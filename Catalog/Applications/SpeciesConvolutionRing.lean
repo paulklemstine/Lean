@@ -42,7 +42,7 @@ generalization of the linear-order EGF to *every* factorial-counted species.
                                         — every `n!`-counted species has EGF `1/(1-X)`.
 -/
 import Mathlib
-import Applications.SpeciesAnalyticBridge
+import Catalog.Applications.SpeciesAnalyticBridge
 
 open scoped BigOperators
 open PowerSeries Finset

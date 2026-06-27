@@ -1,50 +1,46 @@
-# Computational Evidence — Kruskal–Katona graph bridge & triangle removal
+# Computational Evidence — Extremal Graph Theory (Turán, Kruskal–Katona, Roth)
 
-Concise evidence for the two claims formalized this cycle.
+All computations were run in Lean (`#eval`) against the same Mathlib used for the
+proofs, so the numbers below are exact, not floating-point approximations.
 
-## 1. Bridge: "many triangles ⇒ many edges" (`card_edgeFinset_ge_of_triangles`)
+## 1. Turán density bound collapses to Mantel for `r = 3`
 
-Claim: a graph on `Fin n` with `≥ C(k,3)` triangles has `≥ C(k,2)` edges (for `3 ≤ k ≤ n`).
+The integer Turán bound that Mathlib proves,
+`B(n,s) = (n² − (n%s)²)·(s−1)/(2s) + C(n%s, 2)`, at `s = r−1 = 2` should equal
+`⌊n²/4⌋`. Comparing `⌊n²/4⌋` with `B(n,2)` for `n = 0..8`:
 
-The extremal witness is the complete graph `K_k`, which has **exactly** `C(k,3)` triangles and
-`C(k,2)` edges, so the bound is tight. Table of `(k, C(k,3), C(k,2))` computed in Lean
-(`#eval (List.range 9).map (fun k => (k, k.choose 3, k.choose 2))`):
+| n            | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|--------------|---|---|---|---|---|---|---|---|---|
+| ⌊n²/4⌋       | 0 | 0 | 1 | 2 | 4 | 6 | 9 | 12| 16|
+| B(n,2)       | 0 | 0 | 1 | 2 | 4 | 6 | 9 | 12| 16|
 
-| k | triangles C(k,3) | edges C(k,2) |
-|---|------------------|--------------|
-| 2 | 0  | 1  |
-| 3 | 1  | 3  |
-| 4 | 4  | 6  |
-| 5 | 10 | 10 |
-| 6 | 20 | 15 |
-| 7 | 35 | 21 |
-| 8 | 56 | 28 |
+Perfect agreement → `mantel`'s `⌊n²/4⌋` bound is exactly the `r=3` Turán bound,
+and the density form `(1−1/(r−1))n²/2 = n²/4` is its real-number envelope.
 
-Sanity checks of the *threshold logic* (the contrapositive: few edges ⇒ few triangles):
-- A graph with `< C(k,2)` edges has `< C(k,3)` triangles. E.g. with `4` triangles one needs
-  `≥ C(4,2)=6` edges; indeed `K_4` (the only graph with exactly `4` triangles up to isolated
-  vertices) has `6` edges.
-- The shadow inclusion `∂(triangles) ⊆ edges` is checked structurally (deleting any vertex of a
-  triangle yields an edge), so the inequality is not merely numerical: it is a genuine set
-  inclusion, then quantified by Kruskal–Katona.
+## 2. Kruskal–Katona + Pascal (`family_union_shadow_ge`)
 
-Counterexample hunt: none expected, and none found — Kruskal–Katona is a theorem and the witness
-`K_k` matches both binomials simultaneously (row `k=5`: `10 = 10`), confirming tightness rather
-than slack.
+The combined bound rests on `C(k+1, r) = C(k, r−1) + C(k, r)`. Check `k=5, r=3`:
 
-## 2. Triangle removal dichotomy (`triangle_count_dichotomy`)
+`C(6,3) = 20` and `C(5,2) + C(5,3) = 10 + 10 = 20`. ✓
 
-Claim: for any `ε`, every finite graph either has `≥ triangleRemovalBound ε · n³` triangles, or can
-be made triangle-free by deleting `< ε · n²` edges.
+So a `3`-uniform family on `Fin n` with `≥ C(5,3)=10` sets has, together with its
+shadow, at least `C(6,3)=20` sets.
 
-`triangleRemovalBound ε > 0` for `ε > 0` (`triangleRemovalBound_pos`), so the threshold is a
-genuine positive cubic. The dichotomy is exhaustive by construction (`by_cases` on the threshold),
-so no counterexample is possible; the content is that the "few triangles" branch yields an explicit
-sparse triangle-free subgraph via `triangle_removal`.
+## 3. Additive energy lower bound (catalog Fourier bridge)
 
-## Why no heavier computation
+For `A = {0,1,2} ⊆ ℤ/7ℤ`: additive energy `E(A) = 19`, `|A|⁴ = 81`, `N = 7`.
+Spectral bound `|A|⁴/N = 81/7 ≈ 11.57 ≤ 19 = E(A)`. ✓ (catalog
+`card_pow_four_div_le_addEnergy`).
 
-The two results are sharp consequences of theorems already in Mathlib (`kruskal_katona_lovasz_form`,
-`triangle_removal`); the decisive content is the *structural* shadow inclusion and the *cast-aligned*
-contradiction, both of which are verified by the Lean proofs themselves rather than by enumeration.
-Small-case binomial data above suffices to confirm tightness of the bridge.
+Note `2|A|² = 18 < 19 = E(A)`: `{0,1,2}` is *not* near-Sidon (it contains the
+3-AP `0,1,2`, so it carries extra additive quadruples). This is the precise
+dichotomy exploited in `RothThreeAP.lean`: 3-AP-rich sets have *large* energy,
+near-Sidon sets have *small* energy and hence small cardinality (`|A|² ≤ 2N`).
+
+## 4. Roth threshold sanity
+
+`roth_3ap_dense` inherits Mathlib's `cornersTheoremBound ε ≤ card G` largeness
+hypothesis; for any fixed density `ε > 0` this is satisfied once `G` is large
+enough, and then every `A` with `|A| ≥ ε·|G|` contains a genuine 3-AP
+`a, a+d, a+2d` with `d ≠ 0`. The extraction step was unit-tested in Lean on the
+negated `ThreeAPFree` witness.

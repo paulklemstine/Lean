@@ -1,420 +1,442 @@
-# Extremal Graph Theory: From Turán's Edge Bound to Roth's Theorem via Shadows and Removal
+# Extremal Graph Theory: Turán, Kruskal–Katona, Triangle Removal, and Roth
 
 **Author:** Aristotle
-**Date:** 2026-06-25
-**Domain:** Novelty (Extremal Combinatorics)
-
----
+**Date:** 2026-06-27
+**Domain:** Novelty / Extremal Combinatorics
 
 ## Abstract
 
-We present a unified, fully formalized development of four cornerstone results
-in extremal graph theory and additive combinatorics, together with two
-cross-domain bridges. We establish Turán's theorem on the maximum edge count of
-a $K_{r+1}$-free graph in both an integer rearrangement and the textbook real
-density form, and specialize it to Mantel's theorem. We connect the
-set-theoretic Kruskal–Katona shadow inequality to graph theory, proving the
-clique-counting principle that *a graph with $\binom{k}{3}$ triangles has at
-least $\binom{k}{2}$ edges* via the structural fact that the shadow of the
-triangle family is contained in the edge family. We package Szemerédi's
-regularity-driven triangle removal lemma in textbook, contrapositive
-(counting), and dichotomy forms. Finally we deploy the resulting machinery to
-state Roth's theorem on $3$-term arithmetic progressions in both a density-limit
-form and a qualitative "positive frequent density implies a $3$-AP" form. We
-also exhibit a bridge linking Mantel's bound to the Ramsey number $R(3,3) = 6$.
-All results have been verified in a proof assistant; this paper presents the
-mathematics, definitions, statements, and proof sketches.
-
----
+We present a unified, fully formalized development of four pillars of extremal
+combinatorics, together with two cross-domain bridges and a foundational theory
+of graph saturation. We establish **Turán's theorem** in both an integer and a
+real density form — a $K_{r+1}$-free graph on $n$ vertices has at most
+$\left(1 - 1/r\right) n^2/2$ edges — and specialize it to **Mantel's theorem**
+($n^2/4$ for triangle-free graphs). We bridge Mantel's bound to Ramsey theory:
+on at least six vertices, a triangle-free graph forces a triangle in its
+complement, fusing the extremal and Ramsey viewpoints at $R(3,3) = 6$. We extract
+the **Kruskal–Katona** shadow bound $\binom{k}{r} \le |\mathcal A| \Rightarrow
+\binom{k}{r-1} \le |\partial \mathcal A|$, deduce that iterated shadows of dense
+uniform families never vanish prematurely, and bridge it to graphs: a graph with
+at least $\binom{k}{3}$ triangles has at least $\binom{k}{2}$ edges. We package
+the **triangle removal lemma** in textbook, contrapositive, and dichotomy forms,
+and use the downstream asymptotics to prove **Roth's theorem** on $3$-term
+arithmetic progressions, both as a density limit $r_3(N)/N \to 0$ and in the
+qualitative form "frequently-dense sets contain a $3$-AP." Finally we build the
+basic theory of **saturation numbers**, proving existence of saturated graphs,
+the inequality $\mathrm{sat}(n,H) \le \mathrm{ex}(n,H)$, the apex-join edge count,
+exact edge counts for the matching-plus-isolated family, and the clique
+saturation bound $\mathrm{sat}(n, K_{r+1}) \le e(T(n,r))$. We state the
+Cameron–Puleo saturation recurrence as a formal conjecture. All results are
+proved with no unverified assumptions.
 
 ## 1. Introduction
 
-Extremal graph theory studies the maximum or minimum value of a graph parameter
-subject to a structural constraint. Its prototypical question is: *how many edges
-can a graph on $n$ vertices have if it forbids a fixed subgraph $H$?* The answer,
-the **extremal number** $\mathrm{ex}(n, H)$, encodes a fundamental tension
-between abundance and structure: enough edges force the appearance of $H$.
+Extremal graph theory studies the maximum or minimum amount of local structure
+(edges, cliques, set members) a combinatorial object may carry subject to a
+forbidden-substructure constraint. The unifying phenomenon is that *abundance
+forces structure*: beyond a sharp, computable threshold, a forbidden pattern
+becomes unavoidable. This paper develops four cornerstone instances of that
+principle and ties them together.
 
-This paper assembles four pillars of the theory into a single coherent
-development:
+The four pillars are:
 
-1. **Turán's theorem** ($\mathrm{ex}(n, K_{r+1}) = (1 - 1/r)\,n^2/2$) and its
-   special case **Mantel's theorem** ($\mathrm{ex}(n, K_3) = n^2/4$);
-2. the **Kruskal–Katona theorem** on shadows of uniform set families, recast as
-   a graph-theoretic clique-to-edge counting principle;
-3. the **triangle removal lemma**, the combinatorial engine built on
-   Szemerédi's regularity lemma;
-4. **Roth's theorem** on $3$-term arithmetic progressions, the additive payoff
-   of the removal lemma.
+1. **Turán / Mantel** — too many edges force a clique.
+2. **Kruskal–Katona** — too many uniform sets force a large shadow.
+3. **Triangle removal (Szemerédi regularity)** — robust triangle presence forces
+   cubically many triangles.
+4. **Roth** — too many integers force an arithmetic progression.
 
-We additionally develop two **cross-domain bridges**: one linking Mantel's
-extremal bound to Ramsey theory via $R(3,3)=6$, and one linking Kruskal–Katona
-set-family combinatorics to clique and edge counting in graphs.
+We additionally develop the dual *saturation* theory, which minimizes edges over
+maximally-cautious graphs.
 
-### Notation
+### Notation and conventions
 
-Throughout, $G$ is a finite simple graph on a vertex set of size $n$. We write
-$e(G)$ for its number of edges, $V(G)$ for its vertex set, and $G^c$ for its
-complement. For an integer $r$, $K_{r+1}$ denotes the complete graph on $r+1$
-vertices, and $G$ is **$K_{r+1}$-free** (equivalently `CliqueFree (r+1)`) if it
-contains no $r+1$ mutually adjacent vertices. We write $\binom{k}{r}$ for the
-binomial coefficient. For a family $\mathcal{A}$ of finite sets, $\partial
-\mathcal{A}$ is its shadow (Definition 3.1), and $\partial^{[i]}$ is the $i$-fold
-shadow. We write $\#S$ for the cardinality of a finite set $S$.
+Throughout, $G$ denotes a finite simple graph on a vertex type $V$ with
+$n = |V|$. We write $e(G)$ for its number of edges, $\#G.\mathtt{edgeFinset}$ in
+the formalization. A graph is $K_{r+1}$-**free** (clique-free of order $r+1$) if
+it contains no set of $r+1$ pairwise-adjacent vertices. The **Turán graph**
+$T(n,r)$ is the complete $r$-partite graph on $n$ vertices with parts as equal as
+possible. For a family $\mathcal A$ of finite sets, $\partial \mathcal A$ denotes
+its **shadow** and $\partial^{[i]}\mathcal A$ its $i$-th iterated shadow. A set
+$\mathcal A$ is **$r$-uniform** (`Sized r`) if every member has exactly $r$
+elements. $\binom{k}{r}$ is the binomial coefficient `k.choose r`. We write
+$\mathrm{ThreeAPFree}(A)$ for the property that $A$ contains no nontrivial 3-term
+arithmetic progression, and $r_3(N)$ (`rothNumberNat N`) for the size of the
+largest $3$-AP-free subset of $\{0,\dots,N-1\}$.
 
----
+## 2. Turán's theorem and Mantel's theorem
 
-## 2. Turán's and Mantel's Theorems
+### 2.1 The integer edge bound
 
-### 2.1 The edge bound
+**Theorem (`turan_edge_bound_nat`).** *Let $G$ be a finite simple graph on $V$
+with $n = |V|$. If $G$ is $K_{r+1}$-free, then*
+$$ 2r\, e(G) \le (r-1)\, n^2. $$
 
-**Definition 2.1 (Turán graph).** The *Turán graph* $T(n, r)$ is the complete
-$r$-partite graph on $n$ vertices whose parts differ in size by at most one. It
-is $K_{r+1}$-free, since any clique uses at most one vertex per part, and among
-all $K_{r+1}$-free graphs it has the maximum number of edges.
+*Proof sketch.* Among all $K_{r+1}$-free graphs on $n$ vertices, the Turán graph
+$T(n,r)$ is extremal: by `SimpleGraph.CliqueFree.card_edgeFinset_le` we have
+$e(G) \le e(T(n,r))$. Mathlib's exact count
+`card_edgeFinset_turanGraph` and the looser
+`mul_card_edgeFinset_turanGraph_le` give
+$2r\, e(T(n,r)) \le (r-1)n^2$. Chaining a `Nat.mul_le_mul_left` step with this
+inequality closes the goal. $\square$
 
-**Theorem 2.2 (Turán, integer form — `turan_edge_bound_nat`).**
-*Let $G$ be a $K_{r+1}$-free graph on $n$ vertices. Then*
-$$ 2r \cdot e(G) \le (r-1)\, n^2. $$
+This integer form is chosen deliberately: it avoids natural-number truncation
+issues until the casting boundary, where we lift to the reals.
 
-*Proof sketch.* The extremal property of the Turán graph gives $e(G) \le
-e(T(n,r))$. The exact edge count of the Turán graph, together with the integer
-inequality $2r \cdot e(T(n,r)) \le (r-1)n^2$, yields the claim by transitivity.
-Working with the cleared-denominator integer inequality avoids all rounding
-issues at this stage. $\qquad\blacksquare$
+### 2.2 The real density form
 
-**Theorem 2.3 (Turán, real density form — `turan_edge_bound_real`).**
-*Let $G$ be a $K_{r+1}$-free graph on $n$ vertices with $r \ge 1$. Then*
+**Theorem (`turan_edge_bound_real`).** *If $G$ is $K_{r+1}$-free and $r \ge 1$,
+then*
 $$ e(G) \le \left(1 - \frac{1}{r}\right)\frac{n^2}{2}. $$
 
-*Proof sketch.* Substitute $r = m + 1$ (valid since $r \ge 1$), which eliminates
-the truncated natural-number subtraction $r - 1$ that would otherwise misbehave.
-Cast Theorem 2.2 to the reals, obtaining $2(m+1)\,e(G) \le m\, n^2$. The identity
+*Proof sketch.* Write $r = m + 1$ (so $r - 1 = m$ as natural numbers, removing
+the truncated subtraction). Cast `turan_edge_bound_nat` to $\mathbb R$ to obtain
+$2(m+1)\, e(G) \le m\, n^2$. The algebraic identity
 $$ \left(1 - \frac{1}{m+1}\right)\frac{n^2}{2} = \frac{m\, n^2}{2(m+1)} $$
-rewrites the goal into the form $e(G) \le \dfrac{m\, n^2}{2(m+1)}$, which is
-exactly the cast inequality after clearing the positive denominator. $\qquad\blacksquare$
+(verified by `field_simp`/`ring`) rewrites the goal, after which
+`le_div_iff₀` and `nlinarith` finish. $\square$
 
-The hypothesis $r \ge 1$ is necessary and faithful: for $r = 0$, "$K_1$-free"
-means the graph has no vertices, and the density expression $1 - 1/r$ is
-undefined.
+This is exactly the form $\mathrm{ex}(n, K_{r+1}) \le (1 - 1/r)\,n^2/2$ from the
+classical statement of Turán's theorem.
 
-### 2.2 Mantel's theorem
+### 2.3 Mantel's theorem
 
-**Theorem 2.4 (Mantel — `mantel_nat`, `mantel_real`).**
-*Let $G$ be a triangle-free ($K_3$-free) graph on $n$ vertices. Then*
-$$ 4\, e(G) \le n^2, \qquad\text{equivalently}\qquad e(G) \le \frac{n^2}{4}. $$
+Specializing to $r = 2$ (forbidding $K_3$, i.e. triangles) yields Mantel's 1907
+theorem.
 
-*Proof sketch.* Apply Theorems 2.2 and 2.3 with $r = 2$. The integer form gives
-$4\,e(G) \le n^2$ directly; the real form gives $e(G) \le (1 - 1/2)\,n^2/2 =
-n^2/4$. $\qquad\blacksquare$
+**Theorem (`mantel_nat`).** *If $G$ is triangle-free, then $4\, e(G) \le n^2$.*
 
-The bound is sharp, attained by the balanced complete bipartite graph
-$K_{\lfloor n/2\rfloor, \lceil n/2 \rceil}$.
-
-### 2.3 A bridge to Ramsey theory
-
-The Ramsey number $R(3,3) = 6$ asserts that every $2$-coloring of the edges of
-$K_6$ contains a monochromatic triangle. We combine this unavoidability
-statement with the extremal edge cap.
-
-**Theorem 2.5 (Extremal–Ramsey bridge — `mantel_ramsey_bridge`).**
-*Let $G$ be a triangle-free graph on $n \ge 6$ vertices. Then simultaneously*
-$$ 4\,e(G) \le n^2 \qquad\text{and}\qquad G^c \text{ contains a triangle.} $$
+**Theorem (`mantel_real`).** *If $G$ is triangle-free, then $e(G) \le n^2/4$.*
 
-*Proof sketch.* The first conclusion is Mantel's theorem. For the second, view
-$G$ as the "red" graph in a $2$-coloring of the complete graph on the vertex set.
-Since $n \ge 6$, $R(3,3)=6$ forces a monochromatic triangle. As $G$ is
-triangle-free, no red triangle exists, so the monochromatic triangle is blue,
-i.e., it lies in $G^c$. $\qquad\blacksquare$
+*Proof sketch.* Both follow by instantiating the Turán bounds at $r = 2$ and
+simplifying: `mantel_nat` from `turan_edge_bound_nat`, `mantel_real` from
+`turan_edge_bound_real` with `norm_num` and `linarith`. $\square$
 
-This bridge illustrates a complementary duality: extremal theory caps the red
-edges while Ramsey theory forces a blue triangle.
+### 2.4 A cross-domain bridge: Turán meets Ramsey
 
----
+**Theorem (`mantel_ramsey_bridge`).** *Let $V$ be a finite vertex type with
+$6 \le |V|$, and let $G$ be triangle-free. Then both*
+$$ 4\, e(G) \le n^2 \quad\text{and}\quad \exists\, S,\ \overline{G}\text{ contains a triangle on } S. $$
 
-## 3. The Kruskal–Katona Theorem and a Graph Bridge
-
-### 3.1 Shadows of uniform families
+*Proof sketch.* The first conjunct is `mantel_nat`. For the second, apply
+$R(3,3) = 6$ in the form of the catalog result
+`RamseyTheory.arrows_three_three`: every $2$-coloring of the edges of $K_n$
+($n \ge 6$) contains a monochromatic triangle. Reading $G$ as the "red" graph and
+$\overline G$ as the "blue" graph, the unavoidable monochromatic triangle cannot
+be red (as $G$ is triangle-free), so it is blue, i.e. lives in $\overline G$. A
+`rcases` on the two color branches discards the red branch via `CliqueFree`. $\square$
 
-**Definition 3.1 (Shadow).** Let $\mathcal{A}$ be a family of finite sets. Its
-*shadow* is
-$$ \partial \mathcal{A} = \{\, t : \exists\, s \in \mathcal{A},\ \exists\, a \in s,\ t = s \setminus \{a\}\,\}, $$
-the family of all sets obtained by deleting a single element from a member of
-$\mathcal{A}$. The $i$-fold iterated shadow is $\partial^{[i]}\mathcal{A}$. A
-family is **$r$-uniform** (`Sized r`) if every member has exactly $r$ elements.
-
-The Kruskal–Katona theorem governs how small a shadow can be relative to the
-family size. We use the Lovász form: if every member of an $r$-uniform family
-has size $r$ and $\binom{k}{r} \le \#\mathcal{A}$, then $\binom{k}{r-i} \le
-\#(\partial^{[i]}\mathcal{A})$ for all $i$.
-
-**Theorem 3.2 (Kruskal–Katona, single shadow — `kk_shadow_lower`).**
-*Let $\mathcal{A}$ be a family of $r$-element subsets of an $n$-element ground
-set with $1 \le r \le k \le n$ and $\binom{k}{r} \le \#\mathcal{A}$. Then*
-$$ \binom{k}{r-1} \le \#(\partial \mathcal{A}). $$
-
-*Proof sketch.* Instantiate the Lovász form at $i = 1$ and simplify
-$\partial^{[1]} = \partial$. $\qquad\blacksquare$
-
-**Theorem 3.3 (Iterated shadows are nonempty — `kk_iterated_shadow_nonempty`).**
-*Under the hypotheses of Theorem 3.2 with $i \le r \le k \le n$, the iterated
-shadow $\partial^{[i]}\mathcal{A}$ is nonempty for every $i \le r$. In particular
-($i = r$) the shadow chain descends to the empty set.*
-
-*Proof sketch.* The Lovász form yields $\binom{k}{r-i} \le
-\#(\partial^{[i]}\mathcal{A})$. Since $r - i \le r \le k$, the binomial
-coefficient $\binom{k}{r-i}$ is strictly positive, so the cardinality is
-positive and the family is nonempty. $\qquad\blacksquare$
-
-### 3.2 The bridge: triangles, shadows, and edges
-
-The decisive structural observation is that, in a graph, triangles are
-$3$-element cliques, edges are $2$-element cliques, and deleting one vertex from a
-triangle produces an edge.
-
-**Lemma 3.4 (Triangles are $3$-uniform — `triangles_sized`).** *The family of
-triangles (the $3$-cliques) of a graph $G$ is a $3$-uniform set family.*
-
-**Lemma 3.5 (Shadow of triangles ⊆ edges — `shadow_triangles_subset_edges`).**
-*For any graph $G$,*
-$$ \partial\,(\text{triangles of } G) \subseteq (\text{edges of } G). $$
-
-*Proof sketch.* A member of the shadow has the form $s \setminus \{a\}$ where $s$
-is a triangle and $a \in s$. Since $s$ induces a clique, every subset of $s$
-induces a clique, so $s \setminus \{a\}$ is a clique; and it has cardinality
-$3 - 1 = 2$. Hence $s \setminus \{a\}$ is a $2$-clique, i.e., an edge. $\qquad\blacksquare$
-
-**Theorem 3.6 (Kruskal–Katona for graphs, clique form —
-`card_cliqueFinset_two_ge_of_triangles`).**
-*Let $G$ be a graph on $n$ vertices and $3 \le k \le n$. If $G$ has at least
-$\binom{k}{3}$ triangles, then it has at least $\binom{k}{2}$ edges (counted as
-$2$-cliques):*
-$$ \binom{k}{3} \le \#\{\text{triangles}\} \;\Longrightarrow\; \binom{k}{2} \le \#\{2\text{-cliques}\}. $$
-
-*Proof sketch.* Apply the Lovász form of Kruskal–Katona to the $3$-uniform
-triangle family (Lemma 3.4) with $i = 1$ to obtain $\binom{k}{2} =
-\binom{k}{3-1} \le \#(\partial\,\text{triangles})$. By Lemma 3.5 the shadow is
-contained in the edges, so $\#(\partial\,\text{triangles}) \le \#\{2\text{-cliques}\}$.
-Chain the two inequalities. $\qquad\blacksquare$
-
-**Lemma 3.7 ($2$-cliques are edges — `card_cliqueFinset_two_eq_edgeFinset`).*
-*For any finite graph $H$, the number of $2$-cliques equals the number of edges:*
-$$ \#\{2\text{-cliques of } H\} = e(H). $$
-
-*Proof sketch.* The map sending an edge $\{u, v\}$ (as an unordered pair) to the
-two-element set $\{u, v\}$ is a bijection between the edge set and the family of
-$2$-cliques; both directions are checked by unpacking the definitions of an edge
-and of a $2$-element clique. $\qquad\blacksquare$
-
-**Theorem 3.8 (Kruskal–Katona for graphs, edge form —
-`card_edgeFinset_ge_of_triangles`).**
-*Let $G$ be a graph on $n$ vertices and $3 \le k \le n$. If $G$ has at least
-$\binom{k}{3}$ triangles, then $e(G) \ge \binom{k}{2}$.*
+This combines the *extremal* edge cap (Mantel) with the *Ramsey* unavoidability
+phenomenon, showing they constrain complementary parts of the same graph.
 
-*Proof sketch.* Combine Theorem 3.6 with the identification $\#\{2\text{-cliques}\}
-= e(G)$ of Lemma 3.7. $\qquad\blacksquare$
-
-The slogan is **"many triangles force many edges":** a graph rich in triangles
-cannot remain globally sparse.
-
----
-
-## 4. The Triangle Removal Lemma
-
-The triangle removal lemma is the combinatorial heart of Roth's theorem. It is a
-consequence of **Szemerédi's regularity lemma**, which states that the vertex set
-of any large graph admits a partition into a bounded number of parts such that
-the bipartite graph between almost every pair of parts is $\varepsilon$-regular
-(pseudorandom). We denote by $\mathrm{triangleRemovalBound}(\varepsilon)$ the
-explicit (tower-type) constant $\delta$ produced by the standard proof.
-
-**Definition 4.1 ($\varepsilon$-far from triangle-free).** A graph $G$ on $n$
-vertices is *$\varepsilon$-far from triangle-free* (`FarFromTriangleFree`) if
-making $G$ triangle-free requires deleting at least $\varepsilon n^2$ edges;
-equivalently, every triangle-free subgraph $G' \le G$ satisfies $e(G) - e(G') \ge
-\varepsilon n^2$.
-
-**Theorem 4.2 (Triangle removal lemma — `triangle_removal_lemma`).**
-*For every $\varepsilon > 0$ there exists $\delta > 0$ (namely
-$\delta = \mathrm{triangleRemovalBound}(\varepsilon)$) such that every finite
-graph $H$ on $n$ vertices with fewer than $\delta n^3$ triangles admits a
-triangle-free subgraph $H' \le H$ with*
-$$ e(H) - e(H') < \varepsilon\, n^2. $$
-*That is, $H$ can be made triangle-free by deleting fewer than $\varepsilon n^2$
-edges.*
-
-*Proof sketch.* Apply the regularity lemma to obtain an $\varepsilon$-regular
-partition. Delete edges inside parts, between irregular pairs, and between
-low-density pairs; this costs $O(\varepsilon n^2)$ edges. By the triangle
-counting lemma, any remaining triangle would force a triple of high-density
-regular pairs, which would in turn contain $\ge \delta n^3$ triangles. Since $H$
-has fewer than $\delta n^3$ triangles, no triangle survives, so the reduced graph
-is triangle-free. $\qquad\blacksquare$
-
-The counting (contrapositive) form is often more directly usable.
-
-**Theorem 4.3 (Counting form — `not_farFromTriangleFree_of_few_triangles`).**
-*If a graph $G$ on $n$ vertices has fewer than
-$\mathrm{triangleRemovalBound}(\varepsilon)\cdot n^3$ triangles, then $G$ is not
-$\varepsilon$-far from triangle-free.*
-
-*Proof sketch.* Suppose for contradiction that $G$ is $\varepsilon$-far from
-triangle-free. By Theorem 4.2 there is a triangle-free subgraph $G' \le G$ with
-$e(G) - e(G') < \varepsilon n^2$. But $\varepsilon$-farness forces $e(G) - e(G')
-\ge \varepsilon n^2$, a contradiction. $\qquad\blacksquare$
-
-Combined with the fact that an $\varepsilon$-far graph contains many triangle
-copies, one obtains a dichotomy.
-
-**Theorem 4.4 (Triangle-count dichotomy — `triangle_count_dichotomy`).**
-*For every $\varepsilon > 0$, every graph $G$ either contains at least
-$\mathrm{triangleRemovalBound}(\varepsilon)\cdot n^3$ triangles, or is not
-$\varepsilon$-far from triangle-free.*
-
-*Proof sketch.* This is the disjunctive restatement of Theorem 4.3: if the
-triangle count falls below the cubic threshold, the counting form places $G$ on
-the "not far" side. $\qquad\blacksquare$
-
-The qualitative content: a graph is either *triangle-rich* (cubically many
-triangles) or *edge-close to triangle-free*; there is no quantitative middle
-ground beyond the removal threshold.
-
----
-
-## 5. Roth's Theorem on Arithmetic Progressions
-
-### 5.1 Setup
-
-**Definition 5.1 ($3$-term arithmetic progression).** A *nontrivial $3$-term
-arithmetic progression* (3-AP) is a triple $(a, b, c)$ with $a + c = 2b$ and
-$a \ne b$. A set $A$ of naturals is *3AP-free* (`ThreeAPFree`) if it contains no
-such triple.
-
-**Definition 5.2 (Roth number).** The *Roth number* $r_3(N)$ (`rothNumberNat N`)
-is the maximum size of a 3AP-free subset of $\{0, 1, \dots, N-1\}$.
-
-Roth's theorem, in the form proved via the corners theorem and the triangle
-removal lemma, states $r_3(N) = o(N)$.
-
-### 5.2 Density form
-
-**Theorem 5.3 (Roth, density form — `rothNumberNat_density_tendsto_zero`).**
-$$ \frac{r_3(N)}{N} \longrightarrow 0 \qquad (N \to \infty). $$
-
-*Proof sketch.* Immediate from $r_3(N) = o(N)$: an asymptotically little-o
-quantity divided by $N$ tends to zero. $\qquad\blacksquare$
-
-### 5.3 Qualitative form
-
-The most useful form replaces the asymptotic statement by a concrete existence
-conclusion under a positive-density hypothesis.
-
-**Theorem 5.4 (Roth, qualitative form — `exists_threeAP_of_freq_dense`).**
-*Let $A \subseteq \mathbb{N}$, and suppose there is a constant $c > 0$ such that,
-for infinitely many $N$,*
-$$ c \cdot N \le \#\{\, n \in \{0,\dots,N-1\} : n \in A \,\}. $$
-*Then $A$ is not 3AP-free; that is, $A$ contains a nontrivial $3$-term
-arithmetic progression.*
-
-*Proof sketch.* Suppose $A$ is 3AP-free. By Roth's $o(N)$ bound applied with
-$\varepsilon = c/2$, eventually $r_3(N) \le (c/2)\,N$. The frequent-density
-hypothesis provides infinitely many $N$ with $c\,N \le \#(A \cap \{0,\dots,N-1\})$.
-Choose a single large $N \ge 1$ satisfying both. The window $B = A \cap
-\{0,\dots,N-1\}$ is 3AP-free (a subset of a 3AP-free set), so $\#B \le r_3(N)$.
-Chaining,
-$$ c\,N \le \#B \le r_3(N) \le \tfrac{c}{2}\,N, $$
-which forces $c\,N \le \tfrac{c}{2}\,N$, impossible for $c > 0$ and $N \ge 1$.
-$\qquad\blacksquare$
-
-The frequent-density hypothesis is strictly weaker than positive upper density,
-so Theorem 5.4 is stated at its natural level of generality; it is the form used
-in density-increment arguments and in the inductive step of Szemerédi's theorem.
-
----
-
-## 6. Algorithms
-
-The development supports several explicit computations that illustrate and
-numerically verify the theorems.
-
-**Algorithm 6.1 (Turán/Mantel bound checker).** Given $n$, $r$, and an edge
-count $e$, decide whether the integer Turán inequality $2re \le (r-1)n^2$ is
-satisfied, and compare with the real density bound $(1-1/r)n^2/2$. Complexity
-$O(1)$ arithmetic.
-
-**Algorithm 6.2 (Shadow lower bound predictor).** Given a triangle count $T$ in
-a graph on $n$ vertices, compute the largest $k \le n$ with $\binom{k}{3} \le T$,
-and output the guaranteed edge lower bound $\binom{k}{2}$. Complexity $O(n)$ by
-scanning $k$, or $O(\log n)$ by binary search.
-
-**Algorithm 6.3 (3-AP ↔ triangle correspondence).** Given a finite set $A
-\subseteq \{0,\dots,N-1\}$, construct the tripartite "corner/AP graph" whose
-triangles are in bijection with the $3$-APs of $A$, and count them, verifying the
-mechanism underlying Roth's theorem. Complexity $O(N^2)$ for the construction and
-triangle enumeration.
-
----
-
-## 7. Applications and Discussion
-
-The four results assembled here are not isolated; each feeds the next.
-
-- **Turán → Kruskal–Katona.** The Turán edge *upper* bound
-  $(1-1/r)n^2/2$ and the Kruskal–Katona edge *lower* bound $\binom{k}{2}$ are two
-  inequalities on the *same* quantity $e(G)$. A strong triangle count can
-  therefore collide with the Turán ceiling, forcing the appearance of a clique.
-
-- **Removal → Roth.** The triangle removal lemma converts the geometric/graph
-  statement "few triangles" into the arithmetic statement "no dense 3AP-free
-  set," via the 3-AP ↔ triangle correspondence (Algorithm 6.3). Roth's theorem
-  is the additive shadow of the removal dichotomy.
-
-- **Bridges.** The Mantel–Ramsey bridge (Theorem 2.5) shows extremal and Ramsey
-  bounds are complementary. The Kruskal–Katona graph bridge (Section 3.2) shows
-  that clique counting is shadow counting in disguise.
-
-A recurring technical theme is the careful management of natural-number versus
-real arithmetic: truncated subtraction $r - 1$ is the main friction in casting
-Turán to the reals (resolved by the substitution $r = m+1$), and the contrast
-between *frequent* lower bounds and *eventual* upper bounds is the precise
-combinatorial mechanism behind the Roth contradiction.
-
----
-
-## 8. Future Directions
-
-**Conjecture 1 (Sharp clique–edge profile).** For every $K_{r+1}$-free graph on
-$n$ vertices, the iterated shadow inequalities $\#(\partial^{[i]}(\text{cliques}_r))
-\ge \binom{k}{r-i}$ are *simultaneously* tight across all $i$ **iff** the graph is
-a disjoint union of a clique $K_k$ and isolated vertices. The colex-extremal
-family for Kruskal–Katona is exactly the clique structure of a single clique, so
-simultaneous tightness should rigidify the graph. The single-step transfer
-(Theorem 3.8) and the iterated Lovász form are available; the chain version and
-its equality case are within reach.
-
-**Conjecture 2 (Triangle count forces super-Turán density).** If a graph on $n$
-vertices has $\ge \binom{k}{3}$ triangles with $k \ge (1 - 1/r)n$, then it cannot
-be $K_{r+1}$-free for any $r < k$; quantitatively, its edge count $\binom{k}{2}$
-already exceeds the Turán threshold $(1-1/r)n^2/2$. Both bounds now exist in
-compatible $e(G)$ form; only the arithmetic comparison remains.
-
-**Conjecture 3 (No intermediate triangle regime).** There is no graph family with
-triangle count $\Theta(n^{3-c})$ for $0 < c < 3$ that is also $\varepsilon$-far
-from triangle-free for fixed $\varepsilon > 0$; the dichotomy of Theorem 4.4
-admits no quantitative middle ground beyond the $\mathrm{triangleRemovalBound}$
-threshold. Sharpening the (currently tower-type) constant
-$\mathrm{triangleRemovalBound}(\varepsilon)$ is the central open quantitative
-problem.
-
----
+## 3. The Kruskal–Katona shadow bound
+
+For an $r$-uniform family $\mathcal A$ of subsets of an $n$-element ground set,
+the **shadow** $\partial \mathcal A$ is the family of all $(r-1)$-sets obtained by
+deleting a single element from a member of $\mathcal A$. The Kruskal–Katona
+theorem quantifies the minimum shadow size of a family of given size.
+
+### 3.1 Single-shadow lower bound
+
+**Theorem (`kk_shadow_lower`).** *Let $\mathcal A$ be a family of $r$-subsets of
+$\{0,\dots,n-1\}$ with $1 \le r \le k \le n$. If $\binom{k}{r} \le |\mathcal A|$,
+then*
+$$ \binom{k}{r-1} \le |\partial \mathcal A|. $$
+
+*Proof sketch.* This is the $i = 1$ case of Mathlib's Lovász form
+`kruskal_katona_lovasz_form`, which states
+$\binom{k}{r-i} \le |\partial^{[i]}\mathcal A|$ for the $i$-th iterated shadow.
+Setting $i = 1$ and simplifying $\partial^{[1]} = \partial$ gives the claim. $\square$
+
+The extremal families here are the *colex-initial* segments (equivalently, all
+$r$-subsets of a fixed $k$-set), whose shadow is exactly all $(r-1)$-subsets of
+the same $k$-set, realizing $\binom{k}{r-1}$ exactly.
+
+### 3.2 Iterated shadows never vanish prematurely
+
+**Theorem (`kk_iterated_shadow_nonempty`).** *Under the same hypotheses, for every
+$i \le r$ the $i$-th iterated shadow $\partial^{[i]}\mathcal A$ is nonempty.*
+
+*Proof sketch.* The Lovász form gives $\binom{k}{r-i} \le |\partial^{[i]}\mathcal A|$.
+Since $r - i \le r \le k$, the binomial coefficient $\binom{k}{r-i}$ is strictly
+positive (`Nat.choose_pos`), so $|\partial^{[i]}\mathcal A| > 0$ and the family is
+nonempty (`Finset.card_pos`), with `omega` discharging the arithmetic. $\square$
+
+The case $i = r$ is sharpest: $\binom{k}{0} = 1 > 0$, so the shadow chain
+provably descends all the way to the empty layer. Density at the top forces an
+unbroken ladder of shadows beneath.
+
+### 3.3 A bridge to graphs: many triangles force many edges
+
+Triangles are $3$-element vertex sets; edges are $2$-element sets. The shadow
+mechanism transfers directly.
+
+**Lemma (`triangles_sized`).** *The triangle family $G.\mathtt{cliqueFinset}\,3$ of
+a graph is $3$-uniform.*
+
+**Lemma (`shadow_triangles_subset_edges`).** *For a graph $G$ on $\{0,\dots,n-1\}$,*
+$$ \partial\big(G.\mathtt{cliqueFinset}\,3\big) \subseteq G.\mathtt{cliqueFinset}\,2. $$
+
+*Proof sketch.* By `mem_shadow_iff`, every member of the shadow has the form
+$s \setminus \{a\}$ for a triangle $s$ and a vertex $a \in s$. Erasing one vertex
+of a $3$-clique leaves a $2$-clique: the remaining pair is still adjacent
+(`IsClique.subset`) and has cardinality $2$ (`card_erase_of_mem`). Hence the
+result is an edge. $\square$
+
+**Theorem (`card_cliqueFinset_two_ge_of_triangles`).** *If $3 \le k \le n$ and
+$\binom{k}{3} \le \#(G.\mathtt{cliqueFinset}\,3)$, then
+$\binom{k}{2} \le \#(G.\mathtt{cliqueFinset}\,2)$.*
+
+*Proof sketch.* Feed the $3$-uniform triangle family to the Lovász form at
+$i = 1$, $r = 3$ to get $\binom{k}{2} = \binom{k}{3-1} \le |\partial(\text{triangles})|$.
+The containment `shadow_triangles_subset_edges` and `card_le_card` transfer the
+bound to the $2$-cliques. $\square$
+
+**Lemma (`card_cliqueFinset_two_eq_edgeFinset`).** *For any finite graph $H$,
+$\#(H.\mathtt{cliqueFinset}\,2) = \#H.\mathtt{edgeFinset}$.*
+
+*Proof sketch.* The map $s(u,v) \mapsto \{u,v\}$ is a bijection between edges
+(elements of $\mathrm{Sym}_2$) and $2$-cliques; injectivity is `Sym2.ext` and
+surjectivity is `Finset.card_eq_two`. Counting both sides via `Set.ncard_coe_finset`
+yields equality. $\square$
+
+**Theorem (`card_edgeFinset_ge_of_triangles`).** *If $3 \le k \le n$ and
+$\binom{k}{3} \le \#(G.\mathtt{cliqueFinset}\,3)$, then
+$\binom{k}{2} \le \#G.\mathtt{edgeFinset}$.*
+
+*Proof sketch.* Combine the previous two results, rewriting $2$-cliques as edges.
+$\square$
+
+This makes precise the slogan "triangles cast their shadows onto edges": a dense
+layer of triangles cannot exist without a correspondingly dense layer of edges.
+
+## 4. The triangle removal lemma
+
+The triangle removal lemma is the combinatorial engine behind Roth's theorem. It
+is proved via Szemerédi's regularity lemma. Let
+$\mathtt{triangleRemovalBound}\,\varepsilon$ denote Mathlib's explicit positive
+constant $\delta(\varepsilon)$.
+
+### 4.1 Contrapositive (counting) form
+
+**Theorem (`not_farFromTriangleFree_of_few_triangles`).** *If*
+$$ \#(G.\mathtt{cliqueFinset}\,3) < \mathtt{triangleRemovalBound}(\varepsilon)\cdot n^3, $$
+*then $G$ is not $\varepsilon$-far from triangle-free: it can be made
+triangle-free by deleting fewer than $\varepsilon n^2$ edges.*
+
+*Proof sketch.* Suppose, for contradiction, $G$ is $\varepsilon$-far from
+triangle-free. The raw `triangle_removal` produces a triangle-free subgraph
+$G' \le G$ with $e(G) - e(G') < \varepsilon n^2$, while
+`FarFromTriangleFree.le_card_sub_card` forces $\varepsilon n^2 \le e(G) - e(G')$.
+After `push_cast` aligns the $\mathbb N$/$\mathbb R$ casts, `linarith` derives a
+contradiction. $\square$
+
+### 4.2 Textbook quantifier form
+
+**Theorem (`triangle_removal_lemma`).** *For every $\varepsilon > 0$ there exists
+$\delta > 0$ such that every finite graph $H$ with
+$\#(H.\mathtt{cliqueFinset}\,3) < \delta\cdot n^3$ admits a subgraph $H' \le H$
+with $e(H) - e(H') < \varepsilon n^2$ and $H'$ triangle-free.*
+
+*Proof sketch.* Take $\delta = \mathtt{triangleRemovalBound}(\varepsilon) > 0$
+(`triangleRemovalBound_pos`); the body is `triangle_removal` after `push_cast`
+reconciles $\widehat{(n^k)}$ versus $\widehat n^{\,k}$ casts. $\square$
+
+### 4.3 The dichotomy
+
+**Theorem (`triangle_count_dichotomy`).** *For any $\varepsilon$, exactly one of
+the following holds:*
+$$ \mathtt{triangleRemovalBound}(\varepsilon)\cdot n^3 \le \#(G.\mathtt{cliqueFinset}\,3), $$
+*or $G$ can be made triangle-free by deleting fewer than $\varepsilon n^2$ edges.*
+
+*Proof sketch.* A `by_cases` on the triangle-count threshold. If the count is
+below threshold, `triangle_removal` gives the second branch; otherwise `push_neg`
+gives the first. There is no intermediate regime. $\square$
+
+Informally: *either a graph has cubically many triangles, or it is edge-close to
+triangle-free.* This sharp dichotomy is the form of the removal lemma used in
+density-increment arguments.
+
+## 5. Roth's theorem on 3-term arithmetic progressions
+
+Roth's theorem is the $k = 3$ case of Szemerédi's theorem, obtained from the
+triangle removal lemma via the corners theorem. We use the resulting asymptotic
+bound $r_3 = o(N)$ (`rothNumberNat_isLittleO_id`).
+
+### 5.1 Density form
+
+**Theorem (`rothNumberNat_density_tendsto_zero`).**
+$$ \frac{r_3(N)}{N} \longrightarrow 0 \quad \text{as } N \to \infty. $$
+
+*Proof sketch.* Direct from `rothNumberNat_isLittleO_id.tendsto_div_nhds_zero`:
+a little-$o$ statement is exactly the vanishing of the ratio. $\square$
+
+### 5.2 Qualitative form
+
+**Theorem (`exists_threeAP_of_freq_dense`).** *Let $A \subseteq \mathbb N$ and
+$c > 0$. If $A$ is frequently dense — there are infinitely many $N$ with*
+$$ c\cdot N \le \#\{n \in \{0,\dots,N-1\} : n \in A\} $$
+*— then $A$ is not $\mathrm{ThreeAPFree}$: it contains a nontrivial $3$-term
+arithmetic progression $a, b, c$ with $a + c = 2b$ and $a \ne b$.*
+
+*Proof sketch.* Suppose $A$ were $3$-AP-free. Unfolding `isLittleO_iff` at
+$\varepsilon = c/2$ gives an *eventual* upper bound $r_3(N) \le (c/2)N$. Using
+`Frequently.and_eventually`, choose a single $N \ge 1$ at which the frequent
+lower bound and the eventual upper bound both hold. The window
+$B = A \cap \{0,\dots,N-1\}$ is $3$-AP-free (`ThreeAPFree.mono`), so
+$|B| \le r_3(N)$ (`ThreeAPFree.le_rothNumberNat`). Chaining,
+$$ c N \le |B| \le r_3(N) \le \tfrac{c}{2} N, $$
+which `nlinarith` refutes for $N \ge 1$. $\square$
+
+The choice $\varepsilon = c/2$ (rather than $\varepsilon = c$) is essential: it
+makes the contradiction strict away from the degenerate $N = 0$ boundary. The
+frequent-density hypothesis is weaker than positive upper density, so the theorem
+is stated at its natural level of generality.
+
+## 6. Saturation theory
+
+We now turn to the dual extremal parameter, which *minimizes* edges over
+maximally-cautious graphs.
+
+### 6.1 Definitions
+
+- **Edge count (`edgeCount`).** $\mathrm{edgeCount}(G) = |G.\mathtt{edgeSet}|$
+  (as a set cardinality `ncard`).
+- **Saturation (`IsSaturated`).** $G$ is $H$-saturated if $H$ does not embed in
+  $G$, yet for every non-adjacent pair $a \ne b$, adding the edge $s(a,b)$ creates
+  a copy of $H$ (i.e. $H \sqsubseteq G \sqcup \mathtt{fromEdgeSet}\{s(a,b)\}$).
+- **Extremal number (`exNum`).** $\mathrm{ex}(n,H)$ is the supremum of
+  $\mathrm{edgeCount}$ over $H$-free graphs on $\mathrm{Fin}\,n$.
+- **Saturation number (`satNum`).** $\mathrm{sat}(n,H)$ is the infimum of edge
+  counts over $H$-saturated graphs on $\mathrm{Fin}\,n$ (with the convention $0$
+  if none exists; the next result shows this case does not occur when $H$ has an
+  edge).
+
+### 6.2 Existence and the basic inequality
+
+**Lemma (`free_bot_of_adj`).** *If $H$ has an edge, then $H$ does not embed into
+the empty graph $\bot$.*
+
+**Lemma (`edgeCount_lt_addEdge`).** *Adding a genuinely new edge strictly
+increases the edge count.*
+
+*Proof sketch.* The new edge set strictly contains the old one
+(`Set.ncard_lt_ncard` over a finite type). $\square$
+
+**Theorem (`exists_isSaturated`).** *If $H$ has an edge, then for every $n$ there
+exists an $H$-saturated graph on $\mathrm{Fin}\,n$.*
+
+*Proof sketch.* Take a graph $G$ with the *maximum* edge count among $H$-free
+graphs on $\mathrm{Fin}\,n$ (`Set.exists_max_image` over the finite type of
+graphs; the empty graph witnesses nonemptiness via `free_bot_of_adj`). If some
+missing edge could be added while staying $H$-free, the result would be a
+strictly larger $H$-free graph (`edgeCount_lt_addEdge`), contradicting
+maximality. Hence every addition creates a copy of $H$, so $G$ is saturated. $\square$
+
+**Theorem (`satNum_le_exNum`).** *If $H$ has an edge, then for every $n$,*
+$$ \mathrm{sat}(n, H) \le \mathrm{ex}(n, H). $$
+
+*Proof sketch.* The maximum-free graph $G_0$ from `exists_isSaturated` is
+saturated, so $\mathrm{sat}(n,H) \le \mathrm{edgeCount}(G_0)$ (`Nat.sInf_le`),
+while $\mathrm{edgeCount}(G_0) \le \mathrm{ex}(n,H)$ since $G_0$ is free
+(`Finset.le_sup`). $\square$
+
+### 6.3 The apex join and explicit edge counts
+
+**Definition (`cone`).** The **cone** $K_1 \vee H$ over $H$ on vertex type
+$\mathrm{Option}\,V$: a fresh apex `none` adjacent to every `some _`, with $H$ on
+the `some _` vertices.
+
+**Theorem (`edgeCount_cone`).** *$e(K_1 \vee H) = |V| + e(H)$.*
+
+*Proof sketch.* The edge set of $K_1 \vee H$ partitions into the $|V|$ apex edges
+$\{s(\text{none}, \text{some } x)\}$ and a faithful copy (under
+$\mathrm{Sym}_2.\mathtt{map}\ \mathrm{some}$) of the edge set of $H$; these are
+disjoint, so `Set.ncard_union_eq` adds the counts $|V|$ and $e(H)$. $\square$
+
+This is the origin of the $n - 1$ term in the Cameron–Puleo recurrence.
+
+**Definition (`matchingPlusIsolated t q`).** The graph $tK_2 \cup qK_1$ on
+$\mathrm{Fin}(2t + q)$: vertices $2k$ and $2k+1$ (for $k < t$) form the $k$-th
+matching edge; vertices $\ge 2t$ are isolated.
+
+**Theorem (`edgeCount_matchingPlusIsolated`).** *$e(tK_2 \cup qK_1) = t$.*
+
+*Proof sketch.* The map $k \mapsto \{2k, 2k+1\}$ ($k < t$) is an injection from
+$\mathrm{Fin}\,t$ onto the edge set; counting the image (`card_image_of_injective`)
+gives exactly $t$. $\square$
+
+**Theorem (`edgeCount_cone_matchingPlusIsolated`).** *$e\big(K_1 \vee (tK_2 \cup qK_1)\big) = (2t+q) + t$.*
+
+*Proof sketch.* Combine `edgeCount_cone` ($|V| = 2t + q$) with
+`edgeCount_matchingPlusIsolated` ($e(H) = t$). $\square$
+
+### 6.4 Bridge to the Turán world
+
+**Lemma (`edgeCount_eq_card_edgeFinset`).** *On a finite vertex type,
+$\mathrm{edgeCount}(G) = \#G.\mathtt{edgeFinset}$.*
+
+**Theorem (`satNum_clique_le_turan`).** *For $r \ge 1$ and every $n$,*
+$$ \mathrm{sat}(n, K_{r+1}) \le e\big(T(n,r)\big). $$
+
+*Proof sketch.* Apply `satNum_le_exNum` to $H = K_{r+1} = \top$ on
+$\mathrm{Fin}(r+1)$ (which has the edge $s(0,1)$). Then bound the extremal number:
+every $K_{r+1}$-free graph $G$ on $\mathrm{Fin}\,n$ satisfies
+$e(G) \le e(T(n,r))$ by Mathlib's `CliqueFree.card_edgeFinset_le` combined with
+`card_edgeFinset_turanGraph`, using `cliqueFree_iff_top_free` to convert
+$\top$-freeness to $K_{r+1}$-freeness. A `Finset.sup_le` over the free graphs
+finishes. $\square$
+
+This links the *saturation* world to the *extremal* world; the exact value of
+$\mathrm{sat}(n, K_{r+1})$ is the content of the Erdős–Hajnal–Moon theorem.
+
+### 6.5 The Cameron–Puleo recurrence (conjecture)
+
+**Conjecture (`CameronPuleoEquality`).** *For $t \ge 1$, $q \ge 1$, and
+$n > 2t + q$,*
+$$ \mathrm{sat}\big(n,\ K_1 \vee (tK_2 \cup qK_1)\big) = (n-1) + \mathrm{sat}\big(n-1,\ tK_2 \cup qK_1\big). $$
+
+This is stated as a `Prop` (not asserted as a theorem). The source paper proves
+it for $t = 1, 2$; it is open in general. The $(n-1)$ apex term is supplied
+exactly by `edgeCount_cone`.
+
+## 7. Discussion: a single principle
+
+Across all four pillars the same engine runs: **abundance forces structure.**
+
+| Result | Abundance | Forced structure |
+|---|---|---|
+| Turán / Mantel | $> (1-1/r)n^2/2$ edges | a $K_{r+1}$ |
+| Kruskal–Katona | $\ge \binom kr$ $r$-sets | shadow $\ge \binom{k}{r-1}$ |
+| Triangle removal | costly-to-remove triangles | $\Theta(n^3)$ triangles |
+| Roth | positive density in $\mathbb N$ | a $3$-AP |
+
+The bridges reinforce the unity: Mantel $\times$ Ramsey shows the extremal cap and
+the unavoidability phenomenon constrain complementary halves of one graph;
+Kruskal–Katona $\times$ graphs turns an abstract shadow bound into "many
+triangles imply many edges"; triangle removal $\times$ additive combinatorics is
+the route from regularity to Roth.
+
+## 8. Future work
+
+Several concrete continuations follow directly from the formalized core. (1)
+Matching the Turán *upper* bound with a multipartite *lower* bound would upgrade
+`turan_edge_bound_real` to an exact equality, requiring only an explicit edge
+count of the balanced complete $(r-1)$-partite graph. (2) Iterating
+`kk_iterated_shadow_nonempty` and summing the Lovász layers
+$\binom{k}{r-i}$ over all $i$ would yield a full lower-triangle-of-Pascal total
+$\sum_{j\le r}\binom kj$. (3) Sharpening the additive-energy/$3$-AP relationship
+into an explicit energy-dichotomy lower bound on progression density. (4) Settling
+the Cameron–Puleo recurrence beyond $t = 1, 2$. These are recorded in detail in
+the package's future-directions notes.
 
 ## 9. Conclusion
 
-We have presented a unified development of Turán's theorem, the Kruskal–Katona
-theorem, the triangle removal lemma, and Roth's theorem, together with bridges to
-Ramsey theory and set-family combinatorics. The common thread is the extremal
-principle that *largeness forces structure*: enough edges force cliques, enough
-triangles force edges, and enough density forces arithmetic progressions. Each
-result is stated precisely and proved (in a verified development) from standard
-combinatorial machinery, and the bridges demonstrate that these classical pillars
-are facets of a single edifice.
+We have assembled a coherent, fully verified tour of extremal combinatorics:
+Turán and Mantel edge bounds, the Kruskal–Katona shadow inequality and its graph
+incarnation, the triangle removal dichotomy, Roth's theorem in density and
+qualitative forms, and the foundational theory of saturation numbers with a
+Turán bridge. Two cross-domain bridges (Ramsey and Kruskal–Katona-to-graphs) and
+a formally-stated open conjecture round out the development. The recurring moral
+— that beyond a sharp threshold, structure is unavoidable — is realized here as a
+small number of interlocking, machine-checked theorems.

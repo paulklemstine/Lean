@@ -1,265 +1,257 @@
-# When Counting Forces Structure: A Tour Through Extremal Graph Theory
+# How Crowded Can a Network Get Before a Pattern Appears?
 
-Imagine you are designing a social network. You have $n$ people, and you draw a
-line between any two who are friends. You want the network to be *busy* — lots
-of friendships — but you also want to forbid a certain awkward pattern: maybe no
-three people who are all mutually friends (no "triangle"), or no larger tight
-clique of $r$ people who all know each other. How many friendships can you
-possibly allow before such a forbidden pattern is unavoidable?
+## A simple question with surprisingly deep answers
 
-This deceptively simple question is the beating heart of **extremal graph
-theory**, one of the most beautiful corners of modern combinatorics. Its central
-insight is almost philosophical: *if a structure is large enough, it cannot
-avoid having structure*. Pile on enough edges and a triangle appears whether you
-like it or not. Pile on enough numbers and an arithmetic progression appears.
-Abundance breeds order.
+Imagine you are organizing a conference. Some pairs of attendees already know
+each other; you draw a line between any two acquaintances. As more and more
+lines accumulate, an old intuition kicks in: at some point the diagram becomes
+so crowded that *three people who all know each other* — a triangle — must
+appear. You simply cannot keep adding acquaintanceships forever while avoiding
+every single triangle.
 
-This article tells the story of four landmark results that make this slogan
-precise — Turán's theorem, Mantel's theorem, the Kruskal–Katona theorem, and
-the triangle removal lemma — and shows how they link together to prove one of
-the crown jewels of additive combinatorics: **Roth's theorem** on arithmetic
-progressions. Along the way we'll meet a surprising bridge that connects
-counting cliques in graphs to counting subsets of a set, and another that ties
-edge-counting to the famous "party problem" of Ramsey theory.
+This is the founding question of **extremal graph theory**: *how much structure
+can you pack into a network before an unavoidable pattern is forced to appear?*
+A network — mathematicians call it a **graph** — is just a set of points
+(**vertices**) and a set of connecting lines (**edges**). The patterns we hunt
+for are small, rigid shapes: triangles, four-cliques, longer chains. The
+extremal question asks for the exact tipping point.
 
----
+The answers turn out to be beautiful, exact, and far-reaching. They connect a
+party-planning puzzle to the deepest currents of modern mathematics: the
+behavior of prime numbers in arithmetic progressions, the limits of data
+compression, and the hidden regularity inside any sufficiently large structure.
+This article tells the story of five landmark results — Turán's theorem,
+Mantel's theorem, the Kruskal–Katona theorem, the triangle removal lemma, and
+Roth's theorem — and how they fit together into a single arc.
 
-## Part I: Turán's Ceiling
+## Mantel's theorem: the first exact tipping point
 
-Let's start with the simplest version of our question. A **triangle** is three
-people who are all mutually friends. How many friendships can a triangle-free
-network of $n$ people have?
+Let us make the conference puzzle precise. Suppose there are $n$ attendees, and
+we want to avoid every triangle. How many acquaintanceships (edges) can we
+allow?
 
-The answer, discovered by Willhelm Mantel in 1907, is elegant: at most
-$n^2/4$. And the bound is achieved exactly — split your $n$ people into two
-equal groups and let everyone in one group befriend everyone in the other, but
-nobody within their own group. This "complete bipartite" arrangement has
-$\lfloor n/2 \rfloor \cdot \lceil n/2 \rceil \approx n^2/4$ edges and not a single
-triangle, because any triangle would need two of its vertices in the same group.
-
-**Mantel's theorem.** *A triangle-free graph on $n$ vertices has at most $n^2/4$
-edges:*
+The answer, discovered by Willem Mantel in 1907, is astonishingly clean. A
+triangle-free graph on $n$ vertices can have **at most $n^2/4$ edges**:
 $$ e(G) \le \frac{n^2}{4}. $$
+And this is tight: split the $n$ people into two equal rooms and connect every
+person in one room to every person in the other, but never two people in the
+same room. This "complete bipartite" graph has exactly $\lfloor n^2/4\rfloor$
+edges and not a single triangle — because any triangle would need two vertices
+in the same room, which are never connected.
 
-In our formalization this appears as the result `mantel_real`, with a clean
-integer companion `mantel_nat` stating the equivalent $4\,e(G) \le n^2$, avoiding
-any rounding subtleties.
+Push past $n^2/4$ edges, and a triangle is mathematically guaranteed. There is
+no clever arrangement that escapes it. The bound is not an estimate; it is a law.
 
-Mantel's theorem is the first case of a much grander result. Instead of
-forbidding triangles ($K_3$, the complete graph on $3$ vertices), forbid the
-complete graph $K_{r+1}$ on $r+1$ vertices — a clique of $r+1$ mutual friends.
-In 1941 Pál Turán found the exact maximum number of edges.
+## Turán's theorem: the full generalization
 
-**Turán's theorem.** *A graph on $n$ vertices containing no clique $K_{r+1}$ has
-at most*
-$$ e(G) \le \left(1 - \frac{1}{r}\right)\frac{n^2}{2} $$
-*edges.*
+In 1941, Pál Turán asked the natural follow-up. A triangle is a **complete
+graph on 3 vertices**, written $K_3$: three points, all pairs joined. What if we
+forbid a larger clique — say $K_4$ (four mutually-connected people) or, in
+general, $K_{r+1}$?
 
-The extremal example generalizes the bipartite construction: split the $n$
-vertices into $r$ nearly-equal groups and join every pair of vertices in
-*different* groups. This "Turán graph" contains no $K_{r+1}$ because a clique can
-use at most one vertex per group. Setting $r = 2$ recovers Mantel's $n^2/4$.
+Turán's theorem gives the complete answer. If a graph on $n$ vertices contains
+no clique of size $r+1$, then its number of edges obeys
+$$ e(G) \le \left(1 - \frac{1}{r}\right)\frac{n^2}{2}. $$
+Mantel's theorem is exactly the case $r = 2$: forbidding $K_3$ gives the bound
+$\left(1 - \tfrac12\right)\tfrac{n^2}{2} = \tfrac{n^2}{4}$.
 
-Our formalization captures Turán's theorem in two flavours. The integer form
-`turan_edge_bound_nat` states the rearranged inequality
-$$ 2r \cdot e(G) \le (r-1)\, n^2, $$
-which sidesteps division entirely and is the cleanest object to manipulate. The
-real density form `turan_edge_bound_real` then upgrades this to the textbook
-$\left(1 - \tfrac{1}{r}\right) n^2/2$. The translation between them hides a subtle
-trap: with whole-number subtraction, $r - 1$ misbehaves when $r = 0$, so the
-proof quietly rewrites $r$ as $m + 1$ to keep the arithmetic honest.
+The extremal example generalizes too. Instead of two rooms, use $r$ rooms of as
+equal size as possible, and connect two people exactly when they are in
+different rooms. This **Turán graph** $T(n, r)$ contains no $(r+1)$-clique —
+a clique that large would need two vertices in the same room — and it is the
+unique densest such graph. The single fraction $1 - 1/r$ captures the entire
+family of thresholds, from triangles to arbitrarily large cliques.
 
-### A bridge to the party problem
+There is a vivid way to read the formula. As you forbid bigger and bigger
+cliques (larger $r$), the factor $1 - 1/r$ creeps toward $1$, meaning you are
+allowed nearly all $\binom{n}{2} \approx n^2/2$ possible edges. Forbidding a
+huge clique barely constrains you; forbidding a triangle costs you fully half
+your potential edges. Structure is cheap to avoid when the forbidden pattern is
+large, and expensive when it is small.
 
-Here is where the story takes its first surprising turn. Turán's theorem caps
-the number of edges. Ramsey theory, by contrast, guarantees that certain
-patterns *must* appear. The most famous Ramsey fact is the "theorem on
-friends and strangers": **among any six people, there are always three mutual
-friends or three mutual strangers.** In symbols, $R(3,3) = 6$.
+## When extremes collide: Turán meets Ramsey
 
-Now combine the two viewpoints. Take a triangle-free network on at least six
-people. Mantel says it has few edges (at most $n^2/4$). But Ramsey says that
-among any six people there are three mutual friends *or* three mutual strangers
-— and since there are no three mutual friends, there must be three mutual
-*strangers*. In graph language: the **complement** of the network contains a
-triangle.
+Here is a twist that links two great traditions in combinatorics. Suppose your
+conference has at least **six** attendees and contains no triangle of mutual
+acquaintances. Mantel's theorem caps how many acquaintanceships you can have.
+But something else happens for free: among any six people, there must be three
+who are *mutual strangers*.
 
-This is the content of `mantel_ramsey_bridge`: on at least six vertices, a
-triangle-free graph $G$ simultaneously obeys Mantel's edge bound *and* forces a
-triangle into its complement $G^c$. Extremal theory caps one side; Ramsey theory
-fills the other. The same six people, seen through two lenses, tell a complete
-story.
+This is **Ramsey's theorem** in its most famous instance: $R(3,3) = 6$. Color
+every pair of six people either "acquainted" (red) or "stranger" (blue). No
+matter how you color, you cannot avoid a monochromatic triangle — three people
+all red, or all blue. If the red graph (acquaintances) is triangle-free, then
+the unavoidable monochromatic triangle must be blue: three mutual strangers.
 
----
+So in a triangle-free network on six or more vertices, two things hold at once:
+the edges are *capped* by Mantel's $n^2/4$ bound, and the *complement* network
+of non-edges is *forced* to contain a triangle. The extremal viewpoint limits
+what you can build; the Ramsey viewpoint guarantees what you cannot avoid. They
+are two sides of one coin, and they meet precisely at six vertices.
 
-## Part II: Shadows — From Cliques to Edges
+## Kruskal–Katona: the geometry of shadows
 
-Our second landmark, the **Kruskal–Katona theorem**, lives at first glance in a
-different universe: the world of *set systems*. But it turns out to speak
-directly about graphs, and the translation is one of the most satisfying in the
-subject.
+The next landmark steps away from graphs into the broader world of **set
+systems**, and it concerns a notion of *shadow*.
 
-Picture a family $\mathcal{A}$ of sets, all of the same size $r$. Its **shadow**,
-written $\partial \mathcal{A}$, is the collection of all sets you can make by
-deleting a single element from a member of $\mathcal{A}$. For instance, the
-shadow of $\{1,2,3\}$ contains $\{1,2\}$, $\{1,3\}$, and $\{2,3\}$. The
-Kruskal–Katona theorem answers: if $\mathcal{A}$ is large, how small can its
-shadow be? You can't have many $r$-sets sharing only a few $(r-1)$-subsets.
+Picture a family $\mathcal{A}$ of sets, each of the same size $r$ — say, every
+set is a committee of exactly $r$ members drawn from a pool of $n$ people. The
+**shadow** $\partial\mathcal{A}$ is the family of all $(r-1)$-member sets you get
+by removing one person from some committee. If committees are triangles
+(3-element sets), their shadow is made of edges (2-element sets): erase any one
+corner of a triangle and an edge remains.
 
-**Kruskal–Katona (shadow lower bound).** *If $\mathcal{A}$ is a family of
-$r$-element subsets with at least $\binom{k}{r}$ members, then its shadow has at
-least $\binom{k}{r-1}$ members:*
-$$ |\mathcal{A}| \ge \binom{k}{r} \;\Longrightarrow\; |\partial \mathcal{A}| \ge \binom{k}{r-1}. $$
+The Kruskal–Katona theorem answers: *if you have many committees, how small can
+their shadow possibly be?* Intuitively, a large family of $r$-sets must cast a
+large shadow — you cannot have many big sets all leaning on just a few smaller
+ones. The theorem makes this exact. In the clean form we use, if a family of
+$r$-element sets has at least $\binom{k}{r}$ members, then its shadow has at
+least $\binom{k}{r-1}$ members:
+$$ |\mathcal{A}| \ge \binom{k}{r} \implies |\partial\mathcal{A}| \ge \binom{k}{r-1}. $$
+The extremal families are the most "compressed" ones — take all $r$-subsets of a
+fixed $k$-element ground set. Their shadow is exactly all $(r-1)$-subsets of the
+same ground set, hitting the bound on the nose.
 
-The extremal families are the "colex-initial" ones — and the cleanest example is
-simply *all subsets of a fixed $k$-element set*. This is the form we package as
-`kk_shadow_lower`. We also prove a structural companion, `kk_iterated_shadow_nonempty`:
-a large enough $r$-uniform family has the property that its shadow, the shadow of
-its shadow, and so on, never die out — the chain of shadows descends all the way
-to the empty set.
+A surprising structural consequence falls out. If you keep taking shadows of
+shadows — erasing a committee member, then another, then another — a large
+family never dies out prematurely. As long as you take at most $r$ shadows, each
+iterated shadow is still nonempty, and the chain descends all the way down to the
+empty set. Density at the top forces a complete, unbroken ladder of shadows
+beneath it.
 
-### The geometric heart
+### A bridge: many triangles force many edges
 
-Now watch the magic. In any graph, a **triangle is a set of three vertices**, and
-an **edge is a set of two vertices**. What happens when you delete one vertex
-from a triangle? You get an edge — and not just any pair, but a genuine edge of
-the graph, because all three pairs in a triangle are connected.
+The shadow idea pays an immediate dividend back in graph theory. Triangles are
+3-element sets; edges are their 2-element shadows. Erasing one vertex of a
+triangle in a graph always leaves a genuine edge of that graph — so the shadow
+of the triangle family is contained in the edge family.
 
-This means: **the shadow of the family of triangles sits inside the family of
-edges.** We capture this as `shadow_triangles_subset_edges`. It is a one-line
-structural truth with enormous consequences, because now Kruskal–Katona applies.
+Feed this into Kruskal–Katona and you get a clean, quantitative principle:
+**a graph with many triangles must have many edges.** Precisely, if a graph
+contains at least $\binom{k}{3}$ triangles (with $3 \le k \le n$), then it has at
+least $\binom{k}{2}$ edges:
+$$ \#\text{triangles} \ge \binom{k}{3} \implies \#\text{edges} \ge \binom{k}{2}. $$
+This is the abstract shadow bound made fully concrete: triangles cast their
+shadows onto edges, and a dense layer of triangles is impossible without a dense
+layer of edges beneath it.
 
-Feed the family of triangles ($3$-element cliques) into the shadow bound. If a
-graph has at least $\binom{k}{3}$ triangles, Kruskal–Katona guarantees its
-triangle-shadow has at least $\binom{k}{2}$ members. And since that shadow is
-contained in the edges, the graph must have at least $\binom{k}{2}$ edges.
+## The triangle removal lemma: a tiny number of triangles is fragile
 
-**Kruskal–Katona for graphs.** *A graph on $n$ vertices with at least
-$\binom{k}{3}$ triangles (where $3 \le k \le n$) has at least $\binom{k}{2}$
-edges:*
-$$ \#\{\text{triangles}\} \ge \binom{k}{3} \;\Longrightarrow\; \#\{\text{edges}\} \ge \binom{k}{2}. $$
+Now we arrive at one of the most powerful and surprising tools in the entire
+subject — and one whose statement sounds almost paradoxical at first.
 
-This is `card_edgeFinset_ge_of_triangles` (with an intermediate clique-counting
-version `card_cliqueFinset_two_ge_of_triangles` and a bookkeeping lemma
-`card_cliqueFinset_two_eq_edgeFinset` confirming that "$2$-cliques" really are
-edges). The slogan: **many triangles force many edges.** A network can't be rich
-in tight little triangles while staying sparse overall — abundance of small
-structure forces abundance of the building blocks.
+Suppose a graph has *very few* triangles: fewer than $\delta \cdot n^3$ of them,
+where $\delta$ is some tiny constant and $n$ is the number of vertices. The
+**triangle removal lemma** says you can then destroy *all* of those triangles by
+deleting only a *handful* of edges — fewer than $\varepsilon \cdot n^2$ of them,
+for a correspondingly small $\varepsilon$. Formally: for every $\varepsilon > 0$
+there exists a $\delta > 0$ such that any graph with fewer than $\delta n^3$
+triangles can be made completely triangle-free by removing fewer than
+$\varepsilon n^2$ edges.
 
----
+The contrapositive is the punchline, and it is genuinely counterintuitive: if a
+graph is *robustly* triangle-ridden — meaning you *cannot* remove all triangles
+without deleting at least $\varepsilon n^2$ edges — then the graph must contain a
+truly enormous number of triangles, on the order of $n^3$. In other words, when
+it comes to triangles, there is **no middle ground**:
 
-## Part III: The Removal Lemma and the Magic of Regularity
+> *Either a graph is edge-close to triangle-free (a few deletions wipe out every
+> triangle), or it is drowning in triangles (cubically many of them).*
 
-Our third act introduces the most powerful tool in the modern combinatorial
-arsenal, and the engine that drives everything toward Roth's theorem: the
-**triangle removal lemma**.
+A graph cannot sit in the awkward intermediate zone of having, say, only $n^{2.5}$
+triangles while still being hard to clean up. This dichotomy is the engine room
+of modern combinatorics. Its proof rests on **Szemerédi's regularity lemma**,
+a profound result stating that the vertices of *any* large graph can be
+partitioned into a bounded number of groups so that the connections between
+almost every pair of groups look essentially random. Regularity tames arbitrary
+graphs into something nearly structureless, and removal extracts hard
+combinatorial consequences from that tameness.
 
-Its statement sounds almost too good to be true. Suppose a graph has *very few*
-triangles — not zero, but a tiny fraction of what's possible. Then you can make
-it completely triangle-free by deleting only a tiny fraction of its edges.
+## Roth's theorem: patterns in the integers
 
-**Triangle removal lemma.** *For every $\varepsilon > 0$ there is a $\delta > 0$
-such that every graph on $n$ vertices with fewer than $\delta n^3$ triangles can
-be made triangle-free by deleting fewer than $\varepsilon n^2$ edges.*
+Why would anyone care that few triangles are fragile? Because of a stunning
+translation between graphs and *numbers*, which delivers one of the jewels of
+20th-century mathematics.
 
-We package this as `triangle_removal_lemma`. Why is this remarkable? Because the
-number of triangles ($\sim n^3$) and the number of edges ($\sim n^2$) live on
-completely different scales. The lemma says that "few triangles" (a
-*cubic*-scale condition) translates into "few edges to delete" (a
-*quadratic*-scale conclusion). Squeezing out a cubic number of triangles costs
-only a quadratic number of edge deletions.
+A **3-term arithmetic progression** (3-AP) is three numbers evenly spaced:
+$a, b, c$ with $a + c = 2b$, such as $4, 7, 10$ or $20, 25, 30$. A natural
+question, raised by Erdős and Turán in the 1930s: can a "large" set of whole
+numbers avoid every such progression?
 
-The proof — far beyond what we restate here — rests on **Szemerédi's regularity
-lemma**, perhaps the single most influential result in extremal combinatorics.
-Roughly, it says any large graph can be partitioned into a bounded number of
-pieces so that the connections between almost every pair of pieces look
-*pseudorandom*. Once a graph is carved into these well-behaved chunks, counting
-triangles becomes a matter of probability, and the removal lemma follows.
+**Roth's theorem** (1953) says no. Any set of integers with **positive density**
+must contain a 3-term arithmetic progression. Quantitatively, let
+$r_3(N)$ be the size of the *largest* progression-free subset of
+$\{0, 1, \ldots, N-1\}$. Roth proved that this maximum is vanishingly small
+compared to $N$:
+$$ \frac{r_3(N)}{N} \longrightarrow 0 \quad \text{as } N \to \infty. $$
+You cannot keep a positive *fraction* of the numbers up to $N$ while dodging
+every evenly-spaced triple. The density of any progression-free set must decay
+to zero.
 
-It is often more useful to flip the lemma around. The contrapositive,
-`not_farFromTriangleFree_of_few_triangles`, says: a graph that is *far* from
-triangle-free (you'd need to delete $\ge \varepsilon n^2$ edges) must contain a
-*cubic* number of triangles, at least $\delta n^3$. Combining this with the fact
-that being far from triangle-free guarantees many triangle copies yields a sharp
-**dichotomy**, `triangle_count_dichotomy`:
+The qualitative form is even more striking. Suppose a set $A$ of natural numbers
+is *frequently dense*: there is a constant $c > 0$ such that, infinitely often,
+the count of $A$'s members below $N$ is at least $c \cdot N$. Then $A$ is
+guaranteed to contain a genuine 3-term progression $a, b, c$ with
+$a + c = 2b$ and $a \ne b$. Density at infinitely many scales forces evenly
+spaced triples — order emerges from sheer abundance.
 
-> **Every graph either has cubically many triangles, or is edge-close to
-> triangle-free.** There is no middle ground.
+The bridge from graphs to numbers is the triangle removal lemma. Given a
+progression-free set, one builds a clever graph whose triangles correspond
+exactly to arithmetic progressions in the set. Because the set has no genuine
+progressions, the graph has very few triangles — only the "trivial" ones. The
+removal lemma then says those few triangles could be eliminated by deleting few
+edges, but a counting argument shows that is impossible unless the set was small
+to begin with. The contradiction proves Roth's theorem. A statement about prime
+playgrounds of arithmetic is settled by the geometry of triangles.
 
-A graph can't hover in between — it is either triangle-rich or essentially
-triangle-free. This all-or-nothing behavior is exactly the leverage needed for
-the final act.
+## Saturation: the other extreme
 
----
+Most of this story is about *maximizing* structure — packing in as many edges as
+possible before a pattern appears. There is a mirror-image question that is just
+as natural and, in places, still open.
 
-## Part IV: Roth's Theorem — Order in the Integers
+Call a graph **$H$-saturated** if it contains no copy of the pattern $H$, yet
+adding *any* missing edge instantly creates one. Such a graph is on a knife's
+edge: maximally cautious, but maximally fragile. The **saturation number**
+$\mathrm{sat}(n, H)$ is the *minimum* number of edges of an $H$-saturated graph
+on $n$ vertices — the sparsest possible graph that is nonetheless "full" in the
+saturation sense.
 
-We arrive at the destination. Forget graphs for a moment and think about plain
-numbers. A **3-term arithmetic progression** is three numbers equally spaced,
-like $4, 7, 10$ or $a, b, c$ with $a + c = 2b$. A set of integers is
-"3AP-free" if it contains no such triple.
+Two foundational facts anchor the theory. First, saturated graphs always exist
+whenever the forbidden pattern has at least one edge: simply take a graph with
+the *maximum* number of edges among all $H$-free graphs; adding any edge must
+create an $H$, so it is automatically saturated. Second, this immediately gives
+the basic inequality
+$$ \mathrm{sat}(n, H) \le \mathrm{ex}(n, H), $$
+where $\mathrm{ex}(n, H)$ is the extremal (Turán) number — the *maximum* edges of
+an $H$-free graph. The sparsest saturated graph never has more edges than the
+densest free graph, which is intuitive yet requires the existence argument to
+make rigorous. For cliques specifically, this yields
+$\mathrm{sat}(n, K_{r+1}) \le e(T(n, r))$, tying saturation back to the Turán
+graph that started our story.
 
-How large can a 3AP-free subset of $\{0, 1, \dots, N-1\}$ be? You can certainly
-get a positive fraction — clever constructions reach about $N / e^{c\sqrt{\log N}}$.
-But can you keep a *constant* fraction, say $1\%$ of all the numbers, while
-avoiding every arithmetic progression, no matter how large $N$ grows?
+Saturation problems harbor genuine open questions. For certain families built by
+adding a single "apex" vertex joined to everything — where joining an apex to a
+graph on $m$ vertices adds exactly $m$ edges — one expects a clean recurrence
+relating the saturation number on $n$ vertices to that on $n-1$. For the family
+$tK_2 \cup qK_1$ (a matching of $t$ edges together with $q$ isolated vertices,
+which has exactly $t$ edges), this Cameron–Puleo recurrence is known only for
+small cases and remains conjectural in general. The frontier is still moving.
 
-Klaus Roth proved in 1953 that you cannot. This won him the Fields Medal.
+## The unifying idea
 
-**Roth's theorem.** *The largest 3AP-free subset of $\{0, 1, \dots, N-1\}$ has
-size $o(N)$ — a vanishing fraction as $N \to \infty$.*
+Step back and a single theme illuminates the whole landscape. In every result,
+**abundance forces structure**:
 
-Writing $r_3(N)$ for that largest size, we package the density statement as
-`rothNumberNat_density_tendsto_zero`:
-$$ \frac{r_3(N)}{N} \longrightarrow 0. $$
+- Too many edges force a clique (Turán, Mantel).
+- Too many large sets force a large shadow (Kruskal–Katona).
+- Too many triangles to remove cheaply forces cubically many triangles (the
+  removal lemma).
+- Too many integers force an arithmetic progression (Roth).
 
-How does triangle-counting prove a fact about numbers? Through a gorgeous
-translation. Given a set $A$ of integers, one builds a graph whose triangles
-correspond exactly to 3-term arithmetic progressions in $A$. A 3AP-free set
-yields a graph with very few triangles. The removal lemma then says you can
-delete few edges to kill all triangles — but a counting argument shows the
-"trivial" progressions (where $a=b=c$) already form too many triangles to
-remove cheaply. Contradiction, unless $A$ was small to begin with. The dichotomy
-of Part III becomes the dichotomy between a set being sparse and a set being
-arithmetically structured.
-
-The truly useful form of Roth's theorem is qualitative, and we capture it as
-`exists_threeAP_of_freq_dense`:
-
-> **Any set of natural numbers whose density stays bounded below by a positive
-> constant — infinitely often — must contain a genuine 3-term arithmetic
-> progression.**
-
-In other words, you cannot maintain even $1\%$ density forever without
-accidentally creating three equally-spaced numbers. Structure is inescapable.
-The proof is a clean contradiction: density "frequently $\ge c$" collides with
-Roth's "eventually $\le c/2$" upper bound at a single value of $N$, and the two
-inequalities cannot both hold.
-
----
-
-## The Grand Arc
-
-Step back and admire the architecture. Four classical theorems, each a gem in
-its own right, assemble into a single tower:
-
-- **Turán and Mantel** establish the prototype: forbidding a small pattern caps
-  the number of edges, and the cap is achieved by a beautifully symmetric
-  construction.
-- **Kruskal–Katona** reveals that counting cliques is really counting subsets,
-  and that small structure (triangles) forces large structure (edges) through
-  the geometry of shadows.
-- **The triangle removal lemma**, powered by Szemerédi regularity, delivers the
-  all-or-nothing dichotomy: triangle-rich or triangle-free, nothing in between.
-- **Roth's theorem** cashes everything in, proving that the integers themselves
-  cannot escape arithmetic structure once they are dense enough.
-
-The unifying message echoes across every level: **largeness forces structure.**
-Whether you are counting friendships in a network, subsets of a set, triangles
-in a graph, or numbers in a progression, the same law applies. Cross a threshold
-of abundance and order appears, unbidden and unavoidable.
-
-This is the quiet wonder of extremal combinatorics. It does not merely describe
-what *can* happen; it pins down, exactly and provably, what *must*. And in a
-mathematical world that can feel boundlessly free, there is something deeply
-reassuring about discovering its hard, unbreakable limits.
+The forbidden patterns differ, the objects range from social networks to set
+systems to the integers themselves, but the moral is constant: you cannot make
+something large and featureless. Beyond a precise, computable threshold,
+structure is not merely likely — it is unavoidable. That is the quiet power of
+extremal combinatorics, and it is why a question about who-knows-whom at a
+conference reaches all the way to the architecture of the integers.

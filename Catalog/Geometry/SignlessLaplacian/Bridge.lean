@@ -25,8 +25,8 @@
     bridge is not cosmetic.
   Synthesis: `q(G) ≤ 2Δ`, the `r = 1` instance of the conjecture's bound.
 -/
-import Geometry.SignlessLaplacian.Core
-import Geometry.FlagComplex
+import Catalog.Geometry.SignlessLaplacian.Core
+import Catalog.Geometry.FlagComplex
 
 open Finset BigOperators
 
