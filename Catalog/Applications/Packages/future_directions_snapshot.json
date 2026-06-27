@@ -4467,7 +4467,7 @@
       "mathlib: NumberTheory.ArithmeticFunction",
       "mathlib: Analysis.Asymptotics.Asymptotics"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ac2d584",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domain_bridges": [
       "factorial divisibility to p-adic valuation inequalities",
@@ -4483,7 +4483,7 @@
     "proof_strategy": "Use Legendre's formula to translate a_1! ... a_k! | n! into simultaneous digit-sum inequalities. The paper proves the upper bound from the binary digit-sum obstruction and a density-one lower bound from mixed 2--3 rarefaction. The conjectural strengthening is that the binary obstruction is asymptotically sharp for almost all n. A proof would likely construct, for almost every n, admissible tuples a_i whose total excess is ((k - 1) / log 2 - o(1)) log n, while controlling all odd-prime valuation constraints by showing that the binary carry construction can be locally repaired at negligible logarithmic cost.",
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -5997,7 +5997,7 @@
       "Brualdi and Quinn Massey (conjectured)",
       "arXiv:2304.12345 (current paper)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba81674a",
     "description": "For any bipartite graph G with partite sets A and B, the strong chromatic index satisfies χ'_s(G) ≤ Δ_A Δ_B, where Δ_A and Δ_B are the maximum degrees in each partition. This conjecture posits that the product of the maximum degrees in each partition forms an upper bound for the strong chromatic index, improving upon the current best-known bound of 1.676 Δ_A Δ_B for sufficiently large products.",
     "domain_bridges": [
       "Graph Theory",
@@ -6014,7 +6014,7 @@
     "proof_strategy": "The conjecture can be approached via probabilistic methods combined with sparse neighborhood analysis, similar to techniques used in prior improvements of the Erdős-Nesetrýl conjecture. Key steps include constructing an induced matching decomposition that respects the product bound Δ_A Δ_B and leveraging the bipartite structure to minimize color conflicts.",
     "research_mode": "team",
     "source_exp_id": "2606.23824v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T17:05:28.615107+00:00",
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
   },
@@ -10821,7 +10821,7 @@
       "Benz2012",
       "paper:arXiv:2107.XXXX"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "628911c1",
     "description": "For any finite partial cube G, the following are equivalent:\n1. G is a minimal forbidden pc‑minor for the class of daisy cubes (that is, G is a partial cube that contains a non‑peripheral Θ‑class and every proper pc‑minor of G is a daisy cube).\n2. There exist integers r ≥ 2 and s ≥ 1 such that G is isomorphic to the graph obtained from the Cartesian product P₃ⁿ□Qₛ by deleting the two vertices that are opposite in the P₃ⁿ factor and lie in the same Qₛ copy.  In other words, G ≅ (P₃ⁿ□Qₛ) \\ {u, v} with u and v the two antipodal corners of the P₃ⁿ factor.\n\nIn particular, the infinite family { (P₃ⁿ□Qₛ) \\ {u, v} | r ≥ 2, s ≥ 1 } is precisely the set of all minimal forbidden pc‑minors for daisy cubes.",
     "domain_bridges": [
       "Partial cubes ↔ isometric subgraphs of hypercubes",
@@ -10838,7 +10838,7 @@
     "proof_strategy": "The proof will proceed by induction on the isometric dimension of a minimal forbidden partial cube G containing a non‑peripheral Θ‑class. First, we show that any such G must have a Θ‑class whose associated convex halfspace is a proper subset of the vertex set and whose peripheral halfspace is a single vertex—this vertex is an ‘extremal’ corner in the hypercube representation. Next, we prove that removing this corner yields a subgraph that is still a partial cube but has one fewer Θ‑class. Repeating this operation at each step forces G to decompose as a Cartesian product of P₃‑factors and a Qₛ‑factor, with the removed corners precisely the two distinct antipodal vertices in the P₃ⁿ component. A structural lemma about minimal non‑peripheral Θ‑classes in partial cubes is required, which can be formalized using the convexity and evenness conditions of Θ‑classes. The final step is to verify that any graph outside this family contains a proper pc‑minor that also fails the peripheral Θ‑class ",
     "research_mode": "team",
     "source_exp_id": "2606.19032v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T17:13:14.129734+00:00",
     "title": "Complete Characterization of Minimal Forbidden Partial‑Cube Minors for Daisy Cubes"
   },
@@ -11196,7 +11196,7 @@
       "math.NT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e73946ae",
     "description": "Conjecture that a rank four Nahm sum of the form Σ q^Q(i,j,k,l)/((q;q)_i(q;q)_j(q;q)_k(q;q)_l) where Q is a quadratic form in four variables is modular (expressible as an infinite product of q-Pochhammer symbols) if and only if the discriminant of Q's Hessian matrix equals 8, 12, or 16. This would generalize the proven cases in the paper where discriminants compute to these values.",
     "domain_bridges": [
       "Commutative Algebra (quadratic forms)",
@@ -11212,7 +11212,7 @@
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T01:38:56.664555+00:00",
     "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
   },
@@ -11720,7 +11720,7 @@
       "2305.00228",
       "ArXiv: Positive dyadic density for rational weighted binary expansions"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca01957a",
     "description": "We conjecture that the support of any infinite rational series with rational terms has positive density on all sufficiently large dyadic blocks, with the deficit constant depending only on the denominator. This refines and implies a conjecture from the given ArXiv paper on positive densities for rational series, using integral carries and carry geometry.",
     "domain_bridges": [
       "Erdős Problem 260",
@@ -11737,7 +11737,7 @@
     "proof_strategy": "Assume density vanishes on a block, then use carry pressure lower bound and upper bound via stopping-time budget to derive contradiction. Uses four local carry estimates: complete-lap mass balance, total-support summation, fixed-pin confinement, and class-one realization.",
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T14:00:13.576370+00:00",
     "title": "Positive dyadic density of rational series supports via carry recurrence"
   },
@@ -13357,7 +13357,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b012d1e8",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -13370,7 +13370,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -14124,7 +14124,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "434e8e33",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -14137,7 +14137,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
