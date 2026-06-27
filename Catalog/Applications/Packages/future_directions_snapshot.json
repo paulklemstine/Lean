@@ -998,7 +998,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d6c98458",
+    "consumed_by_exp_id": "",
     "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
     "domain_bridges": [],
     "domains": [
@@ -1011,7 +1011,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:57.058856+00:00",
     "title": "Collatz Conjecture"
   },
@@ -7927,38 +7927,6 @@
   },
   {
     "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Brown--Erdos--Sos conjecture for sparse local configurations",
-      "Ruzsa--Szemeredi (6,3)-theorem as the k=3,r=3 case",
-      "Keevash--Long large-uniformity Brown--Erdos--Sos theorem",
-      "mathlib: Data.Finset.Card",
-      "mathlib: Data.Fintype.Card",
-      "mathlib: Combinatorics.SimpleGraph.Basic"
-    ],
-    "consumed_by_exp_id": "d409a01c",
-    "description": "For every fixed r >= 3 and k >= 3, every linear r-uniform hypergraph H on n vertices with no collection of k edges spanning at most (r - 2)k + 3 vertices has o(n^2) edges. Equivalently: for every rational epsilon > 0 there is N such that for all n >= N, if H is linear and r-uniform on Fin n and every k-edge subfamily spans more than (r - 2)k + 3 vertices, then |E(H)| <= epsilon n^2. This would replace the paper's positive constant-density forcing threshold by the conjectural Brown--Erdos--Sos vanishing threshold in the linear setting.",
-    "domain_bridges": [
-      "Represent a finite r-uniform hypergraph on n vertices as Finset (Finset (Fin n)).",
-      "Express linearity by pairwise edge intersections having cardinality at most 1.",
-      "Express a forbidden ((r-2)k+3,k)-configuration by quantifying over k-cardinality Finsets of edges and bounding the cardinality of their Finset.biUnion.",
-      "Encode the asymptotic o(n^2) statement using rational epsilon-N quantifiers, avoiding real analysis if desired."
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2526",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "A plausible route is to formalize the local averaging inequality from the paper as a reusable finite lemma, then combine it with iterative density increment or hypergraph removal-type arguments specialized to linear r-uniform systems. For r=3,k=3 this should connect to the Ruzsa--Szemeredi theorem; for general k one would seek a Lean-formalizable induction on k tracking the number of pairwise edge intersections inside small edge subfamilies. The conjecture is falsifiable by any explicit infinite-density family of linear r-uniform hypergraphs avoiding k edges on at most (r-2)k+3 vertices.",
-    "research_mode": "team",
-    "source_exp_id": "2606.25931v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T14:27:44.525294+00:00",
-    "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
-  },
-  {
-    "ambition_level": "grand_challenge",
     "catalog_references": "Abel CF",
     "consumed_by_exp_id": "",
     "description": "The conjecture posits that their approach's proof aligns with the Four Color Theorem's universality for planar graphs.",
@@ -8559,7 +8527,7 @@
       "approximate Carathéodory theorem",
       "Maurey's empirical method"
     ],
-    "consumed_by_exp_id": "669193db",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor λ > 1, leading to exponential contraction after k iterations: max{σ ∈ Del(X_k)}.diameter ≤ (1/λ)^k · max{σ ∈ Del(X_0)}.diameter",
     "domain_bridges": [
       "Delaunay triangulation",
@@ -8574,7 +8542,7 @@
     "proof_strategy": "Formalize covering estimates via pivotal sampling and the dimension-dependent Carathéodory theorem to bound diameter decay per refinement step",
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
@@ -11967,6 +11935,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Non-Finite-Axiomatization of Measurable Majorities\n\nDerived from this cycle's findings: the incoherence index of `{1} ⊆ ZMod n` is\nthe additive order `n`, the index is the *exact* threshold at which the width-`B`\nfragments begin to detect incoherence, and consequently no bounded finite\nfragment can replace the coherence criterion\n(`coherence_not_finitely_axiomatizable`, `fragment_strictly_refines`).\n\n## Conjecture 1 — Spectrum of indices over *all* frames is exactly `{0} ∪ ℕ≥2`\n\nFor frames `F ⊆ ZMod n` (any `n`, any atom set), the attainable values of\n`incoherenceIndex F` are exactly `0` (coherent frames) together with every\ninteger `≥ 2`; index `1` is impossible because a length-`1` violation needs an\natom equal to `0`, which a *standard* frame excludes.\n- **The key insight is** that the incoherence index is a zero-sum invariant\n  (a Davenport-constant-style quantity), so its spectrum is governed by additive\n  combinatorics of `ZMod n`, not by the social-choice wrapper.\n- **Why now?** We have a verified `incoherenceIndex` and the\n  `coherentUpTo_iff_lt_incoherenceIndex` bridge, so spectrum questions reduce to\n  decidable zero-sum statements already within reach of the prover.\n\n## Conjecture 2 — The index equals the Davenport constant of the generated subgroup\n\nFor a maximal frame `F`, `incoherenceIndex F = D(⟨F⟩)`, the Davenport constant of\nthe subgroup generated by the atoms, whenever the atoms are \"in general position.\"\n- **The key insight is** that a perfectly balanced sequence *is* a zero-sum\n  sequence, so the shortest one is exactly the minimal-zero-sum length, i.e. the\n  (small) Davenport constant.\n- **Why now?** Mathlib's growing additive-combinatorics library makes a direct\n  comparison feasible, and our `singleton_one_balanced_dvd` lemma is the\n  cyclic-group base case of the Davenport bound.\n\n## Conjecture 3 — Density collapses the index logarithmically\n\nIf a maximal frame `F ⊆ ZMod n` has `|F| ≥ c·log n` well-spread atoms, then\n`incoherenceIndex F = 2`; sparsity is *necessary* for a large index.\n- **The key insight is** that the extremal index `n` is the exclusive privilege\n  of single-generator frames (`SaturationContrast.incoherenceIndex_oneThree`\n  already shows `{1,3} ⊆ ZMod 4` drops to `2`), so adding atoms creates short\n  cancellations.\n- **Why now?** The `coherentUpTo_iff_lt_incoherenceIndex` characterization turns\n  this into a counting question about short zero-sums, amenable to probabilistic\n  or pigeonhole formalization.\n\n## Conjecture 4 — No fragment is even *eventually* complete\n\nThere is no `B` and no finite exceptional set `E` of frames such that the\nwidth-`B` fragment agrees with coherence on all frames outside `E`.\n- **The key insight is** that `fragment_strictly_refines` produces a *fresh*\n  separator `{1} ⊆ ZMod (B+1)` for every `B`, and these separators are pairwise\n  non-isomorphic, so no finite exception set can absorb them.\n- **Why now?** The strict-refinement theorem is already proved; upgrading it to\n  \"infinitely many pairwise non-isomorphic separators\" is a finite-group\n  isomorphism bookkeeping task the prover handles well.\n\n## Conjecture 5 — Parity rigidity is the only congruence obstruction\n\nFor even `n`, all-\"odd\"-atom frames have even index (catalog\n`even_incoherenceIndex`); conjecture: this parity constraint is the *only*\ncongruence restriction — for any modulus `q` and residue `r` compatible with the\nrealizability range, some maximal frame has index `≡ r (mod q)`.\n- **The key insight is** that parity arises from a single character\n  `ZMod n → ZMod 2`, and higher congruences would require characters that the\n  zero-sum structure does not enforce.\n- **Why now?** With the realization family `2k+2` and the parity lemma both\n  formalized, a systematic character-by-character analysis can either confirm\n  rigidity or exhibit the first higher obstruction.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2669",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ed2a76aa",
+    "status": "available",
+    "timestamp": "2026-06-27T06:52:51.547068+00:00",
+    "title": "Derived from this cycle's findings: the incoherence index of `{1} ⊆ ZMod n` is"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -12045,7 +12033,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "43f6ae62",
+    "consumed_by_exp_id": "",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domain_bridges": [],
     "domains": [
@@ -12058,7 +12046,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -12398,7 +12386,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "57a09ecd",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -12411,7 +12399,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

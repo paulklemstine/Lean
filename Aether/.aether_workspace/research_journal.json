@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0e89ca61",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Modular Height Formula for Unitary Shimura Varieties\n\nThis cycle established, in the region of absolute convergence `Re s > 1`, a fully-proved toy model\nof the Kudla-program iden",
-      "quality_score": 0.3714852771428572,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-21T23:56:35",
-      "title": "Modular Height Formula for Unitary Shimura Varieties"
-    },
-    {
       "cycle_id": "aa9dc0d5",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\nThe following are concrete next steps that build on the divisor-sum framework and\nEuclid construction formalized in `EuclidConstruction.lean`.\n\n## 1. The Euler converse (completin",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-06-27T06:26:39",
       "title": "Proof Strategy Mining from Deep Mathematics"
+    },
+    {
+      "cycle_id": "ed2a76aa",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Non-Finite-Axiomatization of Measurable Majorities\n\nDerived from this cycle's findings: the incoherence index of `{1} ⊆ ZMod n` is\nthe additive order `n`, the index is the *exact",
+      "quality_score": 0.60416,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T06:53:05",
+      "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76274
     }
   ],
-  "last_updated": "2026-06-27T06:26:39",
+  "last_updated": "2026-06-27T06:53:05",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9871aa6d",
-        "quality": 0.7236,
-        "theorems": 8,
-        "title": "Langlands for GL₂ over Q"
-      },
-      {
         "cycle_id": "7c592ed1",
         "quality": 0.533285,
         "theorems": 23,
@@ -3637,6 +3631,12 @@
         "quality": 0.505788,
         "theorems": 17,
         "title": "Proof Strategy Mining from Deep Mathematics"
+      },
+      {
+        "cycle_id": "ed2a76aa",
+        "quality": 0.60416,
+        "theorems": 0,
+        "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
       }
     ],
     "NumberTheory": [
