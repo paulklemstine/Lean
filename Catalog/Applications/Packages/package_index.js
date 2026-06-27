@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "beb2abc2",
     "filename": "uniqueness_of_extremal_graphons_in_sparse_threshol.json",
     "pkg_num": 138,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5954,
     "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems: The Fractional Independence Number and Its Sandwich"
   },
   {
@@ -4029,8 +4029,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "uniqueness_of_extremal_graphons_in_sparse_threshol",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5954,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems: The Fractional Independence Number and Its Sandwich"
     }

@@ -2077,7 +2077,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "31cf2713",
+    "consumed_by_exp_id": "",
     "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
     "domains": [
       "Algebra"
@@ -2086,7 +2086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -2826,7 +2826,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
   {
-    "consumed_by_exp_id": "ae503725",
+    "consumed_by_exp_id": "",
     "description": "The specific degree one function on the Grassmann scheme $J_3(4,2)$ defined by $f = \\frac{1}{2} \\sum_{Q(p) = 0} x_p + \\frac{1}{6} \\sum_{Q(p) = 1} x_p - \\frac{1}{6} \\sum_{Q(p) = 2} x_p$, where $Q(x,y,z,w) = x^2 + y^2 + z^2 - w^2$ is an elliptic quadric over $\\mathbb{F}_3$, is Boolean and not a trivial Boolean degree one function.",
     "domains": [
       "Bridges"
@@ -2835,7 +2835,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T21:41:56.533485+00:00",
     "title": "Non-triviality of the Bruen-Drudge Boolean degree one function on $J_3(4,2)$"
   },
@@ -7289,6 +7289,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Uniqueness of Extremal Graphons in Sparse Threshold Problems\n\nDerived from this cycle's findings in\n`Catalog/Novelty/SparseThresholdVariational.lean` and\n`Catalog/Novelty/SparseThresholdFractionalIndependence.lean`.\n\nEstablished this cycle (all sorry-free):\n* The reduced three-step objective `J s t = t \u2212 t\u02e2` is **strictly concave** on `[0,1]` for\n  `s \u2265 2`, so it has a **unique** maximizer (`variational_unique_maximizer`), which is interior\n  (`maximizer_mem_Ioo`) with value `C_T(s) \u2208 (0,1)` (`CT_pos`, `CT_lt_one`) and monotone in `s`\n  (`CT_mono`).\n* The fractional independence number satisfies the sandwich `n/2 \u2264 \u03b1*(H) \u2264 n`\n  (`half_card_le_alphaStar`, `alphaStar_le_card`), is `\u2264 n\u22121` once `H` has an edge\n  (`alphaStar_le_card_sub_one_of_edge`), and equals `n/2` for complete graphs\n  (`alphaStar_completeGraph`).\n\n---\n\n### Direction 1 \u2014 Closed form of the extremal constant\n**Conjecture.** For every `s \u2265 2`, the maximizer of `J s` is `t*(s) = s^{\u22121/(s\u22121)}` and the\nextremal constant is `C_T(s) = (1 \u2212 1/s)\u00b7s^{\u22121/(s\u22121)}`, with `C_T(s) \u2191 1` as `s \u2192 \u221e`.\nThe key insight is that strict concavity already forces uniqueness, so the *only* remaining work\nis solving the first-order condition `1 \u2212 s\u00b7t\u02e2\u207b\u00b9 = 0`, an `rpow` computation rather than a new\noptimisation. Why now? The uniqueness and interiority are already formal, so the derivative\nidentification is a self-contained analytic add-on with no missing infrastructure.\n\n### Direction 2 \u2014 `\u03b1*` controls the exponent\n**Conjecture.** The correct structural exponent in the three-step objective is `s = \u03b1*(H)`\n(allowing real `s \u2265 2` via `rpow`), so that the extremal constant of the sparse threshold\nproblem is exactly `C_T(\u03b1*(H))`. The key insight is that both objects proved here are governed by\nthe same half-integral polytope: the `\u03b1*`-LP optimum and the three-step core measure are dual\ndescriptions of one extremal structure. Why now? We have a clean `rpow`-ready objective and a\nformal `\u03b1*`; replacing the natural exponent by `\u03b1*(H)` is the natural unification of the two files.\n\n### Direction 3 \u2014 Strict monotonicity and the dense limit\n**Conjecture.** `C_T` is *strictly* increasing in `s` and `lim_{s\u2192\u221e} C_T(s) = 1`.\nThe key insight is that `J (s+1) t \u2212 J s t = t\u02e2 \u2212 t\u02e2\u207a\u00b9 = t\u02e2(1\u2212t) > 0` on `(0,1)`, a strict gap\nat every interior point, which should upgrade the proved weak `CT_mono` to strict and force the\nlimit. Why now? `CT_mono` is already formal via pointwise `J_le_succ`; sharpening the pointwise\ninequality to strict at the maximizer is a localised step.\n\n### Direction 4 \u2014 Half-integrality of the `\u03b1*`-polytope (Nemhauser\u2013Trotter)\n**Conjecture.** Every vertex of the fractional-independence polytope is half-integral: there is\nan optimal `x` with `x_v \u2208 {0, \u00bd, 1}` for all `v`. The key insight is that the all-`\u00bd` point is a\nuniversal feasible certificate (already used for the lower bound), and the three-block `{0,\u00bd,1}`\nstructure mirrors the three steps of the extremal graphon. Why now? The polytope, feasibility,\nand the `n/2` lower bound are formalised; half-integrality is the missing structural theorem that\nwould make the \"three-step\" characterisation rigorous on the LP side.\n\n### Direction 5 \u2014 Edge-count rigidity of extremal three-step graphons\n**Conjecture.** Among all graphons of a fixed edge density `p \u2208 (0,1)`, the unique maximizer of\nthe (normalised) `H`-density restricted to three-step threshold graphons is determined by a single\nparameter, and distinct `p` give distinct maximizers (no plateau). The key insight is that the\nstrict concavity proved for `J` is *uniform* in the structural exponent, so the argmax map\n`p \u21a6 t*(p)` should be a strictly monotone homeomorphism. Why now? Strict concavity plus\ninteriority give a well-posed implicit-function setup; the only new ingredient is differentiating\nthe objective in `p`, which the closed form of Direction 1 supplies.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2699",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "beb2abc2",
+    "status": "available",
+    "timestamp": "2026-06-27T14:16:38.497503+00:00",
+    "title": "Derived from this cycle's findings in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7360,21 +7375,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
-  },
-  {
-    "consumed_by_exp_id": "6fec91f1",
-    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "id": "fd_0551",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.873771+00:00",
-    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
     "consumed_by_exp_id": "",
@@ -7655,7 +7655,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "46e595fc",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -7665,7 +7665,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },

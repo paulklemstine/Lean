@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "39103244",
-      "domain": "Geometry",
-      "key_insight": "# FUTURE DIRECTIONS — Average-degree shattering for uncrowded hypergraphs\n\nThis cycle established the *deterministic core* of the average-degree independence\ntheory for `k`-uniform hypergraphs:\n\n- han",
-      "quality_score": 0.3928874,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-22T15:05:59",
-      "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
-    },
-    {
       "cycle_id": "16bb5867",
       "domain": "Computation",
       "key_insight": "# FUTURE DIRECTIONS — Langlands Functoriality (GL₂ ⤳ GL₃ and beyond)\n\nDerived from this cycle's findings on the unramified symmetric-square /\nsymmetric-power transfer (`SymmetricSquareGL2to3.lean`,\n`S",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T13:57:55",
       "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
+    },
+    {
+      "cycle_id": "beb2abc2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Uniqueness of Extremal Graphons in Sparse Threshold Problems\n\nDerived from this cycle's findings in\n`Catalog/Novelty/SparseThresholdVariational.lean` and\n`Catalog/Novelty/SparseT",
+      "quality_score": 0.5954,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T14:16:47",
+      "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7014400000000001
     }
   ],
-  "last_updated": "2026-06-27T13:57:55",
+  "last_updated": "2026-06-27T14:16:47",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ed2a76aa",
-        "quality": 0.60416,
-        "theorems": 0,
-        "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
-      },
-      {
         "cycle_id": "669193db",
         "quality": 0.71552,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.3646502272727273,
         "theorems": 0,
         "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
+      },
+      {
+        "cycle_id": "beb2abc2",
+        "quality": 0.5954,
+        "theorems": 0,
+        "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems"
       }
     ],
     "NumberTheory": [
