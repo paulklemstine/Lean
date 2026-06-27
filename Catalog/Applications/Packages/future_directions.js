@@ -4320,20 +4320,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
   },
   {
-    "consumed_by_exp_id": "49ad7738",
-    "description": "The upper bound S_1^\u03c6(x) \u226a x exp{-(1/2 - o(1))\u221a(log x log_2 x)} is tight, i.e., there exists a constant C > 0 such that S_1^\u03c6(x) \u2265 C x exp{-(1/2 + o(1))\u221a(log x log_2 x)} for all sufficiently large x.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2507",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23681v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T12:13:32.061938+00:00",
-    "title": "Tightness of the unit-shift bound for Euler's totient function"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "We conjecture that the set of positive integers that are divisible by the number of summands in their Zeckendorf decomposition has asymptotic density\u00a00.  Equivalently, for any real \u03b5>0 there are only finitely many Zeckendorf\u2011Niven numbers\u00a0n< N with n/N > \u03b5, and the ratio of the counting function to N tends to\u00a00 as N\u2192\u221e.",
     "domains": [
@@ -6533,6 +6519,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-27T01:25:20.817295+00:00",
     "title": "Derived from this research cycle (`EML/FixedPointRate.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Langlands for GL\u2082 over \u211a (Eichler\u2013Shimura & Deligne)\n\nDerived from this cycle's findings in `Catalog/Novelty/EichlerShimuraGL2.lean` and\n`Catalog/Novelty/DeligneBoundGL2.lean`, which formalize the local GL\u2082 Frobenius datum\n(trace = `a_p`, determinant = `p`, Eichler\u2013Shimura congruence relation = rank-2\nCayley\u2013Hamilton) and Deligne's weight-one Weil bound (`|\u03b1| = |\u03b2| = \u221ap \u27fa |a_p| \u2264 2\u221ap`).\n\nThese build directly on the catalog's GL(1) line\n(`Catalog.NumberTheory.GL1Correspondence`, `Catalog.NumberTheory.Langlands.HeckeFactorization`,\n`Catalog.Novelty.QuadraticHecke`): GL(1) packages each local datum as a root of unity\n(`|\u00b7| = 1`); GL\u2082 replaces it with a `2 \u00d7 2` matrix whose eigenvalues are Weil numbers of\nabsolute value `\u221ap`.\n\n---\n\n## Conjecture 1 \u2014 Local L-factor positivity / functional symmetry of the Weil pair\n\nFor `a\u00b2 \u2264 4p` the two Frobenius eigenvalues are complex conjugates, so the local Euler\nfactor `1 \u2212 a X + p X\u00b2` satisfies `\u03b2 = p/\u03b1 = \\bar \u03b1` and the substitution `X \u21a6 1/(pX)`\npermutes the reciprocal roots. Conjecture: the local factor `L_p(s) = (1 \u2212 a p^{-s} + p^{1-2s})^{-1}`\nhas no zeros in `Re(s) > 1/2` exactly when `a\u00b2 \u2264 4p`.\n\n**The key insight is** that the discriminant condition `a\u00b2 \u2264 4p` proved in `deligne_bound_iff`\nis *precisely* the boundary at which the reciprocal roots `\u03b1, \u03b2` swap from the critical circle\n`|\u00b7| = \u221ap` to the real axis, so the \"Riemann hypothesis for the local factor\" is equivalent to\nthe Deligne bound already in hand.\n\n**Why now?** `deligne_weil_pair` already gives `\u03b1\u03b2 = p` and `\u2016\u03b1\u2016 = \u2016\u03b2\u2016 = \u221ap`; turning this into\na statement about zeros of `1 \u2212 a X + p X\u00b2` is a `Polynomial.roots` computation over `\u2102`, with\nthe hard analytic content (the modulus) already discharged.\n\n---\n\n## Conjecture 2 \u2014 Sato\u2013Tate angle realization is surjective onto `[0, \u03c0]`\n\nWrite `a = 2\u221ap \u00b7 cos \u03b8`. Conjecture: as `a` ranges over real values with `a\u00b2 \u2264 4p`, the angle\n`\u03b8` realizing the eigenvalues `\u221ap \u00b7 e^{\u00b1i\u03b8}` ranges over the full interval `[0, \u03c0]`, and the map\n`a \u21a6 \u03b8` is a homeomorphism `[\u22122\u221ap, 2\u221ap] \u2243 [0, \u03c0]`.\n\n**The key insight is** that `deligne_root_abs` forces every admissible eigenvalue onto the circle\nof radius `\u221ap`, so the *only* remaining degree of freedom is the Sato\u2013Tate angle, and the\ncompanion-matrix construction `frobMatrix` shows every admissible `a` is realized.\n\n**Why now?** Both endpoints are in place: realizability (`frobMatrix_trace`, `frobMatrix_det`)\nand the modulus (`deligne_frob_eigenvalues`). The conjecture reduces to surjectivity of\n`cos` on `[0, \u03c0]`, a `Real.cos`/`intermediate value` exercise that the catalog's analysis\ntooling can close.\n\n---\n\n## Conjecture 3 \u2014 Eichler\u2013Shimura determines the rep up to semisimplification\n\nConjecture: two `2 \u00d7 2` matrices over a field both satisfying `M\u00b2 = aM \u2212 p\u00b71` with the *same*\n`(a, p)` and with `a\u00b2 \u2212 4p \u2260 0` are conjugate. Equivalently, the local Frobenius datum is\ndetermined by its trace and determinant once the Hecke polynomial is separable.\n\n**The key insight is** that `eichlerShimura` shows the Hecke polynomial annihilates `M`, so when\nit is separable it is the minimal polynomial and `M` is diagonalizable with eigenvalues `\u03b1, \u03b2`;\ndistinct eigenvalues pin the conjugacy class.\n\n**Why now?** `eichlerShimura` and `heckePoly_factor` already provide the annihilating polynomial\nand its factorization; the missing step is the standard \"separable annihilator \u21d2 diagonalizable\"\nlemma, which is within reach of Mathlib's `Matrix`/`Module.End` eigenspace API.\n\n---\n\n## Conjecture 4 \u2014 Oddness obstruction: `det = p > 0` forbids a real split at small `a`\n\nConjecture: for `0 < a\u00b2 < 4p` the Frobenius companion matrix `frobMatrix a p` over `\u211d` has **no**\nreal eigenvalue, hence no `\u211d`-rational eigenline; the eigenlines are genuinely complex. This is\nthe finite shadow of the *oddness* of the Galois representation attached to a modular form.\n\n**The key insight is** that `deligne_root_abs`'s case split (`z.im = 0` forces `a\u00b2 = 4p`) shows a\nreal eigenvalue can occur *only* at the discriminant boundary, so strict inequality rules out real\neigenlines entirely.\n\n**Why now?** The case analysis is already isolated inside `deligne_root_abs`; promoting the\n`z.im = 0 \u21d2 a\u00b2 = 4p` implication to a standalone \"no real eigenvalue\" theorem is a direct\nrefactor of an argument that already compiles.\n\n---\n\n## Conjecture 5 \u2014 Global compatibility: products of local Weil bounds control the Hecke L-value\n\nConjecture: for a finite set `S` of primes with weight-2 local data `(a_p, p)` satisfying the\nDeligne bound, the partial Euler product `\u220f_{p\u2208S} (1 \u2212 a_p p^{-1} + p^{-1})^{-1}` is bounded\nabove by `\u220f_{p\u2208S}(1 \u2212 p^{-1/2})^{-2}`, uniformly in `S`.\n\n**The key insight is** that `\u2016\u03b1_p\u2016 = \u2016\u03b2_p\u2016 = \u221ap` (from `deligne_weil_pair`) bounds each local\nfactor's size by the worst-case Weil number, so the global bound is a product of the local bounds\nalready proved \u2014 exactly the mechanism by which Ramanujan\u2013Petersson controls automorphic L-values.\n\n**Why now?** This is the natural bridge back to the catalog's GL(1) factorization\n(`HeckeFactorization.heckeFactorization`): the same \"local data multiply over places\" structure,\nnow decorated with the GL\u2082 Weil bound rather than a root-of-unity constraint.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2648",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9871aa6d",
+    "status": "available",
+    "timestamp": "2026-06-27T01:29:22.017618+00:00",
+    "title": "Derived from this cycle's findings in `Catalog/Novelty/EichlerShimuraGL2.lean` a"
   },
   {
     "consumed_by_exp_id": "",

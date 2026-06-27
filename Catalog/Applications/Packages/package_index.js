@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9871aa6d",
     "filename": "langlands_for_gl_over_q.json",
     "pkg_num": 119,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7236,
     "title": "Langlands for GL\u2082 over \u211a: Eichler\u2013Shimura Structure and Deligne's Weil Bound"
   },
   {
@@ -3469,8 +3469,8 @@ window.PACKAGE_GRAPH = {
       "hue": 134,
       "id": "langlands_for_gl_over_q",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7236,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Langlands for GL\u2082 over \u211a: Eichler\u2013Shimura Structure and Deligne's Weil Bound"
     }
