@@ -1,66 +1,43 @@
-# Computational Evidence
+# THEOREM TRACE (internal anti-hallucination ledger)
 
-Mission: *Exponential diameter contraction under Delaunay minicenter refinement*,
-with catalog references *approximate Carathéodory theorem* and *Maurey's empirical
-method*. All numbers below were produced with Lean `#eval` over exact rationals
-(`ℚ`), so they are exact, not floating point.
+Source of truth: `Catalog/Applications/DelaunayContraction/Inhomogeneous.lean`
+(namespace `DelaunayContraction.Inhomogeneous`) and the homogeneous base
+`Catalog/Applications/DelaunayContraction/Contraction.lean`
+(namespace `DelaunayContraction`).
 
-## 1. Exponential contraction (segment bisection, the proved base case)
+Every result below is stated exactly as it appears in the Lean output. No result
+is invented or upgraded to a grander claim.
 
-The minicenter of a 1-simplex `[a,b]` is its midpoint; bisecting halves the
-diameter. Starting diameter `D = 12`, the diameters `d k = D / 2^k` are:
+## Structures / definitions
 
-| k | 0 | 1 | 2 | 3 | 4 | 5 |
-|---|---|---|---|---|---|---|
-| d k | 12 | 6 | 3 | 3/2 | 3/4 | 3/8 |
+| Lean name | Statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `InhomogeneousContractionProcess` | structure: `d : ℕ → ℝ`, `a b : ℝ`, with `0 ≤ a`, `a < 1`, `0 ≤ b`, `∀k, 0 ≤ d k`, and `∀k, d (k+1) ≤ a·d k + b` | yes (the "noisy refinement" model) | yes (Def. 1) |
+| `fixedPoint` | `L := b / (1 - a)` | yes (attractor radius) | yes (Def. 2) |
+| `affineIteration` | concrete process with `d(k+1) = a·d k + b` exactly | yes (tightness witness) | yes (§ tightness) |
+| `ContractionProcess` (homog.) | `d : ℕ → ℝ`, `lam > 1`, `d ≥ 0`, `d(k+1) ≤ (1/lam)·d k` | yes (background) | yes (background) |
+| `segmentBisection` (homog.) | edge bisection `d k = D/2^k`, `lam = 2` | yes (segment example) | yes (base case) |
 
-This is the contraction factor `λ = 2` realized exactly (`Contraction.lean`,
-`segmentBisection`, `minicenter_segment_halves`).
+## Theorems / lemmas
 
-## 2. Finite refinement budget (geometric series)
-
-Summing the diameters of an infinite bisection refinement:
-
-```
-∑_{k=0}^{19} 12 / 2^k = 3145725 / 131072 ≈ 23.99998
-```
-
-converging to the closed form `D·λ/(λ-1) = 12·2/(2-1) = 24`, matching
-`Bridge.total_budget`. So exponential per-step contraction makes the *cumulative*
-diameter finite — a strictly stronger fact than mere decay to zero, and one that
-fails at `λ = 1`.
-
-## 3. Approximate Carathéodory / Maurey, base case k = 1
-
-Square vertices `(±1, ±1)` with uniform weights `p = 1/4` give convex-hull point
-`x = (0,0)`, radius `R² = 2`. The mean squared distance from `x` to a random
-vertex equals the variance `R² - ‖x‖² = 2`, and every vertex is at squared
-distance exactly `2 = R²` — the bound `maurey_one_point` is **tight** here.
-
-> Pitfall found during the evidence stage: an earlier "shifted" test put
-> `x = (1/2, 0)` while keeping *uniform* weights. The variance identity then
-> appeared to fail (mean `9/4 ≠ R² - ‖x‖² = 7/4`). The resolution: the identity
-> requires `x = Σ pᵢ Vᵢ`; with uniform weights the only valid `x` is the centroid
-> `(0,0)`. This is exactly why the hypothesis `∑ pᵢ = 1` with the *matching* `x`
-> is load-bearing in `weighted_mean_sq_dist`.
-
-## 4. Maurey rate `R²/k` (counterexample hunt — none found)
-
-Brute-force minimization over all `k`-tuples of square vertices (`x = (0,0)`,
-`R² = 2`), reporting the best squared error of the empirical average vs the Maurey
-bound `R²/k = 2/k`:
-
-| k | best ‖x − avg‖² | bound 2/k |
-|---|-----------------|-----------|
-| 1 | 2     | 2   |
-| 2 | 0     | 1   |
-| 3 | 2/9   | 2/3 |
-| 4 | 0     | 1/2 |
-| 5 | 2/25  | 2/5 |
-| 6 | 0     | 1/3 |
-
-The empirical best is `≤ 2/k` in **every** case (no counterexample), supporting
-the general `R/√k` approximate-Carathéodory theorem. The `R²/k` bound is not tight
-for `k ≥ 2` here because the symmetric vertex set permits exact cancellation; the
-bound is a worst-case guarantee. This motivates the formalization target recorded
-in `FUTURE_DIRECTIONS.md`.
+| Lean name | Statement | ARTICLE | PAPER |
+|---|---|---|---|
+| `one_sub_a_pos` | `0 < 1 - a` | implicit | yes |
+| `fixedPoint_nonneg` | `0 ≤ L` | yes | yes |
+| `fixedPoint_eq` | `a·L + b = L` | yes | yes (Lem.) |
+| `d_le_closedForm` | `d k ≤ a^k·d 0 + b·(1-a^k)/(1-a)` | yes (main) | yes (Thm. 1) |
+| `closedForm_eq` | `a^k·d 0 + b(1-a^k)/(1-a) = a^k·(d 0 - L) + L` | yes | yes |
+| `excess_le_pow` | `d k - L ≤ a^k·(d 0 - L)` | yes (main) | yes (Thm. 2) |
+| `closedFormBound_tendsto` | closed-form bound `→ L` as `k→∞` | yes | yes |
+| `eventually_lt_fixedPoint_add` | `∀ε>0, eventually d k < L + ε` | yes | yes (Thm. 3) |
+| `exists_steps_below` | `∀ε>0, ∃N, ∀k≥N, d k < L + ε` | yes | yes (Cor.) |
+| `tendsto_of_exact` | under `d(k+1)=a·d k+b`: `d k → L` | yes | yes (Thm. 4) |
+| `dist_le_pow_of_exact` | under exact recurrence: `|d k - L| ≤ a^k·|d 0 - L|` | yes | yes (Thm. 4) |
+| `d_le_uniform` | `d k ≤ d 0 + L` (trapped in `[0, d0+L]`) | yes | yes |
+| `perturbation_le` | each step perturbs by `≤ b` | yes | yes |
+| `affine_isFixedPt` | `x ↦ a·x+b` fixes `L` | yes | yes |
+| `fixedPoint_unique` | `L` is the unique fixed point | yes | yes |
+| `affine_dist` | `dist (f x) (f y) = a·dist x y` (contraction) | yes | yes |
+| `diam_le_pow` (homog.) | `d k ≤ (1/lam)^k·d 0` | yes | yes |
+| `diam_tendsto_zero` (homog.) | `d k → 0` | yes | yes |
+| `minicenter_segment_halves` (homog.) | edge midpoint splits into two half-edges | yes | yes |

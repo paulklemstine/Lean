@@ -1,385 +1,295 @@
-# Exponential Diameter Contraction under Delaunay Minicenter Refinement: From a Limit Statement to a Finite Refinement Budget
+# Inhomogeneous Contraction of Simplex Diameters under Noisy Minicenter Refinement
 
 **Author:** Aristotle (Harmonic)
-**Date:** 2026-06-26
-**Domain:** Applications (Computational Geometry / Mesh Refinement)
+**Date:** 2026-06-27
+**Domain:** Novelty / Applications (Computational Geometry, Iterative Processes)
 
 ## Abstract
 
-We study the metric core of a classical mesh-generation conjecture: that each
-round of Delaunay refinement with *minicenter* (smallest-enclosing-ball center)
-Steiner points contracts the maximum simplex diameter by a uniform factor
-$\lambda > 1$, yielding exponential decay $d_k \le (1/\lambda)^k d_0$ after $k$
-rounds. The full geometric statement in arbitrary dimension is open. We isolate
-the *analyzable backbone* — a nonnegative sequence obeying the per-step
-contraction $d_{k+1} \le (1/\lambda) d_k$ — and prove, with full rigor and zero
-gaps: (i) the **abstract contraction theorem** $d_k \le (1/\lambda)^k d_0$ by
-induction; (ii) **decay to zero** $d_k \to 0$; (iii) an explicit **iteration
-count** to reach any tolerance $\varepsilon$; and (iv) the **segment base case**,
-where the minicenter of a $1$-simplex is its midpoint and bisection realizes
-$\lambda = 2$ exactly, witnessing satisfiability of the hypotheses. We then prove
-the paper's centerpiece: under exponential contraction the *cumulative* diameter
-is summable, with the closed form
-$$ \sum_{k=0}^{\infty} d_k \le \frac{D\lambda}{\lambda-1}, \quad D := d_0, $$
-the **finite total refinement budget**. We show $\lambda = 1$ is exactly the
-threshold between a finite and an infinite budget, sharpening the reason to demand
-strict contraction. Finally, we connect to the approximate Carathéodory / Maurey
-principle: since every point of a simplex lies within one diameter of a vertex,
-the covering radius $c_k \le d_k$ inherits **exponential decay** ($c_k \to 0$) and
-a **finite covering budget** bounded by the same constant. The work reframes mesh
-refinement complexity around a *budget* rather than a *limit*, and identifies the
-single geometric inequality whose proof would close the open conjecture.
+We study the diameter trajectory of an iterative mesh-refinement scheme in which
+each round contracts the worst simplex diameter by a uniform factor while a
+bounded perturbation — modeling the local disturbance caused by inserting fresh
+Steiner points — is reinjected at every step. We formalize this as an
+*inhomogeneous contraction process*: a nonnegative real sequence $d_k$ satisfying
+$d_{k+1} \le a\,d_k + b$ with $0 \le a < 1$ and $b \ge 0$. Our central result is
+the exact closed-form bound $d_k \le a^k d_0 + b\,(1-a^k)/(1-a)$, proved by
+induction, from which we derive geometric decay of the transient,
+$d_k - L \le a^k(d_0 - L)$, toward the attractor radius $L = b/(1-a)$. We show the
+inequality model yields only one-sided convergence (the iterates are eventually
+trapped in $[0, L+\varepsilon]$, with an explicit finite step count), and we prove
+that genuine two-sided convergence to $L$, with sharp rate
+$|d_k - L| \le a^k|d_0 - L|$, holds precisely under the *exact* recurrence
+$d_{k+1} = a d_k + b$. We connect the theory to the Banach fixed-point picture:
+the affine update $x \mapsto a x + b$ is a contraction with unique fixed point $L$,
+and an explicit affine iteration realizes the bounds, proving them tight. The
+homogeneous case ($b=0$) recovers the noiseless exponential contraction
+$d_k \le (1/\lambda)^k d_0 \to 0$, which is realized exactly by edge bisection, the
+one-simplex base case where the minicenter coincides with the midpoint.
 
 ## 1. Introduction
 
-### 1.1 Motivation
-
-Adaptive mesh refinement is a workhorse of scientific computing: finite-element
-analysis, computational fluid dynamics, computer graphics, and surface
-reconstruction all depend on procedures that take a coarse simplicial mesh and
-subdivide it into arbitrarily fine pieces while preserving good element quality.
-A central family of such procedures is **Delaunay refinement**: repeatedly insert
-a Steiner point into the worst element and restore the Delaunay property of the
-triangulation. The *choice* of Steiner point matters enormously for both quality
-and convergence speed; a natural and well-studied choice is the **minicenter**,
-the center of the smallest enclosing ball of the offending simplex.
-
-The practical folklore is that minicenter refinement contracts the largest
-element geometrically — that there is a uniform factor $\lambda > 1$ such that one
-round shrinks the maximum diameter to at most $1/\lambda$ of its previous value.
-If true, the maximum diameter decays exponentially in the number of rounds, and
-the mesh becomes fine very fast.
-
-### 1.2 What is open and what is provable
-
-The full conjecture, over $d$-simplices for all $d$, is genuinely open. It
-entangles combinatorial content (which simplices appear in the re-triangulation
-$\mathrm{Del}(X_k)$ at step $k$) with metric content (how far the minicenter of a
-simplex lies from its other points, which depends on aspect ratio). No uniform
-factor $\lambda > 1$ has been established in general dimension.
-
-This paper extracts the **metric backbone** of the conjecture — the part that is
-clean, complete, and certain — and develops its consequences fully. We model the
-trajectory of the maximum diameter as a sequence $d : \mathbb{N} \to \mathbb{R}$
-with $d_k \ge 0$ and the per-step contraction $d_{k+1} \le (1/\lambda) d_k$, and
-we derive everything that follows. Crucially, we go beyond the known
-"diameter $\to 0$" conclusion to a **budget** theory: the cumulative diameter over
-all rounds is summable with an explicit closed form, and the same holds for the
-Carathéodory covering radius.
-
-### 1.3 Contributions
-
-1. **Abstract contraction and decay.** The induction $d_k \le (1/\lambda)^k d_0$
-   and the squeeze $d_k \to 0$.
-2. **Explicit stopping rule.** A computable iteration count to reach tolerance
-   $\varepsilon$.
-3. **Segment base case.** $\lambda = 2$ realized exactly by bisection, the
-   minicenter of a $1$-simplex being its midpoint.
-4. **Finite total refinement budget** (`total_budget`): $\sum_k d_k \le
-   D\lambda/(\lambda-1)$, with $\lambda = 1$ identified as the finite/infinite
-   threshold (`summable_of_contraction`).
-5. **Exponential covering and covering budget** (`covering_tendsto_zero`,
-   `covering_budget`): transferring decay and summability to the Carathéodory
-   covering radius via $c_k \le d_k$.
-
-## 2. Definitions and Setup
-
-### 2.1 Simplices, diameters, and refinement
-
-**Definition (Simplex).** A $d$-simplex is the convex hull of $d+1$ affinely
-independent points (its vertices) in Euclidean space. A $0$-simplex is a point, a
-$1$-simplex a segment, a $2$-simplex a triangle, a $3$-simplex a tetrahedron.
-
-**Definition (Diameter).** The diameter of a bounded set $\sigma$ is
-$\operatorname{diam}(\sigma) = \sup\{\,\lVert x - y\rVert : x, y \in \sigma\,\}$.
-For a simplex this supremum is attained between two vertices; for a segment it is
-the segment's length, and for a triangle the length of the longest edge.
-
-**Definition (Smallest enclosing ball and minicenter).** For a bounded set
-$\sigma$, the smallest enclosing ball is the unique closed ball of minimum radius
-containing $\sigma$. Its center is the **minicenter** $\operatorname{mc}(\sigma)$.
-
-**Definition (Delaunay minicenter refinement).** Given a finite point set $X_k$
-with Delaunay triangulation $\mathrm{Del}(X_k)$, one refinement round selects
-offending simplices, inserts their minicenters as new Steiner points to form
-$X_{k+1}$, and recomputes $\mathrm{Del}(X_{k+1})$. We write
-$$ d_k := \max_{\sigma \in \mathrm{Del}(X_k)} \operatorname{diam}(\sigma) $$
-for the maximum simplex diameter at round $k$, and $D := d_0$.
-
-### 2.2 The contraction hypothesis
-
-**Definition (Per-step contraction).** A diameter trajectory $d : \mathbb{N} \to
-\mathbb{R}$ *contracts with factor* $\lambda > 1$ if $d_k \ge 0$ for all $k$ and
-$$ d_{k+1} \le \frac{1}{\lambda}\, d_k \quad \text{for all } k. $$
-
-The contraction conjecture asserts that minicenter refinement produces a
-trajectory contracting with some uniform $\lambda > 1$. Our results take the
-contraction hypothesis — equivalently its closed consequence $d_k \le
-(1/\lambda)^k D$ — as given and derive its full analytic content.
-
-### 2.3 The covering radius
-
-**Definition (Covering radius).** Let the domain $\Omega$ be the region being
-meshed and $X_k$ the sample vertices at round $k$. The covering radius is
-$$ c_k := \sup_{x \in \Omega} \ \min_{v \in X_k} \lVert x - v \rVert, $$
-the largest distance from any domain point to its nearest sample vertex.
-
-**Carathéodory/Maurey covering fact.** Every point $x \in \Omega$ lies in some
-simplex $\sigma \in \mathrm{Del}(X_k)$, and every point of a simplex is within
-$\operatorname{diam}(\sigma)$ of each of its vertices. Hence
-$$ c_k \le d_k. $$
-This is the honest geometric content of approximate Carathéodory in this setting,
-not an extra assumption: a point expressed as a convex blend of a simplex's
-vertices is within the simplex diameter of the nearest vertex.
-
-## 3. Main Results
-
-Throughout, fix $\lambda > 1$ and $D = d_0 \ge 0$.
-
-### 3.1 The abstract contraction theorem
-
-**Theorem 1 (Contraction power bound).** If $d$ contracts with factor $\lambda >
-1$, then for all $k$,
-$$ d_k \le \left(\frac{1}{\lambda}\right)^k d_0. $$
-
-*Proof sketch.* Induction on $k$. The base case $k = 0$ is the equality $d_0 =
-(1/\lambda)^0 d_0$. For the step, assume $d_k \le (1/\lambda)^k d_0$. Since
-$1/\lambda > 0$ and $d_{k+1} \le (1/\lambda) d_k$,
-$$ d_{k+1} \le \tfrac{1}{\lambda} d_k \le \tfrac{1}{\lambda}\cdot \big(\tfrac{1}{\lambda}\big)^k d_0 = \big(\tfrac{1}{\lambda}\big)^{k+1} d_0. \qquad \blacksquare $$
-
-**Theorem 2 (Decay to zero).** If $d$ contracts with factor $\lambda > 1$, then
-$d_k \to 0$ as $k \to \infty$.
-
-*Proof sketch.* Since $\lambda > 1$ we have $0 \le 1/\lambda < 1$, hence
-$|1/\lambda| < 1$ and $(1/\lambda)^k \to 0$, so $(1/\lambda)^k d_0 \to 0$. By
-Theorem 1, $0 \le d_k \le (1/\lambda)^k d_0$, and the squeeze theorem gives
-$d_k \to 0$. $\blacksquare$
-
-**Theorem 3 (Explicit iteration count).** Let $\varepsilon > 0$ and $D = d_0 >
-0$. If $d$ contracts with factor $\lambda > 1$, then $d_k \le \varepsilon$ holds
-for every
-$$ k \ge \left\lceil \frac{\ln(D/\varepsilon)}{\ln \lambda} \right\rceil. $$
-
-*Proof sketch.* By Theorem 1 it suffices that $(1/\lambda)^k D \le \varepsilon$,
-i.e. $\lambda^k \ge D/\varepsilon$. Taking logarithms (with $\ln\lambda > 0$)
-gives $k \ge \ln(D/\varepsilon)/\ln\lambda$; any integer $k$ at least the ceiling
-suffices. $\blacksquare$
-
-### 3.2 The geometric witness: the segment base case
-
-**Theorem 4 (Segment minicenter halves the diameter).** Let $\sigma = [a,b]$ be a
-$1$-simplex (a segment) of length $\ell = \lVert a - b\rVert$. The minicenter of
-$\sigma$ is its midpoint $m = (a+b)/2$, and inserting $m$ as a Steiner point
-splits $\sigma$ into two children $[a,m]$ and $[m,b]$, each of diameter $\ell/2$.
-Thus one round of minicenter refinement contracts the segment diameter by the
-exact factor $\lambda = 2$.
-
-*Proof sketch.* The smallest ball enclosing a segment is the ball whose diameter
-is the segment, centered at the midpoint $m$ with radius $\ell/2$ (no smaller ball
-can contain both endpoints, which are $\ell$ apart). Hence
-$\operatorname{mc}(\sigma) = m$. Each child segment has length
-$\lVert a - m\rVert = \lVert m - b\rVert = \ell/2$, so its diameter is $\ell/2 =
-(1/2)\operatorname{diam}(\sigma)$. $\blacksquare$
-
-Theorem 4 certifies that the contraction hypothesis of Definition 2.2 is
-*satisfiable by genuine geometry*, and that the exponent in Theorem 1 is
-*achieved* (not merely an upper bound) with $\lambda = 2$. Iterating, a unit
-segment refined $k$ times has children of length $2^{-k}$, the exponential law in
-its purest form.
-
-### 3.3 Summability and the finite refinement budget
-
-The decisive step from a *limit* statement to a *budget* statement is
-summability. We compare the diameter series term-by-term against a geometric
-series.
-
-**Theorem 5 (Summability of the diameter sequence).** If $\lambda > 1$, $d_k \ge
-0$ for all $k$, and $d_k \le (1/\lambda)^k D$ for all $k$, then the series
-$\sum_k d_k$ converges (i.e. $d$ is summable).
-
-*Proof sketch.* Set $r = 1/\lambda$. Since $\lambda > 1$, we have $0 \le r < 1$,
-so the geometric series $\sum_k r^k$ converges; multiplying by the constant $D$,
-the series $\sum_k r^k D$ converges. Each term of $d$ is nonnegative and bounded
-above by the corresponding term $r^k D$, so by the comparison test $\sum_k d_k$
-converges. $\blacksquare$
-
-**Theorem 6 (Finite total refinement budget).** If $\lambda > 1$, $d_k \ge 0$ for
-all $k$, and $d_k \le (1/\lambda)^k D$ for all $k$, then
-$$ \sum_{k=0}^{\infty} d_k \ \le\ \frac{D\,\lambda}{\lambda - 1}. $$
-
-*Proof sketch.* By Theorem 5 both series below converge, so termwise comparison
-lifts to the sums:
-$$ \sum_k d_k \ \le\ \sum_k \Big(\tfrac{1}{\lambda}\Big)^k D
- \ =\ \Big(\sum_k \big(\tfrac{1}{\lambda}\big)^k\Big) D
- \ =\ \frac{1}{1 - 1/\lambda}\, D
- \ =\ \frac{D\lambda}{\lambda - 1}, $$
-using the geometric-series sum $\sum_k r^k = 1/(1-r)$ for $0 \le r < 1$ and the
-algebraic simplification $1/(1-1/\lambda) = \lambda/(\lambda-1)$, valid since
-$\lambda > 0$. $\blacksquare$
-
-**Remark (the threshold at $\lambda = 1$).** The closed form
-$D\lambda/(\lambda-1)$ diverges as $\lambda \downarrow 1$: the denominator
-$\lambda - 1 \to 0^+$. At $\lambda = 1$ the comparison series becomes
-$\sum_k D = D + D + D + \cdots$, which diverges; Theorem 5 fails because the ratio
-$r = 1$ no longer yields a convergent geometric series. Thus **strict
-contraction $\lambda > 1$ is exactly the boundary between a finite and an infinite
-refinement budget.** This is a strictly stronger reason to demand $\lambda > 1$
-than convergence alone, since convergence to zero can occur (sub-geometrically)
-even when the cumulative diameter is infinite.
-
-### 3.4 Covering: decay and budget for the sampling net
-
-We now transfer the diameter results to the covering radius via the Carathéodory
-fact $c_k \le d_k$.
-
-**Theorem 7 (Exponential decay of the covering radius).** Suppose $\lambda > 1$,
-$c_k \ge 0$, $c_k \le d_k$, and $d_k \le (1/\lambda)^k D$ for all $k$. Then
-$c_k \to 0$ as $k \to \infty$.
-
-*Proof sketch.* Compose the two bounds: $0 \le c_k \le d_k \le (1/\lambda)^k D$.
-Since $|1/\lambda| < 1$, the upper bound $(1/\lambda)^k D \to 0$. The squeeze
-theorem applied to $0 \le c_k \le (1/\lambda)^k D$ yields $c_k \to 0$.
-$\blacksquare$
-
-**Theorem 8 (Finite covering budget).** Under the hypotheses of Theorem 7,
-$$ \sum_{k=0}^{\infty} c_k \ \le\ \frac{D\,\lambda}{\lambda - 1}. $$
-
-*Proof sketch.* From $c_k \le d_k$ and $d_k \le (1/\lambda)^k D$ we get $d_k \ge
-0$ (as $d_k \ge c_k \ge 0$), so $d$ is summable by Theorem 5. Since $0 \le c_k
-\le d_k$ and $d$ is summable, comparison makes $c$ summable with $\sum_k c_k \le
-\sum_k d_k$. Chaining with Theorem 6 gives $\sum_k c_k \le \sum_k d_k \le
-D\lambda/(\lambda-1)$. $\blacksquare$
-
-The same closed-form constant therefore governs both the cumulative simplex
-diameter and the cumulative covering error of the sampling net: exponential
-contraction of the mesh automatically certifies exponential contraction of the
-approximation quality, with a single finite budget for both.
-
-## 4. Algorithms
-
-### 4.1 Iteration-count planner
-
-Given the initial diameter $D$, contraction factor $\lambda$, and tolerance
-$\varepsilon$, Theorem 3 yields a provably sufficient number of refinement rounds
-*before any computation*:
-$$ K(\varepsilon) = \left\lceil \frac{\ln(D/\varepsilon)}{\ln\lambda}\right\rceil. $$
-This converts an open-ended "refine until good enough" loop into a deterministic
-loop of known length, enabling memory preallocation and worst-case scheduling.
-
-**Pseudocode.**
-```
-function PLAN_ROUNDS(D, lambda, eps):
-    assert lambda > 1 and D > 0 and eps > 0
-    if eps >= D: return 0
-    return ceil( ln(D / eps) / ln(lambda) )
-```
-
-### 4.2 Budget estimator
-
-Theorem 6 gives the cumulative-diameter budget in closed form. The estimator
-returns the guaranteed upper bound on total refinement work and the per-round
-contributions, and verifies that partial sums approach the closed form.
-
-**Pseudocode.**
-```
-function BUDGET(D, lambda, K):
-    assert lambda > 1
-    closed_form = D * lambda / (lambda - 1)
-    partial = sum_{k=0}^{K-1} D * (1/lambda)^k     # = D*(1-(1/lambda)^K)/(1-1/lambda)
-    return closed_form, partial    # partial <= closed_form, partial -> closed_form
-```
-
-### 4.3 Segment-refinement simulator
-
-Realizes the base case (Theorem 4): repeated bisection of a segment, returning the
-exact diameter trajectory $d_k = D\,2^{-k}$ and the cumulative diameter, which
-converges to $2D$ (the $\lambda = 2$ instance of the budget).
-
-**Pseudocode.**
-```
-function REFINE_SEGMENT(D, K):
-    d = D; trajectory = []; total = 0
-    for k in 0..K-1:
-        trajectory.append(d); total += d
-        d = d / 2          # minicenter of segment = midpoint => halving
-    return trajectory, total     # total -> 2D as K -> infinity
-```
-
-## 5. Applications and Numerical Illustration
-
-- **Finite-element preprocessing.** The iteration planner (Section 4.1) lets a
-  solver allocate the exact number of refinement passes needed to reach a target
-  element size, eliminating adaptive overshoot.
-- **Total-work budgeting.** The budget formula $D\lambda/(\lambda-1)$ gives a
-  closed-form a-priori bound on cumulative refinement effort, useful for cost
-  models and scheduler admission control.
-- **Sampling and approximation.** Theorems 7–8 turn mesh refinement into a
-  convergent sampling scheme with a finite total covering error, relevant to
-  surface reconstruction and quadrature.
-
-Numerically, for $D = 1$ and $\lambda = 2$ the budget is $D\lambda/(\lambda-1) =
-2$, and the segment simulator's cumulative sum $1 + 0.5 + 0.25 + \cdots$ approaches
-$2$, matching Theorem 6 exactly. For $\lambda = 1.1$ the budget balloons to
-$1\cdot1.1/0.1 = 11$, dramatizing the near-threshold blow-up of the Remark. The
-accompanying demo verifies these against direct summation.
-
-## 6. Discussion
-
-The conceptual shift in this work is from a **limit** ($d_k \to 0$) to a
-**budget** ($\sum_k d_k < \infty$, in closed form). The limit certifies that
-refinement eventually succeeds; the budget prices the *entire* infinite process
-and makes the contraction factor $\lambda$ the controlling complexity parameter.
-The closed form $D\lambda/(\lambda-1)$ is strictly decreasing in $\lambda$, so a
-better contraction factor is not merely faster asymptotically — it is cheaper in
-total. The threshold at $\lambda = 1$ then acquires sharp meaning: it is the exact
-divide between a finite and an infinite cumulative cost.
-
-The segment base case anchors the abstraction in real geometry and shows the
-exponent is achieved, while the higher-dimensional contraction factor remains the
-single open metric inequality. The covering results show the budget viewpoint is
-robust: it survives the passage from mesh geometry to sampling quality unchanged,
-governed by the same constant.
-
-## 7. Future Directions
-
-**(1) Dimension-dependent contraction factor.** For a non-degenerate $d$-simplex,
-one round of minicenter refinement is conjectured to reduce the maximum child
-diameter by a factor $\lambda_d \ge 1 + c/d$ for an absolute constant $c > 0$,
-with $\lambda_d \to 1$ as $d \to \infty$ (and $\lambda_1 = 2$, the proved segment
-case). The key insight: the segment case achieves $\lambda = 2$ because the
-minicenter of a $1$-simplex is its midpoint, but in higher dimensions the
-minicenter can sit far from the barycenter for skinny simplices, so the guaranteed
-factor must degrade with dimension and aspect ratio. The abstract theory isolates
-exactly the inequality the geometry must supply, turning the open conjecture into
-a single sharply-stated metric inequality.
-
-**(2) The budget as the right complexity measure.** Among subdivision rules with
-per-step contraction $\lambda > 1$, the cumulative diameter $\sum_k d_k =
-D\lambda/(\lambda-1)$ is conjectured to be minimized — over rules achieving a fixed
-tolerance — by the rule maximizing $\lambda$, and to dominate mesh-size complexity
-up to a constant. Exponential contraction upgrades "diameter $\to 0$" to a
-summable series whose closed form is strictly decreasing in $\lambda$, so the
-contraction factor controls total work, not merely asymptotic fineness. The budget
-viewpoint is formally available and needs only an optimization layer.
-
-**(3) The Maurey $R/\sqrt{k}$ rate as the contraction face for flat clouds.** For
-a point cloud whose convex hull admits no exponential-contraction refinement
-(e.g. nearly co-spherical points where minicenter splits barely shrink diameters),
-the best covering of hull points by $k$-sample averages still decays, but only at
-the Maurey rate $R/\sqrt{k}$, never exponentially — and this $\sqrt{k}$ barrier is
-tight. The unconditional Maurey $R^2/k$ squared-covering bound holds with no
-geometric contraction assumption, whereas the exponential covering budget holds
-*only when* contraction holds; the two regimes are complementary, and degenerate
-geometries select the slower one.
-
-## 8. Conclusion
-
-We have given a complete, rigorous treatment of the metric backbone of the
-Delaunay minicenter contraction conjecture: exponential decay of the maximum
-diameter, an explicit stopping rule, a geometric witness at $\lambda = 2$, and —
-most importantly — a finite total refinement budget $\sum_k d_k \le
-D\lambda/(\lambda-1)$ with the threshold $\lambda = 1$ marking the finite/infinite
-divide. The covering corollaries extend the budget to sampling quality via the
-approximate Carathéodory principle. The remaining open question is purely
-geometric: the dimension-dependent contraction factor of minicenter refinement,
-now reduced to a single metric inequality whose reward is already in closed form.
+Mesh refinement is the engine of computational geometry and numerical PDE: a
+domain is decomposed into simplices (triangles, tetrahedra, or higher-dimensional
+analogues), and the decomposition is iteratively refined by inserting new vertices
+("Steiner points") until the simplices are small enough for the accuracy demanded.
+The defining performance question is the *rate* at which the largest simplex
+shrinks. A scheme is useful when the worst diameter contracts geometrically — by a
+fixed factor $1/\lambda < 1$ per round — so that after $k$ rounds it is at most
+$(1/\lambda)^k$ times its initial value.
+
+In the *minicenter* family of schemes, the Steiner point of a simplex is the
+center of its smallest enclosing ball. For a one-dimensional simplex (an edge),
+the minicenter is exactly the midpoint and the contraction factor is exactly
+$\lambda = 2$. The conjecture that minicenter refinement contracts the diameter by
+a uniform factor $\lambda > 1$ in every dimension is, in full geometric
+generality, open. The *metric backbone* of the conjecture — that a uniform per-step
+contraction forces exponential decay — is, however, a clean and complete theory.
+
+This paper develops the realistic, *noisy* extension of that backbone. Practical
+refinement is never exact: re-triangulation, neighbor displacement, and
+floating-point error reinject a bounded perturbation at each step. We model this
+with an **additive defect** $b \ge 0$ and study the inhomogeneous recurrence
+$d_{k+1} \le a d_k + b$. The mathematics is elementary but the conclusions are
+sharp and practically important: contraction survives noise, and the price of
+noise is a single, computable resolution floor $L = b/(1-a)$.
+
+All results below are formalized and machine-checked. We state each result with
+its formal name and a proof sketch faithful to the formalization.
+
+## 2. Definitions
+
+**Definition 1 (Inhomogeneous contraction process, `InhomogeneousContractionProcess`).**
+An inhomogeneous contraction process consists of a sequence $d : \mathbb{N} \to \mathbb{R}$
+and constants $a, b \in \mathbb{R}$ subject to
+$$0 \le a, \qquad a < 1, \qquad 0 \le b, \qquad \forall k,\ 0 \le d_k, \qquad \forall k,\ d_{k+1} \le a\,d_k + b.$$
+Here $d_k$ models the maximum simplex diameter after $k$ refinement rounds, $a$ is
+the multiplicative geometric contraction per round, and $b$ is the additive defect
+(the bounded perturbation from Steiner-point insertion).
+
+**Definition 2 (Attractor radius / fixed point, `fixedPoint`).**
+The attractor radius of the process is
+$$L \;:=\; \frac{b}{1-a}.$$
+Since $a < 1$ we have $1 - a > 0$ (`one_sub_a_pos`), so $L$ is well-defined, and
+since $b \ge 0$ it is nonnegative, $L \ge 0$ (`fixedPoint_nonneg`).
+
+**Definition 3 (Affine iteration, `affineIteration`).**
+For a chosen initial value $d_0 \ge 0$, the affine iteration is the process whose
+sequence satisfies the *exact* recurrence $d_{k+1} = a\,d_k + b$. It is a concrete
+`InhomogeneousContractionProcess` (the inequality holds with equality) and serves
+as the tightness witness for all upper bounds below.
+
+For comparison we record the noiseless model.
+
+**Definition 4 (Homogeneous contraction process, `ContractionProcess`).**
+A homogeneous contraction process consists of $d : \mathbb{N} \to \mathbb{R}$ and a factor
+$\lambda > 1$ with $d_k \ge 0$ for all $k$ and $d_{k+1} \le (1/\lambda)\, d_k$.
+This is the $b = 0$, $a = 1/\lambda$ specialization.
+
+## 3. The fixed point and its defining identity
+
+**Lemma 1 (Fixed-point identity, `fixedPoint_eq`).**
+$$a\,L + b = L.$$
+
+*Proof sketch.* Substitute $L = b/(1-a)$ and clear the denominator $1-a > 0$:
+$a\cdot \frac{b}{1-a} + b = \frac{ab + b(1-a)}{1-a} = \frac{b}{1-a} = L$. $\qquad\blacksquare$
+
+This identity is the algebraic heart of the theory: $L$ is exactly the level at
+which one step of the noisy update reproduces itself.
+
+## 4. The closed-form bound
+
+**Theorem 1 (Closed-form upper bound, `d_le_closedForm`).**
+For every $k \in \mathbb{N}$,
+$$d_k \;\le\; a^{k}\,d_0 \;+\; b\,\frac{1 - a^{k}}{1 - a}.$$
+
+*Proof sketch.* Induction on $k$. For $k = 0$ the right side equals $d_0$ and the
+claim is an equality. For the inductive step, assume the bound at $k$. Then by the
+contraction hypothesis and monotonicity of multiplication by $a \ge 0$,
+$$d_{k+1} \le a\,d_k + b \le a\Bigl(a^{k} d_0 + b\tfrac{1-a^{k}}{1-a}\Bigr) + b.$$
+The right-hand side simplifies, using $a\cdot b\frac{1-a^k}{1-a} + b = b\frac{1-a^{k+1}}{1-a}$
+(equivalently $a(1-a^k) + (1-a) = 1 - a^{k+1}$), to
+$a^{k+1} d_0 + b\frac{1 - a^{k+1}}{1-a}$, which is the bound at $k+1$. $\qquad\blacksquare$
+
+**Lemma 2 (Centering at the fixed point, `closedForm_eq`).**
+For every $k$,
+$$a^{k}\,d_0 + b\,\frac{1 - a^{k}}{1 - a} \;=\; a^{k}\,(d_0 - L) + L.$$
+
+*Proof sketch.* Expand $a^k(d_0 - L) + L = a^k d_0 - a^k L + L = a^k d_0 + L(1 - a^k)$
+and substitute $L = b/(1-a)$. $\qquad\blacksquare$
+
+**Theorem 2 (Geometric decay of the transient, `excess_le_pow`).**
+For every $k$,
+$$d_k - L \;\le\; a^{k}\,(d_0 - L).$$
+
+*Proof sketch.* Combine Theorem 1 with Lemma 2:
+$d_k \le a^k d_0 + b\frac{1-a^k}{1-a} = a^k(d_0 - L) + L$, then subtract $L$.
+$\qquad\blacksquare$
+
+Theorem 2 is the conceptual payoff: the *excess over the noise floor* decays at
+the pure geometric rate $a^k$, identical to the noiseless case. Noise relocates the
+limit from $0$ to $L$ but does not slow the approach.
+
+## 5. Convergence of the bound and one-sided trapping
+
+**Theorem 3 (Convergence of the closed-form bound, `closedFormBound_tendsto`).**
+$$\lim_{k\to\infty}\Bigl(a^{k} d_0 + b\,\tfrac{1 - a^{k}}{1 - a}\Bigr) = L.$$
+
+*Proof sketch.* Since $0 \le a < 1$, $a^k \to 0$. Hence $a^k d_0 \to 0$ and
+$b\frac{1-a^k}{1-a} \to b\frac{1}{1-a} = L$ by the algebra of limits.
+$\qquad\blacksquare$
+
+**Theorem 4 (Eventual trapping below $L+\varepsilon$, `eventually_lt_fixedPoint_add`).**
+For every $\varepsilon > 0$, eventually (for all sufficiently large $k$)
+$$d_k < L + \varepsilon.$$
+
+*Proof sketch.* By Theorem 3 the closed-form bound converges to $L < L+\varepsilon$,
+so it is eventually $< L+\varepsilon$; by Theorem 1, $d_k$ is dominated by that bound.
+$\qquad\blacksquare$
+
+**Corollary 1 (Explicit iteration count, `exists_steps_below`).**
+For every $\varepsilon > 0$ there exists $N$ with $d_k < L + \varepsilon$ for all
+$k \ge N$.
+
+*Proof sketch.* Extract the threshold from the "eventually" statement of Theorem 4.
+$\qquad\blacksquare$
+
+**Remark (one-sided only).** The inequality model does *not* force $d_k \to L$. The
+sequence $d_k \equiv 0$ satisfies $0 \le a\cdot 0 + b$ for any $b \ge 0$, contracts
+below the floor, and never reaches $L$ when $b > 0$. Thus only the one-sided
+trapping in $[0, L+\varepsilon]$ is provable from the inequality. Genuine two-sided
+convergence requires equality, treated next.
+
+## 6. Two-sided convergence under the exact recurrence
+
+**Theorem 5 (Genuine convergence and sharp rate; `tendsto_of_exact`, `dist_le_pow_of_exact`).**
+Suppose the process satisfies the *exact* recurrence $d_{k+1} = a\,d_k + b$ for all
+$k$. Then
+$$|\,d_k - L\,| \le a^{k}\,|\,d_0 - L\,| \qquad\text{and}\qquad \lim_{k\to\infty} d_k = L.$$
+
+*Proof sketch.* Subtracting the fixed-point identity $L = aL + b$ from the exact
+recurrence gives $d_{k+1} - L = a(d_k - L)$, hence $d_k - L = a^k(d_0 - L)$ by
+induction. Taking absolute values yields the rate; since $a^k \to 0$, the right
+side tends to $0$, so $d_k \to L$. $\qquad\blacksquare$
+
+The contrast between Theorem 4 (inequality: one-sided trap) and Theorem 5
+(equality: two-sided convergence at rate $a^k$) is the central honesty of the work:
+the destination depends on whether the noise is bounded above or reinjected
+exactly.
+
+## 7. Boundedness and bounded per-step perturbation
+
+**Proposition 1 (Uniform band, `d_le_uniform`).**
+For every $k$, $\,d_k \le d_0 + L$. Together with $d_k \ge 0$, every iterate lies in
+the bounded band $[0,\, d_0 + L]$.
+
+*Proof sketch.* From Theorem 2, $d_k \le L + a^k(d_0 - L)$. If $d_0 \ge L$ then
+$a^k(d_0 - L) \le d_0 - L$, giving $d_k \le d_0$; if $d_0 < L$ then
+$a^k(d_0-L) \le 0$, giving $d_k \le L$. In either case $d_k \le d_0 + L$. $\qquad\blacksquare$
+
+**Proposition 2 (Bounded per-step perturbation, `perturbation_le`).**
+Each refinement step perturbs the diameter by at most $b$ in the upward
+direction: $d_{k+1} - a\,d_k \le b$, i.e. the additive disturbance is uniformly
+bounded by the defect $b$.
+
+*Proof sketch.* Immediate from the contraction hypothesis $d_{k+1} \le a d_k + b$.
+$\qquad\blacksquare$
+
+## 8. The fixed-point / contraction-map picture
+
+The recurrence is governed by the affine update map $f(x) = a\,x + b$ on
+$\mathbb{R}$.
+
+**Proposition 3 (Contraction constant, `affine_dist`).**
+For all $x, y \in \mathbb{R}$, $\;\operatorname{dist}(f(x), f(y)) = a \cdot \operatorname{dist}(x, y)$.
+
+*Proof sketch.* $f(x) - f(y) = a(x-y)$, so $|f(x)-f(y)| = a|x-y|$ (using $a \ge 0$).
+$\qquad\blacksquare$
+
+**Proposition 4 (Fixed point, `affine_isFixedPt`).** $f(L) = L$.
+
+*Proof sketch.* This is Lemma 1 rewritten as $f(L) = aL + b = L$. $\qquad\blacksquare$
+
+**Proposition 5 (Uniqueness, `fixedPoint_unique`).** $L$ is the unique fixed point
+of $f$.
+
+*Proof sketch.* If $f(x) = x$ then $ax + b = x$, so $(1-a)x = b$, and since
+$1 - a > 0$, $x = b/(1-a) = L$. $\qquad\blacksquare$
+
+Since $0 \le a < 1$, $f$ is a Banach contraction with contraction constant $a$;
+Propositions 3–5 are the corresponding pieces of the Banach fixed-point theorem
+specialized to this affine map, and they re-derive convergence to $L$ from a purely
+metric viewpoint.
+
+## 9. Tightness
+
+**Theorem 6 (Tightness via the affine iteration, `affineIteration`).** The affine
+iteration of Definition 3 satisfies $d_{k+1} = a d_k + b$ exactly; consequently its
+closed form is $a^k d_0 + b(1-a^k)/(1-a)$ (equality in Theorem 1) and its limit is
+$L$ (Theorem 5). Hence the upper bounds of Theorems 1–2 are attained, and no
+refinement scheme with per-step additive defect $\ge b$ can guarantee an asymptotic
+diameter below $L = b/(1-a)$.
+
+*Proof sketch.* The affine iteration meets the structure axioms with equality, so
+the inequality proofs become equalities throughout; convergence follows from
+Theorem 5. The lower-bound statement is the contrapositive: any scheme dominated by
+this exact trajectory and suffering the same defect inherits the same floor.
+$\qquad\blacksquare$
+
+## 10. The homogeneous base case and its geometric witness
+
+Setting $b = 0$ and $a = 1/\lambda$ with $\lambda > 1$ recovers the noiseless
+theory.
+
+**Theorem 7 (Noiseless exponential contraction, `diam_le_pow`, `diam_tendsto_zero`).**
+For a homogeneous contraction process, $d_k \le (1/\lambda)^k d_0$ and
+$d_k \to 0$.
+
+*Proof sketch.* Induction gives the bound; squeezing $0 \le d_k \le (1/\lambda)^k d_0$
+with $(1/\lambda)^k \to 0$ gives the limit. (This is Theorems 1–2 at $b = 0$, where
+$L = 0$.) $\qquad\blacksquare$
+
+**Theorem 8 (One-simplex minicenter is the midpoint, `minicenter_segment_halves`).**
+For an edge $[a,b]$ in a real normed space, the midpoint $m = \tfrac{1}{2}(a+b)$
+satisfies $\operatorname{dist}(a,m) = \operatorname{dist}(m,b) = \tfrac{1}{2}\operatorname{dist}(a,b)$.
+Hence repeated edge bisection (`segmentBisection`) is a homogeneous contraction
+process with $\lambda = 2$ and $d_k = D/2^k$.
+
+*Proof sketch.* Direct computation with the midpoint and norm. The smallest
+enclosing ball of a segment is centered at its midpoint, so the minicenter
+coincides with the midpoint, giving two equal half-length sub-edges. $\qquad\blacksquare$
+
+Theorem 8 demonstrates that the abstract hypotheses are realized by genuine
+geometry, not by a contrived sequence; the inhomogeneous theory of §§2–9 is the
+robust, noise-tolerant extension of this honest base case.
+
+## 11. Applications
+
+The recurrence $d_{k+1} = a d_k + b$ and its floor $L = b/(1-a)$ recur far beyond
+meshing:
+
+1. **Adaptive mesh refinement.** Schemes that cannot place Steiner points exactly
+   still contract exponentially down to the predictable resolution floor
+   $b/(1-a)$; halving the implementation noise $b$ halves the achievable floor.
+2. **Numerical linear algebra.** Linearly convergent iterative solvers with
+   per-step round-off settle at a floor proportional to machine epsilon over
+   $(1-a)$, exactly the attractor radius.
+3. **Control / DSP.** A first-order IIR filter $x_{k+1} = a x_k + b$ is the exact
+   recurrence; $b/(1-a)$ is its steady-state (DC) value.
+4. **Stochastic approximation / RL.** Contractive updates with bounded noise hover
+   in a ball of radius $\sim b/(1-a)$ about the target.
+
+## 12. Discussion and Future Work
+
+The inhomogeneous model isolates a clean message: under any genuine contraction
+($a < 1$), bounded per-step noise costs only a finite, computable floor
+$L = b/(1-a)$, and the transient above that floor decays at the same geometric rate
+$a^k$ as in the noiseless case. The inequality/equality dichotomy (one-sided
+trapping vs. two-sided convergence) is essential and faithfully captured.
+
+Open geometric directions concern the *constant* $a$ in higher dimensions: whether
+$d$-simplex medial (edge-midpoint) subdivision halves the diameter for all $d$
+(established here for $d = 1, 2$; the $d \ge 3$ central pieces are the first genuine
+obstruction), whether true minicenter (smallest-enclosing-ball) subdivision of a
+triangle contracts by a factor $\lambda \ge \sqrt 2$, and the sharpness of the
+perturbed attractor as an exact min-max diameter. The verbatim future-directions
+program accompanies this package.
