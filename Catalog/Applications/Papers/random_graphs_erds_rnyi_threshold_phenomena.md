@@ -1,54 +1,40 @@
-# THEOREM TRACE — Erdős–Rényi threshold phenomena
+# Computational Evidence — Erdős–Rényi Threshold Phenomena
 
-Internal anti-hallucination map. Every result below appears verbatim in the
-Phase A Lean output (files `Model.lean`, `Concrete.lean`, `SecondMoment.lean`,
-and the threshold development `Threshold.lean`). No result is stated in the
-prose that is not listed here.
+Supports `Catalog/Probability/ErdosRenyiThreshold.lean`. All claims below are *also*
+proved formally in that file; the numbers here are sanity checks.
 
-## Model.lean — namespace `ErdosRenyi`
+## 1. Total mass is a probability distribution (`weight_sum_eq_one`)
+For `m` independent slots, `∑_{S⊆[m]} p^{|S|}(1-p)^{m-|S|} = (p+(1-p))^m = 1`.
+- m=1: `p + (1-p) = 1`. ✓
+- m=2: `(1-p)^2 + 2p(1-p) + p^2 = 1`. ✓
+- m=3, p=1/2: `8 · (1/2)^3 = 1`. ✓
 
-| Lean name | Mathematical statement | ARTICLE.md | RESEARCH_PAPER.md |
-|---|---|---|---|
-| `weight` (def) | `weight p g = ∏ e, (if g e then p else 1-p)` | yes | yes (Def 1) |
-| `weight_nonneg` | `0 ≤ p ≤ 1 ⇒ 0 ≤ weight p g` | — | yes |
-| `sum_weight` | `∑ g, weight p g = 1` | yes | yes (Prop 1) |
-| `prob` (def) | `prob p A = ∑_{g∈A} weight p g` | yes | yes (Def 2) |
-| `expectation` (def) | `E p X = ∑ g, weight p g · X g` | yes | yes (Def 2) |
-| `allPresent`/`allAbsent` (def) | events that `S` is all-present / all-absent | yes | yes |
-| `prob_allPresent` | `prob p (allPresent S) = p^{|S|}` | yes | yes (Thm 1) |
-| `prob_allAbsent` | `prob p (allAbsent S) = (1-p)^{|S|}` | yes | yes (Thm 1) |
-| `subgraphCount` (def) | number of copies present | yes | yes |
-| `expectation_subgraphCount` | `E[#copies] = ∑_i p^{|S i|}` | yes | yes (Thm 2) |
-| `expectation_subgraphCount_uniform` | uniform size `k`: `= #copies · p^k` | yes | yes (Thm 2) |
-| `firstMoment` | `P(#copies ≥ 1) ≤ ∑_i p^{|S i|}` | yes | yes (Thm 3) |
+## 2. Marginal of a fixed slot-set (`prob_contains_subset`)
+P(all of `T` present) `= p^{|T|}`, independent of `m`.
+- T a single edge: `p`. ✓  T two edges: `p^2`. ✓
 
-## Concrete.lean — namespace `ErdosRenyiConcrete`
+## 3. Expected number of edges (`expectation_card`)
+E[#present slots] `= m·p`. For `G(n,p)`, `m = C(n,2)`, so E[#edges] `= C(n,2)·p`.
+- n=4, p=1/2: `C(4,2)·1/2 = 6·1/2 = 3`. ✓
+- n=10, p=1/n=0.1: `45·0.1 = 4.5` (linear regime around the connectivity scale). ✓
 
-| Lean name | Mathematical statement | ARTICLE.md | RESEARCH_PAPER.md |
-|---|---|---|---|
-| `expectation_count` | `E[#events occurring] = ∑_i prob p (A i)` | yes | yes (Thm 4) |
-| `card_edge` | `#edges = C(n,2)` | yes | yes |
-| `expected_edges` | `E[#edges] = C(n,2)·p` | yes | yes (Thm 5) |
-| `card_incident` | each vertex meets `n-1` edges | yes | yes |
-| `expected_isolated` | `E[#isolated] = n·(1-p)^{n-1}` | yes | yes (Thm 6) |
-| `card_triEdges` | a 3-set spans `3` edges | yes | yes |
-| `expected_triangles` | `E[#triangles] = C(n,3)·p³` | yes | yes (Thm 7) |
+## 4. Subgraph first moment (`expectation_subgraph_count_uniform`)
+For a family `𝒯` of targets each using `k` slots, E[#present targets] `= |𝒯|·p^k`.
+For triangles in `G(n,p)`: `|𝒯| = C(n,3)` triangles, each `k=3` edges, so
+E[#triangles] `= C(n,3)·p^3`.
+- Threshold check `p = c/n`: `C(n,3)·(c/n)^3 → c^3/6`, a constant — the classic
+  triangle threshold at `p ~ 1/n`. For `p = o(1/n)`, E → 0 (a.a.s. triangle-free).
 
-## SecondMoment.lean — namespace `SecondMoment`
+## 5. First-moment / union bound (`first_moment_threshold`)
+P(some target appears) `≤ ∑_T p^{|T|}` = E[#targets]. Whenever E → 0 the appearance
+probability → 0. Uniform case: if `|𝒯|·p^k → 0`, a.a.s. no copy.
 
-| Lean name | Mathematical statement | ARTICLE.md | RESEARCH_PAPER.md |
-|---|---|---|---|
-| `expect`/`variance` (def) | weighted mean / variance | yes | yes (Def 3) |
-| `variance_nonneg` | `0 ≤ Var X` | — | yes (Prop 2) |
-| `markov` | `a·P(X≥a) ≤ E X`, `X≥0` | yes | yes (Thm 8) |
-| `chebyshev` | `P(|X-EX|≥a) ≤ Var X / a²` | yes | yes (Thm 9) |
-| `second_moment_zero` | `P(X=0) ≤ Var X / (EX)²`, `EX>0` | yes | yes (Thm 10) |
+## 6. Probabilistic existence (`exists_avoiding_all`)
+If `∑_T p^{|T|} < 1` then a configuration avoiding *every* target exists. This is the
+Erdős deletion-free lower-bound engine (e.g. Ramsey `R(k,k) > 2^{k/2}` style bounds):
+with `𝒯` the monochromatic cliques and `p=1/2`, `C(n,k)·2^{1-C(k,2)} < 1` forces a
+2-colouring with no monochromatic `k`-clique.
 
-## Threshold.lean — namespace `ErdosRenyiThreshold`
-
-| Lean name | Mathematical statement | ARTICLE.md | RESEARCH_PAPER.md |
-|---|---|---|---|
-| `tendsto_expected_triangles` | `p=c/n ⇒ C(n,3)(c/n)³ → c³/6` | yes | yes (Thm 11) |
-| `subcritical_triangles_vanish` | `n·pₙ→0 ⇒ C(n,3)pₙ³ → 0` | yes | yes (Thm 12) |
-| `supercritical_triangles_blowup` | `n·pₙ→∞ ⇒ C(n,3)pₙ³ → ∞` | yes | yes (Thm 13) |
-| `isolated_blowup_below_connectivity` | `p=c/n ⇒ n(1-p)^{n-1} → ∞` | yes | yes (Thm 14) |
+## Counterexample hunt
+No counterexamples expected: every statement is an exact identity or a Markov/union
+bound with the `0 ≤ p ≤ 1` hypothesis. Formal proofs confirm (standard axioms only).
