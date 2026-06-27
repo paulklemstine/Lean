@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.FibonacciEntryPointDuality
+import Catalog.Novelty.FibonacciEntryPointDuality
 
 /-!
 # Structure of the Fibonacci rank of apparition
