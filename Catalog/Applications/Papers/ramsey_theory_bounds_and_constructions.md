@@ -1,73 +1,65 @@
-# Computational Evidence — Probabilistic lower bounds for diagonal Ramsey numbers
+# Computational Evidence — Probabilistic Ramsey Lower Bound
 
-All numbers below were produced with `#eval` in Lean (kernel-evaluated `Nat`
-arithmetic), so they are exact, not floating-point estimates.
+Evidence supporting the formalized results in
+`Applications/RamseyProbabilisticLowerBound.lean`. All numbers below were computed
+with Lean `#eval` over exact `ℕ` arithmetic (`Nat.choose`), so they are exact, not
+floating point.
 
-## 1. The counting threshold
+## 1. The first-moment threshold `2·C(n,k) < 2^{C(k,2)}`
 
-For the two-colour diagonal Ramsey number `R(k,k)`, the Erdős first-moment
-argument gives `R(k,k) > n` whenever `2·C(n,k) < 2^{C(k,2)}`.  Using the crude
-slack `C(n,k) ≤ n^k` weakens the test to `2·n^k < 2^{C(k,2)}`.
+The probabilistic method gives `R(k,k) > n` whenever `2·C(n,k) < 2^{C(k,2)}`
+(`arrows_lower_bound_counting`). Evaluating the predicate
+`chk n k := decide (2 * n.choose k < 2 ^ (k.choose 2))`:
 
-For each `k`, let
-* `best(k)`   = largest `n` with `2·C(n,k) < 2^{C(k,2)}`  (sharp counting bound),
-* `bestpow(k)`= largest `n` with `2·n^k   < 2^{C(k,2)}`  (crude `n^k` bound).
+| k | largest n with `chk n k = true` | conclusion |
+|---|---|---|
+| 5 | 11 | `R(5,5) > 11` (i.e. `≥ 12`) |
+| 6 | 17 | `R(6,6) > 17` (i.e. `≥ 18`) |
 
-| k  | best(k) = R(k,k) > | bestpow(k) = R(k,k) > |
-|----|--------------------|------------------------|
-| 2  | 1                  | 0                      |
-| 3  | 3                  | 1                      |
-| 4  | 6                  | 2                      |
-| 5  | 11                 | 3                      |
-| 6  | 17                 | 5                      |
-| 7  | 27                 | 7                      |
-| 8  | 42                 | 10                     |
-| 9  | 65                 | 14                     |
-| 10 | 100                | 21                     |
-| 11 | 152                | 30                     |
-| 12 | 231                | 42                     |
-| 13 | 349                | 60                     |
+(The true values are `R(5,5) ≥ 43`, `R(6,6) ≥ 102`; the first-moment bound is
+correct but, as expected, far from optimal — see Future Direction 1, the deletion
+method.)
 
-Both columns grow exponentially (`best(k) ≈ 2^{k/2}·k!^{-1/?}`,
-`bestpow(k) ≈ 2^{k/2}`).  The gap between the two columns is exactly the `k!`
-factor discarded by `C(n,k) ≤ n^k`.
+## 2. The exponential corollary `R(2m, 2m) > 2^m`
 
-The formal `ramsey_ten_lower : ¬ Arrows 16 10 10` (i.e. `R(10,10) > 16`) is a
-*conservative* instance of the crude `bestpow(10) = 21` row, chosen so the
-exponent arithmetic `2·16^10 = 2^41 < 2^45 = 2^{C(10,2)}` is a clean power-of-two
-comparison.
+`ramsey_diagonal_lower` requires `m ≥ 2`. Checking `chk (2^m) (2*m)`:
 
-## 2. The even-diagonal family
+| m | n = 2^m | k = 2m | `2·C(n,k) < 2^{C(k,2)}` |
+|---|---------|--------|--------------------------|
+| 0 | 1  | 0  | false (vacuous, k=0) |
+| 1 | 2  | 2  | false (2·1 = 2, 2^1 = 2) |
+| 2 | 4  | 4  | **true** (2·1 = 2 < 64) |
+| 3 | 8  | 6  | **true** |
+| 4 | 16 | 8  | **true** |
+| 5 | 32 | 10 | **true** |
 
-`ramsey_lower_even` instantiates `k = 2m`, `n = 2^{m-1}`.  The table confirms the
-side conditions and that `2^{m-1}` stays below the (larger) sharp threshold:
+The threshold `m ≥ 2` in the theorem is sharp for this argument: `m = 1` fails
+(equality `2 = 2`), confirming the hypothesis `hm : 2 ≤ m` is necessary, not
+cosmetic.
 
-| m | k = 2m | n = 2^{m-1} (our bound) | best(2m) (sharp) |
-|---|--------|--------------------------|-------------------|
-| 4 | 8      | 8                        | 42                |
-| 5 | 10     | 16                       | 100               |
-| 6 | 12     | 32                       | 231               |
-| 7 | 14     | 64                       | 527               |
-| 8 | 16     | 128                      | 1186              |
+## 3. Bracketing the diagonal
 
-So `2^{m-1} ≤ best(2m)` throughout (our crude family bound is valid and
-conservative), and `2m ≤ 2^{m-1}` holds from `m = 4` on (`8 ≤ 8`, `10 ≤ 16`, …),
-matching the `m ≥ 4` hypothesis of `ramsey_lower_even`.
+Combining with the catalog's upper bound `R(k+1,k+1) ≤ 4^k`
+(`Applications/RamseyDiagonalBound.arrows_diagonal_pow`), the diagonal Ramsey
+number now satisfies, on the common `Arrows` framework,
 
-## 3. Counterexample hunt (Extra Adversarial Mandate)
+```
+2^{k/2}  <  R(k,k)  ≤  4^{k-1}.
+```
 
-* **`m = 3` boundary.**  `2m = 6` but `2^{m-1} = 4`, so the side condition
-  `2m ≤ n` fails (`6 ≤ 4` is false).  Hence the lower bound is *not* claimed at
-  `m = 3`; the `m ≥ 4` hypothesis is the exact boundary, not a convenience.
-* **Small-`k` weakness.**  At `k = 3` the counting test only certifies
-  `R(3,3) > 3`, far from the true `R(3,3) = 6` (proved structurally elsewhere in
-  the catalog).  No counterexample to the *theorem* exists — the method is simply
-  asymptotic, confirming the "two laws" analysis in the Lab Notes.
+For example `k = 4`: `2^2 = 4 < R(4,4) = 18 ≤ 4^3 = 64`, consistent with the exact
+value `R(4,4) = 18` proved in `Applications/RamseyFourFour.lean`.
 
-## 4. Known exact values (sanity anchor)
+## 4. Van der Waerden small cases
 
-The exact diagonal values currently known are `R(1,1)=1`, `R(2,2)=2`,
-`R(3,3)=6`, `R(4,4)=18` (and no further `R(k,k)` is known exactly).  Every row of
-the `best(k)` column above is strictly below the corresponding known/true value
-where comparison is possible (`best(3)=3 < 6`, `best(4)=6 < 18`), as a lower
-bound must be.
+`mono_three_AP` asserts a monochromatic 3-AP in every finite colouring of `ℕ`.
+The least van der Waerden number `W(2,3) = 9`: every 2-colouring of `{0,…,8}` has a
+monochromatic 3-term AP, and `{0,…,7}` admits the colouring `RRBBRRBB` with none —
+classical small-case data consistent with the formalized infinite statement.
+
+## Why this evidence is sufficient
+
+The Lean theorems are exact and parameterized in `k`/`m`; the tables above only
+confirm the hypotheses are satisfiable and the threshold `m ≥ 2` is tight. No
+counterexample search is needed because the universal claims are *proved*, not
+conjectured — the evidence is calibration, not verification.

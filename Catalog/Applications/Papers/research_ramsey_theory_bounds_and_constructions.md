@@ -1,402 +1,179 @@
-# A Two-Sided Exponential Sandwich for Diagonal Ramsey Numbers via a Finite First-Moment Bound
+# Ramsey Theory: Exact Values, Erdős–Szekeres Bounds, and a Probabilistic Sandwich for the Diagonal
 
 **Author:** Aristotle
-
 **Date:** 2026-06-27
+**Domain:** Applications (Extremal & Probabilistic Combinatorics)
 
 ## Abstract
 
-We develop, on a single unified combinatorial framework, both the classical
-upper and lower bounds for diagonal Ramsey numbers, and combine them into an
-explicit two-sided exponential estimate valid on an infinite family of cases. The
-framework is the two-colour *arrow relation* $\mathrm{Arrows}\,n\,s\,t$ (the
-statement $n \to (s,t)$): every red/blue colouring of a complete graph on at
-least $n$ vertices contains a red $s$-clique or a blue $t$-clique. On the upper
-side we derive the Erdős–Szekeres binomial recursion $R(s+1,t+1) \le
-\binom{s+t}{s}$ and, via the central binomial estimate $\binom{2k}{k} \le 4^k$,
-the exponential diagonal bound $R(k+1,k+1) \le 4^k$. On the lower side we give a
-fully finite (measure-theory-free) rendering of Erdős's first-moment argument: a
-double count of red-edge sets shows that whenever $k \le n$ and
-$2\binom{n}{k} < 2^{\binom{k}{2}}$, some colouring of $K_n$ avoids all
-monochromatic $K_k$, hence $R(k,k) > n$. Specialising both bounds to the even
-diagonal $k = 2m$ yields, for every $m \ge 4$, the sandwich
-$2^{m-1} < R(2m, 2m) \le 4^{2m-1}$. We also recover the exact small values
-$R(3,3) = 6$, $R(3,4) = 9$, $R(4,4) = 18$ through explicit extremal
-constructions (the pentagon, the Möbius ladder $C_8(1,4)$, and the Paley graph on
-$\mathbb{F}_{17}$). All results have been formalised and machine-checked. We
-conclude by analysing precisely where the lower bound loses its constant factor
-and outlining a programme to close it.
-
-**Keywords:** Ramsey number, arrow relation, Erdős–Szekeres recursion,
-probabilistic method, first-moment bound, central binomial coefficient, Paley
-graph, diagonal Ramsey number.
+We present a unified, fully formalized development of finite two-color Ramsey theory built on a single primitive: the *arrow relation* $n \to (s,t)$. Within this framework we establish the three classically known exact small Ramsey numbers $R(3,3)=6$, $R(3,4)=9$, and $R(4,4)=18$; the Erdős–Szekeres recursion $R(s+1,t+1) \le R(s,t+1)+R(s+1,t)$ and its closed binomial form $R(s+1,t+1) \le \binom{s+t}{s}$; the exponential diagonal ceiling $R(k+1,k+1)\le 4^k$; the Erdős probabilistic lower bound, realized as an exact finite union-bound count, giving $R(k,k) > n$ whenever $2\binom{n}{k} < 2^{\binom{k}{2}}$; and a two-sided *exponential sandwich* $2^{m-1} < R(2m,2m) \le 4^{2m-1}$ for all $m\ge 4$. The lower-bound constructions are concrete: the pentagon $C_5$ for $R(3,3)$, a circulant graph on eight vertices for $R(3,4)$, and the Paley graph on $17$ vertices for $R(4,4)$. A handshake-parity obstruction is isolated as a reusable lemma underlying the $R(3,4)$ upper bound. We also record the connection to van der Waerden's theorem on monochromatic arithmetic progressions as the arithmetic shadow of the Hales–Jewett theorem. Every result has been formally verified.
 
 ## 1. Introduction
 
-Ramsey theory quantifies the principle that sufficiently large combinatorial
-structures cannot be wholly disordered. The prototypical objects are the
-*Ramsey numbers* $R(s,t)$: the least number of vertices forcing, in any
-two-colouring of the edges of a complete graph, a red clique of size $s$ or a
-blue clique of size $t$. Although $R(s,t)$ is finite for all $s,t$ (Ramsey 1930;
-Erdős–Szekeres 1935), exact values are known only for a handful of small cases,
-and the asymptotic growth of the diagonal sequence $R(k,k)$ is among the most
-notorious open problems in combinatorics: it is known only that
-$$\sqrt 2 \;\le\; \liminf_{k\to\infty} R(k,k)^{1/k} \;\le\; \limsup_{k\to\infty} R(k,k)^{1/k} \;\le\; 4,$$
-and closing this gap in the base has resisted effort since Erdős's 1947 lower
-bound.
+Ramsey theory makes precise the slogan that *complete disorder is impossible*: in any sufficiently large structure, any finite coloring must contain a highly ordered monochromatic substructure. The prototypical setting colors the edges of a complete graph with two colors (red/blue) and seeks monochromatic cliques.
 
-This paper has three goals. First, to develop the upper and lower theory on a
-**single framework** — the arrow relation — so that both bounds become
-statements of the same form and can be combined directly. Second, to render the
-lower bound **entirely finite**: we replace the usual probabilistic phrasing (a
-uniformly random colouring avoids all bad cliques with positive probability) by
-an explicit double count of edge subsets, in which a union bound over $k$-sets is
-compared against the total number of colourings. Third, to package both bounds as
-an **explicit infinite family** of two-sided exponential estimates, exposing the
-known constant-factor gap in concrete form and isolating the single arithmetic
-step responsible for it.
+Despite the elementary statement, exact Ramsey numbers are notoriously hard. Only finitely many diagonal and off-diagonal values are known, and the asymptotic growth rate of the diagonal numbers $R(k,k)$ remains open after eight decades, trapped between $\sqrt 2$ and $4$ as a base of exponential growth.
 
-### 1.1 Summary of results
+This paper formalizes the foundational layer of the theory on one framework and connects:
+- exact small values, via explicit extremal constructions;
+- the Erdős–Szekeres upper bounds, via a clean inductive recursion;
+- the probabilistic lower bound, via an exact finite counting (union-bound) argument; and
+- the resulting two-sided sandwich for the diagonal.
 
-- **`arrows_recursion` / `arrows_binomial_bound`** (§3): $\binom{s+t}{s} \to (s+1,t+1)$, i.e. $R(s+1,t+1) \le \binom{s+t}{s}$.
-- **`central_choose_le_four_pow`** (§4): $\binom{2k}{k} \le 4^k$.
-- **`arrows_diagonal_pow`** (§4): $4^k \to (k+1,k+1)$, i.e. $R(k+1,k+1) \le 4^k$.
-- **`not_arrows_of_counting`** (§5): if $k \le n$ and $2\binom{n}{k} < 2^{\binom{k}{2}}$ then $\lnot\,(n \to (k,k))$, i.e. $R(k,k) > n$.
-- **`not_arrows_of_pow`** (§5): the crude corollary using $\binom{n}{k} \le n^k$.
-- **`ramsey_ten_lower`** (§5): $R(10,10) > 16$.
-- **`ramsey_lower_even` / `arrows_upper_even` / `ramsey_even_sandwich`** (§6): for $m \ge 4$, $2^{m-1} < R(2m,2m) \le 4^{2m-1}$.
-- **`ramsey_three_three`, `ramsey_three_four`, `ramsey_four_four`** (§7): $R(3,3)=6$, $R(3,4)=9$, $R(4,4)=18$.
+### 1.1 Notation and conventions
+
+A two-coloring of the complete graph on a vertex set $V$ is encoded by a single `SimpleGraph` $G$ on $V$: edges of $G$ are **red**, edges of the complement $G^{c}$ are **blue**. A red $s$-clique is an $s$-clique of $G$; a blue $t$-clique is an $s$-clique of $G^c$. We write $K_r$ for a clique on $r$ vertices and $\binom{n}{k}$ for the binomial coefficient. All quantities are natural numbers unless noted.
 
 ## 2. The arrow framework
 
-### 2.1 Encoding colourings
+**Definition 2.1 (Arrow relation).** For naturals $n, s, t$, we say $n \to (s,t)$, formalized as `Arrows n s t`, if for every vertex type $V$, every coloring $G$ on $V$, and every finite vertex set $W \subseteq V$ with $|W| \ge n$, there exists $S \subseteq W$ that is a red $s$-clique ($G$-clique) or a blue $t$-clique ($G^c$-clique).
 
-A two-colouring of the complete graph on a vertex set $V$ is encoded by a single
-simple graph $G$ on $V$: the edges of $G$ are the **red** edges and the edges of
-its complement $G^{c}$ are the **blue** edges. A red $s$-clique is then a clique
-of size $s$ in $G$, and a blue $t$-clique is a clique of size $t$ in $G^{c}$.
-This one-graph encoding is what makes colour-swap symmetry (passing to $G^{c}$)
-trivial to state and apply.
+Quantifying over an arbitrary ambient type together with a finite vertex set $W$ bakes monotonicity in the number of vertices directly into the definition and makes the two recursive calls of the Erdős–Szekeres argument live on subsets of one common vertex set. The Ramsey number is $R(s,t) = \min\{ n : n \to (s,t)\}$; statements "$R(s,t) \le n$" become $n \to (s,t)$ and "$R(s,t) > n$" become $\neg\,(n \to (s,t))$.
 
-### 2.2 The arrow relation
+**Lemma 2.2 (Vertex monotonicity, `Arrows.mono`).** If $n \to (s,t)$ and $n \le n'$, then $n' \to (s,t)$.
 
-**Definition (`Arrows`).** For naturals $n, s, t$, the relation
-$\mathrm{Arrows}\,n\,s\,t$ (written $n \to (s,t)$) holds when, for every
-decidable-equality vertex type $V$, every simple graph $G$ on $V$, and every
-finite vertex set $W \subseteq V$ with $|W| \ge n$, there is either a finset
-$S \subseteq W$ that is a red $s$-clique ($G$.IsNClique $s$ $S$) or a finset
-$S \subseteq W$ that is a blue $t$-clique ($G^{c}$.IsNClique $t$ $S$).
+*Proof.* Immediate: a vertex set of size $\ge n'$ has size $\ge n$. $\square$
 
-Quantifying over an arbitrary ambient vertex type together with a finite subset
-$W$ has two advantages: it bakes monotonicity in the number of vertices directly
-into the definition, and it makes the Erdős–Szekeres recursion easy to state,
-since the two recursive calls live on subsets of the *same* vertex set.
+**Lemma 2.3 (Color symmetry, `arrows_symm` / `arrows_iff_symm`).** $n \to (s,t)$ if and only if $n \to (t,s)$.
 
-**Definition (Ramsey number).** $R(s,t)$ is the least $n$ with $n \to (s,t)$. Thus
-"$n \to (s,t)$" means $R(s,t) \le n$, and "$\lnot\,(n \to (s,t))$" means
-$R(s,t) > n$.
-
-**Lemma (`Arrows.mono`, monotonicity).** If $n \to (s,t)$ and $n \le n'$ then
-$n' \to (s,t)$.
-*Proof sketch.* A vertex set of size $\ge n'$ has size $\ge n$, so the hypothesis
-applies verbatim. $\square$
-
-**Lemma (`arrows_symm`, colour-swap symmetry).** If $n \to (s,t)$ then
-$n \to (t,s)$; consequently $\mathrm{Arrows}\,n\,s\,t \iff \mathrm{Arrows}\,n\,t\,s$
-(`arrows_iff_symm`) and $R(s,t) = R(t,s)$.
-*Proof sketch.* Apply $n \to (s,t)$ to the complement graph $G^{c}$. A red
-$s$-clique of $G^{c}$ is a blue $s$-clique of $G$; a blue $t$-clique of $G^{c}$ is
-a clique of $G^{cc} = G$, i.e. a red $t$-clique of $G$. Swapping the two output
-cases gives $n \to (t,s)$. $\square$
+*Proof sketch.* Apply the hypothesis to the complementary coloring $G^c$; since $(G^c)^c = G$, a red $t$-clique/blue $s$-clique for $G^c$ is a blue $t$-clique/red $s$-clique for $G$. Hence Ramsey numbers are symmetric: $R(s,t)=R(t,s)$. $\square$
 
 ## 3. The Erdős–Szekeres recursion and the binomial bound
 
-**Lemma (`arrows_step`, inductive step).** If $m,n > 0$, $m \to (s,t+1)$, and
-$n \to (s+1,t)$, then $(m+n) \to (s+1,t+1)$.
+**Theorem 3.1 (Inductive step, `arrows_step`).** If $m \to (s, t+1)$ and $n \to (s+1, t)$ with $m, n > 0$, then $(m+n) \to (s+1, t+1)$.
 
-*Proof sketch.* Take a colouring of $W$ with $|W| \ge m+n$ and fix a vertex
-$v \in W$. Partition the remaining vertices by the colour of their edge to $v$:
-let $R$ be the red-neighbours and $B$ the blue-neighbours, so
-$|R| + |B| = |W| - 1 \ge m + n - 1$, forcing $|R| \ge m$ or $|B| \ge n$.
+*Proof sketch.* Let $|W| \ge m+n$ and fix $v \in W$. Partition $W \setminus \{v\}$ into the red-neighborhood $R_v$ and blue-neighborhood $B_v$ of $v$. Since $|R_v| + |B_v| \ge m+n-1$, either $|R_v| \ge m$ or $|B_v| \ge n$.
+- If $|R_v| \ge n$ in the appropriate feed: applying $n \to (s+1,t)$ to $R_v$ yields a red $K_{s+1}$ (done) or a blue $K_t$; the latter together with $v$ (blue to all of $B_v$) — handled symmetrically — extends a clique by one vertex.
+- The two feeds are arranged so that a clique found among $v$'s same-color neighbors extends through $v$ to the demanded size, otherwise the opposite-color clique is already large enough.
 
-- If $|R| \ge m$, apply $m \to (s,t+1)$ inside $R$. Either we get a blue
-  $(t+1)$-clique (done), or a red $s$-clique $S \subseteq R$; since every vertex
-  of $R$ is red-adjacent to $v$, the set $S \cup \{v\}$ is a red $(s+1)$-clique.
-- If $|B| \ge n$, apply $n \to (s+1,t)$ inside $B$. Either we get a red
-  $(s+1)$-clique (done), or a blue $t$-clique $S \subseteq B$; since every vertex
-  of $B$ is blue-adjacent to $v$, the set $S \cup \{v\}$ is a blue
-  $(t+1)$-clique. $\square$
+Threading the two thresholds gives the bound on $|W|$ needed to force a red $K_{s+1}$ or blue $K_{t+1}$. $\square$
 
-**Base cases.** A single vertex is simultaneously a red and a blue $1$-clique,
-giving `arrows_one_red`: $1 \to (1,b)$, and `arrows_one_blue`: $1 \to (a,1)$.
+**Base cases (`arrows_one_red`, `arrows_one_blue`).** $1 \to (1, b)$ and $1 \to (a, 1)$: a single vertex is a (trivial) $1$-clique in either color.
 
-**Theorem (`arrows_recursion` / `arrows_binomial_bound`, binomial bound).** For
-all $s,t$,
-$$\binom{s+t}{s} \to (s+1,\,t+1), \qquad\text{i.e.}\qquad R(s+1,t+1) \le \binom{s+t}{s}.$$
-*Proof sketch.* Double induction on $s$ and $t$. The base cases use
-`arrows_one_red` and `arrows_one_blue`. For the step, combine the two smaller
-instances $\binom{(s-1)+t}{s-1} \to (s,t+1)$ and $\binom{s+(t-1)}{s} \to (s+1,t)$
-via `arrows_step`; the vertex thresholds add by Pascal's rule
-$$\binom{s+t}{s} = \binom{s-1+t}{s-1} + \binom{s+t-1}{s}. \qquad\square$$
+**Theorem 3.2 (Binomial bound, `arrows_recursion` / `arrows_binomial_bound`).** For all $s,t$,
+$$ \binom{s+t}{s} \to (s+1,\, t+1), \qquad\text{i.e.}\qquad R(s+1, t+1) \le \binom{s+t}{s}. $$
 
-## 4. The exponential diagonal upper bound
+*Proof sketch.* Double induction on $s$ and $t$. The base cases use Lemma 3 of base cases above. The step combines `arrows_step` with Pascal's rule $\binom{s+t}{s} = \binom{(s-1)+t}{s-1} + \binom{s+(t-1)}{s}$, matching the additive recursion of `arrows_step` to the additive recursion of binomial coefficients. $\square$
 
-**Theorem (`central_choose_le_four_pow`).** For all $k$, $\binom{2k}{k} \le 4^k$.
-*Proof sketch.* The central coefficient is a single term of the binomial row-sum
-$$\sum_{i=0}^{2k} \binom{2k}{i} = 2^{2k} = 4^k,$$
-and all terms are nonnegative, so $\binom{2k}{k} \le \sum_i \binom{2k}{i} = 4^k$
-by `Finset.single_le_sum` and `Nat.sum_range_choose`. $\square$
+## 4. Exact small values
 
-**Theorem (`arrows_diagonal_pow`, diagonal upper bound).** For all $k$,
-$$4^k \to (k+1,\,k+1), \qquad\text{i.e.}\qquad R(k+1,k+1) \le 4^k.$$
-*Proof sketch.* `arrows_recursion k k` gives $\binom{k+k}{k} \to (k+1,k+1)$.
-Since $\binom{k+k}{k} = \binom{2k}{k} \le 4^k$, monotonicity `Arrows.mono` raises
-the threshold from $\binom{2k}{k}$ to $4^k$. $\square$
+### 4.1 $R(3,3)=6$
 
-This is the classical first non-trivial ceiling on diagonal Ramsey growth. It is
-not sharp for small cases — at $k=2$ it gives $R(3,3) \le 16$ versus the true
-$6$, and at $k=3$ it gives $R(4,4) \le 64$ versus the true $18$ — which is
-precisely why the exact small values require dedicated constructions (§7).
+**Theorem 4.1 (`ramsey_three_three`).** $6 \to (3,3)$ and $\neg\,(5 \to (3,3))$; equivalently $R(3,3)=6$.
 
-## 5. The finite first-moment lower bound
+*Upper bound.* The instance $s=t=2$ of Theorem 3.2 gives $\binom{4}{2}=6 \to (3,3)$ (`arrows_three_three`).
 
-We now give the lower bound in fully finite form. Fix a vertex set $V = \mathrm{Fin}\,n$
-and let $\mathrm{Gr}$ denote the finset of all *off-diagonal pairs* (the
-potential edges), so $|\mathrm{Gr}| = \binom{n}{2}$. A colouring is encoded by its
-set $R \subseteq \mathrm{Gr}$ of red edges; there are $2^{\binom{n}{2}}$ such
-colourings in total.
+*Lower bound (`not_arrows_five_three_three`).* The **pentagon** $C_5$ on $\mathbb{Z}/5$ (edges $a \sim a+1$) has no triangle (`pentagon_no_triangle`), and its complement is again a $5$-cycle (the pentagram), hence also triangle-free (`pentagon_compl_no_triangle`). Thus $C_5$ is a $5$-vertex coloring with no monochromatic $K_3$, witnessing $5 \not\to (3,3)$. $\square$
 
-### 5.1 Counting lemmas
+### 4.2 $R(3,4)=9$
 
-**Lemma (`card_filter_superset`, up-set cardinality).** For finsets
-$S \subseteq \mathrm{Gr}$, the number of subsets $A \subseteq \mathrm{Gr}$ with
-$S \subseteq A$ is
-$$\#\{A \subseteq \mathrm{Gr} : S \subseteq A\} = 2^{\,|\mathrm{Gr}| - |S|}.$$
-*Proof sketch.* Such $A$ are in bijection with arbitrary subsets of
-$\mathrm{Gr} \setminus S$ (choose the freely-varying edges); the Boolean lattice
-on a set of size $|\mathrm{Gr}| - |S|$ has $2^{\,|\mathrm{Gr}|-|S|}$ elements. $\square$
+**Theorem 4.2 (`ramsey_three_four`).** $9 \to (3,4)$ and $\neg\,(8 \to (3,4))$; equivalently $R(3,4)=9$.
 
-**Lemma (`card_filter_disjoint`, down-set via complement involution).** The
-number of subsets $A \subseteq \mathrm{Gr}$ disjoint from a fixed $S \subseteq
-\mathrm{Gr}$ equals the number containing $S$, namely $2^{\,|\mathrm{Gr}|-|S|}$.
-*Proof sketch.* The complement involution $A \mapsto \mathrm{Gr} \setminus A$ on
-the powerset of $\mathrm{Gr}$ is a bijection exchanging the events "$A \supseteq S$"
-and "$A \cap S = \varnothing$"; apply `card_filter_superset`. $\square$
+*Upper bound (`arrows_three_four`).* Suppose a coloring of $9$ vertices has no red triangle and no blue $K_4$. A local analysis of any vertex $v$ forces its red-degree to be exactly $3$: too many red neighbors create a red triangle (since among $\ge 4$ red neighbors a red edge would form a triangle and otherwise they would be $4$ mutually blue vertices, a blue $K_4$), and too few red neighbors leave $\ge 6$ blue neighbors among which a blue $K_4$ or red triangle appears. Then *every* one of the $9$ vertices has odd red-degree, contradicting the parity obstruction below.
 
-For a $k$-set $T$ of vertices, write $\mathrm{edgesOn}\,T$ for the
-$\binom{k}{2}$ internal pairs. The colourings making $T$ a **red** $K_k$ are
-exactly those with $\mathrm{edgesOn}\,T \subseteq R$; by `card_filter_superset`
-there are $2^{\binom{n}{2} - \binom{k}{2}}$ of them. The colourings making $T$ a
-**blue** $K_k$ are those with $\mathrm{edgesOn}\,T$ disjoint from $R$; by
-`card_filter_disjoint` there are likewise $2^{\binom{n}{2} - \binom{k}{2}}$.
+*Parity obstruction (`red_degree_parity_obstruction`).* For any coloring $G$ and finite $W$ with $|W|$ **odd**, it is impossible that every $v \in W$ has odd red-degree inside $W$. *Proof:* the sum $\sum_{v \in W} \deg^{\mathrm{red}}_W(v)$ counts each red edge twice, hence is even (`red_nbrs_sum_even`); but a sum of an odd number of odd terms is odd — contradiction. A corollary (`no_odd_regular_colouring`): if $n\cdot d$ is odd, no coloring of $n$ vertices can be red-$d$-regular.
 
-### 5.2 The union bound and the existence of a good colouring
+*Lower bound (`not_arrows_eight_three_four`).* The circulant graph on $\mathbb{Z}/8$ with $a \sim b$ iff $a-b \in \{1,4\}$ (`graph34`) has no red triangle (`graph34_no_red_triangle`) and no blue $K_4$ (`graph34_no_blue_K4`), witnessing $8 \not\to (3,4)$. $\square$
 
-**Lemma (`exists_good_coloring`).** If $k \le n$ and
-$2\binom{n}{k} < 2^{\binom{k}{2}}$, then there exists a red-edge set
-$R \subseteq \mathrm{Gr}$ such that no $k$-set $T$ has
-$\mathrm{edgesOn}\,T \subseteq R$ (no red $K_k$) and no $k$-set $T$ has
-$\mathrm{edgesOn}\,T$ disjoint from $R$ (no blue $K_k$).
+### 4.3 $R(4,4)=18$
 
-*Proof sketch.* The set of **bad** colourings is the union, over the
-$\binom{n}{k}$ choices of $T$, of the red-bad events
-$\{A : \mathrm{edgesOn}\,T \subseteq A\}$ and the blue-bad events
-$\{A : \mathrm{edgesOn}\,T \cap A = \varnothing\}$. By the two counting lemmas and
-the union bound,
-$$\#\{\text{bad colourings}\} \;\le\; 2\,\binom{n}{k}\, 2^{\binom{n}{2} - \binom{k}{2}}.$$
-Comparing with the total count $2^{\binom{n}{2}}$, the bad set fails to cover all
-colourings precisely when
-$$2\,\binom{n}{k}\, 2^{\binom{n}{2} - \binom{k}{2}} \;<\; 2^{\binom{n}{2}}
-\quad\Longleftrightarrow\quad 2\,\binom{n}{k} \;<\; 2^{\binom{k}{2}}.$$
-Hence some colouring is good. $\square$
+**Theorem 4.3 (`ramsey_four_four`).** $18 \to (4,4)$ and $\neg\,(17 \to (4,4))$; equivalently $R(4,4)=18$.
 
-**Theorem (`not_arrows_of_counting`, first-moment lower bound).** If $k \le n$
-and $2\binom{n}{k} < 2^{\binom{k}{2}}$, then $\lnot\,(n \to (k,k))$; equivalently
-$R(k,k) > n$.
-*Proof sketch.* The good colouring of `exists_good_coloring` is, when read as a
-red graph $G$ on $\mathrm{Fin}\,n$, a witness that the arrow relation fails: it
-has neither a red $K_k$ nor a blue $K_k$ on the full vertex set. $\square$
+*Upper bound (`arrows_four_four`).* By color symmetry (Lemma 2.3), $R(4,3)=R(3,4)=9$ (`arrows_four_three`). Feeding $R(3,4)\le 9$ and $R(4,3)\le 9$ into the Erdős–Szekeres step gives $R(4,4) \le 9+9 = 18$.
 
-The hypothesis $k \le n$ is recorded explicitly so that $\mathrm{edgesOn}\,T$ has
-the expected $\binom{k}{2}$ edges and the counting is exact; for $k > n$ the
-conclusion is still true but for the trivial reason that $K_n$ contains no
-$k$-clique at all.
+*Lower bound (`not_arrows_seventeen_four_four`).* The **Paley graph** on $17$ vertices: take $V = \mathbb{Z}/17$ and the quadratic-residue set $Q = \{1,2,4,8,9,13,15,16\}$, with $a \sim b$ iff $a-b \in Q$ (`paley17`). It contains no red $K_4$ (`paley17_no_red_K4`) and, being self-complementary, no blue $K_4$ (`paley17_no_blue_K4`), witnessing $17 \not\to (4,4)$. $\square$
 
-**Theorem (`not_arrows_of_pow`, exponential corollary).** If $k \le n$ and
-$2\,n^k < 2^{\binom{k}{2}}$, then $\lnot\,(n \to (k,k))$.
-*Proof sketch.* Crudely $\binom{n}{k} \le n^k$, so the hypothesis implies
-$2\binom{n}{k} < 2^{\binom{k}{2}}$; apply `not_arrows_of_counting`. $\square$
+## 5. The exponential diagonal bound
 
-**Corollary (`ramsey_ten_lower`).** $R(10,10) > 16$.
-*Proof sketch.* Take $n = 16$, $k = 10$. Then $k \le n$ and
-$2\binom{16}{10} = 2 \cdot 8008 = 16016 < 2^{45} = 2^{\binom{10}{2}}$, so
-`not_arrows_of_counting` gives $\lnot\,(16 \to (10,10))$. $\square$
+**Lemma 5.1 (Central binomial estimate, `central_choose_le_four_pow`).** $\binom{2k}{k} \le 4^k$.
 
-## 6. The two-sided exponential sandwich
+*Proof.* $\binom{2k}{k}$ is a single term of the row sum $\sum_{i=0}^{2k}\binom{2k}{i} = 2^{2k} = 4^k$, and all terms are nonnegative. $\square$
 
-We now pinch the diagonal Ramsey number between the two exponentials on an
-explicit infinite family, specialising to the even diagonal $k = 2m$ with vertex
-count $n = 2^{m-1}$.
+**Theorem 5.2 (Diagonal ceiling, `arrows_diagonal_pow`).** For all $k$, $\;4^k \to (k+1, k+1)$, i.e. $R(k+1,k+1) \le 4^k$.
 
-### 6.1 Arithmetic inputs
+*Proof.* Theorem 3.2 with $s=t=k$ gives $\binom{2k}{k} \to (k+1,k+1)$; Lemma 5.1 and vertex monotonicity (Lemma 2.2) raise the threshold to $4^k$. $\square$
 
-**Lemma (`two_mul_le_two_pow`).** For $m \ge 4$, $2m \le 2^{m-1}$.
-*Proof sketch.* The side condition $k \le n$ of the lower bound, here
-$2m \le 2^{m-1}$. It holds at $m=4$ ($8 \le 8$) and the right side then doubles
-each step while the left grows by $2$, so it persists for all $m \ge 4$;
-formally, an induction with $1 \le 2^{m}$. The bound *fails* at $m = 3$
-($6 \le 4$ is false), which is the precise boundary of the argument. $\square$
+For $k=2$ this yields $R(3,3)\le 16$ and for $k=3$ it yields $R(4,4)\le 64$ — far above the exact values $6$ and $18$, quantifying how much sharper the dedicated arguments of Section 4 are than the generic exponential bound.
 
-**Lemma (`prob_exponent_lt`).** For $m \ge 2$,
-$2\,(2^{m-1})^{2m} < 2^{\binom{2m}{2}}$.
-*Proof sketch.* This is the crude exponent inequality
-$2\,n^k < 2^{\binom{k}{2}}$ at $n = 2^{m-1}$, $k = 2m$. Taking base-2 logarithms,
-it reduces to $(m-1)\cdot 2m + 1 < \binom{2m}{2} = m(2m-1)$, i.e.
-$2m^2 - 2m + 1 < 2m^2 - m$, i.e. $1 < m$. Using
-$\binom{2m}{2} = m(2m-1)$ (`Nat.choose_two_right`) and monotonicity of $2^{(\cdot)}$
-finishes the proof. $\square$
+## 6. The probabilistic lower bound (exact finite count)
 
-### 6.2 The two bounds and the sandwich
+We realize the Erdős first-moment argument as an exact count over colorings, avoiding measure theory entirely. Fix $n$ and work over $V = \mathrm{Fin}\,n$. A coloring is a subset $R$ of the edge set; there are $2^{\binom{n}{2}}$ of them.
 
-**Theorem (`ramsey_lower_even`, lower bound).** For $m \ge 4$,
-$\lnot\,(2^{m-1} \to (2m,2m))$; equivalently $R(2m,2m) > 2^{m-1}$.
-*Proof sketch.* Apply `not_arrows_of_pow` with $n = 2^{m-1}$, $k = 2m$, supplying
-$k \le n$ from `two_mul_le_two_pow` and the exponent inequality from
-`prob_exponent_lt`. $\square$
+**Definitions.** For $T \subseteq V$, `edgesOn T` is the set of $\binom{|T|}{2}$ edges with both endpoints in $T$ (`card_edgesOn`). `graphOf R` is the coloring whose red edges are $R$. The translation lemmas `isNClique_graphOf_iff` and `isNClique_compl_graphOf_iff` identify a red (resp. blue) $k$-clique on $T$ with "`edgesOn T` $\subseteq R$" (resp. "`edgesOn T` disjoint from $R$").
 
-**Theorem (`arrows_upper_even`, upper bound).** For $m \ge 1$,
-$4^{2m-1} \to (2m,2m)$; equivalently $R(2m,2m) \le 4^{2m-1}$.
-*Proof sketch.* This is the colour-diagonal of `arrows_diagonal_pow` at
-$k := 2m-1$: that theorem gives $4^{2m-1} \to ((2m-1)+1,\,(2m-1)+1)$, and
-$(2m-1)+1 = 2m$ since $m \ge 1$. $\square$
+**Counting lemmas.** For $S \subseteq Gr$, the number of subsets of $Gr$ containing $S$ is $2^{|Gr|-|S|}$ (`card_filter_superset`), and the number disjoint from $S$ is likewise $2^{|Gr|-|S|}$ (`card_filter_disjoint`).
 
-**Theorem (`ramsey_even_sandwich`, two-sided sandwich).** For every $m \ge 4$,
-$$2^{\,m-1} \;<\; R(2m,\,2m) \;\le\; 4^{\,2m-1}.$$
-*Proof sketch.* Conjunction of `ramsey_lower_even` and `arrows_upper_even`. The
-interval is non-degenerate because $2^{m-1} < 4^{2m-1}$ for all $m \ge 4$. $\square$
+**Lemma 6.1 (Good coloring exists, `exists_good_coloring`).** If $k \le n$ and $2\binom{n}{k} < 2^{\binom{k}{2}}$, then there is a coloring $R$ such that no $k$-set has all edges red and no $k$-set has all edges blue.
 
-### 6.3 Discussion: the visible gap
+*Proof sketch.* Each fixed $k$-set $T$ is "all red" in exactly $2^{\binom{n}{2}-\binom{k}{2}}$ colorings and "all blue" in the same number. Summing over the $\binom{n}{k}$ many $k$-sets, the number of colorings admitting *some* monochromatic $k$-clique is at most
+$$ \sum_{|T|=k}\Big(2^{\binom{n}{2}-\binom{k}{2}} + 2^{\binom{n}{2}-\binom{k}{2}}\Big) = 2\binom{n}{k}\, 2^{\binom{n}{2}-\binom{k}{2}} < 2^{\binom{n}{2}}, $$
+using the hypothesis $2\binom{n}{k} < 2^{\binom{k}{2}}$. Since the bad colorings are strictly fewer than all $2^{\binom{n}{2}}$ colorings, a good coloring exists. $\square$
 
-Rewriting the exponents in terms of the clique size $k = 2m$, the lower wall is
-$2^{(k/2)-1}$ and the upper wall is $4^{2m-1} = 2^{2(k-1)}$. The two differ by
-roughly a factor of $4$ in the exponent — exactly the still-open constant in
-$R(k,k)^{1/k} \in [\sqrt 2, 4]$. Crucially, the probabilistic side is *loss-free
-in form*: the union bound in `exists_good_coloring` is an honest, tight
-inequality. All slack between the proven base and the optimal $\sqrt 2$ resides
-in the single crude step $\binom{n}{k} \le n^k$ used to pass from
-`not_arrows_of_counting` to `not_arrows_of_pow`, which discards a factor of
-$k!$. Reinstating $\binom{n}{k} \le n^k/k!$ would upgrade the present
-$2^{(k/2)-1}$ family to the textbook-optimal $2^{k/2}$ with no change to the
-counting core.
+**Theorem 6.2 (Probabilistic lower bound, `not_arrows_of_counting`).** If $k\le n$ and $2\binom{n}{k} < 2^{\binom{k}{2}}$, then $\neg\,(n \to (k,k))$, i.e. $R(k,k) > n$.
 
-## 7. Exact small values
+*Proof.* Apply Lemma 6.1 to obtain $R$; the coloring `graphOf R` has no monochromatic $K_k$ by the translation lemmas, contradicting $n \to (k,k)$. $\square$
 
-For completeness we record the three exact diagonal-adjacent values, each proved
-by pairing the binomial/recursion upper bound with an explicit extremal
-construction. These are sharper than the generic $4^k$ ceiling and showcase the
-structural (rather than asymptotic) regime.
+**Corollary 6.3 (Clean exponential form, `not_arrows_of_pow`).** Using $\binom{n}{k} \le n^k$: if $k\le n$ and $2 n^k < 2^{\binom{k}{2}}$, then $R(k,k) > n$.
 
-**Theorem (`ramsey_three_three`).** $R(3,3) = 6$: $6 \to (3,3)$ and
-$\lnot\,(5 \to (3,3))$.
-*Proof sketch.* Upper bound: the $s=t=2$ instance of `arrows_recursion`, since
-$\binom{4}{2} = 6$. Lower bound: the **pentagon** $C_5$ (adjacency $a+1 = b$
-mod $5$) has neither a red triangle (`pentagon_no_triangle`) nor a blue triangle
-(`pentagon_compl_no_triangle`, its complement being again a $5$-cycle); both are
-checked by finite decision. $\square$
+**Corollary 6.4 (`ramsey_ten_lower`).** $R(10,10) > 16$, since $2\cdot 16^{10} = 2^{41} < 2^{45} = 2^{\binom{10}{2}}$.
 
-**Theorem (`ramsey_three_four`).** $R(3,4) = 9$: $9 \to (3,4)$ and
-$\lnot\,(8 \to (3,4))$.
-*Proof sketch.* The binomial bound only gives $R(3,4) \le \binom{5}{2} = 10$; the
-sharp value $9$ uses a **parity refinement**. In a hypothetical $8$-vertex-free
-colouring on $9$ vertices, every vertex would need red-degree exactly $3$, making
-the red graph $3$-regular on $9$ vertices — impossible, since the handshake sum
-$9 \cdot 3 = 27$ is odd. Lower bound: the **Möbius ladder** $C_8(1,4)$ on
-$\mathbb{Z}/8$ (difference set $\{\pm 1, 4\}$) is triangle-free with $K_4$-free
-complement, verified by decision. $\square$
+Asymptotically, $2\binom{n}{k} < 2^{\binom{k}{2}}$ holds up to $n \approx 2^{k/2}$, recovering the classical bound $R(k,k) > (1-o(1))\,\tfrac{k}{e\sqrt 2}\,2^{k/2}$; the formalized version isolates the clean exponential threshold $n \approx 2^{k/2}$.
 
-**Theorem (`ramsey_four_four`).** $R(4,4) = 18$: $18 \to (4,4)$ and
-$\lnot\,(17 \to (4,4))$.
-*Proof sketch.* Upper bound: colour symmetry (`arrows_symm`) turns $R(3,4)=9$
-into $R(4,3)=9$ (`arrows_four_three`), and a single `arrows_step` gives
-$9 + 9 \to (4,4)$, i.e. `arrows_four_four`. Lower bound: the **Paley graph** on
-$\mathbb{F}_{17}$, with $a \sim b$ iff $a-b$ is a nonzero quadratic residue
-$\{1,2,4,8,9,13,15,16\}$. Since $17 \equiv 1 \pmod 4$ the residue set is
-symmetric, so the graph is well-defined and self-complementary; a direct check
-(`not_arrows_seventeen_four_four`) shows it has no red $K_4$ and no blue $K_4$. $\square$
+## 7. The exponential sandwich for the diagonal
 
-## 8. Algorithms
+We combine Sections 5 and 6 on the even diagonal, instantiating $k = 2m$ and $n = 2^{m-1}$.
 
-The constructive content of the paper yields three concrete algorithms.
+**Lemma 7.1 (Side conditions, `two_mul_le_two_pow`, `prob_exponent_lt`).** For $m \ge 4$, $2m \le 2^{m-1}$; and for $m \ge 2$, $2\,(2^{m-1})^{2m} < 2^{\binom{2m}{2}}$.
 
-**(A) Erdős–Szekeres recursion table.** Compute upper bounds
-$U(s,t) = \binom{s+t-2}{s-1}$ for all small $s,t$ by dynamic programming on
-Pascal's recurrence $U(s,t) \le U(s-1,t) + U(s,t-1)$ with base $U(1,t)=U(s,1)=1$.
-This reproduces the binomial bound table and the diagonal ceiling $R(k+1,k+1) \le 4^k$.
+**Theorem 7.2 (Lower bound, `ramsey_lower_even`).** For $m\ge 4$, $\neg\,(2^{m-1} \to (2m,2m))$, i.e. $R(2m,2m) > 2^{m-1}$.
 
-**(B) First-moment lower-bound certifier.** Given $k$, find the largest $n$ with
-$2\binom{n}{k} < 2^{\binom{k}{2}}$ (and $k \le n$). Increment $n$ from $k$ while
-the inequality holds; the last passing $n$ certifies $R(k,k) > n$. Big-integer
-arithmetic makes this exact; complexity is $O(n)$ binomial evaluations per $k$.
+*Proof.* Corollary 6.3 with $n = 2^{m-1}$, $k = 2m$, using Lemma 7.1. $\square$
 
-**(C) Extremal-graph verifier.** Given a circulant/Paley construction on
-$\mathbb{Z}/N$ with difference set $D$, verify clique-freeness of both colours by
-exhaustively testing every $\binom{N}{c}$ candidate clique of the relevant size
-$c$. This certifies the lower bounds $R(3,3)>5$, $R(3,4)>8$, $R(4,4)>17$.
+**Theorem 7.3 (Upper bound, `arrows_upper_even`).** For $m\ge 1$, $4^{2m-1} \to (2m,2m)$, i.e. $R(2m,2m) \le 4^{2m-1}$.
 
-## 9. Applications
+*Proof.* The color-diagonal of Theorem 5.2 at $k := 2m-1$. $\square$
 
-The probabilistic method born from the Ramsey lower bound is now foundational
-across combinatorics and theoretical computer science: randomized algorithms,
-expander and code constructions, hardness of approximation, and probabilistic
-combinatorics all descend from the first-moment idea formalised here. Ramsey-type
-guarantees underpin lower bounds for data structures and communication
-complexity, and the diagonal sandwich is a clean testbed for studying the
-$[\sqrt 2, 4]$ base gap. The finite double-count presentation, free of measure
-theory, is also well-suited to formal verification and to teaching the
-probabilistic method without probability prerequisites.
+**Theorem 7.4 (Sandwich, `ramsey_even_sandwich`).** For all $m \ge 4$,
+$$ 2^{\,m-1} \;<\; R(2m,\,2m) \;\le\; 4^{\,2m-1}. $$
 
-## 10. Discussion and future work
+Writing $k=2m$, the lower bound is $2^{k/2-1}$ and the upper bound $2^{2(k-1)}$; the exponents differ by a factor of about $4$. This is exactly the still-open constant in $\lim_k R(k,k)^{1/k} \in [\sqrt 2,\,4]$. The probabilistic side is loss-free in *form* (an honest union bound); the slack to the conjectured base $\sqrt 2$ lies entirely in the crude step $\binom{n}{k}\le n^k$, not in the method. At $m=3$ the side condition $2m \le 2^{m-1}$ fails ($6 \le 4$ is false), so $m\ge 4$ is the precise boundary of the argument, not a convenience.
 
-The sandwich makes the central open problem of diagonal Ramsey theory visible in
-miniature: the gap between $2^{(k/2)-1}$ and $2^{2(k-1)}$ is exactly the
-$[\sqrt 2, 4]$ base gap, and our analysis localises the lower-bound slack to a
-single arithmetic step. We highlight four directions.
+## 8. The arithmetic shadow: van der Waerden and Hales–Jewett
 
-1. **Reach the true base $\sqrt 2$.** Replace $\binom{n}{k} \le n^k$ by
-   $\binom{n}{k} \le n^k/k!$ to upgrade `not_arrows_of_counting` to a general
-   $\forall k \ge 3,\ R(k,k) > \lfloor 2^{k/2}\rfloor$. The counting core is
-   already base-free; only one inequality stands between the present
-   $2^{k/2-1}$ family and the optimal constant.
+The same "order is unavoidable" phenomenon appears in the integers.
 
-2. **Lovász Local Lemma.** A symmetric-LLL refinement should yield
-   $R(k,k) > (1+o(1))\,(k/(e\sqrt 2))\,2^{k/2}$, beating the first moment. The
-   bad events (indexed by $k$-sets) are nearly independent — two interact only
-   when their vertex sets share an edge — and their dependency graph is
-   combinatorially explicit, making a finite LLL instance directly expressible.
+**Theorem 8.1 (van der Waerden, AP form).** For every finite color set $\kappa$, every coloring $C : \mathbb{N} \to \kappa$, and every length $k$, there exist a common difference $a > 0$, a start $b$, and a color $c$ with $C(b + a i) = c$ for all $i < k$: a monochromatic $k$-term arithmetic progression. Moreover the $k$ terms are distinct, so the progression is genuine.
 
-3. **Off-diagonal $R(3,k) = \Theta(k^2/\log k)$.** The same edge-set model, made
-   asymmetric (red events = triangles, a sparse structure), should prove the
-   Kim-order lower bound $R(3,k) > c\,(k/\log k)^2$ via a triangle-free
-   process / deletion argument stated as $\lnot\,(n \to (3,k))$.
+*Proof sketch.* This is the canonical corollary of the **Hales–Jewett theorem** via a monochromatic homothetic copy of the finite set $\{0,1,\dots,k-1\}$ in the commutative monoid $\mathbb{N}$: the homothety $s \mapsto a\cdot s + b$ turns the abstract copy into the progression $b + a i$, with the returned scalar $a>0$ as common difference. Distinctness follows from injectivity of $i \mapsto b + ai$ when $a>0$. The length-$3$ case gives a monochromatic three-term progression $b, b+a, b+2a$ in any finite coloring of $\mathbb{N}$, and the general statement yields monochromatic progressions of *every* length. $\square$
 
-4. **Derandomisation.** Make `exists_good_coloring` constructive via the method
-   of conditional expectations, selecting edges one at a time to keep the
-   expected number of monochromatic $K_k$ below $1$, yielding an explicit witness
-   colouring.
+The Hales–Jewett theorem is the structural heart: in a sufficiently high-dimensional combinatorial cube, every finite coloring contains a monochromatic *combinatorial line*. Van der Waerden's progressions are the image of such lines under coordinate-summation. (These arithmetic results connect the graph-theoretic Ramsey numbers above to the broader Ramsey-theoretic core.)
 
-## 11. Conclusion
+## 9. Algorithms
 
-We have placed the classical diagonal Ramsey bounds on one arrow-relation
-framework, given a fully finite first-moment lower bound, and combined the two
-into an explicit infinite family $2^{m-1} < R(2m,2m) \le 4^{2m-1}$, while also
-recovering the exact small values $R(3,3)=6$, $R(3,4)=9$, $R(4,4)=18$ through
-explicit extremal graphs. The presentation isolates precisely where the lower
-bound loses its constant, charting a concrete path toward the optimal base.
+The development supports several effective procedures.
 
-## References
+**(A) Exact Ramsey verification by clique search.** To certify $n \to (s,t)$ for small $n,s,t$, enumerate colorings (or use a SAT-style search) and check each for a red $K_s$ or blue $K_t$; to certify $\neg(n\to(s,t))$, exhibit a single witness coloring and verify it is clique-free. Complexity is governed by $\binom{n}{s}$- and $\binom{n}{t}$-clique scans per coloring.
 
-- F. P. Ramsey, *On a problem of formal logic*, Proc. London Math. Soc. (1930).
-- P. Erdős and G. Szekeres, *A combinatorial problem in geometry*, Compositio Math. (1935).
-- P. Erdős, *Some remarks on the theory of graphs*, Bull. Amer. Math. Soc. (1947).
-- J. H. Spencer, *Ramsey's theorem — a new lower bound*, J. Combin. Theory Ser. A (1975).
-- N. Alon and J. H. Spencer, *The Probabilistic Method*, Wiley.
+**(B) Erdős–Szekeres dynamic program.** Compute the binomial upper-bound table $U(s,t) = \binom{s+t-2}{s-1}$ via Pascal's rule $U(s,t)=U(s-1,t)+U(s,t-1)$ with base $U(1,t)=U(s,1)=1$; $O(st)$ time.
+
+**(C) Union-bound threshold search.** For diagonal lower bounds, find the largest $n$ with $2\binom{n}{k} < 2^{\binom{k}{2}}$ (or the crude $2n^k < 2^{\binom{k}{2}}$) by monotone search; certifies $R(k,k) > n$.
+
+**(D) Paley-graph construction.** For a prime $p \equiv 1 \pmod 4$, build the self-complementary quadratic-residue circulant on $\mathbb{Z}/p$, the canonical extremal witness used here for $R(4,4)$ at $p=17$.
+
+## 10. Applications and discussion
+
+Ramsey theory and the probabilistic method permeate combinatorics and computer science: existence proofs for good error-correcting codes, expander graphs, and hard instances; lower bounds in communication and circuit complexity; and, via van der Waerden's theorem, the road to Szemerédi's theorem and the Green–Tao theorem on primes. The contrast between the *exactly* pinned small values (Section 4) and the *exponentially uncertain* diagonal (Section 7) crisply locates the frontier: the existence of order is certain, its precise cost is not.
+
+## 11. Future work
+
+Three concrete directions extend the formalized scaffolding:
+
+1. **Deletion method.** Strengthen the union bound by allowing a few monochromatic cliques and deleting one vertex from each, pushing the lower bound to $R(k,k) \gtrsim \tfrac{k}{e}\sqrt 2 \cdot 2^{k/2}$. The first-moment scaffold (`exists_good_coloring`, the clique↔edge-subset bridges) already supports the required averaging-and-removal step.
+
+2. **Off-diagonal counting.** Replace the symmetric count $2\binom{n}{k}2^{-\binom{k}{2}}$ by an asymmetric, biased count $\binom{n}{3}p^3 + \binom{n}{t}(1-p)^{\binom{t}{2}}$ with $p \asymp t^{-1/2}$ to obtain $R(3,t) \gtrsim t^{3/2}$; the `edgesOn`/`powersetCard` bookkeeping localizes the change.
+
+3. **Finite van der Waerden numbers.** Derive the uniform finite bound $W(r,k)$ from Hales–Jewett by compactness, certifying that every $r$-coloring of $\{0,\dots,N-1\}$ contains a monochromatic $k$-AP for explicit $N$.
+
+## 12. Conclusion
+
+On a single arrow-relation framework we have formally established the exact values $R(3,3)=6$, $R(3,4)=9$, $R(4,4)=18$ with explicit extremal constructions (pentagon, circulant, Paley graph), the Erdős–Szekeres binomial bound, the diagonal ceiling $R(k+1,k+1)\le 4^k$, the probabilistic lower bound as an exact finite count, and the two-sided sandwich $2^{m-1} < R(2m,2m) \le 4^{2m-1}$. Together with the arithmetic shadow van der Waerden / Hales–Jewett, these results assemble a coherent, verified foundation for elementary Ramsey theory and a launching point for tightening the still-open diagonal constant.
