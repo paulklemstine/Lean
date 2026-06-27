@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b8df0deb",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nThese directions build on the non-circular index telescope in\n`IndexTelescope.lean` (the product of adjacent relative indices of a finite\nmonotone subgroup chain collapses to a si",
-      "quality_score": 0.8904000000000001,
-      "sorry_count": 0,
-      "theorem_count": 90,
-      "timestamp": "2026-06-21T14:57:39",
-      "title": "Derived from the verified Lean results in"
-    },
-    {
       "cycle_id": "fe4ab5a6",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\nThese are freeform research directions extending the finite Jarzynski–Landauer\nformalization in [`JarzynskiLandauer.lean`](./JarzynskiLandauer.lean).\n\n## From identity to inequali",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-06-27T03:44:32",
       "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
+    },
+    {
+      "cycle_id": "8ed8ca57",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Sharp approximate Carathéodory & iterated Delaunay refinement\n\nDerived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,\n`Contraction.lean`, `Bridge.lean`, and the",
+      "quality_score": 0.7478369230769231,
+      "sorry_count": 1,
+      "theorem_count": 13,
+      "timestamp": "2026-06-27T04:13:04",
+      "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refinement"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5ef4c190",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — EML Universal Approximation & Shallow Rates\n\nDerived from the Stage-3 analysis and Stage-4 critique of this research cycle\n(`EML/SoftplusRate.lean`, `EML/ShallowDensity.lean`, bu",
-      "quality_score": 0.512,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-21T20:11:55",
-      "title": "EML Universal Approximation: Density of EML Functions"
-    },
     {
       "cycle_id": "ddfbd83f",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T04:10:57",
       "title": "Resolution of Erdős Problem 550 on Tree versus Complete Multipartite Ramsey Numbers"
+    },
+    {
+      "cycle_id": "8ed8ca57",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Sharp approximate Carathéodory & iterated Delaunay refinement\n\nDerived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,\n`Contraction.lean`, `Bridge.lean`, and the",
+      "quality_score": 0.7478369230769231,
+      "sorry_count": 1,
+      "theorem_count": 13,
+      "timestamp": "2026-06-27T04:13:04",
+      "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refinement"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0dc2bca1",
-      "domain": "Combinatorics",
-      "name": "conj_stdAddChar",
-      "quality": 0.7367999999999999
-    },
-    {
-      "cycle_id": "0dc2bca1",
-      "domain": "Combinatorics",
-      "name": "stdAddChar_sum_mul",
-      "quality": 0.7367999999999999
-    },
-    {
-      "cycle_id": "0dc2bca1",
-      "domain": "Combinatorics",
-      "name": "dft_conv",
-      "quality": 0.7367999999999999
-    },
     {
       "cycle_id": "0548f2b9",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "aes_four_round_ge_25",
       "quality": 0.72888
+    },
+    {
+      "cycle_id": "8ed8ca57",
+      "domain": "Novelty",
+      "name": "sum_weight",
+      "quality": 0.7478369230769231
+    },
+    {
+      "cycle_id": "8ed8ca57",
+      "domain": "Novelty",
+      "name": "by",
+      "quality": 0.7478369230769231
+    },
+    {
+      "cycle_id": "8ed8ca57",
+      "domain": "Novelty",
+      "name": "bestIdx_spec",
+      "quality": 0.7478369230769231
     }
   ],
-  "last_updated": "2026-06-27T04:10:57",
+  "last_updated": "2026-06-27T04:13:04",
   "open_questions": [
-    {
-      "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
-      "cycle_id": "cd281b27",
-      "domain": "Tropical",
-      "sorry_count": 2,
-      "timestamp": "2026-06-15T15:22:59"
-    },
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
       "cycle_id": "cd281b27",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-06-26T16:46:34"
+    },
+    {
+      "context": "All results are proved with zero `sorry`s.",
+      "cycle_id": "8ed8ca57",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-06-27T04:13:04"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6a7e7235",
-        "quality": 0.5980399999999999,
-        "theorems": 0,
-        "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
-      },
-      {
         "cycle_id": "15963379",
         "quality": 0.6772,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.5740799999999999,
         "theorems": 0,
         "title": "Resolution of Erdős Problem 550 on Tree versus Complete Multipartite Ramsey Numb"
+      },
+      {
+        "cycle_id": "8ed8ca57",
+        "quality": 0.7478369230769231,
+        "theorems": 13,
+        "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refi"
       }
     ],
     "NumberTheory": [

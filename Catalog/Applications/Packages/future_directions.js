@@ -6566,6 +6566,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 8ed8ca57 (Q=0.748) proved 13 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate a precise algorithmic reconstruction of the sharp approximate Carath\u00e9odory theorem for iterated Delaunay refinement, focusing on the optimal squared error bounds across varying dimensions.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_8ed8ca57_3b026bad",
+    "priority_score": 0.7978369230769231,
+    "research_mode": "team",
+    "source_exp_id": "8ed8ca57",
+    "status": "available",
+    "timestamp": "2026-06-27T04:13:04.403012+00:00",
+    "title": "Close Proofs: Sharp approximate Carath\u00e9odory theorem and application to iterated Del"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domains": [
       "Algebra"
@@ -6678,6 +6692,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-27T04:10:40.161945+00:00",
     "title": "This cycle formalized the **lower-bound / tightness** half and the **exact base "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Sharp approximate Carath\u00e9odory & iterated Delaunay refinement\n\nDerived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,\n`Contraction.lean`, `Bridge.lean`, and the new `Sharpness.lean` / `SharpBridge.lean`).\nThis cycle established a **two-sided** law for the best `k`-term Carath\u00e9odory error\nof the orthonormal centroid frame: it lies in `[1/k \u2212 1/n, 1/k]`, and equals\nexactly `1/k \u2212 1/n` for `k \u2264 n`. The looseness is governed by the **dimension**\n`n`, not the sample size `k`. The conjectures below push on that structural fact.\n\n## D1. The window width is *always* the centroid's own norm\n\n**Conjecture.** For any finite family `V\u2081,\u2026,V\u2098` of unit vectors with centroid\n`x = (1/m) \u03a3 V\u1d62`, the optimal `k`-term (with-repetition) squared error satisfies\n`min_f \u2016x \u2212 (1/k) \u03a3 V(f j)\u2016\u00b2 \u2208 [ (1/k)\u00b7(1 \u2212 \u2016x\u2016\u00b2\u00b7k? ) , 1/k ]`, with the *additive*\ngap to `1/k` equal to exactly `\u2016x\u2016\u00b2` whenever the family is \"balanced\" (its Gram\nmatrix has constant row sums), generalizing the `1/n = \u2016centroid\u2016\u00b2` identity.\n\nThe key insight is that in `sq_dist_eq` the only slack term is `\u2212\u2016x\u2016\u00b2`, so the\ngap between the Maurey upper bound and the true optimum is *intrinsic to `x`*, not\nto the sampling \u2014 the orthonormal case (`\u2016x\u2016\u00b2 = 1/n`) is just the cleanest witness.\n\nWhy now? `sq_dist_eq` already isolates `\u2016x \u2212 y\u2016\u00b2 = (1/k\u00b2)\u00b7(collision Gram) \u2212 \u2016x\u2016\u00b2`\nfor arbitrary frames; only the collision lower bound `\u2265 k` used orthonormality, so\nthe conjecture is one Gram-matrix estimate away from the proved skeleton.\n\n## D2. Sharpness across `\u2113_p`: the exponent `1 \u2212 1/p` is two-sided\n\n**Conjecture.** In `\u2113_p^n` (`2 \u2264 p < \u221e`) the centroid-of-basis configuration forces\n`min_f \u2016x \u2212 y\u2016_p^? \u2265 c_p \u00b7 k^{-(1 \u2212 1/p)}` for a constant `c_p > 0`, matching the\nknown Maurey/Barman upper bound `O(k^{-(1\u22121/p)})` \u2014 i.e. the empirical-method\nexponent is sharp for every `p \u2265 2`, not just `p = 2`.\n\nThe key insight is that the `p = 2` collision-count argument (`[f j = f l] \u2265\n[j = l]`) is an instance of a general \"self-overlap \u2265 multiplicity\" bound that\nsurvives in `\u2113_p` after replacing inner products by the `p`-th power pairing.\n\nWhy now? Our `\u2113_2` proof needs only one inequality on top of identities; the\n`\u2113_p` version isolates exactly which step must be replaced (the Gram collapse),\nmaking it a concrete, falsifiable target rather than a vague generalization.\n\n## D3. Minicenter Delaunay refinement has a *sharp* contraction constant\n\n**Conjecture.** For `d`-simplex minicenter (smallest-enclosing-ball center)\nrefinement, the per-step diameter contraction factor `\u03bb_d` is bounded *and* the\nbound is attained: `\u03bb_d = \u221a(2(d+1)/d)` for the regular simplex, with the segment\ncase `\u03bb_1 = 2` of `Contraction.lean` as the `d = 1` instance.\n\nThe key insight is that the segment base case (`minicenter_segment_halves`,\n`\u03bb = 2`) is the `d = 1` value of a single closed-form `\u03bb_d`, because the\nminicenter of a regular `d`-simplex splits each edge in a ratio fixed by the\ncircumradius-to-edge formula.\n\nWhy now? `Contraction.lean` already packages contraction as a reusable\n`ContractionProcess` and proves the `d = 1` constant *geometrically*; supplying\n`\u03bb_d` for higher `d` slots directly into `diam_le_pow` with no new metric\nmachinery.\n\n## D4. The refinement budget is sharp, not just finite\n\n**Conjecture.** The cumulative covering bound `\u2211 cov k \u2264 D\u00b7\u03bb/(\u03bb\u22121)` of\n`Bridge.lean` is tight: there is a refinement trajectory (the regular-simplex\nbisection of `Contraction.lean`) whose total covering error equals\n`D\u00b7\u03bb/(\u03bb\u22121)` up to a factor `1 + o(1)`, so no per-step contraction analysis can\npromise a smaller cumulative budget.\n\nThe key insight is that the geometric series bounding the budget is saturated\nexactly when each step contracts by *precisely* `1/\u03bb` (equality in `contracts`),\nwhich the segment bisection achieves (`segmentBisection`, equality form).\n\nWhy now? `Bridge.total_budget` gives the closed-form upper bound and\n`segmentBisection` already realizes equality per step; matching the *sum* is a\ngeometric-series equality check, directly testable.\n\n## D5. A two-sided coreset law for approximate Carath\u00e9odory\n\n**Conjecture.** Combining D1 and the upper bound, the *expected* squared error of\nthe empirical method equals the optimum up to a factor `2`: for the centroid\nframe, `E_f \u2016x \u2212 y\u2016\u00b2 = 1/k \u2212 1/n` is *exactly* the random-selection mean (not just\nan upper bound), so the probabilistic method is, in expectation, optimal \u2014 there\nis no gap between \"best\" and \"average\" `k`-term selection on balanced frames.\n\nThe key insight is that `expectation_bound` (in `MaureyGeneral.lean`) computes the\nmean error as `\u03c4/k` with `\u03c4 = \u03a3 p\u1d62\u2016x \u2212 V\u1d62\u2016\u00b2`, and for the orthonormal centroid\n`\u03c4 = 1 \u2212 1/n`, giving mean `= (1 \u2212 1/n)/k`, while the optimum is `1/k \u2212 1/n`;\nthese differ by `(1/n)(1 \u2212 1/k)`, an explicitly bounded, dimension-only gap.\n\nWhy now? Both quantities are already formalized (`expectation_bound` and\n`sharp_optimum`); their difference is a one-line algebraic identity, so the\n\"mean = optimum up to dimension\" statement is immediately checkable and would\nquantify exactly how lossless Maurey's averaging is.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2658",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8ed8ca57",
+    "status": "available",
+    "timestamp": "2026-06-27T04:12:51.775157+00:00",
+    "title": "Derived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,"
   },
   {
     "consumed_by_exp_id": "",

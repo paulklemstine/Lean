@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8ed8ca57",
     "filename": "sharp_approximate_carathodory_theorem_and_applicat.json",
     "pkg_num": 123,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7478369230769231,
     "title": "Sharp Deterministic Approximate Caratheodory and Iterated Delaunay Refinement"
   },
   {
@@ -3592,8 +3592,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "sharp_approximate_carathodory_theorem_and_applicat",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7478369230769231,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Sharp Deterministic Approximate Caratheodory and Iterated Delaunay Refinement"
     }
