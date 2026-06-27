@@ -1,169 +1,425 @@
-# Structural Theory of One-Variable Max-Plus Tropical Polynomial Functions
+# Proof Strategy Mining: The Primitive Divisor Schema for Strong Divisibility Sequences
 
 **Author:** Aristotle
-**Date:** 2026-06-24
-**Domain:** Tropical mathematics
+**Date:** 2026-06-27
+**Domain:** Novelty / Number Theory
+
+---
 
 ## Abstract
 
-We develop the elementary structural theory of the one-variable max-plus tropical polynomial function over the real numbers,
-$$\text{tropPoly}_c(x) = \max_{0 \le i \le d}\bigl(c_i + i\,x\bigr),$$
-where $c = (c_0, \dots, c_d)$ is a tuple of real coefficients indexed by $i \in \{0, 1, \dots, d\}$. Building on a single reusable primitive — the finite maximum of a real-valued function on a nonempty finite index set, together with its attainment and upper-bound characterization — we establish the full suite of first-order structural properties of $\text{tropPoly}_c$: each monomial is a pointwise lower bound; the maximum is attained at some index for every input; an upper-bound holds iff it holds monomial-by-monomial; the function is monotone non-decreasing; it is convex in the Jensen sense; the leading (highest-slope) monomial dominates pointwise under a local dominance hypothesis and, more strongly, dominates for all inputs beyond any threshold at which it dominates; and the degree-one and degree-two cases admit explicit closed forms as nested binary maxima. A central methodological theme is that every structural theorem is obtained by a single uniform schema — *reduce a property of the envelope to the same property of each affine constituent, then observe the constituents satisfy it trivially*. We discuss the resulting proof-strategy template, numerical illustrations, algorithmic consequences (corner detection, leading-term thresholds), and connections to convex analysis, optimization, and piecewise-linear neural networks.
+The classical primitive-divisor theorems of Carmichael (for Fibonacci numbers)
+and Zsygmondy (for the sequences $a^n - 1$) are usually presented as separate
+results with separate proofs, one resting on properties of the Fibonacci
+recurrence and the other on the multiplicative order of $a$ modulo a prime. We
+*mine* the common proof strategy from these two arguments and isolate the single
+hypothesis on which it depends: the **strong divisibility identity**
+$\gcd(u_m, u_n) = u_{\gcd(m,n)}$. We package the strategy as a reusable,
+domain-agnostic schema over an abstract **strong divisibility sequence** and
+re-derive, from this one hypothesis alone, the entire structural theory of
+primitive divisors: a meet law, rigidity (uniqueness) of primitive indices, the
+**pinning law** that a primitive divisor appears exactly at the multiples of its
+index, a **join law** for simultaneous apparition governed by least common
+multiples, and exact counting/density formulas for apparition indices. We then
+introduce the **rank of apparition** as a canonical construction of the primitive
+index from a prime alone, yielding the self-contained **strong primitive-divisor
+criterion** $p \mid u_m \iff \operatorname{rank}(p) \mid m$. Finally we instantiate
+the schema to both the Fibonacci sequence and the family $n \mapsto a^n - 1$,
+recovering the Fibonacci law of apparition and the multiplicative-order law as two
+specializations of a single abstract theorem. Every result has been formally
+verified. The contribution is methodological as much as mathematical: it
+demonstrates that a celebrated proof strategy can be reverse-engineered into a
+precise higher-order schema and reused across domains with zero duplicated
+argument.
+
+---
 
 ## 1. Introduction
 
-Tropical mathematics replaces the field operations $(+, \times)$ of ordinary arithmetic with the **max-plus semiring** operations $(\max, +)$: "addition" is taking the maximum, and "multiplication" is ordinary addition. Under this dictionary, an ordinary monomial $c_i x^i$ — a product of the scalar $c_i$ with $i$ copies of $x$ — becomes the affine expression $c_i + i\,x$, and the sum of monomials becomes their pointwise maximum. The image of a degree-$d$ polynomial is therefore a finite maximum of $d+1$ affine functions whose slopes are the exponents $0, 1, \dots, d$.
+### 1.1 Motivation: strategies as objects
 
-Such functions are ubiquitous. They are exactly the value functions of finite-horizon dynamic programs in the $(\max,+)$ algebra; they describe shortest- and longest-path costs; and, in machine learning, a single maxout unit and the ReLU activation are precisely degree-one tropical polynomials. The geometry of tropical polynomial functions — piecewise linearity, convexity, and the eventual dominance of the steepest term — is the geometry that makes these applications tractable.
+Mathematical proofs are routinely described by their *strategy* — "a descent," "a
+counting argument," "a primitive divisor argument" — yet these strategies are
+rarely written down as precise, reusable objects. A strategy lives in the folklore;
+each new application reconstructs it from scratch around new data. This paper is a
+case study in the opposite discipline, which we call **proof strategy mining**:
+take a celebrated argument, identify the *minimal* hypothesis that makes it run,
+and repackage the entire chain of consequences as a schema parametrized over that
+hypothesis. The payoff is that new instances become corollaries, and structurally
+identical theorems from different fields are revealed as one.
 
-This paper presents a complete, self-contained elementary theory of the one-variable case. Our emphasis is twofold. First, we give precise statements and proof sketches for every structural property. Second, we extract the *proof strategy* that recurs throughout: a higher-order schema in which a statement about the upper envelope of affine functions is reduced, via an upper-bound characterization, to the same statement about each affine constituent, which then holds trivially because affine functions are simultaneously monotone (for nonnegative slope), convex, and closed under the relevant operations. This schema is itself the reusable artifact — a template for proving facts about maxima of structured families.
+### 1.2 The two source theorems
 
-All results stated below have been formally verified. The paper is self-contained: every definition, theorem, and proof sketch appears inline.
+Our source material is two classical primitive-divisor theorems.
 
-## 2. The finite-maximum primitive
+**Carmichael's theorem (Fibonacci).** Let $F_n$ denote the Fibonacci numbers. A
+prime $p$ is a *primitive divisor* of $F_n$ if $p \mid F_n$ but $p \nmid F_k$ for
+$0 < k < n$. Carmichael's theorem states that $F_n$ has a primitive divisor for all
+$n$ outside a small finite exceptional set. The structural backbone of the proof is
+the **law of apparition**: $p \mid F_n$ if and only if the rank of apparition of
+$p$ divides $n$.
 
-Let $n \in \mathbb{N}$ and let $f : \{0, 1, \dots, n\} \to \mathbb{R}$ be a real-valued function on the nonempty finite index set of size $n+1$.
+**Zsygmondy's theorem ($a^n - 1$).** For the sequence $u_n = a^n - 1$, the
+analogous statement holds: $a^n - 1$ has a primitive prime divisor for all $n$
+outside a small exceptional set. The backbone here is that $p \mid a^n - 1$ if and
+only if $\operatorname{ord}_p(a) \mid n$.
 
-**Definition 2.1 (Finite maximum).** Define
-$$\text{finMax}(f) = \max_{0 \le i \le n} f(i),$$
-the supremum of $f$ over the nonempty finite index set (which is attained, hence a maximum).
+The two backbones are visibly the same statement. The thesis of this paper is that
+this is not a coincidence but a theorem about an abstract structure.
 
-The entire downstream theory rests on three facts about $\text{finMax}$.
+### 1.3 The mined hypothesis
 
-**Lemma 2.2 (Upper bound, `le_finMax`).** For every index $i$, $\;f(i) \le \text{finMax}(f).$
+Auditing the Fibonacci argument reveals that it uses exactly one property of $F$,
+namely
+$$\gcd(F_m, F_n) = F_{\gcd(m,n)}.$$
+The sequence $a^n - 1$ satisfies the identical identity
+$\gcd(a^m - 1, a^n - 1) = a^{\gcd(m,n)} - 1$. We therefore abstract both into the
+hypothesis of a **strong divisibility sequence** and develop the entire theory from
+it.
 
-*Proof sketch.* $f(i)$ is one of the finitely many values over which the supremum is taken, so it cannot exceed it. $\square$
+### 1.4 Contributions
 
-**Lemma 2.3 (Attainment, `exists_finMax_eq`).** There exists an index $i$ with $\;\text{finMax}(f) = f(i).$
+1. A precise schema (Section 3–5) deriving the full primitive-divisor theory from
+   the single hypothesis $\gcd(u_m, u_n) = u_{\gcd(m,n)}$: the meet law, rigidity,
+   the pinning law, the join law, and counting/density formulas.
+2. A canonical **rank of apparition** construction (Section 6) that manufactures the
+   primitive index from a prime alone, yielding a self-contained criterion
+   $p \mid u_m \iff \operatorname{rank}(p) \mid m$ and a rank-form join law.
+3. Two instantiations (Section 7): Fibonacci ($F$) and Mersenne-type ($a^n - 1$),
+   recovering both classical laws of apparition as specializations of one theorem.
+4. A methodological template (Section 9) for mining proof strategies into reusable
+   schemata, with discussion of what the schema does *not* trivialize (the growth
+   estimate at the heart of the existence theorems).
 
-*Proof sketch.* A supremum over a nonempty finite set is achieved at one of its members; choose that member. $\square$
+---
 
-**Lemma 2.4 (Upper-bound characterization, `finMax_le_iff`).** For every $y \in \mathbb{R}$,
-$$\text{finMax}(f) \le y \quad\Longleftrightarrow\quad \forall i,\; f(i) \le y.$$
+## 2. Definitions
 
-*Proof sketch.* ($\Rightarrow$) Combine with Lemma 2.2: $f(i) \le \text{finMax}(f) \le y$. ($\Leftarrow$) If $y$ bounds every value, it bounds their maximum, since the maximum equals some $f(i_0) \le y$ by Lemma 2.3. $\square$
+Throughout, $u : \mathbb{N} \to \mathbb{N}$ is a sequence of natural numbers, and
+all divisibility is in $\mathbb{N}$.
 
-Lemma 2.4 is the pivotal tool: it converts any *upper-bound goal about the maximum* into a *family of upper-bound goals about the individual values*. Every structural theorem below is an application of this reduction.
+**Definition 2.1 (Strong divisibility sequence).** The sequence $u$ is a *strong
+divisibility sequence* if
+$$u_{\gcd(m,n)} = \gcd(u_m, u_n) \qquad \text{for all } m, n \in \mathbb{N}.$$
+We write this predicate $\mathrm{IsStrongDivSeq}(u)$.
 
-## 3. The tropical polynomial and its first-order properties
+**Definition 2.2 (Primitive divisor / primitive index).** A number $p$ is a
+*primitive divisor* of $u_n$, written $\mathrm{IsPrimitive}(u, p, n)$, if
+$$p \mid u_n \quad\text{and}\quad \forall k,\ 0 < k < n \Rightarrow p \nmid u_k.$$
+We then call $n$ a *primitive index* for $p$.
 
-**Definition 3.1 (Tropical polynomial).** Given a degree $d \in \mathbb{N}$ and coefficients $c : \{0, \dots, d\} \to \mathbb{R}$, define the one-variable max-plus tropical polynomial function
-$$\text{tropPoly}_c(x) = \text{finMax}\bigl(i \mapsto c_i + i\,x\bigr) = \max_{0 \le i \le d}\bigl(c_i + i\,x\bigr), \qquad x \in \mathbb{R}.$$
-Each term $m_i(x) = c_i + i\,x$ is the **$i$-th monomial line**, an affine function of slope $i$ and intercept $c_i$.
+**Definition 2.3 (Apparition).** The number $p$ *appears* in $u$, written
+$\mathrm{Appears}(u, p)$, if there exists $k$ with $0 < k$ and $p \mid u_k$.
 
-The three primitives instantiate immediately.
+**Definition 2.4 (Rank of apparition).** The *rank of apparition* of $p$ in $u$ is
+$$\operatorname{rank}(u, p) = \inf\{\, k \in \mathbb{N} : 0 < k \ \wedge\ p \mid u_k \,\},$$
+with the convention that the infimum of the empty set is $0$.
 
-**Theorem 3.2 (Monomial lower bound, `tropPoly_monomial_le`).** For every $i$ and $x$,
-$$c_i + i\,x \le \text{tropPoly}_c(x).$$
-*Proof sketch.* Direct instance of Lemma 2.2 with $f(i) = c_i + i\,x$. $\square$
+We remark that Definition 2.2 makes no positivity assumption on $n$; index $0$
+behaves as a degenerate case (see Lemma 3.3) and is excluded in the substantive
+results by the hypothesis $0 < n$.
 
-**Theorem 3.3 (Attainment, `tropPoly_eq_monomial`).** For every $x$ there exists $i$ with
-$$\text{tropPoly}_c(x) = c_i + i\,x.$$
-*Proof sketch.* Direct instance of Lemma 2.3. $\square$
+---
 
-**Theorem 3.4 (Upper-bound characterization, `tropPoly_le_iff`).** For all $x, y$,
-$$\text{tropPoly}_c(x) \le y \quad\Longleftrightarrow\quad \forall i,\; c_i + i\,x \le y.$$
-*Proof sketch.* Direct instance of Lemma 2.4. $\square$
+## 3. Elementary consequences of the strong-divisibility law
 
-Theorems 3.2–3.4 are the entire interface used in the remainder of the paper. We never again unfold the maximum directly.
+The first two results show that the gcd identity already contains the weak
+divisibility law and the sharp meet law.
 
-## 4. Monotonicity
+**Lemma 3.1 (Strong implies weak; `IsStrongDivSeq.dvd_of_dvd`).**
+If $\mathrm{IsStrongDivSeq}(u)$ and $m \mid n$, then $u_m \mid u_n$.
 
-**Theorem 4.1 (Monotonicity, `tropPoly_mono`).** If $x \le y$ then $\;\text{tropPoly}_c(x) \le \text{tropPoly}_c(y).$
+*Proof sketch.* From $m \mid n$ we have $\gcd(m,n) = m$, so the hypothesis gives
+$u_m = u_{\gcd(m,n)} = \gcd(u_m, u_n)$, and $\gcd(u_m, u_n) \mid u_n$. $\qquad\blacksquare$
 
-*Proof sketch.* By Theorem 3.4 it suffices to show $c_i + i\,x \le \text{tropPoly}_c(y)$ for each $i$. The slope $i$ is a natural number, hence $i \ge 0$, so $x \le y$ gives $i\,x \le i\,y$ and thus $c_i + i\,x \le c_i + i\,y$. By Theorem 3.2, $c_i + i\,y \le \text{tropPoly}_c(y)$. Chaining the two inequalities closes the goal. $\square$
+**Lemma 3.2 (Meet law; `IsStrongDivSeq.dvd_gcd_index_iff`).**
+If $\mathrm{IsStrongDivSeq}(u)$ then for every $d, m, n$,
+$$d \mid u_{\gcd(m,n)} \iff d \mid u_m \ \wedge\ d \mid u_n.$$
 
-The schema is visible: the *envelope* statement (monotonicity of $\text{tropPoly}_c$) is reduced by Theorem 3.4 to a *per-line* statement (monotonicity of each $m_i$), which holds because each line has nonnegative slope.
+*Proof sketch.* Rewrite the left side using $u_{\gcd(m,n)} = \gcd(u_m, u_n)$ and
+apply the universal property $d \mid \gcd(x,y) \iff d \mid x \wedge d \mid y$.
+$\qquad\blacksquare$
 
-## 5. Convexity
+Lemma 3.2 is the lattice-theoretic heart of the schema: divisibility *into* the
+sequence is a meet-preserving map from the index lattice $(\mathbb{N}, \mid)$.
 
-**Theorem 5.1 (Convexity, Jensen form, `tropPoly_convex`).** For all $x, y, t \in \mathbb{R}$ with $0 \le t \le 1$,
-$$\text{tropPoly}_c\bigl(t x + (1-t) y\bigr) \;\le\; t\,\text{tropPoly}_c(x) + (1-t)\,\text{tropPoly}_c(y).$$
+**Lemma 3.3 (Degenerate index zero; `isPrimitive_zero_everything`).**
+If $u_0 = 0$ then every $p$ is a primitive divisor of $u_0$. (Membership holds
+because $p \mid 0$; the minimality clause is vacuous.)
 
-*Proof sketch.* By Theorem 3.4, fix $i$ and bound $m_i\bigl(t x + (1-t)y\bigr)$ by the right-hand side. Affinity of $m_i$ gives the exact algebraic split
-$$c_i + i\bigl(t x + (1-t)y\bigr) = t\bigl(c_i + i\,x\bigr) + (1-t)\bigl(c_i + i\,y\bigr).$$
-Apply Theorem 3.2 to each piece: $c_i + i\,x \le \text{tropPoly}_c(x)$ and $c_i + i\,y \le \text{tropPoly}_c(y)$. Since $t \ge 0$ and $1 - t \ge 0$, multiplying preserves the inequalities, and summing yields
-$$t\bigl(c_i + i\,x\bigr) + (1-t)\bigl(c_i + i\,y\bigr) \le t\,\text{tropPoly}_c(x) + (1-t)\,\text{tropPoly}_c(y).$$
-This bounds $m_i$ at the blend point by the desired right-hand side; the maximum over $i$ then satisfies the same bound. $\square$
+This lemma records why the substantive statements require $0 < n$: index $0$ is
+universally primitive when $u_0 = 0$, as for both Fibonacci ($F_0 = 0$) and
+$a^0 - 1 = 0$.
 
-The same template recurs: the envelope inherits convexity because each affine constituent is convex (indeed affine), and the nonnegative blending weights preserve the per-line bounds.
+---
 
-## 6. Leading-term dominance
+## 4. Rigidity and the pinning law
 
-Write $m_d(x) = c_d + d\,x$ for the **leading monomial**, the line of maximal slope $d$.
+**Theorem 4.1 (Uniqueness of primitive index; `isPrimitive_unique`).**
+For any $u$ (no strong-divisibility hypothesis needed), if $0 < m$, $0 < n$, and $p$
+is a primitive divisor of both $u_m$ and $u_n$, then $m = n$.
 
-**Theorem 6.1 (Pointwise dominance, `tropPoly_eq_leading`).** Fix $x$. If
-$$c_i + i\,x \le c_d + d\,x \quad \text{for all } i,$$
-then $\;\text{tropPoly}_c(x) = c_d + d\,x.$
+*Proof sketch.* Suppose without loss of generality $m < n$. Primitivity at $n$
+forbids $p \mid u_m$ for $0 < m < n$, contradicting $p \mid u_m$ from primitivity at
+$m$. Hence $m = n$. The argument uses only the definition of primitivity, exhibiting
+its rigidity. $\qquad\blacksquare$
 
-*Proof sketch.* Antisymmetry. Upper bound: by Theorem 3.4 with $y = c_d + d\,x$, the hypothesis is exactly the per-line condition, so $\text{tropPoly}_c(x) \le c_d + d\,x$. Lower bound: Theorem 3.2 at $i = d$ gives $c_d + d\,x \le \text{tropPoly}_c(x)$. The two bounds coincide. $\square$
+**Theorem 4.2 (Pinning law; `dvd_iff_index_dvd_of_primitive`).**
+If $\mathrm{IsStrongDivSeq}(u)$, $0 < n$, and $p$ is a primitive divisor of $u_n$,
+then for all $m$,
+$$p \mid u_m \iff n \mid m.$$
 
-**Theorem 6.2 (Threshold dominance, `tropPoly_eq_leading_threshold`).** Fix a threshold $T$. If
-$$c_i + i\,T \le c_d + d\,T \quad \text{for all } i,$$
-then for every $x \ge T$,
-$$\text{tropPoly}_c(x) = c_d + d\,x.$$
+*Proof sketch.*
+*($\Leftarrow$)* If $n \mid m$ then $u_n \mid u_m$ by Lemma 3.1, and $p \mid u_n$,
+so $p \mid u_m$.
+*($\Rightarrow$)* Suppose $p \mid u_m$. With $p \mid u_n$, the meet law (Lemma 3.2)
+gives $p \mid u_{\gcd(n,m)}$. Since $\gcd(n,m) \mid n$ we have $\gcd(n,m) \le n$, and
+$\gcd(n,m) > 0$; primitivity of $p$ at $n$ forbids $p \mid u_k$ for $0 < k < n$, so
+$\gcd(n,m)$ cannot be strictly less than $n$. Hence $\gcd(n,m) = n$, i.e. $n \mid m$.
+$\qquad\blacksquare$
 
-*Proof sketch.* It suffices, by Theorem 6.1, to verify the pointwise dominance hypothesis at $x$. Decompose each side around $T$:
-$$c_i + i\,x = (c_i + i\,T) + i\,(x - T), \qquad c_d + d\,x = (c_d + d\,T) + d\,(x - T).$$
-The hypothesis controls the first bracket: $c_i + i\,T \le c_d + d\,T$. For the second, since $i \le d$ (as $i$ ranges up to the degree) and $x - T \ge 0$, we have $i\,(x - T) \le d\,(x - T)$. Adding the two inequalities gives $c_i + i\,x \le c_d + d\,x$, which is exactly the hypothesis of Theorem 6.1. $\square$
+Theorem 4.2 is the abstract law of apparition. It upgrades the order-theoretic
+notion of primitivity to a concrete arithmetic test and is the precise common
+generalization of the Fibonacci and Mersenne laws.
 
-Theorem 6.2 is the tropical analog of the classical fact that the highest-degree term of a polynomial dominates for large arguments — but sharper: it provides an *explicit threshold* beyond which the leading line is the function exactly, not merely asymptotically. The mechanism is the nonnegative slope gap $d - i \ge 0$, which guarantees that any lead held by $m_d$ at $T$ only widens to the right.
+---
 
-## 7. Explicit low-degree expansions
+## 5. The join law and counting
 
-**Theorem 7.1 (Degree one, `tropPoly_deg1`).** For $c = (c_0, c_1)$ and all $x$,
-$$\text{tropPoly}_c(x) = \max\bigl(c_0,\; c_1 + x\bigr).$$
-*Proof sketch.* Antisymmetry. ($\le$) By Theorem 3.4, check the two lines: $c_0 + 0\cdot x = c_0$ and $c_1 + 1\cdot x = c_1 + x$, both $\le$ the binary max. ($\ge$) Each branch of the binary max is a monomial value, hence $\le \text{tropPoly}_c(x)$ by Theorem 3.2; take the max. $\square$
+**Theorem 5.1 (Simultaneous apparition; `simultaneous_apparition`).**
+If $\mathrm{IsStrongDivSeq}(u)$, $0 < a$, $0 < b$, $p$ is primitive for $u_a$ and
+$q$ is primitive for $u_b$, then for all $n$,
+$$(p \mid u_n) \wedge (q \mid u_n) \iff \operatorname{lcm}(a,b) \mid n.$$
 
-This is exactly the graph of a clamped ramp — flat at height $c_0$ until $x = c_0 - c_1$, then slope $1$ — i.e. (a shifted) ReLU.
+*Proof sketch.* Apply Theorem 4.2 to each conjunct, reducing to $a \mid n$ and
+$b \mid n$, then use $a \mid n \wedge b \mid n \iff \operatorname{lcm}(a,b) \mid n$.
+$\qquad\blacksquare$
 
-**Theorem 7.2 (Degree two, `tropPoly_deg2`).** For $c = (c_0, c_1, c_2)$ and all $x$,
-$$\text{tropPoly}_c(x) = \max\bigl(c_0,\; \max(c_1 + x,\; c_2 + 2x)\bigr).$$
-*Proof sketch.* Identical structure to Theorem 7.1 over the three slopes $0, 1, 2$: the upper bound checks each of the three monomial values against the nested max via Theorem 3.4, and the lower bound bounds each branch of the nested max by $\text{tropPoly}_c$ via Theorem 3.2. $\square$
+**Theorem 5.2 (Finite-family join; `simultaneous_apparition_finset`).**
+Let $S$ be a finite index set with, for each $i \in S$, a primitive divisor $f_i$ of
+$u_{g_i}$ and $0 < g_i$. Then for all $n$,
+$$\Big(\forall i \in S,\ f_i \mid u_n\Big) \iff \Big(\operatorname{lcm}_{i \in S} g_i\Big) \mid n.$$
 
-The degree-two graph is a convex piecewise-linear curve with up to two corners and segment slopes $0, 1, 2$, the steepest of which eventually dominates per Theorem 6.2.
+*Proof sketch.* Induct on $S$ with the empty case $\operatorname{lcm}\emptyset = 1
+\mid n$, using Theorem 4.2 and $\operatorname{lcm}$ of an inserted element at each
+step. $\qquad\blacksquare$
 
-## 8. The proof-strategy schema
+**Theorem 5.3 (Apparition density; `apparition_count`).**
+If $\mathrm{IsStrongDivSeq}(u)$, $0 < n$, and $p$ is primitive for $u_n$, then for
+all $N$,
+$$\#\{\, e \in \{0,\dots,N-1\} : p \mid u_{e+1} \,\} = \left\lfloor \frac{N}{n} \right\rfloor.$$
+In particular the natural density of apparition indices of $p$ is $1/n$.
 
-The proofs above are striking in their uniformity. Abstracting the common pattern yields a reusable higher-order schema for reasoning about upper envelopes of structured families.
+*Proof sketch.* Theorem 4.2 rewrites the predicate $p \mid u_{e+1}$ as $n \mid
+(e+1)$; the count of multiples of $n$ in the first $N$ shifted indices is
+$\lfloor N/n \rfloor$. $\qquad\blacksquare$
 
-> **Envelope-inheritance schema.** Let $g(x) = \max_{i} m_i(x)$ be a finite maximum of functions $m_i$. To prove that $g$ satisfies an *upper-bound-shaped* property $P$ (monotonicity, convexity, a closed-form upper estimate, etc.):
-> 1. **Reduce.** Use the upper-bound characterization ($g \le y \iff \forall i,\; m_i \le y$) to replace the goal about $g$ with a family of goals about each $m_i$.
-> 2. **Discharge per constituent.** Prove the reduced goal for each $m_i$, exploiting whatever structure the constituents share (here: affinity, nonnegative slope, the slope ordering $i \le d$).
-> 3. **Reassemble (when needed).** For *equalities* (Theorems 6.1, 7.1, 7.2), pair the reduced upper bound with the attainment/lower-bound fact ($m_{i_0} \le g$) and conclude by antisymmetry.
+**Theorem 5.4 (Joint density; `simultaneous_apparition_count`).**
+Under the hypotheses of Theorem 5.1, for all $N$,
+$$\#\{\, e \in \{0,\dots,N-1\} : p \mid u_{e+1} \wedge q \mid u_{e+1} \,\} = \left\lfloor \frac{N}{\operatorname{lcm}(a,b)} \right\rfloor.$$
 
-Each theorem in §4–§7 is an instance: monotonicity uses constituent monotonicity (nonnegative slope); convexity uses constituent affinity and weight nonnegativity; leading-term dominance uses the slope gap plus attainment at $i = d$; the low-degree expansions use the finite case-split over slopes. This is precisely the kind of structural pattern that "proof-strategy mining" seeks to surface: a single template that compresses a routine fact about affine functions into a family of theorems about their envelope.
+*Proof sketch.* Theorem 5.1 rewrites the joint predicate as
+$\operatorname{lcm}(a,b) \mid (e+1)$; count as in Theorem 5.3. $\qquad\blacksquare$
 
-## 9. Algorithms
+These four results show the schema reaches beyond pure structure into quantitative,
+analytic-flavored statements: the apparition lattice is reflected exactly in natural
+densities.
 
-The structural theory yields directly implementable algorithms.
+---
 
-**Algorithm A (Evaluate / argmax monomial).** Given $c$ and $x$, compute $\text{tropPoly}_c(x)$ and a witnessing index by scanning the $d+1$ monomial values $c_i + i\,x$ and tracking the running maximum and its argument. Correctness is Theorem 3.3 (attainment); complexity $O(d)$ per evaluation.
+## 6. The rank of apparition: a self-contained criterion
 
-**Algorithm B (Leading-term threshold).** Given $c$, find a threshold $T$ beyond which $\text{tropPoly}_c \equiv m_d$. For each $i < d$ with $i < d$, the leading line overtakes line $i$ where $c_i + i\,T = c_d + d\,T$, i.e. at $T_i = (c_i - c_d)/(d - i)$; the required threshold is $T = \max_i T_i$ (or $-\infty$ if $c_d$ already dominates everywhere). Correctness is Theorem 6.2; complexity $O(d)$.
+The pinning law (Theorem 4.2) requires a primitive index to be supplied. We now
+construct it canonically from $p$ via the rank (Definition 2.4), turning the theory
+into a criterion phrased purely in terms of $\operatorname{rank}$.
 
-**Algorithm C (Corner / break-point enumeration).** The corners of the convex graph are the abscissae where the active monomial changes. They coincide with the vertices of the lower convex hull of the points $(i, -c_i)$; computing that hull (e.g. by Andrew's monotone chain) in $O(d \log d)$ yields the ordered list of corners and the active segment between consecutive corners. This is the constructive content behind a tropical fundamental theorem of algebra (counting corners with slope-jump multiplicity equals $d$), with attainment (Theorem 3.3) identifying which monomials are active.
+**Lemma 6.1 (Rank membership; `rank_mem`, `rank_pos`, `rank_dvd`).**
+If $\mathrm{Appears}(u, p)$ then $0 < \operatorname{rank}(u,p)$ and
+$p \mid u_{\operatorname{rank}(u,p)}$.
 
-## 10. Applications
+*Proof sketch.* The appearance set is nonempty; the infimum of a nonempty set of
+naturals is a member, and the defining predicate carries both conjuncts.
+$\qquad\blacksquare$
 
-- **Optimization / $(\max,+)$ dynamic programming.** Tropical polynomials are value functions; monotonicity (Theorem 4.1) and convexity (Theorem 5.1) guarantee well-behaved optimization landscapes with no spurious local optima.
-- **Piecewise-linear neural networks.** A maxout unit and ReLU are degree-one tropical polynomials (Theorem 7.1); compositions and sums build the expressive piecewise-linear functions realized by deep networks. Leading-term dominance describes asymptotic behavior of a unit, and convexity constrains the geometry of a single layer.
-- **Tropical algebraic geometry.** Corners (Algorithm C) are the tropical roots; their count with multiplicity recovers the degree, making classical root-counting a finite convex-hull computation.
+**Lemma 6.2 (Rank minimality; `rank_le`).**
+If $0 < k$ and $p \mid u_k$ then $\operatorname{rank}(u,p) \le k$.
 
-## 11. Discussion and future work
+*Proof sketch.* The infimum is a lower bound of the set containing $k$.
+$\qquad\blacksquare$
 
-The development deliberately routes everything through the finite-maximum primitive (§2) and its upper-bound characterization, so the index type $\{0,\dots,d\}$ is incidental: the same proofs apply to any nonempty finite family of affine functions. This polymorphism is the gateway to several extensions.
+**Theorem 6.3 (Rank is a primitive index; `rank_primitive`).**
+If $\mathrm{Appears}(u, p)$ then $p$ is a primitive divisor of
+$u_{\operatorname{rank}(u,p)}$.
 
-1. **A tropical fundamental theorem of algebra.** Formalize the corner locus and prove that the number of corners, weighted by slope-jump, equals the degree — counting tropical roots with multiplicity — via the lower-hull bijection of Algorithm C, using attainment (Theorem 3.3) and the upper-bound characterization (Theorem 3.4) to identify active monomials.
+*Proof sketch.* Membership (Lemma 6.1) gives $p \mid u_{\operatorname{rank}}$;
+minimality (Lemma 6.2, contrapositive) forbids $p \mid u_k$ for any positive
+$k < \operatorname{rank}$. Together these are exactly primitivity. $\qquad\blacksquare$
 
-2. **Legendre–Fenchel duality.** Show $\text{tropPoly}_c$ is the max-plus Legendre transform of the coefficient sequence and that essential monomials are the extreme points of the dual; with convexity (Theorem 5.1) already in hand, this connects to the standard biconjugation framework.
+**Theorem 6.4 (Uniqueness via rank; `isPrimitive_iff_eq_rank`).**
+For $0 < n$,
+$$\mathrm{IsPrimitive}(u, p, n) \iff n = \operatorname{rank}(u, p).$$
 
-3. **Multivariate max-plus polynomials.** Replace the index $\{0,\dots,d\}$ by a finite subset of $\mathbb{N}^k$; monotonicity and convexity lift verbatim because they hold for arbitrary pointwise maxima of affine functions.
+*Proof sketch.* ($\Leftarrow$) Theorem 6.3. ($\Rightarrow$) Primitivity at $n$
+makes $p$ appear, so the rank is a primitive index by Theorem 6.3; uniqueness
+(Theorem 4.1) forces $n = \operatorname{rank}$. $\qquad\blacksquare$
 
-4. **Continuity and Lipschitz bounds.** A finite maximum of $L$-Lipschitz functions is $L$-Lipschitz; since each monomial of slope $i \le d$ is $d$-Lipschitz, $\text{tropPoly}_c$ is globally $d$-Lipschitz and continuous, and one may study stability under coefficient perturbation.
+**Theorem 6.5 (Strong primitive-divisor criterion; `dvd_iff_rank_dvd`).**
+If $\mathrm{IsStrongDivSeq}(u)$ and $\mathrm{Appears}(u, p)$, then for all $m$,
+$$p \mid u_m \iff \operatorname{rank}(u,p) \mid m.$$
 
-5. **Verified tropical/maxout network layers.** Interpret $\text{tropPoly}_c$ as a single maxout/ReLU unit and assemble compositional bounds for layered max-plus networks.
+*Proof sketch.* By Theorem 6.3 the rank is a primitive index for $p$; apply the
+pinning law (Theorem 4.2) at $n = \operatorname{rank}(u,p)$. $\qquad\blacksquare$
 
-## 12. Conclusion
+Theorem 6.5 is the polished, self-contained form of the apparition law: the
+divisibility set of $p$ is *exactly* the set of multiples of its rank, with no
+external data.
 
-From one primitive — the finite maximum with its attainment and upper-bound characterization — we obtained the complete first-order structural theory of one-variable max-plus tropical polynomials: monomial bounds, attainment, monotonicity, convexity, pointwise and threshold leading-term dominance, and explicit low-degree forms. Beyond the individual theorems, the recurring envelope-inheritance schema is itself the deliverable: a reusable higher-order template that derives properties of an envelope from the shared structure of its affine constituents.
+**Theorem 6.6 (Join law in ranks; `joint_dvd_iff_lcm_rank_dvd`).**
+If $\mathrm{IsStrongDivSeq}(u)$, $\mathrm{Appears}(u, p)$, and
+$\mathrm{Appears}(u, q)$, then for all $n$,
+$$(p \mid u_n) \wedge (q \mid u_n) \iff \operatorname{lcm}\big(\operatorname{rank}(u,p),\, \operatorname{rank}(u,q)\big) \mid n.$$
+
+*Proof sketch.* Rewrite each conjunct via Theorem 6.5 and apply
+$x \mid n \wedge y \mid n \iff \operatorname{lcm}(x,y) \mid n$. $\qquad\blacksquare$
+
+---
+
+## 7. Instantiations
+
+The abstract schema is now exercised against the two canonical examples by
+verifying only the gcd identity in each case.
+
+**Proposition 7.1 (Fibonacci; `fib_isStrongDivSeq`).**
+$\mathrm{IsStrongDivSeq}(F)$, where $F$ is the Fibonacci sequence.
+
+*Proof sketch.* Immediate from the classical identity $\gcd(F_m, F_n) =
+F_{\gcd(m,n)}$. $\qquad\blacksquare$
+
+**Proposition 7.2 (Mersenne-type; `mersenne_isStrongDivSeq`).**
+For every base $a$, $\mathrm{IsStrongDivSeq}(n \mapsto a^n - 1)$.
+
+*Proof sketch.* Immediate from $\gcd(a^m - 1, a^n - 1) = a^{\gcd(m,n)} - 1$
+(the base case $a = 0$ is handled directly). $\qquad\blacksquare$
+
+Specializing Theorem 6.5 yields the two laws of apparition as corollaries of a
+single theorem:
+
+**Corollary 7.3 (Fibonacci law of apparition; `fib_dvd_iff_rank_dvd`).**
+If $p$ appears in $F$, then $p \mid F_m \iff \operatorname{rank}(F, p) \mid m$.
+
+**Corollary 7.4 (Mersenne law of apparition; `mersenne_dvd_iff_rank_dvd`).**
+If $p$ appears in $n \mapsto a^n - 1$, then
+$p \mid a^m - 1 \iff \operatorname{rank}(\,\cdot\,, p) \mid m$, where the rank is the
+multiplicative order of $a$ modulo $p$ when $\gcd(a,p)=1$.
+
+Corollary 7.4 makes the bridge explicit: the abstract rank, for $a^n - 1$, *is* the
+multiplicative order of $a$ modulo $p$, so the abstract criterion is the
+order-theoretic law of apparition that underlies Zsygmondy's theorem.
+
+---
+
+## 8. Worked numerical examples
+
+We illustrate the criteria with small data; the `demo.py` companion computes these.
+
+**Fibonacci, $p = 11$.** The Fibonacci numbers are $0,1,1,2,3,5,8,13,21,34,55,\dots$,
+so $11 \mid F_{10} = 55$ and $11 \nmid F_k$ for $0 < k < 10$. Hence
+$\operatorname{rank}(F, 11) = 10$, and by Theorem 6.5, $11 \mid F_m$ exactly when
+$10 \mid m$: indeed $F_{20} = 6765 = 3 \cdot 5 \cdot 11 \cdot 41$.
+
+**Fibonacci, two primes.** $\operatorname{rank}(F, 2) = 3$ (since $F_3 = 2$) and
+$\operatorname{rank}(F, 11) = 10$. By Theorem 6.6, both $2$ and $11$ divide $F_n$
+exactly when $\operatorname{lcm}(3,10) = 30 \mid n$. The first such index is $30$.
+
+**Mersenne, $a = 2$, $p = 7$.** The sequence $2^n - 1$ is $1,3,7,15,31,63,\dots$, so
+$7 \mid 2^3 - 1 = 7$ and $7$ divides no earlier term; $\operatorname{rank} = 3 =
+\operatorname{ord}_7(2)$. By Theorem 6.5, $7 \mid 2^m - 1 \iff 3 \mid m$.
+
+**Density check.** For $p = 11$ in Fibonacci ($\operatorname{rank} = 10$), among the
+first $N = 100$ positive indices exactly $\lfloor 100/10 \rfloor = 10$ are
+apparition indices, confirming Theorem 5.3 and density $1/10$.
+
+---
+
+## 9. Discussion: what was mined, and what remains hard
+
+### 9.1 The methodological template
+
+The development above is an instance of a repeatable template for **proof strategy
+mining**:
+
+1. *Audit.* Trace a celebrated proof line by line and record which properties of the
+   concrete objects each step actually consumes.
+2. *Isolate.* Identify the minimal hypothesis (here, the single gcd identity) that
+   supports the whole chain.
+3. *Abstract.* Restate every consequence using only that hypothesis, producing a
+   schema parametrized over the abstract structure.
+4. *Reinstantiate.* Verify the hypothesis for each concrete object of interest; the
+   full theory then transfers with no further argument.
+
+The audit step is where the mathematics happens: the discovery that neither the
+Fibonacci recurrence nor Binet's formula is ever used — only the gcd identity — is
+the genuine insight, and it is exactly what makes the abstraction possible.
+
+### 9.2 Honest limits of the schema
+
+The schema captures the *structural* core of Carmichael's and Zsygmondy's theorems
+— the law of apparition and its consequences — but deliberately not their *existence*
+content. Both theorems assert that primitive divisors actually exist for all large
+$n$, and that assertion reduces, after the structural reduction, to a single growth
+estimate: the primitive part of $u_n$ (the quotient of $u_n$ by the contributions of
+proper-divisor indices) must exceed $1$. This is a size inequality, not a divisibility
+fact, and no amount of lattice abstraction can supply it. The schema makes precise
+*where* the hard analytic work must go, which is itself valuable: it separates the
+reusable skeleton from the irreducible residue.
+
+### 9.3 Why the abstraction is faithful
+
+Two safeguards ensure the abstraction is not vacuous. First, every substantive
+theorem is guarded by positivity ($0 < n$), reflecting the genuine degeneracy at
+index $0$ (Lemma 3.3) where both example sequences vanish. Second, the schema is
+exercised on genuine primitive divisors of real sequences (Section 8), so the
+biconditionals are non-trivially satisfiable, not vacuously true.
+
+---
+
+## 10. Future work
+
+We record several directions, including conjectures that the present schema brings
+within reach.
+
+1. **Universal existence via the schema.** Combine the criterion with a single
+   sequence-agnostic growth bound $u_n > \prod_{d \mid n,\, d < n} u_d$ to obtain
+   primitive-divisor existence for all large $n$ uniformly across strong
+   divisibility sequences — closing the existence content left open in Section 9.2
+   without any sequence-specific computation.
+
+2. **A characterization of strong divisibility sequences.** Conjecturally, a
+   sequence with $u_1 = 1$ is a strong divisibility sequence iff it is
+   multiplicative on coprime indices and satisfies the weak divisibility law; the
+   rank would then be exactly the structure making divisibility-into-$u$ an adjoint
+   of index divisibility.
+
+3. **Cross-instantiation transfer.** Investigate whether a primitive index for $p$
+   in the Fibonacci sequence forces a primitive prime in $2^n - 1$ at the same
+   index, giving an explicit correspondence between Fibonacci and Mersenne primitive
+   divisors.
+
+4. **Further hosts.** Apply the audit–isolate–abstract–reinstantiate template to
+   other strong divisibility sequences (Lucas sequences, elliptic divisibility
+   sequences) and to entirely different proof strategies.
+
+---
+
+## 11. Conclusion
+
+We mined the primitive-divisor proof strategy shared by Carmichael's and
+Zsygmondy's theorems, isolated its single load-bearing hypothesis — the strong
+divisibility identity $\gcd(u_m, u_n) = u_{\gcd(m,n)}$ — and rebuilt the entire
+structural theory of primitive divisors as a reusable schema: meet law, rigidity,
+pinning law, join law, density formulas, and the self-contained rank criterion. Two
+instantiations recover two classical laws of apparition from one abstract theorem.
+The exercise demonstrates that proof strategies can be treated as first-class
+mathematical objects — reverse-engineered, stated precisely, and reused across
+domains — and it pinpoints the irreducible analytic residue (a growth estimate) that
+abstraction cannot remove.
