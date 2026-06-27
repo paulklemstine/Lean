@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8170e958",
     "filename": "cryptographic_hash_functions_collision_resistance_.json",
     "pkg_num": 150,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5594,
     "title": "Collision Resistance from Hard Problems: The Claw-Free Route through Merkle-Damgard"
   },
   {
@@ -4378,8 +4378,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "cryptographic_hash_functions_collision_resistance_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5594,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Collision Resistance from Hard Problems: The Claw-Free Route through Merkle-Damgard"
     }

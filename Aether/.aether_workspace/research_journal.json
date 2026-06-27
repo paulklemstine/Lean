@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a4a5a639",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Rucker Gnarl & Continuous-Valued CA\n\nDerived from this cycle's findings in `Catalog/Novelty/ContinuousValuedCA.lean`,\n`Catalog/Novelty/GnarlLyapunov.lean`, and\n`Catalog/Bridges/G",
-      "quality_score": 0.3493306711864407,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-23T23:51:10",
-      "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
-    },
-    {
       "cycle_id": "2b44c5bb",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\nThis file establishes the algebraic Kramers–Wannier self-dual critical point\n`β_c = ½ log(1 + √2)` for the 2D Ising model. Below are concrete follow-up directions\nthat build on it",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-27T21:36:49",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+    },
+    {
+      "cycle_id": "8170e958",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Collision Resistance from Hard Problems\n\nDerived from this cycle's findings on `Cryptography.ClawFreeHash` and\n`Cryptography.MDLengthExtension`, building on `Cryptography.MerkleD",
+      "quality_score": 0.5594,
+      "sorry_count": 1,
+      "theorem_count": 15,
+      "timestamp": "2026-06-27T22:08:34",
+      "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7938000000000001
     }
   ],
-  "last_updated": "2026-06-27T21:36:49",
+  "last_updated": "2026-06-27T22:08:34",
   "open_questions": [
-    {
-      "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
-      "cycle_id": "6f9401e1",
-      "domain": "NumberTheory",
-      "sorry_count": 1,
-      "timestamp": "2026-06-16T04:13:04"
-    },
     {
       "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
       "cycle_id": "e9b0b276",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 4,
       "timestamp": "2026-06-27T21:36:49"
+    },
+    {
+      "context": "that reduction, constructively and `sorry`-free.",
+      "cycle_id": "8170e958",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-06-27T22:08:34"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "492e1625",
-        "quality": 0.66648,
-        "theorems": 15,
-        "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
-      },
-      {
         "cycle_id": "33ec0c7d",
         "quality": 0.5884799999999999,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.565585,
         "theorems": 15,
         "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+      },
+      {
+        "cycle_id": "8170e958",
+        "quality": 0.5594,
+        "theorems": 15,
+        "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
       }
     ],
     "Bridges": [

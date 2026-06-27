@@ -165,7 +165,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
   {
-    "consumed_by_exp_id": "d15f1fdf",
+    "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
@@ -175,7 +175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -2091,7 +2091,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
   {
-    "consumed_by_exp_id": "c25c1b9e",
+    "consumed_by_exp_id": "",
     "description": "For every finite connected simple graph G on n \u2265 2 vertices with unit edge resistances, let R_G be its effective-resistance matrix and define \u0394(G) = (-1)^(n-1) det(R_G). Conjecture: 2^n (n-1) / n^n \u2264 \u0394(G) \u2264 2^(n-2) (n-1). Moreover, equality on the left holds exactly for the complete graph K_n, and equality on the right holds exactly for trees. This extends the Graham--Pollak tree determinant formula and predicts that adding simple edges monotonically decreases the signed resistance determinant down to the complete graph.",
     "domains": [
       "Pythagorean",
@@ -2101,7 +2101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21902v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T14:24:58.237232+00:00",
     "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
   },
@@ -2726,7 +2726,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
   },
   {
-    "consumed_by_exp_id": "4ac2d584",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domains": [
       "Bridges"
@@ -2735,7 +2735,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -4158,20 +4158,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-25T04:58:44.105271+00:00",
     "title": "Gap Phenomenon for Circular Chromatic Numbers of Projective Plane Quadrangulations"
-  },
-  {
-    "consumed_by_exp_id": "6fa4f641",
-    "description": "Conjecture that for any fixed alphabet size b\u22652, the largest family C\u2286[b]^k in which every pair of distinct vectors yields a bipartite graph containing a cycle has size at most N_b(k), the number of good vectors defined by prescribed block sizes, and that this bound is attained for all sufficiently large k (in particular when k\u2261-1 (mod b)).",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2494",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.25055v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T05:24:56.704027+00:00",
-    "title": "Maximum size of cycle-containing families of vectors"
   },
   {
     "consumed_by_exp_id": "",
@@ -7621,6 +7607,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Collision Resistance from Hard Problems\n\nDerived from this cycle's findings on `Cryptography.ClawFreeHash` and\n`Cryptography.MDLengthExtension`, building on `Cryptography.MerkleDamgard` and\n`Cryptography.ProductCollisions`.\n\nThis cycle established, sorry-free:\n- `claw_iff_compression_collision`: for an injective permutation pair, a Damg\u00e5rd\n  compression collision **is** a claw (and conversely).\n- `clawFree_mdHash_injOn_length`: claw-freeness (the hardness assumption) lifts\n  through Merkle\u2013Damg\u00e5rd to collision resistance of the full iterated hash.\n- `md_collision_family` / `injectiveOracle_no_collision`: a single MD collision\n  generates an infinite suffix-closed family of collisions \u2014 a structural\n  distinguisher from a random oracle (the length-extension obstruction).\n- `finalize_collision_iff`: an injective finalization exactly preserves the\n  collision structure (cannot weaken collision resistance).\n\n---\n\n## Conjecture 1 \u2014 Two-sided claw equivalence collapses to a permutation-pair invariant\n\n**Statement.** For finite `X` and bijections `g\u2080, g\u2081 : X \u2192 X`, the iterated\nDamg\u00e5rd hash `mdHash (clawCompress g\u2080 g\u2081) iv` is injective on each fixed length\n**iff** `g\u2080\u207b\u00b9 \u2218 g\u2081` has no fixed point, i.e. `\u2200 x, g\u2080 x \u2260 g\u2081 x` is *not* the right\ncondition \u2014 rather claw-freeness is equivalent to disjointness of the *ranges*\nof `g\u2080` and `g\u2081` only in the non-surjective case; for permutations a claw always\nexists, so collision resistance must come from a *one-way* (hard-to-invert), not\nmerely injective, pair.\n\n**The key insight is** that over a finite domain two permutations always have a\nclaw (`g\u2080 x = g\u2081 y` is solvable since both are onto), so the catalog's\n`compression_collision_of_card` inevitability theorem forces the hardness to live\nin *inversion difficulty*, not in combinatorial non-existence \u2014 pinning down\nexactly where the computational assumption must enter.\n\n**Why now?** We already have the exact collision \u21d4 claw bridge and the finite\npigeonhole inevitability theorem in the catalog; combining them gives a clean\nfinite-model statement that can be checked by enumeration over small `X`.\n\n## Conjecture 2 \u2014 Prefix-free domain separation removes the length-extension family\n\n**Statement.** Let `pad : List Block \u2192 List Block` be an injective, prefix-free\nencoding (no padded message is a prefix of another). Then\n`mdHash f iv \u2218 pad` admits **no** non-trivial suffix-closed collision family:\nif `mdHash f iv (pad m\u2081) = mdHash f iv (pad m\u2082)` with `m\u2081 \u2260 m\u2082`, there is a suffix\n`s` with `mdHash f iv (pad m\u2081 ++ s) \u2260 mdHash f iv (pad m\u2082 ++ s)` unless the\ncollision is already a genuine compression collision.\n\n**The key insight is** that `md_collision_family` shows the obstruction is the\nright-congruence kernel of plain concatenation, and prefix-freeness is precisely\nthe algebraic condition that breaks that congruence \u2014 turning the length-extension\ndistinguisher off at its root cause rather than by output truncation.\n\n**Why now?** `md_collision_family` and `finalize_collision_iff` localize the\nobstruction to concatenation structure; the natural next theorem is that a\nprefix-free domain (Merkle\u2013Damg\u00e5rd strengthening) is what restores\nindifferentiability, a statement now expressible with the existing `mdHash`\nAPI.\n\n## Conjecture 3 \u2014 The product-collision hash and the claw hash are the same construction\n\n**Statement.** Generalize `clawCompress` from a two-element bit-indexed pair to a\nblock-indexed family `g_b s = s * b`. Then the multiplicative compression\n`mulCompress s b = s * b` (`Cryptography.HashFromHardness`) is exactly\n`s \u21a6 b \u21a6 g_b s`, and a product collision in the sense of\n`ProductCollisions.HasProductCollision` (`a*b = c*d`, `{a,b} \u2260 {c,d}`) maps to a\n*generalized claw* `g_b a = g_d c` with distinct index/state pairs. Conjecture:\nunder this identification `factorization_hierarchy` (UF \u21d2 collision-free \u21d2\nproduct-free) is a special case of claw-freeness for the block-indexed\nmultiplicative family.\n\n**The key insight is** that non-unique factorization, product collisions, and\nclaws are three views of one obstruction \u2014 generalizing the claw pair to a\nblock-indexed family makes multiplicativity the explicit instance \u2014 so the\n`ProductCollisions` hierarchy should re-derive inside the claw framework,\nunifying two catalog files under one reduction.\n\n**Why now?** Both `HashFromHardness` (multiplicative MD) and `ClawFreeHash`\n(claw-based MD) now exist and target the same `HasCompressionCollision`\npredicate; the bridge is one definitional identification away.\n\n## Conjecture 4 \u2014 Collision resistance is *not* monotone under composition of compressions\n\n**Statement.** There exist compression functions `f, g` such that each is\ncollision-free on reachable states from `iv`, yet the \"cascade\" compression\n`(s, b) \u21a6 g (f s b) b` has a reachable collision. Equivalently, collision\nresistance of Merkle\u2013Damg\u00e5rd is not closed under post-composition by a second\nkeyed round, contradicting a naive \"more rounds is safer\" heuristic.\n\n**The key insight is** that `finalize_collision_iff` only guarantees preservation\nfor *injective* finalizations applied to the *digest*; interleaving a non-injective\nround with the message block re-opens collisions, so the load-bearing hypothesis\nis injectivity-on-the-chaining-value, not round count.\n\n**Why now?** `finalize_collision_iff` isolates exactly the injectivity hypothesis\nthat makes finalization safe; negating it for block-dependent rounds is a concrete,\nfalsifiable finite search over small state/block types.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2722",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8170e958",
+    "status": "available",
+    "timestamp": "2026-06-27T22:08:17.053542+00:00",
+    "title": "Derived from this cycle's findings on `Cryptography.ClawFreeHash` and"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7868,7 +7869,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
   {
-    "consumed_by_exp_id": "470fcb83",
+    "consumed_by_exp_id": "",
     "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
     "domains": [
       "Tropical",
@@ -7878,7 +7879,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
   },
@@ -8107,7 +8108,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for GL\u2082 over Q"
   },
   {
-    "consumed_by_exp_id": "7e57e1f5",
+    "consumed_by_exp_id": "",
     "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domains": [
       "Bridges",
@@ -8117,7 +8118,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.798593+00:00",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
