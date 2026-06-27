@@ -434,6 +434,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 43f6ae62 (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_43f6ae62_1e8855c5",
+    "priority_score": 0.8795999999999999,
+    "research_mode": "team",
+    "source_exp_id": "43f6ae62",
+    "status": "available",
+    "timestamp": "2026-06-27T07:21:54.517667+00:00",
+    "title": "Deepening: Code-Based Cryptography: McEliece from Goppa Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
     "domains": [
       "Algebra"
@@ -749,7 +763,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
   },
   {
-    "consumed_by_exp_id": "d6c98458",
+    "consumed_by_exp_id": "",
     "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
     "domains": [
       "Algebra",
@@ -759,7 +773,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:57.058856+00:00",
     "title": "Collatz Conjecture"
   },
@@ -3872,20 +3886,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Growth Rate of Minimum Length for Minimal Additive Codes"
   },
   {
-    "consumed_by_exp_id": "982feb93",
-    "description": "There exists a function space F_d associated with periodic L_p-discrepancy where the worst-case integration error equals the discrepancy, and non-negative linear rules require exponential point counts to achieve \u03b5-accuracy, confirming the curse of dimensionality.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_2468",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.24195v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T15:27:55.505425+00:00",
-    "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via Duality Framework"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The limit \u03bb = lim_{n\u2192\u221e} D_n/n is exactly equal to 3/5*(7 - 8 ln 2), where D_n is the average stack-sorting depth over S_n. This would imply that Defant's upper bound is tight and the Golomb-Dickman constant is strictly less than \u03bb.",
     "domains": [
@@ -4592,7 +4592,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Closed form for even\u2011indexed regularised Wallis products"
   },
   {
-    "consumed_by_exp_id": "d409a01c",
+    "consumed_by_exp_id": "",
     "description": "For every fixed r >= 3 and k >= 3, every linear r-uniform hypergraph H on n vertices with no collection of k edges spanning at most (r - 2)k + 3 vertices has o(n^2) edges. Equivalently: for every rational epsilon > 0 there is N such that for all n >= N, if H is linear and r-uniform on Fin n and every k-edge subfamily spans more than (r - 2)k + 3 vertices, then |E(H)| <= epsilon n^2. This would replace the paper's positive constant-density forcing threshold by the conjectural Brown--Erdos--Sos vanishing threshold in the linear setting.",
     "domains": [
       "Pythagorean",
@@ -4602,7 +4602,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T14:27:44.525294+00:00",
     "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
   },
@@ -6884,6 +6884,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Code-Based Cryptography (McEliece / Goppa)\n\nDerived from this cycle's findings in `LinearCode.lean`, `GoppaDistance.lean`,\nand `Parameters.lean`. Each conjecture is bold, falsifiable, and accompanied by a\nkey insight and a \"Why now?\" justification.\n\n## 1. Tight (matching) Singleton bound for GRS evaluation codes\n\n**Conjecture.** For distinct `\u03b1 : Fin n \u2192 K` and `1 \u2264 k \u2264 n`, the GRS evaluation\ncode `{evalVec \u03b1 f | f.natDegree < k}` has minimum distance *exactly* `n \u2212 k + 1`\n(not merely `\u2265`), i.e. it is MDS, witnessed by `f = \u220f_{i<k-1}(X \u2212 \u03b1 i)`.\n\nThe key insight is that the lower bound `grs_min_distance` is saturated by a\nproduct of `k\u22121` distinct linear factors, whose evaluation vector has exactly\n`k\u22121` zeros \u2014 turning the inequality into an equality and an *explicit extremal\ncodeword*.\n\n**Why now?** We already have `grs_min_distance` (the `\u2265` direction) and the zero\ncounting lemma `card_eval_zero_le_natDegree`; the witness construction reuses the\nexact extremal-polynomial technique proven in the sibling file\n`Cryptography/MinimumDistance.lean` (`witnessPolynomial`), so both directions are\nin reach in one step.\n\n## 2. Goppa codes strictly beat their parent GRS distance in the binary case\n\n**Conjecture.** A binary Goppa code `\u0393(L, g)` with a *separable* degree-`t`\nGoppa polynomial has minimum distance `\u2265 2t + 1`, strictly larger than the\ngeneric alternant bound `t + 1`.\n\nThe key insight is that over `GF(2)` separability lets one replace `g` by `g\u00b2` in\nthe parity check \"for free\" (a codeword's error-locator and its formal derivative\nshare roots), doubling the designed distance \u2014 a phenomenon invisible in the\ngeneric `bch_parity_min_weight` bound proven here.\n\n**Why now?** `bch_parity_min_weight` already gives the `t + 1` alternant bound via\nthe polynomial-multiplier argument; the binary doubling is the same argument\napplied to `g\u00b2`, so the infrastructure (Vandermonde kernel + locator polynomial)\nis exactly what we just built.\n\n## 3. Information-set decoding has a provable exponential floor\n\n**Conjecture.** Any decoder that recovers a planted weight-`t` error in a length-`n`\nlinear code by testing information sets must, in the worst case, examine at least\n`C(n, t) / C(n\u2212k, t)` candidate sets \u2014 an exponential quantity for McEliece\nparameters.\n\nThe key insight is that the success probability of a single random information\nset is `C(n\u2212k, t) / C(n, t)`, so the expected number of trials is its reciprocal;\ncombined with `pow_le_choose` this yields a clean exponential lower bound on\nattack cost rather than the mere \"search space is large\" statement we proved.\n\n**Why now?** `pow_le_choose` gives rigorous binomial lower bounds with no giant\n`decide`; the missing piece is a matching *upper* bound `C(n,t) \u2264 b'^t`, which the\nsame Pascal-recurrence induction delivers, closing the ratio.\n\n## 4. Niederreiter and McEliece are equivalent at the syndrome level\n\n**Conjecture.** For a fixed parity-check matrix `H` with `ker H` of minimum weight\n`\u2265 2t+1`, McEliece decryption and Niederreiter syndrome decoding define the *same*\nerror-recovery function, and both are total bijections between syndromes and\nweight-`\u2264 t` error vectors.\n\nThe key insight is that `syndrome_eq_of_codeword` plus `syndrome_decoding_unique`\nalready prove *injectivity* of `error \u21a6 syndrome` on the weight-`\u2264 t` ball; the\nremaining surjectivity onto the syndrome image is a counting argument\n(`Fintype.card` of a `2t+1`-distance code's coset leaders).\n\n**Why now?** Both supporting lemmas are proven in `LinearCode.lean`; promoting\nuniqueness to a bundled `Equiv` is a finite-cardinality bookkeeping step that\nMathlib's `Equiv.ofBijective` + `Fintype.bijective_iff_injective_and_card`\nsupport directly.\n\n## 5. The key-distinguishing reduction is advantage-tight\n\n**Conjecture.** The hybrid factor-`N` loss in `mceliece_distinguishing_reduction`\nis optimal: there exist distinguishers whose per-step advantage is exactly `\u03b5/N`,\nso no reduction can avoid the `1/N` degradation.\n\nThe key insight is that the pigeonhole bound `\u2203 i, \u03b5/N \u2264 stepAdvantage i` becomes\nan equality precisely when the advantage is spread uniformly across hybrids, which\na uniform `stepAdvantage \u2261 \u03b5/N` realizes \u2014 making the reduction tight rather than\nmerely sound.\n\n**Why now?** We reuse the catalog's `search_to_decision_advantage_bound`\n(`Cryptography.LWE.SearchDecisionCore`); the tightness witness is the constant\nfunction, and `Finset.sum_const` immediately certifies the matching example.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2671",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "43f6ae62",
+    "status": "available",
+    "timestamp": "2026-06-27T07:21:38.796907+00:00",
+    "title": "Derived from this cycle's findings in `LinearCode.lean`, `GoppaDistance.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7205,7 +7220,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "57a09ecd",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -7215,7 +7230,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "43f6ae62",
     "filename": "code_based_cryptography_mceliece_from_goppa_codes.json",
     "pkg_num": 128,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7796,
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
@@ -3737,8 +3737,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "code_based_cryptography_mceliece_from_goppa_codes",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7796,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Code-Based Cryptography: McEliece from Goppa Codes"
     }
