@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "50d5b31e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from this cycle's findings (`RamseySmallNumbers.lean`,\n`RamseyExactFamilies.lean`, `RamseyProbabilisticLowerBound.lean`). Each co",
-      "quality_score": 0.84432,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-21T22:45:31",
-      "title": "Ramsey Theory: Bounds and Constructions"
-    },
-    {
       "cycle_id": "9537a45c",
       "domain": "Tropical",
       "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nDerived from the findings of this research cycle (`LargeDeviations.lean`,\n`DualityGap.lean`). Each conjecture is bold, falsifiable, and",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-27T07:21:54",
       "title": "Code-Based Cryptography: McEliece from Goppa Codes"
+    },
+    {
+      "cycle_id": "669193db",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Delaunay minicenter refinement & approximate Carathéodory\n\nThis cycle added three files to the `DelaunayContraction` catalog:\n\n* `PerturbedContraction.lean` — inhomogeneous contr",
+      "quality_score": 0.71552,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T07:24:07",
+      "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "693eed6d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Tropical Geometry as a Limit of Classical AG\n\nDerived from this cycle's findings in\n`Catalog/Bridges/TropicalDequantizationLimit.lean` and\n`Catalog/Tropical/TropicalFundamentalTh",
-      "quality_score": 0.4390899069767442,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-22T03:12:34",
-      "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-    },
     {
       "cycle_id": "f810a812",
       "domain": "MachineLearning",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-27T07:21:54",
       "title": "Code-Based Cryptography: McEliece from Goppa Codes"
+    },
+    {
+      "cycle_id": "669193db",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Delaunay minicenter refinement & approximate Carathéodory\n\nThis cycle added three files to the `DelaunayContraction` catalog:\n\n* `PerturbedContraction.lean` — inhomogeneous contr",
+      "quality_score": 0.71552,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T07:24:07",
+      "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T07:21:54",
+  "last_updated": "2026-06-27T07:24:07",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7c592ed1",
-        "quality": 0.533285,
-        "theorems": 23,
-        "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-      },
-      {
         "cycle_id": "4efe75bb",
         "quality": 0.5579999999999999,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.60416,
         "theorems": 0,
         "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
+      },
+      {
+        "cycle_id": "669193db",
+        "quality": 0.71552,
+        "theorems": 0,
+        "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
       }
     ],
     "NumberTheory": [

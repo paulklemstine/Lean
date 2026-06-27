@@ -434,20 +434,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 43f6ae62 (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_43f6ae62_1e8855c5",
-    "priority_score": 0.8795999999999999,
-    "research_mode": "team",
-    "source_exp_id": "43f6ae62",
-    "status": "available",
-    "timestamp": "2026-06-27T07:21:54.517667+00:00",
-    "title": "Deepening: Code-Based Cryptography: McEliece from Goppa Codes"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
     "domains": [
       "Algebra"
@@ -475,7 +461,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "10d0f89d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -484,7 +470,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -1403,7 +1389,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a151a9c3",
     "description": "Let B_n be the Birkhoff polytope, the convex hull in R^(n x n) of all n x n permutation matrices. Conjecture: B_n satisfies the clique-face property, meaning every clique in the 1-skeleton of B_n is exactly the vertex set of a face, if and only if n <= 2.",
     "domains": [
       "Pythagorean",
@@ -1413,7 +1399,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20430v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T00:35:57.205204+00:00",
     "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
   },
@@ -3887,6 +3873,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "There exists a function space F_d associated with periodic L_p-discrepancy where the worst-case integration error equals the discrepancy, and non-negative linear rules require exponential point counts to achieve \u03b5-accuracy, confirming the curse of dimensionality.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2468",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24195v1",
+    "status": "available",
+    "timestamp": "2026-06-24T15:27:55.505425+00:00",
+    "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via Duality Framework"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The limit \u03bb = lim_{n\u2192\u221e} D_n/n is exactly equal to 3/5*(7 - 8 ln 2), where D_n is the average stack-sorting depth over S_n. This would imply that Defant's upper bound is tight and the Golomb-Dickman constant is strictly less than \u03bb.",
     "domains": [
       "Pythagorean"
@@ -4275,7 +4275,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dominant Orchard Denominator Root Comes from the Last Complete-Graph Matching Factor"
   },
   {
-    "consumed_by_exp_id": "af3ea261",
+    "consumed_by_exp_id": "",
     "description": "In the h=1 specialization of additive strong blocking sets, i.e. ordinary strong blocking sets in PG(2,2), a finite set S of projective points is strong blocking if and only if it contains at least 6 of the 7 points. Equivalently, the shortest nondegenerate minimal binary linear code of dimension 3 has length 6 under the projective-system correspondence.",
     "domains": [
       "Geometry",
@@ -4285,7 +4285,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T10:08:51.465617+00:00",
     "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
   },
@@ -5898,11 +5898,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that every connected, cubic (3-regular), edge-transitive graph that contains a Hamiltonian cycle has a Hamiltonian compression factor \u03ba(\u0393) \u2265 2. This would follow if every such graph admits a Hamiltonian cycle invariant under a non-trivial automorphism acting as a rotation. A counterexample would be an edge-transitive cubic Hamiltonian graph with \u03ba(\u0393) = 1, which would falsify the conjecture.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2617",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21941v1",
+    "status": "available",
+    "timestamp": "2026-06-27T07:25:10.847387+00:00",
+    "title": "Every Hamiltonian Edge-Transitive Cubic Graph Has Hamiltonian Compression Factor at Least 2"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5916,7 +5931,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5931,7 +5946,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5946,7 +5961,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5961,7 +5976,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5976,7 +5991,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5990,7 +6005,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -6004,7 +6019,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -6018,7 +6033,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -6033,7 +6048,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -6048,7 +6063,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -6063,7 +6078,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -6078,7 +6093,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -6093,7 +6108,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -6107,7 +6122,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -6122,7 +6137,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -6137,7 +6152,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -6151,7 +6166,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -6165,7 +6180,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -6179,7 +6194,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -6194,7 +6209,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6209,7 +6224,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -6224,7 +6239,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2639",
+    "id": "fd_2640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6233,16 +6248,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positive dyadic density of rational series supports via carry recurrence"
   },
   {
-    "consumed_by_exp_id": "08b15f3b",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the completion threshold ratio satisfies \\(\\displaystyle \\limsup_{n\\to\\infty} \\frac{qc(n)}{n}=0.216\\). Equivalently, there exist infinitely many board sizes n for which qc(n) \\geq c n\\) for some constant c > 0.216, and no constant larger than 0.216 can serve as a universal lower bound.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2640",
+    "id": "fd_2641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T14:33:06.466347+00:00",
     "title": "Tight asymptotic bound for the n\u2011queens completion threshold"
   },
@@ -6252,7 +6267,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2641",
+    "id": "fd_2642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6267,7 +6282,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2642",
+    "id": "fd_2643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6281,7 +6296,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2643",
+    "id": "fd_2644",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6296,7 +6311,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2644",
+    "id": "fd_2645",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6310,7 +6325,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2645",
+    "id": "fd_2646",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6324,7 +6339,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2646",
+    "id": "fd_2647",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6338,7 +6353,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2647",
+    "id": "fd_2648",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6353,7 +6368,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2648",
+    "id": "fd_2649",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6368,7 +6383,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2649",
+    "id": "fd_2650",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6383,7 +6398,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2650",
+    "id": "fd_2651",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6397,7 +6412,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2651",
+    "id": "fd_2652",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6412,7 +6427,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2652",
+    "id": "fd_2653",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6426,7 +6441,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2653",
+    "id": "fd_2654",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6441,7 +6456,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2654",
+    "id": "fd_2655",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -6456,7 +6471,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2655",
+    "id": "fd_2656",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -6470,7 +6485,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2656",
+    "id": "fd_2657",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -6485,7 +6500,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2657",
+    "id": "fd_2658",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -6499,7 +6514,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2658",
+    "id": "fd_2659",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
@@ -6514,7 +6529,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2659",
+    "id": "fd_2660",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22513v1",
@@ -6529,7 +6544,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2660",
+    "id": "fd_2661",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22324v1",
@@ -6543,7 +6558,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2661",
+    "id": "fd_2662",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22422v1",
@@ -6557,7 +6572,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2662",
+    "id": "fd_2663",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22253v1",
@@ -6571,7 +6586,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2663",
+    "id": "fd_2664",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22458v1",
@@ -6585,7 +6600,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2664",
+    "id": "fd_2665",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22010v1",
@@ -6599,7 +6614,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2665",
+    "id": "fd_2666",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22064v1",
@@ -6614,7 +6629,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2666",
+    "id": "fd_2667",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
@@ -6629,7 +6644,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2667",
+    "id": "fd_2668",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22106v1",
@@ -6644,7 +6659,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2668",
+    "id": "fd_2669",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22011v2",
@@ -6658,7 +6673,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2669",
+    "id": "fd_2670",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21927v1",
@@ -6673,13 +6688,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2670",
+    "id": "fd_2671",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21859v1",
     "status": "available",
     "timestamp": "2026-06-27T07:01:02.796048+00:00",
     "title": "Ramanujan Bound for Moret-Bailly Isogeny Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the theorem stating that for a finite connected graph G with n vertices and resistance matrix R, the determinant of R can be expressed as a weighted sum of squared differences of resistances from any fixed vertex k: det R = ((-1)^(n-1) * 2^(n-2) / kappa(G)) * sum_{e=(i,j) in E} (R_{ik} - R_{jk})^2, where kappa(G) is the number of spanning trees.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2672",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21902v1",
+    "status": "available",
+    "timestamp": "2026-06-27T07:26:53.879111+00:00",
+    "title": "Combinatorial Determinant of the Resistance Matrix"
   },
   {
     "consumed_by_exp_id": "",
@@ -6881,21 +6910,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Code-Based Cryptography (McEliece / Goppa)\n\nDerived from this cycle's findings in `LinearCode.lean`, `GoppaDistance.lean`,\nand `Parameters.lean`. Each conjecture is bold, falsifiable, and accompanied by a\nkey insight and a \"Why now?\" justification.\n\n## 1. Tight (matching) Singleton bound for GRS evaluation codes\n\n**Conjecture.** For distinct `\u03b1 : Fin n \u2192 K` and `1 \u2264 k \u2264 n`, the GRS evaluation\ncode `{evalVec \u03b1 f | f.natDegree < k}` has minimum distance *exactly* `n \u2212 k + 1`\n(not merely `\u2265`), i.e. it is MDS, witnessed by `f = \u220f_{i<k-1}(X \u2212 \u03b1 i)`.\n\nThe key insight is that the lower bound `grs_min_distance` is saturated by a\nproduct of `k\u22121` distinct linear factors, whose evaluation vector has exactly\n`k\u22121` zeros \u2014 turning the inequality into an equality and an *explicit extremal\ncodeword*.\n\n**Why now?** We already have `grs_min_distance` (the `\u2265` direction) and the zero\ncounting lemma `card_eval_zero_le_natDegree`; the witness construction reuses the\nexact extremal-polynomial technique proven in the sibling file\n`Cryptography/MinimumDistance.lean` (`witnessPolynomial`), so both directions are\nin reach in one step.\n\n## 2. Goppa codes strictly beat their parent GRS distance in the binary case\n\n**Conjecture.** A binary Goppa code `\u0393(L, g)` with a *separable* degree-`t`\nGoppa polynomial has minimum distance `\u2265 2t + 1`, strictly larger than the\ngeneric alternant bound `t + 1`.\n\nThe key insight is that over `GF(2)` separability lets one replace `g` by `g\u00b2` in\nthe parity check \"for free\" (a codeword's error-locator and its formal derivative\nshare roots), doubling the designed distance \u2014 a phenomenon invisible in the\ngeneric `bch_parity_min_weight` bound proven here.\n\n**Why now?** `bch_parity_min_weight` already gives the `t + 1` alternant bound via\nthe polynomial-multiplier argument; the binary doubling is the same argument\napplied to `g\u00b2`, so the infrastructure (Vandermonde kernel + locator polynomial)\nis exactly what we just built.\n\n## 3. Information-set decoding has a provable exponential floor\n\n**Conjecture.** Any decoder that recovers a planted weight-`t` error in a length-`n`\nlinear code by testing information sets must, in the worst case, examine at least\n`C(n, t) / C(n\u2212k, t)` candidate sets \u2014 an exponential quantity for McEliece\nparameters.\n\nThe key insight is that the success probability of a single random information\nset is `C(n\u2212k, t) / C(n, t)`, so the expected number of trials is its reciprocal;\ncombined with `pow_le_choose` this yields a clean exponential lower bound on\nattack cost rather than the mere \"search space is large\" statement we proved.\n\n**Why now?** `pow_le_choose` gives rigorous binomial lower bounds with no giant\n`decide`; the missing piece is a matching *upper* bound `C(n,t) \u2264 b'^t`, which the\nsame Pascal-recurrence induction delivers, closing the ratio.\n\n## 4. Niederreiter and McEliece are equivalent at the syndrome level\n\n**Conjecture.** For a fixed parity-check matrix `H` with `ker H` of minimum weight\n`\u2265 2t+1`, McEliece decryption and Niederreiter syndrome decoding define the *same*\nerror-recovery function, and both are total bijections between syndromes and\nweight-`\u2264 t` error vectors.\n\nThe key insight is that `syndrome_eq_of_codeword` plus `syndrome_decoding_unique`\nalready prove *injectivity* of `error \u21a6 syndrome` on the weight-`\u2264 t` ball; the\nremaining surjectivity onto the syndrome image is a counting argument\n(`Fintype.card` of a `2t+1`-distance code's coset leaders).\n\n**Why now?** Both supporting lemmas are proven in `LinearCode.lean`; promoting\nuniqueness to a bundled `Equiv` is a finite-cardinality bookkeeping step that\nMathlib's `Equiv.ofBijective` + `Fintype.bijective_iff_injective_and_card`\nsupport directly.\n\n## 5. The key-distinguishing reduction is advantage-tight\n\n**Conjecture.** The hybrid factor-`N` loss in `mceliece_distinguishing_reduction`\nis optimal: there exist distinguishers whose per-step advantage is exactly `\u03b5/N`,\nso no reduction can avoid the `1/N` degradation.\n\nThe key insight is that the pigeonhole bound `\u2203 i, \u03b5/N \u2264 stepAdvantage i` becomes\nan equality precisely when the advantage is spread uniformly across hybrids, which\na uniform `stepAdvantage \u2261 \u03b5/N` realizes \u2014 making the reduction tight rather than\nmerely sound.\n\n**Why now?** We reuse the catalog's `search_to_decision_advantage_bound`\n(`Cryptography.LWE.SearchDecisionCore`); the tightness witness is the constant\nfunction, and `Finset.sum_const` immediately certifies the matching example.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2671",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "43f6ae62",
-    "status": "available",
-    "timestamp": "2026-06-27T07:21:38.796907+00:00",
-    "title": "Derived from this cycle's findings in `LinearCode.lean`, `GoppaDistance.lean`,"
   },
   {
     "consumed_by_exp_id": "",

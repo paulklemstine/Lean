@@ -33808,7 +33808,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Birkhoff-von Neumann theorem",
         "1-skeleton of a convex polytope",
@@ -33819,7 +33819,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a151a9c3",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -33835,7 +33835,7 @@
         "Geometry"
       ],
       "id": "fd_2282",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-27T07:26:57.796208+00:00",
       "last_reviewed_at": "2026-06-25T03:41:55.238483+00:00",
       "lean_theorem_stub": "import Mathlib\n\n/-- Placeholder type for a real convex polytope, to be replaced by a concrete\n    bundled definition using finite convex hulls in matrices over `ℝ`. -/\nconstant Polytope : Type\n\n/-- The Birkhoff polytope `B_n`, i.e. the convex hull of all `n × n`\n    permutation matrices. -/\nconstant birkhoffPolytope : ℕ → Polytope\n\n/-- Every clique of the 1-skeleton is exactly the vertex set of a face. -/\nconstant CliqueFaceProperty : Polytope → Prop\n\n/-- Conjecture: Birkhoff polytopes satisfy the clique-face property exactly\n    for `n ≤ 2`. -/\ntheorem birkhoff_cliqueFaceProperty_iff (n : ℕ) :\n    CliqueFaceProperty (birkhoffPolytope n) ↔ n ≤ 2 := by\n  sorry",
       "lineage_refs": [],
@@ -33849,7 +33849,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.20430v1",
       "source_path": "http://arxiv.org/abs/2606.20430v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T00:35:57.205204+00:00",
       "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
@@ -42439,14 +42439,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.NA (Numerical Analysis)",
         "math.NT (Number Theory - related to discrepancy sequences)"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "982feb93",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42460,11 +42460,11 @@
         "Computation"
       ],
       "id": "fd_2468",
-      "last_attempt_time": "2026-06-27T07:01:06.105775+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
       "lineage_refs": [],
-      "outcome_quality": 0.7796,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
@@ -42474,7 +42474,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24195v1",
       "source_path": "http://arxiv.org/abs/2606.24195v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T15:27:55.505425+00:00",
       "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via Duality Framework"
@@ -44011,7 +44011,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Mathlib.Data.ZMod.Basic",
         "Mathlib.LinearAlgebra.FiniteDimensional",
@@ -44021,7 +44021,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "af3ea261",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -44037,7 +44037,7 @@
         "Bridges"
       ],
       "id": "fd_2503",
-      "last_attempt_time": "2026-06-27T07:01:34.448619+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\nabbrev FanoField := ZMod 2\nabbrev FanoVec := Fin 3 → FanoField\n\ndef IsFanoPoint (P : Submodule FanoField FanoVec) : Prop :=\n  Module.finrank FanoField P = 1\n\ndef IsFanoLine (L : Submodule FanoField FanoVec) : Prop :=\n  Module.finrank FanoField L = 2\n\ndef FanoStrongBlocking (S : Finset (Submodule FanoField FanoVec)) : Prop :=\n  (∀ P ∈ S, IsFanoPoint P) ∧\n  ∀ L : Submodule FanoField FanoVec,\n    IsFanoLine L →\n      Submodule.span FanoField\n        ({v : FanoVec | ∃ P ∈ S, P ≤ L ∧ v ∈ P} : Set FanoVec) = L\n\ntheorem fano_strongBlocking_iff_six_le_card\n    (S : Finset (Submodule FanoField FanoVec))\n    (hS : ∀ P ∈ S, IsFanoPoint P) :\n    FanoStrongBlocking S ↔ 6 ≤ S.card := by\n  sorry",
       "lineage_refs": [],
@@ -44051,7 +44051,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24262v1",
       "source_path": "http://arxiv.org/abs/2606.24262v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T10:08:51.465617+00:00",
       "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
@@ -49202,6 +49202,54 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Coxeter 1970s work",
+        "Frucht",
+        "HamComp",
+        "KMR"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that every connected, cubic (3-regular), edge-transitive graph that contains a Hamiltonian cycle has a Hamiltonian compression factor κ(Γ) ≥ 2. This would follow if every such graph admits a Hamiltonian cycle invariant under a non-trivial automorphism acting as a rotation. A counterexample would be an edge-transitive cubic Hamiltonian graph with κ(Γ) = 1, which would falsify the conjecture.",
+      "domain_bridges": [
+        "Algebraic Graph Theory",
+        "Hamiltonian Graphs",
+        "Graph Automorphisms"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Physics"
+      ],
+      "id": "fd_2617",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem hamiltonian_edge_transitive_cubic_compress_at_least_two (G : Graph) [G.is_cubic] [G.is_edge_transitive] [G.is_hamiltonian] : hamiltonian_compression_factor G ≥ 2",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Possibly by leveraging the edge-transitivity to construct a rotational automorphism of a Hamiltonian cycle, or by contradiction assuming κ(Γ)=1 and deriving a structural impossibility inherent to edge-transitive cubic graphs.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.21941v1",
+      "source_path": "http://arxiv.org/abs/2606.21941v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-27T07:25:10.847387+00:00",
+      "title": "Every Hamiltonian Edge-Transitive Cubic Graph Has Hamiltonian Compression Factor at Least 2"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem 1",
         "Corollary 1",
         "Brown-Erdős-Sós conjecture"
@@ -49222,7 +49270,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2617",
+      "id": "fd_2618",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -49270,7 +49318,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2618",
+      "id": "fd_2619",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -49315,7 +49363,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2619",
+      "id": "fd_2620",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -49359,7 +49407,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2620",
+      "id": "fd_2621",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -49406,7 +49454,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2621",
+      "id": "fd_2622",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -49451,7 +49499,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2622",
+      "id": "fd_2623",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -49496,7 +49544,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2623",
+      "id": "fd_2624",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -49537,7 +49585,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2624",
+      "id": "fd_2625",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -49582,7 +49630,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2625",
+      "id": "fd_2626",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -49621,7 +49669,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2626",
+      "id": "fd_2627",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -49663,7 +49711,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2627",
+      "id": "fd_2628",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -49707,7 +49755,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2628",
+      "id": "fd_2629",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -49753,7 +49801,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2629",
+      "id": "fd_2630",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -49798,7 +49846,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2630",
+      "id": "fd_2631",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -49844,7 +49892,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2631",
+      "id": "fd_2632",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -49890,7 +49938,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2632",
+      "id": "fd_2633",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
@@ -49940,7 +49988,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2633",
+      "id": "fd_2634",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_ermc {q n k s : ℕ} [Fact (Prime q)] (h : n ≥ (s+1) * k) :\n  m_q q n k s =\n    max (q_binom q ((s+1) * k - 1) k)\n        (q_binom q n k - (q ^ (k * s)) * q_binom q (n - s) k) :=",
@@ -49986,7 +50034,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2634",
+      "id": "fd_2635",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of the use of filtered complete intersection properties in the orderization process",
@@ -50032,7 +50080,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2635",
+      "id": "fd_2636",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vishik_non_similarity_char_2 (m : ℕ) (hm : m ≥ 3) : ∃ (F : Field) (char F = 2), ∃ (φ ψ : QuadraticForm F), \n  dim φ = 2^m ∧ dim ψ = 2^m ∧ \n  anisotropic φ ∧ anisotropic ψ ∧ \n  (∀ (E : Field), (E ⊇ F) → total_isotropy_index φ E = total_isotropy_index ψ E) ∧ \n  ¬ similar φ ψ",
@@ -50077,7 +50125,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2636",
+      "id": "fd_2637",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularized_sum_primes (P : ℂ → ℂ) (is_prime_zeta : IsPrimeZeta P) (continuation : AnalyticContinuation P) : \n  continuation.value_at (-1 : ℂ) = expected_constant_value := by sorry",
@@ -50126,7 +50174,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2637",
+      "id": "fd_2638",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_veronese_circuit_classification (m : ℕ) (t : ℕ) (d : ℕ) : let circuit := λ (forms : Fin t → (ℓ : LinearForm 𝕂) × ℓ ≠ 0), (linear_dependent_minimally (λ i, forms i |> Prod.fst ^ m)) → (dim (span (λ i, (forms i).1)) = (t + m - 2) / m) in circuit → (∃ (curve_config : Fin t → LinearForm 𝕂), (∀ i, (curve_config i) ^ m = (forms i).1 ^ m) ∧ (rational_normal_curve_configuration curve_config) ∧ (t = m * (d - 1) + 2))",
@@ -50173,7 +50221,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2638",
+      "id": "fd_2639",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_zero_sum_characterization {p : ℕ} [Fact p.Prime] (hp : p % 2 = 1)\n    (ℓ : ℕ) (hℓ : 1 ≤ ℓ ∧ ℓ ≤ (p - 1) / 2)\n    (S : Finset (ZMod p)) (hsym : S = S.image (fun x => -x))\n    (hzero : (0 : ZMod p) ∉ S) :\n    (∃ (vs : Fin (2 * ℓ + 1) → ZMod p),\n        (Pairwise (fun i j => vs i ≠ j)) ∧\n        (∀ i : Fin (2 * ℓ + 1), (vs ((i + 1 : Fin (2 * ℓ + 1))) - vs i) ∈ S)) ↔\n    (∃ (t : Finset (ZMod p)), t ⊆ S ∧ t.card = 2 * ℓ + 1 ∧ (∑ x in t, x) = 0) := by sorry",
@@ -50220,7 +50268,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2639",
+      "id": "fd_2640",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positive_dyadic_density (P : Rat) (Q : Nat) (H : Q.numerator < Q) (inf_support : nat.infinite_support (function n, h (a : nat) => a in support n) (support_sum : nat.sum (n -> n * h (bit_from_n n)) / 2^n = P / Q)) : (exists c_Q : PositiveReals, forall X in Dyads, sufficiently_large X, A_support (2*X) - A_support X >= c_Q * X) := ...",
@@ -50250,7 +50298,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "08b15f3b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -50264,7 +50312,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2640",
+      "id": "fd_2641",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem qc_asymptotic_tight {n : ℕ} (hn : 1 ≤ n) : (qc n : ℝ) / n ≤ 0.216 + o(1) := by sorry",
@@ -50279,7 +50327,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24400v1",
       "source_path": "http://arxiv.org/abs/2606.24400v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-26T14:33:06.466347+00:00",
       "title": "Tight asymptotic bound for the n‑queens completion threshold"
@@ -50308,7 +50356,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2641",
+      "id": "fd_2642",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture_s3_eq : ∀ (k : ℕ), k ≥ 5 → s₃ k = (twr (k-2) 2) ^ 2",
@@ -50356,7 +50404,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2642",
+      "id": "fd_2643",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_size_non_outer_additive_strong_blocking_set {q : ℕ} [hq : Fact (IsPrimePower q)] {h : ℕ} (h_pos : h > 1) {k : ℕ} (k_pos : k ≥ 2) : ∀ (B : AdditiveStrongBlockingSet q k), ¬ ContainsHyperplane B → |B| ≤ q^(k-1) := by\n  -- formal proof outline\n  sorry",
@@ -50398,7 +50446,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2643",
+      "id": "fd_2644",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "M_{g,n} ≅ G_{g,n}",
@@ -50437,7 +50485,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2644",
+      "id": "fd_2645",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Central trinomial coefficient bounds",
@@ -50483,7 +50531,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2645",
+      "id": "fd_2646",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem local_obstruction_dim_twisted_steinberg\n  (p : ℕ)\n  (ℓ : ℕ)\n  (is_prime_p : fact_is_prime p)\n  (is_prime_ℓ : fact_is_prime ℓ)\n  (h_p_not_ℓ : p ≠ ℓ)\n  (type : WeilDeligneType)\n  (h_type : type = twisted_steinberg p)\n  (h_congruence : p % ℓ = 1) :\n  dim (H0 Gp (cyclotomic_char ℓ ⊗ adjoint_zero_rho_bar)) = 1 :=",
@@ -50539,7 +50587,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2646",
+      "id": "fd_2647",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem consecutive_zeckendorf_niven_bound {d a : ℕ} (h : d > 0) : ∀ (n m : ℕ), n ≤ m → (∀ k ∈ Finset.Icc n m, ZeckendorfNiven (a + k * d)) → m - n + 1 ≤ ⌊Real.logb (phi) (d : ℝ)⌋ + 2 := by sorry",
@@ -50584,7 +50632,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2647",
+      "id": "fd_2648",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem wallis_hierarchy_even_branch (k : ℕ) : \n  let P_m := ∏' (n : ℕ), (Real.exp (counterterm k n)) * (1 - 1/(n^2))^(n^(2*k))\n  exists (val : ℝ), P_m = val ∧ is_closed_form_zeta_pi_gamma val\n  where\n    counterterm (k : ℕ) (n : ℕ) : ℝ := sorry",
@@ -50631,7 +50679,7 @@
         "Logic",
         "Pythagorean"
       ],
-      "id": "fd_2648",
+      "id": "fd_2649",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_550_effective_threshold (k : ℕ) (m : Fin k → ℕ) (hk : 2 ≤ k) (hordered : ∀ i j, i ≤ j → m i ≤ m j) :\n  ∃ (C C' : ℝ) (poly : ℕ → ℕ), ∀ (m₁ : ℕ), let n₀ := C * (∏ i, m i) ^ (poly k m₁) in\n  ∀ (n : ℕ) (T : Graph), n ≥ n₀ → (T.IsTree ∧ T.VertexCount = n) →\n  let q := k - 1 in\n  let r := RamseyNumber T (CompleteMultipartite [m 0, m 1]) in\n  RamseyNumber T (CompleteMultipartite (List.map (fun i => m i) (List.range k))) ≤ q * (r - 1) + m 0",
@@ -50678,7 +50726,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2649",
+      "id": "fd_2650",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formal equivalence of mutation operations on quivers and matrix decompositions",
@@ -50723,7 +50771,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2650",
+      "id": "fd_2651",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spectral_radius_vertex_deletion (G : simple_graph) (v : vertex G) [decidable_eq (vertex G)] [directed (edge G)] [signed_graph (G : graph) : @signed_graph (G : graph)] :\n    @rho (G) ≤ sqrt (@rho (subgraph (erase_vertex v G))² + 2 * @degree v - 1) :=\n    ...",
@@ -50763,7 +50811,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2651",
+      "id": "fd_2652",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Homotopy type theorem",
@@ -50810,7 +50858,7 @@
         "Algebra",
         "Logic"
       ],
-      "id": "fd_2652",
+      "id": "fd_2653",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem betti_whittaker_period_contragredient {n : ℕ} {k : Type*} [field k] [number_field k] \\(π : AutomorphicRepresentation (GL n k)\\) (hπ : IsCohomological π) (hgen : IsGeneric π) : \\(\\mathrm{P}_{\\betti}(πᵛ) = \\frac{C(π)}{\\mathrm{P}_{\\betti}(π)}\\) := sorry",
@@ -50858,7 +50906,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2653",
+      "id": "fd_2654",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidorenko_directed_cycle (Γ : Type*) [fintype Γ] [group Γ] (f : Γ → ℝ) (n : ℕ) : t (directed_cycle n) (correlation_kernel f) ≥ (Exp_g Γ f)^(2*n)",
@@ -50901,7 +50949,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2654",
+      "id": "fd_2655",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem girth_three_for_non_nilpotent {G : Group} [Fintype G] (hG : ¬IsNilpotent G) (hcycle : ContainsCycle (DeletedComaximalSubgroupGraph G)) : Girth (DeletedComaximalSubgroupGraph G) = 3 := by sorry",
@@ -50950,7 +50998,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2655",
+      "id": "fd_2656",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (q : ℕ) [[-1 ∉ ℤₚ² △ {0} → (∃ f : P₃ → ℂ → ℂ) (∀ x ∈ ℤ³ ∩ P₃ [∥ (f dσ)⁻¹(x) ∥_{L^r} ≤ R*(2→r) ∥f∥_{L²}] ∨ ∀ x ∈ ℤ³ ∩ P₃ [∥ (f dσ)⁻¹(x) ∥_{L^r} > R*(2→r) ∥f∥_{L²}]]) → (∀ S ⊆ ℤ³ ∩ P₃ [|S| = k] → energies[S] = O(k³^(2/3)))",
@@ -50993,7 +51041,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2656",
+      "id": "fd_2657",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "canonical representation of q-exp expansions",
@@ -51042,7 +51090,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2657",
+      "id": "fd_2658",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem (signless_laplacian_stability) {r t n : ℕ} {K : simplicial_complex (fin n)} (hK : pure r K) (hL : ∀ σ : faces K, σ.card = r - t → homology t (link K σ ℝ) = 0) (ε : ℝ) (hε : 0 < ε) : let bound := t * n - (t - 1) * (r + 1) in signless_laplacian_spectral_radius (r - 1) K ≥ bound - ε → ∃ δ : ℝ, δ = O ε ∧ ∃ K' : simplicial_complex (fin n), K' ≅ Δ (r + 1 - t) ⋆ Δ^{t} (n - r - 1 + t) ∧ edit_distance K K' ≤ δ * n",
@@ -51086,7 +51134,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2658",
+      "id": "fd_2659",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Basic theory of p-adic schemes and morphisms in Lean 4",
@@ -51133,7 +51181,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2659",
+      "id": "fd_2660",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pdim_edge_ideal_cochordal_eq_min_separator (G : SimpleGraph V) [Fintype V]\n    (hG : G.IsCoChordal) :\n    let n := Fintype.card V;\n    let I := G.edgeIdeal (R := Polynomial (Fin n) ℤ);\n    let κ := G.complement.minSeparatorSize;\n    Ideal.projectiveDimension I = n - κ - 1 :=\n  sorry",
@@ -51180,7 +51228,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2660",
+      "id": "fd_2661",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sigma_ramified_iwasawa_module_is_torsion {k : NumberField} {p : ℕ} [Fact (Nat.Prime p)]\n  (Σ : Finset (PrimeIdeal k))\n  (hΣ : ∀ ℘ ∈ Σ, ℘.valuation p > 0) -- Σ consists of p‑adic primes\n  (N∞ : ℤₚExtension k) (hN : N∞.is_sigma_ramified Σ) :\n  IsTorsion (IwasawaAlgebra ℤₚ (Gal N∞ k)) (IwasawaModule Σ N∞) :=\nby\n  -- proof to be filled in\n  admit",
@@ -51224,7 +51272,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2661",
+      "id": "fd_2662",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Defining the appropriate size of inductive hypotheses for domination constraints",
@@ -51268,7 +51316,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2662",
+      "id": "fd_2663",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem planar_zaks_bound (k : ℕ) (h : k ≥ 3) (G : Graph) [G.planar] [G.k_connected k] : count_perfect_matchings G < k.factorial",
@@ -51320,7 +51368,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2663",
+      "id": "fd_2664",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (v : ℕ), v ≥ 1 → (6^v * ∑ n in ℕ, ∑ k in ℤ, (n : ℤ)^v * T_{2v} ((6*k+1)/Real.sqrt (24*n)) * (-1:ℤ)^k * c_f (n - k*(3*k+1)/2) * q^n) - 2 * ∑ n in ℤ, (12/(2*n+1)) * (n : ℤ)^(2*v) * q^(n*(n+1)/6) / (1+q^n) + (2/E_{2*v}) * ∑ n in ℕ, (-1)^(n-1)*(2*n-1)^(2*v) * q^(2*n-1) / (1+q^(2*n-1)) - (2^(2*v+1)/E_{2*v}) * ∑ n in ℕ, (-1)^(n-1)*(n)^(2*v) * q^n / (1+q^n) = 0",
@@ -51361,7 +51409,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2664",
+      "id": "fd_2665",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "A lemma relating characteristic classes to dimension-based formulas",
@@ -51410,7 +51458,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2665",
+      "id": "fd_2666",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem recursive_exact_formula (d n : ℕ) (hd : d ≥ 3) (hn : n ≥ 2 * (d + 2)) :\n    M d n = Nat.choose (n - 1) d + Nat.choose (n - 4) (d - 2) + M (d - 3) (n - 5) := by sorry",
@@ -51455,7 +51503,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2666",
+      "id": "fd_2667",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "description of the operator product expansion and mode analysis",
@@ -51499,7 +51547,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2667",
+      "id": "fd_2668",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rainbow_triangle_lower_bound {n : ℕ} (G : EdgeColoredGraph n) (hδ : δc G ≥ (n+1)/2) : rt G ≥ ((n-1)*(n-3))/8",
@@ -51545,7 +51593,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2668",
+      "id": "fd_2669",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sat_join_K1_eq_iff (F : SimpleGraph ℕ) (hF : F.Nonempty) (n : ℕ) (hn : n > F.card_vertices) :\n  sat (n) (F.join (SimpleGraph.singleton 0)) = n - 1 + sat (n - 1) F ↔\n    (∀ C ∈ F.connectedComponents, (C.card = 2 ∧ C.is_edge) ∨ (C.is_star) ∨ (C.card = 1))",
@@ -51590,7 +51638,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2669",
+      "id": "fd_2670",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem symmetric_sign_pattern_full_p_vertices_iff_every_max_matching_is_perfect\n  (P : SignPattern n n) (hP : Symmetric P) (hdiag : ∀ i, P i i = 0) :\n  RequiresFullPVertices P ↔ ∀ (M : Matching (underlying_graph P)), IsMaximum M → IsPerfect M",
@@ -51637,7 +51685,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2670",
+      "id": "fd_2671",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ramanujan_bound_moret_bailly (p ℓ : ℕ) (hp : p.Prime) (hℓ : ℓ.Prime) (hp_odd : p ≠ 2) (h_ne : ℓ ≠ p) : ∃ (G : Graph (MoretBaillyFamily p)) (M : Matrix (Vertex G) (Vertex G) ℝ), IsRandomWalkMatrix G M ∧ (∀ (λ : ℂ), λ ∈ M.eigenvals → (λ = 1 ∨ Complex.abs λ ≤ 2 * Real.sqrt ℓ / (ℓ + 1))) := by sorry",
@@ -51662,39 +51710,46 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "Matrix Tree Theorem",
+        "Effective Resistance",
+        "Graham-Pollak Theorem"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Code-Based Cryptography (McEliece / Goppa)\n\nDerived from this cycle's findings in `LinearCode.lean`, `GoppaDistance.lean`,\nand `Parameters.lean`. Each conjecture is bold, falsifiable, and accompanied by a\nkey insight and a \"Why now?\" justification.\n\n## 1. Tight (matching) Singleton bound for GRS evaluation codes\n\n**Conjecture.** For distinct `α : Fin n → K` and `1 ≤ k ≤ n`, the GRS evaluation\ncode `{evalVec α f | f.natDegree < k}` has minimum distance *exactly* `n − k + 1`\n(not merely `≥`), i.e. it is MDS, witnessed by `f = ∏_{i<k-1}(X − α i)`.\n\nThe key insight is that the lower bound `grs_min_distance` is saturated by a\nproduct of `k−1` distinct linear factors, whose evaluation vector has exactly\n`k−1` zeros — turning the inequality into an equality and an *explicit extremal\ncodeword*.\n\n**Why now?** We already have `grs_min_distance` (the `≥` direction) and the zero\ncounting lemma `card_eval_zero_le_natDegree`; the witness construction reuses the\nexact extremal-polynomial technique proven in the sibling file\n`Cryptography/MinimumDistance.lean` (`witnessPolynomial`), so both directions are\nin reach in one step.\n\n## 2. Goppa codes strictly beat their parent GRS distance in the binary case\n\n**Conjecture.** A binary Goppa code `Γ(L, g)` with a *separable* degree-`t`\nGoppa polynomial has minimum distance `≥ 2t + 1`, strictly larger than the\ngeneric alternant bound `t + 1`.\n\nThe key insight is that over `GF(2)` separability lets one replace `g` by `g²` in\nthe parity check \"for free\" (a codeword's error-locator and its formal derivative\nshare roots), doubling the designed distance — a phenomenon invisible in the\ngeneric `bch_parity_min_weight` bound proven here.\n\n**Why now?** `bch_parity_min_weight` already gives the `t + 1` alternant bound via\nthe polynomial-multiplier argument; the binary doubling is the same argument\napplied to `g²`, so the infrastructure (Vandermonde kernel + locator polynomial)\nis exactly what we just built.\n\n## 3. Information-set decoding has a provable exponential floor\n\n**Conjecture.** Any decoder that recovers a planted weight-`t` error in a length-`n`\nlinear code by testing information sets must, in the worst case, examine at least\n`C(n, t) / C(n−k, t)` candidate sets — an exponential quantity for McEliece\nparameters.\n\nThe key insight is that the success probability of a single random information\nset is `C(n−k, t) / C(n, t)`, so the expected number of trials is its reciprocal;\ncombined with `pow_le_choose` this yields a clean exponential lower bound on\nattack cost rather than the mere \"search space is large\" statement we proved.\n\n**Why now?** `pow_le_choose` gives rigorous binomial lower bounds with no giant\n`decide`; the missing piece is a matching *upper* bound `C(n,t) ≤ b'^t`, which the\nsame Pascal-recurrence induction delivers, closing the ratio.\n\n## 4. Niederreiter and McEliece are equivalent at the syndrome level\n\n**Conjecture.** For a fixed parity-check matrix `H` with `ker H` of minimum weight\n`≥ 2t+1`, McEliece decryption and Niederreiter syndrome decoding define the *same*\nerror-recovery function, and both are total bijections between syndromes and\nweight-`≤ t` error vectors.\n\nThe key insight is that `syndrome_eq_of_codeword` plus `syndrome_decoding_unique`\nalready prove *injectivity* of `error ↦ syndrome` on the weight-`≤ t` ball; the\nremaining surjectivity onto the syndrome image is a counting argument\n(`Fintype.card` of a `2t+1`-distance code's coset leaders).\n\n**Why now?** Both supporting lemmas are proven in `LinearCode.lean`; promoting\nuniqueness to a bundled `Equiv` is a finite-cardinality bookkeeping step that\nMathlib's `Equiv.ofBijective` + `Fintype.bijective_iff_injective_and_card`\nsupport directly.\n\n## 5. The key-distinguishing reduction is advantage-tight\n\n**Conjecture.** The hybrid factor-`N` loss in `mceliece_distinguishing_reduction`\nis optimal: there exist distinguishers whose per-step advantage is exactly `ε/N`,\nso no reduction can avoid the `1/N` degradation.\n\nThe key insight is that the pigeonhole bound `∃ i, ε/N ≤ stepAdvantage i` becomes\nan equality precisely when the advantage is spread uniformly across hybrids, which\na uniform `stepAdvantage ≡ ε/N` realizes — making the reduction tight rather than\nmerely sound.\n\n**Why now?** We reuse the catalog's `search_to_decision_advantage_bound`\n(`Cryptography.LWE.SearchDecisionCore`); the tightness witness is the constant\nfunction, and `Finset.sum_const` immediately certifies the matching example.\n",
-      "domain_bridges": [],
+      "description": "Formalize the theorem stating that for a finite connected graph G with n vertices and resistance matrix R, the determinant of R can be expressed as a weighted sum of squared differences of resistances from any fixed vertex k: det R = ((-1)^(n-1) * 2^(n-2) / kappa(G)) * sum_{e=(i,j) in E} (R_{ik} - R_{jk})^2, where kappa(G) is the number of spanning trees.",
+      "domain_bridges": [
+        "Linear Algebra",
+        "Combinatorics",
+        "Electrical Network Theory"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
-        "Computation"
+        "Algebra"
       ],
-      "id": "fd_2671",
+      "id": "fd_2672",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem resistance_matrix_det_formula (G : Graph) [Connected G] (k : G.Vertex) :\n  det (resistance_matrix G) = ((-1)^(G.num_vertices - 1) * 2^(G.num_vertices - 2) / spanning_tree_count G) * \n  ∑ (e : G.Edge), (resistance G (e.source) k - resistance G (e.target) k)^2",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The proof involves defining the Laplacian matrix L and utilizing the Matrix Tree Theorem to express kappa(G). The resistance matrix R is then related to the Moore-Penrose pseudoinverse of L. The formalization would require implementing the Bapat identity for det R and the combinatorial identity linking spanning forests to resistance differences, then applying the sum over edges using the property that the sum is invariant of the choice of vertex k.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "43f6ae62",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/43f6ae62",
+      "source_exp_id": "2606.21902v1",
+      "source_path": "http://arxiv.org/abs/2606.21902v1",
       "status": "available",
-      "thread_id": "th_37dd248a",
-      "timestamp": "2026-06-27T07:21:38.796907+00:00",
-      "title": "Derived from this cycle's findings in `LinearCode.lean`, `GoppaDistance.lean`,"
+      "thread_id": "",
+      "timestamp": "2026-06-27T07:26:53.879111+00:00",
+      "title": "Combinatorial Determinant of the Resistance Matrix"
     },
     {
       "ambition_level": "extension",
@@ -52231,44 +52286,6 @@
       "thread_id": "",
       "timestamp": "2026-06-16T03:36:42.186330+00:00",
       "title": "Deepening: `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Building on cycle 43f6ae62 (Q=0.780), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Applications"
-      ],
-      "id": "push_43f6ae62_1e8855c5",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8795999999999999,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "43f6ae62",
-      "source_path": "Code-Based Cryptography: McEliece from Goppa Codes",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-27T07:21:54.517667+00:00",
-      "title": "Deepening: Code-Based Cryptography: McEliece from Goppa Codes"
     },
     {
       "ambition_level": "extension",
@@ -56572,11 +56589,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "10d0f89d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -56587,7 +56604,7 @@
         "NumberTheory"
       ],
       "id": "seed_331",
-      "last_attempt_time": "2026-06-27T07:01:29.238760+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -56601,7 +56618,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432603+00:00",
       "title": "Perfect Numbers: Structure of Even Perfects"
@@ -131831,7 +131848,7 @@
     "Algebra": 303,
     "Applications": 117,
     "Bridges": 58,
-    "Computation": 101,
+    "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
     "Geometry": 168,
@@ -131875,14 +131892,14 @@
     "enabling": 39,
     "ensemble": 10,
     "exhibit": 55,
-    "exists": 133,
+    "exists": 132,
     "extensive": 12,
     "first": 325,
     "first-order": 19,
     "formal": 133,
     "formalize": 224,
-    "framework": 104,
-    "function": 205,
+    "framework": 103,
+    "function": 204,
     "functions": 99,
     "future": 526,
     "giving": 120,
