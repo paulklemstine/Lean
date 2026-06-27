@@ -1,0 +1,13 @@
+--- CohomologyObstruction.lean
++++ CohomologyObstruction.lean
+@@ -43,8 +43,8 @@
+ -- !-- Lab Notes -- !--
+ -/
+ import Mathlib
+-import Physics.CechContextualityCore
+-import Applications.StrangeAttractors.DyadicSolenoid
++import Catalog.Physics.CechContextualityCore
++import Catalog.Applications.StrangeAttractors.DyadicSolenoid
+ 
+ 
+ 

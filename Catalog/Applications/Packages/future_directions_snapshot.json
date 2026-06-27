@@ -1860,7 +1860,7 @@
       "Mathlib.Combinatorics.SimpleGraph.Basic",
       "Mathlib.Data.Matrix.Basic"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a151a9c3",
     "description": "Let B_n be the Birkhoff polytope, the convex hull in R^(n x n) of all n x n permutation matrices. Conjecture: B_n satisfies the clique-face property, meaning every clique in the 1-skeleton of B_n is exactly the vertex set of a face, if and only if n <= 2.",
     "domain_bridges": [
       "permutation matrices to vertices of transportation polytopes",
@@ -1877,7 +1877,7 @@
     "proof_strategy": "For n <= 2, B_n is respectively a point or a segment, so the clique-face property is immediate. For n = 3, two permutation vertices are adjacent exactly when their quotient permutation has a single nontrivial cycle; every nonidentity element of S_3 has this property, so the 1-skeleton of B_3 is complete on six vertices. However B_3 is 4-dimensional and its facets are given by equations x_ij = 0, each containing only four permutation vertices, so a five-vertex clique is not the vertex set of any face. Thus B_3 fails the property. For n >= 3, B_n contains a face isomorphic to B_3 by fixing n-3 rows and columns to the corresponding identity entries. Since the clique-face property passes to faces, B_n also fails it.",
     "research_mode": "team",
     "source_exp_id": "2606.20430v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T00:35:57.205204+00:00",
     "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
   },
@@ -1889,7 +1889,7 @@
       "Mathlib/Topology/Algebra/MulAction",
       "Mathlib/Topology/Subgroup"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "799935ab",
     "description": "Let G be a topological group and H ≤ G a dense subgroup with the subspace topology. If H is extremely amenable, meaning every continuous action of H on a nonempty compact Hausdorff space has a fixed point, then G is extremely amenable. This isolates the density step used when passing from the automorphism group of a projective Fraisse limit to the closure subgroup of the homeomorphism group of the quotient continuum.",
     "domain_bridges": [
       "projective Fraisse limits to homeomorphism groups",
@@ -1906,7 +1906,7 @@
     "proof_strategy": "Given a continuous G-action on a nonempty compact Hausdorff space X, restrict it to the dense subgroup H. Extreme amenability of H gives x ∈ X fixed by every h ∈ H. For arbitrary g ∈ G, the orbit map a ↦ a • x is continuous, and the equalizer of this map with the constant map a ↦ x is closed in G because X is Hausdorff. This closed set contains the dense subset H, hence is all of G. Therefore g • x = x for every g ∈ G.",
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T00:36:00.903861+00:00",
     "title": "Extreme amenability passes from a dense subgroup to its ambient topological group"
   },
@@ -2274,7 +2274,7 @@
       "math.NT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53364cc2",
     "description": "For every integer t ≥ 1, the natural density c_t := lim_{N→∞} (1/N) #{0 ≤ n < N : s₂(n+t) ≥ s₂(n)} strictly exceeds 1/2, with the explicit quantitative bound c_t ≥ 1/2 + 2^{-2s₂(t)-1}, where s₂(m) counts the ones in the binary expansion of m. This was Cusick's long-standing conjecture, recently resolved via first-exit medians for principal subsequence ideals after an exact deconvolution replacing the distribution of s₂(n+t)−s₂(n) by a finite stopped random-walk law.",
     "domain_bridges": [
       "probability_theory",
@@ -2292,7 +2292,7 @@
     "proof_strategy": "Formalize the probability measure μ_t on ℤ giving the density of values of s₂(n+t)−s₂(n), proving its existence via the 2-adic structure of carry propagation. Develop the exact deconvolution identity that replaces μ_t by a finite stopped random-walk distribution indexed by the block structure of t in binary. Then formalize the first-exit median inequality for principal subsequence ideals to extract the quantitative bias 2^{-2s₂(t)-1}, combining the random-walk representation with the combinatorics of binary addition carries.",
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T04:31:20.306116+00:00",
     "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
   },
@@ -7345,7 +7345,7 @@
       "Mathlib.LinearAlgebra.Dimension.Finrank",
       "Mathlib.Data.Finset.Card"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af3ea261",
     "description": "In the h=1 specialization of additive strong blocking sets, i.e. ordinary strong blocking sets in PG(2,2), a finite set S of projective points is strong blocking if and only if it contains at least 6 of the 7 points. Equivalently, the shortest nondegenerate minimal binary linear code of dimension 3 has length 6 under the projective-system correspondence.",
     "domain_bridges": [
       "minimal linear codes ↔ strong blocking sets",
@@ -7362,7 +7362,7 @@
     "proof_strategy": "Represent points of PG(2,2) as 1-dimensional submodules of V = (ZMod 2)^3 and lines as 2-dimensional submodules. In the Fano plane every line has exactly 3 points and any two distinct points determine a unique line. A set S is strong blocking exactly when every line contains at least two points of S. If S is strong blocking, its complement cannot contain two points, since those two points would determine a line meeting S in only one point; hence |S| ≥ 6. Conversely, if |S| ≥ 6, every line misses at most one point, so it contains at least two points of S and therefore its intersection with S spans the line.",
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T10:08:51.465617+00:00",
     "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
   },
@@ -7478,7 +7478,7 @@
       "https://doi.org/10.1007/s00208-022-02102-4",
       "https://doi.org/10.1090/memo/2452"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db9270a7",
     "description": "We conjecture that the set of positive integers that are divisible by the number of summands in their Zeckendorf decomposition has asymptotic density 0.  Equivalently, for any real ε>0 there are only finitely many Zeckendorf‑Niven numbers n< N with n/N > ε, and the ratio of the counting function to N tends to 0 as N→∞.",
     "domain_bridges": [
       "Fibonacci representations",
@@ -7495,7 +7495,7 @@
     "proof_strategy": "The conjecture can be attacked by estimating the growth of the Zeckendorf summand function s_Z(n). The Zeckendorf decomposition of n can be encoded as a word over {0,1} that avoids consecutive 1s. Counting the number of such words of length L gives the number of integers with at most L Fibonacci summands. One can upper–bound s_Z(n) by a logarithmic function of n and then use a probabilistic model (e.g. a Markov chain on the Fibonacci word) to show that the probability that s_Z(n) divides n decays super‑polynomially. An analytic approach would involve Dirichlet series generating functions for the indicator of Zeckendorf‑Niven numbers and bounding its abscissa of convergence. Either route yields an upper bound for the counting function of the form O(N / log^c N) for some c>0, which implies density 0.",
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T12:39:28.725008+00:00",
     "title": "Zero Asymptotic Density of Zeckendorf‑Niven Numbers"
   },
@@ -8229,7 +8229,7 @@
       "Brualdi & Dahl 2018",
       "VanLint & Wilson 1992"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a880054f",
     "description": "Conjecture that for every integer n ≥ 2, any collection of mutually orthogonal Italian squares of order n contains at most n‑1 squares, and this bound is attained exactly when n is a prime power.",
     "domain_bridges": [
       "Latin squares",
@@ -8245,7 +8245,7 @@
     "proof_strategy": "Establish an upper bound via double counting of symbol occurrences and use finite field constructions to exhibit n‑1 orthogonal squares when n is a prime power; then formalize the combinatorial arguments in Lean using existing libraries for finite fields and finite sets.",
     "research_mode": "team",
     "source_exp_id": "2606.25884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T16:34:26.097340+00:00",
     "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
   },
@@ -13267,7 +13267,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53256563",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domain_bridges": [],
     "domains": [
@@ -13280,7 +13280,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
