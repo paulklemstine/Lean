@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d9f17c93",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Pickover–Clifford Attractor Family\n\nThis cycle established, for the full four-parameter family\n`f(x,y) = (sin(a·y) + c·cos(a·x), sin(b·x) + d·cos(b·y))`:\n\n* a forward-invariant a",
-      "quality_score": 0.3829593469387754,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-23T23:47:37",
-      "title": "Pickover Clifford Attractor Family"
-    },
-    {
       "cycle_id": "a4a5a639",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Rucker Gnarl & Continuous-Valued CA\n\nDerived from this cycle's findings in `Catalog/Novelty/ContinuousValuedCA.lean`,\n`Catalog/Novelty/GnarlLyapunov.lean`, and\n`Catalog/Bridges/G",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-27T21:35:39",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "f31c8198",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Erdős–Rényi Threshold Phenomena\n\nCycle 1 established the Bernoulli-product foundation in\n`Catalog/Probability/ErdosRenyiThreshold.lean`: the law of `G(n,p)` on an abstract\nslot t",
+      "quality_score": 0.565585,
+      "sorry_count": 4,
+      "theorem_count": 15,
+      "timestamp": "2026-06-27T21:36:49",
+      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7938000000000001
     }
   ],
-  "last_updated": "2026-06-27T21:35:39",
+  "last_updated": "2026-06-27T21:36:49",
   "open_questions": [
-    {
-      "context": "`Nat.clog_pow`, not `decide`; all main theorems use induction/omega and are 0-sorry; the",
-      "cycle_id": "999c0f6b",
-      "domain": "Algebra",
-      "sorry_count": 1,
-      "timestamp": "2026-06-16T01:42:32"
-    },
     {
       "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
       "cycle_id": "6f9401e1",
@@ -3016,6 +3009,13 @@
       "domain": "Physics",
       "sorry_count": 1,
       "timestamp": "2026-06-27T19:41:28"
+    },
+    {
+      "context": "therefore left as `sorry` and flagged as open formalization targets in the; sorry; sorry",
+      "cycle_id": "f31c8198",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-06-27T21:36:49"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6fec91f1",
-        "quality": 0.7897859999999999,
-        "theorems": 0,
-        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-      },
-      {
         "cycle_id": "492e1625",
         "quality": 0.66648,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.47243587450980395,
         "theorems": 13,
         "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+      },
+      {
+        "cycle_id": "f31c8198",
+        "quality": 0.565585,
+        "theorems": 15,
+        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
       }
     ],
     "Bridges": [
