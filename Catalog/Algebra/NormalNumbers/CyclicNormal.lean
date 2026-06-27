@@ -38,7 +38,7 @@ which we prove and which makes the corresponding real number rational.
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Catalog.Algebra.NormalNumbers.Basic
+import Algebra.NormalNumbers.Basic
 
 namespace NormalConstants
 

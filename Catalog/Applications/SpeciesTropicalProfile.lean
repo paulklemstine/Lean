@@ -36,7 +36,7 @@ because `ℚ` is an integral domain; dually for `deg`.
 * `binConv_extremal_profile` — downstream species/EGF corollary (binomial convolution).
 -/
 import Mathlib
-import Catalog.Applications.CombinatorialSpecies
+import Applications.CombinatorialSpecies
 
 open scoped BigOperators
 open Finset
