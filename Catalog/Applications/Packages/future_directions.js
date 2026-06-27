@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "061c7bd2",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -160,7 +160,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -852,7 +852,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "de494596",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -861,7 +861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1017,7 +1017,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Invariant Subspace Problem: Special Cases"
   },
   {
-    "consumed_by_exp_id": "f881b568",
+    "consumed_by_exp_id": "",
     "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension \u2265 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
     "domains": [
       "Geometry",
@@ -1027,7 +1027,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432660+00:00",
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
@@ -1314,7 +1314,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "cf34309d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1324,7 +1324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -3044,7 +3044,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-acyclicity of transversal spaces in high dimensions"
   },
   {
-    "consumed_by_exp_id": "7d5c7f90",
+    "consumed_by_exp_id": "",
     "description": "For any Cayley digraph G of an abelian group of even order, the pair (G, K\u2082) is unstable.",
     "domains": [
       "Algebra"
@@ -3053,7 +3053,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22947v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T06:20:52.702234+00:00",
     "title": "Stability of Cayley Digraphs of Even Order with K2"
   },
@@ -4189,7 +4189,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "1394b2e6",
+    "consumed_by_exp_id": "",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self\u2011dual string C\u2011group representations of rank $2m$ (as constructed by the vertex\u2011gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self\u2011dual string C\u2011group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domains": [
       "Algebra"
@@ -4198,7 +4198,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
   },
@@ -5170,7 +5170,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of Exact Potential up to Additive Constant"
   },
   {
-    "consumed_by_exp_id": "8ed8ca57",
+    "consumed_by_exp_id": "",
     "description": "Analyzes contraction bounds in spherical Delaunay refinement using an exact Carath\u00e9odory-type result.",
     "domains": [
       "Bridges"
@@ -5179,7 +5179,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T04:18:00.464209+00:00",
     "title": "Sharp approximate Carath\u00e9odory theorem and application to iterated Delaunay refinement"
   },
@@ -5694,11 +5694,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Tur\u00e1n density of the 4-uniform tight cycle of length 6 minus one edge, denoted C_6^{4-}, equals 3/8, and this value is achieved by the complete odd-bipartite 4-graph with parts of sizes \u230an/2\u230b and \u2308n/2\u2309 in each bipartite class. This conjecture provides the exact density for the smallest non-trivial case (k=1) of tight cycles minus one edge, which connects to but may differ from the 1/2 density established for longer tight cycles C_{4k+2}^{4} with k\u22652.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2603",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22828v1",
+    "status": "available",
+    "timestamp": "2026-06-27T00:13:42.059211+00:00",
+    "title": "Exact Tur\u00e1n Density of the 4-Uniform Tight 6-Cycle Minus One Edge"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5712,7 +5726,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5727,7 +5741,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5742,7 +5756,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5757,7 +5771,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5772,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5786,7 +5800,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5800,7 +5814,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5814,7 +5828,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5829,7 +5843,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5844,7 +5858,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5859,7 +5873,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5874,7 +5888,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5889,7 +5903,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5903,7 +5917,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5918,7 +5932,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5933,7 +5947,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5947,7 +5961,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5961,7 +5975,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5975,7 +5989,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5990,7 +6004,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6005,7 +6019,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -6020,7 +6034,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6034,7 +6048,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6048,7 +6062,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6063,7 +6077,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6077,7 +6091,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6092,7 +6106,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6106,7 +6120,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6120,7 +6134,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6134,7 +6148,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6149,7 +6163,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6164,7 +6178,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6179,7 +6193,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6193,7 +6207,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6208,7 +6222,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6222,7 +6236,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2639",
+    "id": "fd_2640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6237,7 +6251,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2640",
+    "id": "fd_2641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -6252,7 +6266,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2641",
+    "id": "fd_2642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -6266,13 +6280,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2642",
+    "id": "fd_2643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
     "status": "available",
     "timestamp": "2026-06-26T23:43:29.466890+00:00",
     "title": "Analytic derivation of the generating function for $k$-alternating permutations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a pure r-dimensional simplicial complex K on n vertices satisfying the homological condition H\u0303_t(lk_K(\u03c3), \u211d) = 0 for all faces \u03c3 with |\u03c3| = r-t, if the (r-1)-up signless Laplacian spectral radius q_{r-1}(K) is within \u03b5 of the upper bound tn - (t-1)(r+1), then K is within edit distance O(\u03b5n) of the extremal join structure \u0394_{r+1-t} \u22c6 \u0394^{t}_{n-r-1+t}, where the edit distance counts vertices whose deletion makes the complexes isomorphic.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2644",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22825v1",
+    "status": "available",
+    "timestamp": "2026-06-27T00:14:20.899782+00:00",
+    "title": "Stability of Signless Laplacian Spectral Radius under Homological Link Restrictions"
   },
   {
     "consumed_by_exp_id": "",
@@ -6798,7 +6827,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "6adcd103",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -6808,7 +6837,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -6948,7 +6977,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Riemann-Roch Theorem"
   },
   {
-    "consumed_by_exp_id": "9871aa6d",
+    "consumed_by_exp_id": "",
     "description": "Prove the Langlands correspondence for GL\u2082 over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
     "domains": [
       "Bridges",
@@ -6958,7 +6987,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.714293+00:00",
     "title": "Langlands for GL\u2082 over Q"
   },

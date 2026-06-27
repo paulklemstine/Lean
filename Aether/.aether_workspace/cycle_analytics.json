@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-26T23:39:15.519356+00:00",
+  "last_updated": "2026-06-27T00:12:24.566481+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -10103,6 +10103,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-26T23:39:15.205167+00:00",
       "title": "Maximum size of pairwise orthogonal Italian squares is n\u20111 for prime powers"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4357,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 74,
+      "domain": "Applications",
+      "duration_seconds": 1573.8138144016266,
+      "end_time": 1782518402.3700361,
+      "files_integrated": 7,
+      "job_id": "f2c77f29",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v2",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7582,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.6976,
+        "novelty": 0.89,
+        "proof_depth": 0.6151,
+        "usefulness": 0.8075
+      },
+      "quality_score": 0.54104,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782516828.5562217,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-27T00:12:23.871644+00:00",
+      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
     }
   ]
 }

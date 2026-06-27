@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "93e2fea4",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThese build on the compactness bridge in `Catalog/Speculative/RamseyExtremeAmenability.lean`\n(`approx_fixed_point_property_implies_extreme_amenability` and\n`ramsey_certificate_imp",
-      "quality_score": 0.45196000000000003,
-      "sorry_count": 0,
-      "theorem_count": 2,
-      "timestamp": "2026-06-21T09:05:25",
-      "title": "Ramsey Theory in Projective Fraïssé Limits Implies Extreme Amenability of Homeomorphism Groups of Co"
-    },
-    {
       "cycle_id": "2fe3f01b",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThe following are freeform research directions extending the constructive\napproximate IVT in `Analysis/ConstructiveApproxIVT.lean`. Each is a starting point\nrather than a finished",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-26T23:39:12",
       "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
+    },
+    {
+      "cycle_id": "f2c77f29",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Euler–Mascheroni Acceleration\n\nDerived from this cycle's findings in\n`MachineLearning/EulerMascheroni/MidpointAcceleration.lean` and\n`MachineLearning/EulerMascheroni/ShiftedAppro",
+      "quality_score": 0.54104,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-27T00:12:21",
+      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7981560000000001
     }
   ],
-  "last_updated": "2026-06-26T23:39:12",
+  "last_updated": "2026-06-27T00:12:21",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "7496c7ce",
-        "quality": 0.80792,
-        "theorems": 17,
-        "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-      },
-      {
         "cycle_id": "53529d3f",
         "quality": 0.78512,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.67428,
         "theorems": 9,
         "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
+      },
+      {
+        "cycle_id": "f2c77f29",
+        "quality": 0.54104,
+        "theorems": 14,
+        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
       }
     ],
     "Bridges": [
