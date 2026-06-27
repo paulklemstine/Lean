@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dafb1f8b",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Twin-width of bounded-width posets\n\nThis cycle established the **static** linear neighbourhood-type bound\n(`nbhdTypeCount_le`: `≤ 2k+1` red neighbourhood types per element under",
-      "quality_score": 0.397447,
-      "sorry_count": 0,
-      "theorem_count": 120,
-      "timestamp": "2026-06-21T18:36:56",
-      "title": "Linear twin-width bound for finite posets of bounded width"
-    },
-    {
       "cycle_id": "5ef4c190",
       "domain": "Computation",
       "key_insight": "# Future Directions — EML Universal Approximation & Shallow Rates\n\nDerived from the Stage-3 analysis and Stage-4 critique of this research cycle\n(`EML/SoftplusRate.lean`, `EML/ShallowDensity.lean`, bu",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-06-27T03:44:32",
       "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
+    },
+    {
+      "cycle_id": "887d83d7",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Erdős Problem 550 (tree vs. complete multipartite Ramsey)\n\nThis cycle formalized the **lower-bound / tightness** half and the **exact base case**\nof Erdős Problem 550 in its all-",
+      "quality_score": 0.5740799999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T04:10:57",
+      "title": "Resolution of Erdős Problem 550 on Tree versus Complete Multipartite Ramsey Numbers"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72888
     }
   ],
-  "last_updated": "2026-06-27T03:44:32",
+  "last_updated": "2026-06-27T04:10:57",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f36ed9b7",
-        "quality": 0.54535,
-        "theorems": 0,
-        "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles"
-      },
-      {
         "cycle_id": "6a7e7235",
         "quality": 0.5980399999999999,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.72888,
         "theorems": 17,
         "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
+      },
+      {
+        "cycle_id": "887d83d7",
+        "quality": 0.5740799999999999,
+        "theorems": 0,
+        "title": "Resolution of Erdős Problem 550 on Tree versus Complete Multipartite Ramsey Numb"
       }
     ],
     "NumberTheory": [

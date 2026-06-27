@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "236373d0",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "a9aa4cae",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -5781,20 +5781,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: The k\u2011limited domination number meets its lower bound for all connected graphs"
   },
   {
-    "consumed_by_exp_id": "802107a7",
-    "description": "Conjecture: For every tree T, the minimum size of an initial set that forces all vertices to exceed the transmission threshold (the transmission zero forcing number) is exactly the domination number of T, i.e., the size of a smallest dominating set.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2609",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22246v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-27T03:44:47.563422+00:00",
-    "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
@@ -6680,6 +6666,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Erd\u0151s Problem 550 (tree vs. complete multipartite Ramsey)\n\nThis cycle formalized the **lower-bound / tightness** half and the **exact base case**\nof Erd\u0151s Problem 550 in its all-ones (Chv\u00e1tal) specialization:\n\n* `chvatal_lower_bound` : `R(T_n, K_k) > (k-1)(n-1)` for every `n`-vertex tree and `k \u2265 1`,\n  witnessed by the disjoint-clique colouring `blockGraph (k-1) (n-1)`.\n* `ramsey_tree_edge` : `R(T_n, K_{1,1}) = R(T_n, K\u2082) = n` exactly (the base term of the\n  conjectured recursion).\n* `completeGraph_isContained_allOnes` / `allOnes_isContained_completeGraph` : the\n  identification `K_{1,\u2026,1} \u2245 K_k` that turns the all-ones case into Chv\u00e1tal's theorem.\n\nThe conjectures below are the natural next targets, ranked by impact.\n\n## 1. The Chv\u00e1tal upper bound (all-ones case of Erd\u0151s 550)\n**Conjecture.** `RamseyArrows ((k-1)(n-1)+1) T (\u22a4 : SimpleGraph (Fin k))` for every\n`n`-vertex tree `T` and `k \u2265 1`; equivalently `R(T_n, K_k) \u2264 (k-1)(n-1)+1`.\nTogether with `chvatal_lower_bound` this gives the *exact* value `R(T_n,K_k)=(k-1)(n-1)+1`.\n**The key insight is** that a graph in which every vertex has red-degree `\u2265 n-1` contains\nevery `n`-vertex tree by greedy leaf-by-leaf embedding (induct on the tree, removing a\ndegree-one vertex supplied by `IsTree.exists_vert_degree_one_of_nontrivial`); a colouring\nwith no blue `K_k` forces, via induction on `k`, a red vertex of low degree whose blue\nneighbourhood carries a smaller instance.\n**Why now?** Mathlib already provides leaves of finite trees\n(`IsTree.exists_vert_degree_one_of_nontrivial`), minimum-degree monotonicity, and the\n`Copy`/`IsContained` calculus used here, so the greedy-embedding induction is now\nexpressible without new foundational infrastructure.\n\n## 2. The full multipartite upper bound (Erd\u0151s 550 proper)\n**Conjecture.** For fixed `k \u2265 2` and `1 \u2264 m\u2081 \u2264 \u22ef \u2264 m_k`, for all large `n` and every\n`n`-vertex tree, `R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081`.\n**The key insight is** that a blue copy of `K_{m\u2081,\u2026,m_k}` can be assembled part-by-part:\nin a colouring with no red `T`, repeatedly peel off a blue-dense block of `R(T,K_{m\u2081,m\u2082})-1`\nvertices realizing one part, the largest part `m_k` being absorbed by the final `+m\u2081` slack.\n**Why now?** The base case `R(T,K_{m\u2081,m\u2082})` and the multipartite-vs-complete-graph\ncontainment `Kmultipartite_isContained_completeGraph` are already formalized, giving the\ntwo endpoints of the induction; only the peeling step remains.\n\n## 3. Sharpness of the multipartite bound\n**Conjecture.** The Erd\u0151s\u2013550 bound is tight: there is a tree `T` and parts `m_i` with\n`R(T, K_{m\u2081,\u2026,m_k}) = (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081`, generalizing the all-ones equality\n`R(T_n,K_k)=(k-1)(n-1)+1` proven here.\n**The key insight is** that the `blockGraph`-style construction generalizes: take `k-1`\nred cliques of size `R(T,K_{m\u2081,m\u2082})-1` plus `m\u2081` extra vertices arranged to block the last\npart, so the same reachability + pigeonhole argument should certify both no-red-`T` and\nno-blue-`K_{m\u2081,\u2026,m_k}`.\n**Why now?** The two obstruction lemmas `no_red_connected` (reachability) and\n`no_blue_clique` (pigeonhole) are already isolated and reusable; only the combined\nextremal colouring needs to be defined.\n\n## 4. Connectivity is the only tree property used in the lower bound\n**Conjecture.** For *every* connected `n`-vertex graph `H` (not only trees),\n`R(H, K_k) > (k-1)(n-1)`; the acyclicity of `T` is never needed for the lower bound.\n**The key insight is** that `no_red_connected` already proves exactly this \u2014 the witness\nonly uses `H.Connected` \u2014 so the tree hypothesis in `chvatal_lower_bound` is cosmetic for\nthe lower direction.  (Acyclicity *does* re-enter for the matching upper bound of #1.)\n**Why now?** The connectivity-only lemma is in hand (`chvatal_lower_bound_connected`); the\nopen part is whether the *upper* bound also survives replacing trees by connected graphs of\nbounded something (it does not in general, making the boundary sharp and interesting).\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2657",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "887d83d7",
+    "status": "available",
+    "timestamp": "2026-06-27T04:10:40.161945+00:00",
+    "title": "This cycle formalized the **lower-bound / tightness** half and the **exact base "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7001,7 +7002,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "905ed2dd",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -7011,7 +7012,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

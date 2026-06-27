@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "887d83d7",
     "filename": "resolution_of_erds_problem_550_on_tree_versus_comp.json",
     "pkg_num": 122,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5740799999999999,
     "title": "Resolution of the Foundational Cases of Erdos Problem 550 (Tree vs. Complete Multipartite Ramsey Numbers)"
   },
   {
@@ -3563,8 +3563,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "resolution_of_erds_problem_550_on_tree_versus_comp",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5740799999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Resolution of the Foundational Cases of Erdos Problem 550 (Tree vs. Complete Multipartite Ramsey Numbers)"
     }
