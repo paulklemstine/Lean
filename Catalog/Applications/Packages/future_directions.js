@@ -539,20 +539,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 905ed2dd (Q=0.763), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_905ed2dd_385f3e0e",
-    "priority_score": 0.86274,
-    "research_mode": "team",
-    "source_exp_id": "905ed2dd",
-    "status": "available",
-    "timestamp": "2026-06-27T05:32:07.818267+00:00",
-    "title": "Deepening: EML Fixed-Point Theorem: exp-log Iteration Convergence"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
     "domains": [
       "Cryptography",
@@ -5854,11 +5840,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that the determinant of the L' vertices in the five-vertex model must vanish unless specific boundary conditions on weights are met, which can be verified computationally.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2613",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22004v1",
+    "status": "available",
+    "timestamp": "2026-06-27T05:39:25.116638+00:00",
+    "title": "Determinantal Consistency"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5872,7 +5872,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5887,7 +5887,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5902,7 +5902,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5917,7 +5917,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5932,7 +5932,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5946,7 +5946,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5960,7 +5960,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5974,7 +5974,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5989,7 +5989,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -6004,7 +6004,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -6019,7 +6019,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -6034,7 +6034,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -6049,7 +6049,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -6063,7 +6063,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -6078,7 +6078,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -6093,7 +6093,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -6107,7 +6107,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -6121,7 +6121,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -6135,7 +6135,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -6150,7 +6150,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6165,7 +6165,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -6180,7 +6180,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6194,7 +6194,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6208,7 +6208,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6223,7 +6223,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6237,7 +6237,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2639",
+    "id": "fd_2640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6246,17 +6246,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moduli Space Isomorphism Failure"
   },
   {
-    "consumed_by_exp_id": "08b15f3b",
+    "consumed_by_exp_id": "",
     "description": "The conjecture states that the minimal N required to ensure AP-free subset sums scales asymptotically as 3^n over \u221an, a bound validated by iterative proofs.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2640",
+    "id": "fd_2641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T16:47:29.894440+00:00",
     "title": "Proportional Growth Requirement"
   },
@@ -6266,7 +6266,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2641",
+    "id": "fd_2642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6280,7 +6280,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2642",
+    "id": "fd_2643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6294,7 +6294,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2643",
+    "id": "fd_2644",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6309,7 +6309,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2644",
+    "id": "fd_2645",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6324,7 +6324,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2645",
+    "id": "fd_2646",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6339,7 +6339,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2646",
+    "id": "fd_2647",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6353,7 +6353,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2647",
+    "id": "fd_2648",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6368,7 +6368,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2648",
+    "id": "fd_2649",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6382,7 +6382,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2649",
+    "id": "fd_2650",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6397,7 +6397,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2650",
+    "id": "fd_2651",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -6412,7 +6412,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2651",
+    "id": "fd_2652",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -6426,7 +6426,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2652",
+    "id": "fd_2653",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -6441,7 +6441,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2653",
+    "id": "fd_2654",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -6455,7 +6455,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2654",
+    "id": "fd_2655",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
@@ -6470,7 +6470,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2655",
+    "id": "fd_2656",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22513v1",
@@ -6485,7 +6485,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2656",
+    "id": "fd_2657",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22324v1",
@@ -6499,7 +6499,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2657",
+    "id": "fd_2658",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22422v1",
@@ -6513,7 +6513,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2658",
+    "id": "fd_2659",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22253v1",
@@ -6527,7 +6527,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2659",
+    "id": "fd_2660",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22458v1",
@@ -6541,7 +6541,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2660",
+    "id": "fd_2661",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22010v1",
@@ -6555,7 +6555,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2661",
+    "id": "fd_2662",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22064v1",
@@ -6570,13 +6570,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2662",
+    "id": "fd_2663",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
     "status": "available",
     "timestamp": "2026-06-27T05:14:07.112543+00:00",
     "title": "Shifted Gessel-Type Formula for Shifted $t$-Gessel Coordinates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Every edge\u2011colored graph G on n\u22653 vertices with minimum colour degree \u03b4c(G)\u2265(n+1)/2 satisfies rt(G)\u2265\u2308((n\u22121)(n\u22123))/8\u2309. Moreover, equality can occur only for the unique extremal construction obtained from a proper (n\u22121)-edge\u2011colouring of K_n when n is odd.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2664",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22106v1",
+    "status": "available",
+    "timestamp": "2026-06-27T05:39:53.561317+00:00",
+    "title": "Rainbow triangle density lower bound conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -6781,51 +6796,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 EML Fixed-Point Dynamics\n\nDerived from this cycle's findings: the EML operator `f(x) = exp(a)\u00b7log(b\u00b7x + c)`\nhas a *sharp closed-form existence threshold* `c \u2265 exp(a)\u00b7(1 \u2212 a)` (for `b = 1`),\nits boundary fixed point is *neutral* (`f' = 1`), and where it contracts it admits\na *monotone two-sided certified bracket*. These suggest the following bold,\nfalsifiable conjectures.\n\n## C1. The threshold is a fold (saddle-node) bifurcation with universal scaling\n**Conjecture.** For `b = 1`, as `c` decreases through `c_crit(a) = exp(a)\u00b7(1 \u2212 a)`,\nthe two domain fixed points `x_\u2212(c) < x_+(c)` collide at `x* = exp(a)\u00b7a` and\nannihilate, with the local separation obeying the square-root law\n`x_+(c) \u2212 x_\u2212(c) = \u03ba(a)\u00b7\u221a(c \u2212 c_crit(a)) + o(\u221a\u00b7)`, `\u03ba(a) = 2\u221a2\u00b7exp(a/2)`.\n- **The key insight is** that `g(x) = f(x) \u2212 x` has a *nondegenerate quadratic\n  maximum* at `x = exp(a) \u2212 c` (since `g''(x*) = \u2212exp(a)/exp(2a) = \u2212exp(\u2212a) \u2260 0`),\n  so the collision is a generic fold, forcing the universal `\u221a` scaling.\n- **Why now?** This cycle already pinned the collision point and the threshold in\n  closed form and proved the necessary inequality; only the quadratic Taylor\n  remainder is missing, which Mathlib's `HasDerivAt`/`Taylor` API can supply.\n\n## C2. Above threshold there are exactly two fixed points, one attracting\n**Conjecture.** For `b = 1` and `c > c_crit(a)`, `f` has exactly two domain fixed\npoints `x_\u2212 < exp(a) \u2212 c < x_+`; the larger `x_+` is attracting (`0 \u2264 f'(x_+) < 1`)\nand the smaller `x_\u2212` is repelling (`f'(x_\u2212) > 1`).\n- **The key insight is** that `f' (x) = exp(a)/(x + c)` is strictly decreasing in\n  `x`, crossing `1` exactly at the residual's maximizer `x = exp(a) \u2212 c`; the two\n  roots of `g` therefore straddle it, landing on opposite sides of the `f' = 1`\n  line.\n- **Why now?** The existing IVT existence proof (`c = 2`) plus this cycle's\n  monotone-derivative analysis give both roots and the sign of `f' \u2212 1` directly;\n  the catalog's `deriv_eq` already supplies `f'` in closed form.\n\n## C3. The bracket width contracts at the exact asymptotic rate `f'(x*)`\n**Conjecture.** For a `b > 0` EML contraction with attracting fixed point `x*`,\nthe certified bracket width `w\u2099 = f\u207f(hi) \u2212 f\u207f(lo)` satisfies\n`w\u2099\u208a\u2081 / w\u2099 \u2192 f'(x*) = exp(a)\u00b7b/(b\u00b7x* + c)`, i.e. the enclosure shrinks at the\n*sharp* linear rate, not merely `\u2264 \u03c1`.\n- **The key insight is** that monotonicity makes the bracket endpoints approach\n  `x*` tangentially, so the mean-value ratio `w\u2099\u208a\u2081/w\u2099` is `f'` evaluated at an\n  interior point that converges to `x*`.\n- **Why now?** `certified_enclosure` already provides the nested brackets with\n  width `\u2192 0`; upgrading \"`\u2192 0`\" to \"geometric with ratio `f'(x*)`\" only needs the\n  MVT bound the catalog already uses for the Lipschitz step.\n\n## C4. Threshold monotonicity selects an optimal scaling exponent\n**Conjecture.** The threshold `c_crit(a) = exp(a)\u00b7(1 \u2212 a)` is strictly decreasing\non `a \u2208 (0, \u221e)` with `c_crit(0) = 1` and `c_crit(1) = 0`; consequently for fixed\n`c \u2208 (0, 1)` there is a *unique* critical scaling `a_c(c)` above which fixed points\nexist, given implicitly by `exp(a)\u00b7(1 \u2212 a) = c`.\n- **The key insight is** that `d/da [exp(a)(1\u2212a)] = \u2212a\u00b7exp(a) < 0` for `a > 0`, so\n  the threshold is a strict bijection `(0,1) \u2192 (0,1)`, making `a_c` well defined.\n- **Why now?** The closed form of `c_crit` is established this cycle; its\n  monotonicity is one `deriv`/`StrictAntiOn` lemma away and turns the existence\n  question into a clean parameter selection rule for EML layers.\n\n## C5. Multi-operator EML compositions inherit a product threshold\n**Conjecture.** A composition `f_k \u2218 \u22ef \u2218 f_1` of EML operators with parameters\n`(a\u1d62, 1, c\u1d62)` is a contraction on a common invariant interval whenever the\nproduct of derivative bounds `\u220f\u1d62 exp(a\u1d62)/(x + c\u1d62)` stays below `1`, and then it\nhas a unique fixed point obeying the same monotone bracket as the single operator.\n- **The key insight is** that the chain rule turns the single-operator derivative\n  bound into a *product* bound, so the contraction condition is multiplicative in\n  the layer derivatives \u2014 the deep-network analogue of the single-layer threshold.\n- **Why now?** The single-operator contraction machinery (`lipschitz_of_deriv_bound`,\n  `fixedPoint_unique`, `certified_enclosure`) is fully in place and composes; the\n  only new ingredient is a product-of-Lipschitz lemma, standard in Mathlib.\n",
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_2663",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "905ed2dd",
-    "status": "available",
-    "timestamp": "2026-06-27T05:31:54.376617+00:00",
-    "title": "Derived from this cycle's findings: the EML operator `f(x) = exp(a)\u00b7log(b\u00b7x + c)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Transmission Zero Forcing vs. Domination on Trees\n\nCycle 1 deliverable: `Catalog/Novelty/TransmissionDominationTree.lean` proves, with zero\nsorries, the exact domination number of the path graph (the canonical tree family):\n\n> `dominationNumber (pathGraph n) = \u03b3(P_n) = \u2308n/3\u2309 = (n + 2) / 3`,\n\nboth for a self-contained combinatorial model and for `Mathlib`'s `SimpleGraph.pathGraph`,\nlinked by a card-preserving bridge. A reusable general definition `dominationNumber` for any\nfinite `SimpleGraph`, plus the closed-neighbourhood **counting lower bound** `n \u2264 3\u00b7|S|`, are\nnow available as building blocks.\n\nComputational evidence (`Catalog/Novelty/ComputationalEvidence.md`) shows ordinary zero\nforcing is constant (`Z(P_n) = 1`) and therefore *cannot* equal domination \u2014 so the mission\nconjecture must concern a transmission-weighted variant. The following conjectures are bold,\nprecise, and testable in the next cycles.\n\n## Conjecture 1 (Spider / star domination closed form)\nFor the star `K_{1,m}` (a spider with `m` legs of length 1), `dominationNumber (K_{1,m}) = 1`\nfor `m \u2265 1`, and for the spider `S(a,a,\u2026,a)` with `k` legs each of length `\u2113`,\n`dominationNumber = k\u00b7\u230a\u2113/3\u230b + [adjustment for the center]`. **Testable:** formalize stars and\nspiders as `SimpleGraph`, reuse `dominationNumber`, and prove the closed form via the same\ncounting + construction template used for paths.\n\n## Conjecture 2 (General degree-`\u0394` lower bound, sharp on paths)\nFor every finite graph `G` with `n` vertices and maximum degree `\u0394`,\n`dominationNumber G \u2265 n / (\u0394 + 1)`, with equality characterized by an \"efficient domination\"\n(perfect code) packing. **Testable:** our `lower_bound` is exactly the `\u0394 = 2` instance; the\ngeneral statement is `n \u2264 (\u0394+1)\u00b7|S|` via `Finset.card_biUnion_le` over closed neighbourhoods.\n\n## Conjecture 3 (Transmission zero forcing = domination on trees \u2014 the headline)\nDefine the **transmission zero forcing number** `\u03be_T(G)` as the minimum, over zero forcing\nsets `B`, of the number of \"transmission-bounded\" forces, equivalently the minimum size of a\nset that both zero-forces `G` and is a dominating set (a forcing set throttled so each force\ncovers distance \u2264 1). Conjecture: for every tree `T`, `\u03be_T(T) = \u03b3(T)`. **Testable first\nmilestone:** prove `\u03be_T(P_n) = \u2308n/3\u2309` by showing the throttled forcing sets are exactly the\ndominating sets of `P_n`, reusing `gammaPath_eq`.\n\n## Conjecture 4 (Path is extremal among trees of fixed order)\nAmong all trees `T` on `n` vertices, the path maximizes the domination ratio:\n`\u03b3(T) \u2264 \u2308n/3\u2309 = \u03b3(P_n)`, with equality iff `T` is a disjoint-block \"caterpillar of `P_3`s\".\n**Testable:** induction on leaves, peeling a longest path; the counting lower bound bounds\n`\u03b3` from below while a greedy construction bounds it above.\n\n## Conjecture 5 (Domination polynomial recurrence on paths)\nThe number `d(P_n, k)` of dominating sets of `P_n` of size `k` satisfies a linear recurrence\n`d(P_n) = d(P_{n-1}) + d(P_{n-2}) + d(P_{n-3})` (tribonacci-type) at the generating-function\nlevel. **Testable:** define the domination polynomial in Lean and prove the three-term\ntransfer recurrence by a partition on the status of the last vertex; this refines the bare\ndomination *number* into full enumerative data and connects to the OEIS tribonacci family.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2664",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "802107a7",
-    "status": "available",
-    "timestamp": "2026-06-27T05:33:48.917860+00:00",
-    "title": "Cycle 1 deliverable: `Catalog/Novelty/TransmissionDominationTree.lean` proves, w"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Strange Attractors as Algebraic Objects\n\nDerived from this cycle's findings (files `InverseLimit.lean`, `DyadicSolenoid.lean`,\n`LorenzTransversal.lean`, `CohomologyObstruction.lean`). Target category for the\ncycle: **cross-domain bridge** (dynamical systems \u2194 category theory / algebraic\ntopology \u2194 abelian-group algebra).\n\nThe cycle established a reusable inverse-limit engine, computed the dyadic\nsolenoid's first cohomology as the non-finitely-generated group `\u2124[1/2]`, realised\nthe Cantor transversal as an inverse limit of finite cyclic graphs, and proved a\nno-go theorem: no finite nerve graph reproduces the solenoid's cohomology. The\nfollowing conjectures push these results outward.\n\n## 1. p-adic generalization of the transversal\n\n**Conjecture.** For every prime `p`, the inverse limit of `\u2124/p\u207f\u2124` with reduction\nbonding maps is infinite, and the corresponding cohomology `\u2124[1/p]` is not\nfinitely generated; moreover `\u2124[1/p] \u2243+ \u2124[1/q]` iff `p = q`.\n\nThe key insight is... that the obstruction to finite generation is *one* unbounded\nprime in the denominators, so the prime is an isomorphism invariant of the limit.\nWhy now? The `Dyadic`/`boundedDen` machinery here is `p`-agnostic \u2014 replacing `2`\nby `p` reuses every lemma, and `AddGroup.fg` transport already gives the rigidity\nhalf.\n\n## 2. Mixed-radix (Lorenz/H\u00e9non two-branch) solenoids\n\n**Conjecture.** The inverse limit of the alternating system `\u2124/a\u2080 \u2190 \u2124/(a\u2080a\u2081) \u2190 \u2026`\nfor a sequence `a\u1d62 \u2265 2` has cohomology equal to the localization of `\u2124` at the set\nof partial products, and it is finitely generated **iff** the sequence `a\u1d62` is\neventually `1` (i.e. trivial branching).\n\nThe key insight is... that the Lorenz template's two-branch return map is exactly a\nmixed-radix odometer, so branching multiplicities become localization primes.\nWhy now? `InvSystem` already allows arbitrary stage objects/bonding maps, so the\nmixed-radix tower is a direct instantiation; only the colimit identification is new.\n\n## 3. K\u00f6nig nonemptiness without surjectivity\n\n**Conjecture.** The inverse limit of a system of *finite nonempty* sets with\n*arbitrary* (not necessarily surjective) bonding maps is nonempty.\n\nThe key insight is... that finiteness lets the \"eventual images\" stabilize\n(Mittag-Leffler), so a surjective subsystem can be extracted and fed to\n`InvLimit.nonempty_of_surjective`. Why now? We already have the surjective case;\nthe missing step is a purely finitary stabilization lemma provable by `Nat`\nwell-ordering on descending image cardinalities.\n\n## 4. Functoriality and an honest inverse-limit functor\n\n**Conjecture.** `InvLimit` extends to a functor from the category of inverse\nsystems (with level-wise commuting maps) to types, sending level-wise surjections\nto surjections and level-wise injections to injections.\n\nThe key insight is... that `proj` is already natural in the system, so the\nuniversal property is one `funext` away. Why now? `InvLimit.ext` (threads\ndetermined by projections) is exactly the uniqueness half of the limit's universal\nproperty; the existence half is the only gap.\n\n## 5. Cohomological hierarchy of attractor complexity\n\n**Conjecture.** Define an attractor's *cohomological complexity* as the minimal\nnumber of generators of `H\u00b9` (`\u221e` if not finitely generated). Then finite\ndirected graphs realise exactly the finite values, and genuine strange attractors\n(solenoid, Lorenz) realise `\u221e`; the value is a topological-conjugacy invariant.\n\nThe key insight is... that `solenoid_not_finite_nerve_cohomology` already separates\n`\u221e` from every finite value via the single predicate `AddGroup.FG`. Why now? The\ncatalog's `NerveGraph.cohomRank` supplies the finite side and `Dyadic.not_fg` the\ninfinite side, so the dichotomy is formalizable today; only conjugacy-invariance\nremains open.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2665",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "688a9cbf",
-    "status": "available",
-    "timestamp": "2026-06-27T05:35:08.711374+00:00",
-    "title": "Derived from this cycle's findings (files `InverseLimit.lean`, `DyadicSolenoid.l"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6986,6 +6956,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "sorry_fill_a0dd96a5_00b573d8",
+    "priority_score": 0.5771458702064898,
+    "research_mode": "team",
+    "source_exp_id": "a0dd96a5",
+    "status": "available",
+    "timestamp": "2026-06-16T12:52:43.615426+00:00",
+    "title": "Close Proofs: These conjectures continue the research cycle begun in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -7133,7 +7117,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57a09ecd",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -7143,7 +7127,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

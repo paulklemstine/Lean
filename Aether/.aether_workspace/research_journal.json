@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "50d5b31e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from this cycle's findings (`RamseySmallNumbers.lean`,\n`RamseyExactFamilies.lean`, `RamseyProbabilisticLowerBound.lean`). Each co",
-      "quality_score": 0.84432,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-21T22:45:31",
-      "title": "Ramsey Theory: Bounds and Constructions"
-    },
-    {
       "cycle_id": "a747a0a8",
       "domain": "Tropical",
       "key_insight": "# Future Directions: Complexity-Driven Emergence of Spacetime (Tropical Core)\n\nDerived from this cycle's findings in `TensorNetworkComplexity.lean`,\n`BondDimensionTransition.lean`, and `HolographicSca",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T05:35:20",
       "title": "Strange Attractors as Algebraic Objects"
+    },
+    {
+      "cycle_id": "8e92c627",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Stack-Sorting Depth\n\nFollow-up conjectures arising from `Catalog/Applications/StackSortingDepth.lean`.\nEach is precise and falsifiable; the small-`n` instances are already machin",
+      "quality_score": 0.5924299999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T05:38:48",
+      "title": "Exact asymptotic value of the average stack-sorting depth"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76274
     }
   ],
-  "last_updated": "2026-06-27T05:35:20",
+  "last_updated": "2026-06-27T05:38:48",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "5544e8f5",
-        "quality": 0.5449999999999999,
-        "theorems": 0,
-        "title": "Lambda Calculus: Church-Rosser and Normalization"
-      },
-      {
         "cycle_id": "913e3580",
         "quality": 0.7981560000000001,
         "theorems": 8,
@@ -3141,6 +3135,12 @@
         "quality": 0.57899,
         "theorems": 0,
         "title": "Strange Attractors as Algebraic Objects"
+      },
+      {
+        "cycle_id": "8e92c627",
+        "quality": 0.5924299999999999,
+        "theorems": 0,
+        "title": "Exact asymptotic value of the average stack-sorting depth"
       }
     ],
     "Bridges": [

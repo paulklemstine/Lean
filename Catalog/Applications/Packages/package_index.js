@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8e92c627",
     "filename": "exact_asymptotic_value_of_the_average_stack_sortin.json",
     "pkg_num": 126,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5924299999999999,
     "title": "Exact Asymptotics of Stack-Sorting Depth: Invariants, Fixed Points, and the Catalan Law"
   },
   {
@@ -3679,8 +3679,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "exact_asymptotic_value_of_the_average_stack_sortin",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5924299999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Exact Asymptotics of Stack-Sorting Depth: Invariants, Fixed Points, and the Catalan Law"
     }
