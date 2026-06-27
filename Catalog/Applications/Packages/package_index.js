@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "bd70abee",
     "filename": "explicit_bias_lower_bound_for_the_density_of_n_wit.json",
     "pkg_num": 143,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7003299999999999,
     "title": "Explicit Bias and Pure Periodicity for the Cusick Density of the Binary Digit Sum"
   },
   {
@@ -4175,8 +4175,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "explicit_bias_lower_bound_for_the_density_of_n_wit",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7003299999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Explicit Bias and Pure Periodicity for the Cusick Density of the Binary Digit Sum"
     }

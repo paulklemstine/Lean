@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "f8a707b1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "4398a39a",
+    "consumed_by_exp_id": "",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -160,7 +160,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -719,7 +719,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "2ff65a6a",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -852,7 +852,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "f2fdcb78",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -861,7 +861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -2208,7 +2208,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Degree-One Triviality of Grassmann Schemes $J_q(n,2)$ for $n \\ge q+2$"
   },
   {
-    "consumed_by_exp_id": "2e08d081",
+    "consumed_by_exp_id": "",
     "description": "For k \u2265 2, let F(k) = gcd_{q=2}^{k} (qk choose k). We conjecture that F(k) = 1 if and only if k is not a prime power. This generalizes the known result for D(k) = gcd_{q=2}^{k+1} (qk choose k) which equals 1 precisely when k+1 is not a prime power (in the sense that the largest prime-power divisor P of k+1 satisfies (k+1)/P > P). The conjecture can be approached using similar techniques: a finite-difference argument shows only primes dividing k can divide F(k), Lucas' theorem reduces the problem to base-p digit analysis, and a digit-box stabilizer theorem determines when F(k) = 1.",
     "domains": [
       "Pythagorean"
@@ -2217,7 +2217,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T08:56:07.087605+00:00",
     "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
   },
@@ -4911,7 +4911,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the Density Threshold for Linear r\u2011Uniform Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "bdfd9dbb",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that there exists a deterministic algorithm solving the Global Label Min-Cut (GLMC) problem on any undirected graph with n vertices and p labels in time O((np)^{C\u00b7log n / log log n}) for some absolute constant C.",
     "domains": [
       "Pythagorean",
@@ -4921,7 +4921,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T19:43:32.279494+00:00",
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
@@ -7490,6 +7490,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Cusick density `c_t = dens { n : s\u2082(n) \u2264 s\u2082(n+t) }`\n\nThis research cycle proved (in `Catalog/Applications/`):\n\n* `CusickShiftSevenDensity.lean` \u2014 `c_7 = 43/64` (first exact `s\u2082(t)=3` density),\n  with the explicit Drmota\u2013Kauers\u2013Spiegelhofer (DKS) bound `c_7 \u2265 65/128`.\n* `CusickShiftFiveDensity.lean` \u2014 `c_5 = 5/8`, and the separation\n  `c_5 = 5/8 < 11/16 = c_3` despite `s\u2082(5) = s\u2082(3) = 2`\n  (`cusick_density_not_s2_function`).\n* `CusickBiasPropagation.lean` \u2014 a general engine turning any single-period bias\n  `d` into the uniform explicit bias lower bound `c_t \u2265 1/2 + d/P` over all\n  windows, instantiated for `t = 1,3,5,7`.\n\nThe following conjectures are precise and testable; each is a candidate target for\na follow-up cycle.\n\n## Conjecture 1 (Bit-reversal symmetry)\nFor an odd `t` with binary digits `(t_{L-1} \u2026 t_1 t_0)` (`t_0 = t_{L-1} = 1`), let\n`rev(t)` be the integer with reversed digit string.  Then `c_t = c_{rev(t)}`.\n*Evidence:* `c_11 = c_13 = 19/32` (`1011`\u2194`1101`), `c_19 = c_25 = 41/64`\n(`10011`\u2194`11001`).  *Formalization path:* exhibit a measure-preserving bijection\non residues mod `2^{L+s\u2082(t)}` carrying `P_t` to `P_{rev(t)}`; likely provable via\nthe carry/Kummer reformulation in `CusickCarryReformulation.lean`.\n\n## Conjecture 2 (Density is governed by gap structure, not `s\u2082(t)`)\n`c_t` is a function of the multiset of gaps between consecutive 1-bits of the odd\npart of `t`, not of `s\u2082(t)` alone (Conjecture 1 is the reversal-invariance facet).\n*Evidence:* `c_3 \u2260 c_5` (proved); `c_7, c_11, c_19, c_21` all distinct at\n`s\u2082 = 3`.  *Testable form:* `c_t = c_{t'}` whenever the odd parts of `t, t'` have\nthe same cyclic-up-to-reversal gap multiset.\n\n## Conjecture 3 (Gap-separation decoupling / limit)\nIf `t = 2^a + 2^b` with `a < b` then `c_t` depends only on `b \u2212 a`, and\n`c_{2^a+2^b} = 11/16` as soon as `b \u2212 a \u2265 3`; the only smaller value in this\ntwo-bit family is `c_5 = 5/8` (`b\u2212a = 2`).  More generally, when all gaps between\n1-bits of `t` are `\u2265 G` (for some absolute `G`), the bits decouple and\n`c_t = 1 \u2212 (1 \u2212 c_{single bit})^{s\u2082(t)}`-type product formula holds.\n*Evidence:* `c_5 = 5/8` (gap 2) `< c_9 = c_17 = 11/16` (gap \u2265 3).\n\n## Conjecture 4 (All-ones is extremal at fixed weight)\nAmong all `t` with `s\u2082(t) = s`, the all-ones shift `t = 2^s \u2212 1` maximizes the\ndensity: `c_{2^s\u22121} \u2265 c_t` for every `t` with `s\u2082(t) = s`.\n*Evidence:* `s = 1`: `c_1 = 3/4` is the (unique) value; `s = 2`: `c_3 = 11/16 \u2265`\nall sampled; `s = 3`: `c_7 = 43/64` is the largest among `{7,11,13,19,21,25}`.\n*Companion lower-extreme question:* identify the minimizer at fixed `s` (data\nsuggests \"evenly spaced\" patterns like `t = 21 = 10101` are small).\n\n## Conjecture 5 (Closed form for the all-ones family `c_{2^s \u2212 1}`)\nWrite `c_{2^s\u22121} = 1/2 + a_s / 4^s`.  The proved values give bias numerators\n`a_1 = 1, a_2 = 3, a_3 = 11, a_4 = 43` (from `c_1 = 3/4`, `c_3 = 11/16`,\n`c_7 = 43/64`, and the now-proved `c_15 = 171/256`, file\n`CusickShiftFifteenDensity.lean`).  Equivalently the per-period **counts**\n`3, 11, 43, 171` each satisfy `next = 4\u00b7prev \u2212 1`.\n\nConjecture: `a_{s+1} = 4 a_s \u2212 1` for all `s`, whose closed form is\n`a_s = (4^s + 2)/6`, giving the exact density\n`c_{2^s\u22121} = 2/3 + 1/(3\u00b74^s)`  (monotonically decreasing to `2/3`).\nIn particular the explicit bias for all-ones shifts is\n`c_{2^s\u22121} \u2212 1/2 = 1/6 + 1/(3\u00b74^s) > 1/6`, vastly above the DKS guarantee\n`2^{-(2s+1)}`.\n*Status:* verified as theorems for `s = 1,2,3,4`.  The next computational check\n`c_31 = 683/1024` (`a_5 = 171`, count `683 = 4\u00b7171 \u2212 1`) was confirmed\nnumerically (period `1024`).  *Path:* formalize the recurrence via the\ndoubling/transfer structure in `CusickDoublingInvariance.lean` and\n`CusickPeriodicity.lean`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2713",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "bd70abee",
+    "status": "available",
+    "timestamp": "2026-06-27T18:14:18.914320+00:00",
+    "title": "(in `Catalog/Applications/`):"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7931,7 +7946,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "e8be0a2a",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -7941,7 +7956,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "81f9ab1d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Beyond the Ordered Hahn-Field Layer\n\nThis file sketches research directions that build on the ordered non-Archimedean field\n`OrderedTSeries = Lex (HahnSeries TransMonoᵒᵈ ℝ)` estab",
-      "quality_score": 0.702,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-24T05:17:33",
-      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-    },
-    {
       "cycle_id": "1e3d4863",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Whitehead Problem (ZFC-provable boundary)\n\nDerived from the Stage 3 analysis and Stage 4 critique of the cycle formalized in\n`Logic/WhiteheadIndependence.lean` and `Logic/Whitehe",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T16:25:23",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "bd70abee",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Cusick density `c_t = dens { n : s₂(n) ≤ s₂(n+t) }`\n\nThis research cycle proved (in `Catalog/Applications/`):\n\n* `CusickShiftSevenDensity.lean` — `c_7 = 43/64` (first exact `s₂(t",
+      "quality_score": 0.7003299999999999,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-06-27T18:14:40",
+      "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cb79327f",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Weil Pairing, MOV, and BLS Aggregation\n\nDerived from the cycle that produced `Cryptography/WeilPairingBLS.lean`\n(abstract biadditive `Pairing`, BLS completeness/aggregation, poin",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-23T04:02:32",
-      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-    },
     {
       "cycle_id": "70e63d82",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T17:11:58",
       "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
+    },
+    {
+      "cycle_id": "bd70abee",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Cusick density `c_t = dens { n : s₂(n) ≤ s₂(n+t) }`\n\nThis research cycle proved (in `Catalog/Applications/`):\n\n* `CusickShiftSevenDensity.lean` — `c_7 = 43/64` (first exact `s₂(t",
+      "quality_score": 0.7003299999999999,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-06-27T18:14:40",
+      "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "151fa435",
-      "domain": "Novelty",
-      "name": "sqrt5_nonneg",
-      "quality": 0.7885600000000001
-    },
-    {
-      "cycle_id": "3718ce68",
-      "domain": "NumberTheory",
-      "name": "of",
-      "quality": 0.71376
-    },
-    {
-      "cycle_id": "3718ce68",
-      "domain": "NumberTheory",
-      "name": "uses",
-      "quality": 0.71376
-    },
     {
       "cycle_id": "3718ce68",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "sum_weight",
       "quality": 0.70696
+    },
+    {
+      "cycle_id": "bd70abee",
+      "domain": "Applications",
+      "name": "states",
+      "quality": 0.7003299999999999
+    },
+    {
+      "cycle_id": "bd70abee",
+      "domain": "Applications",
+      "name": "keyed",
+      "quality": 0.7003299999999999
+    },
+    {
+      "cycle_id": "bd70abee",
+      "domain": "Applications",
+      "name": "cusick_bias_propagation",
+      "quality": 0.7003299999999999
     }
   ],
-  "last_updated": "2026-06-27T17:11:58",
+  "last_updated": "2026-06-27T18:14:40",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "710a2a8b",
-        "quality": 0.415178125,
-        "theorems": 0,
-        "title": "Universal Approximation: Quantitative Bounds"
-      },
-      {
         "cycle_id": "53364cc2",
         "quality": 0.6837600000000001,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.5884799999999999,
         "theorems": 0,
         "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
+      },
+      {
+        "cycle_id": "bd70abee",
+        "quality": 0.7003299999999999,
+        "theorems": 27,
+        "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
       }
     ],
     "Bridges": [
