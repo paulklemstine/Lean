@@ -45,7 +45,7 @@ qualitative jump from approximant to attractor, made precise.
 -- !-- Lab Notes -- !--
 -/
 import Mathlib
-import Applications.StrangeAttractors.InverseLimit
+import Catalog.Applications.StrangeAttractors.InverseLimit
 
 namespace StrangeAttractors
 

@@ -34,7 +34,7 @@ turn the bridge from a merely algebraic correspondence into a *differential* one
 * `egf_binConvOne`, `egf_zero`  — `egf` preserves the rig unit and zero.
 -/
 import Mathlib
-import Applications.CombinatorialSpecies
+import Catalog.Applications.CombinatorialSpecies
 
 open scoped BigOperators
 open PowerSeries Finset

@@ -1,199 +1,131 @@
-# The Loyalty Index of Numbers: How Divisors Reveal Perfection
+# The Perfect Number Hunt: How One Fraction Decides Everything
 
-## A number that adds up to itself
+## A number that equals its own pieces
 
-Pick a number — say $6$. Now list every number that divides it evenly, but
-stop short of $6$ itself: $1$, $2$, and $3$. Add them: $1 + 2 + 3 = 6$. The
-parts reconstitute the whole. The ancient Greeks found this so striking that
-they called such numbers **perfect**.
+Take the number $6$. Set it aside for a moment and look at the numbers that divide it evenly, leaving out $6$ itself: $1$, $2$, and $3$. Now add them up. You get $1 + 2 + 3 = 6$. The number has, in a sense, reconstructed itself out of its own parts.
 
-The next perfect number is $28$: its proper divisors $1, 2, 4, 7, 14$ sum to
-$28$. After that comes $496$, then $8128$, and then a yawning gap — the fifth
-perfect number, $33{,}550{,}336$, was not written down until the fifteenth
-century. Perfect numbers are rare, beautiful, and — even after twenty-three
-centuries — still wrapped in unsolved mystery. We do not know whether there
-are infinitely many. We do not know whether a single *odd* one exists.
+The Greeks found this enchanting, and they were not easily enchanted by arithmetic. They called such numbers **perfect**. The next one is $28$, whose proper divisors $1, 2, 4, 7, 14$ sum to exactly $28$. After that comes $496$, then $8128$. And then the trail seems to go cold for a very long time — the fifth perfect number is $33{,}550{,}336$.
 
-This article is about the simple, powerful idea that turns these questions from
-mysticism into mathematics: the **abundancy index**. It is a single rational
-number attached to every integer that measures how generous that integer is
-with its divisors — and once you have it, perfect numbers stop being a curiosity
-and become the solution of a clean equation.
+Perfect numbers are rare, mysterious, and unreasonably beautiful. They sit at the crossroads of two of the oldest open questions in mathematics: *Are there infinitely many of them?* and *Does an odd one exist at all?* Nobody knows the answer to either. We have searched with computers up to numbers with hundreds of digits and found nothing odd, yet no one has proved that an odd perfect number is impossible.
 
-## From "sum of proper divisors" to one clean ratio
+This article is about a single, deceptively simple tool that organizes the whole subject — a fraction attached to every number — and about what it lets us prove rigorously. We will state every result precisely, so that by the end you could explain to a friend exactly why a perfect number can never be a power of a single prime, and why the search for an odd perfect number is really a search for a delicate balancing act among many primes at once.
 
-The Greek definition compares a number to the sum of its *proper* divisors. A
-slicker bookkeeping move is to include the number itself in the sum. Define the
-**sum-of-divisors function** $\sigma(n)$ to be the total of *all* positive
-divisors of $n$, the number itself included:
-$$\sigma(n) = \sum_{d \mid n} d.$$
+## The sum-of-divisors function
 
-For example $\sigma(6) = 1 + 2 + 3 + 6 = 12$ and $\sigma(28) = 1+2+4+7+14+28 = 56$.
+Everything starts with one function. For a positive whole number $n$, let $\sigma(n)$ be the sum of **all** of its positive divisors, this time *including* $n$ itself. So:
 
-Notice that $12 = 2 \times 6$ and $56 = 2 \times 28$. That is not a coincidence:
-a number is perfect exactly when its proper divisors sum to itself, which — once
-you fold the number into the sum — is the same as saying $\sigma(n) = 2n$.
+$$\sigma(6) = 1 + 2 + 3 + 6 = 12, \qquad \sigma(28) = 1 + 2 + 4 + 7 + 14 + 28 = 56.$$
 
-This invites a normalization. Divide $\sigma(n)$ by $n$ to get the **abundancy
-index**:
+Notice what happened: $\sigma(6) = 12 = 2 \times 6$ and $\sigma(28) = 56 = 2 \times 28$. That is not a coincidence. Including $n$ in the sum simply adds $n$ to the "proper divisor" total, so a number is perfect exactly when
+
+$$\sigma(n) = 2n.$$
+
+This little rewriting is the hinge of the entire theory. The Greek picture — "a number equals the sum of its proper parts" — becomes a clean algebraic identity: $\sigma(n)$ is precisely double $n$.
+
+## The abundancy index: one fraction to rule them all
+
+Here is the central idea. Divide $\sigma(n)$ by $n$ and you get a single rational number that captures the entire character of $n$. We call it the **abundancy index**:
+
 $$A(n) = \frac{\sigma(n)}{n}.$$
 
-The abundancy index is a kind of *loyalty score* for a number: it asks "relative
-to your own size, how much do your divisors add up to?" With this single ratio,
-the whole vocabulary of antiquity collapses into arithmetic on the number line:
+This one fraction sorts every positive integer into exactly three families:
 
-- $A(n) < 2$: the number is **deficient** (its divisors fall short). All primes
-  are deficient — a prime $p$ has $A(p) = (1 + p)/p$, just a hair above $1$.
-- $A(n) = 2$: the number is **perfect**. This is the entire definition.
-- $A(n) > 2$: the number is **abundant** (its divisors overflow). The smallest
-  example is $12$, with $A(12) = 28/12 = 7/3 \approx 2.33$.
+- If $A(n) = 2$, the number is **perfect**. Its divisors balance exactly.
+- If $A(n) < 2$, the number is **deficient**. Its divisors fall short.
+- If $A(n) > 2$, the number is **abundant**. Its divisors overflow.
 
-So a **perfect number is precisely a number whose abundancy index equals $2$.**
-Everything interesting about perfection is now a question about where a single
-function lands relative to the value $2$.
+For example, $A(6) = 12/6 = 2$ (perfect), $A(8) = 15/8 = 1.875$ (deficient, just barely), and $A(12) = 28/12 \approx 2.33$ (abundant). Most small numbers are deficient; abundance is comparatively common only once you start collecting many small prime factors.
 
-## Two rules that govern the index
+The first thing we can prove, and the conceptual cornerstone of the framework, is that this trichotomy is genuinely equivalent to the classical definition:
 
-Once you have a quantity like $A(n)$, the natural question is: how does it
-behave? Does it grow predictably? Does it respect multiplication? The heart of
-this work is a pair of structural laws — proved rigorously and independently of
-one another — that pin down exactly how the abundancy index moves.
+> **Theorem (perfection is abundancy two).** For every positive integer $n$, the number $n$ is perfect if and only if $A(n) = 2$.
 
-### Rule 1: Bigger numbers (that contain you) are at least as loyal
+The proof is a short chain of equivalences: $A(n) = 2$ means $\sigma(n) = 2n$ (after clearing the positive denominator $n$), and $\sigma(n) = 2n$ is exactly the statement that the proper divisors of $n$ sum to $n$. Perfection has been recast as a statement about the size of a single fraction.
 
-The first law is a **monotonicity** principle:
+## Why the fraction is the right tool: multiplicativity
 
-> **If $d$ divides $n$, then $A(d) \le A(n)$. And if $d$ is a *proper*
-> divisor — strictly smaller than $n$ — then $A(d) < A(n)$ strictly.**
+A fraction would not be worth much if you had to factor $n$ completely and add up all its divisors by brute force every time. The magic is that $A(n)$ respects multiplication — as long as the pieces share no common factors.
 
-In words: enlarging a number by absorbing it as a factor of a bigger number can
-only raise its abundancy index, never lower it. Divisors are loyal to their
-multiples.
+Two numbers are *coprime* when they have no common prime divisor; for instance $4$ and $9$ are coprime, while $4$ and $6$ are not. The key structural fact is:
 
-Here is the picture behind the proof, and it is wonderfully concrete. Suppose
-$d$ divides $n$, and write $q = n/d$ for the "stretch factor." Take any divisor
-$e$ of $d$ and multiply it by $q$: the result $e \cdot q$ is automatically a
-divisor of $n$. This little map — "scale every divisor of $d$ by $q$" — sends
-distinct divisors to distinct divisors (if $e_1 q = e_2 q$ then $e_1 = e_2$),
-so it plants a faithful copy of $d$'s divisors inside the divisors of $n$.
+> **Theorem (abundancy is multiplicative on coprime parts).** If $m$ and $n$ are coprime, then
+> $$A(mn) = A(m)\, A(n).$$
 
-Summing along this copy gives exactly $q \cdot \sigma(d)$, and since these are
-just *some* of $n$'s divisors, that sum cannot exceed the total $\sigma(n)$:
-$$\sigma(d) \cdot \frac{n}{d} \le \sigma(n).$$
+This holds because $\sigma$ itself is multiplicative on coprime arguments — the divisors of $mn$ are exactly the products of a divisor of $m$ with a divisor of $n$, with no double-counting — and dividing through by $mn = m \cdot n$ preserves the factorization. The upshot is profound: to understand $A(n)$ for *any* number, it is enough to understand $A$ on **prime powers**, the indivisible atoms of multiplication. The abundancy of a number is just the product of the abundancies of its prime-power building blocks.
 
-That is the engine of the whole argument — in the formal development it is the
-lemma stating $\sigma(d)\cdot(n/d) \le \sigma(n)$. Cross-multiplying turns it
-into $\sigma(d)\cdot n \le \sigma(n)\cdot d$, which is literally the statement
-$A(d) \le A(n)$ after dividing by $dn$.
+## The atoms are always deficient
 
-Why is the inequality *strict* when $d < n$? Because then the stretch factor
-$q = n/d$ is at least $2$, and the number $1$ — which is always a divisor of
-$n$ — can never be of the form $e \cdot q$ with $q \ge 2$. So the divisor $1$
-sits in $n$'s divisor list but is missing from our planted copy. One genuine
-term is left over, and a sum of positive numbers with an extra positive term is
-strictly larger. Hence $A(d) < A(n)$.
+So what does $A$ look like on a prime power? Start with a single prime $p$. Its only divisors are $1$ and $p$, so $\sigma(p) = p + 1$ and
 
-This strictness has a striking consequence for perfection. A perfect number sits
-exactly at $A(n) = 2$. If $d$ is any proper divisor of a perfect number, then
-$A(d) < 2$, so $d$ is strictly deficient. And if a perfect number $n$ properly
-divided some larger $m$, then $A(m) > A(n) = 2$, so $m$ would be abundant. In
-other words: **no perfect number can divide another.** Perfect numbers are, in
-this precise sense, incompressible — they never nest.
+$$A(p) = \frac{p+1}{p} = 1 + \frac{1}{p}.$$
 
-### Rule 2: Coprime pieces multiply
+> **Theorem (every prime is deficient).** For every prime $p$, $A(p) < 2$.
 
-The second law concerns how the index interacts with multiplication. It does not
-behave well for *all* products — but it behaves perfectly for **coprime** ones
-(numbers sharing no common prime factor):
+This is immediate: $A(p) = 1 + 1/p$, and since $p \ge 2$ we have $1/p \le 1/2 < 1$. The largest abundancy a prime can have is $A(2) = 3/2$; every other prime is even more deficient, creeping toward $1$ as $p$ grows.
 
-> **If $m$ and $n$ share no common factor, then**
-> $$A(m \cdot n) = A(m) \cdot A(n).$$
+Now raise the prime to a power. The divisors of $p^k$ are $1, p, p^2, \dots, p^k$, a geometric series, so
 
-For example $A(12) = A(4) \cdot A(3)$ because $4 = 2^2$ and $3$ share nothing:
-$A(4) = 7/4$, $A(3) = 4/3$, and indeed $7/4 \cdot 4/3 = 7/3 = A(12)$. Try it
-with $A(45) = A(9)\cdot A(5)$: $A(9) = 13/9$, $A(5) = 6/5$, product $78/45 =
-26/15 = A(45)$. It always works, as long as the pieces are coprime.
+$$\sigma(p^k) = 1 + p + p^2 + \cdots + p^k = \frac{p^{k+1} - 1}{p - 1}.$$
 
-The reason is that the divisors of a coprime product $m \cdot n$ are exactly the
-products $a \cdot b$ where $a$ runs over the divisors of $m$ and $b$ over those
-of $n$, each pairing occurring once. The sum-of-divisors function therefore
-factors, $\sigma(mn) = \sigma(m)\sigma(n)$, and dividing by $mn = m \cdot n$
-splits cleanly into $A(m) \cdot A(n)$.
+Dividing by $p^k$ gives the abundancy as a truncated geometric sum of reciprocals:
 
-Crucially, this multiplicativity is established *on its own footing*, directly
-from the multiplicative structure of $\sigma$ — not by smuggling in the
-monotonicity argument, and not the other way around. The two laws are proved as
-genuinely independent pillars. That matters because it is exactly the kind of
-hidden circular reasoning ("A because B, and B because A") that a careful
-foundation must avoid.
+$$A(p^k) = 1 + \frac{1}{p} + \frac{1}{p^2} + \cdots + \frac{1}{p^k}.$$
 
-## Why these two rules are the right tools
+If you let the powers run forever, this would converge to $\frac{1}{1 - 1/p} = \frac{p}{p-1}$. Truncating at $p^k$ keeps us strictly below that ceiling, and the ceiling itself never reaches $2$ once $p \ge 2$ — in fact $\frac{p}{p-1} \le 2$ exactly when $p \ge 2$, with equality only in the limiting bound for $p=2$. The conclusion:
 
-Together, monotonicity and multiplicativity turn the abundancy index into a
-*calculator* for abundance. Every whole number factors uniquely into prime
-powers $p_1^{a_1} p_2^{a_2}\cdots$, and those prime-power blocks are automatically
-coprime. So multiplicativity lets you compute $A(n)$ one prime at a time and
-multiply the answers:
-$$A\bigl(p_1^{a_1}\cdots p_k^{a_k}\bigr) = A(p_1^{a_1})\cdots A(p_k^{a_k}).$$
+> **Theorem (every prime power is deficient).** For every prime $p$ and every exponent $k \ge 1$, $A(p^k) < 2$.
 
-For a single prime power, the geometric series gives a clean closed form,
-$$A(p^a) = \frac{1 + p + p^2 + \cdots + p^a}{p^a} = \frac{p^{a+1}-1}{p^a(p-1)},$$
-which is always strictly less than $\dfrac{p}{p-1}$. So each prime $p$ can push a
-number's abundancy index up by a factor of at most $p/(p-1)$: the prime $2$
-contributes up to $2$, the prime $3$ up to $3/2$, the prime $5$ up to $5/4$, and
-so on, with the leverage of large primes fading fast.
+The proof reduces, after clearing the positive denominator $p - 1$, to checking that $p^k(p - 2) + 1 > 0$ — which is obvious for every prime $p \ge 2$ (when $p = 2$ the expression is simply $1$). A geometric estimate, made completely rigorous.
 
-This is the lever that constrains perfect numbers. To reach $A(n) = 2$ you need
-your primes to supply, multiplicatively, a total of exactly $2$. Small primes
-are powerful; the prime $2$ alone can almost get you there. Large primes are
-nearly useless — a prime in the millions barely nudges the index above $1$. This
-is the quantitative reason perfect numbers are dominated by powers of $2$, and
-the reason any hypothetical *odd* perfect number — barred from using the prime
-$2$ at all — would need to assemble its abundancy from a vast crowd of small odd
-primes. That intuition is exactly what powers the famous results bounding odd
-perfect numbers: Sylvester showed in 1888 that an odd perfect number must have at
-least three distinct prime factors, and modern work (Nielsen, 2015) has pushed
-that to at least $101$. Each such bound is, at bottom, a careful accounting of
-how much abundancy a fixed set of primes can manufacture — precisely the
-arithmetic that monotonicity and multiplicativity govern.
+## The first real structure theorem
 
-## The classical payoff: Euclid and Euler
+Combine the last two facts and something genuinely informative falls out. A perfect number needs $A(n) = 2$. But every prime power has $A(p^k) < 2$. Therefore:
 
-The abundancy framework also illuminates the one place where perfect numbers are
-*completely* understood: the even case. Over two millennia, two giants closed the
-book on even perfect numbers.
+> **Theorem (no perfect number is a prime power).** If $n$ is perfect, then $n$ is **not** of the form $p^k$ for a single prime $p$.
 
-Euclid noticed that whenever $2^p - 1$ is a prime (a so-called **Mersenne
-prime**), the number $2^{p-1}(2^p - 1)$ is perfect. You can see why through the
-index: the two factors $2^{p-1}$ and the prime $2^p-1$ are coprime, so
-$$A\bigl(2^{p-1}(2^p-1)\bigr) = A(2^{p-1}) \cdot A(2^p-1) = \frac{2^p - 1}{2^{p-1}} \cdot \frac{2^p}{2^p-1} = 2.$$
-The Mersenne prime is engineered precisely so its single extra factor of
-$2^p/(2^p-1)$ cancels the small deficit $\,(2^p-1)/2^{p-1}\,$ of the power of two,
-landing the product exactly on $2$. With $p = 2$ this gives $6$; with $p=3$,
-$28$; with $p = 5$, $496$.
+In plain terms: perfection is irreducibly a *team effort*. No lone prime, however high you raise it, can ever balance its own divisors. A perfect number must weave together at least two different primes, and the exact value $2$ has to emerge from the *interaction* of their abundancies multiplying together. This is the baby version of every deep structural theorem about perfect numbers — including the spectacular modern result that an odd perfect number, should one exist, would need at least **101** distinct prime factors.
 
-Two thousand years later, Euler proved the converse: *every* even perfect number
-arises this way. So the even perfect numbers are in exact, one-to-one
-correspondence with the Mersenne primes — a result now called the **Euclid–Euler
-theorem**. To this day only about fifty Mersenne primes are known, each one
-hunted down by enormous distributed computations, and each one minting a fresh
-perfect number of staggering size.
+## A beautiful corollary: reciprocals of divisors
 
-## What perfection teaches us
+The abundancy framework has a charming consequence that you can check by hand. Suppose $n$ is perfect, and instead of adding its divisors, you add their *reciprocals*. Then:
 
-There is a lesson here that reaches beyond perfect numbers. A vague, almost
-poetic idea — "a number equal to the sum of its parts" — became tractable the
-moment it was attached to a *quantity*, the abundancy index $A(n) = \sigma(n)/n$.
-Once you can measure something, you can ask how the measurement behaves; and the
-two behaviors that matter most, **monotonicity under divisibility** and
-**multiplicativity over coprime factors**, are exactly the structural laws proved
-here. Monotonicity tells us perfect numbers are incompressible and that their
-proper divisors are all deficient. Multiplicativity reduces every abundancy
-question to a calculation prime by prime, where each prime contributes a precise,
-bounded amount of "abundance."
+> **Theorem (reciprocals of divisors of a perfect number sum to two).** If $n$ is perfect, then
+> $$\sum_{d \mid n} \frac{1}{d} = 2.$$
 
-The Greeks thought $6$ and $28$ were perfect because the universe favored them.
-We now know something better: they are perfect because their divisors balance an
-equation, and the scales that weigh that balance obey laws we can prove. The
-mystery of whether an odd perfect number exists remains open — but every step
-toward it is taken with these same two rules in hand.
+Try it with $n = 6$. Its divisors are $1, 2, 3, 6$, and
+
+$$\frac{1}{1} + \frac{1}{2} + \frac{1}{3} + \frac{1}{6} = \frac{6 + 3 + 2 + 1}{6} = \frac{12}{6} = 2.$$
+
+The reason is a slick symmetry: the map $d \mapsto n/d$ pairs each divisor with its "complement," so $\sum_{d \mid n} \frac{1}{d} = \frac{1}{n}\sum_{d \mid n} \frac{n}{d} = \frac{1}{n}\sum_{d \mid n} d = \frac{\sigma(n)}{n} = A(n)$. For a perfect number that is exactly $2$. The abundancy index reappears, this time wearing the disguise of a reciprocal sum.
+
+## Euclid, Euler, and the shape of even perfects
+
+Where do even perfect numbers actually come from? Look again at the list: $6, 28, 496, 8128$. Factor them:
+
+$$6 = 2 \cdot 3, \quad 28 = 4 \cdot 7, \quad 496 = 16 \cdot 31, \quad 8128 = 64 \cdot 127.$$
+
+Each is a power of two times one more number, and that other number — $3, 7, 31, 127$ — is always one less than a power of two, and always prime. Numbers of the form $2^p - 1$ that happen to be prime are called **Mersenne primes**. Euclid noticed, more than two thousand years ago, that whenever $2^p - 1$ is prime, the number $2^{p-1}(2^p - 1)$ is perfect. Two millennia later, Euler proved the converse: *every* even perfect number must have exactly this shape. Together this is the **Euclid–Euler theorem**:
+
+> An even number $n$ is perfect if and only if $n = 2^{p-1}(2^p - 1)$ where $2^p - 1$ is prime.
+
+You can see why it works through the abundancy lens. The two factors $2^{p-1}$ and $2^p - 1$ are coprime, so by multiplicativity $A(n) = A(2^{p-1}) \cdot A(2^p - 1)$. The first factor is a pure power of two, with $A(2^{p-1}) = \frac{2^p - 1}{2^{p-1}}$. The second, being a prime $q = 2^p - 1$, has $A(q) = \frac{q+1}{q} = \frac{2^p}{2^p - 1}$. Multiply them and watch the parts cancel:
+
+$$A(n) = \frac{2^p - 1}{2^{p-1}} \cdot \frac{2^p}{2^p - 1} = \frac{2^p}{2^{p-1}} = 2.$$
+
+Perfection emerges precisely because a deficient power of two ($A < 2$) is multiplied by a prime whose abundancy is just large enough to push the product back up to exactly $2$. It is a tightrope walk, and the Mersenne prime is what makes the balance possible.
+
+## The odd perfect number problem
+
+Now we reach the great unknown. Every perfect number ever found is even. Does an odd one exist? If it does, the abundancy framework tells us exactly what it is up against.
+
+An odd number can only use odd primes — $3, 5, 7, 11, \dots$ — as its building blocks. The abundancy contributed by an odd prime $p$ is at most $\frac{p}{p-1}$, and for the smallest odd primes these ceilings are $\frac{3}{2}, \frac{5}{4}, \frac{7}{6}, \frac{11}{10}, \dots$ — a sequence of numbers each only slightly above $1$. To reach a product of exactly $2$, you must multiply many of these barely-bigger-than-one factors together. And because the product $\prod \frac{p}{p-1}$ over the smallest odd primes grows only *logarithmically*, you need an enormous number of distinct primes before you can even hope to clear the bar of $2$.
+
+This is the conceptual engine behind **Nielsen's theorem (2015)**: an odd perfect number, if it exists, must have at least $101$ distinct prime factors. The argument is, in spirit, the very inequality we proved for prime powers, iterated and sharpened many times over. The same logic that forbids a perfect number from being a single prime power forces an odd perfect number, if it exists at all, to be a vast and intricate collaboration of at least one hundred and one different primes. The deficiency of the atoms, established rigorously above, is what makes perfection so hard to assemble out of odd parts.
+
+## Why this matters
+
+It is tempting to dismiss perfect numbers as a curiosity, a parlor trick of the integers. But the abundancy index is a window into something much larger: the *multiplicative structure* of the integers, the way arithmetic functions like $\sigma$ encode the prime factorization, and the deep interplay between additive identities (sums of divisors) and multiplicative ones (products of local factors). The same multiplicativity that organizes perfect numbers underlies cryptography, the distribution of primes, and the analytic theory of $L$-functions.
+
+And there is a more human reason. Perfect numbers are a place where the questions are ancient, the answers are partial, and the gap between what we can *check* and what we can *prove* is enormous. We have verified by machine that no odd perfect number exists below astronomically large bounds. Yet the proof that none exists anywhere remains out of reach. The abundancy index does not close that gap — but it tells us, with complete rigor, exactly what shape the missing proof must take: a careful accounting of how many barely-deficient atoms it takes to build something perfect.
+
+Every result in this article rests on one humble fraction, $\sigma(n)/n$, and on the single observation that the atoms of multiplication are always, provably, just shy of perfect. From that shortage, the entire architecture of the perfect numbers is built.
