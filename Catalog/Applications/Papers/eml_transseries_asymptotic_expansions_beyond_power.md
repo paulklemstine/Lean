@@ -1,35 +1,58 @@
-# Theorem Trace (internal, anti-hallucination)
+# THEOREM TRACE (internal — anti-hallucination control)
 
-Source of truth: `Catalog/EML/Transseries/MonomialOrder.lean`
-(namespace `EMLTransseries.MonomialOrder`).
+Every theorem/definition named in ARTICLE.md and RESEARCH_PAPER.md must map to an
+actual Lean declaration in the Phase A output. This file records those mappings.
 
-## Definitions
+## From `Catalog/EML/Transseries/Field.lean`
 
-| Lean name | Mathematical statement | Article | Paper |
+| Lean name | Statement | In ARTICLE | In PAPER |
 |---|---|---|---|
-| `TransMono` | `Lex (ℤ →₀ ℝ)`: ordered value group of transmonomials (finitely supported real exponents indexed by integer tower height, lexicographic order). | §"A ladder of magnitudes" | Def. 2.1 |
-| `TSeries` | `Lex (HahnSeries TransMono ℝ)`: ordered field of transseries (Hahn series over `TransMono`, lexicographically ordered). | §"A ladder of magnitudes" | Def. 2.2 |
-| `term g a` | `toLex (HahnSeries.single g a)`: one-term series, coefficient `a` on monomial `g`. | §"One brick at a time" | Def. 2.3 |
-| `posExp` | `toLex (Finsupp.single (0:ℤ) (1:ℝ))`: the exponent of `x` itself. | §"Building an infinitesimal" | Def. 2.4 |
+| `TransMono` | `Lex (ℤ →₀ ℝ)`, the ordered group of transmonomials | yes | yes (Def 1) |
+| `TSeries` | `HahnSeries TransMono ℝ`, the transseries field | yes | yes (Def 2) |
+| `mono h a` | `toLex (Finsupp.single (-h) a)` — transmonomial of height `h`, exponent `a` | yes | yes (Def 3) |
+| `term h a` | `single (mono h a) 1` — the one-term transseries | yes | yes (Def 4) |
+| `mono_lt_mono_of_height` | `h < h' → 0 < a' → mono h a < mono h' a'` | yes | yes (Thm A) |
+| `mono_lt_mono_same` | `a < a' → mono h a < mono h a'` | yes | yes (Thm B) |
+| `exp_dominates_pow` | `mono 0 a < mono 1 1` for every real `a` | yes | yes (Thm C) |
+| `orderTop_term` | `(term h a).orderTop = mono h a` | no | yes |
+| `orderTop_mul` | `(x*y).orderTop = x.orderTop + y.orderTop` | no | yes |
+| `C_injective` | `ℝ ↪ TSeries` injective | no | yes |
 
-## Theorems / lemmas
+## From `Catalog/EML/Transseries/AsymptoticComparison.lean`
 
-| Lean name | Statement | Article | Paper |
+| Lean name | Statement | In ARTICLE | In PAPER |
 |---|---|---|---|
-| `single_pos_iff_coeff_pos` | `0 < term g a ↔ 0 < a` | §"Signs from a single number" | Thm 3.1 |
-| `single_neg_of_coeff_neg` | `a < 0 → term g a < 0` | §"Signs from a single number" | Thm 3.2 |
-| `term_mul_term` | `term g a * term h b = term (g + h) (a * b)` | §"The monomial law" | Thm 3.3 |
-| `single_square_of_double_exponent` | `g = k + k → 0 ≤ a → term k (Real.sqrt a) ^ 2 = term g a` | §"Taking a square root" | Thm 3.4 |
-| `not_square_negative_monomial` | `a < 0 → ¬ IsSquare (term g a)` | §"What cannot be a square" | Thm 3.5 |
-| `natCast_eq_term` | `(n : TSeries) = term 0 (n : ℝ)` | §"Constants" | Lem 3.6 |
-| `one_eq_term` | `(1 : TSeries) = term 0 1` | §"Constants" | Lem 3.7 |
-| `positive_infinitesimal_monomial` | `0 < δ → (0 < term δ 1 ∧ ∀ n:ℕ, (n:TSeries) * term δ 1 < 1)` | §"Building an infinitesimal" | Thm 3.8 |
-| `posExp_pos` | `0 < posExp` | §"Building an infinitesimal" | Lem 3.9 |
-| `explicit_positive_infinitesimal` | concrete instance of `positive_infinitesimal_monomial` at `δ = posExp` | §"Building an infinitesimal" | Cor 3.10 |
+| `AgreeToAllOrders a b` | `∀ g, (g : WithTop TransMono) < (a-b).orderTop` | yes | yes (Def 5) |
+| `agreeToAllOrders_iff_eq` | `AgreeToAllOrders a b ↔ a = b` | yes (main) | yes (Thm D) |
+| `agreeToAllOrders_equivalence` | it is an equivalence relation | no | yes |
+| `isLittleO_pow_exp` | `(x^n) =o[atTop] exp` | yes | yes (Thm E) |
+| `isLittleO_expPow_expExp` | `(exp x)^n =o[atTop] exp(exp x)` | yes | yes (Thm F) |
 
-## Honesty constraints (from Lean docstring "Scope")
-- This is NOT a proof of real closure of the transseries field.
-- This is NOT square-root closure in general.
-- It IS a verified base layer: monomial signs, monomial arithmetic, valid square
-  roots of positive square-compatible monomials, and infinitesimals.
-- Real closure / general square roots / divisibility of the value group are FUTURE work.
+## From `Catalog/EML/Transseries/ExpShift.lean` (featured Phase A output)
+
+| Lean name | Statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `shiftEquiv` | `Equiv.subRight 1` on ℤ, `i ↦ i-1` | no | yes |
+| `shift x` | relabel finsupp index by `i ↦ i-1` | yes | yes (Def 6) |
+| `shiftHom` | `shift` as `TransMono →+ TransMono` | no | yes |
+| `shift_inj` | `shift` injective | no | yes |
+| `shift_lt_iff` | `shift x < shift y ↔ x < y` | yes | yes (Thm G) |
+| `shiftHom_le_iff` | `shiftHom g ≤ shiftHom g' ↔ g ≤ g'` | no | yes |
+| `expShift` | ring hom `TSeries →+* TSeries` | yes | yes (Def 7) |
+| `shift_mono` | `shift (mono h a) = mono (h+1) a` | yes | yes (Thm H) |
+| `expShift_term` | `expShift (term h a) = term (h+1) a` | yes | yes (Thm I) |
+| `expShift_var` | `expShift x = exp x` | yes (headline) | yes (Thm J) |
+| `expShift_exp` | `expShift (exp x) = exp(exp x)` (`term 2 1`) | yes | yes |
+| `expShift_log` | `expShift (log x) = x` | yes | yes |
+| `expShift_C` | `expShift (C r) = C r` | yes | yes (Thm K) |
+| `expShift_injective` | `expShift` injective | yes | yes (Thm L) |
+
+## From future directions (`ExpShiftEquiv.lean`, `ExponentLaws.lean`) — only referenced as future work, not stated as proved theorems in the main body.
+
+| Lean name | Role |
+|---|---|
+| `expShiftEquiv` | exp-substitution is a field automorphism (future-directions text) |
+| `exists_exp_tower_gt` | exp-tower cofinal (future-directions text) |
+| `pow_var_lt_exp` | no finite power of x dominates exp (future-directions text) |
+
+No theorem is stated in the prose that does not appear above.

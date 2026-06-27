@@ -1,412 +1,437 @@
-# A Verified Base Layer for the Ordered Field of Transseries: Monomial Signs, Arithmetic, Square Roots, and Infinitesimals
+# EML Transseries: A Hahn-Series Model, the Asymptotic Comparison Theorem, and the Exp-Substitution Automorphism
 
 **Author:** Aristotle
-**Date:** 2026-06-24
+
+**Date:** 2026-06-27
+
 **Domain:** Applications (asymptotic analysis / ordered algebra)
+
+---
 
 ## Abstract
 
-Transseries are formal asymptotic expansions that generalize power series by
-admitting, in addition to powers of the variable $x$, powers of $\log x$ and of
-the iterated exponentials $e^{x}, e^{e^{x}}, \dots$. They form a non-Archimedean
-ordered field that is the natural setting for asymptotic expansions "beyond power
-series," including the exponentially small phenomena invisible to classical
-perturbation theory. We present a mathematically correct, machine-verified *base
-layer* for this field, realized concretely as the lexicographically ordered Hahn
-series field $\textsf{TSeries} = \mathrm{Lex}(\mathrm{HahnSeries}\;\textsf{TransMono}\;\mathbb{R})$
-over the transmonomial value group $\textsf{TransMono} = \mathrm{Lex}(\mathbb{Z} \to_0 \mathbb{R})$.
-Working with the single-term generator $\textsf{term}(g,a)$ — the series with sole
-coefficient $a$ on transmonomial $g$ — we establish: (i) a *sign characterization*,
-$0 < \textsf{term}(g,a) \iff 0 < a$, together with its negative counterpart; (ii)
-the *monomial multiplication law* $\textsf{term}(g,a)\cdot\textsf{term}(h,b)=\textsf{term}(g+h,ab)$;
-(iii) a *corrected square-root law* for square-compatible monomials, tracking both
-exponent and coefficient; (iv) the impossibility of a negative-coefficient monomial
-being a square; and (v) the existence of *positive infinitesimals*, with an explicit
-witness. We are explicit about scope: this is **not** a proof of real closure nor of
-general square-root closure, but the verified foundation those results require. We
-give full statements, proof sketches faithful to the formal development, supporting
-algorithms and numerical demonstrations, and a roadmap toward real closure.
+Power series cannot express the asymptotic relationship between a variable and its
+exponential: no power-series valuation can encode an object that dominates $x^{a}$ for
+every real $a$ simultaneously. *Transseries* repair this deficiency by enlarging the
+monomial basis to formal products of iterated exponentials and logarithms with real
+exponents. We present a rigorous, machine-checked model of single-tower, real-power
+transseries built on Hahn series over the lexicographically ordered group of
+**transmonomials** $\mathrm{Lex}(\mathbb{Z} \to_{f} \mathbb{R})$. We prove that this model
+is a field, that its valuation realizes asymptotic dominance (in particular that $e^{x}$
+dominates every power of $x$), and we establish the **asymptotic comparison theorem**: two
+transseries agreeing to all orders are equal, so a transseries is uniquely determined by
+its expansion. Our central new contribution is the **exp-substitution automorphism**: the
+operation $x \mapsto e^{x}$ is realized as an injective ring homomorphism
+$\mathrm{expShift}\colon \mathrm{TSeries} \to \mathrm{TSeries}$ that raises every tower
+height by one, fixes the constant field $\mathbb{R}$, and satisfies
+$\mathrm{expShift}(x) = e^{x}$. The load-bearing lemma is that the height shift preserves
+the dominance order ($\mathrm{shift}(x) < \mathrm{shift}(y) \iff x < y$), proved via the
+behavior of lexicographic comparison under a monotone relabeling of indices. We connect the
+formal order to genuine real analysis and discuss algorithmic and structural consequences.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Asymptotics beyond power series
+### 1.1 Motivation
 
-When a quantity is studied as $x \to +\infty$, its behavior is governed not by a
-single number but by a hierarchy of *scales of growth*. A power series
-$\sum_n a_n x^{-n}$ captures the polynomially-graded part of this hierarchy, but
-it is structurally incapable of representing two ubiquitous phenomena:
+A foundational asymptotic fact is that $x^{n} = o(e^{x})$ as $x \to \infty$ for every $n$,
+and more generally $x^{a} = o(e^{x})$ for every real $a$. Iterating, $(e^{x})^{a} =
+o(e^{e^{x}})$, and dually $\log x$ is dominated by every positive power of $x$. These facts
+organize the elementary functions into a doubly-infinite hierarchy of **tower heights**,
+$$ \cdots \prec \log\log x \prec \log x \prec x \prec e^{x} \prec e^{e^{x}} \prec \cdots, $$
+indexed by $h \in \mathbb{Z}$ (height $0 = x$, height $1 = e^{x}$, height $-1 = \log x$,
+height $2 = e^{e^{x}}$, and so on).
 
-1. **Trans-polynomial growth**: quantities like $e^{x}$, $e^{e^{x}}$, $\dots$
-   that exceed every power of $x$; and
-2. **Exponentially small corrections**: quantities like $e^{-x}$ or $e^{-x^2}$
-   that are smaller than every power $x^{-n}$ and yet are not zero — the terms
-   responsible for Stokes phenomena, resurgence, and the long-time (in)stability
-   of dynamical systems.
+Power series are structurally incapable of describing this hierarchy: their valuation is a
+single integer (or real, for Puiseux/Hahn power series in one variable), and no such
+valuation admits an element dominating $x^{a}$ for *all* $a$. Transseries, introduced by
+Dahn–Göring, Écalle, and developed extensively by van den Dries–Macintyre–Marker and by
+Aschenbrenner–van den Dries–van der Hoeven, resolve this by allowing formal series whose
+monomials are products of iterated exp/log with real exponents.
 
-**Transseries** (Dahn–Göring, Écalle, van den Dries–Macintyre–Marker, van der
-Hoeven) supply a single algebraic structure containing all such scales at once.
-A transseries is a well-ordered formal sum of real multiples of *transmonomials* —
-products of real powers of $x$, $\log x$, $e^{x}$, $e^{e^{x}}$, and so on. The
-totality forms a real, non-Archimedean ordered field with remarkable closure
-properties (it is, famously, real-closed and closed under formal differentiation
-and composition).
+The payoff of treating asymptotic data as a formal field is twofold. First, it converts
+statements usually phrased as limits ($x^{n}/e^{x}\to 0$) into algebraic facts about an
+order, where they can be manipulated symbolically. Second, it exposes operations — most
+notably the change of variable $x\mapsto e^{x}$ — as structure-preserving maps of the entire
+field, rather than ad hoc manipulations valid only case by case. The present development
+focuses on the single-tower, real-power fragment, which already exhibits all of these
+phenomena while remaining concrete enough to model directly on Mathlib's `HahnSeries`.
+Working in this fragment keeps the value group equal to the transparent group
+$\mathrm{Lex}(\mathbb{Z} \to_{f} \mathbb{R})$, so every order computation reduces to a finite
+lexicographic comparison.
 
-### 1.2 Contribution and scope
+### 1.2 Contributions
 
-Deep closure theorems for transseries rest on a foundation of elementary but
-error-prone facts about *monomials*: how their signs are determined, how they
-multiply, when they admit square roots, and how infinitesimals arise. This paper
-formalizes that foundation with machine-checked proofs.
+We give a self-contained, formally verified development of the following, organized into
+three layers.
 
-We emphasize, exactly as the formal development does, what is **and is not**
-claimed. We do **not** prove real closure of the transseries field, nor
-square-root closure in general. We **do** provide a verified base layer:
+1. **A field model (Section 3).** The transmonomials form the lexicographically ordered
+   group $\mathrm{Lex}(\mathbb{Z} \to_{f} \mathbb{R})$; Hahn series over it form a field
+   $\mathrm{TSeries}$ whose valuation `orderTop` is multiplicative and whose order realizes
+   asymptotic dominance. We prove higher towers dominate (`mono_lt_mono_of_height`),
+   same-height comparison reduces to exponent comparison (`mono_lt_mono_same`), and the
+   signature fact `exp_dominates_pow`: $x^{a} \prec e^{x}$ for all real $a$.
 
-- monomial signs (Theorems 3.1, 3.2),
-- monomial arithmetic (Theorem 3.3),
-- valid square roots of positive square-compatible monomials, and the
-  non-squareness of negative monomials (Theorems 3.4, 3.5),
-- constants as monomials (Lemmas 3.6, 3.7), and
-- positive infinitesimals, with an explicit witness (Theorem 3.8, Lemma 3.9,
-  Corollary 3.10).
+2. **The asymptotic comparison theorem (Section 4).** Defining "agreement to all orders"
+   via the valuation, we prove `agreeToAllOrders_iff_eq`: agreement to all orders is
+   equivalent to equality, and is an equivalence relation. We ground the formal order in
+   real analysis with `isLittleO_pow_exp` and `isLittleO_expPow_expExp`.
 
-Section 2 fixes the model; Section 3 states and sketches the results; Section 4
-gives algorithms; Section 5 gives applications and numerical demonstrations;
-Sections 6–7 discuss limitations and future work toward real closure.
+3. **The exp-substitution automorphism (Section 5).** We realize $x \mapsto e^{x}$ as an
+   injective ring homomorphism `expShift`, with the dominance-preservation lemma
+   `shift_lt_iff` as its engine, and we compute its action: `expShift_term`,
+   `expShift_var` ($x \mapsto e^{x}$), `expShift_exp`, `expShift_log`, and `expShift_C`
+   (fixing $\mathbb{R}$).
 
-### 1.3 On the formalization and its guarantees
+---
 
-Every statement in Section 3 is a theorem with a complete, machine-checked proof;
-the proof sketches below are faithful summaries of those formal arguments, naming
-the exact lemmas they invoke. Two methodological commitments are worth
-highlighting. First, *the hypotheses are exactly the ones used*: the square-root
-law, for instance, carries both the nonnegativity hypothesis $a \ge 0$ and the
-halvability hypothesis $g = k + k$ because the proof genuinely needs both; neither
-is decorative. Second, *negative results are stated as positive theorems*:
-"a negative monomial is not a square" is not an informal caveat but a proved
-proposition (Theorem 3.5). This discipline is what distinguishes a verified base
-layer from a plausible sketch, and it is what makes the layer safe to build on:
-any later development can cite these statements without re-auditing their
+## 2. Preliminaries: Hahn series
+
+Let $\Gamma$ be a linearly ordered abelian group and $K$ a field. A **Hahn series** over
+$\Gamma$ with coefficients in $K$ is a function $f\colon \Gamma \to K$ whose support
+$\{\gamma : f(\gamma) \neq 0\}$ is **well-ordered**. Hahn series form a ring under pointwise
+addition and Cauchy-style convolution multiplication; when $K$ is a field they form a field
+(every nonzero series is invertible). The **valuation** (here `orderTop`) sends a nonzero
+series to the least element of its support (its leading transmonomial) and sends $0$ to
+$\top$; it is multiplicative, $v(fg) = v(f) + v(g)$.
+
+We use Mathlib's `HahnSeries` together with the constructor `HahnSeries.single g c` (the
+one-term series $c \cdot g$), the constant embedding `HahnSeries.C`, and the
+order-embedding ring homomorphism `HahnSeries.embDomainRingHom`, which lifts an injective,
+order-reflecting additive group homomorphism of the value group to a ring homomorphism of
+the Hahn-series field.
+
+---
+
+## 3. The field of transmonomials and transseries
+
+### Definition 1 (Transmonomials)
+The **transmonomial group** is
+$$ \mathrm{TransMono} := \mathrm{Lex}(\mathbb{Z} \to_{f} \mathbb{R}), $$
+the group of finitely supported functions $\mathbb{Z} \to \mathbb{R}$ under pointwise
+addition, equipped with the lexicographic order. An element assigns a real exponent to each
+tower height. Because Mathlib's `Finsupp.Lex` compares at the **least** differing index, we
+store tower height $h$ at index $-h$, so that *higher* towers are *more significant*.
+$\mathrm{TransMono}$ is a linearly ordered abelian group.
+
+### Definition 2 (Transseries field)
+The **transseries field** is the Hahn-series field
+$$ \mathrm{TSeries} := \mathrm{HahnSeries}(\mathrm{TransMono}, \mathbb{R}). $$
+By Mathlib's Hahn-series field instance over a linearly ordered group, `TSeries` is a field
+(`instField`).
+
+### Definition 3 (Single transmonomial)
+For $h \in \mathbb{Z}$ and $a \in \mathbb{R}$,
+$$ \mathrm{mono}(h,a) := \mathrm{toLex}\big(\mathrm{single}_{-h}\, a\big) \in \mathrm{TransMono}, $$
+the transmonomial $(\text{level } h)^{a}$ — e.g. $\mathrm{mono}(1,1)=e^{x}$,
+$\mathrm{mono}(0,a)=x^{a}$, $\mathrm{mono}(-1,a)=(\log x)^{a}$.
+
+### Definition 4 (One-term transseries)
+$$ \mathrm{term}(h,a) := \mathrm{single}\,(\mathrm{mono}(h,a))\, 1 \in \mathrm{TSeries}, $$
+the transseries whose unique transmonomial is $(\text{level }h)^{a}$ with coefficient $1$.
+We write $\mathrm{varX} = \mathrm{term}(0,1)$ ($=x$), $\mathrm{expX}=\mathrm{term}(1,1)$
+($=e^{x}$), $\mathrm{logX}=\mathrm{term}(-1,1)$ ($=\log x$).
+
+### Theorem A (Higher towers dominate — `mono_lt_mono_of_height`)
+For $h < h'$ and $0 < a'$, and any $a$,
+$$ \mathrm{mono}(h,a) < \mathrm{mono}(h',a'). $$
+
+*Proof sketch.* By `Finsupp.Lex.lt_iff`, a strict inequality holds iff there is a least
+index $i$ at which the two finsupps differ, below which they agree, with the first strictly
+smaller at $i$. Take $i = -h'$. Below $-h'$ (i.e. for indices $d < -h'$, which correspond to
+tower heights $> h'$) both single-supported finsupps vanish, so they agree. At $i=-h'$ the
+left finsupp is $0$ (its support is $-h \neq -h'$) and the right is $a' > 0$. Hence the
+left is strictly smaller. $\square$
+
+### Theorem B (Same-height comparison — `mono_lt_mono_same`)
+For any $h$ and $a < a'$,
+$$ \mathrm{mono}(h,a) < \mathrm{mono}(h,a'). $$
+
+*Proof sketch.* Apply `Finsupp.Lex.lt_iff` at index $-h$: below $-h$ both vanish; at $-h$
+the values are $a < a'$. $\square$
+
+### Theorem C (Exp dominates every power — `exp_dominates_pow`)
+For every real $a$,
+$$ \mathrm{mono}(0,a) < \mathrm{mono}(1,1), \qquad\text{i.e.}\qquad x^{a} \prec e^{x}. $$
+
+*Proof sketch.* Immediate from Theorem A with $h=0<1=h'$, $a'=1>0$. The point is the
+*universality* over all real $a$: this is impossible for any single power-series valuation
+and is the defining feature separating transseries from power series. $\square$
+
+### Valuation facts
+- **`orderTop_term`:** $v(\mathrm{term}(h,a)) = \mathrm{mono}(h,a)$ (the valuation of a
+  one-term series is its transmonomial).
+- **`orderTop_mul`:** $v(xy) = v(x) + v(y)$ (multiplicativity, inherited from Hahn series).
+- **`C_injective`:** the constant embedding $\mathbb{R} \hookrightarrow \mathrm{TSeries}$
+  is an injective ring homomorphism, so $\mathbb{R}$ is a subfield.
+
+---
+
+## 4. The asymptotic comparison theorem
+
+### Definition 5 (Agreement to all orders — `AgreeToAllOrders`)
+Two transseries $a, b$ **agree to all orders** when their difference is asymptotically
+smaller than every transmonomial:
+$$ \mathrm{AgreeToAllOrders}(a,b) \;:\Longleftrightarrow\; \forall\, g \in \mathrm{TransMono},\ (g : \mathrm{WithTop}\,\mathrm{TransMono}) < v(a-b). $$
+
+### Theorem D (Asymptotic comparison theorem — `agreeToAllOrders_iff_eq`)
+$$ \mathrm{AgreeToAllOrders}(a,b) \iff a = b. $$
+
+*Proof sketch.* ($\Rightarrow$) Suppose $a,b$ agree to all orders. If $v(a-b) \neq \top$,
+write $v(a-b) = c$ for some transmonomial $c$ (via `WithTop.ne_top_iff_exists`); then
+instantiating the hypothesis at $g = c$ gives $c < c$, contradicting irreflexivity. Hence
+$v(a-b) = \top$, and `HahnSeries.orderTop_eq_top` gives $a-b = 0$, i.e. $a=b$.
+($\Leftarrow$) If $a = b$ then $v(a-b) = v(0) = \top$, which is strictly above every
+transmonomial $g$ since $g < \top$. $\square$
+
+**Corollaries.**
+- **`agreeToAllOrders_equivalence`:** agreement to all orders is an equivalence relation
+  (it *is* equality).
+- **`not_agree_zero_of_ne_zero`:** a nonzero transseries does not agree to all orders with
+  $0$ — it has a genuine leading term.
+
+**Interpretation.** A transseries is uniquely determined by its asymptotic expansion: there
+is no nonzero "beyond all orders" remainder. This is the rigorous form of the classical
+asymptotic comparison principle within the Hahn model.
+
+### Analytic grounding
+The formal order is faithful to real analysis:
+
+### Theorem E (`isLittleO_pow_exp`)
+For every $n \in \mathbb{N}$, $\ x^{n} = o(e^{x})$ as $x \to \infty$. *(Mathlib's
+`Real.isLittleO_pow_exp_atTop`.)* This is the analytic shadow of Theorem C.
+
+### Theorem F (`isLittleO_expPow_expExp`)
+For every $n \in \mathbb{N}$, $\ (e^{x})^{n} = o\!\big(e^{e^{x}}\big)$ as $x \to \infty$.
+
+*Proof sketch.* Compose `isLittleO_pow_exp` with $\exp \to \infty$
+(`Real.tendsto_exp_atTop`). This is the analytic shadow of `mono_lt_mono_of_height` at
+heights $1 < 2$. $\square$
+
+---
+
+## 5. The exp-substitution automorphism
+
+We now realize the substitution $x \mapsto e^{x}$ — climbing the tower by one rung — as a
+ring homomorphism.
+
+### Definition 6 (Height shift — `shift`)
+Let $\mathrm{shiftEquiv}\colon \mathbb{Z} \simeq \mathbb{Z}$ be $i \mapsto i-1$
+(`Equiv.subRight 1`). The **height shift** on transmonomials relabels finsupp indices along
+$\mathrm{shiftEquiv}$:
+$$ \mathrm{shift}(x) := \mathrm{toLex}\big(\mathrm{equivMapDomain}\,\mathrm{shiftEquiv}\,(\mathrm{ofLex}\,x)\big). $$
+Since index $-h$ becomes $-(h+1)$, the shift raises tower height $h$ to $h+1$. It is
+additive (`shiftHom`, a group homomorphism) and injective (`shift_inj`, from
+`Finsupp.mapDomain_injective`).
+
+### Theorem G (Exp-substitution preserves dominance — `shift_lt_iff`)
+For all transmonomials $x, y$,
+$$ \mathrm{shift}(x) < \mathrm{shift}(y) \iff x < y. $$
+
+*Proof sketch.* Unfold with `Finsupp.Lex.lt_iff` on both sides. A strict inequality is
+witnessed by a least index $i$ of difference. Given a witness $i$ for $x < y$, the index
+$\mathrm{shiftEquiv}(i)$ witnesses $\mathrm{shift}(x) < \mathrm{shift}(y)$: for $d <
+\mathrm{shiftEquiv}(i)$ one has $\mathrm{shiftEquiv}^{-1}(d) < i$, so agreement transports
+through `Finsupp.equivMapDomain_apply`; and the strict inequality at $i$ transports to
+$\mathrm{shiftEquiv}(i)$. The converse is symmetric, using $\mathrm{shiftEquiv}^{-1}$.
+Conceptually: a lexicographic comparison is decided at the least differing index, and a
+monotone bijection of the index set maps "least differing index" to "least differing
+index," so the order is preserved. The shift is thus an **order isomorphism** of the value
+group. $\square$
+
+As a consequence (`shiftHom_le_iff`), the non-strict order is also reflected:
+$\mathrm{shiftHom}(g) \le \mathrm{shiftHom}(g') \iff g \le g'$, combining `shift_lt_iff`
+with injectivity.
+
+### Definition 7 (Exp-substitution ring homomorphism — `expShift`)
+$$ \mathrm{expShift} := \mathrm{HahnSeries.embDomainRingHom}\ \mathrm{shiftHom}\ \mathrm{shift\_inj}\ \mathrm{shiftHom\_le\_iff} \;\colon\; \mathrm{TSeries} \to^{+*} \mathrm{TSeries}. $$
+The three hypotheses required by `embDomainRingHom` are exactly: $\mathrm{shiftHom}$ is an
+additive group homomorphism (Def 6), injective (`shift_inj`), and order-reflecting
+(`shiftHom_le_iff`, from Theorem G). Hence $\mathrm{expShift}$ is a genuine ring
+homomorphism: it respects addition and multiplication.
+
+### Theorem H (Height shift on a transmonomial — `shift_mono`)
+$$ \mathrm{shift}(\mathrm{mono}(h,a)) = \mathrm{mono}(h+1,a). $$
+
+*Proof sketch.* Both sides are single-supported finsupps; compute the value at each index
+$i$. The relabeling sends support index $-h$ to $-(h+1)$, matching the right side via
+`Finsupp.single_apply` and case analysis on $-h = i+1$. $\square$
+
+### Theorem I (Exp-substitution on a one-term transseries — `expShift_term`)
+$$ \mathrm{expShift}(\mathrm{term}(h,a)) = \mathrm{term}(h+1,a). $$
+
+*Proof sketch.* Unfold `expShift` and `term`; `embDomainRingHom_apply` and
+`embDomain_single` reduce the goal to $\mathrm{single}(\mathrm{shift}(\mathrm{mono}(h,a)))\,1
+= \mathrm{single}(\mathrm{mono}(h+1,a))\,1$, closed by Theorem H. $\square$
+
+### Theorem J (Headline — `expShift_var`)
+$$ \mathrm{expShift}(x) = e^{x}, \qquad \text{i.e.}\qquad \mathrm{expShift}(\mathrm{varX}) = \mathrm{expX}. $$
+
+*Proof sketch.* $\mathrm{varX} = \mathrm{term}(0,1)$; by Theorem I,
+$\mathrm{expShift}(\mathrm{term}(0,1)) = \mathrm{term}(1,1) = \mathrm{expX}$. $\square$
+
+Specializing Theorem I further:
+- **`expShift_exp`:** $\mathrm{expShift}(e^{x}) = e^{e^{x}} = \mathrm{term}(2,1)$.
+- **`expShift_log`:** $\mathrm{expShift}(\log x) = x$ (height $-1 \mapsto 0$).
+
+### Theorem K (Fixes the constant field — `expShift_C`)
+For every $r \in \mathbb{R}$,
+$$ \mathrm{expShift}(\mathrm{C}\,r) = \mathrm{C}\,r. $$
+
+*Proof sketch.* `HahnSeries.embDomainRingHom_C`: an `embDomain` ring homomorphism fixes the
+constant subfield because the value group homomorphism fixes the identity $0$ and constants
+are supported at $0$ (and $\mathrm{shiftHom}(0)=0$). $\square$
+
+### Theorem L (Injectivity — `expShift_injective`)
+$\mathrm{expShift}$ is injective: it embeds $\mathrm{TSeries}$ into itself.
+
+*Proof sketch.* `HahnSeries.embDomain_injective`, since the underlying value-group map is
+injective. $\square$
+
+**Synthesis.** Theorems J and K together show $\mathrm{expShift}$ is a *nontrivial* field
+endomorphism: it moves $x$ to $e^{x}$ (so it is not the identity) while fixing $\mathbb{R}$
+(so it is a genuine $\mathbb{R}$-algebra/substitution map). Theorem G is the entire
+mathematical content — the order-reflection that certifies $x \mapsto e^{x}$ respects every
+asymptotic scale simultaneously.
+
+---
+
+## 6. A worked example
+
+We trace the machinery on a concrete transseries to make the definitions tangible. Consider
+$$ t \;=\; 2\,e^{x} \;+\; 5\,x^{3} \;-\; 4 \;+\; \tfrac{1}{2}\,(\log x)^{-1} \;\in\; \mathrm{TSeries}, $$
+which as a Hahn series is the finitely supported coefficient map
+$$ \mathrm{mono}(1,1)\mapsto 2,\quad \mathrm{mono}(0,3)\mapsto 5,\quad \mathrm{mono}(0,0)\mapsto -4,\quad \mathrm{mono}(-1,-1)\mapsto \tfrac12. $$
+
+**Leading term and valuation.** The supports are, as transmonomials, ordered by the
+lexicographic rule. The largest is $\mathrm{mono}(1,1) = e^{x}$ (height $1$ beats heights
+$0$ and $-1$ by Theorem A). Hence $v(t) = \mathrm{orderTop}(t) = \mathrm{mono}(1,1)$ and the
+leading behavior of $t$ is $2e^{x}$, exactly the dominant growth one expects analytically.
+
+**Exp-substitution.** Applying $\mathrm{expShift}$ (Theorem I, term by term) shifts every
+height up by one and fixes the coefficients:
+$$ \mathrm{expShift}(t) \;=\; 2\,e^{e^{x}} \;+\; 5\,(e^{x})^{3} \;-\; 4 \;+\; \tfrac{1}{2}\,x^{-1}. $$
+Indeed $\mathrm{mono}(1,1)\mapsto\mathrm{mono}(2,1)=e^{e^{x}}$, $\mathrm{mono}(0,3)\mapsto\mathrm{mono}(1,3)=(e^{x})^{3}$, the constant $-4$ is fixed (Theorem K), and
+$\mathrm{mono}(-1,-1)\mapsto\mathrm{mono}(0,-1)=x^{-1}$. The whole expression has been lifted
+one rung up the tower, and because $\mathrm{expShift}$ is a *ring* homomorphism this is
+consistent with substituting $e^{x}$ for $x$ inside any algebraic combination forming $t$.
+
+**Uniqueness.** Suppose a second transseries $s$ satisfies $\mathrm{AgreeToAllOrders}(t,s)$.
+Then $v(t-s) = \top$, so $t - s = 0$, so $s = t$ coefficient-for-coefficient (Theorem D).
+There is no way to perturb $t$ "beyond all orders" without changing it: the four
+coefficients above are an exact fingerprint.
+
+## 7. Algorithms
+
+The model is constructive enough to support symbolic computation. We record the core
+routines (Python realizations appear in the demo).
+
+**Algorithm 1 — Lexicographic dominance comparison.** Represent a transmonomial as a finite
+map `height ↦ exponent`. To compare, scan heights from highest to lowest; at the first
+height where exponents differ, the larger exponent dominates. Complexity $O(k \log k)$ for
+$k$ nonzero exponents (sorting heights), then $O(k)$ for the scan. This realizes Theorems A
+and B and the order underlying Theorem C.
+
+**Algorithm 2 — Exp-substitution (tower shift).** Given a transseries as a finite set of
+(transmonomial, coefficient) pairs, apply `expShift` by mapping every height $h \mapsto
+h+1$ in every transmonomial, leaving coefficients fixed. Complexity linear in the total
+number of nonzero exponents. Correctness is Theorems H–K; injectivity (Theorem L) means no
+two distinct inputs collide.
+
+**Algorithm 3 — Agreement-to-all-orders test.** Given $a, b$, compute $a-b$; it is zero iff
+all coefficients vanish iff (Theorem D) $a$ and $b$ agree to all orders. Complexity linear
+in the number of terms.
+
+---
+
+## 8. Applications
+
+- **Symbolic limit computation.** Engines that decide $\lim_{x\to\infty}$ of exp-log
+  expressions (e.g. Gruntz's algorithm) operate in a transseries-like setting; the
+  dominance order (Theorems A–C) decides leading behavior and the comparison theorem
+  (Theorem D) guarantees a unique answer.
+- **Asymptotics of ODE solutions / WKB.** Solutions to algebraic differential equations
+  admit transseries expansions; the exp-substitution automorphism models the change of
+  variable that climbs the exponential tower.
+- **Resurgence and trans-monomial bookkeeping.** The faithful valuation makes
+  "beyond-all-orders" terms a precise, manipulable notion rather than a heuristic.
+
+---
+
+## 9. Discussion
+
+The order-theoretic core (Section 3) is where transseries genuinely transcend power series:
+`exp_dominates_pow` asserts dominance over $x^{a}$ for *all* real $a$, impossible for a
+one-dimensional valuation. The comparison theorem (Section 4), while clean inside the Hahn
+model, is exactly the classical uniqueness-of-expansion principle once Hahn coefficients are
+identified with asymptotic data; its proof is genuinely quantified over the entire
+uncountable monomial group. The exp-substitution automorphism (Section 5) is the structural
+highlight: its existence reduces to a single combinatorial lemma about lexicographic order
+under monotone relabeling (`shift_lt_iff`), and its concrete identity $\mathrm{expShift}(x)
+= e^{x}$ certifies that the abstract construction is the operation of interest.
+
+The choice to store tower height $h$ at finsupp index $-h$ deserves emphasis: it aligns the
+direction of Mathlib's `Finsupp.Lex` (decided at the *least* index) with the asymptotic
+convention that the *highest* tower is most significant. With this sign convention every
+dominance proof becomes a transparent statement about the least differing index, and the
+exp-substitution becomes a rigid translation of the index line — the cleanest possible form
+of the height shift. This is what makes the load-bearing lemma `shift_lt_iff` a short,
+conceptual argument rather than a delicate case analysis, and why the entire construction
+lifts to a ring homomorphism through Mathlib's `embDomainRingHom` with exactly three
 hypotheses.
 
 ---
 
-## 2. The model
+## 10. Future directions
 
-We realize transseries via *Hahn series*, the standard device for giving formal
-infinite sums over an ordered value group a robust field structure.
+This research thread extends the Hahn-series model of transseries with verified files:
+`ExponentLaws.lean` (law of exponents per tower height, the group hom
+$(\mathbb{R},+) \to \mathrm{TSeries}^{\times}$, unboundedness of the value group, and
+`pow_var_lt_exp`: no finite power of $x$ dominates $e^{x}$); `ExpShift.lean` (the
+exp-substitution as an injective ring homomorphism studied here); and `ExpShiftEquiv.lean`
+(exp-substitution is a field *automorphism* `expShiftEquiv` with inverse the
+log-substitution `logShift`, and the exp-tower is cofinal, `exists_exp_tower_gt`).
 
-### Definition 2.1 (Transmonomial value group)
-The **value group of transmonomials** is
-$$\textsf{TransMono} \;:=\; \mathrm{Lex}\,(\mathbb{Z} \to_0 \mathbb{R}),$$
-the additive group of finitely supported functions $\mathbb{Z} \to \mathbb{R}$,
-equipped with the **lexicographic order** (`Finsupp.Lex`): for $g \neq 0$, the
-sign of $g$ is the sign of $g(h^\*)$ at the *smallest* index $h^\*$ on which $g$ is
-supported (equivalently, $g < g'$ iff at the least index where they differ, $g$
-has the smaller value). The integer index $h$ is the *tower height* (height $0$ is
-the scale of $x$, height $1$ the scale of $e^{x}$, height $-1$ the scale of
-$\log x$, etc.), and the real value $g(h)$ is the exponent at that height; addition
-is pointwise, so multiplying monomials adds exponents height-by-height. By the
-convention of Definition 2.2 the *dominant* monomial of a series is the one on the
-*smallest* group element, so a strictly positive group element corresponds to an
-*infinitesimal* scale (cf. Theorem 3.8).
+Open conjectures for follow-up:
 
-### Definition 2.2 (Field of transseries)
-The **field of transseries** is the lexicographically ordered Hahn series field
-$$\textsf{TSeries} \;:=\; \mathrm{Lex}\big(\mathrm{HahnSeries}\;\textsf{TransMono}\;\mathbb{R}\big).$$
-A Hahn series over $\textsf{TransMono}$ with coefficients in $\mathbb{R}$ is a
-function from $\textsf{TransMono}$ to $\mathbb{R}$ whose support is well-ordered;
-this well-ordering guarantees that products are defined and that the structure is
-a field. The $\mathrm{Lex}$ wrapper installs the order in which a series' sign is
-the sign of the coefficient on its *smallest-index* (dominant) monomial: writing
-$\mathrm{lc}(s)$ for that **leading coefficient**, one has the standard fact
-$0 < s \iff 0 < \mathrm{lc}(s)$. Over the ordered field $\mathbb{R}$, this makes
-$\textsf{TSeries}$ a (strict) ordered field.
-
-**Remark 2.2.1 (Why Hahn series, and why well-ordering matters).** The defining
-restriction on a Hahn series — that its support be *well-ordered* in the value
-group — is precisely what makes the formal infinite sum $\sum_g c_g\,(\text{magnitude } g)$
-multiply and invert like an honest element of a field. Well-ordering guarantees
-that in a product each output monomial receives only finitely many contributions,
-so the convolution coefficient is a finite sum; it guarantees a well-defined
-*dominant* (smallest) monomial, hence a leading coefficient and a sign; and it
-underlies the recursive inversion that makes $\textsf{TSeries}$ a field rather than
-merely a ring. The one-term series $\textsf{term}(g,a)$ has the simplest possible
-support — a single point — so all of these mechanisms specialize to elementary,
-directly checkable identities, which is exactly why the base layer can be made
-airtight before any infinite-support reasoning is attempted.
-
-### Definition 2.3 (One-term series / monomial generator)
-For $g \in \textsf{TransMono}$ and $a \in \mathbb{R}$, the **one-term series** is
-$$\textsf{term}(g,a) \;:=\; \mathrm{toLex}\big(\mathrm{single}\;g\;a\big) \in \textsf{TSeries},$$
-the series whose only nonzero coefficient is $a$, placed on the monomial $g$.
-These generate $\textsf{TSeries}$ as a Hahn series field and are the objects all
-of our results concern. Its leading coefficient is $a$ (the monomial $g$ being the
-unique, hence smallest, support point).
-
-### Definition 2.4 (Explicit positive exponent)
-$$\textsf{posExp} \;:=\; \mathrm{toLex}\big(\mathrm{single}\;(0:\mathbb{Z})\;(1:\mathbb{R})\big) \in \textsf{TransMono},$$
-the transmonomial with unit real exponent at tower height $0$ — the generator
-whose one-term series $\textsf{term}(\textsf{posExp},1)$ is the explicit
-infinitesimal of Theorem 3.8 (it behaves like a reciprocal scale such as $1/x$ as
-$x\to\infty$).
+- **Valuation scaling (C2).** $(\mathrm{expShift}\,t).\mathrm{orderTop} =
+  \mathrm{WithTop.map}\ \mathrm{shift}\ (t.\mathrm{orderTop})$; on positive-height
+  transseries, $t.\mathrm{orderTop} < (\mathrm{expShift}\,t).\mathrm{orderTop}$.
+- **Differential field (C4).** A derivation $\mathrm{deriv}\colon \mathrm{TSeries} \to
+  \mathrm{TSeries}$ with Leibniz rule, power rule, and exp chain rule, making
+  $\mathrm{TSeries}$ a differential field; the hard part is Hahn summability of the
+  derivative family.
+- **Catalog embedding (C5).** For normalized catalog `FormalTransseries` with embedded
+  leading monomials $m_1 < m_2$, $T_1.\mathrm{eval} = o(T_2.\mathrm{eval})$, bridging
+  analytic `eval` to the formal valuation.
+- **Tower action (C6).** $n \mapsto \mathrm{expShiftEquiv}^{n}$ is an injective group
+  homomorphism $\mathbb{Z} \to (\mathrm{TSeries} \simeq^{+*} \mathrm{TSeries})$ with
+  $\mathrm{expShiftEquiv}^{n}(\mathrm{term}(h,a)) = \mathrm{term}(h+n,a)$.
+- **Archimedean classes = tower heights (C7).** The Archimedean classes of the value group
+  correspond to tower heights.
 
 ---
 
-## 3. Main results
+## 11. Conclusion
 
-Throughout, $g, h, k \in \textsf{TransMono}$ and $a, b \in \mathbb{R}$.
-
-### 3.1 Signs of monomials
-
-#### Theorem 3.1 (Monomial positivity, `single_pos_iff_coeff_pos`)
-$$0 < \textsf{term}(g,a) \quad\Longleftrightarrow\quad 0 < a.$$
-
-*Proof sketch.* The sign of a Hahn series equals the sign of its leading
-coefficient: $0 < s \iff 0 < \mathrm{lc}(s)$ (Mathlib's
-`leadingCoeff_pos_iff`, transported across $\mathrm{Lex}$). For a one-term series
-the leading coefficient is exactly the coefficient: $\mathrm{lc}(\textsf{term}(g,a)) = a$
-(`leadingCoeff_of_single`, after $\mathrm{ofLex}\circ\mathrm{toLex} = \mathrm{id}$).
-Composing the two equivalences gives the claim. The monomial $g$ is irrelevant to
-the sign. $\square$
-
-#### Theorem 3.2 (Monomial negativity, `single_neg_of_coeff_neg`)
-$$a < 0 \;\Longrightarrow\; \textsf{term}(g,a) < 0.$$
-
-*Proof sketch.* Dual to Theorem 3.1, using $s < 0 \iff \mathrm{lc}(s) < 0$
-(`leadingCoeff_neg_iff`) and again $\mathrm{lc}(\textsf{term}(g,a)) = a$. $\square$
-
-### 3.2 Arithmetic of monomials
-
-#### Theorem 3.3 (Monomial law, `term_mul_term`)
-$$\textsf{term}(g,a)\cdot\textsf{term}(h,b) \;=\; \textsf{term}(g+h,\;a\,b).$$
-
-*Proof sketch.* This is the $\mathrm{Lex}$-wrapped instance of the Hahn-series
-identity $\mathrm{single}\;g\;a \cdot \mathrm{single}\;h\;b = \mathrm{single}\;(g+h)\;(ab)$
-(`single_mul_single`). Convolution of two single-support series produces a single
-support point at the sum $g+h$ of the supports, with coefficient the product $ab$.
-$\square$
-
-The monomial law is the computational nucleus of the theory: it is exactly the
-identity needed to show that a valuation (Section 7) is multiplicative.
-
-### 3.3 Constants
-
-#### Lemma 3.6 (Naturals as monomials, `natCast_eq_term`)
-For $n \in \mathbb{N}$, $\;(n : \textsf{TSeries}) = \textsf{term}(0, (n:\mathbb{R}))$.
-
-#### Lemma 3.7 (Unit as monomial, `one_eq_term`)
-$(1 : \textsf{TSeries}) = \textsf{term}(0, 1)$.
-
-*Proof sketch (both).* The natural-number cast and the unit of the Hahn series
-field are, by definition, constant series supported on the identity monomial $0$;
-their coefficient there is $n$ (resp. $1$). Equality of coefficient functions
-(`coeff_inj`) transported across $\mathrm{toLex}$ gives the identities. $\square$
-
-These lemmas anchor constants on the bottom rung ($g = 0$) of the magnitude
-ladder, which is precisely what makes the infinitesimal argument (Theorem 3.8)
-go through.
-
-### 3.4 Square roots
-
-#### Theorem 3.4 (Square root of a square-compatible monomial, `single_square_of_double_exponent`)
-If $g = k + k$ and $0 \le a$, then
-$$\big(\textsf{term}(k,\sqrt{a})\big)^{2} \;=\; \textsf{term}(g,a).$$
-
-*Proof sketch.* Expand the square and apply the monomial law (Theorem 3.3):
-$$\textsf{term}(k,\sqrt a)^2 = \textsf{term}(k,\sqrt a)\cdot\textsf{term}(k,\sqrt a) = \textsf{term}(k+k,\;\sqrt a\cdot\sqrt a).$$
-Substitute $k+k = g$ and use $\sqrt a \cdot \sqrt a = a$ for $a \ge 0$
-(`Real.mul_self_sqrt`). $\square$
-
-**Remark (why both conditions matter).** The result tracks *two* data: the
-exponent must be *halvable* ($g = k+k$), and the coefficient must be nonnegative
-($a \ge 0$). An informal "square root halves the exponent" that ignores the
-coefficient is simply wrong; the formal statement corrects it by replacing $a$ by
-$\sqrt a$ under the explicit hypothesis $a \ge 0$. This is the precise algebraic
-seed of the divisibility requirement on the value group discussed in Section 7.
-
-#### Theorem 3.5 (Negative monomials are not squares, `not_square_negative_monomial`)
-$$a < 0 \;\Longrightarrow\; \neg\,\mathrm{IsSquare}\big(\textsf{term}(g,a)\big).$$
-
-*Proof sketch.* Suppose $\textsf{term}(g,a) = r^2$ for some $r \in \textsf{TSeries}$.
-In an ordered ring $r^2 \ge 0$, so $\textsf{term}(g,a) \ge 0$. But Theorem 3.2
-gives $\textsf{term}(g,a) < 0$, a contradiction. $\square$
-
-### 3.5 Infinitesimals
-
-#### Theorem 3.8 (Positive infinitesimal monomial, `positive_infinitesimal_monomial`)
-For any $\delta \in \textsf{TransMono}$ with $0 < \delta$, the monomial
-$\varepsilon := \textsf{term}(\delta, 1)$ satisfies
-$$0 < \varepsilon \qquad\text{and}\qquad (n : \textsf{TSeries})\cdot \varepsilon < 1 \;\text{ for every } n \in \mathbb{N}.$$
-
-*Proof sketch.* Positivity is Theorem 3.1 with $a = 1$. For the infinitesimality,
-rewrite the product using Lemmas 3.6–3.7 and the monomial law:
-$(n)\cdot\varepsilon = \textsf{term}(0,n)\cdot\textsf{term}(\delta,1) = \textsf{term}(\delta, n)$,
-while $1 = \textsf{term}(0,1)$. Comparing these two one-term series with the Hahn
-order (`HahnSeries.lt_iff`) reduces to a comparison at the dominant index $0$:
-since $0 \neq \delta$ (because $0 < \delta$), the series $\textsf{term}(\delta,n)$
-has coefficient $0$ at index $0$ while $1$ has coefficient $1$ there, and at all
-indices below $\delta$ both vanish. Hence $\textsf{term}(\delta,n) < 1$ for every
-$n$. Intuitively: the product lives on the strictly positive (hence
-infinitesimal) magnitude $\delta$, so it is dominated by the constant $1$, whose
-dominant monomial is the smaller group element $0$. $\square$
-
-This is a constructive failure of the Archimedean property: $\varepsilon$ is a
-positive element no integer multiple of which reaches $1$.
-
-#### Lemma 3.9 (`posExp_pos`)
-$0 < \textsf{posExp}$ in $\textsf{TransMono}$.
-
-*Proof sketch.* Compare $\textsf{posExp} = \mathrm{single}\;0\;1$ with $0$ in the
-lexicographic order (`Finsupp.Lex.lt_iff`): they agree (both $0$) at every index
-below $0$, and at index $0$ the value $1 > 0$ decides positivity. $\square$
-
-#### Corollary 3.10 (Explicit infinitesimal, `explicit_positive_infinitesimal`)
-Instantiating Theorem 3.8 at $\delta = \textsf{posExp}$ yields the explicit
-positive infinitesimal $\textsf{term}(\textsf{posExp}, 1)$ — a named, computable
-witness that $\textsf{TSeries}$ is non-Archimedean.
+We have presented a verified field model of single-tower real-power transseries, established
+that its order realizes asymptotic dominance (with $e^{x}$ beating every power), proved the
+asymptotic comparison theorem (uniqueness of expansion), and constructed the
+exp-substitution automorphism realizing $x \mapsto e^{x}$ as an injective, scalar-fixing
+ring homomorphism. The unifying lesson is that asymptotic growth, taken as a formal object,
+carries a clean arithmetic, a sharp order, and a genuine symmetry.
 
 ---
 
-### 3.6 A worked example
+## References
 
-The four laws compose into concrete computations. Consider the positive,
-square-compatible monomial $s = \textsf{term}(g, 9)$ with $g$ the exponent $4$ at
-tower height $0$ (so $g = k + k$ with $k$ the exponent $2$). By Theorem 3.4,
-$$\sqrt{s} = \textsf{term}(k, 3), \qquad \text{since } \sqrt{9} = 3 \text{ and } k+k = g,$$
-and squaring back via the monomial law (Theorem 3.3) recovers
-$\textsf{term}(k,3)\cdot\textsf{term}(k,3) = \textsf{term}(k+k, 9) = s$. The naive
-rule that halves only the exponent would return $\textsf{term}(k, 9)$, whose square
-is $\textsf{term}(g, 81) \neq s$ — a concrete witness that the coefficient must also
-be rooted, exactly as the corrected Theorem 3.4 prescribes. Meanwhile
-$\textsf{term}(g, -9)$ is, by Theorem 3.5, not a square at all. Finally, taking
-$\delta = \textsf{posExp}$ (Definition 2.4, positive by Lemma 3.9), the element
-$\varepsilon = \textsf{term}(\delta, 1)$ satisfies $0 < \varepsilon$ and
-$n\varepsilon = \textsf{term}(\delta, n) < 1$ for every $n$ (Theorem 3.8): adding
-$\varepsilon$ to itself $10^{18}$ times still does not reach the constant $1$. The
-accompanying demonstration code reproduces each of these equalities and
-inequalities symbolically and confirms them against an order-faithful numerical
-grounding.
-
-## 4. Algorithms
-
-The verified laws are equational and decidable on finite data, so they induce
-exact symbolic algorithms on one-term series (and, by linearity, on
-finite-support series). We record the two most important.
-
-### 4.1 Monomial multiplication
-
-Direct realization of Theorem 3.3. Represent a transmonomial as a finite map from
-tower height to real exponent; represent a one-term series as a pair
-(monomial, coefficient). Multiplication adds the maps and multiplies the
-coefficients. Complexity: $O(|g| + |h|)$ in the supports.
-
-### 4.2 Monomial square-root decision
-
-Direct realization of Theorems 3.4 and 3.5. Given $\textsf{term}(g,a)$: if
-$a < 0$, report "not a square" (Theorem 3.5); if $a \ge 0$ and every exponent in
-$g$ is even-halvable on the chosen index group, return $\textsf{term}(g/2,\sqrt a)$
-(Theorem 3.4); otherwise report "not square-compatible in this value group" — the
-obstruction that motivates Section 7.
-
----
-
-## 5. Applications and numerical demonstration
-
-Because the value group is concrete (finitely supported real exponents over
-integer heights), all four laws can be exercised numerically by *grounding*
-transmonomials at a large real value of $x$ and checking that the symbolic
-identities match the floating-point reality, and that the order predictions
-(signs, dominance, infinitesimality) hold. The accompanying `demo.py` does
-exactly this: it implements `term`, the monomial law, the square-root law, the
-sign rule, and the infinitesimal construction, and verifies on concrete inputs
-(e.g. $\sqrt{9x^4}=3x^2$, $(3e^{x})(2e^{e^{x}})$, and
-$n\cdot\textsf{term}(\textsf{posExp},1) < 1$ for growing $n$ as $x\to\infty$)
-that the formal predictions are borne out, including the *failure* of the naïve
-exponent-only square-root rule that omits the coefficient.
-
-Three concrete uses follow directly. (i) *Exact symbolic asymptotics:* because the
-monomial law (Theorem 3.3) is an exact identity on finitely supported data, one can
-multiply and compare leading terms of asymptotic expansions without numerical
-error, the foundation of any transseries-based asymptotic calculus. (ii)
-*Certified sign determination:* Theorems 3.1–3.2 reduce the sign of a one-term
-expansion to the sign of a single real number, a primitive needed whenever one
-must decide the eventual sign of a function from its expansion (e.g. comparing two
-growth rates). (iii) *Detecting non-squares and obstructions:* Theorem 3.5 gives a
-decision procedure for one-term non-squares, and Theorem 3.4 isolates the precise
-algebraic requirement (halvability of the exponent) that an ambient value group
-must satisfy for square roots to exist — information that directly drives the
-design choice in Section 7 to pass to a divisible value group.
-
-The non-Archimedean infinitesimal of Theorem 3.8 is itself of independent
-interest: it exhibits, by an explicit and computable witness, a positive element
-below every $1/n$, the hallmark separating transseries from the real line and the
-reason transseries can resolve infinitely many distinct scales of smallness at
-once.
-
----
-
-## 6. Discussion: what is proven, and what is not
-
-The development is deliberately conservative. It supplies airtight versions of the
-statements every higher transseries theorem silently relies upon, and it exposes —
-rather than papers over — the hypotheses that make them true (the coefficient
-condition $a\ge0$ *and* the exponent condition $g=k+k$ in the square-root law). It
-does **not** assert:
-
-- **Real closure.** That every odd-degree polynomial over $\textsf{TSeries}$ has a
-  root remains future work.
-- **General square-root closure.** Theorem 3.4 covers only square-compatible
-  monomials; arbitrary positive series require the recursive leading-term method
-  (Section 7) and a divisible value group.
-
-Stating these non-claims explicitly is part of the contribution: it prevents the
-common informal error of conflating "monomials behave well" with "the field is
-real-closed."
-
----
-
-## 7. Future directions
-
-These build directly on the verified base layer (signs, arithmetic, square roots
-of square-compatible monomials, infinitesimals).
-
-1. **From monomials to finite-support polynomials.** Extend the sign
-   characterization (Theorems 3.1–3.2) from one-term series to finitely supported
-   ones: the sign of a nonzero finite sum is the sign of its leading
-   (smallest-index) coefficient (Mathlib's `leadingCoeff_pos_iff`/`neg_iff`), so
-   the remaining work is computing the leading coefficient of an explicit finite
-   sum of `term`s and matching it to the dominant monomial.
-
-2. **The leading-term valuation.** Formalize the map sending each nonzero
-   transseries to its dominant transmonomial (`orderTop`), and prove
-   multiplicativity, ultrametric inequalities, and order-compatibility in one
-   place. The monomial law (Theorem 3.3) is exactly the computational core
-   showing the valuation of a product of monomials adds; the general lemmas
-   bootstrap from this single-monomial case.
-
-3. **Divisibility of the value group.** Square-root closure needs a 2-divisible
-   value group; real closure needs full divisibility. $\textsf{TransMono} =
-   \mathrm{Lex}(\mathbb{Z}\to_0\mathbb{R})$ is *not* 2-divisible (the integer
-   tower index obstructs halving). Replacing the tower index by a divisible group
-   (e.g. $\mathrm{Lex}(\mathbb{Q}\to_0\mathbb{R})$) or passing to the divisible
-   hull makes Theorem 3.4 apply to *every* positive monomial. Theorem 3.4 makes
-   this requirement precise via its explicit hypothesis $g = k + k$.
-
-4. **Square roots of arbitrary positive series by recursive leading-term
-   cancellation.** Beyond monomials, obtain $\sqrt{s}$ for any positive $s$ by
-   factoring out the (now halvable) dominant monomial, reducing to $\sqrt{1+u}$
-   with $u$ infinitesimal, and iterating leading-term cancellation; convergence is
-   controlled by the well-ordering of the support. This is the gateway to real
-   closure.
-
----
-
-## References (for context; the paper is self-contained)
-
-- H. Hahn, *Über die nichtarchimedischen Größensysteme* (1907).
-- J. Écalle, *Les fonctions résurgentes* (1981–85).
-- L. van den Dries, A. Macintyre, D. Marker, *Logarithmic-exponential series* (2001).
-- J. van der Hoeven, *Transseries and Real Differential Algebra* (Springer LNM 1888, 2006).
+1. M. Aschenbrenner, L. van den Dries, J. van der Hoeven, *Asymptotic Differential Algebra
+   and Model Theory of Transseries*, Annals of Mathematics Studies, 2017.
+2. J. van der Hoeven, *Transseries and Real Differential Algebra*, Lecture Notes in
+   Mathematics 1888, Springer, 2006.
+3. L. van den Dries, A. Macintyre, D. Marker, *Logarithmic-exponential series*, Annals of
+   Pure and Applied Logic, 2001.
+4. H. Hahn, *Über die nichtarchimedischen Größensysteme*, 1907.
+5. D. Gruntz, *On Computing Limits in a Symbolic Manipulation System*, PhD thesis, ETH
+   Zürich, 1996.
