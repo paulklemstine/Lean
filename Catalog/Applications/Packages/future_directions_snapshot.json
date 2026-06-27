@@ -1753,7 +1753,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f31c8198",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1766,7 +1766,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -4467,7 +4467,7 @@
       "mathlib: NumberTheory.ArithmeticFunction",
       "mathlib: Analysis.Asymptotics.Asymptotics"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ac2d584",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domain_bridges": [
       "factorial divisibility to p-adic valuation inequalities",
@@ -4483,7 +4483,7 @@
     "proof_strategy": "Use Legendre's formula to translate a_1! ... a_k! | n! into simultaneous digit-sum inequalities. The paper proves the upper bound from the binary digit-sum obstruction and a density-one lower bound from mixed 2--3 rarefaction. The conjectural strengthening is that the binary obstruction is asymptotically sharp for almost all n. A proof would likely construct, for almost every n, admissible tuples a_i whose total excess is ((k - 1) / log 2 - o(1)) log n, while controlling all odd-prime valuation constraints by showing that the binary carry construction can be locally repaired at negligible logarithmic cost.",
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -4613,7 +4613,7 @@
       "Balogh_Lidicky_Mubayi_Pfender_Volec_star_inducibility",
       "Basit_Granet_Horsley_Kundgen_Staden_semi_inducibility"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3ff7cf5",
     "description": "For every integer k ≥ 2, there exists an open interval I_k ⊂ (0,1) such that for all β ∈ I_k, the minimum fixed-density semi-inducibility of the red-blue star S_{k,1} (with k red edges and 1 blue edge from a distinguished center) at density β strictly exceeds min(β^k(1−β), β(1−β)^k), the envelope formed by the quasi-clique and quasi-star constructions. This generalizes the paper's result for S_{2,1}, where the true minimum is given by a three-class complement-split family rather than the natural quasi-star/quasi-clique endpoint profile on an interval around β = 1/2. For S_{k,1}, the conjectured minimizer is a step-function graphon with at most k+1 classes.",
     "domain_bridges": [
       "graph_limits",
@@ -4629,7 +4629,7 @@
     "proof_strategy": "Extend the paper's transfer argument with degree-power tie-breaking to the functional f_k(d) = d(d−1)⋯(d−k+1)(n−1−d). Reduce the graphon variational problem to almost-regular, threshold, and finite-staircase optimizations. Show that any graphon achieving the quasi-star/quasi-clique envelope can be perturbed into a (k+1)-class complement-split graphon that strictly decreases the S_{k,1} density at the same edge density, using a Lagrangian comparison on the class-structured ansatz. The key step is proving that the complement-split family dominates the envelope on an interval whose width grows with k.",
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T20:57:57.730978+00:00",
     "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
@@ -12587,7 +12587,7 @@
       "Triangulations and Separating Triangles in Planar Graphs",
       "Rectangular and Orthogonal Duals"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b77b74ce",
     "description": "We conjecture that the number of extra vertices introduced by DPLAN's orthogonal floor plan (OFP) generation equals the number of separating triangles in the intermediate plane triangulation, and that this number is optimal: no orthogonal floor plan can realize the same door‑adjacency constraints with fewer added vertices.",
     "domain_bridges": [
       "Formalizing graph‑based floorplan generation in proof assistants",
@@ -12602,7 +12602,7 @@
     "proof_strategy": "The proof would consist of three parts: (1) establishing a bijection between separating triangles and added vertices in the OFP construction, (2) showing each added vertex is necessary via a lower‑bound argument using Euler's formula and face‑vertex incidences, and (3) proving optimality by demonstrating that any orthogonal floor plan realizing the same adjacency constraints must have at least as many interior vertices as there are separating triangles (e.g., via a counting argument on the dual graph and its treewidth). Induction on the number of separating triangles together with known results on planar triangulations and orthogonal duals would be employed.",
     "research_mode": "team",
     "source_exp_id": "2606.21159v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T10:33:24.812578+00:00",
     "title": "Minimal Added Vertices in DPLAN's Orthogonal Floor Plan Mode"
   },
@@ -13308,7 +13308,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8170e958",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domain_bridges": [],
     "domains": [
@@ -13321,7 +13321,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
@@ -13348,7 +13348,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd8b8392",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -13361,7 +13361,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -13681,7 +13681,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a33a1330",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -13694,7 +13694,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
