@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "10d0f89d",
     "filename": "perfect_numbers_structure_of_even_perfects.json",
     "pkg_num": 131,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.69112,
     "title": "Perfect Numbers: The Abundancy Index and the Structure of Even Perfects"
   },
   {
@@ -3824,8 +3824,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "perfect_numbers_structure_of_even_perfects",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.69112,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Perfect Numbers: The Abundancy Index and the Structure of Even Perfects"
     }

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5bd61b22",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Median Decompositions and Their Uniqueness\n\nDerived from this cycle's findings (`Core.lean`: distributive-lattice median and its\nuniqueness; `GraphMedian.lean`: the hypercube as",
-      "quality_score": 0.5515805555555555,
-      "sorry_count": 0,
-      "theorem_count": 227,
-      "timestamp": "2026-06-22T06:11:38",
-      "title": "Uniqueness of Minimal Median Decompositions for Graphs"
-    },
-    {
       "cycle_id": "9ba0d905",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Universal Probability Bounds for Partial Latin Squares\n\nThis cycle formalized the **exact** low-`k` instances of the universal bound\n`(c₁/n)^k ≤ P ≤ (c₂/n)^k` for the probability",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T08:50:10",
       "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via Duality Framework"
+    },
+    {
+      "cycle_id": "10d0f89d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Perfect Numbers and the Abundancy Index\n\nDerived from this cycle's findings in `AbundancyIndex.lean` and\n`EvenPerfectStructure.lean`. Each conjecture is bold, falsifiable, and po",
+      "quality_score": 0.69112,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T09:17:12",
+      "title": "Perfect Numbers: Structure of Even Perfects"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T08:50:10",
+  "last_updated": "2026-06-27T09:17:12",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "061c7bd2",
-        "quality": 0.6293409999999999,
-        "theorems": 0,
-        "title": "Proof Automation: Custom Lean 4 Tactics"
-      },
-      {
         "cycle_id": "49ad7738",
         "quality": 0.6950400000000001,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.4269881818181818,
         "theorems": 7,
         "title": "Collatz Conjecture"
+      },
+      {
+        "cycle_id": "10d0f89d",
+        "quality": 0.69112,
+        "theorems": 0,
+        "title": "Perfect Numbers: Structure of Even Perfects"
       }
     ],
     "Bridges": [
