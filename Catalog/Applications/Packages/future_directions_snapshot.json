@@ -219,6 +219,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "d15f1fdf",
+    "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "seed_056",
+    "lineage_refs": [],
+    "priority_score": 0.91,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-08T19:25:04.360894+00:00",
+    "title": "Self-Modifying Research via Reflective Type Theory"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, Künneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
     "domain_bridges": [],
@@ -1714,7 +1734,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f31c8198",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1727,7 +1747,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -2253,7 +2273,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8170e958",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domain_bridges": [],
     "domains": [
@@ -2266,7 +2286,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
@@ -2293,7 +2313,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd8b8392",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -2306,7 +2326,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
