@@ -1,224 +1,266 @@
-# When Probability Forgets How to Add: The Strange World of Max-Plus Luck
+# When Probability Forgets How to Add: The Strange World of Idempotent Large Deviations
 
-## A coin that only remembers its best moment
+## A coin that only remembers its best outcome
 
-Imagine a probability theory that has lost the ability to add numbers together.
-In its place, it has learned a single move: *take the maximum*. Two unlikely
-things no longer combine their small chances into something even smaller — instead
-the world simply remembers the more likely of the two and forgets the rest. Add a
-constant cost to every outcome, and the theory dutifully shifts everything by that
-cost. This is **max-plus probability**, also called *idempotent* or *tropical*
-probability, and it is the natural language of a surprising number of real
-problems: the slowest task in a chain of dependencies, the cheapest route through
-a network, the most likely explanation behind a noisy signal, the dominant term
-when temperatures drop to absolute zero.
+Imagine a casino where the house has rewritten the rules of arithmetic. At the
+ordinary roulette table, the chance of *either* red *or* black is the sum of the
+two chances. But in this strange new casino, "or" no longer means *add* — it
+means *take the maximum*. If red pays you a score of $-2$ and black pays you a
+score of $-5$, then the score of "red or black" is not $-7$ and not $-2.5$; it
+is simply $-2$, the better of the two. The casino has forgotten how to add. It
+only ever remembers the best thing that could happen.
 
-The name *idempotent* comes from the fact that, in this arithmetic, $\max(a,a)=a$:
-adding something to itself changes nothing. The name *tropical* is a piece of
-mathematical folklore, a tribute to the Brazilian computer scientist Imre Simon
-who pioneered the algebra. Whatever you call it, the rules are simple. The role
-of "plus" is played by **maximum**, and the role of "times" is played by ordinary
-**addition**. The number $0$ becomes the new multiplicative identity (adding zero
-does nothing), and $-\infty$ becomes the new zero (it loses every maximum).
+This is not a thought experiment for its own sake. It is a precise and
+surprisingly rich mathematical universe called **idempotent probability**, or
+**max-plus probability**, and it sits at the crossroads of optimization,
+statistical physics, tropical geometry, and the theory of rare events. The word
+*idempotent* refers to the defining quirk: in this arithmetic, $a + a = a$,
+because the maximum of a number with itself is just itself. Addition has become
+idempotent.
 
-This article is about what happens when you push this strange arithmetic all the
-way into one of the deepest parts of classical probability — the **theory of large
-deviations**, which studies the probability of rare events — and discover that an
-entire chapter of the theory becomes *exact, finite, and convexity-free*.
+In this article we follow one particular thread through that universe: the
+theory of **large deviations** — the mathematics of how unlikely events behave
+when you push a system to its extremes. We will see that a famous and famously
+delicate result of classical probability, the **Donsker–Varadhan variational
+principle**, has an idempotent twin that is not only true but *cleaner*, *exact*,
+and stripped of the convexity machinery that the classical version cannot live
+without. Along the way a single, humble inequality about maxima will do the work
+that, in ordinary probability, requires the full weight of convex analysis.
 
-## Rare events and the price of surprise
+## The dictionary: from times-and-plus to plus-and-max
 
-Classical large-deviation theory asks: how unlikely is a rare event, and *how*
-unlikely, precisely? Flip a fair coin a million times and you expect about half a
-million heads. The probability of seeing 600,000 heads is astronomically small —
-but it is not zero, and its size is governed by a beautiful law. The probability
-decays like $e^{-n\,I(a)}$, where $n$ is the number of flips, $a$ is the
-fraction of heads you are asking about, and $I$ is a function called the **rate
-function**. The rate function is the "price of surprise": the larger $I(a)$, the
-more exponentially punishing it is to witness an average of $a$.
+To work in the new casino we need a dictionary. Ordinary arithmetic lives in
+what mathematicians call a *semiring*: a world with an addition and a
+multiplication. The **max-plus semiring** replaces them:
 
-The central miracle of the classical theory, **Cramér's theorem**, is that this
-price of surprise is computable. It equals the *Legendre–Fenchel transform* of a
-single auxiliary quantity, the cumulant generating function. In symbols, $I$ is
-the convex conjugate of $\Lambda$, where $\Lambda$ packages the exponential
-moments of a single coin flip.
+- **Addition becomes maximum**: $a \oplus b = \max(a, b)$.
+- **Multiplication becomes ordinary addition**: $a \otimes b = a + b$.
+- The "zero" (the neutral element for $\oplus$) becomes $-\infty$.
+- The "one" (the neutral element for $\otimes$) becomes $0$.
 
-Now here is the idempotent twist. In the max-plus world, a probability law is just
-a **weight function** $w$ that assigns to each outcome $x$ a number $w(x) \le 0$,
-normalized so that the best outcome has weight exactly $0$:
-$$\max_x w(x) = 0, \qquad w(x) \le 0 \text{ for all } x.$$
-You should read $w(x)$ as the logarithm of a probability after the "temperature"
-has been sent to zero — the most likely outcome sits at $0$, and everything else
-is penalized. The **rate function** is then simply the negative weight,
-$$I(x) = -w(x) \ge 0,$$
-the deviation cost of outcome $x$. The most likely outcomes cost nothing; rare
-ones cost a lot.
+There is a beautiful reason this dictionary is natural, not arbitrary. Consider
+the quantity
+$$\frac{1}{n}\log\!\big(e^{n a} + e^{n b}\big).$$
+As the parameter $n$ grows without bound, the larger of $a$ and $b$ dominates the
+exponential, and this expression converges to $\max(a,b)$. The ordinary sum,
+filtered through a logarithm and a growing temperature, *becomes* the maximum.
+Physicists call $n$ an inverse temperature and call this the *zero-temperature
+limit*; mathematicians call it **Maslov dequantization**. It is the bridge that
+turns classical analysis into idempotent analysis, and we will return to it.
 
-And the "probability" of a whole event $A$ — a set of outcomes — is the weight of
-its *best* member:
-$$\mu(A) = \max_{x \in A} w(x).$$
-Its cost is the cheapest deviation that lands you in $A$:
-$$\text{cost}(A) = -\mu(A) = \min_{x \in A} I(x).$$
+A **max-plus measure** on a finite collection of outcomes $X$ is then nothing
+more than an assignment of a real number — a *weight* — to each outcome:
+$$w \colon X \to \mathbb{R}.$$
+Think of $w(x)$ as the log-likelihood of outcome $x$, measured on the
+zero-temperature scale. We call $w$ a **tropical probability measure** when it is
+normalized the way a log-likelihood should be:
+$$\max_{x \in X} w(x) = 0 \qquad\text{and}\qquad w(x) \le 0 \text{ for every } x.$$
+The most likely outcome carries weight $0$ (probability $1$ on the log scale),
+and everything else is penalized by how far below the peak it sits.
 
-This last formula is already a complete large-deviation principle — and it holds
-**exactly**, for finitely many outcomes, with no limits and no approximations. In
-the classical world the analogous statement only emerges asymptotically, as the
-number of trials marches to infinity. In the idempotent world there is no
-$\log$, no $\exp$, no smoothing: the cost of a rare event is *literally* the
-minimum cost over the ways it can happen. We call this the **sharp idempotent
-LDP**, and it is the rock on which everything else is built.
+Finally, to integrate a function $\varphi \colon X \to \mathbb{R}$ — an
+observable, a payoff, a test function — against such a measure, we do not sum and
+we do not average. We maximize:
+$$\int^{\!+}\!\varphi\,dP \;=\; \max_{x \in X}\big(\varphi(x) + w_P(x)\big).$$
+This **max-plus integral** is the idempotent expectation. It asks a single
+question: across all outcomes, what is the best achievable total of payoff plus
+log-likelihood? In optimization this is exactly a value function; in physics it
+is a free energy at zero temperature; in machine learning it is the logic behind
+a hard "winner-take-all" or max-pooling layer.
 
-## The contraction principle: rare events under a lens
+## Rare events and the shape of cost
 
-Here is the question at the heart of this work. Suppose you have a max-plus
-probability law on some space of detailed outcomes $X$, and you only get to
-observe a *summary* of each outcome through a function $T : X \to Y$. Perhaps $X$
-is the full microscopic configuration of a system and $Y$ is a single number you
-can measure; perhaps $X$ is a pair of dice and $Y$ is their sum; perhaps $X$ is a
-fine-grained path and $Y$ is its endpoint. The summary $T$ collapses many detailed
-outcomes into one observed value — its **fibers**, the sets $T^{-1}(y) = \{x : T(x)=y\}$,
-are the bundles of microstates that look identical from the outside.
+Classical large deviation theory studies the probability that a random average
+strays far from its typical value. Such probabilities decay exponentially, and
+the *speed* of that decay is governed by a so-called **rate function** $I(x)$,
+which measures the "cost" of the system being found at the atypical state $x$.
+Rare events are not impossible — they are merely expensive, and the rate function
+is the price tag.
 
-Two natural laws now live on the observed space $Y$. First, the **push-forward**:
-the most natural way to transport the law along $T$ is to give each observed value
-$y$ the weight of its best preimage,
-$$w_Y(y) = \max_{x \,:\, T(x) = y} w(x).$$
-Second, on the cost side, every event $B \subseteq Y$ of observed values pulls
-back to an event $T^{-1}(B) \subseteq X$ of detailed outcomes that produce it.
+In the idempotent world the rate function is disarmingly simple. For a tropical
+probability $P$ with weights $w_P$, define
+$$I_P(x) \;=\; -\,w_P(x).$$
+Because the peak weight is $0$ and all weights are non-positive, the rate
+function is non-negative everywhere and vanishes exactly at the most likely
+outcome. The penalty for being at $x$ is precisely how far $x$ falls below the
+summit of the distribution. This is the zero-temperature shadow of the classical
+rate function, and it is *exact* — no limits, no smoothing, no error terms.
 
-The **contraction principle** answers: how is the cost of a rare *observed* event
-related to the cost of the detailed events behind it? The classical version of
-this principle is one of the workhorses of large-deviation theory, and it is
-usually proved with a delicate two-sided estimate that survives a limiting
-procedure. The idempotent version proved here is razor-sharp and almost shockingly
-clean.
+Here the idempotent theory already shows its hand. The classical statement "the
+probability of an event $A$ decays like $e^{-n \inf_{x \in A} I(x)}$" is an
+*asymptotic* truth, valid only in the limit. Its idempotent counterpart is an
+*identity*. If we define the cost of an event $A$ as $-\max_{x\in A} w_P(x)$,
+then
+$$\text{cost}(A) \;=\; \min_{x \in A} I_P(x),$$
+on the nose, for every finite event. Idempotency has removed the logarithm and
+the exponential that, in classical probability, blur this relationship into an
+approximation. The maximum *is* the integral, and the cost of an event simply
+*is* the cheapest way to make it happen.
 
-**The main theorem, in plain language:** *the deviation cost of any observed event
-equals the deviation cost of its preimage.* Symbolically, for any non-empty event
-$B \subseteq Y$,
-$$\min_{y \in B} I_Y(y) \;=\; \min_{x \in T^{-1}(B)} I_X(x).$$
-There is no inequality to bridge, no $\varepsilon$ to chase to zero. The cheapest
-way to deviate into $B$, measured upstairs in the observed world, is exactly the
-cheapest way to deviate into the preimage of $B$, measured downstairs in the
-detailed world. Equivalently, at the level of the max-plus measure itself, the
-push-forward simply transports mass without loss: $\mu_Y(B) = \mu_X(T^{-1}(B))$.
+## Random walks that scale perfectly
 
-Along the way the theorem delivers a clean formula for the transported rate
-function. The cost of an observed value $y$ is the cheapest deviation among all
-the microstates that produce it:
-$$I_Y(y) = \min_{x \,:\, T(x) = y} I_X(x).$$
-This is the idempotent **contraction of the rate function**, and it is exactly
-what you would hope for: to make the summary $y$ happen, nature picks the least
-costly microscopic story consistent with it.
+What makes a large deviation theory a *theory*, rather than a collection of
+definitions, is what happens when you repeat an experiment many times. Consider a
+**max-plus random walk**: take $n$ independent copies of our outcome space and
+form paths $\omega = (\omega_1, \dots, \omega_n)$, assigning each path the
+additive weight $\sum_i w_P(\omega_i)$ and observing the total displacement
+$S_n(\omega) = \sum_i \mathrm{val}(\omega_i)$.
 
-## A worked example you can do by hand
+To track how the walk concentrates, we use the **idempotent cumulant generating
+function**, the max-plus analogue of the moment generating function from
+ordinary probability:
+$$\Lambda(\lambda) \;=\; \max_{x \in X}\big(\lambda\,\mathrm{val}(x) + w_P(x)\big).$$
+In classical probability the cumulant generating function of a sum of $n$
+independent variables grows like $n$ times the single-step function — but only
+after taking logarithms and exponentials, and only because $e^{a+b}=e^a e^b$. In
+the idempotent world the same scaling holds *exactly and elementarily*:
+$$\Lambda_{\text{walk}}(\lambda) \;=\; n\cdot\Lambda(\lambda).$$
+The reason is a single clean fact about maxima: the maximum of a sum of
+independent coordinates is the sum of the coordinate-wise maxima. There is no
+need to invoke independence in the probabilistic sense, no need for moment
+bounds, no need for anything beyond the observation that you can optimize each
+coordinate separately. The law of large numbers, in this world, is a sentence
+about rearranging a maximum.
 
-Let the detailed world be three outcomes $X = \{a, b, c\}$, with weights
-$$w(a) = 0, \qquad w(b) = -1, \qquad w(c) = -3,$$
-so the deviation costs are $I_X(a)=0$, $I_X(b)=1$, $I_X(c)=3$. The best outcome
-$a$ is free; $c$ is expensive. Now observe through a summary map $T$ that merges
-$a$ and $b$ into a single label $0$ and sends $c$ to label $1$:
-$$T(a) = 0, \quad T(b) = 0, \quad T(c) = 1.$$
-The fiber over $0$ is $\{a,b\}$ and the fiber over $1$ is $\{c\}$.
+From this exact scaling flows an **idempotent Chernoff bound**: for any
+$\lambda \ge 0$ and any outcome $x$ in the upper-tail event
+$\{\mathrm{val} \ge a\}$,
+$$w_P(x) \;\le\; \Lambda(\lambda) - \lambda\,a.$$
+Optimizing over $\lambda$ recovers the familiar exponential-tail estimate of
+classical theory — except here it is a finite, exact inequality rather than an
+asymptotic one.
 
-The push-forward weights are the best weight in each fiber:
-$$w_Y(0) = \max(0, -1) = 0, \qquad w_Y(1) = -3,$$
-giving observed costs $I_Y(0) = 0$ and $I_Y(1) = 3$ — exactly the fiber-wise
-minima of $I_X$, just as the contraction-of-rate formula promised.
+## The crown jewel: idempotent Donsker–Varadhan
 
-Now test the main theorem on the event $B = \{1\}$. Upstairs, its cost is
-$I_Y(1) = 3$. Downstairs, its preimage is $T^{-1}(B) = \{c\}$, whose cost is
-$I_X(c) = 3$. They agree. Try the full event $B = \{0,1\}$: upstairs the cost is
-$\min(0,3) = 0$; downstairs the preimage is everything, $\{a,b,c\}$, with cost
-$\min(0,1,3) = 0$. They agree again. The bookkeeping is exact every time.
+We now reach the result at the heart of this work. In classical probability the
+**Donsker–Varadhan / Gibbs variational principle** is a jewel of convex duality.
+It says that the free energy of a system can be recovered by a competition: you
+search over *all* alternative probability laws $Q$, rewarding each by the average
+energy it assigns and penalizing it by how far it has strayed from the reference
+law $P$. The penalty is the celebrated **Kullback–Leibler divergence** (relative
+entropy) $\mathrm{KL}(Q\,\|\,P)$, and the principle reads
+$$\log \mathbb{E}_P\big[e^{\varphi}\big] \;=\; \sup_{Q}\Big(\mathbb{E}_Q[\varphi] - \mathrm{KL}(Q\,\|\,P)\Big).$$
+This is the equation behind the Gibbs distribution in statistical mechanics, the
+ELBO in variational inference, and a great deal of modern machine learning. Its
+proof is genuinely hard: it rests on the convexity of the exponential and the
+strict convexity of entropy.
 
-## Why no convexity is needed — and where it suddenly is
+What is the idempotent twin? First we need the right notion of "distance between
+laws." In place of the Kullback–Leibler divergence, define the **idempotent
+relative entropy**
+$$D(Q\,\|\,P) \;=\; \max_{x \in X}\big(w_Q(x) - w_P(x)\big).$$
+It measures the worst-case gap by which $Q$ exceeds $P$ in log-likelihood. With
+the max-plus integral playing the role of free energy, the idempotent
+Donsker–Varadhan principle is the strikingly parallel statement
+$$\int^{\!+}\!\varphi\,dP \;=\; \max_{Q}\Big(\int^{\!+}\!\varphi\,dQ \;-\; D(Q\,\|\,P)\Big),$$
+where the maximum ranges over *all* tropical probability measures $Q$.
 
-The most striking feature of the contraction principle is what it *doesn't*
-require. The proof is purely about reordering minimizations: a minimum over a
-preimage is the same number whether you compute it all at once or fiber by fiber
-and then minimize across fibers. In the language of the formal development this is
-the single combinatorial identity
-$$\min_{x \in T^{-1}(B)} f(x) \;=\; \min_{y \in B}\;\min_{x \in T^{-1}(y)} f(x),$$
-a statement of pure order theory. No averages, no straight lines, no convex sets.
-The contraction half of the idempotent Cramér program is **convexity-free**.
+This functional $D$ behaves exactly as a divergence should, and we can say
+precisely why.
 
-This is in pointed contrast to the *other* half of the theory — the
-Legendre–Fenchel duality that recovers the rate function from the cumulant
-generating function. There, convexity is not a convenience; it is the whole game.
-To see this, the development includes a deliberately adversarial counterexample.
-Take three observed values $0, 1, 2$ with rate function $I = (0, 2, 0)$ — a
-**spike** in the middle, the opposite of convex. The cumulant generating function
-of this law turns out to satisfy $\lambda \le \Lambda(\lambda)$ for every slope,
-which means no straight line can ever reach up to the tip of the spike. The double
-Legendre–Fenchel transform — the best convex lower envelope of $I$ — flattens the
-spike completely down to the chord joining the endpoints, collapsing the middle
-value from $2$ all the way to $0$. The result is a genuine, exactly computed
-**duality gap of size $2$**: convex duality reports a cost of $0$ where the true
-cost is $2$.
+**It is zero for the reference law.** Comparing $P$ with itself gives
+$D(P\,\|\,P) = \max_x(w_P(x) - w_P(x)) = \max_x 0 = 0$. Nothing strays from
+itself.
 
-The moral is sharp. Idempotent Cramér theory cleanly splits into two halves of
-opposite character. One half — the contraction principle, the transport of rare
-events through a summary map — needs no convexity at all and holds with perfect
-exactness. The other half — recovering the rate function as a convex conjugate —
-lives and dies by convexity, and fails by a measurable amount the moment the rate
-function bends the wrong way. The same example that makes the duality gap concrete
-also shows that the convexity hypothesis in the duality theorem is not a technical
-blemish: it is load-bearing.
+**It is never negative — the idempotent Gibbs inequality.** For any two tropical
+probabilities, $D(Q\,\|\,P) \ge 0$. The argument is so short it is worth seeing
+in full. Both $Q$ and $P$ are normalized, so $Q$ attains weight $0$ at some peak
+outcome $x_0$, and $P$'s weight there is non-positive. Hence
+$w_Q(x_0) - w_P(x_0) \ge 0 - w_P(x_0) \ge 0$, and the overall maximum is at least
+this large. The entire content of the Gibbs inequality — a deep fact in classical
+probability requiring Jensen's inequality and the convexity of $x\log x$ — is
+here just the statement that a normalized peak sits at zero.
 
-## The supporting cast: a self-contained toolkit
+**It vanishes precisely when one law dominates the other.** $D(Q\,\|\,P) = 0$ if
+and only if $w_Q(x) \le w_P(x)$ for every outcome $x$. The divergence detects
+exactly when $Q$ never out-weighs $P$ anywhere.
 
-The contraction principle does not stand alone. It is the capstone of a small,
-fully worked idempotent probability theory, and the surrounding results are worth
-meeting because they make the whole picture self-supporting.
+With these in hand, the variational principle itself splits into two halves.
+The first is **weak duality**: for *every* candidate law $Q$ and every observable
+$\varphi$,
+$$\int^{\!+}\!\varphi\,dQ \;-\; D(Q\,\|\,P) \;\le\; \int^{\!+}\!\varphi\,dP.$$
+This is, once again, a one-line consequence of the most basic property of the
+maximum — its *subadditivity*, $\max(a+b) \le \max a + \max b$. No candidate law
+can beat the reference free energy. The second half is **attainment**: the bound
+is achieved, and it is achieved by the reference law $P$ itself, because plugging
+$Q = P$ makes the penalty $D(P\,\|\,P)$ vanish and returns exactly
+$\int^{\!+}\varphi\,dP$. Putting the two halves together, the reference free
+energy is the *greatest* value of "average payoff minus divergence" over all
+laws — the precise sense in which the idempotent Donsker–Varadhan principle holds.
 
-The **max-plus integral** of an observable $f$ against a law $w$ is
-$\max_x\,(f(x) + w(x))$ — the best total score across outcomes. It is monotone, it
-shifts by a constant when you shift $f$, and it always attains its maximum at some
-concrete outcome. These mundane-sounding facts are exactly what make the theory
-behave like genuine integration rather than a notational trick.
+There is a genuinely surprising punchline hidden in that last step. In classical
+statistical mechanics, the optimal law in the Donsker–Varadhan competition is
+*not* the reference law — it is the **tilted Gibbs measure**, reweighted by
+$e^{\varphi}$. You must deform $P$ to extract its free energy. In the idempotent
+world, no tilting is necessary: the supremum is attained at $P$ itself. The
+observable $\varphi$ has, in effect, already been absorbed into the geometry of
+the maximum, and the reference law is its own optimal tilt.
 
-The **cumulant generating function** $\Lambda(\lambda) = \max_x(\lambda\,\mathrm{val}(x) + w(x))$
-is the idempotent shadow of the classical exponential-moment function. It is
-always **convex** (it is a maximum of straight lines in $\lambda$). It is
-**additive over independent products** — the max-plus echo of the classical rule
-that exponential moments of independent sums multiply. And for an $n$-step
-**max-plus random walk**, whose path weight is the sum of its per-step weights,
-the cumulant generating function is exactly $n$ times that of a single step. That
-last identity is the engine that drives the scaling behind large deviations,
-reproduced here without a single limit.
+## Why the idempotent version is *easier*
 
-From the same function comes the idempotent **Chernoff bound**: for any
-non-negative slope $\lambda$ and any outcome whose observable is at least $a$, the
-weight is bounded by $\Lambda(\lambda) - \lambda a$. Optimizing over $\lambda$
-gives the exponential-tail estimate familiar from classical probability — except
-here the inequality is an exact, finite statement about weights.
+Step back and notice what was — and was not — needed. The classical
+Donsker–Varadhan principle is a theorem of convex analysis: it lives or dies by
+the convexity of the exponential and the strict convexity of entropy. The
+idempotent version used none of that. Every step rested on two elementary
+properties of the maximum:
 
-Stitched together, these pieces form a complete idempotent retelling of Cramér's
-program: a sharp finite large-deviation principle, a convex cumulant generating
-function with the right additivity, an exact contraction principle for transporting
-rare events through summaries, and a precise diagnosis of when — and by exactly how
-much — convex duality can fail.
+- **Subadditivity**: $\max(a+b) \le \max a + \max b$ (this gave weak duality);
+- **Normalization**: the peak weight of a tropical probability is exactly zero
+  (this gave the Gibbs inequality and the attainment at $P$).
 
-## Why it matters beyond the symbols
+The whole edifice is *order-theoretic*, not analytic. This is more than an
+aesthetic observation; it draws a sharp line through the theory of large
+deviations. Classical large deviation theory has two faces. One face — the
+Laplace principle, the contraction principle, the Donsker–Varadhan duality — is
+about how maxima and sums interact under scaling. The other face — the
+Legendre–Fenchel duality that identifies the rate function as the convex
+conjugate of the cumulant generating function, the content of **Cramér's
+theorem** — is genuinely about *convexity*.
 
-Max-plus thinking is not an exotic curiosity; it is how engineers and scientists
-already reason about worst cases and dominant terms. In a manufacturing pipeline,
-the time to finish is the *maximum* over parallel stages, not their sum, and the
-cost of each stage adds along a path — that is max-plus arithmetic exactly. In
-networks, shortest paths obey the cousin min-plus algebra. In statistical physics,
-the zero-temperature limit replaces sums over states with a maximum over the
-lowest-energy ones — the very "dequantization" that turns ordinary probability
-into the idempotent kind. And in machine learning, the same collapse turns a
-softmax into a hard max and turns log-likelihoods into tropical scores.
+The idempotent collapse treats these two faces utterly differently. The
+order-theoretic face survives *exactly*: in the max-plus world it becomes not an
+approximation but an identity, and it sheds every convexity hypothesis. The
+convex face does *not* collapse for free; the gap between the rate function and
+its convex hull (its Legendre–Fenchel biconjugate) is real and persists,
+closing only at the special "tilt-exposed" outcomes that a supporting line can
+reach. Idempotent probability is thus a kind of mathematical centrifuge: it spins
+the theory of rare events and separates the parts that were really about *order*
+from the parts that were really about *curvature*.
 
-In every one of these settings, the contraction principle answers a recurring
-practical question: *if I only observe a summary of my system, how does the
-worst-case cost of a summary-level event relate to the worst-case cost downstairs?*
-The answer proved here is the cleanest one imaginable — they are equal — and it
-comes with an explicit recipe for the summary-level cost as a fiber-wise minimum.
-That a rare-event theory usually built from careful asymptotic estimates becomes,
-in the idempotent world, a matter of exact bookkeeping is a small but genuine piece
-of mathematical good fortune. And knowing precisely where the good fortune
-runs out — at the spike where convex duality opens a gap of exactly $2$ — is just
-as valuable as knowing where it holds.
+## Closing the loop: the Laplace principle
+
+There is one more strand that ties the whole construction to ordinary
+probability rather than leaving it as a self-contained game. Recall the
+zero-temperature limit we met at the start. For any profile
+$g \colon X \to \mathbb{R}$ on a finite outcome space, the scaled
+log-partition function obeys the **finite Laplace principle**
+$$\frac{1}{n}\log\!\sum_{x \in X} e^{\,n\,g(x)} \;\xrightarrow[n\to\infty]{}\; \max_{x \in X} g(x),$$
+and — what is more — the approach is controlled by an explicit, *uniform* error
+of size $\log(\#X)/n$ that does not depend on the profile $g$ at all. Choosing
+$g(x) = \lambda\,\mathrm{val}(x) + w_P(x)$ turns the classical log-moment
+generating function into the idempotent cumulant generating function; choosing
+$g(x) = \varphi(x) + w_P(x)$ turns the classical free energy into the max-plus
+integral. The idempotent objects are not analogies; they are genuine limits of
+their classical counterparts, reached at a rate we can write down.
+
+This same Laplace bridge connects the theory to modern machine learning, where
+the very same log-sum-exp expression is the *softmax* function. As temperature
+drops, softmax sharpens into a hard maximum — argmax — and the idempotent
+integral describes exactly the winner-take-all regime that classification layers,
+attention mechanisms, and tropical neural networks operate in. The casino that
+forgot how to add turns out to be the casino that machine learning quietly
+visits every time it picks a single best answer.
+
+## A new lens on an old subject
+
+What have we gained by visiting this strange casino? A reformulation of large
+deviation theory in which the law of large numbers is a rearrangement of a
+maximum, the Gibbs inequality is the observation that a normalized peak sits at
+zero, and the Donsker–Varadhan variational principle — that crown jewel of convex
+duality — becomes a two-line consequence of the subadditivity of the maximum,
+with the optimal law revealed to be the reference law itself. The price of
+admission was a willingness to let addition become maximum; the reward was a
+clean separation of the order-theoretic and the convex souls of the subject.
+
+Rare events, it turns out, have a simpler arithmetic than we thought — if only we
+are willing to remember the best thing that could happen, and nothing else.

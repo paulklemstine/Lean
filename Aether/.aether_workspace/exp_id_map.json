@@ -642,5 +642,6 @@
   "8170e958": "cryptographic_hash_functions_collision_resistance_.json",
   "c027516f": "proof_complexity_resolution_and_cutting_planes.json",
   "7e57e1f5": "arithmetic_mirror_symmetry_for_calabi_yau.json",
-  "c25c1b9e": "extremal_signed_determinant_of_the_resistance_matr.json"
+  "c25c1b9e": "extremal_signed_determinant_of_the_resistance_matr.json",
+  "470fcb83": "idempotent_probability_large_deviations.json"
 }
