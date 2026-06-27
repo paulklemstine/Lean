@@ -600,5 +600,6 @@
   "43f6ae62": "code_based_cryptography_mceliece_from_goppa_codes.json",
   "669193db": "exponentialdiameter_contraction_under_delaunay_min.json",
   "57a09ecd": "eml_fixed_point_theorem_exp_log_iteration_converge.json",
-  "08b15f3b": "effective_computability_of_erds_550_threshold.json"
+  "08b15f3b": "effective_computability_of_erds_550_threshold.json",
+  "d6c98458": "collatz_conjecture.json"
 }

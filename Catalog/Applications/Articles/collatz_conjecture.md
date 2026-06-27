@@ -1,77 +1,100 @@
-# The Simplest Problem Nobody Can Solve — And the Hidden Code That Might Crack It
+# The Hailstone Numbers: What We Can Prove About the World's Simplest Unsolved Problem
 
-Pick any positive whole number. If it's even, cut it in half. If it's odd, triple it and add one. Now repeat. Take 7, for example: triple-plus-one gives 22; halve to get 11; triple-plus-one to 34; halve to 17; triple-plus-one to 52; halve to 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1. Sixteen steps, a roller-coaster of rises and falls, and then it lands on 1.
+Pick a number. Any whole number bigger than zero. Now play a game with two rules:
 
-Try 27. It takes 111 steps, soaring to a peak of 9232 before eventually tumbling back down to 1. Try any number you like. Every number ever tested — and computers have checked all the way past 10^20 — does the same thing: it reaches 1.
+- If your number is **even**, cut it in half.
+- If your number is **odd**, triple it and add one.
 
-Does *every* positive integer reach 1? Nobody knows. This question, called the Collatz conjecture, has humbled some of the greatest minds in mathematics for over 80 years. Paul Erdős, one of the most prolific mathematicians in history, said of it: "Mathematics may not be ready for such problems." Jeffrey Lagarias called it "an extraordinarily difficult problem, completely out of reach of present-day mathematics."
+Then repeat, forever, feeding each answer back into the machine.
 
-But what if the problem isn't unsolvable — just badly framed? What if, instead of watching individual numbers bounce around chaotically, we could decode the *grammar* of the chaos itself?
+Try it with $6$. Six is even, so we halve it to $3$. Three is odd, so we triple-and-add-one to get $10$. Ten halves to $5$. Five becomes $16$. Sixteen, being a clean power of two, then tumbles straight down: $16 \to 8 \to 4 \to 2 \to 1$. Once we hit $1$, we triple-and-add-one to get $4$, which falls back to $2$, then $1$ again — a little loop that never escapes.
 
-## A Secret Language Written in Powers of Two
+Try a bigger one, say $27$. This time the number does not go quietly. It climbs to $82$, sinks, climbs again, and goes on a wild ride that peaks at $9232$ before finally — after **111 steps** — collapsing down to $1$. The numbers rise and fall like hailstones tossed up and down inside a storm cloud before they finally fall to earth. That image gave them their nickname: the **hailstone numbers**.
 
-The breakthrough begins with a change of perspective. Instead of tracking every number in a Collatz orbit, skip the boring parts. Every time you hit an odd number, apply the triple-plus-one rule and immediately divide out all the factors of two. This "accelerated map" jumps directly from one odd number to the next, compressing an orbit of 16 steps into just 5 essential leaps.
+The **Collatz Conjecture** is the breathtakingly simple claim that *this always happens*. No matter which positive integer you start with, the hailstone eventually falls to $1$. Mathematicians have checked this by computer for every starting value up to roughly $2^{68}$ — that is over **295 quintillion** numbers — and not one has ever escaped. And yet, after more than eighty years, **nobody has been able to prove it.** The legendary mathematician Paul Erdős said of it: *"Mathematics may not be ready for such problems."* He offered a prize for a solution, but warned it might take generations.
 
-Take our example of 7 again. Under the accelerated map: 7 → 11 → 17 → 13 → 5 → 1. Five steps, each a crisp odd-to-odd transition. And here's the key: at each step, the number of factors of two you divide out — the *2-adic valuation* — tells you something fundamental about the transition. For 7: you divide out 1 factor (giving 11), then 1 (giving 17), then 2 (giving 13), then 3 (giving 5), then 4 (giving 1).
+## The map that runs the whole show
 
-The sequence 1, 1, 2, 3, 4 is the *valuation code* of the orbit starting at 7. It's a finite string of positive integers, like a barcode stamped on the number 7 that records exactly how it falls to 1.
+Strip away the storytelling and the entire universe of this problem is governed by a single function, which we'll call $T$. Given a positive whole number $n$,
 
-This is not merely a notational trick. The valuation code transforms Collatz from a problem about individual numbers into a problem about *patterns* — about which codes exist, which are forbidden, and what rules govern their structure.
+$$
+T(n) = \begin{cases} n/2 & \text{if } n \text{ is even}, \\ 3n + 1 & \text{if } n \text{ is odd}. \end{cases}
+$$
 
-## Every Code Occurs
+The Collatz Conjecture is the statement that if you apply $T$ over and over — written $T(T(T(\cdots T(n))))$, or $T^{[k]}(n)$ for "$T$ applied $k$ times" — you will, for *every* starting $n$, eventually land on $1$.
 
-Here is the first surprise: *every* possible single-step code occurs. Want a code starting with 1? Take n = 3: triple-plus-one gives 10, which has one factor of two. Want 2? Take n = 1: triple-plus-one gives 4 = 2². Want 7? Take n = 213: triple-plus-one gives 640 = 2⁷ × 5.
+What makes this so maddening is the tension baked into the two rules. The halving rule is a force of *destruction*: it shrinks numbers fast. The tripling rule is a force of *creation*: it makes them explode. A single step can roughly triple your number; a single step can roughly halve it. Whether a starting value falls or flies depends on the precise, unpredictable braid of even and odd steps it happens to encounter. There is no obvious reason the destroyers should always win in the end — and no obvious reason they shouldn't.
 
-This isn't obvious. It says that the Collatz map is, in a precise sense, *unrestricted* in its first step — it can produce any amount of division by two. The mathematical proof constructs the required starting number explicitly using modular arithmetic, exploiting the fact that 3 is invertible modulo any power of 2.
+## What would it take to break the conjecture?
 
-But single steps are just the beginning. The real question is about multi-step codes: can you find a number whose accelerated orbit goes 1, 2, 3, 4 — dividing by 2, then 4, then 8, then 16 — in its first four steps? The answer appears to be yes (n = 11 works), and there are strong mathematical reasons to believe that *every* finite code is realizable. If this full realizability theorem can be proved, it would mean that Collatz dynamics is as rich as a *full symbolic shift* — the most complex possible type of symbolic dynamical system.
+If the Collatz Conjecture were *false*, there would have to be a witness — some number that never reaches $1$. There are exactly two ways a hailstone could refuse to fall:
 
-## The Finite Certificate Theorem
+1. **It could fly off to infinity**, growing without bound forever.
+2. **It could get trapped in a loop** — a cycle of numbers other than the familiar $1 \to 4 \to 2 \to 1$ — circling forever without ever touching $1$.
 
-The second breakthrough is a theorem that converts the Collatz conjecture from an infinite problem into a potentially finite one.
+Nobody has found either. But "nobody has found one" is not a proof. The honest mathematical question is: *what can we prove for certain, right now, with no assumptions?* It turns out we can completely shut down certain escape routes. We can prove, unconditionally, that hailstones cannot misbehave in particular ways — and in doing so, we corner the conjecture, narrowing the space where any counterexample could possibly hide.
 
-Here's the idea. Every number, when you divide it by some power of 2 (say 2⁶ = 64), falls into one of 64 possible "residue classes" — it's either 0 mod 64, 1 mod 64, 2 mod 64, and so on. The key insight is that within each class, the Collatz map behaves uniformly: all numbers in the same class follow the same pattern for a fixed number of steps.
+That is exactly what the results described here accomplish. Each one is a small, airtight, fully verified theorem about the map $T$. None of them solves Collatz. But together they form a precise dossier on what a rogue number is *not allowed* to do.
 
-Now suppose you can show, for each of these 64 classes, that after some fixed number of Collatz steps, every number in that class gets *smaller*. Then by strong induction — the mathematical principle that if something works for all smaller cases, it works for the current case — *every* number must eventually reach 1.
+## Closing the first door: no number can stand still
 
-This is not the Collatz conjecture. It is a *reduction* of the Collatz conjecture: a formally verified mathematical theorem that says, "If you can produce such a finite certificate, then Collatz is proved." The theorem itself is proved with complete mathematical rigor — no gaps, no hand-waving, no "it is clear that." It is a bridge between infinite mathematical truth and finite computational verification.
+The simplest possible loop is a loop of length one — a number that maps to itself. If some $n$ satisfied $T(n) = n$, it would be a **fixed point**: a hailstone frozen in midair, neither rising nor falling. Could such a number exist?
 
-And here's the tantalizing part: computational experiments strongly suggest such certificates exist. For every modulus tested up to 2⁶ = 64, the certificate checks out — every residue class has a verifiable descent. The open question is whether the descent can be made *uniform* across all representatives of each class, or whether larger and larger moduli are needed.
+The first theorem says **no, never** (for positive $n$). The argument is so clean it fits in a sentence. Look at any positive number through the lens of its parity:
 
-## Why Cycles Can't Hide
+- If $n$ is **even**, then $T(n) = n/2$, which is *strictly smaller* than $n$. A number cannot equal something smaller than itself.
+- If $n$ is **odd**, then $T(n) = 3n + 1$, which is *strictly larger* than $n$. A number cannot equal something larger than itself.
 
-The third result attacks a different angle: what if the Collatz conjecture is false not because some number shoots off to infinity, but because some numbers get trapped in a loop?
+Either way, $T(n) \ne n$. There are no frozen hailstones. In the formal development this is the theorem **`T_no_fixed_point`**, and it rests on two even simpler facts that are proved first and used everywhere: **`T_lt_of_even`**, which says that an even step strictly *decreases* a positive number, and **`T_gt_of_odd`**, which says that an odd step strictly *increases* it. These two facts — "even shrinks, odd grows" — are the heartbeat of every result that follows.
 
-For the standard Collatz map, the only known cycle is the trivial one: 1 → 4 → 2 → 1. Could there be a hidden cycle among larger numbers? The new results place this question under a mathematical microscope.
+## The trapdoor of pure halving
 
-If a cycle exists among the odd numbers under the accelerated map, the numbers in the cycle must satisfy a precise algebraic identity: a product of terms of the form (3 + 1/x) must equal an exact power of 2. Since each term is slightly larger than 3, and powers of 2 grow much faster than powers of 3, this creates an extremely tight constraint. For a cycle of length k, the minimum element must be smaller than a computable threshold — and for longer cycles, that threshold drops rapidly.
+Here is a tempting daydream. The halving rule is the engine of descent. So what if a number could just... keep halving? If you only ever took even steps, you would plummet: $n \to n/2 \to n/4 \to n/8$, dividing by two at every turn. Could a counterexample to Collatz hide in a long, luxurious slide of nothing but halvings?
 
-For a cycle of length 5, every element would have to be smaller than about 32. But exhaustive computation has verified Collatz for all numbers up to trillions. The conclusion: no short cycle exists, and long cycles are squeezed into an impossibly narrow corridor by the product identity.
+The next theorem, **`all_even_descent`**, pins down exactly what such a slide does. It says: *if the first $k$ numbers in an orbit are all even* — that is, $n, T(n), T^{[2]}(n), \ldots, T^{[k-1]}(n)$ are every one of them even — *then after those $k$ steps you have divided by two exactly $k$ times:*
 
-This isn't a proof that no cycle exists. But it's a formal, machine-verified framework that converts cycle exclusion into a finite computation for each cycle length.
+$$
+T^{[k]}(n) = \frac{n}{2^k}.
+$$
 
-## The Hidden Pattern: Geometric Precision
+It is the formal version of the obvious-sounding claim "$k$ halvings divide by $2^k$," but stated and proved with full rigor by induction: each new even step turns "divided by $2^k$" into "divided by $2^{k+1}$," and the powers of two stack up cleanly. The reason this matters is that it converts a *dynamical* statement (a run of even steps) into a single, exact *arithmetic* formula. And that formula is a weapon, as we're about to see.
 
-Perhaps the most striking discovery is a counting result about the distribution of valuations. Among the odd numbers less than 2^M, exactly half have v₂(3n+1) = 1, exactly one quarter have v₂(3n+1) = 2, exactly one eighth have v₂(3n+1) = 3, and so on — a perfect geometric distribution, exact to the last digit.
+## Closing the big door: every loop must contain an odd number
 
-This is not an approximation or a statistical trend. It is an exact combinatorial fact: the count of odd n in [1, 2^M) with v₂(3n+1) = j is precisely 2^{M-1-j}. The distribution is perfectly geometric, as if the Collatz map were a fair coin flip deciding how many factors of 2 to produce at each step.
+Now we come to the centerpiece. Suppose, for contradiction, that a rogue cycle exists: a positive number $n$ that returns to itself after exactly $p$ steps, with $p \ge 1$. In symbols, $T^{[p]}(n) = n$, and $p$ is the length of the loop. This is precisely the kind of "trapped hailstone" that could doom the conjecture.
 
-This geometric precision has a profound implication. The average valuation is exactly 2, meaning that on average, each accelerated step divides by 2² = 4 while multiplying by 3, for a net contraction factor of 3/4. This is the quantitative heart of why mathematicians believe the Collatz conjecture should be true: orbits shrink on average, even though individual steps can temporarily inflate them.
+The theorem **`periodic_has_odd`** proves something every such loop must obey: **it has to contain at least one odd number.** You cannot build a Collatz cycle out of even numbers alone.
 
-## A New Kind of Mathematical Architecture
+Why? Here the two earlier results snap together like puzzle pieces. Suppose, toward a contradiction, that *every* number in the loop were even — all $p$ of the values $n, T(n), \ldots, T^{[p-1]}(n)$. Then `all_even_descent` applies with $k = p$, and it tells us exactly where the orbit lands after a full lap:
 
-What makes these results different from previous Collatz research isn't just the theorems themselves, but how they fit together.
+$$
+T^{[p]}(n) = \frac{n}{2^p}.
+$$
 
-The residue descent theorem provides a reduction framework: the infinite conjecture reduces to a finite certificate. The valuation coding provides a symbolic language: orbits become strings of integers obeying structural laws. The cycle product identity provides an obstruction theory: hypothetical cycles must satisfy rigid algebraic constraints. And the geometric distribution provides a probabilistic foundation: the "randomness" of Collatz orbits is not random at all, but exactly structured.
+But this is a loop, so by assumption $T^{[p]}(n) = n$. Putting these together gives
 
-Together, these form an *architecture* for attacking Collatz — not a single proof attempt, but a systematic toolkit where each component constrains the problem from a different direction. The residue descent says "check finitely many cases." The coding theory says "organize those cases by their symbolic structure." The cycle theory says "most cases are ruled out automatically." And the distribution theory says "the average behavior is precisely controlled."
+$$
+n = \frac{n}{2^p}.
+$$
 
-## What Comes Next
+And that is absurd. Since the loop length $p$ is at least $1$, the divisor $2^p$ is at least $2$, so $n / 2^p$ is *strictly smaller* than $n$ (for any positive $n$). A positive number simply cannot equal a strictly smaller number. The all-even assumption detonates. Therefore some step in the loop must have been odd. $\blacksquare$
 
-The tantalizing gap that remains is the multi-step realizability theorem — showing that not just individual valuations, but entire finite valuation sequences, can be prescribed. The infrastructure is in place: backward inverse steps work whenever a simple mod-3 compatibility condition is satisfied, and the single-step case is completely proved. What's needed is to show that the mod-3 adjustments can be composed across multiple steps without breaking earlier constraints.
+It is a beautiful little argument, and it carries real weight. It tells us that any hypothetical counterexample-cycle is forced to repeatedly visit the *expanding* odd rule. A loop cannot quietly coast downhill forever on halvings; it is obligated, again and again, to invoke the very rule that makes numbers explode. The destroyer and the creator must take turns. This is one of the structural constraints that has, for decades, made it so hard for anyone to build a rogue cycle on paper — and these theorems prove, with certainty, that the easiest constructions are impossible.
 
-If that theorem falls, the Collatz map will be formally identified as a full symbolic shift — every finite pattern occurs. From there, ergodic theory and entropy calculations can be brought to bear, connecting Collatz to the deep machinery of dynamical systems theory.
+## Why chase a problem you can't solve?
 
-Will this solve the Collatz conjecture? Perhaps not directly. But it changes the nature of the problem from "chaotic arithmetic" to "structured dynamics with exact combinatorial statistics." And in mathematics, framing is everything. The problems that resist solution for decades are often not hard because the answer is complex, but because the right language hasn't been found.
+You might reasonably ask: if Collatz is so far out of reach, why prove these careful little theorems at all? Three reasons.
 
-For the Collatz conjecture, that language may finally be taking shape — written not in single numbers, but in the hidden code of their 2-adic anatomy.
+**First, certainty.** "We checked $2^{68}$ numbers and none escaped" is powerful evidence, but it is not a guarantee — the very next number could, in principle, misbehave. A theorem like `periodic_has_odd` is different in kind. It is true for *all* numbers at once, including the infinitely many no computer will ever reach. It is a permanent fact about the structure of the problem, not a survey of examples.
+
+**Second, the conjecture connects to deep mathematics.** The behavior of $T$ has been studied through the lens of **stopping times** (how many steps until a number first drops below its starting value), through **ergodic theory** (which treats the long-run statistics of orbits the way physics treats a gas of particles), and through **$p$-adic dynamics**, where the doubling and halving become natural operations in an exotic number system built around the prime $2$. In that $2$-adic world, the count of how many times you can halve a number is exactly its "$2$-adic valuation," and the whole tripling-and-halving dance becomes a clean shift operation. Tantalizingly, related "$3n+1$"-style problems *have* been proven undecidable, hinting that Collatz may sit on the knife's edge between order and chaos.
+
+**Third, partial progress is real progress.** Mathematicians have proven that *almost all* numbers (in a precise density sense) do eventually drop below their starting value — a celebrated result of Terence Tao shows Collatz orbits attain "almost bounded values almost everywhere." Each unconditional obstruction, like the ones here, fences off another region where a counterexample could live. The dream is to fence off the entire plane, leaving the rogue number nowhere to stand.
+
+## The shape of the unknown
+
+What is so humbling about Collatz is the gulf between how easy it is to *state* and how impossible it is to *crack*. You can explain the rules to a child in thirty seconds. You can verify any single number by hand. And yet the global question — *does every hailstone fall?* — has resisted the full force of modern mathematics.
+
+The theorems gathered here don't close that gulf. What they do is map its edges with absolute precision. There are no frozen hailstones: no number maps to itself. A pure free-fall of halvings divides cleanly by a power of two and cannot circle back. And every conceivable loop, no matter how long or how cleverly arranged, is forced to climb at least once through the explosive odd rule. These are not guesses or computer surveys. They are certainties, and they hold for every one of the infinitely many numbers there are.
+
+Somewhere out past $2^{68}$, in the unlit reaches of the number line, the hailstones keep falling. We still cannot prove that they all do. But we know, now and forever, several precise ways in which they cannot refuse. And in mathematics, knowing exactly what *cannot* happen is often the first step toward proving what must.
