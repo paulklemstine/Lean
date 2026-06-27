@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "62850b85",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Mathematical Properties of Attention\n\nBold, falsifiable conjectures derived from this cycle's findings (softmax expressivity,\nkernel-smoother confinement, row-stochastic spectrum",
-      "quality_score": 0.4446527272727273,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-23T07:38:34",
-      "title": "Attention Mechanisms: Mathematical Properties"
-    },
-    {
       "cycle_id": "07255b71",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\nThe verified file `Catalog/Tropical/CoveringSystems.lean` provides a reusable\n`CoveringCert` API and a concrete certificate for 78557. Below are several\noriginal directions that b",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-27T18:50:26",
       "title": "Proof Automation: Custom Lean 4 Tactics"
+    },
+    {
+      "cycle_id": "935abbfb",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Character Class Contradiction\n\nDerived from the two cycles in `CharacterClassContradiction.lean` and\n`CuntzKriegerFullShiftFamily.lean`, which proved: for the full shift on `n` s",
+      "quality_score": 0.484642,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-27T19:02:01",
+      "title": "Character Class Contradiction"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8740959999999999
     }
   ],
-  "last_updated": "2026-06-27T18:50:26",
+  "last_updated": "2026-06-27T19:02:01",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "53256563",
-        "quality": 0.65187,
-        "theorems": 11,
-        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-      },
-      {
         "cycle_id": "2cb7b634",
         "quality": 0.7014400000000001,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.6490400000000001,
         "theorems": 23,
         "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
+      },
+      {
+        "cycle_id": "935abbfb",
+        "quality": 0.484642,
+        "theorems": 7,
+        "title": "Character Class Contradiction"
       }
     ],
     "NumberTheory": [

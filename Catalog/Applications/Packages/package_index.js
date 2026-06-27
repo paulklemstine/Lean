@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "935abbfb",
     "filename": "character_class_contradiction.json",
     "pkg_num": 146,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.484642,
     "title": "The Character Class Contradiction: A Rank-One Zeta Computation"
   },
   {
@@ -4262,8 +4262,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "character_class_contradiction",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.484642,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Character Class Contradiction: A Rank-One Zeta Computation"
     }
