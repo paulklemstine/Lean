@@ -1,55 +1,49 @@
-# Computational Evidence — Modified Wiener Attack with Partial p+q Knowledge
+# Computational Evidence — Modified Wiener Attack and Factorization Recovery
 
-## Setup
+This evidence supports `WienerFactorization.lean`, which closes the modified Wiener
+pipeline by turning recovered private-exponent data into an explicit factorization of `n`.
 
-RSA modulus `n = p·q`, primes `p > q`, Euler totient `φ(n) = (p-1)(q-1)`.
-Public/private exponents satisfy the key equation `e·d = k·φ(n) + 1` for some
-integer `k ≥ 1`.
+## 1. Small-case calculation (the canonical worked instance)
 
-Wiener's attack observes that `k/d` is an extremely good rational approximation of
-`e/n`, so good that it must be a continued-fraction convergent of `e/n` when `d` is
-small. The *modified* attack replaces `n` by a corrected modulus
-`ñ = n + 1 - s`, where `s` is an estimate of `p+q` obtained from the known most
-significant bits. The better `s` approximates `p+q`, the better `k/d` approximates
-`e/ñ`, which tolerates a larger private exponent `d`.
+Take `p = 17`, `q = 11`, so `n = p·q = 187`, `φ(n) = (p−1)(q−1) = 160`.
+Pick `e = 7`, `d = 23`, `k = 1` (note `e·d = 161 = 1·160 + 1`, the key equation).
 
-## Key algebraic identities (verified by `#eval`)
+- Perfect estimate `s = p+q = 28`, corrected modulus `ñ = n + 1 − s = 160 = φ(n)`.
+- Approximation error: `e/ñ − k/d = 7/160 − 1/23 = 1/3680`.
+- Legendre threshold: `1/(2·d²) = 1/1058`. Since `1/3680 < 1/1058`, `k/d` is a convergent. ✓
+- Factorization step: `S = n − φ(n) + 1 = 187 − 160 + 1 = 28 = p+q`.
+  Discriminant `S² − 4n = 784 − 748 = 36 = 6²` (a perfect square = `(p−q)²`).
+  Quadratic formula: `p = (28 + 6)/2 = 17`, `q = (28 − 6)/2 = 11`. ✓ recovered.
 
-Take `p = 17, q = 11`, so `n = 187`, `φ = 160`, `p+q = 28`.
-Pick `d = 23`, `e = 7`, `k = 1` (since `7·23 = 161 = 1·160 + 1`).
+These match `worked_example_error`, `worked_example_below_threshold`,
+`worked_example_separation` (catalog) and `worked_example_factor` (this file).
 
-1. **Classical key identity** `e·d - k·n = 1 - k·(p+q-1)`:
-   - LHS `= 7·23 - 1·187 = -26`
-   - RHS `= 1 - 1·(28-1) = -26`  ✓
+## 2. Perfect-square discriminant — the structural invariant
 
-2. **Modified key identity** `e·d - k·ñ = 1 - k·(p+q-s)` with `ñ = n+1-s`.
-   With a deliberately wrong estimate `s = 30`:
-   - LHS `= 7·23 - 1·(187+1-30) = 3`
-   - RHS `= 1 - 1·(28-30) = 3`  ✓
+For *every* semiprime, `(p+q)² − 4·p·q = (p−q)²`. Spot checks:
 
-3. **Exact approximation error** `e/ñ - k/d = (1 - k·(p+q-s))/(ñ·d)`.
-   With the exact estimate `s = 28` (so `ñ = φ = 160`):
-   - LHS `= 7/160 - 1/23 = 1/3680`
-   - RHS `= (1 - 0)/(160·23) = 1/3680`  ✓
+| p  | q  | n=pq | p+q | (p+q)²−4n | √ = p−q |
+|----|----|------|-----|-----------|---------|
+| 17 | 11 | 187  | 28  | 36        | 6       |
+| 13 | 7  | 91   | 20  | 36        | 6       |
+| 23 | 5  | 115  | 28  | 324       | 18      |
+| 31 | 29 | 899  | 60  | 4         | 2       |
 
-   Note `1/3680 < 1/(2·23²) = 1/1058`, so the Legendre convergent criterion holds and
-   `k/d = 1/23` is recovered as a convergent of `e/ñ`.
+The discriminant is always a perfect square, so the real square root is *exact*
+(`= p−q`), and no rounding is needed in the final factorization — this is exactly the
+content of `discriminant_eq` and `factor_from_sum_prod`.
 
-## Counterexample hunt
+## 3. Counterexample hunt
 
-The *uniqueness* claim "`b ≤ d` and both `|x-k/d|, |x-a/b| < 1/(2d²)` ⟹ `k/d = a/b`"
-was stress-tested on random integer fractions; no counterexample exists because the
-Farey separation `|a/b - c/e| ≥ 1/(be)` for distinct fractions is an identity-level
-bound. This is the engine guaranteeing that the recovered denominator is the true `d`.
+- `factor_from_sum_prod` without `q < p`: at `p = q` the formula still holds, but for
+  `q > p` the `+` root returns `q`, not `p` — the sign of `√((p−q)²) = |p−q|` flips. The
+  hypothesis `q < p` is therefore load-bearing (it selects the larger prime). No
+  counterexample to the *stated* theorem was found.
+- Smallness condition: dropping `2·d·(k·Δ+1) < ñ` breaks the convergent criterion
+  (verified by the catalog file's design); no counterexample to the guarded statement.
 
-## Asymptotic reading
+## 4. Conclusion
 
-If a `δ`-fraction of the most significant bits of `p+q` is known, the residual error
-satisfies `|p+q - s| ≤ Δ` with `Δ ≈ (p+q)^{1-δ}`. The convergent criterion
-`2·d·(k·Δ + 1) < ñ` then admits private exponents up to roughly `d < n^{(1+δ)/2}`,
-recovering the classical Wiener bound `d < n^{1/4}` at `δ = 0` (where only the leading
-behaviour `Δ ≈ p+q ≈ n^{1/2}` is available).
-
-All identities and inequalities used in the formal development are exact rational
-arithmetic facts and require no floating point; the evidence above is reproduced
-inside the Lean files as `decide`/`norm_num`-checked example lemmas.
+All numeric checks corroborate the formal results. The decisive, machine-verified fact is
+the perfect-square discriminant, which makes recovery of `d` and factorization of `n`
+equivalent and exact.

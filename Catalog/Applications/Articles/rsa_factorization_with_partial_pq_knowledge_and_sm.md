@@ -1,218 +1,127 @@
-# Cracking RSA When You Whisper Half a Secret
+# When a Few Leaked Bits Crack a Cipher: The Modified Wiener Attack on RSA
 
-## The lock that runs the internet
+## A lock built from two prime numbers
 
-Every time you buy something online, log into your bank, or send an encrypted
-message, a piece of arithmetic from the 1970s quietly stands guard. It is called
-RSA, and its security rests on a deceptively simple fact: it is easy to multiply
-two large prime numbers together, but staggeringly hard to pull the product back
-apart.
+Almost every secure connection you have ever made — buying a book, logging into a bank, sending an encrypted message — has at some point leaned on a number-theoretic puzzle so simple a child can state it and so hard that the world's computers cannot solve it in a hurry: *multiply two large prime numbers together, hand someone the product, and dare them to find the two factors.*
 
-Pick two secret primes, call them $p$ and $q$. Multiply them to get a public
-number $n = p \cdot q$. You can shout $n$ from the rooftops; anyone can use it to
-*encrypt* a message to you. But only someone who knows the original factors $p$
-and $q$ can *decrypt* it. For a modulus with hundreds of digits, factoring $n$
-without inside knowledge would take the fastest computers longer than the age of
-the universe.
+That product is called the **RSA modulus**, written $n = p \cdot q$, where $p$ and $q$ are large primes. The genius of RSA, the cryptosystem named for Rivest, Shamir, and Adleman, is that multiplying $p$ and $q$ is effortless while reversing the operation — *factoring* $n$ back into $p$ and $q$ — is, for well-chosen primes, astronomically expensive. Encryption hides behind that asymmetry. Anyone may know $n$; only someone who can split it into its prime factors holds the real key.
 
-So the system is unbreakable — except when it isn't. The history of cryptography
-is a history of clever shortcuts that sidestep the "hard" problem entirely. This
-article is about one of the most elegant of these shortcuts, a 1990 attack by
-Michael Wiener, and a modern twist on it that turns a small *leak* of secret
-information into a complete collapse of the lock.
+Alongside $n$, RSA publishes a second number, the **public exponent** $e$. The matching secret is the **private exponent** $d$, and the two are bound together by a single, unbreakable arithmetic law:
 
-## The temptation of a small key
+$$e \cdot d = k \cdot \varphi(n) + 1,$$
 
-To decrypt with RSA you need a *private exponent*, written $d$. It is the
-mathematical inverse of the public exponent $e$, tied together by the famous **key
-equation**:
+where $k$ is some positive integer and $\varphi(n) = (p-1)(q-1)$ is **Euler's totient** of $n$ — essentially $n$ with a small correction. This equation is the spine of the whole story. Notice what it quietly reveals: if you ever learn $\varphi(n)$, you have effectively factored $n$, because $n$ and $\varphi(n)$ together pin down $p$ and $q$. The security of RSA is the security of that totient.
 
-$$ e \cdot d = k \cdot \varphi(n) + 1, $$
+## A temptation called "small $d$"
 
-where $k$ is some positive integer and $\varphi(n)$ is *Euler's totient* — for a
-product of two primes it is simply
+Decryption in RSA costs work proportional to the size of the private exponent $d$. So there is a constant, very human temptation: *make $d$ small to make decryption fast.* A small $d$ means snappier signatures on a smart card, less battery drained on a sensor, faster handshakes on a server.
 
-$$ \varphi(n) = (p - 1)(q - 1). $$
+In 1990, Michael Wiener showed this temptation is a trap. If the private exponent is too small — specifically smaller than roughly the fourth root of the modulus, $d < n^{1/4}$ — then RSA collapses entirely. An attacker who knows only the public pair $(n, e)$ can recover the secret $d$ and factor $n$, using nothing more exotic than a tool taught in elementary number theory: **continued fractions**.
 
-Here is the temptation. Decryption is faster when $d$ is small. A small $d$ means
-quicker logins, snappier handshakes, less battery drained on your phone. Surely,
-an engineer might reason, choosing a modest $d$ to speed things up couldn't hurt?
+This article is about a sharpened, *modern* version of Wiener's attack, and about a complete, machine-checked chain of reasoning that carries it all the way from "the exponent is small" to "here are your two primes." The sharpening is this: **what if the attacker also knows a few of the leading digits of $p+q$?** It turns out that even a modest leak of the *most significant bits* of the prime sum makes the attack hungrier — it devours private exponents far larger than Wiener's original $n^{1/4}$.
 
-Wiener's attack is the devastating answer: **if $d$ is too small, RSA falls
-apart.** Specifically, if $d$ is smaller than roughly the fourth root of $n$
-(written $d < n^{1/4}$), an attacker can recover it — and therefore factor $n$ —
-in a flash, using nothing more exotic than the arithmetic of fractions.
+## Why $k/d$ hides in plain sight
 
-## The secret hiding in a fraction
+Here is the central magic trick. Take the key equation $e \cdot d = k \cdot \varphi(n) + 1$ and divide everything by $d \cdot n$. After a little rearranging you find that the fraction $k/d$ — built entirely from secret quantities — is an *uncannily good* approximation of the public fraction $e/n$:
 
-Wiener's insight was to look at the key equation not as a statement about huge
-integers, but as a statement about a *ratio*. Rearrange it and you find that the
-fraction $k/d$ is an almost unbelievably good approximation to the public fraction
-$e/n$.
+$$\frac{e}{n} \approx \frac{k}{d}.$$
 
-Why "almost unbelievable"? Because of a theorem of Legendre from the theory of
-continued fractions. It says: if a fraction $k/d$ approximates a number $x$ so
-tightly that
+How good? The error is controlled by how much $n$ differs from $\varphi(n)$, and that difference is exactly $p + q - 1$, a number roughly the size of $\sqrt{n}$ — tiny compared to $n$ itself. So $k/d$ shadows $e/n$ with almost eerie fidelity.
 
-$$ \left| x - \frac{k}{d} \right| < \frac{1}{2 d^2}, $$
+Now comes a classical theorem of Diophantine approximation, due to Legendre. It says that if a fraction $k/d$ approximates a real number to within $1/(2d^2)$, then $k/d$ is *forced* to appear among the **continued-fraction convergents** of that number. Convergents are the best rational approximations to a number that you can build with small denominators — the "greatest hits" of approximating fractions. There are only a handful of them, and they are cheap to compute.
 
-then $k/d$ is not just *a* good approximation — it is forced to appear as one of
-the **convergents** of $x$, the special sequence of best-possible fractions that
-the continued-fraction algorithm spits out. There are only a handful of these
-convergents, and they are trivially fast to compute. So if Wiener can show that
-the *secret* fraction $k/d$ beats Legendre's threshold against the *public*
-fraction $e/n$, the secret has nowhere to hide: it must be one of a short list of
-fractions anyone can generate.
+So the attack writes itself:
 
-Once you have $k/d$, you know $d$. Once you know $d$, you can compute
-$\varphi(n)$. And once you know both $n = p\cdot q$ and $\varphi(n) = (p-1)(q-1)$,
-recovering $p$ and $q$ is a one-line exercise in solving a quadratic. The lock
-springs open.
+1. Compute the continued-fraction convergents of the *public* number $e/n$.
+2. The secret fraction $k/d$ must be one of them.
+3. Test each candidate; the right one unlocks $\varphi(n)$, and from $\varphi(n)$ you factor $n$.
 
-## Where the magic comes from
+The whole secret falls out of a list of fractions anyone can compute from public data — provided $d$ was small enough for $k/d$ to clear Legendre's bar. That bar is what limits the classical attack to $d < n^{1/4}$.
 
-The whole attack hinges on an exact piece of algebra. Start from the key equation
-and subtract a copy of $n$ scaled by $k$. The mess collapses into something
-beautiful:
+## Buying a bigger attack with leaked bits
 
-$$ e \cdot d - k \cdot n = 1 - k\big((p + q) - 1\big). $$
+The modified attack asks a sharper question. The error in the approximation $e/n \approx k/d$ comes from the gap between $n$ and $\varphi(n)$ — that is, from $p+q$. What if we could *shrink* that gap?
 
-This is the heart of the matter, and it is an *exact identity* — no
-approximation, no error term. The left side is the "residual" of the
-approximation. The right side is controlled entirely by $p + q$, the sum of the
-two secret primes. And here is the crucial scale: while $n$ is roughly the *size*
-of $p$ times $q$, the sum $p + q$ is only about the *square root* of $n$. The
-residual is small because $p+q$ is small compared to $n$. That smallness is
-exactly what drives $k/d$ below Legendre's threshold.
+Suppose an attacker has learned a **$\delta$-fraction of the most significant bits of $p+q$** — through a side channel, a timing leak, a fault, or partial key exposure. Call the resulting estimate $s$. We do not need $s$ to be exact; we only need it close. Then, instead of approximating $e/n$, we approximate $e/\tilde{n}$ where
 
-## The twist: knowing half a secret
+$$\tilde{n} = n + 1 - s$$
 
-Wiener's classic attack only works when $d$ is genuinely tiny — below $n^{1/4}$.
-Cryptographers learned that lesson and kept their private exponents large. So is
-the attack a museum piece?
+is a **corrected modulus**. The beauty is that this correction is *exact arithmetic*, not a heuristic. If the estimate were perfect ($s = p+q$), the corrected modulus would equal the totient itself: $\tilde n = \varphi(n)$. In that ideal case the approximation $e/\tilde n \approx k/d$ becomes razor-sharp.
 
-Not quite. The modern refinement asks a sharper question: **what if the attacker
-already knows part of a secret?** In practice, secrets leak. A side-channel — a
-power-consumption trace, a timing measurement, a fault injection — might reveal
-the *most significant bits* of $p + q$, the leading digits of the prime sum.
-Knowing the leading digits of a number is the same as having a good *estimate* of
-it.
+In general, the residual error of the approximation is governed not by the full $p+q$ but by the much smaller *estimation error* $(p+q) - s$. Let $\Delta$ bound that residual, $|(p+q) - s| \le \Delta$. The smaller $\Delta$ — the more leading bits we know — the larger a private exponent we can still break. Concretely, the attack succeeds whenever the **partial-knowledge smallness condition**
 
-Call that estimate $s$. It is not exactly $p + q$, but it is close — the more
-leading bits you have leaked, the closer it is. The brilliant move is to *correct
-the modulus*. Instead of approximating $e/n$, the attacker builds a **corrected
-modulus**
+$$2 \cdot d \cdot (k\Delta + 1) < \tilde n$$
 
-$$ \tilde{n} = n + 1 - s $$
+holds. Read it as a budget: every leaked bit of $p+q$ roughly halves $\Delta$, and each halving relaxes the bound, admitting private exponents up to about $n^{(1+\delta)/2}$. At $\delta = 0$ (no bits known) it reproduces Wiener's classical $n^{1/4}$; as $\delta$ grows toward $1$, the danger zone swells toward $\sqrt n$. A "small $d$" is no longer a quarter-root nicety — with a side channel, "small" can mean *almost half the bits of $n$.*
 
-and approximates $e / \tilde{n}$ instead. If the estimate were perfect — if
-$s = p + q$ exactly — then $\tilde n$ would equal $\varphi(n)$ itself, the
-totient the attacker is desperate to learn. With a merely good estimate, $\tilde
-n$ is a near-perfect stand-in.
+## The exact identity at the heart of it
 
-Repeating the same algebra with the corrected modulus yields the **modified key
-identity**:
+What makes this rigorous rather than hand-wavy is that every step is an *exact algebraic identity*, not an approximation glued together with hope. The corrected key identity states precisely:
 
-$$ e \cdot d - k \cdot \tilde{n} = 1 - k\big((p + q) - s\big). $$
+$$e \cdot d - k \cdot \tilde n = 1 - k\bigl((p+q) - s\bigr).$$
 
-Look at what changed. The residual is no longer governed by $p + q$ itself, but
-by the *estimation error* $(p + q) - s$. And that error shrinks every time the
-attacker learns one more leading bit. The leak directly sharpens the blade.
+The residual on the right is governed entirely by the estimation error $(p+q)-s$. Turning that into a statement about fractions gives the *exact* approximation error
 
-## How much leakage is enough?
+$$\frac{e}{\tilde n} - \frac{k}{d} = \frac{1 - k\bigl((p+q)-s\bigr)}{\tilde n \cdot d},$$
 
-Suppose the attacker's estimate is good enough that the error is bounded:
+and bounding the numerator by $k\Delta + 1$ yields
 
-$$ |(p + q) - s| \le \Delta $$
+$$\left|\frac{e}{\tilde n} - \frac{k}{d}\right| \le \frac{k\Delta + 1}{\tilde n \cdot d}.$$
 
-for some known $\Delta$. Then the approximation error of the secret fraction
-satisfies a clean bound:
+The smallness condition $2d(k\Delta+1) < \tilde n$ is exactly what drives this below Legendre's threshold $1/(2d^2)$ — which is the green light that $k/d$ is a convergent of $e/\tilde n$.
 
-$$ \left| \frac{e}{\tilde n} - \frac{k}{d} \right| \le \frac{k\Delta + 1}{\tilde n
-\, d}. $$
+## Uniqueness: why you recover the *right* exponent
 
-To trigger Legendre's theorem and force $k/d$ to be a convergent, this must drop
-below $1/(2d^2)$. A little rearrangement shows that it suffices to have
+Finding a convergent is one thing; being *sure* it is the true private exponent is another. What stops two different fractions from both sneaking under Legendre's threshold and leaving the attacker guessing?
 
-$$ 2 \, d \, (k\Delta + 1) < \tilde{n}. $$
+The answer is a gem from the theory of the **Farey sequence**: two *distinct* fractions $a/b$ and $c/e$ can never huddle arbitrarily close. They are always at least $1/(b \cdot e)$ apart:
 
-This single inequality — call it the **partial-knowledge smallness condition** —
-is the entire attack distilled into one line. And notice its structure: it is
-*linear* in the error bound $\Delta$. Smaller $\Delta$ (more leaked bits) lets you
-get away with a larger $d$. When you leak a $\delta$-fraction of the bits of
-$p+q$, the tolerable private exponent grows from Wiener's $d < n^{1/4}$ all the
-way up to roughly $d < n^{(1+\delta)/2}$. At zero leakage ($\delta = 0$) you
-recover the classic fourth-root bound; with substantial leakage, even large,
-"safe" private exponents become vulnerable.
+$$\left|\frac{a}{b} - \frac{c}{e}\right| \ge \frac{1}{b \cdot e}.$$
 
-This is the central lesson of partial key exposure: **security is not binary.**
-Leaking even a fraction of a secret does not merely weaken a system a little — it
-can interact multiplicatively with other small weaknesses (like a moderately
-sized $d$) to bring the whole structure down.
+This is the integer rigidity of rational numbers — fractions with small denominators are spread out, like fence posts that cannot be closer than a fixed spacing. Now suppose two candidate fractions, the true $k/d$ and some impostor $a/b$ with denominator $b \le d$, *both* approximate $e/\tilde n$ to within $1/(2d^2)$. By the triangle inequality they would have to be within $1/d^2$ of each other. But Farey separation insists they are at least $1/(d \cdot b) \ge 1/d^2$ apart. The two demands collide. The only escape is that there *is* no impostor: the fraction is unique.
+
+One more turn of the screw delivers the exponent exactly. If the true fraction $k/d$ is in lowest terms — $k$ and $d$ share no common factor — then equality of the fractions forces the denominators themselves to match: the recovered $b$ *equals* the true private exponent $d$. Notably, the impostor need not be in lowest terms for this to work; the rigidity of the true fraction alone suffices.
+
+## The last mile: from $d$ to the primes
+
+Recovering $d$ is a triumph, but it is not the attacker's actual goal. The goal is to *factor* $n$ — to name $p$ and $q$. Many accounts of Wiener's attack stop at "and then you have $d$," waving at the rest. The complete chain insists on finishing the job, and the finish is elegant.
+
+Once $d$ (and the cofactor $k$) is known, the key equation hands you the totient directly:
+
+$$k \cdot \varphi(n) = e \cdot d - 1.$$
+
+From $\varphi(n)$ and $n$ you get the prime sum for free, because $n - \varphi(n) + 1 = p + q$. Now you know both the **sum** $S = p+q$ and the **product** $N = pq = n$ of the two primes. Schoolroom algebra says $p$ and $q$ are the two roots of the quadratic
+
+$$X^2 - S\,X + N = 0,$$
+
+and the quadratic formula gives them in closed form:
+
+$$p = \frac{S + \sqrt{S^2 - 4N}}{2}, \qquad q = \frac{S - \sqrt{S^2 - 4N}}{2}.$$
+
+Here lies the most satisfying structural surprise of the whole story. The discriminant under that square root is not some messy irrational — it is a *perfect square*:
+
+$$S^2 - 4N = (p+q)^2 - 4pq = (p-q)^2.$$
+
+So $\sqrt{S^2 - 4N} = p - q$ *exactly*, with no rounding, no approximation, no numerical error. The square root that usually injects irrationality into the quadratic formula here closes perfectly into an integer. Recovering $d$ and factoring $n$ are revealed to be two faces of one fact — *information-theoretically equivalent*, joined at the hip by a perfect square.
 
 ## A worked example you can check by hand
 
-Abstract bounds are convincing, but nothing beats watching the gears turn on real
-numbers. Take the toy primes $p = 17$ and $q = 11$. Then:
+Take the toy primes $p = 17$ and $q = 11$, so $n = 187$ and $\varphi(n) = 16 \cdot 10 = 160$. Choose the public exponent $e = 7$; the matching private exponent is $d = 23$ with cofactor $k = 1$ (indeed $7 \cdot 23 = 161 = 1 \cdot 160 + 1$). Grant the attacker a perfect estimate of the prime sum, $s = p + q = 28$, so the corrected modulus is $\tilde n = 187 + 1 - 28 = 160$.
 
-- the modulus is $n = 17 \cdot 11 = 187$;
-- the totient is $\varphi(n) = 16 \cdot 10 = 160$;
-- choose the private exponent $d = 23$ and the public exponent $e = 7$;
-- the key equation $7 \cdot 23 = 161 = 1 \cdot 160 + 1$ holds with $k = 1$.
+Now compute the approximation error:
 
-Now suppose the attacker has a *perfect* estimate $s = p + q = 28$. The corrected
-modulus is $\tilde n = 187 + 1 - 28 = 160$, which (as promised) equals
-$\varphi(n)$ exactly. The approximation error of the secret fraction is
+$$\frac{e}{\tilde n} - \frac{k}{d} = \frac{7}{160} - \frac{1}{23} = \frac{1}{3680}.$$
 
-$$ \frac{7}{160} - \frac{1}{23} = \frac{161 - 160}{3680} = \frac{1}{3680}. $$
+Legendre's threshold here is $1/(2 \cdot 23^2) = 1/1058$, and indeed $1/3680 < 1/1058$. The convergent test fires: $k/d = 1/23$ is recovered. Farey separation is realized *with equality* in this instance — $|1/23 - 7/160| = 1/3680 = 1/(23 \cdot 160)$ — a clean illustration that the bound is sharp, not slack.
 
-Legendre's threshold here is $1/(2 \cdot 23^2) = 1/1058$. And indeed
+With $d = 23$ in hand: $\varphi(n) = (e\,d - 1)/k = 160$, so $S = n - \varphi(n) + 1 = 187 - 160 + 1 = 28$. The discriminant is $28^2 - 4 \cdot 187 = 784 - 748 = 36 = 6^2$, a perfect square as promised. The quadratic formula returns
 
-$$ \frac{1}{3680} < \frac{1}{1058}, $$
+$$p = \frac{28 + 6}{2} = 17, \qquad q = \frac{28 - 6}{2} = 11.$$
 
-so the secret fraction $1/23$ clears the bar with room to spare. It *must* be a
-convergent of $7/160$ — and it is. Run the continued-fraction algorithm on
-$7/160$ and out pops $1/23$, revealing $d = 23$ and unlocking the cipher.
+The modulus $187$ is factored. The whole journey — from a small private exponent and a few known bits, through continued fractions, Farey rigidity, and a perfect-square discriminant — lands exactly on its prime factors.
 
-## Why this story matters
+## What it means for the rest of us
 
-There are three takeaways, each larger than RSA itself.
+The lesson is not that RSA is broken. Properly used, with a large private exponent and no side leaks, it stands. The lesson is about *margins*. Cryptographic safety is not a wall; it is a set of conditions, and each shortcut — a small exponent here, a leaked bit there — chips at the conditions until they fail all at once. The modified Wiener attack quantifies that erosion with brutal precision: it shows exactly how many leaked bits of $p+q$ buy how much extra reach, and it proves that once the smallness condition tips, the secret does not degrade gracefully. It falls out whole, primes and all.
 
-**First, structure is a liability.** RSA is hard to break by brute force precisely
-because factoring is hard. But the key equation imposes *structure* — a hidden
-relationship between public and private data — and structure can be exploited even
-when brute force cannot. The continued-fraction attack never factors anything the
-"hard" way. It listens for the faint music of a near-perfect rational
-approximation, and that music is enough.
-
-**Second, partial leaks are not partial damage.** It is tempting to think that
-leaking, say, a third of the bits of a secret leaves two-thirds of your security
-intact. The modified Wiener attack shows the opposite: a $\delta$-fraction of
-leaked bits stretches the attacker's reach by an *exponential* factor in the size
-of the key. In the arithmetic of secrets, the whole is far more fragile than the
-sum of its parts.
-
-**Third, the boundary is sharp and knowable.** Everything above reduces to a
-single, checkable inequality, $2 d (k\Delta + 1) < \tilde n$. There is no hand
-waving, no "in practice it usually works." There is a precise line in the sand:
-on one side the attack provably succeeds, on the other it provably loses its
-guarantee. That kind of clean threshold is what lets cryptographers design
-systems with confidence — by staying safely on the right side of it.
-
-## The continued-fraction lens
-
-Step back and the deepest idea here is not about cryptography at all. It is that a
-single real number, expanded as a continued fraction, contains within it a short
-and canonical list of "best" rational approximations, and that *any* fraction
-which approximates the number too well is compelled to join that list. This is a
-piece of pure number theory more than two centuries old, the kind of thing one
-might file under "beautiful but useless."
-
-Wiener's attack is the spectacular refutation of that filing. The same Legendre
-theorem that classifies approximations of irrational numbers turns out to be a
-skeleton key for one of the most important cryptosystems ever deployed. And the
-modified attack shows that the key only gets sharper when the world leaks a little
-of its secrets — as the world always does.
-
-The arithmetic of fractions, it turns out, has been quietly auditing the security
-of the internet all along. We just had to learn how to listen.
+It is a reminder that in cryptography, *partial* information is rarely partial in effect. A few most-significant bits of a quantity you thought was hidden, a private exponent shaved a little too small for speed — each seems harmless in isolation. Combined, and pressed against the unyielding arithmetic of continued fractions and Farey separation, they unlock the whole door. The mathematics that makes RSA strong is the very same mathematics that, given an inch, takes the entire mile.
