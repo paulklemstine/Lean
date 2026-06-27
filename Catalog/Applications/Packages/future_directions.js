@@ -719,7 +719,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ff65a6a",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -2077,7 +2077,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31cf2713",
     "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
     "domains": [
       "Algebra"
@@ -2086,7 +2086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -2826,7 +2826,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae503725",
     "description": "The specific degree one function on the Grassmann scheme $J_3(4,2)$ defined by $f = \\frac{1}{2} \\sum_{Q(p) = 0} x_p + \\frac{1}{6} \\sum_{Q(p) = 1} x_p - \\frac{1}{6} \\sum_{Q(p) = 2} x_p$, where $Q(x,y,z,w) = x^2 + y^2 + z^2 - w^2$ is an elliptic quadric over $\\mathbb{F}_3$, is Boolean and not a trivial Boolean degree one function.",
     "domains": [
       "Bridges"
@@ -2835,7 +2835,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T21:41:56.533485+00:00",
     "title": "Non-triviality of the Bruen-Drudge Boolean degree one function on $J_3(4,2)$"
   },
@@ -3757,7 +3757,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing Hales-Jewett lower bounds via symmetric coloring in Lean"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c85b45b6",
     "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_\u03bb^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition \u03bb = (\u03bb\u2081, \u03bb\u2082, ..., \u03bb_k) with \u03bb\u2081 > \u03bb\u2082 > ... > \u03bb_k \u2265 0, the formula takes the form s_\u03bb^Q(t) = Pf[Y_{\u03bb_i - i + j}(t) + Y_{\u03bb_j - j + i}(t)]_{1\u2264i<j\u2264k} \u00b7 vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
     "domains": [
       "Algebra"
@@ -3766,7 +3766,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T02:07:55.532399+00:00",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
@@ -5824,7 +5824,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: HJ(3,4) \u2265 20 via symmetric colorings"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "492e1625",
     "description": "Let n be a positive integer. Define an affine permutation \u03c3: \u2115/n\u2115 \u2192 \u2115/n\u2115 by \u03c3(i) = ai + b (mod n). The conjecture states that for n coprime to 2 and 3, the permutation \u03c3 is panmagic if and only if a is a unit in \u2115/n\u2115 and both a and a-1 are units such that the mapping i \u2192 ai+b and i \u2192 (a-1)i+b satisfy specific modular constraints related to the panmagic property (specifically, that the coefficients of the linear forms for diagonals do not vanish modulo n). Specifically, we propose to formalize the theorem that for prime n > 3, the set of panmagic affine permutations forms a structure related to the cosets of the dihedral group within the affine group Aff(\u2115/n\u2115).",
     "domains": [
       "Algebra",
@@ -5834,7 +5834,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22221v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T05:14:01.442996+00:00",
     "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
   },
@@ -6187,7 +6187,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Decomposition Group Computation via Newton Polygon Indices"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d36ccdc3",
     "description": "Formalizes a precise conjecture about the asymptotic distribution of ordered pairs satisfying the sum-of-divisors identity, leveraging analytic growth estimates and sieve techniques.",
     "domains": [
       "Pythagorean",
@@ -6197,7 +6197,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T04:18:05.916058+00:00",
     "title": "Resolution of Erd\u0151s Problem 1061 using analytic and combinatorial methods"
   },
@@ -7390,7 +7390,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6fec91f1",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -7400,7 +7400,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -7683,7 +7683,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46e595fc",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -7693,7 +7693,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
