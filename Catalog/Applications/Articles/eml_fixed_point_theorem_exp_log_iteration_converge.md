@@ -1,205 +1,187 @@
-# The Self-Correcting Calculator: How an Exp-Log Loop Always Finds Its Center
+# The Self-Correcting Map: How an Exp-Log Loop Always Finds Its Center
 
-Imagine a strange little machine. You feed it a number, it does some arithmetic,
-and it spits out a new number. You feed *that* number back in, and out comes
-another. Again and again. Most machines like this go haywire: the numbers blow up
-to infinity, or thrash around forever without settling. But a few of them are
-magical. No matter what number you start with, they march steadily toward a single
-special value — a *fixed point* — and once you are close, every extra turn of the
-crank slices your remaining error by a fixed fraction.
+Imagine a machine with a single dial. You feed it a number, it does a little
+arithmetic, and out comes another number. You take that output, feed it back in,
+and turn the crank again. And again. And again. For most machines built this way,
+the results wander chaotically, blow up to infinity, or settle into stubborn
+oscillations. But for a special family of machines — the ones we call **EML
+operators** — something remarkable happens. No matter where you start, the numbers
+march inexorably toward a single, predestined value: a *fixed point* the machine
+was always going to find.
 
-This article is about one such machine, built from two of the most important
-functions in all of mathematics: the exponential and the logarithm. We will see
-exactly when it behaves itself, prove that it settles to a unique answer, and
-pin down — with a clean, computable formula — *how fast* it gets there.
+This article is about one of those machines, a map built from two of the most
+fundamental functions in all of mathematics — the exponential and the logarithm —
+and about a guarantee so strong that an engineer can stake a calculation on it. Not
+"it probably converges." Not "it converges in our experiments." But: *here is the
+answer, here is a box that provably contains it, and here is exactly how fast the
+box shrinks.*
 
-## The machine
+## The machine in question
 
-Our machine is a single formula with three knobs, $a$, $b$, and $c$:
+The EML operator is the function
 
-$$f(x) = e^{a}\,\log(b\,x + c).$$
+$$f(x) = e^{a} \cdot \log(b x + c).$$
 
-Here $e^{a}$ is the exponential of $a$ (a positive scaling factor), and $\log$ is
-the natural logarithm. The name in the underlying research is the **EML operator**
-— "exp-log." The exponential out front *stretches*; the logarithm inside
-*compresses*. They pull in opposite directions, and the tension between them is
-exactly what makes the machine tame.
+Three knobs control it: $a$ scales the output exponentially, $b$ stretches the
+input, and $c$ shifts it. The name "EML" stands for **Exp-Minus-Log**, a family of
+building blocks studied as a more disciplined alternative to the activation
+functions inside neural networks. The exponential factor $e^a$ amplifies; the
+logarithm $\log(bx+c)$ compresses. Together they strike a balance: the logarithm
+tames runaway growth, while the exponential keeps the output from collapsing.
 
-To run the machine, pick a starting number $x_0$ and iterate:
+To *iterate* the machine is to apply it over and over, producing a sequence
 
-$$x_{n+1} = f(x_n) = e^{a}\,\log(b\,x_n + c).$$
+$$x_0, \quad x_1 = f(x_0), \quad x_2 = f(x_1), \quad x_3 = f(x_2), \ \ldots$$
 
-This produces a sequence $x_0, x_1, x_2, \dots$ The central question is simple to
-ask and surprisingly deep to answer: **does this sequence settle down, and if so,
-to what?**
+The central question is simple to ask and surprisingly deep to answer: **where does
+this sequence go?**
 
-## Fixed points: where the machine holds still
+## The secret ingredient: contraction
 
-A *fixed point* is a number $x^\*$ that the machine leaves unchanged:
+The key to the EML operator's good behavior is a property called *contraction*. A
+map is a contraction on some interval if it always pulls pairs of points closer
+together. If $x$ and $y$ are two inputs, then their outputs $f(x)$ and $f(y)$ are
+strictly nearer to each other than $x$ and $y$ were — by at least a fixed factor
+$\rho < 1$:
 
-$$f(x^\*) = x^\*, \qquad \text{i.e.} \qquad x^\* = e^{a}\,\log(b\,x^\* + c).$$
+$$|f(x) - f(y)| \le \rho \, |x - y|.$$
 
-If you ever land exactly on $x^\*$, you stay there forever. Fixed points are the
-"centers of gravity" of iterative processes. They appear everywhere: the
-equilibrium price in an economic model, the steady state of a feedback circuit,
-the value that Newton's method hunts for, the rest position of a damped pendulum.
-The whole game is to show that our sequence is *attracted* to such a center,
-rather than repelled from it.
+Why does the EML operator contract? The answer lives in its derivative — the
+measure of how steeply the output changes as you nudge the input. A direct
+calculation, formalized as the theorem `deriv_eq`, gives a clean closed form:
 
-## The secret is the slope
+$$f'(x) = \frac{e^{a} \, b}{b x + c}.$$
 
-Whether a fixed point attracts or repels comes down to a single number: the
-*slope* of $f$ at that point. Calculus hands us the slope directly. The derivative
-of the EML operator is
+This is the engine of everything that follows. Notice what it says: as $x$ grows,
+the denominator $bx + c$ grows, so the slope $f'(x)$ *shrinks*. The logarithm
+flattens out, and with it the whole map. If we can keep the parameters in a range
+where this slope stays below $1$ in magnitude on some interval, the map is a
+contraction there — it can only ever squeeze.
 
-$$f'(x) = \frac{e^{a}\,b}{b\,x + c},$$
+## Why a contraction always has exactly one home
 
-valid wherever the quantity inside the logarithm, $b x + c$, is positive (you
-cannot take the logarithm of a non-positive number). Notice the shape: the
-numerator $e^a b$ is fixed, while the denominator $bx + c$ *grows* as $x$ grows.
-So the slope shrinks as $x$ increases. A big denominator means a gentle slope —
-and a gentle slope is precisely what we want.
+Here is the beautiful logic. Suppose the machine had *two* different resting
+points — two values $x_1^*$ and $x_2^*$, each unchanged by the map, so that
+$f(x_1^*) = x_1^*$ and $f(x_2^*) = x_2^*$. Because $f$ is a contraction, applying
+it to both must bring them closer:
 
-Here is the intuition. If $|f'| < 1$ everywhere on some interval, then $f$ never
-stretches distances — it only shrinks them. Two nearby inputs always produce two
-*even nearer* outputs. Such a map is called a **contraction**. Picture folding a
-map of your country and laying it on the ground: the famous Banach fixed-point
-theorem says there is exactly one point on the paper sitting directly above the
-real place it represents. Contractions always have exactly one fixed point, and
-repeated folding drives you straight to it.
+$$|x_1^* - x_2^*| = |f(x_1^*) - f(x_2^*)| \le \rho \, |x_1^* - x_2^*|.$$
 
-## Packaging the good behaviour
+But $\rho < 1$, so this says a positive number is no larger than a fraction of
+itself — an impossibility unless that number is zero. Therefore $x_1^* = x_2^*$.
+There can be only one. This is the theorem `fixedPoint_unique`, and it is the
+mathematical embodiment of destiny: a contraction has at most one fixed point, and
+the iteration has no choice but to head for it.
 
-For the machine to be a genuine contraction, three conditions must hold together
-on a closed interval $[\,\mathrm{lo}, \mathrm{hi}\,]$:
+That the point actually *exists* — that the marching sequence really does reach a
+limit — is the content of `iterSeq_converges`. The argument shows the sequence is
+*Cauchy*: its terms eventually crowd together so tightly that they must accumulate
+somewhere, and by continuity that accumulation point is the fixed point. The
+combination is the celebrated **Banach fixed-point theorem**, specialized and made
+concrete for the exp-log map.
 
-1. **The logarithm is well-defined.** We need $b x + c > 0$ throughout the
-   interval, so $\log(bx+c)$ always makes sense.
-2. **The interval is a trap.** The machine must map the interval *into itself*:
-   if $x$ lies in $[\mathrm{lo}, \mathrm{hi}]$, then $f(x)$ does too. Once you are
-   in the trap, you never escape — so the whole sequence stays put.
-3. **The slope is tame.** There is a number $\rho$ with $0 \le \rho < 1$ such that
-   $|f'(x)| \le \rho$ everywhere on the interval. This $\rho$ is the
-   **contraction ratio**, the fraction by which distances shrink each step.
+## Not just "it converges" — *how fast*
 
-Bundle these three guarantees together and you get what the formal development
-calls a *contraction certificate*. From that certificate, everything else follows
-mechanically.
+Knowing that a sequence converges is a comfort; knowing *how fast* is a tool.
+Suppose your very first step moved you a distance $|x_1 - x_0|$. Then after $n$
+steps you are guaranteed to be within
 
-## What we can prove
+$$|x_n - x^*| \le \frac{|x_1 - x_0| \cdot \rho^{\,n}}{1 - \rho}$$
 
-With the certificate in hand, here is the complete story, stated plainly.
+of the true answer $x^*$. This is the **a priori error estimate**, proved as
+`iterSeq_error_bound`. Every quantity on the right is something you can measure
+after a single step. The factor $\rho^n$ shrinks geometrically — each iteration
+multiplies your worst-case error by $\rho$ — so the error doesn't just vanish, it
+vanishes *exponentially*. The companion result `iterSeq_error_tendsto_zero`
+confirms the bound genuinely collapses to zero, certifying honest $O(\rho^n)$
+convergence rather than a hollow promise.
 
-**The mean value theorem turns the slope bound into a shrink rate.** Because
-$|f'| \le \rho$ on the interval, the distance between any two outputs is at most
-$\rho$ times the distance between the inputs:
+To make this vivid: with the contraction ratio $\rho = 1/30$ from our worked
+example below, every step buys you another factor of thirty in accuracy. Three
+steps and you've gained more than four decimal digits. The convergence is not a
+slow crawl; it is a freefall toward the answer.
 
-$$|f(x) - f(y)| \le \rho\,|x - y|.$$
+## A guarantee you can hold in your hand
 
-**There is at most one center.** Suppose two points $x_1$ and $x_2$ were both
-fixed. Then $|x_1 - x_2| = |f(x_1) - f(x_2)| \le \rho\,|x_1 - x_2|$. Since
-$\rho < 1$, the only way this can hold is $|x_1 - x_2| = 0$. So the fixed point,
-if it exists, is **unique**.
+There is one more turn of the screw, and it is the part a numerical engineer loves
+most. So far the guarantees are *one-sided*: they bound the distance to an answer
+you cannot yet see. But suppose we add one natural assumption — that $b > 0$, which
+makes the map *monotone increasing* (bigger inputs give bigger outputs). The
+theorem `op_monotoneOn` establishes exactly this, as a direct consequence of the
+logarithm being increasing.
 
-**The center exists, and you are pulled to it.** Track the size of each step. The
-gap between consecutive iterates shrinks geometrically:
+Monotonicity unlocks something wonderful. Start two separate iterations: one from
+the bottom of your interval, $\ell_0 = \text{lo}$, and one from the top,
+$u_0 = \text{hi}$. Because the map is increasing and maps the interval into itself,
+the bottom orbit can only *rise* (`iterSeq_lo_mono`) and the top orbit can only
+*fall* (`iterSeq_hi_anti`). And crucially, the fixed point $x^*$ is sandwiched
+between them at *every single step*:
 
-$$|x_{n+1} - x_n| \le \rho^{n}\,|x_1 - x_0|.$$
+$$\ell_n \le x^* \le u_n \quad \text{for all } n.$$
 
-The total distance still to travel is a geometric series that converges, so the
-sequence cannot wander forever — it is *Cauchy*, the precise mathematical word for
-"the terms eventually huddle arbitrarily close together." A Cauchy sequence of
-real numbers always has a limit, and because $f$ is continuous and the trap is
-closed, that limit $x^\*$ lies inside the interval and satisfies $f(x^\*) = x^\*$.
-The center exists, lives in the interval, and every starting point in the interval
-converges to it.
+The two orbits are like a pair of hands slowly closing around the answer from below
+and above. The gap between them, $u_n - \ell_n$, shrinks to zero. This is the
+**certified two-sided enclosure**, `certified_enclosure`: at any moment you can
+stop the computation and report a rigorous interval $[\ell_n, u_n]$ that is
+*guaranteed* to contain the true fixed point. Not a point estimate with an
+unverified error bar — an honest box with a mathematical seal on it.
 
-**And here is the headline — we know exactly how fast.** This is the result that
-turns a qualitative "it converges" into a quantitative engineering guarantee. From
-the very first step you take, you can bound *all* future error:
+This is precisely the form of answer that *interval arithmetic* and *verified
+computing* demand. When the result of a calculation will be trusted by a control
+system, a proof checker, or a safety-critical algorithm, "approximately $x^*$" is
+not good enough. "$x^*$ lies in $[\ell_n, u_n]$, certified" is.
 
-$$\boxed{\,|x_n - x^\*| \;\le\; |x_1 - x_0|\cdot\frac{\rho^{n}}{1 - \rho}\,}$$
+## A concrete machine, fully verified
 
-Read this carefully. The right-hand side uses only two things you can measure
-immediately: the size of your first step $|x_1 - x_0|$, and the contraction ratio
-$\rho$. Every term shrinks by the factor $\rho$ per iteration, so the error decays
-like $\rho^n$ — exponentially fast. Want ten correct decimal digits? Just solve
-for the $n$ that makes the bound smaller than $10^{-10}$. No guessing, no luck:
-a *certificate* of accuracy you can compute before you even start. This is the
-classical Banach *a priori* error estimate, made completely explicit for the EML
-machine.
+Abstract guarantees are only as good as the examples that satisfy them, so consider
+a specific machine: $f(x) = e \cdot \log(x + 100)$ on the interval $[0, 20]$.
+Here $a = 1$, $b = 1$, $c = 100$. The derivative is $f'(x) = e/(x+100)$, which on
+$[0,20]$ never exceeds $e/100 < 1/30$. So the contraction ratio is a comfortable
+$\rho = 1/30$, and the map sends $[0,20]$ back into itself (since $e \cdot \log(x +
+100) < 3 \cdot 5 = 15 < 20$). Every one of these facts is checked rigorously, down
+to the numerical estimates $e < 3$ and $\log 120 < 5$.
 
-## A concrete machine you can run by hand
+The result, `concreteEML_certified`, is the whole theory delivered for this one
+operator: from *any* starting point in $[0, 20]$, the iteration converges to a
+fixed point $x^* \approx 12.85$, with error bounded by $|x_1 - x_0| \cdot
+(1/30)^n / (1 - 1/30)$ at step $n$. You can run it on paper. After two iterations
+from $x_0 = 0$ you are already correct to several digits.
 
-Abstract guarantees are only convincing if a real example satisfies all of them at
-once. So here is a fully worked-out instance with no loose ends. Take
+## The edge of the map: a sharp threshold
 
-$$f(x) = e^{1}\,\log(x + 100) \qquad \text{on the interval } [0, 20],$$
+The story has a frontier, and it is where the most tantalizing questions live. For
+the case $b = 1$, whether the machine has a fixed point at all depends on a razor's
+edge in the parameter $c$. The analysis pins down an exact threshold:
 
-that is, $a = 1$, $b = 1$, $c = 100$. Let us check the three conditions with
-honest arithmetic.
+$$c_{\text{crit}}(a) = e^{a}(1 - a).$$
 
-- **Logarithm well-defined?** On $[0,20]$ we have $x + 100 \ge 100 > 0$. Yes.
-- **Slope tame?** The slope is $f'(x) = e/(x+100) \le e/100$. Since $e < 3$, this
-  is below $3/100$, comfortably under $\rho = 1/30 \approx 0.0333$. Yes — and with
-  room to spare.
-- **The trap holds?** The output is $e\,\log(x+100)$. The logarithm is at least
-  $\log(100) > 0$, so the output is positive. And it is at most
-  $e\,\log(120) < 3 \times 5 = 15 < 20$, because $\log(120) < 5$ (one checks
-  $e^5 = (e)^5 > 2.7^5 > 120$). So $f$ maps $[0,20]$ into roughly $[4.6, 15]$,
-  safely inside. Yes.
+Above it, two fixed points exist; below it, none. Exactly at the threshold, the two
+points collide and annihilate — and at that collision the derivative equals exactly
+$1$, the neutral knife-edge between attraction and repulsion. This is the signature
+of a *fold* (or *saddle-node*) *bifurcation*, the same universal phenomenon that
+governs tipping points in climate models, the snapping of buckling beams, and the
+sudden onset of laser light. Near the threshold the gap between the two fixed
+points is conjectured to open like a square root, $x_+ - x_- \approx \kappa(a)
+\sqrt{c - c_{\text{crit}}}$ — the universal fingerprint of a fold.
 
-All three conditions hold, with a contraction ratio of just $\rho = 1/30$. The
-machine is a *genuine* exp-log map, not a disguised straight line: since $a = 1$,
-the scaling factor $e^1 = e > 1$ really matters. Plug in the master formula and you
-learn that, starting anywhere in $[0,20]$, the iteration converges to a unique
-fixed point $x^\* \approx 12.85$ in the interval, with the explicit error bound
+That two fixed points should appear, with the larger one attracting and the smaller
+one repelling, and that the threshold itself slides monotonically from
+$c_{\text{crit}}(0) = 1$ down to $c_{\text{crit}}(1) = 0$, are the open conjectures
+this work sets up for the next expedition.
 
-$$|x_n - x^\*| \le |x_1 - x_0|\cdot\frac{(1/30)^n}{1 - 1/30}.$$
+## Why it matters
 
-Each step kills more than ninety-six percent of the remaining error. After just a
-handful of iterations you are correct to machine precision. Try it: start at
-$x_0 = 0$, and within five or six steps you will be staring at $12.85$ and it will
-refuse to budge.
+It is tempting to dismiss a humble one-dimensional map as a curiosity. But the EML
+operator is a microcosm of a much larger ambition: building computational primitives
+whose behavior is not merely observed but *guaranteed*. Neural networks are stitched
+together from millions of simple nonlinear units, and their unpredictability is the
+source of both their power and their peril. The EML program asks a disciplined
+question — what if each unit came with a certificate? What if "this loop converges"
+were a theorem, not a hope?
 
-## When the machine misbehaves
-
-The story has a flip side, and it is just as instructive. The good behaviour
-hinges on choosing the knobs wisely — in particular, on making the translation $c$
-large relative to the interval. Why? Because a large $c$ keeps the denominator
-$bx + c$ big, which keeps the slope small, which keeps the contraction strong. It
-also keeps $bx + c$ comfortably above $1$, so the logarithm stays positive and the
-trap closes neatly.
-
-Push $c$ down toward zero and the magic evaporates. With $b = 1$ and a small
-$c \in (0,1)$, the logarithm can dip *negative* (since $\log$ of anything below $1$
-is negative), the outputs can fall out of any candidate interval, and the slope
-near the left edge can exceed $1$. The contraction breaks. This is not a defect of
-the proof; it is the genuine geometry of exp-log maps. It explains why the original
-conjecture's literal "small $c$" test case is hard, and why the right move is
-*slack engineering*: give yourself a large $c$ and the dynamics become beautifully
-well-behaved.
-
-There is still good news in a middle regime. Even without a slope bound, a fixed
-point can be shown to *exist* by a pure existence argument — the intermediate value
-theorem. For $b = 1$, $c = 2$, and any modest $a$ with $0 < a < \tfrac12$, the
-function $f(x) - x$ is positive at $x = 1$ and negative at $x = 3$, so somewhere
-between them it must cross zero. That crossing is a positive fixed point. As $a$
-varies, this fixed point moves smoothly, tracing a curve $x^\*(a)$ that begins, at
-$a = 0$, at the solution of $x^\* = \log(x^\* + 2)$, namely $x^\* \approx 1.146$.
-
-## Why this matters
-
-The exp-log operator is not a toy. Compositions of exponentials and logarithms are
-the raw material of many machine-learning activation functions, of
-information-theoretic transforms, and of numerical schemes that compress and
-rescale data. A recurring worry with such nonlinear maps is that iterating them is
-unpredictable. What we have shown is that, in the right parameter regime, the
-exp-log machine is the *opposite* of unpredictable. It is a contraction with a
-unique attracting center and a convergence rate you can certify in advance, down
-to the last decimal place.
-
-That is the difference between hoping an iterative algorithm works and *knowing* it
-does. The slope tells you everything; the exponential and the logarithm, those two
-ancient adversaries, hold each other in a perfect, self-correcting balance; and the
-sequence, wherever it starts, walks home.
+The exp-log fixed-point map answers that question for one such unit, completely. It
+converges. It converges to a unique point. It converges geometrically fast. And it
+hands you, at every step, a provably correct box around the answer. In a world
+increasingly run by iterative algorithms whose outputs we are asked to trust, that
+combination — convergence, uniqueness, speed, and a certificate — is exactly the
+kind of bedrock worth building on.
