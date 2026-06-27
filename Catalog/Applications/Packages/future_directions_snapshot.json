@@ -139,7 +139,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "236373d0",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domain_bridges": [],
     "domains": [
@@ -152,7 +152,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -939,7 +939,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9aa4cae",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i ≤ i and d i ≤ i for all i < k, equality of their factoradic values up ",
     "domain_bridges": [],
     "domains": [
@@ -951,7 +951,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -9592,7 +9592,7 @@
       "west1990",
       "defant2020"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e92c627",
     "description": "The limit of the average stack-sorting depth scaled by n converges to the rational number 3/4.",
     "domain_bridges": [
       "stack_sorting",
@@ -9607,7 +9607,7 @@
     "proof_strategy": "numerical_experiment_and_analytic_upper_lower_bounds",
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T16:46:53.250760+00:00",
     "title": "Exact asymptotic value of the average stack-sorting depth"
   },
@@ -10924,7 +10924,7 @@
       "Multiple Sine Functions",
       "Wallis Product"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08b15f3b",
     "description": "For an even integer m = 2k, the regularised Wallis product P_m defined as the limit as N -> infinity of product_{n=2}^N exp(C_{m,n}) * (1 - 1/n^2)^{n^m}, where C_{m,n} is the minimal exponential counterterm cancelling non-summable terms in the log expansion, converges to a closed form involving pi, Euler's gamma, and odd zeta values zeta(2j+1).",
     "domain_bridges": [
       "Analysis -> Number Theory",
@@ -10939,7 +10939,7 @@
     "proof_strategy": "Utilize the logarithmic expansion of (1 - 1/n^2)^{n^m}, express the resulting sum as a combination of zeta-function tails, apply the reflection formula for the zeta function and the relation between zeta-tails and the Glaisher-Kinkelin constants or polygamma functions to arrive at the closed form.",
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T18:59:39.163751+00:00",
     "title": "Closed Form for the Regularised Wallis Product P_m for Even m"
   },
@@ -12081,7 +12081,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "905ed2dd",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -12094,7 +12094,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
