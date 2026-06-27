@@ -1,405 +1,472 @@
-# Tropical Geometry as the Image of a Non-Archimedean Valuation: The Corner-Locus Bridge and the Engine of Tropical Bézout
+# Tropical Geometry as a Limit of Classical Algebraic Geometry: Tropicalization, the Corner Locus, and Tropical Bézout
+
+**Author:** Aristotle
+
+**Date:** 2026-06-27
+
+**Domain:** Novelty (bridge between non-Archimedean algebraic geometry and tropical/min-plus geometry)
+
+---
 
 ## Abstract
 
-We develop, with full rigor, the bridge connecting classical algebraic geometry
-over a non-Archimedean valued field to tropical (min-plus) geometry. The central
-object is an additive valuation `v : K → Γ ∪ {∞}`, interpreted as a
-*tropicalization map* sending a field element to its order in a totally ordered
-value group. We prove four interlocking results. First, an *ultrametric
-winner-takes-all lemma*: if a single term of a finite sum has strictly minimal
-valuation, the valuation of the sum equals that term's valuation. Second, the
-*easy direction of the Fundamental Theorem of Tropical Geometry* (attributed to
-Kapranov): the tropicalization of a point on a classical hypersurface lies on the
-*corner locus* of the tropical polynomial, i.e. the tropicalized term-valuations
-attain their minimum at least twice. Third, *min-plus multiplicativity*: tropical
-evaluation sends products of tropical polynomials to sums of evaluations,
-`eval(P ⊙ Q) = eval(P) + eval(Q)`, the combinatorial engine that makes degrees
-(and Newton polytopes) add — the heart of tropical Bézout. Fourth, a
-*strengthening* showing that only leading-term cancellation, not full vanishing,
-is needed to force a corner. We also record the boundary case (a single monomial
-has empty corner locus) and a concrete instance for classical/tropical lines.
-All statements are formalized and machine-checked. We close with applications to
-enumerative geometry and a roadmap toward the quantitative tropical Bézout
-theorem.
-
-**Keywords:** tropical geometry, non-Archimedean valuation, min-plus semiring,
-Fundamental Theorem of Tropical Geometry, Kapranov's theorem, corner locus,
-tropical hypersurface, Newton polytope, tropical Bézout, ultrametric.
-
-**MSC 2020:** 14T10 (Foundations of tropical geometry), 14T15 (Combinatorial
-aspects of tropical varieties), 12J25 (Non-Archimedean valued fields), 52B20
-(Lattice polytopes).
+We develop the bridge connecting classical algebraic geometry over a
+non-Archimedean valued field $K$ to tropical geometry over the min-plus
+semiring. Working with an additive valuation $v : K \to \mathbb{R} \cup
+\{+\infty\}$, we tropicalize a multivariate polynomial $f$ term by term and
+attach to it a piecewise-linear, concave function $\mathrm{trop}(f)$ whose
+non-smooth seams form the **corner locus** (the tropical hypersurface). Our
+central identity is the compatibility of tropicalization with the valuation: the
+valuation of a classical monomial term equals its tropicalized value. From it,
+together with a sharpened ultrametric "unique minimum wins" lemma, we obtain the
+**forward inclusion** $\mathrm{Trop}(V(f)) \subseteq \mathrm{cornerLocus}
+(\mathrm{trop}\, f)$ unconditionally, and the full **fundamental theorem of
+tropical geometry** (Kapranov, hypersurface case) under an explicit lifting
+hypothesis. We then prove a **tropical Bézout theorem** in one variable: a
+degree-$d$ tropical polynomial has exactly $d$ roots counted with multiplicity,
+where multiplicities are slope drops of a concave broken line, and these roots
+are the valuations of the classical roots. We close with the **Maslov
+dequantization** picture realizing tropicalization as a zero-temperature limit,
+quantitative dequantization rates, and conjectural higher-dimensional Bézout.
 
 ---
 
 ## 1. Introduction
 
-Tropical geometry studies the piecewise-linear images of algebraic varieties
-under a degeneration governed by a non-Archimedean valuation. The min-plus
-semiring `(ℝ ∪ {∞}, ⊕, ⊙)`, with `a ⊕ b := min(a, b)` and `a ⊙ b := a + b`,
-replaces the field operations, and smooth varieties degenerate into polyhedral
-complexes. The dictionary between the two worlds is supplied by a valuation,
-which converts multiplication into addition and addition (generically) into
-minimum.
+Tropical geometry replaces the field operations $(+, \times)$ by the min-plus
+operations $(\min, +)$, turning algebraic varieties into piecewise-linear
+polyhedral complexes. The miracle is that these "shadows" retain a great deal of
+the classical geometry: intersection numbers, degrees, genus, and more. The
+organizing principle, due to Kapranov, Einsiedler–Kapranov–Lind, and others, is
+the **fundamental theorem of tropical geometry**, which identifies the
+valuation-image of a classical variety with a purely combinatorial object — the
+corner locus of a tropical polynomial.
 
-This paper isolates and proves the algebraic core of that dictionary. We work
-over an arbitrary field `K` equipped with an additive valuation `v` into a
-linearly ordered additive commutative monoid-with-top `Γ` (so that `v(0) = ⊤`).
-The valuation is read as the tropicalization map. Our contributions are:
+This paper formalizes the hypersurface case of that bridge and its
+one-dimensional Bézout corollary. Our contributions are:
 
-1. **The ultrametric winner-takes-all lemma** (§3), the additive-valuation
-   analogue of the multiplicative `Valuation.map_sum_eq_of_lt`.
-2. **Kapranov's easy direction** (§4): tropicalization is contained in the corner
-   locus, together with a concrete line instance.
-3. **Min-plus multiplicativity** (§5), via a min-plus distributive law over a
-   product index set, with the tropical polynomial / evaluation / product
-   formalism.
-4. **A leading-term-cancellation strengthening** (§6) that generalizes Kapranov's
-   easy direction beyond exact vanishing.
-
-We emphasize the "limit of valuations" interpretation: classically one studies
-the rescaled family `v_t = t · v` as `t → ∞`; the corner-locus characterization
-is the invariant limiting shape onto which the (logarithmic) amoeba of the
-variety collapses.
-
----
-
-## 2. Setting and definitions
-
-### 2.1 Valuations
-
-Throughout, `K` is a field and `Γ` is a `LinearOrderedAddCommMonoidWithTop`: a
-linearly ordered additive commutative monoid with a top element `⊤` absorbing
-addition. An **additive valuation** `v : AddValuation K Γ` satisfies
-`v(0) = ⊤`, `v(1) = 0`, `v(xy) = v(x) + v(y)`, and the ultrametric inequality
-`v(x + y) ≥ min(v(x), v(y))`, with equality when `v(x) ≠ v(y)`. We read `v(x)` as
-the *order* (tropicalization) of `x`.
-
-### 2.2 The corner locus
-
-The corner locus is captured by a predicate on weight functions.
-
-> **Definition 2.1 (Attained at least twice / corner locus).**
-> For a linear order `α` and a weight function `w : ι → α`, define
-> `AttainedAtLeastTwice w` to hold iff there exist indices `i ≠ j` such that
-> `∀ k, w(i) ≤ w(k)` and `∀ k, w(j) ≤ w(k)`.
-
-Geometrically, a tropical polynomial `x ↦ min_i (c_i + ⟨a_i, x⟩)` is a concave
-piecewise-linear function; it is non-smooth exactly where the defining minimum is
-achieved by two or more distinct monomials. The set of such non-smooth points is
-the **tropical hypersurface** (corner locus). `AttainedAtLeastTwice` is precisely
-the pointwise condition "this point is a corner."
-
-> **Proposition 2.2 (Boundary case).** If `ι` is a subsingleton (at most one
-> index), then `¬ AttainedAtLeastTwice w` for every `w`.
->
-> *Proof sketch.* A witness requires distinct `i ≠ j`; in a subsingleton any two
-> elements are equal, so no witness exists. ∎
-
-This records that a single tropical monomial defines a smooth (globally linear)
-function with empty corner locus: at least two monomials are needed for the
-fundamental theorem to have content.
+1. A clean min-plus setup over an additive valuation $v : K \to \mathbb{R} \cup
+   \{\infty\}$ (Section 2), with tropicalized monomials, the tropical polynomial
+   function, and the corner locus defined combinatorially.
+2. The **bridge identity** $v(c_a x^a) = \mathrm{tropMonomial}(a)$
+   (Theorem 3.1), the compatibility of tropicalization with the valuation.
+3. A sharpened ultrametric lemma: a strictly unique smallest term controls the
+   valuation of a sum (Theorem 3.2).
+4. The **forward inclusion** of the fundamental theorem, proved unconditionally
+   (Theorem 4.1), and the **full equality** under a lifting hypothesis
+   (Theorem 4.2).
+5. **Tropical Bézout** in one variable (Theorem 5.1) with multiplicities as
+   slope drops (Theorem 5.2) and the identification of tropical roots with
+   valuations of classical roots (Theorem 5.3).
+6. The **Maslov dequantization** limit (Section 6) realizing tropicalization as
+   $t \to \infty$.
 
 ---
 
-## 3. The ultrametric winner-takes-all lemma
+## 2. Setup: valued fields, tropicalization, and the corner locus
 
-The technical heart of the bridge is the following additive analogue of
-`Valuation.map_sum_eq_of_lt`.
+Throughout, $K$ is a field equipped with an **additive valuation** valued in
+$\mathbb{R} \cup \{+\infty\} = \mathbb{R} \cup \{\top\}$, written
+$v : K \to \mathbb{R}\cup\{\infty\}$. By definition $v$ satisfies
 
-> **Theorem 3.1 (Winner takes all).** Let `v : AddValuation K Γ`, let
-> `s : Finset ι` be finite, `f : ι → K`, and `j ∈ s`. If `f j` has strictly the
-> smallest valuation in the family, i.e.
-> `∀ i ∈ s, i ≠ j → v(f j) < v(f i)`,
-> then `v(∑_{i ∈ s} f i) = v(f j)`.
+- $v(0) = +\infty$ and $v(1) = 0$;
+- **multiplicativity**: $v(xy) = v(x) + v(y)$;
+- the **non-Archimedean (ultrametric) inequality**:
+  $\min(v(x), v(y)) \le v(x + y)$.
 
-*Proof sketch.* Two cases.
+We use the **min-plus** convention: tropical addition is $\min$, tropical
+multiplication is $+$, the tropical zero is $\top = +\infty$, and the tropical
+one is $0$.
 
-- If `v(f j) = ⊤`, then since `v(f j)` is strictly below all other terms, every
-  other term also has valuation `⊤` — impossible unless there are none, so
-  `s = {j}` and the sum is `f j`.
-- Otherwise split off the minimizer: `∑_{i ∈ s} f i = f j + ∑_{i ∈ s \ {j}} f i`.
-  Every remaining term has valuation strictly exceeding `v(f j)`, so by the
-  strict-monotone bound `v.map_lt_sum` the tail sum has valuation `> v(f j)`.
-  The ultrametric equality `AddValuation.map_add_eq_of_lt_left` then yields
-  `v(f j + tail) = v(f j)`. ∎
+We work with polynomials $f \in K[x_1, \dots, x_n]$ (formally $f \in
+\mathrm{MvPolynomial}(\mathrm{Fin}\,n,\,K)$), each a finite sum
+$f = \sum_{a \in \mathrm{supp}(f)} c_a\, x^a$ over exponent vectors
+$a = (a_1,\dots,a_n) \in \mathbb{N}^n$, with coefficient $c_a = f.\mathrm{coeff}(a)$
+and monomial $x^a = \prod_i x_i^{a_i}$.
 
-The intuition: in a non-Archimedean world there is no cancellation among terms of
-different orders; the single most-divisible term dictates the divisibility of the
-whole sum.
+**Definition 2.1 (linear form).** For an exponent $a \in \mathbb{N}^n$ and a
+tropical point $w \in \mathbb{R}^n$,
+$$
+\langle a, w\rangle \;=\; \mathrm{linForm}(a, w) \;=\; \sum_{i} a_i\, w_i .
+$$
 
----
+**Definition 2.2 (tropicalized monomial).** For $f$, an exponent $a$, and a
+point $w$,
+$$
+\mathrm{tropMonomial}(f, a, w) \;=\; v(c_a) + \langle a, w\rangle \;\in\;
+\mathbb{R}\cup\{\infty\}.
+$$
+This is the min-plus value $v(c_a) \odot w^{\odot a}$ of the $a$-th term.
 
-## 4. The Fundamental Theorem of Tropical Geometry (easy direction)
+**Definition 2.3 (tropical polynomial function).** The tropicalization of $f$,
+evaluated at $w$, is the minimum (infimum over the finite support) of the
+tropicalized monomials:
+$$
+\mathrm{tropPolyValue}(f, w) \;=\; \min_{a \in \mathrm{supp}(f)}
+\mathrm{tropMonomial}(f, a, w).
+$$
+As a function of $w$ this is a minimum of finitely many affine functions, hence
+**piecewise-linear and concave**.
 
-> **Theorem 4.1 (Kapranov's easy direction).** Let `v : AddValuation K Γ` with
-> `Γ` nontrivial, let `ι` be a finite nonempty index type, and let `T : ι → K`.
-> If the terms sum to zero, `∑_i T i = 0`, and the family is not identically zero,
-> `∃ i, T i ≠ 0`, then the weight function `i ↦ v(T i)` satisfies
-> `AttainedAtLeastTwice`. That is, the tropicalized point lies on the corner
-> locus.
+**Definition 2.4 (corner locus / tropical hypersurface).** A point $w \in
+\mathbb{R}^n$ is a **corner point** of $\mathrm{trop}(f)$ if the defining minimum
+is attained at (at least) two distinct exponents: there exist $a \ne b$ in
+$\mathrm{supp}(f)$ with
+$$
+\mathrm{tropMonomial}(f,a,w) = \mathrm{tropMonomial}(f,b,w)
+= \min_{c \in \mathrm{supp}(f)} \mathrm{tropMonomial}(f,c,w).
+$$
+The set of all corner points is the **tropical hypersurface**
+$\mathrm{cornerLocus}(\mathrm{trop}\,f) = \{ w : \mathrm{IsCornerPoint}(f, w)\}$.
 
-*Proof sketch.* Choose a minimizer `m` of `i ↦ v(T i)` (the family is finite and
-nonempty). Suppose for contradiction that the minimum is *not* attained twice.
-Then `m` is the unique minimizer: `v(T m) < v(T i)` for all `i ≠ m`. By the
-winner-takes-all lemma (Theorem 3.1), `v(∑_i T i) = v(T m)`. But `∑_i T i = 0`,
-so `v(∑_i T i) = v(0) = ⊤`, forcing `v(T m) = ⊤` and hence `T m = 0`. Since `m`
-is the strict minimizer, every other term has even larger valuation, so all
-`T i = 0` — contradicting `∃ i, T i ≠ 0`. Therefore the minimum is attained at
-least twice. ∎
+**Definition 2.5 (torus, tropicalization map, $\mathrm{Trop}(V(f))$).** A
+classical point $x \in K^n$ lies in the **torus** $(K^\times)^n$ if every
+coordinate is nonzero, $\mathrm{InTorus}(x) := \forall i,\, x_i \ne 0$. For such
+$x$ each $v(x_i)$ is finite, and the **tropicalization map** is
+$$
+\mathrm{tropicalize}(x) \;=\; \big(v(x_1), \dots, v(x_n)\big) \in \mathbb{R}^n .
+$$
+The **classical zero set in the torus** is
+$$
+\mathrm{classicalZeroSet}(f) = \{ x : \mathrm{InTorus}(x) \wedge f(x) = 0 \},
+$$
+and its tropical shadow is
+$$
+\mathrm{Trop}(V(f)) \;=\; \mathrm{tropicalize}\big(\mathrm{classicalZeroSet}(f)\big)
+\subseteq \mathbb{R}^n .
+$$
 
-This is exactly the statement that the tropicalization of a variety is contained
-in the corner locus of its tropicalized defining polynomial: every point of the
-classical hypersurface maps to a non-smooth point of the tropical polynomial.
-
-> **Corollary 4.2 (Tropical line corner).** Let `a, b, c, x, y ∈ K` with
-> `a·x + b·y + c = 0` and not all of `a·x, b·y, c` zero. Then the weight function
-> `Fin 3 → Γ`, `i ↦ v([a·x, b·y, c]_i)`, satisfies `AttainedAtLeastTwice`.
->
-> *Proof sketch.* Apply Theorem 4.1 to the three-term family `[a·x, b·y, c]`; the
-> sum is the line equation (zero), and the non-degeneracy hypothesis supplies a
-> nonzero term. ∎
-
-Concretely, the tropical line `min(v(a) + X, v(b) + Y, v(c))` has a corner at the
-tropicalized point: two of the three affine pieces tie, producing the single
-vertex of the Y-shaped tropical line.
-
----
-
-## 5. Min-plus multiplicativity: the engine of tropical Bézout
-
-We now formalize tropical polynomials and prove that tropical evaluation is
-multiplicative in the min-plus sense.
-
-> **Definition 5.1 (Tropical polynomial).** A `TropPoly ι n` consists of a finite
-> family of monomials indexed by `ι`, each given by a coefficient
-> `coeff : ι → ℝ` and an exponent vector `exp : ι → (Fin n → ℝ)`.
-
-> **Definition 5.2 (Term value and evaluation).** The value of the `i`-th monomial
-> at a point `x : Fin n → ℝ` is `termVal P x i := coeff(i) + ∑_k exp(i)_k · x_k`.
-> The tropical (min-plus) evaluation is the infimum over the (finite, nonempty)
-> index set: `eval P x := inf'_i termVal P x i`.
-
-> **Definition 5.3 (Tropical product).** For `P : TropPoly ι n` and
-> `Q : TropPoly κ n`, the product `P ⊙ Q : TropPoly (ι × κ) n` has
-> `coeff(i, k) = P.coeff(i) + Q.coeff(k)` and `exp(i, k) = P.exp(i) + Q.exp(k)`.
-> Monomials multiply by adding coefficients and exponents.
-
-The key combinatorial lemma is a min-plus distributive law over a product index.
-
-> **Lemma 5.4 (Min-plus product distributivity).** For nonempty finsets `s ⊆ ι`,
-> `t ⊆ κ` and functions `f : ι → ℝ`, `g : κ → ℝ`,
-> `inf'_{(i,k) ∈ s × t} (f i + g k) = (inf'_{i ∈ s} f i) + (inf'_{k ∈ t} g k)`.
->
-> *Proof sketch.* Antisymmetry. (≥) Pick minimizers `a ∈ s` of `f` and `b ∈ t` of
-> `g`; the pair `(a, b)` realizes the right-hand value, so the left infimum is at
-> most it. (≤) For any pair, `f(i) + g(k) ≥ inf f + inf g` by adding the two
-> separate lower bounds, so the left infimum dominates the right. ∎
-
-> **Theorem 5.5 (Min-plus multiplicativity).** For `P : TropPoly ι n`,
-> `Q : TropPoly κ n` (both finite, nonempty index types) and any `x`,
-> `eval (P ⊙ Q) x = eval P x + eval Q x`.
->
-> *Proof sketch.* The `(i, k)` monomial of `P ⊙ Q` evaluates to
-> `(P.coeff i + Q.coeff k) + ∑_l (P.exp i + Q.exp k)_l · x_l`, which rearranges to
-> `termVal P x i + termVal Q x k`. Taking the min over the product `univ × univ`
-> and applying Lemma 5.4 factors it as `eval P x + eval Q x`. ∎
-
-**Why this is the tropical Bézout engine.** Each tropical polynomial has a
-**Newton polytope**, the convex hull of its exponent vectors. Min-plus
-multiplicativity implies that the Newton polytope of a product is the *Minkowski
-sum* of the factors' polytopes; in particular degrees add. The stable
-intersection number of two tropical curves equals the mixed volume of their
-Newton polytopes, which for plane curves of degrees `d` and `e` is exactly
-`d · e`. Thus Theorem 5.5 supplies the algebraic identity from which the
-quantitative tropical Bézout theorem is assembled: intersection counting becomes
-a volume computation on lattice polytopes.
+**Lemma 2.6 (finiteness on the torus).** If $x \ne 0$ then $v(x) \ne \infty$;
+consequently for a torus point $x$ and each $i$, the real number
+$\mathrm{tropicalize}(x)_i$ coerces back to the valuation,
+$(\mathrm{tropicalize}(x)_i : \mathbb{R}\cup\{\infty\}) = v(x_i)$.
+*(In Lean: `valuation_ne_top`, `coe_untop_valuation`.)* This is what lets us pass
+freely between $v(x_i) \in \mathbb{R}\cup\{\infty\}$ and the real coordinates of
+the tropical point.
 
 ---
 
-## 6. Strengthening: corners from leading-term cancellation
+## 3. The bridge identity and the ultrametric core
 
-The hypothesis `∑_i T i = 0` in Theorem 4.1 is used only through the weaker fact
-that the valuation of the sum *strictly exceeds* the minimal term valuation.
+### 3.1 Compatibility of tropicalization with the valuation
 
-> **Theorem 6.1 (Corner from leading-term cancellation).** Let
-> `v : AddValuation K Γ`, `ι` finite nonempty, `T : ι → K`, and let `m` be a global
-> minimizer: `∀ k, v(T m) ≤ v(T k)`. If `v(T m) < v(∑_i T i)` (the sum's valuation
-> jumps strictly above the leading term), then `i ↦ v(T i)` satisfies
-> `AttainedAtLeastTwice`.
->
-> *Proof sketch.* Contrapositive. If the minimum were attained uniquely at `m`,
-> then `m` is the strict minimizer and Theorem 3.1 gives `v(∑ T i) = v(T m)`,
-> contradicting the strict jump. Concretely: assuming no second minimizer, every
-> `i ≠ m` has `v(T m) < v(T i)`, so winner-takes-all forces equality and no jump
-> is possible. ∎
+**Theorem 3.1 (bridge identity, `tropMonomial_eq_valuation_term`).**
+For any $f$, any exponent $a$, and any torus point $x$,
+$$
+v\!\left(c_a \cdot \prod_i x_i^{a_i}\right) \;=\;
+\mathrm{tropMonomial}\big(f, a, \mathrm{tropicalize}(x)\big)
+\;=\; v(c_a) + \sum_i a_i\, v(x_i).
+$$
 
-Theorem 4.1 is the special case `∑ T i = 0`, where `v(∑ T i) = ⊤` is trivially
-above the finite leading term. Theorem 6.1 captures, e.g., points where the
-polynomial does not vanish but its valuation jumps — and still pins the
-tropicalized point onto the corner locus.
+*Proof sketch.* If $c_a = 0$ both sides are $+\infty$. Otherwise, use Lemma 2.6
+to write $v(x_i) = \mathrm{tropicalize}(x)_i$ as a real number. By
+multiplicativity of $v$ applied across the finite product (a straightforward
+induction over the index set),
+$$
+v\Big(\prod_i x_i^{a_i}\Big) = \sum_i a_i\, v(x_i).
+$$
+Multiplying the coefficient back in and using $v(c_a x^a) = v(c_a) +
+v(x^a)$ gives $v(c_a) + \sum_i a_i v(x_i)$, which is exactly
+$\mathrm{tropMonomial}(f,a,\mathrm{tropicalize}(x))$ after unfolding $\langle a,
+\cdot\rangle$ and matching the natural-number scalar multiplication with real
+multiplication. $\square$
+
+This identity is the literal bridge: the *classical* valuation of a term equals
+its *tropical* value. Everything else is a consequence of it plus the ultrametric
+inequality.
+
+### 3.2 The ultrametric "unique minimum wins" lemma
+
+**Theorem 3.2 (`addval_sum_eq_of_unique_min`).** Let $s$ be a finite index set,
+$g : s \to K$, and $j \in s$. If $v(g_j) < v(g_i)$ for every $i \in s \setminus
+\{j\}$, then
+$$
+v\!\left(\sum_{i \in s} g_i\right) \;=\; v(g_j).
+$$
+
+*Proof sketch.* Strong induction on $|s|$. Split off $g_j$: $\sum_{i} g_i = g_j +
+\sum_{i \ne j} g_i$. By the inductive control on the remaining sum, $v(\sum_{i\ne
+j} g_i) \ge \min_{i \ne j} v(g_i) > v(g_j)$, where the first step is the
+ultrametric inequality applied repeatedly and the second is the strict-minimum
+hypothesis. When two summands have distinct valuations, the ultrametric
+inequality is an *equality* at the smaller one: $v(a + b) = \min(v(a),v(b))$
+whenever $v(a) \ne v(b)$. Applying this to $g_j$ and the tail yields $v(\sum_i
+g_i) = v(g_j)$. $\square$
+
+This is the additive-valuation analogue of the classical "domination" principle
+$v\big(\sum g_i\big) = \min_i v(g_i)$ when the minimum is uniquely attained — the
+*no cancellation* phenomenon that makes non-Archimedean analysis rigid.
 
 ---
 
-## 6.5. A worked example
+## 4. The fundamental theorem of tropical geometry (hypersurface case)
 
-To make the machinery concrete, fix the field `K = ℚ` with the `5`-adic valuation
-`v = v₅` (the additive valuation counting signed powers of `5`; `v₅(0) = ⊤`).
+### 4.1 Forward inclusion (unconditional)
 
-**Winner-takes-all (Theorem 3.1).** Take `f = (3, 5, 25, 50)`. Then
-`v₅(f) = (0, 1, 2, 2)`, so `f₀ = 3` is the unique strict minimizer. The sum is
-`3 + 5 + 25 + 50 = 83`, and `v₅(83) = 0 = v₅(3)`. The lone most-divisible term
-(here the *least* divisible, since the minimum is `0`) determines the sum's order,
-exactly as the theorem predicts.
+**Theorem 4.1 (`TropV_subset_tropicalHypersurface`).** For every polynomial $f$,
+$$
+\mathrm{Trop}(V(f)) \;\subseteq\; \mathrm{cornerLocus}(\mathrm{trop}\,f).
+$$
+Equivalently: if $x$ is a torus point with $f(x) = 0$, then
+$\mathrm{tropicalize}(x)$ is a corner point of $\mathrm{trop}(f)$.
 
-**Kapranov's easy direction (Theorem 4.1).** Take `T = (10, 15, -25)`, which sums
-to `0` but is not identically zero. Then `v₅(T) = (1, 1, 2)`. The minimum `1` is
-attained twice (indices `0` and `1`), so the tropicalized point lies on the corner
-locus, confirming the containment.
+*Proof sketch.* Write $w = \mathrm{tropicalize}(x)$ and let $a^\star \in
+\mathrm{supp}(f)$ attain the minimum $\mathrm{tropPolyValue}(f, w) = \min_a
+\mathrm{tropMonomial}(f, a, w)$ (the support is finite and nonempty since
+$f(x)=0$ presupposes $f \ne 0$ in the nontrivial case). By the bridge identity
+(Theorem 3.1), each term's valuation $v(c_a x^a)$ equals
+$\mathrm{tropMonomial}(f, a, w)$. Suppose, for contradiction, that the minimum
+were attained at the *single* exponent $a^\star$, i.e. $v(c_{a^\star}
+x^{a^\star}) < v(c_a x^a)$ for all other $a$ in the support. Then Theorem 3.2
+applies to the sum $f(x) = \sum_a c_a x^a$, giving
+$$
+v(f(x)) = v(c_{a^\star} x^{a^\star}) < \infty,
+$$
+so $f(x) \ne 0$ — contradicting $f(x) = 0$ (which forces $v(f(x)) = \infty$).
+Hence the minimum is attained at two distinct exponents, i.e. $w$ is a corner
+point. $\square$
 
-**Tropical line (Corollary 4.2).** The classical line `2x + y - 25 = 0` has the
-`5`-adic solution `(x, y) = (0, 25)`. The three terms are `(a·x, b·y, c) =
-(0, 25, -25)` with valuations `(⊤, 2, 2)`; the finite minimum `2` is attained
-twice, placing the vertex of the Y-shaped tropical line at this tropicalized
-point.
+The argument uses *only* multiplicativity, the ultrametric inequality, and the
+fact that $v$ detects zero. No algebraic closure, no genericity, no lifting.
 
-**Min-plus multiplicativity (Theorem 5.5).** Let `P` and `Q` each be the tropical
-line with monomials `{(0;0,0), (1;1,0), (2;0,1)}` and `{(0;0,0), (3;1,0),
-(1;0,1)}` respectively (coefficient `;` exponents). At, say, `x = (-3, 5)` one
-computes `eval P x = -2`... and directly `eval(P ⊙ Q) x = eval P x + eval Q x`
-for every test point — the evaluations add identically.
+### 4.2 The full equality (with lifting)
 
-**Newton polytopes / tropical Bézout (§5).** The Newton polytope of each tropical
-line is the unit triangle `conv{(0,0),(1,0),(0,1)}` of area `½`. Its Minkowski
-self-sum is `conv{(0,0),(2,0),(0,2)}` of area `2`, so the mixed volume is
-`2 - ½ - ½ = 1 = 1 · 1`, the Bézout number of two lines. Replacing one factor by
-a conic (Newton polytope `conv{(0,0),(2,0),(0,2)}`) yields mixed volume `2 =
-1 · 2`, the Bézout number of a line and a conic. The degree product emerges as a
-pure lattice-polygon volume.
+The reverse inclusion requires lifting a corner of the tropical polynomial back
+to an honest classical solution. This is possible over a sufficiently rich valued
+field (e.g. algebraically closed with surjective valuation, such as the Puiseux
+series field $\mathbb{C}\{\{t\}\}$ or $\mathbb{C}_p$). We encapsulate exactly
+what is needed as a hypothesis.
 
-**Leading-term cancellation (Theorem 6.1).** Take `T = (5, -5, 25)`, summing to
-`25 ≠ 0`. Here `v₅(T) = (1, 1, 2)` with minimum `1`, while `v₅(25) = 2 > 1`: the
-sum's valuation jumps strictly above the leading term, and indeed the minimum is
-attained twice — a corner, even without exact vanishing.
+**Lifting hypothesis (H).** For every corner point $w \in
+\mathrm{cornerLocus}(\mathrm{trop}\,f)$ there exists a torus point $x$ with
+$f(x) = 0$ and $\mathrm{tropicalize}(x) = w$.
+
+**Theorem 4.2 (`kapranov_fundamental_theorem`).** Under hypothesis (H),
+$$
+\mathrm{Trop}(V(f)) \;=\; \mathrm{cornerLocus}(\mathrm{trop}\,f).
+$$
+
+*Proof sketch.* The inclusion $\subseteq$ is Theorem 4.1. The inclusion
+$\supseteq$ is exactly hypothesis (H): each corner point is realized as the
+tropicalization of a classical solution. $\square$
+
+The content of the genuine Kapranov theorem is precisely the verification of (H);
+isolating it as a hypothesis cleanly separates the soft, ultrametric direction
+(proved here in full generality) from the hard, field-theoretic direction.
+
+---
+
+## 5. Tropical Bézout in one variable
+
+Specialize to $n = 1$. A degree-$d$ tropical polynomial is a minimum of $d+1$
+affine functions with integer slopes $0, 1, \dots, d$:
+$$
+T(w) \;=\; \min_{0 \le k \le d} \big( c_k + k\, w \big), \qquad w \in \mathbb{R},
+$$
+where $c_k = v(\text{coefficient of } x^k)$ (with $c_k = +\infty$ for absent
+terms; the leading and constant terms are assumed present so the extreme slopes
+$d$ and $0$ occur). The graph of $T$ is a **concave** piecewise-linear curve.
+
+**Definition 5.1 (tropical root and multiplicity).** A point $w_0$ is a
+**tropical root** of $T$ if it is a corner (the minimum is attained at $\ge 2$
+indices). Its **multiplicity** is the *slope drop*
+$$
+\mathrm{mult}(w_0) \;=\; \mathrm{slope}^-(w_0) - \mathrm{slope}^+(w_0),
+$$
+the difference between the slope of $T$ just left of $w_0$ and just right of
+$w_0$. Concavity guarantees $\mathrm{slope}^-(w_0) \ge \mathrm{slope}^+(w_0)$, so
+multiplicities are nonnegative integers.
+
+**Theorem 5.2 (slope drop = multiplicity, `slope_drop_eq_mult`).** At each
+tropical root, the local multiplicity defined combinatorially (number of "extra"
+indices achieving the minimum, in the sense of how the minimizing index set
+jumps) equals the slope drop $\mathrm{slope}^-(w_0) - \mathrm{slope}^+(w_0)$.
+
+*Proof sketch.* For a concave minimum of affine pieces, immediately to the left
+of $w_0$ the minimizing line has some slope $k^-$ and to the right slope $k^+$.
+Since lines are ordered by slope along a concave lower envelope, the indices
+achieving the minimum at $w_0$ are exactly those with slope in $[k^+, k^-]$, and
+the drop $k^- - k^+$ counts them with the correct multiplicity. $\square$
+
+**Theorem 5.3 (tropical Bézout, `tropical_bezout`, `tropical_bezout_sum_mult`).**
+A degree-$d$ tropical polynomial $T$ has exactly $d$ roots counted with
+multiplicity:
+$$
+\sum_{\text{tropical roots } w_0} \mathrm{mult}(w_0) \;=\; d .
+$$
+
+*Proof sketch.* The slope of $T$ as $w \to -\infty$ is $d$ (the steepest line
+$c_d + d w$ dominates the minimum for very negative $w$), and as $w \to +\infty$
+it is $0$ (the line $c_0$ dominates). The slope is a nonincreasing step function
+of $w$ (concavity), changing only at corners, where it decreases by exactly
+$\mathrm{mult}(w_0)$ (Theorem 5.2). The total decrease equals the difference of
+the asymptotic slopes:
+$$
+\sum_{w_0} \mathrm{mult}(w_0) = \mathrm{slope}(-\infty) - \mathrm{slope}(+\infty)
+= d - 0 = d. \qquad \square
+$$
+This is a **conservation law**: the degree is a boundary quantity (difference of
+asymptotic slopes) fixed by the support alone, requiring no genericity.
+
+**Theorem 5.4 (roots are valuations of classical roots,
+`tropPolyValue_linearFactor`).** If $f \in K[x]$ factors over the torus as
+$f = c \prod_{j} (x - r_j)$ with $r_j \in K^\times$, then the tropical roots of
+$\mathrm{trop}(f)$ are exactly the valuations $v(r_j)$, with multiplicities
+matching. In particular the corner locus literally enumerates
+$\{v(r_j)\}_j$.
+
+*Proof sketch.* For a single linear factor $x - r$, the tropical polynomial is
+$\min(v(1) + w,\ v(r)) = \min(w, v(r))$, whose unique corner is at $w = v(r)$
+with slope drop $1 - 0 = 1$. Tropical multiplication of factors corresponds to
+adding their tropical polynomials, whose corner sets (with multiplicity) are the
+union; hence the tropical roots of $\mathrm{trop}(f)$ are $\{v(r_j)\}$ with the
+right multiplicities. This matches Theorem 5.3 since $\deg f = d = $ number of
+factors. $\square$
+
+---
+
+## 6. Tropicalization as a limit: Maslov dequantization
+
+The slogan "tropical geometry is a limit of classical geometry" is made precise
+by **Maslov dequantization**, a one-parameter family of semirings interpolating
+between the classical real semiring and the tropical one.
+
+**Definition 6.1 (dequantized addition).** For $t > 0$ define
+$$
+x \oplus_t y \;=\; \tfrac{1}{t}\,\log\!\big(e^{tx} + e^{ty}\big).
+$$
+Tropical multiplication $x \odot y = x + y$ is unchanged.
+
+**Theorem 6.2 (dequantization limit, `tendsto_logAddExp_max`).** For all
+$x, y \in \mathbb{R}$,
+$$
+\lim_{t \to \infty} \big(x \oplus_t y\big) \;=\; \min(-(-x), -(-y))
+\;=\; \max(x, y),
+$$
+and in the min-convention (replacing $x \mapsto -x$) the limit is $\min(x,y)$.
+
+*Proof sketch.* Factor out the dominant exponential: with $M = \max(x,y)$,
+$$
+x \oplus_t y = M + \tfrac{1}{t}\log\!\big(1 + e^{-t|x - y|}\big),
+$$
+and the correction term lies in $\big[0, \tfrac{\log 2}{t}\big]$, tending to $0$.
+$\square$
+
+**Theorem 6.3 (two-sided sandwich, `logAddExp_lower`, `logAddExp_upper`).** For
+all $x, y$ and $t > 0$,
+$$
+\max(x, y) \;\le\; x \oplus_t y \;\le\; \max(x, y) + \frac{\log 2}{t},
+$$
+with monotonicity in each argument (`logAddExp_mono_left`).
+
+**Conjecture 6.4 (sharp logarithmic rate).** For $x \ne y$ and $t > 0$,
+$$
+0 < (x \oplus_t y) - \max(x, y) \le \frac{\log 2}{t},
+$$
+the bound $\frac{\log 2}{t}$ attained only in the limit $x = y$, and the error is
+strictly monotone decreasing in $t$. The overshoot is governed by the single
+universal constant $\log 2$, so convergence is a sharp $\Theta(1/t)$ property of
+the **semiring deformation**, not of the geometry.
+
+Under this lens, tropicalization $f \mapsto \mathrm{trop}(f)$ is the $t \to
+\infty$ (zero-temperature) limit of the classical operations, and the corner
+locus is the limiting non-smooth locus of the smooth approximants.
+
+---
 
 ## 7. Algorithms
 
-The formal results translate into directly executable procedures over the
-(rational/real) min-plus semiring.
+Three computational primitives fall directly out of the theory; see `demo.py`
+and the `algorithms` field of the package for full implementations.
 
-**Algorithm A — Corner test.** Given finitely many valuations `w : ι → ℝ`,
-compute `μ = min_i w_i` and the cardinality of `{i : w_i = μ}`; the point is on
-the corner locus iff this cardinality is ≥ 2. Complexity `O(|ι|)`.
+1. **Tropical polynomial evaluation.** Given coefficients $c_a$ and a point $w$,
+   compute $\min_a (c_a + \langle a, w\rangle)$ and report the minimizing
+   index set. Complexity $O(|\mathrm{supp}(f)| \cdot n)$.
 
-**Algorithm B — Tropical evaluation.** Given a tropical polynomial and a point
-`x`, return `min_i (coeff_i + ⟨exp_i, x⟩)`. Complexity `O(|ι| · n)`.
+2. **Corner detection.** $w$ is a corner iff the minimizing index set has size
+   $\ge 2$. Combined with evaluation this decides membership in the tropical
+   hypersurface in $O(|\mathrm{supp}(f)| \cdot n)$.
 
-**Algorithm C — Tropical product and multiplicativity check.** Form the product
-polynomial (all coefficient/exponent pairwise sums), evaluate both sides of
-Theorem 5.5 at sample points, and verify equality (a numerical certificate of
-min-plus multiplicativity). Complexity `O(|ι| · |κ| · n)` per point.
-
-**Algorithm D — Newton-polytope Minkowski check.** Compute the convex hulls of
-the exponent sets of `P`, `Q`, and `P ⊙ Q`; verify that the third is the
-Minkowski sum of the first two — the geometric shadow of Theorem 5.5 and the
-combinatorial substrate of tropical Bézout.
+3. **Tropical Bézout root counting (1D).** Sort terms by slope, compute the lower
+   envelope of the lines $c_k + k w$, read off the breakpoints (roots) and slope
+   drops (multiplicities), and verify the total is $d$. Complexity
+   $O(d \log d)$ via an Andrew's-monotone-chain style lower-hull computation.
 
 ---
 
 ## 8. Applications
 
-- **Enumerative geometry.** Tropical methods (Mikhalkin's correspondence) count
-  plane curves of given degree and genus through prescribed points by counting
-  lattice paths / tropical curves, reducing transcendental enumerative problems
-  to combinatorics. The corner-locus and multiplicativity results are the
-  foundational layer.
-- **Optimization and shortest paths.** The min-plus semiring is the algebra of
-  dynamic programming; tropical matrix powers compute shortest paths
-  (Bellman–Ford / Floyd–Warshall). Min-plus multiplicativity is the associativity
-  backbone of these computations.
-- **Phylogenetics.** Tropical geometry of the space of phylogenetic trees uses
-  the min-plus structure to define meaningful distances and means on tree space.
-- **Auction theory and economics.** Product-mix auctions and discrete-choice
-  models are governed by tropical hypersurfaces (the corner loci where the
-  optimal bundle changes), exactly the `AttainedAtLeastTwice` condition.
+- **Enumerative geometry.** Tropical curve counts (Mikhalkin's correspondence
+  theorem) compute Gromov–Witten invariants by counting lattice paths and
+  balanced graphs — a direct descendant of the corner-locus and Bézout pictures
+  developed here.
+- **Phylogenetics.** Spaces of evolutionary trees carry a natural tropical
+  (min-plus) structure; tropical convexity and tropical linear algebra organize
+  distance-based reconstruction.
+- **Optimization and operations research.** Min-plus algebra is the algebra of
+  shortest paths and scheduling; tropical polynomials model bottleneck and
+  critical-path phenomena, and corner loci are decision boundaries.
+- **Non-Archimedean / $p$-adic geometry.** Berkovich analytifications retract
+  onto tropical skeleta; the forward inclusion proved here is the soft half of
+  that retraction.
+- **Symbolic computation and elimination.** Because corner loci are defined by
+  finitely many linear comparisons, membership and intersection questions reduce
+  to linear programming and polyhedral combinatorics, replacing Gröbner-basis
+  computations over the base field by exact rational arithmetic on the Newton
+  data. This is what makes tropical methods attractive for large, structured
+  systems where classical elimination is infeasible.
+
+A recurring theme across these applications is that the *combinatorial* shadow is
+not merely a heuristic but a faithful invariant: by Theorem 4.2 the corner locus
+remembers the variety up to the information visible to the valuation, and by
+Theorem 5.3 it remembers intersection data exactly in the one-dimensional case.
+The practical consequence is a transfer principle: prove a statement about the
+piecewise-linear shadow — often a finite, decidable computation — and lift it to
+a statement about the classical variety.
 
 ---
 
-## 9. Discussion
+## 9. Discussion and future work
 
-The bridge proven here is the *easy* (containment) direction of the Fundamental
-Theorem together with the multiplicative engine of tropical Bézout. Three points
-deserve emphasis.
+The forward inclusion (Theorem 4.1) is striking in its economy: it needs only
+multiplicativity and the ultrametric inequality, and the entire proof reduces to
+"a vanishing sum cannot have a unique smallest term." Isolating the lifting
+hypothesis (H) cleanly factors the fundamental theorem into a universal soft
+direction and a field-dependent hard direction.
 
-First, the proofs are *uniform in the value group*: nothing depends on `Γ` being
-`ℝ` or `ℚ`; only the ordered-monoid-with-top structure and the ultrametric
-identity are used. This is the right level of generality for non-Archimedean
-geometry, where value groups can be `ℤ`, `ℚ`, `ℝ`, or more exotic.
+Three concrete future directions, building directly on the machinery here:
 
-Second, the boundary case (Proposition 2.2) is not a defect but a precise scope
-delimiter: corners are a phenomenon of competition among ≥ 2 monomials. The
-strengthening (Theorem 6.1) shows the true hypothesis is leading-term
-cancellation, clarifying *why* the theorem works.
+1. **Quantitative dequantization is exactly logarithmic** (Conjecture 6.4):
+   upgrade the two-sided sandwich and monotonicity to a sharp, strictly monotone
+   $\Theta(1/t)$ rate governed by $\log 2$.
 
-Third, min-plus multiplicativity (Theorem 5.5) is deceptively elementary yet
-load-bearing: it is the single identity from which the additivity of degrees,
-Newton polytopes, and ultimately the `d · e` intersection count descend.
+2. **Tropical Bézout as slope conservation in every dimension.** For a tropical
+   polynomial in $n$ variables of degree $d$, the local multiplicities over the
+   tropical hypersurface should sum to $d^n$, the classical Bézout number. The
+   one-dimensional proof uses asymptotic slope differences with no genericity;
+   the same $\inf'/\sup'$ asymptotic machinery should generalize over the
+   Newton-polytope support.
 
-It is worth dwelling on the methodological lesson. Classical proofs of Bézout's
-theorem invoke either intersection theory on projective space (Chow rings,
-proper intersection, excess intersection formulas) or the resultant and its
-degree. The tropical route replaces all of this analytic and homological
-machinery with two pieces of finite, checkable combinatorics: a containment of a
-finite point in a finite corner locus, and an identity between two infima over
-finite index sets. Both are decidable, both are stable under the `valuation → ∞`
-limit, and both are insensitive to the precise field of definition. This is the
-distinctive promise of the tropical method — transcendental difficulty traded for
-polyhedral bookkeeping — and the results of this paper isolate the smallest
-self-contained core of that trade in the bivariate, easy-direction setting.
-
-Finally, the choice of an *additive* valuation into a general
-`LinearOrderedAddCommMonoidWithTop` (rather than fixing `Γ = ℝ`) is deliberate.
-The min-plus structure on the value group is precisely the tropical semiring, and
-the top element `⊤ = v(0)` is the tropical additive identity. Working at this
-abstraction makes the bridge results literally statements about a homomorphism
-from the multiplicative structure of `K` to the tropical semiring, which is the
-conceptually correct framing of "tropicalization as a limit of valuations."
+3. **Corner locus = non-differentiability set.** For a univariate tropical
+   polynomial, a point lies on the tropical hypersurface (minimum attained twice)
+   iff $\mathrm{trop}(f)$ fails to be differentiable there, because a concave PL
+   function is differentiable exactly where its one-sided slopes agree.
 
 ---
 
-## 10. Future work
+## 10. Summary of results
 
-The set-theoretic and degree-level skeleton established here points directly at
-the quantitative theory:
+| Result | Statement | Status |
+|---|---|---|
+| `tropMonomial_eq_valuation_term` | $v(c_a x^a) = \mathrm{tropMonomial}(a, \mathrm{trop}\,x)$ | proved |
+| `addval_sum_eq_of_unique_min` | unique smallest term controls $v(\sum)$ | proved |
+| `TropV_subset_tropicalHypersurface` | $\mathrm{Trop}(V(f)) \subseteq \mathrm{cornerLocus}$ | proved (unconditional) |
+| `kapranov_fundamental_theorem` | $\mathrm{Trop}(V(f)) = \mathrm{cornerLocus}$ | proved (under lifting (H)) |
+| `tropical_bezout`, `tropical_bezout_sum_mult` | degree-$d$ poly has $d$ roots w/ mult. | proved |
+| `slope_drop_eq_mult` | local multiplicity = slope drop | proved |
+| `tropPolyValue_linearFactor` | tropical roots = valuations of classical roots | proved |
+| `tendsto_logAddExp_max` | Maslov dequantization limit | proved |
 
-1. **From union to counted intersection number.** Promote the
-   union-of-hypersurfaces / degree-addition results to a `TropMultiplicity`
-   assigning to each transverse corner the lattice index `|det|` of the two edge
-   directions, and prove `∑ multiplicities = d · e` for generic translates. The
-   Newton-polytope Minkowski addition already reduces this to a mixed-volume
-   computation; the missing piece is the local multiplicity bookkeeping.
-
-2. **The hard (converse) direction.** Kapranov's containment is the easy half;
-   the converse — every corner-locus point lifts to an actual point of the variety
-   over the valued field (Kapranov / Speyer–Sturmfels) — is the deep half. A
-   tractable first case is a single binomial or trinomial hypersurface, where the
-   lift is an explicit Newton–Puiseux / Hensel construction requiring only
-   surjectivity of the value group plus one Hensel application per corner.
-
-3. **The valuation-limit family.** Formalize the rescaled family `v_t = t · v`
-   and the amoeba-to-skeleton limit `t → ∞`, making precise the sense in which the
-   corner locus is the invariant limiting shape.
-
----
-
-## 11. Conclusion
-
-We have rigorously established the algebraic bridge from classical algebraic
-geometry over a non-Archimedean valued field to tropical geometry: the ultrametric
-winner-takes-all lemma, the easy direction of the Fundamental Theorem
-(tropicalization ⊆ corner locus), min-plus multiplicativity (the engine of
-tropical Bézout), the boundary case, and a leading-term-cancellation
-strengthening. Together these results show that the tropical shadow of a variety
-is exact — its corners and its counting faithfully encode the classical geometry —
-and they lay the foundation for a fully quantitative tropical intersection theory.
+These results jointly realize tropical geometry as a faithful, computable shadow
+of classical algebraic geometry over a non-Archimedean field, and as its
+zero-temperature limit.

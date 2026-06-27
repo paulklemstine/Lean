@@ -1,218 +1,261 @@
-# The Shadow of a Shape: How Algebra Learns to Cast Polygons
+# Shadows of Curves: How Geometry Survives at the Edge of Infinity
 
-## A puzzle about prices, distances, and the edge of geometry
+Imagine you are looking at a complicated curved landscape — hills, valleys,
+twisting ridgelines — and someone slowly turns down the resolution until all
+that remains is a stick-figure sketch: a few straight creases meeting at sharp
+corners. Astonishingly, the sketch still remembers the most important facts
+about the landscape. Two roads that crossed twice still cross twice. A loop is
+still a loop. The number of times a path meets a fixed line is preserved.
 
-Imagine you are planning a road trip across a vast country, and you only care
-about one thing: the *cheapest* possible route between two cities. You do not
-add up the cost of every leg of every route and compare totals in the usual way.
-Instead, your attention snaps immediately to the smallest number — the cheapest
-connection. Adding more options never makes things more expensive; it can only
-ever lower the minimum. In this world, the natural operation is not "add the
-costs" but "take the smaller of two costs," and the natural way to combine two
-stages of a journey is to add their costs together.
+This is the spirit of **tropical geometry**, one of the most surprising bridges
+built in modern mathematics. It says that the smooth, infinitely detailed world
+of classical algebraic curves and surfaces casts a *piecewise-linear shadow* — a
+world made entirely of line segments, rays, and corners — and that this shadow
+is faithful enough to do real geometry with. You can replace hard questions
+about polynomials with easy questions about broken lines, solve them, and carry
+the answer back.
 
-This is not an idle daydream. It is a complete and consistent arithmetic, and it
-has a name: the **min-plus** or **tropical** semiring. In tropical arithmetic,
-the word "plus" is reassigned to mean *minimum*, and the word "times" is
-reassigned to mean *ordinary addition*. So `3 ⊕ 5 = min(3, 5) = 3`, and
-`3 ⊙ 5 = 3 + 5 = 8`. It feels like a typo at first. But this strange dialect
-turns out to be the native language of optimization, scheduling, network routing,
-and — most surprisingly — a ghostly, flattened version of classical geometry.
+This article tells the story of that bridge and of three precise theorems that
+hold it up: the **fundamental theorem of tropical geometry** (a curve's shadow
+is exactly the set of "corners" of a tropical polynomial), the principle that
+tropicalization is a **limit as a valuation runs off to infinity**, and the
+**tropical Bézout theorem** (the shadow counts intersections just as faithfully
+as the original).
 
-The name "tropical" is a tribute, not a description. It honors the Brazilian
-mathematician and computer scientist Imre Simon, who pioneered the min-plus
-algebra; his colleagues in the Northern Hemisphere simply called it "tropical"
-because Simon worked in São Paulo. The name stuck, and now an entire field of
-geometry carries a whiff of the equator.
+---
 
-This article is about a bridge. On one side stands **classical algebraic
-geometry**: the ancient, baroque study of curves and surfaces carved out by
-polynomial equations — circles, ellipses, the graceful sweep of a cubic. On the
-other side stands **tropical geometry**, where those smooth curves degenerate
-into stick figures: piecewise-linear graphs made of straight segments meeting at
-sharp corners, like the skeleton of a constellation. The bridge explains *how*
-and *why* the smooth becomes the angular — and it reveals that the corners are
-not a crude approximation but an exact, faithful shadow of the original shape.
+## A strange arithmetic where addition forgets how to add
 
-## Valuations: a ruler that measures "how divisible"
+Everything begins with a deliberately weird way of doing arithmetic. In the
+**min-plus tropical semiring**, we redefine the two basic operations:
 
-To build the bridge we need one more idea, and it is a beautiful one: the
-**valuation**. Forget, for a moment, about size in the everyday sense. Instead,
-ask a different question about a number: *how deeply is it divisible by a fixed
-prime?* The number 12, written as `2² · 3`, is divisible by 2 exactly twice;
-its "2-adic valuation" is 2. The number 40, written as `2³ · 5`, has 2-adic
-valuation 3. In this way of seeing the world, 40 is "smaller" than 12 — it sits
-deeper inside the powers of two.
+- Tropical "addition" of two numbers is taking their **minimum**:
+  $x \oplus y = \min(x, y)$.
+- Tropical "multiplication" is ordinary **addition**:
+  $x \odot y = x + y$.
 
-A valuation `v` is precisely such a ruler. It assigns to each nonzero element of
-a field a number — its *order* — and it obeys two rules that make it behave like
-a logarithm of divisibility:
+At first this looks like a typo. But check the laws you care about. Tropical
+addition is commutative and associative, just like real addition. Tropical
+multiplication distributes over it:
+$$x \odot (y \oplus z) = x + \min(y,z) = \min(x+y,\,x+z) = (x\odot y)\oplus(x\odot z).$$
+The role of "zero" (the neutral element for $\oplus$) is played by $+\infty$,
+since $\min(x, +\infty) = x$. The role of "one" (neutral for $\odot$) is played
+by the ordinary number $0$, since $x + 0 = x$.
 
-- The order of a product is the sum of the orders: `v(xy) = v(x) + v(y)`.
-- The order of a sum is at least the minimum of the orders: `v(x + y) ≥ min(v(x), v(y))`,
-  with **equality whenever the two orders differ.**
+This is a genuine algebraic structure — a *semiring* — and it is the home of
+tropical geometry. The only thing you give up is subtraction; you can never undo
+a minimum. That single sacrifice is what makes the geometry turn into straight
+lines.
 
-That second rule is the secret engine of everything that follows. It is called
-the *ultrametric* or *non-Archimedean* inequality, and it encodes a startling
-fact: in a valued world, the smallest term in a sum *dominates*. If one
-ingredient of a sum is strictly more divisible than all the others, it single-
-handedly determines the divisibility of the whole. There is no gradual blending,
-no cancellation in the middle. The winner takes all.
+Now translate a polynomial into this language. An ordinary polynomial is a sum
+of monomial terms, each a coefficient times a product of powers. Tropicalize it
+term by term: products of powers become **linear forms**, coefficients become
+**constants you add on**, and the outer sum becomes a **minimum**. A tropical
+polynomial in variables $w = (w_1, \dots, w_n)$ therefore looks like
+$$
+\mathrm{trop}(f)(w) \;=\; \min_{a \in \mathrm{supp}(f)} \Big( c_a + \langle a, w\rangle \Big),
+\qquad \langle a, w\rangle = \sum_i a_i\, w_i .
+$$
+Each term inside the minimum is a flat, tilted plane. The minimum of a finite
+collection of tilted planes is a **piecewise-linear, concave function** — a
+landscape of flat facets meeting along creases. Those creases are where the
+geometry lives.
 
-Now watch what happens. The valuation is itself a translation device. It takes
-multiplication and turns it into addition (`v(xy) = v(x) + v(y)` — that is
-tropical multiplication!). And it takes addition and turns it, almost, into
-*minimum* (`v(x + y) = min(v(x), v(y))` when the orders differ — that is
-tropical addition!). The valuation is, quite literally, a dictionary that
-translates classical algebra into tropical algebra. To **tropicalize** a
-geometric object is simply to look at it through the lens of a valuation.
+---
 
-## The fundamental theorem: corners are not accidents
+## The corner locus: where the minimum ties
 
-Here is the central question. Take a classical curve — say a line defined by an
-equation `a·x + b·y + c = 0`, where the coefficients live in a valued field. Apply
-the valuation to everything. What shape do you get?
+Look closely at that minimum. At most points $w$, exactly one of the tilted
+planes is strictly lowest; the function is smooth there, just a single flat
+facet. But along certain seams, **two different planes tie for lowest at the
+same time**. These are the corners, the creases, the fold-lines of the
+landscape. We call the set of all such points the **corner locus**, and it is
+the central geometric object.
 
-The classical line is smooth and featureless. Its tropical shadow is a
-piecewise-linear figure: three rays emanating from a single corner point, like a
-letter Y or a peace sign without the circle. The miracle is that this corner is
-not an artifact of sloppy projection. It is forced, exactly and provably, by the
-algebra.
+Formally, a point $w$ is a *corner point* of $\mathrm{trop}(f)$ when there exist
+two distinct exponent vectors $a \neq b$ in the support of $f$ such that
+$$
+c_a + \langle a, w \rangle \;=\; c_b + \langle b, w \rangle
+\;=\; \min_{c \in \mathrm{supp}(f)} \big( c_c + \langle c, w\rangle\big).
+$$
+In words: the cheapest term is achieved twice. The collection of all corner
+points is the **tropical hypersurface** of $f$ — the shadow we have been
+chasing. For a tropical polynomial in two variables it is a planar graph of rays
+and segments, a kind of geometric skeleton.
 
-This is the content of the **Fundamental Theorem of Tropical Geometry**, and its
-more accessible half — historically attributed to Mikhail Kapranov — is the
-keystone of our bridge. Stated plainly:
+But a skeleton of *what*? That is the deep question, and the answer is the
+bridge.
 
-> **Kapranov's easy direction.** Let `T₁, T₂, …, T_n` be the terms (monomials,
-> evaluated at a specific point) of a polynomial over a valued field. Suppose the
-> point lies on the curve, so the terms sum to zero (`T₁ + T₂ + ⋯ + T_n = 0`),
-> and suppose the polynomial does not vanish term-by-term (at least one `Tᵢ` is
-> nonzero). Then the minimum of the valuations `v(T₁), v(T₂), …, v(T_n)` is
-> attained **at least twice** — there are two distinct terms that both achieve
-> the smallest order.
+---
 
-This "attained at least twice" condition is the *corner locus*, also called the
-*tropical hypersurface*. A piecewise-linear function built from a collection of
-linear pieces is smooth everywhere except where two or more of those pieces tie
-for the minimum — and a tie is exactly a corner, a crease, a non-differentiable
-edge. So the theorem says: **the tropicalization of a curve lands precisely on
-the creases of the tropical polynomial.** The shadow of the smooth curve is the
-skeleton of corners, and nowhere else.
+## Valuations: measuring numbers by how divisible they are
 
-Why must the minimum be attained twice? The proof is a single, elegant stroke of
-the winner-takes-all principle. Suppose, to the contrary, that the minimum were
-attained *uniquely* — that one term, say `T_m`, were strictly more divisible than
-every other. Then the ultrametric rule guarantees that this lone champion would
-dictate the valuation of the entire sum: `v(T₁ + ⋯ + T_n) = v(T_m)`. But the
-terms sum to *zero*, and zero is infinitely divisible — its valuation is `∞`. So
-we would be forced to conclude `v(T_m) = ∞`, meaning `T_m` itself is zero,
-contradicting the assumption that it was the strict, nonzero champion. The only
-escape is that there was never a unique champion in the first place: at least two
-terms must tie for the minimum. The corner is born of necessity.
+To connect this stick-figure world to real algebraic geometry, we need a field
+that secretly carries the tropical structure inside it. The right tool is a
+**non-Archimedean valuation**.
 
-For the tropical line `min(v(a) + x, v(b) + y, v(c))`, this means there must be
-a point where two of the three expressions tie — and that tie point is the single
-vertex of the Y-shaped tropical line. A smooth classical line, refracted through
-the valuation, becomes a tripod with one joint. The joint is not optional.
+A valuation $v$ assigns to each nonzero element $x$ of a field $K$ a number
+$v(x)$ — think of it as measuring "how small" or "how divisible" $x$ is. The
+classic example is the **$p$-adic valuation** on the rational numbers: $v_p(x)$
+is the power of a fixed prime $p$ dividing $x$. So $v_2(12) = 2$ because
+$12 = 2^2 \cdot 3$, while $v_2(5) = 0$ and $v_2(1/8) = -3$. A valuation always
+satisfies three rules:
 
-## The boundary case: why two is the magic number
+1. $v(0) = +\infty$ (zero is infinitely divisible),
+2. $v(xy) = v(x) + v(y)$ (the valuation of a product is the sum), and
+3. the **ultrametric inequality** $v(x + y) \ge \min(v(x), v(y))$.
 
-There is a delicate edge to this story, and honesty about it is part of the
-mathematics. If a "polynomial" has only a *single* term, there is nothing to
-tie — a lone runner always wins its own race uncontested. A single tropical
-monomial defines a perfectly smooth, straight, corner-free function. So the
-corner locus of a one-term tropical polynomial is empty, and the fundamental
-theorem has no content there.
+Stare at rules 2 and 3. Multiplication of field elements becomes *addition* of
+valuations. Addition of field elements becomes *at least the minimum* of
+valuations. This is precisely the min-plus dictionary — multiplication goes to
+$\odot$, addition goes to $\oplus$ — appearing spontaneously inside ordinary
+algebra. The valuation is the bridge incarnate.
 
-This is not a flaw; it is a sharp delineation of the theorem's scope. Corners are
-a phenomenon of *competition* between terms. You need at least two monomials for
-a crease to be possible, just as you need at least two runners for a photo
-finish. The mathematics records this precisely: with at most one index, the
-"attained at least twice" condition can never be satisfied, because it demands
-two genuinely distinct winning indices.
+The ultrametric inequality has a powerful sharpened form that does almost all
+the heavy lifting in the theory. If one term in a sum is *strictly* smaller in
+valuation than all the others, there is no possible cancellation, and the sum's
+valuation is forced to equal that of the lone smallest term:
+$$
+v(g_j) < v(g_i) \text{ for all } i \neq j
+\quad\Longrightarrow\quad
+v\!\left(\sum_i g_i\right) = v(g_j).
+$$
+This "unique minimum wins" lemma is the engine that turns vanishing of
+polynomials into ties in a minimum.
 
-## From corners to counting: the tropical Bézout theorem
+---
 
-The bridge does more than match shapes. It matches *numbers* — and this is where
-tropical geometry pays for itself a thousand times over.
+## The first half of the bridge, proved for free
 
-One of the oldest jewels of classical geometry is **Bézout's theorem**: two
-curves of degree `d` and `e` in the plane meet in exactly `d × e` points (counted
-with the right multiplicities and in the right setting). Two lines (degree 1)
-meet in one point; a line and a conic (degrees 1 and 2) meet in two; two conics
-meet in four. It is a clean, powerful, and famously subtle result.
+Here is where the two worlds touch. Take a polynomial $f$ over the valued field
+$K$ and a classical point $x = (x_1, \dots, x_n)$ on the curve it defines —
+meaning $f(x) = 0$ — living in the *torus*, where every coordinate $x_i$ is
+nonzero. Apply the valuation coordinate by coordinate to get a tropical point
+$$
+\mathrm{trop}(x) = \big(v(x_1), \dots, v(x_n)\big).
+$$
+The collection of all such valuation-images of classical solutions is written
+$\mathrm{Trop}(V(f))$: it is the *literal shadow* of the curve $V(f)$ under the
+valuation map.
 
-Tropical geometry offers a breathtakingly down-to-earth proof of this counting
-law. The reason traces back to a single algebraic identity about how tropical
-polynomials *multiply*. In tropical arithmetic, evaluating a product is the same
-as adding the evaluations:
+The first major theorem says this shadow always lands on the corner locus.
 
-> **Min-plus multiplicativity.** For any two tropical polynomials `P` and `Q`,
-> and any point `x`, the tropical evaluation of their product equals the sum of
-> their evaluations: `eval(P ⊙ Q)(x) = eval(P)(x) + eval(Q)(x)`.
+> **Theorem (forward inclusion, proved unconditionally).**
+> For every classical solution $x$ in the torus,
+> $\mathrm{trop}(x)$ is a corner point of $\mathrm{trop}(f)$. In symbols,
+> $$\mathrm{Trop}(V(f)) \;\subseteq\; \text{corner locus of } \mathrm{trop}(f).$$
 
-This looks almost too simple to matter, but it is the load-bearing beam of the
-entire tropical Bézout argument. Its proof is a clean min-plus distributive law:
-the minimum, over all *pairs* of a term from `P` and a term from `Q`, of the sum
-of their values, factors exactly into (the minimum over `P`'s terms) plus (the
-minimum over `Q`'s terms). The cheapest combined journey is the cheapest first
-leg followed by the cheapest second leg — winner-takes-all, applied to a product.
+The reasoning is beautiful and short. Each monomial term of $f$ evaluated at $x$
+has a valuation that — by the multiplicativity rule — equals exactly the
+tropicalized monomial $c_a + \langle a, \mathrm{trop}(x)\rangle$. (This identity,
+that the valuation of a classical term *is* its tropical value, is the technical
+heart of the bridge.) Now suppose the minimum of those tropical values were
+achieved by only *one* term. Then by the "unique minimum wins" lemma, the whole
+sum $f(x)$ would have a finite valuation — in particular it would be nonzero. But
+$f(x) = 0$, whose valuation is $+\infty$. Contradiction. So the minimum must be
+achieved at least *twice*: $\mathrm{trop}(x)$ is a corner. The curve cannot help
+but cast its shadow onto the creases.
 
-Why does "evaluations add" unlock "degrees multiply"? Because each tropical
-polynomial carries a geometric fingerprint called its **Newton polytope** — the
-convex hull of its exponent vectors, a polygon that records the polynomial's
-shape and degree. Min-plus multiplicativity translates directly into the
-statement that the Newton polytope of a product is the **Minkowski sum** of the
-factors' polytopes: you build the combined polygon by sliding one around the
-boundary of the other. And the number of intersection points of two tropical
-curves turns out to be a *volume* — specifically the mixed volume of these
-polytopes — which for plane curves of degree `d` and `e` evaluates to exactly
-`d × e`. The deep counting theorem of classical geometry becomes a measurement of
-area on a polygon you can draw on graph paper.
+The reverse inclusion — that *every* corner point is the shadow of some actual
+classical solution — is the harder half. It is the celebrated **Kapranov /
+fundamental theorem of tropical geometry**, and it requires being able to lift a
+combinatorial corner back to a genuine point of the curve (over a suitably large
+valued field). With that lifting in hand, the two inclusions snap together:
 
-This is the promise of tropical geometry made concrete: hard questions about
-curves over mysterious fields become easy questions about piecewise-linear
-pictures and the volumes of polygons. The corners do the counting.
+> **Fundamental Theorem of Tropical Geometry (hypersurface case).**
+> The tropicalization of a hypersurface equals the corner locus of its tropical
+> polynomial:
+> $$\mathrm{Trop}(V(f)) \;=\; \text{corner locus of } \mathrm{trop}(f).$$
 
-## The limit picture: a valuation going to infinity
+The smooth curve and its stick-figure shadow are not just related — they are two
+faces of the same object.
 
-There is one more image worth carrying away, because it explains the word
-"limit" in the title of this bridge. Classically, one studies a whole *family* of
-valuations, rescaled by a parameter `t`, and asks what happens as `t → ∞`. As the
-valuation is dialed up, a smooth classical curve — viewed through a logarithmic
-lens, it forms a blurry region called an **amoeba** — tightens and sharpens, its
-tentacles contracting toward straight spines. In the limit, the amoeba collapses
-onto its skeleton: the piecewise-linear tropical curve, all corners and rays.
+---
 
-The corner-locus characterization is the *invariant limiting shape*. It is what
-remains when you push the valuation to infinity and let the smooth curve
-crystallize into its angular essence. The tropical curve is the fossil of the
-classical one — and remarkably, the fossil remembers everything that matters:
-the degree, the intersection numbers, the combinatorial soul of the geometry.
+## A limit as the valuation goes to infinity
+
+There is a second, more dynamic way to see why the shadow is faithful, and it
+explains the slogan that *tropical geometry is a limit of classical geometry*.
+
+Replace the sharp $\min$ with a smooth approximation that depends on a
+temperature parameter $t$:
+$$
+x \oplus_t y \;=\; \tfrac{1}{t}\,\log\!\big(e^{tx} + e^{ty}\big).
+$$
+For small $t$ this is close to ordinary addition (in log-coordinates), the
+arithmetic of classical algebra. As $t \to \infty$ it converges to the genuine
+tropical minimum,
+$$
+\lim_{t \to \infty} x \oplus_t y = \min(x, y),
+$$
+because the largest exponential dominates. This deformation — called **Maslov
+dequantization** — is a continuous dial connecting the classical semiring at one
+end to the tropical semiring at the other. Turning the dial all the way up is
+exactly the act of "letting the valuation go to infinity." The overshoot of the
+smooth version over the true minimum is controlled and shrinks at a clean rate of
+order $1/t$, governed by the single universal constant $\log 2$. Tropical
+geometry is what classical geometry looks like in the zero-temperature, infinite-
+valuation limit.
+
+---
+
+## Counting without solving: tropical Bézout
+
+The real payoff of a faithful shadow is that you can *count* in it. The classical
+**Bézout theorem** says that a polynomial of degree $d$ has exactly $d$ roots,
+counted with multiplicity. Its tropical mirror is just as exact — and in one
+variable you can practically see it.
+
+A degree-$d$ tropical polynomial in one variable is a minimum of $d+1$ lines
+with slopes $0, 1, 2, \dots, d$:
+$$
+\mathrm{trop}(f)(w) = \min_{0 \le k \le d}\big(c_k + k\, w\big).
+$$
+Its graph is a concave, downward-bending broken line. Reading from left to right,
+the slope of the lowest line *decreases* in steps — from $d$ on the far left down
+to $0$ on the far right. Each place where the slope drops is a corner, a tropical
+root, and the size of the drop is its **multiplicity**.
+
+> **Tropical Bézout (one variable).**
+> A degree-$d$ tropical polynomial has exactly $d$ roots counted with
+> multiplicity; equivalently, the total of all the slope drops across the graph
+> equals $d$:
+> $$\sum_{\text{corners } w} \big(\text{slope drop at } w\big) = d.$$
+
+The proof is a conservation law in disguise. The slope starts at $d$ and ends at
+$0$; the only way it can get from one to the other is by dropping, and the drops
+must add up to the total descent $d - 0 = d$. No genericity, no case analysis —
+just the asymptotics of a concave broken line. Moreover, the local multiplicity
+at each corner is literally the difference between the slope coming in and the
+slope going out, and these tropical roots are exactly the valuations of the
+classical roots of $f$. Counting solutions to a polynomial equation becomes
+measuring the kinks in a piece of bent wire.
+
+The future of this story is multidimensional. The same slope-conservation idea
+suggests that in $n$ variables the local multiplicities over the tropical
+hypersurface should sum to $d^n$, recovering the full classical Bézout number —
+intersection theory recast as bookkeeping for the corners of a polytope.
+
+---
 
 ## Why this matters
 
-The tropical bridge is more than a pretty correspondence. It is a working tool.
-Enumerative geometers have used tropical methods to count curves that pass
-through prescribed points — questions that resisted classical attack for
-decades — by reducing them to combinatorial bookkeeping on lattice polygons.
-Phylogeneticists use tropical geometry to compare evolutionary trees.
-Optimization theorists recognize the min-plus semiring as the algebra underlying
-shortest-path algorithms and dynamic programming. Economists meet it in auction
-theory and discrete choice. Each of these fields, in its own way, is walking
-across the same bridge: trading a hard continuous problem for an easy piecewise-
-linear one.
+Tropical geometry is not merely a pretty analogy. Because its objects are
+piecewise-linear, hard nonlinear problems become problems in **combinatorics and
+linear programming** — solvable by computer, visualizable on paper. This has
+turned tropical methods into a practical tool across mathematics and its
+neighbors: enumerative geometry (counting curves of a given degree through given
+points), phylogenetics (the "tree spaces" of evolutionary biology are tropical),
+optimization and scheduling (where min-plus algebra models bottlenecks and
+critical paths), and economics (auction and matching markets with
+piecewise-linear utilities).
 
-What the bridge teaches, in the end, is a lesson about *shadows*. We often think
-of a simplification as a loss — a blurry, lossy compression of a richer original.
-But the tropical shadow of a curve is not lossy. The corners are exact. The
-counting is exact. The valuation does not blur the geometry; it distills it,
-boiling away the smooth analytic froth and leaving behind a crystalline lattice
-that you can hold in your hand and count on your fingers. Somewhere between the
-ancient circle and the modern tripod, mathematics found a way to make geometry
-discrete without making it false.
+The three theorems gathered here are the load-bearing beams of that bridge. The
+**forward inclusion** shows, with nothing but the ultrametric inequality, that
+solutions always cast their shadows onto the creases. The **fundamental
+theorem** promises the shadow loses nothing: every crease is a real shadow. And
+**tropical Bézout** shows the shadow can still count, turning the deepest
+invariants of classical geometry into the visible kinks of a broken line.
 
-That is the quiet wonder of the tropical bridge: the smooth and the angular,
-the continuous and the combinatorial, the field and the polygon — all revealed to
-be two views of a single shape, joined by a ruler that measures how divisible a
-number can be.
+A curve, dimmed to a stick figure, still remembers how many times it crosses a
+line. That is the quiet miracle at the heart of tropical geometry.
