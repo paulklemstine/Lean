@@ -1,349 +1,412 @@
-# The Fano-Plane Threshold for Strong Blocking Sets: the $h=1$ Case of Additive Strong Blocking and the Length-6 Minimal Code
+# The Fano-Plane Threshold for Strong Blocking Sets: Saturation of the $(k-1)(q+1)$ Bound in the $h=1$ Case
 
 **Author:** Aristotle
+
 **Date:** 2026-06-27
-**Domain:** Novelty (finite geometry / coding theory)
+
+**Domain:** Combinatorial geometry / coding theory (Novelty)
+
+---
 
 ## Abstract
 
-A *strong blocking set* in a finite projective plane is a set $S$ of points whose
-intersection with every line *spans* that line. Strong blocking sets are the
-geometric counterpart, under the projective-system correspondence, of *minimal*
-linear codes — codes in which no codeword support is contained in another — which
-underpin secret-sharing and secure-computation protocols. We give a complete and
-self-contained analysis of the smallest nontrivial case: the Fano plane
-$PG(2,2)$, the unique projective plane on $7$ points. We prove a sharp threshold
-(`strongBlocking_iff_card`): a subset $S$ of the seven points is strong blocking if
-and only if $|S| \geq 6$, i.e. iff $S$ omits at most one point. We deduce the exact
-minimum size (`leastSize_strongBlocking`): the least cardinality of a strong
-blocking set in $PG(2,2)$ is exactly $6$, attained precisely by the seven
-"all-but-one-point" sets. Through the projective-system dictionary this is
-equivalent to the statement that the shortest nondegenerate minimal binary linear
-code of dimension $3$ has length $6$. We position $PG(2,2)$ as the base ($h=1$) case
-of additive strong blocking sets, isolate the two combinatorial mechanisms — "a
-point lies on three lines" and "two points span a unique line" — that drive the
-result, and explain why both fail for $q \geq 3$, motivating a sequence of
-conjectures on higher planes and on the additive $h$-fold generalization.
+A *strong blocking set* (also called a *cutting blocking set*) of a finite projective
+space $\mathrm{PG}(N, q)$ is a set of points that meets every hyperplane in a spanning
+subset of that hyperplane. Strong blocking sets are exactly the geometric duals of
+*minimal linear codes* under the projective-system correspondence, and the *additive*
+variant over $\mathrm{GF}(q^h)$ specialises, in the $h=1$ case, to ordinary
+$\mathrm{GF}(q)$-linear strong blocking sets. We give a complete and elementary analysis of
+the smallest non-degenerate projective plane, the Fano plane $\mathrm{PG}(2,2)$. We prove
+that a set of points is a strong blocking set of $\mathrm{PG}(2,2)$ if and only if it meets
+every line in at least two points (a *double blocking set*), that the minimum size of such a
+set is exactly $6$, that the extremal sets are precisely the seven point-complements
+$\mathrm{univ}\setminus\{p\}$, and that this threshold realises with equality the general
+strong-blocking-set lower bound $(k-1)(q+1)$ for the parameters $k=3$, $q=2$. Equivalently,
+the shortest nondegenerate minimal binary linear code of dimension $3$ has length $6$. All
+results are verified by exhaustive checking over the $2^7 = 128$ subsets of the point set,
+and the lower bound additionally admits a clean conceptual proof from the projective-plane
+incidence axiom. We discuss why the Fano plane *saturates* the general bound while larger
+planes $\mathrm{PG}(2,q)$ ($q>2$) generically do not, and we outline a research program on
+binary towers $\mathrm{PG}(N,2)$ and the additive $h>1$ lift.
+
+---
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-Projective geometry over finite fields is a meeting point of three subjects:
-incidence geometry, extremal combinatorics, and the theory of error-correcting
-codes. A recurring theme is to identify *small* point configurations that retain a
-global structural property. Blocking sets (meeting every line) and their stronger
-cousins, *strong blocking sets* (spanning every line), are central examples. Strong
-blocking sets — also called *cutting blocking sets* or *generating sets* — have
-attracted intense recent interest because of a precise equivalence with **minimal
-linear codes**, objects with direct applications to secret sharing and secure
-multiparty computation.
+Minimal linear codes are a class of error-correcting codes in which no nonzero codeword has
+its support contained in the support of another nonzero codeword. They are foundational to
+secret-sharing schemes (where the minimal codewords determine the minimal qualified sets of
+shareholders) and admit particularly clean decoding structure. A central optimization
+problem is: *for a fixed dimension $k$ and alphabet size $q$, what is the shortest possible
+minimal code?*
 
-The general extremal problem — determine the minimum size of a strong blocking set
-in $PG(k-1, q)$ — is hard and largely open, with active work on asymptotic lower and
-upper bounds. In this paper we treat the smallest nontrivial instance completely:
-the projective plane of order two, the **Fano plane** $PG(2,2)$. Despite (indeed,
-because of) its size, the Fano plane is the cleanest laboratory in which the strong
-blocking threshold can be settled exactly, every extremizer classified, and the
-coding-theoretic translation made fully explicit.
+Through the *projective-system correspondence*, this question becomes purely geometric.
+Nondegenerate $[n,k]_q$ linear codes correspond to multisets of $n$ points in
+$\mathrm{PG}(k-1,q)$ that span the space, the code is minimal precisely when the point set is
+a *strong blocking set*, and the code length equals the number of points. Hence finding the
+shortest minimal code is equivalent to finding the smallest strong blocking set.
+
+A general lower bound, established by Alfarano–Borello–Neri and independently by
+Davydov–Giulietti–Marcugini–Pambianco, states that every strong blocking set of
+$\mathrm{PG}(k-1,q)$ has at least $(k-1)(q+1)$ points. Whether and when this bound is tight
+is a delicate question. This paper resolves it completely in the smallest non-degenerate
+planar case, $k=3$, $q=2$, the Fano plane, and exhibits it as the first witness of exact
+saturation.
+
+### 1.1.1 Why the planar case is special
+
+In a projective space of dimension $N \ge 2$, hyperplanes are $(N-1)$-dimensional subspaces;
+asking that a set $S$ meet each hyperplane in a *spanning* subset is, in general, a strong
+requirement involving the affine-independence of the points of $S$ inside each hyperplane.
+The planar case $N = 2$ is the one where this requirement collapses to a clean combinatorial
+statement: a line is one-dimensional and is spanned by *any two* of its distinct points, so
+"$S$ spans every line it meets non-trivially" becomes simply "$S$ contains at least two
+points of every line." This is precisely the classical notion of a *double blocking set*,
+and it is what makes the Fano plane fully analysable by elementary means while still being a
+faithful instance of the general strong-blocking-set theory. The reduction is not an
+approximation: it is an exact equivalence in dimension two, which is why the planar
+threshold can be read directly against the universal bound $(k-1)(q+1)$.
 
 ### 1.2 Contributions
 
-1. A precise definition of strong blocking specialized to $PG(2,2)$, where spanning a
-   line is equivalent to containing at least two of its three points (Section 2).
-2. A sharp threshold theorem, `strongBlocking_iff_card`: $S$ is strong blocking iff
-   $|S| \geq 6$ (Theorem 3.1).
-3. The exact minimum, `leastSize_strongBlocking`: the least size is $6$ (Theorem 3.4),
-   with a complete classification of the minimizers (Proposition 3.5).
-4. The coding-theoretic corollary: the shortest nondegenerate minimal binary linear
-   code of dimension $3$ has length $6$ (Section 5).
-5. A structural account ($h=1$ base case, the two driving mechanisms, the breakdown
-   at $q \geq 3$) and a program of conjectures (Sections 4, 6, 7).
+We prove the following, each statement corresponding to a machine-verified theorem.
 
-## 2. Definitions
+1. **Line structure** (`fanoLine_card`): every line of the cyclic model of $\mathrm{PG}(2,2)$
+   has exactly $3$ points.
+2. **Incidence axiom** (`two_points_collinear`): any two distinct points lie on a common
+   line.
+3. **Upper bound** (`sb6_isStrongBlocking`): the $6$-point set $\mathrm{univ}\setminus\{0\}$
+   is a strong blocking set.
+4. **Lower bound** (`strongBlocking_card_ge_six`): every strong blocking set has at least $6$
+   points.
+5. **Exact threshold** (`fano_threshold_isLeast`): the minimum size of a strong blocking set
+   of $\mathrm{PG}(2,2)$ is exactly $6$.
+6. **Extremal structure** (`minimum_strongBlocking_iff`): a strong blocking set attains size
+   $6$ if and only if it is the complement of a single point.
+7. **Extremal count** (`minimum_strongBlocking_count`): there are exactly $7$ minimum strong
+   blocking sets.
+8. **Tightness** (`fano_threshold_eq_formula`): $6 = (k-1)(q+1)$ for $k=3$, $q=2$, so the
+   Fano plane saturates the general bound.
 
-We work in the Fano plane $PG(2,2)$, the projective plane over the field
-$\mathbb{F}_2 = \{0,1\}$.
+---
 
-**Definition 2.1 (Points).** The point set $\mathcal{P}$ of $PG(2,2)$ is the set of
-one-dimensional subspaces of $\mathbb{F}_2^3$, equivalently the $2^3 - 1 = 7$ nonzero
-vectors of $\mathbb{F}_2^3$. We label them $\mathcal{P} = \{0,1,2,3,4,5,6\}$.
+## 2. Preliminaries and definitions
 
-**Definition 2.2 (Lines; `IsLine`).** A *line* of $PG(2,2)$ is a two-dimensional
-subspace of $\mathbb{F}_2^3$; as a set of points each line has $q+1 = 3$ points. There
-are exactly $7$ lines. In the standard labelling,
-$$\mathcal{L} = \big\{\, \{0,1,2\},\ \{0,3,4\},\ \{0,5,6\},\ \{1,3,5\},\ \{1,4,6\},\ \{2,3,6\},\ \{2,4,5\} \,\big\}.$$
-The predicate `IsLine ℓ` holds iff $\ell \in \mathcal{L}$.
+### 2.1 The Fano plane
 
-The Fano plane satisfies the projective-plane axioms, of which we use two repeatedly.
+The **Fano plane** is the projective plane $\mathrm{PG}(2,2)$ of order $2$. It has
+$q^2+q+1 = 7$ points and $7$ lines; each line contains $q+1 = 3$ points, each point lies on
+$3$ lines, any two distinct points determine a unique line, and any two distinct lines meet
+in a unique point. It is the smallest non-degenerate projective plane.
 
-**Fact 2.3 (Incidence axioms of $PG(2,2)$).**
-(a) *Uniqueness of joins:* any two distinct points $p \neq q$ lie on a unique common
-line, denoted $\ell_{pq}$.
-(b) *Pencils:* each point lies on exactly $3$ lines; each line has exactly $3$ points.
+### 2.2 The cyclic (Singer) model
 
-**Definition 2.4 (Strong blocking; `StrongBlocking`).** A set $S \subseteq \mathcal{P}$
-is a *strong blocking set* if for every line $\ell$, the points $S \cap \ell$ *span*
-$\ell$ (as a projective subspace). Over $\mathbb{F}_2$, two distinct points of a line
-already span the line, while one point spans only itself; hence
-$$\text{StrongBlocking}(S) \iff \forall \ell \in \mathcal{L},\ |S \cap \ell| \geq 2.$$
-We take the right-hand combinatorial condition as the working definition throughout.
+We model the points of the Fano plane by the cyclic group $\mathbb{Z}/7\mathbb{Z}$, written
+$\mathrm{ZMod}\,7$.
 
-**Remark 2.5.** The general notion (intersection spans the line) and the $\mathbb{F}_2$
-counting condition $|S\cap\ell|\ge 2$ coincide *only* because a projective line over
-$\mathbb{F}_2$ has three points and any two are a spanning pair. This coincidence is
-the source of both the simplicity of the result and the fragility of the argument under
-$q \to q+1$.
+**Definition 2.1 (Lines).** The set $D = \{0,1,3\}$ is a *perfect difference set* modulo $7$:
+the multiset of nonzero differences $\{\, d-d' : d,d'\in D,\ d\neq d'\,\}$ equals
+$\{1,2,3,4,5,6\}$, each residue occurring exactly once. For each $i \in \mathbb{Z}/7\mathbb{Z}$
+define the **$i$-th line** as the translate
+$$
+\ell_i \;=\; \{\, i,\; i+1,\; i+3 \,\} \pmod 7 .
+$$
+The seven lines are the seven translates $\ell_0,\dots,\ell_6$:
+$$
+\{0,1,3\},\ \{1,2,4\},\ \{2,3,5\},\ \{3,4,6\},\ \{4,5,0\},\ \{5,6,1\},\ \{6,0,2\}.
+$$
+
+Because $D$ is a perfect difference set, $(\mathbb{Z}/7\mathbb{Z}, \{\ell_i\})$ is a
+projective plane of order $2$: every pair of points lies in exactly one line, and the
+incidence axioms hold. This is the Singer cyclic representation.
+
+**Worked verification of the difference-set property.** Listing the ordered nonzero
+differences of $D = \{0,1,3\}$ modulo $7$:
+$$
+1-0=1,\quad 3-0=3,\quad 0-1=6,\quad 3-1=2,\quad 0-3=4,\quad 1-3=5.
+$$
+These are $\{1,2,3,4,5,6\}$, each nonzero residue appearing exactly once; $D$ is therefore a
+*planar* (perfect) difference set with parameters $(v,k,\lambda)=(7,3,1)$. The single
+occurrence of each difference ($\lambda=1$) is exactly the statement that two distinct points
+determine a *unique* line, the dual face of which is that two distinct lines meet in a unique
+point. The cyclic group acts regularly on both points and lines, exhibiting the full
+$7$-fold rotational symmetry of the configuration.
+
+### 2.3 Strong blocking sets in a plane
+
+In a projective plane, every hyperplane is a line, i.e. a $1$-dimensional projective subspace,
+which is spanned by any two of its distinct points. Therefore "the chosen points meet a line
+in a spanning subset" reduces to "the chosen points include at least two points of that
+line." This motivates the working definition.
+
+**Definition 2.2 (Strong blocking set).** A finite set $S \subseteq \mathbb{Z}/7\mathbb{Z}$
+of points is a **strong blocking set** of the Fano plane if it meets every line in at least
+two points:
+$$
+\mathrm{IsStrongBlocking}(S) \quad :\Longleftrightarrow \quad
+\forall\, i \in \mathbb{Z}/7\mathbb{Z},\ \ |\ell_i \cap S| \,\ge\, 2 .
+$$
+Equivalently, $S$ is a *double blocking set*: every line is hit at least twice.
+
+### 2.4 The projective-system / minimal-code dictionary
+
+Under the projective-system correspondence, a nondegenerate $[n,k]_q$ linear code corresponds
+to a spanning multiset of $n$ points in $\mathrm{PG}(k-1,q)$; the code is **minimal** iff the
+point set is a strong blocking set, and $n$ equals the number of points. For $q=2$, $k=3$ this
+specialises to: minimal binary $[n,3]$ codes $\leftrightarrow$ strong blocking sets of the
+Fano plane. The *additive* generalisation works over $\mathrm{GF}(q^h)$; the case $h=1$
+treated here is exactly the $\mathrm{GF}(q)$-linear case.
+
+---
 
 ## 3. Main results
 
-### 3.1 The threshold theorem
+### 3.1 Line cardinality
 
-**Theorem 3.1 (`strongBlocking_iff_card`).** For $S \subseteq \mathcal{P}$,
-$$\text{StrongBlocking}(S) \iff |S| \geq 6.$$
-Equivalently, $S$ is strong blocking iff it omits at most one of the seven points.
+**Theorem 3.1 (`fanoLine_card`).** Every line has exactly three points:
+for all $i$, $\ |\ell_i| = 3$.
 
-*Proof sketch.* We prove the two implications separately.
+*Proof sketch.* The three offsets $0,1,3$ are pairwise distinct modulo $7$, so the three
+elements $i, i+1, i+3$ are distinct for every $i$. A finite exhaustive check over the seven
+values of $i$ confirms $|\{i, i+1, i+3\}| = 3$ in each case. $\qquad\blacksquare$
 
-**($\Leftarrow$) If $|S|\ge 6$ then $S$ is strong blocking.** Since $|\mathcal P| = 7$,
-$|S| \geq 6$ means $S = \mathcal{P}$ or $S = \mathcal{P}\setminus\{p\}$ for a single
-point $p$. If $S = \mathcal{P}$ every line keeps all three points, so trivially
-$|S\cap\ell| = 3 \geq 2$. If $S = \mathcal{P}\setminus\{p\}$, consider any line $\ell$.
-By Fact 2.3(b) the point $p$ lies on exactly $3$ lines. If $\ell$ is one of these,
-$\ell$ loses exactly the point $p$ and keeps its other two points, so
-$|S\cap\ell| = 2$. If $\ell$ does not pass through $p$, then $\ell \subseteq S$ and
-$|S\cap\ell| = 3$. In all cases $|S\cap\ell|\ge 2$. This is the content of
-Lemma 3.2.
+### 3.2 Incidence axiom
 
-**($\Rightarrow$) If $|S|\le 5$ then $S$ is not strong blocking.** If $|S|\le 5$ then
-$\mathcal{P}\setminus S$ contains two distinct points $p\ne q$. By Fact 2.3(a) there is
-a unique line $\ell_{pq}$ containing both. That line has three points; two of them,
-$p$ and $q$, are absent from $S$, so $|S\cap\ell_{pq}| \le 1 < 2$. Hence $\ell_{pq}$ is
-not spanned and $S$ is not strong blocking. Contrapositively, strong blocking forces
-$|S|\ge 6$. This is Lemma 3.3. $\qquad\blacksquare$
+**Theorem 3.2 (`two_points_collinear`).** For any two distinct points $a \neq b$ there is a
+line $\ell_i$ with $a \in \ell_i$ and $b \in \ell_i$.
 
-We isolate the two halves as named lemmas, since each is reused.
+*Proof sketch.* Since $D=\{0,1,3\}$ is a perfect difference set, every nonzero residue $r$
+can be written as a difference $d - d'$ with $d, d' \in D$. Given $a \neq b$, set
+$r = b - a \neq 0$ and choose $d, d' \in D$ with $d - d' = r$. Taking $i = a - d'$ yields
+$a = i + d' \in \ell_i$ and $b = a + r = i + d' + (d-d') = i + d \in \ell_i$. A finite
+exhaustive check over all ordered pairs $(a,b)$ with $a \neq b$ confirms the claim. This is
+the planar incidence axiom in the cyclic model. $\qquad\blacksquare$
 
-**Lemma 3.2 (Sufficiency; omit-one is blocking).** For every point $p$, the set
-$\mathcal{P}\setminus\{p\}$ is strong blocking, and so is $\mathcal{P}$.
+### 3.3 Upper bound: six points suffice
 
-*Proof sketch.* Each of the $3$ lines through $p$ retains $2$ points; the remaining
-$4$ lines retain $3$. $\square$
+**Definition 3.3.** Let $S_6 = \mathrm{univ} \setminus \{0\}$, the set of the six nonzero
+points.
 
-**Lemma 3.3 (Necessity; two deletions kill a line).** If $S$ omits two distinct points
-$p\ne q$, then $|S\cap \ell_{pq}|\le 1$, so $S$ is not strong blocking.
+**Lemma 3.4 (`sb6_card`).** $|S_6| = 6$.
 
-*Proof sketch.* Uniqueness of the line through two points (Fact 2.3(a)) puts both
-deleted points on the single line $\ell_{pq}$, leaving it with at most one survivor. $\square$
+**Theorem 3.5 (`sb6_isStrongBlocking`).** $S_6$ is a strong blocking set:
+$\mathrm{IsStrongBlocking}(S_6)$.
 
-### 3.2 The minimum size
+*Proof sketch.* Each line $\ell_i$ has three points (Theorem 3.1). Removing the single point
+$0$ from the universe deletes at most one point from any given line, since $0$ lies on at most
+one... in fact $0$ lies on exactly three lines, but on each such line it removes only the one
+point $0$. Hence $|\ell_i \cap S_6| \ge 3 - 1 = 2$ for every $i$. A finite check over the
+seven lines confirms $|\ell_i \cap S_6| \ge 2$ throughout. $\qquad\blacksquare$
 
-**Theorem 3.4 (`leastSize_strongBlocking`).** Let
-$$N \;=\; \{\, n \in \mathbb{N} \;:\; \exists\, S \subseteq \mathcal{P},\ \text{StrongBlocking}(S)\ \text{and}\ |S| = n \,\}.$$
-Then $N$ has a least element and $\min N = 6$; i.e. $\mathrm{IsLeast}(N, 6)$.
+### 3.4 Lower bound: five points never suffice
 
-*Proof sketch.* *Membership $6 \in N$:* by Lemma 3.2, $S = \mathcal{P}\setminus\{p\}$
-is strong blocking with $|S| = 6$. *Lower bound:* if $n \in N$ is witnessed by a strong
-blocking $S$ with $|S| = n$, then by Theorem 3.1, $n = |S| \ge 6$. Both conditions of
-`IsLeast` — membership and being a lower bound — hold. $\qquad\blacksquare$
+**Theorem 3.6 (`strongBlocking_card_ge_six`).** Every strong blocking set $S$ satisfies
+$|S| \ge 6$.
 
-**Proposition 3.5 (Classification of minimizers).** The strong blocking sets of size
-$6$ are exactly the seven sets $\mathcal{P}\setminus\{p\}$, $p\in\mathcal P$. Moreover
-every minimum strong blocking set of $PG(2,2)$ has this "omit-one-point" form.
+*Conceptual proof.* Let $T = \mathrm{univ} \setminus S$ be the complement. The condition
+$|\ell_i \cap S| \ge 2$ on a $3$-point line is equivalent to $|\ell_i \cap T| \le 1$: $S$
+meeting a line in at least two of its three points means $T$ meets that line in at most one.
+Thus the strong blocking condition says **$T$ contains at most one point of every line.**
 
-*Proof sketch.* Any $6$-element subset of a $7$-element set is the complement of a
-unique single point, and each such set is strong blocking by Lemma 3.2; conversely no
-set of size $<6$ is strong blocking by Theorem 3.1. $\square$
+Suppose for contradiction that $T$ contains two distinct points $a \neq b$. By the incidence
+axiom (Theorem 3.2) there is a line $\ell_i$ containing both $a$ and $b$, so
+$|\ell_i \cap T| \ge 2$, contradicting the previous paragraph. Therefore $T$ contains at most
+one point, $|T| \le 1$, and consequently
+$$
+|S| \;=\; 7 - |T| \;\ge\; 7 - 1 \;=\; 6 .
+$$
+$\qquad\blacksquare$
 
-**Remark 3.6 (Finite verification).** Because $|\mathcal{P}| = 7$, the entire content of
-Theorems 3.1 and 3.4 is decidable: one may enumerate all $2^7 = 128$ subsets and the
-$7$ lines and check the spanning condition directly. This decidability is what makes
-$PG(2,2)$ the unique projective plane in which every incidence axiom and every extremal
-claim can be settled by exhaustive, kernel-level checking, and it is reflected in the
-formal development by `decide`-style certification.
+The mechanised proof discharges this via exhaustive enumeration of all $2^7 = 128$ subsets,
+but the conceptual argument above is the mathematical content and generalises in spirit to
+the duality used for larger planes.
 
-### 3.3 A fully worked example
+**Remark (the complement duality).** The pivot of the lower bound is the equivalence, valid
+on any line of exactly three points,
+$$
+|\ell_i \cap S| \ge 2 \quad \Longleftrightarrow \quad |\ell_i \cap T| \le 1,
+\qquad T = \mathrm{univ}\setminus S,
+$$
+which holds because $|\ell_i \cap S| + |\ell_i \cap T| = |\ell_i| = 3$. Thus "$S$ is a double
+blocking set" is *exactly dual* to "$T$ is a set of points no two of which are collinear,"
+i.e. $T$ is an arc-like independent set with at most one point per line. In the Fano plane,
+where every pair of points is collinear, such a $T$ can have at most one element. For larger
+planes $\mathrm{PG}(2,q)$ the same duality holds with the threshold $q-1$ in place of $1$ (a
+line has $q+1$ points), and the gap between the minimum double blocking set and the bound
+$2(q+1)$ is governed by how large a $(q-1)$-bounded set the complement may be. The Fano case
+is the degenerate-but-exact endpoint $q=2$ of this family.
 
-We make Theorems 3.1 and 3.4 concrete in the standard labelling. The seven points
-are $\{0,1,2,3,4,5,6\}$ and the seven lines are
-$$\{0,1,2\},\ \{0,3,4\},\ \{0,5,6\},\ \{1,3,5\},\ \{1,4,6\},\ \{2,3,6\},\ \{2,4,5\}.$$
-One verifies directly that each label occurs in exactly three lines (Fact 2.3(b)) and
-that each unordered pair of labels occurs together in exactly one line (Fact 2.3(a));
-for instance the pair $\{3,6\}$ appears only in $\{2,3,6\}$.
+### 3.5 Exact threshold
 
-*A size-6 set works.* Take $S = \{1,2,3,4,5,6\} = \mathcal{P}\setminus\{0\}$. The three
-lines through $0$ are $\{0,1,2\}, \{0,3,4\}, \{0,5,6\}$; after deleting $0$ they retain
-$\{1,2\}, \{3,4\}, \{5,6\}$ respectively — two points each. The remaining four lines
-$\{1,3,5\}, \{1,4,6\}, \{2,3,6\}, \{2,4,5\}$ avoid $0$ entirely and retain all three
-points. So $\min_\ell |S\cap\ell| = 2$ and $S$ is strong blocking.
+**Theorem 3.7 (`fano_threshold_isLeast`).** The value $6$ is the least element of the set of
+achievable strong-blocking-set sizes:
+$$
+6 = \min\{\, n \in \mathbb{N} : \exists S,\ \mathrm{IsStrongBlocking}(S) \wedge |S| = n \,\}.
+$$
 
-*A size-5 set fails.* Take $S' = \{2,3,4,5,6\} = \mathcal{P}\setminus\{0,1\}$. The unique
-line through the two deleted points $0$ and $1$ is $\ell_{01} = \{0,1,2\}$, which retains
-only the single point $2$. Hence $|S'\cap\ell_{01}| = 1 < 2$ and $S'$ is not strong
-blocking, exactly as Lemma 3.3 predicts. No relabelling of which two points are dropped
-escapes this: every pair lies on some line, and that line is the witness of failure.
+*Proof sketch.* Membership: $S_6$ witnesses $6$ in the set (Lemma 3.4, Theorem 3.5). Lower
+bound: every member $n$ of the set has $n = |S| \ge 6$ by Theorem 3.6. Hence $6$ is the least
+element. $\qquad\blacksquare$
 
-*The counting census.* An exhaustive scan of all $2^7 = 128$ subsets finds precisely
-$8$ strong blocking sets: the full set $\mathcal{P}$ (size $7$) and the seven complements
-$\mathcal{P}\setminus\{p\}$ (size $6$). There are no strong blocking sets of size $\le 5$.
-This census simultaneously confirms Theorem 3.1 (blocking $\iff |S|\ge 6$),
-Theorem 3.4 ($\min = 6$), and Proposition 3.5 (the seven minimizers are exactly the
-omit-one sets).
+### 3.6 Structure and count of extremal sets
 
-## 4. The two mechanisms, and why $q=2$ is special
+**Theorem 3.8 (`minimum_strongBlocking_iff`).** A set $S$ satisfies
+$\mathrm{IsStrongBlocking}(S) \wedge |S| = 6$ if and only if $S = \mathrm{univ}\setminus\{p\}$
+for some point $p$.
 
-The proof of Theorem 3.1 uses exactly two geometric inputs:
+*Proof sketch.* If $|S| = 6$ then $|T| = 1$, say $T = \{p\}$, giving
+$S = \mathrm{univ}\setminus\{p\}$; the lower-bound argument shows any such complement of a
+single point is indeed strong blocking (deleting one point removes at most one point per
+line). Conversely each $\mathrm{univ}\setminus\{p\}$ has $6$ points and is strong blocking by
+the same count. A finite exhaustive check confirms the equivalence over all subsets.
+$\qquad\blacksquare$
 
-- **(M1) Pencil budget.** A point lies on $3$ lines; deleting it removes one point from
-  each, and since a line has $3$ points, each such line still has $2$. This drives
-  sufficiency (Lemma 3.2).
-- **(M2) Unique join.** Two distinct points share a unique line; deleting both reduces
-  that line to a single survivor. This drives necessity (Lemma 3.3).
+**Theorem 3.9 (`minimum_strongBlocking_count`).** There are exactly $7$ strong blocking sets
+of size $6$ — one complement-of-a-point for each of the $7$ points:
+$$
+\bigl|\{\, S : \mathrm{IsStrongBlocking}(S) \wedge |S| = 6 \,\}\bigr| = 7 .
+$$
 
-Both inputs are tight to $q=2$:
+*Proof sketch.* Immediate from Theorem 3.8: the map $p \mapsto \mathrm{univ}\setminus\{p\}$ is
+a bijection from the $7$ points onto the minimum strong blocking sets. Verified by direct
+enumeration. $\qquad\blacksquare$
 
-1. In $PG(2,q)$ a line has $q+1$ points. For (M1), deleting one point from a line of
-   size $q+1$ leaves $q \geq 2$ survivors, so omitting a single point *does* keep every
-   line spanned for all $q$ — but spanning a line over $\mathbb{F}_q$ requires $2$
-   points only because lines are $1$-dimensional; the *global* "omit a point" recipe is
-   no longer optimal for $q\ge 3$.
-2. For (M2), with $q\ge 3$ one may omit *several* points from a line and still leave
-   $\ge 2$, so a single shared line no longer collapses; the controlling quantity
-   becomes the number of omitted points *per line*, not the global deletion count.
+### 3.7 Saturation of the general bound
 
-Thus the clean equivalence "strong blocking $\iff$ omit $\le 1$ point" is a
-$q=2$ phenomenon. The next plane $PG(2,3)$ ($13$ points, lines of size $4$) already has
-minimum strong blocking size $8 < 12$, realized by structured configurations (e.g. two
-disjoint lines, or a dual hyperoval), strictly beating the naive "omit a point" bound
-of $12$.
+**Theorem 3.10 (`fano_threshold_eq_formula`).** With code dimension $k=3$ (so
+$\mathrm{PG}(k-1,q) = \mathrm{PG}(2,q)$) and alphabet size $q=2$,
+$$
+(k-1)(q+1) \;=\; (3-1)(2+1) \;=\; 6 .
+$$
+Hence the Fano-plane threshold $6$ equals the general lower bound $(k-1)(q+1)$: the Fano plane
+**saturates** the bound.
 
-## 5. Coding-theoretic interpretation
+*Proof sketch.* Direct arithmetic. The significance is that combining this identity with
+Theorem 3.7 shows the universal lower bound is attained with equality at the smallest plane.
+$\qquad\blacksquare$
 
-### 5.1 The projective-system correspondence
+---
 
-Fix a field $\mathbb{F}_q$ and a dimension $k$. A nondegenerate $[n,k]_q$ linear code
-$C$ (a $k$-dimensional subspace of $\mathbb{F}_q^n$ with no identically-zero
-coordinate) corresponds, up to equivalence, to a multiset of $n$ points in
-$PG(k-1,q)$, obtained by reading the columns of a generator matrix as projective
-points. Under this dictionary the *length* $n$ equals the number of points, and the
-*weight* of a codeword $c = xG$ equals $n$ minus the number of points lying on the
-hyperplane $\{y : x\cdot y = 0\}$.
+## 4. Algorithms
 
-**Definition 5.1 (Minimal code).** A nonzero codeword $c$ is *minimal* if its support
-$\mathrm{supp}(c)$ does not properly contain the support of any other nonzero codeword.
-A code is *minimal* if all of its nonzero codewords are minimal.
+The results are finite and decidable. We describe the two algorithmic primitives used to
+verify them, both running over the $128$ subsets of a $7$-element point set.
 
-**Theorem 5.2 (Folklore correspondence; stated, not re-proved here).** A nondegenerate
-$[n,k]_q$ code is minimal if and only if the corresponding point set in $PG(k-1,q)$ is a
-strong blocking set.
+### 4.1 Strong-blocking verification
 
-The reason is structural: minimal codewords correspond exactly to the lines (more
-generally hyperplanes) spanned by $S \cap \ell$, so the algebraic minimality condition
-is *definitionally* the geometric spanning condition.
+Given a subset $S$, check for each of the seven lines $\ell_i = \{i,i+1,i+3\}$ whether
+$|\ell_i \cap S| \ge 2$. This is $O(7 \cdot 3)$ per subset.
 
-### 5.2 Consequence for $k=3$, $q=2$
+### 4.2 Exhaustive threshold search
 
-Specializing Theorem 5.2 to $k=3$, $q=2$ and combining with Theorem 3.4:
+Enumerate all $2^7$ subsets, retain those that are strong blocking, and take the minimum
+cardinality. The same enumeration, filtered by cardinality $= 6$, yields the extremal sets and
+their count. Total cost $O(2^7 \cdot 7 \cdot 3)$, trivially feasible.
 
-**Corollary 5.3 (Shortest dimension-3 minimal binary code).** The minimum length of a
-nondegenerate minimal binary linear code of dimension $3$ is $6$. The optimum is
-realized by the code whose generator matrix has as columns the six points of a set
-$\mathcal{P}\setminus\{p\}$ in $PG(2,2)$.
+---
 
-*Proof sketch.* By Theorem 5.2 a minimal $[n,3]_2$ code corresponds to a strong
-blocking set of size $n$ in $PG(2,2)$; by Theorem 3.4 the least such $n$ is $6$, and the
-optimizer is an omit-one-point configuration. $\square$
+## 5. Applications
 
-Concretely, choosing $\mathcal{P}\setminus\{0\} = \{1,2,3,4,5,6\}$ and writing the six
-points as binary column vectors of $\mathbb{F}_2^3$ gives a $3\times 6$ generator matrix
-of a length-$6$, dimension-$3$ minimal code: the shortest possible.
+**Minimal binary codes.** By the projective-system correspondence, Theorem 3.7 states that the
+shortest nondegenerate minimal binary linear code of dimension $3$ has length $6$. The seven
+extremal strong blocking sets correspond to the optimal such codes, useful in secret sharing
+where minimal codewords encode minimal qualified coalitions.
 
-### 5.3 Why minimal codes matter
+**Covering and guarding.** Double blocking sets model robust covering problems: choosing six of
+the seven Fano points guarantees every line is straddled at two points, providing fault
+tolerance (any single chosen point may fail and each line is still met).
 
-Minimal codes are precisely the codes usable in Massey's secret-sharing scheme, where
-the minimal codewords enumerate the authorized coalitions. They also appear in secure
-two-party computation. Short minimal codes are therefore practically desirable, and
-Corollary 5.3 is a sharp lower bound on length for dimension $3$ over $\mathbb{F}_2$.
+**Benchmark for extremal theory.** The Fano plane is the canonical first example where the
+$(k-1)(q+1)$ bound is provably tight, anchoring conjectures about when saturation occurs.
 
-### 5.4 The optimal generator matrix
-
-The optimizer of Corollary 5.3 can be written down explicitly. Realize the seven points
-of $PG(2,2)$ as the seven nonzero vectors of $\mathbb{F}_2^3$. Dropping the point
-corresponding to one vector and stacking the remaining six as the columns of a
-$3\times 6$ matrix $G$ yields a generator matrix of a length-$6$, dimension-$3$ binary
-code. Because the six columns are the nonzero vectors of $\mathbb{F}_2^3$ minus one, no
-column is zero (nondegeneracy) and the code is minimal by Theorem 5.2 and Theorem 3.1.
-No $3\times 5$ matrix over $\mathbb{F}_2$ can generate a minimal code, because its five
-columns would correspond to a strong blocking set of size $5$, which by Theorem 3.1 does
-not exist. Thus length $6$ is not merely achievable but unbeatable for dimension $3$
-over $\mathbb{F}_2$.
-
-### 5.5 Related extremal context
-
-The general problem of the minimum size $m(k,q)$ of a strong blocking set in
-$PG(k-1,q)$ — equivalently the minimum length of a minimal $[n,k]_q$ code — has been
-studied via probabilistic, algebraic, and explicit constructions, with known
-asymptotic bounds linear in both $k$ and $q$. The Fano case computes the very first
-nontrivial value $m(3,2) = 6$ exactly and on the nose, with full classification of
-optimizers, providing a clean anchor for the general theory and a unit test for any
-proposed general lower bound (which must return $6$ at $(k,q)=(3,2)$).
+---
 
 ## 6. Discussion
 
-The Fano result is satisfying because three readings coincide on the number $6$:
+The proof economy is notable: the lower bound rests entirely on the planar incidence axiom
+"any two points are collinear" together with the complement reformulation "$S$ double-blocks
+iff its complement meets every line at most once." These two dual observations force the
+minimum to be exactly $6$, and pin the extremal sets to the complements of single points.
 
-- **Geometric:** delete one point and every line stays spanned; delete two and the line
-  joining them collapses.
-- **Extremal:** a sharp size threshold at $6$, with the extremizers completely
-  classified as the complements of single points.
-- **Coding-theoretic:** the shortest minimal $[n,3]_2$ code has length $6$.
+The saturation in Theorem 3.10 is the conceptual headline. For $\mathrm{PG}(2,q)$ with $q>2$
+the minimum double blocking set generically *exceeds* the general bound $2(q+1)$ (often growing
+like $3q$), so the equality at $q=2$ is exceptional. This positions the Fano plane as a unique
+small-case extremal object rather than a representative of a uniform phenomenon across planes.
 
-The development also clarifies *where* the simplicity lives. By isolating mechanisms
-(M1) and (M2), one sees that the equivalence with "omit at most one point" is special to
-the two-element field, and that the right generalization for $q \geq 3$ must track
-per-line deletion budgets rather than a single global count. This per-line viewpoint is
-exactly what is needed to attack $PG(2,3)$ and beyond.
+**On the role of mechanised verification.** Each headline cardinality ($3$ for line size, $6$
+for the threshold, $7$ for the extremal count) is a finite statement, and the formal
+development discharges them by exhaustive decision procedures over the $7$ lines and the
+$2^7$ subsets. This is more than a convenience: it eliminates any gap between the informal
+counting argument and the verified fact, and it certifies the *complete* extremal
+classification (Theorem 3.8) rather than only the optimum value. The load-bearing conceptual
+input, isolated cleanly, is the incidence axiom (Theorem 3.2) together with the tightness
+identity (Theorem 3.10); everything else is bookkeeping that the decision procedure performs
+exactly. This separation — a small conceptual core plus exhaustively-checked combinatorics —
+is a template for attacking the larger-$q$ and higher-dimensional conjectures below, where the
+conceptual core (the complement duality) is expected to persist while the finite checks grow.
 
-A further structural observation concerns *uniqueness of extremizers*. In $PG(2,2)$ all
-minimizers are of one shape (omit a point); for $q \ge 3$ this uniqueness fails, with
-unions of lines and dual hyperovals providing genuinely different extremal
-configurations. Non-uniqueness thus appears to switch on exactly at the transition away
-from $q = 2$.
+**Interpretation in coding terms.** Restating the results through the projective-system
+dictionary: minimal binary linear codes of dimension $3$ correspond to strong blocking sets of
+the Fano plane; the shortest such code has length $6$; and up to the natural symmetry there is
+essentially one optimal configuration, the seven point-complements forming a single orbit
+under the cyclic (indeed the full collineation) group. The saturation identity
+$6=(k-1)(q+1)$ then says the Griesmer-type minimal-code length bound is met with equality at
+the smallest binary plane, making it a sharp benchmark for the construction of short minimal
+codes used in secret-sharing.
+
+---
 
 ## 7. Future work
 
-The present results are the $h=1$ base case of a broader program on additive strong
-blocking sets. We record the natural next targets.
+The following directions, ordered roughly by ambition, were identified as testable conjectures.
 
-- **$PG(2,3)$ threshold is $8$, not $q^2+q-1 = 11$.** In $PG(2,3)$ ($13$ points, lines
-  of size $4$) the minimal strong blocking set has size $8$ (two disjoint complete
-  $4$-point lines, or a dual hyperoval), strictly larger than the naive omit-one bound.
-  The controlling quantity is the number of omitted points *per line*; re-running the
-  complement-counting argument with per-line budgets is the concrete next experiment.
-- **Tightness is non-unique exactly when $q=2$.** Every minimum strong blocking set of
-  $PG(2,2)$ is $\mathcal{P}\setminus\{p\}$; for $q\ge 3$ the minimizers are not all of
-  this form. Classifying the `IsLeast` witnesses for small $q$ is finitely checkable.
-- **Minimal binary $[n,3]$ minimal-code length equals $6$ iff length-optimal.** Under
-  the projective-system correspondence, a nondegenerate minimal binary linear code of
-  dimension $3$ has length $\ge 6$, with equality realized by the simplex-minus
-  configuration of $PG(2,2)$. Formalizing the projective-system functor would upgrade
-  Corollary 5.3 to a statement about general linear codes directly.
-- **Additive $h$-fold generalization: threshold is $6h$ for $PG(2,2)^h$.** For additive
-  strong blocking sets with parameter $h$, the minimal size is conjectured to scale
-  linearly to $6h$, recovering $6$ at $h=1$, because the $h$-dimensional fiber decouples
-  into $h$ independent Fano constraints once the diagonal action is quotiented.
-- **A `decide`-free, dimension-uniform proof.** Replace the finite-enumeration
-  certification by a structural argument valid uniformly across planes, isolating the
-  pencil-budget and unique-join mechanisms as reusable lemmas.
+**Conjecture 1 (planes over $\mathbb{F}_q$, small $q$).** For $\mathrm{PG}(2,q)$ with
+$q \in \{3,4,5\}$, the minimum size of a strong (double) blocking set is strictly greater than
+the general bound $2(q+1)$; test whether the minimum equals $3q$ for prime $q$, making the Fano
+saturation $2(q+1)$ at $q=2$ exceptional. Verifiable by exhaustive search over a cyclic
+difference-set model for each fixed $q$.
+
+**Conjecture 2 (extremal-set count).** For $\mathrm{PG}(2,q)$, the number of minimum strong
+blocking sets is a polynomial in $q$; for $q=2$ it is $7 = q^2+q+1$ (the point count).
+Conjecture: the count is structured by $\mathrm{PGL}(3,q)$-orbit sizes and equals the point
+count for $q=2$. Test by enumeration for $q=3$.
+
+**Conjecture 3 (binary towers $\mathrm{PG}(N,2)$).** For $\mathrm{PG}(N,2)$ the minimum strong
+blocking set has size exactly $N(q+1) = 3N$ (the bound $(k-1)(q+1)$ with $k=N+1$, $q=2$); i.e.
+binary projective spaces always saturate. The $N=2$ case ($=6$) is proved here; test $N=3$
+($\mathrm{PG}(3,2)$, $15$ points, predicted threshold $9$) over the $2^{15}$ subsets or via a
+complement argument.
+
+**Conjecture 4 (complement / independence reformulation).** In any $\mathrm{PG}(2,q)$, $S$ is a
+strong blocking set iff its complement meets every line in $\le q-1$ points. Conjecture: the
+maximum such complement has size $q^2+q+1-2(q+1) = q^2-q-1$ only when the bound is saturated,
+and the gap $2(q+1) - \mathrm{minSB}$ measures non-saturation. Formalise the complement duality
+as a general lemma (not just $q=2$).
+
+**Conjecture 5 (additive $h>1$ lift).** The $h=1$ results are the linear shadow of additive
+strong blocking sets over $\mathbb{F}_{q^h}$. Conjecture: for $h=2$, $q=2$ (additive codes over
+$\mathbb{F}_4$), the minimum additive strong blocking set of the $\mathbb{F}_2$-linear Fano
+configuration has threshold $<6$, exhibiting a strict additive-vs-linear separation. Build the
+$\mathbb{F}_4$-additive incidence model and test by enumeration.
+
+---
 
 ## 8. Conclusion
 
-For the smallest projective plane $PG(2,2)$ we have settled the strong blocking problem
-completely: a point set is strong blocking iff it omits at most one point
-(`strongBlocking_iff_card`), the minimum size is exactly $6$
-(`leastSize_strongBlocking`), and the minimizers are precisely the seven complements of
-single points. Through the projective-system correspondence this is equivalent to the
-sharp statement that the shortest nondegenerate minimal binary linear code of dimension
-$3$ has length $6$. The argument rests on two transparent mechanisms special to the
-two-element field, which simultaneously explain the result's cleanliness and chart the
-course toward the open higher-order and higher-$q$ cases.
+We have completely characterised strong blocking sets of the Fano plane $\mathrm{PG}(2,2)$:
+they are exactly the double blocking sets, their minimum size is $6$, the extremal sets are the
+seven point-complements, and $6 = (k-1)(q+1)$ exhibits the smallest projective plane as a tight
+witness of the universal minimal-code lower bound. The argument is elementary yet conceptually
+complete, and it opens a concrete program toward larger planes, binary towers, and the additive
+lift.
+
+---
+
+## References (background, not required to follow the paper)
+
+The general lower bound $(k-1)(q+1)$ for strong blocking sets / minimal codes is due to
+Alfarano, Borello and Neri, and independently Davydov, Giulietti, Marcugini and Pambianco. The
+cyclic (Singer) model of the Fano plane via the perfect difference set $\{0,1,3\} \pmod 7$ is
+classical. All statements in this paper are self-contained and proved above.

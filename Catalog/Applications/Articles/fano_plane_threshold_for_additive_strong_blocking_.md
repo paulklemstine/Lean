@@ -1,183 +1,232 @@
-# The Smallest Plane in Mathematics, and the Magic Number Six
+# Six Out of Seven: The Hidden Rule of the Fano Plane
 
-## A puzzle with seven points
+## A puzzle with seven dots
 
-Imagine a tiny universe that contains exactly seven places and seven roads. Every
-road passes through exactly three of the places, every place sits on exactly three
-of the roads, and — most strikingly — any two places are joined by one and only one
-road, while any two roads cross at one and only one place. There is no parallelism,
-no waste, no redundancy. This object is real, it is famous, and it is the smallest
-nontrivial geometry that exists. Mathematicians call it the **Fano plane**, written
-$PG(2,2)$: the projective plane over the two-element field.
+Imagine a tiny universe made of just seven points. They cannot be arranged on an
+ordinary sheet of paper in the way you might expect, because this universe obeys a
+stranger kind of geometry. Yet it is real, it is beautiful, and mathematicians have
+been fascinated by it for over a century. It is called the **Fano plane**, and it is
+the smallest possible *projective plane* — the smallest world in which the familiar
+phrase "any two points determine a line" still holds, but where there are no parallel
+lines at all. Every pair of lines meets, and every pair of points joins.
 
-The Fano plane is the boundary of what geometry can be. Shrink any further and the
-axioms collapse; the seven-point world is the irreducible seed from which all
-projective planes grow. Because it is so small, it can be drawn on a napkin (a
-triangle with its three midpoints, its center, and an inscribed circle through the
-midpoints) and, more importantly, it can be *completely understood*. Every question
-you can ask about it has a definite answer. This article is about one such question
-with a surprisingly clean answer: **how few of its seven points can you keep and
-still "see" every road clearly?** The answer is **six**, and proving that the answer
-is exactly six — not five, not seven — turns out to connect pure geometry to the
-hidden architecture of error-correcting codes.
+The Fano plane has seven points and seven lines. Each line contains exactly three
+points, and each point lies on exactly three lines. The whole structure is perfectly
+self-symmetric: points and lines play interchangeable roles. If you have ever seen a
+triangle with its three midpoints marked, plus a circle through those midpoints, with
+seven dots and seven "lines" (six straight, one curved), you have seen a picture of the
+Fano plane.
 
-## What it means to block a line
+In this article we explore a simple-sounding question about this little world that turns
+out to connect to the frontier of modern coding theory:
 
-Picture yourself standing in this seven-point world holding a highlighter. You want
-to mark a subset $S$ of the seven points so that, no matter which of the seven roads
-you look at, the marked points lying on that road are enough to *pin the road down*.
+> **How many of the seven points do you need to "cover" the plane robustly — so that
+> every line is not merely touched, but firmly straddled?**
 
-What does "pin down" mean? Over the two-element field, a road (a projective line) has
-exactly three points, and any **two** distinct points on it already determine the
-whole road — two points span a line. So a road is "pinned down by $S$" precisely when
-$S$ contains at least two of that road's three points. A single marked point is not
-enough: one point lies on three different roads at once and cannot tell them apart.
+The answer, as we will see, is **six**. Not five. Not seven. Exactly six. And the way
+this number arises reveals a deep principle that governs error-correcting codes used in
+real communication systems.
 
-A set $S$ that pins down *every* road in this way is called a **strong blocking set**.
-The name comes from a family of objects studied across combinatorics and coding
-theory: a blocking set merely *touches* every line; a strong blocking set does more —
-its intersection with every line *generates* that line. Strong blocking sets are the
-geometric shadow of some of the most useful objects in digital communication, as we
-will see.
+## Blocking, and then blocking harder
 
-So here is the crisp question. Among all $2^7 = 128$ possible subsets of the seven
-Fano points, which ones are strong blocking, and what is the *smallest* one?
+Let us be precise about what "covering" means. A **blocking set** in a geometry is a
+collection of points that meets every line — every line passes through at least one
+chosen point. Blocking sets are the geometric heart of many combinatorial puzzles: think
+of placing guards so that no corridor goes unwatched.
 
-## The answer, and why it is six
+But ordinary blocking is a weak requirement. A more demanding and more useful notion is a
+**strong blocking set** (sometimes called a *cutting blocking set*). Here we require that
+the chosen points meet every line in a *spanning* way: the points of our set lying on any
+given line must be enough to generate that entire line.
 
-The main result is a clean dichotomy. Call a subset of the seven points strong
-blocking if it meets every line in at least two points. Then:
+In a projective *plane*, a line is one-dimensional, and it is spanned by any two distinct
+points on it. So in this setting the definition becomes vivid and concrete:
 
-> **Threshold theorem.** A subset $S$ of the seven Fano points is strong blocking
-> **if and only if** it contains at least six of the seven points. Equivalently, $S$
-> is strong blocking exactly when it omits at most one point. Consequently, the
-> smallest possible strong blocking set has size exactly **six**.
+> A set of points is a **strong blocking set** of a projective plane if and only if it
+> meets **every line in at least two points**.
 
-Let us see why, because the argument is short and beautiful and uses the special
-geometry of the Fano plane in an essential way.
+This is exactly what is called a **double blocking set**: every line is hit at least
+twice. We do not just touch each line; we pin it down at two places, enough to reconstruct
+the whole line from our chosen points.
 
-**Six points always work.** Suppose you mark six points and leave out a single point
-$p$. How many points does each road keep? There are exactly three roads through $p$;
-each of them loses $p$ and keeps its other two points — still at least two, so still
-pinned down. The other four roads do not pass through $p$ at all, so they keep all
-three of their points. Every road survives with at least two marked points. The
-six-point set $\text{(all points)} \setminus \{p\}$ is strong blocking. Concretely,
-if we label the points $0,1,2,3,4,5,6$ and omit point $0$, the marked set
-$\{1,2,3,4,5,6\}$ blocks all seven lines.
+The central question is now sharp: *what is the smallest double blocking set of the Fano
+plane?*
 
-**Five points never work.** Now suppose you leave out *two* distinct points $p$ and
-$q$. Here the defining miracle of the Fano plane intervenes: any two distinct points
-lie on a **unique** common road. Call it $\ell_{pq}$. That road contains $p$, $q$,
-and exactly one more point. Once you have discarded both $p$ and $q$, the road
-$\ell_{pq}$ retains a single marked point — not enough to pin it down. So the road
-$\ell_{pq}$ is no longer blocked, and $S$ fails. Since any set of five (or fewer)
-points omits at least two points, no such set can be strong blocking.
+## A convenient way to name the seven points
 
-Putting the two halves together: strong blocking is *exactly* the property of omitting
-at most one point, which is *exactly* the property of having size at least six. The
-minimum size is six, achieved by every "all-but-one-point" set and by nothing smaller.
+To reason cleanly, it helps to label the seven points by the numbers $0, 1, 2, 3, 4, 5, 6$,
+which we treat as the integers *modulo 7* — that is, we count in a circle, so that after
+$6$ we wrap around to $0$. This is the so-called **cyclic** or **Singer** model of the
+Fano plane.
 
-Notice how lean the logic is. The forward direction rests entirely on the counting
-fact that a point lies on three lines and each loses only itself; the backward
-direction rests entirely on the uniqueness of the line through two points. Both are
-defining features of $PG(2,2)$. Change the field — go from two elements to three —
-and both halves of the argument break, which is exactly why the larger planes behave
-differently (more on that below).
+The magic ingredient is the set $\{0, 1, 3\}$, a *perfect difference set* modulo $7$:
+the six nonzero differences between its elements,
+$$
+1-0,\; 3-0,\; 0-1,\; 3-1,\; 0-3,\; 1-3 \pmod 7,
+$$
+which work out to $1, 3, 6, 2, 4, 5$, hit **every** nonzero residue modulo $7$ exactly
+once. Because of this, if we "rotate" the triple $\{0,1,3\}$ around the circle, we obtain
+exactly the seven lines of the Fano plane. Concretely, for each $i$ in $\{0,1,\dots,6\}$
+define the line
+$$
+\ell_i = \{\, i,\; i+1,\; i+3 \,\} \pmod 7 .
+$$
+The seven lines are then
+$$
+\{0,1,3\},\;\{1,2,4\},\;\{2,3,5\},\;\{3,4,6\},\;\{4,5,0\},\;\{5,6,1\},\;\{6,0,2\}.
+$$
+You can check by hand that every pair of points appears together in exactly one of these
+lines, and every pair of lines shares exactly one point. That is the Fano plane.
 
-## A concrete walk-through
+Two facts about this model are worth stating because everything hinges on them.
 
-Let's make it tangible with the standard labelling of the Fano plane. Take the seven
-points to be $\{0,1,2,3,4,5,6\}$ and the seven lines to be
-$$\{0,1,2\},\ \{0,3,4\},\ \{0,5,6\},\ \{1,3,5\},\ \{1,4,6\},\ \{2,3,6\},\ \{2,4,5\}.$$
-You can check by eye that each label appears in exactly three lines, and that any two
-labels appear together in exactly one line.
+**Fact 1 (every line has three points).** Each $\ell_i = \{i, i+1, i+3\}$ contains exactly
+three distinct points. (The offsets $0, 1, 3$ are distinct modulo $7$, so no two of the
+three coincide.)
 
-Now mark the six points $S = \{1,2,3,4,5,6\}$ (we dropped $0$). Walk the lines:
-$\{0,1,2\}$ keeps $1,2$; $\{0,3,4\}$ keeps $3,4$; $\{0,5,6\}$ keeps $5,6$; the other
-four lines keep all three of their points. Every line has at least two survivors —
-$S$ is strong blocking, as promised.
+**Fact 2 (any two points are collinear).** Given any two distinct points $a \neq b$, there
+is a line containing both of them. This is the defining incidence axiom of a projective
+plane, and in the cyclic model it follows directly from the perfect-difference-set
+property: the difference $b - a$ is some nonzero residue, and the difference set guarantees
+a rotation of $\{0,1,3\}$ that contains both.
 
-Try to do better with five points, say $S' = \{2,3,4,5,6\}$ (we dropped $0$ and $1$).
-The unique line through $0$ and $1$ is $\{0,1,2\}$. After deletion it retains only the
-single point $2$. That line is unblocked: $S'$ fails. No matter which two points you
-drop, the unique line joining them will betray you. Six is genuinely the floor.
+## Why the answer is six
 
-## From geometry to the wires in your phone
+Now we can solve the puzzle with a single elegant idea.
 
-Why should anyone outside of finite geometry care that a seven-point toy world has a
-magic number six? Because strong blocking sets are the geometric face of **minimal
-linear codes**, and minimal codes are workhorses of modern information theory.
+**The upper bound: six points are enough.** Take all seven points and remove just one — say,
+remove the point $0$. This leaves a set $S$ of six points, the complement of a single point.
+Does $S$ meet every line in at least two points? Each line has three points. Removing the
+single point $0$ can delete at most one point from any given line. So every line still
+retains at least two of its points inside $S$. Therefore $S$ is a strong blocking set, and
+it has size six. We have exhibited a double blocking set of six points.
 
-A binary linear code packages messages as vectors over the two-element field so that
-errors introduced by a noisy channel can be detected and corrected. There is a
-dictionary — the **projective system correspondence** — translating a code with
-$k$ "dimensions" (independent message coordinates) into a collection of points in the
-projective space $PG(k-1,2)$. The *length* of the code (how many bits it transmits per
-codeword) becomes the *number of points* in the geometric picture.
+**The lower bound: five points are never enough.** Suppose $S$ is a strong blocking set, and
+let $T$ be the set of points *not* in $S$ — its complement. The condition "$S$ meets every
+line in at least two of its three points" translates exactly into "$T$ contains at most one
+point of every line." In other words, $T$ never contains two points of the same line.
 
-Among codes, the **minimal** ones are prized: a code is minimal when no codeword's
-pattern of nonzero positions is contained inside another's. Minimal codes are exactly
-what you want for **secret-sharing schemes** (where the "minimal" codewords encode
-precisely the authorized coalitions that can reconstruct a secret) and for certain
-**secure two-party computation** protocols. And here is the punchline of the
-dictionary: **a code is minimal precisely when its associated point set is strong
-blocking.** Minimality, an algebraic condition about codewords, is the very same thing
-as strong blocking, a geometric condition about lines.
+But here is the punchline, and it is Fact 2: in the Fano plane **any two distinct points lie
+on a common line**. So if $T$ contained two distinct points, those two would share a line,
+and $T$ would contain two points of that line — a contradiction. Hence $T$ can contain *at
+most one point*. That means $T$ has size at most $1$, and so $S$ has size at least
+$7 - 1 = 6$.
 
-So our threshold theorem, translated through the dictionary, says something concrete
-about communication:
+Putting the two halves together:
 
-> The shortest nondegenerate minimal binary linear code of dimension $3$ has length
-> exactly $6$.
+> **The Fano-plane threshold.** The minimum size of a strong blocking set of the Fano plane
+> is exactly **six**.
 
-In words: if you insist on three independent message coordinates and on the strong
-security guarantee of minimality, you cannot compress below six transmitted bits — and
-six is achievable. The geometric "omit one point" construction becomes the optimal
-short minimal code. A fact about a napkin-sized geometry is a sharp optimality
-statement about real codes.
+What is more, the same argument tells us *which* sets achieve the minimum. A strong blocking
+set of size six must have a complement $T$ of size exactly one — a single point. So the
+smallest strong blocking sets are precisely the seven complements-of-a-point,
+$$
+\text{univ} \setminus \{p\}, \qquad p \in \{0,1,2,3,4,5,6\}.
+$$
+There are exactly **seven** of them, one for each point you might choose to leave out. The
+extremal configurations are not exotic; they are simply "all but one."
 
-## Why the small case is the interesting case
+## From dots and lines to error-correcting codes
 
-It is tempting to dismiss the seven-point world as too small to matter. The opposite
-is true: $q = 2$ (the two-element field) is the *exceptional* regime. The proof we gave
-exploited two facts that are special to it — that a line has only three points (so
-removing one still leaves two) and that two points determine a unique line (so two
-deletions kill exactly one line). Push to $PG(2,3)$, the next projective plane, with
-$13$ points and lines of size $4$, and both facts weaken.
+So far this might look like a charming but isolated combinatorial fact. It is not. Strong
+blocking sets are the geometric face of a central object in information theory: **minimal
+linear codes**.
 
-The naive guess "omit one point" gives $12$, but it is not optimal there, and a single
-omitted point no longer automatically keeps every line spanned, because a line now has
-four points and the bookkeeping must be done *per line*, not globally. The known
-minimal strong blocking set in $PG(2,3)$ has size $8$, realized by more exotic
-configurations such as two disjoint full lines or a dual hyperoval — genuinely
-different from the "all but one point" recipe. This contrast is part of what makes the
-clean $q = 2$ answer worth isolating: it is the base case that exposes the exact
-obstruction (two omitted points sharing a line) which the larger cases must
-generalize.
+A *linear code* is a way of adding redundancy to data so that errors introduced in
+transmission can be detected or corrected. A *codeword* is a particular encoded message.
+A code is called **minimal** when none of its nonzero codewords is "covered" by another —
+formally, no codeword's support (the set of positions where it is nonzero) is contained in
+another's. Minimal codes are prized because they enable elegant *secret-sharing schemes*
+and efficient decoding procedures: in a minimal code, the access structure of who-can-
+recover-the-secret is determined directly by the codewords.
 
-There is even a uniqueness twist. In the seven-point world, *every* minimum strong
-blocking set is of the form "all points except one" — the minimizers are completely
-classified. For $q \geq 3$ the minimizers are no longer all of this shape; unions of
-lines and other configurations sneak in. Non-uniqueness of the extremal configuration
-appears to be a phenomenon that switches on exactly when you leave the two-element
-field.
+There is a precise dictionary, the **projective-system correspondence**, translating
+between codes and geometry:
 
-## The bigger picture
+- A linear code of dimension $k$ corresponds to a multiset of points in the projective
+  space $\mathrm{PG}(k-1, q)$, where $q$ is the size of the underlying alphabet.
+- The *length* of the code equals the number of points.
+- The code is **minimal** if and only if the corresponding point set is a **strong
+  blocking set**.
 
-The story has a natural ladder of generalizations. One can study **additive** strong
-blocking sets indexed by a parameter $h$, where the seven-point Fano constraint is
-imposed across an $h$-dimensional fiber; the case $h = 1$ is exactly the ordinary
-strong blocking set discussed here. A plausible conjecture is that the threshold scales
-linearly — that the $h$-fold version costs $6h$, recovering the magic six at $h = 1$ —
-because the fibers ought to decouple into $h$ independent copies of the Fano
-constraint. And one can climb the projective ladder to $PG(2,3)$, $PG(2,4)$, and beyond,
-asking for the threshold and the classification of minimizers at each rung. These are
-live questions; the seven-point case is the solved cornerstone they all rest on.
+Under this dictionary, *the shortest possible minimal code of a given dimension* becomes
+*the smallest strong blocking set of a given projective space*. Our Fano-plane result
+therefore reads, in coding language:
 
-What makes the Fano result satisfying is the way three perspectives lock together. To
-the geometer it is a statement about lines and points: keep all but one and every line
-stays visible. To the combinatorialist it is an extremal counting problem with a sharp
-threshold at six and a complete description of the extremizers. To the coding theorist
-it is an optimality bound: minimal codes of dimension three need length six. Three
-languages, one fact. The smallest plane in mathematics, it turns out, has something
-sharp and useful to say — and the number it says is six.
+> The shortest nondegenerate minimal binary linear code of dimension $3$ has length $6$.
+
+Here "binary" means the alphabet has $q = 2$ symbols, and "dimension $3$" corresponds to the
+plane $\mathrm{PG}(2, 2)$ — the Fano plane. The number six is the optimal length, and our
+seven extremal sets correspond to the essentially-unique shortest such codes.
+
+## A bound that the Fano plane hits exactly
+
+Researchers studying minimal codes — among them Alfarano, Borello and Neri, and
+independently Davydov, Giulietti, Marcugini and Pambianco — established a general lower
+bound on how short a minimal code (equivalently, how small a strong blocking set) can be.
+For dimension $k$ over an alphabet of size $q$, every strong blocking set in
+$\mathrm{PG}(k-1, q)$ must have at least
+$$
+(k-1)(q+1)
+$$
+points. This bound is one of the cornerstones of the theory.
+
+For the Fano plane we have $k = 3$ and $q = 2$, so the bound predicts at least
+$$
+(k-1)(q+1) = (3-1)(2+1) = 2 \cdot 3 = 6
+$$
+points. And we proved the true minimum is *exactly* six. The Fano plane does not merely
+*satisfy* the general bound — it **saturates** it, meeting it with perfect equality. The
+smallest nontrivial projective plane is, in this precise sense, extremal: it is as efficient
+as the general theory permits.
+
+This tightness is the heart of the result. It is one thing to verify by brute force that six
+points suffice and five do not; it is another to recognize that the number six is exactly the
+value $(k-1)(q+1)$ handed down by a theorem about *all* minimal codes. The Fano plane is the
+first and cleanest witness that this universal bound can be achieved.
+
+## Why saturation is special
+
+One might guess that all projective planes are this efficient. They are not. As soon as we
+move to larger planes $\mathrm{PG}(2, q)$ with $q = 3, 4, 5, \dots$, the minimum size of a
+double blocking set typically *exceeds* the general bound $2(q+1)$. The minimum tends to
+grow more like $3q$, leaving a genuine gap between what the universal theory guarantees and
+what the geometry actually requires. The Fano plane's exact saturation at $q = 2$ is, in
+this light, a small miracle of the smallest case — an exceptional point of perfect
+efficiency.
+
+This raises a tantalizing research program. Do *binary* projective spaces of higher
+dimension, $\mathrm{PG}(N, 2)$, also saturate the bound — does $\mathrm{PG}(3, 2)$ with its
+fifteen points have minimum strong blocking set of size exactly $9 = 3 \cdot 3$? Does the
+phenomenon of saturation belong to the alphabet $q = 2$ rather than to the plane dimension?
+And what happens for the richer *additive* strong blocking sets, defined over larger fields
+$\mathrm{GF}(q^h)$, of which the case studied here ($h = 1$) is the ordinary linear shadow?
+Early reasoning suggests that the additive world may break the symmetry, allowing strong
+blocking configurations *shorter* than six — a strict separation between additive and linear
+codes already in the Fano configuration.
+
+## The shape of the argument
+
+Step back and admire how little machinery the proof needed. The entire result rested on a
+single geometric truth — *any two points lie on a line* — combined with elementary counting.
+The upper bound came from "removing one point spoils at most one point per line." The lower
+bound came from "the complement cannot contain two collinear points, and everything is
+collinear." Two short observations, dual to one another, pinned the answer to exactly six.
+
+That economy is precisely why the Fano plane is such a beloved teaching example and such a
+fertile testing ground. It is small enough to check every one of its $2^7 = 128$ subsets by
+hand or by machine, yet structured enough to illustrate principles — minimality, duality,
+extremal saturation — that reach all the way to the design of modern communication systems
+and cryptographic secret-sharing.
+
+## Conclusion: a perfect small world
+
+The Fano plane teaches a lesson that recurs throughout mathematics: the smallest example of
+a structure is often the place where its deepest features appear in their clearest form.
+Seven points, seven lines, and a single rule — meet every line twice — together force the
+number six. That six is not arbitrary; it is the exact value of a bound governing the most
+efficient error-correcting codes, achieved here with equality for the very first time.
+
+To cover the Fano plane robustly, you need six of its seven points — and the one you leave
+behind can be any point you like. In that simple statement lives a whole world of geometry,
+coding theory, and the elegant art of doing the most with the least.
