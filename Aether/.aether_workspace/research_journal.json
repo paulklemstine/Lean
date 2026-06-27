@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9537a45c",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nDerived from the findings of this research cycle (`LargeDeviations.lean`,\n`DualityGap.lean`). Each conjecture is bold, falsifiable, and",
-      "quality_score": 0.7829999999999999,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-06-22T21:21:10",
-      "title": "Idempotent Probability: Large Deviations"
-    },
-    {
       "cycle_id": "59a725d3",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions\n\nBuilding on the topological inverse-limit core formalized in\n`Catalog/Pythagorean/ProjectiveFraisseInverseLimitCore.lean`, here are several\nresearch directions that the formalizat",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T15:54:16",
       "title": "Langlands Correspondence: GL(1) Case"
+    },
+    {
+      "cycle_id": "e4cbdb61",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Riordan Array Row Sums and Fibonacci Diagonals\n\nDerived from the cycle that proved `∑_{k} C(n+k, 2k) = fib(2n+1)`\n(`Catalog/Novelty/RiordanRowSumFibonacci.lean`) via the coupled",
+      "quality_score": 0.5522400000000001,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-27T16:19:43",
+      "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70696
     }
   ],
-  "last_updated": "2026-06-27T15:54:16",
+  "last_updated": "2026-06-27T16:19:43",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "982feb93",
-        "quality": 0.35044872340425537,
-        "theorems": 0,
-        "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via "
-      },
-      {
         "cycle_id": "d409a01c",
         "quality": 0.71088,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.463,
         "theorems": 0,
         "title": "Excluded minors for bias graphs gainable over cyclic groups 𝑍ₚ"
+      },
+      {
+        "cycle_id": "e4cbdb61",
+        "quality": 0.5522400000000001,
+        "theorems": 6,
+        "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
       }
     ],
     "NumberTheory": [

@@ -120,25 +120,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f8a707b1",
-    "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_328",
-    "lineage_refs": [],
-    "priority_score": 0.93,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432595+00:00",
-    "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domain_bridges": [],
@@ -958,7 +939,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2ff65a6a",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domain_bridges": [],
     "domains": [
@@ -971,7 +952,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -8532,7 +8513,7 @@
       "https://arxiv.org/abs/2309.14753",
       "https://doi.org/10.1038/s41586-021-03890-9"
     ],
-    "consumed_by_exp_id": "bdfd9dbb",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that there exists a deterministic algorithm solving the Global Label Min-Cut (GLMC) problem on any undirected graph with n vertices and p labels in time O((np)^{C·log n / log log n}) for some absolute constant C.",
     "domain_bridges": [
       "graph_theory",
@@ -8549,7 +8530,7 @@
     "proof_strategy": "The conjectured upper bound can be approached by extending the partition‑lattice dynamic programming techniques used for hypergraph min‑cut.  One would encode the connectivity of the union of label graphs as lattice elements and propagate partial solutions using fast zeta transforms on the lattice.  By carefully arranging the recursion depth to be O(log n / log log n) and applying a logarithmic‑depth divide‑and‑conquer on the label set, the total number of DP states can be bounded by (np)^{O(log n / log log n)}.  A full formal proof would involve defining the lattice, proving its size bound, and showing that the DP recurrence respects the GLMC objective.  The crux is to avoid an exponential blow‑up in the number of subsets of labels by exploiting the lattice’s Möbius inversion to compute union‑connectivity in quasi‑linear time per layer.",
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T19:43:32.279494+00:00",
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
@@ -10848,7 +10829,7 @@
       "math.NT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "d36ccdc3",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a rank four Nahm sum of the form Σ q^Q(i,j,k,l)/((q;q)_i(q;q)_j(q;q)_k(q;q)_l) where Q is a quadratic form in four variables is modular (expressible as an infinite product of q-Pochhammer symbols) if and only if the discriminant of Q's Hessian matrix equals 8, 12, or 16. This would generalize the proven cases in the paper where discriminants compute to these values.",
     "domain_bridges": [
       "Commutative Algebra (quadratic forms)",
@@ -10864,7 +10845,7 @@
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T01:38:56.664555+00:00",
     "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
   },
@@ -12958,6 +12939,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Riordan Array Row Sums and Fibonacci Diagonals\n\nDerived from the cycle that proved `∑_{k} C(n+k, 2k) = fib(2n+1)`\n(`Catalog/Novelty/RiordanRowSumFibonacci.lean`) via the coupled pair\n`A(n) = Σ C(n+k,2k) = fib(2n+1)`, `B(n) = Σ C(n+k,2k+1) = fib(2n)` and the Pascal\nrecurrences `B(n+1)=A(n)+B(n)`, `A(n+1)=A(n)+B(n+1)`.\n\n## Conjecture 1 — Weighted steep diagonals give Chebyshev/Fibonacci-poly evaluations\nStatement: `∑_{k} C(n+k, 2k) · x^k` equals the Fibonacci/Chebyshev-type polynomial\nwhose value at `x=1` is `fib(2n+1)`; concretely it satisfies the q-analogue recurrence\n`P_{n+1}(x) = (2+x)P_n(x) − P_{n-1}(x)` is FALSE as stated and must be tested —\nthe correct recurrence is `P_{n+1} = (1+x)P_n + x·(P_n − P_{n-1})`-shaped, to be pinned\nby the same A/B split with an extra weight `x` on odd diagonals.\nThe key insight is that the A/B coupling is linear, so attaching a formal weight `x`\nto the odd-index diagonal `B` turns the scalar recurrence into a matrix recurrence\n`[A;B]_{n+1} = M(x) [A;B]_n`, whose top entry is the desired polynomial.\nWhy now? The scalar case is fully formalized here, so the weighted lift only needs the\nsame two Pascal steps carried with a `Polynomial ℤ` coefficient — a direct, testable\ngeneralization with no new combinatorial input.\n\n## Conjecture 2 — General steep diagonal `∑_k C(n+k, m·k)` is a linear recurrence sequence\nStatement: for each fixed `m ≥ 2`, the sequence `S_m(n) = ∑_k C(n+k, m·k)` satisfies a\nlinear recurrence with constant integer coefficients of order `m`, generalizing the\norder-2 recurrence `A(n+2)=3A(n+1)−A(n)` proved here (`pascalRiordan_three_term`).\nThe key insight is that the closure under Pascal of the family of diagonals\n`{Σ C(n+k, m·k + r) : 0 ≤ r < m}` is an `m`-dimensional vector recurrence, so its first\ncoordinate obeys an order-`m` scalar recurrence by Cayley–Hamilton.\nWhy now? The `m=2` instance is exactly the coupled `(A,B)` system just verified; the\nproof technique (Pascal split + bound-by-zero top terms) ports verbatim to `m` diagonals.\n\n## Conjecture 3 — Column generating functions are rational with denominator `(1-x)^{2k+1}`\nStatement: the `k`-th column of the array, `n ↦ C(n+k, 2k)`, has ordinary generating\nfunction `x^k / (1-x)^{2k+1}`, matching the Riordan pair `(1/(1-x), x/(1-x)^2)`.\nThe key insight is that `C(n+k,2k)` is a polynomial in `n` of degree `2k`, and degree-`d`\npolynomial sequences have OGF with denominator `(1-x)^{d+1}`; the numerator is forced to\nbe `x^k` by the value pattern (the column starts at `n=k`).\nWhy now? Mathlib has the `PowerSeries`/`Polynomial` API and `Nat.choose` polynomiality\nlemmas; this converts the informal Riordan-array description into a proved rational OGF,\nthe missing analytic counterpart of the combinatorial row-sum identity.\n\n## Conjecture 4 — Row-sum congruences: `fib(2n+1) ≡ row sum mod p` refines apparition\nStatement: combining `pascalRiordanA_eq_fib` with the entry-point machinery in\n`Catalog/Novelty/FibCarmichaelStructure.lean`, the row sum `∑_k C(n+k,2k)` is divisible\nby a prime `p` iff `z(p) ∣ 2n+1`, where `z(p)` is the Fibonacci rank of apparition.\nThe key insight is that the row sum IS `fib(2n+1)`, so the catalog's proved duality\n`p ∣ fib m ↔ z(p) ∣ m` transports directly to a divisibility criterion for these\nbinomial sums — a bridge between the binomial and apparition catalog threads.\nWhy now? Both endpoints are already formalized in the catalog (`fibEntry` duality and the\nrow-sum identity), so the bridge is a one-line `rw` away and yields a non-obvious\nstatement purely about binomial coefficients.\n\n## Conjecture 5 — Alternating row sums give a sign-periodic Fibonacci-free pattern\nStatement: `∑_k (-1)^k C(n+k, 2k)` is eventually `0/±1`-periodic with period dividing 6\n(an \"anti-diagonal\" cancellation), in contrast to the exponential growth of the plain\nrow sum. Test small `n` first; the conjecture must be falsified or pinned by the same\nA/B split carried over `ℤ` with alternating signs.\nThe key insight is that introducing `(-1)^k` flips the coupling matrix `M` to one with\neigenvalues on the unit circle (roots of `x^2 - x + 1`), forcing bounded, periodic\nbehavior rather than Fibonacci growth.\nWhy now? The unsigned case is proved and its `2×2` transfer matrix is explicit; flipping\none sign is a minimal perturbation whose spectral consequence is immediately checkable.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2707",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e4cbdb61",
+    "status": "available",
+    "timestamp": "2026-06-27T16:19:26.351623+00:00",
+    "title": "Derived from the cycle that proved `∑_{k} C(n+k, 2k) = fib(2n+1)`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -13449,7 +13450,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "46e595fc",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domain_bridges": [],
     "domains": [
@@ -13462,7 +13463,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
