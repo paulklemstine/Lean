@@ -506,16 +506,6 @@
       "cycle_id": "ddfbd83f",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Quantum Thermodynamics / Landauer at the Nanoscale\n\nDerived from this cycle's findings (`Physics.LandauerSecondLaw`,\n`Physics.LandauerThermodynamicLimit`, building on `Logic.Jarz",
-      "quality_score": 0.526909,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-06-21T20:13:46",
-      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-    },
-    {
-      "cycle_id": "ddfbd83f",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Quantum Thermodynamics / Landauer at the Nanoscale\n\nDerived from this cycle's findings (`Physics.LandauerSecondLaw`,\n`Physics.LandauerThermodynamicLimit`, building on `Logic.Jarz",
       "quality_score": 0.63352,
       "sorry_count": 0,
       "theorem_count": 247,
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-27T04:13:04",
       "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refinement"
+    },
+    {
+      "cycle_id": "49ad7738",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — unit-shift totient collisions and the GHP lower bound\n\nDerived from this cycle's findings in `TotientFermatCollisions.lean` (the\nFermat-prime prefix mechanism, `fermatPrime_prefi",
+      "quality_score": 0.6950400000000001,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-27T04:16:29",
+      "title": "Tightness of the unit-shift bound for Euler's totient function"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7478369230769231
     }
   ],
-  "last_updated": "2026-06-27T04:13:04",
+  "last_updated": "2026-06-27T04:16:29",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1f3047ef",
-        "quality": 0.45104400000000006,
-        "theorems": 20,
-        "title": "Representation Theory: Character Tables of S_n"
-      },
-      {
         "cycle_id": "6452feb1",
         "quality": 0.43033200000000005,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.6293409999999999,
         "theorems": 0,
         "title": "Proof Automation: Custom Lean 4 Tactics"
+      },
+      {
+        "cycle_id": "49ad7738",
+        "quality": 0.6950400000000001,
+        "theorems": 15,
+        "title": "Tightness of the unit-shift bound for Euler's totient function"
       }
     ],
     "Bridges": [

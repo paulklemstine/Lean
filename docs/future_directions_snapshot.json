@@ -8559,7 +8559,7 @@
       "approximate Carathéodory theorem",
       "Maurey's empirical method"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "669193db",
     "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor λ > 1, leading to exponential contraction after k iterations: max{σ ∈ Del(X_k)}.diameter ≤ (1/λ)^k · max{σ ∈ Del(X_0)}.diameter",
     "domain_bridges": [
       "Delaunay triangulation",
@@ -8574,7 +8574,7 @@
     "proof_strategy": "Formalize covering estimates via pivotal sampling and the dimension-dependent Carathéodory theorem to bound diameter decay per refinement step",
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
@@ -9592,7 +9592,7 @@
       "west1990",
       "defant2020"
     ],
-    "consumed_by_exp_id": "8e92c627",
+    "consumed_by_exp_id": "",
     "description": "The limit of the average stack-sorting depth scaled by n converges to the rational number 3/4.",
     "domain_bridges": [
       "stack_sorting",
@@ -9607,7 +9607,7 @@
     "proof_strategy": "numerical_experiment_and_analytic_upper_lower_bounds",
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T16:46:53.250760+00:00",
     "title": "Exact asymptotic value of the average stack-sorting depth"
   },
@@ -10104,6 +10104,53 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every tree T, the minimum size of an initial set that forces all vertices to exceed the transmission threshold (the transmission zero forcing number) is exactly the domination number of T, i.e., the size of a smallest dominating set.",
+    "domain_bridges": [
+      "Zero Forcing",
+      "Graph Domination"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2609",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use induction on the number of vertices of a tree, leveraging leaf properties and the fact that a dominating set must contain a neighbor of each leaf; show that the forcing process can be simulated by a dominating set and vice‑versa, thereby establishing equality.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22246v1",
+    "status": "available",
+    "timestamp": "2026-06-27T03:44:47.563422+00:00",
+    "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT/2301.01234",
+      "math.NT/2105.06789"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer matrix \\(M = \\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}\\) with non‑zero determinant and \\(\\gcd(a,b,c,d)=1\\), the set of ratios of Lagrange constants\n\\[\\mathcal{V}(M) := \\{ k(Mx)/k(x) : x \\in \\mathrm{Bad}\\}\\]\ncoincides with the closed interval \\([|\\det M|^{-1},\\,|\\det M|]\\). In other words, every value between the extremal bounds given by Lagarias–Shallit is attained by some badly approximable number, and no values outside the interval occur.",
+    "domain_bridges": [
+      "Analysis/Continued Fractions",
+      "Algebra/Smith Normal Form"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2610",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the Smith normal form of \\(M\\) to reduce to diagonal matrices \\(\\operatorname{diag}(d,1)\\) with \\(d=\\det M\\). For a diagonal matrix the transformation is \\(x \\mapsto d x\\) or \\(x \\mapsto x/d\\). Show that for any \\(r\\) in the interval there exists a badly approximable \\(x\\) with prescribed limsup of partial quotients such that \\(k(d x)=r\\,k(x)\\). This is achieved by constructing continued fractions with blocks of large partial quotients whose frequencies encode the desired ratio, employing the known formula \\(k(x)=\\limsup ([a_n; a_{n+1},\\dots]+[0;a_{n-1},\\dots,a_1])\\). Finally lift the result back to the original \\(M\\) using the unimodular matrices from the Smith decomposition, which preserve \\(k(x)\\) up to the determinant factor. The argument is fully formalizable in Lean using existing libraries for continued fractions, matrix normal forms, and Diophantine approximation.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22229v1",
+    "status": "available",
+    "timestamp": "2026-06-27T04:17:04.862367+00:00",
+    "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [
       "Theorem 1",
       "Corollary 1",
@@ -10119,7 +10166,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -10148,7 +10195,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -10174,7 +10221,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -10199,7 +10246,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -10227,7 +10274,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -10253,7 +10300,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -10279,7 +10326,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -10301,7 +10348,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -10327,7 +10374,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -10347,7 +10394,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -10370,7 +10417,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct Verification",
@@ -10395,7 +10442,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive upper bound plus refinement via circular ordering",
@@ -10422,7 +10469,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the vertex-gluing construction from the paper to establish recursive relationships between the ranks for different n, combined with exhaustive case analysis for small n values, and use induction to generalize to larger n. Critical lemmas would involve verifying the intersection condition preservation under gluing operations and demonstrating self-duality through explicit automorphism constructions.",
@@ -10448,7 +10495,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that a rational pair of densities would force a periodic tiling via a rationality-induced lattice symmetry, contradicting aperiodicity.",
@@ -10475,7 +10522,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof techniques from the Chudnovsky-Scott-Seymour paper, using induction on the number of colors and maximum graph size, combined with careful analysis of how vertex partitions interact with the complete join structure under color constraints.",
@@ -10502,7 +10549,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) If a tournament has no transitive triangle, then every directed P3 with endpoints in a convex set must have the arc between endpoints, making both convexities equivalent; (2) If a tournament has a transitive triangle (u,v,w) with u→v→w and u→w, construct a set whose convex hulls differ between the two convexity notions.",
@@ -10533,7 +10580,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Lovász’s minimax theorem for matroid matchings to relate the extremal size to the fractional matching number in the associated matroid. Apply a high‑dimensional Hoffman bound for uniform hypergraphs over the lattice of subspaces to obtain upper bounds that match the two constructions. Then develop a stability argument that shows any family attaining the upper bound must be structurally close to one of the two extremal families, and finally exploit design‑theoretic counting to rule out all other configurations. The proof would combine linear‑algebraic isoperimetric inequalities, spectral techniques on the Grassmann graph, and matroid intersection theory.",
@@ -10560,7 +10607,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive adaptation of existing existence techniques with tailored order-preserving constructions",
@@ -10587,7 +10634,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve constructing a specific field extension (likely a function field of a quadric or a sequence of such extensions) and defining semi-singular forms (composed of a non-singular part and a totally singular part) that satisfy the isotropy index equality by construction via the properties of the Witt group in characteristic 2, while ensuring their similarity classes remain distinct using invariants like the Arf invariant or the dimension of the singular part.",
@@ -10613,7 +10660,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the prime zeta function P(s) as a Dirichlet series. 2. Implement the singular expansion of P(s) near the imaginary axis using the relationship between P(s) and the Riemann zeta function ζ(s) via the Mobius inversion formula: P(s) = ∑_{n=1}^∞ μ(n)/n * log ζ(ns). 3. Use the properties of the logarithm of the Riemann zeta function near its zeros and poles to construct a regularized limit or a specific path-dependent continuation. 4. Evaluate the resulting expression at s = -1.",
@@ -10643,7 +10690,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize coefficient codes whose m-th Schur powers have full-support hyperplane structure, apply the Mirandola-Zémor Schur-product Kneser theorem to constrain extremal matroid structures, then prove that any extremal configuration must have the same underlying point configuration as a rational normal curve under the Veronese embedding. The converse direction follows by explicit computation of rational-normal-curve Veronese images.",
@@ -10671,7 +10718,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the polynomial method (Combinatorial Nullstellensatz) to show that a zero-sum subset of size 2ℓ+1 yields a solution to the system of equations defining a cycle, and conversely extract a zero-sum subset from a given cycle via its edge differences. The symmetry of S allows reordering of differences to obtain a subset of S. Character sums over Z_p handle the distinctness condition on vertices.",
@@ -10699,7 +10746,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume density vanishes on a block, then use carry pressure lower bound and upper bound via stopping-time budget to derive contradiction. Uses four local carry estimates: complete-lap mass balance, total-support summation, fixed-pin confinement, and class-one realization.",
@@ -10724,7 +10771,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply linear programming duality to the covering weighting problem to derive a lower bound on the total weight, showing that any weighting covering the uncovered squares must have weight at least n - k + Ω(n), which translates into a lower bound on qc(n) and forces the asymptotic constant to be at least 0.216.",
@@ -10749,7 +10796,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on k. For the base case k=5, verify s₃(5) = (twr₃(2))² = (2^{2^{2}})² = 64 via explicit construction. For the inductive step, assume the formula holds for k and construct a 3-coloring of (k+1)-subsets that avoids large monochromatic homogeneous sets by taking a product of the coloring for k with a 2-coloring of pairs, then apply the stepping-up lemma for shift numbers to show that s₃(k+1) ≥ (twr_{k-1}(2))². Conversely, use a density increment argument to show that any 3-coloring of (k+1)-subsets of a set of size (twr_{k-1}(2))² must contain a monochromatic homogeneous set of size k+1, establishing the upper bound.",
@@ -10778,7 +10825,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed in two parts. (1) Upper bound: Using the strong blocking property, one shows that any non‑outer additive strong blocking set B in PG(k‑1,q) can be partitioned into fibres of a map from the complement to B, leading to the inequality |B| ≤ q^{k‑1}. This follows from counting arguments and the fact that each line not meeting B can be used to bound the number of points in B. (2) Existence: Construct an explicit additive code by taking a generator matrix whose columns are the points of a maximal partial spread in PG(k‑1,q) of size q^{k‑1}. Such partial spreads are known to exist for all q and k (e.g., via affine geometry constructions). The code is nondegenerate and minimal because removing any column destroys the strong blocking property. Formalising these constructions in Lean 4 will require definitions of finite fields, vector spaces, subspaces, projective geometry, and the strong blocking condition.",
@@ -10801,7 +10848,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive contradiction over order counts",
@@ -10821,7 +10868,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct inequality verification",
@@ -10848,7 +10895,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy involves formalizing the Dembélé-Freitas-Voight classification of Weil-Deligne types as a finite data structure. One would then implement the computation of the $H^0$ group by evaluating the invariants of the adjoint representation $\\mathrm{ad}^0\\bar{\\rho}$ under the action of the inertia group $I_p$, utilizing the explicit action of the Weil-Deligne operators (N and the Weil group action) provided by the classification.",
@@ -10885,7 +10932,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2639",
+    "id": "fd_2640",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structure of Zeckendorf decompositions to derive modular constraints on consecutive terms, then apply known bounds on gaps between Fibonacci numbers and properties of the golden ratio to limit the possible run length.",
@@ -10902,7 +10949,7 @@
       "Multiple Sine Functions",
       "Wallis Product"
     ],
-    "consumed_by_exp_id": "08b15f3b",
+    "consumed_by_exp_id": "",
     "description": "For an even integer m = 2k, the regularised Wallis product P_m defined as the limit as N -> infinity of product_{n=2}^N exp(C_{m,n}) * (1 - 1/n^2)^{n^m}, where C_{m,n} is the minimal exponential counterterm cancelling non-summable terms in the log expansion, converges to a closed form involving pi, Euler's gamma, and odd zeta values zeta(2j+1).",
     "domain_bridges": [
       "Analysis -> Number Theory",
@@ -10911,13 +10958,13 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2640",
+    "id": "fd_2641",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Utilize the logarithmic expansion of (1 - 1/n^2)^{n^m}, express the resulting sum as a combination of zeta-function tails, apply the reflection formula for the zeta function and the relation between zeta-tails and the Glaisher-Kinkelin constants or polygamma functions to arrive at the closed form.",
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T18:59:39.163751+00:00",
     "title": "Closed Form for the Regularised Wallis Product P_m for Even m"
   },
@@ -10939,7 +10986,7 @@
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2641",
+    "id": "fd_2642",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Derive explicit bounds from the off-Turán embedding theorem using quantitative Szemerédi regularity, then trace through the compactness argument to bound the stabilization threshold, leveraging finite versions of the shadow hypergraph construction and effective null-blocker theory.",
@@ -10967,7 +11014,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2642",
+    "id": "fd_2643",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Thesis construction and verification via conjectural examples",
@@ -10993,7 +11040,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2643",
+    "id": "fd_2644",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend symmetric matrix eigenvalue analysis to signed graphs using partitioned adjacency matrices, coupled with Hoffman's chromatic number bounds via interlacing eigenvalue theorems.",
@@ -11014,7 +11061,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2644",
+    "id": "fd_2645",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive contradiction",
@@ -11042,7 +11089,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2645",
+    "id": "fd_2646",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the global functional equation for the Rankin–Selberg convolution \\(L(s,\\pi\\times\\pi^\\vee)\\).  Associate to each place a local zeta integral representing the Betti‑Whittaker period and compare the local gamma factors in the functional equation with the local Whittaker integrals.  By the multiplicativity of local factors, the ratio of the global periods equals the product of the archimedean constants, which are algebraic by Deligne’s conjecture on critical values.  The explicit constant \\(C(\\pi)\\) is expressed in terms of the central character and the local epsilon factors at infinity.",
@@ -11071,7 +11118,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2646",
+    "id": "fd_2647",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the kernel definition and density calculations in Lean 4, then prove the inequality by establishing the recurrence relation for directed cycle densities and applying Jensen's inequality to the expectation of f. The key is to leverage the correlation structure of 𝒞_f to show that directed cycles satisfy the Sidorenko bound.",
@@ -11095,7 +11142,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2647",
+    "id": "fd_2648",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First, use the paper's result that Γ*(G) is either a star or contains a cycle of length 3 or 4. Second, show that if G is not nilpotent then Γ*(G) cannot be a star (by the classification of star groups). Third, construct three subgroups H, K, L such that each pair product equals G but no pair of them is contained in a maximal subgroup that would force a 4‑cycle, yielding a triangle. This construction relies on the existence of a non‑normal maximal subgroup and its core, together with a Sylow subgroup not contained in that maximal subgroup.",
@@ -11125,7 +11172,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2648",
+    "id": "fd_2649",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage point-line incidence bounds in finite fields to analyze additive energy of lattice points, requiring new refinements of bilinear estimates or incidence geometry tools.",
@@ -11149,7 +11196,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2649",
+    "id": "fd_2650",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Functional equation via residue-class decomposition",
@@ -11179,7 +11226,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2650",
+    "id": "fd_2651",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use variational characterizations of the signless Laplacian spectral radius, analyze the structure of near-extremal eigenvectors via Hodge decomposition on links, apply homological stability lemmas to control local deviations from the extremal structure, and employ combinatorial arguments to bound the global edit distance in terms of spectral gap.",
@@ -11204,7 +11251,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2651",
+    "id": "fd_2652",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construction of a p-adic construction with explicit consistency conditions",
@@ -11232,7 +11279,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2652",
+    "id": "fd_2653",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize finite simple graphs, edge ideals, and chordal/complement notions in Lean using existing graph libraries. 2. Define vertex separators and prove basic properties (existence, minimality). 3. Show that for a co‑chordal graph G, its complement \\(\\overline G\\) is chordal, hence admits a perfect elimination ordering; use this ordering to construct the glued clique complex described in the paper. 4. Prove that the minimal separator size of \\(\\overline G\\) equals the minimum intersection size \\(\\min_{m}\\{r_m\\}\\) appearing in the glued complex (by analysing the perfect elimination ordering and the way facets are glued). 5. Using the explicit Betti formula (1) from the paper, translate the bound on the maximal homological degree into the expression \\(|V(G)|-\\min\\{r_m\\}-1\\). 6. Combine steps 4 and 5 to obtain the desired equality \\(\\operatorname{pdim}(S/I(G)) = |V(G)|-\\kappa(\\overline G)-1\\). 7. Verify base cases (trees, split graphs, threshold graphs) by computation and then lift to",
@@ -11260,7 +11307,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2653",
+    "id": "fd_2654",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop the necessary Lean infrastructure for (i) the construction of the maximal abelian pro‑p extension M_Σ(N∞) unramified outside Σ, (ii) the identification of Gal(N∞/k) with ℤₚ and thus the Iwasawa algebra Λ ≅ ℤₚ⟦T⟧, (iii) the module structure of X_Σ(N∞) over Λ, and (iv) a reduction to known finiteness results: show that the Λ‑rank of X_Σ(N∞) equals the λ‑invariant of the corresponding Iwasawa µ‑invariant, and use the control theorem together with known vanishing of µ‑invariant in the Σ‑ramified setting. The conjecture can be disproved by constructing a concrete Σ‑ramified ℤₚ‑extension (e.g., via explicit class field theory) where the λ‑invariant is shown to be positive, yielding a non‑torsion Λ‑module.",
@@ -11285,7 +11332,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2654",
+    "id": "fd_2655",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive upper bound derivation using degree constraints",
@@ -11310,7 +11357,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2655",
+    "id": "fd_2656",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove or disprove by constructing a k-connected planar graph with ≥k! perfect matchings for some k≥3, or show an upper bound below k! for all such graphs.",
@@ -11343,7 +11390,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2656",
+    "id": "fd_2657",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Express the mock theta functions as non‑holomorphic Eisenstein series using harmonic Maass form theory, then compare Fourier coefficients of both sides; the vanishing follows from the uniqueness of Eisenstein series and the known transformation properties under the modular group.",
@@ -11352,6 +11399,28 @@
     "status": "available",
     "timestamp": "2026-06-27T03:45:09.652120+00:00",
     "title": "Vanishing of the Eichler–Selberg combination for third‑order mock theta functions"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Weil Conjectures (Curtis, 1991)",
+      "Cuntz-Krieger Algebras (Cun, 1980)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The conjecture claims the characteristic class of V(F_{1^r})'s zeta function equals 2^r, conflicting with prior expectations of zero for r ≠1.",
+    "domain_bridges": "math.AG -- math.OA",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2658",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Direct algebraic computation using K-theory properties",
+    "research_mode": "team",
+    "source_exp_id": "2606.22010v1",
+    "status": "available",
+    "timestamp": "2026-06-27T04:18:03.584456+00:00",
+    "title": "Character Class Contradiction"
   },
   {
     "ambition_level": "extension",
@@ -11493,25 +11562,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Cycle 8ed8ca57 (Q=0.748) proved 13 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate a precise algorithmic reconstruction of the sharp approximate Carathéodory theorem for iterated Delaunay refinement, focusing on the optimal squared error bounds across varying dimensions.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_8ed8ca57_3b026bad",
-    "lineage_refs": [],
-    "priority_score": 0.7978369230769231,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "8ed8ca57",
-    "status": "available",
-    "timestamp": "2026-06-27T04:13:04.403012+00:00",
-    "title": "Close Proofs: Sharp approximate Carathéodory theorem and application to iterated Del"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domain_bridges": [],
     "domains": [
@@ -11642,46 +11692,6 @@
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Erdős Problem 550 (tree vs. complete multipartite Ramsey)\n\nThis cycle formalized the **lower-bound / tightness** half and the **exact base case**\nof Erdős Problem 550 in its all-ones (Chvátal) specialization:\n\n* `chvatal_lower_bound` : `R(T_n, K_k) > (k-1)(n-1)` for every `n`-vertex tree and `k ≥ 1`,\n  witnessed by the disjoint-clique colouring `blockGraph (k-1) (n-1)`.\n* `ramsey_tree_edge` : `R(T_n, K_{1,1}) = R(T_n, K₂) = n` exactly (the base term of the\n  conjectured recursion).\n* `completeGraph_isContained_allOnes` / `allOnes_isContained_completeGraph` : the\n  identification `K_{1,…,1} ≅ K_k` that turns the all-ones case into Chvátal's theorem.\n\nThe conjectures below are the natural next targets, ranked by impact.\n\n## 1. The Chvátal upper bound (all-ones case of Erdős 550)\n**Conjecture.** `RamseyArrows ((k-1)(n-1)+1) T (⊤ : SimpleGraph (Fin k))` for every\n`n`-vertex tree `T` and `k ≥ 1`; equivalently `R(T_n, K_k) ≤ (k-1)(n-1)+1`.\nTogether with `chvatal_lower_bound` this gives the *exact* value `R(T_n,K_k)=(k-1)(n-1)+1`.\n**The key insight is** that a graph in which every vertex has red-degree `≥ n-1` contains\nevery `n`-vertex tree by greedy leaf-by-leaf embedding (induct on the tree, removing a\ndegree-one vertex supplied by `IsTree.exists_vert_degree_one_of_nontrivial`); a colouring\nwith no blue `K_k` forces, via induction on `k`, a red vertex of low degree whose blue\nneighbourhood carries a smaller instance.\n**Why now?** Mathlib already provides leaves of finite trees\n(`IsTree.exists_vert_degree_one_of_nontrivial`), minimum-degree monotonicity, and the\n`Copy`/`IsContained` calculus used here, so the greedy-embedding induction is now\nexpressible without new foundational infrastructure.\n\n## 2. The full multipartite upper bound (Erdős 550 proper)\n**Conjecture.** For fixed `k ≥ 2` and `1 ≤ m₁ ≤ ⋯ ≤ m_k`, for all large `n` and every\n`n`-vertex tree, `R(T, K_{m₁,…,m_k}) ≤ (k-1)(R(T, K_{m₁,m₂}) - 1) + m₁`.\n**The key insight is** that a blue copy of `K_{m₁,…,m_k}` can be assembled part-by-part:\nin a colouring with no red `T`, repeatedly peel off a blue-dense block of `R(T,K_{m₁,m₂})-1`\nvertices realizing one part, the largest part `m_k` being absorbed by the final `+m₁` slack.\n**Why now?** The base case `R(T,K_{m₁,m₂})` and the multipartite-vs-complete-graph\ncontainment `Kmultipartite_isContained_completeGraph` are already formalized, giving the\ntwo endpoints of the induction; only the peeling step remains.\n\n## 3. Sharpness of the multipartite bound\n**Conjecture.** The Erdős–550 bound is tight: there is a tree `T` and parts `m_i` with\n`R(T, K_{m₁,…,m_k}) = (k-1)(R(T, K_{m₁,m₂}) - 1) + m₁`, generalizing the all-ones equality\n`R(T_n,K_k)=(k-1)(n-1)+1` proven here.\n**The key insight is** that the `blockGraph`-style construction generalizes: take `k-1`\nred cliques of size `R(T,K_{m₁,m₂})-1` plus `m₁` extra vertices arranged to block the last\npart, so the same reachability + pigeonhole argument should certify both no-red-`T` and\nno-blue-`K_{m₁,…,m_k}`.\n**Why now?** The two obstruction lemmas `no_red_connected` (reachability) and\n`no_blue_clique` (pigeonhole) are already isolated and reusable; only the combined\nextremal colouring needs to be defined.\n\n## 4. Connectivity is the only tree property used in the lower bound\n**Conjecture.** For *every* connected `n`-vertex graph `H` (not only trees),\n`R(H, K_k) > (k-1)(n-1)`; the acyclicity of `T` is never needed for the lower bound.\n**The key insight is** that `no_red_connected` already proves exactly this — the witness\nonly uses `H.Connected` — so the tree hypothesis in `chvatal_lower_bound` is cosmetic for\nthe lower direction.  (Acyclicity *does* re-enter for the matching upper bound of #1.)\n**Why now?** The connectivity-only lemma is in hand (`chvatal_lower_bound_connected`); the\nopen part is whether the *upper* bound also survives replacing trees by connected graphs of\nbounded something (it does not in general, making the boundary sharp and interesting).\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2657",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "887d83d7",
-    "status": "available",
-    "timestamp": "2026-06-27T04:10:40.161945+00:00",
-    "title": "This cycle formalized the **lower-bound / tightness** half and the **exact base "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS — Sharp approximate Carathéodory & iterated Delaunay refinement\n\nDerived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,\n`Contraction.lean`, `Bridge.lean`, and the new `Sharpness.lean` / `SharpBridge.lean`).\nThis cycle established a **two-sided** law for the best `k`-term Carathéodory error\nof the orthonormal centroid frame: it lies in `[1/k − 1/n, 1/k]`, and equals\nexactly `1/k − 1/n` for `k ≤ n`. The looseness is governed by the **dimension**\n`n`, not the sample size `k`. The conjectures below push on that structural fact.\n\n## D1. The window width is *always* the centroid's own norm\n\n**Conjecture.** For any finite family `V₁,…,Vₘ` of unit vectors with centroid\n`x = (1/m) Σ Vᵢ`, the optimal `k`-term (with-repetition) squared error satisfies\n`min_f ‖x − (1/k) Σ V(f j)‖² ∈ [ (1/k)·(1 − ‖x‖²·k? ) , 1/k ]`, with the *additive*\ngap to `1/k` equal to exactly `‖x‖²` whenever the family is \"balanced\" (its Gram\nmatrix has constant row sums), generalizing the `1/n = ‖centroid‖²` identity.\n\nThe key insight is that in `sq_dist_eq` the only slack term is `−‖x‖²`, so the\ngap between the Maurey upper bound and the true optimum is *intrinsic to `x`*, not\nto the sampling — the orthonormal case (`‖x‖² = 1/n`) is just the cleanest witness.\n\nWhy now? `sq_dist_eq` already isolates `‖x − y‖² = (1/k²)·(collision Gram) − ‖x‖²`\nfor arbitrary frames; only the collision lower bound `≥ k` used orthonormality, so\nthe conjecture is one Gram-matrix estimate away from the proved skeleton.\n\n## D2. Sharpness across `ℓ_p`: the exponent `1 − 1/p` is two-sided\n\n**Conjecture.** In `ℓ_p^n` (`2 ≤ p < ∞`) the centroid-of-basis configuration forces\n`min_f ‖x − y‖_p^? ≥ c_p · k^{-(1 − 1/p)}` for a constant `c_p > 0`, matching the\nknown Maurey/Barman upper bound `O(k^{-(1−1/p)})` — i.e. the empirical-method\nexponent is sharp for every `p ≥ 2`, not just `p = 2`.\n\nThe key insight is that the `p = 2` collision-count argument (`[f j = f l] ≥\n[j = l]`) is an instance of a general \"self-overlap ≥ multiplicity\" bound that\nsurvives in `ℓ_p` after replacing inner products by the `p`-th power pairing.\n\nWhy now? Our `ℓ_2` proof needs only one inequality on top of identities; the\n`ℓ_p` version isolates exactly which step must be replaced (the Gram collapse),\nmaking it a concrete, falsifiable target rather than a vague generalization.\n\n## D3. Minicenter Delaunay refinement has a *sharp* contraction constant\n\n**Conjecture.** For `d`-simplex minicenter (smallest-enclosing-ball center)\nrefinement, the per-step diameter contraction factor `λ_d` is bounded *and* the\nbound is attained: `λ_d = √(2(d+1)/d)` for the regular simplex, with the segment\ncase `λ_1 = 2` of `Contraction.lean` as the `d = 1` instance.\n\nThe key insight is that the segment base case (`minicenter_segment_halves`,\n`λ = 2`) is the `d = 1` value of a single closed-form `λ_d`, because the\nminicenter of a regular `d`-simplex splits each edge in a ratio fixed by the\ncircumradius-to-edge formula.\n\nWhy now? `Contraction.lean` already packages contraction as a reusable\n`ContractionProcess` and proves the `d = 1` constant *geometrically*; supplying\n`λ_d` for higher `d` slots directly into `diam_le_pow` with no new metric\nmachinery.\n\n## D4. The refinement budget is sharp, not just finite\n\n**Conjecture.** The cumulative covering bound `∑ cov k ≤ D·λ/(λ−1)` of\n`Bridge.lean` is tight: there is a refinement trajectory (the regular-simplex\nbisection of `Contraction.lean`) whose total covering error equals\n`D·λ/(λ−1)` up to a factor `1 + o(1)`, so no per-step contraction analysis can\npromise a smaller cumulative budget.\n\nThe key insight is that the geometric series bounding the budget is saturated\nexactly when each step contracts by *precisely* `1/λ` (equality in `contracts`),\nwhich the segment bisection achieves (`segmentBisection`, equality form).\n\nWhy now? `Bridge.total_budget` gives the closed-form upper bound and\n`segmentBisection` already realizes equality per step; matching the *sum* is a\ngeometric-series equality check, directly testable.\n\n## D5. A two-sided coreset law for approximate Carathéodory\n\n**Conjecture.** Combining D1 and the upper bound, the *expected* squared error of\nthe empirical method equals the optimum up to a factor `2`: for the centroid\nframe, `E_f ‖x − y‖² = 1/k − 1/n` is *exactly* the random-selection mean (not just\nan upper bound), so the probabilistic method is, in expectation, optimal — there\nis no gap between \"best\" and \"average\" `k`-term selection on balanced frames.\n\nThe key insight is that `expectation_bound` (in `MaureyGeneral.lean`) computes the\nmean error as `τ/k` with `τ = Σ pᵢ‖x − Vᵢ‖²`, and for the orthonormal centroid\n`τ = 1 − 1/n`, giving mean `= (1 − 1/n)/k`, while the optimum is `1/k − 1/n`;\nthese differ by `(1/n)(1 − 1/k)`, an explicitly bounded, dimension-only gap.\n\nWhy now? Both quantities are already formalized (`expectation_bound` and\n`sharp_optimum`); their difference is a one-line algebraic identity, so the\n\"mean = optimum up to dimension\" statement is immediately checkable and would\nquantify exactly how lossless Maurey's averaging is.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2658",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "8ed8ca57",
-    "status": "available",
-    "timestamp": "2026-06-27T04:12:51.775157+00:00",
-    "title": "Derived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,"
   },
   {
     "ambition_level": "extension",

@@ -4926,7 +4926,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "669193db",
     "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor \u03bb > 1, leading to exponential contraction after k iterations: max{\u03c3 \u2208 Del(X_k)}.diameter \u2264 (1/\u03bb)^k \u00b7 max{\u03c3 \u2208 Del(X_0)}.diameter",
     "domains": [
       "Pythagorean"
@@ -4935,7 +4935,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
@@ -5489,7 +5489,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Partition-Theoretic Interpretation of the Bilateral Truncated Jacobi Triple Product Coefficients via Minimal Excludant"
   },
   {
-    "consumed_by_exp_id": "8e92c627",
+    "consumed_by_exp_id": "",
     "description": "The limit of the average stack-sorting depth scaled by n converges to the rational number 3/4.",
     "domains": [
       "Bridges"
@@ -5498,7 +5498,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T16:46:53.250760+00:00",
     "title": "Exact asymptotic value of the average stack-sorting depth"
   },
@@ -5782,11 +5782,39 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: For every tree T, the minimum size of an initial set that forces all vertices to exceed the transmission threshold (the transmission zero forcing number) is exactly the domination number of T, i.e., the size of a smallest dominating set.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2609",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22246v1",
+    "status": "available",
+    "timestamp": "2026-06-27T03:44:47.563422+00:00",
+    "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer matrix \\(M = \\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}\\) with non\u2011zero determinant and \\(\\gcd(a,b,c,d)=1\\), the set of ratios of Lagrange constants\n\\[\\mathcal{V}(M) := \\{ k(Mx)/k(x) : x \\in \\mathrm{Bad}\\}\\]\ncoincides with the closed interval \\([|\\det M|^{-1},\\,|\\det M|]\\). In other words, every value between the extremal bounds given by Lagarias\u2013Shallit is attained by some badly approximable number, and no values outside the interval occur.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2610",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22229v1",
+    "status": "available",
+    "timestamp": "2026-06-27T04:17:04.862367+00:00",
+    "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5800,7 +5828,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5815,7 +5843,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5830,7 +5858,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5845,7 +5873,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5860,7 +5888,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5874,7 +5902,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5888,7 +5916,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5902,7 +5930,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5917,7 +5945,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5932,7 +5960,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5947,7 +5975,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5962,7 +5990,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5977,7 +6005,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5991,7 +6019,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -6006,7 +6034,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -6021,7 +6049,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -6035,7 +6063,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -6049,7 +6077,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -6063,7 +6091,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -6078,7 +6106,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6093,7 +6121,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -6108,7 +6136,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6122,7 +6150,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6136,7 +6164,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6151,7 +6179,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6165,7 +6193,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6180,7 +6208,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6194,7 +6222,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6208,7 +6236,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2639",
+    "id": "fd_2640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6217,16 +6245,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Boundon consecutive Zeckendorf-Niven terms in arithmetic progressions"
   },
   {
-    "consumed_by_exp_id": "08b15f3b",
+    "consumed_by_exp_id": "",
     "description": "For an even integer m = 2k, the regularised Wallis product P_m defined as the limit as N -> infinity of product_{n=2}^N exp(C_{m,n}) * (1 - 1/n^2)^{n^m}, where C_{m,n} is the minimal exponential counterterm cancelling non-summable terms in the log expansion, converges to a closed form involving pi, Euler's gamma, and odd zeta values zeta(2j+1).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2640",
+    "id": "fd_2641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T18:59:39.163751+00:00",
     "title": "Closed Form for the Regularised Wallis Product P_m for Even m"
   },
@@ -6237,7 +6265,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2641",
+    "id": "fd_2642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6252,7 +6280,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2642",
+    "id": "fd_2643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6267,7 +6295,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2643",
+    "id": "fd_2644",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6281,7 +6309,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2644",
+    "id": "fd_2645",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6296,7 +6324,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2645",
+    "id": "fd_2646",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6310,7 +6338,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2646",
+    "id": "fd_2647",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6325,7 +6353,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2647",
+    "id": "fd_2648",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -6340,7 +6368,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2648",
+    "id": "fd_2649",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -6354,7 +6382,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2649",
+    "id": "fd_2650",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -6369,7 +6397,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2650",
+    "id": "fd_2651",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -6383,7 +6411,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2651",
+    "id": "fd_2652",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
@@ -6398,7 +6426,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2652",
+    "id": "fd_2653",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22513v1",
@@ -6413,7 +6441,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2653",
+    "id": "fd_2654",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22324v1",
@@ -6427,7 +6455,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2654",
+    "id": "fd_2655",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22422v1",
@@ -6441,7 +6469,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2655",
+    "id": "fd_2656",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22253v1",
@@ -6455,13 +6483,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2656",
+    "id": "fd_2657",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22458v1",
     "status": "available",
     "timestamp": "2026-06-27T03:45:09.652120+00:00",
     "title": "Vanishing of the Eichler\u2013Selberg combination for third\u2011order mock theta functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture claims the characteristic class of V(F_{1^r})'s zeta function equals 2^r, conflicting with prior expectations of zero for r \u22601.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2658",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22010v1",
+    "status": "available",
+    "timestamp": "2026-06-27T04:18:03.584456+00:00",
+    "title": "Character Class Contradiction"
   },
   {
     "consumed_by_exp_id": "",
@@ -6566,20 +6608,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 8ed8ca57 (Q=0.748) proved 13 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate a precise algorithmic reconstruction of the sharp approximate Carath\u00e9odory theorem for iterated Delaunay refinement, focusing on the optimal squared error bounds across varying dimensions.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_8ed8ca57_3b026bad",
-    "priority_score": 0.7978369230769231,
-    "research_mode": "team",
-    "source_exp_id": "8ed8ca57",
-    "status": "available",
-    "timestamp": "2026-06-27T04:13:04.403012+00:00",
-    "title": "Close Proofs: Sharp approximate Carath\u00e9odory theorem and application to iterated Del"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domains": [
       "Algebra"
@@ -6677,36 +6705,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Erd\u0151s Problem 550 (tree vs. complete multipartite Ramsey)\n\nThis cycle formalized the **lower-bound / tightness** half and the **exact base case**\nof Erd\u0151s Problem 550 in its all-ones (Chv\u00e1tal) specialization:\n\n* `chvatal_lower_bound` : `R(T_n, K_k) > (k-1)(n-1)` for every `n`-vertex tree and `k \u2265 1`,\n  witnessed by the disjoint-clique colouring `blockGraph (k-1) (n-1)`.\n* `ramsey_tree_edge` : `R(T_n, K_{1,1}) = R(T_n, K\u2082) = n` exactly (the base term of the\n  conjectured recursion).\n* `completeGraph_isContained_allOnes` / `allOnes_isContained_completeGraph` : the\n  identification `K_{1,\u2026,1} \u2245 K_k` that turns the all-ones case into Chv\u00e1tal's theorem.\n\nThe conjectures below are the natural next targets, ranked by impact.\n\n## 1. The Chv\u00e1tal upper bound (all-ones case of Erd\u0151s 550)\n**Conjecture.** `RamseyArrows ((k-1)(n-1)+1) T (\u22a4 : SimpleGraph (Fin k))` for every\n`n`-vertex tree `T` and `k \u2265 1`; equivalently `R(T_n, K_k) \u2264 (k-1)(n-1)+1`.\nTogether with `chvatal_lower_bound` this gives the *exact* value `R(T_n,K_k)=(k-1)(n-1)+1`.\n**The key insight is** that a graph in which every vertex has red-degree `\u2265 n-1` contains\nevery `n`-vertex tree by greedy leaf-by-leaf embedding (induct on the tree, removing a\ndegree-one vertex supplied by `IsTree.exists_vert_degree_one_of_nontrivial`); a colouring\nwith no blue `K_k` forces, via induction on `k`, a red vertex of low degree whose blue\nneighbourhood carries a smaller instance.\n**Why now?** Mathlib already provides leaves of finite trees\n(`IsTree.exists_vert_degree_one_of_nontrivial`), minimum-degree monotonicity, and the\n`Copy`/`IsContained` calculus used here, so the greedy-embedding induction is now\nexpressible without new foundational infrastructure.\n\n## 2. The full multipartite upper bound (Erd\u0151s 550 proper)\n**Conjecture.** For fixed `k \u2265 2` and `1 \u2264 m\u2081 \u2264 \u22ef \u2264 m_k`, for all large `n` and every\n`n`-vertex tree, `R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081`.\n**The key insight is** that a blue copy of `K_{m\u2081,\u2026,m_k}` can be assembled part-by-part:\nin a colouring with no red `T`, repeatedly peel off a blue-dense block of `R(T,K_{m\u2081,m\u2082})-1`\nvertices realizing one part, the largest part `m_k` being absorbed by the final `+m\u2081` slack.\n**Why now?** The base case `R(T,K_{m\u2081,m\u2082})` and the multipartite-vs-complete-graph\ncontainment `Kmultipartite_isContained_completeGraph` are already formalized, giving the\ntwo endpoints of the induction; only the peeling step remains.\n\n## 3. Sharpness of the multipartite bound\n**Conjecture.** The Erd\u0151s\u2013550 bound is tight: there is a tree `T` and parts `m_i` with\n`R(T, K_{m\u2081,\u2026,m_k}) = (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081`, generalizing the all-ones equality\n`R(T_n,K_k)=(k-1)(n-1)+1` proven here.\n**The key insight is** that the `blockGraph`-style construction generalizes: take `k-1`\nred cliques of size `R(T,K_{m\u2081,m\u2082})-1` plus `m\u2081` extra vertices arranged to block the last\npart, so the same reachability + pigeonhole argument should certify both no-red-`T` and\nno-blue-`K_{m\u2081,\u2026,m_k}`.\n**Why now?** The two obstruction lemmas `no_red_connected` (reachability) and\n`no_blue_clique` (pigeonhole) are already isolated and reusable; only the combined\nextremal colouring needs to be defined.\n\n## 4. Connectivity is the only tree property used in the lower bound\n**Conjecture.** For *every* connected `n`-vertex graph `H` (not only trees),\n`R(H, K_k) > (k-1)(n-1)`; the acyclicity of `T` is never needed for the lower bound.\n**The key insight is** that `no_red_connected` already proves exactly this \u2014 the witness\nonly uses `H.Connected` \u2014 so the tree hypothesis in `chvatal_lower_bound` is cosmetic for\nthe lower direction.  (Acyclicity *does* re-enter for the matching upper bound of #1.)\n**Why now?** The connectivity-only lemma is in hand (`chvatal_lower_bound_connected`); the\nopen part is whether the *upper* bound also survives replacing trees by connected graphs of\nbounded something (it does not in general, making the boundary sharp and interesting).\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2657",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "887d83d7",
-    "status": "available",
-    "timestamp": "2026-06-27T04:10:40.161945+00:00",
-    "title": "This cycle formalized the **lower-bound / tightness** half and the **exact base "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Sharp approximate Carath\u00e9odory & iterated Delaunay refinement\n\nDerived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,\n`Contraction.lean`, `Bridge.lean`, and the new `Sharpness.lean` / `SharpBridge.lean`).\nThis cycle established a **two-sided** law for the best `k`-term Carath\u00e9odory error\nof the orthonormal centroid frame: it lies in `[1/k \u2212 1/n, 1/k]`, and equals\nexactly `1/k \u2212 1/n` for `k \u2264 n`. The looseness is governed by the **dimension**\n`n`, not the sample size `k`. The conjectures below push on that structural fact.\n\n## D1. The window width is *always* the centroid's own norm\n\n**Conjecture.** For any finite family `V\u2081,\u2026,V\u2098` of unit vectors with centroid\n`x = (1/m) \u03a3 V\u1d62`, the optimal `k`-term (with-repetition) squared error satisfies\n`min_f \u2016x \u2212 (1/k) \u03a3 V(f j)\u2016\u00b2 \u2208 [ (1/k)\u00b7(1 \u2212 \u2016x\u2016\u00b2\u00b7k? ) , 1/k ]`, with the *additive*\ngap to `1/k` equal to exactly `\u2016x\u2016\u00b2` whenever the family is \"balanced\" (its Gram\nmatrix has constant row sums), generalizing the `1/n = \u2016centroid\u2016\u00b2` identity.\n\nThe key insight is that in `sq_dist_eq` the only slack term is `\u2212\u2016x\u2016\u00b2`, so the\ngap between the Maurey upper bound and the true optimum is *intrinsic to `x`*, not\nto the sampling \u2014 the orthonormal case (`\u2016x\u2016\u00b2 = 1/n`) is just the cleanest witness.\n\nWhy now? `sq_dist_eq` already isolates `\u2016x \u2212 y\u2016\u00b2 = (1/k\u00b2)\u00b7(collision Gram) \u2212 \u2016x\u2016\u00b2`\nfor arbitrary frames; only the collision lower bound `\u2265 k` used orthonormality, so\nthe conjecture is one Gram-matrix estimate away from the proved skeleton.\n\n## D2. Sharpness across `\u2113_p`: the exponent `1 \u2212 1/p` is two-sided\n\n**Conjecture.** In `\u2113_p^n` (`2 \u2264 p < \u221e`) the centroid-of-basis configuration forces\n`min_f \u2016x \u2212 y\u2016_p^? \u2265 c_p \u00b7 k^{-(1 \u2212 1/p)}` for a constant `c_p > 0`, matching the\nknown Maurey/Barman upper bound `O(k^{-(1\u22121/p)})` \u2014 i.e. the empirical-method\nexponent is sharp for every `p \u2265 2`, not just `p = 2`.\n\nThe key insight is that the `p = 2` collision-count argument (`[f j = f l] \u2265\n[j = l]`) is an instance of a general \"self-overlap \u2265 multiplicity\" bound that\nsurvives in `\u2113_p` after replacing inner products by the `p`-th power pairing.\n\nWhy now? Our `\u2113_2` proof needs only one inequality on top of identities; the\n`\u2113_p` version isolates exactly which step must be replaced (the Gram collapse),\nmaking it a concrete, falsifiable target rather than a vague generalization.\n\n## D3. Minicenter Delaunay refinement has a *sharp* contraction constant\n\n**Conjecture.** For `d`-simplex minicenter (smallest-enclosing-ball center)\nrefinement, the per-step diameter contraction factor `\u03bb_d` is bounded *and* the\nbound is attained: `\u03bb_d = \u221a(2(d+1)/d)` for the regular simplex, with the segment\ncase `\u03bb_1 = 2` of `Contraction.lean` as the `d = 1` instance.\n\nThe key insight is that the segment base case (`minicenter_segment_halves`,\n`\u03bb = 2`) is the `d = 1` value of a single closed-form `\u03bb_d`, because the\nminicenter of a regular `d`-simplex splits each edge in a ratio fixed by the\ncircumradius-to-edge formula.\n\nWhy now? `Contraction.lean` already packages contraction as a reusable\n`ContractionProcess` and proves the `d = 1` constant *geometrically*; supplying\n`\u03bb_d` for higher `d` slots directly into `diam_le_pow` with no new metric\nmachinery.\n\n## D4. The refinement budget is sharp, not just finite\n\n**Conjecture.** The cumulative covering bound `\u2211 cov k \u2264 D\u00b7\u03bb/(\u03bb\u22121)` of\n`Bridge.lean` is tight: there is a refinement trajectory (the regular-simplex\nbisection of `Contraction.lean`) whose total covering error equals\n`D\u00b7\u03bb/(\u03bb\u22121)` up to a factor `1 + o(1)`, so no per-step contraction analysis can\npromise a smaller cumulative budget.\n\nThe key insight is that the geometric series bounding the budget is saturated\nexactly when each step contracts by *precisely* `1/\u03bb` (equality in `contracts`),\nwhich the segment bisection achieves (`segmentBisection`, equality form).\n\nWhy now? `Bridge.total_budget` gives the closed-form upper bound and\n`segmentBisection` already realizes equality per step; matching the *sum* is a\ngeometric-series equality check, directly testable.\n\n## D5. A two-sided coreset law for approximate Carath\u00e9odory\n\n**Conjecture.** Combining D1 and the upper bound, the *expected* squared error of\nthe empirical method equals the optimum up to a factor `2`: for the centroid\nframe, `E_f \u2016x \u2212 y\u2016\u00b2 = 1/k \u2212 1/n` is *exactly* the random-selection mean (not just\nan upper bound), so the probabilistic method is, in expectation, optimal \u2014 there\nis no gap between \"best\" and \"average\" `k`-term selection on balanced frames.\n\nThe key insight is that `expectation_bound` (in `MaureyGeneral.lean`) computes the\nmean error as `\u03c4/k` with `\u03c4 = \u03a3 p\u1d62\u2016x \u2212 V\u1d62\u2016\u00b2`, and for the orthonormal centroid\n`\u03c4 = 1 \u2212 1/n`, giving mean `= (1 \u2212 1/n)/k`, while the optimum is `1/k \u2212 1/n`;\nthese differ by `(1/n)(1 \u2212 1/k)`, an explicitly bounded, dimension-only gap.\n\nWhy now? Both quantities are already formalized (`expectation_bound` and\n`sharp_optimum`); their difference is a one-line algebraic identity, so the\n\"mean = optimum up to dimension\" statement is immediately checkable and would\nquantify exactly how lossless Maurey's averaging is.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2658",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "8ed8ca57",
-    "status": "available",
-    "timestamp": "2026-06-27T04:12:51.775157+00:00",
-    "title": "Derived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,"
   },
   {
     "consumed_by_exp_id": "",
