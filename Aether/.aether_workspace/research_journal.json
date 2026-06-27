@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d1c9c6b9",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Sperner's Lemma, Combinatorial Fixed Points, and Nash\n\nDerived from this cycle's findings (1D Sperner parity ⟹ discrete IVT ⟹ discrete\nBrouwer; potential-game pure Nash via optim",
-      "quality_score": 0.60268,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-23T07:35:28",
-      "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
-    },
-    {
       "cycle_id": "62850b85",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Mathematical Properties of Attention\n\nBold, falsifiable conjectures derived from this cycle's findings (softmax expressivity,\nkernel-smoother confinement, row-stochastic spectrum",
@@ -2501,6 +2491,16 @@
       "theorem_count": 31,
       "timestamp": "2026-06-27T18:47:29",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "cycle_id": "4398a39a",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Proof Automation (Custom Lean 4 Tactics)\n\nCycle output: `Catalog/Applications/ProofAutomation/FibonacciTactics.lean`\n(\"Proof Automation IV\"), extending the existing series `tropi",
+      "quality_score": 0.6822699999999999,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-27T18:50:26",
+      "title": "Proof Automation: Custom Lean 4 Tactics"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8740959999999999
     }
   ],
-  "last_updated": "2026-06-27T18:47:29",
+  "last_updated": "2026-06-27T18:50:26",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a151a9c3",
-        "quality": 0.5405,
-        "theorems": 0,
-        "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
-      },
-      {
         "cycle_id": "f0d5604e",
         "quality": 0.5150000000000001,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.8740959999999999,
         "theorems": 31,
         "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+      },
+      {
+        "cycle_id": "4398a39a",
+        "quality": 0.6822699999999999,
+        "theorems": 15,
+        "title": "Proof Automation: Custom Lean 4 Tactics"
       }
     ],
     "Bridges": [

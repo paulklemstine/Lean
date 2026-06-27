@@ -13257,6 +13257,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Proof Automation (Custom Lean 4 Tactics)\n\nCycle output: `Catalog/Applications/ProofAutomation/FibonacciTactics.lean`\n(\"Proof Automation IV\"), extending the existing series `tropical_simp` (I),\n`number_theory_decide` (II) and `spectral_bound` (III).\n\nThis cycle established the **two-term basis principle** as the engine that makes a\ncustom tactic (`fib_ring`) into a genuine *decision procedure* for single-base\npolynomial Fibonacci identities, with parity handled by `fib_cassini_induct` and\ntwo-base identities reduced to Cassini. The following conjectures are precise and\ntestable; each is a concrete target for a future formalization cycle.\n\n## Conjecture 1 — `fib_ring` is a complete decision procedure\nLet `P(x,y)` be a polynomial with integer coefficients. The single-base identity\n`P(fib n, fib (n+1)) = 0` holds for **all** `n` **iff** `P` is the zero polynomial,\n**iff** it holds for `n = 0` and `n = 1`.  In particular `fib_ring` decides every\ntrue single-base identity, and a two-point check (`n=0,1`) refutes every false one.\n*Test:* formalize `∀ n, P(fib n, fib(n+1)) = 0 ↔ (P(0,1)=0 ∧ P(1,1)=0)` using that\n`(fib n, fib (n+1))` ranges over infinitely many `ℤ²` points on no common curve.\n\n## Conjecture 2 — Generalized two-term basis for all Lucas sequences\nDefine `U` by `U 0 = 0`, `U 1 = 1`, `U (n+2) = p·U(n+1) − q·U n`.  Then for all\n`n, k`, `U (n+k)` is a fixed `ℤ[p,q]`-bilinear form in `(U k, U (k+1))` and\n`(U n, U (n+1))`, and the analogue of `fib_two_basis` holds.  Consequently the\ntactic `fib_ring` generalizes verbatim to a tactic `lucas_ring` that decides\nsingle-base identities for **every** such sequence (Fibonacci `p=1,q=−1`, Pell\n`p=2,q=−1`, Mersenne-like `p=3,q=2`, …).\n*Test:* prove `U (n + (k+1)) = U k · U n · (−q) + U (k+1) · U (n+1)` (or the correct\nnormalization) and re-derive Cassini `U(n+1)^2 − U n · U(n+2) = q^n` generically.\n\n## Conjecture 3 — Catalan = `fib r ^2 · Cassini`, structurally\nEvery signed two-base Fibonacci identity of \"convolution type\" factors as a\nFibonacci/Lucas multiple of the Cassini determinant.  Precisely, for the family\n`F_{n+a} F_{n+b} − F_{n} F_{n+a+b} = (−1)^n · F_a · F_b`\n(d'Ocagne is `b=1`, Catalan is `a=b`), the identity holds for all `n,a,b`.\n*Test:* this single statement subsumes both proved theorems of this cycle; prove it\nonce via `fib_two_basis` + `cassini'` and obtain `dOcagne`, `catalan_identity` as\ninstances.\n\n## Conjecture 4 — Determinantal/`Q`-matrix reflection tactic\nLet `Q = !![1,1;1,0]`. Then `Q^n = !![fib (n+1), fib n; fib n, fib (n-1)]`, and\n**every** polynomial Fibonacci identity (single- or multi-base, signed or not)\nis the `(i,j)`-entry of a true matrix identity over `ℤ`-polynomials in the `Q^{n_i}`.\n*Conjecture:* a reflective tactic `fib_matrix` that (i) replaces each `fib (n+c)` by\nthe appropriate entry of `Q^n · Q^c`, (ii) calls `noncomm_ring`/`Matrix.ext`, and\n(iii) reads off the scalar identity, decides the entire signed two-base class\n(including Catalan and d'Ocagne) **without** case analysis on parity.\n*Test:* prove `cassini` as `det (Q^n) = (−1)^n` via `Matrix.det_pow`.\n\n## Conjecture 5 — Telescoping closer for holonomic sums\nThe partial-sum identities (`sum_fib`, `sum_fib_sq`) are instances of a single\nschema: if `a n` satisfies a linear recurrence, then `∑_{i<n} a i` does too, and\nthe closed form is found by solving one linear system.  *Conjecture:* a tactic\n`fib_telescope` that, given `∑_{i<n} (poly in fib i)`, automatically produces and\nproves the closed form by `Finset.sum_range_succ` induction with `fib_ring`/`omega`\ndischarging each step. *Test:* mechanize `∑_{i<n} fib (2i+1) = fib (2n)` and\n`∑_{i<n} fib i · fib (i+1)` (= `fib n ^2` for even-index truncations).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2718",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4398a39a",
+    "status": "available",
+    "timestamp": "2026-06-27T18:50:09.379420+00:00",
+    "title": "Cycle output: `Catalog/Applications/ProofAutomation/FibonacciTactics.lean`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [

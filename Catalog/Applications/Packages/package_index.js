@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4398a39a",
     "filename": "proof_automation_custom_lean_4_tactics.json",
     "pkg_num": 145,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6822699999999999,
     "title": "Proof Automation for Fibonacci Identities: The Two-Term Basis Principle"
   },
   {
@@ -4233,8 +4233,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "proof_automation_custom_lean_4_tactics",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6822699999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Proof Automation for Fibonacci Identities: The Two-Term Basis Principle"
     }
