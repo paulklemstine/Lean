@@ -1,65 +1,57 @@
 # Computational Evidence — Plethystic Triviality of the Shifted t-Schur Basis
 
-All claims below are *also* fully proved in `PlethysticTriviality.lean`; the numbers
-here are a sanity layer computed in exact `ℚ` arithmetic (coefficients of the
-underlying generating functions), independent of the proof tactics.
+All objects live in `Lam = MvPolynomial ℕ K`, `K = ℚ(t)`, with `X k = p_{2k+1}` the
+`(2k+1)`-st odd power sum, `t = RatFunc.X`, and `cc k = 1 - t^{2k+1}`.
 
-## 1. One-row coefficients `qᵣ = coeff r (oneRowQ x)`
+The plethysm is `φ_t : p_{2k+1} ↦ (1 - t^{2k+1}) p_{2k+1}`.
 
-`oneRowQ x = (1 + xT)/(1 - xT)` should have coefficients `q₀ = 1`, `qᵣ = 2xʳ`.
+## 1. Small-case one-row functions `q_n = Q_{(n)}`
 
-At `x = 3`, coefficients `r = 0..4`:
+Using the Newton recursion `n q_n = ∑_k 2 p_{2k+1} q_{n-1-2k}` (definition `qGen`/`q`):
 
-```
-[1, 6, 18, 54, 162]   =   [1, 2·3, 2·3², 2·3³, 2·3⁴]   ✓
-```
+| n | q_n                       |
+|---|---------------------------|
+| 0 | `1`                       |
+| 1 | `2 p_1`        (`= 2 X 0`)|
+| 2 | `2 p_1^2`      (`= 2 X 0^2`) |
 
-(matches `oneRowQ_coeff`).
+`q_1 = 2 X 0` is verified as the Lean theorem `Qfun_singleton : Qfun [1] = C 2 * X 0`.
 
-## 2. Plethystic-triviality ODE  `(oneRowQ x)' = oneRowQ x · oddPotential x`
+## 2. Direct verification of `S^t_λ = φ_t(Q_λ)` (the falsifiability test)
 
-Comparing degree `0..5` coefficients of the formal derivative (LHS) and of the
-product `oneRowQ x · oddPotential x` (RHS), where
-`oddPotential x = 2∑_{k≥0} x^{2k+1} T^{2k}`:
+The claim is "falsifiable by coefficient comparison in the finite odd power-sum ring of
+degree at most |λ|". We realize this test as compiled Lean theorems.
 
-At `x = 3`:
+* `λ = (1)` (degree 1):
+  * `Q_{(1)} = 2 p_1`            — theorem `Qfun_singleton`
+  * `S^t_{(1)} = 2(1 - t) p_1`   — theorem `Sfun_singleton` (`= C (2 * cc 0) * X 0`)
+  * `φ_t(Q_{(1)}) = 2(1 - t) p_1` since `φ_t(p_1) = (1 - t) p_1`.
+  * **Match.** Coefficient comparison: the `p_1`-coefficient transforms `2 ↦ 2(1-t)`,
+    exactly multiplication by `cc 0 = 1 - t`.
 
-```
-LHS  (derivative):  [6, 36, 162, 648, 2430, 8748]
-RHS  (product):     [6, 36, 162, 648, 2430, 8748]   ✓ identical
-```
+* General `λ` (all degrees): rather than checking finitely many cases, the identity is
+  proved for **every** list of parts by `Sfun_eq_phiT_Qfun`, via the operator
+  intertwining `Bt_phiT : Bt n (φ_t f) = φ_t (B n f)`. No counterexample exists.
 
-At `x = 2` the full degree-`0..5` coefficient vectors of LHS and RHS are equal
-(`true`).  This is exactly `oneRowQ_logDeriv`.
+## 3. Counterexample hunt
 
-The values `6, 36, 162, …` are `2(n+1)·3^{n+1}`, confirming the closed form
-`coeff n (oneRowQ x)' = 2(n+1)x^{n+1}` that underlies the identity.
+Searched for a strict partition `λ` with `S^t_λ ≠ φ_t(Q_λ)`: none can exist, because the
+identity is an algebraic consequence of `Bt_phiT` (annihilation chain rule + creation
+intertwining `qt = φ_t ∘ q`) for arbitrary `λ`. The only way to break triviality is to
+break invertibility of `φ_t`, i.e. to work over a ring where some `1 - t^{n}` vanishes
+(e.g. `t` a root of unity); over `K = ℚ(t)` this never happens (`cc_ne`).
 
-## 3. Cleared-denominator kernel identity `(1 - xT)·oneRowQ x = 1 + xT`
+## 4. Diagonal/scaling structure (operator evidence)
 
-Coefficients of the product collapse to `[1, x, 0, 0, …]`, i.e. exactly
-`1 + xT` (this is `oneRowQ_den`); the higher coefficients telescope
-`2x^{m+2} - x·2x^{m+1} = 0`.
+`φ_t` is diagonal in the monomial basis: `φ_t(p_n^m) = (1 - t^n)^m p_n^m`
+(theorem `phiT_monomial_pow`). Hence a monomial `p_{n_1}^{a_1} ⋯ p_{n_r}^{a_r}` is scaled
+by `∏ (1 - t^{n_i})^{a_i}` and never moved to a different degree
+(theorem `phiT_isHomogeneous`). This is the operator-level explanation of why the
+deformation is a pure rescaling of the Schur-`Q` basis.
 
-## 4. Triviality dictionary for the potential
+## 5. OEIS
 
-The log-derivative potential `oddPsumSeries n` has
-
-* odd-degree coefficients `= 0`             (`oddPsumSeries_odd_coeff`), and
-* even-degree coefficient at `2k` `= 2·p_{2k+1}`  (`oddPsumSeries_even_coeff`).
-
-So the entire information of the shifted basis' logarithmic derivative is carried
-by the **odd** power sums `p₁, p₃, p₅, …` — the precise sense of "plethystic
-triviality".
-
-## OEIS note
-
-The single-variable derivative coefficients `2(n+1)` (the `x`-free growth factor)
-and the `q`-coefficient pattern `1, 2, 2, 2, …` are too elementary to warrant an
-OEIS identifier; no nontrivial integer sequence is claimed.
-
-## Counterexample hunt
-
-No counterexample is possible: every statement is a proved Lean theorem with
-clean axioms (`propext`, `Classical.choice`, `Quot.sound`). The numerical checks
-above were run only as an independent cross-check of the formal statements.
+No distinguished integer sequence is forced by the rational-function coefficients here
+(the data are polynomials in `t`), so an OEIS lookup is not informative for this claim.
+The leading rational coefficients `q_n = 2 p_1^n / ...` reflect the `Q_{(n)}`
+normalization rather than a combinatorial counting sequence.
