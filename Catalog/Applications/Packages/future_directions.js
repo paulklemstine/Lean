@@ -2726,7 +2726,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ac2d584",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domains": [
       "Bridges"
@@ -2735,7 +2735,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -6229,7 +6229,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: Maximizer of u^T R[S] u is proportional to diag(K^+)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f2206c6",
     "description": "We conjecture that for a vertex\u2011transitive graph G and a fixed vertex v0, the finitary upho poset P(G,v0) of walks starting at v0 is multiplicable (i.e., admits an LCIF monoid structure whose left\u2011divisibility order recovers the poset order) if and only if the automorphism group Aut(G) contains a regular subgroup. This condition is equivalent to G being a Cayley graph. The conjecture refines the Fu\u2011Peng\u2011Zhang conjecture and captures the phenomenon exhibited by the Petersen graph (non\u2011Cayley \u2192 non\u2011multiplicable) and its line graph (Cayley \u2192 multiplicable).",
     "domains": [
       "Pythagorean",
@@ -6239,7 +6239,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.17549v3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T19:43:35.047839+00:00",
     "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
   },
@@ -6373,7 +6373,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e73946ae",
     "description": "Every planar graph admits a conflict-free coloring with exactly 4 colors, and this statement is equivalent to the Four Color Theorem over ZFC set theory. More precisely, for any planar graph G, there exists a vertex coloring f: V(G) \u2192 {1,2,3,4} such that every vertex v has a neighbor w where color f(w) appears exactly once in the open neighborhood N(v), and the existence of such a 4-coloring for all planar graphs is interderivable with the Four Color Theorem.",
     "domains": [
       "Algebra"
@@ -6382,7 +6382,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T01:10:10.263546+00:00",
     "title": "Equivalence Between Four Color Theorem and Conflict-Free Chromatic Number of Planar Graphs"
   },
@@ -6665,7 +6665,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Classification of extremal Veronese circuits via rational normal curves"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca01957a",
     "description": "Conjecture: For an odd prime p, integer \u2113 with 1 \u2264 \u2113 \u2264 (p-1)/2, and a symmetric subset S \u2286 Z_p\\{0\\} with 0 \u2209 S, the undirected Cayley graph Cay(Z_p,S) contains a cycle C_{2\u2113+1} as a subgraph if and only if S contains a subset of size 2\u2113+1 whose elements sum to zero in Z_p.",
     "domains": [
       "Pythagorean",
@@ -6675,7 +6675,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T13:28:08.471007+00:00",
     "title": "Zero-sum characterization of odd cycles in symmetric Cayley graphs over prime cyclic groups"
   },
@@ -6956,7 +6956,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of Signless Laplacian Spectral Radius under Homological Link Restrictions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49c290ff",
     "description": "This conjecture predicts the existence of a uniform classification of F-isocrystals on analyticly good rigid spaces, motivated by the analytic and prismatic structures reviewed.",
     "domains": [
       "Pythagorean"
@@ -6965,7 +6965,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T00:50:47.487415+00:00",
     "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
   },
@@ -7621,7 +7621,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b012d1e8",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -7631,7 +7631,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -8193,7 +8193,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "434e8e33",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8203,7 +8203,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

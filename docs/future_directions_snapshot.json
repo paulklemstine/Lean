@@ -4467,7 +4467,7 @@
       "mathlib: NumberTheory.ArithmeticFunction",
       "mathlib: Analysis.Asymptotics.Asymptotics"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ac2d584",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domain_bridges": [
       "factorial divisibility to p-adic valuation inequalities",
@@ -4483,7 +4483,7 @@
     "proof_strategy": "Use Legendre's formula to translate a_1! ... a_k! | n! into simultaneous digit-sum inequalities. The paper proves the upper bound from the binary digit-sum obstruction and a density-one lower bound from mixed 2--3 rarefaction. The conjectural strengthening is that the binary obstruction is asymptotically sharp for almost all n. A proof would likely construct, for almost every n, admissible tuples a_i whose total excess is ((k - 1) / log 2 - o(1)) log n, while controlling all odd-prime valuation constraints by showing that the binary carry construction can be locally repaired at negligible logarithmic cost.",
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -10933,7 +10933,7 @@
       "Regular_subgroup",
       "Cayley_graph"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f2206c6",
     "description": "We conjecture that for a vertex‑transitive graph G and a fixed vertex v0, the finitary upho poset P(G,v0) of walks starting at v0 is multiplicable (i.e., admits an LCIF monoid structure whose left‑divisibility order recovers the poset order) if and only if the automorphism group Aut(G) contains a regular subgroup. This condition is equivalent to G being a Cayley graph. The conjecture refines the Fu‑Peng‑Zhang conjecture and captures the phenomenon exhibited by the Petersen graph (non‑Cayley → non‑multiplicable) and its line graph (Cayley → multiplicable).",
     "domain_bridges": [
       "GraphTheory⇔OrderTheory",
@@ -10949,7 +10949,7 @@
     "proof_strategy": "1. Assuming multiplicability, extract from the LCIF monoid structure a left action of Aut(G) on the set of walks that is transitive and free, yielding a regular subgroup. 2. Assuming a regular subgroup H ≤ Aut(G), define a monoid structure on P(G,v0) by concatenation of walks, identity = empty walk, and left division using the regular action to guarantee uniqueness, left‑cancellativity, and invertible‑free property. Formalize all definitions in Lean (graphs, walks, posets, monoids) and prove the equivalence.",
     "research_mode": "team",
     "source_exp_id": "2606.17549v3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T19:43:35.047839+00:00",
     "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
   },
@@ -11194,7 +11194,7 @@
       "ConflictFreeColoring",
       "PlanarGraphColoring"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e73946ae",
     "description": "Every planar graph admits a conflict-free coloring with exactly 4 colors, and this statement is equivalent to the Four Color Theorem over ZFC set theory. More precisely, for any planar graph G, there exists a vertex coloring f: V(G) → {1,2,3,4} such that every vertex v has a neighbor w where color f(w) appears exactly once in the open neighborhood N(v), and the existence of such a 4-coloring for all planar graphs is interderivable with the Four Color Theorem.",
     "domain_bridges": [
       "four_color_theorem_equivalence",
@@ -11211,7 +11211,7 @@
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T01:10:10.263546+00:00",
     "title": "Equivalence Between Four Color Theorem and Conflict-Free Chromatic Number of Planar Graphs"
   },
@@ -11717,7 +11717,7 @@
       "11B75",
       "05C25"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca01957a",
     "description": "Conjecture: For an odd prime p, integer ℓ with 1 ≤ ℓ ≤ (p-1)/2, and a symmetric subset S ⊆ Z_p\\{0\\} with 0 ∉ S, the undirected Cayley graph Cay(Z_p,S) contains a cycle C_{2ℓ+1} as a subgraph if and only if S contains a subset of size 2ℓ+1 whose elements sum to zero in Z_p.",
     "domain_bridges": [
       "Zero-sum problems",
@@ -11734,7 +11734,7 @@
     "proof_strategy": "Use the polynomial method (Combinatorial Nullstellensatz) to show that a zero-sum subset of size 2ℓ+1 yields a solution to the system of equations defining a cycle, and conversely extract a zero-sum subset from a given cycle via its edge differences. The symmetry of S allows reordering of differences to obtain a subset of S. Character sums over Z_p handle the distinctness condition on vertices.",
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T13:28:08.471007+00:00",
     "title": "Zero-sum characterization of odd cycles in symmetric Cayley graphs over prime cyclic groups"
   },
@@ -12251,7 +12251,7 @@
     "catalog_references": [
       "Ogu84"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49c290ff",
     "description": "This conjecture predicts the existence of a uniform classification of F-isocrystals on analyticly good rigid spaces, motivated by the analytic and prismatic structures reviewed.",
     "domain_bridges": [
       "agricalgebra",
@@ -12267,7 +12267,7 @@
     "proof_strategy": "Construction of a p-adic construction with explicit consistency conditions",
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T00:50:47.487415+00:00",
     "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
   },
@@ -13411,7 +13411,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b012d1e8",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -13424,7 +13424,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -14178,7 +14178,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "434e8e33",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -14191,7 +14191,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
