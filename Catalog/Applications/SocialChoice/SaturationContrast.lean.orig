@@ -31,7 +31,7 @@ spectrum is sensitive to atom density; future work (see `FUTURE_DIRECTIONS.md`)
 should classify the index as a function of the atom set, not merely of maximality.
 -- !-- Lab Notes -- !--
 -/
-import Applications.SocialChoice.IncoherenceIndex
+import Catalog.Applications.SocialChoice.IncoherenceIndex
 
 namespace SocialChoice
 

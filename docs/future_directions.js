@@ -461,7 +461,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "cb2a2cb4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -470,7 +470,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -2077,7 +2077,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "31cf2713",
+    "consumed_by_exp_id": "",
     "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
     "domains": [
       "Algebra"
@@ -2086,7 +2086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -2826,7 +2826,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
   {
-    "consumed_by_exp_id": "ae503725",
+    "consumed_by_exp_id": "",
     "description": "The specific degree one function on the Grassmann scheme $J_3(4,2)$ defined by $f = \\frac{1}{2} \\sum_{Q(p) = 0} x_p + \\frac{1}{6} \\sum_{Q(p) = 1} x_p - \\frac{1}{6} \\sum_{Q(p) = 2} x_p$, where $Q(x,y,z,w) = x^2 + y^2 + z^2 - w^2$ is an elliptic quadric over $\\mathbb{F}_3$, is Boolean and not a trivial Boolean degree one function.",
     "domains": [
       "Bridges"
@@ -2835,7 +2835,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T21:41:56.533485+00:00",
     "title": "Non-triviality of the Bruen-Drudge Boolean degree one function on $J_3(4,2)$"
   },
@@ -4319,7 +4319,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exponential Lower Bound for g_k(n) Conjecture"
   },
   {
-    "consumed_by_exp_id": "06caccbf",
+    "consumed_by_exp_id": "",
     "description": "For every odd prime \ud835\udc5d the class of biased graphs that admit a \ud835\udc4d\u209a\u2011gain labelling is minor\u2011closed and its only excluded minors are the balanced\u2011cycle\u2013free graph (\ud835\udc5d+1)K\u2082, the balanced triangle \u00b1K\u2083 and the unbalanced 4\u2011cycle \u2013K\u2084. In other words, a biased graph \ud835\udd3e is \ud835\udc4d\u209a\u2011gainable iff it contains none of these three minors.",
     "domains": [
       "Pythagorean",
@@ -4329,7 +4329,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23826v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T11:31:35.982720+00:00",
     "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
   },
@@ -7258,6 +7258,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Extremal Graph Theory: Tur\u00e1n, Kruskal\u2013Katona, Szemer\u00e9di, Roth\n\nThis cycle formalized, with 0 sorries:\n\n* `turan_density_bound` \u2014 Tur\u00e1n's theorem in density form\n  `ex(n, K_r) \u2264 (1 \u2212 1/(r\u22121))\u00b7n\u00b2/2`, repackaging Mathlib's integer Tur\u00e1n-graph\n  bound; `mantel` \u2014 the `\u230an\u00b2/4\u230b` triangle-free corollary.\n* `family_union_shadow_ge` \u2014 a combined Kruskal\u2013Katona/Pascal bound\n  `C(k+1,r) \u2264 |\ud835\udc9c| + |\u2202\ud835\udc9c|`.\n* `far_triangle_density_lower_bound` / `far_from_triangleFree_contains_triangle`\n  \u2014 the triangle removal lemma (Szemer\u00e9di regularity) as a scale-invariant\n  triangle-density statement.\n* `roth_3ap_dense` \u2014 Roth's theorem in explicit progression form, plus\n  `card_sq_le_of_addEnergy_le`, a Sidon size bound bridged through the catalog's\n  discrete Fourier additive-energy estimate\n  (`Combinatorics/FourierFiniteGroups.lean`).\n\nThe conjectures below are falsifiable and grew directly out of these results.\n\n## Conjecture 1 \u2014 Matching lower bound makes Tur\u00e1n an equality in Lean\n\nFor every `r \u2265 2` and `n`, the balanced complete `(r\u22121)`-partite graph on `n`\nvertices is `K_r`-free and attains `B(n, r\u22121)` edges, so `turan_density_bound`\nis tight and `ex(n, K_r)` equals the integer Tur\u00e1n bound on the nose.\n\n**The key insight is** that tightness is a *construction* (count edges of the\nbalanced multipartite graph) entirely separate from the analytic upper bound we\nproved, so it can be discharged by an explicit `SimpleGraph` and a degree-sum\nedge count, with no new extremal theory.\n\n**Why now?** The upper-bound half is already formal here; only the multipartite\nedge-count lemma is missing, and Mathlib has `SimpleGraph.completeMultipartiteGraph`\nplus `card_edgeFinset` machinery to count it.\n\n## Conjecture 2 \u2014 The shadow ladder iterates to a full simplex bound\n\nIterating `family_union_shadow_ge` over all shadow levels gives\n`\u2211_{i=0}^{r} |\u2202^[i] \ud835\udc9c| \u2265 2^? \u00b7 C(k, r)`-type totals; concretely, a `C(k,r)`-dense\n`r`-family together with **all** its iterated shadows covers at least\n`\u2211_{j\u2264r} C(k, j)` sets.\n\n**The key insight is** that each Pascal step contributes one more binomial layer,\nso summing the Lov\u00e1sz form across `i = 0..r` telescopes into a complete\nlower-triangle-of-Pascal bound rather than a single level.\n\n**Why now?** `kruskal_katona_lovasz_form` already delivers every level\n`|\u2202^[i]\ud835\udc9c| \u2265 C(k, r\u2212i)`; only the finite summation identity\n`\u2211_{i} C(k, r\u2212i) = \u2211_{j\u2264r} C(k,j)` (an `omega`/`Finset.sum` exercise) remains.\n\n## Conjecture 3 \u2014 Energy dichotomy quantifies 3-AP abundance\n\nThere is an explicit `c(\u03b5) > 0` such that any `A \u2286 \u2124/N\u2124` with `E(A) \u2265 (2+\u03b4)|A|\u00b2`\ncontains at least `c(\u03b4)\u00b7|A|\u00b2` distinct nontrivial 3-APs; conversely the\nnear-Sidon regime `E(A) \u2264 2|A|\u00b2` forces `|A| \u2264 \u221a(2N)` (already proved as\n`card_sq_le_of_addEnergy_le`).\n\n**The key insight is** that the *gap* `E(A) \u2212 2|A|\u00b2` over the trivial-quadruple\ncount is itself a weighted 3-AP counter, so excess additive energy is literally a\nlower bound on additive-progression density.\n\n**Why now?** The catalog already supplies `E(A) = N\u207b\u00b9 \u03a3|\u00c2(k)|\u2074` and the spectral\nlower bound; turning the excess into a progression count is a Fourier/L\u00b3 step on\ntop of machinery that now exists in this repository.\n\n## Conjecture 4 \u2014 Triangle density bound is removal-rate optimal\n\nThe constant in `far_triangle_density_lower_bound` cannot be replaced by anything\nsuper-polynomial in `1/\u03b5`: there exist graphs (Behrend/Ruzsa\u2013Szemer\u00e9di\nconstructions) that are `\u03b5`-far yet have triangle density only\n`exp(\u2212c\u00b7(log(1/\u03b5))\u00b2)`, so any formal improvement of `triangleRemovalBound` beyond\nquasi-polynomial is **false**.\n\n**The key insight is** that the corners \u21c4 triangle-removal equivalence transfers\nBehrend's 3-AP-free lower bound directly into a triangle-sparsity lower bound,\npinning the achievable removal rate from below.\n\n**Why now?** Mathlib already has Behrend's construction (`AP.Three.Behrend`) and\nthe corners/removal bridge, so the lower-bound transfer is assembling existing\nformal pieces rather than building new analysis.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2697",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2cb7b634",
+    "status": "available",
+    "timestamp": "2026-06-27T13:51:40.878328+00:00",
+    "title": "This cycle formalized, with 0 sorries:"
   },
   {
     "consumed_by_exp_id": "",

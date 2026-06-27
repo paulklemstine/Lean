@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cb79327f",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Weil Pairing, MOV, and BLS Aggregation\n\nDerived from the cycle that produced `Cryptography/WeilPairingBLS.lean`\n(abstract biadditive `Pairing`, BLS completeness/aggregation, poin",
-      "quality_score": 0.77,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-23T04:02:32",
-      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-    },
-    {
       "cycle_id": "0dfef380",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Proof Automation: Custom Lean 4 Tactics\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle (`TropicalSimp.lean`, `NumberTheoryDecide.lean`, `Spect",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T09:19:54",
       "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
+    },
+    {
+      "cycle_id": "2cb7b634",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Extremal Graph Theory: Turán, Kruskal–Katona, Szemerédi, Roth\n\nThis cycle formalized, with 0 sorries:\n\n* `turan_density_bound` — Turán's theorem in density form\n  `ex(n, K_r) ≤ (",
+      "quality_score": 0.7014400000000001,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-27T13:51:50",
+      "title": "Extremal Graph Theory: Turán and Szemerédi"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3d0b9aaa",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Orderly Friedman numbers\n\nThis cycle formalized a faithful expression-tree model of orderly (\"nice\")\nFriedman numbers over the `{+, -, *, ^, neg}` fragment, proved 13 of the firs",
-      "quality_score": 0.49636883468834697,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-22T11:22:27",
-      "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
-    },
     {
       "cycle_id": "9a580942",
       "domain": "Computation",
@@ -2501,15 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T12:08:06",
       "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
+    },
+    {
+      "cycle_id": "2cb7b634",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Extremal Graph Theory: Turán, Kruskal–Katona, Szemerédi, Roth\n\nThis cycle formalized, with 0 sorries:\n\n* `turan_density_bound` — Turán's theorem in density form\n  `ex(n, K_r) ≤ (",
+      "quality_score": 0.7014400000000001,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-27T13:51:50",
+      "title": "Extremal Graph Theory: Turán and Szemerédi"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "151fa435",
-      "domain": "Novelty",
-      "name": "sharpens",
-      "quality": 0.7885600000000001
-    },
     {
       "cycle_id": "151fa435",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Applications",
       "name": "from",
       "quality": 0.7796
+    },
+    {
+      "cycle_id": "2cb7b634",
+      "domain": "Novelty",
+      "name": "sum_weight",
+      "quality": 0.7014400000000001
     }
   ],
-  "last_updated": "2026-06-27T12:08:06",
+  "last_updated": "2026-06-27T13:51:50",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "905ed2dd",
-        "quality": 0.76274,
-        "theorems": 13,
-        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-      },
-      {
         "cycle_id": "802107a7",
         "quality": 0.6666400000000001,
         "theorems": 11,
@@ -3637,6 +3631,12 @@
         "quality": 0.65187,
         "theorems": 11,
         "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+      },
+      {
+        "cycle_id": "2cb7b634",
+        "quality": 0.7014400000000001,
+        "theorems": 10,
+        "title": "Extremal Graph Theory: Turán and Szemerédi"
       }
     ],
     "NumberTheory": [
