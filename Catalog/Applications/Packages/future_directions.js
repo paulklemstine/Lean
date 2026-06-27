@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "a9aa4cae",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -1360,7 +1360,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sensitivity Conjecture Extensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4efe75bb",
     "description": "Cycle f25c8810 (Q=0.755) proved 734 theorems in Computation but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid",
     "domains": [
       "Computation"
@@ -1369,7 +1369,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8045600000000002,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:45.492101+00:00",
     "title": "Close Proofs: Alien Number Systems: Beyond Base-N"
   },
@@ -2075,6 +2075,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T13:47:18.898418+00:00",
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2332",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22058v1",
+    "status": "available",
+    "timestamp": "2026-06-23T14:06:13.272860+00:00",
+    "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
   {
     "consumed_by_exp_id": "",
@@ -4321,6 +4335,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The upper bound S_1^\u03c6(x) \u226a x exp{-(1/2 - o(1))\u221a(log x log_2 x)} is tight, i.e., there exists a constant C > 0 such that S_1^\u03c6(x) \u2265 C x exp{-(1/2 + o(1))\u221a(log x log_2 x)} for all sufficiently large x.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2507",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23681v1",
+    "status": "available",
+    "timestamp": "2026-06-25T12:13:32.061938+00:00",
+    "title": "Tightness of the unit-shift bound for Euler's totient function"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the set of positive integers that are divisible by the number of summands in their Zeckendorf decomposition has asymptotic density\u00a00.  Equivalently, for any real \u03b5>0 there are only finitely many Zeckendorf\u2011Niven numbers\u00a0n< N with n/N > \u03b5, and the ratio of the counting function to N tends to\u00a00 as N\u2192\u221e.",
     "domains": [
       "Pythagorean"
@@ -5142,7 +5170,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of Exact Potential up to Additive Constant"
   },
   {
-    "consumed_by_exp_id": "8ed8ca57",
+    "consumed_by_exp_id": "",
     "description": "Analyzes contraction bounds in spherical Delaunay refinement using an exact Carath\u00e9odory-type result.",
     "domains": [
       "Bridges"
@@ -5151,7 +5179,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T04:18:00.464209+00:00",
     "title": "Sharp approximate Carath\u00e9odory theorem and application to iterated Delaunay refinement"
   },
@@ -5695,11 +5723,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that for ternary matrices with fixed row and column sums, the lazy swap chain (defined analogously by swapping 2x2 submatrices preserving margins) has a spectral gap of at least \u03a9(1/(m\u00b2n\u00b2)), matching the binary case's inverse-polynomial bound.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2605",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22636v1",
+    "status": "available",
+    "timestamp": "2026-06-27T01:34:50.314595+00:00",
+    "title": "SpectralGap for Lazy Swap Chains on Ternary Matrices"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5713,7 +5756,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5728,7 +5771,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5743,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5758,7 +5801,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5773,7 +5816,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5787,7 +5830,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5801,7 +5844,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5815,7 +5858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5830,7 +5873,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5845,7 +5888,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5860,7 +5903,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5875,7 +5918,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5890,7 +5933,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5904,7 +5947,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5919,7 +5962,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5934,7 +5977,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5948,7 +5991,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5962,7 +6005,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5976,7 +6019,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5991,7 +6034,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6006,7 +6049,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -6021,7 +6064,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6035,7 +6078,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6049,7 +6092,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6064,7 +6107,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6078,7 +6121,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6093,7 +6136,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6107,7 +6150,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6121,7 +6164,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6135,7 +6178,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6150,7 +6193,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6165,7 +6208,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6180,7 +6223,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6194,7 +6237,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2639",
+    "id": "fd_2640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6209,7 +6252,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2640",
+    "id": "fd_2641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6223,7 +6266,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2641",
+    "id": "fd_2642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6238,7 +6281,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2642",
+    "id": "fd_2643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -6253,7 +6296,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2643",
+    "id": "fd_2644",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -6267,7 +6310,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2644",
+    "id": "fd_2645",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -6282,7 +6325,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2645",
+    "id": "fd_2646",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -6296,13 +6339,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2646",
+    "id": "fd_2647",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
     "status": "available",
     "timestamp": "2026-06-27T00:50:47.487415+00:00",
     "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a finite simple co\u2011chordal graph\u202fG let \\(\\overline G\\) be its chordal complement and let \\(\\kappa(\\overline G)\\) denote the size of a smallest vertex separator of \\(\\overline G\\) (i.e., the minimum cardinality of a set whose removal disconnects \\(\\overline G\\)). The conjecture asserts that the projective dimension of the edge ideal \\(I(G)\\) is given by\n\\[\\operatorname{pdim}\\bigl(S/I(G)\\bigr) = |V(G)| - \\kappa(\\overline G) - 1.\\]\nEquivalently, the largest homological degree appearing in the linear strand formula (1) of the paper coincides exactly with the complement\u2019s minimal separator size. This provides a purely graph\u2011theoretic invariant that determines the homological invariant \\(\\operatorname{pdim}\\) for the whole class of co\u2011chordal graphs, extending the partial result proved in the paper for glued clique complexes where \\(\\kappa(\\overline G)=\\min\\{r_m\\}\\). The statement is falsifiable: one can compute \\(\\kappa(\\overline G)\\) and \\(\\operatorname{pdim}(S/I(G))\\) for any co\u2011chordal graph (e.g., via Macaulay2) and check equality.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2648",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22513v1",
+    "status": "available",
+    "timestamp": "2026-06-27T01:35:45.911433+00:00",
+    "title": "Projective Dimension of Edge Ideals of Co\u2011Chordal Graphs via Minimal Separators"
   },
   {
     "consumed_by_exp_id": "",
@@ -6504,36 +6562,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 EML Fixed-Point Dynamics\n\nDerived from this research cycle (`EML/FixedPointRate.lean`,\n`EML/FixedPointConcreteInstance.lean`), which upgraded the EML fixed-point story\nfrom \"converges\" to \"converges with a certified, computable geometric rate\n`O(\u03c1\u207f)`\" and exhibited an explicit non-vacuous contraction instance.\n\n---\n\n## D1. The contraction ratio is asymptotically *exactly* `|f'(x*)|`\n\n**Conjecture.** For an `EMLContractionData D` with fixed point `x*`, the *true*\nasymptotic convergence ratio equals `|f'(x*)| = exp(a)\u00b7b / (b\u00b7x* + c)`, in the\nsense that `|x\u2099\u208a\u2081 \u2212 x*| / |x\u2099 \u2212 x*| \u2192 |f'(x*)|`, and this limit can be strictly\nsmaller than the certified envelope ratio `D.rho`.\n\n*The key insight is that* the global Lipschitz constant `D.rho` only upper-bounds\nthe *local* multiplier at the fixed point, so the honest rate is a derivative\nevaluated at `x*`, recoverable from the mean value theorem already used to build\nthe contraction.\n\n*Why now?* `FixedPointRate.lean` proves the `O(\u03c1\u207f)` envelope but treats `\u03c1` as an\nexternal certificate; the next natural sharpening is to identify the *optimal* `\u03c1`\nas the spectral data `|f'(x*)|`, which the existing `EMLIterOp.deriv_eq` already\nmakes available symbolically.\n\n---\n\n## D2. A posteriori (residual) error control\n\n**Conjecture.** The EML iteration admits the a-posteriori bound\n`|x\u2099 \u2212 x*| \u2264 \u03c1/(1\u2212\u03c1) \u00b7 |x\u2099 \u2212 x\u2099\u208b\u2081|`, giving a *computable stopping criterion*\nfrom two consecutive iterates without knowing `x*` in advance.\n\n*The key insight is that* the same geometric-tail argument behind the a-priori\nestimate, re-anchored at step `n` instead of step `0`, converts the last observed\nstep length into a rigorous remaining-error certificate.\n\n*Why now?* The a-priori bound `iterSeq_error_bound` needs `|x\u2081 \u2212 x\u2080|`; for\npractical EML iterative algorithms one wants a *runtime* certificate, which the a\nposteriori form supplies directly and is a short reindexing away.\n\n---\n\n## D3. Smooth (analytic) dependence of `x*` on the parameter `a`\n\n**Conjecture.** For fixed `b, c` in the contraction regime, the fixed point\n`x*(a)` is a real-analytic function of `a`, with `dx*/da = x* / (1 \u2212 f'(x*))` and\na convergent Maclaurin series whose radius of convergence is the largest `a` for\nwhich `|f'(x*(a))| < 1`.\n\n*The key insight is that* the implicit equation `x* = exp(a)\u00b7log(b\u00b7x*+c)` has\nnon-vanishing partial derivative `1 \u2212 f'(x*) \u2260 0` precisely on the contraction\nregime, so the analytic implicit function theorem applies.\n\n*Why now?* The existing `fixedPoint_powerSeries_conjecture` only secured\n*existence* of a fixed point via IVT; with the contraction machinery now in place,\nthe implicit-function route to genuine analytic dependence (and the series the\nmission asked for) becomes reachable.\n\n---\n\n## D4. Sharp characterisation of the invariant-interval / small-`c` boundary\n\n**Conjecture.** For `b = 1` and `c \u2208 (0,1)`, no closed interval inside the domain\n`{x : x + c > 0}` is simultaneously `f`-invariant *and* contracting unless it is\npushed to `x`-values with `x + c > 1`; equivalently, the set of `(a,c)` admitting\nan EML contraction interval is exactly `{(a,c) : exp(a) < (b\u00b7x*+c)/b at the\nrelevant fixed point}` and excludes a wedge near `c \u2192 0\u207a`.\n\n*The key insight is that* `log` changes sign at argument `1`, so for tiny `c` the\noperator maps part of any left-anchored interval below `0`, breaking self-mapping;\nthe boundary is governed by where `f` crosses the diagonal with slope `< 1`.\n\n*Why now?* The computational evidence (`ComputationalEvidence.md`) shows the\nmission's literal `c \u2208 (0,1)` test case is dynamically delicate; mapping out the\nexact admissible region turns that obstruction into a clean theorem.\n\n---\n\n## D5. Composition (deep EML) preserves geometric convergence\n\n**Conjecture.** A finite composition `f_k \u2218 ... \u2218 f_1` of EML operators, each a\ncontraction with ratio `\u03c1\u1d62` on a common invariant interval, is itself a\ncontraction with ratio `\u220f \u03c1\u1d62`, and its iteration converges at rate `O((\u220f\u03c1\u1d62)\u207f)`.\n\n*The key insight is that* Lipschitz constants multiply under composition, so the\nsingle-operator `lipschitz_of_deriv_bound` lemma tensors up to depth without new\nanalysis \u2014 connecting this fixed-point theory to the deep-network theme of\n`EML/DeepComposition.lean`.\n\n*Why now?* `FixedPointRate.lean` isolates the rate from the analytic content; that\nseparation is exactly what makes the multi-layer (deep EML) generalisation a\nformal corollary rather than a fresh project.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2647",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6adcd103",
-    "status": "available",
-    "timestamp": "2026-06-27T01:25:20.817295+00:00",
-    "title": "Derived from this research cycle (`EML/FixedPointRate.lean`,"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Langlands for GL\u2082 over \u211a (Eichler\u2013Shimura & Deligne)\n\nDerived from this cycle's findings in `Catalog/Novelty/EichlerShimuraGL2.lean` and\n`Catalog/Novelty/DeligneBoundGL2.lean`, which formalize the local GL\u2082 Frobenius datum\n(trace = `a_p`, determinant = `p`, Eichler\u2013Shimura congruence relation = rank-2\nCayley\u2013Hamilton) and Deligne's weight-one Weil bound (`|\u03b1| = |\u03b2| = \u221ap \u27fa |a_p| \u2264 2\u221ap`).\n\nThese build directly on the catalog's GL(1) line\n(`Catalog.NumberTheory.GL1Correspondence`, `Catalog.NumberTheory.Langlands.HeckeFactorization`,\n`Catalog.Novelty.QuadraticHecke`): GL(1) packages each local datum as a root of unity\n(`|\u00b7| = 1`); GL\u2082 replaces it with a `2 \u00d7 2` matrix whose eigenvalues are Weil numbers of\nabsolute value `\u221ap`.\n\n---\n\n## Conjecture 1 \u2014 Local L-factor positivity / functional symmetry of the Weil pair\n\nFor `a\u00b2 \u2264 4p` the two Frobenius eigenvalues are complex conjugates, so the local Euler\nfactor `1 \u2212 a X + p X\u00b2` satisfies `\u03b2 = p/\u03b1 = \\bar \u03b1` and the substitution `X \u21a6 1/(pX)`\npermutes the reciprocal roots. Conjecture: the local factor `L_p(s) = (1 \u2212 a p^{-s} + p^{1-2s})^{-1}`\nhas no zeros in `Re(s) > 1/2` exactly when `a\u00b2 \u2264 4p`.\n\n**The key insight is** that the discriminant condition `a\u00b2 \u2264 4p` proved in `deligne_bound_iff`\nis *precisely* the boundary at which the reciprocal roots `\u03b1, \u03b2` swap from the critical circle\n`|\u00b7| = \u221ap` to the real axis, so the \"Riemann hypothesis for the local factor\" is equivalent to\nthe Deligne bound already in hand.\n\n**Why now?** `deligne_weil_pair` already gives `\u03b1\u03b2 = p` and `\u2016\u03b1\u2016 = \u2016\u03b2\u2016 = \u221ap`; turning this into\na statement about zeros of `1 \u2212 a X + p X\u00b2` is a `Polynomial.roots` computation over `\u2102`, with\nthe hard analytic content (the modulus) already discharged.\n\n---\n\n## Conjecture 2 \u2014 Sato\u2013Tate angle realization is surjective onto `[0, \u03c0]`\n\nWrite `a = 2\u221ap \u00b7 cos \u03b8`. Conjecture: as `a` ranges over real values with `a\u00b2 \u2264 4p`, the angle\n`\u03b8` realizing the eigenvalues `\u221ap \u00b7 e^{\u00b1i\u03b8}` ranges over the full interval `[0, \u03c0]`, and the map\n`a \u21a6 \u03b8` is a homeomorphism `[\u22122\u221ap, 2\u221ap] \u2243 [0, \u03c0]`.\n\n**The key insight is** that `deligne_root_abs` forces every admissible eigenvalue onto the circle\nof radius `\u221ap`, so the *only* remaining degree of freedom is the Sato\u2013Tate angle, and the\ncompanion-matrix construction `frobMatrix` shows every admissible `a` is realized.\n\n**Why now?** Both endpoints are in place: realizability (`frobMatrix_trace`, `frobMatrix_det`)\nand the modulus (`deligne_frob_eigenvalues`). The conjecture reduces to surjectivity of\n`cos` on `[0, \u03c0]`, a `Real.cos`/`intermediate value` exercise that the catalog's analysis\ntooling can close.\n\n---\n\n## Conjecture 3 \u2014 Eichler\u2013Shimura determines the rep up to semisimplification\n\nConjecture: two `2 \u00d7 2` matrices over a field both satisfying `M\u00b2 = aM \u2212 p\u00b71` with the *same*\n`(a, p)` and with `a\u00b2 \u2212 4p \u2260 0` are conjugate. Equivalently, the local Frobenius datum is\ndetermined by its trace and determinant once the Hecke polynomial is separable.\n\n**The key insight is** that `eichlerShimura` shows the Hecke polynomial annihilates `M`, so when\nit is separable it is the minimal polynomial and `M` is diagonalizable with eigenvalues `\u03b1, \u03b2`;\ndistinct eigenvalues pin the conjugacy class.\n\n**Why now?** `eichlerShimura` and `heckePoly_factor` already provide the annihilating polynomial\nand its factorization; the missing step is the standard \"separable annihilator \u21d2 diagonalizable\"\nlemma, which is within reach of Mathlib's `Matrix`/`Module.End` eigenspace API.\n\n---\n\n## Conjecture 4 \u2014 Oddness obstruction: `det = p > 0` forbids a real split at small `a`\n\nConjecture: for `0 < a\u00b2 < 4p` the Frobenius companion matrix `frobMatrix a p` over `\u211d` has **no**\nreal eigenvalue, hence no `\u211d`-rational eigenline; the eigenlines are genuinely complex. This is\nthe finite shadow of the *oddness* of the Galois representation attached to a modular form.\n\n**The key insight is** that `deligne_root_abs`'s case split (`z.im = 0` forces `a\u00b2 = 4p`) shows a\nreal eigenvalue can occur *only* at the discriminant boundary, so strict inequality rules out real\neigenlines entirely.\n\n**Why now?** The case analysis is already isolated inside `deligne_root_abs`; promoting the\n`z.im = 0 \u21d2 a\u00b2 = 4p` implication to a standalone \"no real eigenvalue\" theorem is a direct\nrefactor of an argument that already compiles.\n\n---\n\n## Conjecture 5 \u2014 Global compatibility: products of local Weil bounds control the Hecke L-value\n\nConjecture: for a finite set `S` of primes with weight-2 local data `(a_p, p)` satisfying the\nDeligne bound, the partial Euler product `\u220f_{p\u2208S} (1 \u2212 a_p p^{-1} + p^{-1})^{-1}` is bounded\nabove by `\u220f_{p\u2208S}(1 \u2212 p^{-1/2})^{-2}`, uniformly in `S`.\n\n**The key insight is** that `\u2016\u03b1_p\u2016 = \u2016\u03b2_p\u2016 = \u221ap` (from `deligne_weil_pair`) bounds each local\nfactor's size by the worst-case Weil number, so the global bound is a product of the local bounds\nalready proved \u2014 exactly the mechanism by which Ramanujan\u2013Petersson controls automorphic L-values.\n\n**Why now?** This is the natural bridge back to the catalog's GL(1) factorization\n(`HeckeFactorization.heckeFactorization`): the same \"local data multiply over places\" structure,\nnow decorated with the GL\u2082 Weil bound rather than a root-of-unity constraint.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2648",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "9871aa6d",
-    "status": "available",
-    "timestamp": "2026-06-27T01:29:22.017618+00:00",
-    "title": "Derived from this cycle's findings in `Catalog/Novelty/EichlerShimuraGL2.lean` a"
   },
   {
     "consumed_by_exp_id": "",

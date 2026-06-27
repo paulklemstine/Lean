@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "37109497",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Chromatic Polynomial Theory\n\nDerived from the cycle that produced `Catalog/Algebra/ChromaticPolynomial.lean` and\n`Catalog/Algebra/GraphColoringBounds.lean`.  Each conjecture is b",
-      "quality_score": 0.6924620000000001,
-      "sorry_count": 0,
-      "theorem_count": 57,
-      "timestamp": "2026-06-21T13:29:29",
-      "title": "Graph Coloring: Chromatic Polynomial Theory"
-    },
-    {
       "cycle_id": "b8df0deb",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\nThese directions build on the non-circular index telescope in\n`IndexTelescope.lean` (the product of adjacent relative indices of a finite\nmonotone subgroup chain collapses to a si",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-27T01:29:38",
       "title": "Langlands for GL₂ over Q"
+    },
+    {
+      "cycle_id": "cf34309d",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Erdős–Rényi threshold phenomena\n\nDerived from this cycle's findings in `Model.lean`, `SecondMoment.lean`,\n`Concrete.lean`, and the new `Threshold.lean`. This cycle established th",
+      "quality_score": 0.584,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-27T01:31:25",
+      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7236
     }
   ],
-  "last_updated": "2026-06-27T01:29:38",
+  "last_updated": "2026-06-27T01:31:25",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1a8e3469",
-        "quality": 0.5860000000000001,
-        "theorems": 11,
-        "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
-      },
-      {
         "cycle_id": "580d1f18",
         "quality": 0.73672,
         "theorems": 23,
@@ -3141,6 +3135,12 @@
         "quality": 0.6233200000000001,
         "theorems": 7,
         "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+      },
+      {
+        "cycle_id": "cf34309d",
+        "quality": 0.584,
+        "theorems": 6,
+        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
       }
     ],
     "Bridges": [

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "cf34309d",
     "filename": "random_graphs_erds_rnyi_threshold_phenomena.json",
     "pkg_num": 119,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.584,
     "title": "Random Graphs: Erdos-Renyi Threshold Phenomena via the Moment Method"
   },
   {
@@ -3469,8 +3469,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.584,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Random Graphs: Erdos-Renyi Threshold Phenomena via the Moment Method"
     }

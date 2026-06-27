@@ -866,6 +866,7 @@ body {
     padding: 3px 8px;
     border-radius: 6px;
     color: #c4b5fd;
+    -webkit-text-fill-color: initial;
 }
 
 .markdown-body pre code {
@@ -1242,6 +1243,7 @@ body.light-theme .code-output.error {
 /* KaTeX tweaks for light/dark mode */
 .katex {
     color: var(--text-main);
+    -webkit-text-fill-color: initial;
 }
 
 .code-header-buttons {
