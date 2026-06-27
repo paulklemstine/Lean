@@ -1,0 +1,11 @@
+--- Basic.lean
++++ Basic.lean
+@@ -38,7 +38,7 @@
+ -- !-- end Lab Notes -- !--
+ -/
+ import Mathlib
+-import Novelty.SequenceLemmas
++import Catalog.Novelty.SequenceLemmas
+ 
+ 
+ 

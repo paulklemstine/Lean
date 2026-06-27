@@ -1,0 +1,10 @@
+--- MixedRadixFactorialBridge.lean
++++ MixedRadixFactorialBridge.lean
+@@ -1,5 +1,5 @@
+-import Computation.MixedRadixNumberSystem
+-import Computation.FactorialNumberSystem
++import Catalog.Computation.MixedRadixNumberSystem
++import Catalog.Computation.FactorialNumberSystem
+ 
+ /-!
+ 

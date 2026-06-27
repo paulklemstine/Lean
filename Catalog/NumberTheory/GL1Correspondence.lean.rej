@@ -1,0 +1,11 @@
+--- GL1Correspondence.lean
++++ GL1Correspondence.lean
+@@ -61,7 +61,7 @@
+ bridge through the prime count `p - 1`.
+ -/
+ import Mathlib
+-import Bridges.NumberTheoryBridge
++import Catalog.Bridges.NumberTheoryBridge
+ 
+ 
+ 

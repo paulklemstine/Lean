@@ -1,0 +1,11 @@
+--- ErdosProblem550Base.lean
++++ ErdosProblem550Base.lean
+@@ -33,7 +33,7 @@
+   multipartite containment lemmas to frame the inductive structure of Erdős 550.
+ -/
+ 
+-import Novelty.ErdosProblem550Chvatal
++import Catalog.Novelty.ErdosProblem550Chvatal
+ 
+ 
+ 

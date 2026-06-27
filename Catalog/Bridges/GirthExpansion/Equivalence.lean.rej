@@ -1,0 +1,8 @@
+--- Equivalence.lean
++++ Equivalence.lean
+@@ -1,4 +1,4 @@
+-import Bridges.GirthExpansion.Basic
++import Catalog.Bridges.GirthExpansion.Basic
+ 
+ /-!
+ 

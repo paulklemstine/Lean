@@ -1,0 +1,11 @@
+--- Core.lean
++++ Core.lean
+@@ -1,6 +1,6 @@
+ import Mathlib
+-import Bridges.TreeCut.Decomposition
+-import Novelty.DegreeNormalizedTreeCut.SequenceLemmas
++import Catalog.Bridges.TreeCut.Decomposition
++import Catalog.Novelty.DegreeNormalizedTreeCut.SequenceLemmas
+ 
+ /-!
+ 

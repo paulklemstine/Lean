@@ -1,0 +1,11 @@
+--- DeligneBoundGL2.lean
++++ DeligneBoundGL2.lean
+@@ -58,7 +58,7 @@
+ `√p`.
+ -/
+ import Mathlib
+-import Novelty.EichlerShimuraGL2
++import Catalog.Novelty.EichlerShimuraGL2
+ 
+ 
+ 

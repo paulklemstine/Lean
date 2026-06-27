@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "eafa171c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Weighted K5-free max-cut with triangle-discounted edges\n\nDerived from the Stage 3 / Stage 4 findings of this research cycle. This cycle proved an\nunconditional **factor-3** upper",
-      "quality_score": 0.4968647748478702,
-      "sorry_count": 0,
-      "theorem_count": 178,
-      "timestamp": "2026-06-22T06:03:53",
-      "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
-    },
-    {
       "cycle_id": "5bd61b22",
       "domain": "Probability",
       "key_insight": "# Future Directions — Median Decompositions and Their Uniqueness\n\nDerived from this cycle's findings (`Core.lean`: distributive-lattice median and its\nuniqueness; `GraphMedian.lean`: the hypercube as",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-06-27T08:47:27",
       "title": "Collatz Conjecture"
+    },
+    {
+      "cycle_id": "982feb93",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Duality Framework for Discrepancy Lower Bounds\n\nDerived from this cycle's findings (`PeriodicDiscrepancyCurse.lean`,\n`PeriodicDiscrepancyBridge.lean`, and the `ComputationalEvide",
+      "quality_score": 0.35044872340425537,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T08:50:10",
+      "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via Duality Framework"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T08:47:27",
+  "last_updated": "2026-06-27T08:50:10",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4efe75bb",
-        "quality": 0.5579999999999999,
-        "theorems": 0,
-        "title": "Close Proofs: Alien Number Systems: Beyond Base-N"
-      },
-      {
         "cycle_id": "11521acf",
         "quality": 0.72888,
         "theorems": 17,
@@ -3637,6 +3631,12 @@
         "quality": 0.71552,
         "theorems": 0,
         "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
+      },
+      {
+        "cycle_id": "982feb93",
+        "quality": 0.35044872340425537,
+        "theorems": 0,
+        "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via "
       }
     ],
     "NumberTheory": [

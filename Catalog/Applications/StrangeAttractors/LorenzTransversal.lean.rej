@@ -1,0 +1,11 @@
+--- LorenzTransversal.lean
++++ LorenzTransversal.lean
+@@ -45,7 +45,7 @@
+ -- !-- Lab Notes -- !--
+ -/
+ import Mathlib
+-import Applications.StrangeAttractors.InverseLimit
++import Catalog.Applications.StrangeAttractors.InverseLimit
+ 
+ 
+ 

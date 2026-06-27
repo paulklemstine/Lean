@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "982feb93",
     "filename": "exponential_information_complexity_lower_bound_for.json",
     "pkg_num": 131,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.35044872340425537,
     "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via a Duality Framework"
   },
   {
@@ -3824,8 +3824,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "exponential_information_complexity_lower_bound_for",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.35044872340425537,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via a Duality Framework"
     }

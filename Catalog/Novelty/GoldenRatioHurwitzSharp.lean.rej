@@ -1,0 +1,9 @@
+--- GoldenRatioHurwitzSharp.lean
++++ GoldenRatioHurwitzSharp.lean
+@@ -1,5 +1,5 @@
+ import Mathlib
+-import Novelty.GoldenRatioApproximation
++import Catalog.Novelty.GoldenRatioApproximation
+ 
+ /-!
+ 

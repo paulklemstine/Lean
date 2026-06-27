@@ -1,0 +1,11 @@
+--- Concrete.lean
++++ Concrete.lean
+@@ -46,7 +46,7 @@
+   sharp thresholds are stated as conjectures in `FUTURE_DIRECTIONS.md`.
+ -/
+ import Mathlib
+-import Algebra.ErdosRenyi.Model
++import Catalog.Algebra.ErdosRenyi.Model
+ 
+ 
+ 

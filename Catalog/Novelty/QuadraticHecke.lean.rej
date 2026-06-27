@@ -1,0 +1,11 @@
+--- QuadraticHecke.lean
++++ QuadraticHecke.lean
+@@ -53,7 +53,7 @@
+ subfield of the prime cyclotomic field.
+ -/
+ import Mathlib
+-import NumberTheory.Langlands.GaloisDuality
++import Catalog.NumberTheory.Langlands.GaloisDuality
+ 
+ 
+ 

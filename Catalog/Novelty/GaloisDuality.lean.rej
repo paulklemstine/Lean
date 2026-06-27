@@ -1,0 +1,11 @@
+--- GaloisDuality.lean
++++ GaloisDuality.lean
+@@ -53,7 +53,7 @@
+ `NumberTheoryBridge.totient_prime`.
+ -/
+ import Mathlib
+-import Bridges.NumberTheoryBridge
++import Catalog.Bridges.NumberTheoryBridge
+ 
+ 
+ 

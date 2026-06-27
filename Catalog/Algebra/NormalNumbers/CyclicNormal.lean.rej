@@ -1,0 +1,11 @@
+--- CyclicNormal.lean
++++ CyclicNormal.lean
+@@ -38,7 +38,7 @@
+ -- !-- end Lab Notes -- !--
+ -/
+ import Mathlib
+-import Algebra.NormalNumbers.Basic
++import Catalog.Algebra.NormalNumbers.Basic
+ 
+ 
+ 

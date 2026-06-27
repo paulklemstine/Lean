@@ -1,0 +1,9 @@
+--- EulerMascheroniApprox.lean
++++ EulerMascheroniApprox.lean
+@@ -1,5 +1,5 @@
+ import Mathlib
+-import Novelty.EulerMascheroniSeries
++import Catalog.Novelty.EulerMascheroniSeries
+ 
+ /-!
+ 

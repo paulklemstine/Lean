@@ -1,0 +1,8 @@
+--- Stieltjes.lean
++++ Stieltjes.lean
+@@ -1,4 +1,4 @@
+-import MachineLearning.EulerMascheroni.SeriesRepresentation
++import Catalog.MachineLearning.EulerMascheroni.SeriesRepresentation
+ 
+ /-!
+ 
