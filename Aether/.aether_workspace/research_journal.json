@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2fe3f01b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThe following are freeform research directions extending the constructive\napproximate IVT in `Analysis/ConstructiveApproxIVT.lean`. Each is a starting point\nrather than a finished",
-      "quality_score": 0.86456,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-06-21T10:40:09",
-      "title": "Constructive Mathematics: Bishop's Analysis"
-    },
-    {
       "cycle_id": "d7a09318",
       "domain": "Physics",
       "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nDerived from this cycle's findings (the bond-dimension threshold\n`TensorNetworkBondTransition`, the universa",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-06-27T01:29:38",
       "title": "Langlands for GL₂ over Q"
+    },
+    {
+      "cycle_id": "1394b2e6",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Self-dual string C-groups of alternating groups\n\nDerived from this cycle's findings (the formalized `Foundations.lean` and\n`RankArithmetic.lean`). Each conjecture is falsifiable",
+      "quality_score": 0.73028,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T02:11:52",
+      "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b8df0deb",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nThese directions build on the non-circular index telescope in\n`IndexTelescope.lean` (the product of adjacent relative indices of a finite\nmonotone subgroup chain collapses to a si",
-      "quality_score": 0.8904000000000001,
-      "sorry_count": 0,
-      "theorem_count": 90,
-      "timestamp": "2026-06-21T14:57:39",
-      "title": "Derived from the verified Lean results in"
-    },
     {
       "cycle_id": "a0d2774b",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-27T01:31:25",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+    },
+    {
+      "cycle_id": "1394b2e6",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Self-dual string C-groups of alternating groups\n\nDerived from this cycle's findings (the formalized `Foundations.lean` and\n`RankArithmetic.lean`). Each conjecture is falsifiable",
+      "quality_score": 0.73028,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T02:11:52",
+      "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7236
     }
   ],
-  "last_updated": "2026-06-27T01:31:25",
+  "last_updated": "2026-06-27T02:11:52",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "580d1f18",
-        "quality": 0.73672,
-        "theorems": 23,
-        "title": "Certified Novelty Detection for Theorem Provers"
-      },
-      {
         "cycle_id": "7b228cc3",
         "quality": 0.74264,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.584,
         "theorems": 6,
         "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+      },
+      {
+        "cycle_id": "1394b2e6",
+        "quality": 0.73028,
+        "theorems": 0,
+        "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
       }
     ],
     "Bridges": [

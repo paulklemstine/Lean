@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "236373d0",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "a9aa4cae",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -864,21 +864,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
-  },
-  {
-    "consumed_by_exp_id": "159144eb",
-    "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_358",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432755+00:00",
-    "title": "Proof Complexity: Resolution and Cutting Planes"
   },
   {
     "consumed_by_exp_id": "",
@@ -2077,7 +2062,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "7c592ed1",
+    "consumed_by_exp_id": "",
     "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
     "domains": [
       "Algebra"
@@ -2086,7 +2071,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -4334,7 +4319,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
   },
   {
-    "consumed_by_exp_id": "49ad7738",
+    "consumed_by_exp_id": "",
     "description": "The upper bound S_1^\u03c6(x) \u226a x exp{-(1/2 - o(1))\u221a(log x log_2 x)} is tight, i.e., there exists a constant C > 0 such that S_1^\u03c6(x) \u2265 C x exp{-(1/2 + o(1))\u221a(log x log_2 x)} for all sufficiently large x.",
     "domains": [
       "Bridges"
@@ -4343,7 +4328,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T12:13:32.061938+00:00",
     "title": "Tightness of the unit-shift bound for Euler's totient function"
   },
@@ -6562,6 +6547,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Self-dual string C-groups of alternating groups\n\nDerived from this cycle's findings (the formalized `Foundations.lean` and\n`RankArithmetic.lean`). Each conjecture is falsifiable and accompanied by a key\ninsight and a \"Why now?\" justification.\n\n## Conjecture 1 \u2014 Discharge the literature hypotheses of `max_selfDual_rank_A4m3`\n\nThe conditional theorem `max_selfDual_rank_A4m3` currently takes the\nFernandes\u2013Leemans rank bound (`hbound`) and the odd-maximal-rank\nnon-palindromicity (`hmaxShape`) as hypotheses. Conjecture: both can be proved\ninside the `StringGroupRep` framework once the *intersection property* (the\ndefining condition upgrading a string group representation to a string C-group)\nis formalized, giving an **unconditional** upper bound `rank \u2264 2m`.\n\n- **The key insight is...** the intersection property forces the last generator\n  `\u03c1_{r-1}` to act on a residue whose support parity is incompatible with a\n  reversal-symmetric Schl\u00e4fli symbol of even length `2m`, exactly the obstruction\n  captured by `palindrome_even_paired`.\n- **Why now?** The reversal parity machinery (`rev_no_fixed_of_even`) and the\n  palindrome theorem (`schlafli_palindrome`) are already in place; only the\n  intersection property is missing to close the loop.\n\n## Conjecture 2 \u2014 A general odd/even corank law\n\nFor every `n`, the maximal rank of a *self-dual* string C-group of `A_n` equals\nthe general maximal rank `\u230a(n-1)/2\u230b` minus `1` exactly when `n \u2261 3 (mod 4)`, and\nequals it (no drop) when `n \u2261 1 (mod 4)`.\n\n- **The key insight is...** the drop is governed by the parity of the Schl\u00e4fli\n  length at the top rank: `n \u2261 3 (mod 4)` makes the top Schl\u00e4fli length even\n  (fixed-point-free reversal, `rev_no_fixed_of_even`), forcing the drop; `n \u2261 1`\n  makes it odd (a stable centre, `rev_unique_fixed_of_odd`), permitting equality.\n- **Why now?** `RankArithmetic.lean` already proves the even/odd dichotomy for\n  `Fin.rev`; extending it to the residue arithmetic mod 4 is a finite case split.\n\n## Conjecture 3 \u2014 Doubling is universal for self-dual achievability\n\nEvery self-dual string C-group representation of `A_{4m+3}` of the maximal rank\n`2m` is equivalent (up to relabelling and group automorphism) to one produced by\nthe doubling homomorphism `dblAlt` applied to a self-dual rank-`2m` simplex-like\nrepresentation.\n\n- **The key insight is...** self-duality plus maximal rank pins the permutation\n  domain into two mirror-image orbits of equal size plus a fixed point, which is\n  precisely the `Fin (2m+1) \u2295 Fin (2m+1) \u2295 Fin 1` decomposition realised by\n  `dblEquiv`.\n- **Why now?** `A4m3_selfDual_rank2m` already exhibits the doubling\n  construction; a classification only needs an orbit-counting converse, for which\n  Mathlib's `Equiv.Perm` / `alternatingGroup` API suffices.\n\n## Conjecture 4 \u2014 Schl\u00e4fli palindromes characterise self-duality\n\nA string C-group representation of a *centreless* group `G` is self-dual **iff**\nits full period matrix is reversal-symmetric (`period i.rev j.rev = period i j`),\nnot merely its Schl\u00e4fli sub-diagonal.\n\n- **The key insight is...** for a centreless group the order data of all\n  generator products determines the dualizing automorphism uniquely, so\n  reversal symmetry of the whole matrix is not just necessary\n  (`period_rev_of_selfDual`) but sufficient.\n- **Why now?** The necessity direction is already formalized; the converse is a\n  reconstruction theorem of exactly the kind Mathlib's group-automorphism API was\n  built to support.\n\n## Conjecture 5 \u2014 Order-3 ridges are forced near maximal rank\n\nIn any string C-group of `A_n` of rank within `1` of the maximum, at least\n`\u230a(n-1)/2\u230b - 2` of the Schl\u00e4fli entries equal `3` (the simplex value computed in\n`simplex_schlafli_eq_three`).\n\n- **The key insight is...** high rank in a fixed alternating group leaves little\n  room for long cycles, so most adjacent generator pairs must be the minimal\n  overlapping transpositions whose product is a 3-cycle (`overlap_order`).\n- **Why now?** `simplex_schlafli_eq_three` and `overlap_order` give the exact\n  local mechanism; a counting argument over the `4m+3` points would quantify how\n  many ridges are forced to be `{3}`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2649",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1394b2e6",
+    "status": "available",
+    "timestamp": "2026-06-27T02:11:19.816218+00:00",
+    "title": "Derived from this cycle's findings (the formalized `Foundations.lean` and"
   },
   {
     "consumed_by_exp_id": "",

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1394b2e6",
     "filename": "maximum_rank_of_selfdual_string_cgroups_for_altern.json",
     "pkg_num": 119,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.73028,
     "title": "Maximum Rank of Self-Dual String C-Groups for the Alternating Groups A_{4m+3}"
   },
   {
@@ -3469,8 +3469,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "maximum_rank_of_selfdual_string_cgroups_for_altern",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.73028,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Maximum Rank of Self-Dual String C-Groups for the Alternating Groups A_{4m+3}"
     }

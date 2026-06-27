@@ -828,6 +828,17 @@ body {
     text-decoration: none;
 }
 
+.markdown-body h1 .katex,
+.markdown-body h2 .katex,
+.markdown-body h3 .katex,
+.markdown-body h4 .katex,
+.markdown-body a .katex {
+    background: inherit;
+    animation: inherit;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .markdown-body a:hover {
     filter: brightness(1.3) drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
 }
