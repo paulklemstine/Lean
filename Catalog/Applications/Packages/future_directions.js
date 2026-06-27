@@ -628,7 +628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2cb7b634",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -637,7 +637,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -2826,7 +2826,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae503725",
     "description": "The specific degree one function on the Grassmann scheme $J_3(4,2)$ defined by $f = \\frac{1}{2} \\sum_{Q(p) = 0} x_p + \\frac{1}{6} \\sum_{Q(p) = 1} x_p - \\frac{1}{6} \\sum_{Q(p) = 2} x_p$, where $Q(x,y,z,w) = x^2 + y^2 + z^2 - w^2$ is an elliptic quadric over $\\mathbb{F}_3$, is Boolean and not a trivial Boolean degree one function.",
     "domains": [
       "Bridges"
@@ -2835,7 +2835,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T21:41:56.533485+00:00",
     "title": "Non-triviality of the Bruen-Drudge Boolean degree one function on $J_3(4,2)$"
   },
@@ -4319,7 +4319,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exponential Lower Bound for g_k(n) Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "06caccbf",
     "description": "For every odd prime \ud835\udc5d the class of biased graphs that admit a \ud835\udc4d\u209a\u2011gain labelling is minor\u2011closed and its only excluded minors are the balanced\u2011cycle\u2013free graph (\ud835\udc5d+1)K\u2082, the balanced triangle \u00b1K\u2083 and the unbalanced 4\u2011cycle \u2013K\u2084. In other words, a biased graph \ud835\udd3e is \ud835\udc4d\u209a\u2011gainable iff it contains none of these three minors.",
     "domains": [
       "Pythagorean",
@@ -4329,7 +4329,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23826v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T11:31:35.982720+00:00",
     "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
   },
@@ -4753,7 +4753,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conflict-Free Coloring of Outerplanar Graphs with Three Colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a880054f",
     "description": "Conjecture that for every integer n \u2265 2, any collection of mutually orthogonal Italian squares of order n contains at most n\u20111 squares, and this bound is attained exactly when n is a prime power.",
     "domains": [
       "Pythagorean"
@@ -4762,7 +4762,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T16:34:26.097340+00:00",
     "title": "Maximum size of pairwise orthogonal Italian squares is n\u20111 for prime powers"
   },
@@ -7044,7 +7044,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "321da2e6",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -7054,7 +7054,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -7631,7 +7631,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb034b80",
     "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
     "domains": [
       "Tropical",
@@ -7641,7 +7641,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.547297+00:00",
     "title": "Tropical Riemann-Roch Theorem"
   },
