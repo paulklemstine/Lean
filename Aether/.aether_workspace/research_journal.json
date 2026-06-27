@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0de5396c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Continuous-Valued Cellular Automata and Rucker's \"Gnarl\"\n\nBuilt on `ContinuousValuedCA.lean` (the symmetric three-point continuous CA, its\ngeometric-mode spectrum, the discrete m",
-      "quality_score": 0.5094479615384615,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-06-23T15:01:59",
-      "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
-    },
-    {
       "cycle_id": "5a2118a3",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — BB84 Security (derived from this cycle)\n\nThis cycle proved (0 sorries, standard axioms only):\n- `SecurityRegion.lean`: the ~11% threshold is a **sharp two-sided boundary**\n  (`se",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-27T20:38:29",
       "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
+    },
+    {
+      "cycle_id": "a33a1330",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nThis cycle proved the EML fixed point `x*` of `f(x) = exp(a)·log(b·x + c)` depends\n*monotonically and strictly* on the scaling parameter `a` (`FixedPoin",
+      "quality_score": 0.6787,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-27T21:02:22",
+      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7938000000000001
     }
   ],
-  "last_updated": "2026-06-27T20:38:29",
+  "last_updated": "2026-06-27T21:02:22",
   "open_questions": [
     {
       "context": "`Nat.clog_pow`, not `decide`; all main theorems use induction/omega and are 0-sorry; the",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c85b45b6",
-        "quality": 0.6839200000000001,
-        "theorems": 0,
-        "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
-      },
-      {
         "cycle_id": "10d599ef",
         "quality": 0.64325,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.7938000000000001,
         "theorems": 13,
         "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-ind"
+      },
+      {
+        "cycle_id": "a33a1330",
+        "quality": 0.6787,
+        "theorems": 11,
+        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
       }
     ],
     "Bridges": [
