@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4efe75bb",
     "filename": "close_proofs_alien_number_systems_beyond_base_n.json",
     "pkg_num": 120,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5579999999999999,
     "title": "Alien Number Systems: Beyond Base-N (Mixed-Radix Positional Systems)"
   },
   {
@@ -3505,8 +3505,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_alien_number_systems_beyond_base_n",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5579999999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Alien Number Systems: Beyond Base-N (Mixed-Radix Positional Systems)"
     }
