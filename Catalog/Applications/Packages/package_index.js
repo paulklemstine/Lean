@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6fec91f1",
     "filename": "eml_differential_equations_odes_with_exponential_l.json",
     "pkg_num": 141,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7897859999999999,
     "title": "EML Differential Equations: Riccati Reduction, Wronskian Existence Criteria, and the Kovacic Parity Obstruction for Airy's Equation"
   },
   {
@@ -4116,8 +4116,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "eml_differential_equations_odes_with_exponential_l",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7897859999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "EML Differential Equations: Riccati Reduction, Wronskian Existence Criteria, and the Kovacic Parity Obstruction for Airy's Equation"
     }

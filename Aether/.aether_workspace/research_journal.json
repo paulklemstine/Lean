@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a5fa8083",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Fitting / TransEndo research thread\n\nThis cycle proved a **sharp two-sided quantitative Fitting stabilization bound**\nfor an endomorphism `g : V →ₗ[K] V` of a finite-dimensional",
-      "quality_score": 0.789328,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-24T01:59:48",
-      "title": "Close Proofs: These conjectures continue the research cycle begun in"
-    },
-    {
       "cycle_id": "81f9ab1d",
       "domain": "Geometry",
       "key_insight": "# Future Directions: Beyond the Ordered Hahn-Field Layer\n\nThis file sketches research directions that build on the ordered non-Archimedean field\n`OrderedTSeries = Lex (HahnSeries TransMonoᵒᵈ ℝ)` estab",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-06-27T15:18:47",
       "title": "Plethystic Triviality of the Shifted t-Schur Basis"
+    },
+    {
+      "cycle_id": "6fec91f1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Differential Equations (Kovacic / Riccati / Differential Galois)\n\nDerived from this cycle's findings in `EML.EMLRiccatiSolvableFamily` (an explicit\ninfinite solvable even-deg",
+      "quality_score": 0.7897859999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T16:25:23",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "59a725d3",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nBuilding on the topological inverse-limit core formalized in\n`Catalog/Pythagorean/ProjectiveFraisseInverseLimitCore.lean`, here are several\nresearch directions that the formalizat",
-      "quality_score": 0.36443276190476187,
-      "sorry_count": 0,
-      "theorem_count": 2,
-      "timestamp": "2026-06-22T21:53:22",
-      "title": "Projective Fraïssé Metrization Conjecture for Universal Minimal Flows"
-    },
     {
       "cycle_id": "2731a7eb",
       "domain": "Bridges",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-27T16:19:43",
       "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
+    },
+    {
+      "cycle_id": "6fec91f1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Differential Equations (Kovacic / Riccati / Differential Galois)\n\nDerived from this cycle's findings in `EML.EMLRiccatiSolvableFamily` (an explicit\ninfinite solvable even-deg",
+      "quality_score": 0.7897859999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T16:25:23",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70696
     }
   ],
-  "last_updated": "2026-06-27T16:19:43",
+  "last_updated": "2026-06-27T16:25:23",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "08b15f3b",
-        "quality": 0.6261199999999999,
-        "theorems": 0,
-        "title": "Effective Computability of Erdős-550 Threshold"
-      },
-      {
         "cycle_id": "d6c98458",
         "quality": 0.4269881818181818,
         "theorems": 7,
@@ -3141,6 +3135,12 @@
         "quality": 0.64325,
         "theorems": 0,
         "title": "Langlands Correspondence: GL(1) Case"
+      },
+      {
+        "cycle_id": "6fec91f1",
+        "quality": 0.7897859999999999,
+        "theorems": 0,
+        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
       }
     ],
     "Bridges": [
