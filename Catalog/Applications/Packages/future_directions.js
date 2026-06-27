@@ -149,22 +149,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "061c7bd2",
-    "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Bridges"
-    ],
-    "id": "seed_379",
-    "priority_score": 0.92,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432809+00:00",
-    "title": "Proof Automation: Custom Lean 4 Tactics"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
@@ -1314,7 +1298,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "cf34309d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1324,7 +1308,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -3044,7 +3028,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-acyclicity of transversal spaces in high dimensions"
   },
   {
-    "consumed_by_exp_id": "7d5c7f90",
+    "consumed_by_exp_id": "",
     "description": "For any Cayley digraph G of an abelian group of even order, the pair (G, K\u2082) is unstable.",
     "domains": [
       "Algebra"
@@ -3053,7 +3037,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22947v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T06:20:52.702234+00:00",
     "title": "Stability of Cayley Digraphs of Even Order with K2"
   },
@@ -4189,7 +4173,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "1394b2e6",
+    "consumed_by_exp_id": "",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self\u2011dual string C\u2011group representations of rank $2m$ (as constructed by the vertex\u2011gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self\u2011dual string C\u2011group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domains": [
       "Algebra"
@@ -4198,7 +4182,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
   },
@@ -6506,6 +6490,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Probabilistic Ramsey lower bounds\n\nDerived from this cycle's findings (see the Lab Notes in\n`RamseyProbabilisticLowerBound.lean` and `RamseyDiagonalSandwich.lean`).  This\ncycle formalised, on the catalog's shared `Arrows` framework:\n\n* `not_arrows_of_counting` \u2014 the Erd\u0151s first-moment lower bound\n  `2\u00b7C(n,k) < 2^{C(k,2)} \u2192 R(k,k) > n`;\n* `not_arrows_of_pow` \u2014 its clean `C(n,k) \u2264 n^k` corollary;\n* `ramsey_lower_even` / `ramsey_even_sandwich` \u2014 an explicit infinite family\n  `2^{m-1} < R(2m,2m) \u2264 4^{2m-1}`.\n\nThe findings below are bold, falsifiable next steps.\n\n## 1. Replace `n^k` by `n^k / k!` to reach the true base `\u221a2`.\n**Conjecture.** `not_arrows_of_counting` can be upgraded to a fully general\n`\u2200 k \u2265 3, \u00ac Arrows \u230a2^{k/2}\u230b k k`, recovering the textbook `R(k,k) > 2^{k/2}`.\n**The key insight is...** the only slack between our `bestpow(k)` column and the\nsharp `best(k)` column in `ComputationalEvidence.md` is the single factor `k!`\ndropped by `C(n,k) \u2264 n^k`; reinstating `C(n,k) \u2264 n^k/k!` (provable from\n`Nat.choose_le_pow_div_factorial`-style bounds) closes the entire gap.\n**Why now?** The counting core (`card_filter_superset`, `exists_good_coloring`)\nis already proved and base-free; only one arithmetic inequality stands between\nthe present `2^{k/2-1}` family and the optimal `2^{k/2}` constant.\n\n## 2. Lov\u00e1sz Local Lemma improves the constant to `\u221a2\u00b7k/e`.\n**Conjecture.** A symmetric-LLL refinement yields\n`R(k,k) > (1+o(1))\u00b7(k/(e\u221a2))\u00b72^{k/2}`, strictly beating the first-moment bound,\nand is formalisable as `\u00ac Arrows n k k` under a dependency-degree hypothesis.\n**The key insight is...** the \"bad events\" indexed by `k`-sets `T` in\n`exists_good_coloring` are *almost* independent \u2014 two events interact only when\ntheir vertex sets share an edge \u2014 so the union bound is wasteful exactly where\nthe LLL is sharp.\n**Why now?** Our bad events are already explicit `Finset`s\n(`Gr.powerset.filter (edgesOn T \u2286 \u00b7)`); their pairwise dependency graph is\ncombinatorially concrete, making a finite LLL instance directly expressible.\n\n## 3. The off-diagonal bound `R(3,k) = \u0398(k\u00b2/log k)`.\n**Conjecture.** The same edge-set counting model proves the off-diagonal lower\nbound `R(3,k) > c\u00b7(k/log k)^2` (Kim's order of magnitude), via a triangle-free\nprocess / alteration argument stated as `\u00ac Arrows n 3 k`.\n**The key insight is...** for `s = 3` the \"red\" bad events are triangles, a\n*sparse* structure, so deleting one vertex per monochromatic triangle (the\nalteration method) costs far less than the first-moment union bound.\n**Why now?** `not_arrows_of_counting` already separates the red (`edgesOn T \u2286 R`)\nand blue (`Disjoint (edgesOn T) R`) events asymmetrically, so an asymmetric\n`s = 3`, `t = k` specialisation is a natural and immediate generalisation.\n\n## 4. A constructive (derandomised) witness colouring.\n**Conjecture.** The existence proof in `exists_good_coloring` can be made\n*constructive*: the method of conditional expectations selects, edge by edge, an\nexplicit `R : Finset (Sym2 (Fin n))` realising `\u00ac Arrows n k k`, computable by\n`decide`/`native_decide` for moderate `n, k`.\n**The key insight is...** our bound is a strict inequality of exact `Nat`\ncardinalities (`bad.card < Gr.powerset.card`), so the averaging argument already\npinpoints a non-empty `Gr.powerset \\ bad`; greedily fixing each edge to keep the\nconditional count below threshold extracts a concrete element.\n**Why now?** Every quantity in the proof is a decidable `Finset.card`, so the\nderandomisation is a finite search with a proven-correct pruning bound.\n\n## 5. Tightening the sandwich exponent gap.\n**Conjecture.** `ramsey_even_sandwich`'s gap can be narrowed from\n`[2^{m-1}, 4^{2m-1}] = [2^{(k/2)-1}, 2^{2k-2}]` to `[2^{k/2}, 2^{2k}]`, and the\nupper exponent reduced via the Conlon/Sah polynomial improvement to `R(k,k) \u2264\n4^{k}\u00b7k^{-c log k}`.\n**The key insight is...** the lower and upper bounds are proved by *disjoint*\nmechanisms (counting vs. recursion) sharing only the `Arrows` vocabulary, so each\nexponent can be improved independently without touching the other.\n**Why now?** Both endpoints are already theorems in this catalog on one\nframework; closing the base-of-exponent gap `[\u221a2, 4]` is the central open problem\nof the field, and a formal sandwich is the natural scaffold for incremental\nprogress.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2645",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "de494596",
+    "status": "available",
+    "timestamp": "2026-06-27T00:45:06.566308+00:00",
+    "title": "Derived from this cycle's findings (see the Lab Notes in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6827,7 +6826,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "6adcd103",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -6837,7 +6836,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -6977,7 +6976,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Riemann-Roch Theorem"
   },
   {
-    "consumed_by_exp_id": "9871aa6d",
+    "consumed_by_exp_id": "",
     "description": "Prove the Langlands correspondence for GL\u2082 over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
     "domains": [
       "Bridges",
@@ -6987,7 +6986,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.714293+00:00",
     "title": "Langlands for GL\u2082 over Q"
   },

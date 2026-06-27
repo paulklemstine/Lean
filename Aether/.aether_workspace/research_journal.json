@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2fe3f01b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThe following are freeform research directions extending the constructive\napproximate IVT in `Analysis/ConstructiveApproxIVT.lean`. Each is a starting point\nrather than a finished",
-      "quality_score": 0.86456,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-06-21T10:40:09",
-      "title": "Constructive Mathematics: Bishop's Analysis"
-    },
-    {
       "cycle_id": "d14bdeaa",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Euler–Mascheroni constant `γ`\n\nDerived from the Stage-3/Stage-4 findings of this cycle (files\n`EulerMascheroniApproximation.lean`, `EulerMascheroniSeries.lean`).\n\n## Conjecture 1",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-27T00:12:21",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+    },
+    {
+      "cycle_id": "de494596",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Probabilistic Ramsey lower bounds\n\nDerived from this cycle's findings (see the Lab Notes in\n`RamseyProbabilisticLowerBound.lean` and `RamseyDiagonalSandwich.lean`).  This\ncycle f",
+      "quality_score": 0.674434,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-27T00:45:25",
+      "title": "Ramsey Theory: Bounds and Constructions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7981560000000001
     }
   ],
-  "last_updated": "2026-06-27T00:12:21",
+  "last_updated": "2026-06-27T00:45:25",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "113a596f",
-        "quality": 0.67667,
-        "theorems": 8,
-        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-      },
-      {
         "cycle_id": "aa3d24c5",
         "quality": 0.70446,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.3990000000000001,
         "theorems": 0,
         "title": "Optimality of the Density Threshold for Linear r‑Uniform Hypergraphs"
+      },
+      {
+        "cycle_id": "de494596",
+        "quality": 0.674434,
+        "theorems": 16,
+        "title": "Ramsey Theory: Bounds and Constructions"
       }
     ],
     "NumberTheory": [
