@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e2815d63",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Schnorr / Σ-Protocols\n\nBuilding on `Catalog/Cryptography/SchnorrProtocol.lean` (abstract-group completeness,\nspecial soundness, group-level witness extraction, and perfect HVZK)",
-      "quality_score": 0.5423795180722892,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-22T03:52:55",
-      "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-    },
-    {
       "cycle_id": "eafa171c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Weighted K5-free max-cut with triangle-discounted edges\n\nDerived from the Stage 3 / Stage 4 findings of this research cycle. This cycle proved an\nunconditional **factor-3** upper",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T08:16:48",
       "title": "Effective Computability of Erdős-550 Threshold"
+    },
+    {
+      "cycle_id": "d6c98458",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Collatz cycle (Phase A, v19a)\n\nDerived from this cycle's verified findings in `StoppingTime.lean`,\n`CycleObstruction.lean`, and `../Bridges/CollatzTwoAdic.lean`. Each conjecture",
+      "quality_score": 0.4269881818181818,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-27T08:47:27",
+      "title": "Collatz Conjecture"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T08:16:48",
+  "last_updated": "2026-06-27T08:47:27",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1394b2e6",
-        "quality": 0.73028,
-        "theorems": 0,
-        "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
-      },
-      {
         "cycle_id": "061c7bd2",
         "quality": 0.6293409999999999,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.6261199999999999,
         "theorems": 0,
         "title": "Effective Computability of Erdős-550 Threshold"
+      },
+      {
+        "cycle_id": "d6c98458",
+        "quality": 0.4269881818181818,
+        "theorems": 7,
+        "title": "Collatz Conjecture"
       }
     ],
     "Bridges": [

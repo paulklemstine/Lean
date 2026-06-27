@@ -1,11 +1,11 @@
---- Fano.lean
-+++ Fano.lean
-@@ -27,7 +27,7 @@
- --   case against which the `q ≥ 3` non-existence conjecture must be tested.
- -- !-- end Lab Notes -- !--
+--- CusickDensityWitness.lean
++++ CusickDensityWitness.lean
+@@ -48,7 +48,7 @@
+ remains open in this development.
  -/
--import Catalog.Applications.BooleanDegreeOne.Core
-+import Applications.BooleanDegreeOne.Core
+ 
+-import Applications.CusickCarryReformulation
++import Catalog.Applications.CusickCarryReformulation
  
  
  

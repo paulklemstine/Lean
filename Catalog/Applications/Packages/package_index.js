@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d6c98458",
     "filename": "collatz_conjecture.json",
     "pkg_num": 130,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4269881818181818,
     "title": "Unconditional Cycle Obstructions for the Collatz Step Map"
   },
   {
@@ -3795,8 +3795,8 @@ window.PACKAGE_GRAPH = {
       "hue": 134,
       "id": "collatz_conjecture",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4269881818181818,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Unconditional Cycle Obstructions for the Collatz Step Map"
     }
