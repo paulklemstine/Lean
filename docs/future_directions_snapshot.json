@@ -11975,6 +11975,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — EML Universal Approximation: Density of EML Functions\n\nThis cycle added `Catalog/Applications/EMLActivationDensity.lean`, which proves that the\nstandard machine-learning activations (logistic sigmoid, softplus, tanh, arctan) are each\nuniversal as a *single* EML feature on any compact domain, by reducing density to strict\nmonotonicity ⇒ injectivity. It builds on `EML.ExponentialPolynomialDensity`\n(`adjoin_singleton_dense`) and `EML.StoneWeierstrassApprox`.\n\nBelow are testable conjectures for follow-up cycles.\n\n## C1 — Non-injective bounded activations require a *family*, mirroring the ridge obstruction\n**Conjecture.** A Gaussian/RBF activation `ρ(x) = e^{-x²}` is *not* injective on ℝ (it is\neven), so a single RBF feature `ρ ∘ g` cannot generate a point-separating subalgebra when\nthe feature `g` takes both a value and its negation. Concretely: there is a compact `X` and\ninjective `g : C(X, ℝ)` with `-c, c ∈ range g` such that `Algebra.adjoin ℝ {ρ ∘ g}` does\n**not** separate points, hence its closure is `≠ ⊤`. **Falsifiable**: exhibit such `X, g`\nand two points not separated. This is the activation-side analogue of\n`EMLMultivariate.ridge_not_injective` (a width/necessity result).\n\n## C2 — Lᵖ density transfer from uniform EML density\n**Conjecture.** For any finite Borel measure `μ` on a compact metric space `X` and any\n`1 ≤ p < ∞`, every point-separating EML subalgebra `A ≤ C(X, ℝ)` is dense in `Lᵖ(μ)`.\n**Proof route**: uniform density (`eml_universalApproximation`) + the contraction\n`‖f‖_{Lᵖ} ≤ μ(X)^{1/p} ‖f‖_∞` + density of `C(X)` in `Lᵖ`. **Falsifiable**: a target\n`Lᵖ` function and `ε` with no EML approximant — impossible if the bound holds, so failure\nwould reveal a gap in the chain.\n\n## C3 — Two-layer EML width bound on `ℝⁿ` via Kolmogorov–Arnold inner functions\n**Conjecture.** Every `f ∈ C(K, ℝ)` on compact `K ⊆ ℝⁿ` is uniformly approximable by a\nsum of `2n+1` outer polynomials applied to single-activation inner features\n`σ(∑ wᵢ xᵢ)`, i.e. the EML class realizes the Kolmogorov–Arnold width `2n+1` with a fixed\nmonotone activation. **Falsifiable**: a continuous `f` provably needing more than `2n+1`\nsuch units. Connects `EMLActivationDensity` with `Applications/KolmogorovArnoldEML`.\n\n## C4 — Monotone-activation density is *equivalent* to injectivity (sharp characterization)\n**Conjecture.** For a continuous `σ : ℝ → ℝ`, the single feature `σ ∘ g` is universal for\n*every* compact `X` and *every* injective `g` **iff** `σ` is injective. The forward\ndirection is `activation_feature_dense`; the converse: if `σ(a) = σ(b)` with `a ≠ b`, pick\n`X = {a, b}` and `g = id` so `σ ∘ g` is constant on `X`, failing separation. **Falsifiable**:\na non-injective `σ` that is nonetheless universal — would contradict the constant-collapse\nargument.\n\n## C5 — Quantitative degree/frequency bounds for exponential-polynomial approximation\n**Conjecture.** On `[a, b]`, approximating an `L`-Lipschitz `f` to uniform error `ε` with\nexponential polynomials `∑_{k≤N} cₖ e^{k x}` (the `exp_monomials_span_dense` basis) needs\ndegree `N = O((L(b-a)/ε)^{c})` for an explicit constant `c`. **Falsifiable**: a Lipschitz\ntarget whose best degree-`N` exponential-polynomial error decays slower than the claimed\nrate. This upgrades the qualitative density of `ExponentialPolynomialDensity` to a\nquantitative rate, the first such bound in the EML catalog.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_2671",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "438f30b4",
+    "status": "available",
+    "timestamp": "2026-06-27T06:55:54.116116+00:00",
+    "title": "This cycle added `Catalog/Applications/EMLActivationDensity.lean`, which proves "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [

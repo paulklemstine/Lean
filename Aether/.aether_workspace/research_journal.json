@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "34ce1554",
-      "domain": "Geometry",
-      "key_insight": "# FUTURE DIRECTIONS — Gravity from Information (manifold-free combinatorial core)\n\nThis cycle built and **fully verified** (0 sorries, only standard axioms) a\nmanifold-free combinatorial core of the h",
-      "quality_score": 0.5018846575342466,
-      "sorry_count": 0,
-      "theorem_count": 143,
-      "timestamp": "2026-06-22T00:43:38",
-      "title": "Fully verified, manifold-free combinatorial core of"
-    },
-    {
       "cycle_id": "12bdf767",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Fixed Point Theorems (Sperner / Brouwer / Banach)\n\nDerived from this cycle's findings in `SpernerBrouwerBridge.lean` and\n`BanachContractionFixedPoint.lean`.\n\n## Conjecture 1 — Tw",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-27T06:54:53",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
+    },
+    {
+      "cycle_id": "438f30b4",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Universal Approximation: Density of EML Functions\n\nThis cycle added `Catalog/Applications/EMLActivationDensity.lean`, which proves that the\nstandard machine-learning activati",
+      "quality_score": 0.34,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T06:56:04",
+      "title": "EML Universal Approximation: Density of EML Functions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76274
     }
   ],
-  "last_updated": "2026-06-27T06:54:53",
+  "last_updated": "2026-06-27T06:56:04",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "0171d9bf",
-        "quality": 0.67428,
-        "theorems": 9,
-        "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
-      },
-      {
         "cycle_id": "f2c77f29",
         "quality": 0.54104,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.55076,
         "theorems": 9,
         "title": "Close Proofs: These conjectures continue the research cycle begun in"
+      },
+      {
+        "cycle_id": "438f30b4",
+        "quality": 0.34,
+        "theorems": 0,
+        "title": "EML Universal Approximation: Density of EML Functions"
       }
     ],
     "Bridges": [
