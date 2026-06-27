@@ -6872,7 +6872,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "11521acf",
     "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
     "domains": [
       "Cryptography",
@@ -6882,7 +6882,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.236800+00:00",
     "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
