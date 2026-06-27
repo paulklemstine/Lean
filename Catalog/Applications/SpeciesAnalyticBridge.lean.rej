@@ -1,11 +1,11 @@
---- SpeciesAnalyticBridge.lean
-+++ SpeciesAnalyticBridge.lean
-@@ -34,7 +34,7 @@
- * `egf_binConvOne`, `egf_zero`  — `egf` preserves the rig unit and zero.
+--- SaturationContrast.lean
++++ SaturationContrast.lean
+@@ -31,7 +31,7 @@
+ should classify the index as a function of the atom set, not merely of maximality.
+ -- !-- Lab Notes -- !--
  -/
- import Mathlib
--import Applications.CombinatorialSpecies
-+import Catalog.Applications.CombinatorialSpecies
+-import Applications.SocialChoice.IncoherenceIndex
++import Catalog.Applications.SocialChoice.IncoherenceIndex
  
- open scoped BigOperators
+ 
  

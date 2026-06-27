@@ -57,7 +57,7 @@ Failure analysis: the `Fin (m+n)` index split is handled entirely by
 -/
 
 import Mathlib
-import Applications.SmoothPoincare.GleasonLength
+import Catalog.Applications.SmoothPoincare.GleasonLength
 
 open scoped BigOperators
 

@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.QuantumTopoMitigation.ErrorMitigation
+import Catalog.Novelty.QuantumTopoMitigation.ErrorMitigation
 
 /-!
 # Betti-count recovery from noisy barcodes

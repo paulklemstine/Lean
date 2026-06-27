@@ -1,11 +1,11 @@
---- Core.lean
-+++ Core.lean
-@@ -1,6 +1,6 @@
+--- DeligneBoundGL2.lean
++++ DeligneBoundGL2.lean
+@@ -58,7 +58,7 @@
+ `√p`.
+ -/
  import Mathlib
--import Bridges.TreeCut.Decomposition
--import Novelty.DegreeNormalizedTreeCut.SequenceLemmas
-+import Catalog.Bridges.TreeCut.Decomposition
-+import Catalog.Novelty.DegreeNormalizedTreeCut.SequenceLemmas
+-import Catalog.Novelty.EichlerShimuraGL2
++import Novelty.EichlerShimuraGL2
  
- /-!
+ 
  

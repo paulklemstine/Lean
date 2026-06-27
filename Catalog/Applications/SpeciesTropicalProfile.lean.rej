@@ -1,11 +1,11 @@
---- SpeciesTropicalProfile.lean
-+++ SpeciesTropicalProfile.lean
-@@ -36,7 +36,7 @@
- * `binConv_extremal_profile` — downstream species/EGF corollary (binomial convolution).
+--- SpeciesConvolutionRing.lean
++++ SpeciesConvolutionRing.lean
+@@ -42,7 +42,7 @@
+                                         — every `n!`-counted species has EGF `1/(1-X)`.
  -/
  import Mathlib
--import Applications.CombinatorialSpecies
-+import Catalog.Applications.CombinatorialSpecies
+-import Catalog.Applications.SpeciesAnalyticBridge
++import Applications.SpeciesAnalyticBridge
  
  open scoped BigOperators
  

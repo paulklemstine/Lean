@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "53256563",
     "filename": "quantum_thermodynamics_landauers_principle_at_the_.json",
     "pkg_num": 133,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.65187,
     "title": "Landauer's Principle at the Nanoscale: A Finite-System Derivation from the Jarzynski Equality"
   },
   {
@@ -3884,8 +3884,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "quantum_thermodynamics_landauers_principle_at_the_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.65187,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Landauer's Principle at the Nanoscale: A Finite-System Derivation from the Jarzynski Equality"
     }
