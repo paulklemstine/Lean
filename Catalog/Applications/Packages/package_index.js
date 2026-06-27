@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "417ceff0",
     "filename": "falsifiability_of_multigraded_regularity_conjectur.json",
     "pkg_num": 155,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.49606231111111115,
     "title": "Falsifiability of the Multigraded Regularity Conjecture for Schubert Varieties via Bruhat Rank and Smooth Pattern Avoidance"
   },
   {
@@ -4523,8 +4523,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "falsifiability_of_multigraded_regularity_conjectur",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.49606231111111115,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Falsifiability of the Multigraded Regularity Conjecture for Schubert Varieties via Bruhat Rank and Smooth Pattern Avoidance"
     }

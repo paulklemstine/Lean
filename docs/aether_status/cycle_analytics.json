@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-27T23:23:10.148926+00:00",
+  "last_updated": "2026-06-27T23:51:47.495307+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -13287,6 +13287,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-27T23:23:09.777024+00:00",
       "title": "Maximum size of cycle-containing families of vectors"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6352,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 161,
+      "domain": "Novelty",
+      "duration_seconds": 1655.231056213379,
+      "end_time": 1782604115.7243435,
+      "files_integrated": 7,
+      "job_id": "417ceff0",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.7402,
+        "cross_domain": 0.85,
+        "grade": "world_class",
+        "importance": 0.6853,
+        "novelty": 0.95,
+        "proof_depth": 0.5718,
+        "usefulness": 0.7109
+      },
+      "quality_score": 0.49606231111111115,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782602460.4932873,
+      "strategy_count": 0,
+      "theorem_count": 18,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 18,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-27T23:51:46.984746+00:00",
+      "title": "Falsifiability of Multigraded Regularity Conjecture for Schubert Varieties via Pl\u00fccker Embedding"
     }
   ]
 }

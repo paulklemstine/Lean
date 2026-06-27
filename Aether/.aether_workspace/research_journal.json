@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "146bc8b0",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Homotopy Type Theory Foundations in Lean\n\nDerived from this cycle's findings (see the `-- !-- Lab Notes -- !--` blocks in\n`FundamentalIdentity.lean`, `PropTruncation.lean`, and `",
-      "quality_score": 0.48341799999999996,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-24T04:40:35",
-      "title": "Homotopy Type Theory Foundations"
-    },
-    {
       "cycle_id": "81f9ab1d",
       "domain": "Geometry",
       "key_insight": "# Future Directions: Beyond the Ordered Hahn-Field Layer\n\nThis file sketches research directions that build on the ordered non-Archimedean field\n`OrderedTSeries = Lex (HahnSeries TransMonoᵒᵈ ℝ)` estab",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-27T23:23:06",
       "title": "Maximum size of cycle-containing families of vectors"
+    },
+    {
+      "cycle_id": "417ceff0",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Schubert smoothness, Bruhat rank, and Plücker regularity\n\nDerived from this cycle's findings (`SchubertSmoothPatterns.lean`,\n`SchubertLengthChain.lean`, `ComputationalEvidence.md",
+      "quality_score": 0.49606231111111115,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-06-27T23:51:43",
+      "title": "Falsifiability of Multigraded Regularity Conjecture for Schubert Varieties via Plücker Embedding"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7798419999999999
     }
   ],
-  "last_updated": "2026-06-27T23:23:06",
+  "last_updated": "2026-06-27T23:51:43",
   "open_questions": [
     {
       "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f8a707b1",
-        "quality": 0.7756646153846154,
-        "theorems": 13,
-        "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
-      },
-      {
         "cycle_id": "2ff65a6a",
         "quality": 0.6490400000000001,
         "theorems": 23,
@@ -3637,6 +3631,12 @@
         "quality": 0.7798419999999999,
         "theorems": 9,
         "title": "Maximum size of cycle-containing families of vectors"
+      },
+      {
+        "cycle_id": "417ceff0",
+        "quality": 0.49606231111111115,
+        "theorems": 18,
+        "title": "Falsifiability of Multigraded Regularity Conjecture for Schubert Varieties via P"
       }
     ],
     "NumberTheory": [
