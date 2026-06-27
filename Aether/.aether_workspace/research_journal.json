@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "48b7f4af",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — cubic planar graph enumeration\n\nDerived from the Stage 3/Stage 4 findings of this cycle (odd-order vanishing\n`a_{2m+1} = 0`, minimum order `≥ 4`, support `= {4,6,8,…}`). Each con",
-      "quality_score": 0.42770230303030304,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-22T12:22:52",
-      "title": "Universal n^{-7/2} asymptotic for unlabelled connected cubic planar graphs"
-    },
-    {
       "cycle_id": "16bb5867",
       "domain": "Computation",
       "key_insight": "# FUTURE DIRECTIONS — Langlands Functoriality (GL₂ ⤳ GL₃ and beyond)\n\nDerived from this cycle's findings on the unramified symmetric-square /\nsymmetric-power transfer (`SymmetricSquareGL2to3.lean`,\n`S",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T13:53:55",
       "title": "Tropical Riemann-Roch Theorem"
+    },
+    {
+      "cycle_id": "f0d5604e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — average stack-sorting depth and Defant's constant\n\nDerived from this cycle's findings (see `DefantConstant.lean`,\n`StackSortMap.lean`, and `ComputationalEvidence.md`).\n\n## Conjec",
+      "quality_score": 0.5150000000000001,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T13:56:11",
+      "title": "Conjecture: The limit of average stack-sorting depth equals Defant's upper bound"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7014400000000001
     }
   ],
-  "last_updated": "2026-06-27T13:53:55",
+  "last_updated": "2026-06-27T13:56:11",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "22e3c34e",
-        "quality": 0.55076,
-        "theorems": 9,
-        "title": "Close Proofs: These conjectures continue the research cycle begun in"
-      },
-      {
         "cycle_id": "438f30b4",
         "quality": 0.34,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.5405,
         "theorems": 0,
         "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
+      },
+      {
+        "cycle_id": "f0d5604e",
+        "quality": 0.5150000000000001,
+        "theorems": 0,
+        "title": "Conjecture: The limit of average stack-sorting depth equals Defant's upper bound"
       }
     ],
     "Bridges": [

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f0d5604e",
     "filename": "conjecture_the_limit_of_average_stack_sorting_dept.json",
     "pkg_num": 137,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5150000000000001,
     "title": "Defant's Stack-Sorting Depth Constant: lambda = (3/5)(7 - 8 ln 2)"
   },
   {
@@ -4000,8 +4000,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "conjecture_the_limit_of_average_stack_sorting_dept",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5150000000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Defant's Stack-Sorting Depth Constant: lambda = (3/5)(7 - 8 ln 2)"
     }

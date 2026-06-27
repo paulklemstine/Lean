@@ -7291,6 +7291,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 average stack-sorting depth and Defant's constant\n\nDerived from this cycle's findings (see `DefantConstant.lean`,\n`StackSortMap.lean`, and `ComputationalEvidence.md`).\n\n## Conjecture 1 \u2014 Tightness of Defant's bound\n`lim_{n\u2192\u221e} D_n / n = (3/5)(7 \u2212 8 ln 2)`, where `D_n` is the average\nstack-sorting depth over `S_n`.\n\n*The key insight is...* that the verified analytic window\n`0.8728 < \u03bb < 0.8729` makes the target a *single real number* against which any\ncandidate asymptotic expansion of `D_n/n` can be tested to arbitrary decimal\nprecision, turning a vague \"tightness\" claim into a falsifiable numeric target.\n\n*Why now?* Because we already have a verified, executable `stackSort` and the\nconstant is pinned down rigorously; the remaining gap is the asymptotic\nanalysis, which can now be attacked with the finite data as a sanity rail.\n\n## Conjecture 2 \u2014 Golomb\u2013Dickman strictly below the depth density\nThe Golomb\u2013Dickman constant `G \u2248 0.6243` satisfies `G < \u03bb`.\n\n*The key insight is...* that `\u03bb` exceeds `0.6244` (proved as\n`golombDickman_bound_lt_defant`), and `G < 0.6244` is a known literature bound,\nso the strict inequality reduces to a *single proved real inequality* plus one\nimported numeric fact \u2014 no asymptotics needed for the comparison itself.\n\n*Why now?* The two constants describe competing \"typical longest-cycle vs.\ntypical sorting-depth\" densities; isolating the inequality formally clarifies\nwhich random-permutation statistic dominates.\n\n## Conjecture 3 \u2014 Permutation invariance is the only obstruction\nFor every `l`, `depth(l)` depends only on the *pattern* (order type) of `l`,\nnot on its values; and `depth(l) \u2264 |l| \u2212 1` for all `l` (West's bound).\n\n*The key insight is...* that our `stackSort_perm` already shows the map never\ncreates or destroys entries, so depth is a conjugation-invariant of the\norder type; the `|l|\u22121` ceiling is the discrete envelope under which `D_n/n`\nmust live, forcing `\u03bb \u2264 1` (which we verified for the candidate value).\n\n*Why now?* `stackSort_perm` and `stackSort_length` give exactly the\nvalue-independence and length-preservation needed to even *state* the\norder-type invariance cleanly in Lean.\n\n## Conjecture 4 \u2014 Sorted lists are the unique depth-0 fixed points\n`stackSort l = l` **iff** `l` is sorted (for permutations: strictly\nincreasing).\n\n*The key insight is...* that `stackSort_sorted_fixed` proves one direction\nunconditionally; the converse is a finite local-confluence argument on the\nstack machine, so the iff would fully characterize depth `0` and anchor an\ninduction on depth.\n\n*Why now?* With the fixed-point direction formalized, the converse is the\nnatural next lemma and would let `depth` be defined by well-founded recursion\ninstead of by fuel.\n\n## Conjecture 5 \u2014 Second-order term of the average depth\n`D_n = \u03bb\u00b7n \u2212 c\u00b7ln n + O(1)` for an explicit constant `c > 0`.\n\n*The key insight is...* that the computed ratios `D_n/n` rise sub-linearly and\nextremely slowly (`0.365 \u2192 0.441` over `n = 4 \u2026 8`), the signature of a\nnegative `ln n` correction sitting beneath a linear leading term \u2014 exactly the\nshape that would make finite enumeration *underestimate* `\u03bb`.\n\n*Why now?* The exact small-`n` totals `T_n = 1,6,35,232,1757,14982,142105`\nare now available as a verified data series to fit and falsify the proposed\ncorrection term.\n",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2699",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f0d5604e",
+    "status": "available",
+    "timestamp": "2026-06-27T13:56:03.842916+00:00",
+    "title": "Derived from this cycle's findings (see `DefantConstant.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
