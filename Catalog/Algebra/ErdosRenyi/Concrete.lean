@@ -46,7 +46,7 @@ Synthesis (Stage 5): these exact expectations feed `firstMoment` (vanishing belo
   sharp thresholds are stated as conjectures in `FUTURE_DIRECTIONS.md`.
 -/
 import Mathlib
-import Algebra.ErdosRenyi.Model
+import Catalog.Algebra.ErdosRenyi.Model
 
 open Finset BigOperators ErdosRenyi
 
