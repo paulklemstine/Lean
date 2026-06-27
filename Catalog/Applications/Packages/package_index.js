@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "710a2a8b",
     "filename": "universal_approximation_quantitative_bounds.json",
     "pkg_num": 132,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.415178125,
     "title": "Universal Approximation: Quantitative Linear and Quadratic Rates for ReLU Networks"
   },
   {
@@ -3855,8 +3855,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "universal_approximation_quantitative_bounds",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.415178125,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Universal Approximation: Quantitative Linear and Quadratic Rates for ReLU Networks"
     }

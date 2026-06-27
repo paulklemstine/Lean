@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-27T09:42:54.700287+00:00",
+  "last_updated": "2026-06-27T10:10:10.787852+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -11538,6 +11538,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-27T09:42:52.132044+00:00",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4479,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 114,
+      "domain": "Applications",
+      "duration_seconds": 1272.2965812683105,
+      "end_time": 1782554486.8016686,
+      "files_integrated": 23,
+      "job_id": "710a2a8b",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v2",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8629,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9292,
+        "novelty": 0.95,
+        "proof_depth": 0.9203,
+        "usefulness": 0.9602
+      },
+      "quality_score": 0.415178125,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782553214.5050874,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-27T10:10:10.401962+00:00",
+      "title": "Universal Approximation: Quantitative Bounds"
     }
   ]
 }

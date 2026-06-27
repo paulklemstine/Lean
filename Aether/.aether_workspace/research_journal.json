@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "930ff410",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE DIRECTIONS — Zeta Zero-Free Regions & Density (v19d)\n\nDerived from this cycle's findings (the 3-4-1 engine, the RvM main term, and the\nde la Vallée Poussin balance). Each conjecture is bold,",
-      "quality_score": 0.5530301941466242,
-      "sorry_count": 0,
-      "theorem_count": 132,
-      "timestamp": "2026-06-22T09:05:18",
-      "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
-    },
-    {
       "cycle_id": "032896b2",
       "domain": "Logic",
       "key_insight": "# FUTURE DIRECTIONS — Pythagorean Triples in Z[i]\n\nDerived from the v19d research cycle in `Logic/GaussianPythagorean.lean` and\n`Logic/GaussianQuaternionBridge.lean`. Each conjecture is bold and falsi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T09:42:49",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+    },
+    {
+      "cycle_id": "710a2a8b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Universal Approximation: Quantitative Bounds\n\nDerived from this cycle's findings in `SobolevQuadraticRate.lean` (quadratic rate\n`M/n²` for `W^{2,∞}` targets) and `TentDepthSepara",
+      "quality_score": 0.415178125,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T10:10:08",
+      "title": "Universal Approximation: Quantitative Bounds"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T09:42:49",
+  "last_updated": "2026-06-27T10:10:08",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "49ad7738",
-        "quality": 0.6950400000000001,
-        "theorems": 15,
-        "title": "Tightness of the unit-shift bound for Euler's totient function"
-      },
-      {
         "cycle_id": "688a9cbf",
         "quality": 0.57899,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.69112,
         "theorems": 0,
         "title": "Perfect Numbers: Structure of Even Perfects"
+      },
+      {
+        "cycle_id": "710a2a8b",
+        "quality": 0.415178125,
+        "theorems": 0,
+        "title": "Universal Approximation: Quantitative Bounds"
       }
     ],
     "Bridges": [
