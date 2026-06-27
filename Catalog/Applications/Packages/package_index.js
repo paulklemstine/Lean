@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "492e1625",
     "filename": "algebraic_characterization_of_panmagic_affine_perm.json",
     "pkg_num": 142,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.66648,
     "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
   },
   {
@@ -4145,8 +4145,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "algebraic_characterization_of_panmagic_affine_perm",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.66648,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
     }

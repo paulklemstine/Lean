@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2731a7eb",
-      "domain": "Bridges",
-      "key_insight": "# FUTURE DIRECTIONS — Hilbert 13 / Kolmogorov superposition\n\nDerived from this cycle's findings in `Bridges/Hilbert13Superposition.lean`,\n`Bridges/Hilbert13SeventhDegree.lean`, and `Bridges/Hilbert13N",
-      "quality_score": 0.3034976,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-22T23:29:49",
-      "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
-    },
-    {
       "cycle_id": "bfb13379",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — EML Transseries\n\nDerived from this cycle's findings (`Field.lean`, `AsymptoticComparison.lean`,\n`CatalogBridge.lean`).  Each conjecture is bold, falsifiable, and accompanied by a",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T16:25:23",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "492e1625",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Panmagic Affine Permutations over `ZMod n`\n\nBuilt on the results in `Catalog/Algebra/PanmagicAffine.lean`:\n\n* `isPanmagic_iff_units` — `σ_{a,b}` panmagic ⇔ `a, a−1, a+1` all units",
+      "quality_score": 0.66648,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-27T16:57:47",
+      "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70696
     }
   ],
-  "last_updated": "2026-06-27T16:25:23",
+  "last_updated": "2026-06-27T16:57:47",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "d6c98458",
-        "quality": 0.4269881818181818,
-        "theorems": 7,
-        "title": "Collatz Conjecture"
-      },
-      {
         "cycle_id": "10d0f89d",
         "quality": 0.69112,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.7897859999999999,
         "theorems": 0,
         "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+      },
+      {
+        "cycle_id": "492e1625",
+        "quality": 0.66648,
+        "theorems": 15,
+        "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
       }
     ],
     "Bridges": [
