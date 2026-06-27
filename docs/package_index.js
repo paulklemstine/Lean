@@ -14,13 +14,23 @@ window.PACKAGE_INDEX = [
     "title": "EML Interpolation Theory: Stone\u2013Weierstrass for exp-log Networks"
   },
   {
+    "date": "2026-06-27T09:32:34Z",
+    "domain": "Novelty",
+    "exp_id": "d409a01c",
+    "filename": "langlands_for_gl_over_q.json",
+    "pkg_num": 130,
+    "quality": "partial",
+    "quality_score": 0.69727,
+    "title": "Langlands for GL\u2082 over \u211a: Eichler\u2013Shimura Structure and Deligne's Weil Bound"
+  },
+  {
     "date": "2026-06-27T09:18:48Z",
     "domain": "Novelty",
     "exp_id": "d409a01c",
     "filename": "sharp_approximate_carathodory_theorem_and_applicat.json",
-    "pkg_num": 130,
-    "quality": "substantial",
-    "quality_score": 0.71088,
+    "pkg_num": 129,
+    "quality": "partial",
+    "quality_score": 0.69727,
     "title": "Sharp Deterministic Approximate Caratheodory and Iterated Delaunay Refinement"
   },
   {
@@ -28,9 +38,9 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "10d0f89d",
     "filename": "perfect_numbers_structure_of_even_perfects.json",
-    "pkg_num": 129,
+    "pkg_num": 128,
     "quality": "partial",
-    "quality_score": 0.69112,
+    "quality_score": 0.38911390243902444,
     "title": "Perfect Numbers: The Abundancy Index and the Structure of Even Perfects"
   },
   {
@@ -38,7 +48,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "982feb93",
     "filename": "exponential_information_complexity_lower_bound_for.json",
-    "pkg_num": 128,
+    "pkg_num": 127,
     "quality": "partial",
     "quality_score": 0.35044872340425537,
     "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via a Duality Framework"
@@ -48,7 +58,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "d6c98458",
     "filename": "collatz_conjecture.json",
-    "pkg_num": 127,
+    "pkg_num": 126,
     "quality": "partial",
     "quality_score": 0.4269881818181818,
     "title": "Unconditional Cycle Obstructions for the Collatz Step Map"
@@ -58,7 +68,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "08b15f3b",
     "filename": "effective_computability_of_erds_550_threshold.json",
-    "pkg_num": 126,
+    "pkg_num": 125,
     "quality": "partial",
     "quality_score": 0.6261199999999999,
     "title": "Effective Computability of the Erd\u0151s\u2013Ginzburg\u2013Ziv Threshold for Cyclic Groups"
@@ -68,7 +78,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "57a09ecd",
     "filename": "eml_fixed_point_theorem_exp_log_iteration_converge.json",
-    "pkg_num": 125,
+    "pkg_num": 124,
     "quality": "partial",
     "quality_score": 0.31055800000000006,
     "title": "EML Fixed-Point Theorem: Certified Exp-Log Iteration Convergence and a Sharp Existence Threshold"
@@ -78,7 +88,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "669193db",
     "filename": "exponentialdiameter_contraction_under_delaunay_min.json",
-    "pkg_num": 124,
+    "pkg_num": 123,
     "quality": "substantial",
     "quality_score": 0.71552,
     "title": "Exponential Diameter Contraction under Noisy Minicenter Delaunay Refinement"
@@ -88,7 +98,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "43f6ae62",
     "filename": "code_based_cryptography_mceliece_from_goppa_codes.json",
-    "pkg_num": 123,
+    "pkg_num": 122,
     "quality": "substantial",
     "quality_score": 0.7796,
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
@@ -98,7 +108,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "438f30b4",
     "filename": "eml_universal_approximation_density_of_eml_functio.json",
-    "pkg_num": 122,
+    "pkg_num": 121,
     "quality": "partial",
     "quality_score": 0.34,
     "title": "EML Universal Approximation: Single-Feature Density for Standard ML Activations"
@@ -108,7 +118,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "22e3c34e",
     "filename": "close_proofs_these_conjectures_continue_the_resear.json",
-    "pkg_num": 121,
+    "pkg_num": 120,
     "quality": "partial",
     "quality_score": 0.55076,
     "title": "Transition Endomorphisms of Discrete Linear Cocycles"
@@ -118,7 +128,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "ed2a76aa",
     "filename": "non_finite_axiomatization_of_measurable_majorities.json",
-    "pkg_num": 120,
+    "pkg_num": 119,
     "quality": "partial",
     "quality_score": 0.60416,
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
@@ -128,7 +138,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "7f4f0e8d",
     "filename": "proof_strategy_mining_from_deep_mathematics.json",
-    "pkg_num": 119,
+    "pkg_num": 118,
     "quality": "partial",
     "quality_score": 0.505788,
     "title": "Proof Strategy Mining: The Primitive Divisor Schema for Strong Divisibility Sequences"
@@ -138,7 +148,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "8e92c627",
     "filename": "exact_asymptotic_value_of_the_average_stack_sortin.json",
-    "pkg_num": 118,
+    "pkg_num": 117,
     "quality": "partial",
     "quality_score": 0.5924299999999999,
     "title": "Exact Asymptotics of Stack-Sorting Depth: Invariants, Fixed Points, and the Catalan Law"
@@ -148,7 +158,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "688a9cbf",
     "filename": "strange_attractors_as_algebraic_objects.json",
-    "pkg_num": 117,
+    "pkg_num": 116,
     "quality": "partial",
     "quality_score": 0.57899,
     "title": "Strange Attractors as Algebraic Objects: A Finite-Nerve Obstruction for the Dyadic Solenoid"
@@ -158,7 +168,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "802107a7",
     "filename": "transmission_zero_forcing_number_equals_domination.json",
-    "pkg_num": 116,
+    "pkg_num": 115,
     "quality": "partial",
     "quality_score": 0.6666400000000001,
     "title": "Transmission Zero Forcing vs. Domination on Trees: The Exact Domination Number of the Path"
@@ -168,7 +178,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "236373d0",
     "filename": "navier_stokes_2d_regularity_and_partial_3d_results.json",
-    "pkg_num": 115,
+    "pkg_num": 114,
     "quality": "partial",
     "quality_score": 0.53432,
     "title": "Navier-Stokes: Abstract Energy Theory for 2D Regularity and Partial 3D Results"
@@ -178,7 +188,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "49ad7738",
     "filename": "tightness_of_the_unit_shift_bound_for_eulers_totie.json",
-    "pkg_num": 114,
+    "pkg_num": 113,
     "quality": "partial",
     "quality_score": 0.6950400000000001,
     "title": "Tightness of the Unit-Shift Bound for Euler's Totient Function"
@@ -188,7 +198,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "887d83d7",
     "filename": "resolution_of_erds_problem_550_on_tree_versus_comp.json",
-    "pkg_num": 113,
+    "pkg_num": 112,
     "quality": "partial",
     "quality_score": 0.5740799999999999,
     "title": "Resolution of the Foundational Cases of Erdos Problem 550 (Tree vs. Complete Multipartite Ramsey Numbers)"
@@ -198,7 +208,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "11521acf",
     "filename": "symmetric_key_cryptanalysis_differential_and_linea.json",
-    "pkg_num": 112,
+    "pkg_num": 111,
     "quality": "substantial",
     "quality_score": 0.72888,
     "title": "Symmetric-Key Cryptanalysis: Four Rounds of AES Have at Least 25 Active S-boxes"
@@ -208,7 +218,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "4efe75bb",
     "filename": "close_proofs_alien_number_systems_beyond_base_n.json",
-    "pkg_num": 111,
+    "pkg_num": 110,
     "quality": "partial",
     "quality_score": 0.5579999999999999,
     "title": "Alien Number Systems: Beyond Base-N (Mixed-Radix Positional Systems)"
@@ -218,7 +228,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "061c7bd2",
     "filename": "proof_automation_custom_lean_4_tactics.json",
-    "pkg_num": 110,
+    "pkg_num": 109,
     "quality": "partial",
     "quality_score": 0.6293409999999999,
     "title": "Proof Automation: Custom Lean 4 Tactics for the Catalog"
@@ -228,7 +238,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "1394b2e6",
     "filename": "maximum_rank_of_selfdual_string_cgroups_for_altern.json",
-    "pkg_num": 109,
+    "pkg_num": 108,
     "quality": "substantial",
     "quality_score": 0.73028,
     "title": "Maximum Rank of Self-Dual String C-Groups for the Alternating Groups A_{4m+3}"
@@ -238,20 +248,10 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "cf34309d",
     "filename": "random_graphs_erds_rnyi_threshold_phenomena.json",
-    "pkg_num": 108,
+    "pkg_num": 107,
     "quality": "partial",
     "quality_score": 0.584,
     "title": "Random Graphs: Erdos-Renyi Threshold Phenomena via the Moment Method"
-  },
-  {
-    "date": "2026-06-27T01:29:18Z",
-    "domain": "Novelty",
-    "exp_id": "9871aa6d",
-    "filename": "langlands_for_gl_over_q.json",
-    "pkg_num": 107,
-    "quality": "substantial",
-    "quality_score": 0.7236,
-    "title": "Langlands for GL\u2082 over \u211a: Eichler\u2013Shimura Structure and Deligne's Weil Bound"
   },
   {
     "date": "2026-06-27T00:49:29Z",
@@ -1887,8 +1887,9 @@ window.PACKAGE_DB_INDEX = {
   },
   "langlands_for_gl_over_q.json": {
     "domain": "Novelty",
-    "exp_id": "9871aa6d",
+    "exp_id": "d409a01c",
     "source_exp_ids": [
+      "2606.25931v1",
       "seed"
     ],
     "title": "Langlands for GL\u2082 over \u211a: Eichler\u2013Shimura Structure and Deligne's Weil Bound"
@@ -3561,8 +3562,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "langlands_for_gl_over_q",
       "primary_domain": "Bridges",
-      "priority_score": 0.7236,
-      "quality": "substantial",
+      "priority_score": 0.69727,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Langlands for GL\u2082 over \u211a: Eichler\u2013Shimura Structure and Deligne's Weil Bound"
     },
@@ -3803,7 +3804,7 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "perfect_numbers_structure_of_even_perfects",
       "primary_domain": "Bridges",
-      "priority_score": 0.69112,
+      "priority_score": 0.38911390243902444,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Perfect Numbers: The Abundancy Index and the Structure of Even Perfects"
@@ -3814,8 +3815,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "sharp_approximate_carathodory_theorem_and_applicat",
       "primary_domain": "Bridges",
-      "priority_score": 0.71088,
-      "quality": "substantial",
+      "priority_score": 0.69727,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Sharp Deterministic Approximate Caratheodory and Iterated Delaunay Refinement"
     },
