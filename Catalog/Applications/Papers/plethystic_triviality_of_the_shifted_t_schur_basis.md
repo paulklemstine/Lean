@@ -1,57 +1,73 @@
-# Computational Evidence — Plethystic Triviality of the Shifted t-Schur Basis
+# Computational Evidence — Diagonal Plethysm Group of the Shifted `t`-Schur Basis
 
-All objects live in `Lam = MvPolynomial ℕ K`, `K = ℚ(t)`, with `X k = p_{2k+1}` the
-`(2k+1)`-st odd power sum, `t = RatFunc.X`, and `cc k = 1 - t^{2k+1}`.
+All objects live in `Lam = MvPolynomial ℕ K` with `K = ℚ(t) = RatFunc ℚ` and
+`X k = p_{2k+1}` (the `(2k+1)`-st odd power sum). The deformation scalar is
+`cc k = 1 - t^{2k+1}`. Everything claimed below is **formally verified** in
+`DiagonalPlethysmGroup.lean` (and the companion files); the tables are the small-case
+hand computations that motivated the formal statements.
 
-The plethysm is `φ_t : p_{2k+1} ↦ (1 - t^{2k+1}) p_{2k+1}`.
+## 1. Eigenvalue formula (`diagHom_monomial`, `diagHom_coeff`)
 
-## 1. Small-case one-row functions `q_n = Q_{(n)}`
+`φ_t` (and more generally `diagHom c`) is diagonal in the monomial basis: the monomial
+`X^d = ∏_k p_{2k+1}^{d_k}` is an eigenvector with eigenvalue `∏_k c_k^{d_k}`.
 
-Using the Newton recursion `n q_n = ∑_k 2 p_{2k+1} q_{n-1-2k}` (definition `qGen`/`q`):
+| monomial `X^d`            | eigenvalue under `φ_t`            |
+|---------------------------|-----------------------------------|
+| `1`                       | `1`                               |
+| `p_1 = X 0`               | `1 - t`                           |
+| `p_1^2 = X 0 ^ 2`         | `(1 - t)^2`                       |
+| `p_3 = X 1`               | `1 - t^3`                         |
+| `p_1 p_3 = X 0 * X 1`     | `(1 - t)(1 - t^3)`                |
+| `p_1^2 p_5 = X0^2 X2`     | `(1 - t)^2 (1 - t^5)`             |
 
-| n | q_n                       |
-|---|---------------------------|
-| 0 | `1`                       |
-| 1 | `2 p_1`        (`= 2 X 0`)|
-| 2 | `2 p_1^2`      (`= 2 X 0^2`) |
+Verified abstractly: `diagHom_coeff` gives `(φ_t f).coeff d = (∏_k cc k ^ d k) * f.coeff d`.
 
-`q_1 = 2 X 0` is verified as the Lean theorem `Qfun_singleton : Qfun [1] = C 2 * X 0`.
+## 2. Non-degeneracy of eigenvalues (`cc_prod_ne_one`)
 
-## 2. Direct verification of `S^t_λ = φ_t(Q_λ)` (the falsifiability test)
+Claim tested: `∏_{k ∈ supp d} (1 - t^{2k+1})^{d_k} ≠ 1` whenever `d ≠ 0`.
 
-The claim is "falsifiable by coefficient comparison in the finite odd power-sum ring of
-degree at most |λ|". We realize this test as compiled Lean theorems.
+Sanity check by evaluation at `t = 1`: every factor `1 - 1^{2k+1} = 0`, so the product
+evaluates to `0 ≠ 1`. This single specialization already certifies the product is not the
+constant polynomial `1`, and is exactly the route taken in the verified proof. (The
+alternative degree argument `deg = ∑ d_k (2k+1) ≥ 1` also holds and was the original
+hypothesis.)
 
-* `λ = (1)` (degree 1):
-  * `Q_{(1)} = 2 p_1`            — theorem `Qfun_singleton`
-  * `S^t_{(1)} = 2(1 - t) p_1`   — theorem `Sfun_singleton` (`= C (2 * cc 0) * X 0`)
-  * `φ_t(Q_{(1)}) = 2(1 - t) p_1` since `φ_t(p_1) = (1 - t) p_1`.
-  * **Match.** Coefficient comparison: the `p_1`-coefficient transforms `2 ↦ 2(1-t)`,
-    exactly multiplication by `cc 0 = 1 - t`.
+## 3. Fixed subalgebra (`phiT_fixed_iff_const`)
 
-* General `λ` (all degrees): rather than checking finitely many cases, the identity is
-  proved for **every** list of parts by `Sfun_eq_phiT_Qfun`, via the operator
-  intertwining `Bt_phiT : Bt n (φ_t f) = φ_t (B n f)`. No counterexample exists.
+Counterexample hunt for "`φ_t` fixes some non-constant `f`": none exists. Any candidate
+`f` with `φ_t f = f` forces `(∏ cc^d − 1)·(coeff_d f) = 0` for every `d`; by item 2 the
+left factor is non-zero for `d ≠ 0`, so all non-constant coefficients vanish. Tested
+small cases: `f = a + b p_1` fixed ⟺ `b(1−t) = b` ⟺ `b·t = 0` ⟺ `b = 0`. Matches the
+theorem: fixed points are exactly the scalars `K`.
 
-## 3. Counterexample hunt
+## 4. Order of the deformation (`phiTEquiv_pow_eq_one_iff`, `orderOf_phiTEquiv`)
 
-Searched for a strict partition `λ` with `S^t_λ ≠ φ_t(Q_λ)`: none can exist, because the
-identity is an algebraic consequence of `Bt_phiT` (annihilation chain rule + creation
-intertwining `qt = φ_t ∘ q`) for arbitrary `λ`. The only way to break triviality is to
-break invertibility of `φ_t`, i.e. to work over a ring where some `1 - t^{n}` vanishes
-(e.g. `t` a root of unity); over `K = ℚ(t)` this never happens (`cc_ne`).
+`φ_t^N = id` ⟺ `N = 0`. Reason: `φ_t^N` is diagonal with eigenvalues `cc k ^ N`; on `p_1`
+the eigenvalue is `(1 − t)^N`, which equals `1` only if `N = 0` (else `(1−t)^N` has
+positive degree). So `orderOf φ_t = 0` (infinite order): the cyclic group `⟨φ_t⟩` is a
+faithful `ℤ` inside `Aut(Λ_odd)`.
 
-## 4. Diagonal/scaling structure (operator evidence)
+| `N` | eigenvalue of `φ_t^N` on `p_1` | `= 1`? |
+|-----|--------------------------------|--------|
+| `0` | `1`                            | yes    |
+| `1` | `1 − t`                        | no     |
+| `2` | `(1 − t)^2`                    | no     |
+| `N` | `(1 − t)^N`                    | iff N=0|
 
-`φ_t` is diagonal in the monomial basis: `φ_t(p_n^m) = (1 - t^n)^m p_n^m`
-(theorem `phiT_monomial_pow`). Hence a monomial `p_{n_1}^{a_1} ⋯ p_{n_r}^{a_r}` is scaled
-by `∏ (1 - t^{n_i})^{a_i}` and never moved to a different degree
-(theorem `phiT_isHomogeneous`). This is the operator-level explanation of why the
-deformation is a pure rescaling of the Schur-`Q` basis.
+## 5. Faithful parametrisation (`diagHom_injective_param`, `diagAutHom_injective`)
 
-## 5. OEIS
+Reading off the coefficient of `X k` shows `diagHom c = diagHom d ⟹ c = d`, so the whole
+group `(K^×)^ℕ` embeds into `Aut(Λ_odd)` — no two scalar sequences collapse.
 
-No distinguished integer sequence is forced by the rational-function coefficients here
-(the data are polynomials in `t`), so an OEIS lookup is not informative for this claim.
-The leading rational coefficients `q_n = 2 p_1^n / ...` reflect the `Q_{(n)}`
-normalization rather than a combinatorial counting sequence.
+## OEIS / sequences
+
+No integer sequence is intrinsic here (coefficients are rational functions of `t`). The
+relevant invariant `∑ d_k (2k+1)` is the size of the underlying strict partition; for the
+one-row case `d = (m at index k)` it is `m(2k+1)`, the standard odd-multiplicity grading.
+
+## Why this is sufficient
+
+The phenomenon is symbolic (over `ℚ(t)`), so finite numeric enumeration is not the right
+tool; the decisive checks are the eigenvalue identity and the degree/evaluation
+non-degeneracy, both of which are discharged in Lean with `0` sorries and only the
+standard axioms `propext, Classical.choice, Quot.sound`.
