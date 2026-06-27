@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c3a3db57",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions for the Radical Framework\n\nThese are freeform research directions that extend the foundational radical API\nin `Catalog/ABC/Radical.lean` toward ABC triples, quality bounds, squaref",
-      "quality_score": 0.50342,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-22T10:28:48",
-      "title": "ABC Conjecture: Consequences and Partial Results"
-    },
-    {
       "cycle_id": "d5789bd5",
       "domain": "Algebra",
       "key_insight": "# Future Directions — BB84 Security Formalization (Cycle 1)\n\nDerived from the Stage-3 Analysis and Stage-4 Critique of this cycle. The cycle\nestablished, in `Catalog/Cryptography/BB84/`:\n\n* `KeyRateTh",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-06-27T11:34:36",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+    },
+    {
+      "cycle_id": "53364cc2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Cusick's sum-of-digits density `c_t`\n\nThis cycle established two new results in the catalog's Cusick thread\n(`CusickShiftThreeDensity.lean`, `CusickPeriodicity.lean`):\n\n* **Exact",
+      "quality_score": 0.6837600000000001,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T11:55:44",
+      "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T11:34:36",
+  "last_updated": "2026-06-27T11:55:44",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "688a9cbf",
-        "quality": 0.57899,
-        "theorems": 0,
-        "title": "Strange Attractors as Algebraic Objects"
-      },
-      {
         "cycle_id": "8e92c627",
         "quality": 0.5924299999999999,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.415178125,
         "theorems": 0,
         "title": "Universal Approximation: Quantitative Bounds"
+      },
+      {
+        "cycle_id": "53364cc2",
+        "quality": 0.6837600000000001,
+        "theorems": 0,
+        "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
       }
     ],
     "Bridges": [

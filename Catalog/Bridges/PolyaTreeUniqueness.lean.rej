@@ -1,8 +1,8 @@
 --- PolyaTreeUniqueness.lean
 +++ PolyaTreeUniqueness.lean
 @@ -1,4 +1,4 @@
--import Bridges.PolyaTreeRecurrence
-+import Catalog.Bridges.PolyaTreeRecurrence
+-import Catalog.Bridges.PolyaTreeRecurrence
++import Bridges.PolyaTreeRecurrence
  
  
  

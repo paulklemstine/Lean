@@ -4,8 +4,8 @@
  -- !-- end Lab Notes -- !--
  -/
  import Mathlib
--import Novelty.SequenceLemmas
-+import Catalog.Novelty.SequenceLemmas
+-import Catalog.Novelty.SequenceLemmas
++import Novelty.SequenceLemmas
  
  
  

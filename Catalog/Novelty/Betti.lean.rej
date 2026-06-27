@@ -2,8 +2,8 @@
 +++ Betti.lean
 @@ -1,5 +1,5 @@
  import Mathlib
--import Novelty.QuantumTopoMitigation.ErrorMitigation
-+import Catalog.Novelty.QuantumTopoMitigation.ErrorMitigation
+-import Catalog.Novelty.QuantumTopoMitigation.ErrorMitigation
++import Novelty.QuantumTopoMitigation.ErrorMitigation
  
  /-!
  

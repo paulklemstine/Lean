@@ -1,5 +1,5 @@
 import Mathlib
-import Geometry.SublevelDuality.Homogeneous
+import Catalog.Geometry.SublevelDuality.Homogeneous
 
 /-
 # Polarity duality of sublevel-set homotopy types for RC functions

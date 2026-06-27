@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "53364cc2",
     "filename": "cusicks_sum_of_digits_conjecture_with_explicit_bia.json",
     "pkg_num": 134,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6837600000000001,
     "title": "Carry Reformulation and Exact Densities for Cusick's Binary Sum-of-Digits Problem"
   },
   {
@@ -3913,8 +3913,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "cusicks_sum_of_digits_conjecture_with_explicit_bia",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6837600000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Carry Reformulation and Exact Densities for Cusick's Binary Sum-of-Digits Problem"
     }

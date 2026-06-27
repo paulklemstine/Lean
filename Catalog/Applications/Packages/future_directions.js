@@ -461,20 +461,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "cb2a2cb4",
-    "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_331",
-    "priority_score": 0.87,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432603+00:00",
-    "title": "Perfect Numbers: Structure of Even Perfects"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
     "domains": [
@@ -628,7 +614,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "2cb7b634",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -637,7 +623,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -2826,7 +2812,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
   {
-    "consumed_by_exp_id": "ae503725",
+    "consumed_by_exp_id": "",
     "description": "The specific degree one function on the Grassmann scheme $J_3(4,2)$ defined by $f = \\frac{1}{2} \\sum_{Q(p) = 0} x_p + \\frac{1}{6} \\sum_{Q(p) = 1} x_p - \\frac{1}{6} \\sum_{Q(p) = 2} x_p$, where $Q(x,y,z,w) = x^2 + y^2 + z^2 - w^2$ is an elliptic quadric over $\\mathbb{F}_3$, is Boolean and not a trivial Boolean degree one function.",
     "domains": [
       "Bridges"
@@ -2835,7 +2821,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T21:41:56.533485+00:00",
     "title": "Non-triviality of the Bruen-Drudge Boolean degree one function on $J_3(4,2)$"
   },
@@ -4319,7 +4305,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exponential Lower Bound for g_k(n) Conjecture"
   },
   {
-    "consumed_by_exp_id": "06caccbf",
+    "consumed_by_exp_id": "",
     "description": "For every odd prime \ud835\udc5d the class of biased graphs that admit a \ud835\udc4d\u209a\u2011gain labelling is minor\u2011closed and its only excluded minors are the balanced\u2011cycle\u2013free graph (\ud835\udc5d+1)K\u2082, the balanced triangle \u00b1K\u2083 and the unbalanced 4\u2011cycle \u2013K\u2084. In other words, a biased graph \ud835\udd3e is \ud835\udc4d\u209a\u2011gainable iff it contains none of these three minors.",
     "domains": [
       "Pythagorean",
@@ -4329,7 +4315,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23826v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T11:31:35.982720+00:00",
     "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
   },
@@ -4753,7 +4739,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conflict-Free Coloring of Outerplanar Graphs with Three Colors"
   },
   {
-    "consumed_by_exp_id": "a880054f",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer n \u2265 2, any collection of mutually orthogonal Italian squares of order n contains at most n\u20111 squares, and this bound is attained exactly when n is a prime power.",
     "domains": [
       "Pythagorean"
@@ -4762,7 +4748,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25884v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T16:34:26.097340+00:00",
     "title": "Maximum size of pairwise orthogonal Italian squares is n\u20111 for prime powers"
   },
@@ -7044,7 +7030,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "321da2e6",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -7054,7 +7040,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -7172,6 +7158,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Cusick's sum-of-digits density `c_t`\n\nThis cycle established two new results in the catalog's Cusick thread\n(`CusickShiftThreeDensity.lean`, `CusickPeriodicity.lean`):\n\n* **Exact density for the first `s\u2082(t) = 2` shift:** `c_3 = 11/16`, with the\n  explicit Cusick bound `1/2 + 2^{-(2\u00b72+1)} = 17/32` cleared by a margin of `5/32`;\n  propagated to the doubling orbit `{3, 6, 12, \u2026}`.\n* **General pure periodicity:** for every `t \u2265 1`, the Cusick predicate\n  `P_t(n) := s\u2082(n) \u2264 s\u2082(n+t)` is purely periodic in `n` with period\n  `2^{L + s\u2082(t)}` (`t < 2^L`), so `c_t` is a dyadic rational equal to\n  `cusickCount t (2^{L+s\u2082(t)}) / 2^{L+s\u2082(t)}`.\n\nThese suggest the following bold, testable conjectures.\n\n## C1. Exact period is `2^{(length t) + s\u2082(t)}` (minimality)\n\nThe proved theorem gives `2^{L+s\u2082(t)}` as *a* period for any `L > log\u2082 t`. The data\n(`t \u2264 31`) shows the *minimal* period is exactly `2^{(length t) + s\u2082(t)}` with\n`length t = \u230alog\u2082 t\u230b + 1`.\n\n*The key insight is* that the upper `s\u2082(t)` carry-positions are the only high bits\nthat can ever influence the predicate, so the minimal period is forced to be no\nsmaller than `2^{length t + s\u2082(t)}` by exhibiting two residues differing only in\nbit `length t + s\u2082(t) \u2212 1` whose predicate values disagree.\n\n*Why now?* The periodicity theorem already isolates `L + s\u2082(t)` as the operative\nexponent; closing the gap to *minimality* only requires a single explicit\ndistinguishing residue, which the carry analysis in `overflow_false` now makes\nconstructible.\n\n## C2. Closed form for the numerator `c_t \u00b7 2^{L+s\u2082(t)}`\n\nDefine `A(t) := cusickCount t (2^{L+s\u2082(t)})`. The proved rationality makes `A(t)` a\nwell-defined integer; measured values are `A(1)=3, A(3)=11, A(7)=43, A(15)=171,\nA(31)=683`, i.e. `A(2^k\u22121) = (2\u00b74^k+1)/3`.\n\n*The key insight is* that for `t = 2^k \u2212 1` (a block of `k` ones) the carry automaton\nis a single counter, so `A(t)` satisfies a linear recurrence `A_{k+1} = 4A_k \u2212 1`,\ngiving the closed form `(2\u00b74^k+1)/3`.\n\n*Why now?* With periodicity proven, `A(t)` is a finite, computable integer for each\n`t`; the recurrence can be checked exactly in Lean for the all-ones family by the\nsame digit-concatenation lemma used for `t = 3`.\n\n## C3. Monotone bias: `c_t \u2212 1/2 \u2265 2^{-2 s\u2082(t)}` for all `t` (strengthening)\n\nCusick's bound is `c_t \u2212 1/2 \u2265 2^{-(2 s\u2082(t)+1)}`. Every measured value beats *twice*\nthat: `c_t \u2212 1/2 \u2265 2^{-2 s\u2082(t)}` (e.g. `t=3`: `3/16 \u2265 1/16`; `t=7`: `11/64 \u2265 1/64`).\n\n*The key insight is* that the overflow regime contributes a *deterministic* deficit\nof one full digit (`s\u2082(n+t) \u2264 s\u2082(n) \u2212 1`), which over-counts the trivial `1/2` bias\nby a factor of two relative to the conjectured slack.\n\n*Why now?* The `overflow_false` lemma already proves the one-digit deficit pointwise;\nturning it into the doubled bias only needs a counting comparison over a single\nperiod, now that the period is finite and explicit.\n\n## C4. Density depends only on the odd part *and* the digit pattern\n\nThe catalog's doubling invariance shows `c_t` depends only on `odd(t)`. Data shows a\nfiner rule: `c_t` depends only on the *cyclic-free binary pattern* of `odd(t)`\n(e.g. `c_3 = c_9 = 11/16`, both odd parts `3` and `9 = 1001` sharing pattern\nstructure).\n\n*The key insight is* that the carry automaton reads `t`'s bits as transition labels,\nso two shifts with conjugate label sequences induce isomorphic automata and hence\nequal stationary densities.\n\n*Why now?* The periodic-count formula `c_t = A(t)/2^{L+s\u2082(t)}` reduces the\nconjecture to an equality of two explicitly computable integers, checkable per pair.\n\n## C5. Effective convergence rate for `c_t`\n\nSince `P_t` is periodic with period `p = 2^{L+s\u2082(t)}`, the finite densities converge\n*exactly* on aligned windows: `|(1/N)#{n<N : P_t(n)} \u2212 c_t| \u2264 p/N`.\n\n*The key insight is* that periodicity upgrades the *asymptotic* density to a finite\nwindow identity, so the error is purely the boundary term of one incomplete period.\n\n*Why now?* `cusickCount_period` already gives the exact value on aligned windows;\nthe remaining bound is the elementary estimate on the at-most-`p` leftover indices.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2691",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "53364cc2",
+    "status": "available",
+    "timestamp": "2026-06-27T11:55:34.339147+00:00",
+    "title": "Two new results in the catalog's Cusick thread"
   },
   {
     "consumed_by_exp_id": "",
@@ -7631,7 +7632,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
   {
-    "consumed_by_exp_id": "eb034b80",
+    "consumed_by_exp_id": "",
     "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
     "domains": [
       "Tropical",
@@ -7641,7 +7642,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.547297+00:00",
     "title": "Tropical Riemann-Roch Theorem"
   },
