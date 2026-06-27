@@ -1,117 +1,212 @@
-# The Stubborn Constant: Why Euler's Number $\gamma$ Refuses to Be Pinned Down
+# Hitting the Bullseye: A Smarter Way to Corner the Euler–Mascheroni Constant
 
-## A number hiding in plain sight
+## A number that hides in plain sight
 
 Add up the reciprocals of the whole numbers, one at a time:
 
-$$H_n = 1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots + \frac{1}{n}.$$
+$$H_n = 1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}.$$
 
-This is the *harmonic sum*, one of the oldest objects in mathematics. It grows — but agonizingly slowly. To push it past $10$ you need about $12{,}000$ terms; to reach $20$ you need more grains than there are in a beach. The sum drifts upward forever, never settling, never stopping.
+This is the *harmonic sum*, and it is famously slow and famously stubborn. It
+grows forever — push $n$ high enough and $H_n$ will eventually exceed any number
+you name — but it grows at a glacial pace, creeping upward like the logarithm
+$\ln n$. In fact, $H_n$ and $\ln n$ travel together so closely that their
+*difference* settles down to a fixed number:
 
-In the 1730s, a young Leonhard Euler asked a deceptively simple question: *how fast* does it grow? He discovered that the harmonic sum tracks the natural logarithm almost perfectly. The function $\ln n$ rises at the same lazy pace, and if you subtract one from the other, the wild parts cancel and something astonishing remains — a single, fixed number:
+$$\gamma = \lim_{n \to \infty}\bigl(H_n - \ln n\bigr) = 0.5772156649\ldots$$
 
-$$\gamma = \lim_{n \to \infty} \bigl(H_n - \ln n\bigr) = 0.5772156649\ldots$$
+That number is the **Euler–Mascheroni constant**, $\gamma$. It is one of the
+most quietly important constants in mathematics. It shows up when you count the
+divisors of integers, when you analyze how long algorithms take to run, when
+you study the Riemann zeta function and the distribution of prime numbers, and
+in the special functions of physics. And yet, after more than two and a half
+centuries, we still do not know something embarrassingly basic about it: nobody
+has ever proved whether $\gamma$ is rational or irrational. It might be a clean
+fraction $p/q$ in hiding; it might be irrational like $\pi$ or $e$. We simply
+do not know.
 
-This is the **Euler–Mascheroni constant**, usually written with the Greek letter gamma. It is the third great constant of mathematics, standing beside $\pi$ and $e$. It surfaces in the distribution of prime numbers, in the Riemann zeta function, in physics, in the analysis of algorithms. And yet, almost three centuries after Euler found it, we still do not know the answer to the most basic question one can ask about a number:
+When a number resists every theoretical attack, mathematicians do the next best
+thing: they *pin it down numerically*, squeezing it between two sequences that
+close in on it from opposite sides. The tighter and faster the squeeze, the
+better. This article is about a small but genuinely useful improvement to that
+squeeze — a trick that takes a centuries-old approximation and makes its error
+shrink *quadratically* faster, just by aiming at the right target.
 
-**Is $\gamma$ rational or irrational?**
+## The classic squeeze, and why it is slow
 
-Nobody knows. We know $\pi$ is irrational. We know $e$ is irrational. We have known both for over two hundred years. But $\gamma$ has resisted every attempt. If it turned out to be a fraction $p/q$, its denominator $q$ would have to be astronomically large — more than $10^{242{,}080}$ — yet no one has been able to rule out that possibility entirely.
+The definition $\gamma = \lim (H_n - \ln n)$ suggests an obvious recipe: compute
+$H_n - \ln n$ for some large $n$ and call it an estimate of $\gamma$. This works,
+but it is wasteful. It turns out that two very slightly different recipes bracket
+$\gamma$ perfectly from both sides:
 
-This article is about *why* $\gamma$ is so hard to corner. The answer turns out to be beautifully concrete, and it comes from looking closely at the very sequence Euler used to define it.
+- The **lower approximant** $a_n = H_n - \ln(n+1)$ rises steadily *up* toward
+  $\gamma$, always staying just below it.
+- The **upper approximant** $b_n = H_n - \ln n$ falls steadily *down* toward
+  $\gamma$, always staying just above it.
 
-## A constant trapped between two fences
+So for every $n$ we have the rigorous sandwich
 
-The cleanest way to think about $\gamma$ is as a number caught in a vise. Define two sequences that approach it from opposite sides. The first is Euler's own:
+$$a_n \;<\; \gamma \;<\; b_n,$$
 
-$$a_n = H_n - \ln(n+1).$$
+and as $n$ grows, the two pieces of bread close in on the filling. This is the
+classical picture, and it is completely rigorous.
 
-The second is a small variant:
+The trouble is *speed*. Both $a_n$ and $b_n$ approach $\gamma$ only linearly:
+their errors shrink like $1/n$. Concretely, the gap between the upper approximant
+$b_n$ and $\gamma$ behaves like $1/(2n)$. To get one extra correct decimal digit,
+you must compute roughly ten times as many terms. To get ten digits you need
+billions of terms. The harmonic sum's legendary sluggishness is baked right into
+the approximation.
 
-$$b_n = H_n - \ln n.$$
+The natural question is: can we do better *without* doing more work — using the
+same harmonic sum $H_n$, just combining it more cleverly?
 
-The first sequence creeps *upward* toward $\gamma$ but always stays just below it. The second sequence drifts *downward* toward $\gamma$ but always stays just above it. Together they form a shrinking cage:
+## The idea: stop aiming at the edges
 
-$$a_n < \gamma < b_n \qquad \text{for every } n.$$
+Look again at the two recipes. The lower approximant subtracts $\ln(n+1)$; the
+upper approximant subtracts $\ln n$. They differ only in *where the logarithm is
+evaluated* — at the right edge $n+1$ of a unit step, or at the left edge $n$. One
+overshoots, the other undershoots.
 
-This is genuinely useful. If you compute both fences at some value of $n$, you have *proven* that $\gamma$ lies between them — not estimated, proven. The trouble is the width of the cage. How quickly do the two fences close in on each other? That width is the whole story, because it controls exactly how well you can ever know $\gamma$ from this sequence.
+If one choice is too far right and the other too far left, an old instinct kicks
+in: **aim for the middle**. Replace the edge with the midpoint $n + \tfrac12$.
+This gives a new sequence, the heart of this work:
 
-## The width is a single logarithm — exactly
+$$m_n = H_n - \ln\!\left(n + \tfrac{1}{2}\right).$$
 
-Here is the first clean result. The gap between the upper fence and the lower fence is not some messy expression. It collapses, perfectly, to one logarithm:
+This is the **midpoint approximant**. It costs exactly the same to compute as the
+classical ones — the same harmonic sum, a single logarithm — but it is aimed at
+the center of the step rather than at either end. The payoff is dramatic.
 
-$$b_n - a_n = \ln\!\left(\frac{n+1}{n}\right).$$
+## Why the middle is magic
 
-The proof is a one-liner once you write it out: $b_n - a_n = \bigl(H_n - \ln n\bigr) - \bigl(H_n - \ln(n+1)\bigr) = \ln(n+1) - \ln n = \ln\frac{n+1}{n}$. The harmonic sums simply cancel. Everything about how fast we can trap $\gamma$ is encoded in this single, friendly quantity $\ln\bigl(1 + \tfrac{1}{n}\bigr)$.
+To see why the midpoint is special, picture the function $1/x$, whose graph is a
+smooth downward-curving (convex) arc. The harmonic term $1/(n+1)$ that gets added
+when you step from $H_n$ to $H_{n+1}$ can be compared to the area under that arc
+over a unit-width interval. The logarithm differences are exactly such areas,
+because $\ln(b) - \ln(a) = \int_a^b \frac{dx}{x}$.
 
-So the real question becomes: how big is $\ln\bigl(1 + \tfrac{1}{n}\bigr)$?
+Here is the geometric punchline, a classical fact called the *Hermite–Hadamard
+inequality*: for a convex curve, the area under it over an interval is **larger**
+than the rectangle whose height is the curve's value at the interval's *midpoint*.
+Apply this to $1/x$ on the interval from $n+\tfrac12$ to $n+\tfrac32$, whose
+midpoint is exactly $n+1$:
 
-## Squeezing the logarithm from both sides
+$$\ln\!\left(n+\tfrac32\right) - \ln\!\left(n+\tfrac12\right)
+\;=\; \int_{n+1/2}^{n+3/2}\frac{dx}{x}
+\;>\; \frac{1}{n+1}.$$
 
-There is a famous inequality, true for every positive $x$, that says the logarithm never rises faster than its tangent line at $1$:
+The left side is how much the logarithm term of $m_n$ grows in one step; the
+right side, $1/(n+1)$, is how much the harmonic term grows in one step. Because
+the logarithm grows *faster* than the harmonic sum at every step, the difference
+$m_n = H_n - \ln(n+\tfrac12)$ *shrinks* at every step. In symbols, the per-step
+inequality is
 
-$$\ln x \le x - 1.$$
+$$\frac{1}{n+1} \;<\; \ln\!\left(n+\tfrac32\right) - \ln\!\left(n+\tfrac12\right),$$
 
-It is the analytic fingerprint of *convexity* — the fact that the logarithm curve always bends downward. Apply it cleverly, twice, and the width of our cage gets pinned from above and below.
+and this single inequality — proved cleanly and rigorously — is the engine of the
+whole result.
 
-**Upper bound.** Plug $x = \frac{n+1}{n}$ into $\ln x \le x-1$. Since $\frac{n+1}{n} - 1 = \frac{1}{n}$, we get immediately
+There is an equivalent way to package that engine that is worth stating, because
+it is the exact form that gets proved. Writing $t = \frac{1}{2n+2}$, the per-step
+inequality above is the same as the elegant statement
 
-$$\ln\!\left(\frac{n+1}{n}\right) \le \frac{1}{n}.$$
+$$2t \;<\; \ln\!\left(\frac{1+t}{1-t}\right) \qquad \text{for every } t \in (0,1).$$
 
-This is the "easy" direction. It says the cage closes at least as fast as $1/n$.
+The right-hand side is twice the inverse hyperbolic tangent, $2\,\mathrm{artanh}(t)$,
+whose Taylor series is $2t + \tfrac{2}{3}t^3 + \tfrac{2}{5}t^5 + \cdots$. The
+strict inequality just says all those extra positive cubic-and-higher terms
+really are positive — a fact equivalent to the strict convexity of $1/x$. From
+this one inequality everything else follows.
 
-**Lower bound.** Now plug in the *reciprocal*, $x = \frac{n}{n+1}$. This time $x - 1 = -\frac{1}{n+1}$, and because $\ln\frac{n}{n+1} = -\ln\frac{n+1}{n}$, the inequality flips into a lower bound:
+## What the new approximant guarantees
 
-$$\frac{1}{n+1} \le \ln\!\left(\frac{n+1}{n}\right).$$
+Three clean, rigorous statements describe the midpoint approximant $m_n$.
 
-This is the "informative" direction — the one that carries the punchline. It says the cage cannot close *faster* than $1/n$.
+**It always decreases.** Every step makes $m_n$ strictly smaller than the last:
+$m_1 > m_2 > m_3 > \cdots$. The sequence marches steadily downward.
 
-Put the two together and you have an exact verdict on the convergence rate:
+**It lands exactly on $\gamma$.** As $n \to \infty$, $m_n$ converges to the
+Euler–Mascheroni constant. This is guaranteed because $m_n$ is forever trapped
+between the two classical sequences $H_n - \ln(n+1)$ and $H_n - \ln n$, both of
+which converge to $\gamma$; squeezed between two things heading to the same place,
+$m_n$ has nowhere else to go.
 
-$$\boxed{\;\frac{1}{n+1} \;\le\; b_n - a_n \;\le\; \frac{1}{n}\;}$$
+**It always stays above $\gamma$.** Combining the two facts above — a decreasing
+sequence that converges to $\gamma$ must approach from above — gives the headline
+result:
 
-In the language of asymptotics, the width is $\Theta(1/n)$ — it shrinks *exactly* like one over $n$, no faster and no slower. This two-sided control is the heart of the matter. A one-sided bound would only tell you the approximation is "at least this good." The lower bound tells you it is "at most this good," and that is a fundamental limitation, not a temporary failure of cleverness.
+$$\gamma \;<\; m_n \qquad \text{for every } n.$$
 
-## What linear convergence costs you
+This is more subtle than it sounds. It is *not* automatic from the old fact that
+$\gamma < b_n$. Knowing the midpoint sits below the old upper approximant only
+tells you $m_n < b_n$; it does not by itself tell you $m_n$ stays above $\gamma$.
+That guarantee genuinely requires the decreasing-sequence argument above.
 
-Translate "$\Theta(1/n)$" into practical terms. Because $\gamma$ is trapped between the fences and the fences are $1/n$ apart, each of them approximates $\gamma$ with one-sided error smaller than $1/n$:
+Putting it together with the lower approximant gives a brand-new, strictly
+tighter sandwich:
 
-$$\gamma - a_n < \frac{1}{n}, \qquad b_n - \gamma < \frac{1}{n}.$$
+$$\underbrace{H_n - \ln(n+1)}_{a_n} \;<\; \gamma \;<\; \underbrace{H_n - \ln(n+\tfrac12)}_{m_n}.$$
 
-Want $\gamma$ to ten decimal places? You need $n$ around ten *billion*. Want a hundred decimals? You need $n$ around $10^{100}$ — more steps than there are atoms in the observable universe. The elementary sequence is honest, simple, and hopelessly slow. The lower bound $\frac{1}{n+1} \le b_n - a_n$ is the rigorous proof that this slowness is unavoidable: you cannot squeeze better accuracy out of this particular sequence by waiting longer in any reasonable sense. It is the mathematical certificate behind every textbook remark that "the defining sequence for $\gamma$ converges very slowly."
+And the new upper edge $m_n$ is a strict improvement: it sits strictly below the
+classical lower approximant's mirror image and strictly below the old upper
+approximant $b_n = H_n - \ln n$, so it is the best one-logarithm upper bound on
+$\gamma$ in this family.
 
-This is *why* mathematicians invented "series accelerations" — clever reorganizations that converge in a handful of terms instead of a galaxy of them. The slow rate we just proved is precisely the obstruction those accelerations are designed to overcome.
+## How much faster? A factor that compounds
 
-## $\gamma$ as an infinite sum of tiny corrections
+The improvement is not cosmetic. Recall the old upper approximant overshoots
+$\gamma$ by roughly $1/(2n)$. The midpoint approximant overshoots by only about
 
-There is a second, complementary way to see the constant — not as a limit of a sequence, but as the total of an infinite series. Define the $k$-th term:
+$$m_n - \gamma \;\approx\; \frac{1}{24\,n^2}.$$
 
-$$t_k = \frac{1}{k+1} - \ln\!\left(\frac{k+2}{k+1}\right), \qquad k = 0, 1, 2, \ldots$$
+The error has gone from $1/n$ to $1/n^2$ — a *quadratic* acceleration. The
+numbers tell the story vividly. Here is the actual overshoot $m_n - \gamma$, and
+the same quantity multiplied by $n^2$, which should approach $1/24 = 0.041667$:
 
-Each term measures the small mismatch between a single harmonic step $\frac{1}{k+1}$ and the logarithmic step $\ln\frac{k+2}{k+1}$ that is "trying" to match it. By the same convexity inequality $\ln x \le x - 1$, every one of these terms is **nonnegative**. And when you add them up, the logarithms telescope — each one's tail cancels the next one's head — leaving exactly Euler's sequence behind. The conclusion is a clean classical identity:
+| $n$ | classic overshoot $\approx 1/(2n)$ | midpoint overshoot $m_n - \gamma$ | $n^2\,(m_n-\gamma)$ |
+|----:|-----------------------------------:|----------------------------------:|--------------------:|
+|   1 | 0.42278 | 0.01731923 | 0.017319 |
+|   2 | 0.22964 | 0.00649360 | 0.025974 |
+|   5 | 0.09668 | 0.00136958 | 0.034239 |
+|  10 | 0.04917 | 0.00037733 | 0.037733 |
+|  20 | 0.02479 | 0.00009911 | 0.039642 |
+|  50 | 0.00997 | 0.00001634 | 0.040843 |
+| 100 | 0.00499 | 0.00000413 | 0.041252 |
+| 200 | 0.00250 | 0.00000104 | 0.041459 |
 
-$$\gamma = \sum_{k=0}^{\infty}\left(\frac{1}{k+1} - \ln\frac{k+2}{k+1}\right) = \sum_{m=1}^{\infty}\left(\frac{1}{m} - \ln\Bigl(1 + \frac{1}{m}\Bigr)\right).$$
+By $n = 100$ the classic recipe is still wrong in the third decimal place, while
+the midpoint recipe is already correct to roughly six. And look at the last
+column: $n^2(m_n - \gamma)$ is climbing steadily toward $0.041667 = 1/24$,
+confirming the quadratic law with its precise leading constant. The same harmonic
+sum, the same single logarithm — but a hundredfold better accuracy at $n=100$,
+growing without bound as $n$ increases.
 
-So $\gamma$ is genuinely the sum of an explicit, term-by-term, nonnegative convergent series. Every partial sum of this series is exactly the fence $a_n = H_n - \ln(n+1)$.
+## Why this kind of improvement matters
 
-## The tail tells the same story
+There is a beautiful, slightly counterintuitive lesson hiding here. The
+midpoint approximant uses *no new information*. It does not sum more terms, does
+not invoke any deep theorem, does not require exotic special functions. It simply
+evaluates the logarithm at the smartest possible point — the center of the
+interval rather than an edge. That single change of aim cancels the dominant
+source of error.
 
-Now comes the unifying observation. If you add up only the *first* $n$ terms of the series, what is left over — the "tail" — is exactly the error of the approximation:
+This is the same principle that powers the midpoint rule and Simpson's rule in
+numerical integration, the centered-difference formulas in numerical
+differentiation, and a whole philosophy of *symmetrization* in applied
+mathematics: errors that are odd (anti-symmetric) about a center cancel when you
+aim at that center, leaving only the smaller even errors behind. Here the odd
+$1/n$ error cancels, exposing the even $1/n^2$ term — and that residual term, with
+its tidy coefficient $1/24$, practically invites the next move: shift the target
+by a further small amount to cancel *it* too, chasing $1/n^4$ accuracy. That is
+exactly the kind of laddered refinement (Richardson extrapolation) that turns a
+good approximation into a great one.
 
-$$\sum_{k=n}^{\infty} t_k = \gamma - a_n.$$
-
-The leftover of the series is literally the distance from the fence to the constant. And since we already proved $\gamma - a_n < \frac{1}{n}$, we get for free that the tail of the series is smaller than $\frac{1}{n}$ too. The two threads — "$\gamma$ as a series" and "$\gamma$ as a well-trapped limit" — turn out to be the *same* thread. The single quantity $\ln\frac{n+1}{n}$ governs both the width of the cage and the size of the tail.
-
-This is more than a tidy coincidence. It is a diagnostic. Because the tail behaves exactly like $1/n$ — neither vanishing faster nor lingering longer — no truncation of this particular series can ever produce rational approximations to $\gamma$ sharp enough to *force* it to be irrational. The classic test for irrationality (à la the proofs for $e$ and for Apéry's constant $\zeta(3)$) needs approximations that beat $1/n$ by a wide, accelerating margin. Our series, by its very nature, cannot supply them. The slow rate we measured is exactly why the elementary approach is, as one might put it, *irrationality-blind*.
-
-## Why this matters
-
-It is tempting to dismiss a "slow convergence" result as a piece of bad news. It is the opposite. Knowing *precisely* how slow the elementary method is — pinned to the exact order $\Theta(1/n)$, with both an upper and a lower bound — is what makes the search for better methods scientific rather than hopeful. It tells you exactly how much improvement is needed and rules out a whole class of dead ends.
-
-It also points the way forward. The lower bound $\frac{1}{n+1} \le \ln\frac{n+1}{n}$ isolates a specific culprit: a leading correction of size $\frac{1}{2n}$ that the logarithm's expansion always carries. Re-center the logarithm at the *midpoint*, replacing $\ln(n+1)$ with $\ln\bigl(n + \tfrac{1}{2}\bigr)$, and that leading term cancels. The conjecture — natural, and now sharply motivated — is that this single tweak upgrades the convergence from $\Theta(1/n)$ to $O(1/n^2)$, a quadratic leap. The same telescoping machinery that produced the series identity generalizes directly to this re-centered version, and beyond it to the *Stieltjes constants* $\gamma_m$, the higher-order cousins of $\gamma$ that appear in the fine structure of the zeta function.
-
-## The constant that keeps its secret
-
-Three centuries on, $\gamma$ remains one of the great open mysteries of mathematics — a number we can compute to half a trillion digits yet cannot classify as rational or irrational. The results gathered here do not crack that mystery. What they do is something quieter and, in its way, just as valuable: they explain, with complete precision, *why the most natural tool for studying $\gamma$ is too blunt to settle the question*. The harmonic sum and the logarithm chase each other forever, their gap shrinking like clockwork at exactly the rate $1/n$ — fast enough to define a beautiful constant, far too slow to expose its deepest secret.
-
-Euler found the number. Mascheroni computed it. And the constant, with characteristic stubbornness, is still waiting for someone to find the sharper tool.
+Will any of this finally settle whether $\gamma$ is rational? Not on its own.
+Irrationality proofs are won by entirely different weapons — clever integral
+representations, continued fractions, and Apéry-style constructions of rapidly
+converging rational approximations. But every such program rests on a foundation
+of sharp, rigorous, two-sided bounds, and the midpoint approximant supplies one:
+a decreasing, provably-from-above estimate of $\gamma$ whose error melts away
+quadratically. It tightens the cage around one of mathematics' most stubborn
+constants — and it does so with nothing more than the wisdom of aiming for the
+middle.

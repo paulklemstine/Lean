@@ -1,271 +1,418 @@
-# Quantitative Bracketing, an Explicit Series Representation, and the Exact $\Theta(1/n)$ Convergence Order of the Euler–Mascheroni Constant
+# A Quadratically-Faster Midpoint Acceleration of the Euler–Mascheroni Constant
 
 **Author:** Aristotle
 **Date:** 2026-06-26
-**Domain:** Novelty / Number Theory
+**Domain:** Applications (number-theoretic constants, sequence acceleration)
 
 ---
 
 ## Abstract
 
-The Euler–Mascheroni constant $\gamma = \lim_{n\to\infty}(H_n - \ln n)$ is classically squeezed between two monotone sequences, $a_n = H_n - \ln(n+1) < \gamma < H_n - \ln n = b_n$, but the standard development records only crude numerical enclosures such as $\tfrac12 < \gamma < \tfrac23$. We make this bracketing *quantitative*. We prove that the width of the bracketing interval is, exactly, a single logarithm,
+The Euler–Mascheroni constant $\gamma = \lim_{n\to\infty}(H_n - \ln n)$ is
+classically bracketed by two sequences with *linear* convergence: the lower
+approximant $a_n = H_n - \ln(n+1)$, which increases to $\gamma$ from below, and
+the upper approximant $b_n = H_n - \ln n$, which decreases to $\gamma$ from
+above; both have error $\Theta(1/n)$. We introduce the **midpoint approximant**
 
-$$b_n - a_n = \ln\!\left(\frac{n+1}{n}\right),$$
+$$m_n = H_n - \ln\!\left(n + \tfrac12\right),$$
 
-and we sandwich it two-sidedly by elementary convexity,
-
-$$\frac{1}{n+1} \;\le\; \ln\!\left(\frac{n+1}{n}\right) \;\le\; \frac{1}{n}, \qquad n \ge 1.$$
-
-Consequently the convergence order of the defining sequence is *exactly linear*, $\Theta(1/n)$: the lower approximant undershoots and the upper approximant overshoots $\gamma$ each by strictly less than $1/n$. We further establish the classical identity exhibiting $\gamma$ as the sum of an explicit nonnegative convergent series,
-
-$$\gamma = \sum_{k=0}^{\infty}\left(\frac{1}{k+1} - \ln\frac{k+2}{k+1}\right),$$
-
-whose partial sums coincide *exactly* with $a_n$, and we identify the series tail $\sum_{k \ge n} t_k$ with the approximation error $\gamma - a_n$, hence also bounded by $1/n$. The two-sided width bound is the precise structural obstruction motivating series accelerations and explains why elementary truncations of this series are "irrationality-blind." All results have been formally verified in the Lean 4 proof assistant on top of Mathlib's `Real.eulerMascheroniConstant`.
+obtained by evaluating the logarithm at the midpoint of the unit step rather
+than at either endpoint. We prove that $m_n$ is strictly decreasing, converges to
+$\gamma$, and bounds $\gamma$ strictly from above: $\gamma < m_n$ for every $n$.
+This yields the new two-sided sandwich $a_n < \gamma < m_n$, strictly sharper on
+the upper side than the classical bound. The decisive analytic input is the
+elementary $\mathrm{artanh}$ inequality $2t < \ln\frac{1+t}{1-t}$ for
+$t\in(0,1)$, equivalent to strict convexity of $1/x$ (Hermite–Hadamard).
+Numerically the new bound overshoots by $m_n - \gamma \approx 1/(24\,n^2)$,
+a quadratic acceleration over the $\Theta(1/n)$ classical endpoints. All
+results have been formally verified.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The constant
+### 1.1 The constant and the problem
 
-The harmonic numbers $H_n = \sum_{k=1}^{n} \frac{1}{k}$ diverge logarithmically. Euler observed that the difference $H_n - \ln n$ converges, and named the limit:
+The harmonic numbers $H_n = \sum_{k=1}^{n} 1/k$ diverge logarithmically. Their
+deviation from $\ln n$ converges to the **Euler–Mascheroni constant**
 
-$$\gamma \;=\; \lim_{n\to\infty}\bigl(H_n - \ln n\bigr) \;=\; 0.57721566490153286\ldots$$
+$$\gamma = \lim_{n\to\infty}\bigl(H_n - \ln n\bigr) = 0.5772156649\ldots$$
 
-The constant $\gamma$ appears throughout analysis and number theory: in the Laurent expansion of the Riemann zeta function at $s=1$ (where $\gamma$ is the constant term), in Mertens' third theorem on the density of primes, in the digamma function $\psi(1) = -\gamma$, in the expected value analyses of randomized algorithms, and in countless integral and product formulas. Despite this ubiquity, whether $\gamma$ is rational or irrational remains a celebrated open problem; if rational, its denominator must exceed $10^{242080}$.
+The constant $\gamma$ pervades analytic number theory (the average order of the
+divisor function, the Mertens theorems, the Laurent expansion of the Riemann
+zeta function at $s=1$), the analysis of algorithms, and the theory of special
+functions: it equals $-\Gamma'(1)$, the value at $1$ of the digamma function
+$\psi = \Gamma'/\Gamma$, through the identity $\psi(n+1) = H_n - \gamma$. Its
+arithmetic nature remains unknown: whether $\gamma$ is rational or irrational is
+a famous open problem. Consequently, sharp and rigorous two-sided numerical
+enclosures of $\gamma$ are of standing interest, both as computational tools and
+as raw material for irrationality programs of Apéry type.
 
-### 1.2 What is already known, and the gap we fill
+### 1.2 The classical bracket and its limitation
 
-The Mathlib library defines $\gamma$ as `Real.eulerMascheroniConstant`, the limit of the increasing sequence
+Two standard sequences enclose $\gamma$:
 
-$$a_n := \texttt{eulerMascheroniSeq}\,(n) = H_n - \ln(n+1),$$
+- $a_n = H_n - \ln(n+1)$ is strictly increasing and converges to $\gamma$ from
+  below;
+- $b_n = H_n - \ln n$ is strictly decreasing and converges to $\gamma$ from above.
 
-and proves the companion facts that the sequence
+Hence $a_n < \gamma < b_n$ for all $n \ge 1$. The monotonicity of these sequences
+is itself a consequence of the convexity of $1/x$: the increment
+$a_{n+1} - a_n = \frac{1}{n+1} - \bigl(\ln(n+2) - \ln(n+1)\bigr)$ is positive
+because $\frac{1}{n+1}$ overestimates the integral $\int_{n+1}^{n+2}\frac{dx}{x}$
+(left-endpoint rule on a decreasing integrand), while $b_{n+1} - b_n =
+\frac{1}{n+1} - \bigl(\ln(n+1) - \ln n\bigr)$ is negative because $\frac{1}{n+1}$
+underestimates $\int_{n}^{n+1}\frac{dx}{x}$ (right-endpoint rule). Both sequences
+converge only *linearly*: $b_n - \gamma \sim 1/(2n)$ and $\gamma - a_n \sim
+1/(2n)$. Achieving $d$ correct digits requires $n \sim 10^{d}$ terms — a direct
+inheritance of the harmonic sum's notorious sluggishness.
 
-$$b_n := \texttt{eulerMascheroniSeq'}\,(n) = H_n - \ln n \quad (n \ge 1)$$
+### 1.3 Prior acceleration strategies
 
-is decreasing with the same limit, yielding the strict two-sided bracket
+Several well-known devices speed up the convergence to $\gamma$. The
+Euler–Maclaurin correction $H_n - \ln n - \frac{1}{2n} + \frac{1}{12 n^2} - \cdots$
+adds explicit Bernoulli-number terms and converges asymptotically but is no
+longer a one-sided bound, and it requires evaluating and storing those
+correction coefficients. Bessel-function and integral-based representations of
+$\gamma$ converge geometrically but abandon the elementary harmonic-sum form
+entirely. Sequence-transformation accelerators such as Richardson extrapolation
+or the Euler transform improve the rate of a given convergent sequence at the
+price of combining several terms and, again, of losing the clean monotone
+enclosure that makes the classical bracket so attractive for certified
+computation. By contrast, the construction below keeps the exact form
+"harmonic sum minus a single logarithm," keeps a rigorous one-sided bound, keeps
+strict monotonicity, and *still* gains a full order of convergence. It is, in a
+precise sense, the cheapest possible upgrade to the textbook bracket.
 
-$$a_n < \gamma < b_n \qquad (n \ge 1). \tag{1.1}$$
+### 1.4 Contribution
 
-However, the library only extracts the crude numerical consequence $\tfrac12 < \gamma < \tfrac23$ (obtained at $n = 6$) and records no information about the *rate* at which (1.1) tightens.
+The two classical approximants differ only in the point at which the logarithm is
+sampled — the right endpoint $n+1$ versus the left endpoint $n$ of a unit
+interval. One is a left-endpoint quadrature of the decreasing integrand $1/x$,
+the other a right-endpoint quadrature; the former overshoots and the latter
+undershoots. The natural remedy, familiar from numerical integration, is to
+sample at the **midpoint** $n+\tfrac12$. We prove that the resulting sequence
+$m_n$ is a strictly decreasing upper approximant to $\gamma$ with the same
+per-term cost but quadratically smaller error. The main theorem is $\gamma < m_n$
+for all $n$, yielding the strictly improved sandwich $a_n < \gamma < m_n$.
 
-This paper supplies that missing quantitative layer. We compute the bracket width in closed form, bound it two-sidedly, deduce the exact linear convergence order, exhibit $\gamma$ as an explicit convergent series, and unify the "series representation" and "good approximation" viewpoints by identifying the series tail with the approximation error.
-
-### 1.3 Summary of contributions
-
-1. **Closed-form width** (`bracket_width`): $b_n - a_n = \ln\frac{n+1}{n}$.
-2. **Two-sided width bound** (`width_le`, `width_ge`, `bracket_width_order`): $\frac{1}{n+1} \le \ln\frac{n+1}{n} \le \frac1n$.
-3. **Quantitative convergence** (`gamma_sub_seq_lt`, `seq'_sub_gamma_lt`): $\gamma - a_n < \frac1n$ and $b_n - \gamma < \frac1n$.
-4. **Explicit series representation** (`tsum_eulerMascheroni` / `HasSum term γ`): $\gamma = \sum_{k\ge 0} t_k$ with $t_k \ge 0$ and partial sums equal to $a_n$.
-5. **Tail–error identity** (`tail_eq_error`, `tsum_tail_lt`): $\sum_{k\ge n} t_k = \gamma - a_n < \frac1n$.
-
----
-
-## 2. Definitions and notation
-
-Throughout, $\ln$ denotes the natural logarithm and $H_n = \sum_{k=1}^{n} 1/k$ the $n$-th harmonic number ($H_0 = 0$).
-
-**Definition 2.1 (Lower approximant).** For $n \in \mathbb{N}$,
-$$a_n := H_n - \ln(n+1).$$
-This is Mathlib's `Real.eulerMascheroniSeq`. It is strictly increasing and $a_0 = 0$.
-
-**Definition 2.2 (Upper approximant).** For $n \ge 1$,
-$$b_n := H_n - \ln n,$$
-with a junk value at $n = 0$. This is Mathlib's `Real.eulerMascheroniSeq'`. It is strictly decreasing (for $n \ge 1$) with $b_1 = 1$.
-
-**Definition 2.3 (Euler–Mascheroni constant).**
-$$\gamma := \lim_{n\to\infty} a_n = \texttt{Real.eulerMascheroniConstant}.$$
-Mathlib proves $a_n \to \gamma$ and $b_n \to \gamma$, and the strict bracket (1.1).
-
-**Definition 2.4 (Series term).** For $k \in \mathbb{N}$,
-$$t_k := \frac{1}{k+1} - \ln\!\left(\frac{k+2}{k+1}\right) = \frac{1}{k+1} - \ln\!\left(1 + \frac{1}{k+1}\right).$$
-This is `EulerMascheroniSeries.term`.
-
-We will repeatedly use the following elementary, sharp convexity inequality.
-
-**Lemma 2.5 (Fundamental log inequality).** For every $x > 0$,
-$$\ln x \le x - 1,$$
-with equality iff $x = 1$. (In Mathlib: `Real.log_le_sub_one_of_pos`.)
-
-*Proof sketch.* The function $f(x) = x - 1 - \ln x$ has $f'(x) = 1 - 1/x$, which is negative on $(0,1)$ and positive on $(1,\infty)$, so $f$ has a global minimum $f(1) = 0$. $\square$
-
----
-
-## 3. The bracket width in closed form
-
-**Theorem 3.1 (Closed-form bracket width).** For all $n \ge 1$,
-$$b_n - a_n = \ln\!\left(\frac{n+1}{n}\right).$$
-
-*Proof.* By Definitions 2.1–2.2,
-$$b_n - a_n = \bigl(H_n - \ln n\bigr) - \bigl(H_n - \ln(n+1)\bigr) = \ln(n+1) - \ln n = \ln\frac{n+1}{n},$$
-using $\ln(n+1) - \ln n = \ln\frac{n+1}{n}$ for positive arguments (`Real.log_div`). The harmonic terms cancel identically. $\square$
-
-This is the structural pivot of the paper: *every* quantitative statement about the bracket reduces to an estimate on the single quantity $\ln\bigl(1 + \tfrac1n\bigr)$.
+All statements below were formally verified; the headers cite the corresponding
+formal names for traceability. The exposition is self-contained: every
+definition, lemma, and theorem is stated in full, and each proof sketch contains
+the complete argument in outline.
 
 ---
 
-## 4. Two-sided estimate of the width
+## 2. Definitions
 
-**Theorem 4.1 (Upper bound — convexity, easy direction).** For all $n \ge 1$,
-$$\ln\!\left(\frac{n+1}{n}\right) \le \frac{1}{n}.$$
+**Definition 1 (Harmonic numbers).**
+$$H_n = \sum_{k=1}^{n} \frac{1}{k}, \qquad H_0 = 0.$$
+We use throughout the recurrence $H_{n+1} = H_n + \frac{1}{n+1}$.
 
-*Proof.* Apply Lemma 2.5 at $x = \frac{n+1}{n} > 0$. Then $x - 1 = \frac{n+1}{n} - 1 = \frac{1}{n}$, so $\ln\frac{n+1}{n} \le \frac1n$. $\square$
+**Definition 2 (Midpoint approximant; `midpointSeq`).**
+For $n \in \mathbb{N}$,
+$$m_n = H_n - \ln\!\left(n + \tfrac12\right).$$
 
-**Theorem 4.2 (Lower bound — informative direction).** For all $n \ge 1$,
-$$\frac{1}{n+1} \le \ln\!\left(\frac{n+1}{n}\right).$$
+For comparison we use the two classical sequences
+$$a_n = H_n - \ln(n+1), \qquad b_n = H_n - \ln n,$$
+and the constant $\gamma = \lim_{n\to\infty} a_n$, with the established facts
+$a_n \uparrow \gamma$, $b_n \downarrow \gamma$, and $a_n < \gamma < b_n$.
 
-*Proof.* Apply Lemma 2.5 at the *reciprocal* $x = \frac{n}{n+1} > 0$. Then
-$$x - 1 = \frac{n}{n+1} - 1 = -\frac{1}{n+1},$$
-so $\ln\frac{n}{n+1} \le -\frac{1}{n+1}$. Now $\ln\frac{n}{n+1} = -\ln\frac{n+1}{n}$ (via $\ln(x^{-1}) = -\ln x$), so $-\ln\frac{n+1}{n} \le -\frac{1}{n+1}$, i.e. $\frac{1}{n+1} \le \ln\frac{n+1}{n}$. $\square$
-
-Combining Theorems 3.1, 4.1, 4.2:
-
-**Theorem 4.3 (Exact linear order of the bracket width).** For all $n \ge 1$,
-$$\frac{1}{n+1} \;\le\; b_n - a_n \;\le\; \frac{1}{n}.$$
-In particular $b_n - a_n = \Theta(1/n)$.
-
-The lower bound is the load-bearing half. An $O(1/n)$ width alone would leave open the possibility of unexpectedly fast convergence along subsequences or after minor reorganization; the matching $\Omega(1/n)$ bound certifies that the defining sequence *cannot* converge faster than linearly. This is the precise obstruction that accelerated and Apéry-like schemes are designed to circumvent.
+The three approximants share the same harmonic head $H_n$ and differ only by the
+*shift* inside the logarithm: $a_n, m_n, b_n$ subtract $\ln(n+1)$, $\ln(n+\tfrac12)$,
+$\ln n$ respectively. This places $m_n$ structurally between $a_n$ and $b_n$, the
+key fact behind both the squeeze (Theorem 4) and the improved sandwich (Theorem 7).
 
 ---
 
-## 5. Quantitative convergence to $\gamma$
+## 3. The engine inequality
 
-Because $\gamma$ lies strictly inside the bracket (1.1), the width bound transfers directly to the individual approximation errors.
+**Lemma 1 (`two_mul_lt_log_div`).**
+For every $t \in (0,1)$,
+$$2t \;<\; \ln\!\left(\frac{1+t}{1-t}\right).$$
 
-**Theorem 5.1 (Lower approximant error).** For all $n \ge 1$,
-$$\gamma - a_n < \frac{1}{n}.$$
+*Proof sketch.* Let $f(x) = \ln(1+x) - \ln(1-x) - 2x$ on $[0,t]$. Then $f(0)=0$.
+The function is differentiable on $(-1,1)$, and
+$$f'(x) = \frac{1}{1+x} + \frac{1}{1-x} - 2
+= \frac{(1-x)+(1+x)}{1-x^2} - 2
+= \frac{2}{1-x^2} - 2
+= \frac{2x^2}{1-x^2}.$$
+For $x \in (0,t) \subset (0,1)$ we have $1 - x^2 > 0$ and $x^2 > 0$, so $f'(x) > 0$.
+By the Mean Value Theorem there is $c \in (0,t)$ with
+$f(t) - f(0) = f'(c)\,(t-0)$; since $f'(c) > 0$ and $t > 0$, this gives $f(t) > 0$,
+which is precisely $2t < \ln(1+t) - \ln(1-t) = \ln\frac{1+t}{1-t}$. $\qquad\blacksquare$
 
-*Proof.* From (1.1), $\gamma < b_n$, hence $\gamma - a_n < b_n - a_n = \ln\frac{n+1}{n} \le \frac1n$ by Theorems 3.1 and 4.1. $\square$
-
-**Theorem 5.2 (Upper approximant error).** For all $n \ge 1$,
-$$b_n - \gamma < \frac{1}{n}.$$
-
-*Proof.* From (1.1), $a_n < \gamma$, hence $b_n - \gamma < b_n - a_n = \ln\frac{n+1}{n} \le \frac1n$. $\square$
-
-These are *strict* one-sided error bounds. Together with Theorem 4.3 they pin the error two-sidedly: the lower bound $\frac{1}{n+1} \le b_n - a_n$ guarantees that at least one of the two approximants is at distance $\ge \frac{1}{2(n+1)}$ from $\gamma$, so the $\Theta(1/n)$ order is genuine and not a one-sided artifact.
-
-**Numerical illustration.** At $n = 10^{10}$ the guaranteed error is below $10^{-10}$ but no better than about $10^{-10}$ as well — ten correct digits require ten billion terms, and a hundred digits require $\approx 10^{100}$ terms. This quantifies the proverbial slowness of the elementary definition.
-
----
-
-## 6. An explicit convergent series for $\gamma$
-
-We now exhibit $\gamma$ as the sum of an explicit nonnegative series and connect it to the bracketing above.
-
-**Lemma 6.1 (Nonnegativity of terms).** For all $k$, $t_k \ge 0$.
-
-*Proof.* By Lemma 2.5 with $x = \frac{k+2}{k+1} = 1 + \frac{1}{k+1}$, $\ln\frac{k+2}{k+1} \le \frac{1}{k+1}$, hence $t_k = \frac{1}{k+1} - \ln\frac{k+2}{k+1} \ge 0$. $\square$
-
-**Lemma 6.2 (Telescoping partial sums).** For all $n$,
-$$\sum_{k=0}^{n-1} t_k = a_n = H_n - \ln(n+1).$$
-
-*Proof.* Split the finite sum:
-$$\sum_{k=0}^{n-1} t_k = \sum_{k=0}^{n-1}\frac{1}{k+1} - \sum_{k=0}^{n-1}\ln\frac{k+2}{k+1} = H_n - \sum_{k=0}^{n-1}\ln\frac{k+2}{k+1}.$$
-The first sum is $H_n$ by reindexing. The second telescopes: by `log_mul`,
-$$\sum_{k=0}^{n-1}\ln\frac{k+2}{k+1} = \ln\prod_{k=0}^{n-1}\frac{k+2}{k+1} = \ln\frac{n+1}{1} = \ln(n+1),$$
-since the product collapses to $\frac{(n+1)!/1!}{\,n!/0!\,}$-style cancellation giving $n+1$. Hence the partial sum equals $H_n - \ln(n+1) = a_n$. $\square$
-
-**Theorem 6.3 (Series representation of $\gamma$).** The series $\sum_{k\ge 0} t_k$ converges, and
-$$\gamma = \sum_{k=0}^{\infty}\left(\frac{1}{k+1} - \ln\frac{k+2}{k+1}\right) = \sum_{m=1}^{\infty}\left(\frac{1}{m} - \ln\Bigl(1+\frac{1}{m}\Bigr)\right).$$
-Moreover this holds in the strong sense `HasSum term γ`.
-
-*Proof.* By Lemma 6.2 the partial sums of the series are exactly $a_n$, and $a_n \to \gamma$ (Mathlib's `tendsto_eulerMascheroniSeq`). For a series of nonnegative terms (Lemma 6.1), convergence of the $\mathbb{N}$-indexed partial sums to a limit is equivalent to `HasSum` to that limit (`hasSum_iff_tendsto_nat_of_nonneg`). Hence $\sum_{k} t_k = \gamma$ as a `HasSum`. The reindexed form $m = k+1$ is immediate. $\square$
-
-*Remark.* Nonnegativity is load-bearing, not decorative: for a general real series, `HasSum` (unconditional summability) is strictly stronger than convergence of the $\mathbb{N}$-ordered partial sums. The equivalence holds here precisely because $t_k \ge 0$.
+The right-hand side equals $2\,\mathrm{artanh}(t) = 2t + \tfrac23 t^3 + \tfrac25
+t^5 + \cdots$; the lemma states the positivity of the cubic-and-higher tail, the
+analytic shadow of strict convexity of $x \mapsto 1/x$. The gap
+$g(t) = \ln\frac{1+t}{1-t} - 2t = \tfrac23 t^3 + O(t^5)$ is itself $\Theta(t^3)$
+near $0$, a fact that will reappear as the $\Theta(1/n^3)$ per-step decrement in
+Section 7 and ultimately as the $\Theta(1/n^2)$ error of $m_n$.
 
 ---
 
-## 7. The tail equals the approximation error
+## 4. Monotonicity
 
-**Theorem 7.1 (Tail–error identity).** For all $n$,
-$$\sum_{k=0}^{\infty} t_{k+n} = \gamma - a_n.$$
+**Lemma 2 (Per-step decrease; `midpoint_step`).**
+For every $n \in \mathbb{N}$,
+$$\frac{1}{n+1} \;<\; \ln\!\left(n+\tfrac32\right) - \ln\!\left(n+\tfrac12\right).$$
 
-*Proof.* By summability (Theorem 6.3) we may split off the first $n$ terms (`Summable.sum_add_tsum_nat_add`):
-$$\gamma = \sum_{k=0}^{\infty} t_k = \sum_{k=0}^{n-1} t_k + \sum_{k=0}^{\infty} t_{k+n} = a_n + \sum_{k=0}^{\infty} t_{k+n},$$
-using Lemma 6.2 for the finite part. Rearranging gives the claim. $\square$
+*Proof sketch.* Set $t = \dfrac{1}{2n+2} \in (0,1)$. A direct computation gives
+$$\frac{1+t}{1-t} = \frac{1 + \frac{1}{2n+2}}{1 - \frac{1}{2n+2}}
+= \frac{2n+3}{2n+1} = \frac{n+3/2}{n+1/2},$$
+so the right side of Lemma 1 is exactly $\ln(n+\tfrac32) - \ln(n+\tfrac12)$,
+while its left side $2t = \frac{2}{2n+2} = 1/(n+1)$. Lemma 1 then yields the
+claim. $\qquad\blacksquare$
 
-**Theorem 7.2 (Tail bound).** For all $n \ge 1$,
-$$\sum_{k=0}^{\infty} t_{k+n} < \frac{1}{n}.$$
+**Geometric reading (Hermite–Hadamard).** The increment of the logarithm term is
+the exact area under $1/x$ over $[n+\tfrac12, n+\tfrac32]$:
+$$\ln\!\left(n+\tfrac32\right) - \ln\!\left(n+\tfrac12\right)
+= \int_{n+1/2}^{n+3/2}\frac{dx}{x}.$$
+The interval has width $1$ and midpoint $n+1$. For a strictly convex integrand,
+the Hermite–Hadamard inequality states that the integral strictly exceeds the
+midpoint rectangle, whose area here is $1 \cdot \frac{1}{n+1}$. Thus the
+logarithm grows by strictly more than $1/(n+1)$ per step, which is exactly the
+amount the harmonic term grows. Lemma 2 is the analytic certificate of this
+geometric fact, with $1/x$ as the convex function.
 
-*Proof.* Immediate from Theorem 7.1 and Theorem 5.1. $\square$
+**Theorem 3 (Strict monotonicity; `strictAnti_midpointSeq`).**
+The sequence $(m_n)_{n\in\mathbb{N}}$ is strictly decreasing.
 
-Theorem 7.1 is the conceptual keystone: it shows the "series representation" and the "good approximation" threads are literally the same object. The single quantity $\ln\frac{n+1}{n}$ controls both the bracket width and the series tail.
+*Proof sketch.* Using $H_{n+1} = H_n + \frac{1}{n+1}$, the increment is
+$$m_{n+1} - m_n = \Bigl(H_{n+1} - H_n\Bigr) - \Bigl[\ln\!\left(n+\tfrac32\right) - \ln\!\left(n+\tfrac12\right)\Bigr]
+= \frac{1}{n+1} - \Bigl[\ln\!\left(n+\tfrac32\right) - \ln\!\left(n+\tfrac12\right)\Bigr].$$
+By Lemma 2 the bracketed term exceeds $1/(n+1)$, so $m_{n+1} - m_n < 0$. Since
+this holds for every $n$, the sequence is strictly decreasing. $\qquad\blacksquare$
+
+---
+
+## 5. Convergence and the main bound
+
+**Theorem 4 (Convergence; `tendsto_midpointSeq`).**
+$$\lim_{n\to\infty} m_n = \gamma.$$
+
+*Proof sketch.* For $n \ge 1$ the monotonicity of $\ln$ gives
+$\ln n \le \ln(n+\tfrac12) \le \ln(n+1)$, hence, subtracting from the common
+$H_n$ and reversing,
+$$a_n = H_n - \ln(n+1) \;\le\; H_n - \ln(n+\tfrac12) = m_n \;\le\; H_n - \ln n = b_n.$$
+Since $a_n \to \gamma$ and $b_n \to \gamma$, the squeeze theorem gives
+$m_n \to \gamma$. $\qquad\blacksquare$
+
+**Theorem 5 (Main result — approach from above; `eulerMascheroniConstant_lt_midpointSeq`).**
+For every $n \in \mathbb{N}$,
+$$\gamma \;<\; m_n.$$
+
+*Proof sketch.* Fix $n$. By Theorem 3, for all $k \ge n+1$ we have
+$m_k \le m_{n+1}$. Taking $k \to \infty$ and using Theorem 4, the limit
+$\gamma = \lim_k m_k$ inherits the weak inequality $\gamma \le m_{n+1}$. Combining
+with the strict step $m_{n+1} < m_n$ (Theorem 3) yields
+$\gamma \le m_{n+1} < m_n$, hence $\gamma < m_n$. $\qquad\blacksquare$
+
+*Remark.* The strict bound $\gamma < m_n$ does **not** follow from the classical
+$\gamma < b_n$. Because $m_n < b_n$ for $n\ge1$ (the right inequality of Theorem 4,
+strict), comparison with $b_n$ alone gives only the upper estimate $m_n < b_n$ and
+provides no lower bound on $m_n - \gamma$. A naive attempt to "inherit" the
+from-above property from $b_n$ therefore fails. The guarantee genuinely requires
+the monotone-limit argument: a strictly decreasing sequence converging to a limit
+stays strictly above that limit.
+
+---
+
+## 6. The improved sandwich
+
+**Theorem 6 (Improvement over the lower approximant; `eulerMascheroniSeq_lt_midpointSeq`).**
+For every $n \in \mathbb{N}$,
+$$a_n = H_n - \ln(n+1) \;<\; H_n - \ln\!\left(n+\tfrac12\right) = m_n.$$
+
+*Proof sketch.* Since $n+\tfrac12 < n+1$ and $\ln$ is strictly increasing,
+$\ln(n+\tfrac12) < \ln(n+1)$; subtracting both from $H_n$ reverses the
+inequality. $\qquad\blacksquare$
+
+**Theorem 7 (New two-sided sandwich; `midpointSeq_sandwich`).**
+For every $n \in \mathbb{N}$,
+$$a_n \;<\; \gamma \;<\; m_n,
+\qquad\text{i.e.}\qquad
+H_n - \ln(n+1) \;<\; \gamma \;<\; H_n - \ln\!\left(n+\tfrac12\right).$$
+
+*Proof sketch.* The left inequality is the classical $a_n < \gamma$; the right
+inequality is Theorem 5. $\qquad\blacksquare$
+
+The new sandwich is non-vacuous and strictly tighter on the upper side: the upper
+edge has moved from $b_n = H_n - \ln n$ down to $m_n = H_n - \ln(n+\tfrac12)$,
+while remaining a valid upper bound on $\gamma$. The midpoint $m_n$ is in fact the
+best one-logarithm upper bound on $\gamma$ in the shifted family
+$s_c(n) = H_n - \ln(n+c)$: as $c$ increases from $0$, $s_c(n)$ decreases, and the
+threshold value of $c$ below which $s_c(n)$ remains $\ge \gamma$ for all $n$ is
+governed by the first-order coefficient $\tfrac12 - c$ discussed in Section 10.
+
+---
+
+## 7. Quantitative rate (numerical)
+
+The proved results establish *sign and monotonicity*; the *rate* is an empirical
+observation, recorded here as a numerical finding rather than a theorem.
+
+### 7.1 The decrement and its sum
+
+Writing $t_n = \frac{1}{2n+2}$, the per-step decrement is
+$$d_n = m_n - m_{n+1} = \bigl[\ln(n+\tfrac32) - \ln(n+\tfrac12)\bigr] - \frac{1}{n+1}
+= 2\,\mathrm{artanh}(t_n) - 2t_n = \frac{2}{3}t_n^3 + \frac{2}{5}t_n^5 + \cdots,$$
+which is positive (Lemma 2) and of order $\Theta(1/n^3)$ since
+$t_n \sim 1/(2n)$. Because $(m_n)$ decreases to $\gamma$ (Theorems 3–5), the
+overshoot telescopes:
+$$m_n - \gamma = \sum_{k\ge n} d_k = \sum_{k \ge n}\Theta\!\left(\frac{1}{k^3}\right)
+= \Theta\!\left(\frac{1}{n^2}\right).$$
+A more precise accounting via the leading term $d_k \approx \frac{2}{3}t_k^3
+\approx \frac{1}{12 k^3}$ and the integral comparison
+$\sum_{k\ge n} 1/k^3 \approx 1/(2 n^2)$ gives the leading constant
+$$m_n - \gamma \;\sim\; \frac{1}{24\,n^2}.$$
+The same constant arises directly from the Euler–Maclaurin expansion
+$H_n = \ln n + \gamma + \frac{1}{2n} - \frac{1}{12 n^2} + O(1/n^4)$ together with
+$\ln(n+\tfrac12) = \ln n + \frac{1}{2n} - \frac{1}{8 n^2} + O(1/n^3)$, whose
+difference yields $m_n - \gamma = \bigl(\tfrac18 - \tfrac{1}{12}\bigr)\frac{1}{n^2}
++ O(1/n^3) = \frac{1}{24 n^2} + O(1/n^3)$; note the $1/n$ terms cancel exactly,
+which is the precise reason the midpoint shift is first-order optimal.
+
+### 7.2 Empirical data
+
+Computed in double precision (see `demo.py`):
+
+| $n$ | $m_n - \gamma$ | $n^2 (m_n-\gamma)$ | classical $b_n - \gamma$ | $2n(b_n-\gamma)$ |
+|----:|---------------:|-------------------:|-------------------------:|-----------------:|
+|   1 | 0.01731923 | 0.017319 | 0.422784 | 0.845569 |
+|   2 | 0.00649360 | 0.025974 | 0.229637 | 0.918549 |
+|   5 | 0.00136958 | 0.034239 | 0.096680 | 0.966798 |
+|  10 | 0.00037733 | 0.037733 | 0.049167 | 0.983350 |
+|  20 | 0.00009911 | 0.039642 | 0.024792 | 0.991669 |
+|  50 | 0.00001634 | 0.040843 | 0.009967 | 0.996667 |
+| 100 | 0.00000413 | 0.041252 | 0.004992 | 0.998333 |
+| 200 | 0.00000104 | 0.041459 | 0.002498 | 0.999167 |
+|1000 | 0.00000004 | 0.041625 | 0.000500 | 0.999833 |
+
+The column $n^2(m_n-\gamma)$ converges to $1/24 = 0.0416\overline{6}$, confirming
+the quadratic law and its constant, while $2n(b_n-\gamma) \to 1$ confirms the
+classical linear rate $b_n - \gamma \sim 1/(2n)$. At $n = 100$ the classical bound
+is still wrong in the third decimal place while the midpoint bound is correct to
+roughly six — a hundredfold accuracy gain at identical cost.
 
 ---
 
 ## 8. Algorithms
 
-### 8.1 Certified rational enclosure of $\gamma$
+### 8.1 Rigorous enclosure of $\gamma$ (`MidpointGammaEnclosure`)
 
-Theorems 4.3 and 5.1–5.2 reduce certified bounds on $\gamma$ to a finite computation: pick $n$, compute $a_n$ and $b_n$ to sufficient precision, and the gap is at most $1/n$.
-
-```
-Algorithm ENCLOSE(target_width w):
-  n ← ceil(1 / w)                      # width bound 1/n ≤ w
-  H ← 0
-  for k in 1..n:  H ← H + 1/k          # harmonic number H_n
-  a ← H - ln(n + 1)                    # lower fence  a_n < γ
-  b ← H - ln(n)                        # upper fence  γ < b_n
-  return (a, b)                        # γ ∈ (a, b),  b - a = ln((n+1)/n) ≤ 1/n
-```
-
-Complexity: $O(n)$ arithmetic operations for additive precision $\sim 1/n$. Because the rate is provably $\Theta(1/n)$, achieving $d$ digits costs $\Theta(10^{d})$ work — the rigorous reason an accelerated method is mandatory beyond a few digits.
-
-### 8.2 Series summation with rigorous tail control
+Given a target half-width $\varepsilon$, compute the smallest $n$ with
+$m_n - a_n < \varepsilon$ and return the interval $[a_n, m_n]$, which provably
+contains $\gamma$ (Theorem 7).
 
 ```
-Algorithm SERIES_SUM(num_terms N):
-  S ← 0
-  for k in 0..N-1:
-     t ← 1/(k+1) - ln((k+2)/(k+1))     # t_k ≥ 0
-     S ← S + t                          # S = a_N after the loop
-  # rigorous: 0 < γ - S < 1/N   (tail = γ - a_N, Theorems 7.1–7.2)
-  return S, 1/N                         # estimate and certified one-sided error
+INPUT  epsilon > 0
+n <- 1; H <- 1.0
+loop:
+    a <- H - ln(n+1)            # lower approximant a_n
+    m <- H - ln(n + 0.5)        # midpoint approximant m_n
+    if (m - a) < epsilon: return [a, m]   # a < gamma < m, width < epsilon
+    n <- n + 1; H <- H + 1/n
 ```
+
+The certified width $m_n - a_n = \ln(n+1) - \ln(n+\tfrac12) = \Theta(1/n)$, so the
+loop terminates in $O(1/\varepsilon)$ iterations; the *midpoint estimate itself*
+already attains accuracy $O(1/n^2)$, so the midpoint of the returned interval is
+considerably more accurate than its half-width suggests.
+
+### 8.2 Quadratic point estimate (`MidpointGammaEstimate`)
+
+To estimate $\gamma$ to a tolerance $\tau$ using the quadratic rate, choose
+$n \approx \sqrt{1/(24\,\tau)}$ and return $m_n$. Because $m_n - \gamma \approx
+1/(24 n^2)$, this requires only $O(1/\sqrt{\tau})$ harmonic terms, versus
+$O(1/\tau)$ for the classical $b_n$ — a quadratic reduction in work. For example,
+$\tau = 10^{-8}$ needs $n \approx 2042$ midpoint terms rather than the
+$\sim 5\times 10^{7}$ terms a linear approximant would demand.
 
 ---
 
-## 9. Applications and discussion
+## 9. Applications
 
-**Why accelerations exist.** Theorem 4.3 is a hard lower bound on the convergence rate of the elementary definition. It explains, rigorously, the standard folklore that "$H_n - \ln n$ converges too slowly to be useful beyond a few digits," and it quantifies exactly how much speed-up an acceleration must provide.
-
-**Irrationality blindness.** Proofs of irrationality (e.g. for $e$, or Apéry's for $\zeta(3)$) require rational approximations $p_n/q_n$ with error decaying faster than any fixed power of $1/q_n$ would allow under rationality. Theorem 7.1 shows the tail of *this* series is $\gamma - a_n = \Theta(1/n)$ — neither super-linearly small nor lingering — so no truncation of this particular series can supply approximations sharp enough to force irrationality. This is a precise, structural statement of why elementary methods are "irrationality-blind."
-
-**A diagnostic for re-centering.** The lower bound of Theorem 4.2 certifies the presence of a leading $\frac{1}{2n}$ term in the Euler–Maclaurin expansion of $H_n - \ln(n+1)$. Re-centering the logarithm at the midpoint $n + \tfrac12$ is designed to cancel exactly this term, motivating the quadratic-acceleration conjecture in §10.
+- **Computational enclosure.** Theorem 7 provides a certified interval for
+  $\gamma$ from a single harmonic sum and two logarithms, with a strictly tighter
+  upper edge than the textbook bound. This is directly usable in interval
+  arithmetic and verified-computation libraries.
+- **Building block for accelerators.** The clean residual $1/(24 n^2)$ is the
+  natural seed for Richardson-style extrapolation (Section 10), which can cancel
+  successive even-order terms.
+- **Digamma and harmonic asymptotics.** Through $\psi(n+1) = H_n - \gamma$, the
+  midpoint shift corresponds to the classical asymptotic
+  $\psi(x) \approx \ln(x - \tfrac12)$, the most accurate one-logarithm
+  approximation of the digamma function; Theorem 5 is its rigorous, monotone,
+  one-sided counterpart on the integers.
+- **Pedagogy.** The result is a vivid, fully rigorous instance of the
+  midpoint/symmetrization principle: sampling a convex integrand at the center of
+  an interval cancels the leading (odd) error term, converting $\Theta(1/n)$ into
+  $\Theta(1/n^2)$ — the same idea behind the midpoint and Simpson quadrature
+  rules and centered finite differences.
 
 ---
 
-## 10. Future directions
+## 10. Discussion and future work
 
-**(1) Quadratic acceleration via the midpoint sequence.** *Conjecture:* $b_n^{\mathrm{mid}} = H_n - \ln(n + \tfrac12)$ satisfies $|\gamma - b_n^{\mathrm{mid}}| = O(1/n^2)$, a strict order improvement over the proven $\Theta(1/n)$ rate. The key insight: re-centering the logarithm at the midpoint cancels the leading $1/(2n)$ term in the Euler–Maclaurin expansion of the harmonic number — exactly the term the present lower bound (Theorem 4.2) certifies is present. The telescoping machinery of §6 generalizes directly to $\ln(n+c)$.
+The midpoint approximant exploits a structural symmetry: the linear error of the
+one-sided approximants is *odd* about the midpoint of the unit step and therefore
+cancels, exposing the smaller even term $1/(24 n^2)$. This invites three
+sharpenings, stated as conjectures.
 
-**(2) Explicit sharp rational enclosure.** *Conjecture:* $0.5772 < \gamma < 0.5773$ is provable by evaluating $a_n, b_n$ at a moderate $n$ together with certified rational bounds on $\ln$ from its Maclaurin/$\operatorname{atanh}$ series. The gap bound $\gamma - a_n < 1/n$ (Theorem 5.1) means only $O(1)$ digits of $\ln$-precision at one $n$ are needed to separate four decimals, turning an analytic limit into a finite certificate.
+**Conjecture 1 (Explicit quadratic bound).** For all $n \ge 1$,
+$m_n - \gamma \le 1/(12 n^2)$, with sharp asymptotic constant $1/24$. The route:
+dominate each decrement $d_k = 2\,\mathrm{artanh}(t_k) - 2t_k$ by a telescoping
+difference $d_k \le \tfrac{1}{12}\bigl(1/k^2 - 1/(k+1)^2\bigr)$, whose tail sums
+exactly to $1/(12 n^2)$. The single remaining per-term transcendental inequality
+is of the same convexity/$\mathrm{artanh}$ type as Lemma 1, and is empirically
+verified for all $k \le 100$.
 
-**(3) Tail-based irrationality obstruction.** *Conjecture:* the tail $R_n = \sum_{k\ge n} t_k$ satisfies $R_n > \frac{1}{2(n+1)}$, so $R_n = \Theta(1/n)$ two-sided; consequently no truncation of this series yields approximations forcing irrationality. The matching lower bound is the dual of Theorem 4.2, complementing the proven $R_n < 1/n$ (Theorem 7.2).
+**Conjecture 2 (Optimal shift uniqueness).** For the shifted family
+$s_c(n) = H_n - \ln(n+c)$, one has $n\,(s_c(n) - \gamma) \to (\tfrac12 - c)$, so
+$s_c(n) - \gamma = o(1/n)$ **iff** $c = \tfrac12$. This follows from the harmonic
+asymptotic $H_n = \ln n + \gamma + \tfrac{1}{2n} + O(1/n^2)$ together with
+$\ln(n+c) = \ln n + c/n + O(1/n^2)$, giving $s_c(n) - \gamma = (\tfrac12 - c)/n +
+O(1/n^2)$. The midpoint $c = \tfrac12$ is the unique first-order-optimal shift —
+the *only* one-logarithm shift achieving the quadratic rate.
 
-**(4) Stieltjes generalization.** *Conjecture:* for each $m \ge 0$ the $m$-th Stieltjes constant $\gamma_m$ equals an explicit telescoping series $\sum_k\bigl((\ln k)^m/k - \int\cdots\bigr)$, generalizing the $m=0$ identity $\gamma = \sum_k(1/k - \ln\frac{k+1}{k})$. The proof of §6 never used anything about $\gamma$ beyond telescoping $\ln$ against $1/k$; replacing the weight $1$ by $(\ln k)^m$ should reproduce the structure verbatim.
+**Conjecture 3 (Quartic accelerator).** The doubly-shifted sequence
+$H_n - \ln\!\left(n + \tfrac12 + \tfrac{1}{24 n}\right)$ converges to $\gamma$
+with error $O(1/n^4)$: absorbing the residual $1/(24 n^2)$ into the logarithm's
+argument cancels the quadratic term, and the cubic term is absent by the parity
+of the $\mathrm{artanh}$ expansion, pushing the first surviving error to order
+$1/n^4$.
+
+Beyond these, the midpoint enclosure can feed Apéry-style rational-approximation
+machinery, and the same Hermite–Hadamard mechanism extends to the Stieltjes
+constants (the higher coefficients $\gamma_k$ in the Laurent expansion
+$\zeta(s) = \frac{1}{s-1} + \sum_{k\ge0} \frac{(-1)^k}{k!}\gamma_k (s-1)^k$ at
+$s=1$, with $\gamma_0 = \gamma$).
 
 ---
 
 ## 11. Conclusion
 
-We have converted Mathlib's qualitative bracketing of the Euler–Mascheroni constant into a sharp quantitative theory. The bracket width is exactly $\ln\frac{n+1}{n}$, squeezed two-sidedly between $\frac{1}{n+1}$ and $\frac1n$, so the defining sequence converges at the exact order $\Theta(1/n)$. The same logarithm governs an explicit nonnegative series for $\gamma$ whose tail *is* the approximation error. Together these results explain, with full rigor, why the elementary approach to $\gamma$ is both beautiful and fundamentally limited — and they chart a precise path toward faster, re-centered, and Stieltjes-generalized successors. All statements are formally verified in Lean 4 / Mathlib.
+By the single expedient of sampling the logarithm at the midpoint of the unit
+step, the approximant $m_n = H_n - \ln(n+\tfrac12)$ becomes a strictly
+decreasing, provably-from-above estimate of the Euler–Mascheroni constant,
+$\gamma < m_n$, with the improved sandwich $H_n - \ln(n+1) < \gamma < H_n -
+\ln(n+\tfrac12)$. The cost is identical to the classical bound, yet the error
+falls from $\Theta(1/n)$ to $\Theta(1/n^2)$ with leading constant $1/24$. The
+proof rests on one elementary inequality, $2t < \ln\frac{1+t}{1-t}$, the analytic
+face of the convexity of $1/x$ — a small change of aim with an outsized payoff.
 
 ---
 
 ## Appendix: Formal result index
 
-| Paper result | Lean name |
+| Formal name | Statement |
 |---|---|
-| Theorem 3.1 | `bracket_width` |
-| Theorem 4.1 | `width_le` |
-| Theorem 4.2 | `width_ge` |
-| Theorem 4.3 | `bracket_width_order` |
-| Theorem 5.1 | `gamma_sub_seq_lt` |
-| Theorem 5.2 | `seq'_sub_gamma_lt` |
-| Lemma 6.1 | `EulerMascheroniSeries.term_nonneg` |
-| Lemma 6.2 | `EulerMascheroniSeries.partial_sum` |
-| Theorem 6.3 | `EulerMascheroniSeries.tsum_eulerMascheroni` / `HasSum` |
-| Theorem 7.1 | `tail_eq_error` |
-| Theorem 7.2 | `tsum_tail_lt` |
+| `midpointSeq` | $m_n = H_n - \ln(n+\tfrac12)$ |
+| `two_mul_lt_log_div` | $t\in(0,1) \Rightarrow 2t < \ln\frac{1+t}{1-t}$ |
+| `midpoint_step` | $\frac{1}{n+1} < \ln(n+\tfrac32) - \ln(n+\tfrac12)$ |
+| `strictAnti_midpointSeq` | $(m_n)$ strictly decreasing |
+| `tendsto_midpointSeq` | $m_n \to \gamma$ |
+| `eulerMascheroniConstant_lt_midpointSeq` | $\gamma < m_n$ |
+| `eulerMascheroniSeq_lt_midpointSeq` | $a_n < m_n$ |
+| `midpointSeq_sandwich` | $a_n < \gamma < m_n$ |
