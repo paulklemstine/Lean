@@ -1,44 +1,47 @@
-# Computational Evidence — Merkle–Damgård Collision Preservation
+# Theorem Trace (internal anti-hallucination ledger)
 
-## Setup
-The Merkle–Damgård (MD) hash iterates a compression function
-`f : State → Block → State` over a message (a list of blocks) starting from an IV:
-`mdHash f iv [b₁,…,bₙ] = f(…f(f(iv,b₁),b₂)…,bₙ)`  (a left fold).
+Every theorem/definition below is taken verbatim from the Phase A Lean output:
+`Catalog/Cryptography/ClawFreeHash.lean` and its dependency
+`Catalog/Cryptography/MerkleDamgard.lean` (read from disk). The
+`MDLengthExtension.lean` names are described only in the Phase A future-directions
+block; they are mentioned in prose ONLY as future/related work, never stated as
+proved results here.
 
-**Claim under test.** If two *equal-length* messages `m₁ ≠ m₂` hash to the same
-value, then `f` has a *compression collision*: distinct `(s,b) ≠ (s',b')`
-with `f s b = f s' b'`.
+## MerkleDamgard.lean (dependency, fully present on disk)
 
-## Small-case calculations (multiplicative model f s b = s·b, iv = 1)
-Here `mdHash` of a list is its product.
+| Lean name | Statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `mdHash` (def) | `mdHash f iv msg = msg.foldl f iv` — iterated hash | yes | yes |
+| `HasCompressionCollision` (def) | `∃ s b s' b', (s,b)≠(s',b') ∧ f s b = f s' b'` | yes | yes |
+| `mdHash_nil` | `mdHash f iv [] = iv` | implicit | yes |
+| `mdHash_concat` | `mdHash f iv (l ++ [b]) = f (mdHash f iv l) b` | no | yes |
+| `mdHash_append` | `mdHash f iv (a++b) = mdHash f (mdHash f iv a) b` | no | yes |
+| `md_collision_extract` | equal-length MD collision ⇒ compression collision | yes | yes |
+| `mdHash_injOn_length` | no compression collision ⇒ MD injective per length | yes | yes |
+| `compression_collision_of_card` | finite pigeonhole: collisions always exist | yes | yes |
 
-| m₁          | m₂          | len | product | distinct? | extracted f-collision            |
-|-------------|-------------|-----|---------|-----------|----------------------------------|
-| [6, 35]     | [10, 21]    | 2   | 210     | yes       | (6,35) vs (10,21): 6·35 = 10·21  |
-| [2, 9]      | [3, 6]      | 2   | 18      | yes       | (2,9) vs (3,6): 2·9 = 3·6        |
-| [4, 9]      | [6, 6]      | 2   | 36      | yes       | (4,9) vs (6,6): 4·9 = 6·6        |
-| [12]        | [12]        | 1   | 12      | no (equal)| none (hypothesis m₁≠m₂ fails)    |
+## ClawFreeHash.lean (headline file, from Phase A output)
 
-Every equal-length, distinct, equal-product pair yields a compression collision
-of multiplication, confirming the extraction direction concretely.
+| Lean name | Statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `IsClaw` (def) | `IsClaw g₀ g₁ x y := g₀ x = g₁ y` | yes | yes |
+| `HasClaw` (def) | `HasClaw g₀ g₁ := ∃ x y, g₀ x = g₁ y` | yes | yes |
+| `clawCompress` (def) | `clawCompress g₀ g₁ s b = bif b then g₁ s else g₀ s` | yes | yes |
+| `clawCompress_false` | `clawCompress g₀ g₁ s false = g₀ s` | no | yes |
+| `clawCompress_true` | `clawCompress g₀ g₁ s true = g₁ s` | no | yes |
+| `claw_to_compression_collision` | claw ⇒ compression collision | yes | yes |
+| `clawCompress_collision_to_claw` | injective pair: compression collision ⇒ claw | yes | yes |
+| `claw_iff_compression_collision` | injective pair: claw ⇔ compression collision | yes (main) | yes (main) |
+| `clawFree_compression_collisionFree` | claw-free ⇒ compression collision-free | yes | yes |
+| `md_clawCompress_collision_to_claw` | MD collision (equal len) ⇒ claw | yes | yes |
+| `clawFree_mdHash_injOn_length` | claw-free ⇒ MD injective per length (HEADLINE) | yes (main) | yes (main) |
+| `g0Ex` (def) | `id : ZMod 2 → ZMod 2` | yes | yes |
+| `g1Ex` (def) | `(· + 1) : ZMod 2 → ZMod 2` | yes | yes |
+| `g0Ex_injective` | `Injective g0Ex` | no | yes |
+| `g1Ex_injective` | `Injective g1Ex` | no | yes |
+| `concrete_claw` | `HasClaw g0Ex g1Ex` (g0Ex 1 = g1Ex 0 = 1) | yes | yes |
+| `concrete_compression_collision` | `HasCompressionCollision (clawCompress g0Ex g1Ex)` | yes | yes |
 
-## Counterexample hunt — why "equal length" is required
-Plain MD (no length padding) is NOT collision resistant across *different*
-lengths. With f s b = s·b, iv = 1:
-- m₁ = [6] (product 6) and m₂ = [2,3] (product 6) collide but have different
-  lengths; the naive recursion bottoms out comparing the IV with an internal
-  state, which is a *free-start*/IV collision, not a genuine compression
-  collision. This is exactly why the classical theorem assumes equal length
-  (or uses MD strengthening / length padding). Our formal theorem therefore
-  carries the `m₁.length = m₂.length` hypothesis, which is faithful and tight.
-
-## Pigeonhole sanity check
-Any compression function on finite types with `1 < card Block` and
-`State` nonempty must have a collision: the domain `State × Block` is strictly
-larger than the codomain `State`. This confirms collision resistance is
-necessarily a *computational* (not information-theoretic) notion — collisions
-always exist; finding them is the hard part.
-
-## Conclusion
-The equal-length MD extraction claim survives all tested cases; the
-unequal-length counterexample pins down the precise boundary of the theorem.
+## Related / future only (NOT stated as proved here)
+- `md_collision_family`, `injectiveOracle_no_collision`, `finalize_collision_iff`
+  — from `MDLengthExtension.lean`; appear only in Future Directions text.

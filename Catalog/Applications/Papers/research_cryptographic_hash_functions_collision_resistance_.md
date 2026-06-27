@@ -1,457 +1,315 @@
-# Collision Resistance from Algebraic Hardness: A Constructive Merkle–Damgård Reduction
+# Collision Resistance from Hard Problems: The Claw-Free Route through Merkle–Damgård
 
 **Author:** Aristotle
-**Date:** 2026-06-21
-**Domain:** Cryptography / Number Theory
-
----
+**Date:** 2026-06-27
+**Domain:** Applications (Cryptography)
 
 ## Abstract
 
-We give a self-contained, fully constructive development of the classical
-theorem that the Merkle–Damgård (MD) iterated-hash construction *preserves
-collision resistance*, and we connect it to an explicit algebraic hardness
-source. We define the MD hash as a left fold of a compression function
-$f : \mathrm{State} \times \mathrm{Block} \to \mathrm{State}$ over a message,
-starting from an initialization vector, and prove its basic algebraic laws
-(empty message, last-block, and concatenation). Our central result,
-**collision extraction**, shows that any collision of the iterated hash on two
-distinct *equal-length* messages can be transformed, by an explicit
-deterministic procedure, into a collision of the compression function $f$. The
-reduction is purely combinatorial and uses no probability. We further show that
-the equal-length hypothesis is tight: a length-extension example collides for
-reasons unrelated to compression strength, motivating the standard
-length-padding ("MD strengthening") fix. Independently, a pigeonhole argument
-shows that compression *forces* collisions to exist, sharpening the meaning of
-collision resistance to *finding*, not *existence*. Finally, we instantiate the
-framework with the multiplicative compression function
-$\mathrm{mulCompress}(s,b) = s\cdot b$, whose iterate is the list product, and
-prove that an algebraic *product collision* (non-unique factorization) maps
-verbatim onto a compression collision, hence onto a full MD hash collision. The
-catalog witness $6 \cdot 35 = 10 \cdot 21 = 210$ exercises the entire pipeline
-end to end. All results are formalized and machine-checked, free of unproven
-assumptions.
-
----
+We present a fully constructive, machine-checked development of the canonical
+reduction from a *hard problem* to a *collision-resistant hash function* (CRHF),
+together with the structural theorem that the Merkle–Damgård (MD) iterated-hash
+construction preserves collision resistance. The hard-problem assumption is
+phrased abstractly as *claw-freeness* of a pair of permutations $g_0, g_1$: a
+*claw* is a pair $(x,y)$ with $g_0(x) = g_1(y)$, and the cryptographic
+assumption is that no claw can be found. We define the one-bit-block Damgård
+compression function $\text{clawCompress}(g_0,g_1)(s,b) = g_b(s)$ and prove its
+central structural identity: **when $g_0$ and $g_1$ are injective, compression
+collisions coincide exactly with claws** (`claw_iff_compression_collision`).
+Composing this equivalence with the MD collision-extraction theorem
+(`md_collision_extract`) yields the headline reduction
+(`clawFree_mdHash_injOn_length`): claw-freeness lifts to injectivity of the full
+iterated hash on each fixed message length, i.e. collision resistance. We
+emphasize three points of mathematical hygiene that the formal development makes
+precise: (i) the equal-length hypothesis in MD extraction is necessary, not
+cosmetic; (ii) injectivity of both permutations is exactly the tight boundary at
+which the collision $\Leftrightarrow$ claw equivalence holds; and (iii) the
+entire package is non-vacuous, witnessed by an explicit claw over $\mathbb{Z}/2$.
+We also record the pigeonhole inevitability theorem
+(`compression_collision_of_card`), which shows that collision resistance is
+necessarily a *computational* notion: collisions always exist, and the only
+difficulty is finding them. We close with a faithfulness discussion of why plain
+one-wayness is insufficient (Simon's black-box separation) and why the
+additional claw-free structure (Damgård 1987) is the right hardness primitive.
 
 ## 1. Introduction
 
-A *cryptographic hash function* maps arbitrary-length messages to fixed-length
-digests. *Collision resistance* — the infeasibility of producing two distinct
-messages with equal digest — underpins digital signatures, commitment schemes,
-password storage, and distributed ledgers. Two structural questions dominate
-the theory of collision resistance:
-
-1. **Domain extension.** Cryptographic primitives are naturally fixed-input
-   (a *compression function* $f$ taking a fixed-size chaining value and a
-   fixed-size message block). How do we extend $f$ to arbitrary-length inputs
-   *without sacrificing security*?
-
-2. **Hardness anchoring.** Why should the underlying compression function be
-   collision resistant at all? Ideally its security reduces to a well-studied
-   computational problem believed to be hard.
-
-The **Merkle–Damgård construction** answers the first question and is the
-backbone of SHA-256, SHA-1, MD5, and most deployed hashes. Its security is
-governed by a classical *preservation theorem*: a collision in the iterated
-hash yields a collision in the compression function. This paper presents a
-constructive, probability-free formalization of that theorem (Section 3),
-identifies its exact validity boundary (Section 4), and connects it to a
-concrete algebraic hardness source via the multiplicative hash (Section 5),
-which links collision finding to non-unique factorization (Section 6).
-
-Our contributions:
-
-- A complete formal development of `mdHash` and its algebraic laws.
-- A constructive proof of the **collision extraction** theorem by reverse
-  (last-block) induction, with an explicitly handled base case ruling out
-  vacuity.
-- A precise statement of the **equal-length boundary**, with a length-extension
-  counterexample.
-- A **pigeonhole inevitability** result clarifying that collision resistance is
-  about search, not existence.
-- A **bridge** from product collisions (non-unique factorization) to MD hash
-  collisions, with the explicit end-to-end witness $6 \cdot 35 = 10 \cdot 21$.
-
-### 1.1 Background and context
-
-The security paradigm we formalize is the *reductionist* (or *provable*)
-approach to cryptography. Rather than asserting that a construction is secure,
-one proves a *reduction*: an efficient procedure that converts any adversary
-breaking the construction into an adversary breaking some clearly stated
-assumption (a hardness assumption, or the security of a smaller primitive).
-Contrapositively, if the assumption holds, so does the construction's security.
-The Merkle–Damgård preservation theorem is the archetypal *structural*
-reduction: it does not reference any number-theoretic assumption at all, only
-the internal compression function, and it converts a collision in the whole
-hash into a collision in that compression function.
-
-It is worth distinguishing three layers that are frequently conflated in
-informal treatments. The *logical* layer is a deterministic map from one
-collision to another; this is what we formalize and it requires no probability.
-The *complexity* layer asks how much work the map costs (here, linear in the
-message length); this controls whether the reduction is *efficient*. The
-*adversarial* layer quantifies over resource-bounded attackers and success
-probabilities; probabilities live only here. By making the logical layer
-explicit and constructive, we expose precisely which parts of the classical
-argument are combinatorial identities and which are quantitative.
-
-The second half of the paper concerns the *source* of compression-function
-hardness. We use the oldest hardness assumption in number theory — the
-difficulty of integer factorization — through a deliberately transparent
-multiplicative compression function. While multiplication is cryptographically
-trivial (small products factor instantly), it makes the equivalence between
-*finding a hash collision* and *finding a second factorization* completely
-literal, and the same skeleton, with multiplication replaced by modular
-exponentiation, underlies number-theoretic hashes whose collision resistance
-rests on genuinely hard problems.
-
----
-
-## 2. Definitions
-
-Throughout, $\mathrm{State}$ and $\mathrm{Block}$ are arbitrary types, and
-messages are finite lists of blocks. We write $|m|$ for the length of a list
-$m$, $m_1 \mathbin{+\!\!+} m_2$ for concatenation, and $[\,]$ for the empty list.
-
-**Definition 2.1 (Merkle–Damgård hash).**
-Given a compression function $f : \mathrm{State} \to \mathrm{Block} \to \mathrm{State}$
-and an initialization vector $iv : \mathrm{State}$, the *Merkle–Damgård hash* of a
-message $m$ is the left fold of $f$ over $m$:
-$$\mathrm{mdHash}(f, iv, m) = \mathrm{foldl}\,f\,iv\,m.$$
-Explicitly, $\mathrm{mdHash}(f, iv, [b_0, \dots, b_{n-1}]) = f(\cdots f(f(iv, b_0), b_1)\cdots, b_{n-1})$.
-
-**Definition 2.2 (Compression collision).**
-A compression function $f$ *has a collision* if there exist inputs
-$(s, b)$ and $(s', b')$ with
-$$(s, b) \neq (s', b') \quad\text{and}\quad f(s, b) = f(s', b').$$
-We write this predicate $\mathrm{HasCompressionCollision}(f)$.
-
-**Definition 2.3 (Multiplicative compression function).**
-On $\mathbb{N}$, define
-$$\mathrm{mulCompress}(s, b) = s \cdot b.$$
-
-**Definition 2.4 (Product collision).**
-A set $S \subseteq \mathbb{N}$ *has a product collision* if there exist
-$a, b, c, d \in S$, all $\geq 2$, with
-$$a \cdot b = c \cdot d \quad\text{and}\quad \{a, b\} \neq \{c, d\} \text{ as multisets}.$$
-We write this predicate $\mathrm{HasProductCollision}(S)$. It is the precise
-obstruction to unique factorization: two distinct unordered factor pairs with
-equal product.
-
----
-
-## 3. Algebraic Laws and the Collision Extraction Theorem
-
-### 3.1 Foundational laws
-
-The following identities follow directly from the definition of the left fold.
-
-**Lemma 3.1 (Empty message).** $\mathrm{mdHash}(f, iv, [\,]) = iv.$
-*Proof.* Folding over the empty list returns the seed. $\qquad\blacksquare$
-
-**Lemma 3.2 (Last block).**
-$$\mathrm{mdHash}(f, iv, \ell \mathbin{+\!\!+} [b]) = f\big(\mathrm{mdHash}(f, iv, \ell),\ b\big).$$
-*Proof.* `foldl` over $\ell \mathbin{+\!\!+} [b]$ is `foldl` over $\ell$ followed
-by one application of $f$ to the final block. $\qquad\blacksquare$
-
-**Lemma 3.3 (Concatenation / composition).**
-$$\mathrm{mdHash}(f, iv, a \mathbin{+\!\!+} b) = \mathrm{mdHash}\big(f,\ \mathrm{mdHash}(f, iv, a),\ b\big).$$
-*Proof.* `foldl` distributes over append: folding $a \mathbin{+\!\!+} b$ from
-$iv$ equals folding $b$ from the result of folding $a$. $\qquad\blacksquare$
-
-Lemma 3.3 is the structural engine of MD security: the construction is
-*memoryless* beyond its current chaining value, so any divergence between two
-runs is localized.
-
-### 3.2 The extraction theorem
-
-**Theorem 3.4 (Merkle–Damgård collision extraction).**
-Let $f : \mathrm{State} \to \mathrm{Block} \to \mathrm{State}$, let
-$iv : \mathrm{State}$, and let $m_1, m_2$ be messages with
-$$|m_1| = |m_2|, \qquad m_1 \neq m_2, \qquad \mathrm{mdHash}(f, iv, m_1) = \mathrm{mdHash}(f, iv, m_2).$$
-Then $\mathrm{HasCompressionCollision}(f)$ holds; moreover, the witnessing
-collision is produced explicitly by the proof.
-
-*Proof sketch (reverse induction on $m_1$).* We induct on $m_1$ using the
-*reverse* recursor (peeling the last block), generalizing over $m_2$.
-
-- **Base case ($m_1 = [\,]$).** Since $|m_1| = |m_2|$, also $m_2 = [\,]$, so
-  $m_1 = m_2$, contradicting $m_1 \neq m_2$. The base case is therefore
-  *vacuously discharged by contradiction* — crucially, it never produces a
-  spurious collision, which guards against vacuity.
-
-- **Inductive step ($m_1 = p_1 \mathbin{+\!\!+} [b_1]$).** Equal lengths force
-  $m_2 = p_2 \mathbin{+\!\!+} [b_2]$ for some prefix $p_2$ and block $b_2$ with
-  $|p_1| = |p_2|$. By Lemma 3.2,
-  $$f\big(\mathrm{mdHash}(f, iv, p_1),\ b_1\big) = f\big(\mathrm{mdHash}(f, iv, p_2),\ b_2\big).$$
-  Let $s_1 = \mathrm{mdHash}(f, iv, p_1)$ and $s_2 = \mathrm{mdHash}(f, iv, p_2)$.
-  Two cases:
-  - If $(s_1, b_1) \neq (s_2, b_2)$, then $(s_1, b_1)$ and $(s_2, b_2)$ form a
-    compression collision of $f$ directly. **Done.**
-  - If $(s_1, b_1) = (s_2, b_2)$, then $b_1 = b_2$ and $s_1 = s_2$, i.e.
-    $\mathrm{mdHash}(f, iv, p_1) = \mathrm{mdHash}(f, iv, p_2)$. Since
-    $m_1 \neq m_2$ but the last blocks agree, $p_1 \neq p_2$; and
-    $|p_1| = |p_2|$. The induction hypothesis applied to $p_1, p_2$ yields a
-    compression collision.
-
-Each recursive step strictly shrinks the message length, so termination is
-guaranteed; the recursion must halt in the first sub-case with an explicit
-$f$-collision. $\qquad\blacksquare$
-
-**Corollary 3.5 (Injectivity on fixed length).** If $f$ is collision-free, then
-for every $n$, $m \mapsto \mathrm{mdHash}(f, iv, m)$ is injective on messages of
-length $n$. *Proof.* Contrapositive of Theorem 3.4. $\qquad\blacksquare$
-
----
-
-## 4. The Equal-Length Boundary
-
-The equal-length hypothesis in Theorem 3.4 is necessary, not cosmetic.
-
-**Observation 4.1 (Length-extension collision).** Consider
-$f = \mathrm{mulCompress}$, $iv = 1$. The messages $[6]$ and $[2, 3]$ satisfy
-$$\mathrm{mdHash}(\mathrm{mulCompress}, 1, [6]) = 6 = 2 \cdot 3 = \mathrm{mdHash}(\mathrm{mulCompress}, 1, [2, 3]),$$
-with $[6] \neq [2, 3]$, yet they have *different lengths* ($1$ vs $2$). This
-collision does not arise from any failure of $f$ to distinguish equal-position
-inputs; it is a *free-start / length-extension* artifact of mixing message
-sizes. Theorem 3.4 correctly excludes it.
-
-**Remark 4.2 (MD strengthening).** Deployed hashes append an injective encoding
-of the message length as a final block (*Merkle–Damgård strengthening*). This
-forces colliding messages to agree on length and converts cross-length
-artifacts back into genuine compression collisions, generalizing Theorem 3.4 to
-arbitrary lengths. The present formalization isolates the result at its tight
-boundary, making the role of padding precise.
-
----
-
-## 5. Pigeonhole Inevitability
-
-Collision resistance cannot mean "no collisions exist."
-
-**Theorem 5.1 (Pigeonhole collision existence).** If the compression function
-$f : \mathrm{State} \times \mathrm{Block} \to \mathrm{State}$ has a domain
-strictly larger than its codomain (as is forced whenever $|\mathrm{Block}| \geq 2$
-and the state space is finite of matching size, i.e. genuine *compression*),
-then $f$ has a collision.
-*Proof sketch.* A function from a finite set to a strictly smaller finite set
-cannot be injective (pigeonhole). Two distinct inputs share an image, which is a
-compression collision. $\qquad\blacksquare$
-
-**Interpretation.** Theorem 5.1 shows collisions *always exist*. Theorem 3.4 is
-therefore not an existence statement; it is an *extraction* (reduction)
-statement: it converts the *act of finding* a hash collision into the *act of
-finding* a compression collision. Security is computational — about the
-infeasibility of search — not information-theoretic.
-
----
-
-## 6. From Algebraic Hardness to Hash Collisions
-
-We now instantiate the framework to anchor collision finding in a number-theoretic
-hard problem.
-
-**Lemma 6.1 (Multiplicative iterate is the product).**
-$$\mathrm{mdHash}(\mathrm{mulCompress}, 1, \ell) = \textstyle\prod_{x \in \ell} x.$$
-*Proof.* Unfolding `mdHash` and `mulCompress`, the left fold of multiplication
-from $1$ is exactly the list product (`List.prod_eq_foldl`). $\qquad\blacksquare$
-
-**Theorem 6.2 (Product collision is a compression collision).**
-If $S \subseteq \mathbb{N}$ has a product collision, then
-$\mathrm{HasCompressionCollision}(\mathrm{mulCompress})$.
-*Proof.* From $\mathrm{HasProductCollision}(S)$ obtain $a,b,c,d$ with
-$a\cdot b = c\cdot d$ and $\{a,b\} \neq \{c,d\}$ as multisets. We claim
-$(a,b)\neq(c,d)$: if $(a,b) = (c,d)$ then $a=c$ and $b=d$, whence the multisets
-$\{a,b\}$ and $\{c,d\}$ coincide, contradicting the hypothesis. Therefore
-$(a,b) \neq (c,d)$ while $\mathrm{mulCompress}(a,b) = a\cdot b = c\cdot d = \mathrm{mulCompress}(c,d)$,
-a compression collision. $\qquad\blacksquare$
-
-**Theorem 6.3 (Equal-product messages collide).**
-If $m_1, m_2$ are messages over $\mathbb{N}$ with $|m_1| = |m_2|$,
-$m_1 \neq m_2$, and $\prod m_1 = \prod m_2$, then
-$\mathrm{HasCompressionCollision}(\mathrm{mulCompress})$.
-*Proof.* By Lemma 6.1 the two iterated hashes equal the equal products, so
-$\mathrm{mdHash}(\mathrm{mulCompress}, 1, m_1) = \mathrm{mdHash}(\mathrm{mulCompress}, 1, m_2)$.
-Apply Theorem 3.4 (collision extraction) to the equal-length, distinct,
-colliding messages. $\qquad\blacksquare$
-
-**Theorem 6.4 (Concrete end-to-end collision).** The set $\{6, 10, 21, 35\}$
-yields an explicit MD collision: with $m_1 = [6, 35]$ and $m_2 = [10, 21]$,
-$$|m_1| = |m_2| = 2, \quad m_1 \neq m_2, \quad \textstyle\prod m_1 = 210 = \prod m_2,$$
-so $\mathrm{HasCompressionCollision}(\mathrm{mulCompress})$ holds.
-*Proof.* Immediate from Theorem 6.3 with the data above (all premises decidable
-and verified by computation). $\qquad\blacksquare$
-
-### 6.1 The factorization connection
-
-The set $\{6, 10, 21, 35\}$ is *product-free* (no product of two members lies in
-the set) yet has the product collision $6\cdot 35 = 10\cdot 21 = 210$ with
-$\{6,35\} \neq \{10,21\}$. This separates the naive "product-free" condition from
-genuine collision-freeness, and it is exactly the non-unique factorization of
-$210$ over this generator set. In the factorization hierarchy
-$$\text{unique factorization} \;\Rightarrow\; \text{collision-free} \;\Rightarrow\; \text{product-free},$$
-both implications are strict, and primes are collision-free precisely by the
-fundamental theorem of arithmetic. Collision finding for $\mathrm{mulCompress}$
-is therefore *finding a second factorization*; scaling block sizes upward, this
-is the integer factoring problem.
-
----
-
-### 6.2 A fully traced execution
-
-It is instructive to trace the entire pipeline on the witness, since every step
-is decidable and concrete. Start from the generator set $S = \{6, 10, 21, 35\}$.
-
-1. **Algebraic source.** Enumerate pairwise products: $6\cdot 10 = 60$,
-   $6\cdot 21 = 126$, $6\cdot 35 = 210$, $10\cdot 21 = 210$, $10\cdot 35 = 350$,
-   $21\cdot 35 = 735$. The value $210$ repeats, witnessed by the distinct pairs
-   $\{6, 35\}$ and $\{10, 21\}$. This is a product collision (Definition 2.4).
-2. **Compression collision (Theorem 6.2).** Since $\{6,35\}\neq\{10,21\}$ we
-   have $(6,35)\neq(10,21)$, while $\mathrm{mulCompress}(6,35) = 210 =
-   \mathrm{mulCompress}(10,21)$. This is a compression collision of
-   multiplication.
-3. **Iterated hash (Lemma 6.1).** With $iv = 1$,
-   $\mathrm{mdHash}(\mathrm{mulCompress}, 1, [6,35]) = (1\cdot 6)\cdot 35 = 210$
-   and likewise $\mathrm{mdHash}(\mathrm{mulCompress}, 1, [10,21]) = 210$.
-4. **MD collision (Theorem 6.3).** The messages $[6,35]$ and $[10,21]$ are
-   distinct, of equal length $2$, and hash to the same digest $210$.
-5. **Extraction (Theorem 3.4).** Peeling the last block compares the inputs to
-   the final $\mathrm{mulCompress}$ step: chaining value $6$ with block $35$
-   versus chaining value $10$ with block $21$. These differ as pairs but agree
-   in output ($210$), so the extracted compression collision is
-   $((6, 35), (10, 21))$.
-
-Every premise above (membership, products, lengths, distinctness) is finite and
-machine-checkable, which is why the concrete theorem closes by computation.
-
-## 7. Algorithms
-
-### 7.1 Iterated hash evaluation
-
-$\mathrm{mdHash}$ is computed by a single left fold (Lemma 3.1–3.3), in
-$\Theta(n)$ compression-function applications for a message of $n$ blocks and
-$O(1)$ auxiliary state. This is the standard streaming evaluation used by all
-MD-based hashes.
-
-### 7.2 Collision extraction
-
-Theorem 3.4 is constructive and yields an algorithm: given two equal-length
-colliding messages, compare them block by block from the *end*, recomputing
-chaining values for the shrinking prefixes, and emit the first position where
-the inputs to $f$ differ but the outputs agree. The procedure performs $O(n)$
-chaining recomputations (each $O(n)$ folds), hence $O(n^2)$ compression calls in
-a naive implementation, or $O(n)$ with cached prefix chaining values.
-
-### 7.3 Product-collision search (algebraic source)
-
-To find a collision of $\mathrm{mulCompress}$ over a generator set $S$, search
-for $a, b, c, d \in S$ with $a\cdot b = c\cdot d$ and $\{a,b\} \neq \{c,d\}$ —
-equivalently, a number with two distinct factorizations over $S$. By Theorem 6.2
-the result is a compression collision, and by Theorem 6.3 an MD hash collision.
-
----
-
-## 8. Applications
-
-- **Domain extension with security transfer.** Theorem 3.4 justifies building a
-  variable-length collision-resistant hash from a fixed-input collision-resistant
-  compression function, the design principle behind SHA-2.
-- **Hardness-based hashing.** Section 6 instantiates "collision resistance from
-  a hard problem": collision finding for the multiplicative hash *is* second
-  factorization, illustrating the reduction template used by VSH and other
-  number-theoretic hashes.
-- **Pedagogy and verification.** The fully constructive, probability-free
-  treatment makes the MD security argument suitable for formal verification and
-  teaching, with an explicit, runnable witness.
-
----
-
-## 9. Discussion
-
-The MD preservation theorem is often stated probabilistically ("a collision
-finder for the hash yields a collision finder for the compression function with
-the same success probability"). Our development shows that the underlying
-*reduction* is entirely deterministic and combinatorial: probabilities enter
-only when one quantifies the *resources* of an adversary, not the logical core.
-Separating these layers clarifies what MD actually guarantees — and, via the
-equal-length boundary and pigeonhole inevitability, what it does *not*.
-
-The multiplicative instantiation is deliberately weak (small products factor
-trivially) but exact: it makes the equivalence "collision $\Leftrightarrow$
-second factorization" literal and exhibits a single witness, $210$, traversing
-the whole pipeline. Replacing multiplication with exponentiation modulo a hard
-modulus turns the same skeleton into a candidate cryptographic hash.
-
-Three further points deserve emphasis. First, the choice of the *reverse*
-recursor in Theorem 3.4 is not incidental: a forward induction would have to
-guess where the two messages first diverge, whereas peeling from the end aligns
-perfectly with the last-block structure of the MD recurrence (Lemma 3.2), so the
-case split is between "the final compression inputs already differ" and "recurse
-on strictly shorter prefixes." This is what makes the extraction *local* and
-linear. Second, the equal-length hypothesis and the pigeonhole result together
-delimit the theorem from both sides: the former excludes cross-length artifacts
-that are not compression failures, and the latter forbids reading the theorem as
-an existence claim, since collisions always exist under genuine compression.
-Third, the bridge to factorization is asymmetric in an illuminating way: the
-forward direction (a second factorization yields a collision) is a one-line
-consequence of injectivity of pairing, whereas the converse (a collision yields
-a nontrivial factor) is the cryptographically substantive direction and is
-flagged as future work. The gap between these two directions is exactly the gap
-between "this map is a hash" and "this hash is as hard as factoring."
-
-A final methodological remark: because the development is constructive and
-probability-free, it is amenable to formal verification and yields executable
-witnesses (as in the companion numerical demonstrations). This contrasts with
-textbook presentations that fold the reduction into asymptotic, probabilistic
-language from the outset, where the underlying combinatorial identity can be
-hard to see.
-
----
-
-## 10. Future Directions
-
-1. **Length-strengthened MD removes the equal-length hypothesis.** Define
-   padding $\mathrm{pad}(m) = m \mathbin{+\!\!+} [\mathrm{encodeLength}(|m|)]$ with
-   an injective length encoder. Then a collision of $\mathrm{mdHash}(f, iv, \cdot)$
-   on $\mathrm{pad}(m_1), \mathrm{pad}(m_2)$ with $m_1 \neq m_2$ (arbitrary
-   lengths) yields a compression collision — no equal-length assumption. The
-   appended length block forces the final compression to compare encoded
-   lengths, converting cross-length artifacts into genuine last-block collisions.
-   This is a thin wrapper over the existing last-block case analysis.
-
-2. **Prefix-free domains are equivalent to length-padding for CR preservation.**
-   On a prefix-free message set, collision resistance is preserved *without*
-   padding, and prefix-freeness is the minimal combinatorial hypothesis making
-   the unequal-length recursion terminate in a compression collision. The only
-   failure mode in the unequal-length case is one message being a processed
-   prefix of the other; prefix-freeness deletes exactly that case.
-
-3. **The multiplicative hash's collision-finding is exactly integer factoring.**
-   Finding a collision of $\mathrm{mulCompress}$ on $b$-bit blocks is
-   polynomial-time equivalent to factoring a $2b$-bit integer; hence the
-   multiplicative MD hash is collision resistant iff factoring is hard.
-   Theorem 6.2 supplies the forward map (a non-unique factorization is a
-   compression collision); the converse reduction (collision $\Rightarrow$
-   nontrivial factor) completes the equivalence and can be tested on small
-   composites immediately.
-
-4. **Pigeonhole gap quantifies unavoidable collision density.** For
-   $f : \mathrm{State}\times\mathrm{Block} \to \mathrm{State}$ with
-   $|\mathrm{Block}| = k$, the number of colliding input pairs is bounded below
-   by a counting (fiber-size) estimate: compression by factor $k$ forces a
-   quantitatively dense collision set, not merely a single collision,
-   strengthening Theorem 5.1 from one collision to many.
-
----
-
-## 11. Conclusion
-
-We have presented a constructive, machine-checked account of Merkle–Damgård
-collision-resistance preservation, pinned its validity boundary, contextualized
-it against pigeonhole inevitability, and bridged it to an explicit algebraic
-hardness source. The chain *hard arithmetic $\Rightarrow$ compression collision
-$\Rightarrow$ hash collision* is realized end to end, with the number $210$ as a
-fully worked witness. The development demonstrates that the security heart of
-iterated hashing is a transparent piece of discrete mathematics, anchored — in
-the multiplicative case — to the venerable hardness of factoring.
+A cryptographic hash function maps inputs of arbitrary length to fixed-length
+digests. Its defining security property, **collision resistance**, asks that it
+be computationally infeasible to find two distinct inputs with the same digest.
+Because the digest space is finite while the input space is unbounded,
+collisions exist in abundance; collision resistance is therefore an inherently
+computational, not information-theoretic, property.
+
+Two pillars support practical CRHF design. The first is the **Merkle–Damgård
+domain extension**: a compression function on fixed-size inputs is iterated to
+hash arbitrarily long messages, and one proves that any collision in the iterate
+yields a collision in the compression function. The second is **basing the
+compression function on a hard problem**, so that finding a collision is
+provably at least as hard as solving a well-studied computational problem (e.g.
+integer factorization or discrete logarithm).
+
+A subtle but crucial fact governs the second pillar: one *cannot* build a CRHF
+from an arbitrary one-way function by a black-box reduction (Simon 1998).
+Additional algebraic structure is required. The classical sufficient structure
+is a **claw-free pair of permutations** (Damgård 1987). This paper formalizes,
+constructively and without unproven assumptions, the complete chain
+
+$$\text{claw-free pair (hard problem)} \;\Longrightarrow\; \text{collision-free compression}\;\Longrightarrow\;\text{collision-resistant iterated hash},$$
+
+with the *collision $\Leftrightarrow$ claw* equivalence as its structural core.
+
+### 1.1 Contributions
+
+1. A formal Merkle–Damgård model `mdHash` and the collision-extraction theorem
+   `md_collision_extract` with the necessity of equal length made explicit.
+2. The Damgård compression function `clawCompress` and the structural
+   equivalence `claw_iff_compression_collision` between its collisions and claws,
+   stated at the tight injectivity boundary.
+3. The headline reduction `clawFree_mdHash_injOn_length`: claw-freeness implies
+   per-length injectivity (collision resistance) of the iterated hash.
+4. The pigeonhole inevitability theorem `compression_collision_of_card`,
+   pinning down the computational nature of the security notion.
+5. An explicit non-vacuity witness over $\mathbb{Z}/2$ (`concrete_claw`,
+   `concrete_compression_collision`).
+
+## 2. The Merkle–Damgård Construction
+
+Throughout, $\text{State}$ and $\text{Block}$ are arbitrary types, and
+$f : \text{State} \to \text{Block} \to \text{State}$ is a compression function.
+
+### Definition 2.1 (Iterated hash, `mdHash`).
+For an initialization vector $iv : \text{State}$ and a message
+$msg : \text{List Block}$,
+$$\text{mdHash}(f, iv, msg) \;=\; \text{foldl}\,(f, iv, msg),$$
+the left fold of $f$ over the blocks of $msg$ starting from $iv$.
+
+### Definition 2.2 (Compression collision, `HasCompressionCollision`).
+$f$ *has a collision* iff there exist $(s,b)$ and $(s',b')$ with
+$$(s,b) \neq (s',b') \quad\text{and}\quad f(s,b) = f(s',b').$$
+
+### Basic identities.
+The fold satisfies, by definition and a standard `foldl` lemma:
+
+- `mdHash_nil`: $\text{mdHash}(f, iv, [\,]) = iv.$
+- `mdHash_concat`: $\text{mdHash}(f, iv, \ell \,{+}{+}\, [b]) = f\big(\text{mdHash}(f, iv, \ell), b\big).$
+- `mdHash_append`: $\text{mdHash}(f, iv, a \,{+}{+}\, b) = \text{mdHash}\big(f,\ \text{mdHash}(f, iv, a),\ b\big).$
+
+### Theorem 2.3 (Collision extraction, `md_collision_extract`).
+Let $m_1, m_2 : \text{List Block}$ with $|m_1| = |m_2|$, $m_1 \neq m_2$, and
+$\text{mdHash}(f, iv, m_1) = \text{mdHash}(f, iv, m_2)$. Then $f$ has a
+compression collision.
+
+*Proof sketch.* Reverse (last-block) induction on $m_1$, generalizing over
+$m_2$. The empty base case is impossible: if $m_1 = [\,]$ then equal length
+forces $m_2 = [\,]$, contradicting $m_1 \neq m_2$. For the inductive step write
+$m_1 = \ell_1 \,{+}{+}\, [b_1]$ and, by equal length and nonemptiness,
+$m_2 = \ell_2 \,{+}{+}\, [b_2]$. By `mdHash_concat`,
+$f(c_1, b_1) = f(c_2, b_2)$ where $c_i = \text{mdHash}(f, iv, \ell_i)$. If
+$(c_1, b_1) \neq (c_2, b_2)$ we have the collision directly. Otherwise
+$c_1 = c_2$ and $b_1 = b_2$; then $\ell_1 \neq \ell_2$ (else $m_1 = m_2$) are
+equal-length prefixes with $\text{mdHash}(f, iv, \ell_1) = \text{mdHash}(f, iv, \ell_2)$,
+and the induction hypothesis applies. $\square$
+
+### Corollary 2.4 (Preservation, `mdHash_injOn_length`).
+If $f$ has no compression collision, then for every $iv$ the map
+$m \mapsto \text{mdHash}(f, iv, m)$ is injective on each fixed message length:
+$|m_1| = |m_2|$ and $\text{mdHash}(f, iv, m_1) = \text{mdHash}(f, iv, m_2)$ imply
+$m_1 = m_2$.
+
+*Proof.* Contrapositive of Theorem 2.3. $\square$
+
+### Remark 2.5 (Necessity of equal length).
+Without length normalization, different-length messages can collide via a
+free-start (IV) collision rather than a genuine compression collision, so the
+equal-length hypothesis is at the tight boundary. (Concrete practice closes this
+gap with length-strengthening padding, "MD-strengthening".)
+
+### Theorem 2.6 (Inevitability, `compression_collision_of_card`).
+Suppose $\text{State}$ and $\text{Block}$ are finite, $\text{State}$ is
+nonempty, and $|\text{Block}| > 1$. Then *every* compression function $f$ has a
+collision.
+
+*Proof sketch.* $|\text{State} \times \text{Block}| = |\text{State}|\cdot|\text{Block}| > |\text{State}|$
+since $|\text{Block}| > 1$ and $|\text{State}| > 0$. The map
+$(s,b) \mapsto f(s,b)$ from a larger finite set to a smaller one cannot be
+injective (pigeonhole), so two distinct inputs share an output. $\square$
+
+This theorem is the formal statement that collision resistance must be
+*computational*: collisions are guaranteed to exist; security lies in the
+infeasibility of *finding* one.
+
+## 3. Claw-Free Pairs and the Damgård Compression Function
+
+Let $X$ be a type and $g_0, g_1 : X \to X$.
+
+### Definition 3.1 (Claw, `IsClaw` / `HasClaw`).
+A *claw* for $(g_0, g_1)$ is a pair $(x, y)$ with $g_0(x) = g_1(y)$. The pair
+*has a claw* iff $\exists\, x\, y,\ g_0(x) = g_1(y)$. Its negation,
+**claw-freeness**, is the cryptographic hardness assumption.
+
+### Definition 3.2 (Damgård compression, `clawCompress`).
+$$\text{clawCompress}(g_0, g_1)(s, b) \;=\; \begin{cases} g_1(s) & b = \text{true} \\ g_0(s) & b = \text{false} \end{cases}$$
+i.e. `bif b then g₁ s else g₀ s`. The reduction equations `clawCompress_false`
+and `clawCompress_true` record $\text{clawCompress}(g_0,g_1)(s,\text{false}) = g_0(s)$
+and $\text{clawCompress}(g_0,g_1)(s,\text{true}) = g_1(s)$.
+
+### Theorem 3.3 (Claw $\Rightarrow$ collision, `claw_to_compression_collision`).
+If $(g_0, g_1)$ has a claw, then $\text{clawCompress}(g_0, g_1)$ has a
+compression collision.
+
+*Proof.* From a claw $g_0(x) = g_1(y)$, the inputs $(x, \text{false})$ and
+$(y, \text{true})$ are distinct (their block bits differ) and map to the same
+output $g_0(x) = g_1(y)$. $\square$
+
+### Theorem 3.4 (Collision $\Rightarrow$ claw, `clawCompress_collision_to_claw`).
+If $g_0$ and $g_1$ are injective and $\text{clawCompress}(g_0, g_1)$ has a
+compression collision, then $(g_0, g_1)$ has a claw.
+
+*Proof.* Let $(s, b) \neq (s', b')$ collide. Case on $(b, b')$:
+- $(\text{false}, \text{false})$: collision is $g_0(s) = g_0(s')$; injectivity
+  of $g_0$ gives $s = s'$, so $(s, b) = (s', b')$, contradiction.
+- $(\text{true}, \text{true})$: symmetric via injectivity of $g_1$,
+  contradiction.
+- $(\text{false}, \text{true})$: collision is $g_0(s) = g_1(s')$, a claw
+  $(s, s')$.
+- $(\text{true}, \text{false})$: collision is $g_1(s) = g_0(s')$, i.e.
+  $g_0(s') = g_1(s)$, a claw $(s', s)$. $\square$
+
+### Theorem 3.5 (Equivalence, `claw_iff_compression_collision`).
+For injective $g_0, g_1$,
+$$\text{HasClaw}(g_0, g_1) \;\Longleftrightarrow\; \text{HasCompressionCollision}\big(\text{clawCompress}(g_0, g_1)\big).$$
+
+*Proof.* Combine Theorems 3.3 and 3.4. $\square$
+
+### Remark 3.6 (Tightness of injectivity).
+Injectivity is necessary for the $\Rightarrow$ direction: without it, a same-bit
+collision $g_0(s) = g_0(s')$ with $s \neq s'$ would be a compression collision
+that is *not* a claw. The equivalence is thus stated at its tight boundary.
+
+### Corollary 3.7 (Claw-free $\Rightarrow$ collision-free, `clawFree_compression_collisionFree`).
+For injective $g_0, g_1$, if $(g_0, g_1)$ is claw-free then
+$\text{clawCompress}(g_0, g_1)$ has no compression collision.
+
+*Proof.* Contrapositive of Theorem 3.4. $\square$
+
+## 4. The Headline Reduction: Hard Problem $\Rightarrow$ CRHF
+
+### Theorem 4.1 (MD lift, `md_clawCompress_collision_to_claw`).
+Let $g_0, g_1$ be injective, $iv : X$, and $m_1, m_2 : \text{List Bool}$ with
+$|m_1| = |m_2|$, $m_1 \neq m_2$, and
+$\text{mdHash}(\text{clawCompress}(g_0,g_1), iv, m_1) = \text{mdHash}(\text{clawCompress}(g_0,g_1), iv, m_2)$.
+Then $(g_0, g_1)$ has a claw.
+
+*Proof.* By Theorem 2.3 the MD collision yields a compression collision of
+$\text{clawCompress}(g_0, g_1)$; by Theorem 3.4 that collision is a claw.
+$\square$
+
+### Theorem 4.2 (Headline, `clawFree_mdHash_injOn_length`).
+Let $g_0, g_1$ be injective and claw-free, and let $iv : X$. Then for all
+$m_1, m_2 : \text{List Bool}$ with $|m_1| = |m_2|$,
+$$\text{mdHash}(\text{clawCompress}(g_0,g_1), iv, m_1) = \text{mdHash}(\text{clawCompress}(g_0,g_1), iv, m_2) \;\Longrightarrow\; m_1 = m_2.$$
+That is, the iterated Damgård hash is injective on each fixed message length: a
+claw-free hard problem yields a collision-resistant variable-length hash.
+
+*Proof.* Suppose $m_1 \neq m_2$. Theorem 4.1 produces a claw, contradicting
+claw-freeness; hence $m_1 = m_2$. $\square$
+
+This is the constructive reduction "claw-free pair $\Rightarrow$ CRHF": any
+attack producing an equal-length collision of the iterated hash is mechanically
+transformed into a claw, hence into a solution of the underlying hard problem.
+
+## 5. Non-Vacuity: An Explicit Witness over $\mathbb{Z}/2$
+
+To certify that all hypotheses are simultaneously satisfiable, the development
+exhibits the smallest nontrivial example on $X = \mathbb{Z}/2$.
+
+### Definition 5.1 (`g0Ex`, `g1Ex`).
+$g_0^{\text{ex}} = \text{id}$ and $g_1^{\text{ex}}(x) = x + 1$ on $\mathbb{Z}/2$.
+
+### Lemma 5.2 (`g0Ex_injective`, `g1Ex_injective`).
+Both $g_0^{\text{ex}}$ and $g_1^{\text{ex}}$ are injective.
+
+*Proof.* The identity is injective; $x \mapsto x + 1$ is injective by
+left-cancellation of addition. $\square$
+
+### Proposition 5.3 (`concrete_claw`).
+$(g_0^{\text{ex}}, g_1^{\text{ex}})$ has a claw, since
+$g_0^{\text{ex}}(1) = 1 = 0 + 1 = g_1^{\text{ex}}(0)$.
+
+### Corollary 5.4 (`concrete_compression_collision`).
+$\text{clawCompress}(g_0^{\text{ex}}, g_1^{\text{ex}})$ has a compression
+collision (apply Theorem 3.3 to Proposition 5.3).
+
+Thus the equivalence of Theorem 3.5 and the reduction of Theorem 4.2 are not
+vacuously true: there is a genuine instance realizing every hypothesis. (Note
+this witness is deliberately *easy* — it demonstrates the structure, not
+hardness; cryptographic instances place hardness in concrete number theory.)
+
+## 6. Algorithmic Content
+
+The proofs are constructive and immediately give algorithms.
+
+**Algorithm A (MD collision extraction).** Given equal-length colliding
+messages $m_1 \neq m_2$, walk both from the last block toward the first. At each
+position compare $(c_i, b_i)$ (chaining value, block). The first position where
+the pairs differ but the outputs agree is an explicit compression collision.
+Cost: $O(|m_1|)$ compression evaluations.
+
+**Algorithm B (Collision $\to$ claw).** Given a compression collision
+$(s,b) \neq (s',b')$ of $\text{clawCompress}$, return the claw determined by the
+differing bits: $(s, s')$ if $b = \text{false}, b' = \text{true}$, or
+$(s', s)$ if $b = \text{true}, b' = \text{false}$ (same-bit cases cannot occur
+for injective $g_0, g_1$). Cost: $O(1)$.
+
+**Algorithm C (Full attack-to-claw reduction).** Compose A then B: an
+equal-length collision of the iterated Damgård hash is turned into a claw, hence
+into a solution of the hard problem. This is the contrapositive of Theorem 4.2
+realized as a reduction, the cornerstone of provable security: any hash
+collision finder yields a claw finder of comparable cost.
+
+## 7. Applications and Discussion
+
+**Provable-security template.** Theorem 4.2 is the abstract skeleton of
+factoring- and discrete-log-based hashes. Concrete claw-free pairs are built so
+that a claw encodes (e.g.) a nontrivial square root modulo a composite or a
+discrete-log relation; Theorem 4.2 then certifies the resulting hash is as
+collision-resistant as the number-theoretic problem is hard.
+
+**Why not one-way functions alone?** Simon (1998) established a black-box
+separation: no black-box construction turns an arbitrary one-way function into a
+CRHF. The claw-free pair supplies exactly the missing structure (collision
+$\equiv$ claw) that makes the reduction go through, which is why the present
+development is stated for claw-free pairs rather than generic one-way functions.
+
+**Inevitability vs. resistance.** Theorem 2.6 shows collisions always exist for
+finite domains; the security claim of Theorem 4.2 is therefore correctly about
+*finding* collisions (which would yield a claw) and not their nonexistence.
+
+## 8. Future Directions
+
+(See the PACKAGE future-directions field for the full Phase A statement.) Two
+guiding conjectures: (1) over finite $X$, two permutations *always* admit a
+claw, so the hardness must reside in *inversion difficulty* rather than
+combinatorial non-existence — connecting `claw_iff_compression_collision` with
+the pigeonhole theorem `compression_collision_of_card`; (2) prefix-free domain
+separation (MD-strengthening) removes the length-extension collision family by
+breaking the right-congruence kernel of plain concatenation.
+
+## 9. Conclusion
+
+We have given a constructive, self-contained chain from an abstract hard problem
+(claw-freeness of a permutation pair) to a collision-resistant variable-length
+hash, with the *collision $\Leftrightarrow$ claw* equivalence as the structural
+core and Merkle–Damgård extraction as the domain-extension engine. The
+development is stated at tight boundaries (equal length, injectivity), is
+provably non-vacuous, and exposes the computational nature of collision
+resistance via the pigeonhole inevitability theorem.
+
+## References
+
+1. I. Damgård, *Collision free hash functions and public key signature
+   schemes*, EUROCRYPT 1987.
+2. R. Merkle, *One way hash functions and DES*, CRYPTO 1989.
+3. D. Simon, *Finding collisions on a one-way street: Can secure hash functions
+   be based on general assumptions?*, EUROCRYPT 1998.
