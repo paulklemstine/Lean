@@ -629,5 +629,6 @@
   "f8a707b1": "twin_prime_gaps_zhang_maynard_formalization.json",
   "2ff65a6a": "bridge_tropical_geometry_as_a_limit_of_classical_a.json",
   "e8be0a2a": "eml_transseries_asymptotic_expansions_beyond_power.json",
-  "4398a39a": "proof_automation_custom_lean_4_tactics.json"
+  "4398a39a": "proof_automation_custom_lean_4_tactics.json",
+  "935abbfb": "character_class_contradiction.json"
 }
