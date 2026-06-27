@@ -1753,7 +1753,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f31c8198",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1766,7 +1766,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -3436,7 +3436,7 @@
       "OEIS A080170",
       "Ralf Stephan's OEIS conjectures"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e08d081",
     "description": "For k ≥ 2, let F(k) = gcd_{q=2}^{k} (qk choose k). We conjecture that F(k) = 1 if and only if k is not a prime power. This generalizes the known result for D(k) = gcd_{q=2}^{k+1} (qk choose k) which equals 1 precisely when k+1 is not a prime power (in the sense that the largest prime-power divisor P of k+1 satisfies (k+1)/P > P). The conjecture can be approached using similar techniques: a finite-difference argument shows only primes dividing k can divide F(k), Lucas' theorem reduces the problem to base-p digit analysis, and a digit-box stabilizer theorem determines when F(k) = 1.",
     "domain_bridges": [
       "Binomial coefficient identities",
@@ -3453,7 +3453,7 @@
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T08:56:07.087605+00:00",
     "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
   },
@@ -4467,7 +4467,7 @@
       "mathlib: NumberTheory.ArithmeticFunction",
       "mathlib: Analysis.Asymptotics.Asymptotics"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ac2d584",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domain_bridges": [
       "factorial divisibility to p-adic valuation inequalities",
@@ -4483,7 +4483,7 @@
     "proof_strategy": "Use Legendre's formula to translate a_1! ... a_k! | n! into simultaneous digit-sum inequalities. The paper proves the upper bound from the binary digit-sum obstruction and a density-one lower bound from mixed 2--3 rarefaction. The conjectural strengthening is that the binary obstruction is asymptotically sharp for almost all n. A proof would likely construct, for almost every n, admissible tuples a_i whose total excess is ((k - 1) / log 2 - o(1)) log n, while controlling all odd-prime valuation constraints by showing that the binary carry construction can be locally repaired at negligible logarithmic cost.",
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -4613,7 +4613,7 @@
       "Balogh_Lidicky_Mubayi_Pfender_Volec_star_inducibility",
       "Basit_Granet_Horsley_Kundgen_Staden_semi_inducibility"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3ff7cf5",
     "description": "For every integer k ≥ 2, there exists an open interval I_k ⊂ (0,1) such that for all β ∈ I_k, the minimum fixed-density semi-inducibility of the red-blue star S_{k,1} (with k red edges and 1 blue edge from a distinguished center) at density β strictly exceeds min(β^k(1−β), β(1−β)^k), the envelope formed by the quasi-clique and quasi-star constructions. This generalizes the paper's result for S_{2,1}, where the true minimum is given by a three-class complement-split family rather than the natural quasi-star/quasi-clique endpoint profile on an interval around β = 1/2. For S_{k,1}, the conjectured minimizer is a step-function graphon with at most k+1 classes.",
     "domain_bridges": [
       "graph_limits",
@@ -4629,7 +4629,7 @@
     "proof_strategy": "Extend the paper's transfer argument with degree-power tie-breaking to the functional f_k(d) = d(d−1)⋯(d−k+1)(n−1−d). Reduce the graphon variational problem to almost-regular, threshold, and finite-staircase optimizations. Show that any graphon achieving the quasi-star/quasi-clique envelope can be perturbed into a (k+1)-class complement-split graphon that strictly decreases the S_{k,1} density at the same edge density, using a Lagrangian comparison on the class-structured ansatz. The key step is proving that the complement-split family dominates the envelope on an interval whose width grows with k.",
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T20:57:57.730978+00:00",
     "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
@@ -12585,7 +12585,7 @@
       "mathlib/GroupTheory/Cyclic",
       "mathlib/Combinatorics/Circulant"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b77b74ce",
     "description": "For a circulant graph $C_{p^k}(R)$ with $p$ prime and $k\\ge 1$, consider its Type‑2 isomorphism graph $\\mathcal G_{2}(C_{p^k}(R))$ whose vertices are all circulants Type‑2‑isomorphic to $C_{p^k}(R)$ (with respect to any divisor $m>1$ of $p^k$) and whose edges join two vertices when they are related by a single Type‑2 transformation. The conjecture states that the graph diameter of $\\mathcal G_{2}(C_{p^k}(R))$ is exactly $k$, i.e. the exponent of the cyclic group $\\mathbb Z_{p^k}$.\n\nFormally: let $\\mathcal V$ be the set of all $C_{p^k}(S)$ that are Type‑2‑isomorphic to $C_{p^k}(R)$. Define a directed edge $C_{p^k}(S) \\to C_{p^k}(T)$ whenever there exists a divisor $m\\mid p^k$, $m>1$, and a unit $x\\in\\mathbb Z_{p^k}^*$ such that $T = xS$ after the reflexive reduction modulo $p^k$ and $\\gcd(p^k, x)=m$. Let $\\mathcal G_{2}$ be the underlying undirected graph. Then the conjecture is:\n\n$$\\operatorname{diam}(\\mathcal G_{2}(C_{p^k}(R))) = k.$$",
     "domain_bridges": [
       "Algebraic Graph Theory",
@@ -12602,7 +12602,7 @@
     "proof_strategy": "1. Formalise circulant graphs as simple graphs on `fin n` with edge set `{(i, i + r) | r ∈ R}` using `simple_graph`. 2. Define the Type‑2 transformation on a set `R` via a divisor `m` of `n` and a unit `x` with `gcd n x = m`. 3. Build the Type‑2 isomorphism graph `G₂` as a finite simple graph whose vertex type is `circulant n`. 4. Prove that for `n = p^k` the group of units modulo `p^k` is a cyclic group of order `p^{k-1}(p-1)`. 5. Show that any two Type‑2‑isomorphic circulants can be connected by a sequence of at most `k` transformations, using the filtration of divisors `p, p^2, …, p^k`. 6. Construct explicit examples attaining distance `k` (e.g., starting from the generating set `{1}` and applying successive multiplications by `p` modulo `p^k`). 7. Conclude that the diameter is exactly `k`.  The proof will rely on lemmas about the structure of the unit group, the behaviour of reflexive reduction, and induction on `k`.",
     "research_mode": "team",
     "source_exp_id": "2606.20984v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T11:06:01.654512+00:00",
     "title": "Diameter of the Type‑2 isomorphism graph equals the exponent of the underlying cyclic group for prime‑power circulants"
   },

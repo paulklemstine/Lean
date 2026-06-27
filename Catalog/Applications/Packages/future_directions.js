@@ -1314,7 +1314,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f31c8198",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1324,7 +1324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -2208,7 +2208,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Degree-One Triviality of Grassmann Schemes $J_q(n,2)$ for $n \\ge q+2$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e08d081",
     "description": "For k \u2265 2, let F(k) = gcd_{q=2}^{k} (qk choose k). We conjecture that F(k) = 1 if and only if k is not a prime power. This generalizes the known result for D(k) = gcd_{q=2}^{k+1} (qk choose k) which equals 1 precisely when k+1 is not a prime power (in the sense that the largest prime-power divisor P of k+1 satisfies (k+1)/P > P). The conjecture can be approached using similar techniques: a finite-difference argument shows only primes dividing k can divide F(k), Lucas' theorem reduces the problem to base-p digit analysis, and a digit-box stabilizer theorem determines when F(k) = 1.",
     "domains": [
       "Pythagorean"
@@ -2217,7 +2217,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T08:56:07.087605+00:00",
     "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
   },
@@ -2726,7 +2726,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ac2d584",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domains": [
       "Bridges"
@@ -2735,7 +2735,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -2798,7 +2798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Base-b Cusick Bias for Sum-of-Digits Increments"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e3ff7cf5",
     "description": "For every integer k \u2265 2, there exists an open interval I_k \u2282 (0,1) such that for all \u03b2 \u2208 I_k, the minimum fixed-density semi-inducibility of the red-blue star S_{k,1} (with k red edges and 1 blue edge from a distinguished center) at density \u03b2 strictly exceeds min(\u03b2^k(1\u2212\u03b2), \u03b2(1\u2212\u03b2)^k), the envelope formed by the quasi-clique and quasi-star constructions. This generalizes the paper's result for S_{2,1}, where the true minimum is given by a three-class complement-split family rather than the natural quasi-star/quasi-clique endpoint profile on an interval around \u03b2 = 1/2. For S_{k,1}, the conjectured minimizer is a step-function graphon with at most k+1 classes.",
     "domains": [
       "Pythagorean"
@@ -2807,7 +2807,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T20:57:57.730978+00:00",
     "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
@@ -7130,7 +7130,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimal Added Vertices in DPLAN's Orthogonal Floor Plan Mode"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b77b74ce",
     "description": "For a circulant graph $C_{p^k}(R)$ with $p$ prime and $k\\ge 1$, consider its Type\u20112 isomorphism graph $\\mathcal G_{2}(C_{p^k}(R))$ whose vertices are all circulants Type\u20112\u2011isomorphic to $C_{p^k}(R)$ (with respect to any divisor $m>1$ of $p^k$) and whose edges join two vertices when they are related by a single Type\u20112 transformation. The conjecture states that the graph diameter of $\\mathcal G_{2}(C_{p^k}(R))$ is exactly $k$, i.e. the exponent of the cyclic group $\\mathbb Z_{p^k}$.\n\nFormally: let $\\mathcal V$ be the set of all $C_{p^k}(S)$ that are Type\u20112\u2011isomorphic to $C_{p^k}(R)$. Define a directed edge $C_{p^k}(S) \\to C_{p^k}(T)$ whenever there exists a divisor $m\\mid p^k$, $m>1$, and a unit $x\\in\\mathbb Z_{p^k}^*$ such that $T = xS$ after the reflexive reduction modulo $p^k$ and $\\gcd(p^k, x)=m$. Let $\\mathcal G_{2}$ be the underlying undirected graph. Then the conjecture is:\n\n$$\\operatorname{diam}(\\mathcal G_{2}(C_{p^k}(R))) = k.$$",
     "domains": [
       "Pythagorean",
@@ -7140,7 +7140,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20984v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T11:06:01.654512+00:00",
     "title": "Diameter of the Type\u20112 isomorphism graph equals the exponent of the underlying cyclic group for prime\u2011power circulants"
   },
@@ -7621,7 +7621,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd8b8392",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -7631,7 +7631,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
