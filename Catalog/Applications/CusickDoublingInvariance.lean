@@ -79,7 +79,7 @@ is exactly `3/4`, strictly above `1/2`, so the bias `1/4` is genuine.  The
 doubling invariance is an honest `↔`, both directions proved, not a one-way bound.
 -/
 
-import Catalog.Applications.CusickDensityWitness
+import Applications.CusickDensityWitness
 
 open Nat Finset
 

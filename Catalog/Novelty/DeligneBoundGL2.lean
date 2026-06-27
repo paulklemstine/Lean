@@ -58,7 +58,7 @@ trace `a_p`, determinant `p`, Eichler–Shimura relation, and Weil eigenvalues o
 `√p`.
 -/
 import Mathlib
-import Catalog.Novelty.EichlerShimuraGL2
+import Novelty.EichlerShimuraGL2
 
 open Polynomial Matrix EichlerShimuraGL2
 
