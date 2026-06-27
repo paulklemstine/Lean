@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-27T17:12:03.157762+00:00",
+  "last_updated": "2026-06-27T18:16:57.507345+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -12384,6 +12384,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-27T17:12:02.899975+00:00",
       "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1538,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 139,
+      "domain": "Applications",
+      "duration_seconds": 1363.206788301468,
+      "end_time": 1782583070.5761821,
+      "files_integrated": 9,
+      "job_id": "bd70abee",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v15",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v15",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6488,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.4756,
+        "novelty": 0.95,
+        "proof_depth": 0.2722,
+        "usefulness": 0.5611
+      },
+      "quality_score": 0.7003299999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782581707.3693938,
+      "strategy_count": 0,
+      "theorem_count": 27,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 27,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-27T18:16:56.861737+00:00",
+      "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
     }
   ]
 }
