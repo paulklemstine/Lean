@@ -1,40 +1,47 @@
-# Computational Evidence — Finite-Family Log-Sum-Exp Rate `τ·log n`
+# Computational Evidence — EML Universal Approximation via Standard ML Activations
 
-This evidence supports `EMLFinsetLSE.abs_lse_sub_max_le`:
-`|τ·log(∑ exp(fᵢ/τ)) − maxᵢ fᵢ| ≤ τ·log(card s)`.
+The main results (`Catalog/Applications/EMLActivationDensity.lean`) are *structural*
+density statements: a single strictly-monotone continuous activation, composed with an
+injective feature, generates a uniformly dense subalgebra of `C(X, ℝ)` on a compact `X`.
+The whole content reduces to **injectivity of the activation**, which follows from strict
+monotonicity. There is therefore no universal claim over a parameter family to falsify by
+sampling; the "experiment" is the monotonicity check itself, which is discharged formally.
 
-## 1. Small-case calculations (constant inputs, the extremal case)
+For completeness we record small sanity checks confirming strict monotonicity of each
+activation on sample grids (these match the formally proved `StrictMono` lemmas).
 
-When all `n` inputs equal `c`, `lse = τ·log(n·exp(c/τ)) = c + τ·log n`, so the
-gap `lse − max = τ·log n` exactly — the bound is attained.
+## Sigmoid `σ(x) = 1/(1+e^{-x})`
+| x   | -2     | -1     | 0      | 1      | 2      |
+|-----|--------|--------|--------|--------|--------|
+| σ(x)| 0.1192 | 0.2689 | 0.5000 | 0.7311 | 0.8808 |
 
-| n | τ   | predicted bound `τ·log n` | actual gap (constant input) |
-|---|-----|---------------------------|-----------------------------|
-| 1 | 1.0 | 0.0000                    | 0.0000                      |
-| 2 | 1.0 | 0.6931                    | 0.6931                      |
-| 3 | 1.0 | 1.0986                    | 1.0986                      |
-| 4 | 0.5 | 0.6931                    | 0.6931                      |
-| 8 | 0.25| 0.5199                    | 0.5199                      |
+Strictly increasing. ✓ (formal: `strictMono_sigmoid`)
 
-## 2. Non-extremal inputs stay strictly below the bound
+## Softplus `s(x) = log(1+e^x)`
+| x   | -2     | -1     | 0      | 1      | 2      |
+|-----|--------|--------|--------|--------|--------|
+| s(x)| 0.1269 | 0.3133 | 0.6931 | 1.3133 | 2.1269 |
 
-For `f = (0, 1, 2)` (spread out), `τ = 1`: `lse = log(1+e+e²) ≈ 2.4076`,
-`max = 2`, gap `≈ 0.4076 < log 3 ≈ 1.0986`. The further apart the inputs, the
-smaller the gap — consistent with saturation only at coincident inputs
-(Future Direction 1).
+Strictly increasing. ✓ (formal: `strictMono_softplus`)
 
-## 3. Counterexample hunt
+## tanh
+| x   | -2      | -1      | 0      | 1      | 2      |
+|-----|---------|---------|--------|--------|--------|
+| tanh| -0.9640 | -0.7616 | 0.0000 | 0.7616 | 0.9640 |
 
-Tested the lower bound `max ≤ lse` and the upper bound `lse ≤ max + τ·log n`
-across random families (varying `n ≤ 12`, `τ ∈ {0.1,…,2}`, values in `[-5,5]`).
-No violation found; both bounds held in every sample, matching the formal proof.
+Strictly increasing. ✓ (formal: `strictMono_tanh`)
 
-## 4. Dequantization limit
+## arctan
+| x     | -2      | -1      | 0     | 1      | 2      |
+|-------|---------|---------|-------|--------|--------|
+| arctan| -1.1071 | -0.7854 | 0.000 | 0.7854 | 1.1071 |
 
-Fixing inputs and shrinking `τ`, the gap `τ·log n → 0`, so `lse → max`. This is
-the quantitative content of `exists_temp_approx`: pick `τ = ε/(log n + 1)`.
+Strictly increasing. ✓ (formal: `Real.arctan_strictMono`)
 
-## Note on OEIS
-No integer sequence is intrinsic to this continuous-analysis result; the only
-discrete parameter is the width `n`, entering through `log n`. No OEIS lookup
-applies.
+## Counterexample hunt
+The only way the density theorem could fail is if some activation were *not* injective.
+All four candidates are strictly monotone on all of ℝ (no plateaus), so no
+injectivity-breaking counterexample exists; the formal `StrictMono` proofs certify this.
+A *bounded non-monotone* activation (e.g. a Gaussian bump `e^{-x²}`) would break
+injectivity and is correctly outside the scope of these theorems — flagged as a future
+direction in `FUTURE_DIRECTIONS.md`.

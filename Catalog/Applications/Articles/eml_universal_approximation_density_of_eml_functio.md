@@ -1,120 +1,244 @@
-# The Three Operations That Can Draw Anything
+# One Neuron Is Enough: The Hidden Simplicity Behind Universal Approximation
 
-## A surprising claim about exp, log, and arithmetic
+## A puzzle about machines that learn anything
 
-Imagine you are handed an astonishingly restrictive toolbox. Inside it you find only three kinds of operations: you may **add and multiply** numbers (and scale them by constants), you may take the **exponential** $e^x$ of anything you have built, and you may take the **logarithm** $\log x$ of anything you have built that happens to be positive. That's it. No sines, no cosines, no absolute values, no special "max" gadget, no neural-network layers bought off the shelf.
+Modern artificial intelligence rests on a quietly astonishing promise. Give a neural
+network enough capacity, the theory says, and it can imitate *any* continuous
+relationship between inputs and outputs — the price of a house from its features, the
+next word in a sentence, the trajectory of a falling leaf. This promise has a name:
+**universal approximation**. It is the reason engineers trust that, with enough data and
+patience, a network *could* in principle learn the pattern hiding in their problem.
 
-Now someone draws an arbitrary smooth landscape over the unit square — a continuous height map $f$ defined for every point $(x, y)$ with $0 \le x \le 1$ and $0 \le y \le 1$. It might be a mountain range, a rippling pond, the silhouette of a face. The challenge: using *only* your three operations, build a formula that reproduces that landscape to within any tolerance you like. A millimeter. A micron. A billionth of a micron.
+But universality, as usually told, is a story about *size*. Pile up enough neurons,
+the classical theorems whisper, and you can get arbitrarily close to your target. The
+mental image is one of brute force: a vast hidden layer, thousands of units firing in
+concert, collectively sculpting a function out of raw numerical clay.
 
-The remarkable answer is that **you can always do it.** The class of functions you can write down with exponentials, logarithms, and arithmetic — call them **EML functions**, for Exponential–Multiplicative–Logarithmic — is *dense* in the space of all continuous functions on the cube. Every continuous function, no matter how wild, has an EML function arbitrarily close to it everywhere at once. This article is the story of why that is true, what it costs, and why it matters far beyond a piece of pure mathematics.
+This article is about a much sharper, almost mischievous truth. It turns out that the
+engine of universality is not *quantity* at all. The real magic comes from a single,
+humble property that almost every activation function in machine learning happens to
+possess — and once you see it, the whole forest of "universal approximation theorems"
+collapses into one tidy idea you can hold in your hand.
 
-## Why "everywhere at once" is the hard part
+The property is **injectivity**: never sending two different inputs to the same output.
+And the punchline is this:
 
-It is easy to match a function at a few points. Run a curve through ten dots and you are done. The difficulty in approximation theory is *uniformity*: we want the error to be small **simultaneously at every single point** of the square, not just on average and not just at sample locations. The right way to measure this is the **uniform norm** (also called the sup norm):
+> A *single* neuron with a strictly increasing activation — sigmoid, tanh, softplus,
+> arctan, take your pick — followed by an ordinary polynomial, can approximate any
+> continuous function on a bounded domain as closely as you like.
 
-$$\|g - f\| = \max_{x \in [0,1]^n} |g(x) - f(x)|.$$
+No wide hidden layer. No army of units. One neuron, one polynomial. Let us see why.
 
-This single number records the worst mismatch anywhere on the entire domain. Saying that EML functions are dense means: for every continuous target $f$ and every tolerance $\varepsilon > 0$, there is an EML function $g$ with
+## The cast of characters: the activation zoo
 
-$$\|g - f\| < \varepsilon.$$
+Every artificial neuron does two things. First it forms a weighted combination of its
+inputs — a simple linear gadget. Then it passes that number through a nonlinear
+*activation function*, the spark of nonlinearity that lets networks bend and curve.
 
-The worst error, anywhere, is below $\varepsilon$. That is a strong promise, and it is exactly the promise that makes approximation theory useful in engineering: a controller, a circuit, or a learned model that is "usually" right but occasionally wildly wrong is often worse than useless.
+Over the decades, practitioners have accumulated a small menagerie of favorite
+activations. Four of them are the heroes of our story:
 
-## The master key: Stone and Weierstrass
+- The **logistic sigmoid**, $\sigma(x) = \dfrac{1}{1 + e^{-x}}$, the classic S-curve
+  that squashes any real number into the interval $(0,1)$. It was the workhorse of early
+  neural networks and still rules the world of probabilities.
+- The **softplus**, $s(x) = \log(1 + e^{x})$, a smooth, gentle ramp that rises like a
+  hill from nearly flat on the left to nearly straight on the right.
+- The **hyperbolic tangent**, $\tanh(x) = \dfrac{e^{x} - e^{-x}}{e^{x} + e^{-x}}$, the
+  sigmoid's symmetric cousin, squashing inputs into $(-1, 1)$.
+- The **arctangent**, $\arctan(x)$, the inverse of the tangent function, another smooth
+  S-curve flattening out toward $\pm \pi/2$.
 
-How could one possibly prove that three humble operations can imitate *every* continuous function? The trick is not to fight each target function individually. Instead we lean on one of the most elegant theorems in twentieth-century analysis: the **Stone–Weierstrass theorem**.
+They look different. They come from different corners of mathematics — probability,
+analysis, trigonometry. Practitioners argue about which one trains fastest or
+generalizes best. But beneath the surface they share one secret feature that, as we will
+see, is the *only* thing that matters for universality.
 
-Karl Weierstrass proved in 1885 that ordinary polynomials can uniformly approximate any continuous function on an interval. Marshall Stone, in the 1930s and 40s, distilled the essence of *why* into a structural principle that applies far beyond polynomials. Stone's insight was that approximation power is not about the specific formulas you use; it is about two abstract properties of the whole *collection* of functions you can build:
+## The one property that rules them all
 
-1. **It is an algebra.** The collection is closed under addition, multiplication, and scaling by constants. If $g$ and $h$ are in your toolbox's reach, so are $g + h$, $g \cdot h$, and $5g$. Such a closed-under-arithmetic collection is called a **subalgebra** of the continuous functions.
+Look again at those four curves. Trace each from left to right. Every one of them is
+*always climbing*. They never dip, never plateau into a flat stretch, never double back.
+In mathematics we call such a function **strictly monotone** (here, strictly
+increasing): whenever $x < y$, we are guaranteed $\sigma(x) < \sigma(y)$.
 
-2. **It separates points.** For any two distinct points $a \ne b$ in the domain, some function in your collection assigns them different values. The toolbox can "tell any two points apart."
+This is more than an aesthetic observation. A strictly increasing function can never
+return the same value twice. If $\sigma(a) = \sigma(b)$ then $a$ and $b$ cannot be
+different — for if, say, $a < b$, we would need $\sigma(a) < \sigma(b)$, a
+contradiction. So strict monotonicity forces **injectivity**: distinct inputs always go
+to distinct outputs. The function loses no information; it merely re-encodes the line.
 
-Stone–Weierstrass says: *on a compact space, any subalgebra that separates points is dense.* That is the master key. To prove that EML functions can draw anything, we do not need to construct clever approximations by hand. We only need to verify these two clean structural conditions, and the theorem does the rest.
+Each of our four activations earns its injectivity through a one-line argument:
 
-Formally, the version we use reads:
+- **Sigmoid**: as $x$ grows, $-x$ shrinks, so $e^{-x}$ shrinks, so the denominator
+  $1 + e^{-x}$ shrinks, so the fraction $\frac{1}{1+e^{-x}}$ grows. Strictly increasing.
+- **Softplus**: as $x$ grows, $e^x$ grows, so $1 + e^x$ grows, and the logarithm — itself
+  strictly increasing — carries that growth forward. Strictly increasing.
+- **Tanh**: its slope is $1/\cosh^2(x)$, and since $\cosh$ is never zero, this slope is
+  *always strictly positive*. A function with everywhere-positive slope only ever climbs.
+- **Arctan**: it is the inverse of a strictly increasing function on its principal
+  branch, and inverses of increasing functions increase. Strictly increasing.
 
-> **Stone–Weierstrass (point-separating form).** Let $X$ be a compact Hausdorff space and let $A$ be a subalgebra of the continuous real functions $C(X, \mathbb{R})$. If $A$ separates points, then the closure of $A$ is everything: $\overline{A} = C(X, \mathbb{R})$.
+Four different reasons, one shared conclusion. Hold that thought, because injectivity is
+about to do all the heavy lifting.
 
-Equivalently, in the language of approximation: every $f \in C(X, \mathbb{R})$ and every $\varepsilon > 0$ admit a $g \in A$ with $\|g - f\| < \varepsilon$.
+## Separating the world, point by point
 
-## Setting the stage: the cube as a stage of points
+Why should injectivity have anything to do with approximating arbitrary functions? The
+bridge is a celebrated nineteenth- and twentieth-century result called the
+**Stone–Weierstrass theorem**, one of the crown jewels of analysis.
 
-To make all of this precise we need a clean arena. We take the **unit cube** $[0,1]^n$ — the set of all points whose $n$ coordinates each lie between $0$ and $1$. For $n = 2$ it is the unit square; for $n = 3$ a solid cube; for general $n$ a hypercube. Crucially, the cube is **compact** (closed and bounded) and **Hausdorff** (distinct points can be surrounded by disjoint neighborhoods). These are exactly the hypotheses Stone–Weierstrass demands, because the cube is a finite product of the compact, Hausdorff interval $[0,1]$.
+Here is its spirit. Suppose you have a collection of "building-block" functions on some
+domain. You are allowed to add them, multiply them, and scale them by constants — the
+operations of ordinary algebra. The resulting family of all such combinations is called
+the **subalgebra generated** by your blocks. Stone and Weierstrass proved a remarkable
+sufficient condition for this generated family to be *dense* — that is, able to
+approximate every continuous function on a closed, bounded domain to any precision:
 
-The simplest functions on the cube are the **coordinate projections**: the function $\pi_i$ that reads off the $i$-th coordinate of a point and ignores the rest, $\pi_i(x) = x_i$. There are $n$ of them. From these seeds we grow our first algebra.
+> If your building blocks can **separate points** — meaning that for any two distinct
+> locations in the domain, at least one block assigns them different values — then the
+> functions you can build from them are dense. You can hit any continuous target.
 
-## Step one: the coordinate algebra already separates points
+It is a profound trade. All you must verify is the modest, almost trivial-sounding
+ability to *tell points apart*. In return you receive the sweeping power to reproduce
+every continuous function on the domain.
 
-Let $\mathcal{A}_{\text{coord}}$ be the smallest subalgebra containing all the coordinate projections — concretely, the set of all **polynomials in the coordinates**, things like $3x_1^2 x_2 - x_3 + 7$. This is the starting toolbox.
+And here is where our humble property pays off spectacularly. A single injective function
+*already* separates points all by itself. If $g$ is injective and $x \ne y$, then by
+definition $g(x) \ne g(y)$ — the two points are separated, with $g$ as the witness. One
+injective function does the entire job that Stone–Weierstrass asks of an entire family.
 
-Does it separate points? Take two distinct points $a \ne b$ of the cube. Being different means they disagree in at least one coordinate: $a_i \ne b_i$ for some $i$. But then the coordinate projection $\pi_i$ already pulls them apart, since $\pi_i(a) = a_i \ne b_i = \pi_i(b)$. So a *single* coordinate function distinguishes them. Point separation is immediate.
+Chaining these observations together gives the centerpiece of this work, which we may
+state precisely. Let $X$ be any compact (closed and bounded, in the familiar setting)
+domain, and let $C(X,\mathbb{R})$ denote the continuous real-valued functions on it.
 
-By Stone–Weierstrass, that one fact is enough:
+> **Single-feature universality.** If $g : X \to \mathbb{R}$ is a continuous *injective*
+> function, then the subalgebra it generates — all polynomials in $g$, that is all finite
+> combinations $c_0 + c_1 g + c_2 g^2 + \cdots + c_d g^d$ — is uniformly dense in
+> $C(X,\mathbb{R})$.
 
-> **Density of the coordinate algebra.** The polynomials in the coordinates are dense in $C([0,1]^n, \mathbb{R})$. For every continuous $f$ and every $\varepsilon > 0$ there is a polynomial $g$ in the coordinates with $\|g - f\| < \varepsilon$.
+In the formal development this is the theorem `adjoin_singleton_dense`, and its companion
+`adjoin_singleton_approx` packages the same fact in the working engineer's language:
+for any target function $f$ and any tolerance $\varepsilon > 0$, there is a polynomial
+$p$ in $g$ with $\|p - f\| < \varepsilon$, the error measured in the worst-case
+(uniform) sense across the whole domain.
 
-This is the multivariate Weierstrass theorem, recovered as a special case. It already proves that *arithmetic alone* (no exp, no log) can draw anything on the cube.
+## From abstract features to real neurons
 
-## Step two: adding exp and log — the full EML algebra
+Now we assemble the pieces. A single neuron computes $g(x) = \sigma(w \cdot x + b)$: it
+forms a linear combination of the inputs, then applies an activation $\sigma$. Two facts
+make this neuron an injective feature in its own right.
 
-So why bring in exponentials and logarithms at all, if polynomials already suffice? Two reasons, one structural and one practical.
+First, **composition preserves injectivity**: if $\sigma$ is injective and the inner map
+is injective, their composition is injective too. Distinct inputs survive the first map
+distinct, and the second map keeps them distinct. (In the formalization this is the
+small but pivotal lemma `injective_comp`.)
 
-The structural reason is honesty about the function class. "EML functions" by definition allow $\exp$ and $\log$, so the natural object of study is the *full* EML algebra $\mathcal{A}_{\text{EML}}$: the smallest collection that contains the coordinate algebra **and** is additionally closed under
+Second, our four activations are *all* injective, as we proved above. So a neuron built
+from any of them, sitting atop an injective feature, is itself an injective feature.
 
-- the **exponential operation**, sending a function $f$ to the function $x \mapsto e^{f(x)}$; and
-- the **logarithm operation**, sending a *positive* function $f$ (one with $f(x) > 0$ everywhere, so the logarithm stays continuous) to $x \mapsto \log f(x)$.
+Feeding that into single-feature universality yields the headline result, captured by the
+theorem `activation_feature_dense` and its quantitative twin `activation_feature_approx`:
 
-This is built up inductively: start with coordinate polynomials and constants, then repeatedly apply addition, multiplication, exponentiation, and (positive) logarithm. The full EML algebra strictly contains the coordinate algebra — it has genuinely new members like $e^{x_1}$ that are not polynomials — yet it still lives inside $C([0,1]^n, \mathbb{R})$, and it certainly still separates points (it contains the coordinate functions that already did the job). So Stone–Weierstrass applies verbatim:
+> **One activated neuron plus a polynomial is universal.** For any compact domain, any
+> injective continuous activation $\sigma$, and any injective input feature $g$, the
+> functions $c_0 + c_1\,(\sigma\circ g) + c_2\,(\sigma\circ g)^2 + \cdots$ are dense in
+> the continuous functions on that domain.
 
-> **EML Universal Approximation Theorem.** The full EML algebra is dense in $C([0,1]^n, \mathbb{R})$. Every continuous function on the cube can be uniformly approximated, to any tolerance, by a finite formula in the coordinates using addition, multiplication, scalar constants, exponentials, and logarithms.
+Specialized to the most concrete possible setting — a single input ranging over an
+interval $[a,b]$, with $g$ the identity coordinate — we obtain four clean corollaries,
+one per activation, named `sigmoid_dense_Icc`, `softplus_dense_Icc`, `tanh_dense_Icc`,
+and `arctan_dense_Icc`. Each says: *polynomials in this one activation are dense on the
+interval.* And a single umbrella theorem, `activation_dense_Icc`, states it once and for
+all for any strictly monotone continuous activation, swallowing all four special cases
+into one.
 
-That is the headline. Three operations, and the entire universe of continuous shapes is within reach.
+There is a pleasing economy here. The mathematician's instinct is to prove one general
+theorem and watch the special cases tumble out. That is exactly what happens: the
+strict-monotonicity interface `strictMono_feature_dense` takes *monotone plus continuous*
+as input and returns universality. Each activation then reduces to a one-line
+monotonicity check — sigmoid, softplus, tanh, arctan each "plug in" and inherit
+universality automatically.
 
-## The practical payoff: depth, width, and the softmax trick
+## The exponential ancestor
 
-The practical reason to care about exp and log is **efficiency**, and this is where the story connects to modern machine learning. Density says an approximant *exists*; it says nothing about how big or deep the formula must be. The deeper question is the **rate**: how good an approximation can you buy for a given amount of structure?
+Where did the single-feature principle come from? Its first incarnation concerned the
+**exponential function** $e^x$, the most famous injective function of all. Because $e^x$
+is strictly increasing, polynomials in $e^x$ — the so-called **exponential polynomials**,
+finite combinations $\sum_k c_k\, e^{k x}$ — are dense in the continuous functions on any
+interval. This is the theorem `exponentialPolynomials_dense_Icc`, and a refinement,
+`exp_monomials_span_dense`, shows you do not even need genuine products of distinct
+features: the plain linear span of the powers $e^{0}, e^{x}, e^{2x}, e^{3x}, \ldots$
+already suffices.
 
-Here a single, beautiful identity does enormous work. Consider the **log-sum-exp** function — the smooth stand-in for the maximum that powers the "softmax" layers of essentially every modern neural network:
+This exponential result is the seed. The leap of the present work is the realization,
+recorded as a "hypothesis confirmed" in the research notes, that *nothing about the
+exponential's analytic personality was ever used* — only its injectivity. The exponential
+was a red herring dressed as a hero. Strip away its special status and you find that
+*any* injective continuous function works just as well, and the whole activation zoo
+walks through the door.
 
-$$\operatorname{LSE}(x_1, x_2) = \log\!\left(e^{x_1} + e^{x_2}\right).$$
+## What is genuinely surprising — and what is not
 
-This is an EML function of *depth two*: one layer of exponentials, a sum, and one outer logarithm. What does it compute? Almost exactly the maximum. The exact accounting is
+It is worth being honest about where the surprise lives.
 
-$$\log\!\left(e^{x_1} + e^{x_2}\right) = \max(x_1, x_2) + \log\!\left(1 + e^{-|x_1 - x_2|}\right),$$
+The surprising part is the **collapse of variety into a single principle**. The
+literature treats "sigmoid networks are universal," "tanh networks are universal," and so
+on as separate theorems, each with its own proof tailored to the activation's quirks.
+Here they all descend from one fact — injectivity via strict monotonicity — applied
+through one theorem. Diversity of activation is revealed to be irrelevant to *whether*
+you can approximate; it is a cosmetic choice from the standpoint of pure expressive power.
 
-and since the correction term is squeezed between $\log 1 = 0$ and $\log 2$, we get the clean two-sided sandwich
+The *unsurprising* — but important — flip side is that this tells you nothing about
+**how efficiently** you approximate. Density is a yes/no question: *can* you get
+arbitrarily close? It says nothing about the *degree* of polynomial or the number of
+terms you need to hit a given accuracy. That quantitative question — the **approximation
+rate**, how the cost scales with the desired precision and the smoothness of the target —
+is where activations genuinely differ, and where the harder, more practical mathematics
+begins. The research notes flag this explicitly: the universal-approximation *content*
+lives entirely in injectivity; everything else is about *rates*.
 
-$$\max(x_1, x_2) \;\le\; \log\!\left(e^{x_1} + e^{x_2}\right) \;\le\; \max(x_1, x_2) + \log 2.$$
+There is even a sharp boundary lurking here. Consider a *non*-injective activation, such
+as a Gaussian bump $\rho(x) = e^{-x^2}$, which is symmetric and so sends $x$ and $-x$ to
+the same value. A single Gaussian feature can fail to separate points — it literally
+cannot tell a value from its negative — and so a lone Gaussian neuron is *not* universal
+in this single-feature sense. To recover universality with such activations you genuinely
+need a *family* of them, several units working together. Injectivity is not merely
+sufficient for the single-neuron miracle; it is essentially the dividing line.
 
-So a depth-two EML network reproduces the maximum with an error that never exceeds the universal constant $\log 2 \approx 0.693$ — *regardless of the inputs*. This is the rigorous heart of why "smooth max" works.
+## Why this matters
 
-The truly useful part is that the error is not fixed; it is a **dial you can turn.** Insert a temperature parameter $c > 0$, run the inputs through $\operatorname{LSE}$ scaled by $c$, and divide back out. The resulting *scaled* log-sum-exp obeys
+At first glance this might look like a piece of mathematical housekeeping — tidying a
+folklore drawer. But the reframing carries real weight.
 
-$$\left|\;\frac{1}{c}\log\!\left(e^{c x_1} + e^{c x_2}\right) - \max(x_1, x_2)\;\right| \;\le\; \frac{\log 2}{c}.$$
+For the **theorist**, it isolates the true mechanism of universality. When you understand
+that injectivity (point separation) is the load-bearing wall, you know exactly which
+modifications to an architecture preserve universality and which threaten it. Swap one
+strictly monotone activation for another: safe. Introduce a symmetry that collapses
+distinct inputs: dangerous. The principle becomes a design compass.
 
-Crank $c$ up and the error melts away like $1/c$. This is **dequantization**: a continuous, differentiable EML formula converging to the sharp, non-differentiable $\max$ as the temperature rises, with an *explicit, provable* error bound at every finite temperature. Want the approximation accurate to $\varepsilon$? Choose $c = \log 2 / \varepsilon$ and you are guaranteed to be within $\varepsilon$, everywhere, forever.
+For the **educator**, it offers a strikingly clean narrative. Instead of four proofs for
+four activations, there is one idea — *injective features separate points, and separation
+plus algebra gives density* — that a student can grasp in an afternoon and then watch
+unfold across the entire activation zoo.
 
-## Why depth is the currency
+And for the **engineer**, it is a reminder of where to spend effort. If universality is
+"free" the moment your activation is monotone, then the interesting engineering questions
+are never *whether* a network can fit the data, but *how cheaply* — how few units, how low
+a degree, how little data. The existence theorems are settled; the economics are not.
 
-This is where "depth of the composition" enters the title's promise. The maximum of two numbers is exactly the kind of sharp, corner-laden function that polynomials approximate only clumsily — to pin down a sharp ridge with smooth polynomials you need very high degree, i.e. enormous *width*. The EML class buys the same accuracy with a tiny, fixed *depth*: two layers (exp, then log) and a single tunable constant.
+## The shape of the idea
 
-That trade-off — a little depth replacing a lot of width — is precisely the phenomenon that makes deep networks powerful in practice. The log-sum-exp identity is the cleanest possible instance of it, and because the constant is exactly $\log 2$ and the rate is exactly $1/c$, it can be taught, audited, and trusted rather than merely observed empirically.
+Step back and the whole argument fits on a single breath:
 
-The same construction scales: the maximum of $m$ numbers is captured by one log-of-sum-of-$m$-exponentials, with a worst-case gap of $\log m$ before temperature scaling, i.e. an error of $\log m / c$ after. A depth-two EML network of width $m$ therefore smooths the $m$-way maximum to any desired accuracy — a width-$m$, depth-$2$ realization of a function that any exp/log-free polynomial would need explosively high degree to match.
+1. The standard activations are strictly increasing.
+2. Strictly increasing means injective: no two inputs collide.
+3. An injective function separates points: it tells every pair of locations apart.
+4. Stone–Weierstrass: point-separating building blocks generate everything continuous.
+5. Therefore one injective activation, plus polynomial read-out, is universal.
 
-## The tropical connection
+Five steps, and the menagerie of universal approximation theorems becomes a single, well-lit
+room. The sigmoid, the tanh, the softplus, the arctan — different masks worn by the same
+underlying actor. What makes a neuron universal was never its particular curve. It was the
+simplest promise a function can make: *I will never confuse two different things.*
 
-There is a deeper current running underneath all of this, and it gives the subject its name: **tropical mathematics**. In the "tropical" or "max-plus" semiring, the role of ordinary addition is played by $\max$ and the role of ordinary multiplication is played by $+$. Tropical polynomials are exactly piecewise-linear functions — the hinges, ridges, and folds you get from taking maxima of linear pieces. They are also, strikingly, the exact functions computed by neural networks built from linear layers and ReLU activations.
-
-Log-sum-exp is the bridge between the smooth world and the tropical world. As the temperature $c \to \infty$, the smooth EML operation $\frac{1}{c}\operatorname{LSE}(c\,\cdot)$ degenerates into the tropical operation $\max$. The exponential map carries ordinary addition to multiplication and ordinary maximum to addition; the logarithm carries it back. EML functions are, in this precise sense, the **analytic shadow of tropical geometry** — and the error bounds above quantify exactly how faithful that shadow is at each finite temperature.
-
-So the universal approximation theorem for EML functions is really two theorems wearing one coat. On the smooth side, it is Stone–Weierstrass: arithmetic-with-exp-and-log can draw any continuous shape. On the tropical side, it is dequantization: those same operations smoothly and controllably converge to the sharp, piecewise-linear primitives of max-plus algebra, with the conversion error pinned to the explicit constants $\log 2$ and $\log m$.
-
-## What it all means
-
-Strip away the formalism and the message is simple and a little astonishing. A toolbox containing only addition, multiplication, the exponential, and the logarithm is **universal**: it can reproduce every continuous function on a bounded domain to any precision. The proof costs almost nothing once you have Stone's master key — you need only check that coordinate projections tell points apart, which they obviously do.
-
-But the *reason to prefer* exp and log over plain polynomials is efficiency, and that reason is made quantitative by the log-sum-exp identity. The same two operations that guarantee universality also give you a depth-two, temperature-tunable smoother for the maximum, with error exactly controlled by $\log 2 / c$ for two inputs and $\log m / c$ for $m$. That is not a metaphor for how deep learning works; it is a clean, fully accounted-for special case of it.
-
-Three operations. Every shape. A dial labeled "accuracy." And underneath, a quiet bridge between the smooth calculus of exponentials and the angular geometry of the tropical world. That is the EML universal approximation theorem — small in its ingredients, vast in its reach.
+That, in the end, is the quiet lesson. The power to approximate everything grows not from
+complexity but from a refusal to lose information — one injective step at a time.
