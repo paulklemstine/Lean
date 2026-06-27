@@ -1,39 +1,54 @@
-# Theorem Trace — Erdős–Rényi Threshold Phenomena (internal)
+# THEOREM TRACE — Erdős–Rényi threshold phenomena
 
-This file maps every Lean name in the Phase A output to its mathematical
-statement and records where it is stated in `ARTICLE.md` and `RESEARCH_PAPER.md`.
-No theorem appears in the prose that is not listed here.
+Internal anti-hallucination map. Every result below appears verbatim in the
+Phase A Lean output (files `Model.lean`, `Concrete.lean`, `SecondMoment.lean`,
+and the threshold development `Threshold.lean`). No result is stated in the
+prose that is not listed here.
 
-## From `Catalog/Algebra/ErdosRenyi/Concrete.lean` (provided source of truth)
+## Model.lean — namespace `ErdosRenyi`
 
-| Lean name | Statement | Article | Paper |
+| Lean name | Mathematical statement | ARTICLE.md | RESEARCH_PAPER.md |
 |---|---|---|---|
-| `expectation_count` | For a finite indexed family of events `A i`, `𝔼[#{i ∈ I : event i holds}] = ∑_{i∈I} ℙ(A i)`. Linearity of expectation. | §"One identity to rule them all" | Def. of expectation; Thm 1 |
-| `card_edge` | `Fintype.card (Edge n) = C(n,2)`, where `Edge n = {(i,j) : i < j}`. | §"Counting the wires" | Lemma 2 |
-| `expected_edges` | `𝔼[#edges in G(n,p)] = C(n,2)·p`. | §"Counting the wires" | Thm 3 |
-| `incident` (def) | `incident v = {edges e : v is an endpoint of e}`. | §"When a point is an island" | Def. (incident) |
-| `card_incident` | `(incident v).card = n − 1`: every vertex touches `n−1` edges. | §"When a point is an island" | Lemma 4 |
-| `expected_isolated` | `𝔼[#isolated vertices] = n·(1−p)^{n−1}`. | §"When a point is an island" | Thm 5 |
-| `triEdges` (def) | `triEdges T = {edges with both endpoints in T}`. | §"Triangles, the simplest social cluster" | Def. (triEdges) |
-| `card_triEdges` | For `|T| = 3`, `(triEdges T).card = 3`. | §"Triangles..." | Lemma 6 |
-| `expected_triangles` | `𝔼[#triangles] = C(n,3)·p³`. | §"Triangles..." | Thm 7 |
+| `weight` (def) | `weight p g = ∏ e, (if g e then p else 1-p)` | yes | yes (Def 1) |
+| `weight_nonneg` | `0 ≤ p ≤ 1 ⇒ 0 ≤ weight p g` | — | yes |
+| `sum_weight` | `∑ g, weight p g = 1` | yes | yes (Prop 1) |
+| `prob` (def) | `prob p A = ∑_{g∈A} weight p g` | yes | yes (Def 2) |
+| `expectation` (def) | `E p X = ∑ g, weight p g · X g` | yes | yes (Def 2) |
+| `allPresent`/`allAbsent` (def) | events that `S` is all-present / all-absent | yes | yes |
+| `prob_allPresent` | `prob p (allPresent S) = p^{|S|}` | yes | yes (Thm 1) |
+| `prob_allAbsent` | `prob p (allAbsent S) = (1-p)^{|S|}` | yes | yes (Thm 1) |
+| `subgraphCount` (def) | number of copies present | yes | yes |
+| `expectation_subgraphCount` | `E[#copies] = ∑_i p^{|S i|}` | yes | yes (Thm 2) |
+| `expectation_subgraphCount_uniform` | uniform size `k`: `= #copies · p^k` | yes | yes (Thm 2) |
+| `firstMoment` | `P(#copies ≥ 1) ≤ ∑_i p^{|S i|}` | yes | yes (Thm 3) |
 
-## Referenced from `Model.lean` / `SecondMoment.lean` (imported, described per lab notes)
+## Concrete.lean — namespace `ErdosRenyiConcrete`
 
-| Lean name | Role (as documented in the Phase A header/lab notes) | Where |
-|---|---|---|
-| `expectation` (def) | Expectation of a real functional of a random configuration `g : E → Bool` under the product Bernoulli(`p`) law. | both, framing |
-| `prob` (def) | Probability of an event (a `Finset` of configurations). | both, framing |
-| `subgraphCount` (def) | Counts present copies of a family of edge-sets in a configuration. | both |
-| `expectation_subgraphCount` | First moment of a subgraph count is `∑_i p^{|S_i|}`. | both |
-| `allPresent` / `allAbsent` | Events "all edges of a set are present / absent". | both |
-| `prob_allPresent` / `prob_allAbsent` | `ℙ(allPresent S) = p^{|S|}`, `ℙ(allAbsent S) = (1−p)^{|S|}` (edge independence). | both |
-| `firstMoment` | First-moment (Markov) bound: vanishing expectation ⇒ absence whp. | both, threshold discussion |
-| `second_moment_zero` | Second-moment bound: `Var/𝔼² → 0` ⇒ presence whp. | both, threshold discussion |
+| Lean name | Mathematical statement | ARTICLE.md | RESEARCH_PAPER.md |
+|---|---|---|---|
+| `expectation_count` | `E[#events occurring] = ∑_i prob p (A i)` | yes | yes (Thm 4) |
+| `card_edge` | `#edges = C(n,2)` | yes | yes |
+| `expected_edges` | `E[#edges] = C(n,2)·p` | yes | yes (Thm 5) |
+| `card_incident` | each vertex meets `n-1` edges | yes | yes |
+| `expected_isolated` | `E[#isolated] = n·(1-p)^{n-1}` | yes | yes (Thm 6) |
+| `card_triEdges` | a 3-set spans `3` edges | yes | yes |
+| `expected_triangles` | `E[#triangles] = C(n,3)·p³` | yes | yes (Thm 7) |
 
-## Anti-hallucination notes
-- The two asymptotic *sharp thresholds* (connectivity at `ln n / n`, giant
-  component at `1/n`, appearance at `n^{-1/m(H)}`, Poisson triangle limit) are
-  NOT proved in the Lean; they are stated as **conjectures / future directions**
-  and are presented as such (clearly labelled "conjecture"/"future work") in the
-  prose. The proved content is the **exact finite-`n` moment identities** above.
+## SecondMoment.lean — namespace `SecondMoment`
+
+| Lean name | Mathematical statement | ARTICLE.md | RESEARCH_PAPER.md |
+|---|---|---|---|
+| `expect`/`variance` (def) | weighted mean / variance | yes | yes (Def 3) |
+| `variance_nonneg` | `0 ≤ Var X` | — | yes (Prop 2) |
+| `markov` | `a·P(X≥a) ≤ E X`, `X≥0` | yes | yes (Thm 8) |
+| `chebyshev` | `P(|X-EX|≥a) ≤ Var X / a²` | yes | yes (Thm 9) |
+| `second_moment_zero` | `P(X=0) ≤ Var X / (EX)²`, `EX>0` | yes | yes (Thm 10) |
+
+## Threshold.lean — namespace `ErdosRenyiThreshold`
+
+| Lean name | Mathematical statement | ARTICLE.md | RESEARCH_PAPER.md |
+|---|---|---|---|
+| `tendsto_expected_triangles` | `p=c/n ⇒ C(n,3)(c/n)³ → c³/6` | yes | yes (Thm 11) |
+| `subcritical_triangles_vanish` | `n·pₙ→0 ⇒ C(n,3)pₙ³ → 0` | yes | yes (Thm 12) |
+| `supercritical_triangles_blowup` | `n·pₙ→∞ ⇒ C(n,3)pₙ³ → ∞` | yes | yes (Thm 13) |
+| `isolated_blowup_below_connectivity` | `p=c/n ⇒ n(1-p)^{n-1} → ∞` | yes | yes (Thm 14) |
