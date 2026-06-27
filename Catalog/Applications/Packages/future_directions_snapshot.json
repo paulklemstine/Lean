@@ -3187,7 +3187,7 @@
       "odd power-sum symmetric functions",
       "Lean mathlib: MvPolynomial, PowerSeries, Finsupp, Nat.Odd"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31cf2713",
     "description": "Let Γ_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism φ_t of Γ_R by φ_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_λ denotes the Schur Q-function indexed by a strict partition λ in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_λ denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition λ one has S^t_λ = φ_t(Q_λ). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n ↦ (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |λ|.",
     "domain_bridges": [
       "vertex-operator constructions ↔ plethystic substitutions",
@@ -3203,7 +3203,7 @@
     "proof_strategy": "Define the scaling algebra automorphism Φ_t on the odd power-sum ring by Φ_t(p_n) = (1 - t^n)p_n. Show coefficientwise that Φ_t ∂/∂p_n Φ_t⁻¹ = (1 - t^n)⁻¹ ∂/∂p_n. Therefore the odd GJZ field Y(z;t) is conjugate to the t=0 neutral-fermion field: Y(z;t) = Φ_t Y(z;0) Φ_t⁻¹. Since Φ_t fixes the vacuum vector 1, applying the negative Fourier modes indexed by a strict partition λ gives S^t_λ = Φ_t(S^0_λ) = Φ_t(Q_λ). In Lean, avoid infinite series by working degreewise in a truncated odd-variable polynomial algebra up to degree |λ|, then pass to the abstract graded Γ formulation.",
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -4667,7 +4667,7 @@
       "BD99",
       "FI19"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae503725",
     "description": "The specific degree one function on the Grassmann scheme $J_3(4,2)$ defined by $f = \\frac{1}{2} \\sum_{Q(p) = 0} x_p + \\frac{1}{6} \\sum_{Q(p) = 1} x_p - \\frac{1}{6} \\sum_{Q(p) = 2} x_p$, where $Q(x,y,z,w) = x^2 + y^2 + z^2 - w^2$ is an elliptic quadric over $\\mathbb{F}_3$, is Boolean and not a trivial Boolean degree one function.",
     "domain_bridges": [
       "finite_geometry",
@@ -4683,7 +4683,7 @@
     "proof_strategy": "Define the Grassmannian $J_3(4,2)$ and the Bruen-Drudge function $f$ over $\\mathbb{F}_3^4$. Prove $f$ is Boolean by classifying the 2-dimensional subspaces (lines) and showing the weight distribution of $Q$ on each line restricts to one of $(2,1,1)$, $(1,3,0)$, $(1,0,3)$, or $(0,2,2)$, which evaluates $f$ to either 0 or 1. Prove $f$ is non-trivial by demonstrating its coefficients do not match the coefficient patterns of any of the 8 trivial templates.",
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T21:41:56.533485+00:00",
     "title": "Non-triviality of the Bruen-Drudge Boolean degree one function on $J_3(4,2)$"
   },
@@ -6376,7 +6376,7 @@
       "Vertex operator algebras and symmetric functions",
       "Pfaffian Giambelli formulas"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c85b45b6",
     "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_λ^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition λ = (λ₁, λ₂, ..., λ_k) with λ₁ > λ₂ > ... > λ_k ≥ 0, the formula takes the form s_λ^Q(t) = Pf[Y_{λ_i - i + j}(t) + Y_{λ_j - j + i}(t)]_{1≤i<j≤k} · vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
     "domain_bridges": [
       "Vertex operator methods in symmetric function theory",
@@ -6392,7 +6392,7 @@
     "proof_strategy": "Formalize the operator construction in Lean 4, prove the Clifford algebra relation [Y_m(t), Y_n(t)]₊ = 2(-1)^mδ_{m,-n}, then establish the Pfaffian determinant formula using standard Pfaffian identities and the operator product expansion, verifying the t=0 specialization recovers the classical Schur Q-function identity.",
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T02:07:55.532399+00:00",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
@@ -10186,7 +10186,7 @@
       "math.GR",
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "492e1625",
     "description": "Let n be a positive integer. Define an affine permutation σ: ℕ/nℕ → ℕ/nℕ by σ(i) = ai + b (mod n). The conjecture states that for n coprime to 2 and 3, the permutation σ is panmagic if and only if a is a unit in ℕ/nℕ and both a and a-1 are units such that the mapping i → ai+b and i → (a-1)i+b satisfy specific modular constraints related to the panmagic property (specifically, that the coefficients of the linear forms for diagonals do not vanish modulo n). Specifically, we propose to formalize the theorem that for prime n > 3, the set of panmagic affine permutations forms a structure related to the cosets of the dihedral group within the affine group Aff(ℕ/nℕ).",
     "domain_bridges": [
       "Group Theory",
@@ -10203,7 +10203,7 @@
     "proof_strategy": "The strategy involves defining the permutation matrix of an affine map in Lean, implementing the panmagic property as a predicate on the sum of entries over broken diagonals, and using the properties of modular arithmetic to show that the panmagic condition is equivalent to certain coefficients being invertible in ℕ/nℕ. The proof would rely on the theory of finite rings and the characterization of latin squares.",
     "research_mode": "team",
     "source_exp_id": "2606.22221v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T05:14:01.442996+00:00",
     "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
   },
@@ -13247,7 +13247,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46e595fc",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domain_bridges": [],
     "domains": [
@@ -13260,7 +13260,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
