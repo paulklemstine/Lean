@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d36ccdc3",
     "filename": "girth_expansion_equivalence_for_optimal_small_set_.json",
     "pkg_num": 142,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.41604728262910795,
     "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
   {
@@ -4146,8 +4146,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "girth_expansion_equivalence_for_optimal_small_set_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.41604728262910795,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
     }

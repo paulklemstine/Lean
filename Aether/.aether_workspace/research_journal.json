@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "bfb13379",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — EML Transseries\n\nDerived from this cycle's findings (`Field.lean`, `AsymptoticComparison.lean`,\n`CatalogBridge.lean`).  Each conjecture is bold, falsifiable, and accompanied by a",
-      "quality_score": 0.46096,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-23T01:46:28",
-      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-    },
-    {
       "cycle_id": "6e34371e",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Sperner's Lemma, Combinatorial Fixed Points, and Nash Equilibria\n\nThis cycle formalised the *finite/combinatorial core* of the \"Sperner ⇒ Nash\"\nprogram: the 1-D Sperner parity la",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-27T16:57:47",
       "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
+    },
+    {
+      "cycle_id": "d36ccdc3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Unbounded 2-adic valuations of `f(x)^m` coefficients\n\nContext: `f(x) = ∏_{n≥0}(1-x^{2^n}) = ∑ (-1)^{s₂(n)} x^n`, `f(x)^m = ∑ t_m(n) x^n`.\nThis cycle proved (0 sorries) the Gawron",
+      "quality_score": 0.41604728262910795,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T17:02:00",
+      "title": "Unbounded 2-adic valuation of coefficients in F_m(x)^m for m ≥ 2"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70696
     }
   ],
-  "last_updated": "2026-06-27T16:57:47",
+  "last_updated": "2026-06-27T17:02:00",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "d409a01c",
-        "quality": 0.71088,
-        "theorems": 0,
-        "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
-      },
-      {
         "cycle_id": "4a61f37f",
         "quality": 0.38234703875969,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.5522400000000001,
         "theorems": 6,
         "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
+      },
+      {
+        "cycle_id": "d36ccdc3",
+        "quality": 0.41604728262910795,
+        "theorems": 0,
+        "title": "Unbounded 2-adic valuation of coefficients in F_m(x)^m for m ≥ 2"
       }
     ],
     "NumberTheory": [
