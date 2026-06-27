@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.BinomialGCDA080170
+import Novelty.BinomialGCDA080170
 
 /-!
 # The prime-power fibre of OEIS A080170

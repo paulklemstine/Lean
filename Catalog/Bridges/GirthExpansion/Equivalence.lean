@@ -1,4 +1,4 @@
-import Catalog.Bridges.GirthExpansion.Basic
+import Bridges.GirthExpansion.Basic
 
 /-!
 # Girth–Expansion Equivalence for Optimal Small-Set Expanders
