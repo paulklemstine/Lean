@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "802107a7",
     "filename": "transmission_zero_forcing_number_equals_domination.json",
     "pkg_num": 124,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6666400000000001,
     "title": "Transmission Zero Forcing vs. Domination on Trees: The Exact Domination Number of the Path"
   },
   {
@@ -3621,8 +3621,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "transmission_zero_forcing_number_equals_domination",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6666400000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Transmission Zero Forcing vs. Domination on Trees: The Exact Domination Number of the Path"
     }

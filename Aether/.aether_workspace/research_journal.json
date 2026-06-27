@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d6c114ef",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Normalization Functor into the Probability Simplex\n\nThis cycle established, in `NormalizationSimplexFunctor.lean`, that marginalization\n(`pushforward`) is a functor preserving to",
-      "quality_score": 0.6766,
-      "sorry_count": 0,
-      "theorem_count": 100,
-      "timestamp": "2026-06-21T21:45:53",
-      "title": "*normalization functor into the probability simplex*"
-    },
-    {
       "cycle_id": "6c747cdd",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\nThese build on the finite Erdős–Rényi model in\n`Catalog/Combinatorics/ErdosRenyi/Model.lean` (namespace `ErdosRenyi`).\n\n## 1. Subgraph-count expectations and the second moment\n\nGe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-27T05:32:07",
       "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+    },
+    {
+      "cycle_id": "802107a7",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Transmission Zero Forcing vs. Domination on Trees\n\nCycle 1 deliverable: `Catalog/Novelty/TransmissionDominationTree.lean` proves, with zero\nsorries, the exact domination number o",
+      "quality_score": 0.6666400000000001,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-27T05:33:59",
+      "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76274
     }
   ],
-  "last_updated": "2026-06-27T05:32:07",
+  "last_updated": "2026-06-27T05:33:59",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "de494596",
-        "quality": 0.674434,
-        "theorems": 16,
-        "title": "Ramsey Theory: Bounds and Constructions"
-      },
-      {
         "cycle_id": "f881b568",
         "quality": 0.50863,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.76274,
         "theorems": 13,
         "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+      },
+      {
+        "cycle_id": "802107a7",
+        "quality": 0.6666400000000001,
+        "theorems": 11,
+        "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
       }
     ],
     "NumberTheory": [

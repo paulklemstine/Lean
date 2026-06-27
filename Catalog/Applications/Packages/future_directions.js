@@ -6796,6 +6796,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Transmission Zero Forcing vs. Domination on Trees\n\nCycle 1 deliverable: `Catalog/Novelty/TransmissionDominationTree.lean` proves, with zero\nsorries, the exact domination number of the path graph (the canonical tree family):\n\n> `dominationNumber (pathGraph n) = \u03b3(P_n) = \u2308n/3\u2309 = (n + 2) / 3`,\n\nboth for a self-contained combinatorial model and for `Mathlib`'s `SimpleGraph.pathGraph`,\nlinked by a card-preserving bridge. A reusable general definition `dominationNumber` for any\nfinite `SimpleGraph`, plus the closed-neighbourhood **counting lower bound** `n \u2264 3\u00b7|S|`, are\nnow available as building blocks.\n\nComputational evidence (`Catalog/Novelty/ComputationalEvidence.md`) shows ordinary zero\nforcing is constant (`Z(P_n) = 1`) and therefore *cannot* equal domination \u2014 so the mission\nconjecture must concern a transmission-weighted variant. The following conjectures are bold,\nprecise, and testable in the next cycles.\n\n## Conjecture 1 (Spider / star domination closed form)\nFor the star `K_{1,m}` (a spider with `m` legs of length 1), `dominationNumber (K_{1,m}) = 1`\nfor `m \u2265 1`, and for the spider `S(a,a,\u2026,a)` with `k` legs each of length `\u2113`,\n`dominationNumber = k\u00b7\u230a\u2113/3\u230b + [adjustment for the center]`. **Testable:** formalize stars and\nspiders as `SimpleGraph`, reuse `dominationNumber`, and prove the closed form via the same\ncounting + construction template used for paths.\n\n## Conjecture 2 (General degree-`\u0394` lower bound, sharp on paths)\nFor every finite graph `G` with `n` vertices and maximum degree `\u0394`,\n`dominationNumber G \u2265 n / (\u0394 + 1)`, with equality characterized by an \"efficient domination\"\n(perfect code) packing. **Testable:** our `lower_bound` is exactly the `\u0394 = 2` instance; the\ngeneral statement is `n \u2264 (\u0394+1)\u00b7|S|` via `Finset.card_biUnion_le` over closed neighbourhoods.\n\n## Conjecture 3 (Transmission zero forcing = domination on trees \u2014 the headline)\nDefine the **transmission zero forcing number** `\u03be_T(G)` as the minimum, over zero forcing\nsets `B`, of the number of \"transmission-bounded\" forces, equivalently the minimum size of a\nset that both zero-forces `G` and is a dominating set (a forcing set throttled so each force\ncovers distance \u2264 1). Conjecture: for every tree `T`, `\u03be_T(T) = \u03b3(T)`. **Testable first\nmilestone:** prove `\u03be_T(P_n) = \u2308n/3\u2309` by showing the throttled forcing sets are exactly the\ndominating sets of `P_n`, reusing `gammaPath_eq`.\n\n## Conjecture 4 (Path is extremal among trees of fixed order)\nAmong all trees `T` on `n` vertices, the path maximizes the domination ratio:\n`\u03b3(T) \u2264 \u2308n/3\u2309 = \u03b3(P_n)`, with equality iff `T` is a disjoint-block \"caterpillar of `P_3`s\".\n**Testable:** induction on leaves, peeling a longest path; the counting lower bound bounds\n`\u03b3` from below while a greedy construction bounds it above.\n\n## Conjecture 5 (Domination polynomial recurrence on paths)\nThe number `d(P_n, k)` of dominating sets of `P_n` of size `k` satisfies a linear recurrence\n`d(P_n) = d(P_{n-1}) + d(P_{n-2}) + d(P_{n-3})` (tribonacci-type) at the generating-function\nlevel. **Testable:** define the domination polynomial in Lean and prove the three-term\ntransfer recurrence by a partition on the status of the last vertex; this refines the bare\ndomination *number* into full enumerative data and connects to the OEIS tribonacci family.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2664",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "802107a7",
+    "status": "available",
+    "timestamp": "2026-06-27T05:33:48.917860+00:00",
+    "title": "Cycle 1 deliverable: `Catalog/Novelty/TransmissionDominationTree.lean` proves, w"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
