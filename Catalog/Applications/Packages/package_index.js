@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2ff65a6a",
     "filename": "bridge_tropical_geometry_as_a_limit_of_classical_a.json",
     "pkg_num": 145,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6490400000000001,
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
   {
@@ -4233,8 +4233,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "bridge_tropical_geometry_as_a_limit_of_classical_a",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6490400000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
     }
