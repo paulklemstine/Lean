@@ -11518,7 +11518,7 @@
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Logic",
         "Computation"
@@ -52286,6 +52286,44 @@
       "thread_id": "",
       "timestamp": "2026-06-11T06:39:35.329358+00:00",
       "title": "Deepening: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 905ed2dd (Q=0.763), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "id": "push_905ed2dd_385f3e0e",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.86274,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "905ed2dd",
+      "source_path": "EML Fixed-Point Theorem: exp-log Iteration Convergence",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-27T05:32:07.818267+00:00",
+      "title": "Deepening: EML Fixed-Point Theorem: exp-log Iteration Convergence"
     },
     {
       "ambition_level": "extension",

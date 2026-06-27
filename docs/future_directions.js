@@ -539,6 +539,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 905ed2dd (Q=0.763), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_905ed2dd_385f3e0e",
+    "priority_score": 0.86274,
+    "research_mode": "team",
+    "source_exp_id": "905ed2dd",
+    "status": "available",
+    "timestamp": "2026-06-27T05:32:07.818267+00:00",
+    "title": "Deepening: EML Fixed-Point Theorem: exp-log Iteration Convergence"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
     "domains": [
       "Cryptography",
@@ -4926,7 +4940,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
   {
-    "consumed_by_exp_id": "669193db",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor \u03bb > 1, leading to exponential contraction after k iterations: max{\u03c3 \u2208 Del(X_k)}.diameter \u2264 (1/\u03bb)^k \u00b7 max{\u03c3 \u2208 Del(X_0)}.diameter",
     "domains": [
       "Pythagorean"
@@ -4935,7 +4949,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
@@ -5012,7 +5026,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
   },
   {
-    "consumed_by_exp_id": "ed2a76aa",
+    "consumed_by_exp_id": "",
     "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k \u2265 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
     "domains": [
       "Logic"
@@ -5021,7 +5035,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T22:09:21.864984+00:00",
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
   },
@@ -6767,6 +6781,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Fixed-Point Dynamics\n\nDerived from this cycle's findings: the EML operator `f(x) = exp(a)\u00b7log(b\u00b7x + c)`\nhas a *sharp closed-form existence threshold* `c \u2265 exp(a)\u00b7(1 \u2212 a)` (for `b = 1`),\nits boundary fixed point is *neutral* (`f' = 1`), and where it contracts it admits\na *monotone two-sided certified bracket*. These suggest the following bold,\nfalsifiable conjectures.\n\n## C1. The threshold is a fold (saddle-node) bifurcation with universal scaling\n**Conjecture.** For `b = 1`, as `c` decreases through `c_crit(a) = exp(a)\u00b7(1 \u2212 a)`,\nthe two domain fixed points `x_\u2212(c) < x_+(c)` collide at `x* = exp(a)\u00b7a` and\nannihilate, with the local separation obeying the square-root law\n`x_+(c) \u2212 x_\u2212(c) = \u03ba(a)\u00b7\u221a(c \u2212 c_crit(a)) + o(\u221a\u00b7)`, `\u03ba(a) = 2\u221a2\u00b7exp(a/2)`.\n- **The key insight is** that `g(x) = f(x) \u2212 x` has a *nondegenerate quadratic\n  maximum* at `x = exp(a) \u2212 c` (since `g''(x*) = \u2212exp(a)/exp(2a) = \u2212exp(\u2212a) \u2260 0`),\n  so the collision is a generic fold, forcing the universal `\u221a` scaling.\n- **Why now?** This cycle already pinned the collision point and the threshold in\n  closed form and proved the necessary inequality; only the quadratic Taylor\n  remainder is missing, which Mathlib's `HasDerivAt`/`Taylor` API can supply.\n\n## C2. Above threshold there are exactly two fixed points, one attracting\n**Conjecture.** For `b = 1` and `c > c_crit(a)`, `f` has exactly two domain fixed\npoints `x_\u2212 < exp(a) \u2212 c < x_+`; the larger `x_+` is attracting (`0 \u2264 f'(x_+) < 1`)\nand the smaller `x_\u2212` is repelling (`f'(x_\u2212) > 1`).\n- **The key insight is** that `f' (x) = exp(a)/(x + c)` is strictly decreasing in\n  `x`, crossing `1` exactly at the residual's maximizer `x = exp(a) \u2212 c`; the two\n  roots of `g` therefore straddle it, landing on opposite sides of the `f' = 1`\n  line.\n- **Why now?** The existing IVT existence proof (`c = 2`) plus this cycle's\n  monotone-derivative analysis give both roots and the sign of `f' \u2212 1` directly;\n  the catalog's `deriv_eq` already supplies `f'` in closed form.\n\n## C3. The bracket width contracts at the exact asymptotic rate `f'(x*)`\n**Conjecture.** For a `b > 0` EML contraction with attracting fixed point `x*`,\nthe certified bracket width `w\u2099 = f\u207f(hi) \u2212 f\u207f(lo)` satisfies\n`w\u2099\u208a\u2081 / w\u2099 \u2192 f'(x*) = exp(a)\u00b7b/(b\u00b7x* + c)`, i.e. the enclosure shrinks at the\n*sharp* linear rate, not merely `\u2264 \u03c1`.\n- **The key insight is** that monotonicity makes the bracket endpoints approach\n  `x*` tangentially, so the mean-value ratio `w\u2099\u208a\u2081/w\u2099` is `f'` evaluated at an\n  interior point that converges to `x*`.\n- **Why now?** `certified_enclosure` already provides the nested brackets with\n  width `\u2192 0`; upgrading \"`\u2192 0`\" to \"geometric with ratio `f'(x*)`\" only needs the\n  MVT bound the catalog already uses for the Lipschitz step.\n\n## C4. Threshold monotonicity selects an optimal scaling exponent\n**Conjecture.** The threshold `c_crit(a) = exp(a)\u00b7(1 \u2212 a)` is strictly decreasing\non `a \u2208 (0, \u221e)` with `c_crit(0) = 1` and `c_crit(1) = 0`; consequently for fixed\n`c \u2208 (0, 1)` there is a *unique* critical scaling `a_c(c)` above which fixed points\nexist, given implicitly by `exp(a)\u00b7(1 \u2212 a) = c`.\n- **The key insight is** that `d/da [exp(a)(1\u2212a)] = \u2212a\u00b7exp(a) < 0` for `a > 0`, so\n  the threshold is a strict bijection `(0,1) \u2192 (0,1)`, making `a_c` well defined.\n- **Why now?** The closed form of `c_crit` is established this cycle; its\n  monotonicity is one `deriv`/`StrictAntiOn` lemma away and turns the existence\n  question into a clean parameter selection rule for EML layers.\n\n## C5. Multi-operator EML compositions inherit a product threshold\n**Conjecture.** A composition `f_k \u2218 \u22ef \u2218 f_1` of EML operators with parameters\n`(a\u1d62, 1, c\u1d62)` is a contraction on a common invariant interval whenever the\nproduct of derivative bounds `\u220f\u1d62 exp(a\u1d62)/(x + c\u1d62)` stays below `1`, and then it\nhas a unique fixed point obeying the same monotone bracket as the single operator.\n- **The key insight is** that the chain rule turns the single-operator derivative\n  bound into a *product* bound, so the contraction condition is multiplicative in\n  the layer derivatives \u2014 the deep-network analogue of the single-layer threshold.\n- **Why now?** The single-operator contraction machinery (`lipschitz_of_deriv_bound`,\n  `fixedPoint_unique`, `certified_enclosure`) is fully in place and composes; the\n  only new ingredient is a product-of-Lipschitz lemma, standard in Mathlib.\n",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2663",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "905ed2dd",
+    "status": "available",
+    "timestamp": "2026-06-27T05:31:54.376617+00:00",
+    "title": "Derived from this cycle's findings: the EML operator `f(x) = exp(a)\u00b7log(b\u00b7x + c)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6924,20 +6953,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
-  },
-  {
-    "consumed_by_exp_id": "22e3c34e",
-    "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "sorry_fill_a0dd96a5_00b573d8",
-    "priority_score": 0.5771458702064898,
-    "research_mode": "team",
-    "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
-    "timestamp": "2026-06-16T12:52:43.615426+00:00",
-    "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
   {
     "consumed_by_exp_id": "",
@@ -7523,7 +7538,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "7f4f0e8d",
+    "consumed_by_exp_id": "",
     "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
     "domains": [
       "Logic",
@@ -7533,7 +7548,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.020862+00:00",
     "title": "Proof Strategy Mining from Deep Mathematics"
   },

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fe4ab5a6",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nThese are freeform research directions extending the finite Jarzynski–Landauer\nformalization in [`JarzynskiLandauer.lean`](./JarzynskiLandauer.lean).\n\n## From identity to inequali",
-      "quality_score": 0.85612,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-21T16:50:55",
-      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-    },
-    {
       "cycle_id": "1d465e25",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nBuilt on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries) that the\ngraph-cut functio",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-27T04:13:04",
       "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refinement"
+    },
+    {
+      "cycle_id": "905ed2dd",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings: the EML operator `f(x) = exp(a)·log(b·x + c)`\nhas a *sharp closed-form existence threshold* `c ≥ exp(a)·(1 − a)` (fo",
+      "quality_score": 0.76274,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-27T05:32:07",
+      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1d465e25",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nBuilt on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries) that the\ngraph-cut functio",
-      "quality_score": 0.79908,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-06-21T21:43:39",
-      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-    },
     {
       "cycle_id": "d6c114ef",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T04:41:36",
       "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
+    },
+    {
+      "cycle_id": "905ed2dd",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings: the EML operator `f(x) = exp(a)·log(b·x + c)`\nhas a *sharp closed-form existence threshold* `c ≥ exp(a)·(1 − a)` (fo",
+      "quality_score": 0.76274,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-27T05:32:07",
+      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0548f2b9",
-      "domain": "Novelty",
-      "name": "recip_sq_lower_lipschitz",
-      "quality": 0.7095
-    },
-    {
-      "cycle_id": "0548f2b9",
-      "domain": "Novelty",
-      "name": "recip_sq_tendsto_zero_of_blowup",
-      "quality": 0.7095
-    },
     {
       "cycle_id": "0f17133d",
       "domain": "Bridges",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "bestIdx_spec",
       "quality": 0.7478369230769231
+    },
+    {
+      "cycle_id": "905ed2dd",
+      "domain": "Novelty",
+      "name": "op_monotoneOn",
+      "quality": 0.76274
+    },
+    {
+      "cycle_id": "905ed2dd",
+      "domain": "Novelty",
+      "name": "iterSeq_lo_mono",
+      "quality": 0.76274
     }
   ],
-  "last_updated": "2026-06-27T04:41:36",
+  "last_updated": "2026-06-27T05:32:07",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3ffd492f",
-        "quality": 0.3990000000000001,
-        "theorems": 0,
-        "title": "Optimality of the Density Threshold for Linear r‑Uniform Hypergraphs"
-      },
-      {
         "cycle_id": "de494596",
         "quality": 0.674434,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.55432,
         "theorems": 0,
         "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
+      },
+      {
+        "cycle_id": "905ed2dd",
+        "quality": 0.76274,
+        "theorems": 13,
+        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
       }
     ],
     "NumberTheory": [
