@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "11521acf",
     "filename": "symmetric_key_cryptanalysis_differential_and_linea.json",
     "pkg_num": 121,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.72888,
     "title": "Symmetric-Key Cryptanalysis: Four Rounds of AES Have at Least 25 Active S-boxes"
   },
   {
@@ -3534,8 +3534,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "symmetric_key_cryptanalysis_differential_and_linea",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.72888,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Symmetric-Key Cryptanalysis: Four Rounds of AES Have at Least 25 Active S-boxes"
     }

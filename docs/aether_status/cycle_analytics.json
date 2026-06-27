@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-27T03:19:45.008412+00:00",
+  "last_updated": "2026-06-27T03:44:35.092242+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -10592,6 +10592,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-27T03:19:44.727597+00:00",
       "title": "Close Proofs: Alien Number Systems: Beyond Base-N"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4846,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 94,
+      "domain": "Novelty",
+      "duration_seconds": 1152.4119038581848,
+      "end_time": 1782531436.7814305,
+      "files_integrated": 9,
+      "job_id": "11521acf",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6546,
+        "cross_domain": 0.95,
+        "grade": "substantial",
+        "importance": 0.4752,
+        "novelty": 0.95,
+        "proof_depth": 0.2717,
+        "usefulness": 0.6108
+      },
+      "quality_score": 0.72888,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782530284.3695266,
+      "strategy_count": 0,
+      "theorem_count": 17,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 17,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-27T03:44:34.555449+00:00",
+      "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
     }
   ]
 }
