@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9537a45c",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nDerived from the findings of this research cycle (`LargeDeviations.lean`,\n`DualityGap.lean`). Each conjecture is bold, falsifiable, and",
-      "quality_score": 0.7829999999999999,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-06-22T21:21:10",
-      "title": "Idempotent Probability: Large Deviations"
-    },
-    {
       "cycle_id": "cb79327f",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Weil Pairing, MOV, and BLS Aggregation\n\nDerived from the cycle that produced `Cryptography/WeilPairingBLS.lean`\n(abstract biadditive `Pairing`, BLS completeness/aggregation, poin",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T07:24:07",
       "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
+    },
+    {
+      "cycle_id": "d409a01c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Linear Brown–Erdős–Sós at the span threshold\n\nDerived from this cycle's findings in `LinearBrownErdosSos.lean` and\n`LinearHypergraphPacking.lean`. Each conjecture is falsifiable.",
+      "quality_score": 0.71088,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T09:19:54",
+      "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9ba0d905",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Universal Probability Bounds for Partial Latin Squares\n\nThis cycle formalized the **exact** low-`k` instances of the universal bound\n`(c₁/n)^k ≤ P ≤ (c₂/n)^k` for the probability",
-      "quality_score": 0.5250358274479863,
-      "sorry_count": 0,
-      "theorem_count": 234,
-      "timestamp": "2026-06-22T06:15:37",
-      "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
-    },
     {
       "cycle_id": "d168a656",
       "domain": "Applications",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T09:17:12",
       "title": "Perfect Numbers: Structure of Even Perfects"
+    },
+    {
+      "cycle_id": "d409a01c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Linear Brown–Erdős–Sós at the span threshold\n\nDerived from this cycle's findings in `LinearBrownErdosSos.lean` and\n`LinearHypergraphPacking.lean`. Each conjecture is falsifiable.",
+      "quality_score": 0.71088,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T09:19:54",
+      "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T09:17:12",
+  "last_updated": "2026-06-27T09:19:54",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "11521acf",
-        "quality": 0.72888,
-        "theorems": 17,
-        "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
-      },
-      {
         "cycle_id": "887d83d7",
         "quality": 0.5740799999999999,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.35044872340425537,
         "theorems": 0,
         "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via "
+      },
+      {
+        "cycle_id": "d409a01c",
+        "quality": 0.71088,
+        "theorems": 0,
+        "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
       }
     ],
     "NumberTheory": [
