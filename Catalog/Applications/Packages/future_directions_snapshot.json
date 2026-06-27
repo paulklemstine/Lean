@@ -10848,7 +10848,7 @@
       "Prouhet-Thue-Morse sequence",
       "2-adic valuation properties"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d36ccdc3",
     "description": "For every integer m ≥ 2 and every integer k ≥ 0, there exists a natural number n such that the 2-adic valuation of t_m(n) is at least k.",
     "domain_bridges": [
       "Algebraic combinatorics",
@@ -10863,7 +10863,7 @@
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T04:48:18.981471+00:00",
     "title": "Unbounded 2-adic valuation of coefficients in F_m(x)^m for m ≥ 2"
   },
