@@ -867,6 +867,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_358",
+    "priority_score": 0.85,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432755+00:00",
+    "title": "Proof Complexity: Resolution and Cutting Planes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
     "domains": [
       "MachineLearning",
@@ -1345,7 +1360,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sensitivity Conjecture Extensions"
   },
   {
-    "consumed_by_exp_id": "4efe75bb",
+    "consumed_by_exp_id": "",
     "description": "Cycle f25c8810 (Q=0.755) proved 734 theorems in Computation but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid",
     "domains": [
       "Computation"
@@ -1354,7 +1369,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8045600000000002,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:46:45.492101+00:00",
     "title": "Close Proofs: Alien Number Systems: Beyond Base-N"
   },
@@ -2683,7 +2698,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q \u2265 3 and n \u2265 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "887d83d7",
     "description": "For fixed integers $k \\ge 2$ and $1 \\le m_1 \\le \\cdots \\le m_k$, there exists an integer $n_0$ such that for all $n \\ge n_0$ and every $n$-vertex tree $T$, the Ramsey number satisfies $R(T, K_{m_1, \\ldots, m_k}) \\le (k-1)(R(T, K_{m_1, m_2})-1)+m_1$.",
     "domains": [
       "Algebra"
@@ -2692,7 +2707,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:46:25.991940+00:00",
     "title": "Resolution of Erd\u0151s Problem 550 on Tree versus Complete Multipartite Ramsey Numbers"
   },
@@ -5155,7 +5170,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of Exact Potential up to Additive Constant"
   },
   {
-    "consumed_by_exp_id": "8ed8ca57",
+    "consumed_by_exp_id": "",
     "description": "Analyzes contraction bounds in spherical Delaunay refinement using an exact Carath\u00e9odory-type result.",
     "domains": [
       "Bridges"
@@ -5164,7 +5179,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T04:18:00.464209+00:00",
     "title": "Sharp approximate Carath\u00e9odory theorem and application to iterated Delaunay refinement"
   },
@@ -5723,11 +5738,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every positive integer \\( s \\), there exists a graph with exactly \\( s \\) irreducible FAT colorings. This is shown explicitly for prime \\( s \\) using a cycle of length \\( 2s + 1 \\) with a single pendant vertex, where only the trivial and full-colorings are irreducible, and generalizations extend this to composite \\( s \\).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2606",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22374v1",
+    "status": "available",
+    "timestamp": "2026-06-27T02:25:42.135167+00:00",
+    "title": "Bounded Irreducible FAT Colorings via Modified Even Cycles"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5741,7 +5771,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5756,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5771,7 +5801,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5786,7 +5816,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5801,7 +5831,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5815,7 +5845,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5829,7 +5859,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5843,7 +5873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5858,7 +5888,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5873,7 +5903,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5888,7 +5918,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5903,7 +5933,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5918,7 +5948,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5932,7 +5962,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5947,7 +5977,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5962,7 +5992,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5976,7 +6006,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5990,7 +6020,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -6004,7 +6034,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -6019,7 +6049,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6034,7 +6064,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -6049,7 +6079,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6063,7 +6093,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6077,7 +6107,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6092,7 +6122,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6106,7 +6136,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6121,7 +6151,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6135,7 +6165,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6149,7 +6179,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6163,7 +6193,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6178,7 +6208,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6193,7 +6223,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6208,7 +6238,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2639",
+    "id": "fd_2640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6222,7 +6252,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2640",
+    "id": "fd_2641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6237,7 +6267,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2641",
+    "id": "fd_2642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6251,7 +6281,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2642",
+    "id": "fd_2643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6266,7 +6296,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2643",
+    "id": "fd_2644",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -6281,7 +6311,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2644",
+    "id": "fd_2645",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -6295,7 +6325,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2645",
+    "id": "fd_2646",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -6310,7 +6340,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2646",
+    "id": "fd_2647",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -6324,7 +6354,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2647",
+    "id": "fd_2648",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
@@ -6339,13 +6369,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2648",
+    "id": "fd_2649",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22513v1",
     "status": "available",
     "timestamp": "2026-06-27T01:35:45.911433+00:00",
     "title": "Projective Dimension of Edge Ideals of Co\u2011Chordal Graphs via Minimal Separators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let k be a number field, p a prime, \u03a3 a (possibly empty) set of p\u2011adic primes of k, and let N\u221e/k be the unique \u03a3\u2011ramified \u2124\u209a\u2011extension (assuming it exists). Denote by X_\u03a3(N\u221e) = Gal(M_\u03a3(N\u221e)/N\u221e) the \u03a3\u2011ramified unramified Iwasawa module, which is a module over the Iwasawa algebra \u039b = \u2124\u209a\u27e6Gal(N\u221e/k)\u27e7 \u2245 \u2124\u209a\u27e6T\u27e7. The conjecture asserts that X_\u03a3(N\u221e) is a torsion \u039b\u2011module; equivalently, \u039b\u2011rank\u202fX_\u03a3(N\u221e) = 0. This statement is a precise, falsifiable generalisation of Greenberg\u2019s conjecture to arbitrary \u03a3\u2011ramified \u2124\u209a\u2011extensions and is amenable to formalisation in Lean\u20114 using existing libraries for number fields, Galois groups, profinite groups and Iwasawa algebras.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2650",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22324v1",
+    "status": "available",
+    "timestamp": "2026-06-27T02:26:35.671962+00:00",
+    "title": "Torsionness of \u03a3\u2011ramified Iwasawa modules over a \u2124\u209a\u2011extension"
   },
   {
     "consumed_by_exp_id": "",
@@ -6547,21 +6592,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Self-dual string C-groups of alternating groups\n\nDerived from this cycle's findings (the formalized `Foundations.lean` and\n`RankArithmetic.lean`). Each conjecture is falsifiable and accompanied by a key\ninsight and a \"Why now?\" justification.\n\n## Conjecture 1 \u2014 Discharge the literature hypotheses of `max_selfDual_rank_A4m3`\n\nThe conditional theorem `max_selfDual_rank_A4m3` currently takes the\nFernandes\u2013Leemans rank bound (`hbound`) and the odd-maximal-rank\nnon-palindromicity (`hmaxShape`) as hypotheses. Conjecture: both can be proved\ninside the `StringGroupRep` framework once the *intersection property* (the\ndefining condition upgrading a string group representation to a string C-group)\nis formalized, giving an **unconditional** upper bound `rank \u2264 2m`.\n\n- **The key insight is...** the intersection property forces the last generator\n  `\u03c1_{r-1}` to act on a residue whose support parity is incompatible with a\n  reversal-symmetric Schl\u00e4fli symbol of even length `2m`, exactly the obstruction\n  captured by `palindrome_even_paired`.\n- **Why now?** The reversal parity machinery (`rev_no_fixed_of_even`) and the\n  palindrome theorem (`schlafli_palindrome`) are already in place; only the\n  intersection property is missing to close the loop.\n\n## Conjecture 2 \u2014 A general odd/even corank law\n\nFor every `n`, the maximal rank of a *self-dual* string C-group of `A_n` equals\nthe general maximal rank `\u230a(n-1)/2\u230b` minus `1` exactly when `n \u2261 3 (mod 4)`, and\nequals it (no drop) when `n \u2261 1 (mod 4)`.\n\n- **The key insight is...** the drop is governed by the parity of the Schl\u00e4fli\n  length at the top rank: `n \u2261 3 (mod 4)` makes the top Schl\u00e4fli length even\n  (fixed-point-free reversal, `rev_no_fixed_of_even`), forcing the drop; `n \u2261 1`\n  makes it odd (a stable centre, `rev_unique_fixed_of_odd`), permitting equality.\n- **Why now?** `RankArithmetic.lean` already proves the even/odd dichotomy for\n  `Fin.rev`; extending it to the residue arithmetic mod 4 is a finite case split.\n\n## Conjecture 3 \u2014 Doubling is universal for self-dual achievability\n\nEvery self-dual string C-group representation of `A_{4m+3}` of the maximal rank\n`2m` is equivalent (up to relabelling and group automorphism) to one produced by\nthe doubling homomorphism `dblAlt` applied to a self-dual rank-`2m` simplex-like\nrepresentation.\n\n- **The key insight is...** self-duality plus maximal rank pins the permutation\n  domain into two mirror-image orbits of equal size plus a fixed point, which is\n  precisely the `Fin (2m+1) \u2295 Fin (2m+1) \u2295 Fin 1` decomposition realised by\n  `dblEquiv`.\n- **Why now?** `A4m3_selfDual_rank2m` already exhibits the doubling\n  construction; a classification only needs an orbit-counting converse, for which\n  Mathlib's `Equiv.Perm` / `alternatingGroup` API suffices.\n\n## Conjecture 4 \u2014 Schl\u00e4fli palindromes characterise self-duality\n\nA string C-group representation of a *centreless* group `G` is self-dual **iff**\nits full period matrix is reversal-symmetric (`period i.rev j.rev = period i j`),\nnot merely its Schl\u00e4fli sub-diagonal.\n\n- **The key insight is...** for a centreless group the order data of all\n  generator products determines the dualizing automorphism uniquely, so\n  reversal symmetry of the whole matrix is not just necessary\n  (`period_rev_of_selfDual`) but sufficient.\n- **Why now?** The necessity direction is already formalized; the converse is a\n  reconstruction theorem of exactly the kind Mathlib's group-automorphism API was\n  built to support.\n\n## Conjecture 5 \u2014 Order-3 ridges are forced near maximal rank\n\nIn any string C-group of `A_n` of rank within `1` of the maximum, at least\n`\u230a(n-1)/2\u230b - 2` of the Schl\u00e4fli entries equal `3` (the simplex value computed in\n`simplex_schlafli_eq_three`).\n\n- **The key insight is...** high rank in a fixed alternating group leaves little\n  room for long cycles, so most adjacent generator pairs must be the minimal\n  overlapping transpositions whose product is a 3-cycle (`overlap_order`).\n- **Why now?** `simplex_schlafli_eq_three` and `overlap_order` give the exact\n  local mechanism; a counting argument over the `4m+3` points would quantify how\n  many ridges are forced to be `{3}`.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2649",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "1394b2e6",
-    "status": "available",
-    "timestamp": "2026-06-27T02:11:19.816218+00:00",
-    "title": "Derived from this cycle's findings (the formalized `Foundations.lean` and"
   },
   {
     "consumed_by_exp_id": "",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a0d2774b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThese are freeform research directions extending the verified finite optimization\ncore of Integrated Information Theory in\n`Catalog/Novelty/FiniteIntegratedInformation.lean`.\n\n##",
-      "quality_score": 0.42573236521739133,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-21T16:36:29",
-      "title": "Consciousness as Integrated Information"
-    },
-    {
       "cycle_id": "fe4ab5a6",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\nThese are freeform research directions extending the finite Jarzynski–Landauer\nformalization in [`JarzynskiLandauer.lean`](./JarzynskiLandauer.lean).\n\n## From identity to inequali",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T02:11:52",
       "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
+    },
+    {
+      "cycle_id": "061c7bd2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Proof Automation Tactics\n\nBold, falsifiable conjectures derived from this cycle's findings (the three\nsound tactics `tropical_simp`, `number_theory_decide`, `spectral_bound` and",
+      "quality_score": 0.6293409999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T02:13:21",
+      "title": "Proof Automation: Custom Lean 4 Tactics"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7236
     }
   ],
-  "last_updated": "2026-06-27T02:11:52",
+  "last_updated": "2026-06-27T02:13:21",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "7b228cc3",
-        "quality": 0.74264,
-        "theorems": 14,
-        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-      },
-      {
         "cycle_id": "1f3047ef",
         "quality": 0.45104400000000006,
         "theorems": 20,
@@ -3141,6 +3135,12 @@
         "quality": 0.73028,
         "theorems": 0,
         "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
+      },
+      {
+        "cycle_id": "061c7bd2",
+        "quality": 0.6293409999999999,
+        "theorems": 0,
+        "title": "Proof Automation: Custom Lean 4 Tactics"
       }
     ],
     "Bridges": [
