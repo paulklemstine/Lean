@@ -1,0 +1,11 @@
+--- Fano.lean
++++ Fano.lean
+@@ -27,7 +27,7 @@
+ --   case against which the `q ≥ 3` non-existence conjecture must be tested.
+ -- !-- end Lab Notes -- !--
+ -/
+-import Catalog.Applications.BooleanDegreeOne.Core
++import Applications.BooleanDegreeOne.Core
+ 
+ 
+ 

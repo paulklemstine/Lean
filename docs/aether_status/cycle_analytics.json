@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-27T07:24:10.101977+00:00",
+  "last_updated": "2026-06-27T07:50:38.913990+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -11237,6 +11237,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-27T07:24:09.855695+00:00",
       "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7014,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 104,
+      "domain": "Applications",
+      "duration_seconds": 1397.2190568447113,
+      "end_time": 1782546200.8058817,
+      "files_integrated": 51,
+      "job_id": "57a09ecd",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v2",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7414,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.6486,
+        "novelty": 0.65,
+        "proof_depth": 0.648,
+        "usefulness": 0.824
+      },
+      "quality_score": 0.31055800000000006,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782544803.586825,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-27T07:50:38.527666+00:00",
+      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
     }
   ]
 }

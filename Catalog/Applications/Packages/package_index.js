@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "57a09ecd",
     "filename": "eml_fixed_point_theorem_exp_log_iteration_converge.json",
     "pkg_num": 128,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.31055800000000006,
     "title": "EML Fixed-Point Theorem: Certified Exp-Log Iteration Convergence and a Sharp Existence Threshold"
   },
   {
@@ -3737,8 +3737,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "eml_fixed_point_theorem_exp_log_iteration_converge",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.31055800000000006,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Fixed-Point Theorem: Certified Exp-Log Iteration Convergence and a Sharp Existence Threshold"
     }

@@ -1,0 +1,11 @@
+--- DirectSum.lean
++++ DirectSum.lean
+@@ -41,7 +41,7 @@
+ -/
+ 
+ import Mathlib
+-import Catalog.Applications.SmoothPoincare.IntersectionForms
++import Applications.SmoothPoincare.IntersectionForms
+ 
+ open Matrix
+ 

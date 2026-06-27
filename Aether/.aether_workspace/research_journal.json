@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f810a812",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Euler–Mascheroni Constant γ\n\nDerived from this cycle's findings (explicit `1/n` approximation, the positive-term\ntelescoping series, and the integer-linear-form irrationality cri",
-      "quality_score": 0.5494902834008097,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-06-22T03:40:16",
-      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-    },
-    {
       "cycle_id": "dafe288e",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\nFreeform research directions extending the shallow softplus → ReLU rate in\n`EML/SoftplusRate.lean`. Each is stated with its central insight and a timeliness\njustification.\n\n## 1.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T07:24:07",
       "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
+    },
+    {
+      "cycle_id": "57a09ecd",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings in `Catalog/EML/FixedPointExistenceDichotomy.lean`\n(sharp existence iff `c ≥ exp(a)·(1−a)`) and `Catalog/EML/FixedPoi",
+      "quality_score": 0.31055800000000006,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T07:50:35",
+      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T07:24:07",
+  "last_updated": "2026-06-27T07:50:35",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6adcd103",
-        "quality": 0.6233200000000001,
-        "theorems": 7,
-        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-      },
-      {
         "cycle_id": "cf34309d",
         "quality": 0.584,
         "theorems": 6,
@@ -3141,6 +3135,12 @@
         "quality": 0.7796,
         "theorems": 14,
         "title": "Code-Based Cryptography: McEliece from Goppa Codes"
+      },
+      {
+        "cycle_id": "57a09ecd",
+        "quality": 0.31055800000000006,
+        "theorems": 0,
+        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
       }
     ],
     "Bridges": [

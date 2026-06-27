@@ -1,0 +1,11 @@
+--- GleasonLength.lean
++++ GleasonLength.lean
+@@ -49,7 +49,7 @@
+ -/
+ 
+ import Mathlib
+-import Catalog.Applications.SmoothPoincare.SelfDualLength
++import Applications.SmoothPoincare.SelfDualLength
+ 
+ 
+ 
