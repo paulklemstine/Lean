@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ef60a392",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Cusick's Sum-of-Digits Explicit Bound\n\nDerived from the carry-reformulation cycle in `CusickSumOfDigits.lean`,\n`CusickCarryReformulation.lean`, and `CusickDensityWitness.lean`.",
-      "quality_score": 0.77328,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-24T23:02:00",
-      "title": "Cusick's Sum-of-Digits Explicit Bound"
-    },
-    {
       "cycle_id": "b45eb1d8",
       "domain": "Applications",
       "key_insight": "# Future Directions — Stability of Cayley Digraphs of Abelian Groups\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nAll conjectures are stated relative to the frame",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-06-27T22:10:10",
       "title": "Proof Complexity: Resolution and Cutting Planes"
+    },
+    {
+      "cycle_id": "7e57e1f5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Arithmetic Mirror Symmetry for Calabi–Yau\n\nDerived from this cycle's findings in `HodgeMirror.lean`, `SYZDuality.lean`, and\n`ZetaModularity.lean`. Each conjecture is bold, falsif",
+      "quality_score": 0.70122,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-27T22:34:58",
+      "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0dfef380",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Proof Automation: Custom Lean 4 Tactics\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle (`TropicalSimp.lean`, `NumberTheoryDecide.lean`, `Spect",
-      "quality_score": 0.7484,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-24T01:22:12",
-      "title": "Proof Automation: Custom Lean 4 Tactics"
-    },
     {
       "cycle_id": "e56a1e16",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-06-27T22:10:10",
       "title": "Proof Complexity: Resolution and Cutting Planes"
+    },
+    {
+      "cycle_id": "7e57e1f5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Arithmetic Mirror Symmetry for Calabi–Yau\n\nDerived from this cycle's findings in `HodgeMirror.lean`, `SYZDuality.lean`, and\n`ZetaModularity.lean`. Each conjecture is bold, falsif",
+      "quality_score": 0.70122,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-27T22:34:58",
+      "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "be72639d",
-      "domain": "Applications",
-      "name": "summable_of_contraction",
-      "quality": 0.7645600000000001
-    },
-    {
-      "cycle_id": "aa3d24c5",
-      "domain": "Novelty",
-      "name": "relativeEntropy_self",
-      "quality": 0.70446
-    },
-    {
-      "cycle_id": "aa3d24c5",
-      "domain": "Novelty",
-      "name": "relativeEntropy_nonneg",
-      "quality": 0.70446
-    },
     {
       "cycle_id": "7496c7ce",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "php_cp_counting",
       "quality": 0.7101600000000001
+    },
+    {
+      "cycle_id": "7e57e1f5",
+      "domain": "Novelty",
+      "name": "ranges",
+      "quality": 0.70122
+    },
+    {
+      "cycle_id": "7e57e1f5",
+      "domain": "Novelty",
+      "name": "mirror_involutive",
+      "quality": 0.70122
+    },
+    {
+      "cycle_id": "7e57e1f5",
+      "domain": "Novelty",
+      "name": "euler_mirror",
+      "quality": 0.70122
     }
   ],
-  "last_updated": "2026-06-27T22:10:10",
+  "last_updated": "2026-06-27T22:34:58",
   "open_questions": [
     {
       "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a880054f",
-        "quality": 0.3646502272727273,
-        "theorems": 0,
-        "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
-      },
-      {
         "cycle_id": "beb2abc2",
         "quality": 0.5954,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.59463,
         "theorems": 9,
         "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
+      },
+      {
+        "cycle_id": "7e57e1f5",
+        "quality": 0.70122,
+        "theorems": 17,
+        "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
       }
     ],
     "NumberTheory": [

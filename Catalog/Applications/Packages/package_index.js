@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7e57e1f5",
     "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
     "pkg_num": 152,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.70122,
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau: The Hodge Involution, SYZ T-Duality, and Zeta Reciprocity"
   },
   {
@@ -4436,8 +4436,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.70122,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Arithmetic Mirror Symmetry for Calabi-Yau: The Hodge Involution, SYZ T-Duality, and Zeta Reciprocity"
     }

@@ -165,7 +165,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
   {
-    "consumed_by_exp_id": "d15f1fdf",
+    "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
@@ -175,7 +175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -2726,7 +2726,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
   },
   {
-    "consumed_by_exp_id": "4ac2d584",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domains": [
       "Bridges"
@@ -2735,7 +2735,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -3815,20 +3815,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scalar curvature formula for incidence-algebra nilpotent Lie algebras"
   },
   {
-    "consumed_by_exp_id": "26246c0e",
-    "description": "For RSA modulus n=p*q with primes p>q, if the private exponent d satisfies d < n^{(1+\u03b4)/2} and a \u03b4-fraction of the most significant bits of p+q is known, then the modulus n can be factored using a modified Wiener's continued fraction attack.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2464",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.24717v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T11:56:42.011405+00:00",
-    "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any odd prime p and any integer \u2113 with 1 \u2264 \u2113 \u2264 (p-1)/2, if p > 2\u2113 + 1 then the maximum size of a symmetric subset S \u2286 Z_p with 0 \u2209 S and Cay(Z_p, S) containing no odd cycle C_{2\u2113+1} is exactly 2\u230a(p + 28 + 12)/(2(28 + 12))\u230b.",
     "domains": [
@@ -4160,7 +4146,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gap Phenomenon for Circular Chromatic Numbers of Projective Plane Quadrangulations"
   },
   {
-    "consumed_by_exp_id": "6fa4f641",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any fixed alphabet size b\u22652, the largest family C\u2286[b]^k in which every pair of distinct vectors yields a bipartite graph containing a cycle has size at most N_b(k), the number of good vectors defined by prescribed block sizes, and that this bound is attained for all sufficiently large k (in particular when k\u2261-1 (mod b)).",
     "domains": [
       "Pythagorean"
@@ -4169,7 +4155,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T05:24:56.704027+00:00",
     "title": "Maximum size of cycle-containing families of vectors"
   },
@@ -7635,6 +7621,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Arithmetic Mirror Symmetry for Calabi\u2013Yau\n\nDerived from this cycle's findings in `HodgeMirror.lean`, `SYZDuality.lean`, and\n`ZetaModularity.lean`. Each conjecture is bold, falsifiable, and Lean-formalizable.\n\n## 1. Mirror symmetry of the full Euler-number generating function\n\n**Conjecture.** Let `H_B(q) = \u03a3_e countEuler(e, B) \u00b7 q^e` be the two-sided Laurent\ngenerating function of the bounded Hodge-diamond Euler histogram. Then `H_B(q) = H_B(q\u207b\u00b9)`\nfor every bound `B`, and moreover `H_B(q)` is a product of cyclotomic-like palindromic\nfactors whose degree grows linearly in `B`.\n\n* The key insight is that `countEuler_neg` already proves the coefficient-wise symmetry\n  `[q^e] = [q^{\u2212e}]`; promoting it to a *functional* palindromy of the generating function\n  turns a pointwise mirror statement into a single algebraic identity that can be\n  differentiated and specialized.\n* Why now? `countEuler_neg` is formalized with an explicit swap bijection, so the\n  generating-function packaging is a direct `Finset.sum` reindex \u2014 within reach of the\n  current Mathlib `Finset`/`Polynomial` API without new geometry.\n\n## 2. \u03c7 = 0 forces an exact even/odd Betti split for every SYZ fiber product\n\n**Conjecture.** For any finite product of tori `T^{n_1} \u00d7 \u22ef \u00d7 T^{n_r}` with at least one\n`n_i \u2265 1`, the even-degree and odd-degree Betti numbers are equal, and each equals\n`2^{(\u03a3 n_i) \u2212 1}`. Consequently every SYZ fibration whose generic fiber is such a product\nhas vanishing Euler characteristic.\n\n* The key insight is that `evenBetti_eq_oddBetti` reduces `\u03c7 = 0` to a parity-balanced\n  binomial identity, and the K\u00fcnneth formula multiplies balanced vectors into balanced\n  vectors \u2014 balance is closed under tensor product.\n* Why now? The single-factor case is already proved here from\n  `Int.alternating_sum_range_choose`; the multiplicative step is a clean induction over\n  the number of factors using `Finset.prod` of generating functions `(1+x)^{n_i}`.\n\n## 3. A reciprocal-polynomial criterion for Calabi\u2013Yau zeta numerators\n\n**Conjecture.** A degree-`2g` integer polynomial `P` is the numerator of the local zeta\nfunction of a Calabi\u2013Yau 1-fold over `\ud835\udd3d_p` **iff** `P` is `p`-reciprocal\n(`p^g T^{2g} P(1/(pT)) = P(T)`) and all its complex roots have absolute value `p^{\u22121/2}`.\nThe functional equation and the Weil bound are jointly *characteristic*, not merely\nnecessary.\n\n* The key insight is that `eulerFactor_funeq` (functional equation) and\n  `zeta_frobenius_weil` (Weil bound) were shown here to spring from the *single* relation\n  `\u03b1\u03b2 = p`; conjecturally that one relation is also sufficient to reconstruct `P`.\n* Why now? The forward direction is fully formalized in `ZetaModularity.lean`; the\n  converse is a finite root-pairing argument over `\u2102` that the existing\n  `funeq_permutes_recip_roots` lemma already sets up.\n\n## 4. Modularity lift: matching point counts of mirror pairs modulo p\n\n**Conjecture.** For a mirror pair `(X, Y)` of Calabi\u2013Yau threefolds reduced mod a prime `p`\nof good reduction, the Frobenius traces on the \"interesting\" middle cohomology satisfy a\ncongruence `a_p(X) \u2261 \u00b1 a_p(Y) (mod p)` governed by the Hodge swap `h\u00b9\u00b9 \u2194 h\u00b2\u00b9`.\n\n* The key insight is that the Hodge involution of `HodgeMirror.lean` exchanges exactly the\n  cohomological pieces whose Frobenius eigenvalues control `a_p`, so a sign-controlled\n  congruence is the arithmetic image of `euler_mirror`.\n* Why now? `zeta_frobenius_weil` pins the eigenvalue norms to `\u221ap`; combined with the\n  determinant relation `\u03b1\u03b2 = p`, congruences mod `p` become statements about the *trace*\n  alone, which are finite and checkable on LMFDB newform data.\n\n## 5. Self-mirror Calabi\u2013Yaus are precisely the fixed points of the histogram symmetry\n\n**Conjecture.** The diagonal `h\u00b9\u00b9 = h\u00b2\u00b9` (equivalently `\u03c7 = 0`, equivalently `Y = X`) is the\nunique fixed-point locus of the mirror involution, and the proportion of self-mirror\ndiamonds in the bounded box `[0,B]\u00b2` decays like `1/B`.\n\n* The key insight is that `selfMirror_iff_euler_zero` identifies the fixed points exactly,\n  reducing the asymptotic to counting the diagonal `(B+1)` points inside `(B+1)\u00b2` total.\n* Why now? Both the exact fixed-point characterization and the box-counting `Finset` are\n  already in `HodgeMirror.lean`; the density statement is a single `Nat`/`Rat` limit.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2723",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7e57e1f5",
+    "status": "available",
+    "timestamp": "2026-06-27T22:34:44.322965+00:00",
+    "title": "Derived from this cycle's findings in `HodgeMirror.lean`, `SYZDuality.lean`, and"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7882,7 +7883,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
   {
-    "consumed_by_exp_id": "470fcb83",
+    "consumed_by_exp_id": "",
     "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
     "domains": [
       "Tropical",
@@ -7892,7 +7893,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
   },
