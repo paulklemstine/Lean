@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "061c7bd2",
+    "consumed_by_exp_id": "",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -160,7 +160,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -2075,20 +2075,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T13:47:18.898418+00:00",
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
-  },
-  {
-    "consumed_by_exp_id": "7c592ed1",
-    "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2332",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T14:06:13.272860+00:00",
-    "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
   {
     "consumed_by_exp_id": "",
@@ -4189,7 +4175,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "1394b2e6",
+    "consumed_by_exp_id": "",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self\u2011dual string C\u2011group representations of rank $2m$ (as constructed by the vertex\u2011gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self\u2011dual string C\u2011group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domains": [
       "Algebra"
@@ -4198,7 +4184,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
   },
@@ -6532,6 +6518,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Fixed-Point Dynamics\n\nDerived from this research cycle (`EML/FixedPointRate.lean`,\n`EML/FixedPointConcreteInstance.lean`), which upgraded the EML fixed-point story\nfrom \"converges\" to \"converges with a certified, computable geometric rate\n`O(\u03c1\u207f)`\" and exhibited an explicit non-vacuous contraction instance.\n\n---\n\n## D1. The contraction ratio is asymptotically *exactly* `|f'(x*)|`\n\n**Conjecture.** For an `EMLContractionData D` with fixed point `x*`, the *true*\nasymptotic convergence ratio equals `|f'(x*)| = exp(a)\u00b7b / (b\u00b7x* + c)`, in the\nsense that `|x\u2099\u208a\u2081 \u2212 x*| / |x\u2099 \u2212 x*| \u2192 |f'(x*)|`, and this limit can be strictly\nsmaller than the certified envelope ratio `D.rho`.\n\n*The key insight is that* the global Lipschitz constant `D.rho` only upper-bounds\nthe *local* multiplier at the fixed point, so the honest rate is a derivative\nevaluated at `x*`, recoverable from the mean value theorem already used to build\nthe contraction.\n\n*Why now?* `FixedPointRate.lean` proves the `O(\u03c1\u207f)` envelope but treats `\u03c1` as an\nexternal certificate; the next natural sharpening is to identify the *optimal* `\u03c1`\nas the spectral data `|f'(x*)|`, which the existing `EMLIterOp.deriv_eq` already\nmakes available symbolically.\n\n---\n\n## D2. A posteriori (residual) error control\n\n**Conjecture.** The EML iteration admits the a-posteriori bound\n`|x\u2099 \u2212 x*| \u2264 \u03c1/(1\u2212\u03c1) \u00b7 |x\u2099 \u2212 x\u2099\u208b\u2081|`, giving a *computable stopping criterion*\nfrom two consecutive iterates without knowing `x*` in advance.\n\n*The key insight is that* the same geometric-tail argument behind the a-priori\nestimate, re-anchored at step `n` instead of step `0`, converts the last observed\nstep length into a rigorous remaining-error certificate.\n\n*Why now?* The a-priori bound `iterSeq_error_bound` needs `|x\u2081 \u2212 x\u2080|`; for\npractical EML iterative algorithms one wants a *runtime* certificate, which the a\nposteriori form supplies directly and is a short reindexing away.\n\n---\n\n## D3. Smooth (analytic) dependence of `x*` on the parameter `a`\n\n**Conjecture.** For fixed `b, c` in the contraction regime, the fixed point\n`x*(a)` is a real-analytic function of `a`, with `dx*/da = x* / (1 \u2212 f'(x*))` and\na convergent Maclaurin series whose radius of convergence is the largest `a` for\nwhich `|f'(x*(a))| < 1`.\n\n*The key insight is that* the implicit equation `x* = exp(a)\u00b7log(b\u00b7x*+c)` has\nnon-vanishing partial derivative `1 \u2212 f'(x*) \u2260 0` precisely on the contraction\nregime, so the analytic implicit function theorem applies.\n\n*Why now?* The existing `fixedPoint_powerSeries_conjecture` only secured\n*existence* of a fixed point via IVT; with the contraction machinery now in place,\nthe implicit-function route to genuine analytic dependence (and the series the\nmission asked for) becomes reachable.\n\n---\n\n## D4. Sharp characterisation of the invariant-interval / small-`c` boundary\n\n**Conjecture.** For `b = 1` and `c \u2208 (0,1)`, no closed interval inside the domain\n`{x : x + c > 0}` is simultaneously `f`-invariant *and* contracting unless it is\npushed to `x`-values with `x + c > 1`; equivalently, the set of `(a,c)` admitting\nan EML contraction interval is exactly `{(a,c) : exp(a) < (b\u00b7x*+c)/b at the\nrelevant fixed point}` and excludes a wedge near `c \u2192 0\u207a`.\n\n*The key insight is that* `log` changes sign at argument `1`, so for tiny `c` the\noperator maps part of any left-anchored interval below `0`, breaking self-mapping;\nthe boundary is governed by where `f` crosses the diagonal with slope `< 1`.\n\n*Why now?* The computational evidence (`ComputationalEvidence.md`) shows the\nmission's literal `c \u2208 (0,1)` test case is dynamically delicate; mapping out the\nexact admissible region turns that obstruction into a clean theorem.\n\n---\n\n## D5. Composition (deep EML) preserves geometric convergence\n\n**Conjecture.** A finite composition `f_k \u2218 ... \u2218 f_1` of EML operators, each a\ncontraction with ratio `\u03c1\u1d62` on a common invariant interval, is itself a\ncontraction with ratio `\u220f \u03c1\u1d62`, and its iteration converges at rate `O((\u220f\u03c1\u1d62)\u207f)`.\n\n*The key insight is that* Lipschitz constants multiply under composition, so the\nsingle-operator `lipschitz_of_deriv_bound` lemma tensors up to depth without new\nanalysis \u2014 connecting this fixed-point theory to the deep-network theme of\n`EML/DeepComposition.lean`.\n\n*Why now?* `FixedPointRate.lean` isolates the rate from the analytic content; that\nseparation is exactly what makes the multi-layer (deep EML) generalisation a\nformal corollary rather than a fresh project.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2647",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6adcd103",
+    "status": "available",
+    "timestamp": "2026-06-27T01:25:20.817295+00:00",
+    "title": "Derived from this research cycle (`EML/FixedPointRate.lean`,"
   },
   {
     "consumed_by_exp_id": "",

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6adcd103",
     "filename": "eml_fixed_point_theorem_exp_log_iteration_converge.json",
     "pkg_num": 118,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6233200000000001,
     "title": "EML Fixed-Point Theorem: Certified Geometric Convergence of Exp-Log Iteration"
   },
   {
@@ -3440,8 +3440,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "eml_fixed_point_theorem_exp_log_iteration_converge",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6233200000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Fixed-Point Theorem: Certified Geometric Convergence of Exp-Log Iteration"
     }
