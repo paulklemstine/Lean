@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f25c8810",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nThis note sketches research directions that build on the direct, non-circular\nfactoradic development in `Catalog/NumberTheory/FactorialNumberSystem.lean`. Each\ndirection states it",
-      "quality_score": 0.7545600000000001,
-      "sorry_count": 4,
-      "theorem_count": 734,
-      "timestamp": "2026-06-25T03:46:44",
-      "title": "Alien Number Systems: Beyond Base-N"
-    },
-    {
       "cycle_id": "7ca7bb8c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — NISQ Error Mitigation via Algebraic Topology\n\nDerived from this cycle's findings in `Persistence.lean`, `ErrorMitigation.lean`,\nand `Betti.lean`.  The cycle established a single",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-27T22:57:33",
       "title": "Idempotent Probability: Large Deviations"
+    },
+    {
+      "cycle_id": "6fa4f641",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Maximum size of cycle-containing families of vectors\n\nThis cycle established, for every alphabet size `b`, the bipartite/girth core of\nthe conjecture: a cycle-containing pair for",
+      "quality_score": 0.7798419999999999,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-27T23:23:06",
+      "title": "Maximum size of cycle-containing families of vectors"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f39e2cb3",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — GL(1) Langlands correspondence\n\nDerived from this cycle's findings: the cyclotomic GL(1) correspondence is realizable as an\n*explicit group isomorphism* `DirichletCharacter ℂ n ≃",
-      "quality_score": 0.57755,
-      "sorry_count": 1,
-      "theorem_count": 6,
-      "timestamp": "2026-06-24T04:32:03",
-      "title": "Langlands Correspondence: GL(1) Case"
-    },
     {
       "cycle_id": "146bc8b0",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-06-27T23:00:45",
       "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
+    },
+    {
+      "cycle_id": "6fa4f641",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Maximum size of cycle-containing families of vectors\n\nThis cycle established, for every alphabet size `b`, the bipartite/girth core of\nthe conjecture: a cycle-containing pair for",
+      "quality_score": 0.7798419999999999,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-27T23:23:06",
+      "title": "Maximum size of cycle-containing families of vectors"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "580d1f18",
-      "domain": "Applications",
-      "name": "embedding",
-      "quality": 0.73672
-    },
-    {
-      "cycle_id": "580d1f18",
-      "domain": "Applications",
-      "name": "novelty_nonneg",
-      "quality": 0.73672
-    },
-    {
-      "cycle_id": "7b228cc3",
-      "domain": "Applications",
-      "name": "mem_constantsSubfield",
-      "quality": 0.74264
-    },
     {
       "cycle_id": "913e3580",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "relEnt_nonneg",
       "quality": 0.7623499999999999
+    },
+    {
+      "cycle_id": "6fa4f641",
+      "domain": "Novelty",
+      "name": "shatter_k_ge_four",
+      "quality": 0.7798419999999999
+    },
+    {
+      "cycle_id": "6fa4f641",
+      "domain": "Novelty",
+      "name": "adj_of_pat",
+      "quality": 0.7798419999999999
+    },
+    {
+      "cycle_id": "6fa4f641",
+      "domain": "Novelty",
+      "name": "shatter_containsCycle",
+      "quality": 0.7798419999999999
     }
   ],
-  "last_updated": "2026-06-27T23:00:45",
+  "last_updated": "2026-06-27T23:23:06",
   "open_questions": [
     {
       "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "d36ccdc3",
-        "quality": 0.41604728262910795,
-        "theorems": 0,
-        "title": "Unbounded 2-adic valuation of coefficients in F_m(x)^m for m ≥ 2"
-      },
-      {
         "cycle_id": "f8a707b1",
         "quality": 0.7756646153846154,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.39061,
         "theorems": 6,
         "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
+      },
+      {
+        "cycle_id": "6fa4f641",
+        "quality": 0.7798419999999999,
+        "theorems": 9,
+        "title": "Maximum size of cycle-containing families of vectors"
       }
     ],
     "NumberTheory": [

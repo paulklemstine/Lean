@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6fa4f641",
     "filename": "maximum_size_of_cycle_containing_families_of_vecto.json",
     "pkg_num": 154,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7798419999999999,
     "title": "Cycle-Containing Families of Vectors: Girth Thresholds and Binary Shattering"
   },
   {
@@ -4494,8 +4494,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "maximum_size_of_cycle_containing_families_of_vecto",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7798419999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Cycle-Containing Families of Vectors: Girth Thresholds and Binary Shattering"
     }

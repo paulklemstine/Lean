@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-27T23:00:49.567026+00:00",
+  "last_updated": "2026-06-27T23:23:10.148926+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -13244,6 +13244,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-27T23:00:49.307830+00:00",
       "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3291,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 158,
+      "domain": "Novelty",
+      "duration_seconds": 1405.6560072898865,
+      "end_time": 1782602367.3903146,
+      "files_integrated": 7,
+      "job_id": "6fa4f641",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v18",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v18",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6416,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.4591,
+        "novelty": 0.95,
+        "proof_depth": 0.2488,
+        "usefulness": 0.5494
+      },
+      "quality_score": 0.7798419999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782600961.7343073,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-27T23:23:09.777024+00:00",
+      "title": "Maximum size of cycle-containing families of vectors"
     }
   ]
 }
