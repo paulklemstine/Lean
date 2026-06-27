@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d5789bd5",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — BB84 Security Formalization (Cycle 1)\n\nDerived from the Stage-3 Analysis and Stage-4 Critique of this cycle. The cycle\nestablished, in `Catalog/Cryptography/BB84/`:\n\n* `KeyRateTh",
-      "quality_score": 0.69248,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-22T11:08:19",
-      "title": "Quantum Key Distribution: BB84 Security Proof"
-    },
-    {
       "cycle_id": "3d0b9aaa",
       "domain": "Applications",
       "key_insight": "# Future Directions — Orderly Friedman numbers\n\nThis cycle formalized a faithful expression-tree model of orderly (\"nice\")\nFriedman numbers over the `{+, -, *, ^, neg}` fragment, proved 13 of the firs",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T11:55:44",
       "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
+    },
+    {
+      "cycle_id": "a151a9c3",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Birkhoff polytopes and the clique-face property\n\nDerived from this cycle's findings (proved: `birkhoff_cliqueFace_iff` — `B_n` has the\nclique-face property iff `n ≤ 2`; the mecha",
+      "quality_score": 0.5405,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T12:08:06",
+      "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T11:55:44",
+  "last_updated": "2026-06-27T12:08:06",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "8e92c627",
-        "quality": 0.5924299999999999,
-        "theorems": 0,
-        "title": "Exact asymptotic value of the average stack-sorting depth"
-      },
-      {
         "cycle_id": "22e3c34e",
         "quality": 0.55076,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.6837600000000001,
         "theorems": 0,
         "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
+      },
+      {
+        "cycle_id": "a151a9c3",
+        "quality": 0.5405,
+        "theorems": 0,
+        "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
       }
     ],
     "Bridges": [

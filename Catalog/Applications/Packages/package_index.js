@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a151a9c3",
     "filename": "birkhoff_polytopes_have_the_clique_face_property_o.json",
     "pkg_num": 135,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5405,
     "title": "Birkhoff Polytopes Have the Clique-Face Property Only in Dimensions n <= 2"
   },
   {
@@ -3942,8 +3942,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "birkhoff_polytopes_have_the_clique_face_property_o",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5405,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Birkhoff Polytopes Have the Clique-Face Property Only in Dimensions n <= 2"
     }
