@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "805dbd7c",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nThese build on the formalized multiset model in\n`Catalog/Computation/MembraneComputing.lean`.\n\n## 1. General growth-rate classification of object rules\n\nGeneralize the dichotomy \"",
-      "quality_score": 0.32121642086956526,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-22T19:29:42",
-      "title": "Membrane Computing (P-Systems) and Their Computational Power"
-    },
-    {
       "cycle_id": "862d1e75",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Wolfram CA Four-Class Classification and its Computability\n\nDerived from the cycle recorded in `WolframClassification.lean` and\n`ComputationalEvidence.md`. Each conjecture is fal",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-06-27T15:18:47",
       "title": "Plethystic Triviality of the Shifted t-Schur Basis"
+    },
+    {
+      "cycle_id": "c85b45b6",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Pfaffian Giambelli formula for shifted `t`-Schur functions\n\nDerived from this cycle's findings (`Pfaffian.lean`, `StrictPartitions.lean`,\n`ShiftedTSchur.lean`).  Each conjecture",
+      "quality_score": 0.6839200000000001,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T15:52:25",
+      "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70696
     }
   ],
-  "last_updated": "2026-06-27T15:18:47",
+  "last_updated": "2026-06-27T15:52:25",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "43f6ae62",
-        "quality": 0.7796,
-        "theorems": 14,
-        "title": "Code-Based Cryptography: McEliece from Goppa Codes"
-      },
-      {
         "cycle_id": "57a09ecd",
         "quality": 0.31055800000000006,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.70696,
         "theorems": 16,
         "title": "Plethystic Triviality of the Shifted t-Schur Basis"
+      },
+      {
+        "cycle_id": "c85b45b6",
+        "quality": 0.6839200000000001,
+        "theorems": 0,
+        "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
       }
     ],
     "Bridges": [

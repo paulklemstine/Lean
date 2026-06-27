@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c85b45b6",
     "filename": "pfaffian_giambelli_formula_for_shifted_t_schur_fun.json",
     "pkg_num": 140,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6839200000000001,
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
   {
@@ -4087,8 +4087,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "pfaffian_giambelli_formula_for_shifted_t_schur_fun",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6839200000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
     }

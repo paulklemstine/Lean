@@ -719,7 +719,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "2ff65a6a",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -2382,7 +2382,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quadratic irrational density in the ratio spectrum"
   },
   {
-    "consumed_by_exp_id": "e4cbdb61",
+    "consumed_by_exp_id": "",
     "description": "The sum of the elements in the $n$-th row of the Pascal-like Riordan array defined by the power series pair $(1/(1-x), x/(1-x)^2)$, whose entries are given by the binomial coefficient $t_{n,k} = \\binom{n+k}{2k}$, equals the $(2n+1)$-th Fibonacci number. This is derived from the paper's demonstration that the generating function of the row sums is $(1-x)/(1-3x+x^2)$, which characterizes the odd-indexed Fibonacci sequence.",
     "domains": [
       "Bridges"
@@ -2391,7 +2391,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22070v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T13:29:49.823733+00:00",
     "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
   },
@@ -4911,7 +4911,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the Density Threshold for Linear r\u2011Uniform Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "bdfd9dbb",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that there exists a deterministic algorithm solving the Global Label Min-Cut (GLMC) problem on any undirected graph with n vertices and p labels in time O((np)^{C\u00b7log n / log log n}) for some absolute constant C.",
     "domains": [
       "Pythagorean",
@@ -4921,7 +4921,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T19:43:32.279494+00:00",
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
@@ -6186,7 +6186,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
   },
   {
-    "consumed_by_exp_id": "d36ccdc3",
+    "consumed_by_exp_id": "",
     "description": "Formalize the statement that for a family of graphs on the same vertex set, the partition of connected components of their union is the join (in the partition lattice) of their individual connected component partitions. This is a key combinatorial lemma used in the ETH-hardness reduction for Global Label Min-Cut.",
     "domains": [
       "Algebra",
@@ -6196,7 +6196,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T02:00:32.669730+00:00",
     "title": "Join of Partition Lattices Corresponds to Graph Union Connectivity"
   },
@@ -7375,6 +7375,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Pfaffian Giambelli formula for shifted `t`-Schur functions\n\nDerived from this cycle's findings (`Pfaffian.lean`, `StrictPartitions.lean`,\n`ShiftedTSchur.lean`).  Each conjecture is bold, falsifiable, and comes with a key\ninsight and a \"why now?\" justification.\n\n---\n\n## Conjecture 1 \u2014 General-`k` Pfaffian\u2013determinant identity\n\n**Statement.** For every `k`, the polynomial `pf_{2k}` defined by the signed\nperfect-matching sum satisfies `det A = (pf_{2k} A)\u00b2` for every alternating\n`2k \u00d7 2k` matrix over a commutative ring, and `pf_{2k}` admits the recursive\ncomplementary-minor (Giambelli) expansion along the first row.\n\n*The key insight is* that `Pf\u00b2 = det` is forced by a single first-row Laplace\nrecursion: once `det_fin_four` and `pf4_giambelli` agree at `k = 2`, the inductive\nstep is a bilinear identity matching the matching-sum recursion to cofactor\nexpansion, so no new idea is needed beyond bookkeeping the signs.\n\n*Why now?* We already isolated and proved the `k = 1, 2` base cases and the missing\n`det_fin_four` over an arbitrary ring; the recursion `pf4_giambelli` is the exact\nshape that generalizes, so the induction is within reach of the current toolchain.\n\n---\n\n## Conjecture 2 \u2014 The shifted `t`-Schur function is polynomial in `t` of degree `\u2264 k`\n\n**Statement.** For a strict partition with `2k` (padded) parts, `s_\u03bb^Q(t) =\nPf(A + t\u00b7B)` is a polynomial in `t` of degree at most `k`, with constant term the\nclassical Schur `Q`-function `s_\u03bb^Q(0)` and leading term `t\u1d4f \u00b7 Pf B`.\n\n*The key insight is* that the Pfaffian is exactly degree `k` in the matrix entries,\nso a linear deformation of the entries deforms `s_\u03bb^Q` by a degree-`k` polynomial in\n`t` \u2014 at `k = 2` we proved the quadratic law `Pf A + t\u00b7mix + t\u00b2\u00b7Pf B` explicitly.\n\n*Why now?* The `k = 2` quadratic expansion (`pf4_deform_expansion`) is proven and its\nconstant/leading terms identified; the general degree bound is the natural\nmultilinear-algebra generalization and would pin down the analytic structure of the\nGJZ deformation.\n\n---\n\n## Conjecture 3 \u2014 Distinct-part labels are strictly fewer than conjugacy classes for `n \u2265 3`\n\n**Statement.** For `n \u2265 3`, the number of strict (distinct-part) partitions of `n` is\n*strictly* less than `|ConjClasses(S\u2099)| = p(n)`; equivalently `q(n) < p(n)`.\n\n*The key insight is* that any partition reusing a part (e.g. `n = 1 + 1 + \u2026`) is\nnon-strict and unmatched by the inclusion `strict \u21aa all`, so the inclusion is never\nsurjective once a repeated-part partition exists, which happens for all `n \u2265 2` except\ntrivially small cases.\n\n*Why now?* We proved the non-strict bound `q(n) \u2264 p(n)` against the catalog count\n`|ConjClasses(S\u2099)| = p(n)`; upgrading `\u2264` to `<` only needs exhibiting one repeated-part\npartition, a finite witness the toolchain handles directly.\n\n---\n\n## Conjecture 4 \u2014 The sign law extends to a full alternating action of `S_{2k}`\n\n**Statement.** The map `\u03c3 \u21a6 pf_{2k}(A.submatrix \u03c3 \u03c3)` equals `sign(\u03c3) \u00b7 pf_{2k}(A)`\nfor every permutation `\u03c3 \u2208 S_{2k}` and every alternating `A`.\n\n*The key insight is* that transpositions generate `S_{2k}` and each transposition\nflips the Pfaffian's sign \u2014 we verified the generator case `pf4_swap12_neg` \u2014 so the\nglobal statement is the unique multiplicative extension of the transposition rule.\n\n*Why now?* The transposition base case is proven from skewness alone; combining it\nwith `Equiv.Perm.swap`-generation lemmas already in Mathlib gives a clean induction on\npermutation length.\n\n---\n\n## Conjecture 5 \u2014 Clifford/Wick realization of the Pfaffian entries\n\n**Statement.** There is an associative algebra with anticommuting generators\n`\u03c8\u2080, \u2026, \u03c8_{2k\u22121}` (`\u03c8_i\u03c8_j = \u2212\u03c8_j\u03c8_i`, `\u03c8_i\u00b2 = 0`) and a vacuum functional `\u27e8\u00b7\u27e9`\nsuch that `\u27e8\u03c8_{i\u2081}\u22ef\u03c8_{i_{2k}}\u27e9 = pf_{2k}` of the contraction matrix `\u27e8\u03c8_i\u03c8_j\u27e9` \u2014\ni.e. Wick's theorem realizes the Pfaffian Giambelli entries from the odd GJZ\noperators.\n\n*The key insight is* that the Pfaffian's `+ \u2212 +` matching signs are precisely the\nfermionic Wick contraction signs; the `k = 2` Pfaffian `a\u2080\u2081a\u2082\u2083 \u2212 a\u2080\u2082a\u2081\u2083 + a\u2080\u2083a\u2081\u2082`\n*is* the order-4 Wick expansion, so the algebraic skeleton we proved already matches\nthe fermionic side term-by-term.\n\n*Why now?* Mathlib has `CliffordAlgebra` and its grading; the matching combinatorics\nare settled on the Pfaffian side here, so building the small Fock model and proving\norder-4 Wick is a concrete next target that would connect this file to the genuine\nGJZ operator construction.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2705",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c85b45b6",
+    "status": "available",
+    "timestamp": "2026-06-27T15:52:03.522410+00:00",
+    "title": "Derived from this cycle's findings (`Pfaffian.lean`, `StrictPartitions.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7448,7 +7463,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "6fec91f1",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -7458,7 +7473,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -7741,7 +7756,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "46e595fc",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -7751,7 +7766,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
