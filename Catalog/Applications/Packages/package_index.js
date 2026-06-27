@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "236373d0",
     "filename": "navier_stokes_2d_regularity_and_partial_3d_results.json",
     "pkg_num": 123,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.55432,
     "title": "Navier-Stokes: Abstract Energy Theory for 2D Regularity and Partial 3D Results"
   },
   {
@@ -3592,8 +3592,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "navier_stokes_2d_regularity_and_partial_3d_results",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.55432,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Navier-Stokes: Abstract Energy Theory for 2D Regularity and Partial 3D Results"
     }
