@@ -1,73 +1,40 @@
-# Computational Evidence — EML Fixed-Point Quantitative Convergence
+# Theorem Trace (internal anti-hallucination ledger)
 
-Operator under test: `f(x) = exp(a)·log(b·x + c)` with `a = 0, b = 1, c = 2`,
-i.e. `f(x) = log(x + 2)`, iterated from `x₀ = 1`. All numbers below are `Float`
-computations (Lean `#eval`).
+Every result below is taken verbatim from the Phase A Lean output. No theorem is
+invented or renamed into a grander claim.
 
-## 1. Orbit and fixed point
+## From `Catalog/EML/FixedPointConvergence.lean`
 
-`xₙ = iter n 1.0` for `n = 0..11`:
+| Lean name | Mathematical statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `EMLIterOp` (def) | `f(x) = exp(a) · log(b·x + c)` | yes | Def. 1 |
+| `EMLIterOp.iterSeq` (def) | `x₀ given; x_{n+1} = f(x_n)` | yes | Def. 2 |
+| `EMLContractionData` (struct) | bundle: `lo<hi`, `0≤ρ<1`, `arg_pos`, `maps_to`, `deriv_bound` | yes | Def. 3 |
+| `EMLIterOp.hasDerivAt` / `EMLIterOp.deriv_eq` | `f'(x) = exp(a)·b/(b·x+c)` when `b·x+c>0` | yes | Prop. 1 |
+| `EMLIterOp.fixedPoint_eq` | a fixed point satisfies `x* = exp(a)·log(b·x*+c)` | yes | Prop. 2 |
+| `EMLIterOp.fixedPoint_arg_gt_one` | if `x*>0` fixed then `b·x*+c>1` | — | Prop. 2 (remark) |
+| `EMLIterOp.lipschitz_of_deriv_bound` | `|f(x)-f(y)| ≤ ρ·|x-y|` on `[lo,hi]` | yes | Lemma 1 |
+| `EMLIterOp.fixedPoint_unique` | at most one fixed point on the contracting interval | yes | Thm. 1 |
+| `EMLIterOp.iterSeq_mem_Icc` | iterates stay in `[lo,hi]` | — | Lemma 2 |
+| `EMLIterOp.iterSeq_geometric_decay` | `|x_{n+1}-x_n| ≤ ρ^n·|x_1-x_0|` | yes | Lemma 3 |
+| `EMLIterOp.iterSeq_cauchy` | the iteration is Cauchy | — | Lemma 4 |
+| `EMLIterOp.iterSeq_converges` | `∃ x*`: limit, fixed, in `[lo,hi]` | yes | Thm. 2 |
+| `EMLIterOp.fixedPoint_powerSeries_conjecture` | for `0<a<1/2`, `b=1,c=2`: `∃ x*>0` fixed (IVT) | yes | Thm. 3 |
 
-```
-1.000000, 1.098612, 1.130954, 1.141338, 1.144649, 1.145702,
-1.146037, 1.146144, 1.146177, 1.146188, 1.146192, 1.146193
-```
+## From `Catalog/EML/FixedPointRate.lean` (Phase A)
 
-The orbit converges to `x* ≈ 1.146193`, the unique solution of `x = log(x + 2)`.
-The contraction factor at the fixed point is `f'(x*) = 1/(x*+2) ≈ 0.317844 < 1`,
-so the interval contraction hypotheses of `EMLContractionData` are satisfiable
-(e.g. on `[1, 1.2]` one may take `ρ = 0.34`).
+| Lean name | Mathematical statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `EMLIterOp.iterSeq_dist_consecutive` | `dist(x_n,x_{n+1}) ≤ |x_1-x_0|·ρ^n` | yes | Lemma 3' |
+| `EMLIterOp.iterSeq_error_bound` | a priori `|x_n-x*| ≤ |x_1-x_0|·ρ^n/(1-ρ)` | yes | Thm. 4 |
+| `EMLIterOp.iterSeq_certified_rate` | packaged: fixed point + explicit geometric error bound | yes | Thm. 5 |
+| `EMLIterOp.iterSeq_error_tendsto_zero` | the error bound `→ 0` (genuine `O(ρ^n)`) | yes | Cor. 1 |
 
-## 2. Geometric decay of consecutive steps (`iterSeq_geometric_decay`)
+## From `Catalog/EML/FixedPointConcreteInstance.lean` (Phase A)
 
-`|xₙ₊₁ − xₙ|` for `n = 0..7`:
-
-```
-0.098612, 0.032342, 0.010384, 0.003311, 0.001053, 0.000335, 0.000106, 0.000034
-```
-
-Successive ratios ≈ `0.328, 0.321, 0.319, 0.318, …` → `f'(x*) ≈ 0.318`, exactly the
-geometric rate predicted by the theory.
-
-## 3. A priori bound (`iterSeq_apriori_bound`), `ρ = 0.34`
-
-Pairs `(actual error |xₙ − x*|,  bound |x₁−x₀|·ρⁿ/(1−ρ))`:
-
-```
-(0.146193, 0.149413)
-(0.047581, 0.050800)
-(0.015239, 0.017272)
-(0.004855, 0.005873)
-(0.001544, 0.001997)
-(0.000491, 0.000679)
-(0.000156, 0.000231)
-```
-
-The bound dominates the actual error in every row. ✓
-
-## 4. A posteriori bound (`iterSeq_aposteriori_bound`), `ρ = 0.34`
-
-Pairs `(actual error |xₙ₊₁ − x*|,  bound (ρ/(1−ρ))·|xₙ₊₁−xₙ|)`:
-
-```
-(0.047581, 0.050800)
-(0.015239, 0.016661)
-(0.004855, 0.005349)
-(0.001544, 0.001706)
-(0.000491, 0.000543)
-(0.000156, 0.000173)
-```
-
-The a posteriori bound is tighter than the a priori bound and still dominates the
-actual error in every row. ✓
-
-## 5. Counterexample hunt
-
-No counterexample to either inequality was found across the sampled iterates with
-`ρ = 0.34`. The bounds degenerate (denominator `1 − ρ → 0`) only as `ρ → 1`, exactly
-the boundary excluded by `D.rho_lt_one`; this is consistent with the formal statements.
-
-## OEIS
-
-The orbit is a transcendental real sequence (decimal expansions), not an integer
-sequence, so no OEIS entry applies.
+| Lean name | Mathematical statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `EMLIterOp.concreteEML` (def) | `a=1,b=1,c=100,lo=0,hi=20,ρ=1/30`; `f(x)=e·log(x+100)` | yes | §6 |
+| `EMLIterOp.concreteEML_apply` | the instance is exactly `f(x)=e·log(x+100)` | yes | §6 |
+| `EMLIterOp.concreteEML_nontrivial` | `1 < exp(a)` with `a=1` (not a bare log) | yes | §6 |
+| `EMLIterOp.concreteEML_certified` | end-to-end: fixed point in `[0,20]`, convergence, `(1/30)^n` rate | yes | Thm. 6 |
