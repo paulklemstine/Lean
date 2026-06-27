@@ -749,7 +749,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6c98458",
     "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
     "domains": [
       "Algebra",
@@ -759,7 +759,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:57.058856+00:00",
     "title": "Collatz Conjecture"
   },
@@ -4926,7 +4926,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "669193db",
     "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor \u03bb > 1, leading to exponential contraction after k iterations: max{\u03c3 \u2208 Del(X_k)}.diameter \u2264 (1/\u03bb)^k \u00b7 max{\u03c3 \u2208 Del(X_0)}.diameter",
     "domains": [
       "Pythagorean"
@@ -4935,7 +4935,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
@@ -6232,7 +6232,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tight asymptotic bound for the n\u2011queens completion threshold"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08b15f3b",
     "description": "Conjecture that for all integers k \u2265 5, the 3-color shift number s\u2083(k) equals the square of the (k-2)-fold tower of twos evaluated at 2, i.e., s\u2083(k) = (twr_{k-2}(2))\u00b2.",
     "domains": [
       "Pythagorean"
@@ -6241,7 +6241,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T15:00:24.904002+00:00",
     "title": "Exact value of the 3-color shift number"
   },
@@ -6912,7 +6912,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43f6ae62",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -6922,7 +6922,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -7175,7 +7175,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57a09ecd",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -7185,7 +7185,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
