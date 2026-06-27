@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cd0ef092",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Proof Automation: Custom Lean 4 Tactics\n\nDerived from this cycle's findings (Stage 3 Analysis & Stage 4 Critique on the\n`tropical_simp`, `number_theory_decide`, `spectral_bound`",
-      "quality_score": 0.7045299999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-24T13:14:57",
-      "title": "Proof Automation: Custom Lean 4 Tactics"
-    },
-    {
       "cycle_id": "f8c355ed",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Gaussian–Pythagorean Bridge for LWE Hardness\n\nThese conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`.\nEach is stated to be falsifiable and formalizable in L",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-27T18:43:36",
       "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
+    },
+    {
+      "cycle_id": "e8be0a2a",
+      "domain": "Applications",
+      "key_insight": "# EML Transseries — Future Directions\n\nThis research thread extends the Hahn-series model of transseries\n(`Catalog/EML/Transseries/`). New verified files added across cycles:\n\n- `ExponentLaws.lean` —",
+      "quality_score": 0.8740959999999999,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-06-27T18:47:29",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "54153a72",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Brunn–Minkowski Theory\n\nThis cycle established the **one-dimensional Brunn–Minkowski inequality**\n(`vol A + vol B ≤ vol(A+B)` for nonempty compact `A,B ⊆ ℝ`), its sharpness on\nin",
-      "quality_score": 0.56159,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-23T07:32:03",
-      "title": "Convex Geometry: Brunn-Minkowski Theory"
-    },
     {
       "cycle_id": "d1c9c6b9",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 23,
       "timestamp": "2026-06-27T18:45:04",
       "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
+    },
+    {
+      "cycle_id": "e8be0a2a",
+      "domain": "Applications",
+      "key_insight": "# EML Transseries — Future Directions\n\nThis research thread extends the Hahn-series model of transseries\n(`Catalog/EML/Transseries/`). New verified files added across cycles:\n\n- `ExponentLaws.lean` —",
+      "quality_score": 0.8740959999999999,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-06-27T18:47:29",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3847ce48",
-      "domain": "MachineLearning",
-      "name": "period_swap",
-      "quality": 0.75084
-    },
-    {
-      "cycle_id": "0e9a5064",
-      "domain": "NumberTheory",
-      "name": "det_add_smul_onesM",
-      "quality": 0.7836800000000002
-    },
-    {
-      "cycle_id": "72d240c8",
-      "domain": "Novelty",
-      "name": "toConj_single",
-      "quality": 0.7694400000000001
-    },
     {
       "cycle_id": "72d240c8",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "exists_missing_residue",
       "quality": 0.7756646153846154
+    },
+    {
+      "cycle_id": "e8be0a2a",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.8740959999999999
+    },
+    {
+      "cycle_id": "e8be0a2a",
+      "domain": "Applications",
+      "name": "shift_inj",
+      "quality": 0.8740959999999999
+    },
+    {
+      "cycle_id": "e8be0a2a",
+      "domain": "Applications",
+      "name": "shift_lt_iff",
+      "quality": 0.8740959999999999
     }
   ],
-  "last_updated": "2026-06-27T18:45:04",
+  "last_updated": "2026-06-27T18:47:29",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "53364cc2",
-        "quality": 0.6837600000000001,
-        "theorems": 0,
-        "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
-      },
-      {
         "cycle_id": "a151a9c3",
         "quality": 0.5405,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.7003299999999999,
         "theorems": 27,
         "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
+      },
+      {
+        "cycle_id": "e8be0a2a",
+        "quality": 0.8740959999999999,
+        "theorems": 31,
+        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
       }
     ],
     "Bridges": [

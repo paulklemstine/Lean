@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e8be0a2a",
     "filename": "eml_transseries_asymptotic_expansions_beyond_power.json",
     "pkg_num": 145,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8740959999999999,
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
   {
@@ -4233,8 +4233,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8740959999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
