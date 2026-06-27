@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8a707b1",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4398a39a",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -160,7 +160,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -719,7 +719,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ff65a6a",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -852,7 +852,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2fdcb78",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -861,7 +861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1817,7 +1817,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bd70abee",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domains": [
       "Bridges"
@@ -1826,7 +1826,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -2208,7 +2208,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Degree-One Triviality of Grassmann Schemes $J_q(n,2)$ for $n \\ge q+2$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e08d081",
     "description": "For k \u2265 2, let F(k) = gcd_{q=2}^{k} (qk choose k). We conjecture that F(k) = 1 if and only if k is not a prime power. This generalizes the known result for D(k) = gcd_{q=2}^{k+1} (qk choose k) which equals 1 precisely when k+1 is not a prime power (in the sense that the largest prime-power divisor P of k+1 satisfies (k+1)/P > P). The conjecture can be approached using similar techniques: a finite-difference argument shows only primes dividing k can divide F(k), Lucas' theorem reduces the problem to base-p digit analysis, and a digit-box stabilizer theorem determines when F(k) = 1.",
     "domains": [
       "Pythagorean"
@@ -2217,7 +2217,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T08:56:07.087605+00:00",
     "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
   },
@@ -4911,7 +4911,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of the Density Threshold for Linear r\u2011Uniform Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bdfd9dbb",
     "description": "Conjecture that there exists a deterministic algorithm solving the Global Label Min-Cut (GLMC) problem on any undirected graph with n vertices and p labels in time O((np)^{C\u00b7log n / log log n}) for some absolute constant C.",
     "domains": [
       "Pythagorean",
@@ -4921,7 +4921,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T19:43:32.279494+00:00",
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
@@ -6854,7 +6854,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Planar Zaks Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "935abbfb",
     "description": "Conjecture that for every integer v\u22651 the q\u2011series\n6^v \u03a3_{n\u22651} \u03a3_{k\u2208\u2124} n^v T_{2v}((6k+1)/\u221a(24 n)) (\u22121)^k c_f(n\u2212k(3k+1)/2) q^n\n\u2212 2 \u03a3_{n\u2208\u2124} (12/(2n+1)) n^{2v} q^{n(n+1)/6}/(1+q^n)\n+ (2/E_{2v}) \u03a3_{n\u22651} (\u22121)^{n\u22121} (2n\u22121)^{2v} q^{2n\u22121}/(1+q^{2n\u22121})\n\u2212 (2^{2v+1}/E_{2v}) \u03a3_{n\u22651} (\u22121)^{n\u22121} n^{2v} q^n/(1+q^n)\n= 0 as a formal power series in q.",
     "domains": [
       "Pythagorean"
@@ -6863,7 +6863,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22458v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T03:45:09.652120+00:00",
     "title": "Vanishing of the Eichler\u2013Selberg combination for third\u2011order mock theta functions"
   },

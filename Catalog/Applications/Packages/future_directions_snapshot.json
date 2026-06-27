@@ -120,7 +120,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8a707b1",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domain_bridges": [],
     "domains": [
@@ -132,7 +132,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -958,7 +958,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ff65a6a",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domain_bridges": [],
     "domains": [
@@ -971,7 +971,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -2693,7 +2693,7 @@
     "catalog_references": [
       "DrmotaKauersSpiegelhofer2016"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bd70abee",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->∞} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domain_bridges": [
       "math.CO",
@@ -2708,7 +2708,7 @@
     "proof_strategy": "exact deconvolution replaced by finite stopped random-walk law and first-exit median analysis",
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -3436,7 +3436,7 @@
       "OEIS A080170",
       "Ralf Stephan's OEIS conjectures"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e08d081",
     "description": "For k ≥ 2, let F(k) = gcd_{q=2}^{k} (qk choose k). We conjecture that F(k) = 1 if and only if k is not a prime power. This generalizes the known result for D(k) = gcd_{q=2}^{k+1} (qk choose k) which equals 1 precisely when k+1 is not a prime power (in the sense that the largest prime-power divisor P of k+1 satisfies (k+1)/P > P). The conjecture can be approached using similar techniques: a finite-difference argument shows only primes dividing k can divide F(k), Lucas' theorem reduces the problem to base-p digit analysis, and a digit-box stabilizer theorem determines when F(k) = 1.",
     "domain_bridges": [
       "Binomial coefficient identities",
@@ -3453,7 +3453,7 @@
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T08:56:07.087605+00:00",
     "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
   },
@@ -8532,7 +8532,7 @@
       "https://arxiv.org/abs/2309.14753",
       "https://doi.org/10.1038/s41586-021-03890-9"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bdfd9dbb",
     "description": "Conjecture that there exists a deterministic algorithm solving the Global Label Min-Cut (GLMC) problem on any undirected graph with n vertices and p labels in time O((np)^{C·log n / log log n}) for some absolute constant C.",
     "domain_bridges": [
       "graph_theory",
@@ -8549,7 +8549,7 @@
     "proof_strategy": "The conjectured upper bound can be approached by extending the partition‑lattice dynamic programming techniques used for hypergraph min‑cut.  One would encode the connectivity of the union of label graphs as lattice elements and propagate partial solutions using fast zeta transforms on the lattice.  By carefully arranging the recursion depth to be O(log n / log log n) and applying a logarithmic‑depth divide‑and‑conquer on the label set, the total number of DP states can be bounded by (np)^{O(log n / log log n)}.  A full formal proof would involve defining the lattice, proving its size bound, and showing that the DP recurrence respects the GLMC objective.  The crux is to avoid an exponential blow‑up in the number of subsets of labels by exploiting the lattice’s Möbius inversion to compute union‑connectivity in quasi‑linear time per layer.",
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T19:43:32.279494+00:00",
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
@@ -12072,7 +12072,7 @@
       "zbMATH05374823",
       "zbMATH06828732"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "935abbfb",
     "description": "Conjecture that for every integer v≥1 the q‑series\n6^v Σ_{n≥1} Σ_{k∈ℤ} n^v T_{2v}((6k+1)/√(24 n)) (−1)^k c_f(n−k(3k+1)/2) q^n\n− 2 Σ_{n∈ℤ} (12/(2n+1)) n^{2v} q^{n(n+1)/6}/(1+q^n)\n+ (2/E_{2v}) Σ_{n≥1} (−1)^{n−1} (2n−1)^{2v} q^{2n−1}/(1+q^{2n−1})\n− (2^{2v+1}/E_{2v}) Σ_{n≥1} (−1)^{n−1} n^{2v} q^n/(1+q^n)\n= 0 as a formal power series in q.",
     "domain_bridges": [
       "Modular Forms",
@@ -12089,7 +12089,7 @@
     "proof_strategy": "Express the mock theta functions as non‑holomorphic Eisenstein series using harmonic Maass form theory, then compare Fourier coefficients of both sides; the vanishing follows from the uniqueness of Eisenstein series and the known transformation properties under the modular group.",
     "research_mode": "team",
     "source_exp_id": "2606.22458v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T03:45:09.652120+00:00",
     "title": "Vanishing of the Eichler–Selberg combination for third‑order mock theta functions"
   },
