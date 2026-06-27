@@ -1,4 +1,4 @@
-import Catalog.MachineLearning.EulerMascheroni.SeriesRepresentation
+import MachineLearning.EulerMascheroni.SeriesRepresentation
 
 /-!
 # The zeroth Stieltjes constant is the Euler–Mascheroni constant
