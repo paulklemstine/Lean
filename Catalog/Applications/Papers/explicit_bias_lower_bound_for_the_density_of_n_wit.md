@@ -1,54 +1,61 @@
-# Computational Evidence — Cusick density bias for `s₂(n+t) ≥ s₂(n)`
+# Computational Evidence: Cusick density `c_t = dens { n : s₂(n) ≤ s₂(n+t) }`
 
-All computations use the binary sum-of-digits function `s₂(n) = (Nat.digits 2 n).sum`
-and the finite count `cc t N = #{ n < N : s₂(n) ≤ s₂(n+t) }`. They were run inside
-Lean via `#eval` (so the numbers below are reproducible with the project toolchain),
-and each conclusion that we formalize is independently kernel-checked in
-`CusickDoublingInvariance.lean`.
+All values below were computed with the binary digit sum
+`s₂(n) = (Nat.digits 2 n).sum` and the predicate `P_t(n) := s₂(n) ≤ s₂(n+t)`.
+The Cusick predicate `P_t` is purely periodic with period `P = 2^{L + s₂(t)}`,
+`L = (Nat.digits 2 t).length` (proved in general in `CusickPeriodicity.lean`), so
+`c_t = (#good residues in [0,P)) / P`.  Periodicity was re-confirmed empirically by
+checking `good t n == good t (n + P)` for `n < P·50` in every row.
 
-## 1. Doubling invariance (the formalized mechanism)
+## Exact densities (verified periods and good-residue counts)
 
-For all sampled `n < 768`, `t < 30`:
+| t  | binary | s₂(t) | L | period P | #good | c_t      | decimal |
+|----|--------|-------|---|----------|-------|----------|---------|
+| 1  | 1      | 1     | 1 | 4        | 3     | 3/4      | 0.7500  |
+| 3  | 11     | 2     | 2 | 16       | 11    | 11/16    | 0.6875  |
+| 5  | 101    | 2     | 3 | 32       | 20    | 5/8      | 0.6250  |
+| 7  | 111    | 3     | 3 | 64       | 43    | 43/64    | 0.6719  |
+| 9  | 1001   | 2     | 4 | 64       | 44    | 11/16    | 0.6875  |
+| 11 | 1011   | 3     | 4 | 128      | 76    | 19/32    | 0.5938  |
+| 13 | 1101   | 3     | 4 | 128      | 76    | 19/32    | 0.5938  |
+| 17 | 10001  | 2     | 5 | 128      | 88    | 11/16    | 0.6875  |
+| 19 | 10011  | 3     | 5 | 256      | 164   | 41/64    | 0.6406  |
+| 21 | 10101  | 3     | 5 | 256      | 160   | 5/8      | 0.6250  |
+| 25 | 11001  | 3     | 5 | 256      | 164   | 41/64    | 0.6406  |
 
-* `s₂(n) ≤ s₂(n+t)  ↔  s₂(2n)   ≤ s₂(2n   + 2t)`  — holds with no exception.
-* `s₂(n) ≤ s₂(n+t)  ↔  s₂(2n+1) ≤ s₂(2n+1 + 2t)`  — holds with no exception.
+Good residues for `t = 7` (period 64), 43 of them:
+`{0,1,2,3,4,5,6,7,8,10,12,14,16,17,18,19,20,21,22,23,24,28,32,33,34,35,36,37,38,
+39,40,42,44,46,48,49,50,51,52,53,54,55,56}`.
 
-Consequently `cc (2t) (2N) = 2 · cc t N`, checked numerically:
-`cc 4 (4·N) = 4 · cc 1 N` gave `(120,120), (112,112), (104,104)` for `N=40,40,40`
-across `t∈{1,3,5}`. Formalized as `cusickCount_two_mul` / `cusickCount_two_pow_mul`.
+## Key observations driving the formalized results
 
-## 2. Exact density `3/4` for every power of two `t = 2^k`
+1. **Density is not a function of `s₂(t)`.**  `s₂(3) = s₂(5) = 2` but
+   `c_3 = 11/16 ≠ 5/8 = c_5`.  Formalized as
+   `CusickShiftFive.cusick_density_not_s2_function`.
 
-`cc (2^k) (2^{k+2}·3)` for `k = 0,1,2,3` returned `9, 18, 36, 72`, i.e. exactly
-`3·2^k·3`. Pointwise rule `s₂(n) ≤ s₂(n+2^k) ↔ (n / 2^k) % 4 ≠ 3` verified on
-`n < 200`, `k < 4`. Formalized exactly as `cusick_pow2_iff` and
-`cusick_pow2_density` (density `3/4`, bias `1/4`).
+2. **First `s₂(t) = 3` exact value.**  `c_7 = 43/64`, extending the catalog from
+   the `s₂ = 1,2` regimes.  Formalized as `CusickShiftSeven.cusickCount_seven`.
 
-## 3. Densities for small odd shifts (NOT yet formalized — see FUTURE_DIRECTIONS)
+3. **Bit-reversal symmetry (conjectural).**  `c_11 = c_13 = 19/32` (`1011`↔`1101`)
+   and `c_19 = c_25 = 41/64` (`10011`↔`11001`).  See `FUTURE_DIRECTIONS.md`.
 
-`cc t (2^N)` stabilizes to an exact dyadic rational already at finite `N`:
+4. **Gap-separation limit (conjectural).**  For `t = 2^k + 1`: `c_5 = 5/8` (k=2)
+   but `c_9 = c_17 = 11/16` (k≥3) — well-separated 1-bits decouple.
 
-| t | `cc t (2^N)` for N=6,8,10,12,14 | stable density `c_t` |
-|---|----------------------------------|----------------------|
-| 1 | 48,192,768,3072,12288            | 3/4   = 0.7500       |
-| 3 | 44,176,704,2816,11264            | 11/16 = 0.6875       |
-| 5 | 40,160,640,2560,10240            | 5/8   = 0.6250       |
-| 7 | 43,172,688,2752,11008            | 43/64 = 0.671875     |
+5. **Extremality of all-ones (conjectural).**  Among `s₂(t) = 3` shifts sampled,
+   `c_7 = 43/64` is the largest, suggesting `t = 2^s − 1` maximizes `c_t` at fixed
+   `s₂(t) = s`.
 
-Observations:
-* Each density is `> 1/2` (consistent with Cusick), with explicit bias
-  `1/4, 3/16, 1/8, 11/64` for `t = 1,3,5,7`.
-* The ratio is *exactly* constant from a finite level onward
-  (`cc t (2^{N+2}) = 4 · cc t (2^N)` for the sampled range), and the denominator
-  is a power of two `2^{2 s₂(t)}` for these `t` (`16, 16, 64` for `t=3,5,7`).
-* Unlike `t = 2^k`, the predicate for `t` with `s₂(t) ≥ 2` is **not** a function of
-  finitely many low bits (carry chains propagate arbitrarily far, e.g. `n=13, t=3`
-  yields 4 carries), so these exact values require a recursion/transfer-operator
-  argument rather than a residue count. They are recorded as conjectures.
+6. **Every value clears the DKS bound `1/2 + 2^{-(2 s₂(t)+1)}`** with room to
+   spare (smallest margin in the table is `c_11 = 19/32` vs `17/32`, margin `2/32`).
 
-## OEIS
+## Reproduction
 
-The good-set counts `cc 1 (2^N) = 3·2^{N-2}` are the trivial `3·2^{N-2}` sequence.
-The mixed values `c_t · 2^{2 s₂(t)}` (numerators `3, 11, 43` for `t=1,3,7` at
-denominator scale) were not matched to a single catalog entry; recording the
-`(t, numerator, 2-power denominator)` table here for future cross-referencing.
+```lean
+import Mathlib
+open Finset
+def s2 (n : Nat) : Nat := (Nat.digits 2 n).sum
+def good (t n : Nat) : Bool := decide (s2 n ≤ s2 (n+t))
+#eval ((List.range 64).filter (fun r => good 7 r)).length          -- 43
+#eval (List.range 3200).all (fun n => good 7 n == good 7 (n+64))   -- true
+```

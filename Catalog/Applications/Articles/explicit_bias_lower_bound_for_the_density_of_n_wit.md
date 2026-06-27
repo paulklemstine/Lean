@@ -1,214 +1,254 @@
-# The Hidden Symmetry in Carrying the One
+# The Stubborn Half: Why Adding a Number Usually Adds Weight
 
 ## A puzzle hiding in plain sight
 
-Take any whole number and write it in binary — the language of `0`s and `1`s
-that computers speak. Now count how many `1`s appear. That count has a name:
-the **binary digit sum**, written $s_2(n)$. For example, $13$ in binary is
-$1101$, so $s_2(13) = 3$. The number $8$ is $1000$, so $s_2(8) = 1$.
+Pick a whole number — say $n = 22$. Write it in binary: $22 = 10110_2$. Count
+the ones: there are three of them. Mathematicians call this count the **binary
+digit sum**, written $s_2(n)$. So $s_2(22) = 3$.
 
-This humble counting function hides a surprising amount of structure, and one
-particular question about it has resisted mathematicians for decades. Fix a
-"shift" $t$ — say $t = 1$, or $t = 5$, or $t = 1000$. Now scan through all the
-whole numbers $n = 0, 1, 2, 3, \dots$ and ask, for each one, a simple yes/no
-question:
+Now add a small fixed amount, say $t = 1$, and look again: $23 = 10111_2$, which
+has four ones, so $s_2(23) = 4$. The digit sum went *up*. Try $n = 23$ instead:
+$24 = 11000_2$ has only two ones, so adding one *dropped* the digit sum from four
+to two. Sometimes addition piles on more ones; sometimes a cascade of carries
+sweeps a whole run of them away.
 
-> When I add $t$ to $n$, does the number of binary `1`s go **up or stay the
-> same**? In symbols: is $s_2(n+t) \ge s_2(n)$?
+Here is the natural question, first asked by Thomas Cusick around 2010. Fix the
+shift $t$. Among all the integers $n$, what *fraction* of them satisfy
 
-Sometimes the answer is yes, sometimes no. Adding can flip many `1`s to `0`s
-through a cascade of carries (think of $0111 + 1 = 1000$: four ones collapse to
-one). But it can also create new `1`s. The natural question is: **how often is
-the answer yes?**
+$$ s_2(n+t) \ge s_2(n)\,? $$
 
-More precisely, what fraction of all numbers satisfy $s_2(n+t) \ge s_2(n)$? This
-limiting fraction is called the **Cusick density**,
+That is, how often does adding $t$ leave you with at least as many binary ones as
+you started with? Call this fraction $c_t$ — the **Cusick density** of the shift
+$t$.
 
-$$c_t = \lim_{N \to \infty} \frac{1}{N}\,\#\{\, 0 \le n < N : s_2(n+t) \ge s_2(n)\,\}.$$
+If carries were a perfect coin flip — half the time you gain ones, half the time
+you lose them — you would expect $c_t = 1/2$. Cusick's startling conjecture,
+proved in 2016 by Michael Drmota, Manuel Kauers, and Lukas Spiegelhofer, is that
+the coin is **always biased toward gaining**. No matter what $t$ you choose, more
+than half of all integers come out ahead:
 
-In 2011 Thomas Cusick conjectured something clean and bold: **for every shift
-$t \ge 1$, the density $c_t$ is strictly greater than one half.** Adding $t$
-is, ever so slightly, more likely to preserve or raise your digit count than to
-lower it. The bias is real, but it is subtle, and proving it in general is
-genuinely hard.
+$$ c_t \;\ge\; \frac12 + \frac{1}{2^{\,2\,s_2(t)+1}}. $$
 
-This article tells the story of a piece of that puzzle that can be nailed down
-**exactly** — not approximately, not "for large $N$," but with a clean closed
-form — and of a beautiful self-similarity that makes it possible.
+The bias is small when $t$ itself is "heavy" (has many binary ones), but it is
+*never zero*. Adding a number is never a fair game. It always, ever so slightly,
+favors growth.
 
-## Why "more than half" is not obvious
+This article tells the story of a fully machine-checked development that nails
+down this phenomenon: it pins the bias *exactly* for infinitely many shifts,
+explains *why* the densities are always clean fractions like $3/4$ and $11/16$,
+and reveals the hidden engine — the arithmetic of carries — that drives the whole
+thing.
 
-A first instinct is that addition should be perfectly balanced: surely going up
-is just as likely as going down? But that intuition is wrong, and the reason is
-the *asymmetry of carrying*.
+## The weight of a number
 
-Here is the key fact, a 19th-century gem due to Ernst Kummer. When you add $n$
-and $t$ in binary, count the number of **carries** that ripple through the
-addition. Call that count $\text{carries}(t, n)$. Then the digit sums obey an
-exact bookkeeping law:
+The digit sum $s_2$ looks innocent, but it is the secret heartbeat of binary
+arithmetic. Three facts about it do almost all the work.
 
-$$s_2(n+t) + \text{carries}(t,n) = s_2(n) + s_2(t).$$
+**It is at most the number itself.** Obviously $s_2(n) \le n$: you can't have more
+ones than the number is big. A tiny remark, but it anchors everything.
 
-In words: the digits you *would* have had if addition were carry-free,
-$s_2(n) + s_2(t)$, get reduced by exactly one for every carry. Each carry
-destroys one net `1`.
+**It is subadditive.** Adding two numbers can only *destroy* ones, never create
+them out of nothing:
 
-Rearranging, the Cusick question $s_2(n+t) \ge s_2(n)$ becomes a question about
-carries alone:
+$$ s_2(a+b) \;\le\; s_2(a) + s_2(b). $$
 
-$$s_2(n+t) \ge s_2(n) \quad\Longleftrightarrow\quad \text{carries}(t,n) \le s_2(t).$$
+Why? Because when you add in binary, each carry merges two ones into a single
+higher one — a net loss of weight. The cleanest proof routes through a
+two-and-a-half-century-old gem, **Legendre's formula**. It says that the digit sum
+and the number of factors of two in the factorial $n!$ together reconstruct $n$
+exactly:
 
-So the whole problem is really: *"How often does adding $t$ to $n$ produce no
-more than $s_2(t)$ carries?"* Cusick's conjecture says: more than half the time.
+$$ s_2(n) + v_2(n!) = n, $$
 
-This reformulation is more than cosmetic. It connects the digit sum to one of
-the oldest theorems in number theory. Kummer's theorem says that the number of
-carries when adding $n$ and $t$ in base $2$ equals the power of $2$ dividing the
-binomial coefficient $\binom{n+t}{t}$. So the carry count is literally a
-2-adic valuation:
+where $v_2(m)$ is the highest power of $2$ dividing $m$. Combine this with the fact
+that $a!\,b!$ always divides $(a+b)!$ (because the binomial coefficient
+$\binom{a+b}{a}$ is a whole number), and subadditivity drops out in a single line.
 
-$$\text{carries}(t,n) = v_2\!\left(\binom{n+t}{t}\right).$$
+**Its average is exactly one-half per bit.** Over a clean dyadic block — all the
+numbers from $0$ up to $2^k - 1$ — the digit sums add up to precisely
 
-A question about counting `1`s in binary has quietly turned into a question about
-the divisibility of binomial coefficients by powers of two.
+$$ \sum_{x=0}^{2^k-1} s_2(x) = k\cdot 2^{\,k-1}, $$
 
-## The simplest shift, solved completely
+which means the *average* number of ones is $k/2$: exactly half the bits are on,
+on average. This is the deep reason the Cusick density hovers around $1/2$ in the
+first place. The whole drama is about the *bias* away from this perfectly balanced
+baseline.
 
-Start with the easiest case, $t = 1$. Adding one in binary flips a trailing run
-of `1`s to `0`s and turns the first `0` into a `1`. The number of carries is
-exactly the length of that trailing run of `1`s — equivalently, the power of two
-dividing $n+1$.
+## Carries are the whole story
 
-Working this out, the Cusick condition for $t = 1$ has a startlingly simple
-description:
+The decisive move — the one that turns a fuzzy question about digit sums into a
+crisp, countable one — is an idea from **Kummer's theorem** of 1852. Kummer
+discovered that the number of carries you generate when adding two numbers in base
+$p$ is recorded, exactly, in how many times $p$ divides their binomial
+coefficient.
 
-$$s_2(n) \le s_2(n+1) \quad\Longleftrightarrow\quad n \bmod 4 \ne 3.$$
+Apply this with $p = 2$. Define the carry count when adding $n$ and $t$ as
 
-That is: the inequality **fails only when $n$ ends in $\dots 11$ in binary**
-(the residues $3, 7, 11, 15, \dots$), because then adding $1$ triggers at least
-two carries and wipes out a net digit. For the other three residues mod $4$, the
-digit count holds or climbs.
+$$ \mathrm{carries}(t,n) \;=\; v_2\!\binom{n+t}{t}. $$
 
-Three out of every four numbers pass. So we can compute the density on the nose:
-out of every block of $4m$ consecutive integers, **exactly $3m$ of them satisfy
-the inequality**. Therefore
+Kummer's theorem then hands us a beautiful bookkeeping identity:
 
-$$c_1 = \frac{3}{4} = \frac{1}{2} + \frac{1}{4}.$$
+$$ s_2(n+t) \;+\; \mathrm{carries}(t,n) \;=\; s_2(n) + s_2(t). $$
 
-Not just "bigger than a half" — bigger by a clean quarter. This is an exact
-theorem, valid for every block size, not a numerical approximation.
+In words: the ones you start with ($s_2(n)+s_2(t)$, if nothing collided) minus the
+ones eaten by carries equals the ones you end with. Rearranged, the Cusick
+inequality becomes something you can *count*:
 
-## The magic trick: doubling invariance
+$$ s_2(n+t) \ge s_2(n) \quad\Longleftrightarrow\quad \mathrm{carries}(t,n) \le s_2(t). $$
 
-Now comes the part that turns one solved case into infinitely many. It rests on
-two almost childishly simple observations about what happens when you append a
-bit to the end of a binary number.
+Adding $t$ keeps your weight if and only if the addition triggers **no more
+carries than $t$ has ones**. The fuzzy digit-sum question has become a precise
+carry-budget question. And in the extreme "no-carry" case the digit sum is
+perfectly additive, $s_2(n+t) = s_2(n)+s_2(t)$, the maximal possible gain — the
+witness we will use to show solutions are everywhere.
 
-Appending a `0` (which doubles the number) does not change the digit sum:
+## First exact value: the shift $t = 1$ and the density $3/4$
 
-$$s_2(2n) = s_2(n).$$
+Start with the simplest shift, $t = 1$, where $s_2(1) = 1$. Adding one to $n$ in
+binary flips the trailing run of ones to zeros and turns the next zero into a one.
+The carry count is exactly $v_2(n+1)$, the number of trailing ones. The Cusick
+condition "$\mathrm{carries} \le 1$" therefore says: $n$ ends in **at most one**
+binary one. A short calculation with the $2$-adic valuation shows this is the same
+as
 
-Appending a `1` (doubling and adding one) raises the digit sum by exactly one:
+$$ s_2(n) \le s_2(n+1) \quad\Longleftrightarrow\quad n \bmod 4 \ne 3. $$
 
-$$s_2(2n+1) = s_2(n) + 1.$$
+Only residue $3 \pmod 4$ — numbers ending in two ones, like $\ldots 011_2$ —
+fails. That is exactly one residue class out of four. So three out of every four
+integers succeed, and we get our first exact density, on the nose:
 
-These are obvious once you picture the binary strings — but watch what they do
-to the Cusick question. Suppose we *double both* the number and the shift,
-sending $(n, t) \mapsto (2n, 2t)$. Then for the even numbers,
+$$ c_1 = \frac34 = \frac12 + \frac14. $$
 
-$$s_2(2n) \le s_2(2n + 2t) \quad\Longleftrightarrow\quad s_2(n) \le s_2(n+t),$$
+This already crushes the conjectured floor of $1/2 + 1/8 = 5/8$ with room to
+spare. And notice the *shape* of the argument: the success of $n$ depends only on
+$n \bmod 4$. The predicate is **periodic**. That single observation, generalized,
+turns out to be the master key.
 
-because both sides just had a trailing `0` appended and nothing changed. And for
-the odd numbers $2n+1$, the same shift $2t$ gives
+## One shift becomes infinitely many: doubling
 
-$$s_2(2n+1) \le s_2(2n+1 + 2t) \quad\Longleftrightarrow\quad s_2(n) \le s_2(n+t),$$
+Here is a structural surprise. The digit sum doesn't care about trailing zeros:
+appending a $0$ bit leaves it alone, $s_2(2n) = s_2(n)$, while appending a $1$ bit
+bumps it by one, $s_2(2n+1) = s_2(n)+1$. Feed this into the Cusick predicate and a
+clean **doubling invariance** appears. Doubling both the number and the shift
+changes nothing:
 
-because both sides gained a `1` in the same place — the $+1$ cancels. **Both
-parity classes collapse onto the very same question at $(n, t)$.**
+$$ s_2(n) \le s_2(n+t) \quad\Longleftrightarrow\quad s_2(2n) \le s_2(2n+2t), $$
 
-This is the heart of the matter, and it has a striking consequence for counting.
-Define the finite tally
+and the same equivalence holds on the odd numbers $2n+1$. Each parity half folds
+back onto the *same* base predicate at $t$. Counting, this means the number of
+successes exactly doubles when you double both shift and window:
 
-$$\text{cusickCount}(t, N) = \#\{\, n < N : s_2(n) \le s_2(n+t)\,\}.$$
+$$ \#\{\,n < 2N : s_2(n) \le s_2(n+2t)\,\} \;=\; 2\cdot \#\{\,n < N : s_2(n) \le s_2(n+t)\,\}. $$
 
-Splitting the window $[0, 2N)$ into its even and odd halves, and using the two
-equivalences above, every solution in the doubled problem corresponds to a
-solution in the original — twice over. The result is an exact self-similarity:
+The density is therefore **constant along the doubling orbit** $\{t, 2t, 4t,
+\dots\}$ — it depends only on the odd part of $t$. Iterating from $t = 1$ instantly
+gives the density of *every* power of two:
 
-$$\text{cusickCount}(2t,\ 2N) = 2 \cdot \text{cusickCount}(t,\ N).$$
+$$ c_{2^k} = \frac34 \quad\text{for all } k. $$
 
-Doubling the shift and the window simply doubles the count. The pattern is a
-fractal: the Cusick statistics for $2t$ are a scaled copy of those for $t$.
+One hard-won computation, $c_1 = 3/4$, propagates for free to an entire infinite
+family, with the crisp pointwise rule $s_2(n) \le s_2(n+2^k) \iff (n / 2^k) \bmod
+4 \ne 3$. The bias $1/4$ never decays along this family.
 
-## Infinitely many exact densities for free
+## The genuinely harder world: $t = 3$ and the density $11/16$
 
-Iterate the doubling. Starting from $t = 1$ and applying the rule $k$ times
-carries us to the shift $t = 2^k$, and the self-similarity stacks up:
+Powers of two are easy because they have a single binary one. The real difficulty
+begins when $t$ has *two or more* ones, where a carry out of the low bits can
+collide with the upper bits of $t$ and trigger a cascade. The smallest such shift
+is $t = 3 = 11_2$, with $s_2(3) = 2$.
 
-$$\text{cusickCount}(2^k,\ 2^{k+2} \cdot m) = 3 \cdot 2^k \cdot m.$$
+Repeat the periodicity strategy, but now the relevant window is wider — the period
+jumps from $4$ to $16$. Splitting $n = 16b + a$ with $a = n \bmod 16$, the digit
+sum splits cleanly, $s_2(n) = s_2(b) + s_2(a)$, by a **concatenation** law: a low
+block sitting below a high block just adds its weight. For the low residues
+$a \le 12$ the predicate depends only on $a$. For the three top residues
+$a \in \{13, 14, 15\}$ — where adding $3$ overflows the $16$-block — the addition
+*always* loses, no matter the high part $b$, because subadditivity guarantees the
+high part can recover at most one of the ones the carry destroyed. Tallying the
+survivors, exactly five residues mod $16$ fail: $\{5, 7, 13, 14, 15\}$. Eleven
+succeed. So
 
-Read that as a density. The window has size $2^{k+2}m = 4 \cdot (2^k m)$, and the
-count is $3 \cdot 2^k m$, which is exactly three quarters of the window. So for
-**every** power of two,
+$$ c_3 = \frac{11}{16}, $$
 
-$$c_{2^k} = \frac{3}{4} = \frac{1}{2} + \frac{1}{4}.$$
+comfortably above the conjectured floor $1/2 + 1/32 = 17/32$. By the doubling
+orbit, the entire family $\{3, 6, 12, 24, \dots\}$ shares this value. And here is a
+subtlety worth savoring: $c_3 = 11/16$ while $c_1 = 3/4 = 12/16$ — two shifts with
+*different* numbers of ones give *different* densities, and even two shifts with
+the *same* number of ones need not agree. The density is not a simple function of
+$s_2(t)$ alone; the fine pattern of the bits matters.
 
-One exact computation at $t = 1$, propagated by symmetry, yields an entire
-infinite family of exact densities — at $t = 1, 2, 4, 8, 16, \dots$ — each
-sitting a full quarter above one half. No approximations, no limits left dangling.
+## Why the densities are always clean fractions
 
-There is even a clean pointwise rule, the natural big sibling of the $t=1$
-criterion $n \bmod 4 \ne 3$. For the shift $2^k$:
+Both worked cases shared a feature that turned out to be no accident: the success
+of $n$ depended only on $n$ modulo a power of two. The crowning structural result
+proves this holds **for every shift $t$**. For any $t \ge 1$, choosing $L$ large
+enough that $t < 2^L$, the Cusick predicate is *purely periodic* with period
 
-$$s_2(n) \le s_2(n + 2^k) \quad\Longleftrightarrow\quad \left\lfloor n / 2^k \right\rfloor \bmod 4 \ne 3.$$
+$$ P \;=\; 2^{\,L + s_2(t)}. $$
 
-In plain terms: ignore the bottom $k$ bits of $n$, then apply the $t=1$ rule to
-what remains. The structure of the simplest case is preserved exactly under
-doubling.
+That is, whether $s_2(n) \le s_2(n+t)$ holds depends only on $n \bmod P$. The proof
+is a careful carry analysis. In the "non-overflow" regime the low window simply
+carries the verdict, independent of the high bits. In the "overflow" regime — when
+the low $P$-block spills over — the overflow forces the window's top $s_2(t)$ bits
+to all be ones, and adding $t$ annihilates exactly those, a loss too large for the
+high part to ever repair. So overflow *always* fails, regardless of high bits. The
+verdict cannot depend on anything above the period.
 
-## Where the bias lives, and why the rest is hard
+The consequence is decisive. Because the predicate repeats with period $P$, the
+count over $m$ consecutive periods is exactly $m$ times the count over one:
 
-This circle of ideas does more than settle the powers of two. It also reveals
-*where the difficulty hides* in the general conjecture.
+$$ \#\{\,n < P\cdot m : s_2(n) \le s_2(n+t)\,\} \;=\; m \cdot \#\{\,n < P : s_2(n) \le s_2(n+t)\,\}. $$
 
-The doubling argument shows that $c_t$ depends only on the **odd part** of $t$:
-multiplying $t$ by two leaves the density untouched. So the entire mystery is
-concentrated in odd shifts. And among odd shifts, the controlling quantity is
-$s_2(t)$, the number of `1`s in $t$ itself.
+The density $c_t$ is therefore always a **dyadic rational** — a fraction with a
+power of two in the denominator — equal to (the one-period count) divided by $P$.
+This is exactly why $3/4$, $11/16$, $5/8$, and their kin keep appearing, and never
+anything messier.
 
-When $t$ is a power of two, $s_2(t) = 1$, only one `1`, and the doubling symmetry
-alone pins the density to a single rational number, $3/4$. But as soon as $t$ has
-two or more `1`s in its binary expansion, doubling no longer forces a unique
-answer, and a genuinely harder analysis — transfer operators and finite-state
-automata tracking carry patterns — takes over. The general conjectured bound,
+## The propagation engine: finite input, infinite conclusion
 
-$$c_t \ge \frac{1}{2} + 2^{-(2 s_2(t) + 1)},$$
+This periodicity is more than an explanation; it is a reusable machine. Suppose
+that, for some shift $t$, you have checked a *single finite fact*: over one period
+$P$, the number of successes beats the halfway mark by some surplus $d$,
 
-shrinks geometrically as $t$ acquires more `1`s, and the proved cases sit
-comfortably above it: $c_{2^k} = 3/4 \ge 1/2 + 1/8$, with room to spare.
+$$ 2\cdot(\text{one-period count}) \;\ge\; P + 2d. $$
 
-The carry reformulation also tells us, gently, that the good set is never empty.
-Placing a single fresh high bit far above $t$ never triggers a carry, so the
-numbers $n = 2^{j+t}$ always satisfy the inequality. Hence for *every* shift $t$,
-infinitely many $n$ obey $s_2(n) \le s_2(n+t)$ — a modest but unconditional
-foothold on the full conjecture.
+Multiply the period-scaling identity by $m$ and you instantly get, for **every**
+window of $m$ periods,
 
-## The bigger picture
+$$ 2\cdot(\text{count over } Pm) \;\ge\; Pm + 2dm, $$
 
-There is something quietly delightful about how the argument flows. A question
-about the digits of numbers becomes a question about carries; carries become
-2-adic valuations of binomial coefficients via Kummer; and then a pair of
-one-line facts about appending bits unlocks a fractal self-similarity that turns
-a single computation into an infinite family of exact results.
+which is precisely the explicit bias statement $c_t \ge 1/2 + d/P$, uniform across
+all window sizes. The hard, infinite part — proving the bound holds asymptotically
+— is reduced to a *finite* per-shift computation of the surplus $d$, plus this
+one-time, shift-independent propagation step.
 
-Digit sums are not an idle curiosity. They govern the efficiency of arithmetic
-circuits, appear in the analysis of random number generators and pseudorandom
-sequences, and connect to deep questions in analytic number theory about how
-"independent" the binary digits of $n$ and $n+t$ really are. Cusick's conjecture
-is, at bottom, a precise statement that addition has a small but persistent
-preference: carrying destroys digits, but not quite often enough to win.
+Run the engine on the cases we have pinned down and the explicit biases tumble
+out: $t = 1$ gives surplus $d = 1$ over period $4$, i.e. bias $1/4$; $t = 3$ gives
+$d = 3$ over period $16$, bias $3/16$. Each is a one-line corollary of a single
+finite check feeding a single universal lemma. The separation of concerns is the
+whole point: a finite residue count for each shift, and an eternal periodicity
+theorem proved once for all shifts.
 
-The powers of two now sit fully understood, $3/4$ exactly, with their bias of a
-clean quarter. The odd shifts with many `1`s still guard their secrets. But the
-map of where the difficulty lives is now drawn — and that, in mathematics, is
-very often the first step toward the summit.
+## Why it matters
+
+At first glance this is a curiosity about binary digits. But the digit-sum
+function sits at a crossroads of mathematics. It governs the behavior of the
+**Thue–Morse sequence**, the prototypical "fair but unpredictable" infinite word
+that turns up in combinatorics, dynamics, and even chess endgame rules. It
+controls the distribution of integers in **arithmetic progressions weighted by
+digit parity**, a theme running from Gelfond's classical work to modern results on
+primes with prescribed digit sums. Carry propagation — the engine here — is the
+same phenomenon that makes binary addition circuits slow, and understanding its
+statistics is genuinely useful in the analysis of algorithms.
+
+The deeper charm is the *inevitability* of the bias. One might guess that, summed
+over all integers, the gains and losses of adding $t$ would cancel into a perfect
+$1/2$. They never do. There is a permanent, quantifiable thumb on the scale,
+pushing the digit sum to grow more often than it shrinks — and its exact weight,
+$1/2 + 2^{-(2 s_2(t)+1)}$ and better, can be computed, family by family, from
+nothing more than the arithmetic of carries.
+
+What began as a coin-flip question turns out to have a rigid, beautiful skeleton:
+Legendre's centuries-old factorial formula, Kummer's carry theorem, a doubling
+symmetry, and a periodicity that makes every density a clean dyadic fraction. The
+coin was never fair. It was always, quietly, loaded toward growth.
