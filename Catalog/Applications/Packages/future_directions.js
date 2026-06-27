@@ -165,7 +165,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
   {
-    "consumed_by_exp_id": "d15f1fdf",
+    "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
@@ -175,7 +175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -536,6 +536,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432801+00:00",
     "title": "Categorical Foundations: Yoneda and Adjunctions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 470fcb83 (Q=0.762), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_470fcb83_e2bdcfa7",
+    "priority_score": 0.8623499999999998,
+    "research_mode": "team",
+    "source_exp_id": "470fcb83",
+    "status": "available",
+    "timestamp": "2026-06-27T22:57:34.201561+00:00",
+    "title": "Deepening: Idempotent Probability: Large Deviations"
   },
   {
     "consumed_by_exp_id": "",
@@ -2726,7 +2740,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
   },
   {
-    "consumed_by_exp_id": "4ac2d584",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domains": [
       "Bridges"
@@ -2735,7 +2749,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -3538,21 +3552,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logarithmic formula for the regularised Wallis hierarchy"
   },
   {
-    "consumed_by_exp_id": "ba81674a",
-    "description": "For any bipartite graph G with partite sets A and B, the strong chromatic index satisfies \u03c7'_s(G) \u2264 \u0394_A \u0394_B, where \u0394_A and \u0394_B are the maximum degrees in each partition. This conjecture posits that the product of the maximum degrees in each partition forms an upper bound for the strong chromatic index, improving upon the current best-known bound of 1.676 \u0394_A \u0394_B for sufficiently large products.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2443",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23824v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T17:05:28.615107+00:00",
-    "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The conjecture asserts no primes exceeding 7 satisfy $n! + 1 = m^2$ for $n < p$. This is falsifiable via computational checks.",
     "domains": [
@@ -4160,7 +4159,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gap Phenomenon for Circular Chromatic Numbers of Projective Plane Quadrangulations"
   },
   {
-    "consumed_by_exp_id": "6fa4f641",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any fixed alphabet size b\u22652, the largest family C\u2286[b]^k in which every pair of distinct vectors yields a bipartite graph containing a cycle has size at most N_b(k), the number of good vectors defined by prescribed block sizes, and that this bound is attained for all sufficiently large k (in particular when k\u2261-1 (mod b)).",
     "domains": [
       "Pythagorean"
@@ -4169,7 +4168,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T05:24:56.704027+00:00",
     "title": "Maximum size of cycle-containing families of vectors"
   },
@@ -7662,6 +7661,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Idempotent Probability: Large Deviations\n\nDerived from this cycle's findings (`Catalog/Tropical/MeasureTheory/LaplacePrinciple.lean`\nand `DonskerVaradhan.lean`), which established (i) the finite Laplace principle\n`(1/n)\u00b7log \u2211 exp(n g) \u2192 sup g` with the **uniform** rate `log(card X)/n`, and (ii)\nthe idempotent Donsker\u2013Varadhan variational principle with the *additive* relative\nentropy `D(Q\u2016P) = sup\u2093(w_Q \u2212 w_P)`, attained at `Q = P`.\n\nThe recurring structural discovery this cycle: **the order-theoretic half of\nCram\u00e9r's program (Laplace, contraction, Donsker\u2013Varadhan) survives the idempotent\ncollapse exactly and needs no convexity, while the Legendre\u2013Fenchel half genuinely\ndoes** (cf. `DualityGap.lean`). The conjectures below probe that boundary.\n\n## Conjecture 1 \u2014 Uniform dequantization of the whole rate function\n\nFor an idempotent law `P` and observable `val`, the classical Legendre transform of\nthe finite-temperature CGF converges to the idempotent rate function `I` on its\nconvex hull, with error `O(log(card X)/n)` uniform over the state space.\n\nThe key insight is that `scaledLogPartition_le` already gives a `g`-independent\n`log(card X)/n` bound, so the convergence of the *transform* should inherit the same\nuniform rate everywhere the biconjugate is tight (the tilt-exposed points of\n`Tilting.lean`).\n\nWhy now? The Laplace principle (`finite_laplace_principle`) and the supporting-line\nconstructor (`tilt_provides_support`) are both formalized; composing them is the only\nmissing step, and the uniform `log(card X)/n` rate makes the error bound explicit\nrather than asymptotic.\n\n## Conjecture 2 \u2014 Cram\u00e9r rate of the random walk is the n-fold inf-convolution\n\nThe deviation cost of the `n`-step max-plus walk's empirical mean equals the `n`-fold\nmin-plus (inf-)convolution of the single-step rate function, divided by `n`, and this\nquotient is monotone non-increasing in `n` (a subadditive Fekete sequence).\n\nThe key insight is that `idempotentCGF_walk` already shows the CGF is exactly `n\u00b7\u039b`,\nso by the contraction principle (`idempotent_contraction`) the walk's pushforward\nrate must be a min-plus convolution power, linking the LDP to the tropical matrix\nalgebra of `MinPlusAlgebra.lean`.\n\nWhy now? Both ingredients \u2014 the additive CGF for walks and the exact contraction\nprinciple \u2014 are already proved in the catalog; the inf-convolution identity is the\nnatural bridge to the existing min-plus algebra files.\n\n## Conjecture 3 \u2014 Donsker\u2013Varadhan duality characterizes idempotent probabilities\n\nA normalized functional `F : (X \u2192 \u211d) \u2192 \u211d` that is monotone and shift-equivariant\nequals `\u03c6 \u21a6 \u222b\u207a \u03c6 dP` for some idempotent probability `P` **iff** it satisfies the\nvariational identity `F(\u03c6) = sup_Q (Q-integral of \u03c6 \u2212 D(Q\u2016P_F))` for the law `P_F`\nit induces.\n\nThe key insight is that `idempotent_donsker_varadhan` proves one direction\nconstructively (every `\u222b\u207a\u00b7dP` is such a sup attained at `P`), so duality is a\ncandidate *defining* property, turning the variational principle into a Riesz-type\nrepresentation theorem for max-plus functionals.\n\nWhy now? The catalog already has the functional-representation scaffold\n(`MaxPlusMeasure.toFunctional` in `Basic.lean`) and the variational principle; the\nconjecture asks only whether the two are equivalent.\n\n## Conjecture 4 \u2014 Strict positivity of the entropy gap controls the duality gap\n\nFor idempotent probabilities, the Legendre\u2013Fenchel duality gap at a point `x` is\nbounded above by `inf_{\u03bb} D(P^\u03bb \u2016 P)` over the exponential tilts `P^\u03bb`, with equality\nwhen `x` is not tilt-exposed.\n\nThe key insight is that `DualityGap.lean` exhibits a non-exposed middle point with a\ngap of exactly `2`, while `Tilting.lean` shows every slope exposes *some* point with\n`D = 0`; the unexposed points are precisely those of strictly positive minimal tilt\nentropy.\n\nWhy now? The non-convex counterexample (`strict_duality_gap`) and the tilt\nconstruction (`exists_cramer_tight_point`) are both in place, so the entropy gap can\nbe computed against them directly to test the bound.\n\n## Conjecture 5 \u2014 A second law: relative entropy is monotone under coarse-graining\n\nFor a surjection `T : X \u2192 Y` and idempotent probabilities `Q, P`, the pushed-forward\nrelative entropy satisfies `D(T_*Q \u2016 T_*P) \u2264 D(Q\u2016P)` (idempotent data-processing\ninequality), with equality iff `T` separates the active set of `Q`.\n\nThe key insight is that the pushforward of `Contraction.lean` is a fibrewise\nsupremum and `D` is itself a supremum of differences, so the inequality is the\norder-theoretic statement that a sup of fibre-sups cannot exceed the global sup of\ndifferences \u2014 exactly the structure that made `idempotent_contraction` exact.\n\nWhy now? The pushforward measure and its rate identity (`pushforward_rate`) are\nalready formalized, and `relEnt` is now available; the data-processing inequality is\nthe natural composite and would give the idempotent LDP a genuine \"second law\".\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_2725",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "470fcb83",
+    "status": "available",
+    "timestamp": "2026-06-27T22:57:19.318751+00:00",
+    "title": "Derived from this cycle's findings (`Catalog/Tropical/MeasureTheory/LaplacePrinc"
   },
   {
     "consumed_by_exp_id": "",

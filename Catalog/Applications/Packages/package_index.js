@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "470fcb83",
     "filename": "idempotent_probability_large_deviations.json",
     "pkg_num": 153,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7623499999999999,
     "title": "Idempotent Probability: Large Deviations and the Donsker\u2013Varadhan Variational Principle"
   },
   {
@@ -4465,8 +4465,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7623499999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Idempotent Probability: Large Deviations and the Donsker\u2013Varadhan Variational Principle"
     }

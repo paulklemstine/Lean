@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "99725b45",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — C5-decompositions and the 5/8 threshold\n\nDerived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-divisibility,\nedge-count `|E| = 5·#cycles`, the pentagon wi",
-      "quality_score": 0.708,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-25T01:28:18",
-      "title": "Asymptotic C5-decomposition threshold equals 5/8"
-    },
-    {
       "cycle_id": "f25c8810",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\nThis note sketches research directions that build on the direct, non-circular\nfactoradic development in `Catalog/NumberTheory/FactorialNumberSystem.lean`. Each\ndirection states it",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-27T22:36:00",
       "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
+    },
+    {
+      "cycle_id": "470fcb83",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nDerived from this cycle's findings (`Catalog/Tropical/MeasureTheory/LaplacePrinciple.lean`\nand `DonskerVaradhan.lean`), which establishe",
+      "quality_score": 0.7623499999999999,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-27T22:57:33",
+      "title": "Idempotent Probability: Large Deviations"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a5fa8083",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Fitting / TransEndo research thread\n\nThis cycle proved a **sharp two-sided quantitative Fitting stabilization bound**\nfor an endomorphism `g : V →ₗ[K] V` of a finite-dimensional",
-      "quality_score": 0.789328,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-24T01:59:48",
-      "title": "Close Proofs: These conjectures continue the research cycle begun in"
-    },
     {
       "cycle_id": "7e71ceda",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-27T22:36:00",
       "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
+    },
+    {
+      "cycle_id": "470fcb83",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nDerived from this cycle's findings (`Catalog/Tropical/MeasureTheory/LaplacePrinciple.lean`\nand `DonskerVaradhan.lean`), which establishe",
+      "quality_score": 0.7623499999999999,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-27T22:57:33",
+      "title": "Idempotent Probability: Large Deviations"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "53529d3f",
-      "domain": "Applications",
-      "name": "trivial",
-      "quality": 0.78512
-    },
-    {
-      "cycle_id": "53529d3f",
-      "domain": "Applications",
-      "name": "gridGraph_degree_eq",
-      "quality": 0.78512
-    },
-    {
-      "cycle_id": "580d1f18",
-      "domain": "Applications",
-      "name": "embedding",
-      "quality": 0.73672
-    },
     {
       "cycle_id": "580d1f18",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "det_KresMat",
       "quality": 0.7665600000000001
+    },
+    {
+      "cycle_id": "470fcb83",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.7623499999999999
+    },
+    {
+      "cycle_id": "470fcb83",
+      "domain": "Novelty",
+      "name": "relEnt_self",
+      "quality": 0.7623499999999999
+    },
+    {
+      "cycle_id": "470fcb83",
+      "domain": "Novelty",
+      "name": "relEnt_nonneg",
+      "quality": 0.7623499999999999
     }
   ],
-  "last_updated": "2026-06-27T22:36:00",
+  "last_updated": "2026-06-27T22:57:33",
   "open_questions": [
     {
       "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "06caccbf",
-        "quality": 0.463,
-        "theorems": 0,
-        "title": "Excluded minors for bias graphs gainable over cyclic groups 𝑍ₚ"
-      },
-      {
         "cycle_id": "e4cbdb61",
         "quality": 0.5522400000000001,
         "theorems": 6,
@@ -3637,6 +3631,12 @@
         "quality": 0.7665600000000001,
         "theorems": 14,
         "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
+      },
+      {
+        "cycle_id": "470fcb83",
+        "quality": 0.7623499999999999,
+        "theorems": 14,
+        "title": "Idempotent Probability: Large Deviations"
       }
     ],
     "NumberTheory": [
