@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7e71ceda",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs\n\nDerived from this cycle's findings (`HamiltonianCompression.lean`,\n`HamiltonianCompressionBoundary.lean`). Each co",
-      "quality_score": 0.48598591282051284,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-24T02:14:58",
-      "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
-    },
-    {
       "cycle_id": "f39e2cb3",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — GL(1) Langlands correspondence\n\nDerived from this cycle's findings: the cyclotomic GL(1) correspondence is realizable as an\n*explicit group isomorphism* `DirichletCharacter ℂ n ≃",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-27T22:57:33",
       "title": "Idempotent Probability: Large Deviations"
+    },
+    {
+      "cycle_id": "26246c0e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's findings in `WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`, and the new `WienerFactorization.",
+      "quality_score": 0.39061,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-27T23:00:45",
+      "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7623499999999999
     }
   ],
-  "last_updated": "2026-06-27T22:57:33",
+  "last_updated": "2026-06-27T23:00:45",
   "open_questions": [
     {
       "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "e4cbdb61",
-        "quality": 0.5522400000000001,
-        "theorems": 6,
-        "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
-      },
-      {
         "cycle_id": "d36ccdc3",
         "quality": 0.41604728262910795,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.7623499999999999,
         "theorems": 14,
         "title": "Idempotent Probability: Large Deviations"
+      },
+      {
+        "cycle_id": "26246c0e",
+        "quality": 0.39061,
+        "theorems": 6,
+        "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
       }
     ],
     "NumberTheory": [
