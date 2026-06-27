@@ -1,62 +1,73 @@
-# Computational Evidence — `R(4,4) = 18` and the diagonal bound
+# Computational Evidence — Probabilistic lower bounds for diagonal Ramsey numbers
 
-This note records the small-case computations that guided the formal proofs in
-`RamseyFourFour.lean` and `RamseyDiagonalBound.lean`.
+All numbers below were produced with `#eval` in Lean (kernel-evaluated `Nat`
+arithmetic), so they are exact, not floating-point estimates.
 
-## 1. Known small two-colour Ramsey numbers (OEIS A212954 diagonal / classical table)
+## 1. The counting threshold
 
-| s\t | 1 | 2 | 3 | 4  | 5  |
-|-----|---|---|---|----|----|
-| 1   | 1 | 1 | 1 | 1  | 1  |
-| 2   | 1 | 2 | 3 | 4  | 5  |
-| 3   | 1 | 3 | 6 | 9  | 14 |
-| 4   | 1 | 4 | 9 | 18 | 25 |
+For the two-colour diagonal Ramsey number `R(k,k)`, the Erdős first-moment
+argument gives `R(k,k) > n` whenever `2·C(n,k) < 2^{C(k,2)}`.  Using the crude
+slack `C(n,k) ≤ n^k` weakens the test to `2·n^k < 2^{C(k,2)}`.
 
-Diagonal values `R(k,k)`: 1, 2, 6, 18, 48–49 (R(5,5) unknown). The values
-`R(3,3)=6`, `R(3,4)=9`, `R(4,4)=18` are exactly the targets formalised in this
-catalog.
+For each `k`, let
+* `best(k)`   = largest `n` with `2·C(n,k) < 2^{C(k,2)}`  (sharp counting bound),
+* `bestpow(k)`= largest `n` with `2·n^k   < 2^{C(k,2)}`  (crude `n^k` bound).
 
-## 2. Upper bound `R(4,4) ≤ 18` — recursion check
+| k  | best(k) = R(k,k) > | bestpow(k) = R(k,k) > |
+|----|--------------------|------------------------|
+| 2  | 1                  | 0                      |
+| 3  | 3                  | 1                      |
+| 4  | 6                  | 2                      |
+| 5  | 11                 | 3                      |
+| 6  | 17                 | 5                      |
+| 7  | 27                 | 7                      |
+| 8  | 42                 | 10                     |
+| 9  | 65                 | 14                     |
+| 10 | 100                | 21                     |
+| 11 | 152                | 30                     |
+| 12 | 231                | 42                     |
+| 13 | 349                | 60                     |
 
-Erdős–Szekeres: `R(s,t) ≤ R(s-1,t) + R(s,t-1)`.
-- `R(4,4) ≤ R(3,4) + R(4,3) = 9 + 9 = 18`. ✔ (tight)
-- Binomial bound `R(4,4) ≤ C(6,3) = 20` is looser, confirming the recursion (not
-  the binomial estimate) is what is sharp here.
+Both columns grow exponentially (`best(k) ≈ 2^{k/2}·k!^{-1/?}`,
+`bestpow(k) ≈ 2^{k/2}`).  The gap between the two columns is exactly the `k!`
+factor discarded by `C(n,k) ≤ n^k`.
 
-## 3. Lower bound `R(4,4) > 17` — Paley graph on 𝔽₁₇
+The formal `ramsey_ten_lower : ¬ Arrows 16 10 10` (i.e. `R(10,10) > 16`) is a
+*conservative* instance of the crude `bestpow(10) = 21` row, chosen so the
+exponent arithmetic `2·16^10 = 2^41 < 2^45 = 2^{C(10,2)}` is a clean power-of-two
+comparison.
 
-Nonzero quadratic residues mod 17: `{1,2,4,8,9,13,15,16}` (8 of them, since
-`(17-1)/2 = 8`). Because `17 ≡ 1 (mod 4)`, `-1 ≡ 16` is a residue, so the set is
-closed under negation and defines an undirected graph.
+## 2. The even-diagonal family
 
-Exhaustive search (reproduced in Lean by `native_decide`):
-- Number of 4-subsets of 17 vertices: `C(17,4) = 2380`.
-- Red `K₄`'s found: **0**.
-- Blue `K₄`'s found: **0** (the Paley graph is self-complementary).
+`ramsey_lower_even` instantiates `k = 2m`, `n = 2^{m-1}`.  The table confirms the
+side conditions and that `2^{m-1}` stays below the (larger) sharp threshold:
 
-Hence the Paley colouring of `K₁₇` has no monochromatic `K₄`, giving `R(4,4) > 17`.
+| m | k = 2m | n = 2^{m-1} (our bound) | best(2m) (sharp) |
+|---|--------|--------------------------|-------------------|
+| 4 | 8      | 8                        | 42                |
+| 5 | 10     | 16                       | 100               |
+| 6 | 12     | 32                       | 231               |
+| 7 | 14     | 64                       | 527               |
+| 8 | 16     | 128                      | 1186              |
 
-`#eval decide (¬ ∃ S : Finset (Fin 17), paley17.IsNClique 4 S)  -- true`
+So `2^{m-1} ≤ best(2m)` throughout (our crude family bound is valid and
+conservative), and `2m ≤ 2^{m-1}` holds from `m = 4` on (`8 ≤ 8`, `10 ≤ 16`, …),
+matching the `m ≥ 4` hypothesis of `ramsey_lower_even`.
 
-## 4. Diagonal exponential bound `R(k+1,k+1) ≤ 4^k`
+## 3. Counterexample hunt (Extra Adversarial Mandate)
 
-Central binomial estimate `C(2k,k) ≤ 4^k`:
+* **`m = 3` boundary.**  `2m = 6` but `2^{m-1} = 4`, so the side condition
+  `2m ≤ n` fails (`6 ≤ 4` is false).  Hence the lower bound is *not* claimed at
+  `m = 3`; the `m ≥ 4` hypothesis is the exact boundary, not a convenience.
+* **Small-`k` weakness.**  At `k = 3` the counting test only certifies
+  `R(3,3) > 3`, far from the true `R(3,3) = 6` (proved structurally elsewhere in
+  the catalog).  No counterexample to the *theorem* exists — the method is simply
+  asymptotic, confirming the "two laws" analysis in the Lab Notes.
 
-| k | C(2k,k) | 4^k |
-|---|---------|-----|
-| 0 | 1       | 1   |
-| 1 | 2       | 4   |
-| 2 | 6       | 16  |
-| 3 | 20      | 64  |
-| 4 | 70      | 256 |
+## 4. Known exact values (sanity anchor)
 
-So `R(3,3) ≤ 16`, `R(4,4) ≤ 64` from the generic bound — both far from the exact
-values `6` and `18`, confirming that the exact results genuinely beat the generic
-exponential estimate.
-
-## 5. Conclusion
-
-All four numerical facts above are reproduced as machine-checked Lean theorems:
-the upper bound by the recursion `arrows_step` + colour symmetry, the lower bound
-by an exhaustive `native_decide` certificate on the Paley graph, and the diagonal
-bound by the central binomial estimate `central_choose_le_four_pow`.
+The exact diagonal values currently known are `R(1,1)=1`, `R(2,2)=2`,
+`R(3,3)=6`, `R(4,4)=18` (and no further `R(k,k)` is known exactly).  Every row of
+the `best(k)` column above is strictly below the corresponding known/true value
+where comparison is possible (`best(3)=3 < 6`, `best(4)=6 < 18`), as a lower
+bound must be.
