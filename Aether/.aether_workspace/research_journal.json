@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dafe288e",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nFreeform research directions extending the shallow softplus → ReLU rate in\n`EML/SoftplusRate.lean`. Each is stated with its central insight and a timeliness\njustification.\n\n## 1.",
-      "quality_score": 0.42662737142857143,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-22T03:46:41",
-      "title": "Baum-Connes Conjecture"
-    },
-    {
       "cycle_id": "e2815d63",
       "domain": "Physics",
       "key_insight": "# Future Directions — Schnorr / Σ-Protocols\n\nBuilding on `Catalog/Cryptography/SchnorrProtocol.lean` (abstract-group completeness,\nspecial soundness, group-level witness extraction, and perfect HVZK)",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T07:50:35",
       "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+    },
+    {
+      "cycle_id": "08b15f3b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Effective Computability of Erdős Zero-Sum Thresholds\n\nDerived from this cycle's findings (`davenport_zero_sum`, `card_pi_zmod`,\n`effective_threshold_prod`, `egz_multimodulus`), w",
+      "quality_score": 0.6261199999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T08:16:48",
+      "title": "Effective Computability of Erdős-550 Threshold"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T07:50:35",
+  "last_updated": "2026-06-27T08:16:48",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "cf34309d",
-        "quality": 0.584,
-        "theorems": 6,
-        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-      },
-      {
         "cycle_id": "1394b2e6",
         "quality": 0.73028,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.31055800000000006,
         "theorems": 0,
         "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+      },
+      {
+        "cycle_id": "08b15f3b",
+        "quality": 0.6261199999999999,
+        "theorems": 0,
+        "title": "Effective Computability of Erdős-550 Threshold"
       }
     ],
     "Bridges": [

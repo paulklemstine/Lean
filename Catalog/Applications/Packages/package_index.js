@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "08b15f3b",
     "filename": "effective_computability_of_erds_550_threshold.json",
     "pkg_num": 129,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6261199999999999,
     "title": "Effective Computability of the Erd\u0151s\u2013Ginzburg\u2013Ziv Threshold for Cyclic Groups"
   },
   {
@@ -3766,8 +3766,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "effective_computability_of_erds_550_threshold",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6261199999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Effective Computability of the Erd\u0151s\u2013Ginzburg\u2013Ziv Threshold for Cyclic Groups"
     }
