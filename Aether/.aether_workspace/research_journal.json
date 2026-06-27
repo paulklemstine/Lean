@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a747a0a8",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Complexity-Driven Emergence of Spacetime (Tropical Core)\n\nDerived from this cycle's findings in `TensorNetworkComplexity.lean`,\n`BondDimensionTransition.lean`, and `HolographicSca",
-      "quality_score": 0.60792,
-      "sorry_count": 0,
-      "theorem_count": 45,
-      "timestamp": "2026-06-21T23:33:49",
-      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-    },
-    {
       "cycle_id": "0e89ca61",
       "domain": "Shared",
       "key_insight": "# Future Directions — Modular Height Formula for Unitary Shimura Varieties\n\nThis cycle established, in the region of absolute convergence `Re s > 1`, a fully-proved toy model\nof the Kudla-program iden",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T05:38:48",
       "title": "Exact asymptotic value of the average stack-sorting depth"
+    },
+    {
+      "cycle_id": "7f4f0e8d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures distilled from this cycle (primitive-divisor schema mined\nfrom Carmichael's theorem + Erdős–Straus parametric families).\n\n## 1. Universal Carmichael",
+      "quality_score": 0.505788,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-27T06:26:39",
+      "title": "Proof Strategy Mining from Deep Mathematics"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76274
     }
   ],
-  "last_updated": "2026-06-27T05:38:48",
+  "last_updated": "2026-06-27T06:26:39",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f881b568",
-        "quality": 0.50863,
-        "theorems": 10,
-        "title": "Kakeya Conjecture: Known Cases and Bounds"
-      },
-      {
         "cycle_id": "9871aa6d",
         "quality": 0.7236,
         "theorems": 8,
@@ -3637,6 +3631,12 @@
         "quality": 0.6666400000000001,
         "theorems": 11,
         "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
+      },
+      {
+        "cycle_id": "7f4f0e8d",
+        "quality": 0.505788,
+        "theorems": 17,
+        "title": "Proof Strategy Mining from Deep Mathematics"
       }
     ],
     "NumberTheory": [
