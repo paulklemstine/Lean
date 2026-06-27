@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "16bb5867",
-      "domain": "Computation",
-      "key_insight": "# FUTURE DIRECTIONS — Langlands Functoriality (GL₂ ⤳ GL₃ and beyond)\n\nDerived from this cycle's findings on the unramified symmetric-square /\nsymmetric-power transfer (`SymmetricSquareGL2to3.lean`,\n`S",
-      "quality_score": 0.62616,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-22T12:40:16",
-      "title": "Langlands Program: Functoriality"
-    },
-    {
       "cycle_id": "39103244",
       "domain": "Geometry",
       "key_insight": "# FUTURE DIRECTIONS — Average-degree shattering for uncrowded hypergraphs\n\nThis cycle established the *deterministic core* of the average-degree independence\ntheory for `k`-uniform hypergraphs:\n\n- han",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T13:56:11",
       "title": "Conjecture: The limit of average stack-sorting depth equals Defant's upper bound"
+    },
+    {
+      "cycle_id": "a880054f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Mutually Orthogonal Italian Squares\n\nThis cycle formalized, over an arbitrary finite carrier `α` (so the carrier of a\nprime-power-order square can be a finite field directly):\n\n*",
+      "quality_score": 0.3646502272727273,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T13:57:55",
+      "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7014400000000001
     }
   ],
-  "last_updated": "2026-06-27T13:56:11",
+  "last_updated": "2026-06-27T13:57:55",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7f4f0e8d",
-        "quality": 0.505788,
-        "theorems": 17,
-        "title": "Proof Strategy Mining from Deep Mathematics"
-      },
-      {
         "cycle_id": "ed2a76aa",
         "quality": 0.60416,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.8360800000000002,
         "theorems": 0,
         "title": "Tropical Riemann-Roch Theorem"
+      },
+      {
+        "cycle_id": "a880054f",
+        "quality": 0.3646502272727273,
+        "theorems": 0,
+        "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
       }
     ],
     "NumberTheory": [

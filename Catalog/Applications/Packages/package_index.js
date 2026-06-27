@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a880054f",
     "filename": "maximum_size_of_pairwise_orthogonal_italian_square.json",
     "pkg_num": 137,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3646502272727273,
     "title": "The Maximum Size of a Family of Mutually Orthogonal Italian Squares is n-1, Attained at Prime Powers"
   },
   {
@@ -4000,8 +4000,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "maximum_size_of_pairwise_orthogonal_italian_square",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3646502272727273,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Maximum Size of a Family of Mutually Orthogonal Italian Squares is n-1, Attained at Prime Powers"
     }

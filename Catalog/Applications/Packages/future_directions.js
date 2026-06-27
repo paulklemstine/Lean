@@ -5752,7 +5752,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bounded Irreducible FAT Colorings via Modified Even Cycles"
   },
   {
-    "consumed_by_exp_id": "beb2abc2",
+    "consumed_by_exp_id": "",
     "description": "For every fixed graph H without isolated vertices, any graphon W achieving the supremum in the sparse threshold conjecture is a three-step threshold graphon, and the constant C_T(H) is the unique maximizer of the associated variational problem.",
     "domains": [
       "Algebra",
@@ -5762,7 +5762,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23737v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-27T02:59:38.386093+00:00",
     "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems"
   },
@@ -6087,11 +6087,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that any finite graph admits a finite tree-cut decomposition preserving undominated edge-ends, contradicting non-finite cases.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2630",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20452v1",
+    "status": "available",
+    "timestamp": "2026-06-27T13:58:28.750392+00:00",
+    "title": "Finite Decomposition Finiteness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -6105,7 +6119,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -6120,7 +6134,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -6135,7 +6149,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -6150,7 +6164,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -6165,7 +6179,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -6179,7 +6193,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -6193,7 +6207,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -6207,7 +6221,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -6222,7 +6236,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2639",
+    "id": "fd_2640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -6237,7 +6251,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2640",
+    "id": "fd_2641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -6252,7 +6266,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2641",
+    "id": "fd_2642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -6267,7 +6281,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2642",
+    "id": "fd_2643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -6282,7 +6296,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2643",
+    "id": "fd_2644",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -6296,7 +6310,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2644",
+    "id": "fd_2645",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -6311,7 +6325,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2645",
+    "id": "fd_2646",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -6326,7 +6340,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2646",
+    "id": "fd_2647",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -6340,7 +6354,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2647",
+    "id": "fd_2648",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -6354,7 +6368,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2648",
+    "id": "fd_2649",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -6368,7 +6382,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2649",
+    "id": "fd_2650",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -6383,7 +6397,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2650",
+    "id": "fd_2651",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6398,7 +6412,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2651",
+    "id": "fd_2652",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -6413,7 +6427,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2652",
+    "id": "fd_2653",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6427,7 +6441,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2653",
+    "id": "fd_2654",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6441,7 +6455,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2654",
+    "id": "fd_2655",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6456,7 +6470,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2655",
+    "id": "fd_2656",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6470,7 +6484,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2656",
+    "id": "fd_2657",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6485,7 +6499,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2657",
+    "id": "fd_2658",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6499,7 +6513,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2658",
+    "id": "fd_2659",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6513,7 +6527,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2659",
+    "id": "fd_2660",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6527,7 +6541,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2660",
+    "id": "fd_2661",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6542,7 +6556,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2661",
+    "id": "fd_2662",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6557,7 +6571,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2662",
+    "id": "fd_2663",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6572,7 +6586,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2663",
+    "id": "fd_2664",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6586,7 +6600,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2664",
+    "id": "fd_2665",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6601,7 +6615,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2665",
+    "id": "fd_2666",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6615,7 +6629,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2666",
+    "id": "fd_2667",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6630,7 +6644,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2667",
+    "id": "fd_2668",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -6645,7 +6659,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2668",
+    "id": "fd_2669",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -6659,7 +6673,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2669",
+    "id": "fd_2670",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -6674,7 +6688,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2670",
+    "id": "fd_2671",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -6688,7 +6702,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2671",
+    "id": "fd_2672",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
@@ -6703,7 +6717,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2672",
+    "id": "fd_2673",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22513v1",
@@ -6718,7 +6732,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2673",
+    "id": "fd_2674",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22324v1",
@@ -6732,7 +6746,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2674",
+    "id": "fd_2675",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22422v1",
@@ -6746,7 +6760,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2675",
+    "id": "fd_2676",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22253v1",
@@ -6760,7 +6774,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2676",
+    "id": "fd_2677",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22458v1",
@@ -6774,7 +6788,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2677",
+    "id": "fd_2678",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22010v1",
@@ -6788,7 +6802,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2678",
+    "id": "fd_2679",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22064v1",
@@ -6803,7 +6817,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2679",
+    "id": "fd_2680",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
@@ -6818,7 +6832,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2680",
+    "id": "fd_2681",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22106v1",
@@ -6833,7 +6847,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2681",
+    "id": "fd_2682",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22011v2",
@@ -6847,7 +6861,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2682",
+    "id": "fd_2683",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21927v1",
@@ -6862,7 +6876,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2683",
+    "id": "fd_2684",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21859v1",
@@ -6876,7 +6890,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2684",
+    "id": "fd_2685",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21902v1",
@@ -6891,7 +6905,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2685",
+    "id": "fd_2686",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21870v1",
@@ -6906,7 +6920,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2686",
+    "id": "fd_2687",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21534v1",
@@ -6920,7 +6934,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2687",
+    "id": "fd_2688",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21548v1",
@@ -6935,7 +6949,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2688",
+    "id": "fd_2689",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21780v1",
@@ -6950,7 +6964,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2689",
+    "id": "fd_2690",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21313v1",
@@ -6964,7 +6978,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2690",
+    "id": "fd_2691",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21383v1",
@@ -6978,7 +6992,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2691",
+    "id": "fd_2692",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21159v1",
@@ -6993,7 +7007,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2692",
+    "id": "fd_2693",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20984v1",
@@ -7008,7 +7022,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2693",
+    "id": "fd_2694",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20831v1",
@@ -7022,7 +7036,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2694",
+    "id": "fd_2695",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23721v1",
@@ -7036,7 +7050,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2695",
+    "id": "fd_2696",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20397v1",
@@ -7050,13 +7064,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2696",
+    "id": "fd_2697",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
     "status": "available",
     "timestamp": "2026-06-27T13:15:18.589752+00:00",
     "title": "NoSquareSideDiceSolutionConjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that terminal cycle lengths in odd bases are bounded by (B-1)/2, achieving equality only for prime B.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2698",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-27T13:58:50.027566+00:00",
+    "title": "Maximum Cycle Length Bound in Odd Bases"
   },
   {
     "consumed_by_exp_id": "",
@@ -7261,51 +7289,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Extremal Graph Theory: Tur\u00e1n, Kruskal\u2013Katona, Szemer\u00e9di, Roth\n\nThis cycle formalized, with 0 sorries:\n\n* `turan_density_bound` \u2014 Tur\u00e1n's theorem in density form\n  `ex(n, K_r) \u2264 (1 \u2212 1/(r\u22121))\u00b7n\u00b2/2`, repackaging Mathlib's integer Tur\u00e1n-graph\n  bound; `mantel` \u2014 the `\u230an\u00b2/4\u230b` triangle-free corollary.\n* `family_union_shadow_ge` \u2014 a combined Kruskal\u2013Katona/Pascal bound\n  `C(k+1,r) \u2264 |\ud835\udc9c| + |\u2202\ud835\udc9c|`.\n* `far_triangle_density_lower_bound` / `far_from_triangleFree_contains_triangle`\n  \u2014 the triangle removal lemma (Szemer\u00e9di regularity) as a scale-invariant\n  triangle-density statement.\n* `roth_3ap_dense` \u2014 Roth's theorem in explicit progression form, plus\n  `card_sq_le_of_addEnergy_le`, a Sidon size bound bridged through the catalog's\n  discrete Fourier additive-energy estimate\n  (`Combinatorics/FourierFiniteGroups.lean`).\n\nThe conjectures below are falsifiable and grew directly out of these results.\n\n## Conjecture 1 \u2014 Matching lower bound makes Tur\u00e1n an equality in Lean\n\nFor every `r \u2265 2` and `n`, the balanced complete `(r\u22121)`-partite graph on `n`\nvertices is `K_r`-free and attains `B(n, r\u22121)` edges, so `turan_density_bound`\nis tight and `ex(n, K_r)` equals the integer Tur\u00e1n bound on the nose.\n\n**The key insight is** that tightness is a *construction* (count edges of the\nbalanced multipartite graph) entirely separate from the analytic upper bound we\nproved, so it can be discharged by an explicit `SimpleGraph` and a degree-sum\nedge count, with no new extremal theory.\n\n**Why now?** The upper-bound half is already formal here; only the multipartite\nedge-count lemma is missing, and Mathlib has `SimpleGraph.completeMultipartiteGraph`\nplus `card_edgeFinset` machinery to count it.\n\n## Conjecture 2 \u2014 The shadow ladder iterates to a full simplex bound\n\nIterating `family_union_shadow_ge` over all shadow levels gives\n`\u2211_{i=0}^{r} |\u2202^[i] \ud835\udc9c| \u2265 2^? \u00b7 C(k, r)`-type totals; concretely, a `C(k,r)`-dense\n`r`-family together with **all** its iterated shadows covers at least\n`\u2211_{j\u2264r} C(k, j)` sets.\n\n**The key insight is** that each Pascal step contributes one more binomial layer,\nso summing the Lov\u00e1sz form across `i = 0..r` telescopes into a complete\nlower-triangle-of-Pascal bound rather than a single level.\n\n**Why now?** `kruskal_katona_lovasz_form` already delivers every level\n`|\u2202^[i]\ud835\udc9c| \u2265 C(k, r\u2212i)`; only the finite summation identity\n`\u2211_{i} C(k, r\u2212i) = \u2211_{j\u2264r} C(k,j)` (an `omega`/`Finset.sum` exercise) remains.\n\n## Conjecture 3 \u2014 Energy dichotomy quantifies 3-AP abundance\n\nThere is an explicit `c(\u03b5) > 0` such that any `A \u2286 \u2124/N\u2124` with `E(A) \u2265 (2+\u03b4)|A|\u00b2`\ncontains at least `c(\u03b4)\u00b7|A|\u00b2` distinct nontrivial 3-APs; conversely the\nnear-Sidon regime `E(A) \u2264 2|A|\u00b2` forces `|A| \u2264 \u221a(2N)` (already proved as\n`card_sq_le_of_addEnergy_le`).\n\n**The key insight is** that the *gap* `E(A) \u2212 2|A|\u00b2` over the trivial-quadruple\ncount is itself a weighted 3-AP counter, so excess additive energy is literally a\nlower bound on additive-progression density.\n\n**Why now?** The catalog already supplies `E(A) = N\u207b\u00b9 \u03a3|\u00c2(k)|\u2074` and the spectral\nlower bound; turning the excess into a progression count is a Fourier/L\u00b3 step on\ntop of machinery that now exists in this repository.\n\n## Conjecture 4 \u2014 Triangle density bound is removal-rate optimal\n\nThe constant in `far_triangle_density_lower_bound` cannot be replaced by anything\nsuper-polynomial in `1/\u03b5`: there exist graphs (Behrend/Ruzsa\u2013Szemer\u00e9di\nconstructions) that are `\u03b5`-far yet have triangle density only\n`exp(\u2212c\u00b7(log(1/\u03b5))\u00b2)`, so any formal improvement of `triangleRemovalBound` beyond\nquasi-polynomial is **false**.\n\n**The key insight is** that the corners \u21c4 triangle-removal equivalence transfers\nBehrend's 3-AP-free lower bound directly into a triangle-sparsity lower bound,\npinning the achievable removal rate from below.\n\n**Why now?** Mathlib already has Behrend's construction (`AP.Three.Behrend`) and\nthe corners/removal bridge, so the lower-bound transfer is assembling existing\nformal pieces rather than building new analysis.\n",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_2697",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "2cb7b634",
-    "status": "available",
-    "timestamp": "2026-06-27T13:51:40.878328+00:00",
-    "title": "This cycle formalized, with 0 sorries:"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Tropical / Baker\u2013Norine Riemann\u2013Roch\n\nThis cycle formalized chip-firing on finite graphs (`prin`, `LinEquiv`, degree\ninvariance), the canonical-degree identity `deg K = 2g \u2212 2` for *arbitrary* finite\ngraphs, the Baker\u2013Norine `rank`, the genus-0 Riemann\u2013Roch theorem, and a genus-1\nobstruction showing the genus-0 hypothesis is load-bearing.\n\nThe conjectures below are derived from the Stage-3 analysis (what worked / what was\nhard) and the Stage-4 critique (the `g = 0` boundary).\n\n## Conjecture 1 \u2014 Reduced divisors collapse the rank to a finite check\n\n**Statement.** For every finite connected graph `G`, every divisor class contains a\nunique `q`-reduced representative (Dhar burning algorithm), and `rank D \u2265 0` iff that\nrepresentative is effective. Consequently `rank` is computable by a terminating\nalgorithm with no infinite quantifier.\n\n*The key insight is...* that the offending infinite quantifier in `SatisfiesRank`\n(over all effective `E`) can be replaced by a single canonical-form test, because\nchip-firing has a confluent normal form per linear-equivalence class.\n\n*Why now?* The present `rank` definition already isolates exactly this quantifier\nas the only non-finitary ingredient; the lattice index computation `even_totalEdges`\n+ `deg_canonical` show the remaining structure is purely combinatorial and within\nreach of `omega`/induction once the normal form is built.\n\n## Conjecture 2 \u2014 Full Riemann\u2013Roch from a single involution lemma\n\n**Statement.** For arbitrary `G`, `rank D \u2212 rank (K \u2212 D) = deg D \u2212 g + 1`, and the\n*only* deep input beyond this cycle's results is: for every `\u03be` of degree `g \u2212 1`,\nexactly one of `\u03be`, `K \u2212 \u03be` is equivalent to an effective divisor.\n\n*The key insight is...* that, given `deg K = 2g \u2212 2` (already proved), the\nRiemann\u2013Roch identity is equivalent to this `g \u2212 1` symmetry, so the entire theorem\nreduces to one Baker\u2013Norine \"non-special class\" lemma plus arithmetic we already\ndischarge with `split_ifs <;> omega`.\n\n*Why now?* `riemann_roch_genus_zero` is literally this reduction specialized to\n`g = 0` (where the symmetry is vacuous); the proof skeleton transfers verbatim once\nthe symmetry lemma is available.\n\n## Conjecture 3 \u2014 Lattice index equals genus-degeneracy of `hsurj`\n\n**Statement.** `hsurj` (all equal-degree divisors equivalent) holds for `G` iff the\nprincipal lattice has index `1` in the degree-0 lattice iff `G` is a tree iff\n`g = 0`. More quantitatively, the Jacobian `Pic\u2070(G)` has order equal to the number\nof spanning trees, and `hsurj` fails by exactly that factor.\n\n*The key insight is...* that `cycleTwo_hsurj_fails` is the `index = 2` instance of a\ngeneral parity/divisibility obstruction: `prin f` is always divisible by gcd-type\ndata of `adj`, so non-trivial torsion in `Pic\u2070` is the precise obstruction to `hsurj`.\n\n*Why now?* We have a working obstruction proof (`omega` on `2t = 1`); generalizing\nits divisibility core to arbitrary `adj` is a direct next step, and Kirchhoff's\nmatrix-tree theorem is available in Mathlib for the index computation.\n\n## Conjecture 4 \u2014 Riemann inequality `rank D \u2265 deg D \u2212 g` for all graphs\n\n**Statement.** For every finite graph and every divisor, `rank D \u2265 deg D \u2212 g`\n(the \"Riemann\" half of Riemann\u2013Roch), with equality on the non-special locus.\n\n*The key insight is...* that this one-sided bound needs only *existence* of an\neffective representative after subtracting `g` generic chips, not the uniqueness\nhalf, so it should be provable from reduced divisors alone (Conjecture 1) without\nthe full involution (Conjecture 2).\n\n*Why now?* The genus-0 computation already yields `rank D = deg D = deg D \u2212 g`\nexactly; isolating the inequality direction is strictly easier than the equality and\nis the natural first milestone toward Conjecture 2.\n\n## Conjecture 5 \u2014 Genus is a chip-firing invariant of the Jacobian alone\n\n**Statement.** Two graphs with isomorphic Jacobians `Pic\u2070` and equal vertex count\nsatisfy the *same* Riemann\u2013Roch rank function up to degree shift; in particular the\ngenus `g = |E| \u2212 |V| + 1` is recoverable from `(Pic\u2070, |V|)`.\n\n*The key insight is...* that `deg K = 2g \u2212 2` ties `g` to the canonical class, which\nlives in `Pic`, so genus is not extra data but is determined by the firing dynamics.\n\n*Why now?* `deg_canonical` is proved for arbitrary graphs in this cycle, giving the\nexact bridge from the (already formalized) lattice picture to `g`; testing the\nconjecture on small multigraphs is immediately decidable.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2698",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "eb034b80",
-    "status": "available",
-    "timestamp": "2026-06-27T13:53:46.893675+00:00",
-    "title": "This cycle formalized chip-firing on finite graphs (`prin`, `LinEquiv`, degree"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 average stack-sorting depth and Defant's constant\n\nDerived from this cycle's findings (see `DefantConstant.lean`,\n`StackSortMap.lean`, and `ComputationalEvidence.md`).\n\n## Conjecture 1 \u2014 Tightness of Defant's bound\n`lim_{n\u2192\u221e} D_n / n = (3/5)(7 \u2212 8 ln 2)`, where `D_n` is the average\nstack-sorting depth over `S_n`.\n\n*The key insight is...* that the verified analytic window\n`0.8728 < \u03bb < 0.8729` makes the target a *single real number* against which any\ncandidate asymptotic expansion of `D_n/n` can be tested to arbitrary decimal\nprecision, turning a vague \"tightness\" claim into a falsifiable numeric target.\n\n*Why now?* Because we already have a verified, executable `stackSort` and the\nconstant is pinned down rigorously; the remaining gap is the asymptotic\nanalysis, which can now be attacked with the finite data as a sanity rail.\n\n## Conjecture 2 \u2014 Golomb\u2013Dickman strictly below the depth density\nThe Golomb\u2013Dickman constant `G \u2248 0.6243` satisfies `G < \u03bb`.\n\n*The key insight is...* that `\u03bb` exceeds `0.6244` (proved as\n`golombDickman_bound_lt_defant`), and `G < 0.6244` is a known literature bound,\nso the strict inequality reduces to a *single proved real inequality* plus one\nimported numeric fact \u2014 no asymptotics needed for the comparison itself.\n\n*Why now?* The two constants describe competing \"typical longest-cycle vs.\ntypical sorting-depth\" densities; isolating the inequality formally clarifies\nwhich random-permutation statistic dominates.\n\n## Conjecture 3 \u2014 Permutation invariance is the only obstruction\nFor every `l`, `depth(l)` depends only on the *pattern* (order type) of `l`,\nnot on its values; and `depth(l) \u2264 |l| \u2212 1` for all `l` (West's bound).\n\n*The key insight is...* that our `stackSort_perm` already shows the map never\ncreates or destroys entries, so depth is a conjugation-invariant of the\norder type; the `|l|\u22121` ceiling is the discrete envelope under which `D_n/n`\nmust live, forcing `\u03bb \u2264 1` (which we verified for the candidate value).\n\n*Why now?* `stackSort_perm` and `stackSort_length` give exactly the\nvalue-independence and length-preservation needed to even *state* the\norder-type invariance cleanly in Lean.\n\n## Conjecture 4 \u2014 Sorted lists are the unique depth-0 fixed points\n`stackSort l = l` **iff** `l` is sorted (for permutations: strictly\nincreasing).\n\n*The key insight is...* that `stackSort_sorted_fixed` proves one direction\nunconditionally; the converse is a finite local-confluence argument on the\nstack machine, so the iff would fully characterize depth `0` and anchor an\ninduction on depth.\n\n*Why now?* With the fixed-point direction formalized, the converse is the\nnatural next lemma and would let `depth` be defined by well-founded recursion\ninstead of by fuel.\n\n## Conjecture 5 \u2014 Second-order term of the average depth\n`D_n = \u03bb\u00b7n \u2212 c\u00b7ln n + O(1)` for an explicit constant `c > 0`.\n\n*The key insight is...* that the computed ratios `D_n/n` rise sub-linearly and\nextremely slowly (`0.365 \u2192 0.441` over `n = 4 \u2026 8`), the signature of a\nnegative `ln n` correction sitting beneath a linear leading term \u2014 exactly the\nshape that would make finite enumeration *underestimate* `\u03bb`.\n\n*Why now?* The exact small-`n` totals `T_n = 1,6,35,232,1757,14982,142105`\nare now available as a verified data series to fit and falsify the proposed\ncorrection term.\n",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2699",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "f0d5604e",
-    "status": "available",
-    "timestamp": "2026-06-27T13:56:03.842916+00:00",
-    "title": "Derived from this cycle's findings (see `DefantConstant.lean`,"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7379,7 +7362,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6fec91f1",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -7389,7 +7372,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
