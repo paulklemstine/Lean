@@ -591,5 +591,6 @@
   "236373d0": "navier_stokes_2d_regularity_and_partial_3d_results.json",
   "905ed2dd": "eml_fixed_point_theorem_exp_log_iteration_converge.json",
   "802107a7": "transmission_zero_forcing_number_equals_domination.json",
-  "688a9cbf": "strange_attractors_as_algebraic_objects.json"
+  "688a9cbf": "strange_attractors_as_algebraic_objects.json",
+  "8e92c627": "exact_asymptotic_value_of_the_average_stack_sortin.json"
 }
