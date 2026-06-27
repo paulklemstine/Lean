@@ -617,5 +617,6 @@
   "a880054f": "maximum_size_of_pairwise_orthogonal_italian_square.json",
   "beb2abc2": "uniqueness_of_extremal_graphons_in_sparse_threshol.json",
   "06caccbf": "excluded_minors_for_bias_graphs_gainable_over_cycl.json",
-  "31cf2713": "plethystic_triviality_of_the_shifted_t_schur_basis.json"
+  "31cf2713": "plethystic_triviality_of_the_shifted_t_schur_basis.json",
+  "c85b45b6": "pfaffian_giambelli_formula_for_shifted_t_schur_fun.json"
 }
