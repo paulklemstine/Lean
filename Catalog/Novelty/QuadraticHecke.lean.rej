@@ -4,8 +4,8 @@
  subfield of the prime cyclotomic field.
  -/
  import Mathlib
--import NumberTheory.Langlands.GaloisDuality
-+import Catalog.NumberTheory.Langlands.GaloisDuality
+-import Catalog.NumberTheory.Langlands.GaloisDuality
++import NumberTheory.Langlands.GaloisDuality
  
  
  

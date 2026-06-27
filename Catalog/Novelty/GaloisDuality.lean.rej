@@ -4,8 +4,8 @@
  `NumberTheoryBridge.totient_prime`.
  -/
  import Mathlib
--import Bridges.NumberTheoryBridge
-+import Catalog.Bridges.NumberTheoryBridge
+-import Catalog.Bridges.NumberTheoryBridge
++import Bridges.NumberTheoryBridge
  
  
  

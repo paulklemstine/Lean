@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "af3ea261",
     "filename": "fano_plane_threshold_for_additive_strong_blocking_.json",
     "pkg_num": 133,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5364949999999999,
     "title": "The Fano-Plane Threshold for Strong Blocking Sets: the Length-6 Minimal Code"
   },
   {
@@ -3884,8 +3884,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "fano_plane_threshold_for_additive_strong_blocking_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5364949999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Fano-Plane Threshold for Strong Blocking Sets: the Length-6 Minimal Code"
     }

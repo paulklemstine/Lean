@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "032896b2",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — Pythagorean Triples in Z[i]\n\nDerived from the v19d research cycle in `Logic/GaussianPythagorean.lean` and\n`Logic/GaussianQuaternionBridge.lean`. Each conjecture is bold and falsi",
-      "quality_score": 0.547645269003818,
-      "sorry_count": 0,
-      "theorem_count": 150,
-      "timestamp": "2026-06-22T09:42:33",
-      "title": "Pythagorean Triples in Gaussian Integers"
-    },
-    {
       "cycle_id": "4dca8a63",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\nThe following directions extend the arithmetic rigidity of integer\n`q`-expansions developed in `Basic.lean`. Each is stated as a self-contained\nresearch program.\n\n## 1. Finite-sup",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T10:10:08",
       "title": "Universal Approximation: Quantitative Bounds"
+    },
+    {
+      "cycle_id": "af3ea261",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Strong blocking sets in finite projective spaces\n\nDerived from the cycle that proved `strongBlocking_iff_card` and\n`leastSize_strongBlocking` for `PG(2,2)`.\n\n## Conjecture 1 — `P",
+      "quality_score": 0.5364949999999999,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-27T10:32:16",
+      "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T10:10:08",
+  "last_updated": "2026-06-27T10:32:16",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8ed8ca57",
-        "quality": 0.7478369230769231,
-        "theorems": 13,
-        "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refi"
-      },
-      {
         "cycle_id": "236373d0",
         "quality": 0.55432,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.38234703875969,
         "theorems": 0,
         "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+      },
+      {
+        "cycle_id": "af3ea261",
+        "quality": 0.5364949999999999,
+        "theorems": 9,
+        "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
       }
     ],
     "NumberTheory": [
