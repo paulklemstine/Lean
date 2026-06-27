@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "06caccbf",
     "filename": "excluded_minors_for_bias_graphs_gainable_over_cycl.json",
     "pkg_num": 139,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.463,
     "title": "Excluded Minors for Biased Graphs Gainable over Cyclic Groups Z/p: the Parallel-Class Obstruction (p+1)K\u2082"
   },
   {
@@ -4058,8 +4058,8 @@ window.PACKAGE_GRAPH = {
       "hue": 89,
       "id": "excluded_minors_for_bias_graphs_gainable_over_cycl",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.463,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Excluded Minors for Biased Graphs Gainable over Cyclic Groups Z/p: the Parallel-Class Obstruction (p+1)K\u2082"
     }

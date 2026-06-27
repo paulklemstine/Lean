@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "16bb5867",
-      "domain": "Computation",
-      "key_insight": "# FUTURE DIRECTIONS — Langlands Functoriality (GL₂ ⤳ GL₃ and beyond)\n\nDerived from this cycle's findings on the unramified symmetric-square /\nsymmetric-power transfer (`SymmetricSquareGL2to3.lean`,\n`S",
-      "quality_score": 0.44580200000000003,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-22T17:05:47",
-      "title": "Langlands Program: Functoriality"
-    },
-    {
       "cycle_id": "8892ab13",
       "domain": "Probability",
       "key_insight": "# Future Directions — Approximate Ramsey degrees and metrizable universal minimal flows\n\nDerived from this cycle's findings on the finite combinatorial skeleton of the\napproximate Ramsey degree (`Core",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T14:16:47",
       "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems"
+    },
+    {
+      "cycle_id": "06caccbf",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Excluded minors for bias graphs gainable over ℤ/pℤ\n\nBuilding on `Catalog/Novelty/BiasGraphGainsZp.lean`, which establishes (1) switching\ninvariance of balance and (2) the `p`-dep",
+      "quality_score": 0.463,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T14:18:35",
+      "title": "Excluded minors for bias graphs gainable over cyclic groups 𝑍ₚ"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7014400000000001
     }
   ],
-  "last_updated": "2026-06-27T14:16:47",
+  "last_updated": "2026-06-27T14:18:35",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "669193db",
-        "quality": 0.71552,
-        "theorems": 0,
-        "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
-      },
-      {
         "cycle_id": "982feb93",
         "quality": 0.35044872340425537,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.5954,
         "theorems": 0,
         "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems"
+      },
+      {
+        "cycle_id": "06caccbf",
+        "quality": 0.463,
+        "theorems": 0,
+        "title": "Excluded minors for bias graphs gainable over cyclic groups 𝑍ₚ"
       }
     ],
     "NumberTheory": [
