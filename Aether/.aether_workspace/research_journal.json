@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6e34371e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Sperner's Lemma, Combinatorial Fixed Points, and Nash Equilibria\n\nThis cycle formalised the *finite/combinatorial core* of the \"Sperner ⇒ Nash\"\nprogram: the 1-D Sperner parity la",
-      "quality_score": 0.3216371714285714,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-23T03:21:18",
-      "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
-    },
-    {
       "cycle_id": "cb79327f",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Weil Pairing, MOV, and BLS Aggregation\n\nDerived from the cycle that produced `Cryptography/WeilPairingBLS.lean`\n(abstract biadditive `Pairing`, BLS completeness/aggregation, poin",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T17:02:00",
       "title": "Unbounded 2-adic valuation of coefficients in F_m(x)^m for m ≥ 2"
+    },
+    {
+      "cycle_id": "33ec0c7d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Modular Rank-Four Nahm Sums via the Discriminant Condition\n\nDerived from this cycle's findings (see `Discriminant.lean`, `DiscriminantSet.lean`,\n`QPochhammer.lean`, and `Computat",
+      "quality_score": 0.5884799999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T17:11:58",
+      "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70696
     }
   ],
-  "last_updated": "2026-06-27T17:02:00",
+  "last_updated": "2026-06-27T17:11:58",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "10d0f89d",
-        "quality": 0.69112,
-        "theorems": 0,
-        "title": "Perfect Numbers: Structure of Even Perfects"
-      },
-      {
         "cycle_id": "710a2a8b",
         "quality": 0.415178125,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.66648,
         "theorems": 15,
         "title": "Algebraic Characterization of Panmagic Affine Permutations over Z_n"
+      },
+      {
+        "cycle_id": "33ec0c7d",
+        "quality": 0.5884799999999999,
+        "theorems": 0,
+        "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
       }
     ],
     "Bridges": [

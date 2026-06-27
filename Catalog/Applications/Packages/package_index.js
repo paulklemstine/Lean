@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "33ec0c7d",
     "filename": "characterization_of_modular_rank_four_nahm_sums_vi.json",
     "pkg_num": 143,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5884799999999999,
     "title": "Characterization of Modular Rank-Four Nahm Sums via the Discriminant Condition"
   },
   {
@@ -4175,8 +4175,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "characterization_of_modular_rank_four_nahm_sums_vi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5884799999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Characterization of Modular Rank-Four Nahm Sums via the Discriminant Condition"
     }
