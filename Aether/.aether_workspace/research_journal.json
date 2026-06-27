@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1d985141",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\nA few freeform research directions building on\n`Catalog/Tropical/TropicalPolynomialFunctions.lean`.\n\n## 1. A tropical fundamental theorem of algebra in Lean\n\nFormalize the break-p",
-      "quality_score": 0.751851,
-      "sorry_count": 1,
-      "theorem_count": 12,
-      "timestamp": "2026-06-24T22:34:09",
-      "title": "Proof Strategy Mining from Deep Mathematics"
-    },
-    {
       "cycle_id": "ef60a392",
       "domain": "Applications",
       "key_insight": "# Future Directions — Cusick's Sum-of-Digits Explicit Bound\n\nDerived from the carry-reformulation cycle in `CusickSumOfDigits.lean`,\n`CusickCarryReformulation.lean`, and `CusickDensityWitness.lean`.",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-27T20:38:29",
       "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
+    },
+    {
+      "cycle_id": "c027516f",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Proof Complexity: Resolution and Cutting Planes\n\nDerived from this cycle's findings (soundness of resolution, unsatisfiability of\nthe pigeonhole CNF `PHP n`, soundness of the two",
+      "quality_score": 0.7101600000000001,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-27T22:10:10",
+      "title": "Proof Complexity: Resolution and Cutting Planes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2b44c5bb",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\nThis file establishes the algebraic Kramers–Wannier self-dual critical point\n`β_c = ½ log(1 + √2)` for the 2D Ising model. Below are concrete follow-up directions\nthat build on it",
-      "quality_score": 0.6913,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-24T00:21:18",
-      "title": "Statistical Mechanics: Ising Model Phase Transition"
-    },
     {
       "cycle_id": "0dfef380",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-06-27T22:08:34",
       "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
+    },
+    {
+      "cycle_id": "c027516f",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Proof Complexity: Resolution and Cutting Planes\n\nDerived from this cycle's findings (soundness of resolution, unsatisfiability of\nthe pigeonhole CNF `PHP n`, soundness of the two",
+      "quality_score": 0.7101600000000001,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-27T22:10:10",
+      "title": "Proof Complexity: Resolution and Cutting Planes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f014f8e3",
-      "domain": "Novelty",
-      "name": "isMatching_empty",
-      "quality": 0.7510892307692308
-    },
-    {
-      "cycle_id": "be72639d",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.7645600000000001
-    },
-    {
-      "cycle_id": "be72639d",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.7645600000000001
-    },
     {
       "cycle_id": "be72639d",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "here",
       "quality": 0.7938000000000001
+    },
+    {
+      "cycle_id": "c027516f",
+      "domain": "Applications",
+      "name": "add_sound",
+      "quality": 0.7101600000000001
+    },
+    {
+      "cycle_id": "c027516f",
+      "domain": "Applications",
+      "name": "cg_rounding_sound",
+      "quality": 0.7101600000000001
+    },
+    {
+      "cycle_id": "c027516f",
+      "domain": "Applications",
+      "name": "php_cp_counting",
+      "quality": 0.7101600000000001
     }
   ],
-  "last_updated": "2026-06-27T22:08:34",
+  "last_updated": "2026-06-27T22:10:10",
   "open_questions": [
     {
       "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "33ec0c7d",
-        "quality": 0.5884799999999999,
-        "theorems": 0,
-        "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
-      },
-      {
         "cycle_id": "bd70abee",
         "quality": 0.7003299999999999,
         "theorems": 27,
@@ -3141,6 +3135,12 @@
         "quality": 0.5594,
         "theorems": 15,
         "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
+      },
+      {
+        "cycle_id": "c027516f",
+        "quality": 0.7101600000000001,
+        "theorems": 11,
+        "title": "Proof Complexity: Resolution and Cutting Planes"
       }
     ],
     "Bridges": [

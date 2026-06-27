@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c027516f",
     "filename": "proof_complexity_resolution_and_cutting_planes.json",
     "pkg_num": 151,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7101600000000001,
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
   {
@@ -4407,8 +4407,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "proof_complexity_resolution_and_cutting_planes",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7101600000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Proof Complexity: Resolution and Cutting Planes"
     }
