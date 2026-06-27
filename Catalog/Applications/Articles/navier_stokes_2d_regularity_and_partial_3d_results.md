@@ -1,108 +1,246 @@
-# Why Water Flows Forever in Flatland — and Why Our World Keeps Its Secret
+# The Energy That Never Lies: How a Single Quantity Tames the Equations of Fluid Flow
 
-## A tale of two dimensions
+Pour cream into your coffee and watch the swirls. Stir, and the tendrils fold
+into one another, stretch, curl, and finally dissolve into a uniform tan. Wait
+long enough without stirring and the whole cup settles into stillness. That
+everyday relaxation — motion fading into rest — hides one of the deepest
+unsolved problems in mathematics, and also one of its most reliable triumphs.
+The same equations that nobody can fully tame in three dimensions are, in two
+dimensions, completely understood. The story of why is a story about a single
+number: the **energy** of the flow, and what it is willing to tell us.
 
-Pour cream into your coffee and stir. The swirls fold into smaller swirls, the smaller swirls into still smaller ones, and within a heartbeat the whole cup is a uniform tan. You have just watched, in miniature, one of the deepest unsolved problems in all of mathematics unfold in front of you.
+## The equations everyone trusts and nobody fully understands
 
-The motion of every fluid — the coffee in your cup, the air over a wing, the blood in your veins, the churning interior of a star — is governed by a single set of equations written down in the 1820s by Claude-Louis Navier and refined by George Gabriel Stokes. The **Navier–Stokes equations** are, by any reasonable measure, the most successful equations in applied science. Engineers use them to design aircraft. Meteorologists use them to forecast tomorrow's storms. Astrophysicists use them to model galaxies.
+The motion of an incompressible fluid — water, air at low speed, the cream in
+your coffee — is governed by the **Navier–Stokes equations**:
 
-And yet, after two hundred years, nobody on Earth can answer a deceptively simple question about them: *if you start with a smooth, gentle, finite flow, can the equations ever — all by themselves — manufacture an infinitely sharp spike of velocity out of nothing?*
+$$\partial_t u + (u\cdot\nabla)u = \nu\,\Delta u - \nabla p, \qquad \nabla\cdot u = 0.$$
 
-This is the **regularity problem**, and it is so important that the Clay Mathematics Institute has offered a one-million-dollar prize for its solution. The question splits the world cleanly in two. In **two dimensions** — imagine a perfectly thin sheet of fluid, a kind of mathematical Flatland — the answer has been known since the work of Olga Ladyzhenskaya in the 1960s: *no, blow-up never happens.* A smooth start stays smooth forever. But in our own **three-dimensional** world, the question is wide open. Nobody knows.
+Here $u(x,t)$ is the velocity of the fluid at each point in space and time,
+$p$ is the pressure, and $\nu > 0$ is the **viscosity** — the fluid's internal
+friction, the stickiness that turns motion into heat. The term $(u\cdot\nabla)u$
+is **transport**: the fluid carries itself along, and this is where all the
+trouble lives, because it is *nonlinear* — the velocity multiplies its own
+derivative. The term $\nu\,\Delta u$ is **diffusion**: viscosity smooths sharp
+features out, like ink spreading in still water.
 
-What separates these two worlds? Why is Flatland so well-behaved while our universe guards its secret? This article is about the single, beautiful mechanism that draws the line between the two — a mechanism so clean that it can be stated as one short mathematical sentence.
+Engineers solve these equations every day, approximately, to design airplane
+wings and weather forecasts. And yet the most basic mathematical question
+remains open: in three dimensions, starting from smooth initial data, *does a
+smooth solution exist for all time, or can it blow up* — can the velocity become
+infinite at some point in finite time? This is one of the seven Clay
+Millennium Prize Problems, with a million dollars attached. Nobody knows the
+answer.
 
-## The first thing that is conserved: energy
+But here is the remarkable twist. In **two** dimensions — imagine a perfectly
+thin layer of fluid, a soap film — the answer is a clean, century-old *yes*.
+Solutions exist forever, are smooth forever, and are uniquely determined by
+their starting state. This is **Ladyzhenskaya's theorem**, named for the
+pioneering Soviet mathematician Olga Ladyzhenskaya. The chasm between the
+solved 2D world and the open 3D world is razor-thin, and pinpointing exactly
+where it opens up is what this work is about.
 
-Start with the most basic fact about any real fluid: viscosity drains energy. Stir your coffee and stop; the swirls slow and die. Friction between neighboring parcels of fluid turns the organized motion into heat, and the total kinetic energy of the flow can only go *down*.
+## A change of viewpoint: the flow as a single moving point
 
-To make this precise, define the **energy** of a flow $u$ at time $t$ as the integral of the speed squared,
-$$E(t) = \int |u(t)|^2,$$
-which in the abstract language we'll use is written as an inner product, $E(t) = \langle u(t), u(t)\rangle = \|u(t)\|^2$.
+To see the structure clearly, mathematicians perform a sleight of hand. Instead
+of tracking the velocity at every point in space, they bundle the entire
+velocity field into a single point moving through an abstract, high-dimensional
+space $V$ — a space whose "directions" are the possible shapes a flow can take.
+Project the Navier–Stokes equations onto this space (a procedure called
+**Galerkin truncation**, the same idea that powers practical fluid simulators),
+and the unwieldy partial differential equation collapses into a clean ordinary
+differential equation:
 
-Here is the miracle that makes the energy controllable. The Navier–Stokes equations have two ingredients: a *viscous* part that smooths things out, and a *nonlinear transport* part — the term that describes fluid carrying itself along, the very thing that creates the cascade of swirls. The transport term looks dangerous; it is quadratic, and quadratic feedback is exactly the kind of thing that makes quantities explode. But it has a hidden symmetry. When you ask how much energy the transport term injects, the answer is *exactly zero*. In symbols, writing $B(u,u)$ for the transport nonlinearity,
-$$\langle B(u,u),\, u\rangle = 0.$$
-This is the **trilinear cancellation**. It is the abstract shadow of the fact that an incompressible fluid — one that cannot be squeezed — simply shuffles energy around without creating or destroying any. The transport never pumps energy; only viscosity acts, and viscosity only drains.
+$$u'(t) = -\nu\,A\,u - B(u,u).$$
 
-Put these together and the energy obeys a strikingly simple law. If we model the flow abstractly as evolving by
-$$u'(t) = -\nu A u - B(u,u),$$
-where $\nu \ge 0$ is the viscosity and $A$ is the *viscous operator* (the abstract version of $-\Delta$, the operator that measures how jagged a flow is), then the energy's rate of change is
-$$E'(t) = -2\nu\,\langle A u,\, u\rangle \le 0.$$
-The transport term has vanished. What remains is purely dissipative. The energy can only fall. **It can never blow up.**
+Every piece of the original physics survives the translation:
 
-This is the heart of Jean Leray's foundational 1934 theory of "weak solutions," and it holds in *every* dimension — two, three, a thousand. It is rigorous, complete, and beautiful. If energy were the whole story, the regularity problem would have been solved a century ago.
+- $A$ is the **viscous operator**, the abstract stand-in for $-\Delta$. It is
+  *positive semidefinite*, meaning $\langle A v, v\rangle \ge 0$ for every flow
+  shape $v$. This is the mathematical fingerprint of friction: viscosity can
+  only ever remove energy, never add it.
+- $B$ is the **transport nonlinearity**, the abstract $(u\cdot\nabla)u$. It is
+  quadratic — it feeds the flow back into itself — and it is the source of all
+  the difficulty.
+- $\nu \ge 0$ is the viscosity, exactly as before.
 
-But energy is not the whole story.
+This abstraction is the canvas on which the entire theory is painted. Its
+beauty is that it strips away the geometry and leaves only the *structural*
+facts that actually drive the mathematics. And the most important structural
+fact is a hidden cancellation.
 
-## The quantity that really matters: enstrophy
+## The miraculous cancellation
 
-A flow can have small total energy and still be on the verge of catastrophe. Imagine a tornado: most of the air is nearly still, so the *energy* is modest, but in the funnel the velocity changes ferociously over a tiny distance. What blow-up really means is that the *gradients* of the flow — how sharply the velocity varies from point to point — run away to infinity. Energy doesn't see gradients. We need a finer instrument.
+Define the **energy** of the flow as the square of its size:
 
-That instrument is the **enstrophy**. Where energy measures the size of the velocity, enstrophy measures the size of the *swirl* — the vorticity, the local spin of the fluid. In the abstract language it is
-$$\Omega(t) = \langle A\,u(t),\, u(t)\rangle = \|A^{1/2} u(t)\|^2.$$
-Here $A^{1/2}$ is, loosely, one derivative of the velocity, so enstrophy is the energy of the gradients. The decisive theorem of fluid analysis is this: **as long as the enstrophy stays finite, the flow stays smooth.** Blow-up, if it ever happens, must announce itself as enstrophy racing to infinity. Control the enstrophy and you have won. Lose control of it and all bets are off.
+$$E(t) = \langle u(t), u(t)\rangle = \|u(t)\|^2.$$
 
-So the entire regularity problem reduces to a single question: *can the enstrophy blow up?*
+Physically this is (twice) the kinetic energy — how much "oomph" the fluid is
+carrying. Now ask: how does the energy change in time? Differentiate, apply the
+equation of motion, and you get two contributions, one from viscosity and one
+from transport:
 
-Let us do to the enstrophy exactly what we did to the energy — ask how it changes in time. Differentiating along a solution and using that the viscous operator $A$ is symmetric (the abstract $-\Delta$ is a symmetric operator, $\langle A v, w\rangle = \langle v, A w\rangle$) yields
-$$\Omega'(t) = -2\nu\,\langle A u,\, A u\rangle \;-\; 2\,\langle B(u,u),\, A u\rangle.$$
-Look closely. The structure is almost identical to the energy law, with one fateful difference. The first term, $-2\nu\langle A u, A u\rangle = -2\nu\|A u\|^2$, is again purely dissipative; viscosity drains enstrophy just as it drains energy. But the second term — the **vortex-stretching term** $\langle B(u,u), A u\rangle$ — did *not* cancel.
+$$E'(t) = -2\nu\,\langle A u, u\rangle - 2\,\langle B(u,u), u\rangle.$$
 
-This single term is the entire million-dollar question.
+The viscous term $-2\nu\langle A u, u\rangle$ is friendly: because $A$ is
+positive semidefinite, it is always $\le 0$. Friction drains energy. But the
+transport term looks dangerous — the nonlinearity could, in principle, pump
+energy into the flow and drive it to infinity.
 
-## The vortex-stretching term: the villain of the story
+It does not. The decisive fact, the keystone of the whole edifice, is the
+**trilinear cancellation**:
 
-In the energy budget, the transport nonlinearity politely vanished. In the enstrophy budget, it refuses to. And it has a vivid physical meaning. **Vortex stretching** is what happens when a tube of swirling fluid gets pulled lengthwise: like a spinning ice skater drawing in her arms, the vortex spins faster as it thins. Stretching *amplifies* vorticity, which means it *amplifies* enstrophy. This is the engine that could, in principle, drive a smooth flow toward a singular spike. It is the dynamo at the heart of turbulence.
+$$\langle B(u,u), u\rangle = 0.$$
 
-Whether this dynamo can ever run away to infinity is precisely what nobody knows in three dimensions. The term $\langle B(u,u), A u\rangle$ has no definite sign; it can pump enstrophy *up*. And once enstrophy can grow, the elegant argument that worked for energy collapses.
+This is the abstract shadow of the calculus identity $\int (u\cdot\nabla)u\cdot u\,dx = 0$,
+which holds for any incompressible (divergence-free) flow. In words: *transport
+merely moves energy around between different parts of the fluid; it never
+creates or destroys it.* The nonlinearity, terrifying as it looks, is energy-
+neutral.
 
-Now we can finally say, in one sentence, what makes Flatland special.
+With that single cancellation, the energy budget becomes airtight:
 
-## The two-dimensional miracle
+$$E'(t) = -2\nu\,\langle A u, u\rangle \le 0.$$
 
-In two dimensions, vortex stretching *does not exist*.
+The energy can only go down. It is a **Lyapunov function** — a quantity that
+monotonically decreases along the flow, certifying stability. The flow can
+never blow up in the energy norm; mathematically, $\|u(t)\| \le \|u(s)\|$
+whenever $s \le t$. This is the formal heart of **Leray's theory** of global
+weak solutions, dating to 1934, and it holds in *every* dimension — 2D, 3D, and
+beyond. It is the one thing we always know.
 
-The reason is geometric and gorgeous. In three dimensions, vorticity is a vector — it points along an axis, the axis a vortex spins around — and that axis can be tilted and stretched by the flow. But in two dimensions, the fluid lives in a plane, and the only possible axis of rotation is perpendicular to that plane, pointing straight out of Flatland. There is nothing to tilt it toward and nothing to stretch it along. The vorticity becomes a mere *scalar* — a number attached to each point saying how fast it spins — and that number is simply carried along by the flow, like a leaf riding a current, never amplified.
+## From "fades" to "fades fast"
 
-In the abstract language, this physical fact crystallizes into one identity:
-$$\langle B(v,v),\, A v\rangle = 0.$$
-The vortex-stretching term, the villain of the three-dimensional story, is identically zero in two dimensions. It is the second great cancellation — a sibling of the trilinear cancellation that tamed the energy, but now operating one level higher, on the enstrophy.
+Energy decreasing is reassuring, but coffee doesn't merely calm down — it calms
+down *quickly*, settling toward stillness at an exponential rate. Can we prove
+that?
 
-And the moment that term vanishes, everything falls into place. The enstrophy law becomes
-$$\Omega'(t) = -2\nu\,\|A u\|^2 \le 0.$$
-The enstrophy can only fall. It is a *Lyapunov function* — a quantity that decreases inexorably along the flow. Just as energy could never blow up, now **enstrophy can never blow up either**. And since bounded enstrophy guarantees smoothness, the two-dimensional Navier–Stokes equations are globally regular: a smooth start stays smooth for all time. This is the structural skeleton of Ladyzhenskaya's celebrated theorem.
+Yes, provided the viscous operator has a little more muscle. In a bounded
+container, the **Poincaré inequality** guarantees a *spectral gap*: there is a
+constant $\lambda > 0$ such that
 
-The contrast could not be sharper. In two dimensions:
-$$\langle B(v,v), A v\rangle = 0 \quad\Longrightarrow\quad \text{enstrophy dissipates} \quad\Longrightarrow\quad \text{regularity, forever.}$$
-In three dimensions, that first cancellation is gone, the enstrophy can in principle grow, and the chain of reasoning breaks at its very first link.
+$$\langle A v, v\rangle \ge \lambda\,\|v\|^2 \quad \text{for every admissible } v.$$
 
-## A unifying slogan: regularity is one more dissipated quantity
+This says viscosity doesn't just remove energy — it removes energy at a rate
+proportional to the energy present. Feeding this **coercivity** into the energy
+budget upgrades the lazy inequality $E' \le 0$ into a quantitative one:
 
-Step back and a striking pattern emerges. There are two great conservation-style cancellations in fluid dynamics, and they live on two different rungs of a ladder:
+$$E'(t) \le -2\nu\lambda\,E(t).$$
 
-- **Rung one (energy):** $\langle B(u,u), u\rangle = 0$. True in every dimension. Gives you global control of energy. This is Leray's theory, and it is why weak solutions exist everywhere.
-- **Rung two (enstrophy):** $\langle B(v,v), A v\rangle = 0$. True *only* in two dimensions. Gives you global control of gradients. This is why two-dimensional flow is regular.
+This is precisely the kind of inequality that Grönwall's lemma — the
+mathematician's compound-interest formula, run in reverse — converts into
+exponential decay:
 
-The slogan that captures the whole picture is this: **regularity is one more dissipated observable.** You climb the ladder one rung at a time, and at each rung you need a cancellation to make the next quantity a Lyapunov function. In two dimensions you get two rungs for free. In three dimensions the ladder breaks after the first.
+$$\boxed{\,E(t) \le E(s)\cdot e^{-2\nu\lambda(t-s)}, \qquad s \le t.\,}$$
 
-This reframing is more than poetry. It tells us *exactly where to look* in three dimensions. We do not need a brand-new idea about the whole equation; we need to understand a single number, the size and sign of the one trilinear pairing $\langle B(u,u), A u\rangle$. The entire chasm between a solved problem and a million-dollar mystery is localized to that one term.
+Equivalently, the size of the flow itself shrinks geometrically,
+$\|u(t)\| \le \|u(s)\|\,e^{-\nu\lambda(t-s)}$. The fluid relaxes to rest with a
+half-life set by viscosity and the geometry of the container. The qualitative
+statement "energy never increases" is exactly the degenerate case $\lambda = 0$
+of this sharper law. This is the content of the result we call **exponential
+energy decay**.
 
-## What we can still say in three dimensions
+## Why a flow can only do one thing
 
-The three-dimensional case is not a blank wall. Because the vortex-stretching term is the *only* obstruction, we can hold it hostage. Suppose we simply *assume* the term never grows faster than viscosity can absorb — concretely, that at every instant
-$$-\langle B(u,u),\, A u\rangle \le \nu\,\langle A u,\, A u\rangle.$$
-This is a *conditional* hypothesis: we don't know it's always true, but *if* it holds, then the dissipative term dominates, the enstrophy law again reads $\Omega'(t) \le 0$, and blow-up is once more impossible. This is the abstract skeleton of the famous **Prodi–Serrin** and **Beale–Kato–Majda** conditional-regularity criteria: theorems of the form "*if* the flow doesn't get too rough in such-and-such a sense, *then* it never blows up at all." They convert the open problem into a precise tug-of-war between stretching and dissipation.
+There is a second question every physical theory must answer: is the future
+*determined*? If two fluids start identically, must they evolve identically, or
+could they spontaneously diverge? In a deterministic universe the answer must
+be uniqueness — but proving it requires, once again, the energy.
 
-And here is the satisfying part: two-dimensional regularity is just the *degenerate case* of this three-dimensional criterion. In two dimensions the stretching term isn't merely *small enough to be absorbed* — it is exactly *zero*, which trivially satisfies the conditional bound. The two-dimensional miracle and the three-dimensional conditional theory are not two separate stories; they are one story, told at two settings of a single dial. Turn the vortex-stretching term down to zero and you are in Flatland. Turn it up and you are in our world, holding your breath.
+Suppose $u$ and $w$ are two solutions. Watch their difference $d = u - w$.
+Because the viscous operator $A$ is linear, the difference obeys
 
-## Why this matters beyond the prize
+$$d'(t) = -\nu A d - \bigl(B(u,u) - B(w,w)\bigr).$$
 
-It would be easy to dismiss all of this as a chase after a million-dollar abstraction. It is not. Turbulence — the violent, eddy-filled motion that the regularity problem is really about — is the single biggest source of uncertainty in weather prediction, the dominant drag on every vehicle that moves through air or water, and a central puzzle in understanding everything from blood flow in arteries to the birth of stars. The question of whether the equations can spontaneously form a singularity is the mathematical face of the question *how small can turbulent structures get?* A blow-up would mean energy concentrating into an infinitely small region — the ultimate eddy. Its impossibility, or possibility, tells us something fundamental about the texture of fluid motion at the finest scales.
+Track the **difference energy** $E_d(t) = \|d(t)\|^2$, a measure of how far
+apart the two flows have drifted. Differentiating and using the positivity of
+$A$, the viscous term again only helps. Everything hinges on the transport
+difference, and here the *second* great gift of two dimensions appears — the
+**Ladyzhenskaya bound**:
 
-The clean two-dimensional theory also has very concrete uses. Large-scale atmospheric and oceanic flows are nearly two-dimensional — the atmosphere is a thin shell compared to the size of the Earth — and the robustness of two-dimensional dynamics is part of why long-range climate modeling is even possible. The mechanisms in this article are not confined to a chalkboard; they are quietly at work every time a forecaster predicts a jet stream.
+$$-\langle B(u,u) - B(w,w),\, d\rangle \le C\,\|d\|^2.$$
 
-## The shape of an answer
+In 2D this follows from a sharp interpolation inequality,
+$\|f\|_4 \lesssim \|f\|_2^{1/2}\|\nabla f\|_2^{1/2}$, that controls the fourth
+power of a function by its size and its gradient. It says the rate at which two
+flows can pull apart is bounded by how far apart they already are. The result is
+a self-limiting growth law for the difference energy:
 
-What makes this circle of ideas so appealing is its economy. A problem that seems to demand mastery of an impossibly complicated nonlinear system collapses, under the right gaze, to the behavior of *one quantity* — the enstrophy — and the sign of *one term* — the vortex stretching. Two dimensions are regular because of a single, geometrically inevitable cancellation. Three dimensions are mysterious because that cancellation is exactly the one thing the third dimension takes away.
+$$E_d'(t) \le 2C\,E_d(t).$$
 
-Every great unsolved problem has a moment where the fog clears just enough to see the real obstacle standing alone in the open. For Navier–Stokes, that obstacle has a name, a formula, and a physical meaning: it is the stretching of a vortex, the spinning skater pulling in her arms, the term $\langle B(u,u), A u\rangle$ that flatland erases and our world keeps. Whoever finally tames it — proving it can be controlled, or finding the one flow where it cannot — will not just collect a million dollars. They will have answered, at last, what happens in the heart of a storm.
+Now comes the punchline. If the two flows agree at some moment $t_0$, then
+$E_d(t_0) = 0$. Grönwall's lemma, applied to an inequality that starts from
+zero, forces the difference energy to *stay* zero for all later times. Zero
+difference means the flows are identical:
+
+$$\boxed{\,u(t_0) = w(t_0) \;\Longrightarrow\; u(t) = w(t)\ \text{for all } t \ge t_0.\,}$$
+
+The future is determined. This is **uniqueness**, and together with Leray's
+existence it completes the 2D well-posedness story. This is the content of the
+result we call **forward-in-time uniqueness**.
+
+## The one term that separates the solved from the unsolved
+
+So why is 3D still open? The answer is breathtakingly precise. To get
+*regularity* — genuine smoothness, not just bounded energy — you must control a
+higher quantity than energy: the **enstrophy**,
+
+$$\Omega(t) = \langle A u, u\rangle = \|A^{1/2}u\|^2,$$
+
+which measures the intensity of the swirling, the vorticity packed into the
+flow. Differentiate the enstrophy and you find
+
+$$\Omega'(t) = -2\nu\,\langle A u, A u\rangle - 2\,\langle B(u,u), A u\rangle.$$
+
+The first term is dissipative, as always. The second is the infamous
+**vortex-stretching term**, and it is the entire ballgame:
+
+- In **2D**, vorticity is a scalar simply carried along by the flow — vortex
+  lines cannot stretch because there is no third dimension to stretch into. The
+  stretching term *vanishes identically*: $\langle B(u,u), A u\rangle = 0$. The
+  enstrophy becomes a second Lyapunov function, swirl intensity can never blow
+  up, and full regularity follows. This is the abstract engine of Ladyzhenskaya's
+  2D theorem.
+- In **3D**, vortex lines *can* stretch — think of how a spinning ice skater
+  speeds up by pulling in her arms. The stretching term has no definite sign and
+  could, in principle, pump enstrophy to infinity. Nobody knows whether it
+  actually does.
+
+This is the whole mystery, localized to the sign of a single quadratic pairing.
+The best **partial 3D results** quarantine the difficulty into a conditional
+statement: *if* the stretching term stays dominated by the viscous dissipation —
+$-\langle B(u,u), A u\rangle \le \nu\langle A u, A u\rangle$ — *then* the
+enstrophy stays bounded and the flow stays smooth. These are the abstract
+skeletons of the celebrated Prodi–Serrin and Beale–Kato–Majda criteria. They
+do not solve the problem; they pinpoint it. And the unconditional energy bound,
+the one thing we always have, survives untouched in 3D regardless.
+
+There is even a clean way to see 2D as a special case of the 3D conditional
+theory: the 2D cancellation makes the stretching term exactly zero, which
+trivially satisfies the 3D control hypothesis. Two-dimensional regularity sits
+*inside* the three-dimensional conditional framework as its perfect, degenerate
+limit.
+
+## Why this matters
+
+The picture that emerges is startlingly clean. There is a ladder of quantities
+— energy, then enstrophy — and **regularity is a question of how far up the
+ladder dissipation can reach.** In every dimension, the trilinear cancellation
+hands us the bottom rung: energy is controlled, weak solutions exist, nothing
+blows up in the crudest sense. In two dimensions, a second cancellation hands us
+the next rung: enstrophy is controlled too, and full smoothness follows. In
+three dimensions, that second rung is missing — and the entire million-dollar
+problem is the question of whether we can climb it anyway.
+
+This is more than an accounting trick. Identifying that the *whole* 2D-versus-3D
+gap lives in the sign of one term tells researchers exactly where to push. It
+explains why every known 3D result is conditional, why they all reduce to
+controlling the same stretching term, and why the energy method alone will never
+be enough. It is the difference between knowing that a door is locked and knowing
+precisely which key is missing.
+
+From the swirl of cream in coffee to a Clay Millennium Prize, the throughline is
+the same: a single number, the energy, that simply refuses to lie. It decreases,
+it decreases exponentially fast, it pins down the future uniquely — and where it
+runs out of things to say, at the enstrophy level in three dimensions, the
+deepest open problem in fluid mathematics is waiting.
