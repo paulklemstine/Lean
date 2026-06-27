@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f881b568",
     "filename": "kakeya_conjecture_known_cases_and_bounds.json",
     "pkg_num": 118,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.50863,
     "title": "The Kakeya Problem in the Finite-Field Model: Bush Counts, Incidences, and Sumset Growth"
   },
   {
@@ -3440,8 +3440,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "kakeya_conjecture_known_cases_and_bounds",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.50863,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Kakeya Problem in the Finite-Field Model: Bush Counts, Incidences, and Sumset Growth"
     }

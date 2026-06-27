@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d14bdeaa",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Euler–Mascheroni constant `γ`\n\nDerived from the Stage-3/Stage-4 findings of this cycle (files\n`EulerMascheroniApproximation.lean`, `EulerMascheroniSeries.lean`).\n\n## Conjecture 1",
-      "quality_score": 0.4532320481927711,
-      "sorry_count": 0,
-      "theorem_count": 130,
-      "timestamp": "2026-06-21T11:16:42",
-      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-    },
-    {
       "cycle_id": "11f0f366",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Collision Resistance from Hard Problems\n\nDerived from the cycle that produced `Cryptography.MerkleDamgard` (equal-length\nMerkle–Damgård collision extraction + pigeonhole inevitab",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-06-27T00:45:25",
       "title": "Ramsey Theory: Bounds and Constructions"
+    },
+    {
+      "cycle_id": "f881b568",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Kakeya: known cases and bounds\n\nDerived from this cycle's findings on the finite-field Kakeya model\n(`KakeyaBushFiniteField.lean`, `KakeyaKatzTaoSumset.lean`).\n\n## Conjecture 1 —",
+      "quality_score": 0.50863,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-27T00:49:45",
+      "title": "Kakeya Conjecture: Known Cases and Bounds"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7981560000000001
     }
   ],
-  "last_updated": "2026-06-27T00:45:25",
+  "last_updated": "2026-06-27T00:49:45",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "aa3d24c5",
-        "quality": 0.70446,
-        "theorems": 14,
-        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-      },
-      {
         "cycle_id": "518f172b",
         "quality": 0.56304,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.674434,
         "theorems": 16,
         "title": "Ramsey Theory: Bounds and Constructions"
+      },
+      {
+        "cycle_id": "f881b568",
+        "quality": 0.50863,
+        "theorems": 10,
+        "title": "Kakeya Conjecture: Known Cases and Bounds"
       }
     ],
     "NumberTheory": [
