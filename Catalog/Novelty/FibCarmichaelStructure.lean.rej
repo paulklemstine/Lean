@@ -2,8 +2,8 @@
 +++ FibCarmichaelStructure.lean
 @@ -1,5 +1,5 @@
  import Mathlib
--import Novelty.FibonacciEntryPointDuality
-+import Catalog.Novelty.FibonacciEntryPointDuality
+-import Catalog.Novelty.FibonacciEntryPointDuality
++import Novelty.FibonacciEntryPointDuality
  
  /-!
  

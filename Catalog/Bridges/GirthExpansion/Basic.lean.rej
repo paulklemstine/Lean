@@ -1,11 +1,9 @@
---- LorenzTransversal.lean
-+++ LorenzTransversal.lean
-@@ -45,7 +45,7 @@
- -- !-- Lab Notes -- !--
- -/
+--- Basic.lean
++++ Basic.lean
+@@ -1,5 +1,5 @@
  import Mathlib
--import Catalog.Applications.StrangeAttractors.InverseLimit
-+import Applications.StrangeAttractors.InverseLimit
+-import Bridges.CombinatorialBridge
++import Catalog.Bridges.CombinatorialBridge
  
- 
+ /-!
  

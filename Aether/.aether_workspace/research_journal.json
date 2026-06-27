@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0dfef380",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Proof Automation: Custom Lean 4 Tactics\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle (`TropicalSimp.lean`, `NumberTheoryDecide.lean`, `Spect",
-      "quality_score": 0.7484,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-24T01:22:12",
-      "title": "Proof Automation: Custom Lean 4 Tactics"
-    },
-    {
       "cycle_id": "e56a1e16",
       "domain": "Tropical",
       "key_insight": "# Future Directions — EML Universal Approximation\n\nDerived from the cycle that produced `FinsetLogSumExp.lean` (finite-family\nlog-sum-exp dequantization with explicit width rate `τ·log n`) and\n`CubeDe",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-06-27T13:51:50",
       "title": "Extremal Graph Theory: Turán and Szemerédi"
+    },
+    {
+      "cycle_id": "eb034b80",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Tropical / Baker–Norine Riemann–Roch\n\nThis cycle formalized chip-firing on finite graphs (`prin`, `LinEquiv`, degree\ninvariance), the canonical-degree identity `deg K = 2g − 2` f",
+      "quality_score": 0.8360800000000002,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T13:53:55",
+      "title": "Tropical Riemann-Roch Theorem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9a580942",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Elliptic Curve Arithmetic\n\nDerived from this cycle's findings in `HasseBound.lean` (the analytic Hasse\nbridge `hasse_sq_iff` plus seven verified curves) and `GroupLaw.lean` (the",
-      "quality_score": 0.6555200000000001,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-22T12:16:10",
-      "title": "Elliptic Curve Arithmetic: Group Law Formalization"
-    },
     {
       "cycle_id": "48b7f4af",
       "domain": "Combinatorics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-27T13:51:50",
       "title": "Extremal Graph Theory: Turán and Szemerédi"
+    },
+    {
+      "cycle_id": "eb034b80",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Tropical / Baker–Norine Riemann–Roch\n\nThis cycle formalized chip-firing on finite graphs (`prin`, `LinEquiv`, degree\ninvariance), the canonical-degree identity `deg K = 2g − 2` f",
+      "quality_score": 0.8360800000000002,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T13:53:55",
+      "title": "Tropical Riemann-Roch Theorem"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7014400000000001
     }
   ],
-  "last_updated": "2026-06-27T13:51:50",
+  "last_updated": "2026-06-27T13:53:55",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "802107a7",
-        "quality": 0.6666400000000001,
-        "theorems": 11,
-        "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
-      },
-      {
         "cycle_id": "7f4f0e8d",
         "quality": 0.505788,
         "theorems": 17,
@@ -3637,6 +3631,12 @@
         "quality": 0.7014400000000001,
         "theorems": 10,
         "title": "Extremal Graph Theory: Turán and Szemerédi"
+      },
+      {
+        "cycle_id": "eb034b80",
+        "quality": 0.8360800000000002,
+        "theorems": 0,
+        "title": "Tropical Riemann-Roch Theorem"
       }
     ],
     "NumberTheory": [

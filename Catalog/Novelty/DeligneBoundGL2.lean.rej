@@ -1,9 +1,11 @@
---- EulerMascheroniApprox.lean
-+++ EulerMascheroniApprox.lean
-@@ -1,5 +1,5 @@
+--- DeligneBoundGL2.lean
++++ DeligneBoundGL2.lean
+@@ -58,7 +58,7 @@
+ `√p`.
+ -/
  import Mathlib
--import Catalog.Novelty.EulerMascheroniSeries
-+import Novelty.EulerMascheroniSeries
+-import Novelty.EichlerShimuraGL2
++import Catalog.Novelty.EichlerShimuraGL2
  
- /-!
+ 
  

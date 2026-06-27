@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "eb034b80",
     "filename": "tropical_riemann_roch_theorem.json",
     "pkg_num": 136,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8360800000000002,
     "title": "Riemann-Roch Theory for Finite Graphs: Chip-Firing and Baker-Norine Rank"
   },
   {
@@ -3971,8 +3971,8 @@ window.PACKAGE_GRAPH = {
       "hue": 281,
       "id": "tropical_riemann_roch_theorem",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8360800000000002,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Riemann-Roch Theory for Finite Graphs: Chip-Firing and Baker-Norine Rank"
     }
