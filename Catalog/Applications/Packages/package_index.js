@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4a61f37f",
     "filename": "eml_interpolation_theory_stone_weierstrass_for_exp.json",
     "pkg_num": 131,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.38234703875969,
     "title": "EML Interpolation Theory: Stone\u2013Weierstrass for exp-log Networks"
   },
   {
@@ -3825,8 +3825,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "eml_interpolation_theory_stone_weierstrass_for_exp",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.38234703875969,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Interpolation Theory: Stone\u2013Weierstrass for exp-log Networks"
     }
