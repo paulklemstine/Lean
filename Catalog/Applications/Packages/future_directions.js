@@ -1389,7 +1389,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a151a9c3",
     "description": "Let B_n be the Birkhoff polytope, the convex hull in R^(n x n) of all n x n permutation matrices. Conjecture: B_n satisfies the clique-face property, meaning every clique in the 1-skeleton of B_n is exactly the vertex set of a face, if and only if n <= 2.",
     "domains": [
       "Pythagorean",
@@ -1399,12 +1399,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20430v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T00:35:57.205204+00:00",
     "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "799935ab",
     "description": "Let G be a topological group and H \u2264 G a dense subgroup with the subspace topology. If H is extremely amenable, meaning every continuous action of H on a nonempty compact Hausdorff space has a fixed point, then G is extremely amenable. This isolates the density step used when passing from the automorphism group of a projective Fraisse limit to the closure subgroup of the homeomorphism group of the quotient continuum.",
     "domains": [
       "Algebra",
@@ -1414,7 +1414,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T00:36:00.903861+00:00",
     "title": "Extreme amenability passes from a dense subgroup to its ambient topological group"
   },
@@ -1597,7 +1597,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Equilateral Torus Uniquely Maximizes the Zeta Regularized Determinant Among Orthogonal Flat Tori of Unit Volume"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53364cc2",
     "description": "For every integer t \u2265 1, the natural density c_t := lim_{N\u2192\u221e} (1/N) #{0 \u2264 n < N : s\u2082(n+t) \u2265 s\u2082(n)} strictly exceeds 1/2, with the explicit quantitative bound c_t \u2265 1/2 + 2^{-2s\u2082(t)-1}, where s\u2082(m) counts the ones in the binary expansion of m. This was Cusick's long-standing conjecture, recently resolved via first-exit medians for principal subsequence ideals after an exact deconvolution replacing the distribution of s\u2082(n+t)\u2212s\u2082(n) by a finite stopped random-walk law.",
     "domains": [
       "Computation",
@@ -1607,7 +1607,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T04:31:20.306116+00:00",
     "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
   },
@@ -2826,7 +2826,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae503725",
     "description": "The specific degree one function on the Grassmann scheme $J_3(4,2)$ defined by $f = \\frac{1}{2} \\sum_{Q(p) = 0} x_p + \\frac{1}{6} \\sum_{Q(p) = 1} x_p - \\frac{1}{6} \\sum_{Q(p) = 2} x_p$, where $Q(x,y,z,w) = x^2 + y^2 + z^2 - w^2$ is an elliptic quadric over $\\mathbb{F}_3$, is Boolean and not a trivial Boolean degree one function.",
     "domains": [
       "Bridges"
@@ -2835,7 +2835,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T21:41:56.533485+00:00",
     "title": "Non-triviality of the Bruen-Drudge Boolean degree one function on $J_3(4,2)$"
   },
@@ -4319,7 +4319,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exponential Lower Bound for g_k(n) Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "06caccbf",
     "description": "For every odd prime \ud835\udc5d the class of biased graphs that admit a \ud835\udc4d\u209a\u2011gain labelling is minor\u2011closed and its only excluded minors are the balanced\u2011cycle\u2013free graph (\ud835\udc5d+1)K\u2082, the balanced triangle \u00b1K\u2083 and the unbalanced 4\u2011cycle \u2013K\u2084. In other words, a biased graph \ud835\udd3e is \ud835\udc4d\u209a\u2011gainable iff it contains none of these three minors.",
     "domains": [
       "Pythagorean",
@@ -4329,7 +4329,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23826v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T11:31:35.982720+00:00",
     "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
   },
@@ -4348,7 +4348,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the unit-shift bound for Euler's totient function"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db9270a7",
     "description": "We conjecture that the set of positive integers that are divisible by the number of summands in their Zeckendorf decomposition has asymptotic density\u00a00.  Equivalently, for any real \u03b5>0 there are only finitely many Zeckendorf\u2011Niven numbers\u00a0n< N with n/N > \u03b5, and the ratio of the counting function to N tends to\u00a00 as N\u2192\u221e.",
     "domains": [
       "Pythagorean"
@@ -4357,7 +4357,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T12:39:28.725008+00:00",
     "title": "Zero Asymptotic Density of Zeckendorf\u2011Niven Numbers"
   },
@@ -4753,7 +4753,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conflict-Free Coloring of Outerplanar Graphs with Three Colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a880054f",
     "description": "Conjecture that for every integer n \u2265 2, any collection of mutually orthogonal Italian squares of order n contains at most n\u20111 squares, and this bound is attained exactly when n is a prime power.",
     "domains": [
       "Pythagorean"
@@ -4762,7 +4762,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T16:34:26.097340+00:00",
     "title": "Maximum size of pairwise orthogonal Italian squares is n\u20111 for prime powers"
   },
@@ -7797,7 +7797,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53256563",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -7807,7 +7807,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
