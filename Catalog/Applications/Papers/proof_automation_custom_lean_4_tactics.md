@@ -1,55 +1,63 @@
-# Computational Evidence — Proof Automation: Custom Lean 4 Tactics
+# Computational Evidence — Proof Automation Tactics
 
-Pre-proof computational landscape for the three tactics
+Concise numerical evidence gathered before formalizing the three tactics
 (`tropical_simp`, `number_theory_decide`, `spectral_bound`).
 
-## 1. `tropical_simp` (min-plus distributivity)
+## 1. `tropical_simp` — min-plus identities
 
-Small-case check of the scalar-distribution law `c + min b c = min (c+b) (c+c)`
-and the list form `c + foldr min d l = foldr min (c+d) (map (c+·) l)`:
+Working over `Tropical ℤ` with `a ⊕ b = min a b`, `a ⊙ b = a + b`.
 
-| `c` | `l`            | `c + foldr min d l` | `foldr min (c+d) (map (c+·) l)` |
-|-----|----------------|---------------------|---------------------------------|
-| 2   | `[3, 1, 4]`    | `2 + 1 = 3`         | `min(5, min(3, min(6, 2+d)))`=3 |
-| -1  | `[0, 5]`       | `-1 + 0 = -1`       | `min(-1, min(4, -1+d))` = -1    |
-| 10  | `[]`           | `10 + d`            | `10 + d`                        |
+| identity | check at `(a,b,c) = (1,4,2)` (where relevant) | holds? |
+|---|---|---|
+| `a ⊕ a = a` | `min 1 1 = 1` | ✓ |
+| `a ⊙ (b ⊕ c) = a⊙b ⊕ a⊙c` | `1 + min 4 2 = min 5 3 = 3` | ✓ |
+| `(a ⊕ b)² = a² ⊕ b²` (freshman) | `2·min 1 4 = 2 = min 2 8` | ✓ |
+| `(a ⊕ b)³ = a³ ⊕ b³` | `3·min 1 4 = 3 = min 3 12` | ✓ |
 
-All instances agree → the identity is plausible for all lists; confirmed by the
-inductive proof `scalar_foldr_min`.  Observed failure during experimentation:
-AC-normalisation of nested `min` needs `min_left_comm`; without it `simp` stalls
-on re-bracketed trees.
+Freshman's dream boundary: the identity `n • min p q = min (n•p) (n•q)` was
+spot-checked for `n ∈ {0,1,2,3,5}` and random `p,q ∈ [-5,5]`; it holds whenever
+`n ≥ 0` and **fails for negative scalars** (e.g. `(-1)·min 1 4 = -1 ≠ min(-1,-4) = -4`).
+This pins the hypothesis `0 ≤ (n:ℤ)` used in the proof.
 
-## 2. `number_theory_decide` (finite cases)
+## 2. `number_theory_decide` — small cases + Pisano periodicity
 
-* `n² < 2ⁿ`: false for `n ∈ {2,3,4}` (4<4 false, 9<8 false, 16<16 false),
-  flips true at `n = 5` (25 < 32) and stays true — so the correct hypothesis is
-  `n ≥ 5`, matching `two_pow_gt_sq`.  (n=0: 0<1 ✓, n=1: 1<2 ✓ are incidental.)
-* Fermat / Carmichael residue scan `nᵖ ≡ n (mod m)` over a full residue system:
-  - `m = 5, p = 5`: holds for all `x ∈ ZMod 5` → `5 ∣ n⁵ − n`.
-  - `m = 7, p = 7`: holds for all `x ∈ ZMod 7` → `7 ∣ n⁷ − n`.
-  - `m = 6, p = 3`: `x³ − x = 0` for all `x ∈ ZMod 6` → `6 ∣ n³ − n`.
-  - Counterexample hunt: `m = 4, p = 3` gives `2³ − 2 = 6 ≡ 2 ≠ 0 (mod 4)`, so
-    `4 ∤ n³ − n` in general — confirms the modulus matters and the tactic
-    correctly *fails* (does not prove) the false instance.
+Fibonacci residues (period = first `p>0` with `F p ≡ 0`, `F(p+1) ≡ 1`):
 
-## 3. `spectral_bound` (eigenvalue magnitude)
+| modulus `m` | Fibonacci residues `F 0..` | Pisano period |
+|---|---|---|
+| 2 | 0 1 1 **0 1 1** … | 3 |
+| 3 | 0 1 1 2 0 2 2 1 **0 1** … | 8 |
+| 5 | 0 1 1 2 3 0 3 3 1 4 0 4 4 3 2 0 2 2 4 1 **0 1** | 20 |
 
-Row-sum (∞-norm) bound `|λ| ≤ maxᵢ ∑ⱼ |Mᵢⱼ|` checked on explicit matrices:
+Seeds verified: `F 3 = 2 ≡ 0 (mod 2)`, `F 4 = 3 ≡ 1 (mod 2)`;
+`F 8 = 21 ≡ 0 (mod 3)`, `F 9 = 34 ≡ 1 (mod 3)`. (OEIS A001175 = Pisano periods:
+1, 3, 8, 6, 20, 24, 16, 12, 24, 60, … — matches the table.)
 
-| Matrix                   | row sums | bound | actual eigenvalues | `|λ| ≤ bound`? |
-|--------------------------|----------|-------|--------------------|----------------|
-| `[[1,2],[0,3]]`          | 3, 3     | 3     | 1, 3               | yes (3 ≤ 3)    |
-| `[[2,0],[0,-2]]`         | 2, 2     | 2     | 2, −2              | yes (tight)    |
-| `[[0,1],[1,0]]`          | 1, 1     | 1     | 1, −1              | yes (tight)    |
-| `[[5,0],[0,1]]`          | 5, 1     | 5     | 5, 1               | yes            |
+Carmichael small case: `561 = 3·11·17`, squarefree, and `(p−1) ∣ 560` for each
+prime (`2|560`, `10|560`, `16|560`) — Korselt's criterion, all decidable.
+`561` is composite and `gcd(561,560)=1`.
 
-No counterexample found; the bound is tight on symmetric/diagonal cases.  This
-motivated phrasing the certificate with an abstract bound `B ≥ ∑ⱼ|Mᵢⱼ|` so the
-maximum instantiates `B`, avoiding `Finset.sup'` bookkeeping in the proof.
+## 3. `spectral_bound` — Gershgorin discs
 
-## Verdict
+`A2 = [[2,1],[1,2]]`: characteristic polynomial `(2−λ)² − 1`, eigenvalues
+`λ = 1, 3`. Gershgorin disc of each row: center `2`, radius `1` → `[1,3]`.
+The eigenvalues `1` and `3` sit on the boundary, so the bound `|λ − 2| ≤ 1` is
+**sharp** (cannot be tightened by Gershgorin alone).
 
-All three computational landscapes are consistent with the conjectured laws and
-exposed the exact hypotheses needed (`n ≥ 5`; modulus = exponent or `6 | n³−n`;
-abstract row-sum bound).  Proceeded to formal proof; all main theorems compile
-with `0` sorries and only `propext / Classical.choice / Quot.sound`.
+`D3 = [[5,1,1],[1,5,1],[1,1,5]]`: each off-diagonal row sum is `2 < 5`
+(strict diagonal dominance) → no Gershgorin disc contains `0` → `det ≠ 0`.
+Direct check: `det D3 = 5³ + 2 − 3·5 = 125 + 2 − 15·... = 112 ≠ 0` (and indeed
+eigenvalues are `4, 4, 7`, all positive).
+
+## Counterexample hunt
+
+* Freshman's dream with negative exponent-scalar: falsified (see §1) — informs the
+  `0 ≤ n` hypothesis.
+* Pisano "period = p" with wrong seeds: e.g. `(m,p)=(2,2)` has `F 2 = 1 ≢ 0`, so
+  the seed hypothesis fails and the periodicity theorem is (correctly) not
+  applicable — no false instance produced.
+* Gershgorin sharpness: searched balanced `2×2` symmetric matrices; the bound is
+  attained exactly when off-diagonal magnitudes are equal, never violated.
+
+No counterexample to any *stated* theorem was found; all stated hypotheses are
+necessary where flagged.

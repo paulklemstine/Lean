@@ -1,210 +1,296 @@
-# Tactics: The Tireless Apprentices of Mathematical Proof
+# Three Little Robots That Prove Theorems
 
-## A machine that never gets bored
+## The art of teaching a machine to be lazy in the right way
 
-Every working mathematician knows the feeling. You are deep inside a proof, the
-real ideas are humming, and then you hit a wall of *bookkeeping*: a dozen tiny
-cases that must each be checked, a sum that must be rearranged, an inequality
-that just needs grinding out. None of it is hard. All of it is tedious. And one
-slip — a forgotten case, a sign error — can quietly poison the whole argument.
+Every working mathematician keeps a mental toolbox of moves so routine they
+barely register as thinking. "That follows by checking the cases." "That's
+just the triangle inequality." "Reduce it mod $p$ and the rest is bookkeeping."
+These reflexes are the connective tissue of real proofs — the unglamorous steps
+between the ideas that actually matter.
 
-This is exactly the kind of labor a machine should do. Not the inspiration, but
-the perspiration. The trick is to package a recurring pattern of reasoning into
-a single, reusable command — a *tactic* — that performs the drudgery
-automatically and, crucially, performs it *correctly* every single time.
+What if you could bottle those reflexes? What if, instead of writing out the
+same boring case-check for the hundredth time, you could hand the boring part to
+a small, trustworthy assistant and spend your energy on the part that's genuinely
+hard?
 
-This article tells the story of three such apprentices, each designed for a
-different corner of mathematics: one for number theory, one for the strange
-"min-plus" algebra called the tropical semiring, and one for estimating the
-eigenvalues of a matrix. Each one automates a chore that mathematicians do by
-hand thousands of times. And each one comes with a guarantee that it can never
-lie to you.
+That is the idea behind a *proof tactic*: a reusable piece of automation that
+recognizes a common pattern and dispatches it. This article is about three such
+assistants — three "little robots," each specialized for one corner of
+mathematics — and about the surprisingly subtle question that hangs over all of
+them: **how do you know a robot that proves theorems isn't lying to you?**
 
-That guarantee is the heart of the matter, so let us start there.
+The three robots are:
 
-## What it means for an apprentice to be honest
+- **`tropical_simp`**, which simplifies expressions in a strange arithmetic
+  where "plus" means "take the minimum";
+- **`number_theory_decide`**, which closes out the finite, grind-it-out steps
+  that lurk inside number-theoretic arguments; and
+- **`spectral_bound`**, which estimates how large the eigenvalues of a matrix
+  can get.
 
-A tactic is, roughly, a little program that transforms one mathematical goal
-into another, or finishes it off entirely. The danger is obvious: a buggy tactic
-could "prove" something false, and a false theorem at the foundation can topple
-an entire edifice. So before we celebrate convenience, we demand *soundness* — a
-promise that the tactic only ever closes goals that are genuinely true.
+Each one is small. Each one is *sound* — meaning it provably cannot certify a
+false statement. And each one, it turns out, is most powerful not when it works
+alone, but when it teams up with a genuine mathematical idea that it could never
+discover on its own. That partnership — automation handling the routine,
+insight handling the rest — is the real story.
 
-There are two clean ways to keep that promise, and our three apprentices
-illustrate both.
+---
 
-The first way is to build the tactic out of pieces that are *already* known to
-be honest, so the whole inherits their honesty. The second way is to prove, once
-and for all, a single load-bearing theorem — a *soundness certificate* — and
-then have the tactic do nothing but invoke that theorem. The first style is like
-assembling a tool from trusted parts; the second is like stamping a tool with a
-certified safety rating. We will meet one of each.
+## Robot #1: `tropical_simp`, the minimum-plus simplifier
 
-## Apprentice One: the finite-case checker
+Start with a thought experiment. Take ordinary arithmetic and play a little
+game of substitution. Wherever you'd normally write "$+$" (addition), instead
+write "take the smaller of the two." And wherever you'd normally write
+"$\times$" (multiplication), instead write ordinary "$+$." This bizarre-looking
+swap defines the **min-plus**, or **tropical**, semiring. Its addition is
+$a \oplus b = \min(a, b)$, and its multiplication is $a \odot b = a + b$.
 
-The first apprentice is called `number_theory_decide`, and its philosophy is
-disarmingly simple. An enormous number of statements in elementary number theory
-ultimately reduce to checking *finitely many cases*. Is 97 prime? Check the
-candidate divisors. Does some pattern hold for every remainder modulo 6? Check
-all six remainders. These are exactly the moments where a human's attention
-flags and errors creep in — and exactly where a machine excels.
+It sounds like a joke, but tropical arithmetic is a serious and useful object.
+It shows up wherever you care about *shortest paths*, *cheapest routes*, or
+*critical bottlenecks*: the cost of a journey is the sum of the legs (tropical
+multiplication), and the best journey is the minimum over all options (tropical
+addition). Scheduling, network routing, dynamic programming, and even parts of
+algebraic geometry all speak this dialect.
 
-So `number_theory_decide` is built as a *disjunction of trusted finishers*. In
-plain terms, it tries, in order, a handful of well-established decision
-procedures: an arithmetic solver for linear facts about integers; a brute-force
-evaluator for decidable propositions; a normalizer for numerical equalities and
-inequalities; and, when the goal ranges over a finite type, a routine that
-splits into every case and checks each one. Because each of those four
-ingredients is itself sound, *any* goal the apprentice closes was already
-provable by an honest method. Honesty is inherited for free.
+Now, the whole point of arithmetic is that the usual laws hold. In tropical
+land, the analogue of the distributive law $a(b+c) = ab + ac$ becomes a clean,
+provable fact about real numbers:
 
-But here is the subtle and beautiful point. On its own, a finite-case checker is
-not very impressive — it can only handle finite things. The real power emerges
-when it is paired with a *reduction*: a mathematical maneuver that turns an
-infinite problem into a finite one. The apprentice supplies the muscle; the
-mathematician supplies the cleverness of the reduction. Three classic examples
-show this partnership in action.
+$$a + \min(b, c) = \min(a + b,\ a + c).$$
 
-**Example 1: exponential growth outruns squares.** Consider the claim that
-$n^2 < 2^n$ for every integer $n \ge 5$. (Check the boundary: $5^2 = 25 < 32 =
-2^5$. It works, and the gap only widens.) This is an *infinite* statement — it
-must hold for all $n$ — so no finite check can settle it directly. The reduction
-here is *mathematical induction*. You prove the base case at $n = 5$, then show
-that whenever the inequality holds for some $k$, it must also hold for $k+1$. The
-inductive step is genuine algebra: from $k^2 < 2^k$ one argues
-$$(k+1)^2 \le k^2 + k^2 < 2^k + 2^k = 2^{k+1},$$
-using that $(k+1)^2 \le 2k^2$ once $k$ is large enough. That step needs a real
-inequality solver, not a finite check. But the *base interval* — the small
-values where the pattern first takes hold — is precisely where the finite-case
-checker shines. The division of labor is exact: induction tames the infinity,
-and the apprentice mops up the finitely many starting cases.
+Read it slowly: adding a fixed cost $a$ to "the cheaper of $b$ and $c$" gives the
+same answer as "the cheaper of ($a$ plus $b$) and ($a$ plus $c$)." Of course it
+does — adding a constant to both options doesn't change which one is smaller.
+There's a mirror-image version too,
 
-**Example 2: Fermat's Little Theorem, in miniature.** A jewel of number theory
-says that if $p$ is a prime, then $p$ divides $n^p - n$ for *every* integer $n$.
-For $p = 5$ this means $5 \mid n^5 - n$; for $p = 7$, $7 \mid n^7 - n$. Again the
-statement is infinite — it quantifies over all integers $n$. The reduction this
-time is *modular arithmetic*: divisibility by $p$ is the same as vanishing in the
-finite world of remainders modulo $p$, a system with exactly $p$ elements. In
-that finite world, the claim becomes the crisp identity $x^p = x$ for every one
-of the $p$ residues — and *that* is a finite check the apprentice dispatches
-instantly. The infinite collapses to the finite the moment you pass to
-remainders.
+$$\min(a, b) + c = \min(a + c,\ b + c),$$
 
-**Example 3: a composite modulus.** The very same trick is not limited to
-primes. The fact that $6 \mid n^3 - n$ for every integer $n$ — a favorite of
-competition mathematics, since $n^3 - n = (n-1)n(n+1)$ is a product of three
-consecutive integers — follows by checking the identity $x^3 = x$ across the six
-remainders modulo 6. One reduction, one finite check, done.
+and both are genuinely true, not by convention but by a two-line case split on
+whether $b \le c$.
 
-The lesson of the first apprentice is a manifesto: **automate the boredom, not
-the insight.** The finite check is the only part a machine should own; choosing
-the right reduction — induction here, remainders there — remains the
-mathematician's art.
+The robot `tropical_simp` is built **only** out of facts like these — proven
+equalities of real numbers — together with the obvious shuffling rules: that
+$\min$ doesn't care about order ($\min(a,b) = \min(b,a)$), that it can be
+re-bracketed freely, and that $\min(a, a) = a$. Because every rule it knows is a
+theorem, the robot is *sound by construction*: anything it simplifies away is
+genuinely equal to what it started with. It cannot accidentally "prove" a false
+tropical identity, because it has no false rule to apply.
 
-## Apprentice Two: the rearranger for min-plus algebra
+So `tropical_simp` will instantly verify chains like
 
-The second apprentice lives in a stranger country. In ordinary arithmetic we add
-and multiply. In *tropical* (or *min-plus*) arithmetic, we replace addition with
-*taking the minimum* and replace multiplication with *ordinary addition*. It
-sounds like a parlor trick, but this algebra is the secret language of shortest
-paths, scheduling, optimization, and even certain neural networks: the cost of
-the cheapest route is a giant min-of-sums, which is to say a tropical polynomial.
+$$a + \min(\min(b, c), d) = \min(a + b,\ \min(a + c,\ a + d)),$$
 
-In this world the familiar distributive law $a \cdot (b + c) = a\cdot b + a \cdot
-c$ becomes
-$$c + \min(a, b) = \min(c + a,\; c + b).$$
-Read it slowly: adding a fixed cost $c$ to the cheaper of two options is the same
-as adding $c$ to each and then choosing the cheaper. Obvious once you see it —
-and used constantly. The second apprentice, `tropical_simp`, exists to apply this
-law, and the laws that the minimum is *associative* and *commutative*
-($\min(a,b) = \min(b,a)$ and the order of a nested minimum does not matter),
-over and over until an expression is in a clean canonical form.
+pushing a shared cost into a nested minimum, and it will recognize re-ordered
+versions of the same identity even when the terms are scrambled.
 
-The mathematical core that makes this honest is a distributivity lemma — call it
-the *scalar-fold law*. It says that pushing a constant $c$ inside a whole
-*chain* of minimums distributes onto every term at once:
-$$c + \min(a_1, a_2, \ldots, a_k) = \min(c + a_1,\; c + a_2,\; \ldots,\; c + a_k).$$
-Proving this once, rigorously, certifies that the apprentice's central rewrite
-never changes the value of an expression. The remaining cleanup — flattening
-nested minimums and sorting their operands into a standard order — rests on the
-plain associativity and commutativity of $\min$, including the "left-commutative"
-shuffle $\min(a, \min(b, c)) = \min(b, \min(a, c))$ that lets you slide any
-operand to the front. Together these turn a tangled min-plus expression into a
-tidy, comparable normal form, automatically.
+But here's where the story gets interesting — and honest. A simplifier that
+only knows finitely many rewrite rules can handle expressions of *fixed* shape,
+but mathematics loves the word "for all." What about distributing a cost over a
+sum of arbitrary length — a route with not two or three legs, but $n$ of them?
 
-There is an honest boundary worth naming. As built, `tropical_simp` normalizes
-the *algebraic* structure — the distribution and the shuffling — but it does not
-yet resolve the *order* of unknown operands inside a minimum. When you write
-$\min(x, y)$ with $x$ and $y$ symbolic, the machine cannot know which is smaller
-without more information. Closing that last gap — by enumerating the finitely
-many possible orderings — would turn the rearranger into a complete decision
-procedure for min-plus polynomial identities. That is the natural next chapter,
-and the groundwork is already laid.
+That requires a genuine theorem, proved by induction, that no finite bag of
+rewrite rules can replace. Call it the **scalar fold law**. Model a tropical
+sum as a running minimum over a list of values $[a_1, a_2, \dots, a_k]$ — fold
+$\min$ across the list, ending at a base value $d$. The theorem says: adding a
+constant $c$ to the whole tropical sum equals adding $c$ to every single term
+first:
 
-## Apprentice Three: the eigenvalue appraiser
+$$c + \min(a_1, a_2, \dots, a_k, d) = \min(c + a_1,\ c + a_2,\ \dots,\ c + a_k,\ c + d).$$
 
-The third apprentice tackles a question from linear algebra that echoes through
-physics, engineering, and data science: *how big can the eigenvalues of a matrix
-be?* Eigenvalues govern whether a vibrating structure resonates, whether an
-iterative algorithm converges, whether a dynamical system is stable. Pinning down
-their magnitude is a daily need — and there is a wonderfully cheap way to bound
-it without computing the eigenvalues at all.
+This is the closed-form guarantee that the robot's one-step instinct scales up
+correctly to sums of any size. The robot performs the rewrite one step at a
+time; the induction certifies that doing so forever lands in the right place.
+The lesson is already visible: **the automation handles each step; a human-style
+proof certifies the whole.**
 
-The idea is a cousin of a classical result called Gershgorin's theorem. Look at
-each row of your matrix and add up the *absolute values* of its entries; call
-that the row's *absolute row sum*. The claim is that every eigenvalue, in
-magnitude, is no larger than the biggest absolute row sum in the whole matrix.
-The third apprentice, `spectral_bound`, certifies exactly this estimate.
+There's a charming epilogue. Some people prefer the *max-plus* convention,
+where tropical addition is $\max$ instead of $\min$. The two worlds are mirror
+images, swapped by negation: $\min(a, b) = -\max(-a, -b)$. Using exactly this
+reflection, the min-plus distributive law can be derived *from* its max-plus
+twin — a small bridge showing the two dialects are one language seen in a mirror.
 
-Why is it true? The argument is a small gem, and it is the apprentice's
-soundness certificate. Suppose $\lambda$ is an eigenvalue with eigenvector $v$,
-meaning $Mv = \lambda v$ and $v$ is not the zero vector. Among the coordinates of
-$v$, pick the one that is largest in absolute value; call its index $i$. Because
-$v$ is nonzero, this largest coordinate $|v_i|$ is strictly positive — a fact the
-proof genuinely relies on. Now write out the $i$-th line of the equation $Mv =
-\lambda v$:
-$$\lambda v_i = \sum_j M_{ij}\, v_j.$$
-Take absolute values and apply the triangle inequality:
-$$|\lambda|\,|v_i| = \Big|\sum_j M_{ij} v_j\Big| \le \sum_j |M_{ij}|\,|v_j|
-\le \Big(\sum_j |M_{ij}|\Big)|v_i|,$$
-where the last step uses that $|v_j| \le |v_i|$ for every $j$, since $i$ was
-chosen to maximize it. Finally divide by the strictly positive number $|v_i|$ to
-conclude
-$$|\lambda| \le \sum_j |M_{ij}| \le B,$$
-where $B$ is any agreed-upon bound on all the absolute row sums. The certificate
-is proved.
+---
 
-Notice how the structure mirrors apprentice one: a single, carefully proved
-theorem — here the "largest-coordinate" row-sum bound — is the entire source of
-trust, and the tactic does nothing but invoke it. To see it in action, take a
-concrete $2 \times 2$ matrix; its absolute row sums are easy to add up, and
-`spectral_bound` immediately certifies that both eigenvalue magnitudes fall below
-that maximum, with a clean corollary controlling the spectral radius.
+## Robot #2: `number_theory_decide`, the finite-case closer
 
-Here too there is an honest limitation, openly flagged. This is the *weak*
-Gershgorin bound: a single disc centered at the origin, large enough to contain
-every eigenvalue. The full Gershgorin theorem is sharper — it confines the
-eigenvalues to a *union* of smaller discs, one per row, each centered at that
-row's diagonal entry. Remarkably, the very same "largest-coordinate" argument
-yields the sharper version with only a small algebraic regrouping: move the
-diagonal term $M_{ii} v_i$ to the other side before taking absolute values, and
-the origin-centered disc becomes a disc centered at $M_{ii}$. The apprentice is
-ready to be upgraded.
+Number theory has a personality split. Its theorems are often about *all*
+integers — infinitely many — yet their proofs frequently collapse to checking a
+*finite* handful of cases. "Every prime bigger than 3 is $1$ or $5$ modulo $6$."
+"This recurrence repeats with some period." The infinite claim is the headline;
+a finite check is the engine room.
 
-## The shape of the idea
+The robot `number_theory_decide` is that engine room, packaged. It is, quite
+literally, a disjunction of trustworthy primitive tactics: try straightforward
+linear-arithmetic reasoning; if that fails, try direct computation; if that
+fails, try the numeric normalizer; if that fails, split into cases and compute
+each. Every branch is individually sound, so the combination is sound: it can
+only ever close a finite goal that is *actually true*.
 
-Step back and the three apprentices rhyme. Each isolates a *mechanical* step —
-checking finite cases, applying an algebraic law, invoking one inequality — and
-makes that step both effortless and trustworthy. Each draws a sharp line between
-the part a machine should own and the part a human must still supply: the
-reduction, the formulation, the choice of strategy. And each carries its honesty
-on its sleeve, whether inherited from trusted parts or stamped by a single
-certified theorem.
+What can it knock out cold? Genuinely useful finite facts. That $561$ is **not**
+prime — it's $3 \times 11 \times 17$, the smallest of the eerie *Carmichael
+numbers* that masquerade as primes in Fermat's test. That $17$ *is* prime. That
+$561$ and $560$ share no common factor. And the curious divisibility data
+$(3-1) \mid 560$, $(11-1) \mid 560$, $(17-1) \mid 560$ — which is no accident,
+but **Korselt's criterion**, the exact fingerprint that makes $561$ a Carmichael
+number in the first place. The robot dispatches all of these without a murmur.
 
-This is, quietly, a model for how mathematics and machines can collaborate. Not
-the machine replacing the mathematician, and not the mathematician drowning in
-clerical work, but a partnership in which the boring-but-error-prone is delegated
-to a tireless, honest apprentice — freeing human attention for the only thing it
-was ever good at: having ideas.
+But, exactly as with the tropical simplifier, the robot's true value appears only
+when it's paired with a real idea. Three classic patterns show it off.
 
-The drudgery, at last, has somewhere to go.
+**Pattern one: induction with a finite base.** Consider the claim that
+$n^2 < 2^n$ for every $n \ge 5$ — exponential growth eventually crushes
+quadratic growth. The proof is by induction. The inductive *step* — showing
+that if it holds at $k$ it holds at $k+1$ — is real algebra, an honest
+inequality estimate; no robot can guess it. But the *base case*, checking the
+claim at $n = 5$ and confirming the small values below it behave, is a finite
+computation. The robot owns the base; the human owns the step.
+
+**Pattern two: reduce modulo $p$, then compute.** Fermat's Little Theorem says
+that for a prime $p$, the integer $n^p - n$ is always divisible by $p$ — for
+*every* integer $n$, of which there are infinitely many. The decisive move is a
+change of scenery: instead of working with all integers, work in the finite
+world of remainders modulo $p$, where there are only $p$ values to consider.
+In that finite world, the statement becomes "$x^p = x$ for every one of the $p$
+residues" — and *that* the robot checks by brute force. For $p = 5$ it checks
+five values; for $p = 7$, seven. The reduction from "all integers" to "five
+residues" is the insight; the five-way check is the robot. The same trick even
+works for the composite modulus $6$, proving $6 \mid n^3 - n$ for every integer
+$n$ by checking six residues.
+
+**Pattern three: periodicity from two seeds.** Here is the most beautiful
+example. The Fibonacci numbers $1, 1, 2, 3, 5, 8, 13, 21, \dots$ are famous for
+never repeating — they march off to infinity. But look at them through the lens
+of remainders, say modulo $2$: their pattern of even-and-odd is
+$1, 1, 0, 1, 1, 0, \dots$, repeating with period $3$ forever. Modulo $3$, the
+remainders cycle with period $8$. This phenomenon — that the Fibonacci sequence
+is *eventually periodic modulo any number* — is named the **Pisano period**,
+after Leonardo of Pisa (Fibonacci himself).
+
+Why does it happen, and how short is the cycle? The clean statement is this: if
+you can find some position $p$ where the Fibonacci number $F_p$ leaves remainder
+$0$ and the next one $F_{p+1}$ leaves remainder $1$ (modulo $m$), then the whole
+sequence repeats with period $p$:
+
+$$F_{n+p} \equiv F_n \pmod{m} \quad\text{for every } n.$$
+
+The proof is a small gem. A *single*-variable induction won't work, because the
+Fibonacci rule $F_{n+2} = F_{n+1} + F_n$ couples each term to its neighbor —
+to advance one step you need to know about two. So you run a **paired
+induction**, carrying *two* facts forward in lockstep:
+
+$$F_{n+p} \equiv F_n \quad\text{and}\quad F_{n+p+1} \equiv F_{n+1} \pmod{m}.$$
+
+Knowing both at stage $n$, the recurrence lets you push both to stage $n+1$, and
+the chain never breaks. This "two-track" trick — keeping a paired invariant so
+the recurrence has everything it needs — is the genuine mathematical content,
+and no decision procedure could have invented it.
+
+And the robot? The robot's job is to verify the two *seeds*. To prove the
+period-$3$ fact modulo $2$, someone has to check that $F_3 \equiv 0$ and
+$F_4 \equiv 1$. To get period $8$ modulo $3$, check $F_8 = 21 \equiv 0$ and
+$F_9 = 34 \equiv 1$. Those are exactly the finite computations
+`number_theory_decide` exists to do. The structural theorem provides the
+machine; the robot provides the fuel. Together they manufacture infinitely many
+true statements from two tiny checks.
+
+There's even a bridge to a classical jewel. **Cassini's identity** states that
+for Fibonacci numbers,
+
+$$F_{n+2}\, F_n - F_{n+1}^2 = (-1)^{n+1},$$
+
+a perfect, alternating $\pm 1$ that never decays. Read modulo any $m$, it stays
+true, and a concrete instance — say modulo $5$ at $n = 4$, where
+$F_6 \cdot F_4 - F_5^2 = 8 \cdot 3 - 25 = -1$ — falls instantly to the robot.
+
+---
+
+## Robot #3: `spectral_bound`, the eigenvalue estimator
+
+The third robot lives in linear algebra, and it answers a question that
+engineers, physicists, and data scientists ask constantly: **how big can the
+eigenvalues of a matrix get?**
+
+Eigenvalues are the secret growth rates hidden inside a matrix. If a system
+evolves by repeatedly multiplying a state vector by a matrix $M$, then the
+eigenvalues of $M$ decide whether the system explodes, decays, or settles. An
+eigenvalue is a number $\lambda$ for which there's a nonzero vector $v$ — the
+eigenvector — with
+
+$$M v = \lambda v.$$
+
+Multiplying by $M$ just stretches $v$ by the factor $\lambda$. Knowing the
+eigenvalues are all small (in magnitude) is often exactly what you need to
+guarantee a system is stable, an iteration converges, or a model is well-behaved.
+
+Computing eigenvalues exactly can be painful. But *bounding* them is
+surprisingly easy, thanks to a classical idea associated with the
+**Gershgorin** circle theorem. The robot `spectral_bound` packages a clean,
+self-contained version of that bound, which we can state precisely.
+
+Suppose every **absolute row sum** of $M$ is at most some number $B$ — that is,
+for each row $i$,
+
+$$\sum_j |M_{ij}| \le B.$$
+
+Then **every** eigenvalue $\lambda$ of $M$ satisfies
+
+$$|\lambda| \le B.$$
+
+In words: a matrix can't stretch by more than its biggest row can account for.
+The proof is a small masterpiece of "look at the extreme case." Take an
+eigenvector $v$ and find the coordinate $v_i$ that is largest in absolute value.
+Because $v$ is nonzero, that biggest coordinate is genuinely positive — and this
+is exactly where the assumption $v \neq 0$ earns its keep; a fake "zero
+eigenvector" would let *any* number masquerade as an eigenvalue. Now write down
+the $i$-th line of the equation $Mv = \lambda v$:
+
+$$\lambda v_i = \sum_j M_{ij} v_j.$$
+
+Take absolute values, apply the triangle inequality, and use that every $|v_j|$
+is no bigger than $|v_i|$:
+
+$$|\lambda|\,|v_i| = \left|\sum_j M_{ij} v_j\right| \le \sum_j |M_{ij}|\,|v_j| \le \left(\sum_j |M_{ij}|\right)|v_i| \le B\,|v_i|.$$
+
+Divide through by the positive number $|v_i|$, and out pops $|\lambda| \le B$.
+That's the entire soundness certificate behind the robot.
+
+Concretely, take the matrix
+
+$$M = \begin{pmatrix} 1 & 2 \\ 0 & 3 \end{pmatrix}.$$
+
+Its row sums of absolute values are $|1| + |2| = 3$ and $|0| + |3| = 3$, both at
+most $3$. So the robot certifies that every eigenvalue has magnitude at most $3$
+— and indeed the true eigenvalues are $1$ and $3$, comfortably inside. For a
+*real* eigenvalue the bound immediately becomes a two-sided trap,
+$-B \le \lambda \le B$, which is precisely the form a stability or convergence
+argument wants to consume downstream.
+
+The robot is candid about its limits, too. This is the *weak* Gershgorin bound —
+a single disc that captures all eigenvalues, rather than the sharper picture of
+one disc per row. It trades a little precision for a lot of reusability, which
+is exactly the right trade for an automated assistant.
+
+---
+
+## The moral: trustworthy laziness
+
+Step back and the three robots tell one story. Each is deliberately small. Each
+is *sound* — incapable, by its very construction, of certifying a falsehood:
+the tropical simplifier only ever applies proven equalities; the number-theory
+closer only ever runs sound decision procedures; the eigenvalue estimator only
+ever invokes a fully proved bound. And crucially, each reaches its full power
+only in partnership with a genuine idea it cannot generate on its own — the
+inductive scalar-fold law, the reduce-mod-$p$ and paired-Pisano arguments, the
+extremal-coordinate trick behind Gershgorin.
+
+This is what good automation looks like in mathematics, and increasingly in
+software, science, and engineering broadly. The goal is not a single oracle that
+"does everything." It is a *division of labor*: let the machine be reliably,
+verifiably lazy about the routine, so the human can be creative about what's
+hard. The robots don't replace the mathematician. They clear the underbrush, so
+the real climbing can begin.
+
+And because each robot is sound by construction, you never have to wonder whether
+it's bluffing. When one of these little machines says a thing is true, it is —
+not because it's clever, but because it is, in the most literal sense, incapable
+of saying otherwise.
