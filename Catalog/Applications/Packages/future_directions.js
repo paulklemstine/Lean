@@ -224,7 +224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory: Solvability of Polynomials"
   },
   {
-    "consumed_by_exp_id": "10d599ef",
+    "consumed_by_exp_id": "",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domains": [
       "Algebra",
@@ -235,7 +235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -719,7 +719,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "2ff65a6a",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -2382,20 +2382,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quadratic irrational density in the ratio spectrum"
   },
   {
-    "consumed_by_exp_id": "e4cbdb61",
-    "description": "The sum of the elements in the $n$-th row of the Pascal-like Riordan array defined by the power series pair $(1/(1-x), x/(1-x)^2)$, whose entries are given by the binomial coefficient $t_{n,k} = \\binom{n+k}{2k}$, equals the $(2n+1)$-th Fibonacci number. This is derived from the paper's demonstration that the generating function of the row sums is $(1-x)/(1-3x+x^2)$, which characterizes the odd-indexed Fibonacci sequence.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2354",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22070v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T13:29:49.823733+00:00",
-    "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Every Hamiltonian connected cubic edge-transitive graph \u0393 has Hamiltonian compression factor \u03ba(\u0393) \u2265 2, i.e., it admits a 2-symmetric Hamiltonian cycle: there exists a Hamiltonian cycle C and an automorphism g of order 2 such that g acts on C as a rotation by |V(\u0393)|/2 positions. This is supported by exhaustive computation on all such graphs up to 10,000 vertices, where every Hamiltonian cubic edge-transitive graph was found to have \u03ba \u2265 2.",
     "domains": [
@@ -3757,7 +3743,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing Hales-Jewett lower bounds via symmetric coloring in Lean"
   },
   {
-    "consumed_by_exp_id": "c85b45b6",
+    "consumed_by_exp_id": "",
     "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_\u03bb^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition \u03bb = (\u03bb\u2081, \u03bb\u2082, ..., \u03bb_k) with \u03bb\u2081 > \u03bb\u2082 > ... > \u03bb_k \u2265 0, the formula takes the form s_\u03bb^Q(t) = Pf[Y_{\u03bb_i - i + j}(t) + Y_{\u03bb_j - j + i}(t)]_{1\u2264i<j\u2264k} \u00b7 vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
     "domains": [
       "Algebra"
@@ -3766,7 +3752,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T02:07:55.532399+00:00",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
@@ -6186,7 +6172,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Join of Partition Lattices Corresponds to Graph Union Connectivity"
   },
   {
-    "consumed_by_exp_id": "d36ccdc3",
+    "consumed_by_exp_id": "",
     "description": "Let $f \\in \\mathcal{O}_K[X]$ be a monic irreducible polynomial defining a finite extension of $K$, where $K$ is a finite extension of $\\mathbb{Q}_p$. Suppose the Newton polygon of $f$ with respect to some monic irreducible $\\varphi \\in \\mathcal{O}_K[X]$ satisfies Montes and Nart's index conditions (i.e., the indices of the equation order induced by $f$ are trivial). Then, the decomposition group of any prime $\\mathfrak{p}$ of $\\mathcal{O}_K$ in the splitting field of $f$ is isomorphic to the subgroup of the Galois group constructed via the Newton polygon method described in the paper. This conjecture formalizes the claim that the algorithmic procedure extends to the weaker index assumptions.",
     "domains": [
       "Algebra",
@@ -6196,7 +6182,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T02:52:07.462502+00:00",
     "title": "Decomposition Group Computation via Newton Polygon Indices"
   },
@@ -7345,6 +7331,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Plethystic Triviality of the Shifted `t`-Schur Basis\n\nThis cycle promoted the single plethystic automorphism `\u03c6_t : p_{2k+1} \u21a6 (1 - t^{2k+1})\np_{2k+1}` to its ambient **diagonal plethysm group** `(K^\u00d7)^\u2115 \u21aa Aut(\u039b_odd)`\n(`DiagonalPlethysmGroup.lean`), proving it is faithful, diagonal in the monomial basis,\nhas fixed subalgebra exactly the scalars, and that the `t`-line is a free `\u2124`. The\nfollowing conjectures are concrete, falsifiable targets for follow-up cycles.\n\n## Conjecture 1 (Orbit characterization of the shifted basis)\nFor *every* unit sequence `c : \u2115 \u2192 K\u02e3`, define `S^c_\u03bb := (diagEquiv c)(Q_\u03bb)`. Conjecture:\nthe family `{S^c_\u03bb}` over strict partitions `\u03bb` is `K`-linearly independent for **all** `c`\nsimultaneously, and the `S^c` for different `c` are related by a single element of the\ndiagonal plethysm group. Formally: `linearIndependent_Sfun_iff` generalizes verbatim with\n`\u03c6_t` replaced by any `diagEquiv c`. *Test:* prove\n`LinearIndependent K (S^c \u2218 g) \u2194 LinearIndependent K (Q \u2218 g)` using `diagAutHom`.\n\n## Conjecture 2 (Two-parameter / iterated deformation closes the group)\nThe subgroup of `Aut(\u039b_odd)` generated by all `\u03c6_t`-type elements with scalars\n`1 - t^{2k+1}` for varying transcendental specializations is a free abelian group, and the\n\"`q,t`\" double deformation `p_n \u21a6 (1 - t^n)/(1 - q^n) \u00b7 p_n` is again a `diagEquiv`, hence\ntrivial in the same sense. *Test:* introduce `K = \u211a(q,t)`, define the Macdonald-style\nscalar `cc_qt k = (1 - t^{2k+1})/(1 - q^{2k+1})`, show it is a unit and that the resulting\n`diagEquiv` has fixed subalgebra exactly the scalars iff `q \u2260 t` (and reduces to `id` when\n`q = t`).\n\n## Conjecture 3 (Spectral rigidity / centralizer)\nThe centralizer of `\u03c6_t` in `Aut_K(\u039b_odd)` is exactly the diagonal plethysm group\n`(K^\u00d7)^\u2115` itself. That is, an algebra automorphism commutes with `\u03c6_t` **iff** it is\ndiagonal in the monomial basis. *Test:* the eigenvalues `\u220f cc^d` are pairwise distinct\nacross monomials of a fixed total degree (a separation/transcendence statement over\n`\u211a(t)`), forcing any commuting automorphism to preserve each monomial line.\n\n## Conjecture 4 (Degree-graded determinant identity)\nRestrict `\u03c6_t` to the degree-`m` homogeneous component graded further by partition shape.\nOn the finite-dimensional piece spanned by monomials `X^d` with fixed `d`, the \"local\ndeterminant\" is `\u220f cc^d`. Conjecture a clean product formula for the determinant of `\u03c6_t`\non the span of all `X^d` with `\u2211 d_k (2k+1) = m` (a finite set), namely\n`\u220f_{|d| = m} \u220f_k (1 - t^{2k+1})^{d_k}`, and relate its `t`-degree to the number of strict\npartitions of `m`. *Test:* finite computation for `m \u2264 6`, then `LinearMap.det` of the\nrestricted map.\n\n## Conjecture 5 (Specialization boundary = degeneration locus)\nOver a base ring where some `1 - t^{2k+1}` becomes a zero divisor or vanishes (e.g.\nspecializing `t` to a root of unity in an extension), `\u03c6_t` ceases to be injective and\nplethystic triviality genuinely fails. Conjecture: the set of `t` at which `\u03c6_t` is *not*\nan automorphism is exactly `{t : \u2203 k, t^{2k+1} = 1}`, i.e. the odd roots of unity, and the\nrank drop is governed by which `cc k` vanish. *Test:* over `ZMod p`-style or cyclotomic\nspecializations, exhibit a non-zero fixed non-constant element when `t` is a primitive\n`(2k+1)`-st root of unity.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2703",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "31cf2713",
+    "status": "available",
+    "timestamp": "2026-06-27T15:18:37.414520+00:00",
+    "title": "This cycle promoted the single plethystic automorphism `\u03c6_t : p_{2k+1} \u21a6 (1 - t^"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7418,7 +7419,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "6fec91f1",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -7428,7 +7429,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -7711,7 +7712,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "46e595fc",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -7721,7 +7722,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
