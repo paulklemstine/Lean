@@ -198,7 +198,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "061c7bd2",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domain_bridges": [],
     "domains": [
@@ -212,7 +212,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -939,7 +939,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9aa4cae",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i ≤ i and d i ≤ i for all i < k, equality of their factoradic values up ",
     "domain_bridges": [],
     "domains": [
@@ -951,7 +951,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -7175,7 +7175,7 @@
       "Mathlib.Combinatorics.Polytope",
       "Mathlib.Data.Fintype.Card"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1394b2e6",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self‑dual string C‑group representations of rank $2m$ (as constructed by the vertex‑gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self‑dual string C‑group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domain_bridges": [
       "Coxeter groups ↔ abstract regular polytopes",
@@ -7191,7 +7191,7 @@
     "proof_strategy": "Formalize the vertex‑gluing construction of the paper and prove that it yields a self‑dual string C‑group of rank $2m$ for $A_{4m+3}$. Then, using the intersection condition for string C‑groups together with known bounds on the rank of any string C‑group for $A_n$ (the maximal rank $\\lfloor (n-1)/2 \\rfloor$), show that any self‑dual representation would force an extra involutive symmetry that contradicts the parity constraints on generators of $A_{4m+3}$. The contradiction establishes the non‑existence of rank $2m+1$ self‑dual string C‑groups. The proof proceeds by: (1) defining string C‑groups and self‑duality in Lean; (2) encoding the universal string Coxeter group $W_r$ and the intersection condition; (3) constructing the specific generating involutions for the glued representation; (4) verifying the intersection condition and self‑duality; (5) proving a rank‑upper‑bound lemma for self‑dual representations of $A_{4m+3}$ via counting arguments on the fixed‑point structure of the invo",
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
   },
@@ -7451,7 +7451,7 @@
       "shifted equal values",
       "Graham--Holt--Pomerance construction"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49ad7738",
     "description": "The upper bound S_1^φ(x) ≪ x exp{-(1/2 - o(1))√(log x log_2 x)} is tight, i.e., there exists a constant C > 0 such that S_1^φ(x) ≥ C x exp{-(1/2 + o(1))√(log x log_2 x)} for all sufficiently large x.",
     "domain_bridges": [
       "additive number theory",
@@ -7467,7 +7467,7 @@
     "proof_strategy": "Construct explicit examples of n with φ(n)=φ(n+1) achieving the lower bound, or refine the error term analysis in the existing proof",
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T12:13:32.061938+00:00",
     "title": "Tightness of the unit-shift bound for Euler's totient function"
   },
@@ -9010,7 +9010,7 @@
       "barber1996quickhull",
       "b-gtfga-80"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ed8ca57",
     "description": "Analyzes contraction bounds in spherical Delaunay refinement using an exact Carathéodory-type result.",
     "domain_bridges": "machine_learning > optimization",
     "domains": [
@@ -9022,7 +9022,7 @@
     "proof_strategy": "dimensional analysis and covering theorems",
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T04:18:00.464209+00:00",
     "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refinement"
   },
