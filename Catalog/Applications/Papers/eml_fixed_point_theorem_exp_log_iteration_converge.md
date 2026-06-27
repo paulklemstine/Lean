@@ -1,44 +1,55 @@
-# THEOREM TRACE (internal — anti-hallucination)
+# Theorem Trace (internal anti-hallucination ledger)
 
-Source files (ground truth):
-- `Catalog/EML/FixedPointConvergence.lean`
-- `Catalog/EML/FixedPointThreshold.lean`
-- `Catalog/EML/FixedPointRate.lean`
-- `Catalog/EML/FixedPointBracket.lean`
-- `Catalog/EML/FixedPointConcreteInstance.lean`
-- `Catalog/EML/FixedPointBracketInstance.lean`
+Every result stated in ARTICLE.md and RESEARCH_PAPER.md maps to one of the
+Lean declarations below. No grander claims are made than what these establish.
+
+## Definitions
 
 | Lean name | Statement | Article | Paper |
 |---|---|---|---|
-| `EMLIterOp` (def) | `f(x) = exp a * log (b*x + c)` | yes | Def 1 |
-| `EMLIterOp.iterSeq` (def) | `x_{n+1} = f(x_n)` | yes | Def 2 |
-| `EMLContractionData` (struct) | packages a,b,c,lo,hi,rho + invariants | yes | Def 3 |
-| `EMLIterOp.hasDerivAt` / `deriv_eq` | `f'(x) = exp a * b / (b*x + c)` | yes | Lem 1 |
-| `EMLIterOp.fixedPoint_eq` | fix ⇒ `x* = exp a * log(b x* + c)` | yes | Lem 2 |
-| `EMLIterOp.fixedPoint_arg_gt_one` | pos fix ⇒ `b x* + c > 1` | — | Lem 2b |
-| `EMLIterOp.lipschitz_of_deriv_bound` | deriv ≤ ρ ⇒ ρ-Lipschitz | yes | Lem 3 |
-| `EMLIterOp.fixedPoint_unique` | contraction ⇒ ≤1 fixed point | yes | Thm A |
-| `EMLIterOp.iterSeq_mem_Icc` | maps_to ⇒ orbit stays in [lo,hi] | yes | Lem 4 |
-| `EMLIterOp.iterSeq_geometric_decay` | `|x_{n+1}-x_n| ≤ ρ^n |x_1-x_0|` | yes | Lem 5 |
-| `EMLIterOp.iterSeq_cauchy` | orbit Cauchy | — | Lem 6 |
-| `EMLIterOp.iterSeq_converges` | orbit → fixed point in [lo,hi] | yes | Thm B |
-| `EMLIterOp.special_b1_c1` | `f = exp a * log(x+1)` | — | Rmk |
-| `EMLIterOp.at_a_zero` | `a=0 ⇒ f = log(b x + c)` | — | Rmk |
-| `EMLIterOp.fixedPoint_powerSeries_conjecture` | b=1,c=2,0<a<1/2 ⇒ ∃ pos fix | yes | Prop |
-| `residual_le` | `f(x)-x ≤ exp a (a-1) + c` (b=1) | yes | Lem 7 |
-| `no_fixedPoint_of_subcritical` | `exp a (a-1)+c<0 ⇒` no fix | yes | Thm C |
-| `no_fixedPoint_half_half` | a=c=1/2 ⇒ no fix (falsifies box) | yes | Cor |
-| `fixedPoint_imp_c_ge_threshold` | fix ⇒ `c ≥ exp a (1-a)` | yes | Thm C |
-| `threshold_fixedPoint_neutral` | at `c=exp a(1-a)`: fix at `x*=exp a -c`, `f'=1` | yes | Thm D |
-| `iterSeq_dist_consecutive` | dist form of geometric decay | — | Lem 5' |
-| `iterSeq_error_bound` | `|x_n-x*| ≤ |x_1-x_0| ρ^n/(1-ρ)` | yes | Thm E |
-| `iterSeq_certified_rate` | existence + a priori error bound | yes | Thm E |
-| `iterSeq_error_tendsto_zero` | error bound → 0 | — | Cor |
-| `op_monotoneOn` | b>0 ⇒ f monotone on interval | yes | Lem 8 |
-| `iterSeq_lo_mono` / `iterSeq_hi_anti` | lower orbit ↑, upper orbit ↓ | yes | Lem 9 |
-| `iterSeq_lo_le_fixedPoint` / `iterSeq_fixedPoint_le_hi` | orbits bracket x* | yes | Lem 10 |
-| `certified_enclosure` | two-sided enclosure, width→0 | yes | Thm F |
-| `concreteEML` (def) | `f(x)=exp 1·log(x+100)` on [0,20], ρ=1/30 | yes | Ex |
-| `concreteEML_apply` | unfolds to exp 1 log(x+100) | — | Ex |
-| `concreteEML_nontrivial` | `exp 1 > 1` | — | Ex |
-| `concreteEML_certified` | end-to-end certified convergence | yes | Thm G |
+| `EMLIterOp` | `EMLIterOp a b c x = exp a * log (b * x + c)` | "the move", §1 | Def. 1 |
+| `EMLIterOp.iterSeq` | `iterSeq a b c x₀ 0 = x₀`; `iterSeq … (n+1) = EMLIterOp a b c (iterSeq … n)` | §1 | Def. 2 |
+| `EMLContractionData` | structure: `a b c lo hi rho` with `lo<hi`, `0≤rho<1`, `arg_pos`, `maps_to`, `deriv_bound` | §2 | Def. 3 |
+
+## Convergence layer (FixedPointConvergence.lean)
+
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `EMLIterOp.hasDerivAt` / `deriv_eq` | `deriv (EMLIterOp a b c) x = exp a * b / (b*x+c)` for `b*x+c>0` | §2 | Lemma 1 |
+| `EMLIterOp.fixedPoint_eq` | `f(x*)=x* ⇒ x* = exp a * log(b*x*+c)` | §2 | Lemma 2 |
+| `EMLIterOp.fixedPoint_arg_gt_one` | positive fixed point with positive arg ⇒ `b*x*+c > 1` | §3 | Lemma 3 |
+| `EMLIterOp.lipschitz_of_deriv_bound` | deriv bound by `rho` ⇒ `|f x - f y| ≤ rho*|x-y|` | §2 | Lemma 4 |
+| `EMLIterOp.fixedPoint_unique` | contraction ⇒ ≤ one fixed point in `[lo,hi]` | §2 | Thm. 1 |
+| `EMLIterOp.iterSeq_mem_Icc` | iterates stay in `[lo,hi]` | §2 | Lemma 5 |
+| `EMLIterOp.iterSeq_geometric_decay` | `|x_{n+1}-x_n| ≤ rho^n |x_1-x_0|` | §2 | Lemma 6 |
+| `EMLIterOp.iterSeq_cauchy` | iteration is Cauchy | §2 | Lemma 7 |
+| `EMLIterOp.iterSeq_converges` | iteration → a fixed point in `[lo,hi]` | §2 | Thm. 2 |
+| `EMLIterOp.fixedPoint_powerSeries_conjecture` | for `0<a<1/2`, `b=1,c=2`: ∃ positive fixed point | §4 | Prop. 1 |
+
+## Rate layer (FixedPointRate.lean)
+
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `EMLIterOp.iterSeq_error_bound` | `|x_n - x*| ≤ |x_1-x_0| rho^n /(1-rho)` | §2 | Thm. 3 |
+| `EMLIterOp.iterSeq_certified_rate` | existence + a priori bound packaged | §2 | Cor. 1 |
+| `EMLIterOp.iterSeq_error_tendsto_zero` | the a priori bound → 0 | §2 | Cor. 2 |
+
+## Bracket layer (FixedPointBracket.lean)
+
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `EMLIterOp.op_monotoneOn` | `b>0 ⇒ f` monotone on `[lo,hi]` | §3 | Lemma 8 |
+| `EMLIterOp.iterSeq_lo_mono` | lower orbit `fⁿ(lo)` increases | §3 | Lemma 9 |
+| `EMLIterOp.iterSeq_hi_anti` | upper orbit `fⁿ(hi)` decreases | §3 | Lemma 10 |
+| `EMLIterOp.certified_enclosure` | bracket `ℓₙ ≤ x* ≤ uₙ`, width → 0 | §3 | Thm. 4 |
+
+## Comparative-statics layer (FixedPointMonotoneParam.lean — Phase A)
+
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `EMLIterOp.op_le_op_of_a_le` | `a₁≤a₂`, `log(b*x+c)≥0 ⇒ f_{a₁}(x) ≤ f_{a₂}(x)` | §3 | Lemma 11 |
+| `EMLIterOp.op_lt_op_of_a_lt` | `a₁<a₂`, `log(b*x+c)>0 ⇒ f_{a₁}(x) < f_{a₂}(x)` | §3 | Lemma 12 |
+| `EMLIterOp.orbit_mono_of_subsolution` | `p ≤ f(p) ⇒` orbit from `p` increases | §3 | Lemma 13 |
+| `EMLIterOp.fixedPoint_le_of_a_le` | `a₁≤D.a` ⇒ ∃ fixed point `x₂` with `x₁ ≤ x₂` | §3 (main) | Thm. 5 |
+| `EMLIterOp.fixedPoint_lt_of_a_lt` | `a₁<D.a` ⇒ ∃ fixed point `x₂` with `x₁ < x₂` | §3 (main) | Thm. 6 |
+| `EMLIterOp.fixedPoint_unique_le_of_a_le` | unique fixed point of larger `a` dominates | §3 | Thm. 7 |

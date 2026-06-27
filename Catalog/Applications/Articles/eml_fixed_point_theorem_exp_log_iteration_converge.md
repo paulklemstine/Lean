@@ -1,207 +1,227 @@
-# The Tamest Wild Function: How Exp-Log Iteration Always Finds Its Center
+# The Knob That Never Lies: How a Single Dial Steers an Exp-Log Machine
 
-## A machine that eats numbers
+## A machine that keeps folding a number back on itself
 
-Imagine a little machine. You feed it a number, it does some arithmetic, and
-out comes another number. Then you take *that* number and feed it back in. And
-again. And again. Most machines like this behave badly: feed them almost the
-same number twice and the outputs fly apart; let them run and the numbers
-explode to infinity or crash to nothing. Chaos is the rule, not the exception —
-the same mathematics that makes weather unpredictable lives inside even the
-simplest feedback loops.
+Imagine a tiny machine with one input slot and one output slot. You feed it a
+number, it hands you back a different number, and then — this is the interesting
+part — you feed *that* number straight back in. Over and over. Numbers in,
+numbers out, the output of each round becoming the input of the next.
 
-This article is about a machine that refuses to misbehave. Its rule is
+Machines like this are everywhere. They are the beating heart of how interest
+compounds in a bank account, how a thermostat settles a room to a steady
+temperature, how a population of rabbits stabilizes, and how the layers of a
+neural network transform their signals. The mathematical name for "apply the
+same rule again and again" is **iteration**, and the central question is always
+the same: *where does it all end up?* Does the stream of numbers wander forever,
+oscillate, blow up to infinity — or does it home in on a single, special value
+and stay there?
 
-$$f(x) = e^{a}\,\log(b\,x + c),$$
+That special value, the number the machine reproduces unchanged, is called a
+**fixed point**. If you feed in the fixed point, you get the fixed point back.
+It is the resting state of the machine, its equilibrium, the place where the
+endless folding finally comes to rest.
 
-where $a$, $b$, and $c$ are fixed dials you set before you start. It first
-stretches the input by the linear map $x \mapsto bx+c$, then *compresses* it
-violently with a logarithm, then *re-expands* it by the constant factor $e^a$.
-Stretch, squash, scale. We call this an **EML operator** — short for
-*exponential–minus–logarithm* — because it is built from the same exponential
-and logarithmic atoms that appear in nearly every model in science, from
-radioactive decay to the activation functions inside neural networks.
+This article is about one particular family of these machines — call them
+**exp-log machines** — and about a beautiful, exact law that governs how their
+resting state responds when you turn a single dial.
 
-The central discovery is that, for the right settings of the dials, this
-machine is profoundly, provably tame. No matter where you start, the sequence
-of numbers it produces homes in on a single special value — a *fixed point* —
-and it does so at a guaranteed, computable speed. Even better, we can pin down
-*exactly* which dial settings make this happen, and we can prove that just
-outside that region the good behavior collapses in a precise and beautiful way.
+## The exp-log rule
 
-Every claim in what follows has been verified down to the last logical step.
-There are no hand-waves.
+Our machine implements a specific rule. Given an input $x$, it computes
 
-## Fixed points: where the machine stands still
+$$f(x) = e^{a}\,\log(b\,x + c).$$
 
-A **fixed point** of the machine is a number $x^\*$ that the machine leaves
-unchanged: feed in $x^\*$ and you get $x^\*$ back. In symbols,
+Three numbers, $a$, $b$, and $c$, are the machine's settings. The parameter $b$
+scales the input, $c$ shifts it, the logarithm gently compresses large values,
+and then $e^{a}$ — the exponential of the scaling dial $a$ — stretches the
+result back out. The combination of a *compressing* logarithm and a *stretching*
+exponential is what gives these machines their tame, well-behaved character.
+They are a clean idealization of the kind of "squash-then-scale" operation that
+appears inside learning systems, where it pays to know exactly how the output
+behaves rather than to cross your fingers.
 
-$$x^\* = e^{a}\,\log(b\,x^\* + c).$$
+To make this concrete, set $b = 1$ and $c = 2$, so the rule becomes
+$f(x) = e^{a}\,\log(x + 2)$. Start with the scaling dial at $a = 0$, so
+$e^{0} = 1$ and the machine simply computes $f(x) = \log(x + 2)$. Begin the
+iteration anywhere reasonable — say $x_0 = 1$ — and watch:
 
-Fixed points are the secret skeletons of any iterative process. If a sequence
-$x_0, x_1, x_2, \dots$ produced by repeatedly applying $f$ ever settles down to
-a limit, that limit *must* be a fixed point — there is nowhere else for it to
-go. So the whole story of long-run behavior is really a story about fixed
-points: do they exist, how many are there, and does the machine actually march
-toward them?
+$$1 \;\to\; \log 3 \approx 1.0986 \;\to\; \log(3.0986) \approx 1.1310 \;\to\; \cdots \;\to\; 1.1462\ldots$$
 
-## The secret of the slope
+The numbers march in and settle, quickly, onto $x^\* \approx 1.1462$, the unique
+solution of $x = \log(x + 2)$. That number is the machine's fixed point. Feed it
+in, get it back. The machine has found its rest.
 
-Here is the single idea that controls everything. Ask how sensitive the machine
-is to small nudges of its input. That sensitivity is the *slope* (the
-derivative) of $f$, and for the EML operator it has a clean closed form:
+## Why it always settles: the contraction principle
+
+The reason the numbers converge — and don't, say, ricochet around forever — is
+that the exp-log rule is a **contraction**. A contraction is a map that pulls
+points closer together: if you run two different inputs through it, the gap
+between the outputs is strictly smaller than the gap between the inputs. Apply a
+contraction repeatedly and every pair of trajectories is squeezed together,
+relentlessly, until they collapse onto a single point. That point is the fixed
+point, and it is necessarily unique — there is no room for two.
+
+How do we know our machine contracts? We look at its steepness. The derivative
+of $f$ — the factor by which it magnifies tiny changes in the input — works out
+to
 
 $$f'(x) = \frac{e^{a}\,b}{b\,x + c}.$$
 
-Read this formula like a dial gauge. The numerator $e^a b$ is fixed; the
-denominator $bx+c$ grows as $x$ grows. So as we move to larger inputs, the slope
-*shrinks*. When the slope is smaller than $1$ in size, the machine is a
-**contraction**: it pulls any two inputs strictly closer together every time it
-runs. Two travelers who start a mile apart end up half a mile apart, then a
-quarter, then an eighth — squeezed inexorably toward each other.
+If this magnification factor stays below $1$ in absolute value across the whole
+working range, then small differences shrink at every step, and the machine is a
+contraction. In our example with $a = 0$, $b = 1$, $c = 2$, near the fixed point
+we have $f'(x^\*) = 1/(x^\* + 2) \approx 1/3.15 \approx 0.32$, comfortably below
+one. Each iteration cuts the remaining error to roughly a third. That is why the
+convergence above looked so brisk: after $n$ steps the distance to the fixed
+point is no larger than a constant times $0.32^{\,n}$ — geometric decay, the gold
+standard of fast convergence.
 
-This is the mechanism behind one of the most useful theorems in all of
-mathematics, the *contraction mapping principle*. If a process always shrinks
-distances by at least a fixed factor $\rho < 1$, then it has exactly one fixed
-point, and every starting value rushes toward it. Our machine inherits this
-power whenever its slope stays below $1$ on the working interval.
+This is the classical guarantee, made completely rigorous: the exp-log machine,
+whenever its steepness stays below one on an interval it maps into itself, has
+**exactly one** resting state, and the iteration **always finds it**, with the
+error falling off like $\rho^{\,n}$ where $\rho < 1$ is the bound on the
+steepness. The convergence even comes with a *certificate*: at every step you
+can compute a guaranteed error bound,
+$$|x_n - x^\*| \;\le\; |x_1 - x_0|\,\frac{\rho^{\,n}}{1 - \rho},$$
+so you always know how close you are without knowing $x^\*$ in advance. And
+because the rule is increasing when $b > 0$, you can do even better: run the
+iteration from the *bottom* of the interval and from the *top* simultaneously,
+and the two trajectories close in on the fixed point from both sides like a
+vise — a lower estimate that rises, an upper estimate that falls, and a gap
+between them that provably shrinks to zero. At any moment you hold a rigorous
+bracket $[\ell_n, u_n]$ that is *guaranteed* to contain $x^\*$.
 
-Concretely, suppose on some interval $[\text{lo}, \text{hi}]$ the slope never
-exceeds a number $\rho < 1$ in absolute value, and suppose the machine never
-sends a point in that interval outside of it. Then three things are true, and
-all three have been proved:
+## The real story: turning the dial
 
-1. **At most one fixed point.** Two fixed points $x_1, x_2$ in the interval
-   would satisfy $|x_1 - x_2| \le \rho\,|x_1 - x_2|$ with $\rho < 1$, which
-   forces $|x_1-x_2| = 0$. They must coincide.
+All of that — guaranteed convergence, a unique resting state, a certified error
+and a self-validating bracket — sets the stage. But it leaves the most practical
+question unanswered. Suppose you want to *tune* the machine. You reach for the
+scaling dial $a$ and nudge it. **What happens to the resting state?**
 
-2. **The orbit converges.** Starting from any $x_0$ in the interval, the
-   sequence $x_{n+1} = f(x_n)$ is a Cauchy sequence and therefore converges to
-   a genuine fixed point inside the interval.
+This is the question an engineer actually cares about. If the exp-log machine is
+a component inside a larger system, $a$ is your control knob, and $x^\*$ is the
+output you are trying to place. You need to know: is the knob trustworthy? When
+you turn it up, does the output go up — predictably, every time? Or could a
+small twist send the output lurching the wrong way, or jumping to some entirely
+different equilibrium?
 
-3. **You can watch it happen at a known speed.** The gaps between consecutive
-   steps shrink geometrically, $|x_{n+1} - x_n| \le \rho^n\,|x_1 - x_0|$, and
-   the distance to the limit obeys the explicit error bound
-   $$|x_n - x^\*| \;\le\; \frac{|x_1 - x_0|\;\rho^n}{1 - \rho}.$$
+The headline result of this work is a clean and complete answer:
 
-That last inequality is the prize. It is not a vague promise that "things
-converge eventually." It is a certificate: *before you run a single step*, it
-tells you exactly how many iterations you need to reach any accuracy you want.
-If $\rho = 1/30$, every step buys you roughly another factor of thirty in
-precision. This is what turns a curiosity into an algorithm.
+> **Turn the dial up, and the resting state rises. Always. Strictly.**
 
-## A worked example you can trust
+In precise terms: if $a_1 < a_2$ are two settings of the scaling dial (with the
+other settings $b > 0$ and $c$ held fixed), and $x_1^\*$ is the resting state at
+$a_1$ while $x_2^\*$ is the resting state at $a_2$, then
 
-Set the dials to $a = 1$, $b = 1$, $c = 100$, so the machine is
+$$x_1^\* \;<\; x_2^\*.$$
 
-$$f(x) = e^{1}\,\log(x + 100) \approx 2.718\,\log(x + 100),$$
+A larger scaling parameter produces a strictly larger equilibrium. There is no
+threshold, no reversal, no flat spot, no surprise jump to a different basin. The
+response is **monotone**, and because it is *strictly* monotone, the map from
+dial settings to resting states is **injective**: every distinct setting yields
+its own distinct equilibrium. The knob is, in the most literal sense, an honest
+control — it never lies about the direction it moves the output, and it never
+sends two different settings to the same place.
 
-and let it run on the interval $[0, 20]$. On this interval the denominator
-$x + 100$ is enormous compared with the numerator $e^1 \approx 2.718$, so the
-slope is tiny — never larger than $1/30$. One can check (and it has been
-checked) that $f$ keeps every point of $[0,20]$ inside $[0,20]$.
+Let us see it in our running example. With $b = 1$, $c = 2$:
 
-The conclusion is airtight: from *any* starting value in $[0,20]$, the iteration
-converges to the unique fixed point $x^\* \approx 12.85$, with the explicit error
-guarantee
+| dial $a$ | rule | resting state $x^\*$ |
+|---|---|---|
+| $0.00$ | $\log(x+2)$ | $1.146$ |
+| $0.10$ | $1.105\,\log(x+2)$ | $1.329$ |
+| $0.30$ | $1.350\,\log(x+2)$ | $1.803$ |
+| $0.49$ | $1.632\,\log(x+2)$ | $2.429$ |
 
-$$|x_n - x^\*| \;\le\; |x_1 - x_0|\,\frac{(1/30)^n}{1 - 1/30}.$$
+Every increase in $a$ lifts the resting state. The column of equilibria climbs
+in lockstep with the dial. Turn it up a little, the output rises a little; turn
+it up more, the output rises more.
 
-After just five steps the error is below one part in twenty million. The machine
-finds its center almost instantly, and we can prove the bound without ever
-running it.
+## The idea behind the proof: a clever head start
 
-## The sharp edge of order
+What makes the rising-equilibrium law *true* — and what makes it a genuine
+theorem rather than a lucky pattern in a table — is an argument of disarming
+elegance. It needs no heavy machinery, no calculus of how the fixed point
+"moves" as a function of $a$, no implicit function theorem. It needs only three
+facts you already believe: the exponential is increasing, the logarithm is
+increasing, and the machine itself is increasing when $b > 0$.
 
-Now the deepest part of the story. The original hope was that the machine would
-be tame for a whole rectangular block of dial settings — say $a$ between $0$ and
-$1$, $b = 1$, and $c$ between $0$ and $1$. That hope is *false*, and the way it
-fails is exquisitely precise.
+Here is the whole idea in one breath.
 
-The key is a single inequality about how far the machine can push a point
-forward. With $b = 1$, the "gain" $f(x) - x$ can never exceed a value that
-depends only on the dials:
+Start at the *smaller* setting $a_1$ and let the machine settle to its resting
+state $x_1^\*$. Now turn the dial up to the larger setting $a_2$ — but don't
+restart from scratch. Instead, hand the larger machine the smaller machine's
+resting state $x_1^\*$ as its starting point, and ask: what does the larger
+machine do with it?
 
-$$f(x) - x \;\le\; e^{a}(a - 1) + c.$$
+The larger machine multiplies by $e^{a_2}$ instead of $e^{a_1}$, and since
+$a_2 > a_1$ that is a *bigger* stretch. At the point $x_1^\*$ the logarithm term
+$\log(b\,x_1^\* + c)$ is positive — this is precisely where the positivity of
+the resting state matters, because a positive fixed point forces
+$b\,x_1^\* + c > 1$, and the log of something bigger than $1$ is positive.
+Multiplying a positive quantity by a bigger number gives a bigger result. So the
+larger machine, fed $x_1^\*$, returns something *strictly greater* than
+$x_1^\*$:
 
-The reason is a classic one-line fact about the logarithm: $\log s \le s - 1$
-for every positive $s$. Applied with $s = (x+c)/e^a$, this pins the maximum
-possible gain, and the maximum is reached exactly when $x + c = e^a$.
+$$f_{a_2}(x_1^\*) \;>\; x_1^\*.$$
 
-Stare at the right-hand side. If $e^a(a-1) + c$ is **negative**, then
-$f(x) - x < 0$ for *every* admissible $x$ — the machine always pushes points to
-the *left*, so it can never stand still. There is **no fixed point at all**.
-This gives a sharp law:
+In the language of dynamics, $x_1^\*$ is a **sub-solution** of the larger
+machine — a point the machine pushes *upward*. And because the machine is
+monotone increasing, once it starts pushing upward it keeps pushing upward: the
+trajectory launched from $x_1^\*$ rises, step after step, never turning back.
+A rising trajectory inside a contraction can only be heading toward one place —
+the larger machine's resting state $x_2^\*$. And every point on a rising path
+lies below where the path ends. So the starting point sits below the
+destination:
 
-> **A fixed point exists only if** $\;c \ge e^{a}(1 - a).$
+$$x_1^\* \;<\; x_2^\*.$$
 
-This single threshold demolishes the naive rectangle. Take $a = 1/2$ and
-$c = 1/2$ — squarely inside the hoped-for box. Then
-$e^{1/2}(1 - 1/2) = \tfrac{1}{2}e^{1/2} \approx 0.824$, which is *bigger* than
-$c = 0.5$. The threshold is violated, and so — provably — the machine
-$f(x) = e^{1/2}\log(x + 1/2)$ has **no fixed point whatsoever**. Run it from
-anywhere and the orbit simply marches off without ever settling. The pretty
-rectangle was a mirage.
+That is the entire proof. The smaller machine's equilibrium is a *head start*
+for the larger machine — a launch pad it can only climb away from, upward, into
+its own higher resting state. The contraction guarantees the climb has a single
+destination; monotonicity guarantees the climb only goes up; positivity
+guarantees the first step is strictly upward. Three honest facts, one inevitable
+conclusion.
 
-## The knife's edge
-
-What happens *exactly* on the boundary, when $c = e^a(1 - a)$? Here the
-mathematics performs a perfect balancing act. At this critical setting the point
-$x^\* = e^a - c$ is a genuine fixed point — but the slope there equals *exactly*
-$1$:
-
-$$f'(x^\*) = \frac{e^a}{x^\* + c} = \frac{e^a}{e^a} = 1.$$
-
-A slope of exactly $1$ is the razor's edge between contraction and expansion.
-The fixed point is *neutral*: the machine neither pulls toward it nor pushes
-away, and the contraction guarantee evaporates. So the boundary of the region
-where fixed points *exist* is also the boundary of the region where the machine
-is *tame*. The two frontiers coincide — a striking and exact correspondence
-between two questions that, at first glance, seem unrelated.
-
-This is the heart of the matter: order does not fade gradually as you turn the
-dials. It ends at a sharp wall, defined by the elegant curve $c = e^a(1-a)$, and
-on that wall the dynamics hang in perfect, neutral balance.
-
-## Two hands closing on the answer
-
-There is one more pleasing twist. When $b > 0$ the machine is *monotone*:
-larger inputs give larger outputs, with no folding or crossing. This lets us
-trap the fixed point between two converging sequences, like two hands closing on
-a coin in the dark.
-
-Start one orbit at the bottom of the interval, $\ell_0 = \text{lo}$, and another
-at the top, $u_0 = \text{hi}$. Monotonicity guarantees the bottom orbit climbs
-steadily upward, the top orbit descends steadily downward, and the true fixed
-point is *always* sandwiched between them:
-
-$$\ell_n \;\le\; x^\* \;\le\; u_n \quad \text{for every } n.$$
-
-Both sequences converge to $x^\*$, and the width of the bracket $u_n - \ell_n$
-shrinks to zero. At every single step the machine hands you not just an estimate
-but a *guaranteed interval* containing the true answer. It is self-validating
-arithmetic: the computation certifies its own accuracy as it runs.
+It is worth pausing on why the positivity of the resting state is not a
+technicality but the load-bearing beam. If the resting state were negative,
+the logarithm term could turn negative, the bigger stretch would make the
+output *smaller*, and the whole argument would run in reverse. The theorem is
+true exactly where it should be true, and the proof knows it.
 
 ## Why this matters
 
-The exponential and the logarithm are the workhorses of quantitative science,
-and lately they have become the building blocks of machine-learning models,
-where functions are stitched together by the millions. The trouble is that most
-such building blocks come with no behavioral guarantees at all — feed them into
-a feedback loop and anything can happen.
+A control knob that always moves the output the right way, by a predictable
+amount, with no hidden cliffs — that is the difference between a component you
+can build on and one you have to babysit. Many of the nonlinear maps that
+populate modern computational systems lack this courtesy: nudge a parameter and
+the behavior can jump, fold, or destabilize without warning. The exp-log machine
+is provably better behaved. Its scaling dial is a *monotone, injective* control:
+turn it up and the equilibrium rises, turn it down and the equilibrium falls,
+and no two settings ever collide on the same output.
 
-The EML operator is different. We now know, with complete certainty:
+Combine this with the earlier guarantees — a unique resting state, geometric
+convergence to it, a computable error certificate, and a two-sided bracket that
+provably traps the answer — and you get an iterative scheme that is genuinely
+*engineerable*. You can certify that it converges, certify how fast, certify a
+rigorous enclosure of the answer at any step, and now certify which way and how
+reliably its output responds to tuning. The dial does exactly what a dial should
+do.
 
-- **exactly when** it has a fixed point (the sharp law $c \ge e^a(1-a)$);
-- that when it does behave, it converges from *anywhere* in its working range;
-- the **precise speed** of that convergence, as a formula you can evaluate in
-  advance;
-- and a **self-certifying bracket** that boxes in the answer at every step.
+## The frontier
 
-A function this well-understood is a safe foundation. It can serve as a
-certified iterative solver, a trustworthy layer in a learning system, or a
-textbook-clean illustration of how the abstract contraction principle plays out
-in a concrete, real-world map. And the lesson it teaches is larger than itself:
-that even in a world where feedback usually breeds chaos, there are islands of
-perfect, provable order — and we can draw their coastlines exactly.
+The same head-start argument that tames the scaling dial $a$ applies, word for
+word, to the shift dial $c$: increasing $c$ also strictly raises the resting
+state. That immediately raises the prospect of a *two-knob* control surface in
+which $a$ and $c$ both push the equilibrium the same way and never cancel — a
+response surface that is monotone in every direction, never folded. Beyond the
+qualitative picture lies a quantitative one: not just *that* the output rises but
+*how much*, captured by an explicit sensitivity bound built from the same
+geometric series that controls the convergence rate. And further still lies the
+analytic dream — a genuine power-series formula for the resting state as a
+function of the dial, valid precisely in the regime where the machine contracts.
+
+But the foundation is laid, and it is solid. A machine that folds numbers back
+on itself, settles to a single resting state, and responds to its control dial
+with perfect honesty — turn it up, and it rises; every time, by just the right
+amount, with never a lie. In a world of unpredictable nonlinear systems, that
+kind of trustworthiness is rare, and it is worth celebrating.
