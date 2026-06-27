@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "bf529381",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Transition-rank rigidity of endomorphism streams\n\nThis cycle continued the `Catalog.Algebra.TransEndo` line. The catalog already had:\n\n* `TransEndo` — the iterated-composition /",
-      "quality_score": 0.34015242857142863,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-23T10:59:59",
-      "title": "Close Proofs: These conjectures continue the research cycle begun in"
-    },
-    {
       "cycle_id": "57fbcb2f",
       "domain": "Probability",
       "key_insight": "# Future Directions — Orderly Friedman Numbers\n\nBuilding on `Computation/OrderlyFriedman.lean` (formalization of orderly Friedman\nnumbers A080035 via an expression language, five canonical witnesses,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-06-27T19:41:28",
       "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
+    },
+    {
+      "cycle_id": "2e08d081",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — restricted-upper-index binomial GCDs\n\nDerived from this cycle's findings on `F(k) = gcd_{2 ≤ q ≤ k} C(q·k, k)` and its\nrelation to OEIS A080170 `D(k) = gcd_{2 ≤ q ≤ k+1} C(q·k, k",
+      "quality_score": 0.6115200000000001,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-27T20:00:54",
+      "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84592
     }
   ],
-  "last_updated": "2026-06-27T19:41:28",
+  "last_updated": "2026-06-27T20:00:54",
   "open_questions": [
     {
       "context": "`Nat.clog_pow`, not `decide`; all main theorems use induction/omega and are 0-sorry; the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2cb7b634",
-        "quality": 0.7014400000000001,
-        "theorems": 10,
-        "title": "Extremal Graph Theory: Turán and Szemerédi"
-      },
-      {
         "cycle_id": "eb034b80",
         "quality": 0.8360800000000002,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.484642,
         "theorems": 7,
         "title": "Character Class Contradiction"
+      },
+      {
+        "cycle_id": "2e08d081",
+        "quality": 0.6115200000000001,
+        "theorems": 6,
+        "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper "
       }
     ],
     "NumberTheory": [

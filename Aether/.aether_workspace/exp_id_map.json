@@ -632,5 +632,6 @@
   "4398a39a": "proof_automation_custom_lean_4_tactics.json",
   "935abbfb": "character_class_contradiction.json",
   "f2fdcb78": "ramsey_theory_bounds_and_constructions.json",
-  "bdfd9dbb": "polynomial_logarithmic_time_algorithm_for_global_l.json"
+  "bdfd9dbb": "polynomial_logarithmic_time_algorithm_for_global_l.json",
+  "2e08d081": "a_prime_power_criterion_for_gcds_of_binomial_coeff.json"
 }
