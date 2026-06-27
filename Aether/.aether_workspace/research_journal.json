@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "862d1e75",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Wolfram CA Four-Class Classification and its Computability\n\nDerived from the cycle recorded in `WolframClassification.lean` and\n`ComputationalEvidence.md`. Each conjecture is fal",
-      "quality_score": 0.4281950461538462,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-22T19:50:02",
-      "title": "Wolfram CA Four-Class Classification and its Computability"
-    },
-    {
       "cycle_id": "9537a45c",
       "domain": "Tropical",
       "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nDerived from the findings of this research cycle (`LargeDeviations.lean`,\n`DualityGap.lean`). Each conjecture is bold, falsifiable, and",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T15:52:25",
       "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
+    },
+    {
+      "cycle_id": "10d599ef",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — GL(1) Langlands / Global Class Field Theory\n\nDerived from this cycle's findings:\n\n* **Galois side (catalog `GL1Correspondence`)**: `Gal(ℚ(ζₙ)/ℚ) ≃* (ℤ/nℤ)ˣ` and the abstract\n  co",
+      "quality_score": 0.64325,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T15:54:16",
+      "title": "Langlands Correspondence: GL(1) Case"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70696
     }
   ],
-  "last_updated": "2026-06-27T15:52:25",
+  "last_updated": "2026-06-27T15:54:16",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "57a09ecd",
-        "quality": 0.31055800000000006,
-        "theorems": 0,
-        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-      },
-      {
         "cycle_id": "08b15f3b",
         "quality": 0.6261199999999999,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.6839200000000001,
         "theorems": 0,
         "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
+      },
+      {
+        "cycle_id": "10d599ef",
+        "quality": 0.64325,
+        "theorems": 0,
+        "title": "Langlands Correspondence: GL(1) Case"
       }
     ],
     "Bridges": [

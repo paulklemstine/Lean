@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "10d599ef",
     "filename": "langlands_correspondence_gl1_case.json",
     "pkg_num": 140,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.64325,
     "title": "Explicit GL(1) Langlands over Q: Cyclotomic Reciprocity and the Idele Class Group"
   },
   {
@@ -4087,8 +4087,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "langlands_correspondence_gl1_case",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.64325,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Explicit GL(1) Langlands over Q: Cyclotomic Reciprocity and the Idele Class Group"
     }
