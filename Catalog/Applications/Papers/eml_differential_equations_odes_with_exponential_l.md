@@ -1,54 +1,54 @@
-# Computational Evidence — EML Differential Equations Cycle
+# Computational Evidence — EML Riccati Solvable Family
 
-Concise numerical/structural checks performed before formalizing the Lean theorems
-in `EMLDifferentialGalois.lean`, `EMLKovacicSharp.lean`, `EMLWronskianGalois.lean`.
+Supporting `EML.EMLRiccatiSolvableFamily` and `EML.EMLGaloisSolutionSpace`.
 
-## 1. Kovacic parity test on the cleared Riccati identity
+## 1. The Riccati image map `g ↦ g′ + g²` (cleared form, q = 1)
 
-The cleared Riccati identity for `y″ = f·y` is
+For `v = g`, `q = 1`, the cleared Riccati identity
+`p′q − pq′ + p² = f·q²` reduces (since `1′ = 0`) to `g′ + g² = f`. Small cases:
 
-    p′·q − p·q′ + p² = f·q²      (v = p/q, q ≠ 0).
+| `g`      | `g′`      | `g²`        | `f = g′ + g²`        | `deg f` |
+|----------|-----------|-------------|----------------------|---------|
+| `X`      | `1`       | `X²`        | `X² + 1`             | 2       |
+| `X²`     | `2X`      | `X⁴`        | `X⁴ + 2X`            | 4       |
+| `X³`     | `3X²`     | `X⁶`        | `X⁶ + 3X²`           | 6       |
+| `Xⁿ`     | `nX^{n-1}`| `X^{2n}`    | `X^{2n} + nX^{n-1}`  | 2n      |
 
-Degree count of the left side: `deg(p²) = 2·deg p`, `deg(p′q − pq′) ≤ deg p + deg q − 1`.
-Right side: `deg(f·q²) = deg f + 2·deg q`.
+Observations:
+- `g = X` reproduces exactly the catalog witness `X² + 1`
+  (`EMLKovacicSharp.riccati_evenDeg_solvable`), confirming
+  `evenWitness_eq_riccati_image`.
+- Every `g = Xⁿ` (`n ≥ 1`) yields an even degree `2n`, so the solvable family
+  meets every even degree `≥ 2`. This is `riccati_image_natDegree` /
+  `parity_decision_every_degree`.
 
-| f          | deg f | parity | rational Riccati solution? |
-|------------|-------|--------|----------------------------|
-| X          | 1     | odd    | NONE (Airy)                |
-| X³         | 3     | odd    | NONE                       |
-| X^(2k+1)   | 2k+1  | odd    | NONE (generalized Airy)    |
-| X² + 1     | 2     | even   | v = X  (explicit!)         |
+## 2. Degree-parity decision boundary (interleaving)
 
-Verification of the even witness `f = X²+1`, `v = X` (p = X, q = 1):
+| degree `d` | example coefficient        | Kovacic first step |
+|------------|----------------------------|--------------------|
+| 1          | `X`                        | obstructed (odd)   |
+| 2          | `X² + 1 = X′ + X²`         | solvable (`v = X`) |
+| 3          | `X³`                       | obstructed (odd)   |
+| 4          | `X⁴ + 2X = (X²)′ + (X²)²`  | solvable (`v = X²`)|
+| 5          | `X⁵`                       | obstructed (odd)   |
+| 2n         | `(Xⁿ)′ + (Xⁿ)²`            | solvable (`v = Xⁿ`)|
+| 2n+1       | `X^{2n+1}`                 | obstructed         |
 
-    p′·q − p·q′ + p² = 1·1 − X·0 + X² = X² + 1 = f·q².  ✓
+The odd column is the catalog's `no_rational_riccati_genAiry`; the even column is
+this cycle's `riccati_image_solvable`. The decision flips at every degree.
 
-This `v = X` is the logarithmic derivative of `y = e^{x²/2}`, which solves
-`y″ = (x² + 1)·y` — an EML-solvable equation, confirming the odd-degree hypothesis
-is genuinely necessary. Both rows are formalized:
-`EMLKovacicSharp.no_rational_riccati_genAiry` (odd, impossible) and
-`EMLKovacicSharp.riccati_evenDeg_solvable` (even, witnessed).
+## 3. Counterexample hunt
 
-## 2. Constants subfield closure (spot check of the field axioms)
+- Claim "all even-degree coefficients are solvable" is **not** asserted (and is
+  false in general — e.g. `X²` alone: `v′ + v² = X²` would need `v ≈ X` but
+  `X′ + X² = X² + 1 ≠ X²`). The theorems only assert solvability of the explicit
+  *image* coefficients `g′ + g²`, which is exactly what is proved.
+- The odd obstruction was probed against `f = X, X³, X⁵`: no rational solution in
+  every case (formalized for all `X^{2k+1}`).
 
-For a derivation `D` with `Da = Db = 0`:
-- `D(a+b) = 0`, `D(ab) = a·Db + b·Da = 0`, `D(-a) = 0`, `D(a⁻¹) = -a⁻²·Da = 0`.
-All four close, so `{x | x′ = 0}` is a subfield — formalized as
-`EMLDiffGalois.constantsSubfield`.
+## 4. First-order solution line
 
-## 3. Wronskian linear-independence detector (2×2 determinant check)
-
-A constant dependence `c₁y₁ + c₂y₂ = 0` differentiates to `c₁y₁′ + c₂y₂′ = 0`
-(constants drop out). The 2×2 system in `(c₁, c₂)` has a nontrivial solution, so its
-determinant — the Wronskian `W = y₁y₂′ − y₂y₁′` — vanishes:
-
-    c₁·W = (c₁y₁)y₂′ − y₂(c₁y₁′) = −c₂y₂y₂′ + c₂y₂y₂′ = 0,  similarly c₂·W = 0.
-
-Nontriviality of `(c₁, c₂)` ⇒ `W = 0`. Formalized as
-`EMLWronskianGalois.wronskian_eq_zero_of_linDep`; the contrapositive gives the
-independence detector.
-
-## OEIS
-
-No new integer sequence arises; the relevant invariant is the *parity* of `deg f`
-(A000035 applied to polynomial degree), which is exactly the Kovacic decision bit.
+For `y′ = a·y`, sampling `a` symbolically: any two nonzero solutions have constant
+ratio (catalog `firstOrder_ratio_isConstant`), and reconstructing `y₁ = (y₁/y₂)·y₂`
+holds whenever `y₂ ≠ 0` — verified symbolically by `field_simp`, giving the full
+solution-line description `firstOrder_solSpace_iff`.
