@@ -631,5 +631,6 @@
   "e8be0a2a": "eml_transseries_asymptotic_expansions_beyond_power.json",
   "4398a39a": "proof_automation_custom_lean_4_tactics.json",
   "935abbfb": "character_class_contradiction.json",
-  "f2fdcb78": "ramsey_theory_bounds_and_constructions.json"
+  "f2fdcb78": "ramsey_theory_bounds_and_constructions.json",
+  "bdfd9dbb": "polynomial_logarithmic_time_algorithm_for_global_l.json"
 }
