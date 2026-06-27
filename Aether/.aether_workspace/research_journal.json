@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "aa9dc0d5",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nThe following are concrete next steps that build on the divisor-sum framework and\nEuclid construction formalized in `EuclidConstruction.lean`.\n\n## 1. The Euler converse (completin",
-      "quality_score": 0.46458109090909094,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-06-22T00:22:02",
-      "title": "Perfect Numbers: Structure of Even Perfects"
-    },
-    {
       "cycle_id": "34ce1554",
       "domain": "Geometry",
       "key_insight": "# FUTURE DIRECTIONS — Gravity from Information (manifold-free combinatorial core)\n\nThis cycle built and **fully verified** (0 sorries, only standard axioms) a\nmanifold-free combinatorial core of the h",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T06:53:05",
       "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
+    },
+    {
+      "cycle_id": "22e3c34e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Transition Endomorphisms of Discrete Linear Cocycles\n\nDerived from the cycle that produced `Catalog/Applications/TransitionEndomorphism.lean`\n(definition `transEndo`, cocycle ide",
+      "quality_score": 0.55076,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-27T06:54:53",
+      "title": "Close Proofs: These conjectures continue the research cycle begun in"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76274
     }
   ],
-  "last_updated": "2026-06-27T06:53:05",
+  "last_updated": "2026-06-27T06:54:53",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "913e3580",
-        "quality": 0.7981560000000001,
-        "theorems": 8,
-        "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-      },
-      {
         "cycle_id": "0171d9bf",
         "quality": 0.67428,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.5924299999999999,
         "theorems": 0,
         "title": "Exact asymptotic value of the average stack-sorting depth"
+      },
+      {
+        "cycle_id": "22e3c34e",
+        "quality": 0.55076,
+        "theorems": 9,
+        "title": "Close Proofs: These conjectures continue the research cycle begun in"
       }
     ],
     "Bridges": [

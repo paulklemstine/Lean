@@ -6854,6 +6854,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Transition Endomorphisms of Discrete Linear Cocycles\n\nDerived from the cycle that produced `Catalog/Applications/TransitionEndomorphism.lean`\n(definition `transEndo`, cocycle identity `transEndo_add`, rank antitonicity, and\ninjectivity propagation).\n\n## 1. Eventual rank stabilization\n**Conjecture.** For a fixed point `i` and any sequence `f`, the antitone sequence\n`n \u21a6 finrank K (range (transEndo f i n))` is eventually constant, and over a field\nits limiting value equals `finrank K V` minus the dimension of the union of the\nforward kernels.\n\nThe key insight is... that antitonicity (already proved) plus the well-ordering of\n`\u2115` forces a least value, so the only open content is *characterizing* the stable\nrank, not proving that a limit exists.\n\n**Why now?** The cocycle identity makes `transEndo f i (n+k)` factor through\n`transEndo f i n`, so the stable subspace is `\u2a05\u2099 range (transEndo f i n)`, an\nintersection of a decreasing chain that Mathlib's finite-dimensional API can already\nmanipulate.\n\n## 2. Cocycle determinant multiplicativity\n**Conjecture.** With `V` finite dimensional, `det (transEndo f i (m+n)) =\ndet (transEndo f (i+n) m) \u00b7 det (transEndo f i n)`, and hence `transEndo f i n` is\ninvertible iff every factor `f(i+k)` (`k < n`) is.\n\nThe key insight is... that `det` is a monoid homomorphism on `End V`, so the cocycle\nidentity `transEndo_add` transports directly through `LinearMap.det_comp`.\n\n**Why now?** `transEndo_injective` is already the kernel-side half of this statement;\nin finite dimension injective \u21d4 bijective \u21d4 nonzero determinant, so the determinant\nform is the natural quantitative upgrade.\n\n## 3. Spectral radius / growth law for periodic sequences\n**Conjecture.** If `f` is `p`-periodic (`f (k+p) = f k`), then `transEndo f 0 (p\u00b7n) =\n(transEndo f 0 p)^n`, so the long-run growth of `\u2016transEndo f 0 n\u2016` is governed by\nthe spectral radius of the single monodromy operator `transEndo f 0 p`.\n\nThe key insight is... that periodicity collapses the two-parameter cocycle into the\npowers of one fixed \"monodromy\" endomorphism, reducing a dynamical question to linear\nalgebra of a single matrix.\n\n**Why now?** The cocycle identity specialized to `m = n = p` already yields the base\ncase of the power law; only an induction on `n` remains.\n\n## 4. Sub-multiplicative rank gaps\n**Conjecture.** The rank drops are sub-additive:\n`finrank V - finrank (range (transEndo f i (m+n))) \u2264\n (finrank V - finrank (range (transEndo f i n))) +\n (finrank V - finrank (range (transEndo f (i+n) m)))`,\ni.e. the total rank deficiency of a long window is at most the sum of the deficiencies\nof its two halves.\n\nThe key insight is... that the rank deficiency is exactly the dimension of the\nkernel, and kernels of composites satisfy `ker(g\u2218h) \u2286 h\u207b\u00b9(ker g)`, giving an additive\nbound without invoking a full Sylvester inequality.\n\n**Why now?** This is the dualized, additive companion of the already-proved antitonicity\nand can reuse the same `transEndo_add` + `LinearMap.range_comp` machinery.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2670",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "22e3c34e",
+    "status": "available",
+    "timestamp": "2026-06-27T06:54:41.963175+00:00",
+    "title": "Derived from the cycle that produced `Catalog/Applications/TransitionEndomorphis"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
