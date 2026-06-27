@@ -165,7 +165,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
   {
-    "consumed_by_exp_id": "d15f1fdf",
+    "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
@@ -175,7 +175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -866,7 +866,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramsey Theory: Bounds and Constructions"
   },
   {
-    "consumed_by_exp_id": "c027516f",
+    "consumed_by_exp_id": "",
     "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
     "domains": [
       "Computation",
@@ -876,7 +876,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432755+00:00",
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
@@ -2091,7 +2091,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
   {
-    "consumed_by_exp_id": "c25c1b9e",
+    "consumed_by_exp_id": "",
     "description": "For every finite connected simple graph G on n \u2265 2 vertices with unit edge resistances, let R_G be its effective-resistance matrix and define \u0394(G) = (-1)^(n-1) det(R_G). Conjecture: 2^n (n-1) / n^n \u2264 \u0394(G) \u2264 2^(n-2) (n-1). Moreover, equality on the left holds exactly for the complete graph K_n, and equality on the right holds exactly for trees. This extends the Graham--Pollak tree determinant formula and predicts that adding simple edges monotonically decreases the signed resistance determinant down to the complete graph.",
     "domains": [
       "Pythagorean",
@@ -2101,7 +2101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21902v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T14:24:58.237232+00:00",
     "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
   },
@@ -2726,7 +2726,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
   },
   {
-    "consumed_by_exp_id": "4ac2d584",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domains": [
       "Bridges"
@@ -2735,7 +2735,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -7592,6 +7592,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML ODEs with Exponential\u2013Logarithmic Coefficients\n\nThis cycle added the *positive* theory of first-order linear EML ODEs to the\n`Catalog/EML` directory:\n\n- `EML/EMLLogDerivHom.lean` \u2014 the logarithmic derivative `L(y) = y\u2032/y` as a\n  homomorphism `K^\u00d7 \u2192 (K,+)` in an arbitrary differential field, with the full\n  first-order solution calculus (product, quotient, inverse, integer power).\n- `EML/EMLCoefficientODE.lean` \u2014 explicit closed-form real solutions for the\n  logarithmic (`y\u2032 = (log x)y`), exponential (`y\u2032 = (exp x)y`), and power\n  (`y\u2032 = (a/x)y`) coefficient classes, plus infinitesimal uniqueness-up-to-constant.\n\nThese complement the existing *negative* (obstruction) theory for the second-order\nAiry equation (`EMLDiffObstruction`, `EMLAiryRiccati`, `EMLRiccatiTransform`,\n`EMLDifferentialGalois`, `EMLWronskianGalois`).\n\nThe following conjectures are bold, precise, and testable in follow-up cycles.\n\n## C1. Global uniqueness from the infinitesimal ratio law\n`solution_ratio_hasDerivAt_zero` shows `(y / exp F)\u2032 = 0` pointwise. Conjecture:\non a connected domain (e.g. an interval `(0,\u221e)` for the log/power cases, or all of\n`\u211d` for the exp case), every `C\u00b9` solution of `y\u2032 = c\u00b7y` equals `K \u00b7 exp(F)` for a\n*constant* `K`. Formalize via `is_const_of_deriv_eq_zero` / `Convex.is_const_of_fderivWithin_eq_zero`\non the ratio. This upgrades the catalog's algebraic `firstOrder_ratio_isConstant`\nto a genuine analytic uniqueness theorem.\n\n## C2. Second-order EML solvability dichotomy\nFor the log coefficient, study `y\u2033 = (log x)\u00b7y`. Conjecture: it has **no** solution\nof the form `exp(F)` with `F` a polynomial in `x` and `log x` (an \"EML-elementary\"\nexponent), mirroring the Airy obstruction `y\u2033 = x\u00b7y`. Test by the Riccati transform\n`v = y\u2032/y \u21d2 v\u2032 + v\u00b2 = log x` and a degree/valuation count in the differential ring\n`\u211d[x, log x]` (where `(log x)\u2032 = 1/x`). Expected obstruction: parity/degree mismatch\nanalogous to `no_rational_solves_riccati_odd_deg`.\n\n## C3. The Stirling exponent ODE characterizes the Gamma growth\nThe log-coefficient solution `exp(x log x \u2212 x)` is the continuous Stirling exponent.\nConjecture: `Real.Gamma (x+1)` and `exp(x log x \u2212 x)` have the **same logarithmic\nderivative asymptotically** (`logDeriv \u0393(x+1) \u2212 log x \u2192 0` as `x \u2192 \u221e`), i.e. the EML\nODE `y\u2032 = (log x) y` is the leading-order differential equation governing factorial\ngrowth. Formalize via `Real.Gamma` asymptotics already partly in Mathlib\n(`Real.Gamma_seq`, Stirling) and `logDeriv`.\n\n## C4. Homomorphism kernel = constants, exactly\n`EMLLogDerivHom` proves `L` is a homomorphism and `EMLDifferentialGalois` proves the\nconstants form a subfield. Conjecture: in any differential field, `ker L = ` units of\nthe constants subfield, and `L` descends to an **injective** homomorphism\n`K^\u00d7 / constants^\u00d7 \u21aa (K,+)`. Formalize `L` as a bundled `MonoidHom (K^\u00d7) (Multiplicative? / Additive K)`\nand identify its kernel; this gives a clean \"EML exponential is unique up to a constant\"\ngroup-theoretic statement.\n\n## C5. Coefficient-additivity is a complete invariant for first-order EML solvability\nDefine `EMLCoeff` \u2286 `K` as the additive subgroup of coefficients `a` for which\n`y\u2032 = a\u00b7y` has a nonzero solution in a fixed EML extension. Conjecture: `EMLCoeff` is\nexactly the image of `L`, is closed under `+`, `\u2212`, and `\u2124`-scaling (proved abstractly\nthis cycle for solutions; conjecture the converse closure for coefficients), and the\nlog/exp/power coefficients generate a free abelian subgroup. This would make\n\"EML-solvability of `y\u2032 = a\u00b7y`\" a decidable membership problem in an additive group.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2720",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dd8b8392",
+    "status": "available",
+    "timestamp": "2026-06-27T21:35:17.556105+00:00",
+    "title": "This cycle added the *positive* theory of first-order linear EML ODEs to the"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7635,7 +7650,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "8170e958",
+    "consumed_by_exp_id": "",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -7645,7 +7660,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
@@ -7837,21 +7852,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
-  },
-  {
-    "consumed_by_exp_id": "470fcb83",
-    "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "fd_0439",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:28.479969+00:00",
-    "title": "Idempotent Probability: Large Deviations"
   },
   {
     "consumed_by_exp_id": "",
@@ -8078,7 +8078,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for GL\u2082 over Q"
   },
   {
-    "consumed_by_exp_id": "7e57e1f5",
+    "consumed_by_exp_id": "",
     "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domains": [
       "Bridges",
@@ -8088,7 +8088,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.798593+00:00",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
