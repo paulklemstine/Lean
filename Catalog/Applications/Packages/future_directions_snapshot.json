@@ -11720,7 +11720,7 @@
     "catalog_references": [
       "Glock2022NQueens"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca01957a",
     "description": "Conjecture that the completion threshold ratio satisfies \\(\\displaystyle \\limsup_{n\\to\\infty} \\frac{qc(n)}{n}=0.216\\). Equivalently, there exist infinitely many board sizes n for which qc(n) \\geq c n\\) for some constant c > 0.216, and no constant larger than 0.216 can serve as a universal lower bound.",
     "domain_bridges": [
       "Combinatorial optimization",
@@ -11736,7 +11736,7 @@
     "proof_strategy": "Apply linear programming duality to the covering weighting problem to derive a lower bound on the total weight, showing that any weighting covering the uncovered squares must have weight at least n - k + Ω(n), which translates into a lower bound on qc(n) and forces the asymptotic constant to be at least 0.216.",
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T14:33:06.466347+00:00",
     "title": "Tight asymptotic bound for the n‑queens completion threshold"
   },
