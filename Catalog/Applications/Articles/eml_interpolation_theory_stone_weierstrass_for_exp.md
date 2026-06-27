@@ -1,212 +1,100 @@
-# One Logarithm Is Enough: How a Single Curve Can Imitate Every Continuous Shape
+# The Two Faces of Approximation: How $\exp$ and $\log$ Quietly Build Every Curve
 
-## A puzzle about copying curves
+## A promise no one keeps
 
-Imagine you are handed a wild, wiggly curve drawn across a page — a temperature
-chart, a stock price, the silhouette of a mountain range. Now suppose your only
-tool is one fixed, gentle curve: the graph of $t \mapsto \log(1 + t)$, a smooth
-function that rises slowly from $0$ at $t = 0$ to about $0.693$ at $t = 1$. You are
-allowed to add copies of this curve, scale them, multiply them together, and add
-plain horizontal lines (constants). Nothing else. No new ingredients, no second
-function.
+There is a famous promise in the mathematics of neural networks, and it is almost always broken in spirit even when it is kept in letter. The promise is called the *universal approximation theorem*, and it says something that sounds wonderful: a neural network, given enough neurons, can approximate **any** continuous function on a bounded region as closely as you like.
 
-Could you, with only these moves, reproduce *any* continuous shape on the unit
-interval $[0,1]$ — to any accuracy you like?
+It is a true theorem. But read the fine print and you discover it is a promise of pure existence. It says a good network *exists*. It does not tell you how wide that network must be. It does not tell you what its weights are. It does not hand you a recipe. It is the mathematical equivalent of a treasure map that reads, "The gold is somewhere on Earth."
 
-It sounds impossible. A single logarithm is a humble, monotone thing. How could
-combinations of it possibly capture the violent oscillations of, say,
-$\sin(100\,t)$, or a sharp Lipschitz zig-zag? Yet the answer is a clean and
-slightly astonishing **yes**. The set of all functions you can build from
-$\log(1 + t)$ using addition, multiplication, and constants is *dense* in the
-space of all continuous functions on $[0,1]$. Whatever continuous target you
-name, and whatever tolerance $\varepsilon > 0$ you demand, there is a
-combination of logarithms that stays within $\varepsilon$ of your target
-everywhere.
+This article is about closing that gap for a particular and surprisingly elegant family of networks — ones built not from the usual sigmoids and ReLUs, but from the two oldest transcendental functions in the book: the exponential $\exp$ and the logarithm $\log$. We call them **EML networks** (Exponential–Multiplicative–Logarithmic), and they are nothing more than finite combinations of $\exp$, $\log$, addition, and multiplication. The story has two acts. In the first, we prove that EML networks can approximate *anything*. In the second, we prove that for a concrete target — the humble parabola $x \mapsto x^2$ — they do so at an explicit, guaranteed rate, with no hidden constants and no hand-waving.
 
-This article is about why that is true, why it matters for modern computing, and
-why getting the *reasoning* exactly right turned out to be surprisingly subtle.
+## Act I: Why $\exp$ and $\log$ are enough
 
-## The cast of characters: EML networks
+To understand why a fixed palette of operations can paint every continuous curve, we need a result from 1937 that is one of the great unifying theorems of analysis: the **Stone–Weierstrass theorem**.
 
-The story belongs to a family of computational models sometimes called **EML
-networks** — for **E**xp, **M**ultiply, **L**og. These are functions assembled
-from a small alphabet of primitive operations: the exponential function
-$\exp$, the logarithm $\log$, addition $+$, and multiplication $\times$. They are
-cousins of neural networks, but instead of the familiar ReLU or sigmoid
-activations, their expressive power comes from the interplay of exponentials and
-logarithms.
+Karl Weierstrass had shown in the 1880s that polynomials can approximate any continuous function on a closed interval. Marshall Stone, decades later, saw the deeper reason. It was not really about polynomials. It was about *structure*. Stone's theorem says: take any collection $\mathcal{A}$ of continuous functions on a compact set $K$. Suppose this collection is closed under the natural operations — you can add two of its members, multiply them, and scale them by constants (such a collection is called an *algebra*). Then $\mathcal{A}$ can approximate every continuous function on $K$, provided it satisfies just **one** geometric condition:
 
-EML networks are attractive because exp and log are exactly the operations that
-turn multiplication into addition and back again — the engine behind slide rules,
-log-likelihoods, and a great deal of numerical computing. A central theoretical
-question is: *how expressive are they?* Can a network built only from these
-primitives approximate arbitrary behavior? Classical "universal approximation"
-theorems answer such questions for standard neural networks, but they usually do
-so *existentially* — they promise that *some* network works, without pinning down
-which ingredients are essential.
+> **Separation of points.** For any two distinct points $x \neq y$ in $K$, the collection must contain *some* function $g$ with $g(x) \neq g(y)$.
 
-The result at the heart of this article isolates the essential ingredient with
-almost shocking economy: **a single logarithmic coordinate suffices.**
+That is the entire secret. If your functions can tell every pair of points apart, then by adding, multiplying, and scaling them you can build anything. Separation is the seed; the algebra grows the forest.
 
-## The master key: Stone–Weierstrass
+So the question "can EML networks approximate everything?" collapses into a much smaller and more concrete question: **can a single EML function separate points?**
 
-To see why one logarithm can do so much, we need a classical gem of twentieth
-century analysis: the **Stone–Weierstrass theorem**.
+### One function to separate them all
 
-Marshall Stone's theorem generalizes a famous fact discovered by Karl
-Weierstrass in 1885: every continuous function on a closed interval can be
-approximated as closely as you like by *polynomials*. Stone realized that
-polynomials are not special for any deep reason — what matters are three
-structural properties of the collection of approximating functions:
+Here is the candidate, exactly as the theory proposes it:
 
-1. **It is an algebra.** You can add its members, multiply them, and scale them
-   by constants, and you stay inside the collection.
-2. **It contains the constants.** The flat function $t \mapsto c$ is available
-   for every real $c$.
-3. **It separates points.** For any two distinct inputs $x \neq y$, *some*
-   member of the collection assigns them different values. The collection can
-   "tell points apart."
+$$g(t) = e^{a} \cdot \log(b \cdot t + c).$$
 
-Stone's theorem says: *any* collection of continuous functions on a compact
-space satisfying these three properties is dense — it can approximate every
-continuous function arbitrarily well. The specific functions you started with are
-irrelevant. Only the structural skeleton matters.
+It has three dials: $a$, $b$, and $c$. The claim is that with the dials set sensibly — $b > 0$, and $c$ large enough that the argument inside the logarithm stays positive — this single function separates points. The reason is beautifully simple. The function is **strictly monotone**: as $t$ increases, $g(t)$ strictly increases, never pausing, never reversing. And a strictly monotone function is injective — it sends distinct inputs to distinct outputs. Injectivity *is* separation.
 
-This is a liberating idea. It converts a hard analytic question ("can I
-approximate this wild function?") into three easy-to-check structural questions.
-And of those three, two are nearly automatic for any algebra worth its name. The
-only one with any teeth is the third: **separating points.**
+Why is $g$ strictly increasing? Read it as a relay race of three runners, each strictly increasing on its leg:
 
-## The whole game is separation
+1. The affine map $t \mapsto b\,t + c$ is strictly increasing when $b > 0$.
+2. The logarithm $\log$ is strictly increasing on the positive numbers.
+3. Multiplying by $e^{a}$, a strictly positive number, preserves the ordering.
 
-Here is the crux. When we build all combinations of $\log(1 + t)$ — sums,
-products, scalings, plus constants — we automatically get an algebra that
-contains the constants. Properties (1) and (2) come for free. So the entire
-question of whether one logarithm can imitate every continuous function reduces
-to a single, almost childish-sounding check:
+Compose three strictly increasing maps and the result is strictly increasing. This is the content of the result we call `emlSep_strictMonoOn`, which states precisely that $g(t) = e^a \log(bt+c)$ is strictly increasing on the set of $t$ where $bt + c > 0$. From it follows `emlSep_separates`: any two distinct admissible points land on distinct values.
 
-> Given two different points $x \neq y$ in $[0,1]$, does $\log(1 + t)$ assign
-> them different values?
+There is one subtlety worth dwelling on, because it is exactly the kind of detail that separates a real proof from a plausible sketch. The logarithm is only monotone where its argument is **positive**. Near the place where $bt + c$ would dip to zero, $\log$ plunges to $-\infty$ and the clean monotone behavior breaks down. So the condition "$bt + c > 0$" is not decoration — it is load-bearing. The theorem is *guarded* by it.
 
-And the answer is obviously yes — because $\log(1 + t)$ is **strictly
-increasing**. As $t$ climbs from $0$ to $1$, the quantity $1 + t$ climbs from $1$
-to $2$, and since the logarithm is one-to-one on the positive numbers, distinct
-inputs always produce distinct outputs:
-$$
-x \neq y \quad \Longrightarrow \quad \log(1 + x) \neq \log(1 + y).
-$$
+How do we guarantee positivity once and for all on a given interval $[lo, hi]$? With a single clean choice of dials: set $a = 0$, $b = 1$, and $c = 1 - lo$. Then
 
-That single observation — *the generator is injective* — is the load-bearing
-fact. Everything else is machinery. The strict monotonicity of the logarithm is
-the seed from which universal approximation grows.
+$$g(t) = \log(t + 1 - lo),$$
 
-So the formal chain of reasoning is:
+and for any $t \ge lo$ the argument satisfies $t + 1 - lo \ge 1 > 0$. Positivity is automatic, everywhere on the interval. This is `emlSep_separates_Icc`: on $[lo, hi]$, the function $\log(t + 1 - lo)$ separates every pair of points.
 
-$$
-\underbrace{\log(1+t)\ \text{is injective}}_{\text{strict monotonicity}}
-\;\Longrightarrow\;
-\underbrace{\text{the generated algebra separates points}}_{\text{telling inputs apart}}
-\;\Longrightarrow\;
-\underbrace{\text{the algebra is dense}}_{\text{Stone–Weierstrass}}.
-$$
+### From one function to everything
 
-## What the approximants actually look like
+Now we feed this single separating function into Stone's machine. The functions you can build from $\log(t + 1 - lo)$ by adding, multiplying, and scaling form an algebra. That algebra separates points (we just proved it). Therefore — by Stone–Weierstrass — that algebra is **dense**: every continuous function on $[lo, hi]$ can be approximated arbitrarily well by these EML combinations. This is the headline of Act I, the theorem `eml_adjoin_dense_on_Icc`:
 
-There is a pleasingly concrete payoff. Because every combination of a single
-generator $g(t) = \log(1+t)$ built by adding, multiplying, and scaling is just a
-**polynomial in that generator**, the approximating functions have an explicit
-form. Every continuous target $F$ on $[0,1]$ can be approximated, within any
-$\varepsilon > 0$, by a function of the shape
-$$
-t \;\longmapsto\; p\big(\log(1 + t)\big)
-= a_0 + a_1 \log(1+t) + a_2 \big(\log(1+t)\big)^2 + \cdots + a_n \big(\log(1+t)\big)^n,
-$$
-for some ordinary real polynomial $p(u) = a_0 + a_1 u + \cdots + a_n u^n$. In
-words: *compose a polynomial with a logarithm and you can match any continuous
-curve.*
+> The algebra generated by the single EML function $t \mapsto \log(t + 1 - lo)$ is uniformly dense in the space of all continuous functions on $[lo, hi]$.
 
-There is a beautiful way to see why this must work, which also hints at how to
-actually compute the coefficients. Make the change of variable $u = \log(1 + t)$.
-As $t$ ranges over $[0,1]$, the new variable $u$ ranges over $[0, \log 2]$, and
-the relationship is reversible: $t = e^{u} - 1$. So approximating $F(t)$ by
-$p(\log(1+t))$ on $[0,1]$ is *exactly the same problem* as approximating the
-reshaped function $u \mapsto F(e^u - 1)$ by an ordinary polynomial $p(u)$ on
-$[0, \log 2]$ — and that is precisely the classical Weierstrass theorem, which we
-know how to solve with tools like Bernstein polynomials. The logarithm is just a
-lens that warps the interval; through that lens, ordinary polynomials do the rest.
+Pause to appreciate what this says. *One* logarithm, plus the freedom to add, multiply, and scale, reproduces the entire continuum of continuous functions on an interval — sine waves, sawtooths, the wild graph of your favorite pathological example, all of them, to any tolerance you name. The transcendental richness of $\log$ is so great that a single copy of it seeds the whole space.
 
-## A concrete miniature: approximating $x^2$
+## Act II: From "exists" to "here it is"
 
-To make this tangible, consider the simplest nontrivial target: $F(t) = t^2$ on
-$[0,1]$. Using the change of variable $u = \log(1+t)$, equivalently $t = e^u - 1$,
-we want a polynomial $p$ with $p(u) \approx (e^u - 1)^2 = e^{2u} - 2e^u + 1$ on
-$[0, \log 2]$. Truncating the Taylor expansions of the exponentials gives a short
-polynomial in $u$, and substituting $u = \log(1+t)$ back yields an explicit
-EML approximant
-$$
-t \;\longmapsto\; p\big(\log(1+t)\big)
-$$
-that hugs the parabola $t^2$ across the whole interval. The companion code for
-this article computes these coefficients and reports the actual error: even a
-low-degree polynomial in $\log(1+t)$ tracks $t^2$ to within a fraction of a
-percent, and the error shrinks rapidly as the degree grows.
+Act I is a universal-approximation theorem, and like all such theorems it is existential. It tells us a good EML approximation exists; it does not build one or bound its size. Act II repairs exactly this, for a concrete and beloved target: the parabola $f(x) = x^2$ on the unit interval $[0,1]$.
 
-## Why the careful version of the story matters
+The construction uses only the *exponential* half of the EML toolkit. Define, for a small step size $h > 0$, the function
 
-There is a cautionary subplot here, and it is a genuinely interesting one about
-the *discipline of proof*.
+$$\text{emlQuadApprox}_h(x) = \frac{2}{h^2}\left(e^{hx} - 1 - hx\right).$$
 
-A tempting but flawed way to argue that "the log-generated algebra is dense"
-would be to invoke a generic statement like "EML networks are universal
-approximators, therefore this particular EML-generated algebra is dense." That
-reasoning is **circular**. The generic universal-approximation claim is the very
-thing one wants to establish; using it to justify a specific instance is borrowing
-the conclusion to prove a premise. It feels like progress but proves nothing.
+This is a genuine EML network: one exponential, two subtractions, and two scalar multiplications. Where does it come from, and why should it look like $x^2$? The answer is the Taylor series of the exponential, the most reliable source of polynomials in all of analysis:
 
-The version of the story told here is deliberately **non-circular**. It never
-appeals to any pre-existing EML universal-approximation result. It uses only two
-honest ingredients:
+$$e^{hx} = 1 + hx + \frac{(hx)^2}{2} + \frac{(hx)^3}{6} + \cdots$$
 
-- the general Stone–Weierstrass theorem (a fact about *arbitrary* algebras, with
-  no EML content whatsoever), and
-- elementary properties of the logarithm — that it is continuous away from zero
-  and injective on the positive numbers.
+Subtract off the first two terms $1 + hx$ and you are left with $\frac{(hx)^2}{2} + \frac{(hx)^3}{6} + \cdots$. Multiply by $\frac{2}{h^2}$ and the leading term becomes exactly $x^2$, while everything after it carries at least one extra factor of $h$:
 
-From these, and nothing else, the density of the log-coordinate algebra follows.
-This matters because in mathematics — and especially in the modern enterprise of
-machine-checked mathematics — the *provenance* of a fact is as important as the
-fact itself. A theorem is only as trustworthy as the chain of reasoning behind
-it, and a single circular link can quietly invalidate the whole argument. Building
-the result from genuinely independent foundations turns a plausible-sounding slogan
-into a theorem you can stake your name on.
+$$\text{emlQuadApprox}_h(x) = x^2 + \frac{h\,x^3}{3} + \frac{h^2 x^4}{12} + \cdots$$
 
-## The bigger picture
+As the step $h$ shrinks toward zero, the tail vanishes and the parabola emerges. The exponential, properly rescaled, *is* the parabola plus a controllable error.
 
-Strip away the specifics and a general principle emerges, one with real reach:
+### The rate, with a real number attached
 
-> **Any strictly monotone, continuous "generator" on a compact interval —
-> $\exp$, $\tanh$, softplus, or our $\log(1+t)$ — single-handedly generates a
-> dense algebra. One injective curve is enough to imitate them all.**
+The whole point of Act II is to refuse to stop at "the error vanishes." We want to know *how fast*. The result `emlQuadApprox_rate` delivers an honest, finite bound:
 
-The logarithm is not magic; *monotonicity* is. The same three-step argument
-applies verbatim to any activation function that never doubles back on itself.
-This reframes universal approximation not as a property of clever architectures
-with many moving parts, but as a consequence of a single, transparent geometric
-condition: *the building block must be able to tell points apart.*
+> For every step size $h$ with $0 < h \le 1$ and every $x$ in $[0,1]$,
+> $$\left|\,\text{emlQuadApprox}_h(x) - x^2\,\right| \le \frac{4}{9}\,h.$$
 
-And the idea scales. In higher dimensions, on the cube $[0,1]^d$, one simply uses
-the family of coordinate logarithms $t \mapsto \log(1 + t_i)$, one per axis.
-Because each is injective in its own coordinate, the products of these generators
-separate points of the whole cube, and Stone–Weierstrass applies again, word for
-word. Universality in any dimension flows from the same humble source.
+No asymptotic fog, no unspecified constant $C$, no "for sufficiently small $h$." A concrete fraction, $4/9$, valid for every $h$ up to $1$. If you want the approximation accurate to within $\varepsilon$, you choose $h = \tfrac{9}{4}\varepsilon$ and you are done. Phrased in the language of network *width* — where using $n$ refinement steps corresponds to $h = 1/n$ — the error decays like $\tfrac{4}{9n} = O(1/n)$. You can dial in any accuracy and know exactly the price.
 
-## Coda: economy as insight
+Where does $4/9$ come from? The error is $\frac{2}{h^2}\sum_{k \ge 3}\frac{(hx)^k}{k!}$, which on $[0,1]$ is largest at $x = 1$ and grows with $h$, so it is maximized at $h = 1$, where it equals $2\left(e - 2 - \tfrac12\right) = 2(e - 2.5) \approx 0.4366$. The bound $4/9 \approx 0.4444$ is a clean rational number sitting just above this worst case — provably correct and almost tight. (The true leading slope, by the way, is $1/3$, coming from the $\tfrac{h x^3}{3}$ term at $x=1$; pinning down the exact optimal constant between $1/3$ and $4/9$ is a tidy open question.)
 
-There is an aesthetic lesson lurking here. The most powerful theorems are often
-the ones that reveal how *little* you need. Universal approximation can sound like
-a story about abundance — more neurons, more layers, more parameters. This result
-tells the opposite story. A single rising curve, combined only with the
-arithmetic everyone learns as a child, already contains every continuous shape as
-a limit. The richness was never in the ingredients. It was in the structure — in
-addition, multiplication, and the simple, decisive fact that a logarithm always
-knows the difference between two distinct numbers.
+## Why this matters beyond the parabola
+
+It is tempting to dismiss "approximating $x^2$" as a toy. It is not. It is a *proof of concept for constructive guarantees*. The universal-approximation literature is overwhelmingly existential; results that hand you an explicit network with an explicit, computable error bound are rare and valuable. Act II is exactly such a result, and the recipe behind it — rescaled exponential increments built from Taylor remainders — generalizes. The same second-order increment kernel that reproduces $x^2$ can, by linear superposition, be aimed at any Lipschitz function, with the conjecture that the same $O(1/n)$ first-order rate survives.
+
+There is also a conceptual payoff. Modern machine learning is built on a small zoo of activation functions — ReLU, sigmoid, tanh, softplus — chosen largely for convenience of gradient computation. The softplus activation $\log(1 + e^x)$ is, tellingly, an EML function: it is exactly the kind of $\exp$-$\log$ composition this theory studies. By placing $\exp$ and $\log$ at the foundation and deriving approximation *constructively*, this work suggests a way to think about expressive power that is grounded in classical analysis rather than empirical lore. The strict monotonicity that gives separation is the same monotonicity that makes such activations well-behaved for optimization; the two virtues are not a coincidence.
+
+And there is the sheer economy of the thing. Two functions — $\exp$ and $\log$, each the inverse of the other, the pair that turns multiplication into addition and powers into products — turn out to be a complete basis for continuous functions, in two complementary senses. $\log$ supplies *separation*, hence the qualitative power to approximate everything. $\exp$ supplies *quantitative rates*, hence the explicit recipes. Between them they cover both faces of approximation: that it can be done, and how well.
+
+## The shape of the argument, in one breath
+
+Strip away the details and the logic is a clean chain:
+
+**strict monotonicity** $\Rightarrow$ **injectivity** $\Rightarrow$ **separation of points** $\Rightarrow$ (Stone–Weierstrass) $\Rightarrow$ **density** — and separately, **Taylor's theorem** $\Rightarrow$ **explicit increment** $\Rightarrow$ **$4/9$ error bound** $\Rightarrow$ **$O(1/n)$ rate**.
+
+The first chain tells you EML networks are universal. The second tells you they are efficient on concrete targets, with numbers you can hold in your hand. Together they turn a famous broken promise — "a good network exists, somewhere" — into a kept one: here is the function, here is its width, and here, to the fraction $4/9$, is exactly how wrong it is allowed to be.
+
+That is the quiet power of $\exp$ and $\log$. The two functions that taught humanity to multiply by adding now teach our networks to approximate by composing — and, for once, they show their work.

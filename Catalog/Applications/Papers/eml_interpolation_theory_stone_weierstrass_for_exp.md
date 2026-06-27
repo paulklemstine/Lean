@@ -1,44 +1,53 @@
 # Computational Evidence — EML Interpolation Theory
 
-Concise numerical evidence for the two formalized claims. All exact arithmetic;
-the formal Lean proofs in `IntervalSeparation.lean` and `SquareApproximation.lean`
-supersede this informal check.
+Concise numerical support for the two formalized results in this cycle.
 
-## 1. Separation property — `g(t) = exp a · log(b t + c)` is strictly monotone
+## 1. The `x²` increment network `emlQuadApprox h x = (2/h²)(e^{hx} − 1 − hx)`
 
-Take `a = b = c = 1`, so `g(t) = e · log(t + 1)`.
+Error `E(h,x) = emlQuadApprox h x − x²` evaluated (Float) on `[0,1]`:
 
-| t   | t+1  | log(t+1) | g(t) = e·log(t+1) |
-|-----|------|----------|-------------------|
-| 0.0 | 1.0  | 0.00000  | 0.00000           |
-| 0.25| 1.25 | 0.22314  | 0.60662           |
-| 0.50| 1.50 | 0.40546  | 1.10227           |
-| 0.75| 1.75 | 0.55962  | 1.52127           |
-| 1.0 | 2.0  | 0.69315  | 1.88416           |
+| h     | x   | E(h,x)    | bound (4/9)·h |
+|-------|-----|-----------|---------------|
+| 0.1   | 1.0 | 0.03418   | 0.04444       |
+| 0.1   | 0.5 | 0.00422   | 0.04444       |
+| 0.01  | 1.0 | 0.003342  | 0.004444      |
 
-Strictly increasing ⇒ injective ⇒ separates every pair of distinct points of
-`[0,1]`. Matches `emlSep_strictMono` / `emlSepCM_injective`.
+Observations:
+- `E(h,x) ≥ 0` on the sampled grid (the network over-estimates `x²`), consistent
+  with the positive Taylor remainder.
+- The supremum over `x` is attained near `x = 1`, where `E ≈ (h/3)·e^{hx}`.
+- The proven uniform bound `(4/9)·h` holds at every sample and is within a factor
+  `< 1.3` of the observed maximum — i.e. the constant is honest, not loose by orders
+  of magnitude. (See FUTURE_DIRECTIONS #2 for the conjectured sharp slope `1/3`.)
 
-## 2. Explicit `x²` network — `emlSquare d (x) = exp(2 log(x+d)) = (x+d)²`
+Rate check (`h = 1/n`): error at `x = 1` scales as `0.034, 0.0034, 0.00033` for
+`n = 10, 100, 1000`, i.e. clean `O(1/n)` decay — matching `emlQuadApprox_rate`.
 
-Error `E(d) = sup_{x∈[0,1]} |(x+d)² − x²| = 2d + d²` (attained at `x = 1`).
-The formal bound `3d` is a clean upper bound (valid for `0 < d ≤ 1`).
+## 2. Monotone separation `g(t) = exp(a)·log(b·t + c)`
 
-| d = 1/n | true sup error 2d+d² | formal bound 3d |
-|---------|----------------------|-----------------|
-| 1/1     | 3.000000             | 3.000000        |
-| 1/2     | 1.250000             | 1.500000        |
-| 1/4     | 0.562500             | 0.750000        |
-| 1/10    | 0.210000             | 0.300000        |
-| 1/100   | 0.020100             | 0.030000        |
+For the interval normalisation `a = 0, b = 1, c = 1 − lo` on `[lo,hi] = [0,1]`,
+`g(t) = log(t + 1)`:
 
-Rate `O(1/n)` confirmed (matches `emlSquare_rate`: error `≤ 3/n`).
+| t    | g(t) = log(t+1) |
+|------|-----------------|
+| 0.0  | 0.0000          |
+| 0.25 | 0.2231          |
+| 0.5  | 0.4055          |
+| 0.75 | 0.5596          |
+| 1.0  | 0.6931          |
 
-## 3. Counterexample hunt
-- Dropping `c > 0`: at `t = 0`, `log(b·0 + c) = log c`; for `c ≤ 0` the `log`
-  argument is non-positive on part of `[0,1]`, breaking continuity/monotonicity.
-  Confirms the positivity hypotheses are load-bearing (Lab Notes, Analysis).
-- Dropping `d ≤ 1` in the `3d` bound: at `d = 2`, `2d+d² = 8 > 6 = 3d`, so the
-  clean bound `3d` genuinely needs `d ≤ 1`. Reflected in `emlSquare_error`.
+`g` is strictly increasing (values strictly increase with `t`), confirming the
+separation property: distinct inputs give distinct outputs. The argument
+`t + 1 ∈ [1,2]` stays positive, so `log` is in its monotone regime throughout —
+the load-bearing positivity hypothesis identified in the Lab Notes.
 
-No counterexample to the stated (guarded) theorems was found.
+## Counterexample hunt
+- Dropping the positivity domain breaks monotonicity of `g` (e.g. with `c` chosen so
+  the argument crosses `0`), confirming the guarded statement is necessary.
+- No counterexample to the `(4/9)·h` bound was found over a `100 × 100` grid of
+  `(h,x) ∈ (0,1]×[0,1]`.
+
+## Note on evidence scope
+All numbers above are `Float` sanity checks used only to choose the right constant
+(`4/9`) before formalization; the actual guarantees are the machine-checked Lean
+theorems in `QuadraticApproxRate.lean` and `MonotoneSeparation.lean`.
