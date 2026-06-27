@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fe4ab5a6",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nThese are freeform research directions extending the finite Jarzynski–Landauer\nformalization in [`JarzynskiLandauer.lean`](./JarzynskiLandauer.lean).\n\n## From identity to inequali",
-      "quality_score": 0.85612,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-21T16:50:55",
-      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-    },
-    {
       "cycle_id": "22ed9246",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\n## 1. Certified dequantization of tropical polynomials (SELECTED THIS CYCLE)\nBuild a machine-checked pipeline that maps a tropical polynomial and a target\naccuracy `ε` to its cano",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T02:13:21",
       "title": "Proof Automation: Custom Lean 4 Tactics"
+    },
+    {
+      "cycle_id": "7c592ed1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings: the shifted `t`-Schur family `S^t_λ` is the image of\nthe Schur-`Q` basis `Q_λ` under the o",
+      "quality_score": 0.533285,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-06-27T02:51:59",
+      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7236
     }
   ],
-  "last_updated": "2026-06-27T02:13:21",
+  "last_updated": "2026-06-27T02:51:59",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "762ed13d",
-        "quality": 0.521245,
-        "theorems": 15,
-        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-      },
-      {
         "cycle_id": "0d192d1b",
         "quality": 0.6544800000000001,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.7236,
         "theorems": 8,
         "title": "Langlands for GL₂ over Q"
+      },
+      {
+        "cycle_id": "7c592ed1",
+        "quality": 0.533285,
+        "theorems": 23,
+        "title": "Plethystic Triviality of the Shifted t-Schur Basis"
       }
     ],
     "NumberTheory": [

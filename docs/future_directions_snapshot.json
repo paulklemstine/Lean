@@ -11492,6 +11492,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings: the shifted `t`-Schur family `S^t_λ` is the image of\nthe Schur-`Q` basis `Q_λ` under the odd plethysm `φ_t : p_n ↦ (1 - t^n)p_n`, and `φ_t` is\na **degree-preserving, monomial-diagonal algebra automorphism** of the odd power-sum ring\n(files `PlethysticTrivialityShiftedTSchur.lean`, `OddPowerSumPlethysm.lean`). The\nfollowing conjectures push that structure further; each is falsifiable by coefficient\ncomparison in the finite odd power-sum ring.\n\n## 1. Triangular non-triviality: `S^t_λ = Q_λ + (lower-in-t terms)`\n\n**Conjecture.** Writing `S^t_λ = Q_λ + t·R_λ(t)` with `R_λ ∈ t·Λ_odd[t]`, the\n\"correction\" `R_λ` is nonzero for every nonempty strict `λ` and its `t`-leading term is\n`-Q_{λ}` evaluated with each `p_{n}` scaled by `n`-dependent... i.e. `S^t_λ ≡ Q_λ`\nmod `t` and `∂_t S^t_λ |_{t=0}` is an explicit power-sum derivation of `Q_λ`.\n\nThe key insight is that `φ_t = id - t·D + O(t^2)` where `D` is the degree-graded\nderivation `p_n ↦ n·(t^{n-1}/(...)) p_n` truncated at first order, so the whole `t`-family\nis the exponential flow of a single power-sum vector field acting on `Q_λ`.\n\nWhy now? We already proved `φ_t` is an automorphism with `φ_0 = id` in spirit\n(`cc k → 1` as `t → 0`); extracting the first-order generator only needs a formal\n`t`-derivative of `cc k`, which is immediate in `RatFunc ℚ`.\n\n## 2. Inner-product (orthogonality) transport\n\n**Conjecture.** Under the Hall–Littlewood-at-`-1` inner product `⟨·,·⟩` for which\n`{Q_λ}` is orthogonal, the deformed family `{S^t_λ}` is orthogonal for the *twisted*\ninner product `⟨f,g⟩_t := ⟨ψ_t f, ψ_t g⟩`, and `⟨S^t_λ, S^t_μ⟩_t = ⟨Q_λ, Q_μ⟩`.\n\nThe key insight is that an automorphism `φ_t` turns any nondegenerate pairing into a\ncongruent one, so orthogonality is transported verbatim — triviality at the level of\nbilinear forms, not just bases.\n\nWhy now? We have `φ_t ∈ Aut` with explicit inverse `ψ_t` (`phiTEquiv`); the only missing\ningredient is a Lean model of the Schur-`Q` pairing, buildable from the `annShift`\nadjoint constant already present in the construction.\n\n## 3. Failure locus = roots of unity (sharp boundary)\n\n**Conjecture.** Over `R = ℚ[t]/(Φ_d(t))` (cyclotomic specialization), `φ_t` fails to be\ninjective exactly on the odd power sums `p_n` with `d | n`, and there the shifted\n`t`-Schur \"basis\" degenerates: `S^t_λ = 0` whenever `λ` has a part divisible by `d`.\n\nThe key insight is that triviality is governed entirely by the scalars `1 - t^n`, whose\nvanishing locus is the union of roots of unity; plethystic triviality is therefore\n*generic* and breaks precisely on this measure-zero set.\n\nWhy now? Our `cc_ne` lemma proves `1 - t^n ≠ 0` over `ℚ(t)`; negating it over a\ncyclotomic quotient is a finite, decidable computation, making the boundary directly\ntestable.\n\n## 4. Functoriality in the deformation parameter\n\n**Conjecture.** The assignment `t ↦ φ_t` is a monoid map from `(odd-support power series\nunder a twisted convolution)` into `Aut(Λ_odd)`, and in particular `φ_s ∘ φ_t` is the\nplethysm `p_n ↦ (1 - s^n)(1 - t^n) p_n`, which is *not* of the form `φ_u` — so the\n`t`-Schur families do not compose into a single `t`-Schur family.\n\nThe key insight is that diagonal-in-power-sum operators form a commutative group under\npointwise multiplication of their eigenvalues, and `{φ_t}` is a one-parameter curve in\nthis group that is closed under composition only up to reparametrization.\n\nWhy now? `phiT_monomial_pow` already exhibits the eigenvalues `∏(1-t^{n_i})^{a_i}`\nexplicitly; multiplying two such diagonal operators is a one-line check away.\n\n## 5. Shifted t-Schur positivity defect\n\n**Conjecture.** Unlike `Q_λ`, the `S^t_λ` expanded in the monomial-symmetric / Schur-`P`\nbasis have coefficients in `ℤ[t]` with **signs governed by `|λ|` parity**, and the\n\"positivity defect\" (number of negative monomials) equals the number of parts of `λ`.\n\nThe key insight is that each factor `1 - t^{n}` injects exactly one sign flip per part,\nso combinatorial positivity of `Q_λ` is deformed into a controlled, parity-indexed sign\npattern.\n\nWhy now? The single-part case `S^t_{(1)} = 2(1-t)p_1` (theorem `Sfun_singleton`) already\nshows one sign flip per part; verifying two- and three-part cases is a finite coefficient\ncomparison enabled by the `qGen` recursion now in the catalog.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2651",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7c592ed1",
+    "status": "available",
+    "timestamp": "2026-06-27T02:51:47.666880+00:00",
+    "title": "Derived from this cycle's findings: the shifted `t`-Schur family `S^t_λ` is the "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -11860,26 +11880,6 @@
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.353451+00:00",
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "11521acf",
-    "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "fd_0461",
-    "lineage_refs": [],
-    "priority_score": 0.5499999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:30.236800+00:00",
-    "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
   {
     "ambition_level": "extension",

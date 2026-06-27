@@ -6595,6 +6595,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings: the shifted `t`-Schur family `S^t_\u03bb` is the image of\nthe Schur-`Q` basis `Q_\u03bb` under the odd plethysm `\u03c6_t : p_n \u21a6 (1 - t^n)p_n`, and `\u03c6_t` is\na **degree-preserving, monomial-diagonal algebra automorphism** of the odd power-sum ring\n(files `PlethysticTrivialityShiftedTSchur.lean`, `OddPowerSumPlethysm.lean`). The\nfollowing conjectures push that structure further; each is falsifiable by coefficient\ncomparison in the finite odd power-sum ring.\n\n## 1. Triangular non-triviality: `S^t_\u03bb = Q_\u03bb + (lower-in-t terms)`\n\n**Conjecture.** Writing `S^t_\u03bb = Q_\u03bb + t\u00b7R_\u03bb(t)` with `R_\u03bb \u2208 t\u00b7\u039b_odd[t]`, the\n\"correction\" `R_\u03bb` is nonzero for every nonempty strict `\u03bb` and its `t`-leading term is\n`-Q_{\u03bb}` evaluated with each `p_{n}` scaled by `n`-dependent... i.e. `S^t_\u03bb \u2261 Q_\u03bb`\nmod `t` and `\u2202_t S^t_\u03bb |_{t=0}` is an explicit power-sum derivation of `Q_\u03bb`.\n\nThe key insight is that `\u03c6_t = id - t\u00b7D + O(t^2)` where `D` is the degree-graded\nderivation `p_n \u21a6 n\u00b7(t^{n-1}/(...)) p_n` truncated at first order, so the whole `t`-family\nis the exponential flow of a single power-sum vector field acting on `Q_\u03bb`.\n\nWhy now? We already proved `\u03c6_t` is an automorphism with `\u03c6_0 = id` in spirit\n(`cc k \u2192 1` as `t \u2192 0`); extracting the first-order generator only needs a formal\n`t`-derivative of `cc k`, which is immediate in `RatFunc \u211a`.\n\n## 2. Inner-product (orthogonality) transport\n\n**Conjecture.** Under the Hall\u2013Littlewood-at-`-1` inner product `\u27e8\u00b7,\u00b7\u27e9` for which\n`{Q_\u03bb}` is orthogonal, the deformed family `{S^t_\u03bb}` is orthogonal for the *twisted*\ninner product `\u27e8f,g\u27e9_t := \u27e8\u03c8_t f, \u03c8_t g\u27e9`, and `\u27e8S^t_\u03bb, S^t_\u03bc\u27e9_t = \u27e8Q_\u03bb, Q_\u03bc\u27e9`.\n\nThe key insight is that an automorphism `\u03c6_t` turns any nondegenerate pairing into a\ncongruent one, so orthogonality is transported verbatim \u2014 triviality at the level of\nbilinear forms, not just bases.\n\nWhy now? We have `\u03c6_t \u2208 Aut` with explicit inverse `\u03c8_t` (`phiTEquiv`); the only missing\ningredient is a Lean model of the Schur-`Q` pairing, buildable from the `annShift`\nadjoint constant already present in the construction.\n\n## 3. Failure locus = roots of unity (sharp boundary)\n\n**Conjecture.** Over `R = \u211a[t]/(\u03a6_d(t))` (cyclotomic specialization), `\u03c6_t` fails to be\ninjective exactly on the odd power sums `p_n` with `d | n`, and there the shifted\n`t`-Schur \"basis\" degenerates: `S^t_\u03bb = 0` whenever `\u03bb` has a part divisible by `d`.\n\nThe key insight is that triviality is governed entirely by the scalars `1 - t^n`, whose\nvanishing locus is the union of roots of unity; plethystic triviality is therefore\n*generic* and breaks precisely on this measure-zero set.\n\nWhy now? Our `cc_ne` lemma proves `1 - t^n \u2260 0` over `\u211a(t)`; negating it over a\ncyclotomic quotient is a finite, decidable computation, making the boundary directly\ntestable.\n\n## 4. Functoriality in the deformation parameter\n\n**Conjecture.** The assignment `t \u21a6 \u03c6_t` is a monoid map from `(odd-support power series\nunder a twisted convolution)` into `Aut(\u039b_odd)`, and in particular `\u03c6_s \u2218 \u03c6_t` is the\nplethysm `p_n \u21a6 (1 - s^n)(1 - t^n) p_n`, which is *not* of the form `\u03c6_u` \u2014 so the\n`t`-Schur families do not compose into a single `t`-Schur family.\n\nThe key insight is that diagonal-in-power-sum operators form a commutative group under\npointwise multiplication of their eigenvalues, and `{\u03c6_t}` is a one-parameter curve in\nthis group that is closed under composition only up to reparametrization.\n\nWhy now? `phiT_monomial_pow` already exhibits the eigenvalues `\u220f(1-t^{n_i})^{a_i}`\nexplicitly; multiplying two such diagonal operators is a one-line check away.\n\n## 5. Shifted t-Schur positivity defect\n\n**Conjecture.** Unlike `Q_\u03bb`, the `S^t_\u03bb` expanded in the monomial-symmetric / Schur-`P`\nbasis have coefficients in `\u2124[t]` with **signs governed by `|\u03bb|` parity**, and the\n\"positivity defect\" (number of negative monomials) equals the number of parts of `\u03bb`.\n\nThe key insight is that each factor `1 - t^{n}` injects exactly one sign flip per part,\nso combinatorial positivity of `Q_\u03bb` is deformed into a controlled, parity-indexed sign\npattern.\n\nWhy now? The single-part case `S^t_{(1)} = 2(1-t)p_1` (theorem `Sfun_singleton`) already\nshows one sign flip per part; verifying two- and three-part cases is a finite coefficient\ncomparison enabled by the `qGen` recursion now in the catalog.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2651",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7c592ed1",
+    "status": "available",
+    "timestamp": "2026-06-27T02:51:47.666880+00:00",
+    "title": "Derived from this cycle's findings: the shifted `t`-Schur family `S^t_\u03bb` is the "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6870,21 +6885,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.353451+00:00",
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
-  },
-  {
-    "consumed_by_exp_id": "11521acf",
-    "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "fd_0461",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:30.236800+00:00",
-    "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
   {
     "consumed_by_exp_id": "",
