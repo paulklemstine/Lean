@@ -65,7 +65,7 @@ Synthesis (PI): `wcount` upgrades the catalog's `twe`/`minDist` tropical diction
 -/
 
 import Mathlib
-import Applications.SmoothPoincare.TropicalWeightEnumerator
+import Catalog.Applications.SmoothPoincare.TropicalWeightEnumerator
 
 open scoped BigOperators
 
