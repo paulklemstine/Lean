@@ -219,7 +219,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d15f1fdf",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domain_bridges": [],
     "domains": [
@@ -232,7 +232,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -4467,7 +4467,7 @@
       "mathlib: NumberTheory.ArithmeticFunction",
       "mathlib: Analysis.Asymptotics.Asymptotics"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ac2d584",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domain_bridges": [
       "factorial divisibility to p-adic valuation inequalities",
@@ -4483,7 +4483,7 @@
     "proof_strategy": "Use Legendre's formula to translate a_1! ... a_k! | n! into simultaneous digit-sum inequalities. The paper proves the upper bound from the binary digit-sum obstruction and a density-one lower bound from mixed 2--3 rarefaction. The conjectural strengthening is that the binary obstruction is asymptotically sharp for almost all n. A proof would likely construct, for almost every n, admissible tuples a_i whose total excess is ((k - 1) / log 2 - o(1)) log n, while controlling all odd-prime valuation constraints by showing that the binary carry construction can be locally repaired at negligible logarithmic cost.",
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -7121,7 +7121,7 @@
     "catalog_references": [
       "math.CO/1234567"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6fa4f641",
     "description": "Conjecture that for any fixed alphabet size b≥2, the largest family C⊆[b]^k in which every pair of distinct vectors yields a bipartite graph containing a cycle has size at most N_b(k), the number of good vectors defined by prescribed block sizes, and that this bound is attained for all sufficiently large k (in particular when k≡-1 (mod b)).",
     "domain_bridges": [
       "math.CO",
@@ -7136,7 +7136,7 @@
     "proof_strategy": "Prove an LYM-type inequality for families of vectors, show that extremal families must consist of good vectors, and verify that the count N_b(k) is an upper bound, with equality for large k satisfying the congruence condition.",
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T05:24:56.704027+00:00",
     "title": "Maximum size of cycle-containing families of vectors"
   },
@@ -10585,7 +10585,7 @@
       "BerkeschErmanSmith2020",
       "Fulton1997"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "417ceff0",
     "description": "We conjecture that the multigraded Castelnuovo-Mumford regularity of a Schubert variety $S_\\sigma$ in the Plücker embedding is upper bounded by the length of the longest chain of Bruhat-ordered Schubert varieties between the trivial subgroup and $\\sigma$ with a \\(3412\\)-\\(4231\\)-avoiding element at each step. This refines the existing bounds in Theorem 1.3 of the paper using Schubert poset combinatorics.",
     "domain_bridges": [
       "SageMath/Macaulay2 modular forms",
@@ -10602,7 +10602,7 @@
     "proof_strategy": "Automated theorem proving using Lean 4's combinatorial ring of varieties, leveraging existing formalizations of Schubert subposets, Bruhat order automata, and multigraded regularity computations from the Cranton-Heller-Sayrafi papers.",
     "research_mode": "team",
     "source_exp_id": "2606.21058v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T12:08:30.225471+00:00",
     "title": "Falsifiability of Multigraded Regularity Conjecture for Schubert Varieties via Plücker Embedding"
   },
@@ -10821,7 +10821,7 @@
       "Benz2012",
       "paper:arXiv:2107.XXXX"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "628911c1",
     "description": "For any finite partial cube G, the following are equivalent:\n1. G is a minimal forbidden pc‑minor for the class of daisy cubes (that is, G is a partial cube that contains a non‑peripheral Θ‑class and every proper pc‑minor of G is a daisy cube).\n2. There exist integers r ≥ 2 and s ≥ 1 such that G is isomorphic to the graph obtained from the Cartesian product P₃ⁿ□Qₛ by deleting the two vertices that are opposite in the P₃ⁿ factor and lie in the same Qₛ copy.  In other words, G ≅ (P₃ⁿ□Qₛ) \\ {u, v} with u and v the two antipodal corners of the P₃ⁿ factor.\n\nIn particular, the infinite family { (P₃ⁿ□Qₛ) \\ {u, v} | r ≥ 2, s ≥ 1 } is precisely the set of all minimal forbidden pc‑minors for daisy cubes.",
     "domain_bridges": [
       "Partial cubes ↔ isometric subgraphs of hypercubes",
@@ -10838,7 +10838,7 @@
     "proof_strategy": "The proof will proceed by induction on the isometric dimension of a minimal forbidden partial cube G containing a non‑peripheral Θ‑class. First, we show that any such G must have a Θ‑class whose associated convex halfspace is a proper subset of the vertex set and whose peripheral halfspace is a single vertex—this vertex is an ‘extremal’ corner in the hypercube representation. Next, we prove that removing this corner yields a subgraph that is still a partial cube but has one fewer Θ‑class. Repeating this operation at each step forces G to decompose as a Cartesian product of P₃‑factors and a Qₛ‑factor, with the removed corners precisely the two distinct antipodal vertices in the P₃ⁿ component. A structural lemma about minimal non‑peripheral Θ‑classes in partial cubes is required, which can be formalized using the convexity and evenness conditions of Θ‑classes. The final step is to verify that any graph outside this family contains a proper pc‑minor that also fails the peripheral Θ‑class ",
     "research_mode": "team",
     "source_exp_id": "2606.19032v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T17:13:14.129734+00:00",
     "title": "Complete Characterization of Minimal Forbidden Partial‑Cube Minors for Daisy Cubes"
   },
@@ -13704,7 +13704,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "470fcb83",
     "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
     "domain_bridges": [],
     "domains": [
@@ -13717,7 +13717,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
   },
