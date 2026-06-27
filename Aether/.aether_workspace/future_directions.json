@@ -11518,7 +11518,7 @@
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.7000000000000001,
       "domains": [
         "Logic",
         "Computation"
@@ -55254,6 +55254,44 @@
       "thread_id": "",
       "timestamp": "2026-06-11T17:04:01.828478+00:00",
       "title": "Deepening: Natural Proofs Barrier: Formalization"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle c25c1b9e (Q=0.767), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every finite connected simple graph G on n ≥ 2 vertices with unit edge resistances, let R_G be its effective-resistance matrix and define Δ(G) = (-1)^(n-1) det(R_G). Conjecture: 2^n (n-1) / n^n ≤ Δ(G) ≤ 2^(n-2) (n-1). Moreover, equality on the left holds exactly for the complete graph K_n, and e",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "id": "push_c25c1b9e_6431800e",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8665600000000001,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "c25c1b9e",
+      "source_path": "Extremal signed determinant of the resistance matrix of a connected simple graph",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-27T22:36:00.402192+00:00",
+      "title": "Deepening: Extremal signed determinant of the resistance matrix of a connected simple graph"
     },
     {
       "ambition_level": "extension",

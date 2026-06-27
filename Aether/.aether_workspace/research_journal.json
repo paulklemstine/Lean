@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b45eb1d8",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Stability of Cayley Digraphs of Abelian Groups\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nAll conjectures are stated relative to the frame",
-      "quality_score": 0.7496,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-24T23:28:45",
-      "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
-    },
-    {
       "cycle_id": "99725b45",
       "domain": "Novelty",
       "key_insight": "# Future Directions — C5-decompositions and the 5/8 threshold\n\nDerived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-divisibility,\nedge-count `|E| = 5·#cycles`, the pentagon wi",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-06-27T22:34:58",
       "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
+    },
+    {
+      "cycle_id": "c25c1b9e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Extremal signed determinant of the resistance matrix\n\nThis research cycle established two endpoints of the *signed resistance determinant*\n`sdet(G) := (-1)^(n-1) · det R(G)` over",
+      "quality_score": 0.7665600000000001,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-27T22:36:00",
+      "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e56a1e16",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — EML Universal Approximation\n\nDerived from the cycle that produced `FinsetLogSumExp.lean` (finite-family\nlog-sum-exp dequantization with explicit width rate `τ·log n`) and\n`CubeDe",
-      "quality_score": 0.86528,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-06-24T01:35:56",
-      "title": "EML Universal Approximation: Density of EML Functions"
-    },
     {
       "cycle_id": "a5fa8083",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-06-27T22:34:58",
       "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
+    },
+    {
+      "cycle_id": "c25c1b9e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Extremal signed determinant of the resistance matrix\n\nThis research cycle established two endpoints of the *signed resistance determinant*\n`sdet(G) := (-1)^(n-1) · det R(G)` over",
+      "quality_score": 0.7665600000000001,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-27T22:36:00",
+      "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7496c7ce",
-      "domain": "Applications",
-      "name": "asserts",
-      "quality": 0.80792
-    },
-    {
-      "cycle_id": "7496c7ce",
-      "domain": "Applications",
-      "name": "supplies",
-      "quality": 0.80792
-    },
-    {
-      "cycle_id": "7496c7ce",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.80792
-    },
     {
       "cycle_id": "53529d3f",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "euler_mirror",
       "quality": 0.70122
+    },
+    {
+      "cycle_id": "c25c1b9e",
+      "domain": "Novelty",
+      "name": "det_one_sub_Jmat",
+      "quality": 0.7665600000000001
+    },
+    {
+      "cycle_id": "c25c1b9e",
+      "domain": "Novelty",
+      "name": "det_Jmat_sub_one",
+      "quality": 0.7665600000000001
+    },
+    {
+      "cycle_id": "c25c1b9e",
+      "domain": "Novelty",
+      "name": "det_KresMat",
+      "quality": 0.7665600000000001
     }
   ],
-  "last_updated": "2026-06-27T22:34:58",
+  "last_updated": "2026-06-27T22:36:00",
   "open_questions": [
     {
       "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "beb2abc2",
-        "quality": 0.5954,
-        "theorems": 0,
-        "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems"
-      },
-      {
         "cycle_id": "06caccbf",
         "quality": 0.463,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.70122,
         "theorems": 17,
         "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
+      },
+      {
+        "cycle_id": "c25c1b9e",
+        "quality": 0.7665600000000001,
+        "theorems": 14,
+        "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
       }
     ],
     "NumberTheory": [

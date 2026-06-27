@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c25c1b9e",
     "filename": "extremal_signed_determinant_of_the_resistance_matr.json",
     "pkg_num": 153,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7665600000000001,
     "title": "Extremal Signed Determinant of the Resistance Matrix of a Connected Graph"
   },
   {
@@ -4465,8 +4465,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "extremal_signed_determinant_of_the_resistance_matr",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7665600000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Extremal Signed Determinant of the Resistance Matrix of a Connected Graph"
     }

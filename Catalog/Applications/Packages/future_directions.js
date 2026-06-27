@@ -539,6 +539,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c25c1b9e (Q=0.767), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every finite connected simple graph G on n \u2265 2 vertices with unit edge resistances, let R_G be its effective-resistance matrix and define \u0394(G) = (-1)^(n-1) det(R_G). Conjecture: 2^n (n-1) / n^n \u2264 \u0394(G) \u2264 2^(n-2) (n-1). Moreover, equality on the left holds exactly for the complete graph K_n, and e",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_c25c1b9e_6431800e",
+    "priority_score": 0.8665600000000001,
+    "research_mode": "team",
+    "source_exp_id": "c25c1b9e",
+    "status": "available",
+    "timestamp": "2026-06-27T22:36:00.402192+00:00",
+    "title": "Deepening: Extremal signed determinant of the resistance matrix of a connected simple graph"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
     "domains": [
       "Cryptography",
@@ -7633,6 +7647,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-27T22:34:44.322965+00:00",
     "title": "Derived from this cycle's findings in `HodgeMirror.lean`, `SYZDuality.lean`, and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Extremal signed determinant of the resistance matrix\n\nThis research cycle established two endpoints of the *signed resistance determinant*\n`sdet(G) := (-1)^(n-1) \u00b7 det R(G)` over connected simple graphs on `n` vertices, where\n`R(G)` is the effective-resistance (= distance, for trees) matrix:\n\n* **Complete graph** `K\u2099` (`ResistanceCompleteGraph.lean`):\n  `R(K\u2099) = (2/n)(J - I)`, `det = (2/n)^n (-1)^n (1-n)`, and `sdet(K\u2099) = (2/n)^n (n-1) > 0`.\n* **Path / tree** `P\u2099` (`ResistancePathTree.lean`):\n  `R(P\u2099)\u1d62\u2c7c = |i-j|`, `det = (n-1)(-2)^(n-1)/2`, and `sdet(P\u2099) = (n-1) 2^(n-2)`.\n\nBoth are fully formalized and verified (0 sorries). They sit at opposite ends of the\nedge-density spectrum and already exhibit a striking gap:\n`sdet(P\u2099)/sdet(K\u2099) = (n/2)^n \u2192 \u221e`.\n\nThe following conjectures are precise and falsifiable; each is amenable to small-case\ncomputational testing before formalization.\n\n## Conjecture 1 (Tree invariance \u2014 Graham\u2013Pollak for resistance)\nFor **every** tree `T` on `n` vertices, the resistance matrix equals the graph-distance\nmatrix and `sdet(T) = (n-1) \u00b7 2^(n-2)`, independent of the shape of `T`.\n*Status:* proved here for the path; the star and caterpillar cases are natural next targets,\nthen the general inductive (leaf-removal) proof. Falsifiable: any tree with a different value.\n\n## Conjecture 2 (Global extremality)\nOver all connected simple graphs on `n` vertices (`n \u2265 2`):\n`sdet(K\u2099) \u2264 sdet(G) \u2264 sdet(P\u2099) = (n-1)2^(n-2)`,\ni.e. the complete graph minimizes and trees maximize the signed resistance determinant,\nwith trees being the unique maximizers. Falsifiable by exhibiting any `G` with\n`sdet(G) > (n-1)2^(n-2)` or `sdet(G) < sdet(K\u2099)`.\n\n## Conjecture 3 (Edge-addition monotonicity)\nIf `H = G + e` is obtained from connected `G` by adding one edge, then `sdet(H) < sdet(G)`.\nRationale: Rayleigh monotonicity makes every effective resistance non-increasing under edge\naddition; conjecturally this forces a strict decrease of the signed determinant. This would\nimply Conjecture 2 (trees are edge-minimal connected graphs, `K\u2099` is edge-maximal).\n\n## Conjecture 4 (Positivity / sign law)\nFor every connected simple graph on `n \u2265 2` vertices, `sdet(G) > 0`; equivalently\n`sign(det R(G)) = (-1)^(n-1)`. Verified here for `K\u2099` (`signed_det_KresMat_pos`) and for the\npath. Falsifiable by a connected graph with `det R` of the \"wrong\" sign.\n\n## Conjecture 5 (Bapat\u2013Gutman\u2013Xiao closed form)\nFor a connected graph `G`, `det R(G) = (-1)^(n-1) 2^(n-2) (\u2211_{e} R_e^{(2)}) / \u03c4(G)`-type\nformula relating `det R` to spanning-tree count `\u03c4(G)` and 2-forest data. Concretely:\ntest the conjecture `(-1)^(n-1) det R(G) = 2^(n-2) \u00b7 F(G)/\u03c4(G)` for an explicit combinatorial\n`F` (number of spanning 2-forests weighted by component sizes), recovering `2^(n-2)(n-1)` for\ntrees (`\u03c4 = 1`) and `(2/n)^n(n-1)` for `K\u2099` (`\u03c4 = n^(n-2)`). Falsifiable on any small graph.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2724",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c25c1b9e",
+    "status": "available",
+    "timestamp": "2026-06-27T22:35:51.888025+00:00",
+    "title": "Two endpoints of the *signed resistance determin"
   },
   {
     "consumed_by_exp_id": "",
