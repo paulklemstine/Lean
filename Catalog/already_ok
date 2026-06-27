@@ -1,0 +1,225 @@
+import Applications.ItalianSquares.UpperBound
+
+/-!
+# Characterization of equality: complete sets of MOLS and affine planes
+
+Parts (1) and (2) of the Italian-square orthogonality problem establish that a family
+of mutually orthogonal Italian squares of order `n` has at most `n - 1` members
+(`ItalianSquares.card_le_card_sub_one`), and that this bound is attained whenever `n`
+is a prime power (`ItalianSquares.exists_mols_prime_power`).
+
+This file settles part (3): **a characterization of when equality holds.**
+
+The right combinatorial object is an *orthogonal array* `OA(n, m)` of strength `2` and
+index `1`: an assignment of an `m`-tuple of symbols in `Fin n` to each of the `n²` runs
+`Fin n × Fin n`, such that for any two distinct columns the corresponding pair of
+entries ranges over `Fin n × Fin n` bijectively (each ordered pair occurs exactly once).
+
+The classical equivalence (van Lint–Wilson, *A Course in Combinatorics*, Ch. 22) is:
+
+* a family of `k` mutually orthogonal Italian squares of order `n` is the *same data* as
+  an orthogonal array `OA(n, k + 2)` (the two extra columns record the row and column
+  coordinates).  This is `ItalianSquares.mols_iff_oa`.
+
+Specializing `k = n - 1` (so `k + 2 = n + 1` columns) gives the characterization of
+equality: **a complete set of `n - 1` mutually orthogonal Italian squares of order `n`
+exists if and only if a complete orthogonal array `OA(n, n + 1)` exists**
+(`ItalianSquares.equality_iff_oa`).  A complete orthogonal array `OA(n, n + 1)` is
+exactly the incidence data of an *affine plane of order `n`* (equivalently a projective
+plane of order `n`): the `n + 1` columns are the `n + 1` parallel classes of lines, and
+strength-`2` index-`1` is the affine plane axiom that two non-parallel lines meet in a
+unique point.  Thus equality holds precisely for those orders `n` admitting an affine
+plane — which is why the prime powers (where the field construction yields a plane) are
+exactly the orders where we can *prove* equality, while the converse existence question
+for general `n` is the (open) projective-plane existence problem.
+-/
+
+namespace ItalianSquares
+
+open Function
+
+/-- An **orthogonal array** `OA(n, m)` of strength `2` and index `1`, with columns
+indexed by a type `ι`: an array `A` assigning to each run `p : Fin n × Fin n` a tuple
+`A p : ι → Fin n`, such that for every pair of distinct columns `c ≠ d` the map
+`p ↦ (A p c, A p d)` is a bijection of `Fin n × Fin n` (every ordered pair of symbols
+occurs in columns `c, d` exactly once). -/
+def IsOA (n : ℕ) (ι : Type*) (A : Fin n × Fin n → ι → Fin n) : Prop :=
+  ∀ c d : ι, c ≠ d → Bijective (fun p : Fin n × Fin n => (A p c, A p d))
+
+/-! ### Building-block bijections of `Fin n × Fin n` -/
+
+variable {n k : ℕ}
+
+/-
+The identity pairing is a bijection.
+-/
+lemma prod_id_bij : Bijective (fun p : Fin n × Fin n => (p.1, p.2)) := by
+  constructor <;> intro p <;> aesop
+
+/-
+The swapped pairing is a bijection.
+-/
+lemma prod_swap_bij : Bijective (fun p : Fin n × Fin n => (p.2, p.1)) := by
+  exact ⟨ fun p q h => by aesop, fun p => ⟨ ( p.2, p.1 ), by aesop ⟩ ⟩
+
+/-
+`(i, j) ↦ (i, M i j)` is a bijection for an Italian square `M` (row bijectivity).
+-/
+lemma row_pair_bij (M : ItalianSquare (Fin n)) :
+    Bijective (fun p : Fin n × Fin n => (p.1, M.toFun p.1 p.2)) := by
+      have h_row_bij : ∀ i : Fin n, Function.Bijective (fun j : Fin n => M.toFun i j) := by
+        exact fun i => M.row_bij i;
+      exact ⟨ fun p q h => by have := h_row_bij p.1; have := this.1 ( by aesop : M.toFun p.1 p.2 = M.toFun p.1 q.2 ) ; aesop, fun p => by have := h_row_bij p.1; have := this.2 p.2; aesop ⟩
+
+/-
+`(i, j) ↦ (M i j, i)` is a bijection (swap of `row_pair_bij`).
+-/
+lemma row_pair_bij' (M : ItalianSquare (Fin n)) :
+    Bijective (fun p : Fin n × Fin n => (M.toFun p.1 p.2, p.1)) := by
+      have := M.row_bij;
+      exact ⟨ fun p q h => by have := this p.1; have := this.injective; aesop, fun p => by have := this p.2; have := this.surjective; aesop ⟩
+
+/-
+`(i, j) ↦ (j, M i j)` is a bijection for an Italian square `M` (column bijectivity).
+-/
+lemma col_pair_bij (M : ItalianSquare (Fin n)) :
+    Bijective (fun p : Fin n × Fin n => (p.2, M.toFun p.1 p.2)) := by
+      convert M.col_bij using 1;
+      constructor <;> intro h;
+      · exact M.col_bij;
+      · constructor;
+        · intro p q h_eq;
+          have := h p.2; have := this.1; aesop;
+        · intro p;
+          obtain ⟨ a, ha ⟩ := h p.1 |>.2 p.2; use ( a, p.1 ) ; aesop;
+
+/-
+`(i, j) ↦ (M i j, j)` is a bijection (swap of `col_pair_bij`).
+-/
+lemma col_pair_bij' (M : ItalianSquare (Fin n)) :
+    Bijective (fun p : Fin n × Fin n => (M.toFun p.1 p.2, p.2)) := by
+      constructor;
+      · intro p q; have := M.col_bij p.2; have := M.row_bij p.1; simp_all +decide [ Function.Bijective ] ;
+        aesop;
+      · intro p;
+        exact M.col_bij p.2 |>.2 p.1 |> fun ⟨ a, ha ⟩ => ⟨ ( a, p.2 ), by aesop ⟩
+
+/-! ### From MOLS to an orthogonal array -/
+
+/-- The orthogonal array built from a family of `k` Italian squares: columns are indexed
+by `Bool ⊕ Fin k`; the two `Bool` columns record the row coordinate (`inl false`) and
+column coordinate (`inl true`), and column `inr t` records the value of the `t`-th
+square. -/
+def oaOfMols (L : Fin k → ItalianSquare (Fin n)) :
+    Fin n × Fin n → (Bool ⊕ Fin k) → Fin n :=
+  fun p c => match c with
+    | Sum.inl false => p.1
+    | Sum.inl true => p.2
+    | Sum.inr t => (L t).toFun p.1 p.2
+
+/-
+A pairwise-orthogonal family of `k` Italian squares yields an orthogonal array
+`OA(n, k + 2)`.
+-/
+lemma isOA_oaOfMols (L : Fin k → ItalianSquare (Fin n))
+    (hL : ∀ s t, s ≠ t → Orthogonal (L s) (L t)) :
+    IsOA n (Bool ⊕ Fin k) (oaOfMols L) := by
+      intro c d hcd; rcases c with ( _ | c ) <;> rcases d with ( _ | d ) <;> simp_all +decide ;
+      · rename_i a b; fin_cases a <;> fin_cases b <;> simp_all +decide ;
+        · exact Multiset.map_univ_val_equiv ( Equiv.prodComm _ _ );
+        · simp +decide [ oaOfMols ];
+      · rename_i b; cases b <;> simp_all +decide [ oaOfMols ] ;
+        · exact Multiset.map_univ_val_equiv ( Equiv.ofBijective _ ( row_pair_bij ( L d ) ) );
+        · exact Multiset.map_univ_val_equiv ( col_pair_bij ( L d ) |> Equiv.ofBijective _ );
+      · cases ‹Bool› <;> simp +decide [ oaOfMols ];
+        · exact Multiset.map_univ_val_equiv ( Equiv.ofBijective _ ( row_pair_bij' ( L c ) ) );
+        · exact Multiset.map_univ_val_equiv ( col_pair_bij' ( L c ) |> Equiv.ofBijective _ );
+      · exact Multiset.map_univ_val_equiv ( Equiv.ofBijective _ ( hL c d hcd ) )
+
+/-! ### From an orthogonal array to MOLS -/
+
+/-- The coordinate bijection of an orthogonal array: reading off the two coordinate
+columns `inl false` and `inl true` is a bijection of `Fin n × Fin n`. -/
+noncomputable def coordEquiv (A : Fin n × Fin n → (Bool ⊕ Fin k) → Fin n)
+    (hA : IsOA n (Bool ⊕ Fin k) A) : Fin n × Fin n ≃ Fin n × Fin n :=
+  Equiv.ofBijective (fun p => (A p (Sum.inl false), A p (Sum.inl true)))
+    (hA (Sum.inl false) (Sum.inl true) (by simp))
+
+/-
+Row bijectivity of the extracted square: for fixed row `i`, the map
+`j ↦ A (coordEquiv⁻¹ (i, j)) (inr t)` is a bijection of `Fin n`.
+-/
+lemma molsOfOA_row_bij (A : Fin n × Fin n → (Bool ⊕ Fin k) → Fin n)
+    (hA : IsOA n (Bool ⊕ Fin k) A) (t : Fin k) (i : Fin n) :
+    Bijective (fun j => A ((coordEquiv A hA).symm (i, j)) (Sum.inr t)) := by
+      convert Finite.injective_iff_bijective.mp _ using 1;
+      · infer_instance;
+      · intro j₁ j₂ h_eq
+        have h_eq' : (A ((coordEquiv A hA).symm (i, j₁)) (Sum.inl false), A ((coordEquiv A hA).symm (i, j₁)) (Sum.inr t)) = (A ((coordEquiv A hA).symm (i, j₂)) (Sum.inl false), A ((coordEquiv A hA).symm (i, j₂)) (Sum.inr t)) := by
+          simp_all +decide [ coordEquiv ];
+          grind +suggestions;
+        have := hA ( Sum.inl false ) ( Sum.inr t ) ( by simp +decide ) ; have := this.injective h_eq'; aesop;
+
+/-
+Column bijectivity of the extracted square: for fixed column `j`, the map
+`i ↦ A (coordEquiv⁻¹ (i, j)) (inr t)` is a bijection of `Fin n`.
+-/
+lemma molsOfOA_col_bij (A : Fin n × Fin n → (Bool ⊕ Fin k) → Fin n)
+    (hA : IsOA n (Bool ⊕ Fin k) A) (t : Fin k) (j : Fin n) :
+    Bijective (fun i => A ((coordEquiv A hA).symm (i, j)) (Sum.inr t)) := by
+      convert Finite.injective_iff_bijective.mp _ using 1;
+      · infer_instance;
+      · intro i₁ i₂ h_eq
+        have h_eq' : (A ((coordEquiv A hA).symm (i₁, j)) (Sum.inl true), A ((coordEquiv A hA).symm (i₁, j)) (Sum.inr t)) = (A ((coordEquiv A hA).symm (i₂, j)) (Sum.inl true), A ((coordEquiv A hA).symm (i₂, j)) (Sum.inr t)) := by
+          simp_all +decide [ coordEquiv ];
+          grind +suggestions;
+        have := hA ( Sum.inl true ) ( Sum.inr t ) ( by simp +decide ) ; have := this.injective h_eq'; aesop;
+
+/-- The `t`-th Italian square extracted from an orthogonal array `OA(n, k + 2)`: in cell
+`(i, j)` it records column `inr t` of the (unique) run whose coordinate columns read
+`(i, j)`. -/
+noncomputable def molsOfOA (A : Fin n × Fin n → (Bool ⊕ Fin k) → Fin n)
+    (hA : IsOA n (Bool ⊕ Fin k) A) (t : Fin k) : ItalianSquare (Fin n) where
+  toFun i j := A ((coordEquiv A hA).symm (i, j)) (Sum.inr t)
+  row_bij i := molsOfOA_row_bij A hA t i
+  col_bij j := molsOfOA_col_bij A hA t j
+
+/-
+The squares extracted from an orthogonal array are pairwise orthogonal.
+-/
+lemma orth_molsOfOA (A : Fin n × Fin n → (Bool ⊕ Fin k) → Fin n)
+    (hA : IsOA n (Bool ⊕ Fin k) A) :
+    ∀ s t, s ≠ t → Orthogonal (molsOfOA A hA s) (molsOfOA A hA t) := by
+      intros s t hst
+      unfold Orthogonal;
+      convert ( hA ( Sum.inr s ) ( Sum.inr t ) ( by simp [hst] ) ) |> fun h => h.comp ( ( coordEquiv A hA ).symm.bijective ) using 1
+
+/-! ### The master correspondence and the characterization of equality -/
+
+/-- **Master correspondence.** A family of `k` mutually orthogonal Italian squares of
+order `n` exists if and only if an orthogonal array `OA(n, k + 2)` exists (columns
+indexed by `Bool ⊕ Fin k`, of cardinality `k + 2`). -/
+theorem mols_iff_oa (n k : ℕ) :
+    (∃ L : Fin k → ItalianSquare (Fin n), ∀ s t, s ≠ t → Orthogonal (L s) (L t)) ↔
+    (∃ A : Fin n × Fin n → (Bool ⊕ Fin k) → Fin n, IsOA n (Bool ⊕ Fin k) A) := by
+  constructor
+  · rintro ⟨L, hL⟩
+    exact ⟨oaOfMols L, isOA_oaOfMols L hL⟩
+  · rintro ⟨A, hA⟩
+    exact ⟨molsOfOA A hA, orth_molsOfOA A hA⟩
+
+/-- The index type of a complete orthogonal array has `n + 1` columns. -/
+lemma index_card (hn : 1 ≤ n) : Fintype.card (Bool ⊕ Fin (n - 1)) = n + 1 := by
+  rw [Fintype.card_sum, Fintype.card_bool, Fintype.card_fin]
+  omega
+
+/-- **Characterization of equality.**  A *complete* set of `n - 1` mutually orthogonal
+Italian squares of order `n` (i.e. equality in the bound `n - 1`) exists if and only if a
+*complete* orthogonal array `OA(n, n + 1)` exists.  Such an array is precisely an affine
+plane of order `n`; see `index_card` for the column count `n + 1`. -/
+theorem equality_iff_oa (n : ℕ) :
+    (∃ L : Fin (n - 1) → ItalianSquare (Fin n), ∀ s t, s ≠ t → Orthogonal (L s) (L t)) ↔
+    (∃ A : Fin n × Fin n → (Bool ⊕ Fin (n - 1)) → Fin n, IsOA n (Bool ⊕ Fin (n - 1)) A) :=
+  mols_iff_oa n (n - 1)
+
+end ItalianSquares

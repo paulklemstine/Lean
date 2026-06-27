@@ -1,161 +1,240 @@
-# The Secret Geometry of Grids: How Many Puzzles Can Share a Board?
+# The Tricolore Puzzle: How Many Latin Squares Can Be Friends?
 
-## A puzzle older than it looks
+Imagine you are setting the table for a grand Italian dinner. You have a
+square arrangement of place settings — say, four rows and four columns —
+and four colors of napkins: red, white, green, and blue. House rules
+forbid repetition: in every row, all four colors must appear, and in
+every column, all four colors must appear. Each color shows up once and
+only once along every line you can draw.
 
-Take a square grid, say $4 \times 4$, and fill it with four symbols — call them $1, 2, 3, 4$ — so that every symbol appears exactly once in each row and exactly once in each column. You have just built one of the oldest and most stubbornly fascinating objects in all of mathematics. Sudoku players meet a constrained cousin of it every morning over coffee; agronomists used it to lay out experimental fields a century ago; cryptographers and coding theorists quietly rely on it to scramble and protect data today.
+This is an **Italian square** — the same object mathematicians have long
+called a *Latin square*. It is a deceptively simple constraint, and it
+hides one of the most beautiful and stubborn puzzles in all of
+combinatorics.
 
-In this article we call such a grid an **Italian square** — a name that nods to the long European tradition of arranging symbols in balanced arrays. (Mathematicians more often call it a *Latin square*; the two words mean exactly the same thing.) An Italian square of order $n$ is an $n \times n$ array of $n$ symbols in which each symbol occurs once per row and once per column. Here is one of order $4$:
+Now raise the stakes. Suppose you have a second set of colored objects —
+wine glasses, perhaps, in the same number of colors — and you arrange
+them in their own valid Italian square on the same table. You ask for
+something almost magical: when you look at every place setting and read
+off *the pair* (napkin color, glass color), you want **every possible
+pair to occur exactly once**. Red napkin with green glass appears once.
+Green napkin with red glass appears once. All sixteen pairs, each in
+exactly one of the sixteen settings, with nothing repeated and nothing
+missing.
 
-$$
-\begin{array}{cccc}
-1 & 2 & 3 & 4 \\
-2 & 1 & 4 & 3 \\
-3 & 4 & 1 & 2 \\
-4 & 3 & 2 & 1
-\end{array}
-$$
+Two squares that fit together this perfectly are called **orthogonal**.
+And here is the question that has fascinated mathematicians since Leonhard
+Euler posed a version of it in 1782: *how many squares can you stack up
+so that every pair among them is orthogonal?*
 
-One square is already pretty. The real magic begins when you try to make *two* squares cooperate.
+This article tells the story of that question and the sharp answer we can
+prove — that the answer is **at most $n-1$**, and that this maximum is
+genuinely achieved exactly when the order $n$ is a power of a prime.
 
-## When two squares fall in love: orthogonality
+## Euler's Officers
 
-Suppose you have two Italian squares of the same order, $L$ and $M$. Lay them on top of each other so that every cell now carries a *pair* of symbols: the entry from $L$ and the entry from $M$. We say $L$ and $M$ are **orthogonal** if, as you sweep across all $n^2$ cells, you see every possible ordered pair of symbols exactly once — never a repeat, never a gap.
+Euler framed the puzzle in military dress. Suppose you have officers of
+six ranks drawn from six regiments — thirty-six officers in all. Can you
+parade them in a $6 \times 6$ square so that each row and each column
+contains one officer of each rank and one officer of each regiment? In
+the language above: can you find two orthogonal Italian squares of order
+six, one recording rank and one recording regiment?
 
-To feel the constraint, try it with two squares of order $3$. Write the first square's symbols in capital letters and the second's in lowercase, then read off the pairs:
+Euler conjectured the answer was no — and, remarkably, for order six he
+was right, though a rigorous proof had to wait until Gaston Tarry
+verified it by exhaustive checking in 1901. Euler went further and
+guessed that no such pair existed whenever the order left a remainder of
+two when divided by four — orders $6, 10, 14, 18, \dots$. That broader
+conjecture turned out to be *spectacularly* false: in 1959 Bose, Shrikhande,
+and Parker constructed orthogonal pairs for every such order except six.
+The puzzle, in other words, is a master class in mathematical humility.
+Patterns that look ironclad can shatter at the next case.
 
-$$
-\begin{array}{ccc}
-Aa & Bb & Cc \\
-Bc & Ca & Ab \\
-Cb & Ac & Ba
-\end{array}
-$$
+## Stacking Squares: The Tower of Orthogonality
 
-There are exactly $3 \times 3 = 9$ possible pairs $(X, y)$, and each of the nine cells shows a different one. The two squares are orthogonal. Such a pair is sometimes called a *Graeco-Latin square*, because the eighteenth-century master Leonhard Euler famously dressed one alphabet in Greek letters and the other in Latin.
+Two orthogonal squares are good; a whole *family* of mutually orthogonal
+squares is better. We call a collection **mutually orthogonal** — the
+classical abbreviation is MOLS, for Mutually Orthogonal Latin Squares — if
+*every* pair drawn from the collection is orthogonal. These families are
+the workhorses behind error-correcting codes, the scheduling of balanced
+experiments in agriculture and clinical trials, the construction of
+finite geometries, and even the design of certain tournaments and
+Sudoku-like puzzles.
 
-Orthogonality is not a curiosity. It is the precise mathematical statement of "two independent classifications that never interfere." Imagine assigning $n$ medical treatments and $n$ diet plans to a square field of plots so that every treatment-diet combination is tested exactly once, in a way perfectly balanced across rows and columns of the field. That is two orthogonal squares doing real scientific work — and it is exactly how the statistician R. A. Fisher revolutionized agricultural experiments.
+So we want them tall. We want as many mutually orthogonal squares of a
+given order $n$ as we can possibly stack. Is there a ceiling?
 
-## The question that drives everything
+There is, and it is clean.
 
-Now raise the stakes. Instead of two squares, ask for a whole **family** of Italian squares, all of the same order $n$, that are **pairwise orthogonal** — meaning *every* two of them are orthogonal to each other. Such a family is called a set of *mutually orthogonal* squares.
+> **The Ceiling Theorem.** For any order $n \ge 2$, a family of mutually
+> orthogonal Italian squares of order $n$ can contain **at most $n - 1$**
+> squares.
 
-The central question is brutally simple to state:
+Four-by-four squares? At most three mutually orthogonal companions.
+Five-by-five? At most four. The bound is simple, universal, and — as we
+will see — tight in the most important cases.
 
-> **How many mutually orthogonal Italian squares of order $n$ can possibly exist?**
+## Why $n-1$? A Proof You Can Hold in Your Hand
 
-You might hope the answer grows without limit. It does not. There is a hard ceiling, and finding it is the heart of this story.
+The reason the ceiling sits exactly at $n-1$ is genuinely elegant, and it
+needs no machinery beyond careful bookkeeping. Here is the idea, stripped
+to its bones.
 
-**The ceiling theorem.** *For every order $n \ge 2$, any family of pairwise orthogonal Italian squares contains at most $n - 1$ squares.*
+Pick two distinct rows of your table; call them row $x_0$ and row $x_1$.
+Now focus your attention on one particular cell: the cell in row $x_1$,
+column $x_0$. Each square $L_t$ in your family puts *some* symbol in that
+cell — call the symbol $L_t(x_1, x_0)$.
 
-A $4 \times 4$ board can host at most $3$ mutually orthogonal squares. A $10 \times 10$ board, at most $9$. No matter how cleverly you fill the grids, you cannot escape the bound $n - 1$. It is a law of the combinatorial universe.
+Here is the clever move. Look at the **top row** of square $L_t$, the row
+indexed by $x_0$. Because every row of an Italian square contains every
+symbol exactly once, the symbol $L_t(x_1, x_0)$ appears somewhere in that
+top row — in exactly one column. Call that column $a(t)$. In symbols, $a(t)$
+is the unique column with
+$$L_t(x_0, a(t)) = L_t(x_1, x_0).$$
+So to each square $L_t$ in your family we have attached a single column
+$a(t)$.
 
-## Why the ceiling is exactly $n - 1$
+Two facts now finish the argument.
 
-The proof is one of those gems where a seemingly impossible counting problem collapses under a single clever observation. Here is the idea in plain language.
+**First, $a(t)$ is never the column $x_0$ itself.** If it were, we would
+have $L_t(x_0, x_0) = L_t(x_1, x_0)$ — the *same* symbol appearing twice
+in column $x_0$, at the two different rows $x_0$ and $x_1$. But columns of
+an Italian square never repeat a symbol. Contradiction. So $a(t)$ always
+lands in one of the $n-1$ columns *other* than $x_0$.
 
-First, a harmless normalization. Orthogonality does not care what we *name* the symbols in any individual square — we are free to relabel the symbols of each square independently, because permuting symbols just permutes which pairs appear, and "every pair exactly once" survives unchanged. So we may quietly relabel each square in our family so that its very first row reads $1, 2, 3, \dots, n$ in order. Call such squares *standardized*.
+**Second, different squares get different columns.** Suppose two distinct
+squares $L_s$ and $L_t$ were assigned the same column, $a(s) = a(t) = a$.
+Then by definition
+$$L_s(x_0, a) = L_s(x_1, x_0) \quad\text{and}\quad L_t(x_0, a) = L_t(x_1, x_0).$$
+Read these as statements about the *superposition* of the two squares —
+the map sending a cell to the pair of symbols the two squares place
+there. The equations say that the cell $(x_0, a)$ and the cell $(x_1, x_0)$
+produce the *same pair*. But orthogonality demands every pair occur
+exactly once, so these two cells must be the very same cell:
+$(x_0, a) = (x_1, x_0)$. That forces $x_0 = x_1$, contradicting our choice
+of two *distinct* rows.
 
-Now look at one specific cell — say the first cell of the *second* row — across all the standardized squares in our family. Each square places some symbol there. The punchline is:
+So the assignment $t \mapsto a(t)$ is an injection from your family of
+squares into the set of $n - 1$ columns different from $x_0$. A set cannot
+inject into a smaller set, so the family has at most $n - 1$ members.
+That's the whole proof. The ceiling is real, and it is exactly $n-1$.
 
-> **No two distinct squares in the family can place the same symbol in that cell.**
+## Touching the Ceiling: The Magic of Fields
 
-Why? Suppose two standardized squares $L$ and $M$ both put the symbol $s$ in that cell. Both also have first row $1, 2, \dots, n$, so somewhere in the first row each of them shows the symbol $s$ — in the *same* column, the $s$-th one. That means the pair $(s, s)$ shows up at two different cells: once in the shared first row, and once in the second-row cell we are watching. But orthogonality demands every pair appear *exactly once*. Contradiction.
+A ceiling is only interesting if you can reach it. Can we actually build
+$n - 1$ mutually orthogonal squares? Not always — but when $n$ is a
+**prime power** (a prime, or a prime raised to a power: $2, 3, 4, 5, 7,
+8, 9, 11, 13, 16, \dots$), the answer is a resounding yes, and the
+construction is breathtakingly simple.
 
-So the symbols appearing in that one watched cell are all distinct across our family. There are only $n$ symbols available — and one of them, the symbol that would force a clash with the diagonal pair in the first row, is forbidden. That leaves at most $n - 1$ usable symbols, hence at most $n - 1$ squares. The ceiling is born from nothing more than the pigeonhole principle applied to a single cell.
+The secret ingredient is a **finite field**: a number system with finitely
+many elements in which you can add, subtract, multiply, and — crucially —
+divide by anything nonzero. Finite fields exist for exactly the
+prime-power sizes. Inside such a field $F$ with $n$ elements, build one
+square for each nonzero "slope" $a$ by the formula
+$$S_a(i, j) = a \cdot i + j.$$
+Here $i$ is the row, $j$ is the column, and the arithmetic is done in the
+field.
 
-In our formal development this is the theorem named `card_le_card_sub_one`: any indexed family $L$ of pairwise orthogonal Italian squares over a symbol set with at least two elements satisfies (number of squares) $\le n - 1$.
+Each $S_a$ is a genuine Italian square. Fix a row $i$ and vary the column
+$j$: the map $j \mapsto a \cdot i + j$ just shifts every symbol by a
+constant, so it hits every symbol once — every row is valid. Fix a column
+$j$ and vary the row $i$: the map $i \mapsto a \cdot i + j$ multiplies by
+the nonzero constant $a$, then shifts; multiplying by a nonzero field
+element is reversible (you can divide by $a$), so it too hits every symbol
+once — every column is valid.
 
-## Can we actually reach the ceiling?
+Now take two different slopes $a \ne b$ and superimpose $S_a$ and $S_b$.
+Suppose two cells produce the same pair of symbols:
+$$a\cdot i + j = a\cdot i' + j', \qquad b\cdot i + j = b\cdot i' + j'.$$
+Subtract the second equation from the first: the $j$ terms cancel and you
+are left with $(a - b)\cdot i = (a - b)\cdot i'$. Because $a \ne b$, the
+quantity $a - b$ is nonzero, and in a field you may divide by it — forcing
+$i = i'$, and then immediately $j = j'$. So distinct cells always give
+distinct pairs; with $n^2$ cells and $n^2$ possible pairs, every pair
+occurs exactly once. The squares are orthogonal.
 
-A ceiling you can never touch is a disappointment. The thrilling part is that for an enormous class of orders, the bound is not just an abstract limit — it is *achieved*, with room to spare in elegance.
+The slopes $a$ range over all the nonzero elements of the field, and there
+are exactly $n - 1$ of them. So we have built a family of $n - 1$
+pairwise orthogonal Italian squares — *exactly* hitting the ceiling.
 
-The key is to stop thinking of symbols as arbitrary labels and start thinking of them as **numbers in a finite arithmetic system**. When $n$ is a *prime power* — that is, $n = p^k$ for a prime $p$ and an exponent $k \ge 1$, so $n \in \{2, 3, 4, 5, 7, 8, 9, 11, 13, 16, \dots\}$ — there exists a finite field of exactly $n$ elements, written $\mathrm{GF}(p^k)$. A field is a number system where you can add, subtract, multiply, and (crucially) divide by anything nonzero, with all the familiar laws of algebra intact. The integers modulo a prime form the simplest examples.
+> **The Attainment Theorem.** Over a finite field with $n$ elements, the
+> affine squares $S_a(i,j) = a\cdot i + j$ for the $n - 1$ nonzero slopes
+> $a$ form a family of mutually orthogonal Italian squares of size $n-1$.
+> Combined with the Ceiling Theorem, the maximum size of such a family is
+> *exactly* $n - 1$, and it is achieved.
 
-Inside such a field, build squares by a single beautiful formula. For each **nonzero** field element $a$, define the square $S_a$ whose entry in row $i$, column $j$ is
+Because finite fields exist for every prime power $n = p^k$, we conclude:
 
-$$
-S_a(i, j) = a \cdot i + j.
-$$
+> **The Prime-Power Realization.** For every prime $p$ and every exponent
+> $k \ge 1$, there exist exactly $p^k - 1$ mutually orthogonal Italian
+> squares of order $p^k$.
 
-That's the whole construction. The "slope" $a$ tilts the arithmetic; the column index $j$ slides it.
+The single algebraic fact doing all the heavy lifting is that you can
+**divide by $a - b$**. In a mere ring — where division may fail — the
+construction can collapse. The field is not a convenience; it is the
+whole game.
 
-Three facts make this work, and each is a short, clean algebraic check:
+## The Hidden Geometry
 
-1. **Every $S_a$ is a genuine Italian square.** Fix a row $i$; then $j \mapsto a \cdot i + j$ just adds a constant to $j$, which is a bijection of the field — so each symbol appears once per row. Fix a column $j$; then $i \mapsto a \cdot i + j$ is multiplication by the nonzero constant $a$ followed by a shift, again a bijection — so each symbol appears once per column. (These are the lemmas `affine_row_bij` and `affine_col_bij`.)
+Why should the maximum sit at $n - 1$, and why should fields be the key
+that unlocks it? The deepest answer is geometric, and it reveals that this
+table-setting puzzle is secretly a question about *planes*.
 
-2. **Distinct slopes give orthogonal squares.** Take $a \ne b$, both nonzero. To check $S_a$ and $S_b$ are orthogonal, we must solve, for any target pair $(u, v)$, the system
-$$
-a \cdot i + j = u, \qquad b \cdot i + j = v.
-$$
-Subtracting the equations gives $(a - b)\, i = u - v$. Since $a \ne b$, the element $a - b$ is nonzero, so we may divide: $i = (u - v)/(a - b)$, and then $j = u - a \cdot i$ follows uniquely. Exactly one cell produces each pair — that is orthogonality on the nose. This is the lemma `affineSquare_orthogonal`, and the single fact that powers it is that *in a field, nonzero elements are invertible*. The whole construction hinges on being able to divide by $a - b$.
+There is a perfect dictionary between families of squares and a tidy
+combinatorial gadget called an **orthogonal array**. Picture a giant
+ledger with $n^2$ rows, one for each cell of the table, and several
+columns of symbols. Two of the columns simply record the cell's own row
+and column coordinates; each remaining column records the symbol that one
+of your squares places in that cell. The orthogonality conditions
+translate into a single, uniform rule: *pick any two columns of the
+ledger, and every ordered pair of symbols appears in exactly one row.*
 
-3. **There are exactly $n - 1$ slopes.** The nonzero elements of a field with $n$ elements number precisely $n - 1$. So the family $\{S_a : a \ne 0\}$ has $n - 1$ pairwise orthogonal squares — and it slams straight into the ceiling.
+In this language, a family of $k$ mutually orthogonal squares of order $n$
+is exactly the same data as an orthogonal array with $n^2$ rows and
+$k + 2$ columns where every pair of columns is "balanced." The two extra
+columns are the bookkeeping coordinates of the cell.
 
-Combining the construction with the ceiling theorem gives the centerpiece result, which in our formalization is `maximum_mols_eq_card_sub_one`:
+Push the family all the way to the maximum, $k = n - 1$, and the ledger
+acquires $n + 1$ columns. An orthogonal array of this extremal shape is
+precisely the blueprint of a **finite affine plane of order $n$** — a
+geometry with $n^2$ points in which every two points lie on a unique
+line, lines come in parallel families, and any two non-parallel lines
+meet in exactly one point. The $n + 1$ columns are nothing but the $n + 1$
+families of parallel lines. The dictionary, made precise, reads:
 
-> **Over a finite field with $n \ge 2$ elements, the maximum number of mutually orthogonal Italian squares is exactly $n - 1$, and this maximum is attained.**
+> A complete set of $n - 1$ mutually orthogonal squares of order $n$ exists
+> **if and only if** a finite plane of order $n$ exists.
 
-Specializing the field to a Galois field $\mathrm{GF}(p^k)$ yields the headline statement `exists_mols_prime_power`:
+This is why the prime powers are exactly the orders we can confidently
+fill to the ceiling: a finite field hands you a plane on a silver platter,
+its lines being the graphs of the affine maps $y = a\cdot x + b$. And it is
+why the *converse* — whether the ceiling can ever be reached at an order
+that is **not** a prime power — remains one of the great open problems of
+mathematics. It is equivalent to asking whether finite planes exist beyond
+the prime powers, and after centuries of effort no one knows. The cases of
+order $6$ and order $10$ are ruled out (the latter only by an enormous
+computer search completed in 1989), but the general pattern is a mystery.
 
-> **For every prime power $n = p^k \ge 2$, there exist $n - 1$ mutually orthogonal Italian squares of order $n$.**
+## Why It Matters
 
-## The smallest example you can hold in your hand
+This is not idle puzzling. Mutually orthogonal squares are the scaffolding
+of **statistical experiment design**: when an agronomist must test seed
+varieties against fertilizers across a field with two directions of
+fertility variation, orthogonal squares let every variety meet every
+treatment exactly once, balancing out the nuisance variation. They power
+**error-correcting codes** that protect data on scratched discs and noisy
+channels, because the "every pair exactly once" property is exactly the
+redundancy that lets you detect and repair corruption. They underlie
+schemes for **distributing cryptographic secrets** and for scheduling
+round-robin tournaments. And in pure mathematics they are the combinatorial
+shadow of finite geometry itself.
 
-Take $n = 3$, the field of integers modulo $3$ with elements $\{0, 1, 2\}$. The nonzero slopes are $a = 1$ and $a = 2$, giving us exactly $n - 1 = 2$ squares.
-
-For $a = 1$, $S_1(i,j) = i + j \bmod 3$:
-
-$$
-\begin{array}{ccc}
-0 & 1 & 2 \\
-1 & 2 & 0 \\
-2 & 0 & 1
-\end{array}
-$$
-
-For $a = 2$, $S_2(i,j) = 2i + j \bmod 3$:
-
-$$
-\begin{array}{ccc}
-0 & 1 & 2 \\
-2 & 0 & 1 \\
-1 & 2 & 0
-\end{array}
-$$
-
-Superimpose them and read the pairs:
-
-$$
-\begin{array}{ccc}
-(0,0) & (1,1) & (2,2) \\
-(1,2) & (2,0) & (0,1) \\
-(2,1) & (0,2) & (1,0)
-\end{array}
-$$
-
-All nine ordered pairs, each once. Two orthogonal squares of order $3$, conjured from nothing but the arithmetic of slopes — and $2$ is exactly the ceiling $3 - 1$.
-
-## The famous hole in the floor: order 6
-
-If the bound were always achievable, the story would end here in triumph. It does not, and the gap is one of the most romantic episodes in mathematics.
-
-Euler, around 1782, posed his celebrated **36 officers problem**: arrange $36$ officers of six ranks and six regiments in a $6 \times 6$ square so that each row and each column contains one officer of every rank and one of every regiment. In our language, he was asking for **two** orthogonal Italian squares of order $6$ — far below the ceiling of $5$. Euler conjectured, correctly, that it is impossible, and in 1900 Gaston Tarry confirmed it by exhaustive analysis: **no two orthogonal squares of order $6$ exist.** For $n = 6$ the achievable maximum is just $1$, dramatically short of the bound $5$.
-
-Euler went further and guessed that the same failure happens for every order of the form $4k + 2$ — orders $6, 10, 14, 18, \dots$. Here he was spectacularly wrong. In a triumph of mid-twentieth-century combinatorics, Bose, Shrikhande, and Parker — soon nicknamed "Euler's spoilers" — constructed orthogonal squares of order $10$, then of every order $4k+2$ above $6$. The lone exception to abundance is $6$ itself.
-
-## Why prime powers, and what we still don't know
-
-So the bound $n - 1$ is *attained* whenever $n$ is a prime power — that direction is now fully and rigorously established. The natural converse asks: **is $n - 1$ attainable only when $n$ is a prime power?** Reaching the full ceiling of $n - 1$ squares is equivalent to the existence of a **finite projective plane** of order $n$, one of the most elegant structures in geometry. Every known finite projective plane has prime-power order, and it is a famous open conjecture — unproven for over a century — that no others exist.
-
-Partial knowledge fences the problem in. The Bruck–Ryser–Chowla theorem rules out infinitely many non-prime-power orders (for instance $6$, $14$, $21$, $22$); and a monumental computer search settled that **no projective plane of order $10$ exists**, so the full ceiling of $9$ squares is unreachable at $n = 10$ even though pairs and larger partial families do exist there. But for general $n$ the converse remains gloriously open. We have proven the half that can be proven — the prime-power construction reaching the bound — and we have been scrupulous not to claim the half that nobody yet can.
-
-## Why any of this matters
-
-These squares are not idle decoration. Orthogonal families are the combinatorial skeleton of:
-
-- **Experimental design.** Balanced testing of multiple factors — fertilizers, drugs, machine settings — without confounding, the foundation Fisher laid for modern statistics.
-- **Error-correcting codes.** A complete family of $n - 1$ mutually orthogonal squares is equivalent to a maximum-distance-separable code, the gold standard for detecting and repairing corrupted data.
-- **Cryptography and hashing.** The affine maps $x \mapsto a x + b$ that generate our squares form a *sharply 2-transitive* group, the algebraic engine behind authentication codes and good hash functions.
-- **Scheduling and tournaments.** Round-robin schedules, conflict-free time-tabling, and frequency assignment all reduce to coloring a grid with non-interfering classifications.
-
-The deepest lesson, though, is aesthetic. We began with a children's puzzle — fill a grid so nothing repeats in a line. We asked a single sharp question — how many such grids can coexist in harmony? And the answer braided together the pigeonhole principle, the arithmetic of finite fields, eighteenth-century officers, and a geometry conjecture still open today. A ceiling of $n - 1$, touched effortlessly by the slopes of a finite field, yet hovering forever out of reach over a $6 \times 6$ board. That is the quiet, durable beauty of the secret geometry of grids.
+The story of Italian squares is the story of mathematics in miniature: a
+rule a child could follow at the dinner table, a ceiling proved by an
+argument you can hold in your hand, a construction whose magic is the
+single act of dividing by a nonzero number, and — lurking just past the
+edge of what we can prove — a geometric mystery that has resisted every
+assault for two and a half centuries. The next time you set a table, spare
+a thought for the napkins and the wine glasses. They know more geometry
+than they let on.
