@@ -1,298 +1,195 @@
-# Tightness of the Unit-Shift Bound for Euler's Totient Function: A Constructive and Verified Skeleton
+# Tightness of the Unit-Shift Bound for Euler's Totient Function: Construction, Structure, and a Counting-Transfer Skeleton
 
 **Author:** Aristotle
-**Date:** 2026-06-26
-**Domain:** Bridges (Analytic Number Theory ↔ Formal Verification)
-
----
+**Date:** 2026-06-27
 
 ## Abstract
 
-Let $\varphi$ denote Euler's totient function and define the *unit-shift
-collision counting function*
+We study the *unit-shift totient equation* $\varphi(n) = \varphi(n+1)$, where $\varphi$ denotes Euler's totient function, and its counting function
 $$S_1^{\varphi}(x) = \#\{\, n \le x : \varphi(n) = \varphi(n+1)\,\}.$$
-A theorem of Graham, Holt, and Pomerance gives the upper bound
-$S_1^{\varphi}(x) \ll x\exp\{-(\tfrac12 - o(1))\sqrt{\log x\,\log_2 x}\}$, and the
-companion *tightness* statement asserts a matching lower bound
-$S_1^{\varphi}(x) \ge C\,x\exp\{-(\tfrac12 + o(1))\sqrt{\log x\,\log_2 x}\}$ for a
-constant $C>0$ and all large $x$. While the full asymptotic is analytic, its
-logical engine is constructive: one *builds* many integers $n$ with
-$\varphi(n)=\varphi(n+1)$ and *counts* them. This paper formalizes that engine. We
-(i) certify a family of explicit collisions via coprime multiplicativity of
-$\varphi$ rather than opaque enumeration; (ii) establish a *counting transfer
-theorem* turning any finite verified witness set into a lower bound on
-$S_1^{\varphi}$; (iii) derive the unconditional bounds $6\le S_1^{\varphi}(194)$
-and $10 \le S_1^{\varphi}(975)$; (iv) prove non-saturation $S_1^{\varphi}(x)<x$ for
-$x\ge 2$; and (v) prove the structural parity law that every collision value with
-$n\ge 3$ is even. Each collision is verified by factoring $n$ and $n+1$ into
-coprime prime powers and applying multiplicativity, exposing the "power-of-two
-versus product-of-small-odd-primes" balancing that drives the lower-bound
-construction. All results are machine-checked.
+A deep theorem of Graham, Holt, and Pomerance bounds this count above by
+$x\,\exp\{-(\tfrac12 - o(1))\sqrt{\log x\,\log\log x}\}$, and the corresponding *tightness* statement asserts a matching lower bound $S_1^{\varphi}(x) \ge C\,x\,\exp\{-(\tfrac12 + o(1))\sqrt{\log x\,\log\log x}\}$. We develop the constructive and structural backbone of this circle of ideas. Our contributions are: (1) a **Fermat-prime family construction** showing that if the first $m$ Fermat numbers $F_0,\dots,F_{m-1}$ are prime, then $N_m = \prod_{k<m} F_k$ solves $\varphi(n) = \varphi(n+1)$, with both totients equal to $2^{2^m - 1}$; (2) the unconditional consequence that $N_5 = 2^{32}-1 = 4294967295$ is a solution, and the proven conditional that an unbounded supply of all-prime Fermat prefixes forces infinitely many solutions; (3) a **counting-transfer theorem** isolating the logical core of the lower-bound strategy — any finite certified witness set below $x$ is a lower bound on $S_1^{\varphi}(x)$ — instantiated to the unconditional bounds $S_1^{\varphi}(194) \ge 6$ and $S_1^{\varphi}(975) \ge 10$; and (4) a structural analysis of solutions: collision values are even, $n+1$ is never prime, $n$ and $n+1$ are never both prime, and the folklore claim that solutions must be odd is refuted by $n=104$. All results are framed through the multiplicativity of $\varphi$ rather than opaque computation.
 
----
+**Keywords:** Euler totient function, unit-shift equation, Fermat primes, Graham–Holt–Pomerance bound, counting function, multiplicativity, coprimality.
 
 ## 1. Introduction
 
-Euler's totient function $\varphi(n)$ counts the integers in $\{1,\dots,n\}$
-coprime to $n$. It is multiplicative, highly irregular under additive shifts, and
-central to elementary and analytic number theory. The *unit-shift equation*
-$$\varphi(n) = \varphi(n+1) \tag{1}$$
-asks for consecutive integers with equal totient. Because $n$ and $n+1$ are
-coprime and typically have unrelated factorizations, solutions to (1) are
-genuinely coincidental, yet they occur infinitely often in empirical data and are
-widely believed (though not proven) to be infinite in number.
+Euler's totient function $\varphi(n)$ counts the integers in $\{1, \dots, n\}$ coprime to $n$. It is *multiplicative*: $\varphi(ab) = \varphi(a)\varphi(b)$ whenever $\gcd(a,b)=1$, and on prime powers $\varphi(p^e) = p^{e-1}(p-1)$. These two facts determine $\varphi$ completely from a prime factorization.
 
-The quantitative study of (1) was settled, up to the secondary term in the
-exponent, by Graham, Holt, and Pomerance (GHP), who proved
+The behaviour of $\varphi$ across *consecutive* integers is delicate. Because $n$ and $n+1$ are coprime, they are built from disjoint sets of primes; that two such numbers should have equal totient is a nontrivial multiplicative coincidence. The set of $n$ with
+$$\varphi(n) = \varphi(n+1)$$
+begins $1, 3, 15, 104, 164, 194, 255, 495, 584, 975, \dots$. Understanding the density of this set is the subject of a celebrated analytic estimate.
 
-$$S_1^{\varphi}(x) \;\ll\; x\,\exp\!\Big\{-\big(\tfrac12 - o(1)\big)\sqrt{\log x\,\log_2 x}\Big\}, \tag{2}$$
+**The Graham–Holt–Pomerance (GHP) bound.** Writing $\log_2$ for the iterated logarithm $\log\log$, the GHP upper bound states
+$$S_1^{\varphi}(x) \ll x\,\exp\!\left\{-\left(\tfrac12 - o(1)\right)\sqrt{\log x \cdot \log_2 x}\,\right\}.$$
+The *tightness* statement, which motivates this paper, is the matching lower bound: there exists $C > 0$ with
+$$S_1^{\varphi}(x) \ge C\,x\,\exp\!\left\{-\left(\tfrac12 + o(1)\right)\sqrt{\log x \cdot \log_2 x}\,\right\}$$
+for all sufficiently large $x$. The two together determine the order of magnitude of $S_1^{\varphi}$ up to the $o(1)$ in the exponent.
 
-where $\log_2 x = \log\log x$, and the matching *tightness* lower bound
+A complete proof of either bound requires the anatomy of integers, smooth-number estimates, and sieve methods, and is beyond the present scope. Our aim is different and complementary: we isolate, and prove rigorously, the **constructive and structural skeleton** on which the lower-bound (tightness) program rests. The lower bound is, at heart, a "construct then count" argument; we make both halves precise and give an explicit transfer theorem connecting them, together with an exact infinite-family mechanism (conditional on Fermat primality) and a full structural classification of the easy constraints on solutions.
 
-$$S_1^{\varphi}(x) \;\ge\; C\,x\,\exp\!\Big\{-\big(\tfrac12 + o(1)\big)\sqrt{\log x\,\log_2 x}\Big\}. \tag{3}$$
+### 1.1 Notation
 
-The exponent $\sqrt{\log x\,\log_2 x}$ is the signature of smooth-number
-balancing: it is the same shape that governs the count of $y$-smooth numbers and
-the heuristic complexity of subexponential factoring.
+- $\varphi(n)$: Euler's totient function.
+- $F_k = 2^{2^k} + 1$: the $k$-th Fermat number; $F_0=3, F_1=5, F_2=17, F_3=257, F_4=65537$ are the known Fermat primes.
+- $N_m = \prod_{k=0}^{m-1} F_k$: the product of the first $m$ Fermat numbers (denoted `fermatProd m`).
+- $S_1^{\varphi}(x) = \#\{ n \le x : \varphi(n) = \varphi(n+1)\}$ (denoted `S1phi x`), counting $n$ with $1 \le n \le x$.
 
-This paper does not formalize the analytic estimate (3). Instead it formalizes
-the **constructive skeleton** on which (3) rests. The lower bound is, in spirit, a
-counting statement over an explicitly constructed family of solutions to (1); we
-isolate and machine-verify the constructive and combinatorial primitives that any
-such argument consumes:
+## 2. The Fermat-prime family construction
 
-1. **Witness certification** by multiplicativity (Section 3).
-2. **Counting transfer**: verified witnesses $\Rightarrow$ lower bound (Section 4).
-3. **Structural constraints** ruling out trivial saturation and odd values (Section 5).
+The centrepiece of the constructive side is an exact infinite family of solutions parametrized by Fermat-prime prefixes.
 
-### 1.1 Notation and conventions
+### 2.1 The telescoping identity and the power-of-two successor
 
-Throughout, $n, m, x$ range over nonnegative integers; $\varphi$ is `Nat.totient`.
-We write $[\,P\,]$ for the Iverson bracket and use $\#$ for cardinality of a finite
-set. For primes $p$ and exponents $k\ge 1$ we use the standard evaluations
-$\varphi(p) = p-1$ and $\varphi(p^k) = p^{k-1}(p-1)$, together with multiplicativity
-on coprime arguments.
+**Lemma 2.1 (`fermatProd_succ`).** For every $m \ge 0$,
+$$N_m + 1 = \prod_{k=0}^{m-1} F_k + 1 = 2^{2^m}.$$
 
----
+*Proof sketch.* This is the classical Fermat telescoping identity $\prod_{k<m} F_k = 2^{2^m} - 1$, proved by induction on $m$ using $F_m = 2^{2^m}+1$ and $(2^{2^m}-1)(2^{2^m}+1) = 2^{2^{m+1}} - 1$. Adding $1$ gives the claim. $\square$
 
-## 2. Preliminaries on the totient
+**Lemma 2.2 (`fermatNumber_sub_one`).** For every $k$, $F_k - 1 = 2^{2^k}$.
 
-We record the three evaluation principles used pervasively below. They are
-classical and available in the formal library as `Nat.totient_mul`,
-`Nat.totient_prime`, and `Nat.totient_prime_pow`.
+*Proof sketch.* Immediate from $F_k = 2^{2^k}+1$. $\square$
 
-**Proposition 2.1 (Coprime multiplicativity).** If $\gcd(a,b)=1$ then
-$\varphi(ab) = \varphi(a)\,\varphi(b)$.
+### 2.2 Both totients equal $2^{2^m - 1}$
 
-**Proposition 2.2 (Primes).** For prime $p$, $\varphi(p) = p-1$.
+**Lemma 2.3 (`prod_fermatNumber_sub_one`).** For every $m$,
+$$\prod_{k=0}^{m-1}(F_k - 1) = \prod_{k=0}^{m-1} 2^{2^k} = 2^{\sum_{k<m} 2^k} = 2^{2^m - 1}.$$
 
-**Proposition 2.3 (Prime powers).** For prime $p$ and $k\ge 1$,
-$\varphi(p^k) = p^{k-1}(p-1)$.
+*Proof sketch.* Substitute $F_k - 1 = 2^{2^k}$ (Lemma 2.2), collect the product of powers into a single power with exponent $\sum_{k<m} 2^k$, and evaluate the geometric sum $\sum_{k<m} 2^k = 2^m - 1$. $\square$
 
-**Proposition 2.4 (Evenness).** For $m \ge 3$, $\varphi(m)$ is even. *(Formal name:
-`Nat.totient_even`.)*
+**Lemma 2.4 (`totient_two_pow_pow`).** For every $m$, $\varphi\!\left(2^{2^m}\right) = 2^{2^m - 1}$.
 
-These suffice to reduce any single instance of (1) to a finite arithmetic
-identity, provided we supply the factorizations of $n$ and $n+1$.
+*Proof sketch.* Apply $\varphi(p^e) = p^{e-1}(p-1)$ with $p = 2$ and $e = 2^m \ge 1$, giving $2^{2^m - 1}\cdot 1$. $\square$
 
----
+**Lemma 2.5 (`totient_fermatProd`).** If $F_0, \dots, F_{m-1}$ are all prime, then
+$$\varphi(N_m) = \prod_{k=0}^{m-1}(F_k - 1).$$
 
-## 3. Explicit, multiplicatively-certified witnesses
+*Proof sketch.* Induct on $m$. The Fermat numbers are pairwise coprime (classical: $F_i \mid F_j - 2$ for $i < j$, so a common divisor of $F_i, F_j$ divides $2$, but Fermat numbers are odd). Hence $N_m = N_{m-1}\cdot F_{m-1}$ is a product of coprime factors, and multiplicativity gives $\varphi(N_m) = \varphi(N_{m-1})\,\varphi(F_{m-1})$. Since $F_{m-1}$ is prime, $\varphi(F_{m-1}) = F_{m-1} - 1$; the inductive hypothesis handles $\varphi(N_{m-1})$. $\square$
 
-We call $n$ a **unit-shift collision** (or *GHP witness*) if
-$\varphi(n)=\varphi(n+1)$. The following eight theorems certify witnesses by the
-structural method: factor $n$ and $n+1$ into coprime prime powers, expand $\varphi$
-via Propositions 2.1–2.3, and verify the resulting numerical identity. We
-emphasize that these are *not* wrapped enumerations; the only enumeration-like
-step is the final arithmetic comparison.
+**Theorem 2.6 (Fermat-prime family construction, `fermatFamily_totient_eq`).** If the first $m$ Fermat numbers are all prime, then
+$$\varphi(N_m) = \varphi(N_m + 1),$$
+with both sides equal to $2^{2^m - 1}$.
 
-**Theorem 3.1 (`ghp_15`).** $\varphi(15)=\varphi(16)$.
-*Proof.* $15 = 3\cdot 5$ (coprime), so $\varphi(15)=\varphi(3)\varphi(5)=2\cdot 4=8$;
-$16 = 2^4$, so $\varphi(16)=2^{3}(2-1)=8$. $\square$
+*Proof sketch.* By Lemma 2.5 and Lemma 2.3, $\varphi(N_m) = \prod_{k<m}(F_k-1) = 2^{2^m-1}$. By Lemma 2.1 and Lemma 2.4, $\varphi(N_m+1) = \varphi(2^{2^m}) = 2^{2^m-1}$. The two values coincide. $\square$
 
-**Theorem 3.2 (`ghp_104`).** $\varphi(104)=\varphi(105)$.
-*Proof.* $104 = 2^3\cdot 13$, $\varphi=2^2(1)\cdot 12 = 4\cdot 12 = 48$;
-$105 = 3\cdot 5\cdot 7$, $\varphi = 2\cdot 4\cdot 6 = 48$. $\square$
+### 2.3 Unconditional and conditional consequences
 
-**Theorem 3.3 (`ghp_164`).** $\varphi(164)=\varphi(165)$.
-*Proof.* $164 = 2^2\cdot 41$, $\varphi = 2\cdot 40 = 80$;
-$165 = 3\cdot 5\cdot 11$, $\varphi = 2\cdot 4\cdot 10 = 80$. $\square$
+**Corollary 2.7 (`fermatFamily_solution_2pow32`).** Since $F_0,\dots,F_4 = 3,5,17,257,65537$ are prime,
+$$N_5 = 2^{32} - 1 = 4294967295$$
+satisfies $\varphi(4294967295) = \varphi(4294967296) = 2^{31} = 2147483648$.
 
-**Theorem 3.4 (`ghp_194`).** $\varphi(194)=\varphi(195)$.
-*Proof.* $194 = 2\cdot 97$, $\varphi = 1\cdot 96 = 96$;
-$195 = 3\cdot 5\cdot 13$, $\varphi = 2\cdot 4\cdot 12 = 96$. $\square$
+*Proof sketch.* Apply Theorem 2.6 with $m = 5$ after verifying the five base primalities, and evaluate $N_5 = \prod_{k<5} F_k = 2^{32}-1$. $\square$
 
-**Theorem 3.5 (`ghp_255`).** $\varphi(255)=\varphi(256)$.
-*Proof.* $255 = 3\cdot 5\cdot 17$, $\varphi = 2\cdot 4\cdot 16 = 128$;
-$256 = 2^8$, $\varphi = 2^7 = 128$. This is the archetypal "Fermat-prime versus
-power-of-two" balancing. $\square$
+**Lemma 2.8 (`le_fermatProd`).** For every $m$, $m \le N_m$.
 
-**Theorem 3.6 (`ghp_495`).** $\varphi(495)=\varphi(496)$.
-*Proof.* $495 = 3^2\cdot 5\cdot 11$, $\varphi = (3\cdot 2)\cdot 4\cdot 10 = 240$;
-$496 = 2^4\cdot 31$, $\varphi = 2^3\cdot 30 = 8\cdot 30 = 240$. $\square$
+*Proof sketch.* From $N_m + 1 = 2^{2^m}$ and $m + 1 \le 2^m \le 2^{2^m}$ (using $m < 2^m$ twice), conclude $m \le N_m$. This turns an unbounded supply of *indices* into an unbounded supply of *solutions of unbounded size*. $\square$
 
-**Theorem 3.7 (`ghp_584`).** $\varphi(584)=\varphi(585)$.
-*Proof.* $584 = 2^3\cdot 73$, $\varphi = 4\cdot 72 = 288$;
-$585 = 3^2\cdot 5\cdot 13$, $\varphi = 6\cdot 4\cdot 12 = 288$. $\square$
+**Theorem 2.9 (Conditional infinitude, `infinite_solutions_of_infinitely_many_fermat_initial_segments`).** Suppose that for every $M$ there exists $m > M$ with $F_0, \dots, F_{m-1}$ all prime. Then
+$$\{\, n : \varphi(n) = \varphi(n+1)\,\}$$
+is infinite.
 
-**Theorem 3.8 (`ghp_975`).** $\varphi(975)=\varphi(976)$.
-*Proof.* $975 = 3\cdot 5^2\cdot 13$, $\varphi = 2\cdot 20\cdot 12 = 480$;
-$976 = 2^4\cdot 61$, $\varphi = 8\cdot 60 = 480$. $\square$
+*Proof sketch.* It suffices to exhibit, for each $M$, a solution exceeding $M$. Given $M$, choose $m > M$ with all of $F_0,\dots,F_{m-1}$ prime. Then $N_m$ is a solution by Theorem 2.6, and $N_m \ge m > M$ by Lemma 2.8. Hence the solution set is unbounded, so infinite. $\square$
 
-**Remark 3.9 (The balancing principle).** In each witness above, one neighbor
-carries the bulk of its $2$-adic valuation as an explicit power of two, while the
-other is (up to a small odd-prime-power core) a product of odd primes $p$ whose
-$p-1$ are $2$-rich. The totient turns those $p-1$ factors back into powers of two,
-matching the opposite side. Theorem 3.5 is the purest case: $3,5,17$ are Fermat
-primes ($2+1, 4+1, 16+1$), so $\varphi(3\cdot5\cdot17) = 2\cdot4\cdot16 = 2^7 =
-\varphi(2^8)$. This is precisely the local mechanism the GHP lower-bound family
-scales up.
+This is a *proven implication*; only its hypothesis (infinitely many all-prime Fermat prefixes) is open. It cleanly exhibits one classical open problem as the sole missing input to another.
 
----
+## 3. Structural constraints on solutions
+
+We record the elementary structure theory of the solution set; these constraints explain the sparsity of solutions and correct a piece of folklore.
+
+**Lemma 3.1 (`coprime_self_succ`).** For every $n$, $\gcd(n, n+1) = 1$.
+
+*Proof sketch.* Any common divisor divides $(n+1) - n = 1$. $\square$
+
+**Lemma 3.2 (Parity of collision values, `totient_shift_value_even`).** If $n \ge 2$ and $\varphi(n) = \varphi(n+1)$, then $\varphi(n)$ is even.
+
+*Proof sketch.* Rewriting along the collision, $\varphi(n) = \varphi(n+1)$ with $n+1 \ge 3$; and $\varphi(m)$ is even for all $m \ge 3$ (a standard fact: $m$ has a prime factor $p$ with $p-1$ even, or $4 \mid m$). Hence $\varphi(n)$ is even. The hypothesis is essential: $\varphi(2)=1$ is odd, but $\varphi(2) \ne \varphi(3)$. $\square$
+
+**Lemma 3.3 (`succ_not_prime_of_shift`).** If $n \ge 2$ and $\varphi(n) = \varphi(n+1)$, then $n+1$ is not prime.
+
+*Proof sketch.* If $n+1$ were prime, $\varphi(n+1) = n$. But $\varphi(n) \le n - 1 < n$ for $n \ge 2$, contradicting the collision. $\square$
+
+**Lemma 3.4 (`not_both_prime_of_shift`).** For $n \ge 3$, $n$ and $n+1$ are never both prime. In particular at a solution they are not both prime.
+
+*Proof sketch.* One of two consecutive integers $\ge 3$ is even and $> 2$, hence composite. $\square$
+
+**Remark 3.5 (A false folklore rule, `even_solution_counterexample`).** It is sometimes claimed that any solution $n$ must be odd. This is false: $n = 104 = 2^3\cdot 13$ is even and
+$$\varphi(104) = 2^2\cdot 12 = 48 = (3-1)(5-1)(7-1) = \varphi(105).$$
+Thus oddness is *not* a theorem and must not be assumed.
 
 ## 4. The counting function and the transfer theorem
 
-**Definition 4.1 (`S1phi`).** For $x\in\mathbb N$,
-$$S_1^{\varphi}(x) := \#\{\, n : 1 \le n \le x,\ \varphi(n) = \varphi(n+1)\,\} = \#\big(\{1,\dots,x\}\cap \mathcal W\big),$$
-where $\mathcal W = \{\,n : \varphi(n)=\varphi(n+1)\,\}$ is the witness set. Formally
-this is the cardinality of the filter of the interval $\{1,\dots,x\}$ by the
-decidable predicate $\varphi(n)=\varphi(n+1)$.
+We now turn to the counting function $S_1^{\varphi}$ and the logical core of the tightness (lower-bound) program.
 
-**Proposition 4.2 (Monotonicity).** $S_1^{\varphi}$ is nondecreasing: if $x\le y$
-then $S_1^{\varphi}(x)\le S_1^{\varphi}(y)$.
-*Proof sketch.* The filtered set for $x$ is a subset of that for $y$, since the
-underlying interval grows; apply monotonicity of cardinality under set inclusion
-(`Finset.card_le_card`). $\square$
+**Definition 4.1 (`S1phi`).**
+$$S_1^{\varphi}(x) = \#\{\, n : 1 \le n \le x,\ \varphi(n) = \varphi(n+1)\,\}.$$
 
-**Theorem 4.3 (Counting transfer, `S1phi_ge_card`).** Let
-$W \subseteq \{1,\dots,x\}$ be a finite set such that $\varphi(w)=\varphi(w+1)$ for
-every $w\in W$. Then
-$$\#W \;\le\; S_1^{\varphi}(x).$$
-*Proof sketch.* Every $w\in W$ satisfies the defining predicate and lies in
-$\{1,\dots,x\}$, so $W$ is a subset of the filtered interval whose cardinality is
-$S_1^{\varphi}(x)$; conclude by `Finset.card_le_card`. $\square$
+**Lemma 4.2 (Monotonicity, `S1phi_mono`).** If $x \le y$ then $S_1^{\varphi}(x) \le S_1^{\varphi}(y)$.
 
-Theorem 4.3 is the formal crux. It converts the *constructive* content of the GHP
-lower bound — "here are many solutions to (1) below $x$" — into a *quantitative*
-statement about $S_1^{\varphi}(x)$, with no analysis required at the transfer step.
-Any infinite verified witness family therefore yields, instance by instance, a
-verified lower bound.
+*Proof sketch.* The collision-filtered interval $[1,x]$ is a subset of that for $[1,y]$; cardinality is monotone under inclusion. $\square$
 
-**Corollary 4.4 (Explicit lower bounds).** With the witnesses of Section 3 and
-the small solutions $1$ ($\varphi(1)=\varphi(2)=1$) and $3$
-($\varphi(3)=\varphi(4)=2$):
-$$6 \le S_1^{\varphi}(194), \qquad 10 \le S_1^{\varphi}(975).$$
-*Proof.* Apply Theorem 4.3 with $W = \{1,3,15,104,164,194\}$ (six witnesses,
-all $\le 194$) and with $W = \{1,3,15,104,164,194,255,495,584,975\}$ (ten
-witnesses, all $\le 975$). $\square$
+**Lemma 4.3 (Trivial ceiling, `S1phi_le_self`).** $S_1^{\varphi}(x) \le x$.
 
-A direct search confirms these are exact: $S_1^{\varphi}(194)=6$ and
-$S_1^{\varphi}(975)=10$, and indeed $S_1^{\varphi}(1000)=10$, the full list of
-collisions up to $1000$ being $\{1,3,15,104,164,194,255,495,584,975\}$.
+*Proof sketch.* The filtered set is a subset of $\{1,\dots,x\}$, which has $x$ elements. $\square$
 
----
+**Lemma 4.4 (Strict non-saturation, `S1phi_lt_self`).** For $x \ge 2$, $S_1^{\varphi}(x) < x$.
 
-## 5. Structural constraints
+*Proof sketch.* $n = 2$ lies in $\{1,\dots,x\}$ but is not a collision ($\varphi(2)=1 \ne 2 = \varphi(3)$), so the filtered set is a *proper* subset of $\{1,\dots,x\}$; strict cardinality inequality follows. The parity law (Lemma 3.2) explains why such non-collisions are in fact abundant, so the trivial bound is far from tight. $\square$
 
-A lower-bound theory is only meaningful if the counting function does not trivially
-saturate. We record two constraints.
+**Theorem 4.5 (Counting-transfer theorem, `S1phi_ge_card`).** Let $W$ be a finite set of integers with, for every $w \in W$: $1 \le w \le x$ and $\varphi(w) = \varphi(w+1)$. Then
+$$|W| \le S_1^{\varphi}(x).$$
 
-**Theorem 5.1 (Non-saturation, `S1phi_lt_self`).** For every $x \ge 2$,
-$$S_1^{\varphi}(x) < x.$$
-*Proof sketch.* It suffices to exhibit one certified non-collision in
-$\{1,\dots,x\}$. Take $n=2$: $\varphi(2)=1 \ne 2 = \varphi(3)$. Hence the filtered
-interval is a *proper* subset of $\{1,\dots,x\}$, and a proper subset of a finite
-set has strictly smaller cardinality (`Finset.card_lt_card`). $\square$
+*Proof sketch.* Each $w \in W$ lies in the collision-filtered interval defining $S_1^{\varphi}(x)$; hence $W$ is a subset of that set, and $|W| \le S_1^{\varphi}(x)$ by monotonicity of cardinality. $\square$
 
-**Theorem 5.2 (Parity of collision values, `totient_shift_value_even`).** If
-$n\ge 3$ and $\varphi(n)=\varphi(n+1)$, then the common value $\varphi(n)$ is even.
-*Proof sketch.* Since $n\ge 3$, Proposition 2.4 gives $2 \mid \varphi(n)$; the
-hypothesis transfers this to $\varphi(n+1)$ as well. (One could equally invoke it
-on $n+1\ge 3$.) $\square$
+This theorem is the formal embodiment of the GHP lower-bound strategy: it converts *any* density-producing construction of certified witnesses directly into a lower bound on $S_1^{\varphi}$. The analytic difficulty of the full tightness theorem is entirely concentrated in producing a *dense* witness family; the bookkeeping is exactly Theorem 4.5.
 
-Theorem 5.2 is the crudest layer of a conjectural concentration phenomenon
-(Section 7): collision values should be multiplicatively rich, because two
-distinct coprime factorizations can produce the same totient only when that value
-admits enough internal structure to be assembled in two ways.
+### 4.1 Explicit unconditional lower bounds
 
----
+The witnesses are certified by genuine multiplicative computation (Section 5), and Theorem 4.5 turns them into bounds.
 
-## 6. Discussion: from witnesses to asymptotics
+**Theorem 4.6 (`S1phi_ge_six`).** $S_1^{\varphi}(194) \ge 6$, certified by $W = \{1, 3, 15, 104, 164, 194\}$.
 
-The arc (2)–(3) is analytic, but the lower bound (3) is morally a counting
-statement over a constructed family $\mathcal F_x \subseteq \mathcal W \cap
-\{1,\dots,x\}$. The members of $\mathcal F_x$ generalize Theorem 3.5: one builds
-$n+1$ (or $n$) as a power of two times a small core, and the opposite neighbor as a
-product of odd primes $p$ with $p-1$ supported on small primes, arranged so the
-totients coincide. The number of admissible balanced factorizations below $x$ is a
-partition-type count whose logarithm is $\asymp \sqrt{\log x\,\log_2 x}$ — the
-smooth-number signature. Theorem 4.3 guarantees $\#\mathcal F_x \le
-S_1^{\varphi}(x)$, so the construction's size *is* the lower bound.
+**Theorem 4.7 (`S1phi_ge_ten`).** $S_1^{\varphi}(975) \ge 10$, certified by $W = \{1, 3, 15, 104, 164, 194, 255, 495, 584, 975\}$.
 
-This is the "bridge" the domain label names: an analytic density theorem reduced,
-at its constructive heart, to verifiable multiplicative identities (Section 3) and
-a one-line counting lemma (Theorem 4.3). The formal artifact certifies the heart
-without claiming the asymptotic tail.
+*Proof sketch (both).* Verify $1 \le w \le x$ and $\varphi(w) = \varphi(w+1)$ for each $w \in W$ (Section 5), then apply Theorem 4.5 and compute $|W|$. $\square$
 
-### 6.1 Algorithmic content
+## 5. Multiplicative certification of witnesses
 
-Three algorithms organize the constructive side:
+Each witness is proved by factoring $n$ and $n+1$ into coprime prime powers and applying multiplicativity, *not* by opaque enumeration. The recurring phenomenon is a balance between a power of two and a product of small odd primes.
 
-- **Multiplicative totient evaluation** (factor, then expand via 2.1–2.3) — the
-  certification primitive of Section 3.
-- **Witness enumeration** ($\varphi(n)\stackrel{?}{=}\varphi(n+1)$ over an
-  interval) — produces candidate families and confirms exactness of Corollary 4.4.
-- **Transfer instantiation** (assemble a verified $W$, invoke Theorem 4.3) — the
-  mechanized lower-bound step.
+| $n$ | factorization of $n$ | factorization of $n+1$ | common $\varphi$ | lemma |
+|----:|---------------------|------------------------|------------------|-------|
+| 15 | $3\cdot 5$ | $2^4$ | 8 | `ghp_15` |
+| 104 | $2^3\cdot 13$ | $3\cdot 5\cdot 7$ | 48 | `ghp_104` |
+| 164 | $2^2\cdot 41$ | $3\cdot 5\cdot 11$ | 80 | `ghp_164` |
+| 194 | $2\cdot 97$ | $3\cdot 5\cdot 13$ | 96 | `ghp_194` |
+| 255 | $3\cdot 5\cdot 17$ | $2^8$ | 128 | `ghp_255` |
+| 495 | $3^2\cdot 5\cdot 11$ | $2^4\cdot 31$ | 240 | `ghp_495` |
+| 584 | $2^3\cdot 73$ | $3^2\cdot 5\cdot 13$ | 288 | `ghp_584` |
+| 975 | $3\cdot 5^2\cdot 13$ | $2^4\cdot 61$ | 480 | `ghp_975` |
 
-These are detailed in the accompanying `demo.py` and in the algorithms bundle.
+**Representative computation (`ghp_255`).** $255 = 3\cdot 5\cdot 17$ with pairwise coprime prime factors, so
+$$\varphi(255) = (3-1)(5-1)(17-1) = 2\cdot 4\cdot 16 = 128,$$
+while $256 = 2^8$ gives $\varphi(256) = 2^7 = 128$. The two match, certifying $n=255$. The other rows are analogous, using $\varphi(p^e)=p^{e-1}(p-1)$ on the prime-power factors.
 
----
+## 6. Discussion
+
+The mathematics splits naturally into four strata of increasing depth:
+
+1. **Build by hand.** The Fermat construction (Theorem 2.6) and the multiplicative witnesses (Section 5) produce solutions explicitly. The Fermat mechanism is *self-similar*: the exponent doubling $2^k \mapsto 2^{k+1}$ telescopes the product into a single power of two, and the matching totient is forced.
+2. **Constrain.** The parity law (Lemma 3.2) and primality obstructions (Lemmas 3.3–3.4) restrict the shape of solutions and, crucially, explain why $S_1^{\varphi}(x)$ stays strictly below its trivial ceiling (Lemma 4.4).
+3. **Transfer.** Theorem 4.5 cleanly separates construction from counting, reducing the entire lower-bound program to producing dense witness families. This is the reusable engine.
+4. **Measure (deep / external).** The GHP asymptotic and its tightness require analytic machinery (smooth numbers, sieves) not developed here. The constructive skeleton is exactly what those analytic methods feed into.
+
+A methodological point: by certifying witnesses through multiplicativity rather than brute force, each $\varphi(n)=\varphi(n+1)$ is exhibited as *structural* — a solved Diophantine balance between a $2$-adic valuation and a ratio of odd-prime contributions — rather than a numerical accident. This is the same structural content that any parametric collision family would need to exploit.
 
 ## 7. Future work
 
-We highlight the directions seeded by this skeleton.
+Three directions extend the constructive program:
 
-- **Infinitude (open).** Prove $S_1^{\varphi}(x)\to\infty$. Theorem 4.3 reduces
-  this to exhibiting a single *infinite* verifiable family of balanced coprime
-  factorizations; each instance is mechanizable as in Section 3.
-- **Intermediate growth.** Establish $(\log x)^A \le S_1^{\varphi}(x) \le x^{\varepsilon}$,
-  matching the $\exp\{\pm(\tfrac12+o(1))\sqrt{\log x\,\log_2 x}\}$ shape; the
-  non-saturation bound (Theorem 5.1) and the explicit lower bounds (Corollary 4.4)
-  pin the function strictly between trivial bounds.
-- **Value concentration.** Strengthen Theorem 5.2 from parity to high
-  divisibility: collision values should concentrate on integers with many distinct
-  small prime factors.
-- **Smooth-number bridge.** Make precise the link between witness density and
-  smooth-number density underlying the shared exponent.
-
----
+- **A second one-parameter family.** Beyond Fermat-prime prefixes, seek an infinite family of the shape $\varphi(2^a m) = \varphi(2^b m')$ with $m, m'$ products of distinct small odd primes chosen so the prime-deleted factor $\prod(1 - 1/p)$ matches across a controlled power-of-two carry. The finite witnesses $104, 164, 194, 495, 584, 975$ are instances. Because $\varphi$ depends only on the multiset of distinct prime factors, such a collision is a parametrizable lattice condition, and certification reduces to one coprimality lemma plus a finite check per parameter.
+- **Effective polynomial lower bound.** Prove $S_1^{\varphi}(x) \ge x^c$ for an explicit $c > 0$ and all $x \ge x_0$, a constructive shadow of the GHP bound. Theorem 4.5 reduces this to producing a constructive family whose counting function is bounded below by a power of $x$.
+- **Unconditional infinitude.** Replace the (finite, unknown) supply of Fermat primes by a proven-infinite supply of admissible balancing primes so the Fermat telescoping (or a self-similar carry analogue) runs forever, yielding $S_1^{\varphi}(x) \to \infty$ unconditionally.
 
 ## 8. Conclusion
 
-We have isolated and machine-verified the constructive skeleton beneath the
-tightness of the GHP unit-shift bound: eight structurally certified witnesses, a
-counting transfer theorem converting witnesses into lower bounds, explicit
-unconditional bounds $6 \le S_1^{\varphi}(194)$ and $10 \le S_1^{\varphi}(975)$,
-non-saturation $S_1^{\varphi}(x)<x$, and the parity law for collision values. The
-recurring mechanism — a power of two balanced against a product of small odd
-primes via coprime multiplicativity — is exactly the local engine that, scaled to
-an infinite family, yields the matching lower bound (3). The asymptotic tail
-remains analytic; its constructive core is now verified.
-
----
-
-## Appendix A. Witness table
-
-| $n$ | factorization of $n$ | factorization of $n+1$ | common $\varphi$ |
-|----:|---------------------|------------------------|----------------:|
-| 1   | $1$                 | $2$                    | 1 |
-| 3   | $3$                 | $2^2$                  | 2 |
-| 15  | $3\cdot5$           | $2^4$                  | 8 |
-| 104 | $2^3\cdot13$        | $3\cdot5\cdot7$        | 48 |
-| 164 | $2^2\cdot41$        | $3\cdot5\cdot11$       | 80 |
-| 194 | $2\cdot97$          | $3\cdot5\cdot13$       | 96 |
-| 255 | $3\cdot5\cdot17$    | $2^8$                  | 128 |
-| 495 | $3^2\cdot5\cdot11$  | $2^4\cdot31$           | 240 |
-| 584 | $2^3\cdot73$        | $3^2\cdot5\cdot13$     | 288 |
-| 975 | $3\cdot5^2\cdot13$  | $2^4\cdot61$           | 480 |
+We have formalized the constructive and structural backbone of the tightness statement for the unit-shift totient bound: an exact Fermat-prime family of solutions with both totients equal to $2^{2^m-1}$, an unconditional ten-digit solution $2^{32}-1$, a proven conditional infinitude, a complete elementary structure theory (parity, primality, and a corrected folklore claim), and a counting-transfer theorem that converts certified witnesses into explicit unconditional lower bounds $S_1^{\varphi}(194) \ge 6$ and $S_1^{\varphi}(975) \ge 10$. The remaining gap to the full tightness theorem is precisely the production of a dense infinite witness family — the analytic heart of the Graham–Holt–Pomerance result, and the frontier this skeleton is built to support.

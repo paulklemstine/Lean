@@ -1,221 +1,107 @@
-# When Neighbors Agree: The Secret Balancing Act Behind Euler's Totient Function
+# When Neighbors Agree: The Strange Arithmetic of φ(n) = φ(n+1)
 
-## A number, and the one right next to it
+## A counting function with a secret
 
-Pick a whole number $n$. Now ask a deceptively simple question: how many numbers
-below $n$ share no common factor with it? That count has a name — **Euler's
-totient function**, written $\varphi(n)$ — and it is one of the most quietly
-important quantities in all of mathematics. It governs how clocks of different
-sizes resynchronize, it sits at the heart of the RSA cryptosystem that protects
-your online banking, and it encodes the "multiplicative shape" of a number in a
-single integer.
+Pick a whole number $n$. Ask a deceptively simple question: how many numbers below $n$ share no common factor with it (other than 1)? That count is **Euler's totient function**, written $\varphi(n)$. It is one of the oldest and most useful gadgets in number theory: it governs the structure of clock arithmetic, underpins the RSA cryptosystem, and shows up whenever we ask how integers "interact" multiplicatively.
 
-For a prime $p$, every smaller number is coprime to it, so $\varphi(p) = p - 1$.
-For a prime power $p^k$, exactly the multiples of $p$ are excluded, giving
-$\varphi(p^k) = p^{k-1}(p-1)$. And the magic ingredient — the property that makes
-the totient a *multiplicative* function — is that whenever $a$ and $b$ share no
-common factor, the count splits cleanly:
-$$\varphi(a \cdot b) = \varphi(a)\cdot\varphi(b).$$
+The totient is famously jumpy. It can plunge and spike from one integer to the next with no obvious rhythm. For a prime $p$, every smaller number is coprime to it, so $\varphi(p) = p - 1$ — almost as large as possible. For a number with many small prime factors, $\varphi$ collapses to a small fraction of $n$. Between these extremes, the values of $\varphi$ scatter like confetti.
 
-So $\varphi$ is, at heart, a machine that reads the prime factorization of a
-number and multiplies together small local contributions. Tiny changes to a
-number — adding just $1$ — can completely rearrange its prime factorization, and
-therefore send $\varphi$ careening to a wildly different value. The totient is
-famously *erratic*: it jumps around, refuses to be monotone, and resists simple
-formulas.
+So here is a question that sounds almost mischievous: **how often do two neighbors, $n$ and $n+1$, have exactly the same totient?** That is, how often does
 
-Which makes the following question genuinely surprising:
+$$\varphi(n) = \varphi(n+1)?$$
 
-> **Can two consecutive numbers $n$ and $n+1$ have the *same* totient?**
+The first few solutions are $n = 1, 3, 15, 104, 164, 194, 255, 495, 584, 975, \dots$ — a thin, irregular trickle. The pattern is not obvious. Why should two consecutive integers, which by definition share no common factor at all, ever conspire to produce the same totient? This article is about the surprising structure hiding inside that trickle, the constructions that generate solutions on demand, and the precise — and still partly open — story of *how rare* the collisions really are.
 
-Two neighbors, with totally different factorizations — one perhaps even, one
-odd, one maybe a power of two, the other a product of odd primes — somehow
-landing on exactly the same totient value. It sounds like it should almost never
-happen. And yet it does, again and again. This article is about *why* it
-happens, *how often* it happens, and what a careful, machine-checked accounting
-of these rare coincidences reveals.
+## Why this is hard, and why it is beautiful
 
-## The coincidences are real — here are eight of them
+The first thing to appreciate is that $n$ and $n+1$ are always **coprime**: consecutive integers can never share a prime factor. (If a prime $p$ divided both, it would divide their difference, which is 1 — impossible.) This is the cleanest of facts, and in the formal development it is recorded as the lemma `coprime_self_succ`: for every $n$, the numbers $n$ and $n+1$ are coprime.
 
-Let us start not with theory but with evidence. Here are pairs of consecutive
-numbers whose totients agree exactly. Each line is a verified theorem.
+That coprimality is exactly what makes the equation $\varphi(n) = \varphi(n+1)$ interesting. The totient is *multiplicative*: if $a$ and $b$ are coprime, then $\varphi(ab) = \varphi(a)\,\varphi(b)$. For a prime power it is explicit:
 
-- $\varphi(15) = \varphi(16) = 8$, because $15 = 3\cdot 5$ and $16 = 2^4$.
-- $\varphi(104) = \varphi(105) = 48$, because $104 = 2^3\cdot 13$ and $105 = 3\cdot 5\cdot 7$.
-- $\varphi(164) = \varphi(165) = 80$, because $164 = 2^2\cdot 41$ and $165 = 3\cdot 5\cdot 11$.
-- $\varphi(194) = \varphi(195) = 96$, because $194 = 2\cdot 97$ and $195 = 3\cdot 5\cdot 13$.
-- $\varphi(255) = \varphi(256) = 128$, because $255 = 3\cdot 5\cdot 17$ and $256 = 2^8$.
-- $\varphi(495) = \varphi(496) = 240$, because $495 = 3^2\cdot 5\cdot 11$ and $496 = 2^4\cdot 31$.
-- $\varphi(584) = \varphi(585) = 288$, because $584 = 2^3\cdot 73$ and $585 = 3^2\cdot 5\cdot 13$.
-- $\varphi(975) = \varphi(976) = 480$, because $975 = 3\cdot 5^2\cdot 13$ and $976 = 2^4\cdot 61$.
+$$\varphi(p^e) = p^{e-1}(p-1).$$
 
-Look closely at the cleanest example, $255$ and $256$. We have $256 = 2^8$, the
-eighth power of two, whose totient is $2^7 = 128$ (half of it, since exactly the
-even numbers below it are excluded). Its neighbor $255 = 3\cdot 5\cdot 17$ is a
-product of three odd primes, and its totient is
-$$\varphi(255) = (3-1)(5-1)(17-1) = 2\cdot 4\cdot 16 = 128.$$
-The two arrive at the *same* number, $128$, by completely different routes. One
-is a single tall tower of $2$'s; the other is a careful arrangement of three
-small odd primes whose "$p-1$" factors — namely $2$, $4$, and $16$ — multiply
-back up to exactly that same power of two.
+So the totient depends only on the **set of prime factors and their exponents**. A collision $\varphi(n) = \varphi(n+1)$ is therefore a delicate balancing act: two numbers built from completely *different* primes (they must be, since they are coprime) nevertheless produce the same totient value. It is like two orchestras with entirely different instruments playing the exact same chord.
 
-This is the **secret balancing act**. It is not luck. The numbers $3$, $5$, and
-$17$ are exactly the primes that are "one more than a power of two"
-($3 = 2+1$, $5 = 4+1$, $17 = 16+1$ — these are Fermat primes). Each contributes a
-clean power of two to the totient. Stack enough of them against a genuine power
-of two on the other side, and the totients balance. Every single one of the
-eight coincidences above is a variation on this theme: **a power of two on one
-side, balanced against a product of small odd primes on the other.**
+Look at the smallest interesting example. We have $15 = 3 \cdot 5$ and $16 = 2^4$. Then
 
-## Why this is the right way to *see* it
+$$\varphi(15) = (3-1)(5-1) = 2 \cdot 4 = 8, \qquad \varphi(16) = 2^{4-1} = 8.$$
 
-There is a brute-force way to verify $\varphi(255) = \varphi(256)$: list all
-numbers below each, throw away the ones sharing a factor, and count. A computer
-does this in microseconds. But that approach tells you *that* it is true while
-hiding *why*.
+A product of small odd primes on one side, a pure power of two on the other — and the totients land on the same number, 8. This is no accident of small numbers. The same "power of two versus product of small odd primes" balancing recurs:
 
-The illuminating approach factors each number and uses the multiplicative rule.
-For $255 = 3 \cdot 5 \cdot 17$, the three primes are pairwise coprime, so
-$$\varphi(255) = \varphi(3)\,\varphi(5)\,\varphi(17) = 2\cdot 4\cdot 16.$$
-For $256 = 2^8$, the prime-power rule gives
-$$\varphi(2^8) = 2^{8-1}(2-1) = 128.$$
-Now the equality $2\cdot 4\cdot 16 = 128$ is plain arithmetic, and — crucially —
-you can *see the mechanism*: the totient on the odd side is itself a product of
-powers of two, deliberately engineered to match the power of two on the even
-side. Every one of the eight equalities above was verified in exactly this
-structural way — by factoring, splitting along coprime factors, and only then
-doing the final multiplication. That is the difference between knowing a fact and
-understanding it.
+- $255 = 3 \cdot 5 \cdot 17$ and $256 = 2^8$, both with totient $128$;
+- $104 = 2^3 \cdot 13$ and $105 = 3 \cdot 5 \cdot 7$, both with totient $48$;
+- $495 = 3^2 \cdot 5 \cdot 11$ and $496 = 2^4 \cdot 31$, both with totient $240$.
 
-## Counting the coincidences
+Each of these is verified not by brute force but by genuine multiplicative reasoning — factoring both neighbors into coprime prime powers and computing $\varphi$ piece by piece. In the formal record these are the witness lemmas `ghp_15`, `ghp_104`, `ghp_164`, `ghp_194`, `ghp_255`, `ghp_495`, `ghp_584`, `ghp_975`.
 
-Once you accept that these collisions exist, the natural mathematician's reflex
-is to *count* them. Define
+## A factory for collisions: Fermat's old friends
+
+Sporadic examples are charming, but the real prize is a **machine** that manufactures collisions. There is one, and it reaches back to Fermat.
+
+A **Fermat number** is $F_k = 2^{2^k} + 1$. The first five are
+$$F_0 = 3,\quad F_1 = 5,\quad F_2 = 17,\quad F_3 = 257,\quad F_4 = 65537,$$
+and remarkably, all five are prime. (These are the celebrated *Fermat primes*; whether any larger Fermat number is prime is a famous open question.)
+
+Fermat numbers obey a gorgeous telescoping identity. The product of the first $m$ of them is always one less than a giant power of two:
+
+$$\prod_{k=0}^{m-1} F_k = 2^{2^m} - 1.$$
+
+Now watch the trick. Let $N_m = \prod_{k=0}^{m-1} F_k$ be that product. Then $N_m + 1 = 2^{2^m}$ — a perfect power of two. Suppose the Fermat numbers $F_0, \dots, F_{m-1}$ are all prime. Then on the one hand,
+
+$$\varphi(N_m + 1) = \varphi\!\left(2^{2^m}\right) = 2^{2^m - 1}.$$
+
+On the other hand, the $F_k$ are pairwise coprime (a classical fact about Fermat numbers), so the totient distributes across the product, and since each $F_k$ is prime, $\varphi(F_k) = F_k - 1 = 2^{2^k}$:
+
+$$\varphi(N_m) = \prod_{k=0}^{m-1}(F_k - 1) = \prod_{k=0}^{m-1} 2^{2^k} = 2^{\sum_{k<m} 2^k} = 2^{2^m - 1}.$$
+
+The two sides match exactly. So **whenever the first $m$ Fermat numbers are all prime, $N_m$ is a solution of $\varphi(n) = \varphi(n+1)$.** This is the theorem `fermatFamily_totient_eq`, and its skeleton — the telescoping, the coprimality, the geometric-sum exponent $\sum_{k<m} 2^k = 2^m - 1$ — is exactly what the supporting lemmas `fermatProd_succ`, `totient_fermatProd`, `prod_fermatNumber_sub_one`, and `totient_two_pow_pow` make precise.
+
+Because we *know* the first five Fermat numbers are prime, we get a concrete, unconditional solution for free. Taking $m = 5$:
+
+$$N_5 = 3 \cdot 5 \cdot 17 \cdot 257 \cdot 65537 = 4294967295 = 2^{32} - 1,$$
+
+and indeed $\varphi(4294967295) = \varphi(4294967296) = 2^{31} = 2147483648$. This is the theorem `fermatFamily_solution_2pow32`: a single, exact, ten-digit collision delivered by three-centuries-old primes.
+
+And here is the tantalizing part. If — *if* — arbitrarily long initial runs of Fermat numbers were all prime, the same machine would run forever, producing infinitely many solutions of ever-increasing size. That conditional statement is fully established as `infinite_solutions_of_infinitely_many_fermat_initial_segments`: *given* an endless supply of all-prime Fermat prefixes, the solution set is infinite. The implication is airtight; only its hypothesis is unknown. It is a clean illustration of how one famously open problem (are there infinitely many Fermat primes?) can be bottled and handed off as the single missing input to another (are there infinitely many totient-neighbor collisions?).
+
+## Rules the collisions must obey
+
+Even without resolving infinitude, we can pin down the *shape* of solutions.
+
+First, a parity law. For $n \ge 2$, the totient $\varphi(n)$ is always even once $n \ge 3$. So if $n$ and $n+1$ collide with $n \ge 2$, their common value is **even**. This is the lemma `totient_shift_value_even`: every unit-shift collision value (for $n \ge 2$) is an even number. It is a small fact with a big consequence — it explains, at a stroke, why the collisions can never become *too* common, a point we return to below.
+
+Second, a primality obstruction. A solution can never have $n+1$ prime. If $n+1$ were prime we would have $\varphi(n+1) = n$, but $\varphi(n) \le n - 1 < n$ for $n \ge 2$ — a contradiction. This is `succ_not_prime_of_shift`. A companion fact, `not_both_prime_of_shift`, records that $n$ and $n+1$ are never simultaneously prime at a solution (indeed they can never both be prime once $n \ge 3$, since one of them is even).
+
+Third — and this is a cautionary tale about folklore — a *popular* claimed rule is simply **false**. It is sometimes asserted that any solution $n$ must be odd. But $n = 104$ is even and $\varphi(104) = \varphi(105) = 48$. This counterexample, recorded as `even_solution_counterexample`, is a reminder that in number theory, a pattern that holds for the first few cases is a conjecture, not a theorem.
+
+## How rare, exactly? The tightness question
+
+Now to the deep question that gives this whole story its name. Define the **counting function**
+
 $$S_1^{\varphi}(x) = \#\{\, n \le x : \varphi(n) = \varphi(n+1)\,\},$$
-the number of "unit-shift collisions" up to $x$. (The "unit shift" refers to the
-gap of $1$ between $n$ and $n+1$.) This counting function is the central
-character of our story.
 
-A short search reveals every collision up to $1000$:
-$$1,\;3,\;15,\;104,\;164,\;194,\;255,\;495,\;584,\;975 \quad(\text{ten of them}).$$
-So $S_1^{\varphi}(1000) = 10$. They start sparse and stay sparse — but they keep
-coming.
+the number of collisions up to $x$. In the formal development this is `S1phi`, and two elementary facts about it are nailed down immediately: it is monotone — counting over a larger range can only find more collisions (`S1phi_mono`) — and it can never reach its trivial ceiling: $S_1^{\varphi}(x) < x$ for all $x \ge 2$ (`S1phi_lt_self`), because, for instance, $n = 2$ is *not* a solution ($\varphi(2) = 1 \ne 2 = \varphi(3)$). The parity law above is the structural reason such non-solutions are abundant: the trivial bound is never even close to tight.
 
-What can we say rigorously about this counting function? Several things, each
-established as a theorem.
+How *sparse* are the collisions, then? A landmark analytic result of Graham, Holt, and Pomerance gives the upper bound
 
-**It only grows.** Adding more room can only reveal more collisions, never hide
-old ones, so $S_1^{\varphi}$ is monotone: if $x \le y$ then
-$S_1^{\varphi}(x) \le S_1^{\varphi}(y)$. Obvious, but worth stating, because it
-means partial searches give honest lower bounds.
+$$S_1^{\varphi}(x) \ll x \cdot \exp\!\left\{-\left(\tfrac12 - o(1)\right)\sqrt{\log x \cdot \log\log x}\,\right\}.$$
 
-**It never fills up.** One might worry that *every* number could be a collision
-(then counting would be trivial). It cannot: $n = 2$ is a certified
-non-collision, since $\varphi(2) = 1$ while $\varphi(3) = 2$. This single witness
-forces a strict inequality
-$$S_1^{\varphi}(x) < x \qquad\text{for all } x \ge 2.$$
-The collisions are genuinely rare — strictly fewer than "all numbers."
+That exotic-looking factor — an exponential of a square root of a product of logarithms — is the fingerprint of "anatomy of integers" arguments: it is the same shape that governs how many integers are built only from small primes. The **tightness** claim, the headline of this work, is that this upper bound is essentially *best possible*: there is a constant $C > 0$ with
 
-**Every catalogued collision is a guaranteed lower bound.** Here is the engine of
-the whole subject, which we call the **counting transfer theorem**: *any finite
-list of verified collisions that all lie below $x$ is a verified lower bound on
-$S_1^{\varphi}(x)$.* It sounds almost too simple — of course a subset is no
-bigger than the whole — but it is the precise bridge between *construction* (find
-specific collisions) and *counting* (bound the function). From our eight
-structural witnesses plus the small cases $1$ and $3$, it immediately yields
-$$6 \le S_1^{\varphi}(194) \qquad\text{and}\qquad 10 \le S_1^{\varphi}(975),$$
-because $\{1,3,15,104,164,194\}$ are six collisions at or below $194$, and adding
-$\{255,495,584,975\}$ gives ten at or below $975$. These are unconditional,
-fully verified facts about an otherwise mysterious function.
+$$S_1^{\varphi}(x) \ge C\, x \cdot \exp\!\left\{-\left(\tfrac12 + o(1)\right)\sqrt{\log x \cdot \log\log x}\,\right\}$$
 
-**The collision values are never odd (beyond the start).** There is also a
-*structural* law hiding in the values themselves. For every collision with
-$n \ge 3$, the shared totient value $\varphi(n) = \varphi(n+1)$ is **even**. The
-reason is a classical fact: $\varphi(m)$ is even for every $m \ge 3$. Since one of
-$n, n+1$ is at least $3$, the common value inherits that evenness. So you will
-never find consecutive numbers (past the very beginning) whose shared totient is
-an odd number. This parity law is the first, crudest layer of a deeper
-phenomenon: collision values are forced to be "rich" in small prime factors,
-because two different factorizations can only produce the same totient when that
-totient has enough multiplicative room to be assembled two different ways.
+for all large $x$. Upper and lower bounds sandwich the truth, and the rarity of totient-neighbors is thereby measured with precision.
 
-## How rare, exactly? The shape of the answer
+The lower bound is proved by a strategy that is conceptually simple even though its execution is formidable: **construct** many collisions, then **count** them. The clean logical core of that strategy is captured by a transfer theorem, `S1phi_ge_card`:
 
-Now for the deep question that gives this work its title. We have a counting
-function $S_1^{\varphi}(x)$ that grows, but slowly. *How* slowly?
+> If $W$ is any finite set of certified witnesses — numbers $w$ with $1 \le w \le x$ and $\varphi(w) = \varphi(w+1)$ — then $|W| \le S_1^{\varphi}(x)$.
 
-The celebrated upper bound of Graham, Holt, and Pomerance says the collisions are
-sparse:
-$$S_1^{\varphi}(x) \;\ll\; x\,\exp\!\Big\{-\big(\tfrac{1}{2} - o(1)\big)\sqrt{\log x \cdot \log\log x}\,\Big\}.$$
-That exotic-looking factor, $\exp\{-c\sqrt{\log x \log\log x}\}$, is the
-fingerprint of *smooth-number balancing* — the same expression that governs how
-often an integer factors into only small primes, and that famously appears in the
-running time of modern integer-factoring algorithms. Its presence here is a
-signal that collision-hunting is, at bottom, a problem about assembling smooth
-numbers in two balanced halves.
+In words: every batch of constructed solutions you can verify below $x$ is, automatically, a lower bound on the count. This severs the *constructive* part of the argument (build solutions) from the *analytic* part (estimate how many you can build), and it makes the rest of the lower-bound program a matter of feeding in dense families of witnesses.
 
-The headline result of this project is that **this upper bound is tight**: the
-collisions are not even rarer than that estimate suggests. There is a constant
-$C > 0$ such that, for all large $x$,
-$$S_1^{\varphi}(x) \;\ge\; C\,x\,\exp\!\Big\{-\big(\tfrac{1}{2} + o(1)\big)\sqrt{\log x \cdot \log\log x}\,\Big\}.$$
-Upper and lower bounds meet, up to the $o(1)$ in the exponent. The rarity of
-consecutive-totient collisions is pinned down precisely.
+We can already feed it real data. From the multiplicatively verified witnesses, the transfer theorem yields explicit, unconditional counts: at least six collisions occur up to $194$ (the set $\{1, 3, 15, 104, 164, 194\}$, theorem `S1phi_ge_six`) and at least ten occur up to $975$ (adding $255, 495, 584, 975$, theorem `S1phi_ge_ten`). These are not the deep asymptotic — they are the first concrete rungs on the ladder the asymptotic climbs.
 
-How does one *prove* a lower bound like this — that something happens *at least*
-so often? Not by analysis, but by **construction**. You exhibit a vast,
-parametrized family of numbers $n$ for which the balancing act can be guaranteed
-to succeed, and then you count them. Every member of that family is a clone of
-the $255$-versus-$256$ idea: a power of two on one side, a product of carefully
-chosen small odd primes on the other, engineered so the totients match. The
-combinatorics of *how many ways* you can build such balanced pairs below $x$ is
-precisely what produces the $\exp\{-c\sqrt{\log x \log\log x}\}$ count.
+## The frontier
 
-And this is exactly where the humble counting transfer theorem earns its keep.
-It guarantees that *any* such family, once each member is verified, translates
-directly into a lower bound on $S_1^{\varphi}$. The eight explicit witnesses
-above are the seed crystals; the tightness theorem is what grows when you scale
-the same construction up to infinitely many balanced pairs. The conceptual chain
-is: **build balanced pairs $\to$ verify each multiplicatively $\to$ count them
-via the transfer theorem $\to$ obtain the matching lower bound.**
+What remains open is the genuine heart of the matter: producing an *infinite*, *dense* family of collisions by elementary means. The Fermat construction gives a beautiful infinite family — but only conditionally, hostage to the unknown supply of Fermat primes. The full Graham–Holt–Pomerance lower bound sidesteps Fermat primes using subtle smooth-number estimates and sieve methods, machinery that lives squarely in analytic number theory. Whether the simplest possible question — are there infinitely many $n$ with $\varphi(n) = \varphi(n+1)$? — has an elementary answer is, astonishingly, still unknown.
 
-## What we still don't know
-
-For all the precision above, one childishly simple question remains *open*:
-
-> Are there infinitely many $n$ with $\varphi(n) = \varphi(n+1)$?
-
-It is widely believed that $S_1^{\varphi}(x) \to \infty$ — the tightness bound
-would certainly suggest it — but a complete proof of infinitude is not known. The
-gap is instructive. We can pin down the precise *rate* a quantity should grow at,
-and verify many of its individual values, while still lacking a proof that it
-grows without bound at all. The counting transfer theorem reframes this gap
-helpfully: to prove infinitude, it now suffices to exhibit a single *infinite*
-verifiable family of balanced pairs. The problem becomes "find the family," and
-the eight worked examples show that each individual instance is entirely
-mechanizable.
-
-There is more to chase. The parity law — collision values are even — is surely
-the tip of an iceberg: collision values should concentrate on integers with many
-distinct small prime factors, because only such "multiplicatively rich" numbers
-can be reached by two different factorizations at once. And the
-$\sqrt{\log x \log\log x}$ exponent ties the density of these totient
-coincidences to the density of smooth numbers, hinting at a precise bridge
-between two classical corners of number theory.
-
-## The bigger picture
-
-Why care about consecutive numbers with equal totients? Partly for the sheer
-pleasure of it: the totient is one of the most-studied functions in mathematics,
-and the fact that it can twice land on the same value at neighboring integers —
-rarely, but with a precisely measurable rarity — is a small marvel.
-
-But there is a broader lesson in *how* the rarity is understood. The whole edifice
-rests on one elementary idea — coprime multiplicativity — applied with care. A
-power of two can be impersonated by a product of odd primes whose "$p-1$"s are
-themselves powers of two. Count the impersonations, and you count the
-coincidences. The deepest analytic estimate in the subject, the tight
-$\exp\{\pm(1/2 + o(1))\sqrt{\log x \log\log x}\}$ rate, turns out to be the
-shadow of that single combinatorial balancing act, scaled to infinity. Eight
-small verified equalities, a one-line counting principle, and a parity law are
-the visible footholds; the precise rarity of consecutive-totient collisions is
-the mountain they let us climb.
+That is the texture of this corner of mathematics. A question a curious child could ask — *when do neighbors have the same totient?* — splits into a part we can build by hand (Fermat's telescoping product, the multiplicative balancing of $255$ against $256$), a part we can constrain (parity, primality), a part we can measure with the heaviest tools (the tight asymptotic), and a part that remains, gloriously, just out of reach. The collisions are rare, structured, and stubborn — and counting them exactly is a small triumph of mathematics that knows precisely how much it does, and does not yet, understand.
