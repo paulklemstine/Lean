@@ -1,54 +1,15 @@
-# Computational Evidence — EML Riccati Solvable Family
+# Theorem Trace (internal anti-hallucination ledger)
 
-Supporting `EML.EMLRiccatiSolvableFamily` and `EML.EMLGaloisSolutionSpace`.
+Source of truth: `Catalog/EML/EMLCoefficientODE.lean` and `Catalog/EML/EMLLogDerivHom.lean`.
 
-## 1. The Riccati image map `g ↦ g′ + g²` (cleared form, q = 1)
+| Lean name | Statement | ARTICLE.md | RESEARCH_PAPER.md |
+|---|---|---|---|
+| `EMLCoefficientODE.hasDerivAt_exp_comp_solves` | If `HasDerivAt F c x` then `HasDerivAt (fun t => exp (F t)) (c * exp (F x)) x`. I.e. if `F' = c` then `(exp∘F)' = c·(exp∘F)`. | "The master key" section | Theorem 1 (Master construction) |
+| `EMLCoefficientODE.solves_log_coeff` | For `0 < x`, `HasDerivAt (fun t => exp (t·log t − t)) (log x · exp (x·log x − x)) x`. Solves `y' = (log x)·y`. | "The logarithm coefficient / Stirling exponent" | Theorem 2 |
+| `EMLCoefficientODE.solves_exp_coeff` | `HasDerivAt (fun t => exp (exp t)) (exp x · exp (exp x)) x`. Solves `y' = (exp x)·y`. | "The exponential coefficient / double exponential" | Theorem 3 |
+| `EMLCoefficientODE.solves_power_coeff` | For `0 < x` and any `a`, `HasDerivAt (fun t => exp (a·log t)) ((a/x)·exp (a·log x)) x`. Solves `y' = (a/x)·y`, solution `x^a`. | "The power coefficient" | Theorem 4 |
+| `EMLCoefficientODE.solution_ratio_hasDerivAt_zero` | If `HasDerivAt y (c·y x) x` and `HasDerivAt F c x` then `HasDerivAt (fun t => y t / exp (F t)) 0 x`. Uniqueness up to a constant. | "One solution, up to a constant" | Theorem 5 |
+| `EML.EMLLogDerivHom` (logarithmic derivative homomorphism) | `L(y) = y'/y` is a homomorphism from `K^×` (multiplicative) to `(K,+)` (additive): `L(yz) = L(y)+L(z)`. | "The hidden symmetry" | Section 2 (algebraic engine) |
+| `EMLDiffGalois.firstOrder_ratio_isConstant` (referenced, from existing file) | If `y₁'=a·y₁`, `y₂'=a·y₂`, `y₂≠0` then `(y₁/y₂)'=0`. Algebraic counterpart of Theorem 5. | mentioned | Section 5 (Galois context) |
 
-For `v = g`, `q = 1`, the cleared Riccati identity
-`p′q − pq′ + p² = f·q²` reduces (since `1′ = 0`) to `g′ + g² = f`. Small cases:
-
-| `g`      | `g′`      | `g²`        | `f = g′ + g²`        | `deg f` |
-|----------|-----------|-------------|----------------------|---------|
-| `X`      | `1`       | `X²`        | `X² + 1`             | 2       |
-| `X²`     | `2X`      | `X⁴`        | `X⁴ + 2X`            | 4       |
-| `X³`     | `3X²`     | `X⁶`        | `X⁶ + 3X²`           | 6       |
-| `Xⁿ`     | `nX^{n-1}`| `X^{2n}`    | `X^{2n} + nX^{n-1}`  | 2n      |
-
-Observations:
-- `g = X` reproduces exactly the catalog witness `X² + 1`
-  (`EMLKovacicSharp.riccati_evenDeg_solvable`), confirming
-  `evenWitness_eq_riccati_image`.
-- Every `g = Xⁿ` (`n ≥ 1`) yields an even degree `2n`, so the solvable family
-  meets every even degree `≥ 2`. This is `riccati_image_natDegree` /
-  `parity_decision_every_degree`.
-
-## 2. Degree-parity decision boundary (interleaving)
-
-| degree `d` | example coefficient        | Kovacic first step |
-|------------|----------------------------|--------------------|
-| 1          | `X`                        | obstructed (odd)   |
-| 2          | `X² + 1 = X′ + X²`         | solvable (`v = X`) |
-| 3          | `X³`                       | obstructed (odd)   |
-| 4          | `X⁴ + 2X = (X²)′ + (X²)²`  | solvable (`v = X²`)|
-| 5          | `X⁵`                       | obstructed (odd)   |
-| 2n         | `(Xⁿ)′ + (Xⁿ)²`            | solvable (`v = Xⁿ`)|
-| 2n+1       | `X^{2n+1}`                 | obstructed         |
-
-The odd column is the catalog's `no_rational_riccati_genAiry`; the even column is
-this cycle's `riccati_image_solvable`. The decision flips at every degree.
-
-## 3. Counterexample hunt
-
-- Claim "all even-degree coefficients are solvable" is **not** asserted (and is
-  false in general — e.g. `X²` alone: `v′ + v² = X²` would need `v ≈ X` but
-  `X′ + X² = X² + 1 ≠ X²`). The theorems only assert solvability of the explicit
-  *image* coefficients `g′ + g²`, which is exactly what is proved.
-- The odd obstruction was probed against `f = X, X³, X⁵`: no rational solution in
-  every case (formalized for all `X^{2k+1}`).
-
-## 4. First-order solution line
-
-For `y′ = a·y`, sampling `a` symbolically: any two nonzero solutions have constant
-ratio (catalog `firstOrder_ratio_isConstant`), and reconstructing `y₁ = (y₁/y₂)·y₂`
-holds whenever `y₂ ≠ 0` — verified symbolically by `field_simp`, giving the full
-solution-line description `firstOrder_solSpace_iff`.
+No theorems beyond these are claimed. No theorem name is paraphrased into a grander claim.
