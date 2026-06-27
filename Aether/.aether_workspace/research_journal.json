@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d168a656",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Degree-normalized linked tree-cut decompositions\n\nDerived from this cycle's findings in `AdhesionSequence.lean` and\n`DegreeNormalization.lean`.  The cycle isolated the combinator",
-      "quality_score": 0.5556197063805759,
-      "sorry_count": 0,
-      "theorem_count": 311,
-      "timestamp": "2026-06-22T07:28:23",
-      "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
-    },
-    {
       "cycle_id": "930ff410",
       "domain": "NumberTheory",
       "key_insight": "# FUTURE DIRECTIONS — Zeta Zero-Free Regions & Density (v19d)\n\nDerived from this cycle's findings (the 3-4-1 engine, the RvM main term, and the\nde la Vallée Poussin balance). Each conjecture is bold,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-27T09:19:54",
       "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
+    },
+    {
+      "cycle_id": "d409a01c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Linear Brown–Erdős–Sós at the span threshold\n\nDerived from this cycle's findings in `LinearBrownErdosSos.lean` and\n`LinearHypergraphPacking.lean`. Each conjecture is falsifiable.",
+      "quality_score": 0.69727,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T09:33:56",
+      "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7796
     }
   ],
-  "last_updated": "2026-06-27T09:19:54",
+  "last_updated": "2026-06-27T09:33:56",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "887d83d7",
-        "quality": 0.5740799999999999,
-        "theorems": 0,
-        "title": "Resolution of Erdős Problem 550 on Tree versus Complete Multipartite Ramsey Numb"
-      },
-      {
         "cycle_id": "8ed8ca57",
         "quality": 0.7478369230769231,
         "theorems": 13,
@@ -3635,6 +3629,12 @@
       {
         "cycle_id": "d409a01c",
         "quality": 0.71088,
+        "theorems": 0,
+        "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
+      },
+      {
+        "cycle_id": "d409a01c",
+        "quality": 0.69727,
         "theorems": 0,
         "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
       }

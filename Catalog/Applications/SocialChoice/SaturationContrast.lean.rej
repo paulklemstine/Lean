@@ -1,0 +1,11 @@
+--- SaturationContrast.lean
++++ SaturationContrast.lean
+@@ -31,7 +31,7 @@
+ should classify the index as a function of the atom set, not merely of maximality.
+ -- !-- Lab Notes -- !--
+ -/
+-import Applications.SocialChoice.IncoherenceIndex
++import Catalog.Applications.SocialChoice.IncoherenceIndex
+ 
+ 
+ 
