@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f8a707b1",
     "filename": "twin_prime_gaps_zhang_maynard_formalization.json",
     "pkg_num": 144,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7756646153846154,
     "title": "Twin Prime Gaps: The Combinatorial Core of the Zhang\u2013Maynard\u2013Tao Theorem"
   },
   {
@@ -4204,8 +4204,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "twin_prime_gaps_zhang_maynard_formalization",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7756646153846154,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Twin Prime Gaps: The Combinatorial Core of the Zhang\u2013Maynard\u2013Tao Theorem"
     }

@@ -578,6 +578,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f8a707b1 (Q=0.776), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_f8a707b1_b196055b",
+    "lineage_refs": [],
+    "priority_score": 0.8756646153846154,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f8a707b1",
+    "status": "available",
+    "timestamp": "2026-06-27T18:43:36.860280+00:00",
+    "title": "Deepening: Twin Prime Gaps: Zhang-Maynard Formalization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n² and (n+1)². Formalize known partial results on prime gaps and connect to the Cramér model of primes.",
     "domain_bridges": [],
     "domains": [
@@ -1136,7 +1155,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f2fdcb78",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1148,7 +1167,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1591,6 +1610,25 @@
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle f8a707b1 (Q=0.776) proved 13 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distrib",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_f8a707b1_ecec1ce2",
+    "lineage_refs": [],
+    "priority_score": 0.8256646153846154,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f8a707b1",
+    "status": "available",
+    "timestamp": "2026-06-27T18:43:37.543045+00:00",
+    "title": "Close Proofs: Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
     "ambition_level": "extension",
@@ -3436,7 +3474,7 @@
       "OEIS A080170",
       "Ralf Stephan's OEIS conjectures"
     ],
-    "consumed_by_exp_id": "2e08d081",
+    "consumed_by_exp_id": "",
     "description": "For k ≥ 2, let F(k) = gcd_{q=2}^{k} (qk choose k). We conjecture that F(k) = 1 if and only if k is not a prime power. This generalizes the known result for D(k) = gcd_{q=2}^{k+1} (qk choose k) which equals 1 precisely when k+1 is not a prime power (in the sense that the largest prime-power divisor P of k+1 satisfies (k+1)/P > P). The conjecture can be approached using similar techniques: a finite-difference argument shows only primes dividing k can divide F(k), Lucas' theorem reduces the problem to base-p digit analysis, and a digit-box stabilizer theorem determines when F(k) = 1.",
     "domain_bridges": [
       "Binomial coefficient identities",
@@ -3453,7 +3491,7 @@
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T08:56:07.087605+00:00",
     "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
   },
@@ -4605,33 +4643,6 @@
     "status": "available",
     "timestamp": "2026-06-23T20:33:56.015910+00:00",
     "title": "Base-b Cusick Bias for Sum-of-Digits Increments"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.CO/2025_fix_density_S21",
-      "Balogh_Lidicky_Mubayi_Pfender_Volec_star_inducibility",
-      "Basit_Granet_Horsley_Kundgen_Staden_semi_inducibility"
-    ],
-    "consumed_by_exp_id": "e3ff7cf5",
-    "description": "For every integer k ≥ 2, there exists an open interval I_k ⊂ (0,1) such that for all β ∈ I_k, the minimum fixed-density semi-inducibility of the red-blue star S_{k,1} (with k red edges and 1 blue edge from a distinguished center) at density β strictly exceeds min(β^k(1−β), β(1−β)^k), the envelope formed by the quasi-clique and quasi-star constructions. This generalizes the paper's result for S_{2,1}, where the true minimum is given by a three-class complement-split family rather than the natural quasi-star/quasi-clique endpoint profile on an interval around β = 1/2. For S_{k,1}, the conjectured minimizer is a step-function graphon with at most k+1 classes.",
-    "domain_bridges": [
-      "graph_limits",
-      "flag_algebras",
-      "variational_calculus_on_graphons"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2384",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Extend the paper's transfer argument with degree-power tie-breaking to the functional f_k(d) = d(d−1)⋯(d−k+1)(n−1−d). Reduce the graphon variational problem to almost-regular, threshold, and finite-staircase optimizations. Show that any graphon achieving the quasi-star/quasi-clique envelope can be perturbed into a (k+1)-class complement-split graphon that strictly decreases the S_{k,1} density at the same edge density, using a Lagrangian comparison on the class-structured ansatz. The key step is proving that the complement-split family dominates the envelope on an interval whose width grows with k.",
-    "research_mode": "team",
-    "source_exp_id": "2606.23351v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T20:57:57.730978+00:00",
-    "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
   {
     "ambition_level": "extension",
@@ -8532,7 +8543,7 @@
       "https://arxiv.org/abs/2309.14753",
       "https://doi.org/10.1038/s41586-021-03890-9"
     ],
-    "consumed_by_exp_id": "bdfd9dbb",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that there exists a deterministic algorithm solving the Global Label Min-Cut (GLMC) problem on any undirected graph with n vertices and p labels in time O((np)^{C·log n / log log n}) for some absolute constant C.",
     "domain_bridges": [
       "graph_theory",
@@ -8549,7 +8560,7 @@
     "proof_strategy": "The conjectured upper bound can be approached by extending the partition‑lattice dynamic programming techniques used for hypergraph min‑cut.  One would encode the connectivity of the union of label graphs as lattice elements and propagate partial solutions using fast zeta transforms on the lattice.  By carefully arranging the recursion depth to be O(log n / log log n) and applying a logarithmic‑depth divide‑and‑conquer on the label set, the total number of DP states can be bounded by (np)^{O(log n / log log n)}.  A full formal proof would involve defining the lattice, proving its size bound, and showing that the DP recurrence respects the GLMC objective.  The crux is to avoid an exponential blow‑up in the number of subsets of labels by exploiting the lattice’s Möbius inversion to compute union‑connectivity in quasi‑linear time per layer.",
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T19:43:32.279494+00:00",
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
@@ -13162,6 +13173,26 @@
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Twin Prime Gaps / Maynard–Tao formalization\n\nDerived from this cycle's findings (the admissibility ⇄ bounded-gaps split, the\n`liminf` reduction, and the Selberg-weight bridge). Each conjecture is bold,\nfalsifiable, and within reach of the present infrastructure.\n\n## 1. Decidability of admissibility\n\n**Conjecture.** For every explicit finite `H : Finset ℤ`, `IsAdmissible H` is\ndecidable, and the decision procedure runs by checking only the primes `p ≤ H.card`.\n\n*The key insight is...* that `isAdmissible_iff_small_primes` already collapses the\ninfinite quantifier over primes to a finite range `p ≤ H.card`; turning that `Iff`\ninto a `Decidable` instance only requires a decidable check of the missing-residue\ncondition over each finite `ZMod p`.\n\n*Why now?* The reduction theorem is proved with `0` sorries in `Admissible.lean`, so\nthe only remaining work is packaging the finite check — no new mathematics is needed.\n\n## 2. Minimal diameter of admissible k-tuples (the \"246\" line)\n\n**Conjecture.** Define `admissibleDiameter k` as the least diameter of an admissible\n`k`-tuple. Then `admissibleDiameter` is well-defined, monotone in `k`, and the\nMaynard–Tao value `admissibleDiameter 50 = 246` is computable inside Lean.\n\n*The key insight is...* that admissibility is a finite, decidable condition\n(Direction 1), so `admissibleDiameter k` is the minimum of a finite, enumerable set of\ndiameters and is therefore computable, not merely existent.\n\n*Why now?* `twinTuple_admissible` and `consecutive_not_admissible` already exhibit the\nbase cases (`k = 2`); a verified search over candidate tuples would make the headline\nconstant `246` an *evaluated* object rather than a quoted number.\n\n## 3. Unconditional input: a Lean statement of the level of distribution\n\n**Conjecture.** The Bombieri–Vinogradov level-of-distribution statement\n(primes are equidistributed in arithmetic progressions to modulus `x^{1/2−ε}`) can be\nphrased in Mathlib and *implies* `InfinitelyOftenTuplePrime d` for some `d ≤ 246`,\ndischarging the hypothesis of `liminf_le_of_infinitelyOften`.\n\n*The key insight is...* that our development isolates the entire analytic difficulty\ninto the single predicate `InfinitelyOftenTuplePrime`; the elementary reduction to\n`liminf primeGap ≤ d` is already complete, so only the sieve/equidistribution input\nremains.\n\n*Why now?* `liminf_primeGap_le` and `liminf_le_of_infinitelyOften` are sorry-free, so\nany future formalization of Bombieri–Vinogradov plugs in as a black box and yields an\n*unconditional* bounded-gaps theorem with no further reduction work.\n\n## 4. The GPY/Maynard variational optimum\n\n**Conjecture.** The GPY sieve weight `(∑_{d ∣ n, d ≤ R} λ_d)²` with squarefree support\n(governed by `selberg_weight_eq_squarefree_indicator`) admits a finite-dimensional\nRayleigh-quotient formulation whose optimum is a computable rational eigenvalue, and\nthis optimum strictly exceeds `4` once the number of test polynomials is large enough\n(the Maynard threshold that produces `m ≥ 2` primes per tuple).\n\n*The key insight is...* that the squarefree restriction in the GPY sieve is exactly the\nMöbius identity from the catalog (`selberg_sieve_weight`), so the weight optimization\nbecomes a finite quadratic form over squarefree moduli — a linear-algebra problem, not\nan analytic one.\n\n*Why now?* The squarefree-indicator bridge is already proved (`0` sorries), giving a\nclean, finite index set on which to set up the quadratic form.\n\n## 5. Sharpness of the gap reduction\n\n**Conjecture.** The reduction `liminf primeGap ≤ B` from bounded prime pairs is sharp:\nthere is no `B' < B` derivable from the hypothesis alone, i.e. the bound transfers the\npair-distance exactly. Formally, for the model where the only close pairs have distance\nexactly `B`, `liminf primeGap = B`.\n\n*The key insight is...* that `next_prime_le_of_prime_lt` shows the next prime after `p`\nis at most `q`, but a matching lower bound (no prime strictly between consecutive twins)\nwould pin the `liminf` from below, turning the inequality `≤` into an equality.\n\n*Why now?* The upper-bound half is finished in `BoundedGaps.lean`; only the\ncomplementary lower-bound `liminf primeGap ≥ ...` (a counting argument with `Nat.nth`)\nis missing, and the needed `Nat.count`/`Nat.nth` API is the same already in use.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2715",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f8a707b1",
+    "status": "available",
+    "timestamp": "2026-06-27T18:43:13.914855+00:00",
+    "title": "Derived from this cycle's findings (the admissibility ⇄ bounded-gaps split, the"
   },
   {
     "ambition_level": "extension",
