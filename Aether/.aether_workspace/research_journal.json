@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "731f1c25",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — LWE Worst-Case Hardness Reductions\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\nresearch cycle, recorded in the Lab Notes of `WorstCaseLattice.lea",
-      "quality_score": 0.67588,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-23T10:40:58",
-      "title": "Learning with Errors: Hardness Reductions"
-    },
-    {
       "cycle_id": "bf529381",
       "domain": "Shared",
       "key_insight": "# Future Directions — Transition-rank rigidity of endomorphism streams\n\nThis cycle continued the `Catalog.Algebra.TransEndo` line. The catalog already had:\n\n* `TransEndo` — the iterated-composition /",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-06-27T19:38:01",
       "title": "Ramsey Theory: Bounds and Constructions"
+    },
+    {
+      "cycle_id": "bdfd9dbb",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Global Label Min-Cut (GLMC)\n\nDerived from this cycle's findings in `Core.lean`, `MinCut.lean`, and\n`Complexity.lean`. This cycle established a faithful finite model of GLMC, a\nde",
+      "quality_score": 0.3683071607142858,
+      "sorry_count": 1,
+      "theorem_count": 7,
+      "timestamp": "2026-06-27T19:41:28",
+      "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.84592
     }
   ],
-  "last_updated": "2026-06-27T19:38:01",
+  "last_updated": "2026-06-27T19:41:28",
   "open_questions": [
-    {
-      "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
-      "cycle_id": "a4d16ba9",
-      "domain": "Probability",
-      "sorry_count": 2,
-      "timestamp": "2026-06-15T16:53:53"
-    },
     {
       "context": "`Nat.clog_pow`, not `decide`; all main theorems use induction/omega and are 0-sorry; the",
       "cycle_id": "999c0f6b",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-06-27T18:43:36"
+    },
+    {
+      "context": "correct). All statements below are proved without `sorry`.",
+      "cycle_id": "bdfd9dbb",
+      "domain": "Physics",
+      "sorry_count": 1,
+      "timestamp": "2026-06-27T19:41:28"
     }
   ],
   "research_threads": {
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "f53b6be3",
-        "quality": 0.6543599999999999,
-        "theorems": 7,
-        "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-      },
-      {
         "cycle_id": "acb790ee",
         "quality": 0.8075699999999999,
         "theorems": 238,
@@ -3761,6 +3755,12 @@
         "quality": 0.66768,
         "theorems": 15,
         "title": "Noether's Theorem: Symmetries and Conservation Laws"
+      },
+      {
+        "cycle_id": "bdfd9dbb",
+        "quality": 0.3683071607142858,
+        "theorems": 7,
+        "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
       }
     ],
     "Probability": [

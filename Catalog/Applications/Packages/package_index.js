@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "bdfd9dbb",
     "filename": "polynomial_logarithmic_time_algorithm_for_global_l.json",
     "pkg_num": 147,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3683071607142858,
     "title": "Global Label Min-Cut: A Verified Foundation and the Limits of a Fast-Algorithm Conjecture"
   },
   {
@@ -4291,8 +4291,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "polynomial_logarithmic_time_algorithm_for_global_l",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3683071607142858,
+      "quality": "partial",
       "shape": "cube",
       "title": "Global Label Min-Cut: A Verified Foundation and the Limits of a Fast-Algorithm Conjecture"
     }
