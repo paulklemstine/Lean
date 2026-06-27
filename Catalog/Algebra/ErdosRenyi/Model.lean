@@ -84,7 +84,7 @@ theorem weight_nonneg {p : ℝ} (h0 : 0 ≤ p) (h1 : p ≤ 1) (g : E → Bool) :
 theorem sum_weight (p : ℝ) : ∑ g : E → Bool, weight p g = 1 := by
   -- The sum over all functions $g : E → Bool$ can be rewritten as a product of sums over each $e ∈ E$.
   have h_sum : ∑ g : E → Bool, (∏ e : E, (if g e then p else 1 - p)) = ∏ e : E, (∑ g : Bool, (if g then p else 1 - p)) := by
-    exact?;
+    exact Eq.symm (Fintype.prod_sum fun i j => if j = true then p else 1 - p);
   aesop
 
 /-- Probability of an event (a finset of configurations). -/
@@ -131,7 +131,7 @@ theorem prob_allAbsent (p : ℝ) (S : Finset E) :
     prob p (allAbsent S) = (1 - p) ^ S.card := by
   -- Consider the symmetric case where the event is that every edge in `S` is present.
   have h_symm : prob (1 - p) (allPresent S) = (1 - p) ^ S.card := by
-    exact?
+    exact prob_allPresent (1 - p) S
   simp_all +decide [ prob, allPresent, allAbsent ];
   convert h_symm using 1;
   apply Finset.sum_bij (fun g _ => fun e => !g e);
