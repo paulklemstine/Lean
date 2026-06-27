@@ -1,68 +1,46 @@
-# Computational Evidence — 2D Enstrophy Control vs. 3D Stretching
+# Computational Evidence
 
-The theorems proved this cycle are *abstract structural identities* (a derivative
-computation + a sign argument), so the decisive evidence is small concrete
-instances confirming (i) the structural axioms are jointly satisfiable, and
-(ii) the dissipation conclusions hold on genuine trajectories. These are encoded
-directly in Lean (`Examples.lean`), so the "evidence" below is machine-checked,
-not ad hoc.
+Concise pre-proof checks for the two new results. The objects are analytic, so
+the relevant "computation" is exact symbolic verification on the simplest
+non-trivial instance, the scalar model on `V = ℝ`.
 
-## 1. Concrete inhabiting model and solution (verified in `Examples.lean`)
+## 1. Exponential decay is sharp (scalar model)
 
-Model on `V = ℝ`: `ν = 1`, `A = id`, `B = 0`.
-- All five structural axioms (`hA`, `hB`, `hA_symm`, `hB2`) discharged by `simp`.
-- Solution `u(t) = e^{−t}` solves `u'(t) = −u(t)` (chain rule), verified.
-- Enstrophy `Ω(t) = ⟪A u, u⟫ = (e^{−t})² = e^{−2t}` is strictly decreasing.
+Take `V = ℝ`, `A = id` (so `⟪A v, v⟫ = v²`, coercive with `λ = 1`), `B = 0`,
+viscosity `ν > 0`. The model ODE is `u'(t) = −ν u(t)`, with solution
+`u(t) = u₀ e^{−ν t}`.
 
-| t   | u(t)=e^{−t} | Ω(t)=e^{−2t} | Ω decreasing? |
-|-----|-------------|--------------|---------------|
-| 0.0 | 1.000       | 1.000        | —             |
-| 0.5 | 0.6065      | 0.3679       | yes           |
-| 1.0 | 0.3679      | 0.1353       | yes           |
-| 2.0 | 0.1353      | 0.0183       | yes           |
+| quantity | value |
+|---|---|
+| `E(t) = u(t)²` | `u₀² e^{−2ν t}` |
+| bound `E(0) e^{−2νλ t}` (λ=1) | `u₀² e^{−2ν t}` |
+| ratio | `1` (bound is attained) |
 
-This confirms `trivialModel2D_enstrophy_bound` is non-vacuous: a non-constant
-trajectory with strictly dissipated enstrophy.
+So `energy_exp_decay` holds with **equality** here: the constant `2νλ` is the
+true decay rate, confirming the inequality is not lossy and `λ = 1` is the right
+coercivity constant. Numerically (u₀=1, ν=1): E(1)=0.1353, bound=0.1353;
+E(2)=0.0183, bound=0.0183.
 
-## 2. The 2D vs 3D dichotomy, scalarized
+## 2. Uniqueness hypothesis is satisfiable, conclusion non-vacuous
 
-The general enstrophy identity is `Ω'(t) = −2ν‖A u‖² − 2⟨B(u,u), A u⟩`.
-Writing `S = ⟨B(u,u), A u⟩` (the stretching pairing) and `D = ν‖A u‖² ≥ 0`:
+With `B = 0` the Ladyzhenskaya bound `−⟪B(u,u)−B(w,w),d⟫ ≤ C‖d‖²` holds with
+`C = 0`. Two solutions `u, w` of `u' = −ν u` with `u(t₀) = w(t₀)` give difference
+energy `E_d(t) = (u(t₀)−w(t₀))² e^{−2ν(t−t₀)} = 0`, so `u ≡ w`. This matches
+`eq_of_energy_estimate` and shows the hypotheses are simultaneously satisfiable
+on a genuine (non-constant) trajectory, so the theorem is not vacuous.
 
-- **2D** (`hB2`): `S = 0` ⇒ `Ω' = −2D ≤ 0` always. Enstrophy decays.
-- **3D conditional** (`hctrl`): `−S ≤ D` ⇒ `Ω' = −2D − 2S ≤ −2D + 2D = 0`.
-- **3D unconditional**: `S` free ⇒ `Ω'` sign indeterminate (possible growth).
+## 3. Counterexample hunt (forward vs backward)
 
-Sanity check of the sign algebra used in
-`Model3D.enstrophy_antitone_of_stretching_controlled` (here `D = 1`):
+Running the scalar model *backward* from `t₀` with `C > 0`: the inequality
+`E_d' ≤ 2C E_d` does not constrain `E_d` for `t < t₀`. Concretely, a hypothetical
+`E_d(t) = ε e^{2C(t−t₀)}` satisfies `E_d' = 2C E_d` and `E_d(t₀) = ε`; sending
+`ε → 0` shows nothing forces `E_d = 0` for `t < t₀`. This confirms the proof must
+restrict to `t ≥ t₀` (it does) and motivates Conjecture 1 in FUTURE_DIRECTIONS.
 
-| S (stretching) | −S ≤ D? | Ω' = −2D−2S | ≤ 0? |
-|----------------|---------|-------------|------|
-| 0.0            | yes     | −2.0        | yes  |
-| −0.5           | yes     | −1.0        | yes  |
-| −1.0           | yes (=) | 0.0         | yes  |
-| −1.5           | no      | +1.0        | no   |
+## Conclusion
 
-The control hypothesis `−S ≤ D` is exactly the threshold `S ≥ −D` separating
-guaranteed decay from possible growth — matching the proved theorem.
-
-## 3. Counterexample hunt (against over-claiming)
-
-We deliberately checked that the **3D unconditional** enstrophy bound is *false*
-in general (otherwise the work would be vacuous or wrong): the row `S = −1.5`
-above gives `Ω' > 0`, so without `hctrl` the enstrophy can increase. This is why
-`Partial3D.lean` only states a *conditional* result, and why the genuine 3D
-global regularity problem remains open. No false universal claim is made.
-
-## 4. OEIS
-
-No integer sequence arises (the objects are continuous dissipation identities),
-so no OEIS lookup applies.
-
-## Scope note
-
-This stage is intentionally brief: the mathematical content is an exact identity
-plus a sign inequality, both fully verified in Lean with only the standard
-axioms `{propext, Classical.choice, Quot.sound}`. The tables above are
-illustrative restatements of the machine-checked algebra, not the primary
-evidence.
+The computational landscape supports both theorems: the decay bound is tight
+(equality on the bottom eigenmode) and the uniqueness hypotheses are satisfiable
+with non-trivial dynamics. No counterexample to the *forward* statements was
+found; the only failure mode (backward uniqueness) is correctly excluded by the
+`t₀ ≤ t` hypothesis.

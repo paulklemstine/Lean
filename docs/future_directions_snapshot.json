@@ -5430,7 +5430,7 @@
       "Geometric Discrepancy Theory",
       "Quasi-Monte Carlo Methods"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4cde7769",
     "description": "For tensor-product function spaces with a worst-case function h satisfying specific integrality and sparsity conditions, the information complexity for non-negative linear rules exhibits a curse of dimensionality.",
     "domain_bridges": [
       "Information Theory",
@@ -5446,7 +5446,7 @@
     "proof_strategy": "Construct a family of functions leveraging the worst-case h and s_y to show exponential lower bounds via combinatorial arguments.",
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T04:05:20.240232+00:00",
     "title": "Exponential Information Complexity in Tensor-Product Function Spaces"
   },
@@ -11421,6 +11421,64 @@
     "status": "available",
     "timestamp": "2026-06-27T04:18:03.584456+00:00",
     "title": "Character Class Contradiction"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "On R-sequenceability of odd ordered groups"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that every finite group of odd order admits an R-sequence, i.e., an ordering of its non-identity elements such that the consecutive quotients g_i⁻¹g_{i+1} (with g_{n}⁻¹g_1) are all distinct. This extends the paper's result that all groups of order coprime to 30 are R-sequenceable and all nilpotent groups of order coprime to 6 and not a power of 5 are R-sequenceable.",
+    "domain_bridges": [
+      "combinatorial group theory",
+      "graph embeddings",
+      "orthomorphisms",
+      "finite group theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2659",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the Feit-Thompson theorem to deduce that all finite groups of odd order are solvable. Proceed by induction on the group order, using the Quotient-Normal Gadget theorem (Theorem 1.1 of the paper) as the main inductive step. The key is to show that for any minimal counterexample, one can find a normal subgroup N such that G/N is R**-sequenceable and τ(N) ≤ |G/N| - 3, or develop alternative gadgets for the remaining cases. The odd cycle index τ(G) and its inductive bound τ(G) ≤ max{τ(N), τ(G/N)} play a central role. One would also need to analyze the base cases (simple groups of odd order, which are cyclic of prime order) and verify the condition for them.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27208v1",
+    "status": "available",
+    "timestamp": "2026-06-27T04:47:19.393918+00:00",
+    "title": "All finite groups of odd order are R-sequenceable"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Serre77",
+      "Zywina16",
+      "Ramakrishna09",
+      "BombieriZannier01",
+      "AmorosoDvornicich00",
+      "Habegger13"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let ρ: G_ℚ → GL_n(ℤ_ℓ) be a continuous ℓ-adic representation that is unramified outside a finite set of primes and whose image contains an open congruence subgroup of GL_n(ℤ_ℓ). Let K = ℚ̅^{ker ρ} be the fixed field of the kernel of ρ. Conjecture: K satisfies the Bogomolov property; i.e. there exists a constant c_K > 0 such that every algebraic number α ∈ K^× that is not a root of unity satisfies h(α) ≥ c_K.",
+    "domain_bridges": [
+      "Algebraic number theory",
+      "Galois theory",
+      "Height theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2660",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof would adapt the Bombieri–Zannier local–degree method to the infinite extension K, using Checcoli’s criterion that Galois extensions with bounded local degrees have Property B. One shows that, because ρ has open image, the residue degrees at every finite place are uniformly bounded in K/ℚ, hence the Galois group of K has uniformly bounded exponent. This reduces the problem to establishing a uniform lower bound on heights in fields of bounded exponent, which follows from known results on degree–height inequalities for non‑torsion algebraic numbers. The proof would also use the openness of the Galois image to control ramification and apply height comparison techniques from Amoroso–Zannier’s work on abelian extensions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27203v1",
+    "status": "available",
+    "timestamp": "2026-06-27T04:47:50.366396+00:00",
+    "title": "Property B for fields fixed by ℓ-adic Galois representations with open image"
   },
   {
     "ambition_level": "extension",

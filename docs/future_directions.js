@@ -3232,7 +3232,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vanishing of Euler characteristic for higher-dimensional parallel toric arrangement complements"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4cde7769",
     "description": "For tensor-product function spaces with a worst-case function h satisfying specific integrality and sparsity conditions, the information complexity for non-negative linear rules exhibits a curse of dimensionality.",
     "domains": [
       "Algebra",
@@ -3242,7 +3242,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T04:05:20.240232+00:00",
     "title": "Exponential Information Complexity in Tensor-Product Function Spaces"
   },
@@ -6504,6 +6504,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-27T04:18:03.584456+00:00",
     "title": "Character Class Contradiction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that every finite group of odd order admits an R-sequence, i.e., an ordering of its non-identity elements such that the consecutive quotients g_i\u207b\u00b9g_{i+1} (with g_{n}\u207b\u00b9g_1) are all distinct. This extends the paper's result that all groups of order coprime to 30 are R-sequenceable and all nilpotent groups of order coprime to 6 and not a power of 5 are R-sequenceable.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2659",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27208v1",
+    "status": "available",
+    "timestamp": "2026-06-27T04:47:19.393918+00:00",
+    "title": "All finite groups of odd order are R-sequenceable"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let \u03c1: G_\u211a \u2192 GL_n(\u2124_\u2113) be a continuous \u2113-adic representation that is unramified outside a finite set of primes and whose image contains an open congruence subgroup of GL_n(\u2124_\u2113). Let K = \u211a\u0305^{ker \u03c1} be the fixed field of the kernel of \u03c1. Conjecture: K satisfies the Bogomolov property; i.e. there exists a constant c_K > 0 such that every algebraic number \u03b1 \u2208 K^\u00d7 that is not a root of unity satisfies h(\u03b1) \u2265 c_K.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2660",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27203v1",
+    "status": "available",
+    "timestamp": "2026-06-27T04:47:50.366396+00:00",
+    "title": "Property B for fields fixed by \u2113-adic Galois representations with open image"
   },
   {
     "consumed_by_exp_id": "",

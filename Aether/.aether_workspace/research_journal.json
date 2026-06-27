@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ddfbd83f",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Quantum Thermodynamics / Landauer at the Nanoscale\n\nDerived from this cycle's findings (`Physics.LandauerSecondLaw`,\n`Physics.LandauerThermodynamicLimit`, building on `Logic.Jarz",
-      "quality_score": 0.63352,
-      "sorry_count": 0,
-      "theorem_count": 247,
-      "timestamp": "2026-06-21T20:32:09",
-      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-    },
-    {
       "cycle_id": "1d465e25",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nBuilt on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries) that the\ngraph-cut functio",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-27T04:16:29",
       "title": "Tightness of the unit-shift bound for Euler's totient function"
+    },
+    {
+      "cycle_id": "236373d0",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Abstract Navier–Stokes Energy Theory\n\nDerived from this cycle's findings (`ExponentialDecay.lean`, `Uniqueness.lean`,\nbuilding on `EnergyMethod.lean`, `Enstrophy2D.lean`, `Partia",
+      "quality_score": 0.53432,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-27T04:45:22",
+      "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7478369230769231
     }
   ],
-  "last_updated": "2026-06-27T04:16:29",
+  "last_updated": "2026-06-27T04:45:22",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "15963379",
-        "quality": 0.6772,
-        "theorems": 0,
-        "title": "Circuit Complexity: Monotone Lower Bounds"
-      },
-      {
         "cycle_id": "3ffd492f",
         "quality": 0.3990000000000001,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.7478369230769231,
         "theorems": 13,
         "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refi"
+      },
+      {
+        "cycle_id": "236373d0",
+        "quality": 0.53432,
+        "theorems": 0,
+        "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
       }
     ],
     "NumberTheory": [
