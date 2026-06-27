@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-27T20:09:19.833411+00:00",
+  "last_updated": "2026-06-27T20:38:35.085414+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -12771,6 +12771,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-27T20:09:19.189967+00:00",
       "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2497,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 145,
+      "domain": "Applications",
+      "duration_seconds": 1612.1767182350159,
+      "end_time": 1782592182.2584355,
+      "files_integrated": 7,
+      "job_id": "e3ff7cf5",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16b",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16b",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.7497,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.5889,
+        "novelty": 0.95,
+        "proof_depth": 0.4341,
+        "usefulness": 0.7171
+      },
+      "quality_score": 0.7938000000000001,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782590570.0817173,
+      "strategy_count": 0,
+      "theorem_count": 13,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 13,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-27T20:38:34.464431+00:00",
+      "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
     }
   ]
 }

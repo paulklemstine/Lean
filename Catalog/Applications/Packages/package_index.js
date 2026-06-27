@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e3ff7cf5",
     "filename": "complement_split_minima_exceed_the_quasi_starquasi.json",
     "pkg_num": 149,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7938000000000001,
     "title": "Complement-Split Constructions Beat the Quasi-Clique/Quasi-Star Envelope for Semi-Induced Stars S_{k,1}"
   },
   {
@@ -4349,8 +4349,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "complement_split_minima_exceed_the_quasi_starquasi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7938000000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Complement-Split Constructions Beat the Quasi-Clique/Quasi-Star Envelope for Semi-Induced Stars S_{k,1}"
     }

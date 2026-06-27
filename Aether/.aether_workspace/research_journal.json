@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a1973066",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Brocard's Problem (Probability domain)\n\nThis cycle established: the three Brown numbers `{4,5,7}`, an exhaustive\n`native_decide` verification that no others occur below `1000`, t",
-      "quality_score": 0.7684399999999999,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-24T19:02:30",
-      "title": "Brocard's Problem: n! + 1 = m²"
-    },
-    {
       "cycle_id": "1d985141",
       "domain": "Tropical",
       "key_insight": "# Future directions\n\nA few freeform research directions building on\n`Catalog/Tropical/TropicalPolynomialFunctions.lean`.\n\n## 1. A tropical fundamental theorem of algebra in Lean\n\nFormalize the break-p",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-06-27T20:09:16",
       "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
+    },
+    {
+      "cycle_id": "e3ff7cf5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Semi-induced stars `S_{k,1}` and the suboptimal envelope\n\nDerived from this cycle's findings (see `Basic.lean`, `TuranBridge.lean`, `ComputationalEvidence.md`).\nThis cycle proved",
+      "quality_score": 0.7938000000000001,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-27T20:38:29",
+      "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "57fbcb2f",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Orderly Friedman Numbers\n\nBuilding on `Computation/OrderlyFriedman.lean` (formalization of orderly Friedman\nnumbers A080035 via an expression language, five canonical witnesses,",
-      "quality_score": 0.48476875555555554,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-23T11:40:48",
-      "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
-    },
     {
       "cycle_id": "0de5396c",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-06-27T20:09:16",
       "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
+    },
+    {
+      "cycle_id": "e3ff7cf5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Semi-induced stars `S_{k,1}` and the suboptimal envelope\n\nDerived from this cycle's findings (see `Basic.lean`, `TuranBridge.lean`, `ComputationalEvidence.md`).\nThis cycle proved",
+      "quality_score": 0.7938000000000001,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-27T20:38:29",
+      "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f014f8e3",
-      "domain": "Novelty",
-      "name": "IsMatching",
-      "quality": 0.7510892307692308
-    },
     {
       "cycle_id": "f014f8e3",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Novelty",
       "name": "F_ne_one_of_succ_primePow",
       "quality": 0.71083
+    },
+    {
+      "cycle_id": "e3ff7cf5",
+      "domain": "Applications",
+      "name": "here",
+      "quality": 0.7938000000000001
     }
   ],
-  "last_updated": "2026-06-27T20:09:16",
+  "last_updated": "2026-06-27T20:38:29",
   "open_questions": [
     {
       "context": "`Nat.clog_pow`, not `decide`; all main theorems use induction/omega and are 0-sorry; the",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "31cf2713",
-        "quality": 0.70696,
-        "theorems": 16,
-        "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-      },
-      {
         "cycle_id": "c85b45b6",
         "quality": 0.6839200000000001,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.84592,
         "theorems": 19,
         "title": "Ramsey Theory: Bounds and Constructions"
+      },
+      {
+        "cycle_id": "e3ff7cf5",
+        "quality": 0.7938000000000001,
+        "theorems": 13,
+        "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-ind"
       }
     ],
     "Bridges": [
