@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6218af01",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Parabola-Circumscribed Quadrilaterals & Irrational Densities\n\nThese conjectures extend the two proved cores in this directory:\n`ParabolaConcyclic.lean` (concyclic ⟺ `a+b+c+d=0`)",
-      "quality_score": 0.550667741935484,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-06-25T20:03:37",
-      "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
-    },
-    {
       "cycle_id": "0cb84107",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Primes of the Form n² + 1\n\nDerived from the Stage 3 analysis and Stage 4 critique of this research cycle.\nEach conjecture is bold and falsifiable, with the decisive insight and a",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-28T17:27:15",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+    },
+    {
+      "cycle_id": "e44edf9a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Non-Trivial Boolean Degree-One Functions on `J_q(n,2)`\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  This cycle proved\nthe *parametric fingerprint* of t",
+      "quality_score": 0.39200000000000007,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T17:30:42",
+      "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T17:27:15",
+  "last_updated": "2026-06-28T17:30:42",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "42ce6f47",
-        "quality": 0.518,
-        "theorems": 0,
-        "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
-      },
-      {
         "cycle_id": "3f134ce6",
         "quality": 0.5751195652173913,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.7782,
         "theorems": 0,
         "title": "Girth bounds minimum distance of bipartite graph codes"
+      },
+      {
+        "cycle_id": "e44edf9a",
+        "quality": 0.39200000000000007,
+        "theorems": 0,
+        "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and "
       }
     ],
     "NumberTheory": [

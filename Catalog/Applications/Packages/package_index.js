@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e44edf9a",
     "filename": "existence_of_non_trivial_boolean_degree_one_functi.json",
     "pkg_num": 191,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.39200000000000007,
     "title": "Existence of Non-Trivial Boolean Degree-One Functions on the Grassmann Scheme J_q(n,2)"
   },
   {
@@ -5574,8 +5574,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "existence_of_non_trivial_boolean_degree_one_functi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.39200000000000007,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Existence of Non-Trivial Boolean Degree-One Functions on the Grassmann Scheme J_q(n,2)"
     }

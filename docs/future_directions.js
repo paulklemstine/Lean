@@ -1435,20 +1435,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
   },
   {
-    "consumed_by_exp_id": "e44edf9a",
-    "description": "For q \u2265 3 and n \u2265 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2376",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23465v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T17:44:54.697706+00:00",
-    "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q \u2265 3 and n \u2265 4"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "This conjecture posits that for a totally degenerating family of polarized abelian varieties, the existence of a non-Archimedean balanced metric would imply uniform control over the convergence rates of Hilbert\u2013Chow stability criteria, which in turn constrains the possible bounds on the volumes of moduli spaces in such families.",
     "domains": [
@@ -1678,6 +1664,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-28T17:27:03.682469+00:00",
     "title": "Target category (Menu Balance, v19a): **subtask of a famous open problem** \u2014"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Non-Trivial Boolean Degree-One Functions on `J_q(n,2)`\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  This cycle proved\nthe *parametric fingerprint* of the Bruen\u2013Drudge non-trivial function (self-complementary,\nhalf-of-all-lines, parameter outside the trivial set `{0,1,2,q\u00b2-1,q\u00b2,q\u00b2+1}`) and the\nfunction-level structure of the trivial list (`degOneSum_boolean_iff`, complement closure,\nweight = parameter bridge).  The geometric *realisation* of the parameter as an actual\nline class, and the even-`q` case, remain open in the formalization.\n\n## D1. Geometric realisation of the Bruen\u2013Drudge class in `PG(3,q)`\n\n**Conjecture.** For every odd prime power `q` there is an explicit set `L` of\n`((q\u00b2+1)/2)\u00b7(q\u00b2+q+1)` lines of `PG(3,q)` whose indicator is a Boolean degree-one function\n(a Cameron\u2013Liebler line class) with parameter `(q\u00b2+1)/2`.\n\n*The key insight is...* that the parameter arithmetic already proved (`bd_two_mul`,\n`bd_self_complement`, `bd_size_eq_half`) forces the class to be **exactly half** of all\nlines and self-paired under complementation, so a construction can be sought among\nself-complementary line sets fixed by a polarity \u2014 drastically shrinking the search space.\n\n*Why now?* The Gaussian-binomial backbone (`GrassmannDegreeOne.lean`) plus the size\nidentity `qBinom q 4 2 = (q\u00b2+1)(q\u00b2+q+1)` give, for the first time in this catalog, a fully\nformal target cardinality and the closure laws a candidate must satisfy.\n\n## D2. Even-`q` non-trivial classes (Gavrilyuk\u2013Mogilnykh regime)\n\n**Conjecture.** For every even `q \u2265 4` there is a non-trivial Boolean degree-one function on\n`J_q(4,2)`, with a parameter `x` satisfying `2 < x < q\u00b2-1` but `2\u00b7x \u2260 q\u00b2+1` (so it is *not*\nself-complementary, unlike Bruen\u2013Drudge).\n\n*The key insight is...* that `bd_two_mul` fails for even `q` (then `q\u00b2+1` is odd), so the\nself-complementary mechanism is unavailable and the genuinely *asymmetric* constructions of\nGavrilyuk\u2013Mogilnykh 2014 must be used; the parametric obstruction is therefore a parity\nphenomenon, not a deficiency of the existence claim.\n\n*Why now?* The cycle isolated exactly which proved lemma (`bd_two_mul`) breaks at even `q`,\nturning a vague \"other constructions\" remark into a precise, testable parity dichotomy.\n\n## D3. A `decide`-checkable witness for the smallest case `PG(3,3)`\n\n**Conjecture.** There is a `65`-line subset of the `130` lines of `PG(3,3)`, encodable as a\nconcrete `Finset (Fin 4 \u2192 ZMod 3)`-based object, whose Cameron\u2013Liebler defining identity is\nverifiable by `decide`/`native_decide`, giving a machine-checked non-trivial degree-one\nfunction for `q = 3`.\n\n*The key insight is...* that `130` lines is small enough for a finite verification, and the\nproved weight `65 = 130/2` (`bd_size_eq_half` at `q=3`) tells us the exact size to enumerate.\n\n*Why now?* `lines_PG3` makes `130 = 10\u00b713` a formal fact, so the enumeration bound is no\nlonger a guess; the only missing ingredient is an efficient Lean encoding of `2`-subspaces.\n\n## D4. Classification: the trivial parameters are *exactly* `{0,1,2,q\u00b2-1,q\u00b2,q\u00b2+1}`\n\n**Conjecture.** Every Boolean degree-one function built solely from one point-pencil and one\nplane-pencil (and Boolean complement) has parameter in `{0,1,2,q\u00b2-1,q\u00b2,q\u00b2+1}`, and each value\nis attained \u2014 so the trivial list has exactly eight members for `q \u2265 2`.\n\n*The key insight is...* that `degOneSum_param_two` already realises `x=2`, `ind_compl`\nrealises the complementary values, and the empty/full functions realise `0` and `q\u00b2+1`; the\nremaining content is a *no other values* uniqueness argument via `degOneSum_card`.\n\n*Why now?* The function-level weight machinery (`degOneSum_card`, `ind_compl`) proved this\ncycle reduces the classification to a finite case analysis over the two pencils' incidence.\n\n## D5. The triviality/non-triviality threshold across `(q,k)`\n\n**Conjecture.** For `J_q(n,k)` the dividing line is sharp: all Boolean degree-one functions\nare trivial iff `q = 2`, while for every `q \u2265 3` (and suitable `n`) a non-trivial one exists,\nuniformly across `k = 2`.\n\n*The key insight is...* combining this cycle's existence direction (`exists_nontrivial_param`)\nwith the *triviality* backbone in `GrassmannDegreeOne.lean` (`qBinom_symm`,\n`point_hyperplane_duality`) suggests the threshold is governed by whether the eigenspace\n`V\u2081` admits a `{0,1}`-vector beyond the duality-closed trivial family.\n\n*Why now?* For the first time the catalog holds *both* directions' backbones in the same\nnamespace, so a unified `q=2` vs `q\u22653` dichotomy theorem is within reach.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2797",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e44edf9a",
+    "status": "available",
+    "timestamp": "2026-06-28T17:30:25.622457+00:00",
+    "title": "Derived from the Stage-3 analysis and Stage-4 critique of this cycle.  This cycl"
   },
   {
     "consumed_by_exp_id": "",
@@ -1960,7 +1961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ecd5b8c",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -1970,7 +1971,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
