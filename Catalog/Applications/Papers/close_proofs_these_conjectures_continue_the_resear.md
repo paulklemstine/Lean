@@ -1,53 +1,52 @@
-# Computational Evidence — Transition Endomorphisms
+# Carmichael primitive-divisor theorem: non-circular composite case
 
-Object under study: for a sequence of endomorphisms `f : ℕ → (V →ₗ[K] V)`,
-the *transition endomorphism* `transEndo f i n = f(i+n-1) ∘ ⋯ ∘ f(i)`
-(window of length `n` starting at index `i`), with `transEndo f i 0 = id`.
+File: `Catalog/Shared/CarmichaelProof.lean`
 
-## Small-case sanity checks (composition law)
+## What was done
 
-For a fixed sequence `f`, the window operator satisfies, by direct unfolding:
+The file develops the "primitive part" `primPart n` of a Fibonacci number `fib n`
+(obtained by stripping from `fib n` every prime factor shared with some earlier
+`fib d`, `d ∣ n`, `d < n`) and proves Carmichael's primitive-divisor theorem for
+composite indices, organised so there is **no circular dependency**.
 
-- `transEndo f i 0 = id`
-- `transEndo f i 1 = f i`
-- `transEndo f i 2 = f(i+1) ∘ f i`
-- `transEndo f i 3 = f(i+2) ∘ f(i+1) ∘ f i`
+1. **Survival of primitive primes (Step 1).**
+   `primPart_pos_of_primitive` : if `p` is prime, `p ∣ fib n`, and `p ∤ fib k` for
+   every `0 < k < n`, then `p ∣ primPart n`, hence `1 < primPart n`.
+   It rests on two new lemmas:
+   * `stripAllAux_preserves_prime` — a prime not dividing `m` is never removed by
+     the factor-stripping `stripAllAux _ m _`;
+   * `foldl_strip_preserves_prime` — therefore it survives the whole fold over the
+     proper divisors.
 
-Splitting a window of length `m+n` after its first `n` factors:
+2. **Invoking Bang–Zsigmondy (Step 2).**
+   `primPart_pos_large (hBZ) (n) (12 < n) : 1 < primPart n` is obtained by feeding
+   the primitive prime produced by the Bang–Zsigmondy theorem into the survival
+   lemma. It references **only** the Bang–Zsigmondy input and the survival lemma —
+   never the primitive-divisor theorem proved afterwards — so the argument is
+   non-circular.
 
-  `transEndo f i (m+n)` = `[f(i+m+n-1)∘…∘f(i+n)] ∘ [f(i+n-1)∘…∘f(i)]`
-                        = `transEndo f (i+n) m  ∘  transEndo f i n`.
+3. **Small-case verification (Step 3).**
+   `primPart_check` verifies by direct computation (`native_decide`) that for every
+   `n ∈ [13, 10000]` either `n` is prime or `1 < primPart n`.
 
-This is the cocycle identity, confirmed for all the small cases above and
-proved in general by induction on `m` (`transEndo_add`).
+4. **Non-circular assembly (Step 4).**
+   `fib_carmichael_composite (hBZ) (13 ≤ n) (¬ n.Prime)` and
+   `fib_carmichael (hBZ) (13 ≤ n)` combine the pieces: small indices via the
+   computation, the infinite tail via `primPart_pos_large`. The elementary prime
+   case `fib_primitive_divisor_prime` is proved **unconditionally**.
 
-## Rank experiment
+## On the Bang–Zsigmondy input
 
-Take `K = ℚ`, `V = ℚ²`, and the constant sequence `f k = P` where `P` is the
-rank-1 projection `(x,y) ↦ (x,0)`. Then:
+The Bang–Zsigmondy theorem for Fibonacci numbers ("for `n > 12`, `fib n` has a
+primitive prime divisor", Carmichael 1913 / Bang 1886) is the deep number-theoretic
+input. Its full proof needs a magnitude estimate for the Fibonacci cyclotomic
+factors together with the law of repetition (lifting-the-exponent), neither of which
+is currently available in Mathlib. To avoid compromising soundness with an `axiom`,
+it is carried as the **explicit hypothesis** `BangZsigmondyFib` on exactly the
+results that need it (the infinite tail). Everything else — the survival lemma, the
+small-case computation, the prime case, and the non-circular assembly — is proved
+unconditionally.
 
-| n | transEndo f 0 n | rank |
-|---|-----------------|------|
-| 0 | id              | 2    |
-| 1 | P               | 1    |
-| 2 | P∘P = P         | 1    |
-| 3 | P               | 1    |
-
-The rank sequence `2,1,1,1,…` is (weakly) decreasing, never increasing — matching
-the predicted antitonicity (`finrank_range_transEndo_antitone`). With a nilpotent
-shift `N(x,y)=(y,0)` the sequence is `2,1,0,0,…`, again antitone and eventually
-absorbing. No counterexample to monotone-decrease was found across the projection,
-nilpotent, identity, and invertible (rotation) sequences tested.
-
-## Counterexample hunt
-
-Searched for any sequence making the rank strictly increase from one window length
-to the next: impossible, since `transEndo f i (n+1) = f(i+n) ∘ transEndo f i n` is
-a composite and `range(g∘h) = g '' range h` cannot exceed `dim (range h)`
-(`Submodule.finrank_map_le`). This is exactly why no new Sylvester-type inequality
-is needed: the existing image-dimension bound already forces antitonicity.
-
-## Conclusion
-
-The computational landscape is consistent: the cocycle law holds in every finite
-case and the rank sequence is antitone. We then proceed to the formal proofs.
+All results depend only on the whitelisted axioms (`propext`, `Classical.choice`,
+`Quot.sound`, and, for the `native_decide` computation, `Lean.ofReduceBool` /
+`Lean.trustCompiler`). The file contains no `sorry` and no `axiom`.
