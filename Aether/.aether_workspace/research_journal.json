@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7242c7d6",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe following are concrete follow-up directions building on the Airy\nexponential–polynomial obstruction (`no_airyCoeff_eq_X_mul` and\n`no_nonzero_expPoly_solves_airy`).\n\n## 1. Gene",
-      "quality_score": 0.6932800000000001,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-25T01:58:31",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
-    {
       "cycle_id": "3e805dd4",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Extremal Graph Theory (Turán · Roth · Kruskal–Katona)\n\nDerived from this cycle's findings (see the `-- !-- Lab Notes -- !--` blocks in\n`Turan.lean`, `Roth.lean`, `KruskalKatona.l",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T10:41:07",
       "title": "Rainbow triangle density lower bound conjecture"
+    },
+    {
+      "cycle_id": "e5dd524d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings in `Applications/EMLIterationSharpRate.lean`\nand `Applications/EMLIterationSharpRateConcrete.lean`, which proved that",
+      "quality_score": 0.3921804000000001,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T11:13:13",
+      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8043199999999999
     }
   ],
-  "last_updated": "2026-06-28T10:41:07",
+  "last_updated": "2026-06-28T11:13:13",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "9ee5d694",
-        "quality": 0.6915199999999999,
-        "theorems": 12,
-        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-      },
-      {
         "cycle_id": "8ffddeae",
         "quality": 0.76734,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.34884000000000004,
         "theorems": 0,
         "title": "Rainbow triangle density lower bound conjecture"
+      },
+      {
+        "cycle_id": "e5dd524d",
+        "quality": 0.3921804000000001,
+        "theorems": 0,
+        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
       }
     ],
     "Bridges": [
