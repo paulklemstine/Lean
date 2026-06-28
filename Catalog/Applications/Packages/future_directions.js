@@ -793,7 +793,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kaplansky's Conjectures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72f7aee6",
     "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
     "domains": [
       "Computation",
@@ -803,7 +803,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:16.651864+00:00",
     "title": "Random Matrices: Edge Universality"
   },
@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "551fc26b",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -997,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -3465,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Linear Codes Achieve List-Decoding Capacity with Concentration"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a880828",
     "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
     "domains": [
       "Pythagorean",
@@ -3475,7 +3475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T13:54:36.235382+00:00",
     "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
@@ -4694,7 +4694,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scattering Determinant Critical Line Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f347664d",
     "description": "We conjecture that if a p-adic Galois representation becomes semistable after passing to some finite extension, then it must already have been of finite E-height. This would provide a characterization of finite height representations in terms of their behavior under finite extensions.",
     "domains": [
       "Algebra",
@@ -4704,7 +4704,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26043v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T17:11:00.832064+00:00",
     "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representations"
   },
@@ -5795,7 +5795,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a59363e7",
     "description": "For any integer matrix \\(M = \\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}\\) with non\u2011zero determinant and \\(\\gcd(a,b,c,d)=1\\), the set of ratios of Lagrange constants\n\\[\\mathcal{V}(M) := \\{ k(Mx)/k(x) : x \\in \\mathrm{Bad}\\}\\]\ncoincides with the closed interval \\([|\\det M|^{-1},\\,|\\det M|]\\). In other words, every value between the extremal bounds given by Lagarias\u2013Shallit is attained by some badly approximable number, and no values outside the interval occur.",
     "domains": [
       "Algebra"
@@ -5804,7 +5804,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T04:17:04.862367+00:00",
     "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
   },
@@ -7014,7 +7014,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Endpoint Restriction Conjecture for P\u2083 Implies \u039b(3) Structure of Lattice Points"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "552f4622",
     "description": "This paper presents an analytic approach to characterize permutations with restricted descent sets using generating functions and modular arithmetic.",
     "domains": [
       "Pythagorean"
@@ -7023,7 +7023,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T23:43:29.466890+00:00",
     "title": "Analytic derivation of the generating function for $k$-alternating permutations"
   },

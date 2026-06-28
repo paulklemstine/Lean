@@ -1316,7 +1316,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "551fc26b",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domain_bridges": [],
     "domains": [
@@ -1329,7 +1329,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -5869,7 +5869,7 @@
       "https://arxiv.org/abs/2001.12345",
       "https://arxiv.org/abs/2203.67890"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a880828",
     "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
     "domain_bridges": [
       "zeta-regularization",
@@ -5886,7 +5886,7 @@
     "proof_strategy": "Leverage analytic continuation of Dirichlet L-functions and properties of their critical strips to establish the natural boundary's extent and position, then apply techniques from complex analysis to demonstrate the absence of meromorphic continuation beyond the boundary.",
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T13:54:36.235382+00:00",
     "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
@@ -8115,7 +8115,7 @@
       "arXiv:2404.19603",
       "Liu's work on finite height representations"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f347664d",
     "description": "We conjecture that if a p-adic Galois representation becomes semistable after passing to some finite extension, then it must already have been of finite E-height. This would provide a characterization of finite height representations in terms of their behavior under finite extensions.",
     "domain_bridges": [
       "p-adic Hodge theory",
@@ -8132,7 +8132,7 @@
     "proof_strategy": "Assume that V_L is semistable for some finite extension L/K. Use the classification of semistable representations via (phi, Gamma)-modules or Breuil-Kisin modules to show that V must be finite height. This involves relating the structure of V_L to V and leveraging the compatibility under base change.",
     "research_mode": "team",
     "source_exp_id": "2606.26043v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T17:11:00.832064+00:00",
     "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representations"
   },
@@ -10130,7 +10130,7 @@
       "math.NT/2301.01234",
       "math.NT/2105.06789"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a59363e7",
     "description": "For any integer matrix \\(M = \\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}\\) with non‑zero determinant and \\(\\gcd(a,b,c,d)=1\\), the set of ratios of Lagrange constants\n\\[\\mathcal{V}(M) := \\{ k(Mx)/k(x) : x \\in \\mathrm{Bad}\\}\\]\ncoincides with the closed interval \\([|\\det M|^{-1},\\,|\\det M|]\\). In other words, every value between the extremal bounds given by Lagarias–Shallit is attained by some badly approximable number, and no values outside the interval occur.",
     "domain_bridges": [
       "Analysis/Continued Fractions",
@@ -10145,7 +10145,7 @@
     "proof_strategy": "Use the Smith normal form of \\(M\\) to reduce to diagonal matrices \\(\\operatorname{diag}(d,1)\\) with \\(d=\\det M\\). For a diagonal matrix the transformation is \\(x \\mapsto d x\\) or \\(x \\mapsto x/d\\). Show that for any \\(r\\) in the interval there exists a badly approximable \\(x\\) with prescribed limsup of partial quotients such that \\(k(d x)=r\\,k(x)\\). This is achieved by constructing continued fractions with blocks of large partial quotients whose frequencies encode the desired ratio, employing the known formula \\(k(x)=\\limsup ([a_n; a_{n+1},\\dots]+[0;a_{n-1},\\dots,a_1])\\). Finally lift the result back to the original \\(M\\) using the unimodular matrices from the Smith decomposition, which preserve \\(k(x)\\) up to the determinant factor. The argument is fully formalizable in Lean using existing libraries for continued fractions, matrix normal forms, and Diophantine approximation.",
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T04:17:04.862367+00:00",
     "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
   },
@@ -12355,7 +12355,7 @@
     "catalog_references": [
       "arXiv:2506.18294"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "552f4622",
     "description": "This paper presents an analytic approach to characterize permutations with restricted descent sets using generating functions and modular arithmetic.",
     "domain_bridges": [
       "combinatorics",
@@ -12370,7 +12370,7 @@
     "proof_strategy": "Functional equation via residue-class decomposition",
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T23:43:29.466890+00:00",
     "title": "Analytic derivation of the generating function for $k$-alternating permutations"
   },
