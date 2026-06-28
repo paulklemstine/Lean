@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ab9c78a7",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Extremal Graph Theory (Turán / Kruskal–Katona / Removal / Roth)\n\nDerived from this cycle's findings. The cycle added two compiling, sorry-free Lean files:\n\n* `KruskalKatonaGraphB",
-      "quality_score": 0.72533,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-25T18:50:27",
-      "title": "Extremal Graph Theory: Turán and Szemerédi"
-    },
-    {
       "cycle_id": "2e536cee",
       "domain": "Computation",
       "key_insight": "# Future Directions — Discrepancy of Random Linear Codes for Hamming Balls\n\nDerived from this cycle's findings: an exact averaging identity (`sum_inter_ball`),\nthe explicit ball-volume formula (`ball_",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-06-28T04:28:31",
       "title": "Random Matrices: Edge Universality"
+    },
+    {
+      "cycle_id": "8ffddeae",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Balanced side lengths maximise spanning trees\n\nDerived from this cycle's findings (computable Kirchhoff counter `tauG`, the\nverified instances `balanced_strict_4/6/8`, and the ab",
+      "quality_score": 0.76734,
+      "sorry_count": 2,
+      "theorem_count": 16,
+      "timestamp": "2026-06-28T05:31:58",
+      "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f8c355ed",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Gaussian–Pythagorean Bridge for LWE Hardness\n\nThese conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`.\nEach is stated to be falsifiable and formalizable in L",
-      "quality_score": 0.7276800000000001,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-06-24T16:29:16",
-      "title": "Lattice Cryptography: LWE Hardness"
-    },
     {
       "cycle_id": "ceeb135f",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-06-28T05:29:22",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "cycle_id": "8ffddeae",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Balanced side lengths maximise spanning trees\n\nDerived from this cycle's findings (computable Kirchhoff counter `tauG`, the\nverified instances `balanced_strict_4/6/8`, and the ab",
+      "quality_score": 0.76734,
+      "sorry_count": 2,
+      "theorem_count": 16,
+      "timestamp": "2026-06-28T05:31:58",
+      "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "31cf2713",
-      "domain": "Applications",
-      "name": "sum_weight",
-      "quality": 0.70696
-    },
-    {
-      "cycle_id": "bd70abee",
-      "domain": "Applications",
-      "name": "states",
-      "quality": 0.7003299999999999
-    },
-    {
-      "cycle_id": "bd70abee",
-      "domain": "Applications",
-      "name": "keyed",
-      "quality": 0.7003299999999999
-    },
     {
       "cycle_id": "bd70abee",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "gram_corr_det_nonneg",
       "quality": 0.73264
+    },
+    {
+      "cycle_id": "8ffddeae",
+      "domain": "Applications",
+      "name": "explains",
+      "quality": 0.76734
+    },
+    {
+      "cycle_id": "8ffddeae",
+      "domain": "Applications",
+      "name": "in",
+      "quality": 0.76734
+    },
+    {
+      "cycle_id": "8ffddeae",
+      "domain": "Applications",
+      "name": "balanced_of_maximizer",
+      "quality": 0.76734
     }
   ],
-  "last_updated": "2026-06-28T05:29:22",
+  "last_updated": "2026-06-28T05:31:58",
   "open_questions": [
-    {
-      "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
-      "cycle_id": "d6329d46",
-      "domain": "Shared",
-      "sorry_count": 2,
-      "timestamp": "2026-06-16T10:39:15"
-    },
     {
       "context": "## Verified results (all `sorry`-free)",
       "cycle_id": "bfb62bb9",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-06-28T01:55:20"
+    },
+    {
+      "context": "We prove, with no `sorry`, the abstract principle:; formal, zero-`sorry` proofs**, on the smallest non-trivial values",
+      "cycle_id": "8ffddeae",
+      "domain": "Applications",
+      "sorry_count": 2,
+      "timestamp": "2026-06-28T05:31:58"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c027516f",
-        "quality": 0.7101600000000001,
-        "theorems": 11,
-        "title": "Proof Complexity: Resolution and Cutting Planes"
-      },
-      {
         "cycle_id": "ca01957a",
         "quality": 0.6280000000000001,
         "theorems": 20,
@@ -3141,6 +3135,12 @@
         "quality": 0.6915199999999999,
         "theorems": 12,
         "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+      },
+      {
+        "cycle_id": "8ffddeae",
+        "quality": 0.76734,
+        "theorems": 16,
+        "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
       }
     ],
     "Bridges": [

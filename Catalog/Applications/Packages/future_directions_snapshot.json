@@ -718,6 +718,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 8ffddeae (Q=0.767), which proved 16 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any dimension d ≥ 2 and any positive integer N, the number of spanning trees of the d-dimensional grid graph with free boundaries (Cartesian product of d path graphs) having exactly N vertices is maximized when the side lengths are as equal as possible (i.e., differ by at most 1). Moreover, any ",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_8ffddeae_f133e9da",
+    "lineage_refs": [],
+    "priority_score": 0.86734,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8ffddeae",
+    "status": "available",
+    "timestamp": "2026-06-28T05:31:58.773603+00:00",
+    "title": "Deepening: Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
     "domain_bridges": [],
     "domains": [
@@ -1790,6 +1809,25 @@
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432797+00:00",
     "title": "Tropical Convexity and Linear Programming"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 8ffddeae (Q=0.767) proved 16 theorems in Applications but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For any dimension d ≥ 2 and any positive integer N, the number of spanning trees of the d-dimensional grid graph with free boundaries (Cartesian product of d path graphs) having exactly N vertices is ",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_8ffddeae_925362bd",
+    "lineage_refs": [],
+    "priority_score": 0.8173400000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8ffddeae",
+    "status": "available",
+    "timestamp": "2026-06-28T05:31:59.333877+00:00",
+    "title": "Close Proofs: Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product"
   },
   {
     "ambition_level": "extension",
@@ -14115,6 +14153,25 @@
     "status": "available",
     "timestamp": "2026-06-28T05:29:14.275640+00:00",
     "title": "Derived from this cycle's findings in `OrderedField.lean` and `RealClosureIngred"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Balanced side lengths maximise spanning trees\n\nDerived from this cycle's findings (computable Kirchhoff counter `tauG`, the\nverified instances `balanced_strict_4/6/8`, and the abstract exchange engine\n`balanced_of_maximizer` with its AM–GM / sum-of-squares corollaries).\n\n## C1. The grid spanning-tree count is Schur-concave in the side-length multiset\n**Conjecture.** For the `d`-dimensional free-boundary grid, the spanning-tree\ncount `τ(n₁,…,n_d)` satisfies the exchange inequality\n`τ(…,a,…,b,…) < τ(…,a+1,…,b-1,…)` whenever `a+2 ≤ b`. Consequently, by\n`grid_balanced_of_exchange`, every fixed-`N` maximiser is balanced.\n*The key insight is...* that \"balanced wins\" is **not** a spanning-tree fact but a\nSchur-concavity fact: this project already proves the implication\n`exchange ⇒ balanced` unconditionally, so the entire conjecture collapses to a\n*single* two-coordinate determinant inequality.\n*Why now?* The computable `tauG` makes the two-coordinate inequality directly\ntestable (and already `native_decide`-proved for `N ≤ 8`), turning an analytic\nconjecture into a finite, falsifiable experiment.\n\n## C2. Multiplicative balancing reduces to additive balancing on exponents\n**Conjecture.** For `N = c^k`, restricting to side lengths that are powers of `c`,\nthe product constraint `∏ c^{aᵢ} = N` is the additive constraint `∑ aᵢ = k`, and\nthe τ-maximiser has balanced exponents (sides as equal as possible).\n*The key insight is...* that the multiplicative majorisation order on side lengths\nis the additive majorisation order on their `c`-adic exponents, so the additive\nengine proved here applies verbatim.\n*Why now?* `balanced_of_maximizer` is stated on `Multiset ℕ` with an arbitrary\nexchange-respecting `f`; the exponent multiset is a ready-made instance needing\nonly the τ-exchange input of C1 in the prime-power regime.\n\n## C3. Spanning-tree count is strictly log-concave along balancing chains\n**Conjecture.** Along any spread-reducing chain `(1×N) → … → (balanced)`, the\nsequence `log τ` is strictly concave, not merely increasing.\n*The key insight is...* the eigenvalue product formula\n`τ = (1/N)∏_{k≠0}(…)` factorises over dimensions, so balancing acts as a\nconvolution that should preserve log-concavity.\n*Why now?* The Lean values `1 < 780 < 2415` (N=12) and `1 < 4256 < 100352`\n(N=16) already exhibit accelerating ratios, giving concrete data to fit before\nformalising.\n\n## C4. Uniqueness of the maximiser shape\n**Conjecture.** When a perfectly balanced factorisation exists (`max−min ≤ 1`),\nit is the *unique* maximiser up to permutation; when none exists (e.g. `N` prime,\nor `N=15, d=2`), the unique spread-minimiser is the unique maximiser.\n*The key insight is...* strictness of the exchange inequality already forces\nuniqueness in the engine — `balanced_strict_4/6/8` are the `d=2` shadow of this.\n*Why now?* The strict instances are proved; promoting `<` from instances to a\ngeneral strict exchange lemma is the only missing step.\n\n## C5. Free vs. periodic boundary: the balanced law is boundary-robust\n**Conjecture.** The same balanced-maximisation law holds for the discrete torus\n(periodic boundary, Cartesian product of cycles `C_{n_i}`), with the analogous\ncycle-eigenvalue exchange inequality.\n*The key insight is...* the engine is boundary-agnostic — it consumes only an\nabstract exchange inequality, so swapping path-eigenvalues `4sin²(πk/2n)` for\ncycle-eigenvalues `4sin²(πk/n)` re-uses the entire `BalancedEngine` machinery.\n*Why now?* `tauG` can be re-instantiated with a wrap-around adjacency in a few\nlines, immediately producing periodic-boundary evidence to test C5.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2753",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8ffddeae",
+    "status": "available",
+    "timestamp": "2026-06-28T05:31:50.313920+00:00",
+    "title": "Derived from this cycle's findings (computable Kirchhoff counter `tauG`, the"
   },
   {
     "ambition_level": "extension",
