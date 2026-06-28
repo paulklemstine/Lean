@@ -1,32 +1,26 @@
-# Theorem Trace — Euler–Mascheroni Midpoint Acceleration
+# THEOREM TRACE (internal anti-hallucination ledger)
 
-Internal anti-hallucination ledger. Every result discussed in `ARTICLE.md`,
-`RESEARCH_PAPER.md`, and `RESEARCH_PAPER.tex` maps to an actual declaration in
-the Phase A Lean source
-`Catalog/MachineLearning/EulerMascheroni/MidpointAcceleration.lean`. No result
-is stated in the prose that is not in this table.
+Source of truth: `Catalog/Applications/EulerMascheroni/IrrationalityCriterion.lean`
+(namespace `EMR`). Every result below is taken verbatim from the Phase A Lean
+output. No theorem appears in ARTICLE.md or RESEARCH_PAPER.md that is not listed
+here.
 
-Background facts used (from Mathlib `Mathlib/NumberTheory/Harmonic/EulerMascheroni.lean`):
-- `Real.eulerMascheroniConstant` — the constant γ, defined as the limit of `eulerMascheroniSeq`.
-- `Real.eulerMascheroniSeq n = harmonic n − log (n+1)` — strictly increasing, converges to γ from below.
-- `Real.eulerMascheroniSeq' n = harmonic n − log n` (junk at 0) — strictly decreasing, converges to γ from above.
-- `Real.tendsto_eulerMascheroniSeq`, `Real.tendsto_harmonic_sub_log` — convergence facts.
-
-| Lean name | Mathematical statement | ARTICLE.md | RESEARCH_PAPER.md |
+| Lean name | Mathematical statement | In ARTICLE.md | In RESEARCH_PAPER.md |
 |---|---|---|---|
-| `EulerMascheroniMidpoint.midpointSeq` (def) | `midpointSeq n = H_n − log(n + 1/2)` | "the midpoint sequence" | Definition 2 |
-| `two_mul_lt_log_div` | For `t ∈ (0,1)`: `2t < log((1+t)/(1−t))` | "the engine inequality" | Lemma 1 |
-| `midpoint_step` | `1/(n+1) < log(n+3/2) − log(n+1/2)` | "each step shrinks" | Lemma 2 |
-| `strictAnti_midpointSeq` | `midpointSeq` is strictly decreasing | "always decreasing" | Theorem 3 |
-| `tendsto_midpointSeq` | `midpointSeq → γ` (squeeze) | "lands exactly on γ" | Theorem 4 |
-| `eulerMascheroniConstant_lt_midpointSeq` | `γ < midpointSeq n` for all n | "always above γ" | Theorem 5 (main) |
-| `eulerMascheroniSeq_lt_midpointSeq` | `eulerMascheroniSeq n < midpointSeq n` | "beats the lower approximant" | Theorem 6 |
-| `midpointSeq_sandwich` | `eulerMascheroniSeq n < γ < midpointSeq n` | "the new sandwich" | Theorem 7 |
+| `EMR.irrational_of_int_linear_combo_tendsto_zero` | If `a, b : ℕ → ℤ` satisfy `aₙ + bₙ x ≠ 0` for all `n` and `aₙ + bₙ x → 0`, then `x` is irrational. | "The Rigidity Theorem" / main idea | Theorem 1 (Sufficiency) |
+| `EMR.exists_rat_mem_den_ge` | If `x` is irrational, then for every `N` there is a rational `q` with `\|x − q\| < 1/q.den²` and `q.den ≥ N`. | "Dirichlet with unbounded denominators" | Lemma 2 (Unbounded denominators) |
+| `EMR.irrational_iff_exists_int_linear_combo_tendsto_zero` | `x` irrational ⇔ there exist integer sequences `a, b` with `aₙ + bₙ x ≠ 0` and `aₙ + bₙ x → 0`. | "The Characterization" | Theorem 3 (Characterization) |
+| `EMR.eulerMascheroniConstant_irrational_iff` | `Irrational γ` ⇔ there exist integer sequences `a, b` with `aₙ + bₙ γ ≠ 0` and `aₙ + bₙ γ → 0`. | "Reducing the γ problem" | Theorem 4 (Reduction of the open problem) |
 
-Notes:
-- The numerical rate `midpointSeq n − γ ≈ 1/(24 n²)` is an EXPERIMENTAL observation
-  recorded in the Lean lab notes, not a proved theorem. Prose marks it as numerical.
-- Identities mentioned only in the Lean docstring (e.g. linking midpoint to the
-  classical lower approximant, and `midpointSeq n < eulerMascheroniSeq' n`) are
-  discussed qualitatively but never claimed as separate proved theorems beyond the
-  table above.
+Supporting Mathlib results referenced (not original to this package):
+- `Real.infinite_rat_abs_sub_lt_one_div_den_sq_of_irrational` (Dirichlet / Hurwitz infinitude of good approximations).
+- `Int.one_le_abs` (a nonzero integer has absolute value ≥ 1).
+
+Related companion results in the wider EulerMascheroni development (named for context only, NOT restated as if original here):
+- `EulerMascheroni.gterm`, `EulerMascheroni.hasSum_gterm` (positive series `∑ gterm = γ`).
+- `EulerMascheroni.gamma_sub_seq_lt_inv` (the `O(1/n)` approximation bound).
+
+Rules applied:
+- No theorem name paraphrased into a grander claim.
+- The corollary `eulerMascheroniConstant_irrational_iff` is an honest *reduction*,
+  NOT a claim that γ is (ir)rational.
