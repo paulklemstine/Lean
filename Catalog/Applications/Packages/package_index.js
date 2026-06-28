@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c0f7c830",
     "filename": "sharp_lower_bound_for_lxy_under_hypothesis_u.json",
     "pkg_num": 169,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.63496,
     "title": "A Sharp Elementary Sieve Bound for the Smooth-Number Counting Function L(x, y) under Hypothesis U"
   },
   {
@@ -4929,8 +4929,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "sharp_lower_bound_for_lxy_under_hypothesis_u",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.63496,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "A Sharp Elementary Sieve Bound for the Smooth-Number Counting Function L(x, y) under Hypothesis U"
     }

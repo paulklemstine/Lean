@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "71ab9721",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Euler–Mascheroni constant `γ`\n\nDerived from this cycle's findings: a positive-term series\n`γ = ∑_k (1/(k+1) − log((k+2)/(k+1)))`, its term-wise integral form\n`γ = ∑_k ∫_{k+1}^{k+",
-      "quality_score": 0.6771,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-24T18:58:02",
-      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-    },
-    {
       "cycle_id": "a1973066",
       "domain": "Probability",
       "key_insight": "# Future Directions — Brocard's Problem (Probability domain)\n\nThis cycle established: the three Brown numbers `{4,5,7}`, an exhaustive\n`native_decide` verification that no others occur below `1000`, t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-06-28T06:24:48",
       "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
+    },
+    {
+      "cycle_id": "c0f7c830",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Sharp lower bounds for `L(x,y)` (smooth-number count)\n\nBuilt on `Catalog/Novelty/SmoothNumberLowerBound.lean`, where:\n\n- `L x y` = number of `y`-smooth integers in `(0, x]`;\n- `p",
+      "quality_score": 0.63496,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-28T06:27:51",
+      "title": "Sharp lower bound for L(x,y) under Hypothesis U"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8251200000000001
     }
   ],
-  "last_updated": "2026-06-28T06:24:48",
+  "last_updated": "2026-06-28T06:27:51",
   "open_questions": [
     {
       "context": "## Verified results (all `sorry`-free)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ba81674a",
-        "quality": 0.79596,
-        "theorems": 13,
-        "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
-      },
-      {
         "cycle_id": "2f2206c6",
         "quality": 0.71552,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.8251200000000001,
         "theorems": 17,
         "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
+      },
+      {
+        "cycle_id": "c0f7c830",
+        "quality": 0.63496,
+        "theorems": 11,
+        "title": "Sharp lower bound for L(x,y) under Hypothesis U"
       }
     ],
     "NumberTheory": [

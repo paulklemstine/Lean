@@ -8116,6 +8116,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Sharp lower bounds for `L(x,y)` (smooth-number count)\n\nBuilt on `Catalog/Novelty/SmoothNumberLowerBound.lean`, where:\n\n- `L x y` = number of `y`-smooth integers in `(0, x]`;\n- `primeContribution x y = \u2211_{y < p \u2264 x, p prime} \u230ax/p\u230b`;\n- proved unconditionally `x - primeContribution x y \u2264 L x y` (`L_lower_sieve`);\n- proved this is an **equality** when no `n \u2264 x` has two distinct prime factors\n  `> y` (`L_eq_sieve_of_no_double_large_factor`);\n- proved `L x y = x \u2194 no prime in (y, x]` (`L_eq_iff_no_prime_between`) and the\n  Bertrand consequence `L (2y) y < 2y` (`L_two_mul_lt`).\n\nThe following conjectures are precise and Lean-targetable for the next cycle.\n\n## C1 \u2014 Exact sharpness threshold (iff form)\n**Conjecture.** `L x y = x - primeContribution x y` holds **iff** for all\ndistinct primes `p, q \u2208 (y, x]` one has `p * q > x`.\nThe current `L_eq_sieve_of_no_double_large_factor` is the `\u2190` direction; the\nconverse should follow by exhibiting `pq \u2264 x` as a doubly-counted integer that\nmakes the union bound strict. A convenient sufficient closed form: the equality\nholds whenever `x < (y+1)^2` is replaced by `x < p\u2081 p\u2082` for the two smallest\nprimes `p\u2081 < p\u2082` in `(y, x]`.\n\n## C2 \u2014 Second-order (Bonferroni) bracketing\n**Conjecture.** The two-term inclusion\u2013exclusion correction brackets `L`:\n```\nx - \u2211_{p} \u230ax/p\u230b + \u2211_{p<q} \u230ax/(pq)\u230b \u2265 L x y \u2265 x - \u2211_{p} \u230ax/p\u230b ,\n```\nsums over primes in `(y, x]`. More generally, truncating Legendre's formula at\nan even/odd number of terms gives upper/lower bounds (Bonferroni inequalities).\nTarget: formalize the depth-2 upper bound, then general `Brun`-style truncation.\n\n## C3 \u2014 Mertens-calibrated Hypothesis U\n**Conjecture.** For `2 \u2264 y \u2264 x`, `primeContribution x y \u2264 x \u00b7 (ln ln x \u2212 ln ln y) + C\u00b7x/ln y`\nfor an absolute constant `C` (a Mertens-type estimate for `\u2211_{y<p\u2264x} 1/p` times\n`x`, plus the `\u230a\u00b7\u230b` defect bounded by `\u03c0(x) \u2212 \u03c0(y)`). Consequently Hypothesis U\nwith `c = x(1 \u2212 (ln ln x \u2212 ln ln y)) \u2212 C x/ln y` is satisfied, yielding an\nexplicit density lower bound `L x y / x \u2265 1 \u2212 ln u + o(1)` for `u = ln x / ln y`\nin the Dickman range `1 \u2264 u \u2264 2` (matching `\u03c1(u) = 1 \u2212 ln u`).\n\n## C4 \u2014 Buchstab dual for rough numbers\n**Conjecture.** Let `R x y = #{n \u2208 (0,x] : every prime factor of n is > y}`\n(`y`-rough numbers). Then `R x y = x \u2212 L'` for a complementary smoothness notion,\nand `R` satisfies the elementary Buchstab recursion\n`R x y = R x (y\u22121) \u2212 R (x / y) (y\u22121)` when `y` is prime. Formalize this and derive\n`R x y \u2265 x \u220f_{p \u2264 y}(1 \u2212 1/p) \u2212 2^{\u03c0(y)}` (Legendre/Brun lower bound).\n\n## C5 \u2014 Prime-gap upgrades of the deficiency theorem\n**Conjecture.** Every strengthening of Bertrand sharpens `L_two_mul_lt`:\n- (Nagura) for `y \u2265 25`, a prime lies in `(y, 6y/5]`, hence `L (\u23086y/5\u2309) y < \u23086y/5\u2309`.\n- Conditionally (or via known unconditional results for large `y`), a prime lies\n  in `(y, y + y^{0.525}]`, giving `L (y + \u230ay^{0.525}\u230b) y < y + \u230ay^{0.525}\u230b`.\nThis makes `L`'s deficiency a quantitative *detector* of prime gaps and is a clean\nbridge from 11N25 to 11N05/11N13.\n",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_2756",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c0f7c830",
+    "status": "available",
+    "timestamp": "2026-06-28T06:27:43.219649+00:00",
+    "title": "Built on `Catalog/Novelty/SmoothNumberLowerBound.lean`, where:"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
