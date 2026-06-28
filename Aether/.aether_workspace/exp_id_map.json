@@ -652,5 +652,6 @@
   "2d24ca82": "regularized_sum_of_primes_via_analytic_continuatio.json",
   "f3fa5004": "explicit_bias_lower_bound_for_the_density_of_n_wit.json",
   "ca01957a": "tight_asymptotic_bound_for_the_nqueens_completion_.json",
-  "f73687d8": "eml_kolmogorov_arnold_representation.json"
+  "f73687d8": "eml_kolmogorov_arnold_representation.json",
+  "c011c95b": "zero_knowledge_proofs_schnorr_protocol.json"
 }
