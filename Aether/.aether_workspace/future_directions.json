@@ -44011,7 +44011,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Mathlib.Data.ZMod.Basic",
         "Mathlib.LinearAlgebra.FiniteDimensional",
@@ -44021,7 +44021,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "12b5f4b2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -44037,7 +44037,7 @@
         "Bridges"
       ],
       "id": "fd_2503",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-28T21:27:44.380574+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\nabbrev FanoField := ZMod 2\nabbrev FanoVec := Fin 3 → FanoField\n\ndef IsFanoPoint (P : Submodule FanoField FanoVec) : Prop :=\n  Module.finrank FanoField P = 1\n\ndef IsFanoLine (L : Submodule FanoField FanoVec) : Prop :=\n  Module.finrank FanoField L = 2\n\ndef FanoStrongBlocking (S : Finset (Submodule FanoField FanoVec)) : Prop :=\n  (∀ P ∈ S, IsFanoPoint P) ∧\n  ∀ L : Submodule FanoField FanoVec,\n    IsFanoLine L →\n      Submodule.span FanoField\n        ({v : FanoVec | ∃ P ∈ S, P ≤ L ∧ v ∈ P} : Set FanoVec) = L\n\ntheorem fano_strongBlocking_iff_six_le_card\n    (S : Finset (Submodule FanoField FanoVec))\n    (hS : ∀ P ∈ S, IsFanoPoint P) :\n    FanoStrongBlocking S ↔ 6 ≤ S.card := by\n  sorry",
       "lineage_refs": [],
@@ -44051,7 +44051,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24262v1",
       "source_path": "http://arxiv.org/abs/2606.24262v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-25T10:08:51.465617+00:00",
       "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"

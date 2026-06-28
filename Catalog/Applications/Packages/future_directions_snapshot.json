@@ -7345,7 +7345,7 @@
       "Mathlib.LinearAlgebra.Dimension.Finrank",
       "Mathlib.Data.Finset.Card"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12b5f4b2",
     "description": "In the h=1 specialization of additive strong blocking sets, i.e. ordinary strong blocking sets in PG(2,2), a finite set S of projective points is strong blocking if and only if it contains at least 6 of the 7 points. Equivalently, the shortest nondegenerate minimal binary linear code of dimension 3 has length 6 under the projective-system correspondence.",
     "domain_bridges": [
       "minimal linear codes ↔ strong blocking sets",
@@ -7362,7 +7362,7 @@
     "proof_strategy": "Represent points of PG(2,2) as 1-dimensional submodules of V = (ZMod 2)^3 and lines as 2-dimensional submodules. In the Fano plane every line has exactly 3 points and any two distinct points determine a unique line. A set S is strong blocking exactly when every line contains at least two points of S. If S is strong blocking, its complement cannot contain two points, since those two points would determine a line meeting S in only one point; hence |S| ≥ 6. Conversely, if |S| ≥ 6, every line misses at most one point, so it contains at least two points of S and therefore its intersection with S spans the line.",
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T10:08:51.465617+00:00",
     "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
   },
