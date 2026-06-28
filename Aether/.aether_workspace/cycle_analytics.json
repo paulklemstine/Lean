@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T06:31:04.298928+00:00",
+  "last_updated": "2026-06-28T06:58:39.616677+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -14276,6 +14276,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-28T06:31:04.051898+00:00",
       "title": "Sharp lower bound for L(x,y) under Hypothesis U"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5053,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 191,
+      "domain": "Novelty",
+      "duration_seconds": 1552.2445440292358,
+      "end_time": 1782629231.7031555,
+      "files_integrated": 7,
+      "job_id": "5d028d25",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.8428,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.8728,
+        "novelty": 0.95,
+        "proof_depth": 0.8397,
+        "usefulness": 0.8948
+      },
+      "quality_score": 0.747936,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782627679.4586115,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-28T06:58:39.340231+00:00",
+      "title": "Prismatic Purity for F-Crystals on Regular Schemes"
     }
   ]
 }
