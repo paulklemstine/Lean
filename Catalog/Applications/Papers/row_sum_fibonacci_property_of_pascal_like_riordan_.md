@@ -1,47 +1,25 @@
-# Computational Evidence — Row Sum Fibonacci Property of the Pascal-like Riordan Array
+# Theorem Trace — Row Sum Fibonacci Property of a Pascal-like Riordan Array
 
-## Object
+Source of truth: `Catalog/Novelty/RiordanRowSumFibonacci.lean`
+(namespace `RiordanRowSumFibonacci`). Every name below is copied verbatim
+from that file. No other results are claimed in the prose.
 
-Riordan array `(1/(1-x), x/(1-x)^2)` with entries `t_{n,k} = C(n+k, 2k)`.
-Row sum `A(n) = Σ_{k≥0} C(n+k, 2k)`.
+| Lean name | Kind | Mathematical statement | In ARTICLE.md | In RESEARCH_PAPER.md |
+|---|---|---|---|---|
+| `pascalRiordanA` | def | $A(n) = \sum_{k=0}^{n}\binom{n+k}{2k}$ | yes (the "row sum") | Def. 2.1 |
+| `pascalRiordanB` | def | $B(n) = \sum_{k=0}^{n}\binom{n+k}{2k+1}$ | yes (the "companion sum") | Def. 2.2 |
+| `pascalRiordanB_succ` | lemma | $B(n+1) = A(n) + B(n)$ | yes (the coupling) | Lemma 3.1 |
+| `pascalRiordanA_succ` | lemma | $A(n+1) = A(n) + B(n+1)$ | yes (the coupling) | Lemma 3.2 |
+| `pascalRiordan_pair` | lemma | $A(n)=F_{2n+1}\ \wedge\ B(n)=F_{2n}$ | yes (main statement) | Theorem 3.3 |
+| `pascalRiordanA_eq_fib` | theorem | $\sum_{k=0}^{n}\binom{n+k}{2k}=F_{2n+1}$ | yes (headline) | Theorem 3.4 |
+| `pascalRiordanB_eq_fib` | theorem | $\sum_{k=0}^{n}\binom{n+k}{2k+1}=F_{2n}$ | yes (companion) | Theorem 3.5 |
+| `pascalRiordan_three_term` | theorem | $A(n+2)+A(n)=3A(n+1)$ | yes (recurrence) | Theorem 3.6 |
 
-## Small-case calculations
-
-| n | row entries C(n+k,2k), k=0.. | A(n) = row sum | fib(2n+1) |
-|---|------------------------------|----------------|-----------|
-| 0 | 1                            | 1              | 1         |
-| 1 | 1, 1                         | 2              | 2         |
-| 2 | 1, 3, 1                      | 5              | 5         |
-| 3 | 1, 6, 5, 1                   | 13             | 13        |
-| 4 | 1, 10, 15, 7, 1             | 34             | 34        |
-| 5 | 1, 15, 35, 28, 9, 1        | 89             | 89        |
-| 6 | ...                          | 233            | 233       |
-| 7 | ...                          | 610            | 610       |
-
-Computed in Lean (`#eval`): `A(n)` matches `Nat.fib (2*n+1)` for n = 0..7. ✓
-
-## A companion sequence
-
-Define `B(n) = Σ_{k≥0} C(n+k, 2k+1)`. Computation gives
-`B(n) = 0, 1, 3, 8, 21, 55, 144, 377` = `fib(2n)`. ✓
-
-## OEIS
-
-- Row sums `1, 2, 5, 13, 34, 89, 233, 610, ...` = odd-indexed Fibonacci numbers, OEIS A001519.
-- The array `C(n+k,2k)` is OEIS A085478 (triangle of `C(n+k,2k)`).
-- The generating function of the row sums is `(1-x)/(1-3x+x^2)`, the g.f. of A001519,
-  reflecting the recurrence `A(n+1) = 3 A(n) - A(n-1)`.
-
-## Recurrence verified computationally
-
-Two coupled Pascal recurrences, checked for n = 0..5 in Lean:
-- `B(n+1) = A(n) + B(n)`   (pure additive Pascal, no reindexing)
-- `A(n+1) = A(n) + B(n+1)` (reindexing of the lower-odd diagonal)
-
-Both hold for all tested n. These reduce, with `A(0)=1=fib 1`, `B(0)=0=fib 0`, to a
-simultaneous induction giving `A(n)=fib(2n+1)`, `B(n)=fib(2n)`. Combining the two yields
-`A(n+1) = 3 A(n) - A(n-1)`, matching the g.f. `(1-x)/(1-3x+x^2)`.
-
-## Counterexample hunt
-
-No counterexample to `A(n) = fib(2n+1)` found in n = 0..7 (exact, exhaustive).
+Notes / anti-hallucination guards:
+- Fibonacci indexing follows Mathlib's `Nat.fib`: $F_0=0, F_1=1, F_2=1, F_3=2,\dots$
+- The generating function $(1-x)/(1-3x+x^2)$ is described as the analytic
+  shadow of `pascalRiordan_three_term`; it is discussed as motivation. The
+  *proved* statements are the eight rows above. No power-series identity is
+  claimed as proved in this project's source file.
+- OEIS references: the array is A085478, the row sums A001519. These are
+  descriptive cross-references, not proved theorems.
