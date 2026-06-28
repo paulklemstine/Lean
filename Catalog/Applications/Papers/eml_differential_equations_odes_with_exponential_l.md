@@ -1,15 +1,69 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# Computational Evidence — EML Differential Equations cycle
 
-Source of truth: `Catalog/EML/EMLCoefficientODE.lean` and `Catalog/EML/EMLLogDerivHom.lean`.
+This cycle adds order-reduction and Riccati-gauge infrastructure for second-order
+EML ODEs. The new results are *algebraic identities in an arbitrary differential
+field*, so the relevant evidence is symbolic verification of the identities on the
+canonical analytic realization (functions of a real variable, derivation = `d/dx`,
+exp/log the genuine transcendentals). Each identity below was checked by hand on a
+concrete worked example; all are then proved in full generality in the Lean files.
 
-| Lean name | Statement | ARTICLE.md | RESEARCH_PAPER.md |
-|---|---|---|---|
-| `EMLCoefficientODE.hasDerivAt_exp_comp_solves` | If `HasDerivAt F c x` then `HasDerivAt (fun t => exp (F t)) (c * exp (F x)) x`. I.e. if `F' = c` then `(exp∘F)' = c·(exp∘F)`. | "The master key" section | Theorem 1 (Master construction) |
-| `EMLCoefficientODE.solves_log_coeff` | For `0 < x`, `HasDerivAt (fun t => exp (t·log t − t)) (log x · exp (x·log x − x)) x`. Solves `y' = (log x)·y`. | "The logarithm coefficient / Stirling exponent" | Theorem 2 |
-| `EMLCoefficientODE.solves_exp_coeff` | `HasDerivAt (fun t => exp (exp t)) (exp x · exp (exp x)) x`. Solves `y' = (exp x)·y`. | "The exponential coefficient / double exponential" | Theorem 3 |
-| `EMLCoefficientODE.solves_power_coeff` | For `0 < x` and any `a`, `HasDerivAt (fun t => exp (a·log t)) ((a/x)·exp (a·log x)) x`. Solves `y' = (a/x)·y`, solution `x^a`. | "The power coefficient" | Theorem 4 |
-| `EMLCoefficientODE.solution_ratio_hasDerivAt_zero` | If `HasDerivAt y (c·y x) x` and `HasDerivAt F c x` then `HasDerivAt (fun t => y t / exp (F t)) 0 x`. Uniqueness up to a constant. | "One solution, up to a constant" | Theorem 5 |
-| `EML.EMLLogDerivHom` (logarithmic derivative homomorphism) | `L(y) = y'/y` is a homomorphism from `K^×` (multiplicative) to `(K,+)` (additive): `L(yz) = L(y)+L(z)`. | "The hidden symmetry" | Section 2 (algebraic engine) |
-| `EMLDiffGalois.firstOrder_ratio_isConstant` (referenced, from existing file) | If `y₁'=a·y₁`, `y₂'=a·y₂`, `y₂≠0` then `(y₁/y₂)'=0`. Algebraic counterpart of Theorem 5. | mentioned | Section 5 (Galois context) |
+## 1. Normal-form reduction `y = z·u` removes the `y′` term
 
-No theorems beyond these are claimed. No theorem name is paraphrased into a grander claim.
+Test ODE: `y″ − 2x·y′ + (something)·y = 0`, gauge `z` with `2z′ + p·z = 0`,
+`p = −2x` ⇒ `z′ = x·z` ⇒ `z = exp(x²/2)`.
+
+Substitution identity (`reduction_identity`):
+`(z·u)″ + p·(z·u)′ + q·(z·u) = z·u″ + (z″ + p·z′ + q·z)·u`.
+
+Check with `z = exp(x²/2)`, `p = −2x`:
+- `z′ = x z`, `z″ = (1 + x²) z`.
+- `z″ + p z′ = (1+x²)z − 2x·(x z) = (1 − x²) z`.
+  So the coefficient of `u` is `(1 − x² + q) z`, independent of `u′` — the `u′`
+  term has cancelled, as the identity asserts. ✓
+
+Explicit coefficient (`normalForm_coeff_explicit`, division-free `×4` form):
+`4(z″ + p z′ + q z) = z(4q − p² − 2p′)`.
+With `p = −2x`: `p² = 4x²`, `p′ = −2`, so `4q − p² − 2p′ = 4q − 4x² + 4`.
+RHS `= z(4q − 4x² + 4) = 4z(q − x² + 1)`, matching `4·(1 − x² + q)z`. ✓
+(Classical normal-form coefficient `r = q − p²/4 − p′/2 = q − x² + 1`.)
+
+## 2. d'Alembert reduction of order
+
+Test: `y″ = y` (`a = 1`), known solution `y₁ = exp x`.
+Second solution `y₂ = y₁·w` with `y₁²·w′` constant: `y₁² = exp(2x)`, pick
+`y₁²·w′ = −2` (constant) ⇒ `w′ = −2 exp(−2x)` ⇒ `w = exp(−2x)` ⇒
+`y₂ = exp x · exp(−2x) = exp(−x)`.
+Indeed `y₂″ = exp(−x) = y₂`. ✓ (`reduction_of_order`).
+
+Wronskian (`reduction_wronskian`): `W(y₁, y₂) = y₁²·w′ = −2`, a nonzero constant,
+so `y₁, y₂` are independent over the constants (`reduction_linIndep`). ✓
+(Boundary: if instead `y₁²·w′ = 0` then `w` is constant and `y₂ = c·y₁` is
+dependent — `W = 0`.)
+
+## 3. Riccati gauge (completing the square)
+
+Full Riccati of `y″ + p y′ + q y = 0` via `v = y′/y`:
+`v′ + v² + p v + q = 0` (`riccati_full_of_second_order`).
+
+Gauge `ṽ = v + g`, `2g = p`: `(v+g)′ + (v+g)² = g′ + g² − q`
+(`riccati_gauge`). Worked check `p = −2x` (`g = −x`), `q` arbitrary:
+- `g′ = −1`, `g² = x²`, so RHS `= −1 + x² − q`.
+- Equivalently the normal-form coefficient is `r = −(g′ + g² − q) = q − x² + 1`,
+  matching §1. The two gauges (linear-side `y = z·u` and Riccati-side `ṽ = v + p/2`)
+  land on the *same* `r`. ✓
+
+## 4. Sanity counterexample hunt
+
+- Normal-form criterion requires `z ≠ 0`: with `z = 0` the substitution `y = z·u`
+  is identically `0`, so the iff is vacuous/false — hypothesis is load-bearing.
+- `galois_action_is_mul_constant` requires both solutions nonzero: with `y₂ = 0`
+  the "constant" `c = y₂/y₁ = 0` is not in `Gₘ`, so `y₂ ≠ 0` is necessary.
+- `reduction_linIndep` requires `y₁²·w′ ≠ 0`: dropping it allows `w` constant, giving
+  a dependent pair. No counterexample to any stated theorem was found.
+
+## Notes
+
+No integer/OEIS sequence arises (the content is symbolic differential algebra rather
+than enumerative). The decisive evidence is that every identity, verified above on
+canonical exp/log examples, is proved in Lean over an *arbitrary* differential field
+with only standard axioms (`propext`, `Classical.choice`, `Quot.sound`).

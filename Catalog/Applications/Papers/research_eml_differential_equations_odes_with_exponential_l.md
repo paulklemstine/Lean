@@ -1,292 +1,431 @@
-# First-Order Linear ODEs with Exponential–Logarithmic Coefficients: A Constructive Solution Calculus and Its Infinitesimal Uniqueness Law
+# The Differential Algebra of EML Ordinary Differential Equations: Logarithmic Derivatives, Galois Torsors, and a Sharp Kovacic Parity Decision
 
 **Author:** Aristotle
-**Date:** 2026-06-27
-**Domain:** Applications (Differential Equations / Differential Algebra)
+**Date:** 2026-06-28
+**Domain:** Novelty (Differential Algebra / Differential Galois Theory)
+
+---
 
 ## Abstract
 
-We develop the positive, constructive theory of first-order linear ordinary
-differential equations $y' = c(x)\,y$ whose coefficient $c$ is an
-*exponential–logarithmic* (EML) function — one built from the transcendental
-operations $\exp$ and $\log$. The cornerstone is a single master construction: if
-$F$ is an antiderivative of $c$ (that is, $F' = c$), then $y = \exp \circ F$ solves
-the equation, with derivative computed exactly by the chain rule. We specialize
-this to the three archetypal EML coefficient classes — the **logarithmic**
-coefficient $c(x) = \log x$, solved by the continuous Stirling exponent
-$y(x) = \exp(x\log x - x)$; the **exponential** coefficient $c(x) = \exp x$, solved
-by the double exponential $y(x) = \exp(\exp x)$; and the **power / inverse-linear**
-coefficient $c(x) = a/x$, solved by $y(x) = \exp(a\log x) = x^a$. We then prove an
-infinitesimal **uniqueness-up-to-a-constant** law: any solution divided by the
-canonical solution $\exp \circ F$ has vanishing derivative, so the solution space is
-one-dimensional over the constants. The algebraic engine underlying every result is
-the **logarithmic derivative** $L(y) = y'/y$, which is a homomorphism from the
-multiplicative group of nonzero elements of a differential field to its additive
-group; solving $y' = c\,y$ is exactly solving $L(y) = c$. Every statement is backed
-by a machine-checked formal proof in the calculus library of Lean/Mathlib, so the
-calculus presented here is verified to the level of the kernel. These positive
-results complement an existing *negative* (obstruction) theory for second-order EML
-equations, of which Airy's equation $y'' = x\,y$ is the prototype.
+We develop, in a fully abstract differential-field setting, the algebraic core
+of ordinary differential equations whose coefficients are *exponential,
+multiplicative, and logarithmic* (EML) functions, and we apply it to the
+decision problem of elementary solvability. Working over an arbitrary
+differential field $K$ with derivation $y \mapsto y'$, we establish four
+interlocking layers of structure. First, the **logarithmic derivative**
+$L(y) = y'/y$ is a homomorphism from the multiplicative group $K^\times$ to the
+additive group $(K,+)$, with the consequence that solutions of first-order linear
+equations $y' = a\,y$ multiply by adding coefficients; we prove the finite
+superposition law $\big(\prod_i y_i\big)' = \big(\sum_i a_i\big)\prod_i y_i$.
+Second, the **constants** $\{x : x' = 0\}$ form a subfield, and the solution
+space of $y' = a\,y$ is a torsor under the multiplicative group of nonzero
+constants $\mathbb{G}_m(\text{constants})$: any two nonzero solutions differ by a
+nonzero constant. Third, the **Wronskian** $W(y_1,y_2) = y_1 y_2' - y_2 y_1'$ is
+constant on solutions of $y'' = a\,y$ (abstract Abel identity) and is a sharp
+detector of linear independence over the constants. Fourth, the **Riccati
+transform** $v = y'/y$ converts $y'' = a\,y$ into $v' + v^2 = a$, which drives the
+first step of the Kovacic algorithm; we prove that for any polynomial $f$ of odd
+degree the Riccati equation $v' + v^2 = f$ has no rational solution, deducing that
+the generalized Airy family $y'' = x^{2k+1} y$ — and Airy's equation $y'' = xy$ in
+particular — has no rational Riccati solution and hence no elementary solution.
+Finally, we prove the decision rule is **sharp**: the even-degree coefficient
+$f = x^2 + 1$ admits the rational Riccati solution $v = x$ (the logarithmic
+derivative of $e^{x^2/2}$), so the odd-degree hypothesis cannot be weakened. All
+results have been formalized and machine-checked.
+
+---
 
 ## 1. Introduction
 
-The equation $y' = c\,y$ is the universal model of proportional change. When $c$ is
-a scalar, the solution $y = K e^{cx}$ is elementary. When $c$ is a function of $x$,
-the solution is still elementary *in principle* — $y = K \exp(\int c)$ — but the
-character of the solution depends sharply on the analytic nature of $c$. We isolate
-the case where $c$ is **exponential–logarithmic**: assembled from $\exp$, $\log$,
-the field operations, and constants. This class is large enough to be interesting
-(it contains genuinely transcendental, non-Liouvillian growth) yet structured
-enough to admit a complete first-order solution calculus.
+Airy's equation $y'' = x\,y$, introduced by G. B. Airy in his 1838 study of
+optical caustics, is the prototypical second-order linear ordinary differential
+equation with no closed-form elementary solution. Its solutions, the Airy
+functions $\mathrm{Ai}$ and $\mathrm{Bi}$, are genuinely transcendental: no finite
+expression in polynomials, exponentials, logarithms, radicals and the field
+operations represents them. The modern explanation of such impossibility is
+**differential Galois theory** (Picard–Vessiot theory), the differential-equation
+analogue of classical Galois theory: a linear ODE is solvable in "Liouvillian"
+(elementary) terms if and only if its differential Galois group is suitably
+structured, and the **Kovacic algorithm** turns this into an effective decision
+procedure for second-order equations.
 
-Our contribution is fourfold:
+This paper isolates and formalizes the algebraic engine of the EML theory — the
+class of equations whose coefficients are built from exponentials and logarithms —
+in a way that is independent of any characteristic, algebraic-closure, or analytic
+hypothesis. We work in an arbitrary **differential field** $(K, {}')$: a field $K$
+equipped with a derivation $\,'$ satisfying additivity $(x+y)' = x' + y'$ and the
+Leibniz rule $(xy)' = x'y + x y'$. From these axioms alone we recover the full
+first-order solution calculus, the constants-subfield symmetry theory, the
+Wronskian independence criterion, and the Riccati transform; and over the
+concrete polynomial ring $\mathbb{R}[X]$ we run the degree-parity argument that
+decides solvability for the generalized Airy family.
 
-1. A **master construction** (Theorem 1) reducing the solution of any
-   first-order linear equation to antidifferentiation of its coefficient, via the
-   substitution $y = \exp \circ F$.
-2. **Closed-form solutions** for the three archetypal EML coefficient classes
-   (Theorems 2–4), each obtained by computing exactly one antiderivative.
-3. An **infinitesimal uniqueness law** (Theorem 5) showing the solution space is
-   one-dimensional over constants.
-4. Identification of the **logarithmic derivative homomorphism** $L(y) = y'/y$
-   (Section 2) as the algebraic mechanism unifying all of the above and explaining
-   why EML coefficients form a closed, coherent class.
+### 1.1 Contributions
 
-All results are formalized; the formal statements use Mathlib's `HasDerivAt`
-predicate, which asserts pointwise (Fréchet) differentiability with a specified
-derivative value, so each theorem is a verified analytic identity rather than a
-symbolic manipulation.
+1. **The logarithmic-derivative homomorphism** (§3): $L(y) = y'/y$ is a group
+   homomorphism $K^\times \to (K,+)$, yielding product, quotient, inverse, and
+   integer-power laws, the binary and finite superposition laws for $y' = a\,y$.
+2. **First-order differential Galois structure** (§4): the constants form a
+   subfield; the solution space of $y' = a\,y$ is a $\mathbb{G}_m(\text{constants})$
+   torsor (`galois_action_is_mul_constant`, `galois_torsor`).
+3. **Wronskian theory for $y'' = a\,y$** (§5): abstract Abel identity, and the
+   biconditional between vanishing Wronskian and linear dependence over the
+   constants, giving a fundamental-system criterion.
+4. **Riccati transform and the Kovacic first step** (§6): $v = y'/y$ sends
+   $y'' = a\,y$ to $v' + v^2 = a$.
+5. **A sharp parity decision for Airy** (§7): odd-degree coefficients are
+   obstructed (`no_rational_solves_riccati_airy`,
+   `no_rational_riccati_genAiry`), while $f = x^2+1$ is solvable
+   (`riccati_evenDeg_solvable`), so the criterion is tight
+   (`kovacic_parity_decision_sharp`).
 
-### 1.1 Setting and notation
+---
 
-Throughout, $\exp$ and $\log$ are the genuine real exponential and natural
-logarithm. For a function $y : \mathbb{R} \to \mathbb{R}$ and a point $x$, we write
-$y'(x)$ for the derivative; formally, the assertion "$y$ has derivative $v$ at $x$"
-is `HasDerivAt y v x`. The logarithm $\log$ is differentiable exactly on
-$\mathbb{R}\setminus\{0\}$ with $(\log)'(x) = 1/x$; this is the source of the
-$x > 0$ hypotheses below, which are load-bearing (the logarithmic and power
-statements are false at $x = 0$).
+## 2. Preliminaries: differential fields
 
-For the algebraic Section 2 we work in an abstract **differential field** $K$: a
-field equipped with a derivation $\cdot' : K \to K$ satisfying additivity and the
-Leibniz rule $(yz)' = y'z + yz'$. The **constants** are $\{x \in K : x' = 0\}$;
-they form a subfield.
+**Definition 2.1 (Differential field).** A *differential field* is a field $K$
+together with an additive map $\,' : K \to K$ (the *derivation*) satisfying the
+Leibniz rule
+$$ (xy)' = x'\,y + x\,y'. $$
+From the axioms one derives the quotient rule
+$(y/z)' = (y'z - yz')/z^2$ and the inverse rule $(y^{-1})' = -y'/y^2$ for
+$z, y \neq 0$.
 
-## 2. The algebraic engine: the logarithmic derivative homomorphism
+**Definition 2.2 (Constants).** The *field of constants* of $K$ is
+$$ C_K = \{\, x \in K : x' = 0 \,\}. $$
 
-**Definition (logarithmic derivative).** For a nonzero element $y$ of a
-differential field $K$, the *logarithmic derivative* is
-$$L(y) = \frac{y'}{y}.$$
+**Definition 2.3 (Logarithmic derivative).** For $y \neq 0$, the *logarithmic
+derivative* is
+$$ L(y) = \frac{y'}{y}. $$
 
-**Proposition (homomorphism law).** $L$ is a group homomorphism from the
-multiplicative group $K^\times$ to the additive group $(K, +)$:
-$$L(y\,z) = L(y) + L(z), \qquad L(y^{-1}) = -L(y), \qquad L(y/z) = L(y) - L(z),$$
-and for $n \in \mathbb{Z}$, $L(y^n) = n\,L(y)$.
+Throughout, "EML equation" refers to a linear ODE $y' = a\,y$ or $y'' = a\,y$
+(or their first-derivative-bearing forms) interpreted in such a $K$; the slogan
+"the differential Galois group is an EML group" is made precise below by showing
+the relevant groups are subgroups of $\mathbb{G}_m(C_K)$, the multiplicative
+group of nonzero constants.
 
-*Proof sketch.* By the Leibniz rule, $(yz)' = y'z + yz'$, hence
-$L(yz) = (y'z + yz')/(yz) = y'/y + z'/z = L(y) + L(z)$. The remaining identities
-follow from the group-homomorphism property (inverse to negative, quotient to
-difference, integer power to integer multiple). $\square$
+---
 
-This single structural fact is the conceptual core. Solving the first-order linear
-equation $y' = c\,y$ is *literally* solving $L(y) = c$: finding an element whose
-logarithmic derivative equals the prescribed coefficient. The homomorphism law
-explains the closure properties of the EML solution class — products, quotients,
-inverses, and integer powers of solutions correspond under $L$ to sums,
-differences, negatives, and multiples of coefficients, all of which remain EML
-when the original coefficients are EML. The kernel of $L$ is exactly the units of
-the constants subfield, which is why solutions are unique only up to a constant
-factor (made precise analytically in Theorem 5, and algebraically in the existing
-result `EMLDiffGalois.firstOrder_ratio_isConstant`).
+## 3. The logarithmic derivative as an exponential–logarithmic homomorphism
 
-## 3. The master construction
+The decisive structural fact is that $L$ converts multiplication into addition.
 
-**Theorem 1 (Master construction; `hasDerivAt_exp_comp_solves`).**
-*Let $F : \mathbb{R} \to \mathbb{R}$ and let $c, x \in \mathbb{R}$. If $F$ has
-derivative $c$ at $x$, then $t \mapsto \exp(F(t))$ has derivative $c \cdot
-\exp(F(x))$ at $x$. Equivalently, if $F' = c$ then $\exp \circ F$ solves
-$y' = c\,y$.*
+**Theorem 3.1 (Homomorphism law, `logDeriv_mul`).** For nonzero $y, z \in K$,
+$$ L(yz) = \frac{(yz)'}{yz} = \frac{y'}{y} + \frac{z'}{z} = L(y) + L(z). $$
 
-*Proof sketch.* The chain rule for the exponential states that if $F$ has
-derivative $c$ at $x$, then $\exp \circ F$ has derivative $\exp(F(x)) \cdot c$ at
-$x$ (in Mathlib, `HasDerivAt.exp`). Commuting the product gives $c \cdot
-\exp(F(x))$, which is $c \cdot y(x)$ for $y = \exp \circ F$. $\square$
+*Proof sketch.* Expand $(yz)' = y'z + yz'$ by Leibniz, divide by $yz$, and
+simplify. ∎
 
-The power of this lemma is that it converts the *analytic* problem (solve a
-differential equation) into the *symbolic* problem (find an antiderivative of the
-coefficient). For EML coefficients the antiderivative is itself EML — the class is
-closed under integration of its archetypes — and the three theorems below are each
-one antiderivative computation.
+**Corollary 3.2 (Quotient, inverse, power laws).** For nonzero $y, z$ and
+$n \in \mathbb{Z}$:
+$$ L(y/z) = L(y) - L(z), \quad L(y^{-1}) = -L(y), \quad L(y^n) = n\,L(y). $$
+These are `logDeriv_div`, `logDeriv_inv`, and `logDeriv_zpow`. The power law is
+proved by integer induction, reusing the multiplicative and inverse laws.
 
-## 4. Closed-form solutions for the three EML coefficient classes
+The equation $y' = a\,y$ is equivalent to $L(y) = a$ for $y \neq 0$, so the
+solution set is the $L$-fibre over $a$ — a coset of $\ker L = C_K$. The
+homomorphism property turns multiplicative combinations of solutions into
+additive combinations of coefficients.
 
-### 4.1 Logarithmic coefficient
+**Theorem 3.3 (Binary superposition, `firstOrder_mul`).** If $y' = a\,y$ and
+$z' = b\,z$, then $(yz)' = (a+b)(yz)$.
 
-**Theorem 2 (Logarithmic-coefficient ODE; `solves_log_coeff`).**
-*For every $x > 0$, the function $y(x) = \exp(x\log x - x)$ has derivative
-$(\log x)\,\exp(x\log x - x)$; that is, it solves $y' = (\log x)\,y$ on
-$(0,\infty)$.*
+*Proof sketch.* $(yz)' = y'z + yz' = a y z + b y z = (a+b) yz$. ∎
 
-*Proof sketch.* Set $F(t) = t\log t - t$, an antiderivative of $\log$. We compute
-$F'(x)$ for $x > 0$:
-- By the product rule, $(t \mapsto t\log t)$ has derivative
-  $1\cdot\log x + x\cdot x^{-1}$ at $x$ (using $(\log)'(x) = x^{-1}$).
-- Subtracting the identity $t \mapsto t$ (derivative $1$) gives
-  $F'(x) = 1\cdot\log x + x\cdot x^{-1} - 1$.
-- Since $x \ne 0$, $x \cdot x^{-1} = 1$, so $F'(x) = \log x + 1 - 1 = \log x$.
+**Theorem 3.4 (Inverse, quotient, power solutions).** If $y' = a\,y$ (and where
+needed $y \neq 0$):
+$$ (y^{-1})' = (-a)\,y^{-1}, \quad (y/z)' = (a-b)(y/z)\ \text{when}\ z'=bz,\ z\neq 0, \quad (y^n)' = (n a)\,y^n. $$
+These are `firstOrder_inv`, `firstOrder_div`, `firstOrder_zpow`.
 
-Apply Theorem 1 with $c = \log x$. $\square$
+**Theorem 3.5 (Finite superposition, `firstOrder_prod`).** For a finite family
+$(y_i)_{i \in s}$ with $y_i' = a_i\,y_i$ for all $i \in s$,
+$$ \Big(\prod_{i \in s} y_i\Big)' = \Big(\sum_{i \in s} a_i\Big)\,\prod_{i \in s} y_i. $$
 
-**Remark (the Stirling exponent).** The exponent $x\log x - x$ is the continuous
-Stirling exponent: Stirling's formula reads
-$n! \sim \sqrt{2\pi n}\,\exp(n\log n - n)$. Thus $y' = (\log x)\,y$ is the
-leading-order differential equation governing factorial / Gamma-function growth.
-Its solution is genuinely transcendental — not algebraic over $\mathbb{R}(x)$ — in
-contrast to the power case below.
+*Proof sketch.* Finite-set induction. The empty product gives $1' = 0$, the
+honest zero-coefficient base case. The inductive step applies Leibniz to
+$y_j \cdot \prod_{i \in s} y_i$ and uses the inductive hypothesis together with
+$y_j' = a_j y_j$, finishing with ring normalization. ∎
 
-### 4.2 Exponential coefficient
+This is the abstract content of $\prod_i e^{\int a_i} = e^{\sum_i \int a_i}$:
+multiplicative structure on solutions is additive structure on coefficients.
 
-**Theorem 3 (Exponential-coefficient ODE; `solves_exp_coeff`).**
-*For every $x \in \mathbb{R}$, the double exponential $y(x) = \exp(\exp x)$ has
-derivative $(\exp x)\,\exp(\exp x)$; that is, it solves $y' = (\exp x)\,y$
-everywhere.*
+---
 
-*Proof sketch.* Take $F(t) = \exp t$, whose derivative is $\exp x$ (the
-exponential is its own derivative). Apply Theorem 1 with $c = \exp x$. No domain
-restriction is needed since $\exp$ is everywhere differentiable. $\square$
+## 4. Differential Galois structure of first-order EML equations
 
-**Remark.** The double exponential is the **Gompertz** growth function, central to
-models of mortality, tumor growth, and self-reinforcing exponential processes.
+**Theorem 4.1 (Constants form a subfield, `constantsSubfield`).** The set
+$C_K = \{x : x' = 0\}$ is a subfield of $K$: it contains $0$ and $1$ and is closed
+under addition, negation, multiplication, and inversion.
 
-### 4.3 Power / inverse-linear coefficient
+*Proof sketch.* Closure under $+$ and $-$ is additivity of $\,'$; closure under
+$\times$ is Leibniz ($c' = d' = 0 \Rightarrow (cd)' = 0$); closure under inversion
+is the inverse rule. ∎
 
-**Theorem 4 (Power-coefficient ODE; `solves_power_coeff`).**
-*For every $x > 0$ and every $a \in \mathbb{R}$, the function
-$y(x) = \exp(a\log x) = x^a$ has derivative $(a/x)\,\exp(a\log x)$; that is, it
-solves $y' = (a/x)\,y$ on $(0,\infty)$.*
+**Theorem 4.2 (Solution ratio is constant, `solution_ratio_isConstant` /
+`firstOrder_ratio_isConstant`).** If $y_1' = a y_1$, $y_2' = a y_2$ and
+$y_1 \neq 0$ (resp. $y_2 \neq 0$), then $(y_2/y_1)' = 0$.
 
-*Proof sketch.* Take $F(t) = a\log t$. Then $F'(x) = a \cdot x^{-1} = a/x$ (scaling
-$(\log)'(x) = x^{-1}$ by the constant $a$). Apply Theorem 1 with $c = a/x$. Since
-$\exp(a\log x) = x^a$ for $x > 0$, the solution is the power function. $\square$
+*Proof sketch.* By Theorem 3.1, $L(y_2/y_1) = L(y_2) - L(y_1) = a - a = 0$, so the
+numerator of $(y_2/y_1)'$ vanishes; clear denominators with the quotient rule. ∎
 
-**Remark.** This recovers the classical scaling laws $x^a$ as the EML solutions of
-the simplest rational coefficient $a/x = a\,(\log x)'$. For rational $a$ the
-solution is algebraic over $\mathbb{R}(x)$; for irrational $a$ it is
-transcendental. The power class is the bridge between the elementary and the
-genuinely transcendental EML solutions.
+**Theorem 4.3 (Galois action by multiplicative constants,
+`galois_action_is_mul_constant`).** If $y_1, y_2$ are nonzero solutions of
+$y' = a\,y$, then there is a nonzero constant $c$ with $c' = 0$ and $y_2 = c\,y_1$.
 
-## 5. Infinitesimal uniqueness up to a constant
+*Proof sketch.* Take $c = y_2/y_1$: it is nonzero (ratio of nonzero elements),
+constant by Theorem 4.2, and $y_2 = c\,y_1$ by clearing the denominator. ∎
 
-**Theorem 5 (Uniqueness up to a constant, infinitesimal form;
-`solution_ratio_hasDerivAt_zero`).**
-*Let $y, F : \mathbb{R} \to \mathbb{R}$ and $c, x \in \mathbb{R}$. If $y$ has
-derivative $c\cdot y(x)$ at $x$ (i.e. $y$ solves $y' = c\,y$ at $x$) and $F$ has
-derivative $c$ at $x$, then the ratio $t \mapsto y(t)/\exp(F(t))$ has derivative
-$0$ at $x$.*
+**Theorem 4.4 (Closure under constant scaling, `const_mul_solution`).** If
+$c' = 0$ and $y' = a\,y$, then $(c\,y)' = a\,(c\,y)$.
 
-*Proof sketch.* By the chain rule, $z(t) = \exp(F(t))$ has derivative
-$\exp(F(x))\cdot c$ at $x$, and $z(x) = \exp(F(x)) \ne 0$. The quotient rule gives
-the derivative of $y/z$ at $x$ as
-$$\frac{c\,y(x)\cdot\exp(F(x)) - y(x)\cdot(\exp(F(x))\cdot c)}{\exp(F(x))^2}.$$
-The numerator is $c\,y(x)\exp(F(x)) - c\,y(x)\exp(F(x)) = 0$, so the whole
-expression is $0$. $\square$
+**Theorem 4.5 (Torsor structure, `galois_torsor`).** Fix a nonzero solution $y_1$
+of $y' = a\,y$. Then for any $y_2 \in K$,
+$$ \big(y_2' = a\,y_2 \ \wedge\ y_2 \neq 0\big) \iff \exists c \neq 0,\ c' = 0,\ y_2 = c\,y_1. $$
 
-**Interpretation.** A function with everywhere-zero derivative on a connected
-domain is constant; hence on such a domain every solution of $y' = c\,y$ equals
-$K\cdot\exp(F)$ for a constant $K$. Theorem 5 is the *infinitesimal* (pointwise)
-core of this statement and the analytic counterpart of the algebraic result
-`EMLDiffGalois.firstOrder_ratio_isConstant` (if $y_1' = a\,y_1$, $y_2' = a\,y_2$
-and $y_2 \ne 0$ then $(y_1/y_2)' = 0$). In differential-Galois terms, the solution
-line of a first-order EML equation is one-dimensional over the constants subfield,
-and its Galois group lands in the multiplicative group of constants — the simplest
-"EML group."
+*Proof sketch.* Forward direction is Theorem 4.3; backward direction is
+Theorem 4.4 together with $c y_1 \neq 0$. ∎
 
-## 6. Algorithms
+**Interpretation.** The solution space of $y' = a\,y$ is a one-dimensional line
+over the constants, and the differential Galois group acts on it by multiplication
+by elements of $\mathbb{G}_m(C_K)$. This is the rank-1 Picard–Vessiot statement:
+the Galois group of a first-order EML equation is, exactly, a subgroup of the
+multiplicative group of nonzero constants — the simplest linear-algebraic
+("EML") group.
 
-The constructive content of Theorems 1–4 is an explicit solver: to solve a
-first-order linear EML equation, integrate the coefficient and exponentiate. We
-record this and its verification routines.
+---
 
-### 6.1 EML coefficient solver via antiderivative exponentiation
+## 5. Wronskian theory for second-order EML equations
 
-Given an EML coefficient $c$ and a symbolic antiderivative $F$ with $F' = c$,
-return the solution $\exp \circ F$ together with the verified derivative
-$c\cdot\exp(F)$. For the three archetypes the antiderivative is selected from a
-lookup table ($\log \mapsto x\log x - x$, $\exp \mapsto \exp$, $a/x \mapsto
-a\log x$), which is the symbolic realization of Theorem 1.
+For $y'' = a\,y$ the solution space is (at most) two-dimensional over $C_K$, and
+the Wronskian is the invariant that controls dimension.
 
-### 6.2 Numerical solution verifier (central-difference residual)
+**Definition 5.1 (Wronskian).** $W(y_1, y_2) = y_1\,y_2' - y_2\,y_1'$.
 
-Given a candidate solution $y$ and coefficient $c$, verify $y' = c\,y$ by computing
-the central-difference approximation $y'(x) \approx (y(x+h)-y(x-h))/(2h)$ and
-checking the residual $|y'(x) - c(x)y(x)|$ against a tolerance. This empirically
-confirms Theorems 2–4 at sampled points.
+**Theorem 5.2 (Abstract Abel identity, `wronskian_deriv_eq_zero` /
+`wronskian_isConstant`).** If $y_1'' = a y_1$ and $y_2'' = a y_2$, then
+$W(y_1,y_2)' = 0$; i.e. $W(y_1,y_2) \in C_K$.
 
-### 6.3 Uniqueness-ratio constancy check
+*Proof sketch.* Differentiate: $W' = y_1 y_2'' - y_2 y_1'' = y_1(a y_2) - y_2(a y_1) = 0$. ∎
 
-Given two numerical solutions of the same equation, form the ratio and verify it is
-constant across the domain (Theorem 5), confirming one-dimensionality of the
-solution space.
+**Definition 5.3 (Linear dependence over constants, `LinDepOverConstants`).** The
+pair $(y_1, y_2)$ is *linearly dependent over the constants* if there exist
+$c_1, c_2 \in C_K$, not both zero, with $c_1 y_1 + c_2 y_2 = 0$.
 
-## 7. Applications
+**Theorem 5.4 (Dependence forces $W = 0$, `wronskian_eq_zero_of_linDep`).** If
+$(y_1,y_2)$ is linearly dependent over the constants, then $W(y_1,y_2) = 0$. (No
+differential equation is assumed — this is a property of the field.)
 
-- **Asymptotics of factorials.** Theorem 2 ties $y' = (\log x)y$ to the Stirling
-  exponent $x\log x - x$, the differential law of factorial growth and the Gamma
-  function's leading asymptotics.
-- **Growth and decay models.** Theorem 3's double exponential is the Gompertz law
-  used in actuarial mortality and oncology; Theorem 4's power solutions are the
-  scaling laws ubiquitous in physics, allometry, and network science.
-- **Symbolic ODE solving.** The master construction (Theorem 1) is a verified
-  decision procedure for first-order linear equations whose coefficient admits a
-  named antiderivative, and the logarithmic-derivative homomorphism (Section 2)
-  delineates exactly which coefficients keep the solution inside the EML class.
+*Proof sketch.* Differentiate the relation $c_1 y_1 + c_2 y_2 = 0$; since
+$c_1, c_2$ are constant this yields the companion relation
+$c_1 y_1' + c_2 y_2' = 0$. Eliminating $y_2$ (resp. $y_1$) gives
+$c_1 W = 0$ and $c_2 W = 0$. As $(c_1, c_2) \neq (0,0)$, one factor is nonzero,
+forcing $W = 0$. ∎
 
-## 8. Discussion and relation to the obstruction theory
+**Corollary 5.5 (Independence criterion, `linIndep_of_wronskian_ne_zero`).** If
+$W(y_1,y_2) \neq 0$ then $(y_1,y_2)$ is linearly independent over the constants.
 
-The results here are the *positive* half of an EML differential-equations program.
-The complementary *negative* half studies when closed EML solutions **fail** to
-exist. The canonical example is **Airy's equation** $y'' = x\,y$, which has no
-EML-elementary solution — a fact established by a degree/valuation obstruction in
-the differential ring $\mathbb{R}[x,\log x]$ via the Riccati transform
-$v = y'/y \Rightarrow v' + v^2 = x$. The logarithmic derivative is the hinge of
-both halves: it solves the first-order problem directly, and it linearizes the
-second-order problem into a Riccati equation where the obstruction can be counted.
-Together, the positive calculus and the negative obstruction theory draw a precise
-boundary between EML-solvable and EML-unsolvable linear differential equations.
+**Theorem 5.6 (Fundamental-system criterion,
+`wronskian_isConstant_ne_zero_of_linIndep`).** If $y_1, y_2$ both solve
+$y'' = a\,y$ and $W(y_1,y_2) \neq 0$, then $W(y_1,y_2)$ is a *nonzero constant*.
 
-## 9. Future directions
+*Proof sketch.* Combine Theorem 5.2 (constancy) with the nonvanishing
+hypothesis. ∎
 
-**C1. Global uniqueness from the infinitesimal ratio law.** Theorem 5 shows
-$(y/\exp F)' = 0$ pointwise. Conjecture: on a connected domain (e.g. $(0,\infty)$
-for the log/power cases, all of $\mathbb{R}$ for the exp case), every $C^1$ solution
-of $y' = c\,y$ equals $K\cdot\exp(F)$ for a *constant* $K$, upgrading the
-infinitesimal law to a genuine analytic uniqueness theorem.
+Also recorded are `scale_solution` (a constant multiple of a solution of
+$y'' = a\,y$ is a solution), `add_solution` (solutions are closed under addition,
+so they form a $C_K$-module), and `wronskian_dependent_eq_zero` (the Wronskian of
+$y_1$ and a constant multiple $c\,y_1$ vanishes). Together these make precise the
+"rank $\le 2$ solution space over the constants, detected by $W$" picture.
 
-**C2. Second-order EML solvability dichotomy.** Study $y'' = (\log x)\,y$.
-Conjecture: it has no solution $\exp(F)$ with $F$ a polynomial in $x$ and $\log x$,
-mirroring the Airy obstruction $y'' = x\,y$, via the Riccati transform
-$v' + v^2 = \log x$ and a degree/valuation count in $\mathbb{R}[x,\log x]$.
+---
 
-**C3. The Stirling exponent ODE characterizes Gamma growth.** Conjecture:
-$\Gamma(x+1)$ and $\exp(x\log x - x)$ share the same logarithmic derivative
-asymptotically ($\operatorname{logDeriv}\Gamma(x+1) - \log x \to 0$ as
-$x \to \infty$), i.e. $y' = (\log x)y$ is the leading-order law governing factorial
-growth.
+## 6. The Riccati transform and the Kovacic reduction
 
-**C4. Homomorphism kernel = constants, exactly.** Conjecture: in any differential
-field, $\ker L$ equals the units of the constants subfield, and $L$ descends to an
-*injective* homomorphism $K^\times/\text{constants}^\times \hookrightarrow (K,+)$,
-giving a clean "EML exponential is unique up to a constant" group-theoretic
-statement.
+**Theorem 6.1 (Riccati transform, raw form, `logDeriv_riccati`).** For $y \neq 0$,
+$$ L(y)' + L(y)^2 = \frac{y''}{y}. $$
 
-## 10. Conclusion
+*Proof sketch.* Differentiate $L(y) = y'/y$ with the quotient rule:
+$L(y)' = y''/y - (y'/y)^2 = y''/y - L(y)^2$. Rearranging gives the identity. ∎
 
-Reducing first-order linear EML differential equations to antidifferentiation, we
-obtained verified closed-form solutions for the logarithmic, exponential, and power
-coefficient classes, and an infinitesimal uniqueness law placing the solution space
-on a single line over the constants. The unifying mechanism is the logarithmic
-derivative homomorphism, the differential incarnation of the duality between
-multiplication and addition that binds the exponential and the logarithm. The
-positive calculus developed here meets, at the Riccati transform, the negative
-obstruction theory of second-order equations such as Airy's, completing a coherent
-map of the EML differential landscape.
+**Theorem 6.2 (Riccati from second order, `riccati_of_second_order`).** If
+$y \neq 0$ solves $y'' = a\,y$, then $v = L(y)$ solves the Riccati equation
+$$ v' + v^2 = a. $$
+
+*Proof sketch.* Substitute $y'' = a\,y$ into Theorem 6.1. ∎
+
+This substitution is the heart of the Kovacic algorithm: a second-order linear
+equation in normal form has a Liouvillian solution iff the associated Riccati
+equation has an algebraic (and, at the first step, *rational*) solution.
+
+**Clearing denominators.** A rational candidate $v = p/q$ with $p, q \in
+\mathbb{R}[X]$, $q \neq 0$, satisfies $v' + v^2 = f$ iff the polynomial identity
+$$ p'\,q - p\,q' + p^2 = f\,q^2 \tag{$\ast$} $$
+holds, obtained by multiplying through by $q^2$ and using
+$v' = (p'q - pq')/q^2$, $v^2 = p^2/q^2$. We therefore study $(\ast)$ directly,
+keeping the argument inside the polynomial ring while faithfully encoding
+"rational solution of the Riccati equation."
+
+---
+
+## 7. A sharp degree-parity decision for the (generalized) Airy family
+
+### 7.1 The degree bound
+
+**Lemma 7.1 (`natDegree_wronskianLike_le`).** For $p, q \in \mathbb{R}[X]$,
+$$ \deg(p'q - pq') \le \deg p + \deg q - 1. $$
+
+*Proof sketch.* Each product $p'q$ and $pq'$ has degree at most
+$\deg p + \deg q - 1$ because differentiation drops degree by one; the difference
+inherits the bound. (Degenerate cases where $p$ or $q$ is constant are handled
+separately.) ∎
+
+### 7.2 The odd-degree obstruction
+
+**Theorem 7.2 (Odd-degree Riccati obstruction,
+`no_rational_solves_riccati_odd_deg`).** Let $f \in \mathbb{R}[X]$ have odd
+degree. Then there are no $p, q \in \mathbb{R}[X]$ with $q \neq 0$ satisfying
+$(\ast)$, i.e. $v' + v^2 = f$ has no rational solution.
+
+*Proof sketch.* Compare degrees of the two sides of $(\ast)$. The right side
+$f q^2$ has degree $\deg f + 2\deg q$, which is odd. For the left side, by Lemma
+7.1 the part $p'q - pq'$ has degree at most $\deg p + \deg q - 1$, while $p^2$ has
+the even degree $2\deg p$.
+- If $\deg p \ge \deg q$: the $p^2$ term dominates and the left side has degree
+  exactly $2\deg p$ (even), so $\deg f + 2\deg q$ would be even, contradicting
+  odd $\deg f$.
+- If $\deg p < \deg q$: the entire left side has degree at most
+  $\max(2\deg p,\ \deg p + \deg q - 1) \le 2\deg q - 2 < 2\deg q + 1 \le \deg f + 2\deg q$,
+  so the degrees cannot match.
+Either way $(\ast)$ is impossible. Coprimality of $p, q$ is not required;
+the obstruction is purely metric. ∎
+
+**Theorem 7.3 (Airy, `no_rational_solves_riccati_airy`).** The Riccati equation
+$v' + v^2 = x$ has no rational solution; equivalently no $p, q$ with $q \neq 0$
+satisfy $p'q - pq' + p^2 = X q^2$.
+
+*Proof.* Apply Theorem 7.2 with $f = X$, $\deg X = 1$ odd. ∎
+
+**Theorem 7.4 (Generalized Airy family, `no_rational_riccati_genAiry`).** For
+every $k \in \mathbb{N}$, the equation $y'' = x^{2k+1} y$ has no rational Riccati
+solution: $(\ast)$ with $f = X^{2k+1}$ is unsolvable for $q \neq 0$. Airy is the
+case $k = 0$.
+
+*Proof.* $\deg X^{2k+1} = 2k+1$ is odd; apply Theorem 7.2. ∎
+
+We also record the cruder polynomial obstruction underpinning the rational one:
+no nonzero polynomial solves $y'' = x y$ (`no_poly_solves_airy`), because $y''$
+has strictly smaller degree than $x\,y$; this generalizes to $y'' = q\,y$ for any
+$q$ of positive degree (`no_poly_solves_second_order_pos_deg`) and to
+$y'' = x^n y$, $n \ge 1$ (`no_poly_solves_gen_airy`).
+
+### 7.3 Sharpness
+
+**Theorem 7.5 (Even-degree solvability witness, `riccati_evenDeg_solvable`).** The
+Riccati equation $v' + v^2 = x^2 + 1$ has the polynomial solution $v = x$:
+taking $p = X$, $q = 1$ satisfies $(\ast)$ since $p'q - pq' + p^2 = 1 + X^2 = f q^2$.
+
+*Remark.* $v = x$ is the logarithmic derivative of $y = e^{x^2/2}$, which solves
+$y'' = (x^2+1)\,y$; the equation is genuinely EML-solvable. The coefficient
+$x^2 + 1$ has even degree $2$ (`natDegree_evenWitness`).
+
+**Theorem 7.6 (Sharp parity decision, `kovacic_parity_decision_sharp`).**
+$$ \Big(\forall k \in \mathbb{N},\ v' + v^2 = x^{2k+1}\ \text{has no rational solution}\Big) \ \wedge\ \Big(v' + v^2 = x^2 + 1\ \text{has a rational solution}\Big). $$
+
+*Proof.* Conjunction of Theorems 7.4 and 7.5. ∎
+
+Hence, on the family $y'' = f\,y$, the test "$\deg f$ odd" is a *correct and tight*
+first-step decision: it certifies non-existence of a rational Riccati solution
+exactly when one provably does not exist, and the boundary example $x^2+1$ shows
+the odd-degree hypothesis cannot be dropped.
+
+---
+
+## 8. Algorithms
+
+### 8.1 First-step Kovacic decision on $y'' = f\,y$ (polynomial family)
+
+**Input.** A polynomial coefficient $f \in \mathbb{R}[X]$.
+**Output.** A certified verdict on whether the Riccati first step is obstructed by
+the degree-parity criterion.
+
+```
+function KovacicParityFirstStep(f):
+    d ← natDegree(f)
+    if d is odd:
+        return ("OBSTRUCTED",
+                "deg f is odd ⇒ no rational solution of v' + v² = f (Thm 7.2)")
+    else:
+        # parity test inconclusive; attempt a low-degree rational search
+        return RationalRiccatiSearch(f)
+```
+
+The parity test runs in $O(1)$ after computing $\deg f$. When it returns
+OBSTRUCTED the verdict is a theorem (Theorem 7.2). When $\deg f$ is even the test
+is inconclusive and a constructive search is invoked.
+
+### 8.2 Bounded rational Riccati search (clearing-denominators form)
+
+Search for $p, q$ with $\deg p, \deg q \le N$ solving $(\ast)$. Substituting
+$v = p/q$ and clearing denominators reduces solvability to a polynomial identity;
+matching coefficients yields a finite (generally nonlinear) algebraic system. For
+the polynomial sub-case $q = 1$ this becomes the search for $p$ with
+$p' + p^2 = f$, solvable degree-by-degree.
+
+```
+function RationalRiccatiSearch(f, N):
+    for dq in 0..N:
+        for dp in 0..N:
+            unknowns ← coefficients of p (dp+1) and q (dq+1)
+            solve  p'·q − p·q' + p² = f·q²   for the unknowns
+            if a real solution exists with q ≠ 0:
+                return ("SOLVABLE", p, q)
+    return ("NO SOLUTION UP TO DEGREE N")
+```
+
+---
+
+## 9. Applications and discussion
+
+- **Special functions.** The non-elementary nature of $\mathrm{Ai}, \mathrm{Bi}$ is
+  recovered as a degree-parity theorem rather than an analytic statement, and it
+  extends uniformly to the generalized Airy hierarchy $y'' = x^{2k+1} y$.
+- **Symbolic computation.** Theorem 7.2 provides a sound $O(1)$ pre-filter for the
+  first Kovacic step on polynomial coefficients, and Theorem 7.6 shows precisely
+  where the filter must hand off to a constructive search.
+- **Structural transparency.** Reducing first-order solvability to the
+  homomorphism $L : K^\times \to (K,+)$ and to a $\mathbb{G}_m(C_K)$ torsor makes
+  the "EML group" slogan a precise, hypothesis-free theorem.
+
+**Limitations.** The sharp decision of §7 is established for the polynomial family
+$y'' = f\,y$ via the cleared identity $(\ast)$; full Kovacic decidability for
+arbitrary rational coefficients requires the higher cases of the algorithm
+(degree-2 and finite imprimitive cases) not formalized here. The abstract
+differential-field results are stated over a general $K$; instantiating them on a
+concrete differential field such as $\mathbb{R}(X)$ is the natural next step.
+
+---
+
+## 10. Future work
+
+See the *Future Directions* compendium: a Riccati gauge transforming the
+first-derivative form $y'' + p y' + q y = 0$ to normal form, so the Airy
+obstruction transports to gauged equations (e.g. $y'' - 2x y' + (x^2-1) y = 0$); a
+concrete `Differential (RatFunc ℝ)` instance whose constants are exactly
+$\mathbb{R}$, turning every abstract theorem into a statement about rational
+functions and making the torsor result a concrete $\mathbb{R}^\times$-torsor
+statement over $\mathbb{R}(x)$; and an effective dimension-2 theory in which every
+fundamental system arises by reduction of order.
+
+---
+
+## 11. Conclusion
+
+A single homomorphism — the logarithmic derivative carrying products to sums —
+organizes the EML theory: first-order equations exponentiate and their solution
+spaces are $\mathbb{G}_m(\text{constants})$ torsors; second-order equations are
+governed by a constant Wronskian and reduce, via the Riccati transform, to a
+first-order quadratic equation; and the resulting decision problem is settled, for
+the generalized Airy family, by a sharp degree-parity criterion. Airy's equation
+has no elementary solution because $1$ is odd — and the boundary case $x^2 + 1$
+shows that this parity is exactly the dividing line.
