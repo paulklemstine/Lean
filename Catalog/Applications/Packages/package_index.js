@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f589dfb5",
     "filename": "zero_knowledge_proofs_schnorr_protocol.json",
     "pkg_num": 199,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.55062,
     "title": "Zero-Knowledge Proofs: The Schnorr Sigma-Protocol, Verified"
   },
   {
@@ -5806,8 +5806,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "zero_knowledge_proofs_schnorr_protocol",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.55062,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Zero-Knowledge Proofs: The Schnorr Sigma-Protocol, Verified"
     }

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f0b7b2e4",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Ramsey Bounds and the Parity Obstruction\n\nDerived from this cycle's findings (`Applications.RamseyThreeFour`,\n`Applications.RamseyParity`), which proved `R(3,4) = 9` by combining",
-      "quality_score": 0.53943,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-26T05:18:24",
-      "title": "Ramsey Theory: Bounds and Constructions"
-    },
-    {
       "cycle_id": "ab7f1188",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Duality of RC Sublevel Homotopy Types\n\nDerived from this cycle's findings (see the Lab Notes in `Homogeneous.lean`,\n`Duality.lean`, `Examples.lean`).  Each conjecture is bold and",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T23:17:20",
       "title": "Optimal Transport and Wasserstein Distances"
+    },
+    {
+      "cycle_id": "f589dfb5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Schnorr Σ-protocol (derived from this cycle)\n\nThis cycle proved, on top of the catalog's `SchnorrIdentification` and `SchnorrFiatShamir`:\nknowledge soundness for arbitrary public",
+      "quality_score": 0.55062,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T23:19:56",
+      "title": "Zero-Knowledge Proofs: Schnorr Protocol"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7327899999999999
     }
   ],
-  "last_updated": "2026-06-28T23:17:20",
+  "last_updated": "2026-06-28T23:19:56",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "28bd8499",
-        "quality": 0.643006,
-        "theorems": 0,
-        "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
-      },
-      {
         "cycle_id": "ce5b4268",
         "quality": 0.71224,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.65976,
         "theorems": 0,
         "title": "Optimal Transport and Wasserstein Distances"
+      },
+      {
+        "cycle_id": "f589dfb5",
+        "quality": 0.55062,
+        "theorems": 0,
+        "title": "Zero-Knowledge Proofs: Schnorr Protocol"
       }
     ],
     "NumberTheory": [
