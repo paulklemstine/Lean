@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ef629b7b",
     "filename": "row_sum_fibonacci_property_of_pascal_like_riordan_.json",
     "pkg_num": 182,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.722996,
     "title": "Row Sum Fibonacci Property of the Pascal-like Riordan Array"
   },
   {
@@ -5313,8 +5313,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "row_sum_fibonacci_property_of_pascal_like_riordan_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.722996,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Row Sum Fibonacci Property of the Pascal-like Riordan Array"
     }

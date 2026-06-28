@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3847ce48",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: self-dual string C-groups\n\nDerived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,\n`simplex_selfDual`, and `symmetricGroup_selfDual_rank`.\n\n## Conjecture 1",
-      "quality_score": 0.75084,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-26T11:34:11",
-      "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
-    },
-    {
       "cycle_id": "0e9a5064",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Sun's truncated Legendre-symbol determinant\n\nThis cycle formalised the *structural* half of Sun's identity in full generality\n(`det A = det(C+J) · X` for all primes `p ≥ 7`, `p ≡",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T09:42:01",
       "title": "Excluded minors for Z_n-gainable biased graphs"
+    },
+    {
+      "cycle_id": "ef629b7b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Riordan Array Row Sums and Fibonacci Bisections\n\nDerived from the cycle that proved `Σ_{k=0}^{n} C(n+k, 2k) = F(2n+1)` and the\ncompanion `Σ_{k=0}^{n} C(n+1+k, 2k+1) = F(2n+2)` vi",
+      "quality_score": 0.722996,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-28T13:04:38",
+      "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7ca7bb8c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — NISQ Error Mitigation via Algebraic Topology\n\nDerived from this cycle's findings in `Persistence.lean`, `ErrorMitigation.lean`,\nand `Betti.lean`.  The cycle established a single",
-      "quality_score": 0.886574,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-25T05:24:17",
-      "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
-    },
     {
       "cycle_id": "ff8131d4",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T12:42:06",
       "title": "A Sharp Upper Bound for Uniform VC‑Dimension Families via Layered Stars"
+    },
+    {
+      "cycle_id": "ef629b7b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Riordan Array Row Sums and Fibonacci Bisections\n\nDerived from the cycle that proved `Σ_{k=0}^{n} C(n+k, 2k) = F(2n+1)` and the\ncompanion `Σ_{k=0}^{n} C(n+1+k, 2k+1) = F(2n+2)` vi",
+      "quality_score": 0.722996,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-28T13:04:38",
+      "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e3ff7cf5",
-      "domain": "Applications",
-      "name": "here",
-      "quality": 0.7938000000000001
-    },
-    {
-      "cycle_id": "c027516f",
-      "domain": "Applications",
-      "name": "add_sound",
-      "quality": 0.7101600000000001
-    },
-    {
-      "cycle_id": "c027516f",
-      "domain": "Applications",
-      "name": "cg_rounding_sound",
-      "quality": 0.7101600000000001
-    },
     {
       "cycle_id": "c027516f",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "of",
       "quality": 0.8043199999999999
+    },
+    {
+      "cycle_id": "ef629b7b",
+      "domain": "Novelty",
+      "name": "s_zero",
+      "quality": 0.722996
+    },
+    {
+      "cycle_id": "ef629b7b",
+      "domain": "Novelty",
+      "name": "s_one",
+      "quality": 0.722996
+    },
+    {
+      "cycle_id": "ef629b7b",
+      "domain": "Novelty",
+      "name": "s_succ",
+      "quality": 0.722996
     }
   ],
-  "last_updated": "2026-06-28T12:42:06",
+  "last_updated": "2026-06-28T13:04:38",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cff12e07",
-        "quality": 0.6639999999999999,
-        "theorems": 14,
-        "title": "Super-exponential growth of the number of symmetric chain decompositions of M(n)"
-      },
-      {
         "cycle_id": "9a7cbc8b",
         "quality": 0.7861499999999999,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.36300923636363636,
         "theorems": 0,
         "title": "A Sharp Upper Bound for Uniform VC‑Dimension Families via Layered Stars"
+      },
+      {
+        "cycle_id": "ef629b7b",
+        "quality": 0.722996,
+        "theorems": 17,
+        "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
       }
     ],
     "NumberTheory": [

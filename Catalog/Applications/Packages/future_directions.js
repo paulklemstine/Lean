@@ -881,7 +881,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
   {
-    "consumed_by_exp_id": "bc81b3a8",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
     "domains": [
       "MachineLearning",
@@ -892,7 +892,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
@@ -5853,7 +5853,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Determinantal Consistency"
   },
   {
-    "consumed_by_exp_id": "3f134ce6",
+    "consumed_by_exp_id": "",
     "description": "Propose that for any Sprugnoli array $(g(x), f_1(x), f_2(x))$ in the first family, there exists a unique inverse array $(g^{-1}(x), f_1^{-1}(x), f_2^{-1}(x))$ whose coefficients are closed-form expressions involving only summation symbols, binomial coefficients, and arithmetic operations, as described in the paper's Section 3. This inverse must satisfy the condition that the matrix product of the original and inverse arrays yields the identity matrix.",
     "domains": [
       "Pythagorean"
@@ -5862,7 +5862,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22070v2",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-27T06:01:14.131396+00:00",
     "title": "Existence of Inverse Sprugnoli Arrays with Closed-Form Coefficients"
   },
@@ -6357,20 +6357,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-27T23:52:41.320630+00:00",
     "title": "Gap-free floor of semiprime subset-sum set tends to zero"
-  },
-  {
-    "consumed_by_exp_id": "d1a8353e",
-    "description": "The extended Eulerian numbers A(n,k,s) = \u2211_{j=0}^k (-1)^j C(n+1,j) (k+1-j-s)^n satisfy the recurrence A(n,k,s) = (k+1-s) A(n-1,k,s) + (n-k+s) A(n-1,k-1,s) for n \u2265 1, with boundary conditions A(0,0,s)=1 and A(n,k,s)=0 for k<0 or k>n. This generalizes the classical Eulerian recurrence (s=0).",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2649",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.15178v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-28T00:27:35.663578+00:00",
-    "title": "Recurrence relation for extended Eulerian numbers"
   },
   {
     "consumed_by_exp_id": "",
@@ -8479,6 +8465,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Riordan Array Row Sums and Fibonacci Bisections\n\nDerived from the cycle that proved `\u03a3_{k=0}^{n} C(n+k, 2k) = F(2n+1)` and the\ncompanion `\u03a3_{k=0}^{n} C(n+1+k, 2k+1) = F(2n+2)` via the coupled recurrences\n`A(n+1)=A(n)+B(n)`, `B(n+1)=A(n+1)+B(n)` (file `RiordanFibonacciRowSum.lean`).\n\n## C1. Diagonal-sum unification with Mathlib's `fib_succ_eq_sum_choose`\n\n**Conjecture.** Both `\u03a3_k C(n+k, 2k) = F(2n+1)` and the shallow-diagonal formula\n`F(m+1) = \u03a3_{i+j=m} C(i,j)` (Mathlib `Nat.fib_succ_eq_sum_choose`) are special\ncases of a single Riordan-array row/diagonal identity; in particular\n`\u03a3_{k} C(n+k, 2k) = \u03a3_{j} C(2n-j, j)` as a provable rearrangement.\n\nThe key insight is... both sums select the *same* anti-diagonal of Pascal's\ntriangle but traverse it with step-2 versus step-1 indexing, so a single\nre-indexing bijection should connect the two without re-deriving Fibonacci.\n\nWhy now? We have a fully formal `A(n)=F(2n+1)` and Mathlib already has the\nstep-1 diagonal sum, so the bridge is a finite combinatorial reindexing rather\nthan new analysis.\n\n## C2. General `(1/(1-x), x/(1-x)^2)`-style arrays give Chebyshev/Fibonacci-like row sums\n\n**Conjecture.** For the family with entries `C(n+k, mk)` (m \u2265 2 fixed), the row\nsums satisfy a fixed linear recurrence of order `m` with constant integer\ncoefficients, generalizing the `a_{n+2}=3a_{n+1}-a_n` (`m=2`) case.\n\nThe key insight is... raising the column-step from 2 to m raises the order of\nthe Pascal-telescoping from a 2-term to an m-term coupled system, and the\ncharacteristic polynomial is exactly the denominator of the Riordan generating\nfunction.\n\nWhy now? The `m=2` coupled-recurrence proof is finished and the method\n(peel `k=0`, Pascal-split, reindex) is mechanical to lift to larger `m`.\n\n## C3. Alternating row sums and a sign-twisted Fibonacci\n\n**Conjecture.** `\u03a3_{k=0}^{n} (-1)^k C(n+k, 2k)` is eventually periodic / equals a\nsimple closed form (candidate: a 6-periodic `{1,0,-1,-1,0,1}`-type pattern tied\nto `F` modulo small primes).\n\nThe key insight is... the same coupled recurrence with a sign twist sends the\ncompanion pair `(A,B)` to a rotation rather than a growth map, forcing\nperiodicity instead of exponential growth.\n\nWhy now? The unsigned coupled system is proved; injecting `(-1)^k` only changes\nthe recurrence coefficients, so the periodicity is a finite eigenvalue check.\n\n## C4. Carmichael-style divisibility of the row sums\n\n**Conjecture.** `gcd(A(n), A(m)) = A(gcd(n,m))`-type identities hold for these\nodd-Fibonacci row sums, mirroring the classical `gcd(F_n, F_m) = F_{gcd(n,m)}`.\n\nThe key insight is... `A(n) = F(2n+1)` transports the strong divisibility\nstructure of `F` onto the Riordan row sums verbatim, so the catalog's\n`Fib_gcd_identity` target should specialize directly.\n\nWhy now? With `A(n) = F(2n+1)` proven, every number-theoretic property of the\nodd-indexed Fibonacci subsequence is now a corollary waiting to be specialized.\n\n## C5. Production-rule / matrix characterization\n\n**Conjecture.** The infinite lower-triangular matrix `T = [C(n+k,2k)]` satisfies\n`T = P \u00b7 T'` for an explicit Pascal-like production matrix `P`, and `det` of every\nleading principal minor is `1` (total positivity).\n\nThe key insight is... the two coupled recurrences are precisely one row of the\nproduction-matrix action, so the whole array is generated by a single\ntridiagonal-like rule.\n\nWhy now? The pointwise Pascal identities used in `A_succ`/`B_succ` already encode\nthe production rule for one row; promoting them to a matrix statement is the\nnatural next abstraction.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2781",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ef629b7b",
+    "status": "available",
+    "timestamp": "2026-06-28T13:04:28.655324+00:00",
+    "title": "Derived from the cycle that proved `\u03a3_{k=0}^{n} C(n+k, 2k) = F(2n+1)` and the"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8522,7 +8523,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "fbfc053a",
+    "consumed_by_exp_id": "",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -8532,7 +8533,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
@@ -8638,7 +8639,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "6dda8a29",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -8647,7 +8648,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -8920,7 +8921,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "847a7b4e",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8930,7 +8931,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
