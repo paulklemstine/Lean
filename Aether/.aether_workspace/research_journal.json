@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "54abcfb1",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Tropical Differential Equations: Power-Series Solutions\n\nDerived from this cycle's findings (`Basic.lean`, `Balancing.lean`, `FundamentalTheorem.lean`):\nthe order map `ord : K⟦X⟧",
-      "quality_score": 0.45116,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-25T19:11:36",
-      "title": "Tropical Differential Equations: Power Series Solutions"
-    },
-    {
       "cycle_id": "6218af01",
       "domain": "Physics",
       "key_insight": "# Future Directions — Parabola-Circumscribed Quadrilaterals & Irrational Densities\n\nThese conjectures extend the two proved cores in this directory:\n`ParabolaConcyclic.lean` (concyclic ⟺ `a+b+c+d=0`)",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-06-28T17:25:51",
       "title": "EML Universal Approximation: Density of EML Functions"
+    },
+    {
+      "cycle_id": "35f6557d",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Euler–Mascheroni Constant: Irrationality Approaches\n\nTarget category (Menu Balance, v19a): **subtask of a famous open problem** —\nthe irrationality of the Euler–Mascheroni consta",
+      "quality_score": 0.61504,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-28T17:27:15",
+      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T17:25:51",
+  "last_updated": "2026-06-28T17:27:15",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c8e22e5a",
-        "quality": 0.8043199999999999,
-        "theorems": 11,
-        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-      },
-      {
         "cycle_id": "ce8c041d",
         "quality": 0.5816,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.77992,
         "theorems": 12,
         "title": "EML Universal Approximation: Density of EML Functions"
+      },
+      {
+        "cycle_id": "35f6557d",
+        "quality": 0.61504,
+        "theorems": 13,
+        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
       }
     ],
     "Bridges": [

@@ -1535,21 +1535,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "35f6557d",
-    "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
-    "domains": [
-      "Analysis",
-      "NumberTheory"
-    ],
-    "id": "seed_335",
-    "priority_score": 0.8,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432611+00:00",
-    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize Frankl's conjecture and prove it for families of size \u2264 50 (Bo\u0161njak-Markovi\u0107). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domains": [
@@ -1678,6 +1663,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-28T17:25:34.463795+00:00",
     "title": "Derived from the cycle that produced `Catalog/EML/CubeDensity.lean` (density of "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Euler\u2013Mascheroni Constant: Irrationality Approaches\n\nTarget category (Menu Balance, v19a): **subtask of a famous open problem** \u2014\nthe irrationality of the Euler\u2013Mascheroni constant `\u03b3`. The cycle produced\n(i) a manifestly convergent series representation with a sharp `O(1/n)`\napproximation bound, and (ii) an *iff* characterization of irrationality by\ninteger linear forms, specialized to `\u03b3`. The directions below are derived\ndirectly from those findings.\n\n## Conjecture 1 \u2014 Ap\u00e9ry-type integer linear forms for `\u03b3`\nThere exist explicitly computable integer sequences `a\u2099, b\u2099` with\n`a\u2099 + b\u2099\u00b7\u03b3 \u2260 0` and `a\u2099 + b\u2099\u00b7\u03b3 \u2192 0`, witnessing `Irrational \u03b3` through\n`EMR.eulerMascheroniConstant_irrational_iff`.\n- **The key insight is...** that `EMR.eulerMascheroniConstant_irrational_iff` turns\n  the analytic open problem into a *purely Diophantine* one: build the forms, do\n  not analyze `\u03b3` directly.\n- **Why now?** The characterization is now a 0-sorry Lean theorem, so any candidate\n  `(a\u2099, b\u2099)` (e.g. from the continued-fraction convergents `A006953/A082633`) can be\n  certified mechanically the moment a `\u2192 0` bound is proved.\n\n## Conjecture 2 \u2014 The accelerated series has a Beukers-style integral form\n`gammaTerm k = 1/(k+1) \u2212 log(1+1/(k+1))` equals `\u222b\u2080\u00b9 t\u1d4f\u00b7(something)` so that\n`\u2211 gammaTerm k = \u222b\u2080\u00b9 (1 \u2212 {1/u})/\u2026 ` reproduces a known integral for `\u03b3`.\n- **The key insight is...** that telescoping already gave `\u2211 gammaTerm = \u03b3`\n  (`EMR.hasSum_gammaTerm`); pairing each nonnegative term with an integrand makes the\n  partial-fraction/`log` structure amenable to the Beukers double-integral machinery\n  used for `\u03b6(3)`.\n- **Why now?** With the series fixed and proven convergent in Lean, the integral\n  identity is a term-by-term check rather than a global limit argument.\n\n## Conjecture 3 \u2014 Denominator growth controls irrationality measure\nIf integer forms `a\u2099 + b\u2099\u00b7\u03b3 \u2192 0` exist with `|a\u2099 + b\u2099\u00b7\u03b3| \u2264 C\u00b7b\u2099^{-(1+\u03b4)}` for some\n`\u03b4 > 0`, then `\u03b3` is not only irrational but has finite irrationality measure\n`\u2264 1 + 1/\u03b4`.\n- **The key insight is...** that the proof of `EMR.exists_rat_mem_den_ge` already\n  extracts denominator-unbounded approximations; sharpening the `1/den` bound to\n  `den^{-(1+\u03b4)}` is exactly the quantitative upgrade separating \"irrational\" from\n  \"Diophantine\".\n- **Why now?** The qualitative extraction is formalized; only the rate needs\n  strengthening, a self-contained analytic lemma.\n\n## Conjecture 4 \u2014 Stieltjes-constant generalization of the criterion\nThe integer-linear-form criterion `EMR.irrational_of_int_linear_combo_tendsto_zero`\napplies verbatim to every Stieltjes constant `\u03b3\u2099` (with `\u03b3\u2080 = \u03b3`); hence the open\nproblems \"`\u03b3\u2099` irrational?\" are *simultaneously* reducible to Diophantine constructions.\n- **The key insight is...** that the criterion is constant-agnostic: it only uses\n  integrality of `a\u2099\u00b7q + b\u2099\u00b7p`, never any property of `\u03b3`.\n- **Why now?** Mathlib's `ZetaAsymp`/`HurwitzZeta` development exposes the `\u03b3\u2099` as\n  Laurent coefficients of `\u03b6`, so the same `import Mathlib` reduction is one corollary away.\n\n## Conjecture 5 \u2014 A converse \"no slow forms\" rigidity for rationals\nFor every rational `x = p/q`, *no* integer-linear-form sequence can converge to `0`\nfaster than the constant `1/q` floor; i.e. `liminf |a\u2099 + b\u2099 x| \u2208 {0 (only if eventually 0)} \u222a [1/q, \u221e)\u00b7(1/lcm)`.\n- **The key insight is...** that the `1/q` lower bound in\n  `irrational_of_int_linear_combo_tendsto_zero` is *sharp*, separating rationals from\n  irrationals by a hard gap rather than an asymptotic one.\n- **Why now?** The lower bound is already isolated as `Int.one_le_abs`-driven step in\n  the proof, so formalizing its sharpness (and the resulting dichotomy) is incremental.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2796",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "35f6557d",
+    "status": "available",
+    "timestamp": "2026-06-28T17:27:03.682469+00:00",
+    "title": "Target category (Menu Balance, v19a): **subtask of a famous open problem** \u2014"
   },
   {
     "consumed_by_exp_id": "",

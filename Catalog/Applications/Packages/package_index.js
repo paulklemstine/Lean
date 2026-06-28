@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "35f6557d",
     "filename": "euler_mascheroni_constant_irrationality_approaches.json",
     "pkg_num": 191,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.61504,
     "title": "Euler\u2013Mascheroni Constant: An Integer-Linear-Form Characterization of Irrationality"
   },
   {
@@ -5574,8 +5574,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "euler_mascheroni_constant_irrationality_approaches",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.61504,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Euler\u2013Mascheroni Constant: An Integer-Linear-Form Characterization of Irrationality"
     }
