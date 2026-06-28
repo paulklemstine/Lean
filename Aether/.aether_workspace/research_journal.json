@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0e9a5064",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Sun's truncated Legendre-symbol determinant\n\nThis cycle formalised the *structural* half of Sun's identity in full generality\n(`det A = det(C+J) · X` for all primes `p ≥ 7`, `p ≡",
-      "quality_score": 0.7836800000000002,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-26T11:39:02",
-      "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
-    },
-    {
       "cycle_id": "72d240c8",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Hochschild homology of group algebras\n\nDerived from the cycle that produced\n`Catalog/Novelty/HochschildH0GroupAlgebra.lean`, where we proved the `R`-linear\nequivalence `HH₀(R[G])",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-06-28T13:04:38",
       "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
+    },
+    {
+      "cycle_id": "872fa119",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Incoherence Index of Standard Social Decision Frames\n\nDerived from this cycle's findings (`OrderSpectrum.lean`,\n`SpectrumCharacterization.lean`): the incoherence index of a singl",
+      "quality_score": 0.7050400000000001,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-28T15:37:33",
+      "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bd1f81a7",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Pólya tree coefficient divisor-sum recurrence\n\nThis cycle formalized the Pólya-tree (A000081) divisor-sum / Euler-transform\nrecurrence in `Catalog/Cryptography/PolyaTreeDivisorSu",
-      "quality_score": 0.80372,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-25T12:39:02",
-      "title": "Pólya tree coefficient divisor-sum recurrence"
-    },
     {
       "cycle_id": "fb5aee47",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T15:11:53",
       "title": "Recurrence relation for extended Eulerian numbers"
+    },
+    {
+      "cycle_id": "872fa119",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Incoherence Index of Standard Social Decision Frames\n\nDerived from this cycle's findings (`OrderSpectrum.lean`,\n`SpectrumCharacterization.lean`): the incoherence index of a singl",
+      "quality_score": 0.7050400000000001,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-28T15:37:33",
+      "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c027516f",
-      "domain": "Applications",
-      "name": "php_cp_counting",
-      "quality": 0.7101600000000001
-    },
     {
       "cycle_id": "7e57e1f5",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Novelty",
       "name": "s_succ",
       "quality": 0.722996
+    },
+    {
+      "cycle_id": "872fa119",
+      "domain": "Novelty",
+      "name": "isMaximal_singleton_one",
+      "quality": 0.7050400000000001
     }
   ],
-  "last_updated": "2026-06-28T15:11:53",
+  "last_updated": "2026-06-28T15:37:33",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8d0e7e8c",
-        "quality": 0.7360800000000001,
-        "theorems": 0,
-        "title": "Excluded minors for Z_n-gainable biased graphs"
-      },
-      {
         "cycle_id": "bac3bfcc",
         "quality": 0.562048,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.43096,
         "theorems": 0,
         "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
+      },
+      {
+        "cycle_id": "872fa119",
+        "quality": 0.7050400000000001,
+        "theorems": 13,
+        "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
       }
     ],
     "NumberTheory": [
