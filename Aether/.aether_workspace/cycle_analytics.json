@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T20:11:59.609684+00:00",
+  "last_updated": "2026-06-28T20:54:54.209333+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -16211,6 +16211,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-28T20:11:59.453644+00:00",
       "title": "Continued Fractions and Diophantine Approximation"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6633,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 244,
+      "domain": "Applications",
+      "duration_seconds": 1257.146984577179,
+      "end_time": 1782678894.3251781,
+      "files_integrated": 9,
+      "job_id": "5773b0b9",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v18",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v18",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8333,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.8871,
+        "novelty": 0.9371,
+        "proof_depth": 0.8657,
+        "usefulness": 0.9079
+      },
+      "quality_score": 0.5333106912442396,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782677637.1781936,
+      "strategy_count": 0,
+      "theorem_count": 23,
+      "theorem_novelty_disproof": 3,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 20,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-28T20:54:53.431065+00:00",
+      "title": "Logic-Physics Bridge: Consistency of Physical Theories"
     }
   ]
 }
