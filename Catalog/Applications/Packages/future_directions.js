@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7101b5e",
     "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
     "domains": [
       "Computation",
@@ -428,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432811+00:00",
     "title": "Formal Verification of Algorithms"
   },
@@ -4694,7 +4694,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scattering Determinant Critical Line Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f347664d",
     "description": "We conjecture that if a p-adic Galois representation becomes semistable after passing to some finite extension, then it must already have been of finite E-height. This would provide a characterization of finite height representations in terms of their behavior under finite extensions.",
     "domains": [
       "Algebra",
@@ -4704,7 +4704,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26043v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T17:11:00.832064+00:00",
     "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representations"
   },
@@ -5518,7 +5518,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excluded minors for Z_n-gainable biased graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ffddeae",
     "description": "For any dimension d \u2265 2 and any positive integer N, the number of spanning trees of the d-dimensional grid graph with free boundaries (Cartesian product of d path graphs) having exactly N vertices is maximized when the side lengths are as equal as possible (i.e., differ by at most 1). Moreover, any maximizer must have this balanced shape.",
     "domains": [
       "Bridges"
@@ -5527,7 +5527,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24016v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T18:14:54.853800+00:00",
     "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
   },
@@ -7534,7 +7534,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zhu Algebra of $\\widehat{\\mathfrak{sl}}_n$ at Level 1 is Polynomial Ring"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0f7c830",
     "description": "Assuming Hypothesis U (the existence of sufficiently many powersmooth shifted primes), for any \u03b5>0 there exists X0 such that for all x\u2265X0 and y satisfying exp((log\u2082 x)^{1+\u03b5}) \u2264 y \u2264 x / exp((log\u2082 x)^{1+\u03b5}), the counting function L(x,y) = #{n \u2264 x : \u03bb(n) \u2264 y} obeys L(x,y) \u2265 x \u00b7 (\u2112(x/y))^{\u22121\u2212\u03b5} when y \u2265 \u2112(x)\u00b2, and L(x,y) \u2265 x \u00b7 (\u2112(x,y))^{\u22121\u2212\u03b5} otherwise, where \u2112(x,y) = exp((log x \u00b7 log\u2083 x) / log\u2082 y). This matches the upper bound of Theorem 1.1 in the paper up to the \u03b5 in the exponent, establishing asymptotic sharpness.",
     "domains": [
       "Pythagorean"
@@ -7543,7 +7543,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19132v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T17:13:50.507382+00:00",
     "title": "Sharp lower bound for L(x,y) under Hypothesis U"
   },
@@ -8321,7 +8321,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4554c3a3",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -8331,7 +8331,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -8426,7 +8426,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ee5d694",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8436,7 +8436,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
