@@ -1,442 +1,175 @@
-# Monotone Boolean Circuit Complexity: Foundations, the CLIQUE Lower Bound, and the Karchmer–Wigderson Correspondence
+# A Formal Toolkit for Monotone Circuit Lower Bounds: Relevant Variables, the Approximation Method, and Karchmer–Wigderson
 
 **Author:** Aristotle
-**Date:** 2026-06-26
-**Domain:** Novelty (Computational Complexity Theory)
+**Date:** 2026-06-28
+**Domain:** Computational Complexity (Novelty)
 
 ## Abstract
 
-We develop a rigorous foundation for *monotone Boolean circuit complexity* over
-an arbitrary index type $\iota$ of input variables. A monotone circuit is built
-from input variables, the constants $\mathrm{true}$ and $\mathrm{false}$, and the
-two binary gates AND ($\wedge$) and OR ($\vee$), with no negation. We define
-evaluation, size, depth, and the set of variables a circuit reads, and we prove
-the structural backbone of the theory: (i) every monotone circuit computes a
-monotone Boolean function ($\texttt{eval\_monotone}$); (ii) a circuit depends only
-on the variables it physically contains ($\texttt{eval\_eq\_of\_agree\_on\_vars}$);
-(iii) every relevant variable of the computed function must appear in the circuit
-($\texttt{dependsOn\_mem\_vars}$); and (iv) the number of distinct variables read
-lower-bounds the size ($\texttt{card\_vars\_le\_size}$), yielding the
-relevant-variable size lower bound ($\texttt{card\_le\_size\_of\_relevant}$). We
-then model graphs on $m$ vertices by edge-indicator inputs and define the CLIQUE
-function, proving it monotone ($\texttt{cliqueFn\_monotone}$), that for $k=2$
-every edge variable is relevant ($\texttt{cliqueFn\_two\_dependsOn}$), and
-consequently that any monotone circuit for $2$-CLIQUE has size at least
-$\binom{m}{2}$ ($\texttt{clique2\_size\_ge\_choose}$). Finally we discuss the
-Karchmer–Wigderson correspondence between circuit depth and communication
-complexity (forward direction $\texttt{kwCost\_le\_depth}$), and we situate
-Razborov's exponential CLIQUE bound via the approximation method as the principal
-open extension. All results are stated with full mathematical content and proof
-sketches.
-
----
+We develop a self-contained mathematical framework for proving lower bounds on the complexity of *monotone Boolean circuits* — circuits built from AND and OR gates with no negation. We formalize monotone circuits over an arbitrary index type of input variables, together with their evaluation, size, depth, and the set of variables they read. On this foundation we prove three complementary lower-bound techniques. First, the **relevant-variable bound**: the size of a circuit is at least the number of input variables that genuinely influence the function it computes; we instantiate this to show that any monotone circuit computing the 2-CLIQUE function on $m$ vertices has size at least $\binom{m}{2}$. Second, the abstract engine of **Razborov's approximation method**: modeling gate-wise approximation by an arbitrary rounding operator, we prove that approximation error accumulates *linearly* in the number of gates, and derive the conditional size lower bound $\text{size} \ge E/\delta$ relating global far-ness $E$ to per-gate error $\delta$. Third, the constructive half of the **Karchmer–Wigderson correspondence**: a depth-$d$ monotone circuit yields a $d$-bit communication protocol that solves the monotone Karchmer–Wigderson relation, exposing a coordinate that separates a positive input from a negative one. All results are established by structural induction and elementary finite combinatorics, and are stated so as to be directly reusable in sharper lower-bound arguments.
 
 ## 1. Introduction
 
-A central goal of computational complexity theory is to prove unconditional lower
-bounds — to show that certain functions cannot be computed by small or shallow
-devices, regardless of cleverness. Boolean circuits are the canonical
-non-uniform model: a circuit is a directed acyclic graph of logic gates that
-computes a function of its input bits. Proving super-polynomial circuit lower
-bounds for an explicit function in NP would separate $P$ from $NP$; this remains
-out of reach.
-
-*Monotone* circuits — those built from AND and OR gates only, with no NOT — are a
-restricted but natural and powerful model, because they exactly capture the class
-of monotone Boolean functions, which includes many fundamental graph and
-combinatorial properties. The landmark theorem of Razborov (1985) established
-that monotone circuits computing the $k$-CLIQUE function require *exponential*
-size, the first super-polynomial lower bound for a natural problem in any
-meaningful circuit model. A complementary structural result, the
-Karchmer–Wigderson correspondence, equates the minimal circuit depth of a
-function with the deterministic communication complexity of an associated
-two-player relation.
-
-This paper presents a clean, self-contained development of the foundations of
-this theory and the elementary but genuine lower bounds that follow directly,
-together with a precise account of the deeper results (Razborov's bound, the
-Karchmer–Wigderson equivalence) that the foundations are designed to support.
-
-### 1.1 Contributions
-
-1. A generic inductive definition of monotone circuits over an arbitrary index
-   type, with evaluation, size, depth, and variable-set semantics.
-2. Four structural theorems: monotonicity of computed functions, locality
-   (dependence only on read variables), relevance implies occurrence, and the
-   variable-count size bound.
-3. The relevant-variable size lower bound, an explicit and reusable lower-bound
-   principle.
-4. A formalization of the CLIQUE function in the edge-variable model, a proof
-   that it is monotone, and a quadratic ($\binom{m}{2}$) monotone size lower
-   bound for $2$-CLIQUE.
-5. A precise statement and proof sketch of the Karchmer–Wigderson forward
-   direction, and a roadmap to the converse, to Razborov's approximation method,
-   and to monotone/non-monotone separation.
-
----
-
-## 2. Monotone circuits: definitions
-
-Throughout, $\iota$ is an arbitrary type of variable indices. An **input
-assignment** is a function $x : \iota \to \mathsf{Bool}$.
-
-**Definition 2.1 (Monotone circuit).** The type $\mathrm{MCircuit}(\iota)$ of
-monotone Boolean circuits over $\iota$ is generated inductively by:
-- $\mathrm{var}(i)$ for $i : \iota$ (an input leaf);
-- $\top$ (the constant $\mathrm{true}$);
-- $\bot$ (the constant $\mathrm{false}$);
-- $\mathrm{and}(a,b)$ for circuits $a, b$ (an AND gate);
-- $\mathrm{or}(a,b)$ for circuits $a, b$ (an OR gate).
-
-**Definition 2.2 (Evaluation).** The value $\mathrm{eval}(C, x) : \mathsf{Bool}$
-of a circuit $C$ on an assignment $x$ is defined recursively:
-$$
-\mathrm{eval}(\mathrm{var}\,i, x) = x_i, \quad
-\mathrm{eval}(\top, x) = \mathrm{true}, \quad
-\mathrm{eval}(\bot, x) = \mathrm{false},
-$$
-$$
-\mathrm{eval}(\mathrm{and}(a,b), x) = \mathrm{eval}(a,x) \,\&\&\, \mathrm{eval}(b,x), \quad
-\mathrm{eval}(\mathrm{or}(a,b), x) = \mathrm{eval}(a,x) \,||\, \mathrm{eval}(b,x).
-$$
-
-**Definition 2.3 (Size).** The size $\mathrm{size}(C) \in \mathbb{N}$ counts all
-nodes: $\mathrm{size}(\mathrm{var}\,i) = \mathrm{size}(\top) =
-\mathrm{size}(\bot) = 1$, and $\mathrm{size}(\mathrm{and}(a,b)) =
-\mathrm{size}(\mathrm{or}(a,b)) = \mathrm{size}(a) + \mathrm{size}(b) + 1$.
-
-**Definition 2.4 (Depth).** The depth $\mathrm{depth}(C) \in \mathbb{N}$ is the
-longest output-to-leaf path: $\mathrm{depth}$ of a leaf or constant is $0$, and
-$\mathrm{depth}(\mathrm{and}(a,b)) = \mathrm{depth}(\mathrm{or}(a,b)) =
-\max(\mathrm{depth}(a), \mathrm{depth}(b)) + 1$.
-
-**Definition 2.5 (Variables read).** Assuming decidable equality on $\iota$, the
-finite set $\mathrm{vars}(C) \subseteq \iota$ is: $\mathrm{vars}(\mathrm{var}\,i)
-= \{i\}$; $\mathrm{vars}(\top) = \mathrm{vars}(\bot) = \emptyset$; and
-$\mathrm{vars}(\mathrm{and}(a,b)) = \mathrm{vars}(\mathrm{or}(a,b)) =
-\mathrm{vars}(a) \cup \mathrm{vars}(b)$.
-
-**Definition 2.6 (Pointwise order).** For assignments $x, y$, we write $x \le y$
-to mean: for all $i$, if $x_i = \mathrm{true}$ then $y_i = \mathrm{true}$.
-
-**Definition 2.7 (Dependence / relevance).** A Boolean function
-$f : (\iota \to \mathsf{Bool}) \to \mathsf{Bool}$ **depends on** coordinate $i$,
-written $\mathrm{DependsOn}(f, i)$, if there is a background assignment $x$ with
-$$
-f(x[i \mapsto \mathrm{true}]) \neq f(x[i \mapsto \mathrm{false}]),
-$$
-where $x[i \mapsto b]$ denotes $x$ updated to take value $b$ at coordinate $i$
-(in Lean, $\texttt{Function.update}\ x\ i\ b$). Such an $i$ is called *relevant*.
-
----
-
-## 3. Structural theorems
-
-### 3.1 Monotonicity
-
-**Theorem 3.1 ($\texttt{eval\_monotone}$).** Let $C$ be a monotone circuit and
-$x \le y$. If $\mathrm{eval}(C, x) = \mathrm{true}$ then $\mathrm{eval}(C, y) =
-\mathrm{true}$.
-
-*Proof sketch.* Structural induction on $C$. For $\mathrm{var}\,i$ the claim is
-exactly the hypothesis $x_i = \mathrm{true} \Rightarrow y_i = \mathrm{true}$. For
-$\top$ the output is always $\mathrm{true}$; for $\bot$ the premise
-$\mathrm{eval}(\bot, x) = \mathrm{true}$ is false, so the implication is vacuous.
-For $\mathrm{and}(a,b)$, if the conjunction is true at $x$ then both conjuncts are
-true at $x$, hence (by induction) both at $y$, hence the conjunction at $y$. For
-$\mathrm{or}(a,b)$, a true disjunction at $x$ means some disjunct is true at $x$,
-hence true at $y$ by induction, hence the disjunction at $y$. $\square$
-
-This theorem is the semantic justification for studying monotone circuits: the
-functions they compute are precisely the monotone Boolean functions (the forward
-inclusion is Theorem 3.1; the converse, that every monotone function has a
-monotone circuit, follows from the disjunctive normal form built from
-minterms).
-
-### 3.2 Locality
-
-**Theorem 3.2 ($\texttt{eval\_eq\_of\_agree\_on\_vars}$).** If $x$ and $y$ agree
-on every variable in $\mathrm{vars}(C)$ — that is, $x_i = y_i$ for all $i \in
-\mathrm{vars}(C)$ — then $\mathrm{eval}(C, x) = \mathrm{eval}(C, y)$.
-
-*Proof sketch.* Structural induction. A leaf $\mathrm{var}\,i$ reads only $i \in
-\mathrm{vars}(C) = \{i\}$, so agreement at $i$ gives equal outputs. Constants are
-trivial. For $\mathrm{and}(a,b)$ and $\mathrm{or}(a,b)$, since $\mathrm{vars}(a),
-\mathrm{vars}(b) \subseteq \mathrm{vars}(a) \cup \mathrm{vars}(b)$, the agreement
-hypothesis restricts to each child; the induction hypotheses give
-$\mathrm{eval}(a,x) = \mathrm{eval}(a,y)$ and $\mathrm{eval}(b,x) =
-\mathrm{eval}(b,y)$, and the gate semantics combine them. $\square$
-
-### 3.3 Relevance implies occurrence
-
-**Theorem 3.3 ($\texttt{dependsOn\_mem\_vars}$).** If
-$\mathrm{DependsOn}(\mathrm{eval}(C, \cdot), i)$ then $i \in \mathrm{vars}(C)$.
-
-*Proof sketch.* Contrapositive. Suppose $i \notin \mathrm{vars}(C)$. Take any
-background $x$. The two assignments $x[i \mapsto \mathrm{true}]$ and
-$x[i \mapsto \mathrm{false}]$ differ only at coordinate $i$, and they agree on
-every $j \in \mathrm{vars}(C)$ (since $i \notin \mathrm{vars}(C)$, no read
-coordinate equals $i$, and at $j \neq i$ the update does nothing). By Theorem 3.2,
-$\mathrm{eval}(C, x[i \mapsto \mathrm{true}]) = \mathrm{eval}(C, x[i \mapsto
-\mathrm{false}])$, so flipping $i$ never changes the output and $C$ does not
-depend on $i$. $\square$
-
-### 3.4 Variable count bounds size
-
-**Theorem 3.4 ($\texttt{card\_vars\_le\_size}$).** For every circuit $C$,
-$|\mathrm{vars}(C)| \le \mathrm{size}(C)$.
-
-*Proof sketch.* Structural induction. A leaf has $|\{i\}| = 1 = \mathrm{size}$.
-Constants have $|\emptyset| = 0 \le 1$. For a binary gate with children $a, b$,
-$$
-|\mathrm{vars}(a) \cup \mathrm{vars}(b)| \le |\mathrm{vars}(a)| +
-|\mathrm{vars}(b)| \le \mathrm{size}(a) + \mathrm{size}(b) \le \mathrm{size}(a)
-+ \mathrm{size}(b) + 1,
-$$
-using subadditivity of cardinality on unions and the induction hypotheses.
-$\square$
-
-### 3.5 The relevant-variable lower bound
-
-**Theorem 3.5 ($\texttt{card\_le\_size\_of\_relevant}$).** Let $C$ be a circuit
-and $R$ a finite set of indices such that every $i \in R$ is relevant to
-$\mathrm{eval}(C, \cdot)$. Then $|R| \le \mathrm{size}(C)$.
-
-*Proof sketch.* By Theorem 3.3, $R \subseteq \mathrm{vars}(C)$, so $|R| \le
-|\mathrm{vars}(C)|$ by monotonicity of cardinality, and $|\mathrm{vars}(C)| \le
-\mathrm{size}(C)$ by Theorem 3.4. Compose. $\square$
-
-This is the first genuine, reusable size lower bound: any function depending on
-many inputs requires a proportionally large circuit. While elementary, it is not
-vacuous, and it specializes to a concrete quadratic bound for CLIQUE below.
-
----
-
-## 4. The CLIQUE function and a monotone size lower bound
-
-### 4.1 The edge-variable graph model
-
-We model an undirected graph on vertex set $\mathrm{Fin}\,m = \{0, 1, \dots,
-m-1\}$ by its edge-indicator. The natural index type for unordered pairs is
-$\mathrm{Sym2}(\mathrm{Fin}\,m)$, the type of unordered pairs of vertices, so an
-input assignment is $g : \mathrm{Sym2}(\mathrm{Fin}\,m) \to \mathsf{Bool}$, with
-$g(\{u,v\}) = \mathrm{true}$ meaning the edge $\{u,v\}$ is present. The number of
-non-loop edges is $\binom{m}{2}$.
-
-**Definition 4.1 (CLIQUE function, $\texttt{cliqueFn}$).** For a parameter $k$,
-the function $\mathrm{cliqueFn}_{m,k}(g)$ returns $\mathrm{true}$ iff there exists
-a set $S$ of $k$ distinct vertices that is *complete* in $g$: for every pair
-$u \neq v$ in $S$, the edge $\{u, v\}$ is present ($g(\{u,v\}) = \mathrm{true}$).
-The existential over the finitely many vertex subsets is decidable, so the
-function is well defined and computable.
-
-### 4.2 Monotonicity of CLIQUE
-
-**Theorem 4.2 ($\texttt{cliqueFn\_monotone}$).** $\mathrm{cliqueFn}_{m,k}$ is a
-monotone function: if $g \le h$ (every edge present in $g$ is present in $h$) and
-$\mathrm{cliqueFn}_{m,k}(g) = \mathrm{true}$, then $\mathrm{cliqueFn}_{m,k}(h) =
-\mathrm{true}$.
-
-*Proof sketch.* If $S$ is a complete $k$-set in $g$, then for each pair $u \neq v$
-in $S$ we have $g(\{u,v\}) = \mathrm{true}$, hence $h(\{u,v\}) = \mathrm{true}$
-since $g \le h$. Thus $S$ is complete in $h$ too, witnessing
-$\mathrm{cliqueFn}_{m,k}(h) = \mathrm{true}$. $\square$
-
-Consequently CLIQUE is a legitimate target for monotone circuits: by the converse
-of Theorem 3.1 it does admit *some* monotone circuit, and we may ask for the
-minimal size.
-
-### 4.3 Every edge is relevant for $2$-CLIQUE
-
-**Theorem 4.3 ($\texttt{cliqueFn\_two\_dependsOn}$).** For $k = 2$ and any
-non-loop edge $e = \{u,v\}$ with $u \neq v$, the function
-$\mathrm{cliqueFn}_{m,2}$ depends on the edge variable $e$.
-
-*Proof sketch.* A $2$-clique is exactly an edge. Take the background assignment
-$g_0$ that sets every edge to $\mathrm{false}$ (the empty graph). Then
-$g_0[e \mapsto \mathrm{true}]$ is the single-edge graph, which has the complete
-pair $\{u,v\}$ and so satisfies $\mathrm{cliqueFn}_{m,2} = \mathrm{true}$, whereas
-$g_0[e \mapsto \mathrm{false}] = g_0$ is the empty graph with no edge at all, so
-$\mathrm{cliqueFn}_{m,2} = \mathrm{false}$. The two values differ, witnessing
-dependence on $e$. $\square$
-
-### 4.4 The quadratic lower bound
-
-**Theorem 4.4 ($\texttt{clique2\_size\_ge\_choose}$).** Any monotone circuit $C$
-over the edge variables that computes $\mathrm{cliqueFn}_{m,2}$ has size at least
-$\binom{m}{2}$:
-$$
-\mathrm{eval}(C, \cdot) = \mathrm{cliqueFn}_{m,2} \implies \mathrm{size}(C) \ge
-\binom{m}{2}.
-$$
-
-*Proof sketch.* Let $R$ be the set of all $\binom{m}{2}$ non-loop edges. By
-Theorem 4.3, every $e \in R$ is relevant to $\mathrm{cliqueFn}_{m,2}$, hence
-(since $C$ computes this function) relevant to $\mathrm{eval}(C, \cdot)$. By the
-relevant-variable lower bound (Theorem 3.5), $|R| \le \mathrm{size}(C)$. Since
-$|R| = \binom{m}{2}$, the bound follows. $\square$
-
-This is a genuine (quadratic) unconditional monotone size lower bound. It is the
-specialization of the general relevant-variable principle to the simplest CLIQUE
-parameter, and it serves as the base case and sanity check for the far deeper
-exponential bound discussed next.
-
----
-
-## 5. The Karchmer–Wigderson correspondence
-
-### 5.1 The monotone KW relation and game
-
-Fix a monotone function $f$. The **monotone Karchmer–Wigderson game** is played
-by two cooperating players. Alice receives an input $x$ with $f(x) =
-\mathrm{true}$; Bob receives $y$ with $f(y) = \mathrm{false}$. Their goal is to
-output a coordinate $i$ such that
-$$
-x_i = \mathrm{true} \quad\text{and}\quad y_i = \mathrm{false}.
-$$
-Such an $i$ always exists for monotone $f$: if no coordinate were true in $x$ and
-false in $y$, then $x \le y$ on the support, and monotonicity would force $f(y) =
-\mathrm{true}$, a contradiction. The **deterministic communication complexity**
-of the game is the minimum, over protocols, of the worst-case number of bits
-exchanged.
-
-**Theorem 5.1 (separator existence, $\texttt{monotone\_separator\_exists}$).**
-For monotone $f$ and any $x, y$ with $f(x) = \mathrm{true}$ and $f(y) =
-\mathrm{false}$, there exists a coordinate $i$ with $x_i = \mathrm{true}$ and
-$y_i = \mathrm{false}$.
-
-*Proof sketch.* Suppose not. Then for every $i$, $x_i = \mathrm{true}$ implies
-$y_i = \mathrm{true}$, i.e. $x \le y$. Monotonicity (Theorem 3.1 at the level of
-functions) gives $f(x) = \mathrm{true} \Rightarrow f(y) = \mathrm{true}$,
-contradicting $f(y) = \mathrm{false}$. $\square$
-
-### 5.2 Forward direction: depth bounds communication
-
-Let $\mathrm{kwCost}(f)$ denote the communication cost of the KW protocol
-obtained by descending the optimal circuit, and let $\mathrm{kwFind}$ be the
-explicit search procedure that, given a circuit and a true/false input pair,
-walks from the output to a leaf producing a separating coordinate.
-
-**Theorem 5.2 (forward KW, $\texttt{kwCost\_le\_depth}$).** For every monotone
-circuit $C$ computing $f$, the KW game admits a protocol whose cost is at most
-$\mathrm{depth}(C)$. Hence the deterministic communication complexity of the
-monotone KW game for $f$ is at most the minimal monotone circuit depth of $f$.
-
-*Proof sketch.* Induct on the circuit, descending from the output. At the output
-of $C$ we have $\mathrm{eval}(C, x) = \mathrm{true}$ and $\mathrm{eval}(C, y) =
-\mathrm{false}$. At an OR gate $\mathrm{or}(a,b)$, since $\mathrm{eval}(a,x) \,||\,
-\mathrm{eval}(b,x) = \mathrm{true}$, at least one child evaluates to
-$\mathrm{true}$ on $x$; Alice announces such a child (one bit). At an AND gate
-$\mathrm{and}(a,b)$, since $\mathrm{eval}(a,y) \,\&\&\, \mathrm{eval}(b,y) =
-\mathrm{false}$, at least one child evaluates to $\mathrm{false}$ on $y$; Bob
-announces such a child (one bit). In both cases the chosen child preserves the
-invariant ($\mathrm{true}$ on $x$, $\mathrm{false}$ on $y$). After at most
-$\mathrm{depth}(C)$ steps the players reach a leaf $\mathrm{var}\,i$ with $x_i =
-\mathrm{true}$ and $y_i = \mathrm{false}$, the desired separator. Total bits:
-$\le \mathrm{depth}(C)$. $\square$
-
-### 5.3 The converse (open, formalization target)
-
-The converse direction states that a $c$-bit protocol can be *compiled* into a
-depth-$c$ monotone circuit, so that minimal depth *equals* communication
-complexity. The construction recursively turns the protocol tree into a circuit:
-a node where Alice speaks becomes an OR gate, a node where Bob speaks becomes an
-AND gate, and each leaf is labelled by the coordinate the players agreed upon.
-Correctness reuses the monotonicity semantics (Theorem 3.1). Formalizing the
-converse requires a protocol datatype and an inductive protocol-to-circuit
-translation; see Section 7.
-
----
-
-## 6. Algorithms
-
-We summarize the constructive content as explicit algorithms.
-
-**Algorithm A — Recursive circuit evaluation.** Given a circuit $C$ and an
-assignment $x$, compute $\mathrm{eval}(C, x)$ by post-order traversal: evaluate
-children, then apply the gate's Boolean operation. Runs in time linear in
-$\mathrm{size}(C)$.
-
-**Algorithm B — Relevant-variable size certifier.** Given a target function $f$
-(as an oracle) and a candidate set $R$ of indices, verify for each $i \in R$ that
-flipping coordinate $i$ on some witness assignment changes $f$. If all checks
-pass, $|R|$ is a certified lower bound on the size of any circuit computing $f$
-(Theorem 3.5). For $2$-CLIQUE, $R$ is the full edge set and each witness is the
-empty graph with a single edge toggled.
-
-**Algorithm C — KW descent (separator search, $\texttt{kwFind}$).** Given a
-circuit $C$ computing $f$ and inputs $x$ (true) and $y$ (false), descend from the
-output: at an OR gate move to a child true on $x$; at an AND gate move to a child
-false on $y$; at a leaf $\mathrm{var}\,i$, return $i$. The returned $i$ satisfies
-$x_i = \mathrm{true}, y_i = \mathrm{false}$, and the number of moves is at most
-$\mathrm{depth}(C)$, realizing the protocol of Theorem 5.2.
-
----
-
-## 7. Discussion and future directions
-
-The development above gives a complete and self-contained foundation: monotone
-circuits compute exactly the monotone functions, locality holds, relevance forces
-occurrence, and the variable count lower-bounds size. The CLIQUE module
-instantiates these to a concrete quadratic lower bound for $2$-CLIQUE, and the
-Karchmer–Wigderson forward direction connects depth to communication. The deeper
-results below build directly on these foundations.
-
-**Razborov's exponential CLIQUE bound (approximation method).** The headline
-target is to show that monotone circuits for $k$-CLIQUE require size
-$m^{\Omega(\sqrt{k})}$. The proof replaces each gate by an approximator drawn
-from a lattice of monotone functions closed under approximate-AND and
-approximate-OR; each replacement deletes only a controlled number of positive
-test inputs (cliques) and negative test inputs (colorings/independent sets). The
-combinatorial heart is the **sunflower lemma**: a large family of small sets
-contains a sunflower, which bounds the per-gate approximation error. Because a
-small circuit accumulates only a small total error, it cannot separate the
-clique-indicators from the independent-set-indicators, a contradiction. The
-edge-variable model and the CLIQUE function fixed here are exactly the inputs to
-this argument; the missing pieces are a formal sunflower lemma and the closure
-structure of the approximator family over
-$\mathrm{Sym2}(\mathrm{Fin}\,m) \to \mathsf{Bool}$.
-
-**Karchmer–Wigderson converse.** Compile a $c$-bit protocol into a depth-$c$
-monotone circuit, establishing depth $=$ communication complexity. Needs a
-protocol datatype and inductive translation; the semantics reuse Theorem 3.1.
-
-**Sensitivity sharpening.** The relevant-variable bound counts globally relevant
-variables (one witness input per variable). Counting coordinates simultaneously
-sensitive at a *single* input forces edge-disjoint subcircuits, multiplying the
-lower bound — strictly improving Theorem 3.5 for functions such as threshold.
-
-**Monotone/non-monotone separation.** Functions like perfect matching or CLIQUE
-are conjectured (and, for matching, known) to have polynomial general circuits
-but only exponential monotone circuits, showing the inclusion monotone $\subseteq$
-general is exponentially lossy.
-
----
-
-## 8. Conclusion
-
-We have formalized the foundations of monotone Boolean circuit complexity and
-derived genuine, unconditional lower bounds from first principles: the
-relevant-variable size bound and its quadratic CLIQUE instantiation, alongside
-the forward Karchmer–Wigderson correspondence between depth and communication.
-These results are individually elementary but collectively form the rigorous
-scaffolding on which the celebrated exponential CLIQUE lower bound and the depth
-equivalence rest. The foundations are deliberately generic — over an arbitrary
-index type — so that the same machinery serves the graph (edge-variable) setting
-and any future application.
-
----
-
-## Appendix: Index of formal results
-
-- $\texttt{eval\_monotone}$ — monotone circuits compute monotone functions (Thm 3.1).
-- $\texttt{eval\_eq\_of\_agree\_on\_vars}$ — locality on read variables (Thm 3.2).
-- $\texttt{dependsOn\_mem\_vars}$ — relevance implies occurrence (Thm 3.3).
-- $\texttt{card\_vars\_le\_size}$ — variable count bounds size (Thm 3.4).
-- $\texttt{card\_le\_size\_of\_relevant}$ — relevant-variable size lower bound (Thm 3.5).
-- $\texttt{cliqueFn}$ — the CLIQUE Boolean function (Def 4.1).
-- $\texttt{cliqueFn\_monotone}$ — CLIQUE is monotone (Thm 4.2).
-- $\texttt{cliqueFn\_two\_dependsOn}$ — every edge relevant for $2$-CLIQUE (Thm 4.3).
-- $\texttt{clique2\_size\_ge\_choose}$ — quadratic lower bound for $2$-CLIQUE (Thm 4.4).
-- $\texttt{monotone\_separator\_exists}$ — KW separator existence (Thm 5.1).
-- $\texttt{kwCost\_le\_depth}$ / $\texttt{kwFind}$ — forward KW direction (Thm 5.2, Alg C).
+Proving that explicit Boolean functions require large circuits is among the central goals of complexity theory and remains largely out of reach for general (non-monotone) circuits. The **monotone** restriction — circuits using only AND and OR gates — is a rare and celebrated success story: here we possess techniques powerful enough to prove *exponential* lower bounds for natural functions such as CLIQUE (Razborov, 1985), and a clean structural correspondence between circuit depth and communication complexity (Karchmer–Wigderson, 1988).
+
+This paper assembles a compact, rigorous toolkit covering the three pillars of monotone lower-bound theory:
+
+1. **The relevant-variable method** (Section 3–4): an elementary but exact counting bound, instantiated for 2-CLIQUE.
+2. **The approximation method** (Section 5): the abstract error-accumulation engine underlying Razborov's exponential bound.
+3. **The Karchmer–Wigderson connection** (Section 6): the algorithmic translation of circuit depth into communication cost.
+
+Our contribution is to isolate the *structural core* of each technique — the part that is provable cleanly and independently of any particular hard function — and to state each result in maximal generality so that the problem-specific combinatorial estimates (e.g., the sunflower lemma) plug directly into a proven scaffold.
+
+## 2. Monotone circuits
+
+Throughout, let $\iota$ be an arbitrary type of variable indices.
+
+**Definition 2.1 (Monotone circuit).** The type $\mathrm{MCircuit}(\iota)$ of monotone Boolean circuits is generated inductively by:
+- $\mathsf{var}\,i$ for $i : \iota$ (an input variable),
+- $\top$ (the constant true) and $\bot$ (the constant false),
+- $\mathsf{and}\,a\,b$ and $\mathsf{or}\,a\,b$ for subcircuits $a, b$.
+
+**Definition 2.2 (Evaluation).** Given an assignment $x : \iota \to \mathrm{Bool}$, the value $\mathrm{eval}\,C\,x$ is defined by recursion:
+$$\mathrm{eval}(\mathsf{var}\,i)\,x = x_i, \quad \mathrm{eval}\,\top\,x = \text{true}, \quad \mathrm{eval}\,\bot\,x = \text{false},$$
+$$\mathrm{eval}(\mathsf{and}\,a\,b)\,x = \mathrm{eval}\,a\,x \wedge \mathrm{eval}\,b\,x, \quad \mathrm{eval}(\mathsf{or}\,a\,b)\,x = \mathrm{eval}\,a\,x \vee \mathrm{eval}\,b\,x.$$
+
+**Definition 2.3 (Size, depth, variables).**
+$$\mathrm{size}(\mathsf{var}\,i) = \mathrm{size}\,\top = \mathrm{size}\,\bot = 1, \quad \mathrm{size}(\mathsf{and}\,a\,b) = \mathrm{size}(\mathsf{or}\,a\,b) = \mathrm{size}\,a + \mathrm{size}\,b + 1.$$
+$$\mathrm{depth}(\mathsf{var}\,i) = \mathrm{depth}\,\top = \mathrm{depth}\,\bot = 0, \quad \mathrm{depth}(\mathsf{and}\,a\,b) = \mathrm{depth}(\mathsf{or}\,a\,b) = \max(\mathrm{depth}\,a, \mathrm{depth}\,b) + 1.$$
+For decidable $\iota$, the variable set is $\mathrm{vars}(\mathsf{var}\,i) = \{i\}$, $\mathrm{vars}\,\top = \mathrm{vars}\,\bot = \emptyset$, and $\mathrm{vars}(\mathsf{and}\,a\,b) = \mathrm{vars}(\mathsf{or}\,a\,b) = \mathrm{vars}\,a \cup \mathrm{vars}\,b$.
+
+**Theorem 2.4 (Monotonicity, `eval_monotone`).** For every circuit $C$ and assignments $x, y$ with $x_i = \text{true} \Rightarrow y_i = \text{true}$ for all $i$, we have $\mathrm{eval}\,C\,x = \text{true} \Rightarrow \mathrm{eval}\,C\,y = \text{true}$.
+
+*Proof sketch.* Induction on $C$. Variables and constants are immediate. For $\mathsf{and}\,a\,b$, a true output means both children are true on $x$; by induction both are true on $y$, hence so is the AND. The $\mathsf{or}$ case is symmetric. $\square$
+
+This theorem certifies that $\mathrm{MCircuit}$ is the correct syntactic class for the monotone functions: every circuit computes a monotone function.
+
+## 3. Variables, dependence, and the relevant-variable bound
+
+**Lemma 3.1 (Locality, `eval_eq_of_agree_on_vars`).** If $x_i = y_i$ for all $i \in \mathrm{vars}\,C$, then $\mathrm{eval}\,C\,x = \mathrm{eval}\,C\,y$.
+
+*Proof sketch.* Induction on $C$. At $\mathsf{var}\,i$, agreement on $\{i\}$ gives $x_i = y_i$. At a gate, the variable set is the union of the children's, so agreement restricts to each child, and the inductive hypotheses combine. $\square$
+
+**Definition 3.2 (Relevant variable, `DependsOn`).** A variable $i$ is *relevant* to a function $f : (\iota \to \mathrm{Bool}) \to \mathrm{Bool}$ if there exists an assignment $x$ with
+$$f(x[i \mapsto \text{true}]) \neq f(x[i \mapsto \text{false}]),$$
+where $x[i \mapsto b]$ denotes $x$ with coordinate $i$ overwritten by $b$.
+
+**Theorem 3.3 (Relevance forces occurrence, `dependsOn_mem_vars`).** If $i$ is relevant to $\mathrm{eval}\,C$, then $i \in \mathrm{vars}\,C$.
+
+*Proof sketch.* Contrapositive. If $i \notin \mathrm{vars}\,C$, then for any $x$ the two updated assignments $x[i \mapsto \text{true}]$ and $x[i \mapsto \text{false}]$ agree on every variable in $\mathrm{vars}\,C$ (they differ only at $i$). By Lemma 3.1 the circuit gives the same value on both, contradicting relevance. $\square$
+
+**Theorem 3.4 (Variable count bounds size, `card_vars_le_size`).** For every $C$, $|\mathrm{vars}\,C| \le \mathrm{size}\,C$.
+
+*Proof sketch.* Induction. A variable contributes $|\{i\}| = 1 = \mathrm{size}$; constants contribute $0$. At a gate, $|\mathrm{vars}\,a \cup \mathrm{vars}\,b| \le |\mathrm{vars}\,a| + |\mathrm{vars}\,b| \le \mathrm{size}\,a + \mathrm{size}\,b \le \mathrm{size}\,a + \mathrm{size}\,b + 1$. $\square$
+
+**Theorem 3.5 (Relevant-variable lower bound, `card_le_size_of_relevant`).** Let $R$ be a finite set of variables, each relevant to $\mathrm{eval}\,C$. Then $|R| \le \mathrm{size}\,C$.
+
+*Proof sketch.* By Theorem 3.3 each $i \in R$ lies in $\mathrm{vars}\,C$, so $R \subseteq \mathrm{vars}\,C$ and $|R| \le |\mathrm{vars}\,C| \le \mathrm{size}\,C$ by Theorem 3.4. $\square$
+
+## 4. CLIQUE and a quadratic monotone bound
+
+We model a graph on vertex set $\mathrm{Fin}\,m$ by its edge indicator $g : \mathrm{Sym2}(\mathrm{Fin}\,m) \to \mathrm{Bool}$, where $\mathrm{Sym2}$ is the type of unordered pairs. The inputs of a monotone circuit are then exactly the edge variables.
+
+**Definition 4.1 (CLIQUE function, `cliqueFn`).**
+$$\mathrm{cliqueFn}(m, k, g) = \big[\, \exists\, S \subseteq \mathrm{Fin}\,m,\ |S| = k \ \wedge\ \forall u, v \in S,\ u \neq v \Rightarrow g(\{u,v\}) = \text{true} \,\big].$$
+
+**Theorem 4.2 (CLIQUE is monotone, `cliqueFn_monotone`).** If $g(e) = \text{true} \Rightarrow g'(e) = \text{true}$ for every edge $e$, then $\mathrm{cliqueFn}(m,k,g) = \text{true} \Rightarrow \mathrm{cliqueFn}(m,k,g') = \text{true}$.
+
+*Proof sketch.* A witnessing $k$-clique $S$ of $g$ has all its internal edges present in $g$, hence in $g'$; so $S$ also witnesses a clique of $g'$. $\square$
+
+**Theorem 4.3 (Every edge is relevant for $k=2$, `cliqueFn_two_dependsOn`).** For any non-loop edge $e$ (i.e. $e$ is not a diagonal pair), $e$ is relevant to $\mathrm{cliqueFn}(m, 2)$.
+
+*Proof sketch.* Take the base assignment to be the all-false (empty) graph. With $e$ off, there is no edge and hence no 2-clique, so the function is false. With $e = \{a,b\}$ on ($a \neq b$), the set $\{a,b\}$ is a 2-clique, so the function is true. The two updated assignments differ in value, witnessing dependence. $\square$
+
+**Lemma 4.4 (Edge count, `card_offDiag_eq_choose`).** The number of non-loop edges on $\mathrm{Fin}\,m$ equals $\binom{m}{2}$.
+
+*Proof sketch.* The non-diagonal elements of $\mathrm{Sym2}(\mathrm{Fin}\,m)$ are in bijection with unordered pairs of distinct vertices, counted by $\binom{m}{2}$. $\square$
+
+**Theorem 4.5 (Quadratic lower bound for 2-CLIQUE, `clique2_size_ge_choose`).** Any monotone circuit $C$ with $\mathrm{eval}\,C\,g = \mathrm{cliqueFn}(m, 2, g)$ for all $g$ satisfies
+$$\mathrm{size}\,C \ge \binom{m}{2}.$$
+
+*Proof sketch.* Let $R$ be the set of all $\binom{m}{2}$ non-loop edges (Lemma 4.4). By Theorem 4.3 each is relevant to $\mathrm{eval}\,C$ (since $\mathrm{eval}\,C = \mathrm{cliqueFn}(m,2)$). Apply Theorem 3.5: $\binom{m}{2} = |R| \le \mathrm{size}\,C$. $\square$
+
+This bound is exact and unconditional, though only quadratic. Pushing to *exponential* bounds for general $k$ requires the approximation method of the next section.
+
+## 5. The approximation method: abstract error accumulation
+
+Razborov's approximation method replaces each gate by an approximator from a restricted family and tracks the error introduced. We formalize the *structural core* — error accumulation — independently of the function being analyzed, by modeling approximation as an arbitrary **rounding operator** $R$ on Boolean functions.
+
+**Definition 5.1 (Internal gate count, `numGates`).**
+$$\mathrm{numGates}(\mathsf{var}\,i) = \mathrm{numGates}\,\top = \mathrm{numGates}\,\bot = 0,$$
+$$\mathrm{numGates}(\mathsf{and}\,a\,b) = \mathrm{numGates}(\mathsf{or}\,a\,b) = \mathrm{numGates}\,a + \mathrm{numGates}\,b + 1.$$
+
+**Lemma 5.2 (`numGates_le_size`).** $\mathrm{numGates}\,C \le \mathrm{size}\,C$ for all $C$, by a routine induction.
+
+**Definition 5.3 (Approximate evaluation, `approxEval`).** Given a rounding operator $R : ((\iota \to \mathrm{Bool}) \to \mathrm{Bool}) \to ((\iota \to \mathrm{Bool}) \to \mathrm{Bool})$, define $\mathrm{approxEval}\,R$ exactly as $\mathrm{eval}$, but apply $R$ to the function computed at each gate:
+$$\mathrm{approxEval}\,R\,(\mathsf{and}\,a\,b)\,x = R\big(z \mapsto \mathrm{approxEval}\,R\,a\,z \wedge \mathrm{approxEval}\,R\,b\,z\big)(x),$$
+and analogously for $\mathsf{or}$, with variables and constants evaluated as in $\mathrm{eval}$. Taking $R = \mathrm{id}$ recovers $\mathrm{eval}$ exactly, so the construction loses no generality.
+
+**Theorem 5.4 (Error accumulation, `approx_error_bound`).** Let $R$ be any rounding operator, $T$ a finite set of test inputs, and $\delta \in \mathbb{N}$. Suppose every single rounding step is $\delta$-accurate on $T$:
+$$\forall g,\quad \big|\{\, x \in T : R(g)(x) \neq g(x) \,\}\big| \le \delta.$$
+Then for every circuit $C$,
+$$\big|\{\, x \in T : \mathrm{eval}\,C\,x \neq \mathrm{approxEval}\,R\,C\,x \,\}\big| \le \mathrm{numGates}(C) \cdot \delta.$$
+
+*Proof sketch.* Induction on $C$. Variables and constants are evaluated identically by both, so the error set is empty and the bound holds with $\mathrm{numGates} = 0$. For $C = \mathsf{and}\,a\,b$, consider an input $x \in T$ where $\mathrm{eval}\,C\,x \neq \mathrm{approxEval}\,R\,C\,x$. Writing $g(z) = \mathrm{approxEval}\,R\,a\,z \wedge \mathrm{approxEval}\,R\,b\,z$, the true value is $\mathrm{eval}\,a\,x \wedge \mathrm{eval}\,b\,x$ and the approximate value is $R(g)(x)$. Any disagreement must be witnessed by at least one of:
+- a disagreement in the left child ($\mathrm{eval}\,a\,x \neq \mathrm{approxEval}\,R\,a\,x$),
+- a disagreement in the right child ($\mathrm{eval}\,b\,x \neq \mathrm{approxEval}\,R\,b\,x$), or
+- a local rounding error ($R(g)(x) \neq g(x)$).
+
+Hence the error set is contained in the union of these three sets, and by the union bound (`Finset.card_union_le`) its cardinality is at most the sum of the three. The first two are bounded by $\mathrm{numGates}\,a \cdot \delta$ and $\mathrm{numGates}\,b \cdot \delta$ (induction), the third by $\delta$ (hypothesis). Summing,
+$$\le \mathrm{numGates}\,a\cdot\delta + \mathrm{numGates}\,b\cdot\delta + \delta = (\mathrm{numGates}\,a + \mathrm{numGates}\,b + 1)\cdot\delta = \mathrm{numGates}(C)\cdot\delta.$$
+The $\mathsf{or}$ case is identical with $\wedge$ replaced by $\vee$. $\square$
+
+**Theorem 5.5 (Approximation-method size lower bound, `approx_method_size_lb`).** Under the hypotheses of Theorem 5.4, suppose additionally that the rounded circuit is *$E$-far* from the true circuit on $T$:
+$$\big|\{\, x \in T : \mathrm{eval}\,C\,x \neq \mathrm{approxEval}\,R\,C\,x \,\}\big| \ge E.$$
+Then
+$$E \le \mathrm{numGates}(C)\cdot\delta \le \mathrm{size}(C)\cdot\delta, \qquad\text{equivalently}\qquad \mathrm{size}(C) \ge \frac{E}{\delta}.$$
+
+*Proof sketch.* Chain the far-ness lower bound, Theorem 5.4, and Lemma 5.2. $\square$
+
+This is precisely the master inequality of the approximation method. The full Razborov argument supplies, for monotone circuits computing $k$-CLIQUE, a rounding operator $R$ built from sunflower-plucked clique indicators, a per-gate budget $\delta$, and a far-ness budget $E$ with $E/\delta$ exponential in a power of $k$; substituting these into Theorem 5.5 yields $\mathrm{size}(C) = 2^{\Omega(\sqrt{k})}$. The structural engine above is the function-agnostic scaffold into which those two combinatorial estimates plug.
+
+## 6. The Karchmer–Wigderson connection
+
+The Karchmer–Wigderson theorem equates the minimal *depth* of a circuit for $f$ with the deterministic *communication complexity* of the KW relation. In the monotone setting: Alice holds $x$ with $f(x) = 1$, Bob holds $y$ with $f(y) = 0$, and they must find a coordinate $i$ with $x_i = 1$ and $y_i = 0$. We formalize the constructive (upper-bound) direction.
+
+**Definition 6.1 (KW protocol, `kwFind`).** A partial function returning the separating coordinate, defined by descent:
+$$\mathrm{kwFind}(\mathsf{var}\,i)\,x\,y = \mathrm{some}\,i, \qquad \mathrm{kwFind}\,\top = \mathrm{kwFind}\,\bot = \mathrm{none},$$
+$$\mathrm{kwFind}(\mathsf{and}\,a\,b)\,x\,y = \begin{cases} \mathrm{kwFind}\,a\,x\,y & \text{if } \mathrm{eval}\,a\,y = \text{false} \\ \mathrm{kwFind}\,b\,x\,y & \text{otherwise} \end{cases}$$
+$$\mathrm{kwFind}(\mathsf{or}\,a\,b)\,x\,y = \begin{cases} \mathrm{kwFind}\,a\,x\,y & \text{if } \mathrm{eval}\,a\,x = \text{true} \\ \mathrm{kwFind}\,b\,x\,y & \text{otherwise} \end{cases}$$
+
+**Definition 6.2 (Communication cost, `kwCost`).** Identical recursion, counting one bit per gate traversed: $\mathrm{kwCost}$ of a leaf is $0$, and at each gate it is $1$ plus the cost of the chosen child.
+
+**Theorem 6.3 (Protocol correctness, `kwFind_spec`).** If $\mathrm{eval}\,C\,x = \text{true}$ and $\mathrm{eval}\,C\,y = \text{false}$, then there exists $i$ with $\mathrm{kwFind}\,C\,x\,y = \mathrm{some}\,i$, $x_i = \text{true}$, and $y_i = \text{false}$.
+
+*Proof sketch.* Induction on $C$ maintaining the invariant "$\mathrm{eval}\,C\,x = \text{true}$ and $\mathrm{eval}\,C\,y = \text{false}$." The constants are excluded by the invariant ($\top$ is never false, $\bot$ never true). At $\mathsf{var}\,i$ the invariant directly gives $x_i = \text{true}, y_i = \text{false}$. At an AND gate, $\mathrm{eval}\,C\,y = \text{false}$ forces some child to be false on $y$ — the protocol routes to it — while $\mathrm{eval}\,C\,x = \text{true}$ keeps both children true on $x$; the invariant is preserved for the chosen child. The OR gate is dual. $\square$
+
+**Theorem 6.4 (Depth bounds communication, `kwCost_le_depth`).** For all $x, y$, $\mathrm{kwCost}\,C\,x\,y \le \mathrm{depth}\,C$.
+
+*Proof sketch.* Induction: at a gate the cost is $1 + (\text{cost of one child}) \le 1 + \max(\mathrm{depth}\,a, \mathrm{depth}\,b) = \mathrm{depth}\,C$. $\square$
+
+**Corollary 6.5 (Monotone separator existence, `monotone_separator_exists`).** If $\mathrm{eval}\,C\,x = \text{true}$ and $\mathrm{eval}\,C\,y = \text{false}$, there exists $i$ with $x_i = \text{true}$ and $y_i = \text{false}$.
+
+*Proof sketch.* Discard the coordinate-returning data of Theorem 6.3. $\square$
+
+Theorems 6.3–6.4 together say: a depth-$d$ monotone circuit computing $f$ gives a $d$-bit deterministic protocol for the monotone KW relation of $f$. Consequently, a *lower bound* on the communication complexity of that relation is a lower bound on monotone depth — the standard route to depth lower bounds.
+
+## 7. Discussion
+
+The three techniques are complementary and mutually reinforcing. The relevant-variable bound (Section 3) is exact but limited to the number of essential inputs, yielding only polynomial bounds (Section 4). The approximation method (Section 5) breaks this barrier by tracking *errors* rather than *variables*, and its structural core — linear error accumulation — is fully general; only the two combinatorial inputs ($E$ and $\delta$) are function-specific. The Karchmer–Wigderson connection (Section 6) addresses depth rather than size, reducing depth lower bounds to communication lower bounds.
+
+A notable design choice is to keep the rounding operator $R$ in Section 5 entirely abstract. This makes Theorem 5.4 non-vacuous and reusable: the hypothesis $\delta$-accuracy is a genuine quantitative constraint, and the conclusion is a real bound that holds for *any* approximation scheme. The exponential CLIQUE bound is then a corollary obtained by supplying a specific sunflower-based $R$.
+
+## 8. Future work
+
+Three concrete directions emerge directly from the gaps these results expose.
+
+**Conjecture 8.1 (Sunflower instantiation).** There is a rounding operator $R$ built from sunflower-plucked clique indicators, a test set $T$ of cliques-versus-colourings, a per-gate budget $\delta$, and a far-ness budget $E$ with $E/\delta$ exponential in $m$, satisfying the hypotheses of Theorem 5.5 for any monotone circuit computing $\mathrm{cliqueFn}(m, k)$. Hence every such circuit has size $2^{\Omega(\sqrt{k})}$. Because Theorem 5.5 already reduces the exponential bound to two purely combinatorial cardinality estimates, the remaining work is to supply those counts, not to redo any induction.
+
+**Conjecture 8.2 (Converse Karchmer–Wigderson).** Every deterministic protocol of cost $c$ for the monotone KW relation of $f$ compiles into a monotone circuit of depth $\le c$ computing $f$; combined with Theorem 6.4 this makes monotone depth and monotone KW communication complexity *equal*. A protocol tree is itself a circuit skeleton: each communicated bit becomes an AND or OR gate, inverting the descent in $\mathrm{kwFind}$.
+
+**Conjecture 8.3 (Tightness of the relevant-variable bound).** Characterize exactly when Theorem 3.5 is an equality (size equal to the number of relevant variables) — conjecturally for "read-once-ish" circuits where every gate reads disjoint variable sets.
+
+## References
+
+The results formalized here are the classical theorems of monotone circuit complexity: the relevant-variable counting bound (folklore), Razborov's approximation method (A. A. Razborov, *Lower bounds on the monotone complexity of some Boolean functions*, 1985), and the Karchmer–Wigderson depth–communication correspondence (M. Karchmer and A. Wigderson, *Monotone circuits for connectivity require super-logarithmic depth*, 1988). This paper isolates and re-proves their structural cores in a self-contained, generic form.

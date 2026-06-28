@@ -1,4 +1,4 @@
-import Novelty.CircuitComplexity.Basic
+import Catalog.Novelty.CircuitComplexity.Basic
 
 /-!
 # The CLIQUE function and a monotone size lower bound
