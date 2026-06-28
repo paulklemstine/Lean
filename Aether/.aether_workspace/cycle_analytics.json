@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T11:13:15.445238+00:00",
+  "last_updated": "2026-06-28T11:40:56.425826+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -15093,6 +15093,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-28T11:13:15.172221+00:00",
       "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2462,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 207,
+      "domain": "Novelty",
+      "duration_seconds": 1532.019449710846,
+      "end_time": 1782646377.8110569,
+      "files_integrated": 10,
+      "job_id": "fdadfe48",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 1.0,
+        "composite": 0.7462,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.6039,
+        "novelty": 0.95,
+        "proof_depth": 0.4556,
+        "usefulness": 0.7278
+      },
+      "quality_score": 0.5959,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782644845.7916071,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-28T11:40:56.160218+00:00",
+      "title": "The most natural next step is to attack the residue class isolated by the"
     }
   ]
 }
