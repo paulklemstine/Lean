@@ -1,100 +1,187 @@
-# The Two Faces of Approximation: How $\exp$ and $\log$ Quietly Build Every Curve
+# The Exponential That Learned to Count: How $\exp$ and $\log$ Approximate Anything
 
-## A promise no one keeps
+## A promise with no recipe
 
-There is a famous promise in the mathematics of neural networks, and it is almost always broken in spirit even when it is kept in letter. The promise is called the *universal approximation theorem*, and it says something that sounds wonderful: a neural network, given enough neurons, can approximate **any** continuous function on a bounded region as closely as you like.
+Imagine someone hands you a guarantee: *"Whatever continuous shape you draw on a
+sheet of graph paper, I can match it as closely as you like."* That is the
+celebrated promise of the **universal approximation theorems** that underpin much
+of modern machine learning. A network of simple units — neurons — can, in
+principle, imitate any continuous function.
 
-It is a true theorem. But read the fine print and you discover it is a promise of pure existence. It says a good network *exists*. It does not tell you how wide that network must be. It does not tell you what its weights are. It does not hand you a recipe. It is the mathematical equivalent of a treasure map that reads, "The gold is somewhere on Earth."
+The trouble is that the classic promise is purely **existential**. It tells you a
+good approximation *exists*, but not how wide the network must be, nor how the
+error shrinks as you make it bigger. It is like being told a treasure is buried
+somewhere on an island, with no map and no shovel.
 
-This article is about closing that gap for a particular and surprisingly elegant family of networks — ones built not from the usual sigmoids and ReLUs, but from the two oldest transcendental functions in the book: the exponential $\exp$ and the logarithm $\log$. We call them **EML networks** (Exponential–Multiplicative–Logarithmic), and they are nothing more than finite combinations of $\exp$, $\log$, addition, and multiplication. The story has two acts. In the first, we prove that EML networks can approximate *anything*. In the second, we prove that for a concrete target — the humble parabola $x \mapsto x^2$ — they do so at an explicit, guaranteed rate, with no hidden constants and no hand-waving.
+This article is about turning that vague promise into an explicit, honest
+contract for a particular and elegant family of functions: the **EML networks**.
+An EML function is anything you can build from three ingredients — the exponential
+$\exp$, the logarithm $\log$, and ordinary arithmetic ($+$, $\times$, and
+multiplication by constants). The letters stand for **E**xponential,
+**M**ultiplicative, **L**ogarithmic. These are the natural primitives of
+continuous mathematics, and it turns out they are astonishingly expressive.
 
-## Act I: Why $\exp$ and $\log$ are enough
+The story has three movements. First, a single curved function made of $\exp$ and
+$\log$ can *tell every pair of points apart* — the property that, by a deep
+theorem, unlocks the ability to approximate everything. Second, we can write down
+**concrete** EML formulas that approximate the building-block shapes $x^2$ and
+$x^3$, with an error we can compute on the back of an envelope. Third — and this
+is the part that keeps us honest — we can prove that our error estimate cannot be
+beaten: the construction is exactly as good as we claimed, no better and no
+worse.
 
-To understand why a fixed palette of operations can paint every continuous curve, we need a result from 1937 that is one of the great unifying theorems of analysis: the **Stone–Weierstrass theorem**.
+## Movement I: One curve to separate them all
 
-Karl Weierstrass had shown in the 1880s that polynomials can approximate any continuous function on a closed interval. Marshall Stone, decades later, saw the deeper reason. It was not really about polynomials. It was about *structure*. Stone's theorem says: take any collection $\mathcal{A}$ of continuous functions on a compact set $K$. Suppose this collection is closed under the natural operations — you can add two of its members, multiply them, and scale them by constants (such a collection is called an *algebra*). Then $\mathcal{A}$ can approximate every continuous function on $K$, provided it satisfies just **one** geometric condition:
+The master key that converts "can build it" into "can approximate anything" is the
+**Stone–Weierstrass theorem**. Its statement is almost magical in its economy. Take
+a collection of continuous functions on a compact set (think: a closed, bounded
+interval) that is closed under addition and multiplication — an *algebra*. If that
+collection can **separate points** — meaning for any two distinct inputs $x \neq
+y$ there is at least one function in the collection that assigns them different
+values — and if it contains the constant functions, then that collection is
+**dense**. Dense means: any continuous target function whatsoever can be matched
+to within any tolerance you choose.
 
-> **Separation of points.** For any two distinct points $x \neq y$ in $K$, the collection must contain *some* function $g$ with $g(x) \neq g(y)$.
+So the whole game reduces to one question: *can our EML toolkit separate points?*
 
-That is the entire secret. If your functions can tell every pair of points apart, then by adding, multiplying, and scaling them you can build anything. Separation is the seed; the algebra grows the forest.
+The answer is a clean yes, and it needs only a single function. Consider
+$$ g(t) = \exp(a)\,\log(b\,t + c). $$
+This is an EML function by construction — an $\exp$, a $\log$, a multiplication and
+an addition. The claim is that when $a$ and $b$ are chosen positive (with $c$ large
+enough that the quantity inside the logarithm stays positive), this $g$ is
+**strictly increasing**. And a strictly increasing function never sends two
+different inputs to the same output — it is injective — so it automatically
+separates every pair of points.
 
-So the question "can EML networks approximate everything?" collapses into a much smaller and more concrete question: **can a single EML function separate points?**
+Why is $g$ strictly increasing? Trace the assembly line. The inner map $t \mapsto
+b\,t + c$ is a straight line going uphill because $b > 0$. The logarithm is itself
+strictly increasing wherever its argument is positive. Multiplying by the positive
+constant $\exp(a)$ preserves the uphill direction. Three increasing steps compose
+into one increasing whole. The one subtlety — and it is a genuine, load-bearing
+one — is that the logarithm only behaves on positive numbers. So the positivity of
+$b\,t + c$ across the whole domain is not a technicality to wave away; it is the
+hypothesis that makes the argument valid.
 
-### One function to separate them all
+On any interval $[\text{lo}, \text{hi}]$ there is a tidy normalization that makes
+all of this automatic: take $a = 0$, $b = 1$, $c = 1 - \text{lo}$, so that
+$$ g(t) = \log(t + 1 - \text{lo}). $$
+The argument $t + 1 - \text{lo}$ is at least $1$ everywhere on the interval, safely
+positive, and $g$ strictly increases across it. This single logarithmic curve
+separates every pair of points in $[\text{lo}, \text{hi}]$.
 
-Here is the candidate, exactly as the theory proposes it:
+Feed that one separating function into the Stone–Weierstrass machine and the
+conclusion drops out: **the algebra generated by the single EML function $t
+\mapsto \log(t + 1 - \text{lo})$ is uniformly dense in the space of all
+continuous functions on $[\text{lo}, \text{hi}]$.** One humble logarithm, plus the
+freedom to add and multiply, suffices to reach everything.
 
-$$g(t) = e^{a} \cdot \log(b \cdot t + c).$$
+That is a beautiful existence statement. But it is still a treasure map without a
+shovel. To dig, we need explicit formulas.
 
-It has three dials: $a$, $b$, and $c$. The claim is that with the dials set sensibly — $b > 0$, and $c$ large enough that the argument inside the logarithm stays positive — this single function separates points. The reason is beautifully simple. The function is **strictly monotone**: as $t$ increases, $g(t)$ strictly increases, never pausing, never reversing. And a strictly monotone function is injective — it sends distinct inputs to distinct outputs. Injectivity *is* separation.
+## Movement II: Building $x^2$ and $x^3$ out of one exponential
 
-Why is $g$ strictly increasing? Read it as a relay race of three runners, each strictly increasing on its leg:
+Here is the trick that gives the abstract guarantee a body. Recall the
+exponential's famous infinite series,
+$$ \exp(u) = 1 + u + \frac{u^2}{2} + \frac{u^3}{6} + \frac{u^4}{24} + \cdots $$
+Each power of $u$ is sitting right there, waiting to be extracted. If we could
+strip away the lower-order terms and rescale, we would isolate the monomial we
+want. That is exactly what a **finite difference** does.
 
-1. The affine map $t \mapsto b\,t + c$ is strictly increasing when $b > 0$.
-2. The logarithm $\log$ is strictly increasing on the positive numbers.
-3. Multiplying by $e^{a}$, a strictly positive number, preserves the ordering.
+Take the squared shape first. Define the EML network
+$$ \text{emlQuadApprox}(h, x) = \frac{2}{h^2}\Big(\exp(h\,x) - 1 - h\,x\Big). $$
+This is built only from $\exp$, multiplication, and constants — a bona fide EML
+function. Substitute the series with $u = h\,x$: the terms $1$ and $h\,x$ are
+subtracted away, the leading survivor is $\tfrac{1}{2}(h\,x)^2$, and multiplying by
+$2/h^2$ turns it into exactly $x^2$. Everything beyond that is the "tail" of the
+series — the error.
 
-Compose three strictly increasing maps and the result is strictly increasing. This is the content of the result we call `emlSep_strictMonoOn`, which states precisely that $g(t) = e^a \log(bt+c)$ is strictly increasing on the set of $t$ where $bt + c > 0$. From it follows `emlSep_separates`: any two distinct admissible points land on distinct values.
+How big is that tail? Taylor's theorem gives a precise, provable answer. On the
+unit interval the result is strikingly clean:
+$$ \big|\,\text{emlQuadApprox}(h, x) - x^2\,\big| \le \frac{4}{9}\,h
+\qquad \text{for all } x \in [0,1],\ 0 < h \le 1. $$
+The error is no more than a fixed constant ($4/9$) times the step size $h$. Now
+choose $h = 1/n$ to get a *width-$n$ network*:
+$$ \big|\,\text{emlQuadApprox}(1/n, x) - x^2\,\big| \le \frac{4}{9n}. $$
+The error falls like $1/n$. Double the width, halve the error. This is a
+**Jackson-type rate** — named for the approximation theorist Dunham Jackson — and
+it is exactly the kind of explicit, quantitative guarantee the classic universal
+approximation theorems leave unspoken. As a sanity check, at $h = 0.1$ and $x = 1$
+the true error is about $0.0342$, comfortably under the promised $0.0444$.
 
-There is one subtlety worth dwelling on, because it is exactly the kind of detail that separates a real proof from a plausible sketch. The logarithm is only monotone where its argument is **positive**. Near the place where $bt + c$ would dip to zero, $\log$ plunges to $-\infty$ and the clean monotone behavior breaks down. So the condition "$bt + c > 0$" is not decoration — it is load-bearing. The theorem is *guarded* by it.
+The same idea climbs to the next power. One more term peeled from the series, one
+order higher in the finite difference:
+$$ \text{emlCubicApprox}(h, x) = \frac{6}{h^3}\Big(\exp(h\,x) - 1 - h\,x -
+\tfrac{(h\,x)^2}{2}\Big). $$
+Subtract the constant, linear, and quadratic terms; the leading survivor is
+$\tfrac{1}{6}(h\,x)^3$, and the factor $6/h^3$ converts it to $x^3$. Taylor's
+theorem again controls the tail, with the explicit bound
+$$ \big|\,\text{emlCubicApprox}(h, x) - x^3\,\big| \le \frac{5}{16}\,h
+\qquad \text{for all } x \in [0,1],\ 0 < h \le 1, $$
+and therefore the width-$n$ rate
+$$ \big|\,\text{emlCubicApprox}(1/n, x) - x^3\,\big| \le \frac{5}{16n}. $$
+Numerically, at $h = 0.1, x = 1$ the error is about $0.0263$, under the promised
+$0.03125$. The pattern is now unmistakable and forms the heart of the theory: the
+**order-$k$ rescaled forward difference of $\exp$ is an EML network for $x^k$**,
+and each extra order costs one factor of $h$ in accuracy. Since every polynomial is
+a sum of monomials, the entire polynomial algebra becomes constructively EML-
+approximable — and polynomials are precisely the dense family that powers the
+classical Weierstrass theorem. The abstract density of Movement I now has an
+explicit, rate-equipped engine underneath it.
 
-How do we guarantee positivity once and for all on a given interval $[lo, hi]$? With a single clean choice of dials: set $a = 0$, $b = 1$, and $c = 1 - lo$. Then
+## Movement III: Keeping ourselves honest
 
-$$g(t) = \log(t + 1 - lo),$$
+A skeptic should immediately ask: maybe the bound $4/9 \cdot h$ is just a sloppy
+overestimate, and the construction is secretly far better — perhaps the error
+actually shrinks like $h^2$, much faster than $h$. If so, the "rate $O(1/n)$"
+headline would be underselling the method.
 
-and for any $t \ge lo$ the argument satisfies $t + 1 - lo \ge 1 > 0$. Positivity is automatic, everywhere on the interval. This is `emlSep_separates_Icc`: on $[lo, hi]$, the function $\log(t + 1 - lo)$ separates every pair of points.
+We can settle this decisively. There is a **matching lower bound**. The key fact
+is a one-line truth about the exponential: its first few series terms always
+*under*estimate it,
+$$ 1 + h + \frac{h^2}{2} + \frac{h^3}{6} \le \exp(h) \qquad \text{for } h \ge 0, $$
+simply because all the remaining terms in the series are positive. Plug this into
+the quadratic construction at the right endpoint $x = 1$ and the slack does not
+vanish — it is bounded below:
+$$ \frac{h}{3} \le \text{emlQuadApprox}(h, 1) - 1^2. $$
+Combine this with the upper bound from Movement II, evaluated at the same point,
+and the error is pinned from both sides:
+$$ \frac{h}{3} \le \text{emlQuadApprox}(h, 1) - 1 \le \frac{4}{9}\,h. $$
+The error at $x = 1$ is genuinely **of order $h$** — squeezed between two straight
+lines through the origin. In width-$n$ language, the error there is at least
+$1/(3n)$. It can never be $o(h)$; in particular it never improves to the quadratic
+rate $O(h^2)$. The linear rate is not an artifact of a lazy estimate. It is the
+true behavior of the construction.
 
-### From one function to everything
+This is what separates a rigorous result from a hopeful one. We did not merely
+exhibit a bound and hope it was tight; we proved tightness, so the headline rate
+$O(1/n)$ is exactly right.
 
-Now we feed this single separating function into Stone's machine. The functions you can build from $\log(t + 1 - lo)$ by adding, multiplying, and scaling form an algebra. That algebra separates points (we just proved it). Therefore — by Stone–Weierstrass — that algebra is **dense**: every continuous function on $[lo, hi]$ can be approximated arbitrarily well by these EML combinations. This is the headline of Act I, the theorem `eml_adjoin_dense_on_Icc`:
+## Why this matters beyond the page
 
-> The algebra generated by the single EML function $t \mapsto \log(t + 1 - lo)$ is uniformly dense in the space of all continuous functions on $[lo, hi]$.
+Three threads weave together here, and each touches something practical.
 
-Pause to appreciate what this says. *One* logarithm, plus the freedom to add, multiply, and scale, reproduces the entire continuum of continuous functions on an interval — sine waves, sawtooths, the wild graph of your favorite pathological example, all of them, to any tolerance you name. The transcendental richness of $\log$ is so great that a single copy of it seeds the whole space.
+**Honest contracts for learned functions.** In machine learning the worry is never
+whether *some* network could fit the data, but how large a network you must pay for
+and how the error behaves as you scale. The EML rates turn a vague existence
+promise into a quantitative budget: to halve the error on $x^2$ or $x^3$, double
+the width. Engineers can plan around a number, not a wish.
 
-## Act II: From "exists" to "here it is"
+**The exponential as a universal Lego brick.** It is genuinely surprising that the
+*same* function — the exponential — both unlocks the abstract density argument
+(through its strictly monotone cousin, the logarithm, which separates points) and
+provides the concrete construction (through its series, whose finite differences
+manufacture every monomial). The two halves of approximation theory, the abstract
+and the explicit, are powered by a single mathematical object.
 
-Act I is a universal-approximation theorem, and like all such theorems it is existential. It tells us a good EML approximation exists; it does not build one or bound its size. Act II repairs exactly this, for a concrete and beloved target: the parabola $f(x) = x^2$ on the unit interval $[0,1]$.
+**A template that scales.** Nothing about the method stops at the cube. The
+order-$k$ forward difference of $\exp$, rescaled by $k!/h^k$, manufactures $x^k$
+with the same linear rate. Stack monomials and you reach every polynomial; close
+up with Stone–Weierstrass and you reach every continuous function. The cube was
+not the destination — it was the proof that the staircase keeps going up.
 
-The construction uses only the *exponential* half of the EML toolkit. Define, for a small step size $h > 0$, the function
-
-$$\text{emlQuadApprox}_h(x) = \frac{2}{h^2}\left(e^{hx} - 1 - hx\right).$$
-
-This is a genuine EML network: one exponential, two subtractions, and two scalar multiplications. Where does it come from, and why should it look like $x^2$? The answer is the Taylor series of the exponential, the most reliable source of polynomials in all of analysis:
-
-$$e^{hx} = 1 + hx + \frac{(hx)^2}{2} + \frac{(hx)^3}{6} + \cdots$$
-
-Subtract off the first two terms $1 + hx$ and you are left with $\frac{(hx)^2}{2} + \frac{(hx)^3}{6} + \cdots$. Multiply by $\frac{2}{h^2}$ and the leading term becomes exactly $x^2$, while everything after it carries at least one extra factor of $h$:
-
-$$\text{emlQuadApprox}_h(x) = x^2 + \frac{h\,x^3}{3} + \frac{h^2 x^4}{12} + \cdots$$
-
-As the step $h$ shrinks toward zero, the tail vanishes and the parabola emerges. The exponential, properly rescaled, *is* the parabola plus a controllable error.
-
-### The rate, with a real number attached
-
-The whole point of Act II is to refuse to stop at "the error vanishes." We want to know *how fast*. The result `emlQuadApprox_rate` delivers an honest, finite bound:
-
-> For every step size $h$ with $0 < h \le 1$ and every $x$ in $[0,1]$,
-> $$\left|\,\text{emlQuadApprox}_h(x) - x^2\,\right| \le \frac{4}{9}\,h.$$
-
-No asymptotic fog, no unspecified constant $C$, no "for sufficiently small $h$." A concrete fraction, $4/9$, valid for every $h$ up to $1$. If you want the approximation accurate to within $\varepsilon$, you choose $h = \tfrac{9}{4}\varepsilon$ and you are done. Phrased in the language of network *width* — where using $n$ refinement steps corresponds to $h = 1/n$ — the error decays like $\tfrac{4}{9n} = O(1/n)$. You can dial in any accuracy and know exactly the price.
-
-Where does $4/9$ come from? The error is $\frac{2}{h^2}\sum_{k \ge 3}\frac{(hx)^k}{k!}$, which on $[0,1]$ is largest at $x = 1$ and grows with $h$, so it is maximized at $h = 1$, where it equals $2\left(e - 2 - \tfrac12\right) = 2(e - 2.5) \approx 0.4366$. The bound $4/9 \approx 0.4444$ is a clean rational number sitting just above this worst case — provably correct and almost tight. (The true leading slope, by the way, is $1/3$, coming from the $\tfrac{h x^3}{3}$ term at $x=1$; pinning down the exact optimal constant between $1/3$ and $4/9$ is a tidy open question.)
-
-## Why this matters beyond the parabola
-
-It is tempting to dismiss "approximating $x^2$" as a toy. It is not. It is a *proof of concept for constructive guarantees*. The universal-approximation literature is overwhelmingly existential; results that hand you an explicit network with an explicit, computable error bound are rare and valuable. Act II is exactly such a result, and the recipe behind it — rescaled exponential increments built from Taylor remainders — generalizes. The same second-order increment kernel that reproduces $x^2$ can, by linear superposition, be aimed at any Lipschitz function, with the conjecture that the same $O(1/n)$ first-order rate survives.
-
-There is also a conceptual payoff. Modern machine learning is built on a small zoo of activation functions — ReLU, sigmoid, tanh, softplus — chosen largely for convenience of gradient computation. The softplus activation $\log(1 + e^x)$ is, tellingly, an EML function: it is exactly the kind of $\exp$-$\log$ composition this theory studies. By placing $\exp$ and $\log$ at the foundation and deriving approximation *constructively*, this work suggests a way to think about expressive power that is grounded in classical analysis rather than empirical lore. The strict monotonicity that gives separation is the same monotonicity that makes such activations well-behaved for optimization; the two virtues are not a coincidence.
-
-And there is the sheer economy of the thing. Two functions — $\exp$ and $\log$, each the inverse of the other, the pair that turns multiplication into addition and powers into products — turn out to be a complete basis for continuous functions, in two complementary senses. $\log$ supplies *separation*, hence the qualitative power to approximate everything. $\exp$ supplies *quantitative rates*, hence the explicit recipes. Between them they cover both faces of approximation: that it can be done, and how well.
-
-## The shape of the argument, in one breath
-
-Strip away the details and the logic is a clean chain:
-
-**strict monotonicity** $\Rightarrow$ **injectivity** $\Rightarrow$ **separation of points** $\Rightarrow$ (Stone–Weierstrass) $\Rightarrow$ **density** — and separately, **Taylor's theorem** $\Rightarrow$ **explicit increment** $\Rightarrow$ **$4/9$ error bound** $\Rightarrow$ **$O(1/n)$ rate**.
-
-The first chain tells you EML networks are universal. The second tells you they are efficient on concrete targets, with numbers you can hold in your hand. Together they turn a famous broken promise — "a good network exists, somewhere" — into a kept one: here is the function, here is its width, and here, to the fraction $4/9$, is exactly how wrong it is allowed to be.
-
-That is the quiet power of $\exp$ and $\log$. The two functions that taught humanity to multiply by adding now teach our networks to approximate by composing — and, for once, they show their work.
+There is a quiet lesson in all of this. The deepest guarantees in analysis are
+often existential, telling us *that* something can be done. But with care, patience,
+and the right primitive — here, the humble exponential and its inverse — we can
+sometimes replace "it exists" with "here it is, and here is exactly how good it is,
+and here is the proof it is no better." That upgrade, from promise to recipe to
+honest receipt, is what turns a theorem into a tool.
