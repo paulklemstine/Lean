@@ -1,40 +1,58 @@
-# Computational Evidence — Erdős–Rényi Threshold Phenomena
+# Computational Evidence — General Clique `K_r` Thresholds in `G(n,p)`
 
-Supports `Catalog/Probability/ErdosRenyiThreshold.lean`. All claims below are *also*
-proved formally in that file; the numbers here are sanity checks.
+This note records the small-case checks that motivated and de-risked the formal
+results in `Algebra/ErdosRenyi/Cliques.lean`. The central claim is the exact
+first-moment identity
 
-## 1. Total mass is a probability distribution (`weight_sum_eq_one`)
-For `m` independent slots, `∑_{S⊆[m]} p^{|S|}(1-p)^{m-|S|} = (p+(1-p))^m = 1`.
-- m=1: `p + (1-p) = 1`. ✓
-- m=2: `(1-p)^2 + 2p(1-p) + p^2 = 1`. ✓
-- m=3, p=1/2: `8 · (1/2)^3 = 1`. ✓
+  𝔼[#K_r in G(n,p)] = C(n,r) · p^{C(r,2)}.
 
-## 2. Marginal of a fixed slot-set (`prob_contains_subset`)
-P(all of `T` present) `= p^{|T|}`, independent of `m`.
-- T a single edge: `p`. ✓  T two edges: `p^2`. ✓
+All checks below were run in Lean via `#eval` over concrete `Finset`s, so they
+reflect the *same* objects (`powersetCard`) used in the proofs.
 
-## 3. Expected number of edges (`expectation_card`)
-E[#present slots] `= m·p`. For `G(n,p)`, `m = C(n,2)`, so E[#edges] `= C(n,2)·p`.
-- n=4, p=1/2: `C(4,2)·1/2 = 6·1/2 = 3`. ✓
-- n=10, p=1/n=0.1: `45·0.1 = 4.5` (linear regime around the connectivity scale). ✓
+## 1. The two combinatorial ingredients
 
-## 4. Subgraph first moment (`expectation_subgraph_count_uniform`)
-For a family `𝒯` of targets each using `k` slots, E[#present targets] `= |𝒯|·p^k`.
-For triangles in `G(n,p)`: `|𝒯| = C(n,3)` triangles, each `k=3` edges, so
-E[#triangles] `= C(n,3)·p^3`.
-- Threshold check `p = c/n`: `C(n,3)·(c/n)^3 → c^3/6`, a constant — the classic
-  triangle threshold at `p ~ 1/n`. For `p = o(1/n)`, E → 0 (a.a.s. triangle-free).
+The identity factors through exactly two cardinalities, both `Finset.card_powersetCard`:
 
-## 5. First-moment / union bound (`first_moment_threshold`)
-P(some target appears) `≤ ∑_T p^{|T|}` = E[#targets]. Whenever E → 0 the appearance
-probability → 0. Uniform case: if `|𝒯|·p^k → 0`, a.a.s. no copy.
+* number of potential edges of `K_n` = number of 2-subsets of `[n]` = `C(n,2)`;
+* number of copies of `K_r` = number of `r`-subsets of `[n]` = `C(n,r)`;
+* edges spanned by one `K_r` = 2-subsets of an `r`-set = `C(r,2)` (the exponent).
 
-## 6. Probabilistic existence (`exists_avoiding_all`)
-If `∑_T p^{|T|} < 1` then a configuration avoiding *every* target exists. This is the
-Erdős deletion-free lower-bound engine (e.g. Ramsey `R(k,k) > 2^{k/2}` style bounds):
-with `𝒯` the monochromatic cliques and `p=1/2`, `C(n,k)·2^{1-C(k,2)} < 1` forces a
-2-colouring with no monochromatic `k`-clique.
+| object                                   | eval                                  | expected (`C`)        |
+|------------------------------------------|---------------------------------------|-----------------------|
+| `#edges(K_n)`, n = 0..5                   | `[0,0,1,3,6,10]`                      | `C(n,2)`              |
+| `#r`-subsets of `[5]`, r = 0..5          | `[1,5,10,10,5,1]`                     | `C(5,r)`              |
+| edges spanned by a 4-set in `Fin 6`      | `6`                                  | `C(4,2)=6`            |
+| exponent `C(r,2)`, r = 0..5              | `[0,0,1,3,6,10]`                     | `C(r,2)`              |
 
-## Counterexample hunt
-No counterexamples expected: every statement is an exact identity or a Markov/union
-bound with the `0 ≤ p ≤ 1` hypothesis. Formal proofs confirm (standard axioms only).
+These match exactly, confirming `expected_cliques` reduces to `C(n,r)·p^{C(r,2)}`.
+
+## 2. Threshold scaling sanity (no fractional exponents)
+
+The classical `K_r` appearance threshold is `p = n^{-2/(r-1)}`. Because
+`C(r,2) = r(r-1)/2`, we have the *integer-power* identity
+
+  n^r = (n^{2/(r-1)})^{C(r,2)},   hence   n^r · p^{C(r,2)} = (n^{2/(r-1)} · p)^{C(r,2)}.
+
+So the condition `n^r · pₙ^{C(r,2)} → 0` used in `subcritical_cliques_vanish`
+is *equivalent* to the textbook `n^{2/(r-1)} pₙ → 0`, but stated with integer
+exponents only — which is what makes the squeeze `0 ≤ C(n,r) pₙ^{C(r,2)} ≤
+n^r pₙ^{C(r,2)}` (via `C(n,r) ≤ n^r`, `Nat.choose_le_pow`) discharge it.
+
+Specialisations recovered:
+* `r = 3`: `C(n,3) p^3`, threshold `1/n` — matches the catalog's
+  `ErdosRenyiConcrete.expected_triangles` / `subcritical_triangles_vanish`.
+* `r = 2`: `C(n,2) p` (expected edges), threshold `1/n^2`.
+
+## 3. Counterexample hunt
+
+No counterexample is expected: the main statement is an *exact identity* plus an
+elementary squeeze, both fully proved in Lean with only `propext`,
+`Classical.choice`, `Quot.sound`. The brute-force `#eval`s above were the
+de-risking step; the table entries all agree with the closed forms.
+
+## 4. OEIS
+
+The expectation polynomial coefficients are the binomial triangle entries
+`C(n,r)` (OEIS A007318, Pascal's triangle) with the exponent `C(r,2)` running
+through the triangular numbers `0,0,1,3,6,10,...` (OEIS A000217 on the relevant
+slice). No new integer sequence is introduced.

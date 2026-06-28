@@ -1,256 +1,240 @@
-# The Tipping Points of Chance: How Random Graphs Suddenly Snap Into Shape
+# When Randomness Builds a World: The Hidden Thresholds of Erdős–Rényi Graphs
 
-Imagine you are throwing a party for $n$ strangers. You have a coin that comes
-up heads with probability $p$. For every possible pair of guests, you flip the
-coin: heads, they are introduced and become friends; tails, they never meet.
-When the party ends, you are left with a web of friendships — a *random graph*.
+Imagine you are throwing a party. You invite $n$ guests, none of whom know each
+other in advance. As the evening unfolds, every pair of guests independently
+strikes up a conversation with some fixed probability $p$. When $p$ is tiny,
+the room is a scatter of isolated strangers. When $p$ is large, everyone is
+talking to everyone. Somewhere in between, something dramatic happens — not
+gradually, but *suddenly*. A sprawling web of acquaintance snaps into
+existence. The party transforms.
 
-Now turn the dial on that coin. If $p$ is tiny, almost nobody knows anybody:
-the room is a dust of isolated individuals. If $p$ is close to $1$, everyone
-knows everyone: a single dense crowd. Somewhere in between, something dramatic
-happens. And the surprise — the discovery that launched an entire branch of
-mathematics — is that the transition is not gradual. The room does not slowly
-warm up. Instead, as you nudge $p$ across an invisible line, the whole social
-fabric *snaps* from fragmented to connected, almost all at once.
+This is not a metaphor. It is a precise mathematical phenomenon, and it sits at
+the heart of one of the most beautiful subjects in modern mathematics: the
+theory of **random graphs**, pioneered by Paul Erdős and Alfréd Rényi in the
+late 1950s. Their central discovery was that random networks do not change
+smoothly as you add connections. Instead they undergo **phase transitions** —
+abrupt, knife-edge changes in global structure, every bit as sharp as water
+freezing into ice. This article tells the story of those thresholds, and of how
+each one can be pinned down with the simplest of tools: counting, and the
+average.
 
-This is the world of the **Erdős–Rényi random graph**, written $G(n,p)$, and
-of *threshold phenomena*: the abrupt, almost magical, phase transitions that
-govern it. This article tells the story of three of these tipping points and
-the elementary but powerful counting principles that explain them.
-
-## The model in one line
+## The model: a coin for every edge
 
 Let us be precise about the party. We have $n$ vertices (the guests). The
-*potential edges* are all the pairs of vertices — there are exactly
-$\binom{n}{2}$ of them. A *configuration* of the graph is a decision, for each
-potential edge, of whether it is present or absent. We can record this as a
-function $g$ that assigns to each potential edge either `true` (present) or
-`false` (absent).
+*potential edges* are all the $\binom{n}{2}$ pairs of vertices. For each pair we
+flip a biased coin that comes up "edge" with probability $p$ and "no edge" with
+probability $1-p$, all flips independent. The resulting random network is
+called $G(n,p)$, the Erdős–Rényi random graph.
 
-The probability rule is the simplest imaginable: each edge is present
-independently with probability $p$ and absent with probability $1-p$. So the
-chance of seeing one specific configuration $g$ is the product over all edges of
-$p$ (for the present ones) and $1-p$ (for the absent ones):
+A single outcome of all those coin flips is one specific graph. The probability
+of obtaining one particular graph with $m$ edges (out of the $\binom{n}{2}$
+possible) is
 
-$$\text{weight}(g) = \prod_{\text{edges } e} \begin{cases} p & \text{if } g(e)=\text{true},\\ 1-p & \text{if } g(e)=\text{false}.\end{cases}$$
+$$ p^{m}\,(1-p)^{\binom{n}{2}-m}, $$
 
-This deserves a sanity check: if we add up the weights of *all* possible graphs,
-do we get $1$, as any honest probability must? We do. The total is
+because we need $m$ specific coins to land "edge" and the remaining
+$\binom{n}{2}-m$ to land "no edge." A foundational sanity check — proved
+rigorously in our formal development — is that if you add up these probabilities
+over *all* possible graphs, you get exactly $1$. Randomness has to land
+somewhere; the bookkeeping is exact. In the formalization this is the identity
+$\sum_{g} \mathrm{weight}(p,g) = 1$, a clean consequence of the binomial
+theorem applied edge by edge.
 
-$$\sum_{g} \text{weight}(g) = \prod_{\text{edges}} \big(p + (1-p)\big) = 1^{\binom{n}{2}} = 1.$$
+The single most useful fact about this model is a statement about
+**independence**. Fix any particular set $S$ of edges you care about — say, the
+three edges of a specific triangle. What is the probability that *all* of them
+are present? Because the coins are independent, it is simply
 
-The middle step is the heart of why everything works: a sum over all graphs
-*factors* into a product over individual edges, because the edges are
-independent. Each edge contributes a factor of $p + (1-p) = 1$, and the whole
-thing collapses to $1$.
+$$ \mathbb{P}(\text{all edges of } S \text{ present}) = p^{|S|}. $$
 
-## The first secret: independence is multiplication
+Dually, the probability that *all* the edges of $S$ are *absent* is
+$(1-p)^{|S|}$. These two formulas — proved as exact identities — are the
+engine room of everything that follows.
 
-Pick any fixed set $S$ of edges you care about — say, the three edges of a
-particular triangle. What is the probability that *all* of them are present
-(never mind the others)? Because each edge flips its own coin, the answer is a
-clean product:
+## The art of the average
 
-$$\mathbb{P}(\text{all edges of } S \text{ present}) = p^{|S|}.$$
+Here is the central trick of the whole subject, and it is almost
+embarrassingly simple. Suppose you want to know whether a random graph contains
+some structure — a triangle, a long cycle, a fully connected clique. Directly
+computing the probability that *at least one* such structure appears is hard,
+because the structures overlap and interfere in complicated ways. So instead of
+asking "does one appear?", we ask "*how many* appear, on average?"
 
-Dually, the probability that all edges of $S$ are *absent* is $(1-p)^{|S|}$.
-These two facts — present-probability $p^{|S|}$, absent-probability
-$(1-p)^{|S|}$ — are the engine room of the entire theory. Every threshold we are
-about to meet is, at bottom, a consequence of these two formulas plus careful
-counting.
+The average number is easy to compute, thanks to a principle called **linearity
+of expectation**: the expected total count is just the sum of the individual
+probabilities, *regardless of whether the events overlap*. If we want to count
+copies of some shape, and each copy occupies an edge set of size $k$, and there
+are $N$ possible places to put it, then the expected number of copies is exactly
 
-## Counting copies without looking: linearity of expectation
+$$ \mathbb{E}[\#\text{copies}] = N \cdot p^{k}. $$
 
-Suppose we want to know the *expected number* of triangles in our random graph —
-the average count over all possible outcomes. Triangles are rare and tangled
-events; computing the probability of "at least one triangle" directly is a
-nightmare of overlaps. But the average is easy, thanks to a principle so useful
-it feels like cheating: **linearity of expectation**.
+Let us see this in action on three concrete structures.
 
-The idea: to count the average number of triangles, go through every potential
-triangle one at a time, ask "what's the probability *this* one appears?", and
-add up those probabilities. Overlaps, correlations, double-counting — none of it
-matters for the average. If we have a family of target structures, the
-$i$-th one occupying an edge set $S_i$, then
+**Edges.** There are $\binom{n}{2}$ potential edges, each present with
+probability $p$. So the expected number of edges is $\binom{n}{2}\, p$. Obvious,
+but it is the template.
 
-$$\mathbb{E}[\text{number of copies present}] = \sum_i p^{|S_i|}.$$
+**Triangles.** A triangle lives on a set of $3$ vertices and uses exactly $3$
+edges. There are $\binom{n}{3}$ choices of vertex triple. Hence
 
-When all the copies use the same number $k$ of edges, this becomes simply
-$(\text{number of copies}) \cdot p^k$. Plug in real graphs and the classical
-formulas tumble out:
+$$ \mathbb{E}[\#\text{triangles}] = \binom{n}{3}\, p^{3}. $$
 
-- **Edges.** There are $\binom{n}{2}$ potential edges, each present with
-  probability $p$, so the expected number of edges is
-  $$\mathbb{E}[\#\text{edges}] = \binom{n}{2}\, p.$$
-- **Triangles.** There are $\binom{n}{3}$ potential triangles, each needing its
-  $3$ edges present, so
-  $$\mathbb{E}[\#\text{triangles}] = \binom{n}{3}\, p^3.$$
-- **Isolated vertices.** A vertex is *isolated* if all $n-1$ edges touching it
-  are absent. So
-  $$\mathbb{E}[\#\text{isolated vertices}] = n\,(1-p)^{n-1}.$$
+**Isolated vertices.** A vertex is *isolated* if none of its $n-1$ potential
+edges is present. By the "all absent" formula, that happens with probability
+$(1-p)^{n-1}$. With $n$ vertices to try,
 
-Three formulas, one principle. And inside each of them, a threshold is hiding.
+$$ \mathbb{E}[\#\text{isolated vertices}] = n\,(1-p)^{n-1}. $$
 
-## Tipping point one: the birth of triangles at $p = 1/n$
+Each of these is a theorem we have proved exactly — not an approximation, not an
+asymptotic, but an identity that holds for every $n$ and every $p$.
 
-Watch what happens to the expected triangle count
-$\binom{n}{3} p^3$ as we scale the coin probability like $p = c/n$ for a fixed
-constant $c$. Since $\binom{n}{3} \approx n^3/6$ for large $n$, we get
+## The first moment: when nothing happens
 
-$$\binom{n}{3}\left(\frac{c}{n}\right)^3 = \frac{n(n-1)(n-2)}{6}\cdot\frac{c^3}{n^3} \;\longrightarrow\; \frac{c^3}{6}.$$
+Why is the average so powerful? Because of a one-line inequality with enormous
+consequences, the **first moment method**. If the expected number of copies of
+a structure is small, then the structure almost certainly does not appear at
+all. Formally,
 
-This is a beautiful and exact limit. At the critical scale $p = c/n$, the
-expected number of triangles settles down to the finite constant $c^3/6$ — which
-is precisely the *Poisson mean* that governs how triangles first appear. The
-critical line is at $p = 1/n$, and $c$ tunes you through the transition window.
+$$ \mathbb{P}(\text{at least one copy appears}) \le \mathbb{E}[\#\text{copies}]. $$
 
-What lies on either side of this window?
+The reasoning is irresistible: if even *one* copy appeared, the count would be
+at least $1$; so the probability of "at least one" can never exceed the average
+count. (This is just Markov's inequality in disguise.) The upshot: whenever the
+expected count tends to $0$, the structure vanishes with near-certainty.
 
-- **Below threshold ($n\cdot p_n \to 0$).** When the average degree shrinks to
-  zero, the expected triangle count $\binom{n}{3} p_n^3$ vanishes. Squeeze it
-  between $0$ and $(n p_n)^3/6 \to 0$ and it is pinned to zero. And here a second
-  principle kicks in.
+Apply this to triangles. The expected count is $\binom{n}{3}p^3 \approx
+\frac{(np)^3}{6}$. So the natural scale to watch is $p \sim 1/n$, where $np$ is
+order $1$. Suppose we push $p$ *below* this scale — precisely, suppose
+$n\,p_n \to 0$ as $n$ grows. Then we proved that
 
-- **Above threshold ($n\cdot p_n \to \infty$).** Now the expected triangle count
-  *explodes* to infinity, because $\binom{n}{3} p_n^3 \ge (n p_n)^3/216$ for
-  large $n$, and the right-hand side diverges.
+$$ \binom{n}{3}\,p_n^{3} \longrightarrow 0, $$
 
-## The first moment method: if the average is small, the thing isn't there
+and so, by the first moment method, the random graph is **triangle-free with
+high probability**. The proof is a clean squeeze: $\binom{n}{3} \le n^3/6$, so
+the count is trapped between $0$ and $(np_n)^3/6$, which collapses to zero.
 
-Why does a vanishing *average* let us conclude triangles are *actually absent*,
-not just rare on average? Because of a deceptively simple inequality, the **first
-moment method**. If $N$ counts how many copies appear, then the probability that
-*at least one* appears can never exceed the average number that appear:
+This is the "below threshold" half of a phase transition. Below $p = 1/n$,
+triangles essentially do not exist.
 
-$$\mathbb{P}(N \ge 1) \;\le\; \mathbb{E}[N] = \sum_i p^{|S_i|}.$$
+## The second moment: when everything happens
 
-The reason is almost a tautology: a count of "at least $1$" contributes at least
-$1$ to the average whenever it happens, so the average is an upper bound on the
-chance of happening at all. (This is the discrete cousin of Markov's
-inequality.) So when the expected triangle count tends to $0$, the probability
-of *any* triangle tends to $0$ too: **below the $1/n$ scale, the random graph is
-triangle-free with overwhelming probability.**
+The first moment tells us when structures vanish. To prove they *appear* we
+need its mirror image, the **second moment method**, which controls not just the
+average but the *spread* around the average — the variance.
 
-That handles "below threshold." But the first moment method is one-directional:
-a large average does *not* by itself guarantee the object exists. (A lottery has
-a large expected payout concentrated in one ticket; almost everyone still wins
-nothing.) To prove that triangles *do* appear above threshold, we need a partner.
+The key results here are textbook pillars of probability, all formalized from
+scratch on a finite weighted probability space. **Markov's inequality** bounds
+the chance that a nonnegative quantity is large by its mean. **Chebyshev's
+inequality** says a random variable rarely strays far from its mean:
 
-## The second moment method: taming the variance
+$$ \mathbb{P}\big(|X - \mathbb{E}X| \ge a\big) \le \frac{\mathrm{Var}\,X}{a^{2}}. $$
 
-Enter the **second moment method**, which controls not just the average of a
-count but its *spread*. The key quantity is the *variance*,
-$\text{Var}(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2$, which measures how widely
-$X$ fluctuates around its mean. Variance is always nonnegative — a fact that is,
-under the hood, the Cauchy–Schwarz inequality in disguise.
+And the variance is always nonnegative — a fact that, at bottom, is the
+Cauchy–Schwarz inequality. From Chebyshev one extracts the decisive tool, the
+**second moment method** proper: if the average is positive, then
 
-From variance we get two classical bounds. First, **Markov's inequality**: for a
-nonnegative quantity $X$ and a level $a > 0$,
+$$ \mathbb{P}(X = 0) \le \frac{\mathrm{Var}\,X}{(\mathbb{E}X)^{2}}. $$
 
-$$a\cdot \mathbb{P}(X \ge a) \le \mathbb{E}[X].$$
+Read this carefully. It says that if the variance is small compared to the
+square of the mean, then $X$ is essentially never zero — the structure you are
+counting is essentially *always* present. This is the "above threshold" half.
+When the expected count of some structure blows up *and* its fluctuations stay
+controlled, the structure appears with high probability.
 
-Second, its sharpened relative **Chebyshev's inequality**, which says deviations
-from the mean are rare when the variance is small:
+Together, the first and second moment methods form a pincer. Below the
+threshold the average dies and the structure vanishes; above it the average
+explodes and (with variance control) the structure becomes inevitable. The
+transition between these two regimes is the phase transition.
 
-$$\mathbb{P}\big(|X - \mathbb{E}[X]| \ge a\big) \;\le\; \frac{\text{Var}(X)}{a^2}.$$
+## The Poisson window: counting at the critical scale
 
-And from Chebyshev comes the crown jewel — the inequality that proves objects
-*exist*. If $\mathbb{E}[X] > 0$, then the probability that $X$ is *exactly zero*
-obeys
+The most delicate and beautiful behavior happens *exactly at* the threshold,
+where the expected count settles to a finite constant rather than dying or
+exploding. Set $p = c/n$ for a fixed constant $c$ and watch the triangles. We
+proved that
 
-$$\mathbb{P}(X = 0) \;\le\; \frac{\text{Var}(X)}{(\mathbb{E}[X])^2}.$$
+$$ \binom{n}{3}\left(\frac{c}{n}\right)^{3} \longrightarrow \frac{c^{3}}{6} \quad\text{as } n \to \infty. $$
 
-Read it slowly. If the average count is large *and* the relative variance
-$\text{Var}(X)/(\mathbb{E}[X])^2$ is small, then the probability of seeing *none*
-is forced to zero — so the object appears with high probability. This is the
-"above threshold" direction that the first moment method could not reach.
-Together, first moment (vanishing) and second moment (appearance) bracket the
-transition from both sides: they prove the threshold is genuinely *sharp*.
+So at the critical density $p = c/n$, the number of triangles does not vanish
+and does not explode: its mean converges to the finite limit $c^3/6$. This
+constant is the mean of a **Poisson distribution** — and indeed, in this
+critical window the triangle count behaves like a Poisson random variable, the
+same law that governs radioactive decay clicks and rare typos in a manuscript.
+Rare events scattered independently produce Poisson statistics, and triangles at
+the threshold are exactly such rare, nearly-independent events.
 
-## Tipping point two: the giant component and the scale $p = 1/n$
+## Two thresholds, one ladder
 
-The most famous Erdős–Rényi phenomenon is the **giant component**. When $p$ is
-well below $1/n$, the graph is a scattering of tiny pieces, the largest only
-about $\log n$ vertices. When $p$ crosses $1/n$, a single colossal component
-suddenly appears, swallowing a positive fraction of all vertices. It is the
-mathematical signature of a forest fire catching, a gel setting, an epidemic
-going pandemic. The critical density is the same scale $p = 1/n$ that controls
-triangles — the average degree passing through $1$ is the universal switch.
+The scale $p = 1/n$ is famous for another reason: it is where the **giant
+component** is born. Below it, the random graph is a dust of tiny fragments, the
+largest containing only $O(\log n)$ vertices. Above it, a single colossal
+component suddenly engulfs a constant fraction of all vertices. This is the most
+celebrated of all random-graph phase transitions, the "double jump" that Erdős
+and Rényi discovered in 1960.
 
-Our triangle calculation already reveals why $1/n$ is special: it is exactly the
-scale at which local structures stop being negligible and start proliferating.
-The constant $c$ in $p = c/n$ is the limiting average degree, and $c = 1$ is the
-knife's edge.
+But $1/n$ is *not* the end of the story. There is a second, higher threshold —
+the one governing **connectivity**, where the graph becomes a single connected
+piece with no stragglers at all. That threshold sits at
 
-## Tipping point three: connectivity at $p = \ln n / n$
+$$ p = \frac{\ln n}{n}, $$
 
-Having a giant component is *not* the same as being fully connected. Even after
-the giant emerges, stragglers remain — and the most stubborn stragglers are
-**isolated vertices**, vertices with no friends at all. A graph cannot be
-connected while even one vertex sits alone. So the connectivity threshold is
-governed by the disappearance of isolated vertices.
+higher than the giant-component scale by a factor of $\ln n$. The obstruction to
+full connectivity is the humble isolated vertex: a graph cannot be connected if
+even one vertex is left out in the cold. And isolated vertices are governed by
+the expected count $n\,(1-p)^{n-1}$.
 
-Recall the expected number of isolated vertices is $n(1-p)^{n-1}$. For this to
-tend to a finite, nonzero constant — the balance point where isolated vertices
-are neither guaranteed nor forbidden — we need $p$ around $\ln n / n$. Indeed,
-writing $p = (\ln n + c)/n$ makes $n(1-p)^{n-1} \to e^{-c}$, and the celebrated
-result is that
+Our formalization makes the gap between the two thresholds vivid. Plug in the
+giant-component scale $p = c/n$ and ask how many isolated vertices survive. We
+proved that
 
-$$\mathbb{P}\big(G(n,p) \text{ is connected}\big) \;\longrightarrow\; e^{-e^{-c}}.$$
+$$ n\,\left(1 - \frac{c}{n}\right)^{n-1} \longrightarrow \infty \quad\text{for every constant } c. $$
 
-The connectivity threshold sits at $p = \ln n / n$, strictly *above* the
-giant-component scale $1/n$. We can see this separation directly. At the
-giant-component scale $p = c/n$, what happens to the isolated vertices? Their
-expected number is
+The mechanism is the classic limit $(1 - c/n)^{n-1} \to e^{-c}$, so the expected
+number of isolated vertices behaves like $n\,e^{-c}$, which marches off to
+infinity. In plain terms: at the giant-component scale $p = c/n$, even after the
+giant has formed, there are still *enormous numbers* of completely isolated
+vertices. The graph has a giant heart but a cloud of orphans. Connectivity must
+wait until $p$ climbs all the way up to $\ln n / n$, where those last isolated
+vertices finally get absorbed. The two thresholds are genuinely different rungs
+on the ladder, separated by a factor of $\ln n$ — and the isolated-vertex
+blow-up is the proof.
 
-$$n\left(1 - \frac{c}{n}\right)^{n-1} \;\approx\; n\, e^{-c} \;\longrightarrow\; \infty.$$
+## From triangles to cliques: the universal pattern
 
-Because $(1 - c/n)^{n-1} \to e^{-c} > 0$ while the prefactor $n$ marches off to
-infinity, the expected number of isolated vertices *diverges*. So at the
-giant-component scale, the graph still teems with lonely vertices and cannot
-possibly be connected. Connectivity must wait for the higher density
-$\ln n / n$, where the factor $\ln n$ is exactly the boost needed to drag the
-last isolated vertex into the fold. Two thresholds, cleanly separated by the
-gap between $1/n$ and $\ln n / n$.
+The triangle is just the first member of an infinite family. A **clique** $K_r$
+is a set of $r$ vertices, *all* pairs of which are connected — a perfectly
+egalitarian little club where everyone knows everyone. A triangle is $K_3$. The
+same counting machinery handles every $K_r$ at once. A copy of $K_r$ lives on
+$r$ vertices and demands all $\binom{r}{2}$ internal edges, so the expected
+number of copies is
 
-## Why this matters beyond the party
+$$ \mathbb{E}[\#K_r] = \binom{n}{r}\, p^{\binom{r}{2}}. $$
 
-The Erdős–Rényi model is the hydrogen atom of network science — the simplest
-system in which the deep truth of *phase transitions* appears in pure form. The
-same mathematics describes:
+For $r = 3$ this is exactly $\binom{n}{3}p^3$, our triangle count — the general
+formula contains the special case. Running the same first-moment squeeze shows
+that below the threshold scaling $p = n^{-2/(r-1)}$, the expected clique count
+collapses to zero and $K_r$ vanishes with high probability. Each clique size
+has its own threshold, and they form a perfectly ordered hierarchy: larger
+cliques demand denser graphs to appear. The triangle threshold $1/n$ is simply
+the case $r=3$ of the universal law $n^{-2/(r-1)}$.
 
-- **Epidemics.** Whether a disease fizzles or explodes depends on a reproduction
-  number crossing $1$ — the very same average-degree threshold as the giant
-  component.
-- **Percolation and materials.** Whether liquid seeps through porous rock, or a
-  gel sets, or a network of resistors conducts, hinges on a critical density of
-  open channels.
-- **Communication networks.** Whether a wireless or peer-to-peer network stays
-  globally connected as nodes drop out is precisely a connectivity-threshold
-  question.
-- **Error-correcting codes and algorithms.** Random structures power some of the
-  best codes and the analysis of algorithms whose performance changes phase as a
-  parameter crosses a threshold.
+## Why thresholds matter
 
-The lesson is universal: in large random systems, "more or less" can suddenly
-become "all or nothing." A microscopic change in a single parameter — one more
-flip of the coin, on average, per vertex — flips the macroscopic world from
-shattered to whole.
+The Erdős–Rényi model is a mathematical idealization, but its lessons reach far
+beyond pure combinatorics. The abruptness of these transitions — structure
+appearing not gradually but all at once as a parameter crosses a critical value
+— is the signature of phenomena across science. It is the percolation of water
+through porous rock, the sudden gelation of a polymer, the cascade of a power
+grid, the tipping point at which a rumor becomes an epidemic, the moment a
+neural network's connectivity becomes rich enough to compute. Wherever many
+small, independent local decisions add up to a sudden global change, the ghost
+of Erdős and Rényi is at work.
 
-## The shape of the argument
-
-Strip away the applications and a remarkably clean logical skeleton remains.
-Everything rests on two probabilities about fixed edge sets — present with
-probability $p^{|S|}$, absent with probability $(1-p)^{|S|}$ — assembled by
-linearity of expectation into exact average counts:
-$\binom{n}{2}p$ edges, $\binom{n}{3}p^3$ triangles, $n(1-p)^{n-1}$ isolated
-vertices. The **first moment method** turns a vanishing average into genuine
-absence; the **second moment method**, built on Markov's and Chebyshev's
-inequalities, turns a large, concentrated average into genuine presence. Pin
-these two halves on either side of a critical density and a *threshold* is born —
-sharp, abrupt, and inevitable.
-
-That a handful of elementary counting identities can predict the sudden birth of
-a giant component, or the precise moment a network becomes whole, is one of the
-quiet marvels of modern mathematics. The coins are fair, the rules are simple,
-and yet the crowd, all at once, decides to become one.
+What is remarkable is how little machinery is needed to capture all of this. No
+heavy analysis, no measure theory — just the average of a count, an inequality
+that says rare things rarely happen, and its partner that says common things
+commonly do. Counting and the average: with these two ideas, sharpened into the
+first and second moment methods, the entire landscape of random-graph
+thresholds comes into focus. From a room of strangers flipping coins, a world
+reliably assembles itself — and mathematics can tell you, to the precise
+critical density, exactly when.
