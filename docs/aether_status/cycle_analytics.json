@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T16:11:11.744183+00:00",
+  "last_updated": "2026-06-28T17:01:23.343769+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -15738,6 +15738,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-28T16:11:11.462521+00:00",
       "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6155,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 223,
+      "domain": "Novelty",
+      "duration_seconds": 1346.7697415351868,
+      "end_time": 1782665502.2115183,
+      "files_integrated": 7,
+      "job_id": "ce5b4268",
+      "outcome_quality": 0.71224,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.7305,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.5804,
+        "novelty": 0.71,
+        "proof_depth": 0.5248,
+        "usefulness": 0.7624
+      },
+      "quality_score": 0.71224,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782664155.4417768,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-28T17:01:22.625768+00:00",
+      "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
     }
   ]
 }

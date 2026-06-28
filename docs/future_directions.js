@@ -1300,7 +1300,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0ffedaae",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1310,7 +1310,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -1450,7 +1450,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q \u2265 3 and n \u2265 4"
   },
   {
-    "consumed_by_exp_id": "dc303029",
+    "consumed_by_exp_id": "",
     "description": "This conjecture posits that for a totally degenerating family of polarized abelian varieties, the existence of a non-Archimedean balanced metric would imply uniform control over the convergence rates of Hilbert\u2013Chow stability criteria, which in turn constrains the possible bounds on the volumes of moduli spaces in such families.",
     "domains": [
       "Pythagorean",
@@ -1460,7 +1460,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15758v1",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-27T23:02:04.414507+00:00",
     "title": "Non-Archimedean balanced metrics and their implications for totally degenerate abelian geometries"
   },
@@ -1740,7 +1740,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8f5c44bc",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -1750,7 +1750,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -1961,7 +1961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "140a33ad",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -1971,7 +1971,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
