@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3718ce68",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Betti–Whittaker periods and the contragredient twist\n\nDerived from the Stage 3/Stage 4 findings of this cycle (files\n`BettiWhittakerContragredient.lean`, `BettiWhittakerReciproci",
-      "quality_score": 0.71376,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-26T10:43:57",
-      "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
-    },
-    {
       "cycle_id": "3847ce48",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: self-dual string C-groups\n\nDerived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,\n`simplex_selfDual`, and `symmetricGroup_selfDual_rank`.\n\n## Conjecture 1",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-06-28T09:38:33",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "8d0e7e8c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Excluded minors for Z_n-gainable biased graphs\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle. The formalised\nresults (`ZnGain.lean`, `ZnGainSharp.lean`) s",
+      "quality_score": 0.7360800000000001,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T09:42:01",
+      "title": "Excluded minors for Z_n-gainable biased graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "226a5c12",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## 1. A reusable `ClosureOperator`-based interface\n\nThe present development proves completeness of the closed lattice directly from a\nGalois connection, but the same argument appl",
-      "quality_score": 0.57117,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-06-24T23:31:58",
-      "title": "Bridge: Galois Connections Between Order Theory and Topology"
-    },
     {
       "cycle_id": "c37a84a2",
       "domain": "Computation",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-06-28T09:38:33",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "8d0e7e8c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Excluded minors for Z_n-gainable biased graphs\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle. The formalised\nresults (`ZnGain.lean`, `ZnGainSharp.lean`) s",
+      "quality_score": 0.7360800000000001,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T09:42:01",
+      "title": "Excluded minors for Z_n-gainable biased graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8043199999999999
     }
   ],
-  "last_updated": "2026-06-28T09:38:33",
+  "last_updated": "2026-06-28T09:42:01",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "dbb7efcb",
-        "quality": 0.79816,
-        "theorems": 14,
-        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-      },
-      {
         "cycle_id": "cff6413b",
         "quality": 0.8251200000000001,
         "theorems": 17,
@@ -3637,6 +3631,12 @@
         "quality": 0.5631599999999999,
         "theorems": 0,
         "title": "Linear one-set wall-Menger bound for elementary walls"
+      },
+      {
+        "cycle_id": "8d0e7e8c",
+        "quality": 0.7360800000000001,
+        "theorems": 0,
+        "title": "Excluded minors for Z_n-gainable biased graphs"
       }
     ],
     "NumberTheory": [
