@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c235005e",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — T-Ideals of Acyclic Path Algebras\n\nThis cycle proved the *containment* half of the mission statement: for a finite\nacyclic quiver `Q` with longest path length `n - 1`, the symmet",
-      "quality_score": 0.5303045714285715,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-24T16:21:28",
-      "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
-    },
-    {
       "cycle_id": "f8c355ed",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Gaussian–Pythagorean Bridge for LWE Hardness\n\nThese conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`.\nEach is stated to be falsifiable and formalizable in L",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-28T05:27:57",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+    },
+    {
+      "cycle_id": "9ee5d694",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Ordered Transseries Field & Real Closedness\n\nDerived from this cycle's findings in `OrderedField.lean` and `RealClosureIngredients.lean`,\nwhich established: (i) the transseries f",
+      "quality_score": 0.6915199999999999,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-28T05:29:22",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73264
     }
   ],
-  "last_updated": "2026-06-28T05:27:57",
+  "last_updated": "2026-06-28T05:29:22",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "8170e958",
-        "quality": 0.5594,
-        "theorems": 15,
-        "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
-      },
-      {
         "cycle_id": "c027516f",
         "quality": 0.7101600000000001,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.630526,
         "theorems": 9,
         "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+      },
+      {
+        "cycle_id": "9ee5d694",
+        "quality": 0.6915199999999999,
+        "theorems": 12,
+        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
       }
     ],
     "Bridges": [

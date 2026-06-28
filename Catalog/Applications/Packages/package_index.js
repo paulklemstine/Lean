@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9ee5d694",
     "filename": "eml_transseries_asymptotic_expansions_beyond_power.json",
     "pkg_num": 165,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6915199999999999,
     "title": "The Ordered Field of Transseries: Asymptotic Expansions Beyond Power Series"
   },
   {
@@ -4813,8 +4813,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6915199999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Ordered Field of Transseries: Asymptotic Expansions Beyond Power Series"
     }
