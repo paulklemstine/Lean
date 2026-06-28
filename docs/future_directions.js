@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fee52015",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
       "Logic",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -2325,7 +2325,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Gap Lower Bound for the Binary Fixed-Margin Swap Chain"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28bd8499",
     "description": "For every nonempty m \u00d7 n rectangular grid, let f : {0,\u2026,m\u22121} \u00d7 {0,\u2026,n\u22121} \u2192 Z satisfy f(0,0)=0 and |f(p)-f(q)|\u22641 on every grid edge. Then the total absolute mass is at most n\u00b7m(m\u22121)/2 + m\u00b7n(n\u22121)/2. This bound is sharp, attained by f(i,j)=i+j and by f(i,j)=\u2212(i+j). In the Miura-ori height-function model this is exactly the extremal inequality needed to turn the explicit lower-bound construction for the flip-graph diameter into a matching upper bound whenever flip distance is controlled by L1 height difference.",
     "domains": [
       "Algebra"
@@ -2334,7 +2334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22614v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T12:05:30.404748+00:00",
     "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
   },
@@ -6417,7 +6417,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Minimal Covering Polytopes with Exactly 2d Facets in Every Dimension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce5b4268",
     "description": "For the polynomial f(x) = x^q + bx^2 + cx + d over F_{q^2}, we conjecture that f is a permutation polynomial if and only if specific explicit conditions on the coefficients hold: when q is odd, f permutes F_{q^2} iff b, c, d satisfy g(b,c,d) \u2260 0 where g is an explicit polynomial expression derived from Weil sum evaluation; when q is even, f permutes F_{q^2} iff h(b,c,d) \u2260 0 with h being another explicit expression. The precise forms of g and h relate to the discriminant of the associated Weil sum and can be computed via the number of solutions to the equation f(x) = f(y) for x \u2260 y.",
     "domains": [
       "Pythagorean"
@@ -6426,7 +6426,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14529v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-28T02:23:31.130528+00:00",
     "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
   },
@@ -7958,7 +7958,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Archimedean balanced metrics and their implications for totally degenerate abelian geometries"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dc303029",
     "description": "Conjecture that for any commutative ring R with 1, if the inclusion graph of annihilators \u0393'(R) is connected and contains a cycle, then its girth is exactly 6.",
     "domains": [
       "Pythagorean",
@@ -7968,7 +7968,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15498v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T23:31:30.244011+00:00",
     "title": "Exactgirth of the inclusion graph of annihilators in connected commutative rings"
   },
@@ -8931,7 +8931,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "251e4381",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -8941,12 +8941,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "140a33ad",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -8956,7 +8956,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
@@ -9276,7 +9276,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "461fdf74",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -9286,7 +9286,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
