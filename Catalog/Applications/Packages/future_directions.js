@@ -506,22 +506,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "bac3bfcc",
-    "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
-    "domains": [
-      "Physics",
-      "Probability",
-      "Analysis"
-    ],
-    "id": "seed_364",
-    "priority_score": 0.87,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432774+00:00",
-    "title": "Statistical Mechanics: Ising Model Phase Transition"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the Yoneda lemma in Lean 4 with concrete applications. Prove that representable functors determine objects up to isomorphism. Formalize adjunctions and prove the general adjoint functor theorem. Apply to free-forgetful adjunctions.",
     "domains": [
@@ -8162,50 +8146,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe most natural next step is to attack the residue class isolated by the\nprime-core reduction: primes `p \u2261 1 (mod 8)`. The key insight is that the four\nelementary families already dispatch every residue except this one, so the entire\ndifficulty of Erd\u0151s\u2013Straus is concentrated in a single arithmetic progression,\nand any constructive scheme that handles it would, via\n`erdosStraus_of_primes_one_mod_eight`, close the problem unconditionally. A\npromising route is to formalize the classical covering-congruence constructions\nof Mordell, which solve `4/p` for all `p` outside a sparse set of residues modulo\nsmall moduli (e.g. residues that are quadratic non-residues modulo `4`, or that\nfall into specific classes mod `3\u00b78`, `5\u00b78`, `7\u00b78`, \u2026). Why now? Because the\npresent development supplies exactly the reusable scaffolding \u2014 the predicate, the\nwitness-verification idioms, and divisor inheritance \u2014 that such a formalization\nwould otherwise have to rebuild from scratch.\n\nA second direction is computational certification at scale. The key insight is\nthat `ErdosStrausSolution n` is witnessed by a finite triple whose correctness is\na single rational identity, so a verified search procedure could emit witnesses\nfor enormous ranges and check them by `decide`/`norm_num`, turning empirical\ntables (which currently confirm the conjecture far beyond `10^17`) into\nmachine-checked theorems for explicit bounds. Why now? Because Lean's `decide`\nkernel reduction and `norm_num` extensions are mature enough to validate millions\nof rational identities reliably, and the bounded theorem `erdosStraus_upto_100`\ndemonstrates the pattern end to end; scaling it is an engineering problem, not a\nmathematical one.\n\nA third direction concerns the structure of the witness map itself.\nThe key insight is that the family witnesses are not ad hoc but instances of a small\nnumber of algebraic identities (the `1/a + 1/(a\u00b7n)` split and its halving, and the\n`(n+3)/(2na)` collapse), so one could formalize a *parametrized solver*: a single\nlemma taking residue data and returning a witness, from which all four families\nbecome corollaries. Why now? Because unifying the families would both shrink the\nproof and expose precisely which algebraic degrees of freedom remain unused for\nthe `1 (mod 8)` case, potentially suggesting the missing construction.\n\nA fourth direction is to connect this development to Mathlib's number-theoretic\ninfrastructure on quadratic residues and Dirichlet characters. The key insight is\nthat the obstruction at `p \u2261 1 (mod 8)` is governed by solvability of congruences\nthat quadratic reciprocity controls, so importing Mathlib's reciprocity and\nLegendre-symbol API could let one phrase the open core as a clean statement about\nrepresentability rather than as a raw existential over triples. Why now? Because\nMathlib's quadratic reciprocity and `ZMod` character theory are now stable and\nwell-supported, making it feasible to translate the analytic-number-theory\nheuristics for Erd\u0151s\u2013Straus into formal, checkable hypotheses.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2559",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "199a5960",
-    "status": "available",
-    "timestamp": "2026-06-26T00:08:32.567910+00:00",
-    "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Hadwiger\u2013Debrunner `(p,q)` for convex splinters\n\nDerived from this cycle's findings in `Combinatorial.lean` and `HellyBridge.lean`.\nThis cycle proved (0 sorries) that the `(p,q)`-to-transversal passage factors as\n`set-class-agnostic combinatorics \u00d7 (one Helly number)`, with the Helly number\n`d+1` for convex sets (via Mathlib's `Convex.helly_theorem`) and `2d+1` for\nconvex splinters (Arocha\u2013Bracho\u2013Montejano, supplied as a hypothesis). The\nfollowing conjectures are the natural next falsifiable targets.\n\n**Category declaration.** This target is a *cross-domain bridge* between\n**Geometry** (`Convex.helly_theorem`, `EuclideanSpace`) and **Combinatorics**\n(`Finset`-indexed `(p,q)`-property and transversals). Each direction below keeps\nthat bridge orientation.\n\n---\n\n## C1. A dimension-independent transversal bound at the Helly threshold `q = h`\n\n**Conjecture.** For a family with Helly number `h` (abstract `HasHellyNumber`-style,\nuniformly over all subfamilies) and the `(p, h)`-property with `p \u2265 h`, the\ntransversal number is bounded by a constant `N(h, p)` independent of `|s|` \u2014 in\nfact `\u03c4 \u2264 binom(p-1, h-1)` should already follow from fractional Helly.\n\n**The key insight is** that our `exists_transversal_of_pqProperty_full` bound\n`\u03c4 \u2264 |s| - q + 1` is the *trivial* one-shot bound; iterating the Helly extraction\n(remove one common point, recurse) replaces `|s|` by a quantity controlled only\nby the *fractional* Helly constant, which is dimension/`h`-driven, not `|s|`-driven.\n\n**Why now?** Mathlib already has `Convex.helly_theorem`; the missing ingredient is\na *fractional* Helly statement, which our `HasHellyNumber` abstraction is shaped to\naccept as a drop-in hypothesis, so the combinatorial recursion can be formalised\nimmediately on top of this cycle's core.\n\n---\n\n## C2. The splinter Helly theorem `2d+1` as a Radon-type statement in Mathlib\n\n**Conjecture.** Convex splinters in `\u211d^d` (in the Arocha\u2013Bracho\u2013Montejano sense)\nsatisfy a Radon-type partition lemma with `2d+2` points, and hence have Helly\nnumber exactly `2d+1`; this is provable in Lean by the same colourful-Radon\nscaffolding that underlies `Mathlib/Analysis/Convex/Radon.lean`.\n\n**The key insight is** that our `convex_hasHellyNumber` shows the *only* thing the\n`(p,q)` machinery needs from geometry is `HasHellyNumber s F h`; therefore proving\nthe splinter case reduces entirely to discharging that one predicate at `h = 2d+1`,\ndecoupled from the transversal bookkeeping.\n\n**Why now?** The convex Radon/Helly pipeline is already in Mathlib at the exact\nversion we build against, so the splinter generalisation is an incremental\nmodification (a `2d+2`-point partition replacing the `d+2`-point one) rather than\na from-scratch development.\n\n---\n\n## C3. Sharpness of the threshold: a splinter family failing `(2d, 2d)` but not `(2d+1, 2d+1)`\n\n**Conjecture.** For every `d` there is a finite family of convex splinters in `\u211d^d`\nwith the `(2d, 2d)`-property (every `2d`-subfamily intersecting) yet **no** common\npoint \u2014 certifying that the Helly threshold cannot be lowered below `2d+1`.\n\n**The key insight is** that the gap between the convex threshold `d+1` and the\nsplinter threshold `2d+1` must be *witnessed* by an explicit construction, and our\n`HasHellyNumber` predicate makes \"threshold `h` fails\" a precisely stateable,\nrefutable Lean proposition (`\u00ac HasHellyNumber s F h`).\n\n**Why now?** With the abstract predicate in hand, a candidate construction (unions\nof two parallel slabs) can be tested computationally first, then formalised,\nclosing the loop between the upper bound (C2) and its sharpness.\n\n---\n\n## C4. Monotone-in-`q` transversal interpolation\n\n**Conjecture.** Combining `HasPQProperty.weaken_q` with a fractional-Helly input\nyields a *monotone family of bounds* `N(d, p, q)` that is non-increasing in `q`\nand meets the classical Hadwiger\u2013Debrunner value `N(d, p, d+1)` at the convex\nthreshold and a strictly larger value at `q = 2d+1` for splinters.\n\n**The key insight is** that `weaken_q` already proves the `(p,q)`-property is\nmonotone in `q` *for free*, so the only `q`-dependence left to quantify is inside\nthe Helly/fractional-Helly constant \u2014 isolating exactly where the convex/splinter\ndistinction injects its cost.\n\n**Why now?** `HasPQProperty.weaken_q` is proved in this cycle with 0 sorries; the\ninterpolation conjecture is the immediate quantitative refinement it invites.\n\n---\n\n## C5. A `(p,q)` theorem for finite Boolean combinations of convex sets\n\n**Conjecture.** Families whose members are unions of at most `k` convex sets in\n`\u211d^d` admit a Helly number `\u2264 k(d+1)`, and therefore inherit the entire\ntransversal theory of this cycle with `h := k(d+1)`.\n\n**The key insight is** that \"convex splinter\" is one instance of a broader pattern:\n*any* set class with a finite Helly number plugs into `pqProperty_helly_transversal_one`\nunchanged; the splinter result is the `k = 2` (slab-union) shadow of this family.\n\n**Why now?** The abstract bridge is already proved and parameterised purely by `h`,\nso each new set class is a single `HasHellyNumber` lemma away from a full\ntransversal theorem \u2014 making `k`-fold unions the cheapest next bridge to build.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2761",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5f11db87",
-    "status": "available",
-    "timestamp": "2026-06-28T07:54:15.187356+00:00",
-    "title": "Derived from this cycle's findings in `Combinatorial.lean` and `HellyBridge.lean"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 5f11db87 (Q=0.698) proved 8 theorems in Applications but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at mos",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_5f11db87_68e28566",
-    "priority_score": 0.7482,
-    "research_mode": "team",
-    "source_exp_id": "5f11db87",
-    "status": "available",
-    "timestamp": "2026-06-28T07:58:49.789596+00:00",
-    "title": "Close Proofs: Hadwiger--Debrunner (p,q) theorem for convex splinters"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8217,6 +8157,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For quantum spin systems undergoing continuous phase transitions, the persistent homology of ground state correlation matrices exhibits universal topological signatures (characterized by Betti number scaling and barcode length distributions) that occur precisely at critical points, with the signature's scaling exponent directly related to the universality class central charge. Test: Apply persistent homology to transverse field Ising chains and Heisenberg models across their phase diagrams; verify that the barcode entropy and zeroth Betti number peak exactly at known critical points, and that the scaling follows the predicted conformal field theory predictions. Impact: Enables polynomial-time quantum phase detection algorithms, creates new quantum-classical correspondence principles, and opens topological data analysis as a rigorous tool for quantum many-body physics.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_2763",
+    "priority_score": 0.7158260869565218,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-28T08:05:36.727843+00:00",
+    "title": "Persistent Homology Witnesses Quantum Criticality: Topological Signatures in Man"
   },
   {
     "consumed_by_exp_id": "",

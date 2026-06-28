@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "18853638",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from *A Sharp Generalized Uniform–Witness Bound for Families with\nPrescribed Missing–Trace Size* (`RESEARCH_PAPER.md`) and its formal companion\n`Catalog/Bridges/UniformWit",
-      "quality_score": 0.42325214328358207,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-24T21:30:37",
-      "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
-    },
-    {
       "cycle_id": "6ddef5de",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nThe verified deterministic backbone in `Catalog/Physics/OUProcessMoments.lean`\n(VP/OU marginal mean and variance, their moment ODEs, long-time convergence, and\nthe Gaussian score",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-28T07:58:49",
       "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
+    },
+    {
+      "cycle_id": "cff12e07",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Symmetric chain decompositions and super-exponential growth\n\nDerived from this cycle's findings (the matching mechanism on a two-level slab,\nthe factorial engine `factorial_super",
+      "quality_score": 0.6639999999999999,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T08:05:45",
+      "title": "Super-exponential growth of the number of symmetric chain decompositions of M(n)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.747936
     }
   ],
-  "last_updated": "2026-06-28T07:58:49",
+  "last_updated": "2026-06-28T08:05:45",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2d24ca82",
-        "quality": 0.5835454545454546,
-        "theorems": 11,
-        "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
-      },
-      {
         "cycle_id": "f3fa5004",
         "quality": 0.38602000000000003,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.747936,
         "theorems": 11,
         "title": "Prismatic Purity for F-Crystals on Regular Schemes"
+      },
+      {
+        "cycle_id": "cff12e07",
+        "quality": 0.6639999999999999,
+        "theorems": 14,
+        "title": "Super-exponential growth of the number of symmetric chain decompositions of M(n)"
       }
     ],
     "NumberTheory": [
