@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bd406889",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fee52015",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
       "Logic",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -2974,7 +2974,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Sharp Upper Bound for Uniform VC\u2011Dimension Families via Layered Stars"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72418ed5",
     "description": "For a connected signed graph \u03a3 and a non-isolated vertex v, the inequality \u03bb\u2081(\u03a3) \u2264 \u221a(\u03bb\u2081\u00b2(\u03a3\u2212v) + 2d(v) \u2212 1) holds, with equality if and only if \u03a3 is a signed star with v as the center or \u03a3 is a signed complete graph.",
     "domains": [
       "Physics"
@@ -2983,7 +2983,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T01:36:45.202062+00:00",
     "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
   },
@@ -5012,7 +5012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "872fa119",
     "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k \u2265 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
     "domains": [
       "Logic"
@@ -5021,7 +5021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T22:09:21.864984+00:00",
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
   },
@@ -5795,7 +5795,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e43f12ea",
     "description": "For any integer matrix \\(M = \\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}\\) with non\u2011zero determinant and \\(\\gcd(a,b,c,d)=1\\), the set of ratios of Lagrange constants\n\\[\\mathcal{V}(M) := \\{ k(Mx)/k(x) : x \\in \\mathrm{Bad}\\}\\]\ncoincides with the closed interval \\([|\\det M|^{-1},\\,|\\det M|]\\). In other words, every value between the extremal bounds given by Lagarias\u2013Shallit is attained by some badly approximable number, and no values outside the interval occur.",
     "domains": [
       "Algebra"
@@ -5804,7 +5804,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T04:17:04.862367+00:00",
     "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
   },
@@ -8001,7 +8001,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimal Interval Complexity of d\u2011Dimensional Grid Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ef6ec544",
     "description": "For any full-dimensional convex d-polytope P, the top normal-fan shadow T(P) equals zero if and only if every facet F of P has an opposite support face which is a vertex. This extends the 3-dimensional result \u03b4(P)=0 to arbitrary dimensions, connecting the vanishing of the generalized antipodal defect to the existence of vertex-opposite facet pairs in the normal fan structure.",
     "domains": [
       "Geometry"
@@ -8010,7 +8010,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14599v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-28T01:35:58.764545+00:00",
     "title": "Higher-Dimensional Antipodal Defect Vanishing Criterion"
   },
@@ -8362,6 +8362,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-28T13:43:18.294221+00:00",
     "title": "Alternating Extremes Conjecture for Meander Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let E/\u211a be an elliptic curve without complex multiplication and let p be a prime. Denote by \u211a(E[p^\u221e]) the field obtained by adjoining all coordinates of the p\u2011power torsion points of E. The conjecture asserts that \u211a(E[p^\u221e]) enjoys the Bogomolov property: there exists a constant c(E,p)>0 such that every non\u2011torsion algebraic number \u03b1 in \u211a(E[p^\u221e]) satisfies h(\u03b1)\u2265c(E,p). This extends known results for full torsion fields (Habegger) to the one\u2011prime\u2011adic tower and is amenable to a Lean formalisation via the existing libraries on heights, number fields, and Galois representations.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2786",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27203v1",
+    "status": "available",
+    "timestamp": "2026-06-28T14:42:11.036121+00:00",
+    "title": "Bogomolov property for the infinite p\u2011adic division field of a non\u2011CM elliptic curve"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every strongly regular graph G appearing in the exceptional list of Neumaier's classification (Petersen graph, Shrikhande graph, complete bipartite graphs, conference graphs on at most 255 vertices, lattice graphs, and the exceptional families E_m with m\u22653), there exists a field F such that the first homology group H\u2081(CliqueComplex(G), F) is non\u2011zero.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2787",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27328v1",
+    "status": "available",
+    "timestamp": "2026-06-28T14:43:19.694245+00:00",
+    "title": "Non-vanishing first clique homology for exceptional strongly regular graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -8753,7 +8783,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Program: Functoriality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0074646a",
     "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
     "domains": [
       "MachineLearning",
@@ -8763,7 +8793,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.309278+00:00",
     "title": "Category-Theoretic Neural Architectures"
   },
@@ -9247,7 +9277,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "461fdf74",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -9257,7 +9287,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
