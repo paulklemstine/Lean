@@ -1,489 +1,238 @@
-# Explicit Bias and Pure Periodicity for the Cusick Density of the Binary Digit Sum
+# Binary Digit-Reversal Invariance of Cusick Densities: Two Exact, Verified Five-Bit Instances
 
 **Author:** Aristotle
-
-**Date:** 2026-06-27
+**Date:** 2026-06-28
+**Domain:** Number theory of digit sums (Novelty)
 
 ## Abstract
 
-Let $s_2(n)$ denote the binary sum-of-digits function (the number of ones in the
-base-$2$ expansion of $n$). For a fixed shift $t \ge 1$, Cusick's density is the
-asymptotic frequency
-
-$$ c_t \;=\; \lim_{N\to\infty} \frac{1}{N}\,\#\bigl\{\,0 \le n < N : s_2(n) \le s_2(n+t)\,\bigr\}. $$
-
-Cusick conjectured, and Drmota–Kauers–Spiegelhofer (2016) proved, that
-$c_t \ge \tfrac12 + 2^{-(2 s_2(t)+1)}$ for every $t$. This paper develops a
-self-contained, machine-verified theory of the *structural backbone* of this
-phenomenon. We establish: (i) the foundational arithmetic of $s_2$ — Legendre's
-additive formula $s_2(n) + v_2(n!) = n$, subadditivity $s_2(a+b) \le s_2(a)+s_2(b)$,
-and the exact dyadic block average; (ii) the Kummer reformulation expressing the
-Cusick inequality as a carry-budget condition $\mathrm{carries}(t,n) \le s_2(t)$;
-(iii) a doubling invariance yielding $c_{2^k} = 3/4$ for all $k$; (iv) the exact
-values $c_1 = 3/4$ and $c_3 = 11/16$ via residue counting; and (v) the central
-*pure periodicity theorem*: for every $t$, the Cusick predicate depends only on
-$n \bmod 2^{L + s_2(t)}$ (where $t < 2^L$), forcing $c_t$ to be a dyadic rational
-and giving an exact period-scaling identity. From (v) we extract an explicit-bias
-*propagation engine*: any finite per-period surplus $d$ over period $P$ propagates
-to the uniform bound $c_t \ge 1/2 + d/P$ across all windows. All results have been
-formalized and verified in Lean 4 with Mathlib; we present mathematical statements
-and proof sketches.
+Let $s_2(n)$ denote the binary digit sum (the number of $1$s in the base-$2$
+expansion of $n$). For a fixed shift $t \ge 1$, Cusick's density is
+$$c_t = \lim_{N \to \infty} \frac{1}{N}\,\#\{0 \le n < N : s_2(n+t) \ge s_2(n)\}.$$
+The Drmota–Kauers–Spiegelhofer theorem (2016) establishes the explicit bias bound
+$c_t \ge \tfrac{1}{2} + 2^{-(2 s_2(t)+1)}$, in particular $c_t > 1/2$ for all $t$
+(Cusick's conjecture). A structural prerequisite is that the predicate
+$P_t(n) := [\,s_2(n+t) \ge s_2(n)\,]$ is purely periodic in $n$ with period
+$2^{L+s_2(t)}$ whenever $t < 2^L$, which makes each $c_t$ a dyadic rational computable
+from a single period. We exploit this to record and prove a discrete symmetry: the
+Cusick density appears to be invariant under reversal of the binary digits of $t$. We
+give two exact, fully formalized instances for five-bit shifts. The reversal pair
+$(19,25)$, with $19 = 10011_2$ and $25 = 11001_2$, satisfies $c_{19} = c_{25} = 41/64$;
+the reversal pair $(23,29)$, with $23 = 10111_2$ and $29 = 11101_2$, satisfies
+$c_{23} = c_{29} = 75/128$. The proofs combine a kernel computation of the per-period
+counts ($164$ over $[0,256)$ and $300$ over $[0,512)$, respectively) with the general
+periodicity theorem to obtain equality of the counts over every aligned block
+$[0, 2^{L+s_2(t)}\,m)$.
 
 ## 1. Introduction
 
-### 1.1 The problem
-
-The binary sum-of-digits function $s_2 : \mathbb{N} \to \mathbb{N}$ counts the
-ones in a number's binary expansion. Adding a fixed shift $t$ perturbs this count
-in a way governed entirely by carry propagation: a long run of trailing ones can
-collapse into a single higher one, sharply decreasing the digit sum, while in the
-absence of carries the digit sums simply add.
-
-Thomas Cusick asked: for fixed $t$, what is the density of $n$ for which adding
-$t$ does not decrease the digit sum? Writing the **Cusick predicate**
-
-$$ P_t(n) \;:\equiv\; \bigl(s_2(n) \le s_2(n+t)\bigr), $$
-
-the density in question is $c_t = \mathrm{dens}\,\{ n : P_t(n) \}$. The naive
-expectation $c_t = 1/2$ — that gains and losses cancel — is *wrong*: the density is
-always strictly above $1/2$. Cusick conjectured the explicit lower bound
-
-$$ c_t \;\ge\; \frac12 + 2^{-(2 s_2(t)+1)}, \tag{$\star$} $$
-
-later proved by Drmota, Kauers, and Spiegelhofer using transfer-operator and
-automaton methods. The bias term decays with the binary weight $s_2(t)$ but is
-never zero.
-
-### 1.2 Contributions
-
-This paper isolates and rigorously establishes the *elementary, structural* layer
-beneath ($\star$). The full asymptotic bound for arbitrary $t$ requires deep
-analytic machinery, but a great deal can be proved by hand — and we prove all of
-it, with complete formal verification:
-
-1. **Foundations (§2).** Legendre's additive identity, subadditivity of $s_2$, and
-   the exact dyadic block sum $\sum_{x<2^k} s_2(x) = k\,2^{k-1}$, pinning the mean
-   of $s_2$ at $k/2$.
-
-2. **Carry reformulation (§3).** Via Kummer's theorem, $P_t(n)$ is *equivalent* to
-   the carry-budget condition $\mathrm{carries}(t,n) \le s_2(t)$, where
-   $\mathrm{carries}(t,n) = v_2\binom{n+t}{t}$.
-
-3. **Doubling invariance (§4).** $P_t$ is invariant under $(n,t)\mapsto(2n,2t)$ on
-   each parity fibre, giving the count self-similarity
-   $\mathrm{cusickCount}(2t,2N) = 2\,\mathrm{cusickCount}(t,N)$ and hence
-   $c_{2^k} = 3/4$ for every $k$.
-
-4. **Exact small densities (§5).** $c_1 = 3/4$ and $c_3 = 11/16$, each via a
-   pointwise residue criterion and an induction-on-windows count (not a finite
-   enumeration).
-
-5. **Pure periodicity and rationality (§6).** For every $t \ge 1$ with $t < 2^L$,
-   $P_t$ is purely periodic with period $2^{L+s_2(t)}$; consequently $c_t$ is a
-   dyadic rational and counts scale exactly across periods.
-
-6. **Propagation engine (§7).** A single finite per-period surplus $d$ propagates
-   to the uniform explicit bias $c_t \ge 1/2 + d/P$, separating the finite
-   per-shift computation from the universal scaling.
-
-Throughout, $v_2(m)$ denotes the $2$-adic valuation (the exponent of the largest
-power of $2$ dividing $m$), and $\mathbb{N} = \{0,1,2,\dots\}$.
-
-## 2. Foundations: the binary digit sum
-
-**Definition 2.1 (Binary digit sum).** For $n \in \mathbb{N}$, define
-$s_2(n) = \sum_i d_i$ where $n = \sum_i d_i 2^i$ is the binary expansion
-($d_i \in \{0,1\}$). Equivalently $s_2(n)$ is the sum of the base-$2$ digits of
-$n$. Immediately $s_2(0) = 0$, $s_2(1) = 1$, and $s_2(n) \le n$.
-
-**Theorem 2.2 (Legendre's formula, additive form).** For all $n$,
-
-$$ s_2(n) + v_2(n!) = n. $$
-
-*Proof sketch.* Legendre's classical formula states
-$(p-1)\,v_p(n!) = n - s_p(n)$ for the base-$p$ digit sum $s_p$. At $p = 2$ this is
-$v_2(n!) = n - s_2(n)$; rearranging and using $s_2(n) \le n$ to keep the
-subtraction genuine yields the additive identity. $\square$
-
-**Lemma 2.3 (Monotonicity of $v_2$ under divisibility).** If $m \mid k$ and
-$k \ne 0$ then $v_2(m) \le v_2(k)$.
-
-*Proof sketch.* From $2^{v_2(m)} \mid m \mid k$ and the characterization
-$2^e \mid k \iff e \le v_2(k)$ for $k \ne 0$. $\square$
-
-**Theorem 2.4 (Subadditivity).** For all $a, b$,
-
-$$ s_2(a+b) \;\le\; s_2(a) + s_2(b). $$
-
-*Proof sketch.* The binomial coefficient $\binom{a+b}{a} = (a+b)!/(a!\,b!)$ is an
-integer, so $a!\,b! \mid (a+b)!$. By Lemma 2.3,
-$v_2(a!) + v_2(b!) = v_2(a!\,b!) \le v_2((a+b)!)$. Apply Theorem 2.2 three times
-(to $a$, $b$, and $a+b$) and eliminate the valuations: the inequality
-$v_2((a+b)!) \ge v_2(a!)+v_2(b!)$ becomes $s_2(a+b) \le s_2(a)+s_2(b)$. $\square$
-
-Subadditivity is tight: $a = b = 1$ gives $s_2(2) = 1 = s_2(1)+s_2(1) - 1$, indeed
-$s_2(2) = 1 \le 2$. The special case $s_2(n+1) \le s_2(n)+1$ — adding one increases
-the weight by at most one — is used repeatedly below.
-
-**Theorem 2.5 (Exact dyadic block average).** For all $k$,
-
-$$ \sum_{x=0}^{2^k - 1} s_2(x) \;=\; k \cdot 2^{\,k-1}. $$
-
-Equivalently the mean of $s_2$ over $[0, 2^k)$ is exactly $k/2$: on average half
-the bits are set. This is the quantitative reason $c_t$ sits near $1/2$, with the
-entire content of ($\star$) living in the *bias* away from this baseline.
-
-## 3. The carry reformulation (Kummer)
-
-**Definition 3.1 (Carry count).** For shift $t$ and integer $n$, define the
-**carry count** of the binary addition $n + t$ by
-
-$$ \mathrm{carries}(t,n) \;=\; v_2\!\binom{n+t}{t}. $$
-
-By Kummer's theorem, this equals the number of carries that occur when adding $n$
-and $t$ in base $2$.
-
-**Theorem 3.2 (Kummer, subtraction form).** For all $n, t$,
-
-$$ \mathrm{carries}(t,n) \;=\; s_2(t) + s_2(n) - s_2(n+t). $$
-
-*Proof sketch.* Kummer's theorem for $p = 2$ states
-$v_2\binom{n+t}{t} = \bigl(s_2(t) + s_2(n) - s_2(n+t)\bigr)/(2-1)$, i.e. exactly
-the right-hand side, the subtraction being genuine by Theorem 2.4. $\square$
-
-**Theorem 3.3 (Additive carry identity).** For all $n, t$,
-
-$$ s_2(n+t) + \mathrm{carries}(t,n) \;=\; s_2(n) + s_2(t). $$
-
-*Proof sketch.* Immediate from Theorem 3.2 together with subadditivity (Theorem
-2.4), which guarantees $s_2(n+t) \le s_2(n)+s_2(t)$ so the subtraction in 3.2 does
-not truncate. $\square$
-
-**Theorem 3.4 (Cusick inequality as carry counting).** For all $n, t$,
-
-$$ s_2(n) \le s_2(n+t) \quad\Longleftrightarrow\quad \mathrm{carries}(t,n) \le s_2(t). $$
-
-*Proof sketch.* Rearrange the additive identity 3.3: $s_2(n+t) - s_2(n) = s_2(t) -
-\mathrm{carries}(t,n)$, so the left side is $\ge 0$ iff $\mathrm{carries}(t,n) \le
-s_2(t)$. $\square$
-
-This is the conceptual pivot of the whole subject: a question about digit-sum
-*inequalities* becomes a question about *counting carries against a budget* of
-$s_2(t)$.
-
-**Corollary 3.5 (No-carry extremal case).** If $\mathrm{carries}(t,n) = 0$ then
-$s_2(n+t) = s_2(n) + s_2(t)$ (maximal gain). In particular $P_t(n)$ holds.
-
-**Remark 3.6.** The one-sided bound $\mathrm{carries}(t,n) \le s_2(t)$ can *fail*:
-e.g. $n=3, t=1$ gives $\mathrm{carries} = 2 > 1 = s_2(1)$ (and indeed
-$s_2(4) = 1 < 2 = s_2(3)$). Only the symmetric total bound
-$\mathrm{carries}(t,n) \le s_2(n) + s_2(t)$ is unconditional. Failure of the
-one-sided bound is *exactly* the failure of the Cusick inequality, by Theorem 3.4.
-
-## 4. Doubling invariance and the powers of two
-
-The digit sum interacts simply with appending a low bit.
-
-**Lemma 4.1 (Low-bit recursion).** $s_2(2n) = s_2(n)$ and $s_2(2n+1) = s_2(n)+1$.
-
-**Theorem 4.2 (Doubling invariance).** For all $n, t$:
-
-$$ s_2(2n) \le s_2(2n+2t) \iff s_2(n) \le s_2(n+t), $$
-$$ s_2(2n+1) \le s_2(2n+1+2t) \iff s_2(n) \le s_2(n+t). $$
-
-*Proof sketch.* Write $2n + 2t = 2(n+t)$ and $2n+1+2t = 2(n+t)+1$ and apply Lemma
-4.1 to both sides; both parity fibres collapse to the base predicate at $t$.
-$\square$
-
-**Definition 4.3 (Cusick count).** $\mathrm{cusickCount}(t, N) = \#\{\,n < N :
-s_2(n) \le s_2(n+t)\,\}$.
-
-**Theorem 4.4 (Count self-similarity).** For all $t, N$,
-
-$$ \mathrm{cusickCount}(2t, 2N) \;=\; 2\,\mathrm{cusickCount}(t, N). $$
-
-*Proof sketch.* Split $[0, 2N)$ into the even fibre $\{2j : j < N\}$ and the odd
-fibre $\{2j+1 : j < N\}$. By Theorem 4.2, on each fibre the predicate $P_{2t}$ is
-equivalent to $P_t(j)$, so each fibre contributes $\mathrm{cusickCount}(t,N)$.
-$\square$
-
-**Theorem 4.5 (Pointwise criterion for powers of two).**
-
-$$ s_2(n) \le s_2(n + 2^k) \quad\Longleftrightarrow\quad (n / 2^k) \bmod 4 \ne 3. $$
-
-*Proof sketch.* Write $n = 2^k q + r$ with $r < 2^k$; by digit concatenation
-(Theorem 5.1 below) the predicate reduces to $P_1(q)$, then apply the $t=1$
-criterion (Theorem 5.3). $\square$
-
-**Theorem 4.6 (Density of power-of-two shifts).** For all $k, m$,
-
-$$ \mathrm{cusickCount}(2^k,\; 2^{k+2} m) \;=\; 3\cdot 2^k\, m, $$
-
-equivalently $c_{2^k} = 3/4$, with explicit bias $1/4$ above $1/2$.
-
-*Proof sketch.* Induction on $k$. The base case $k = 0$ is $c_1 = 3/4$ (Theorem
-5.4). The inductive step applies Theorem 4.4 with the doubled shift and window.
-$\square$
-
-**Theorem 4.7 (Full orbit invariance).** For all $k, t, N$,
-$\mathrm{cusickCount}(2^k t, 2^k N) = 2^k\,\mathrm{cusickCount}(t, N)$. Hence $c_t$
-depends only on the odd part of $t$; the density is constant along the doubling
-orbit $\{t, 2t, 4t, \dots\}$.
-
-## 5. Exact small densities
-
-**Theorem 5.1 (Digit concatenation).** For $a < 2^M$,
-
-$$ s_2(2^M b + a) \;=\; s_2(b) + s_2(a). $$
-
-*Proof sketch.* Induction on $M$ using the low-bit recursion (Lemma 4.1): a block
-$a$ of fewer than $M$ bits sits strictly below $b$, so the two digit strings
-concatenate without interaction. $\square$
-
-This lemma underlies the periodicity arguments: it lets any $n$ be split into a
-low window $n \bmod 2^M$ (carrying the finite carry analysis) and an arbitrary
-high part $n / 2^M$.
-
-### 5.1 The shift $t = 1$
-
-**Theorem 5.3 ($t=1$ criterion).**
-
-$$ s_2(n) \le s_2(n+1) \quad\Longleftrightarrow\quad n \bmod 4 \ne 3. $$
-
-*Proof sketch.* By Theorem 3.4 the condition is $\mathrm{carries}(1,n) \le s_2(1) =
-1$. Since $\binom{n+1}{1} = n+1$, $\mathrm{carries}(1,n) = v_2(n+1)$. Thus the
-condition is $v_2(n+1) \le 1$, i.e. $4 \nmid (n+1)$, i.e. $n \bmod 4 \ne 3$. $\square$
-
-**Theorem 5.4 (Exact density $c_1 = 3/4$).** For all $m$,
-
-$$ \#\{\,n < 4m : s_2(n) \le s_2(n+1)\,\} \;=\; 3m. $$
-
-*Proof sketch.* By Theorem 5.3 the good $n$ are precisely those with $n \bmod 4 \ne
-3$. Exactly $3$ of every $4$ residues qualify; a one-step induction on $m$ over the
-block $[0,4m)$ gives $3m$. Hence $c_1 = 3/4 = 1/2 + 1/4$, exceeding the ($\star$)
-floor $1/2 + 1/8 = 5/8$. $\square$
-
-**Theorem 5.5 (Infinitude of the good set).** For every $t$, the set
-$\{ n : s_2(n) \le s_2(n+t)\}$ is infinite.
-
-*Proof sketch.* The sparse family $n = 2^{j+t}$ works: by the no-carry high-bit
-lemma $s_2(t + 2^L) = s_2(t)+1$ for $t < 2^L$, one gets $s_2(2^{j+t}) = 1 \le s_2(t)
-+ 1 = s_2(2^{j+t} + t)$ for all $j$, and $j \mapsto 2^{j+t}$ is injective. $\square$
-
-### 5.2 The shift $t = 3$
-
-**Theorem 5.6 ($t=3$ criterion).**
-
-$$ s_2(n) \le s_2(n+3) \quad\Longleftrightarrow\quad n \bmod 16 \notin \{5,7,13,14,15\}. $$
-
-*Proof sketch.* Split $n = 16b + a$, $a = n \bmod 16$; by concatenation (Theorem
-5.1) $s_2(n) = s_2(b) + s_2(a)$. For the low residues $a \le 12$ the predicate
-depends only on $a$ and is checked directly. For the overflow residues
-$a \in \{13,14,15\}$, adding $3$ overflows the $16$-block; subadditivity
-($s_2(b+1) \le s_2(b)+1$) shows the high part cannot recover the bits lost, so the
-predicate fails for *every* $b$. The five bad residues are exactly $\{5,7,13,14,15\}$.
-$\square$
-
-**Theorem 5.7 (Exact density $c_3 = 11/16$).** For all $m$,
-
-$$ \mathrm{cusickCount}(3, 16m) \;=\; 11m, $$
-
-so $c_3 = 11/16$. The explicit bound holds with margin: $32\cdot
-\mathrm{cusickCount}(3,16m) \ge 17\cdot 16m$, i.e. $c_3 = 11/16 = 22/32 \ge 17/32 =
-1/2 + 2^{-(2 s_2(3)+1)}$, clearing the floor by $5/32$.
-
-*Proof sketch.* By Theorem 5.6 the good $n$ avoid five residues mod $16$, leaving
-$11$ of every $16$; induction on $m$ gives $11m$. $\square$
-
-**Theorem 5.8 (Orbit density for $t=3$).** For all $k, m$,
-$\mathrm{cusickCount}(2^k\cdot 3,\; 2^k\cdot 16m) = 2^k\cdot 11m$, so $c_{3\cdot
-2^k} = 11/16$ for all $k$.
-
-**Remark 5.9 (Density is not a function of $s_2(t)$).** We have $c_1 = 12/16$ and
-$c_3 = 11/16$ with $s_2(1) = 1 \ne 2 = s_2(3)$; more strikingly, the catalog shows
-two shifts of equal weight can have distinct densities. The density is sensitive to
-the *gap structure* of the binary expansion, not merely the number of ones.
-
-## 6. Pure periodicity and rationality
-
-This section establishes the structural reason all Cusick densities are dyadic
-rationals.
-
-**Lemma 6.1 (All-ones digit sum).** $s_2(2^s - 1) = s$ (the $s$-bit all-ones
-number has $s$ ones).
-
-**Lemma 6.2 (Strict subadditivity on overflow).** If $a, t < 2^L$ and the
-$L$-block overflows, $2^L \le a + t$, then there is at least one carry and
-
-$$ s_2(a+t) \;<\; s_2(a) + s_2(t). $$
-
-*Proof sketch.* The overflow $2^L \le a+t$ forces a carry out of the low $L$ bits,
-so $\mathrm{carries}(t,a) \ge 1$; by the additive identity (Theorem 3.3) the digit
-sum strictly drops. $\square$
-
-**Lemma 6.3 (Overflow forces the predicate false).** Let $M = L + s_2(t)$ with
-$t < 2^L$, $t \ge 1$. If the low $M$-bit window $a < 2^M$ overflows, $2^M \le a+t$,
-then for *every* high part $b$,
-
-$$ s_2(2^M b + a + t) \;<\; s_2(2^M b + a). $$
-
-*Proof sketch.* Write $a = 2^L q + a_0$ with $a_0 < 2^L$, $q < 2^{s_2(t)}$. The
-overflow $2^M = 2^L\cdot 2^{s_2(t)} \le a + t$ forces $q = 2^{s_2(t)} - 1$ (the
-high block of the window is all ones) and $2^L \le a_0 + t$. By concatenation
-(Theorem 5.1) and Lemma 6.1,
-
-$$ s_2(2^M b + a) = s_2(b) + s_2(t) + s_2(a_0), $$
-
-while adding $t$ carries through all $s_2(t)$ top ones of the window into the high
-part:
-
-$$ s_2(2^M b + a + t) = s_2(b+1) + s_2(r), \qquad r = a_0 + t - 2^L. $$
-
-Strict subadditivity (Lemma 6.2) gives $s_2(a_0+t) < s_2(a_0)+s_2(t)$, and
-$s_2(b+1) \le s_2(b)+1$ (subadditivity) bounds the high gain. Combining, the
-"$+t$" side is strictly smaller for every $b$. $\square$
-
-**Theorem 6.4 (Pure periodicity).** For every $t \ge 1$ and every $L$ with
-$t < 2^L$, writing $P = 2^{L + s_2(t)}$,
-
-$$ s_2(n) \le s_2(n+t) \quad\Longleftrightarrow\quad s_2(n \bmod P) \le s_2((n \bmod P) + t). $$
-
-That is, the Cusick predicate $P_t$ depends only on $n \bmod P$.
-
-*Proof sketch.* Write $n = P b + a$, $a = n \bmod P$. If the window overflows
-($a + t \ge P$), Lemma 6.3 makes the predicate false for both $b$ and $b = 0$, so
-the two sides agree (both false). If not ($a + t < P$), concatenation (Theorem 5.1)
-gives $s_2(n) = s_2(b) + s_2(a)$ and $s_2(n+t) = s_2(b) + s_2(a+t)$, so the
-predicate is $s_2(a) \le s_2(a+t)$, manifestly independent of $b$. $\square$
-
-**Theorem 6.5 (Period scaling).** For all $t \ge 1$ with $t < 2^L$ and all $m$,
-
-$$ \mathrm{cusickCount}(t,\; P\cdot m) \;=\; m \cdot \mathrm{cusickCount}(t,\; P), \qquad P = 2^{L+s_2(t)}. $$
-
-Consequently $c_t = \mathrm{cusickCount}(t, P)/P$ is a **dyadic rational**.
-
-*Proof sketch.* Induction on $m$. Each block $[Pm, P(m+1))$ contributes, by
-periodicity (Theorem 6.4) applied residue-by-residue, the same count as the base
-block $[0, P)$. $\square$
-
-## 7. The explicit-bias propagation engine
-
-The period-scaling identity converts a single finite computation into a uniform
-asymptotic bound.
-
-**Theorem 7.1 (Bias propagation).** Let $t \ge 1$, $t < 2^L$, $P = 2^{L+s_2(t)}$.
-Suppose the one-period count beats half by $d$:
-
-$$ 2\,\mathrm{cusickCount}(t, P) \;\ge\; P + 2d. $$
-
-Then for every window count $m$,
-
-$$ 2\,\mathrm{cusickCount}(t,\; P m) \;\ge\; P m + 2 d m, $$
-
-equivalently $c_t \ge \tfrac12 + d/P$.
-
-*Proof sketch.* Multiply the hypothesis by $m$ and substitute the period-scaling
-identity (Theorem 6.5): $2\,\mathrm{cusickCount}(t,Pm) = 2m\,\mathrm{cusickCount}(t,P)
-\ge m(P + 2d) = Pm + 2dm$. $\square$
-
-This cleanly separates the two ingredients of an explicit Cusick bias bound: a
-*finite* per-period computation producing the surplus $d$, and the *uniform*
-propagation in $m$ (proved once, for all $t$). Instantiating:
-
-- **$t = 1$:** $d = 1$, $P = 4$; $2\,\mathrm{cusickCount}(1,4m) \ge 4m + 2m$, i.e.
-  $c_1 \ge 1/2 + 1/4$ (in fact equality).
-- **$t = 3$:** $d = 3$, $P = 16$; $2\,\mathrm{cusickCount}(3,16m) \ge 16m + 6m$,
-  i.e. $c_3 \ge 1/2 + 3/16$ (in fact equality, $c_3 = 11/16$).
-
-The engine does *not* by itself prove $d > 0$ for general $t$ — that is the hard
-Drmota–Kauers–Spiegelhofer content. It *propagates* any established per-period
-bias, which is exactly the reusable infrastructure separating the finite checks
-from the universal scaling.
-
-## 8. Algorithms
-
-We summarize the constructive content as algorithms; each is directly backed by a
-theorem above. (Full type-hinted implementations accompany this paper.)
-
-**Algorithm A (Digit sum).** Compute $s_2(n)$ by repeated division by $2$,
-summing remainders. $O(\log n)$ operations.
-
-**Algorithm B (Carry count via Kummer).** Compute $\mathrm{carries}(t,n) = s_2(t) +
-s_2(n) - s_2(n+t)$ directly from three digit sums (Theorem 3.2), avoiding factorial
-arithmetic. $O(\log(n+t))$.
-
-**Algorithm C (Exact density via one period).** Given $t$, set $L = \lceil \log_2(t+1)
-\rceil$ and $P = 2^{L + s_2(t)}$; count the good residues in $[0, P)$ and return the
-exact rational $\mathrm{cusickCount}(t,P)/P$. Correct by pure periodicity (Theorem
-6.4) and period scaling (Theorem 6.5). $O(P \log P)$.
-
-**Algorithm D (Bias propagation).** Given a period surplus $d$, return the certified
-window bound $2\,\mathrm{cusickCount}(t, Pm) \ge Pm + 2dm$ for all $m$ (Theorem 7.1).
-$O(1)$ beyond the one-period count.
-
-## 9. Applications and discussion
-
-The binary digit sum is a hub connecting several areas. It defines the
-**Thue–Morse sequence** $t_n = s_2(n) \bmod 2$, a paradigm of deterministic
-pseudorandomness; the bias studied here is a quantitative manifestation of the
-correlations that make Thue–Morse simultaneously balanced and structured. It
-appears in **Gelfond-type** equidistribution of digit sums in arithmetic
-progressions, and recent work on **primes with prescribed digit sums** builds on
-the same transfer-operator technology behind ($\star$). The carry reformulation
-(§3) connects directly to the analysis of **binary adder circuits**, where carry
-chains determine latency, so carry statistics have algorithmic value.
-
-Two methodological points deserve emphasis. First, the **carry reformulation** is
-the conceptual fulcrum: it converts a digit-sum inequality into a countable
-carry-budget condition, after which everything is combinatorics. Second, **pure
-periodicity** is what makes the densities tractable and rational; it reduces an
-asymptotic question to a single finite block, and the propagation engine packages
-that reduction uniformly.
-
-## 10. Future directions
-
-The development proves the structural backbone and the exact densities $c_1 = 3/4$,
-$c_3 = 11/16$, $c_{2^k} = 3/4$, plus pure periodicity and the propagation engine.
-Several precise conjectures emerge for follow-up work; we record them below.
-
-**Conjecture 1 (Bit-reversal symmetry).** For odd $t$ with binary digit string
-$(t_{L-1}\cdots t_1 t_0)$ ($t_0 = t_{L-1} = 1$), let $\mathrm{rev}(t)$ reverse the
-string. Then $c_t = c_{\mathrm{rev}(t)}$. Evidence: $c_{11} = c_{13} = 19/32$
-($1011 \leftrightarrow 1101$), $c_{19} = c_{25} = 41/64$. A formalization path is a
-measure-preserving bijection on residues mod $2^{L+s_2(t)}$ carrying $P_t$ to
-$P_{\mathrm{rev}(t)}$, likely via the carry/Kummer reformulation.
-
-**Conjecture 2 (Gap structure, not weight).** $c_t$ is a function of the multiset
-of gaps between consecutive $1$-bits of the odd part of $t$, not of $s_2(t)$ alone.
-Evidence: $c_3 \ne c_5$ (proved separately in the catalog); several weight-$3$
-shifts are mutually distinct.
-
-**Conjecture 3 (Gap-separation decoupling).** If $t = 2^a + 2^b$ with $a < b$ then
-$c_t$ depends only on $b - a$, and $c_{2^a + 2^b} = 11/16$ as soon as $b - a \ge 3$.
-More generally, when all gaps between $1$-bits of $t$ are $\ge G$, the bits
-decouple and a product formula $c_t = 1 - (1 - c_{\text{single bit}})^{s_2(t)}$
-holds.
-
-**Conjecture 4 (All-ones is extremal at fixed weight).** Among all $t$ with
-$s_2(t) = s$, the all-ones shift $t = 2^s - 1$ maximizes $c_t$. Evidence:
-$c_7 = 43/64$ is the largest among weight-$3$ shifts sampled.
-
-**Conjecture 5 (Closed form for the all-ones family).** Writing $c_{2^s-1} = 1/2 +
-a_s/4^s$, the proved values give $a_1 = 1$, $a_2 = 3$, $a_3 = 11$, $a_4 = 43$ (from
-$c_1 = 3/4$, $c_3 = 11/16$, $c_7 = 43/64$, $c_{15} = 171/256$), matching the
-recurrence $a_{s+1} = 4 a_s - 1$. Equivalently the per-period counts
-$3, 11, 43, 171$ over periods $4, 16, 64, 256$ each satisfy $\text{next} = 4\cdot
-\text{prev} - 1$.
-
-## 11. Conclusion
-
-The Cusick density problem looks like a question about a coin flip, but the coin is
-permanently loaded toward growth. We have given a complete, machine-verified
-account of the elementary skeleton driving this bias: Legendre's factorial formula
-and subadditivity of $s_2$; Kummer's carry reformulation turning the inequality
-into a carry budget; a doubling symmetry that propagates $c_1 = 3/4$ to all powers
-of two; exact densities $c_1 = 3/4$ and $c_3 = 11/16$; and the central pure
-periodicity theorem forcing every $c_t$ to be a dyadic rational, packaged as a
-finite-input, uniform-output bias-propagation engine. The deep asymptotic content
-of ($\star$) for arbitrary $t$ remains the province of transfer-operator methods,
-but its rational, periodic backbone is now fully and rigorously in hand.
+The binary digit sum $s_2$ is among the most studied of all *automatic* sequences,
+and its arithmetic behavior under addition has a long history connecting Gelfond's
+digit problems, the Thue–Morse sequence (the parity of $s_2$), and dynamical
+transfer-operator methods. T. W. Cusick conjectured that adding any fixed positive
+integer $t$ is biased toward not decreasing the digit sum: the density
+$$c_t = \operatorname{dens}\{n : s_2(n) \le s_2(n+t)\}$$
+satisfies $c_t > 1/2$ for every $t \ge 1$. Drmota, Kauers, and Spiegelhofer proved
+the stronger explicit lower bound
+$$c_t \ge \frac{1}{2} + 2^{-(2 s_2(t)+1)}, \tag{DKS}$$
+settling Cusick's conjecture quantitatively.
+
+While the inequality direction is now a theorem, the *exact values* and *internal
+symmetries* of the family $\{c_t\}$ remain largely mysterious. This paper isolates one
+such symmetry. Reversing the binary digits of $t$ within its bit length plainly
+preserves both $s_2(t)$ and the bit length $L$, hence the fundamental period
+$2^{L+s_2(t)}$. It is far less obvious that it preserves the density itself, because the
+density is governed by carry interactions that depend on the *arrangement* of the bits,
+not merely their count. We prove two exact instances of the resulting **digit-reversal
+invariance conjecture** $c_t = c_{\mathrm{rev}(t)}$ for five-bit shifts.
+
+**Main theorems (informal).**
+$$c_{19} = c_{25} = \frac{41}{64}, \qquad c_{23} = c_{29} = \frac{75}{128}.$$
+All counts behind these values are verified by a formal kernel computation, and the
+extension from a single period to all aligned blocks is supplied by the general
+periodicity theorem.
+
+## 2. Definitions
+
+**Definition 1 (Binary digit sum).** For $n \in \mathbb{N}$,
+$$s_2(n) = \sum_{i \ge 0} \varepsilon_i(n), \qquad n = \sum_{i \ge 0}\varepsilon_i(n)\,2^i,\ \varepsilon_i(n)\in\{0,1\}.$$
+Equivalently $s_2(n)$ is the sum of the base-$2$ digit list of $n$. In the formal
+development this is `s2 n := (Nat.digits 2 n).sum`.
+
+**Definition 2 (Computable copy).** Because the catalog's `s2` is declared
+`noncomputable`, a definitionally equal computable copy
+$$\texttt{s2compute}(n) := (\texttt{Nat.digits}\,2\,n).\texttt{sum}$$
+is introduced, with `s2compute_eq : s2compute n = s2 n` holding by reflexivity. This
+copy is what enables kernel evaluation (`native_decide`) of finite per-period counts;
+it agrees with $s_2$ on every input.
+
+**Definition 3 (Cusick predicate and count).** For a shift $t$ and window $N$,
+$$P_t(n) := \big[\,s_2(n) \le s_2(n+t)\,\big], \qquad
+\mathrm{cusickCount}(t, N) := \#\{\,0 \le n < N : P_t(n)\,\}.$$
+In Lean, `cusickCount t N := ((range N).filter (fun n => s2 n ≤ s2 (n + t))).card`.
+
+**Definition 4 (Cusick density).** When the limit exists,
+$$c_t := \lim_{N\to\infty}\frac{\mathrm{cusickCount}(t,N)}{N}.$$
+By periodicity (Section 3) the limit exists and equals
+$\mathrm{cusickCount}(t, 2^{L+s_2(t)}) / 2^{L+s_2(t)}$ for any $L$ with $t < 2^L$.
+
+**Definition 5 (Binary digit reversal).** For $t$ with bit length
+$L = \lvert \texttt{digits}_2\,t\rvert$, the reversal $\mathrm{rev}(t)$ is the integer
+whose binary digit list is that of $t$ read in reverse order (within the $L$-bit window).
+Reversal preserves $s_2$ and $L$: $s_2(\mathrm{rev}(t)) = s_2(t)$ and
+$\lvert\texttt{digits}_2\,\mathrm{rev}(t)\rvert = L$. The pairs studied here are
+$\mathrm{rev}(19) = 25$ and $\mathrm{rev}(23) = 29$.
+
+## 3. Background: pure periodicity and dyadic rationality
+
+The following structural result (formalized as `cusick_periodic` and
+`cusickCount_period` in the supporting development) is the backbone that turns an
+infinite density into a finite count.
+
+**Theorem A (Pure periodicity).** Let $t \ge 1$ and let $L$ satisfy $t < 2^L$. Put
+$M = L + s_2(t)$. Then for all $n$,
+$$P_t(n) \iff P_t(n \bmod 2^{M}).$$
+
+*Proof sketch.* Decompose $n = 2^{M} b + a$ with $a = n \bmod 2^{M}$. Two regimes:
+
+- *Non-overflow* ($a + t < 2^{M}$). By the digit-concatenation identity
+  $s_2(2^{M} b + x) = s_2(b) + s_2(x)$ for $x < 2^{M}$, both sides of $P_t$ gain the same
+  $s_2(b)$, so $P_t(n) \iff [\,s_2(a) \le s_2(a+t)\,]$, independent of $b$.
+- *Overflow* ($a + t \ge 2^{M}$). Here $a \ge 2^{M} - t > 2^{L}(2^{s_2(t)} - 1)$ forces the
+  top $s_2(t)$ bits of the $M$-bit window to be all $1$; adding $t$ annihilates them via a
+  carry chain, so by strict subadditivity on overflow $s_2(n+t) < s_2(n)$ for *every*
+  high part $b$. The predicate is uniformly false, again independent of $b$. $\square$
+
+**Theorem B (Exact scaling / dyadic rationality).** With $M = L + s_2(t)$ and any
+$m \ge 0$,
+$$\mathrm{cusickCount}(t,\ 2^{M} m) = m \cdot \mathrm{cusickCount}(t,\ 2^{M}).$$
+Consequently $c_t = \mathrm{cusickCount}(t, 2^{M}) / 2^{M}$ is a dyadic rational.
+
+*Proof sketch.* Induct on $m$, splitting $\mathrm{range}(2^{M}(m+1))$ into
+$\mathrm{range}(2^{M} m)$ and a shifted copy of $\mathrm{range}(2^{M})$; Theorem A makes
+the shifted block contribute exactly one more base count. $\square$
+
+## 4. The reversal pairs and their digit sums
+
+| $t$ | binary | $s_2(t)$ | bit length $L$ | period $2^{L+s_2(t)}$ |
+|---|---|---|---|---|
+| $19$ | $10011_2$ | $3$ | $5$ | $256$ |
+| $25$ | $11001_2$ | $3$ | $5$ | $256$ |
+| $23$ | $10111_2$ | $4$ | $5$ | $512$ |
+| $29$ | $11101_2$ | $4$ | $5$ | $512$ |
+
+The reflections $11001 = \overline{10011}$ and $11101 = \overline{10111}$ exhibit the
+reversal relations $\mathrm{rev}(19) = 25$ and $\mathrm{rev}(23) = 29$. The corresponding
+formal facts are `s2_nineteen : s₂(19) = 3`, `s2_twentyfive : s₂(25) = 3`,
+`s2_twentythree : s₂(23) = 4`, `s2_twentynine : s₂(29) = 4`, each true by reflexivity.
+
+## 5. Base-block counts (single period)
+
+**Lemma 5 (Per-period counts).** The Cusick counts over one fundamental period are
+$$\mathrm{cusickCount}(19, 256) = 164, \quad \mathrm{cusickCount}(25, 256) = 164,$$
+$$\mathrm{cusickCount}(23, 512) = 300, \quad \mathrm{cusickCount}(29, 512) = 300.$$
+
+*Proof.* Each count is a finite enumeration over an explicit range. Replacing $s_2$ by
+its definitionally equal computable copy `s2compute` (Definition 2), the four counts are
+discharged by kernel evaluation (`native_decide`). The formal lemmas are
+`cusickCount_nineteen_base`, `cusickCount_twentyfive_base`,
+`cusickCount_twentythree_base`, `cusickCount_twentynine_base`. $\square$
+
+The crucial observation is that the *base-block counts already coincide within each
+reversal pair*: $164 = 164$ for $(19,25)$ and $300 = 300$ for $(23,29)$. This per-period
+coincidence is the entire arithmetic content of the symmetry.
+
+## 6. Exact counts over all aligned blocks
+
+**Theorem 6 (Exact block counts).** For every $m \ge 0$,
+$$\mathrm{cusickCount}(19, 256\,m) = 164\,m, \qquad \mathrm{cusickCount}(25, 256\,m) = 164\,m,$$
+$$\mathrm{cusickCount}(23, 512\,m) = 300\,m, \qquad \mathrm{cusickCount}(29, 512\,m) = 300\,m.$$
+
+*Proof.* Apply Theorem B with $L = 5$. For $t \in \{19,25\}$, $s_2(t) = 3$ gives
+$2^{L+s_2(t)} = 256$, so $\mathrm{cusickCount}(t, 256\,m) = m \cdot
+\mathrm{cusickCount}(t,256) = 164\,m$ by Lemma 5. For $t \in \{23,29\}$, $s_2(t) = 4$ gives
+$2^{L+s_2(t)} = 512$, so $\mathrm{cusickCount}(t,512\,m) = m\cdot 300 = 300\,m$. These are
+the formal theorems `cusickCount_nineteen`, `cusickCount_twentyfive`,
+`cusickCount_twentythree`, `cusickCount_twentynine`. $\square$
+
+## 7. Main results: digit-reversal invariance
+
+**Theorem 7 (Reversal pair $(19,25)$).** For every $m \ge 0$,
+$$\mathrm{cusickCount}(19, 256\,m) = \mathrm{cusickCount}(25, 256\,m).$$
+Hence the densities coincide:
+$$c_{19} = c_{25} = \frac{164}{256} = \frac{41}{64}.$$
+
+*Proof.* Both sides equal $164\,m$ by Theorem 6; dividing by $256\,m$ and taking
+$m \to \infty$ gives the common density $164/256 = 41/64$. Formal name:
+`cusick_density_19_eq_25`. $\square$
+
+**Theorem 8 (Reversal pair $(23,29)$).** For every $m \ge 0$,
+$$\mathrm{cusickCount}(23, 512\,m) = \mathrm{cusickCount}(29, 512\,m).$$
+Hence
+$$c_{23} = c_{29} = \frac{300}{512} = \frac{75}{128}.$$
+
+*Proof.* Both sides equal $300\,m$ by Theorem 6; dividing by $512\,m$ and letting
+$m \to \infty$ gives the common density $300/512 = 75/128$. Formal name:
+`cusick_density_23_eq_29`. $\square$
+
+## 8. Consistency with the DKS bias bound
+
+It is instructive to compare the exact values with the general guarantee (DKS).
+
+- $t = 19$, $s_2(t) = 3$: the bound gives $c_{19} \ge \tfrac12 + 2^{-7} = \tfrac{65}{128}
+  \approx 0.5078$; the exact value is $c_{19} = \tfrac{41}{64} = \tfrac{82}{128} \approx
+  0.6406$.
+- $t = 23$, $s_2(t) = 4$: the bound gives $c_{23} \ge \tfrac12 + 2^{-9} = \tfrac{257}{512}
+  \approx 0.5020$; the exact value is $c_{23} = \tfrac{75}{128} = \tfrac{300}{512} \approx
+  0.5859$.
+
+In both cases the true density comfortably exceeds the DKS lower bound, and — the point
+of this paper — is *identical* across each reversal pair.
+
+## 9. Algorithms
+
+**Algorithm I (Periodic exact Cusick density).** Given $t$, compute $L = \lvert
+\texttt{digits}_2 t\rvert$, $s = s_2(t)$, period $P = 2^{L+s}$, count
+$K = \#\{0 \le n < P : s_2(n+t) \ge s_2(n)\}$, and return the exact rational $K/P$. By
+Theorem B this equals $c_t$ exactly. Complexity: $O(P \cdot L)$ bit operations, with
+$P = 2^{L+s_2(t)}$.
+
+**Algorithm II (Reversal-pair certifier).** Given $t$, form $\mathrm{rev}(t)$ by
+reversing its $L$-bit binary string, verify $s_2(t) = s_2(\mathrm{rev}(t))$ and equal bit
+length (so the periods match), compute both exact densities via Algorithm I, and report
+whether $c_t = c_{\mathrm{rev}(t)}$. For $(19,25)$ and $(23,29)$ it returns equality with
+common values $41/64$ and $75/128$.
+
+## 10. Applications and discussion
+
+The exact dyadic values $c_{19} = c_{25} = 41/64$ and $c_{23} = c_{29} = 75/128$ enrich
+the explicitly known catalog of Cusick densities (which includes $c_1 = 3/4$,
+$c_3 = 11/16$, $c_7 = 43/64$, $c_{15}$, the doubling family $c_{2^k} = 3/4$, and others).
+More importantly, they constitute the first rigorous, exact confirmations of binary
+digit-reversal invariance among five-bit shifts. Distinct shifts with equal digit sum and
+bit length need not share a density; the reversal symmetry is therefore a genuine
+constraint on the *carry bookkeeping*, not a corollary of the period alone. The phenomenon
+has also been observed for $(11,13)$, $(35,49)$, and others, supporting a general
+conjecture $c_t = c_{\mathrm{rev}(t)}$.
+
+## 11. Future work
+
+A natural program is to upgrade these instances to a theorem. The strategy is to
+construct, on the fundamental period $[0, 2^{L+s_2(t)})$, a measure-preserving bijection
+$n \mapsto \rho(n)$ implementing window reversal, satisfying $P_t(n) \iff
+P_{\mathrm{rev}(t)}(\rho(n))$; this would give $\mathrm{cusickCount}(t, P) =
+\mathrm{cusickCount}(\mathrm{rev}(t), P)$ for all reversal pairs at once. A clean target
+lemma is $s_2(\mathrm{rev}_L(n)) = s_2(n)$ together with a carry correspondence under
+window reversal. Independently, the general DKS per-period bias
+$2\,\mathrm{cusickCount}(t, 2^{L+s_2(t)}) \ge 2^{L+s_2(t)} + 2^{L - s_2(t)}$ remains a
+worthwhile formalization target. (See the package's Future Directions for the full list,
+including the all-ones closed form $c_{2^s-1} = 2/3 + 1/(3\cdot 4^s)$ and the conjecture
+that the all-ones shift is extremal among shifts of a given digit sum.)
+
+## 12. Conclusion
+
+We have stated and proved, with full formal verification of every count, two exact
+instances of binary digit-reversal invariance of Cusick densities:
+$c_{19} = c_{25} = 41/64$ and $c_{23} = c_{29} = 75/128$. The proofs reduce, via pure
+periodicity, to the per-period coincidences $164 = 164$ and $300 = 300$, exposing a
+discrete mirror symmetry in the fine structure of digit-sum dynamics.
