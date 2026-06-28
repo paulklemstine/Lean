@@ -1,95 +1,246 @@
-# Beyond Power Series: A Number System Where Infinity Has a Reciprocal
+# Beyond Power Series: The Strange Arithmetic of Things That Grow Forever
 
-## A crack in the toolbox
+## A number system built for infinity
 
-For three centuries, scientists who wanted to understand how a quantity behaves "in the limit" reached for the same instrument: the power series. Want to know how $\sin x$ behaves near zero? Write $x - \tfrac{x^3}{6} + \tfrac{x^5}{120} - \cdots$. Want to approximate a complicated function? Match its first few derivatives with a polynomial. The power series is the Swiss Army knife of asymptotics, and it works beautifully — until it doesn't.
+Ask a calculus student how fast a function grows, and they will reach for a
+familiar toolbox: polynomials, exponentials, logarithms. We say $x^2$ grows
+faster than $x$, that $e^x$ outruns every polynomial, and that $\log x$ creeps
+upward so slowly it seems almost to stand still. These statements feel obvious.
+But they hide a deep question: *is there a single, self-consistent number system
+in which all of these growth rates live side by side — and in which we can do
+ordinary algebra?*
 
-Consider a deceptively simple question: which grows faster as $x$ gets large, the polynomial $x^{1000}$ or the exponential $e^x$? Every calculus student learns the answer: the exponential wins, eventually and overwhelmingly. But here is the unsettling part. No power series in $x$ can *express* that fact. The function $e^x$ has the Taylor expansion $1 + x + \tfrac{x^2}{2} + \cdots$, but that expansion is a statement about behavior near $x = 0$, not about the wild growth at infinity. The language of powers of $x$ — even allowing infinitely many of them, even allowing fractional powers — simply does not contain a symbol that outruns every $x^n$ at once.
+The answer is yes, and its name is **transseries**. A transseries is an
+asymptotic expansion that is allowed to mix powers, logarithms, exponentials, and
+even towers of exponentials like $e^{e^x}$, all in one formal object. Where an
+ordinary power series can only describe behavior like $1 + x + x^2 + \dots$, a
+transseries can describe genuinely wild objects such as
 
-This is not a minor inconvenience. Whole swaths of mathematics and physics live in exactly the regime that power series cannot describe: the large-$x$ asymptotics of solutions to differential equations, the divergent series that appear in quantum field theory, the running time of algorithms, the growth of combinatorial sequences. To work there honestly, we need a richer language. That language is the language of **transseries**.
+$$e^{e^x} + 3\,e^x \cdot x^{1/2} - 7 + \frac{2}{x} + \frac{\log x}{x^2} + \cdots$$
 
-## What a transseries is
+This article tells the story of a rigorous, machine-checked construction of the
+field of transseries, and of three things we can prove about it: that powers are
+*formally* powerless against exponentials, that a transseries is uniquely pinned
+down by its asymptotic expansion, and that this number system is rich enough to
+take square roots and $n$-th roots — the property that, in the classical theory,
+makes transseries a *real closed field*, an arithmetic universe as complete as the
+real numbers themselves.
 
-The idea is gloriously direct. If powers of $x$ are not enough, throw in more building blocks. Allow not just $x$, but also $\log x$, and $e^x$, and $e^{e^x}$, and $\log\log x$, and every combination you can form by multiplying these together and raising them to (real-number!) powers. A typical building block — we call it a **transmonomial** — looks like
+## The trouble with power series
 
-$$\bigl(e^{e^x}\bigr)^{a_2}\cdot \bigl(e^{x}\bigr)^{a_1}\cdot x^{a_0}\cdot (\log x)^{a_{-1}}\cdot \bigl(\log\log x\bigr)^{a_{-2}}\cdots$$
+Power series are the workhorses of analysis. Near a point, almost any smooth
+function looks like an infinite polynomial. But power series have a built-in
+ceiling: each one carries a single notion of "size," its **order** — the exponent
+of its smallest nonzero term. The order of $3x^2 + 5x^7$ is $2$, because near
+zero the $x^2$ term dominates.
 
-where each exponent $a_k$ is a real number and only finitely many of them are nonzero. A **transseries** is then a (possibly infinite, suitably well-organized) sum of such transmonomials with real coefficients — for example,
+This works beautifully until you try to compare a power series with an
+exponential. The function $e^x$ has no finite order in the world of powers of
+$x$: it beats $x$, it beats $x^{10}$, it beats $x^{1000}$, it beats $x^a$ for
+*every* real $a$, no matter how astronomically large. There is simply no slot in
+the power-series filing cabinet where $e^x$ belongs. You cannot say "$e^x$ is the
+$x^{\infty}$ term," because $\infty$ is not a number.
 
-$$3\,e^{x} + 5x^{2} - \tfrac{1}{2}x + 7 + \frac{2}{x} + \frac{1}{x\log x} + \cdots$$
+Transseries fix this by enlarging the filing cabinet. Instead of indexing terms
+by a single exponent, we index them by an entire *hierarchy* of growth scales.
 
-The genius of the construction is its bookkeeping. We organize each transmonomial by a single integer, its **tower height** $h$: height $1$ is $e^x$, height $0$ is plain $x$, height $-1$ is $\log x$, height $2$ is $e^{e^x}$, and so on up and down the "exponential–logarithm tower." A transmonomial is thus a finite list of real exponents indexed by height — formally, a finitely supported function from the integers to the reals.
+## Transmonomials: a periodic table of growth
 
-To compare two transmonomials we use a simple, decisive rule: **look at the highest tower height where they differ.** Whoever has the bigger exponent there is the bigger transmonomial. This is exactly how you would rank growth rates by hand: $e^x$ beats any power of $x$ because the $e^x$-slot (height $1$) trumps the $x$-slot (height $0$) no matter what sits in the lower slot. The rule is a *lexicographic order*, the same alphabetical principle that puts "ax" before "by" in a dictionary, except our alphabet is the tower of exponentials and logarithms.
+The building blocks of a transseries are called **transmonomials**. A
+transmonomial is a formal product of powers drawn from a whole tower of scales:
 
-With the building blocks defined and ordered, the rest of arithmetic follows. You add transseries coefficient by coefficient. You multiply them by multiplying transmonomials (exponents add: $x^a\cdot x^b = x^{a+b}$) and collecting like terms. The remarkable payoff, which sits at the foundation of everything below, is this:
+$$\cdots (e^{e^x})^{a_2} \cdot (e^x)^{a_1} \cdot x^{a_0} \cdot (\log x)^{a_{-1}} \cdots$$
 
-> **The transseries form a field.** You can add, subtract, multiply, *and divide* — every nonzero transseries has a genuine reciprocal that is again a transseries.
+Each scale sits at an integer **tower height** $h$. Height $0$ is the ordinary
+variable $x$. Height $1$ is $e^x$. Height $-1$ is $\log x$. Height $2$ is the
+double exponential $e^{e^x}$, and so on, climbing up toward faster and faster
+growth and down toward slower and slower growth. A transmonomial records, for
+each height, the real exponent of that scale; only finitely many of these
+exponents are allowed to be nonzero.
 
-Division is the subtle one. How do you invert $1 + \frac{1}{x}$? You use the geometric-series trick: $\frac{1}{1+u} = 1 - u + u^2 - u^3 + \cdots$ with $u = \frac1x$, which converges in the transseries sense because each successive term is asymptotically smaller. That this always works — that the reciprocal of any nonzero transseries exists and is well-defined — is what earns transseries the title of *field*, putting them on the same footing as the rational numbers or the reals.
+Formally, then, a transmonomial is just a **finitely supported function from the
+integers (heights) to the reals (exponents)**. In the verified construction this
+is written `ℤ →₀ ℝ` — finitely supported maps from $\mathbb{Z}$ to $\mathbb{R}$.
 
-## The headline theorem, stated plainly
+The genius is in how we *order* these monomials, because that order is exactly the
+notion of asymptotic dominance. We compare two transmonomials **lexicographically,
+giving the highest tower height the most weight**. To decide which of two
+transmonomials is bigger, look first at the highest height where they differ:
+whoever has the larger exponent there wins outright, no matter what happens at
+lower heights.
 
-Here is the single fact that captures why transseries transcend power series. Write $x^a$ for the height-$0$ transmonomial with exponent $a$, and $e^x$ for the height-$1$ transmonomial. Then:
+This single rule encodes all of our intuitions at once:
 
-> **Exponential dominance.** For *every* real number $a$ — including $a = 10^{100}$, including any astronomically large value you care to name — the transmonomial $x^a$ is strictly smaller than $e^x$.
+- **Higher towers always win.** $e^{e^x}$ (height $2$) beats any power of $e^x$
+  (height $1$), which beats any power of $x$ (height $0$), which beats any power
+  of $\log x$ (height $-1$). In the verified development this is the theorem
+  `mono_lt_mono_of_height`: *a transmonomial of strictly higher tower height (with
+  positive exponent) dominates any transmonomial of lower height, whatever its
+  exponent.*
 
-In symbols, $x^{a} < e^{x}$ for all $a$. A single, fixed object, $e^x$, sits above the *entire* family of powers of $x$ simultaneously. No power series can contain such an element, because a power series ranks its terms by a single integer (or rational) exponent, and within that ranking there is always a "next" power; nothing dominates all of them at once. The transseries, by contrast, has a built-in second dimension — the tower height — that lets $e^x$ leap over every power in one bound. This is the precise, formal sense in which transseries "go beyond" power series.
+- **At the same height, the larger exponent wins.** $x^3$ beats $x^2$, exactly as
+  it should. This is the theorem `mono_lt_mono_same`.
 
-## Infinitesimals, infinities, and a strange arithmetic
+The crown jewel is the formal statement that exponentials annihilate powers,
+proved as `exp_dominates_pow`:
 
-Once you grant transseries the structure of an *ordered* field — a number system in which every element is positive, negative, or zero, and the order plays nicely with addition and multiplication — something marvelous and a little vertiginous appears.
+> For **every** real number $a$, the transmonomial $e^x$ dominates the
+> transmonomial $x^a$.
 
-Look at the transmonomial $x$ itself, regarded now not as "the variable" but as a *number* in our field. We measure size by the leading transmonomial, and the convention that organizes the tower makes the field's order agree with the behavior of germs as $x \to 0^+$. In that order, $x$ is a **positive infinitesimal**: it is greater than zero, yet smaller than every ordinary positive fraction. Concretely,
+Read that quantifier carefully: *every* real $a$, including $a = 10^{100}$. No
+single order in the power-series world can express this. Here it falls out
+cleanly from the lexicographic order, because $e^x$ lives one tower height above
+every power of $x$.
 
-$$(n+1)\cdot x < 1 \qquad \text{for every natural number } n.$$
+## From monomials to series — and a free field
 
-No matter how many copies of $x$ you pile up — a hundred, a billion — you never reach $1$. The real numbers contain nothing like this: in the reals, the *Archimedean property* guarantees that enough copies of any positive number eventually exceed any bound. Transseries cheerfully violate this. They are a **non-Archimedean** field.
+Once we have a linearly ordered group of transmonomials, we build transseries the
+way mathematicians build all generalized series: as **Hahn series**. A Hahn
+series is a formal sum $\sum_g c_g \cdot g$, with real coefficients $c_g$, whose
+collection of nonzero terms forms a *well-ordered* set (every nonempty subset has
+a smallest element). Well-orderedness is the magic condition that lets you add,
+multiply, and even *divide* such infinite sums without ever needing to compute an
+infinite numerical sum.
 
-Its partner is the transmonomial $1/x$, which in the same order is **infinite**:
+A foundational theorem of algebra — Hahn's theorem — says that when the value
+group is linearly ordered and the coefficients form a field, the Hahn series
+themselves form a field. Applying this to our ordered group of transmonomials and
+real coefficients, we obtain:
 
-$$n < \frac{1}{x} \qquad \text{for every natural number } n.$$
+> **The transseries form a field.**
 
-It is larger than every whole number. And here is the punchline that ties the two together — the kind of fact that feels paradoxical until you see the proof, and inevitable afterward:
+Addition, subtraction, multiplication, and division by any nonzero element all
+make sense. This is not an analytic miracle requiring convergence; it is pure
+algebra, and in the formal development it is simply inherited from the general
+Hahn-series field construction.
 
-$$x \cdot \frac{1}{x} = 1.$$
+Every transseries now carries a **valuation**, written `orderTop`: the
+transmonomial of its leading (most dominant) term, or the symbol $\top$
+("infinitely small") reserved for the zero series. The valuation behaves
+multiplicatively — the leading term of a product is the product of the leading
+terms, `orderTop_mul` — and it is the rigorous replacement for the single
+"order" of a power series. The real numbers sit inside this field as the constant
+transseries (`C_injective`), so transseries genuinely extend ordinary arithmetic.
 
-The infinitesimal and the infinite are exact reciprocals. An infinitely small number multiplied by an infinitely large one gives precisely $1$. This is not sloppy hand-waving about "infinity" of the kind that gets students into trouble; it is a rigorous identity in a rigorously constructed field. Infinity, here, genuinely has a reciprocal, and that reciprocal is genuinely infinitesimal.
+## The comparison theorem: expansions don't lie
 
-These transseries do not abandon the familiar numbers, either. The real numbers $\mathbb{R}$ sit *inside* the transseries as a perfectly ordered subfield: a real $a$ is less than a real $b$ as transseries exactly when $a < b$ as reals. The transseries are a strict enlargement — they contain all of $\mathbb{R}$ and then add infinitesimals and infinities around it, like a magnifying glass that resolves the structure hiding in the infinitely small and infinitely large neighborhoods of every real number.
+Here is a question that sounds philosophical but turns out to be a precise
+theorem. Suppose you compute the asymptotic expansion of a function term by term —
+its leading behavior, then the next correction, then the next — and you never
+stop. Could two genuinely different functions produce the *same* expansion all the
+way down? Could the expansion secretly lose information?
 
-## The tower never ends — and one ladder reaches everything
+For transseries, the answer is a reassuring **no**. We formalize the idea of two
+transseries "agreeing to all orders": their difference is asymptotically smaller
+than *every* transmonomial — smaller than every conceivable scale of growth. The
+**asymptotic comparison theorem** (`agreeToAllOrders_iff_eq`) then states:
 
-If $e^x$ dominates every power of $x$, what dominates $e^x$? The answer is $e^{e^x}$ (tower height $2$), and above that $e^{e^{e^x}}$, and so on forever. The hierarchy of growth rates has **no top**:
+> Two transseries agree to all orders **if and only if** they are equal.
 
-> **No largest transmonomial.** For every transmonomial there is a strictly larger one.
+In other words, the asymptotic expansion of a transseries is a perfect
+fingerprint. Nothing hides "below all orders." If two transseries match scale by
+scale, they are literally the same object. The proof is a clean piece of valuation
+logic: the only way for a difference to be smaller than every transmonomial is for
+its valuation to be $\top$, and the only element with valuation $\top$ is zero. As
+a bonus, "agreeing to all orders" is verified to be an equivalence relation
+(`agreeToAllOrders_equivalence`) — which, given the theorem, just confirms that it
+*is* equality in disguise.
 
-The exponential ladder never terminates; you can always climb higher. But the structure is even more orderly than mere endlessness suggests. The single explicit sequence of iterated exponentials,
+This is the formal heart of why asymptotic analysis works at all. When physicists
+and engineers expand a solution in powers of a small parameter and trust the
+result, they are implicitly relying on a uniqueness principle of exactly this
+kind.
 
-$$x,\quad e^{x},\quad e^{e^{x}},\quad e^{e^{e^{x}}},\quad \ldots$$
+To make sure the formal order is not an empty abstraction, the development also
+ties it back to honest real analysis. The theorem `isLittleO_pow_exp` proves that
+every polynomial $x^n$ is little-o of $e^x$ at infinity — the analytic shadow of
+the formal `exp_dominates_pow`. And `isLittleO_expPow_expExp` proves that every
+power of $e^x$ is little-o of $e^{e^x}$, the analytic shadow of "higher towers
+win." The formal order and the analytic order agree.
 
-is **cofinal**: every transmonomial whatsoever, no matter how exotic, is eventually dominated by some member of this one canonical ladder. You do not need a different witness for each growth rate; the tower of iterated exponentials already exhausts all of them from above. This is the sharp statement of how transseries surpass *every* power series at once — a single sequence outpaces the entire universe of power-series growth.
+## A non-Archimedean world
 
-## A symmetry of the infinite
+Transseries form an **ordered** field, and a strange one. The element $x$ is a
+*positive infinitesimal*: it is bigger than zero, yet smaller than every positive
+fraction $\tfrac{1}{n+1}$ (`x_infinitesimal`). Meanwhile $1/x$ is *infinite*: it
+exceeds every natural number $n$ (`inv_x_infinite`). And of course they are
+reciprocals, $x \cdot \tfrac1x = 1$ (`x_mul_inv_x`).
 
-There is a beautiful self-similarity lurking in all of this. The operation "substitute $e^x$ for $x$" — which sends $x \mapsto e^x$, sends $e^x \mapsto e^{e^x}$, and sends $\log x \mapsto x$ — is not just an analytic trick. It is a genuine **symmetry of the entire transseries field**: a bijection that respects addition, multiplication, and the dominance order, leaving the real-number scalars untouched.
+A field with infinitesimals and infinities is called **non-Archimedean** — it
+violates the Archimedean principle that you can always reach any size by adding $1$
+to itself enough times. The transseries field is non-Archimedean in the most
+vivid possible way, with infinitely many distinct scales of infinity ($x$,
+$e^x$, $e^{e^x}$, …) and infinitely many distinct scales of smallness. Crucially,
+$\mathbb{R}$ still embeds as an ordered subfield: real constants compare exactly
+as they do on the number line (`C_lt_iff`, `C_strictMono`).
 
-Because it is a symmetry, it can be undone, and its inverse is exactly what you would guess: "substitute $\log x$ for $x$." Exponentiation and logarithm act as mutually inverse mirror operations on the whole asymptotic world. Shifting the entire exp–log tower up by one notch, or down by one notch, leaves the architecture of growth rates perfectly intact. The hierarchy looks the same from every rung of the ladder — a fractal-like invariance of the infinite.
+## Roots and real closure: why real exponents matter
 
-## Why uniqueness matters: the comparison theorem
+Now for the property that elevates transseries from "a useful bookkeeping device"
+to "a complete arithmetic universe." A **real closed field** is, informally, a
+field that behaves like the real numbers for the purposes of algebra and order:
+every positive element has a square root, and every odd-degree polynomial has a
+root. Real closure is the algebraic analogue of having no holes.
 
-All of this structure would be a curiosity if the asymptotic expansion of a function could be ambiguous. The reassurance is the **asymptotic comparison theorem**, the capstone result and the original promise of the whole enterprise:
+The classical theory of transseries proves they are real closed. The verified
+development here establishes the decisive structural *ingredients* of that result,
+and pinpoints exactly why ordinary Laurent series fall short.
 
-> **If two transseries agree to all orders — if their difference is asymptotically smaller than every transmonomial — then they are equal.**
+The key is the **value group** — the group of all the leading scales. For an
+ordinary Laurent or formal power series, exponents are integers, and the value
+group is $\mathbb{Z}$. To extract a square root of a monomial you must halve its
+exponent — but you cannot halve an odd integer and stay inside $\mathbb{Z}$. The
+verified theorem `laurent_value_group_not_divisible` makes the obstruction
+brutally concrete:
 
-In other words, a transseries is *completely and uniquely determined* by its asymptotic data. There is no "hidden remainder," no ghost term lurking beyond all the others that two distinct objects could share. If you know how a quantity behaves at every order of magnitude in the exp–log scale, you know the quantity itself, period.
+> There is no integer $k$ with $2k = 1$.
 
-This is the rigorous foundation that makes asymptotic analysis trustworthy. When a physicist computes the large-coupling expansion of some quantity, or an analyst extracts the behavior of a differential equation's solution at infinity, the comparison theorem guarantees that the transseries they obtain is *the* answer — not one of several. Match the expansion to all orders, and you have pinned down the object uniquely.
+That single missing solution is the entire reason Laurent series fail to be real
+closed. Transseries dodge it by allowing **real** exponents. Now halving is always
+possible, and the development proves the value group is **divisible**
+(`valueGroup_divisible`): for every transmonomial $g$ and every positive integer
+$n$, there is a transmonomial $g'$ with $n \cdot g' = g$. Concretely you just
+divide every exponent by $n$.
 
-The proof has a satisfying inevitability. "Smaller than every transmonomial" forces the difference to have valuation strictly above the entire scale — and the only thing with valuation above everything is the genuine zero. Agreement to all orders is not approximate equality; in this field, it *is* equality.
+From divisibility, root extraction follows. The theorem `exists_nthRoot_term`
+shows every one-term transseries has an $n$-th root for every $n > 0$, and its
+special case `isSquare_term` shows every one-term transseries is a perfect square.
+The recipe is exactly the intuitive one: to take the square root of a monomial,
+halve all its exponents. With integer exponents this is impossible; with real
+exponents it is automatic. That contrast — `laurent_value_group_not_divisible`
+versus `valueGroup_divisible` — is the cleanest possible explanation of why
+mathematicians had to invent transseries in the first place.
 
-## The view from here
+## Climbing the tower: the exp-shift symmetry
 
-What has been built is a self-contained universe of formal growth rates: a field, ordered and non-Archimedean, containing the reals, full of infinitesimals and infinities that multiply to one, climbing an endless exponential ladder that nonetheless a single sequence exhausts, symmetric under the exchange of exponential and logarithm, and rigid enough that asymptotic data determines its objects uniquely. It is the natural home for the asymptotics that power series leave homeless.
+There is one more piece of structure worth meeting: the **exp-shift**. Applying
+the exponential to the variable, $x \mapsto e^x$, ought to slide every scale up by
+one tower height — turning $x$ into $e^x$, turning $e^x$ into $e^{e^x}$, and
+turning $\log x$ back into $x$. The development realizes this as an actual
+**field automorphism** of the transseries (`expShiftEquiv`): a structure-preserving
+symmetry of the entire number system, with an inverse log-shift that slides
+everything back down. It is verified to send the variable to the exponential
+(`expShift_var`) and to be a genuine isomorphism (`logShift_expShift`,
+`expShift_logShift`). This makes precise the idea that the tower of growth scales
+is *self-similar*: it looks the same one level up as it does where you started,
+and there is always another exponential waiting above any scale you name
+(`exists_exp_tower_gt`).
 
-And the frontier beckons. The transmonomial $x$ has a square root — it is $x^{1/2}$, perfectly legal in our real-power framework — and more generally every positive transmonomial is a square. The conjecture on the horizon is that this extends to *every* positive transseries, and beyond that, that the transseries field is **real closed**: that it carries the full algebraic richness of the real numbers, with square roots for all nonnegative elements and roots for every odd-degree polynomial. If true — and the structural ingredients are now in place — it would crown transseries as not merely a richer asymptotic language than power series, but a complete and self-sufficient number system in its own right: the real numbers' wilder, more expressive sibling, built to speak fluently about infinity.
+## Why this matters
+
+Transseries are not an exotic curiosity. They are the natural habitat of solutions
+to differential equations that cannot be solved in closed form, of asymptotic
+expansions in physics, and of the modern theory of o-minimal structures and
+model theory of the real exponential field. They are central to **resurgence
+theory**, the framework physicists use to extract sense from divergent series in
+quantum field theory and string theory. The reason all of these fields can treat
+asymptotic expansions as honest algebraic objects — adding them, multiplying them,
+inverting them, taking roots — is that those expansions live in a real closed,
+non-Archimedean field with a faithful valuation.
+
+What this construction delivers is that whole edifice, built from the ground up
+and checked to the last detail: an ordered field where exponentials provably crush
+every power, where every expansion uniquely determines its function, and where the
+real exponents that distinguish transseries from mere Laurent series are exactly
+what unlock square roots and real closure. It is a small, complete window into how
+infinity can be made to obey the ordinary rules of arithmetic.
