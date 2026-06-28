@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "c7101b5e",
+    "consumed_by_exp_id": "",
     "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
     "domains": [
       "Computation",
@@ -428,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432811+00:00",
     "title": "Formal Verification of Algorithms"
   },
@@ -4694,7 +4694,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scattering Determinant Critical Line Conjecture"
   },
   {
-    "consumed_by_exp_id": "f347664d",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that if a p-adic Galois representation becomes semistable after passing to some finite extension, then it must already have been of finite E-height. This would provide a characterization of finite height representations in terms of their behavior under finite extensions.",
     "domains": [
       "Algebra",
@@ -4704,7 +4704,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26043v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T17:11:00.832064+00:00",
     "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representations"
   },
@@ -5518,7 +5518,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excluded minors for Z_n-gainable biased graphs"
   },
   {
-    "consumed_by_exp_id": "8ffddeae",
+    "consumed_by_exp_id": "",
     "description": "For any dimension d \u2265 2 and any positive integer N, the number of spanning trees of the d-dimensional grid graph with free boundaries (Cartesian product of d path graphs) having exactly N vertices is maximized when the side lengths are as equal as possible (i.e., differ by at most 1). Moreover, any maximizer must have this balanced shape.",
     "domains": [
       "Bridges"
@@ -5527,7 +5527,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24016v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T18:14:54.853800+00:00",
     "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
   },
@@ -7985,6 +7985,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Random Matrices: Edge Universality\n\nDerived from the verified results in `AiryODE.lean`, `AiryKernel.lean`, and\n`AiryNonPolynomial.lean` (all 0-sorry, axioms = {propext, Classical.choice,\nQuot.sound}). Each conjecture below is falsifiable and stated so it could be\nattempted directly in Lean 4 / Mathlib.\n\n---\n\n## C1. The Airy kernel diagonal equals the constant Wronskian, globally normalized\n\n**Conjecture.** For the genuine Airy function `Ai` (the decaying solution of\n`y'' = x y`), define `K(x,y) = (Ai x \u00b7 Ai' y \u2212 Ai' x \u00b7 Ai y)/(x\u2212y)`. Then the\nremovable-singularity diagonal value `K(x,x\u207a) = Ai'(x)\u00b2 \u2212 x\u00b7Ai(x)\u00b2` is, for the\n*two-solution* CD kernel built from `(Ai, Bi)`, a position-independent constant\nequal to `\u2212W(Ai,Bi) = \u22121/\u03c0`.\n\n**The key insight is** that our `airyKernel_diagonal_tendsto` already proves the\ndiagonal limit is `\u2212W` and that `airyWronskian_const` makes `W` position-free; the\nonly missing ingredient is the *value* `W(Ai,Bi)=1/\u03c0`, a single normalization\nconstant, not new structural analysis.\n\n**Why now?** We have isolated the diagonal limit as a pure slope/`HasDerivAt`\ncomputation independent of any special-function theory, so the conjecture reduces\nto pinning one normalization constant rather than redoing the limit.\n\n---\n\n## C2. Linear-independence \u21d2 a 2-dimensional solution space (Wronskian as a basis test)\n\n**Conjecture.** The map `(a,b) \u21a6 a\u00b7Ai + b\u00b7Bi` is a linear isomorphism from `\u211d\u00b2`\nonto the solution space of `y'' = x y`; equivalently, every solution is a unique\ncombination of two solutions with nonzero Wronskian.\n\n**The key insight is** that `airy_solutions_linearIndep` already gives injectivity\n(nonzero Wronskian \u21d2 independence); surjectivity follows from Picard\u2013Lindel\u00f6f\nuniqueness applied to the difference of a candidate and its `(a,b)`-fit at one\npoint.\n\n**Why now?** Mathlib's ODE existence/uniqueness (`ODE_solution_unique`) is in\nplace, and we have already reduced the hard half (independence) to the constant\nWronskian, so only the abstract 2-dimensionality remains.\n\n---\n\n## C3. Determinantal positivity is *necessary*, not just sufficient, for edge kernels\n\n**Conjecture.** A symmetric kernel `K` admits a Gram representation\n`K(x,y)=\u27ea\u03c6 x, \u03c6 y\u27eb` **iff** every finite correlation matrix `(K(p\u1d62,p\u2c7c))` is\npositive semidefinite. Hence the Airy kernel's determinantal-process status is\nequivalent to the `n\u00d7n` PSD property we proved in `gram_corr_posSemidef`.\n\n**The key insight is** that `gram_corr_posSemidef` is exactly the forward (Gram \u21d2\nPSD) direction; the converse is the spectral theorem / Moore\u2013Aronszajn\nreproducing-kernel construction, which Mathlib's `InnerProductSpace` and\n`Matrix.PosSemidef` toolkit can support.\n\n**Why now?** We have a clean abstract `gramKernel` whose positivity is proved with\nno Airy-specific input, so the only new work is the reproducing-kernel converse \u2014\na self-contained functional-analysis lemma.\n\n---\n\n## C4. Non-algebraicity propagates to all higher edge-kernel generators\n\n**Conjecture.** No nonzero solution of any `y'' = q(x)\u00b7y` with `deg q \u2265 1`\n(e.g. the higher Airy/Painlev\u00e9-adjacent edge kernels) is a polynomial function;\nthe analytic bridge of `airy_solution_not_polynomial` lifts verbatim to\n`EMLDiffObstruction.no_poly_solves_second_order_pos_deg`.\n\n**The key insight is** that our bridge proof used only derivative uniqueness and\n`Polynomial.funext`, never the specific coefficient `X`; swapping the catalog\nlemma `no_poly_solves_airy \u2192 no_poly_solves_second_order_pos_deg` should close it\nwith the *same* transport script.\n\n**Why now?** The catalog already contains the general-degree algebraic\nobstruction; our analytic transport is coefficient-agnostic, so the generalization\nis a one-lemma substitution.\n\n---\n\n## C5. A Tracy\u2013Widom-style monotonicity from kernel positivity alone\n\n**Conjecture.** For a Gram correlation kernel `K`, the finite-`n` \"gap functional\"\n`det(I \u2212 K|_{p\u2081,\u2026,p\u2099})` is monotone non-increasing as the point set grows, giving a\nnascent (finite-rank) Tracy\u2013Widom CDF that is monotone without any limit theorem.\n\n**The key insight is** that PSD of all principal correlation matrices\n(`gram_corr_posSemidef`) forces the Fredholm-truncation determinants to interlace;\nmonotonicity is a Cauchy-interlacing consequence rather than an analytic limit.\n\n**Why now?** With `gram_corr_posSemidef` established for every finite point set,\nthe monotonicity is a finite linear-algebra statement (Cauchy interlacing is in\nMathlib), decoupling the *order* structure of Tracy\u2013Widom from its hard analytic\nconvergence.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2747",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "72f7aee6",
+    "status": "available",
+    "timestamp": "2026-06-28T04:28:20.539720+00:00",
+    "title": "Derived from the verified results in `AiryODE.lean`, `AiryKernel.lean`, and"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8056,21 +8071,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
-  },
-  {
-    "consumed_by_exp_id": "dbb7efcb",
-    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "id": "fd_0551",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.873771+00:00",
-    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
     "consumed_by_exp_id": "",
@@ -8321,7 +8321,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "4554c3a3",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -8331,7 +8331,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -8426,7 +8426,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "9ee5d694",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8436,7 +8436,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

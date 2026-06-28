@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "72f7aee6",
     "filename": "random_matrices_edge_universality.json",
     "pkg_num": 164,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.73264,
     "title": "Random Matrices at the Spectral Edge: Structure and Positivity of the Christoffel-Darboux Airy Kernel"
   },
   {
@@ -4784,8 +4784,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "random_matrices_edge_universality",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.73264,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Random Matrices at the Spectral Edge: Structure and Positivity of the Christoffel-Darboux Airy Kernel"
     }

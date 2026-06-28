@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fb2780d5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — GL(1) Langlands / Global Class Field Theory (cyclotomic case)\n\nDerived from this cycle's verified results in `GaloisDuality.lean` and `QuadraticHecke.lean`\n(building on the exist",
-      "quality_score": 0.7235799999999999,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-25T18:22:22",
-      "title": "Langlands Correspondence: GL(1) Case"
-    },
-    {
       "cycle_id": "ab9c78a7",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Extremal Graph Theory (Turán / Kruskal–Katona / Removal / Roth)\n\nDerived from this cycle's findings. The cycle added two compiling, sorry-free Lean files:\n\n* `KruskalKatonaGraphB",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T03:52:42",
       "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
+    },
+    {
+      "cycle_id": "72f7aee6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Random Matrices: Edge Universality\n\nDerived from the verified results in `AiryODE.lean`, `AiryKernel.lean`, and\n`AiryNonPolynomial.lean` (all 0-sorry, axioms = {propext, Classica",
+      "quality_score": 0.73264,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-28T04:28:31",
+      "title": "Random Matrices: Edge Universality"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1670a4b8",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nThis cycle settled the two-colour Schur number `S(2) = 4` exactly and supplied\nthe extremal construction for the lower bound `S(3) ≥ 13`",
-      "quality_score": 0.61528,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-24T13:10:21",
-      "title": "Ramsey Theory: Bounds and Constructions"
-    },
     {
       "cycle_id": "cd0ef092",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 5,
       "timestamp": "2026-06-28T04:01:53",
       "title": "Torsionness of Σ‑ramified Iwasawa modules over a ℤₚ‑extension"
+    },
+    {
+      "cycle_id": "72f7aee6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Random Matrices: Edge Universality\n\nDerived from the verified results in `AiryODE.lean`, `AiryKernel.lean`, and\n`AiryNonPolynomial.lean` (all 0-sorry, axioms = {propext, Classica",
+      "quality_score": 0.73264,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-28T04:28:31",
+      "title": "Random Matrices: Edge Universality"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "43f6ae62",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.7796
-    },
-    {
-      "cycle_id": "43f6ae62",
-      "domain": "Applications",
-      "name": "from",
-      "quality": 0.7796
-    },
-    {
-      "cycle_id": "2cb7b634",
-      "domain": "Novelty",
-      "name": "sum_weight",
-      "quality": 0.7014400000000001
-    },
     {
       "cycle_id": "31cf2713",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "gaussTerm_ge",
       "quality": 0.70384
+    },
+    {
+      "cycle_id": "72f7aee6",
+      "domain": "Novelty",
+      "name": "airyKernel_symm",
+      "quality": 0.73264
+    },
+    {
+      "cycle_id": "72f7aee6",
+      "domain": "Novelty",
+      "name": "airyKernel_diagonal_tendsto",
+      "quality": 0.73264
+    },
+    {
+      "cycle_id": "72f7aee6",
+      "domain": "Novelty",
+      "name": "gram_corr_det_nonneg",
+      "quality": 0.73264
     }
   ],
-  "last_updated": "2026-06-28T04:01:53",
+  "last_updated": "2026-06-28T04:28:31",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "470fcb83",
-        "quality": 0.7623499999999999,
-        "theorems": 14,
-        "title": "Idempotent Probability: Large Deviations"
-      },
-      {
         "cycle_id": "26246c0e",
         "quality": 0.39061,
         "theorems": 6,
@@ -3637,6 +3631,12 @@
         "quality": 0.70384,
         "theorems": 14,
         "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadrat"
+      },
+      {
+        "cycle_id": "72f7aee6",
+        "quality": 0.73264,
+        "theorems": 9,
+        "title": "Random Matrices: Edge Universality"
       }
     ],
     "NumberTheory": [
