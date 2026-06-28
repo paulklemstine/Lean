@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "72418ed5",
     "filename": "equality_cases_for_spectral_radius_bound_in_signed.json",
     "pkg_num": 187,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.43096,
     "title": "Equality Cases for the Maximum-Degree Spectral Bound of Signed Graphs"
   },
   {
@@ -5458,8 +5458,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "equality_cases_for_spectral_radius_bound_in_signed",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.43096,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Equality Cases for the Maximum-Degree Spectral Bound of Signed Graphs"
     }

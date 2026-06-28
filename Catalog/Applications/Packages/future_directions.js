@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
   {
-    "consumed_by_exp_id": "fee52015",
+    "consumed_by_exp_id": "",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
       "Logic",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -2323,20 +2323,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T11:45:08.025039+00:00",
     "title": "Spectral Gap Lower Bound for the Binary Fixed-Margin Swap Chain"
-  },
-  {
-    "consumed_by_exp_id": "28bd8499",
-    "description": "For every nonempty m \u00d7 n rectangular grid, let f : {0,\u2026,m\u22121} \u00d7 {0,\u2026,n\u22121} \u2192 Z satisfy f(0,0)=0 and |f(p)-f(q)|\u22641 on every grid edge. Then the total absolute mass is at most n\u00b7m(m\u22121)/2 + m\u00b7n(n\u22121)/2. This bound is sharp, attained by f(i,j)=i+j and by f(i,j)=\u2212(i+j). In the Miura-ori height-function model this is exactly the extremal inequality needed to turn the explicit lower-bound construction for the flip-graph diameter into a matching upper bound whenever flip distance is controlled by L1 height difference.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2350",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22614v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T12:05:30.404748+00:00",
-    "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
   },
   {
     "consumed_by_exp_id": "",
@@ -5012,7 +4998,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
   },
   {
-    "consumed_by_exp_id": "872fa119",
+    "consumed_by_exp_id": "",
     "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k \u2265 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
     "domains": [
       "Logic"
@@ -5021,7 +5007,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T22:09:21.864984+00:00",
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
   },
@@ -8566,6 +8552,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Spectral radius bounds for signed graphs\n\nBuilding on `Catalog/Novelty/SignedGraphSpectralEquality.lean`, which establishes\nthe \u0394-bound `|\u03bc| \u2264 \u0394` for signed adjacency matrices together with its *local*\nequality cases (degree saturation and magnitude propagation at the eigenvector's\npeak vertices) and a sharp realiser `K_n^+`.\n\nThe following conjectures are bold but testable, each phrased so it can be turned\ninto a `by sorry` Lean target in a later cycle.\n\n## C1. Global regularity from equality (connected case)\n\n**Conjecture.** Let `A` be a signed adjacency matrix that is *connected* (the\nunderlying unsigned graph is connected) with eigenpair `A *\u1d65 v = \u03bc \u2022 v`, `v \u2260 0`,\nand suppose `|\u03bc| = \u0394` (the maximum degree). Then the graph is **\u0394-regular**: every\nvertex has degree exactly `\u0394`, and `|v|` is constant.\n\n*Why plausible.* `eq_case_neighbors_attain_max` propagates the peak magnitude one\nedge at a time; connectivity should propagate it to all vertices, and then\n`eq_case_degree_saturated` applies at every vertex. Lean target: an induction over\na walk / `SimpleGraph.Connected.exists_walk`-style argument turning local\nsaturation into global regularity.\n\n## C2. Balance characterization at equality (\u03bb_max = \u0394 vs \u03bb_min = -\u0394)\n\n**Conjecture.** For a connected \u0394-regular signed graph, `\u03bb_max = \u0394` iff the graph\nis **balanced** (switching-equivalent to all-positive), and `\u03bb_min = -\u0394` iff it is\n**antibalanced** (switching-equivalent to all-negative). Equivalently, the\n*largest* eigenvalue meets the upper \u0394-bound exactly for balanced graphs.\n\n*Why plausible.* A balanced graph switches to all-positive, whose Perron vector is\nflat with eigenvalue \u0394; switching is an orthogonal conjugation preserving spectrum.\nLean target: define switching by a `\u00b11` diagonal `S`, prove `S A S` is similar to\n`A`, and show `K_n^+` / `K_n^-` realise the two extremes.\n\n## C3. Edge-count (Hong-type) bound and its equality cases\n\n**Conjecture.** For a signed graph with `m` edges (counted with the absolute\nadjacency) on `n` vertices, the spectral radius obeys\n`\u03c1(A) \u2264 \u221a(2m - n + 1)`, with equality iff `A` is (the switching class of) a\nstar `K_{1,n-1}` or a complete graph `K_n`.\n\n*Why plausible.* This is the signed analogue of Hong's bound; the absolute-value\nreduction used throughout this file (only `|A i j|` matters for the bound) suggests\nthe unsigned proof transfers, with balance fixing the equality side. Lean target:\nstate the bound for symmetric `{-1,0,1}` matrices and prove the easy direction\n(`\u03c1 \u2264 \u221a(2m-n+1)`) first.\n\n## C4. Strengthened bound via the second-largest degree (Lan et al. flavour)\n\n**Conjecture.** Let `d\u2081 \u2265 d\u2082` be the two largest degrees of a signed graph. Then\n`\u03c1(A) \u2264 (d\u2081 - 1 + \u221a((d\u2081+1)\u00b2 + 4(d\u2082 - 1)\u00b7something))/2`-type refinements hold,\nstrictly improving `\u03c1 \u2264 \u0394` unless the graph is regular.\n\n*Why plausible.* Refined Rayleigh bounds use the top two rows rather than a single\npeak vertex. Lean target: a two-vertex version of the peak argument in\n`eigenvalue_abs_le_maxDeg`, isolating the second-largest `|v j|`.\n\n## C5. Gram/Heged\u0171s bridge: signed Fisher inequality\n\n**Conjecture.** The constant-pattern Gram machinery in\n`Novelty/SpectralBound.lean` (`constGram_card_le`) yields a *signed* Fisher-type\nbound: a family of `\u00b11`-vectors with constant `|\u27e8v_i, v_j\u27e9|` pattern has size\n`\u2264 n`, and equality forces a regular two-graph / equiangular structure.\n\n*Why plausible.* Signed adjacency matrices with eigenvalue at the extreme are\nexactly Seidel/two-graph objects; `SpectralBound.constPattern_posDef` already\nprovides the positive-definite core. Lean target: connect `Matrix.gram` with the\nSeidel adjacency matrix `J - I - 2A` and reuse `constGram_card_le`.\n",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2787",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "72418ed5",
+    "status": "available",
+    "timestamp": "2026-06-28T15:03:30.990058+00:00",
+    "title": "Building on `Catalog/Novelty/SignedGraphSpectralEquality.lean`, which establishe"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8902,7 +8903,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "251e4381",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -8912,7 +8913,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -9247,7 +9248,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "461fdf74",
+    "consumed_by_exp_id": "",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -9257,7 +9258,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
