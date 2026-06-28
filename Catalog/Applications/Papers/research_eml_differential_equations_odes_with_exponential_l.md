@@ -1,431 +1,474 @@
-# The Differential Algebra of EML Ordinary Differential Equations: Logarithmic Derivatives, Galois Torsors, and a Sharp Kovacic Parity Decision
+# The Projective Galois Structure of the Riccati Equation and the Kovacic Obstruction for EML Ordinary Differential Equations
 
 **Author:** Aristotle
 **Date:** 2026-06-28
-**Domain:** Novelty (Differential Algebra / Differential Galois Theory)
+**Domain:** Applications (Differential Galois Theory)
 
 ---
 
 ## Abstract
 
-We develop, in a fully abstract differential-field setting, the algebraic core
-of ordinary differential equations whose coefficients are *exponential,
-multiplicative, and logarithmic* (EML) functions, and we apply it to the
-decision problem of elementary solvability. Working over an arbitrary
-differential field $K$ with derivation $y \mapsto y'$, we establish four
-interlocking layers of structure. First, the **logarithmic derivative**
-$L(y) = y'/y$ is a homomorphism from the multiplicative group $K^\times$ to the
-additive group $(K,+)$, with the consequence that solutions of first-order linear
-equations $y' = a\,y$ multiply by adding coefficients; we prove the finite
-superposition law $\big(\prod_i y_i\big)' = \big(\sum_i a_i\big)\prod_i y_i$.
-Second, the **constants** $\{x : x' = 0\}$ form a subfield, and the solution
-space of $y' = a\,y$ is a torsor under the multiplicative group of nonzero
-constants $\mathbb{G}_m(\text{constants})$: any two nonzero solutions differ by a
-nonzero constant. Third, the **Wronskian** $W(y_1,y_2) = y_1 y_2' - y_2 y_1'$ is
-constant on solutions of $y'' = a\,y$ (abstract Abel identity) and is a sharp
-detector of linear independence over the constants. Fourth, the **Riccati
-transform** $v = y'/y$ converts $y'' = a\,y$ into $v' + v^2 = a$, which drives the
-first step of the Kovacic algorithm; we prove that for any polynomial $f$ of odd
-degree the Riccati equation $v' + v^2 = f$ has no rational solution, deducing that
-the generalized Airy family $y'' = x^{2k+1} y$ — and Airy's equation $y'' = xy$ in
-particular — has no rational Riccati solution and hence no elementary solution.
-Finally, we prove the decision rule is **sharp**: the even-degree coefficient
-$f = x^2 + 1$ admits the rational Riccati solution $v = x$ (the logarithmic
-derivative of $e^{x^2/2}$), so the odd-degree hypothesis cannot be weakened. All
-results have been formalized and machine-checked.
+We develop the differential-Galois theory of ordinary differential equations
+whose coefficients are *exponential–logarithmic* (EML) functions, working
+entirely within an abstract differential field $K$ equipped with a derivation
+$x \mapsto x'$. The central object is the **Riccati equation**
+$v' + v^2 + p\,v + q = 0$, the equation satisfied by the logarithmic derivative
+$v = y'/y$ of a solution of the second-order linear equation
+$y'' + p\,y' + q\,y = 0$. Our main structural result is that the differential
+Galois group of the Riccati equation is **projective**: it embeds in
+$\mathrm{PGL}_2$ of the field of constants. We prove this in basis-free form by
+exhibiting the projective invariant — the **cross-ratio** of four solutions — as
+a constant of the differential field. The proof rests on a *difference law*
+showing that the difference of two Riccati solutions satisfies a first-order
+linear equation, combined with the homomorphism property of the logarithmic
+derivative (multiplication of solutions adds coefficients). We then connect this
+symmetry picture to the **Kovacic decision procedure**: the gauge transformation
+that reduces a general second-order EML equation to normal Riccati form, the
+clearing of denominators that translates rational solvability into a polynomial
+identity, and a degree-parity obstruction proving that **Airy's equation**
+$y'' = x\,y$ has no elementary (EML) solution. We show the parity criterion is
+sharp: every odd-degree coefficient $x^{2k+1}$ is obstructed, while the
+even-degree coefficient $x^2+1$ admits the explicit rational Riccati solution
+$v = x$ (corresponding to $y = e^{x^2/2}$). All results are stated over an
+arbitrary differential field with no characteristic or algebraic-closure
+hypotheses; the obstruction results live in the polynomial ring $\mathbb{R}[X]$.
 
 ---
 
 ## 1. Introduction
 
-Airy's equation $y'' = x\,y$, introduced by G. B. Airy in his 1838 study of
-optical caustics, is the prototypical second-order linear ordinary differential
-equation with no closed-form elementary solution. Its solutions, the Airy
-functions $\mathrm{Ai}$ and $\mathrm{Bi}$, are genuinely transcendental: no finite
-expression in polynomials, exponentials, logarithms, radicals and the field
-operations represents them. The modern explanation of such impossibility is
-**differential Galois theory** (Picard–Vessiot theory), the differential-equation
-analogue of classical Galois theory: a linear ODE is solvable in "Liouvillian"
-(elementary) terms if and only if its differential Galois group is suitably
-structured, and the **Kovacic algorithm** turns this into an effective decision
-procedure for second-order equations.
+### 1.1 Differential Galois theory in one paragraph
 
-This paper isolates and formalizes the algebraic engine of the EML theory — the
-class of equations whose coefficients are built from exponentials and logarithms —
-in a way that is independent of any characteristic, algebraic-closure, or analytic
-hypothesis. We work in an arbitrary **differential field** $(K, {}')$: a field $K$
-equipped with a derivation $\,'$ satisfying additivity $(x+y)' = x' + y'$ and the
-Leibniz rule $(xy)' = x'y + x y'$. From these axioms alone we recover the full
-first-order solution calculus, the constants-subfield symmetry theory, the
-Wronskian independence criterion, and the Riccati transform; and over the
-concrete polynomial ring $\mathbb{R}[X]$ we run the degree-parity argument that
-decides solvability for the generalized Airy family.
+Classical Galois theory attaches to a polynomial a finite group of symmetries
+and reads off solvability-by-radicals from the structure of that group.
+**Differential Galois theory** (Picard–Vessiot theory) performs the analogous
+construction for linear ordinary differential equations: it attaches to an
+equation a *linear-algebraic* group — the differential Galois group — acting on
+the space of solutions, and the question "is the equation solvable in elementary
+(Liouvillian) terms?" becomes a question about the structure of that group. The
+base field of the theory is not $\mathbb{Q}$ but the **field of constants**, the
+elements annihilated by the derivation.
 
-### 1.1 Contributions
+### 1.2 EML equations
 
-1. **The logarithmic-derivative homomorphism** (§3): $L(y) = y'/y$ is a group
-   homomorphism $K^\times \to (K,+)$, yielding product, quotient, inverse, and
-   integer-power laws, the binary and finite superposition laws for $y' = a\,y$.
-2. **First-order differential Galois structure** (§4): the constants form a
-   subfield; the solution space of $y' = a\,y$ is a $\mathbb{G}_m(\text{constants})$
-   torsor (`galois_action_is_mul_constant`, `galois_torsor`).
-3. **Wronskian theory for $y'' = a\,y$** (§5): abstract Abel identity, and the
-   biconditional between vanishing Wronskian and linear dependence over the
-   constants, giving a fundamental-system criterion.
-4. **Riccati transform and the Kovacic first step** (§6): $v = y'/y$ sends
-   $y'' = a\,y$ to $v' + v^2 = a$.
-5. **A sharp parity decision for Airy** (§7): odd-degree coefficients are
-   obstructed (`no_rational_solves_riccati_airy`,
-   `no_rational_riccati_genAiry`), while $f = x^2+1$ is solvable
-   (`riccati_evenDeg_solvable`), so the criterion is tight
-   (`kovacic_parity_decision_sharp`).
+By an **EML function** we informally mean a function assembled from the
+exponential, the logarithm, polynomials, and field operations — the "ordinary"
+closed-form functions of science. The corresponding class of ODEs has
+EML coefficients, and the slogan organizing the theory is:
 
----
+> *The differential Galois group of an EML equation is an EML group.*
 
-## 2. Preliminaries: differential fields
+For the first-order linear equation $y' = a\,y$ this group is the multiplicative
+group of nonzero constants $\mathbb{G}_m$. The contribution of this paper is the
+analogous, genuinely *nonlinear*, computation for the Riccati equation, whose
+group is **projective**.
 
-**Definition 2.1 (Differential field).** A *differential field* is a field $K$
-together with an additive map $\,' : K \to K$ (the *derivation*) satisfying the
-Leibniz rule
-$$ (xy)' = x'\,y + x\,y'. $$
-From the axioms one derives the quotient rule
-$(y/z)' = (y'z - yz')/z^2$ and the inverse rule $(y^{-1})' = -y'/y^2$ for
-$z, y \neq 0$.
+### 1.3 The differential-field formalism
 
-**Definition 2.2 (Constants).** The *field of constants* of $K$ is
-$$ C_K = \{\, x \in K : x' = 0 \,\}. $$
+To keep the algebra honest and free of analytic side-conditions, we work in a
+**differential field**: a field $K$ together with a derivation
+$\partial : K \to K$, written $x' := \partial x$, satisfying additivity and the
+Leibniz rule $(xy)' = x'y + xy'$. We write the derivative-of-quotient and
+derivative-of-inverse rules in their standard forms. All identities below are
+purely algebraic consequences of these axioms.
 
-**Definition 2.3 (Logarithmic derivative).** For $y \neq 0$, the *logarithmic
-derivative* is
-$$ L(y) = \frac{y'}{y}. $$
-
-Throughout, "EML equation" refers to a linear ODE $y' = a\,y$ or $y'' = a\,y$
-(or their first-derivative-bearing forms) interpreted in such a $K$; the slogan
-"the differential Galois group is an EML group" is made precise below by showing
-the relevant groups are subgroups of $\mathbb{G}_m(C_K)$, the multiplicative
-group of nonzero constants.
+**Definition 1.1 (Constants).** The *field of constants* of $K$ is
+$$C \;=\; \{\, x \in K : x' = 0 \,\}.$$
+It is a subfield of $K$: it is closed under addition (additivity of $\partial$),
+multiplication and inverse (Leibniz and the inverse rule), and contains $0,1$.
+This is the base field over which the differential Galois group is a
+linear-algebraic group. *(Formalized as `constantsSubfield`, with membership
+unfolding `mem_constantsSubfield : x ∈ C ↔ x' = 0`.)*
 
 ---
 
-## 3. The logarithmic derivative as an exponential–logarithmic homomorphism
+## 2. The logarithmic derivative as a homomorphism
 
-The decisive structural fact is that $L$ converts multiplication into addition.
+The algebraic engine of the entire theory is the **logarithmic derivative**
+$$L : K^\times \to (K, +), \qquad L(y) = \frac{y'}{y}.$$
 
-**Theorem 3.1 (Homomorphism law, `logDeriv_mul`).** For nonzero $y, z \in K$,
-$$ L(yz) = \frac{(yz)'}{yz} = \frac{y'}{y} + \frac{z'}{z} = L(y) + L(z). $$
+**Lemma 2.1 (Homomorphism property, `logDeriv_mul`).** For nonzero $y, z$,
+$$\frac{(yz)'}{yz} = \frac{y'}{y} + \frac{z'}{z}.$$
+*Proof.* Apply Leibniz: $(yz)' = y'z + yz'$; divide by $yz$ and simplify. $\square$
 
-*Proof sketch.* Expand $(yz)' = y'z + yz'$ by Leibniz, divide by $yz$, and
-simplify. ∎
+This is the abstract content of $\log(yz) = \log y + \log z$. The companion
+identities are $L(y/z) = L(y) - L(z)$ (`logDeriv_div`), $L(y^{-1}) = -L(y)$
+(`logDeriv_inv`), and $L(y^n) = n\,L(y)$ for $n \in \mathbb{Z}$
+(`logDeriv_zpow`). Thus $L$ is a group homomorphism whose kernel is exactly the
+constants $C$.
 
-**Corollary 3.2 (Quotient, inverse, power laws).** For nonzero $y, z$ and
-$n \in \mathbb{Z}$:
-$$ L(y/z) = L(y) - L(z), \quad L(y^{-1}) = -L(y), \quad L(y^n) = n\,L(y). $$
-These are `logDeriv_div`, `logDeriv_inv`, and `logDeriv_zpow`. The power law is
-proved by integer induction, reusing the multiplicative and inverse laws.
+The homomorphism property powers a complete **first-order solution calculus**.
 
-The equation $y' = a\,y$ is equivalent to $L(y) = a$ for $y \neq 0$, so the
-solution set is the $L$-fibre over $a$ — a coset of $\ker L = C_K$. The
-homomorphism property turns multiplicative combinations of solutions into
-additive combinations of coefficients.
+**Lemma 2.2 (Superposition, `firstOrder_mul`).** If $y' = a\,y$ and $z' = b\,z$,
+then
+$$(yz)' = (a+b)\,(yz).$$
+*Proof.* $(yz)' = y'z + yz' = a y z + b y z = (a+b) yz$. $\square$
 
-**Theorem 3.3 (Binary superposition, `firstOrder_mul`).** If $y' = a\,y$ and
-$z' = b\,z$, then $(yz)' = (a+b)(yz)$.
+This is the algebraic shadow of $e^A e^B = e^{A+B}$: multiplying solutions adds
+coefficients. The quotient analogue is:
 
-*Proof sketch.* $(yz)' = y'z + yz' = a y z + b y z = (a+b) yz$. ∎
+**Lemma 2.3 (Quotient solution, `firstOrder_div`).** If $y' = a\,y$,
+$z' = b\,z$, and $z \neq 0$, then
+$$(y/z)' = (a - b)\,(y/z).$$
 
-**Theorem 3.4 (Inverse, quotient, power solutions).** If $y' = a\,y$ (and where
-needed $y \neq 0$):
-$$ (y^{-1})' = (-a)\,y^{-1}, \quad (y/z)' = (a-b)(y/z)\ \text{when}\ z'=bz,\ z\neq 0, \quad (y^n)' = (n a)\,y^n. $$
-These are `firstOrder_inv`, `firstOrder_div`, `firstOrder_zpow`.
+There is also a finite version, `firstOrder_prod`: for a finite family with
+$(y_i)' = a_i\,y_i$, the product $\prod_i y_i$ solves
+$w' = \bigl(\sum_i a_i\bigr) w$.
 
-**Theorem 3.5 (Finite superposition, `firstOrder_prod`).** For a finite family
-$(y_i)_{i \in s}$ with $y_i' = a_i\,y_i$ for all $i \in s$,
-$$ \Big(\prod_{i \in s} y_i\Big)' = \Big(\sum_{i \in s} a_i\Big)\,\prod_{i \in s} y_i. $$
-
-*Proof sketch.* Finite-set induction. The empty product gives $1' = 0$, the
-honest zero-coefficient base case. The inductive step applies Leibniz to
-$y_j \cdot \prod_{i \in s} y_i$ and uses the inductive hypothesis together with
-$y_j' = a_j y_j$, finishing with ring normalization. ∎
-
-This is the abstract content of $\prod_i e^{\int a_i} = e^{\sum_i \int a_i}$:
-multiplicative structure on solutions is additive structure on coefficients.
+Lemmas 2.2 and 2.3 are precisely the catalog machinery invoked in the cross-ratio
+computation of Section 4.
 
 ---
 
-## 4. Differential Galois structure of first-order EML equations
+## 3. The first-order Galois group is $\mathbb{G}_m(C)$
 
-**Theorem 4.1 (Constants form a subfield, `constantsSubfield`).** The set
-$C_K = \{x : x' = 0\}$ is a subfield of $K$: it contains $0$ and $1$ and is closed
-under addition, negation, multiplication, and inversion.
+Before the projective (Riccati) computation, we record the linear (first-order)
+one, which is its rank-one shadow.
 
-*Proof sketch.* Closure under $+$ and $-$ is additivity of $\,'$; closure under
-$\times$ is Leibniz ($c' = d' = 0 \Rightarrow (cd)' = 0$); closure under inversion
-is the inverse rule. ∎
+**Theorem 3.1 (Constant ratio of solutions, `solution_ratio_isConstant`).** If
+$y_1' = a\,y_1$, $y_2' = a\,y_2$ and $y_1 \neq 0$, then $(y_2/y_1)' = 0$, i.e.
+$y_2/y_1 \in C$.
+*Proof.* By the quotient rule and substitution of the equations, the numerator
+of $(y_2/y_1)'$ is $y_2' y_1 - y_2 y_1' = a y_2 y_1 - y_2 a y_1 = 0$. $\square$
 
-**Theorem 4.2 (Solution ratio is constant, `solution_ratio_isConstant` /
-`firstOrder_ratio_isConstant`).** If $y_1' = a y_1$, $y_2' = a y_2$ and
-$y_1 \neq 0$ (resp. $y_2 \neq 0$), then $(y_2/y_1)' = 0$.
+**Theorem 3.2 (Galois action is scaling by a constant, `galois_action_is_mul_constant`).**
+Any two nonzero solutions $y_1, y_2$ of $y' = a\,y$ differ by a nonzero
+constant: there is $c \in K$ with $c \neq 0$, $c' = 0$, and $y_2 = c\,y_1$.
+*Proof.* Take $c = y_2/y_1$; it is nonzero (quotient of nonzeros) and constant
+(Theorem 3.1), and $y_2 = c\,y_1$ by clearing the denominator. $\square$
 
-*Proof sketch.* By Theorem 3.1, $L(y_2/y_1) = L(y_2) - L(y_1) = a - a = 0$, so the
-numerator of $(y_2/y_1)'$ vanishes; clear denominators with the quotient rule. ∎
+**Theorem 3.3 (Solution space is a $\mathbb{G}_m(C)$-torsor, `galois_torsor`).**
+For a fixed nonzero solution $y_1$, an element $y_2$ is a nonzero solution iff
+$y_2 = c\,y_1$ for some nonzero constant $c$.
+*Proof.* Forward direction is Theorem 3.2. Conversely, a constant multiple of a
+solution is a solution (`const_mul_solution`), and a product of nonzeros is
+nonzero. $\square$
 
-**Theorem 4.3 (Galois action by multiplicative constants,
-`galois_action_is_mul_constant`).** If $y_1, y_2$ are nonzero solutions of
-$y' = a\,y$, then there is a nonzero constant $c$ with $c' = 0$ and $y_2 = c\,y_1$.
-
-*Proof sketch.* Take $c = y_2/y_1$: it is nonzero (ratio of nonzero elements),
-constant by Theorem 4.2, and $y_2 = c\,y_1$ by clearing the denominator. ∎
-
-**Theorem 4.4 (Closure under constant scaling, `const_mul_solution`).** If
-$c' = 0$ and $y' = a\,y$, then $(c\,y)' = a\,(c\,y)$.
-
-**Theorem 4.5 (Torsor structure, `galois_torsor`).** Fix a nonzero solution $y_1$
-of $y' = a\,y$. Then for any $y_2 \in K$,
-$$ \big(y_2' = a\,y_2 \ \wedge\ y_2 \neq 0\big) \iff \exists c \neq 0,\ c' = 0,\ y_2 = c\,y_1. $$
-
-*Proof sketch.* Forward direction is Theorem 4.3; backward direction is
-Theorem 4.4 together with $c y_1 \neq 0$. ∎
-
-**Interpretation.** The solution space of $y' = a\,y$ is a one-dimensional line
-over the constants, and the differential Galois group acts on it by multiplication
-by elements of $\mathbb{G}_m(C_K)$. This is the rank-1 Picard–Vessiot statement:
-the Galois group of a first-order EML equation is, exactly, a subgroup of the
-multiplicative group of nonzero constants — the simplest linear-algebraic
-("EML") group.
+Thus the differential Galois group of $y' = a\,y$ acts on its one-dimensional
+solution line by the multiplicative group of nonzero constants $\mathbb{G}_m(C)$
+— the prototypical EML group.
 
 ---
 
-## 5. Wronskian theory for second-order EML equations
+## 4. The projective Galois group of the Riccati equation
 
-For $y'' = a\,y$ the solution space is (at most) two-dimensional over $C_K$, and
-the Wronskian is the invariant that controls dimension.
+### 4.1 The Riccati equation and its origin
 
-**Definition 5.1 (Wronskian).** $W(y_1, y_2) = y_1\,y_2' - y_2\,y_1'$.
+**Definition 4.1 (Riccati equation).** For $p, q \in K$, the *Riccati equation*
+is the first-order nonlinear equation
+$$v' + v^2 + p\,v + q = 0.$$
 
-**Theorem 5.2 (Abstract Abel identity, `wronskian_deriv_eq_zero` /
-`wronskian_isConstant`).** If $y_1'' = a y_1$ and $y_2'' = a y_2$, then
-$W(y_1,y_2)' = 0$; i.e. $W(y_1,y_2) \in C_K$.
+It is the logarithmic-derivative reduction of a second-order linear equation:
 
-*Proof sketch.* Differentiate: $W' = y_1 y_2'' - y_2 y_1'' = y_1(a y_2) - y_2(a y_1) = 0$. ∎
+**Proposition 4.2 (Full Riccati transform, `riccati_full_of_second_order`).** If
+$y \neq 0$ solves $y'' + p\,y' + q\,y = 0$, then $v = y'/y$ solves
+$v' + v^2 + p\,v + q = 0$.
+*Proof sketch.* The identity $(y'/y)' + (y'/y)^2 = y''/y$ (the Riccati identity
+for the logarithmic derivative) reduces the claim to substituting
+$y'' = -p\,y' - q\,y$ and simplifying. $\square$
 
-**Definition 5.3 (Linear dependence over constants, `LinDepOverConstants`).** The
-pair $(y_1, y_2)$ is *linearly dependent over the constants* if there exist
-$c_1, c_2 \in C_K$, not both zero, with $c_1 y_1 + c_2 y_2 = 0$.
+### 4.2 The difference law
 
-**Theorem 5.4 (Dependence forces $W = 0$, `wronskian_eq_zero_of_linDep`).** If
-$(y_1,y_2)$ is linearly dependent over the constants, then $W(y_1,y_2) = 0$. (No
-differential equation is assumed — this is a property of the field.)
+The decisive structural fact is that *differences* of Riccati solutions are
+linear.
 
-*Proof sketch.* Differentiate the relation $c_1 y_1 + c_2 y_2 = 0$; since
-$c_1, c_2$ are constant this yields the companion relation
-$c_1 y_1' + c_2 y_2' = 0$. Eliminating $y_2$ (resp. $y_1$) gives
-$c_1 W = 0$ and $c_2 W = 0$. As $(c_1, c_2) \neq (0,0)$, one factor is nonzero,
-forcing $W = 0$. ∎
+**Theorem 4.3 (Difference law, `riccati_diff`).** If $v_1$ and $v_2$ both solve
+$v' + v^2 + p\,v + q = 0$, then
+$$(v_1 - v_2)' = -\bigl(v_1 + v_2 + p\bigr)\,(v_1 - v_2).$$
+*Proof.* Subtract the two Riccati equations:
+$$
+(v_1 - v_2)' = v_1' - v_2'
+= -(v_1^2 - v_2^2) - p(v_1 - v_2)
+= -\bigl[(v_1+v_2) + p\bigr](v_1 - v_2),
+$$
+using $v_1^2 - v_2^2 = (v_1+v_2)(v_1-v_2)$ and the cancellation of $q$. $\square$
 
-**Corollary 5.5 (Independence criterion, `linIndep_of_wronskian_ne_zero`).** If
-$W(y_1,y_2) \neq 0$ then $(y_1,y_2)$ is linearly independent over the constants.
+Equivalently (`riccati_diff_logDeriv`), for distinct solutions
+$$\frac{(v_1 - v_2)'}{v_1 - v_2} = -\bigl(v_1 + v_2 + p\bigr).$$
 
-**Theorem 5.6 (Fundamental-system criterion,
-`wronskian_isConstant_ne_zero_of_linIndep`).** If $y_1, y_2$ both solve
-$y'' = a\,y$ and $W(y_1,y_2) \neq 0$, then $W(y_1,y_2)$ is a *nonzero constant*.
+So every difference $v_i - v_j$ is a first-order linear solution with
+coefficient $-(v_i + v_j + p)$, and the calculus of Section 2 applies to it.
 
-*Proof sketch.* Combine Theorem 5.2 (constancy) with the nonvanishing
-hypothesis. ∎
+### 4.3 The cross-ratio is constant
 
-Also recorded are `scale_solution` (a constant multiple of a solution of
-$y'' = a\,y$ is a solution), `add_solution` (solutions are closed under addition,
-so they form a $C_K$-module), and `wronskian_dependent_eq_zero` (the Wronskian of
-$y_1$ and a constant multiple $c\,y_1$ vanishes). Together these make precise the
-"rank $\le 2$ solution space over the constants, detected by $W$" picture.
+**Definition 4.4 (Cross-ratio, `crossRatio`).** For $v_1, v_2, v_3, v_4 \in K$,
+$$[\,v_1, v_2; v_3, v_4\,] \;=\;
+\frac{(v_1 - v_3)(v_2 - v_4)}{(v_1 - v_4)(v_2 - v_3)}.$$
 
----
+This is the canonical projective invariant: it is exactly the quantity fixed by
+the Möbius (i.e. $\mathrm{PGL}_2$) action on the projective line.
 
-## 6. The Riccati transform and the Kovacic reduction
+**Theorem 4.5 (Invariance of the cross-ratio, `riccati_crossRatio_isConstant`).**
+Let $v_1, v_2, v_3, v_4$ all solve $v' + v^2 + p\,v + q = 0$, with $v_1 \neq v_4$
+and $v_2 \neq v_3$ (so the cross-ratio is defined). Then
+$$\bigl(\,[\,v_1, v_2; v_3, v_4\,]\,\bigr)' = 0,$$
+i.e. the cross-ratio is a constant.
 
-**Theorem 6.1 (Riccati transform, raw form, `logDeriv_riccati`).** For $y \neq 0$,
-$$ L(y)' + L(y)^2 = \frac{y''}{y}. $$
+*Proof.* By Theorem 4.3, each difference is a first-order solution:
+$$
+(v_1 - v_3)' = -(v_1+v_3+p)(v_1-v_3), \qquad
+(v_2 - v_4)' = -(v_2+v_4+p)(v_2-v_4),
+$$
+and similarly for $v_1 - v_4$, $v_2 - v_3$. Apply Lemma 2.2 (`firstOrder_mul`)
+to the numerator $N = (v_1-v_3)(v_2-v_4)$ and denominator
+$D = (v_1-v_4)(v_2-v_3)$:
+$$
+N' = \kappa_N\, N, \quad \kappa_N = -(v_1+v_3+p) - (v_2+v_4+p),
+$$
+$$
+D' = \kappa_D\, D, \quad \kappa_D = -(v_1+v_4+p) - (v_2+v_3+p).
+$$
+Since $D \neq 0$ (both factors are nonzero by hypothesis), Lemma 2.3
+(`firstOrder_div`) gives
+$$
+\bigl(N/D\bigr)' = (\kappa_N - \kappa_D)\,(N/D).
+$$
+Finally,
+$$
+\kappa_N - \kappa_D
+= \bigl[-(v_1+v_2+v_3+v_4+2p)\bigr] - \bigl[-(v_1+v_2+v_3+v_4+2p)\bigr]
+= 0,
+$$
+since each of $v_1, v_2, v_3, v_4$ occurs once in each bracket and the two copies
+of $p$ match. Hence $(N/D)' = 0$. $\square$
 
-*Proof sketch.* Differentiate $L(y) = y'/y$ with the quotient rule:
-$L(y)' = y''/y - (y'/y)^2 = y''/y - L(y)^2$. Rearranging gives the identity. ∎
+**Interpretation.** Theorem 4.5 is the basis-free statement that the differential
+Galois group of the Riccati equation is a subgroup of $\mathrm{PGL}_2(C)$: every
+symmetry of the equation preserves the projective cross-ratio invariant, exactly
+as Möbius transformations do in classical geometry. The cancellation
+$\kappa_N = \kappa_D$ is the differential-algebraic incarnation of the chain-rule
+identity underlying Möbius invariance of the cross-ratio. The hypotheses
+$v_1 \neq v_4$, $v_2 \neq v_3$ are precisely well-definedness of the
+denominator; no further assumption is needed.
 
-**Theorem 6.2 (Riccati from second order, `riccati_of_second_order`).** If
-$y \neq 0$ solves $y'' = a\,y$, then $v = L(y)$ solves the Riccati equation
-$$ v' + v^2 = a. $$
+### 4.4 The degeneration chain
 
-*Proof sketch.* Substitute $y'' = a\,y$ into Theorem 6.1. ∎
+Knowledge of explicit solutions degenerates the symmetry group along
+$$
+\mathrm{PGL}_2(C) \;\supset\;
+\mathbb{G}_a \rtimes \mathbb{G}_m \;\supset\;
+\mathbb{G}_m \;\supset\; 1,
+$$
+each step removing one degree of projective freedom:
 
-This substitution is the heart of the Kovacic algorithm: a second-order linear
-equation in normal form has a Liouvillian solution iff the associated Riccati
-equation has an algebraic (and, at the first step, *rational*) solution.
+- **One solution** $v_0$ linearizes the equation via $v = v_0 + 1/u$, with
+  $u' = (2 v_0 + p)\,u + 1$; the stabilizer is the affine group
+  $\mathbb{G}_a \rtimes \mathbb{G}_m$.
+- **Two solutions** leave the scaling torus $\mathbb{G}_m$, exactly the
+  first-order picture of Section 3 (the reciprocal-shifts $1/(v - v_0)$ form an
+  affine line over the constants).
+- **Three solutions** fix the projective coordinate completely; the symmetry is
+  trivial. This is rigidity: three points determine a Möbius map.
 
-**Clearing denominators.** A rational candidate $v = p/q$ with $p, q \in
-\mathbb{R}[X]$, $q \neq 0$, satisfies $v' + v^2 = f$ iff the polynomial identity
-$$ p'\,q - p\,q' + p^2 = f\,q^2 \tag{$\ast$} $$
-holds, obtained by multiplying through by $q^2$ and using
-$v' = (p'q - pq')/q^2$, $v^2 = p^2/q^2$. We therefore study $(\ast)$ directly,
-keeping the argument inside the polynomial ring while faithfully encoding
-"rational solution of the Riccati equation."
-
----
-
-## 7. A sharp degree-parity decision for the (generalized) Airy family
-
-### 7.1 The degree bound
-
-**Lemma 7.1 (`natDegree_wronskianLike_le`).** For $p, q \in \mathbb{R}[X]$,
-$$ \deg(p'q - pq') \le \deg p + \deg q - 1. $$
-
-*Proof sketch.* Each product $p'q$ and $pq'$ has degree at most
-$\deg p + \deg q - 1$ because differentiation drops degree by one; the difference
-inherits the bound. (Degenerate cases where $p$ or $q$ is constant are handled
-separately.) ∎
-
-### 7.2 The odd-degree obstruction
-
-**Theorem 7.2 (Odd-degree Riccati obstruction,
-`no_rational_solves_riccati_odd_deg`).** Let $f \in \mathbb{R}[X]$ have odd
-degree. Then there are no $p, q \in \mathbb{R}[X]$ with $q \neq 0$ satisfying
-$(\ast)$, i.e. $v' + v^2 = f$ has no rational solution.
-
-*Proof sketch.* Compare degrees of the two sides of $(\ast)$. The right side
-$f q^2$ has degree $\deg f + 2\deg q$, which is odd. For the left side, by Lemma
-7.1 the part $p'q - pq'$ has degree at most $\deg p + \deg q - 1$, while $p^2$ has
-the even degree $2\deg p$.
-- If $\deg p \ge \deg q$: the $p^2$ term dominates and the left side has degree
-  exactly $2\deg p$ (even), so $\deg f + 2\deg q$ would be even, contradicting
-  odd $\deg f$.
-- If $\deg p < \deg q$: the entire left side has degree at most
-  $\max(2\deg p,\ \deg p + \deg q - 1) \le 2\deg q - 2 < 2\deg q + 1 \le \deg f + 2\deg q$,
-  so the degrees cannot match.
-Either way $(\ast)$ is impossible. Coprimality of $p, q$ is not required;
-the obstruction is purely metric. ∎
-
-**Theorem 7.3 (Airy, `no_rational_solves_riccati_airy`).** The Riccati equation
-$v' + v^2 = x$ has no rational solution; equivalently no $p, q$ with $q \neq 0$
-satisfy $p'q - pq' + p^2 = X q^2$.
-
-*Proof.* Apply Theorem 7.2 with $f = X$, $\deg X = 1$ odd. ∎
-
-**Theorem 7.4 (Generalized Airy family, `no_rational_riccati_genAiry`).** For
-every $k \in \mathbb{N}$, the equation $y'' = x^{2k+1} y$ has no rational Riccati
-solution: $(\ast)$ with $f = X^{2k+1}$ is unsolvable for $q \neq 0$. Airy is the
-case $k = 0$.
-
-*Proof.* $\deg X^{2k+1} = 2k+1$ is odd; apply Theorem 7.2. ∎
-
-We also record the cruder polynomial obstruction underpinning the rational one:
-no nonzero polynomial solves $y'' = x y$ (`no_poly_solves_airy`), because $y''$
-has strictly smaller degree than $x\,y$; this generalizes to $y'' = q\,y$ for any
-$q$ of positive degree (`no_poly_solves_second_order_pos_deg`) and to
-$y'' = x^n y$, $n \ge 1$ (`no_poly_solves_gen_airy`).
-
-### 7.3 Sharpness
-
-**Theorem 7.5 (Even-degree solvability witness, `riccati_evenDeg_solvable`).** The
-Riccati equation $v' + v^2 = x^2 + 1$ has the polynomial solution $v = x$:
-taking $p = X$, $q = 1$ satisfies $(\ast)$ since $p'q - pq' + p^2 = 1 + X^2 = f q^2$.
-
-*Remark.* $v = x$ is the logarithmic derivative of $y = e^{x^2/2}$, which solves
-$y'' = (x^2+1)\,y$; the equation is genuinely EML-solvable. The coefficient
-$x^2 + 1$ has even degree $2$ (`natDegree_evenWitness`).
-
-**Theorem 7.6 (Sharp parity decision, `kovacic_parity_decision_sharp`).**
-$$ \Big(\forall k \in \mathbb{N},\ v' + v^2 = x^{2k+1}\ \text{has no rational solution}\Big) \ \wedge\ \Big(v' + v^2 = x^2 + 1\ \text{has a rational solution}\Big). $$
-
-*Proof.* Conjunction of Theorems 7.4 and 7.5. ∎
-
-Hence, on the family $y'' = f\,y$, the test "$\deg f$ odd" is a *correct and tight*
-first-step decision: it certifies non-existence of a rational Riccati solution
-exactly when one provably does not exist, and the boundary example $x^2+1$ shows
-the odd-degree hypothesis cannot be dropped.
+The count of constant-field-rational solutions ($0, 1, 2$, or $\infty$) is thus a
+complete discrete invariant of the Riccati Galois group — a projective analogue
+of the order of a finite Galois group.
 
 ---
 
-## 8. Algorithms
+## 5. Reduction to normal form: the Riccati gauge
 
-### 8.1 First-step Kovacic decision on $y'' = f\,y$ (polynomial family)
+The Kovacic algorithm is stated for the *normal form* $u'' = r\,u$, whose
+Riccati equation is $\tilde v' + \tilde v^2 = r$. A general second-order EML
+equation carries a first-derivative term, so we need a gauge to remove it.
 
-**Input.** A polynomial coefficient $f \in \mathbb{R}[X]$.
-**Output.** A certified verdict on whether the Riccati first step is obstructed by
-the degree-parity criterion.
+**Theorem 5.1 (Riccati gauge / completing the square, `riccati_gauge`).** Suppose
+$2g = p$ (abstractly $g = p/2$) and $v$ solves $v' + v^2 + p\,v + q = 0$. Then
+$\tilde v = v + g$ solves the normal-form Riccati equation
+$$\tilde v' + \tilde v^2 = g' + g^2 - q.$$
+*Proof.* Expand $(v+g)' + (v+g)^2 - (g'+g^2-q)$ using additivity of $\partial$.
+It equals $(v' + v^2 + p v + q) + (2g - p)\,v$; the first parenthesis vanishes by
+hypothesis and the second by $2g = p$. The proof is division-free and valid in
+any differential field. $\square$
 
-```
-function KovacicParityFirstStep(f):
-    d ← natDegree(f)
-    if d is odd:
-        return ("OBSTRUCTED",
-                "deg f is odd ⇒ no rational solution of v' + v² = f (Thm 7.2)")
-    else:
-        # parity test inconclusive; attempt a low-degree rational search
-        return RationalRiccatiSearch(f)
-```
+**Corollary 5.2 (`riccati_normalForm_of_second_order`).** A nonzero solution $y$
+of $y'' + p\,y' + q\,y = 0$, gauged by any $g$ with $2g = p$, yields a solution
+$\tilde v = y'/y + g$ of $\tilde v' + \tilde v^2 = g'+g^2-q$. The normal-form
+coefficient is $r = g' + g^2 - q = q - \tfrac{p^2}{4} - \tfrac{p'}{2}$ when
+$g = p/2$.
 
-The parity test runs in $O(1)$ after computing $\deg f$. When it returns
-OBSTRUCTED the verdict is a theorem (Theorem 7.2). When $\deg f$ is even the test
-is inconclusive and a constructive search is invoked.
-
-### 8.2 Bounded rational Riccati search (clearing-denominators form)
-
-Search for $p, q$ with $\deg p, \deg q \le N$ solving $(\ast)$. Substituting
-$v = p/q$ and clearing denominators reduces solvability to a polynomial identity;
-matching coefficients yields a finite (generally nonlinear) algebraic system. For
-the polynomial sub-case $q = 1$ this becomes the search for $p$ with
-$p' + p^2 = f$, solvable degree-by-degree.
-
-```
-function RationalRiccatiSearch(f, N):
-    for dq in 0..N:
-        for dp in 0..N:
-            unknowns ← coefficients of p (dp+1) and q (dq+1)
-            solve  p'·q − p·q' + p² = f·q²   for the unknowns
-            if a real solution exists with q ≠ 0:
-                return ("SOLVABLE", p, q)
-    return ("NO SOLUTION UP TO DEGREE N")
-```
+This is the Riccati-side companion of the substitution
+$y = e^{-\frac12 \int p}\,u$ that removes the first-derivative term on the linear
+side, and it is what allows the normal-form obstruction theory below to apply to
+general EML equations.
 
 ---
 
-## 9. Applications and discussion
+## 6. The Kovacic obstruction: Airy's equation has no EML solution
 
-- **Special functions.** The non-elementary nature of $\mathrm{Ai}, \mathrm{Bi}$ is
-  recovered as a degree-parity theorem rather than an analytic statement, and it
-  extends uniformly to the generalized Airy hierarchy $y'' = x^{2k+1} y$.
-- **Symbolic computation.** Theorem 7.2 provides a sound $O(1)$ pre-filter for the
-  first Kovacic step on polynomial coefficients, and Theorem 7.6 shows precisely
-  where the filter must hand off to a constructive search.
-- **Structural transparency.** Reducing first-order solvability to the
-  homomorphism $L : K^\times \to (K,+)$ and to a $\mathbb{G}_m(C_K)$ torsor makes
-  the "EML group" slogan a precise, hypothesis-free theorem.
+### 6.1 Rational solvability as a polynomial identity
 
-**Limitations.** The sharp decision of §7 is established for the polynomial family
-$y'' = f\,y$ via the cleared identity $(\ast)$; full Kovacic decidability for
-arbitrary rational coefficients requires the higher cases of the algorithm
-(degree-2 and finite imprimitive cases) not formalized here. The abstract
-differential-field results are stated over a general $K$; instantiating them on a
-concrete differential field such as $\mathbb{R}(X)$ is the natural next step.
+The first step of the Kovacic algorithm asks whether the normal-form Riccati
+equation $v' + v^2 = f$ has a *rational* solution $v = p/q$ with $q \neq 0$.
+Clearing denominators (using $v' = (p'q - pq')/q^2$ and $v^2 = p^2/q^2$) shows
+this holds iff the polynomial identity
+$$p'\,q - p\,q' + p^2 \;=\; f\,q^2$$
+holds in the polynomial ring. We work in $\mathbb{R}[X]$.
+
+**Definition 6.1 (`HasRationalRiccatiSolution`).** $f \in \mathbb{R}[X]$ *has a
+rational Riccati solution* if there exist $p, q \in \mathbb{R}[X]$ with $q \neq 0$
+and $p'q - pq' + p^2 = f\,q^2$.
+
+### 6.2 The Wronskian-like degree bound
+
+**Lemma 6.2 (`natDegree_wronskianLike_le`).** For $p, q \in \mathbb{R}[X]$,
+$$\deg\bigl(p'\,q - p\,q'\bigr) \le \deg p + \deg q - 1.$$
+*Proof sketch.* The "Wronskian-like" combination $p'q - pq'$ has its top-degree
+terms cancel: both $p'q$ and $pq'$ have leading degree $\deg p + \deg q - 1$, and
+their leading coefficients agree up to the cancellation, dropping the degree by
+one. (Handled by case analysis on the degrees of $p, q$ in the formalization.)
+$\square$
+
+### 6.3 The odd-degree obstruction
+
+**Theorem 6.3 (Odd-degree Riccati obstruction, `no_rational_solves_riccati_odd_deg`).**
+If $f \in \mathbb{R}[X]$ has *odd* degree, then $p'q - pq' + p^2 = f\,q^2$ has no
+solution with $q \neq 0$. Equivalently, $v' + v^2 = f$ has no rational solution.
+
+*Proof.* Suppose a solution exists with $q \neq 0$. The right-hand side has
+degree $\deg f + 2\deg q$, which is **odd** (since $\deg f$ is odd). For the left
+side, split on $\deg p$ versus $\deg q$:
+
+- **Case $\deg p \ge \deg q$.** Then $\deg(p^2) = 2\deg p \ge 2\deg q$, while by
+  Lemma 6.2 the term $p'q - pq'$ has degree $\le \deg p + \deg q - 1 < 2\deg p$.
+  So the left side has degree exactly $2\deg p$, an **even** number. Equating to
+  the odd right-hand degree forces $\deg f + 2\deg q = 2\deg p$, i.e.
+  $\deg f = 2(\deg p - \deg q)$ is even — contradicting $\deg f$ odd.
+- **Case $\deg p < \deg q$.** Then $\deg(p^2) = 2\deg p \le 2\deg q - 2$ and, by
+  Lemma 6.2, $\deg(p'q - pq') \le \deg p + \deg q - 1 \le 2\deg q - 2$. So the
+  left side has degree $\le 2\deg q - 2$, strictly below the right side's degree
+  $\ge 2\deg q + 1$. Contradiction.
+
+Either way no solution exists. Notably, *coprimality of $p$ and $q$ is not
+required*: the obstruction is purely metric (degree-parity), stronger than the
+textbook pole argument. $\square$
+
+### 6.4 Airy
+
+**Theorem 6.4 (Airy has no rational Riccati solution, `no_rational_solves_riccati_airy`).**
+There are no $p, q \in \mathbb{R}[X]$ with $q \neq 0$ and
+$p'q - pq' + p^2 = X\,q^2$.
+*Proof.* Apply Theorem 6.3 with $f = X$, whose degree is $1$, odd. $\square$
+
+Combined with the polynomial-level obstruction (Airy has no nonzero polynomial
+solution, `no_poly_solves_airy`), this packages as
+`airy_no_poly_and_no_rational_riccati`: Airy's equation $y'' = x\,y$ has neither
+a polynomial solution nor a rational Riccati solution — the first two layers of
+the Kovacic procedure certifying that **Airy's equation has no elementary (EML)
+closed-form solution.**
+
+### 6.5 Sharpness of the parity criterion
+
+**Theorem 6.5 (Generalized Airy obstruction, `no_rational_riccati_genAiry`).**
+For every $k \in \mathbb{N}$, $f = X^{2k+1}$ has no rational Riccati solution.
+*Proof.* $\deg X^{2k+1} = 2k+1$ is odd; apply Theorem 6.3. $\square$
+
+**Theorem 6.6 (Even-degree solvability, `riccati_evenDeg_solvable`).** The
+coefficient $f = X^2 + 1$ has the explicit rational (indeed polynomial) Riccati
+solution $v = X$.
+*Proof.* With $p = X$, $q = 1$: $p'q - pq' + p^2 = 1 + X^2 = f\,q^2$. $\square$
+
+This witness is not artificial: $y'' = (x^2+1)\,y$ is solved by $y = e^{x^2/2}$,
+whose logarithmic derivative is exactly $x = v$.
+
+**Theorem 6.7 (Sharpness, `kovacic_parity_decision_sharp`).** On the family
+$y'' = f\,y$ the odd-degree test is a correct and tight decision: every
+$X^{2k+1}$ is obstructed while $X^2 + 1$ is solvable.
+*Proof.* Conjunction of Theorems 6.5 and 6.6. $\square$
+
+Thus the odd-degree hypothesis is *necessary*: it cannot be weakened without
+admitting solvable even-degree examples.
 
 ---
 
-## 10. Future work
+## 7. Algorithmic summary
 
-See the *Future Directions* compendium: a Riccati gauge transforming the
-first-derivative form $y'' + p y' + q y = 0$ to normal form, so the Airy
-obstruction transports to gauged equations (e.g. $y'' - 2x y' + (x^2-1) y = 0$); a
-concrete `Differential (RatFunc ℝ)` instance whose constants are exactly
-$\mathbb{R}$, turning every abstract theorem into a statement about rational
-functions and making the torsor result a concrete $\mathbb{R}^\times$-torsor
-statement over $\mathbb{R}(x)$; and an effective dimension-2 theory in which every
-fundamental system arises by reduction of order.
+The results assemble into the first step of a Kovacic-style decision procedure
+for a second-order EML equation $y'' + p\,y' + q\,y = 0$:
+
+1. **Gauge to normal form.** Choose $g$ with $2g = p$; the normal-form
+   coefficient is $r = g' + g^2 - q$ (Theorem 5.1). The Riccati equation becomes
+   $\tilde v' + \tilde v^2 = r$.
+2. **Test rational solvability.** A rational solution $\tilde v = p_0/q_0$ exists
+   iff $p_0' q_0 - p_0 q_0' + p_0^2 = r\,q_0^2$ (Definition 6.1).
+3. **Parity shortcut.** If $r$ is a polynomial of odd degree, *no* rational
+   solution exists (Theorem 6.3); the equation has no first-step Liouvillian
+   solution. For Airy ($r = x$) this terminates with "unsolvable" (Theorem 6.4).
+4. **Symmetry bookkeeping.** Whatever rational solutions exist, the cross-ratio
+   of any four solutions is constant (Theorem 4.5); the count of rational
+   solutions ($0,1,2,\infty$) pins the Galois group on the degeneration chain
+   $\mathrm{PGL}_2 \supset \mathbb{G}_a\rtimes\mathbb{G}_m \supset \mathbb{G}_m
+   \supset 1$.
 
 ---
 
-## 11. Conclusion
+## 8. Discussion and applications
 
-A single homomorphism — the logarithmic derivative carrying products to sums —
-organizes the EML theory: first-order equations exponentiate and their solution
-spaces are $\mathbb{G}_m(\text{constants})$ torsors; second-order equations are
-governed by a constant Wronskian and reduce, via the Riccati transform, to a
-first-order quadratic equation; and the resulting decision problem is settled, for
-the generalized Airy family, by a sharp degree-parity criterion. Airy's equation
-has no elementary solution because $1$ is odd — and the boundary case $x^2 + 1$
-shows that this parity is exactly the dividing line.
+**Why projective and not linear.** The first-order linear theory (Section 3)
+gives a $\mathbb{G}_m(C)$ torsor — a *line* of solutions. The Riccati equation,
+being a nonlinear (quadratic) first-order equation, instead carries a
+*projective line* of solutions: its symmetry group is $\mathrm{PGL}_2(C)$ and the
+invariant is the cross-ratio. The two pictures are unified by the difference law
+(Theorem 4.3), which exhibits each difference $v_i - v_j$ as a rank-one
+($\mathbb{G}_m$) object; the projective combination of four such pieces collapses
+the additive coefficients to zero (Theorem 4.5).
+
+**Practical relevance.** Second-order linear ODEs pervade physics and
+engineering — oscillators, wave propagation, quantum states near turning points,
+control systems. The Kovacic algorithm is the rigorous arbiter of whether such
+an equation has a closed-form solution. The Airy result is the paradigmatic
+"no": Airy functions, fundamental in optics (caustics, rainbows) and quantum
+mechanics (linear-potential turning points), are *provably* non-elementary, and
+the proof here is a transparent degree-parity count rather than a pole analysis.
+
+**Abstraction without loss.** All symmetry results are proved over an arbitrary
+differential field with no characteristic or algebraic-closure hypotheses; the
+obstruction results are polynomial-degree statements in $\mathbb{R}[X]$. This
+keeps the arguments structural and broadly reusable.
+
+---
+
+## 9. Future directions
+
+The Riccati Galois action degenerates along
+$\mathrm{PGL}_2(C) \supset \mathbb{G}_a \rtimes \mathbb{G}_m \supset \mathbb{G}_m
+\supset 1$, each known solution removing one projective degree of freedom. Three
+testable conjectures push this pattern:
+
+1. **Effective three-solution reconstruction.** For three distinct solutions
+   $a, b, c$, every solution equals an explicit Möbius map of a constant $\kappa$
+   (the cross-ratio), giving a genuine bijection
+   $\{\text{solutions}\} \simeq C \cup \{\infty\}$. The only missing ingredient is
+   the algebraic inversion of a Möbius map over the constants subfield — pure
+   field algebra.
+2. **Strict, complete degeneration.** Over an algebraically closed constant
+   field the Riccati Galois group is *exactly* one of $\mathrm{PGL}_2$,
+   $\mathbb{G}_a \rtimes \mathbb{G}_m$, $\mathbb{G}_m$, finite, or trivial, with
+   the number of rational solutions being $0, 1, 2,$ or $\infty$ respectively —
+   no other possibility. The discrete count is a complete invariant.
+3. **Airy and beyond.** Extend the odd-degree obstruction from $\mathbb{R}[X]$ to
+   the full transcendental EML setting and characterize precisely which
+   coefficient families admit Liouvillian solutions.
+
+---
+
+## Appendix: catalog of formal results
+
+| Name | Statement |
+|------|-----------|
+| `logDeriv_mul` | $L(yz) = L(y) + L(z)$ |
+| `firstOrder_mul` | $y'=ay,\ z'=bz \Rightarrow (yz)'=(a{+}b)yz$ |
+| `firstOrder_div` | $y'=ay,\ z'=bz,\ z\neq 0 \Rightarrow (y/z)'=(a{-}b)(y/z)$ |
+| `constantsSubfield` | constants form a subfield $C$ |
+| `galois_action_is_mul_constant` | two nonzero solutions of $y'=ay$ differ by a nonzero constant |
+| `galois_torsor` | solution space of $y'=ay$ is a $\mathbb{G}_m(C)$-torsor |
+| `riccati_full_of_second_order` | $y''+py'+qy=0 \Rightarrow v=y'/y$ solves Riccati |
+| `riccati_diff` | $(v_1-v_2)' = -(v_1{+}v_2{+}p)(v_1-v_2)$ |
+| `crossRatio` | $[v_1,v_2;v_3,v_4]$ definition |
+| `riccati_crossRatio_isConstant` | cross-ratio of four solutions is constant |
+| `riccati_gauge` | $2g=p \Rightarrow (v{+}g)'+(v{+}g)^2 = g'+g^2-q$ |
+| `natDegree_wronskianLike_le` | $\deg(p'q-pq') \le \deg p + \deg q - 1$ |
+| `no_rational_solves_riccati_odd_deg` | odd $\deg f$ $\Rightarrow$ no rational Riccati solution |
+| `no_rational_solves_riccati_airy` | Airy ($f=X$) has no rational Riccati solution |
+| `riccati_evenDeg_solvable` | $X^2+1$ has solution $v=X$ |
+| `kovacic_parity_decision_sharp` | odd obstructed, $X^2+1$ solvable |

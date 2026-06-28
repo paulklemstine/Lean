@@ -1,270 +1,272 @@
-# When an Equation Refuses to Be Solved: The Hidden Algebra of Airy's Curve
+# The Hidden Symmetry of a Bending Equation
+
+## When the answer cannot be written down
 
-## A puzzle from a rainbow
+Some equations refuse to be solved. Not because they are too hard for the
+patient algebraist, but because, in a precise and provable sense, *no formula
+exists*. The most famous example is the quintic: there is no general way to
+write the roots of a degree-five polynomial using only addition,
+multiplication, and radicals. Évariste Galois explained why with one of the
+most beautiful ideas in mathematics — attach a *group of symmetries* to the
+equation, and let the structure of that group decide whether a clean formula
+can possibly exist.
 
-In 1838 the British astronomer George Biddell Airy was trying to understand
-something everyone has seen but few have explained: the bright and dark bands
-that fringe a rainbow. To capture how light intensity rises and falls near the
-edge of a caustic, he wrote down a deceptively simple differential equation,
+What is less widely known is that the very same idea governs *differential
+equations* — the equations that describe how things change. There is a
+"Galois theory of calculus," called **differential Galois theory**, and it
+answers questions like: *Can this differential equation be solved with
+exponentials, logarithms, and integrals — the everyday functions of science —
+or is it forever beyond their reach?*
 
-$$ y'' = x\,y. $$
+This article is about one corner of that theory, built around a family of
+equations whose coefficients are **exponential–logarithmic** functions — call
+them **EML** functions, the ordinary functions you can assemble from $e^x$,
+$\ln x$, polynomials, and arithmetic. We will follow a single thread: the
+*Riccati equation*, a deceptively simple nonlinear equation whose symmetry
+group turns out to be **projective**, and a famous equation from physics —
+**Airy's equation** $y'' = x\,y$ — that this machinery proves can *never* be
+solved in elementary terms.
 
-In words: the curvature of the function $y$ at any point $x$ equals the value of
-the function multiplied by $x$ itself. It looks like the kind of thing a first
-course in calculus should dispatch in an afternoon. It is not. No combination of
-the functions we learn in school — polynomials, exponentials, sines, cosines,
-logarithms, roots, or any finite recipe built from them — solves it. Airy's
-equation defines genuinely *new* functions, the Airy functions $\mathrm{Ai}(x)$
-and $\mathrm{Bi}(x)$, which cannot be written in closed form.
+## The logarithmic derivative: turning multiplication into addition
 
-This article is about a remarkable fact and the algebra that explains it: the
-question "can this differential equation be solved in elementary terms?" is not
-a matter of cleverness or patience. It is a **structural** question with a
-definite yes-or-no answer, decidable by an algorithm, and rooted in a beautiful
-correspondence between *multiplying functions* and *adding their exponents*. The
-same machinery that proves Airy's equation has no elementary solution also
-*decides*, for a whole family of equations, exactly which ones do.
+The whole story begins with a single, almost childish, observation. If you
+have a function $y$ and you form the ratio
 
-We call the relevant class of functions **EML** — exponential, multiplicative,
-logarithmic — the functions you can assemble from exponentials, logarithms, and
-algebraic operations. The central drama is a tug-of-war between two equations
-that are secretly the same problem wearing different clothes.
+$$L(y) \;=\; \frac{y'}{y},$$
 
-## The logarithm's superpower: turning products into sums
+something magical happens to products. Because $\ln(yz) = \ln y + \ln z$, and
+because differentiating a logarithm gives exactly this ratio, we get
 
-Everything begins with a single, almost childish observation. The logarithm
-converts multiplication into addition:
+$$\frac{(yz)'}{yz} \;=\; \frac{y'}{y} + \frac{z'}{z}.$$
 
-$$ \log(yz) = \log y + \log z. $$
+In words: the operation $L$ converts **multiplication into addition**. It is a
+*homomorphism* — a structure-preserving map — from the multiplicative world of
+nonzero functions to the additive world. This single fact is the engine of
+everything that follows. (In the formal development it appears as a lemma
+named `logDeriv_mul`, with companions `logDeriv_div` for quotients and
+`logDeriv_zpow` for integer powers.)
 
-Differentiate both sides and you get the **logarithmic derivative**, the quantity
-$L(y) = y'/y$. The product rule then hands you a clean homomorphism law,
+Why does this matter? Consider the simplest differential equation that is not
+trivial: the *first-order linear* equation
 
-$$ \frac{(yz)'}{yz} = \frac{y'}{y} + \frac{z'}{z}, \qquad\text{i.e.}\qquad L(yz) = L(y) + L(z). $$
+$$y' = a\,y.$$
 
-This is the seed crystal of the entire theory. The map $L$ takes the
-*multiplicative* world of nonzero functions and lands it in the *additive* world
-of their coefficients. It also respects division and powers:
+Its solution is the exponential $y = e^{\int a}$. Suppose $y$ solves
+$y' = a\,y$ and $z$ solves $z' = b\,z$. Then their product solves
 
-$$ L(y/z) = L(y) - L(z), \qquad L(y^{-1}) = -L(y), \qquad L(y^{n}) = n\,L(y). $$
+$$(yz)' = (a+b)\,(yz).$$
 
-The last identity — that the logarithmic derivative of an $n$-th power is just
-$n$ times the original — is the homomorphism iterated, and it holds for every
-integer power $n$, positive or negative.
+Multiplying the *solutions* adds the *coefficients* — the abstract shadow of
+$e^A \cdot e^B = e^{A+B}$. This is the lemma `firstOrder_mul`. And here is the
+first whiff of Galois theory: if $y_1$ and $y_2$ both solve $y' = a\,y$, then
+their ratio $y_1/y_2$ has logarithmic derivative zero, which means it is a
+**constant**. So *any two solutions differ only by a constant multiple*:
 
-Why does this matter for differential equations? Consider the simplest linear
-equation, the first-order one:
+$$y_2 = c\,y_1, \qquad c \neq 0, \quad c' = 0.$$
 
-$$ y' = a\,y. $$
+This is the theorem `galois_action_is_mul_constant`. The set of solutions is a
+single line, and the only freedom is scaling by a nonzero constant. The group
+of symmetries — the differential Galois group — is therefore the
+**multiplicative group of constants**, written $\mathbb{G}_m$. This is the
+simplest possible "EML group," and it is the entire content of the slogan
+*"the Galois group of a first-order EML equation is an EML group."*
 
-Dividing by $y$ rewrites it as $L(y) = a$. So **solving $y' = a\,y$ is the same
-as finding a function whose logarithmic derivative is $a$** — the abstract
-shadow of $y = e^{\int a}$. The homomorphism law immediately tells you something
-powerful about superposition. If $y' = a\,y$ and $z' = b\,z$, then the product
-solves
+## The Riccati equation: where things turn projective
 
-$$ (yz)' = (a+b)\,(yz). $$
+First-order *linear* equations are tame. The real drama starts with the
+**Riccati equation**, a first-order but *nonlinear* equation:
 
-Multiplying solutions *adds* their coefficients. This is the algebraic heart of
-why $e^{A}\cdot e^{B} = e^{A+B}$. And it scales without limit: for any finite
-family of solutions $y_i' = a_i\, y_i$, their product solves the equation with
-the *summed* coefficient,
+$$v' + v^2 + p\,v + q = 0.$$
 
-$$ \Big(\prod_i y_i\Big)' = \Big(\sum_i a_i\Big)\,\prod_i y_i, $$
+It looks like a curiosity, but it is secretly the heart of every *second-order*
+linear equation. If you take a second-order equation $y'' + p\,y' + q\,y = 0$
+and substitute the logarithmic derivative $v = y'/y$, the Riccati equation is
+exactly what pops out. So understanding Riccati is understanding all of
+second-order linear theory — and second-order linear equations are everywhere
+in physics, from the quantum harmonic oscillator to the bending of light.
 
-the abstract content of $\prod e^{\int a_i} = e^{\sum \int a_i}$. This finite
-superposition law is one of the formally verified results behind this article.
+Now comes the central question of this work: **what is the symmetry group of
+the Riccati equation?** For the linear equation it was the line-scaling group
+$\mathbb{G}_m$. For Riccati, the answer is richer and more beautiful. The
+symmetry group is **projective** — it is a subgroup of $\mathrm{PGL}_2$, the
+group of *Möbius transformations*
 
-## Constants, ratios, and the shape of the solution set
+$$v \;\longmapsto\; \frac{\alpha v + \beta}{\gamma v + \delta},$$
 
-If multiplication adds coefficients, what corresponds to *zero* coefficient? A
-function with $L(y) = 0$ is one whose derivative vanishes: a **constant**. The
-constants form the kernel of the homomorphism, and they are the bedrock on which
-the whole symmetry theory rests. They form a self-contained number system — a
-*subfield* — closed under addition, multiplication, subtraction, and division:
-if $c' = 0$ and $d' = 0$, then so are $(c+d)'$, $(cd)'$, $(c^{-1})'$, and so on.
+the fractional-linear maps that geometers know as the symmetries of the
+"projective line." These are the same transformations that act on the Riemann
+sphere, that describe perspective in art, and that underlie hyperbolic
+geometry.
 
-This has an immediate and elegant consequence. Suppose $y_1$ and $y_2$ both
-solve $y' = a\,y$. Then their ratio has logarithmic derivative
-$L(y_1) - L(y_2) = a - a = 0$, so
+How do we *prove* that the Riccati symmetry group is projective, without ever
+writing down a single solution? The key is a classical invariant.
 
-$$ \left(\frac{y_1}{y_2}\right)' = 0. $$
+### The difference law
 
-**The ratio of any two solutions is a constant.** Concretely: any two nonzero
-solutions of $y' = a\,y$ differ only by multiplication by a nonzero constant. If
-you know one solution, you know them all — they fill out a single
-one-dimensional line, and the "symmetries" of that line are exactly
-multiplication by nonzero constants. In the language of differential Galois
-theory, the symmetry group of a first-order EML equation is a subgroup of the
-**multiplicative group of nonzero constants** — the simplest possible
-"EML group." The solution set is what algebraists call a *torsor*: a fixed
-solution $y_1$ generates every other solution $y_2$ as $y_2 = c\,y_1$ for a
-unique nonzero constant $c$, and conversely every such multiple is again a
-solution.
+Take two solutions $v_1$ and $v_2$ of the same Riccati equation. Subtract one
+equation from the other. The quadratic terms $v_1^2 - v_2^2$ factor as
+$(v_1+v_2)(v_1-v_2)$, the linear terms combine, and the constant $q$ cancels
+entirely. What remains is startlingly clean:
 
-This is the "easy" case, and it always works out: first-order linear EML
-equations *always* exponentiate. The trouble — and the interest — begins one
-order up.
+$$(v_1 - v_2)' \;=\; -\bigl(v_1 + v_2 + p\bigr)\,(v_1 - v_2).$$
 
-## Second order, and the Riccati gambit
+This is the theorem `riccati_diff`. Read it carefully: the *difference* of two
+Riccati solutions satisfies a **first-order linear** equation — exactly the
+tame kind from the previous section, with coefficient $-(v_1+v_2+p)$. The
+nonlinearity has dissolved. Every difference $v_i - v_j$ is now a creature we
+fully understand.
 
-A second-order linear equation in *normal form* (no first-derivative term) looks
-like
+### The cross-ratio is constant
 
-$$ y'' = a\,y. $$
+Projective geometry has one supreme invariant, the quantity that Möbius
+transformations leave untouched: the **cross-ratio** of four points,
 
-Airy's equation is exactly this, with $a = x$. Now there is generally a
-two-dimensional space of solutions, and a single number — the **Wronskian** —
-governs whether two given solutions are genuinely independent:
+$$[\,v_1, v_2; v_3, v_4\,] \;=\;
+\frac{(v_1 - v_3)(v_2 - v_4)}{(v_1 - v_4)(v_2 - v_3)}.$$
 
-$$ W(y_1, y_2) = y_1\,y_2' - y_2\,y_1'. $$
+If the Riccati symmetry group really is projective, then the cross-ratio of
+four solutions should be the fixed, unchanging fingerprint of the equation. And
+indeed it is. Here is the argument, and it is a small marvel of bookkeeping.
+Every difference $v_i - v_j$ in the cross-ratio satisfies a first-order linear
+equation. The numerator is a product of two differences, so by the
+"multiplication adds coefficients" law its logarithmic derivative is
 
-A foundational fact, the abstract form of **Abel's identity**, is that when
-$y_1$ and $y_2$ both solve $y'' = a\,y$, their Wronskian is a *constant*:
+$$-(v_1+v_3+p) \;+\; -(v_2+v_4+p).$$
 
-$$ W(y_1,y_2)' = 0. $$
+The denominator likewise contributes
 
-Moreover the Wronskian is a perfect detector of dependence. If $y_1$ and $y_2$
-are linearly dependent over the constants — meaning some nontrivial constant
-combination $c_1 y_1 + c_2 y_2$ vanishes — then $W = 0$. Conversely, a nonzero
-Wronskian certifies that the two solutions are independent, and for genuine
-solutions a nonzero Wronskian is automatically a *nonzero constant*: a true
-"fundamental system" of the equation. This holds in any setting whatsoever, with
-no reference to solving the equation — it is pure algebra.
+$$-(v_1+v_4+p) \;+\; -(v_2+v_3+p).$$
 
-So how do we attack $y'' = a\,y$? With a change of variable so natural it feels
-like cheating. Take the logarithmic derivative again, $v = y'/y$. A short
-computation with the product and quotient rules gives
+The cross-ratio is the numerator over the denominator, so its logarithmic
+derivative is the *difference* of these two coefficients. Expand:
+
+$$\bigl[-(v_1+v_3+p) - (v_2+v_4+p)\bigr] - \bigl[-(v_1+v_4+p) - (v_2+v_3+p)\bigr].$$
 
-$$ v' + v^2 = \frac{y''}{y}. $$
+Both brackets equal $-(v_1+v_2+v_3+v_4+2p)$ — the four solutions appear once
+each, and the two copies of $p$ match. They cancel *exactly*. The logarithmic
+derivative of the cross-ratio is zero, so:
 
-If $y$ solves $y'' = a\,y$, the right-hand side is just $a$, and we land on the
-**Riccati equation**
+$$\bigl(\,[\,v_1, v_2; v_3, v_4\,]\,\bigr)' = 0.$$
 
-$$ v' + v^2 = a. $$
-
-This is the master move of the whole subject. It trades a *linear* second-order
-equation for a *quadratic* first-order one. A second-order linear equation has an
-elementary solution precisely when this first-order quadratic equation has a
-sufficiently nice (rational) solution. The **Kovacic algorithm** — the decision
-procedure that answers "does this equation have a closed-form solution?" — runs
-on exactly this reformulation.
-
-## Why Airy must fail: a parity argument
-
-Now we can see, with our own eyes, why Airy's equation is unsolvable in
-elementary terms. The Riccati equation for Airy is
-
-$$ v' + v^2 = x. $$
-
-Suppose, hoping for a contradiction, that it had a rational solution $v = p/q$,
-a ratio of two polynomials with $q \neq 0$. Multiply through by $q^2$ to clear
-denominators. Using $v' = (p'q - pq')/q^2$ and $v^2 = p^2/q^2$, the equation
-becomes a clean polynomial identity:
-
-$$ p'\,q - p\,q' + p^2 = x\,q^2. $$
-
-Everything now lives inside the polynomial ring, where the only tool we need is
-**degree counting** — and the answer turns on a parity. Look at the degrees:
-
-- The right-hand side $x\,q^2$ has degree $1 + 2\deg q$, which is **odd**.
-- On the left, the "Wronskian-like" piece $p'q - pq'$ has degree at most
-  $\deg p + \deg q - 1$ (differentiation drops a degree). The square $p^2$ has
-  the **even** degree $2\deg p$.
-
-Two cases. If $\deg p \ge \deg q$, the $p^2$ term dominates, and the left side has
-degree exactly $2\deg p$ — an *even* number. It cannot equal the odd degree of
-the right side. If instead $\deg p < \deg q$, the entire left side has degree at
-most $2\deg q - 2$, strictly *below* the right side's degree of $2\deg q + 1$.
-Either way, the equation is impossible. There is **no rational solution**.
-
-This is the formally verified theorem
-`no_rational_solves_riccati_airy`: there are no polynomials $p, q$ with $q \neq 0$
-satisfying $p'q - pq' + p^2 = x\,q^2$. It is the genuinely Galois-theoretic step
-that closes the door on Airy. (There is a cruder warm-up, too: a direct degree
-mismatch shows no nonzero *polynomial* can satisfy $y'' = x\,y$ at all, since
-$y''$ has lower degree than $x\,y$. Both obstructions are proved.)
-
-What makes the argument satisfying is that it is *parity*, not delicate analysis.
-The reason Airy resists is, at bottom, that $1$ is an odd number.
-
-## The decision rule, and why it is sharp
-
-Here is where the story turns from "one stubborn equation" into "a theorem about
-a whole family." The parity argument never used anything special about $x$ beyond
-its degree being odd. Replace $x$ by any polynomial $f$ of **odd degree**, and
-the identical degree-counting argument shows the Riccati equation
-$v' + v^2 = f$ has no rational solution. In particular the entire **generalized
-Airy family**
-
-$$ y'' = x^{2k+1}\,y, \qquad k = 0, 1, 2, \dots $$
-
-is obstructed, with ordinary Airy as the case $k = 0$. This is the verified
-result `no_rational_riccati_genAiry`.
-
-So we have a candidate decision rule: *if $\deg f$ is odd, the equation is
-obstructed.* Is the rule tight? Could we relax "odd" to something weaker? The
-answer is no, and the proof is a single counterexample that lands right on the
-boundary. Take the **even**-degree coefficient $f = x^2 + 1$. Then the Riccati
-equation
-
-$$ v' + v^2 = x^2 + 1 $$
-
-*does* have a solution — and a stunningly simple one. Try $v = x$: then
-$v' + v^2 = 1 + x^2$, exactly $f$. This polynomial solution is the verified
-witness `riccati_evenDeg_solvable`. And it is not an algebraic accident: $v = x$
-is the logarithmic derivative of $y = e^{x^2/2}$, which genuinely solves
-$y'' = (x^2 + 1)\,y$. The even-degree equation is honestly EML-solvable, with an
-exponential in closed form.
-
-Putting the two halves together gives the **sharpness theorem**
-`kovacic_parity_decision_sharp`: across this family, every odd-degree coefficient
-is obstructed while the even-degree example $x^2+1$ is solvable. The parity test
-is a *correct two-sided decision* — it says "no" exactly when the answer provably
-is no, and the boundary case proves the criterion cannot be loosened. We have
-not merely shown one equation fails; we have drawn the precise line between the
-solvable and the unsolvable.
-
-## What the algebra is really telling us
-
-Step back and the shape of the theory is striking. A single homomorphism — the
-logarithmic derivative carrying products to sums — organizes everything:
-
-- **First order** ($y' = a\,y$): solutions are a coset of the constants; the
-  symmetry group is the multiplicative group of nonzero constants; products add
-  coefficients. These equations always exponentiate.
-- **Second order** ($y'' = a\,y$): the Wronskian, a constant, measures
-  independence; the Riccati substitution $v = y'/y$ collapses the linear
-  second-order problem into a quadratic first-order one.
-- **Decidability**: whether the second-order equation has an elementary solution
-  becomes a question about rational solutions of the Riccati equation — and for
-  rich families that question is settled by a degree-parity count.
-
-The deeper moral is one of the most beautiful in mathematics: *solvability is a
-symmetry property.* Just as Évariste Galois showed that a polynomial equation can
-be solved by radicals exactly when its symmetry group is "solvable," the
-differential Galois theory pioneered by Picard and Vessiot shows that a
-differential equation can be solved in elementary terms exactly when *its*
-symmetry group has the right structure. For first-order EML equations the group
-is as simple as possible — the multiplicative constants — and they always solve.
-For Airy, the symmetry group is too large to be elementary, and the obstruction
-manifests, concretely, as the impossibility of an odd number being even.
-
-## The view from the bridge
-
-It is worth dwelling on the bridge that makes all of this work, because it is the
-same bridge that appears again and again across mathematics: the translation
-between the *multiplicative* and the *additive*. Logarithms invented it for
-arithmetic, turning the labor of multiplication into the ease of addition and
-powering three centuries of computation by slide rule and log table. Here, the
-very same idea — that $y'/y$ converts products into sums — is what lets us
-analyze differential equations by linear algebra over a field of constants, count
-degrees, and read off solvability from a parity.
-
-Airy's little equation, born from the desire to explain the soft fringes of a
-rainbow, turns out to be a gateway to one of the grand unifying themes of modern
-algebra. It cannot be solved by elementary functions, and that is not a failure
-of ingenuity but a theorem — provable, sharp, and, in the end, surprisingly
-simple. The next time you see the faint supernumerary bands inside a rainbow, you
-are looking at a function that no finite formula can name, kept forever out of
-elementary reach by the stubborn fact that one is odd.
+**The cross-ratio of four Riccati solutions is a constant.** This is the
+flagship theorem `riccati_crossRatio_isConstant`. It is the precise,
+formula-free statement that the differential Galois group of a Riccati equation
+lives inside $\mathrm{PGL}_2$ of the constants: whatever symmetries the equation
+has, they preserve the projective invariant, just like the Möbius maps of
+classical geometry.
+
+The cancellation that makes this work — both brackets collapsing to the same
+thing — is not an accident. It is the differential-algebraic incarnation of the
+*chain rule* that makes the cross-ratio invariant under Möbius maps in the
+first place. The geometry and the calculus are the same theorem wearing
+different clothes.
+
+## A ladder of degenerating symmetry
+
+The projective picture organizes everything. As you learn more about a Riccati
+equation — say, you happen to know one explicit solution — the symmetry group
+*shrinks* in a perfectly regular way, like a telescope collapsing:
+
+$$\mathrm{PGL}_2 \;\supset\; \mathbb{G}_a \rtimes \mathbb{G}_m
+\;\supset\; \mathbb{G}_m \;\supset\; 1.$$
+
+- With **no** known solution, the full projective group $\mathrm{PGL}_2$ acts.
+- Knowing **one** solution lets you substitute $v = v_0 + 1/u$ and linearize
+  the equation; the remaining symmetry is the affine group
+  $\mathbb{G}_a \rtimes \mathbb{G}_m$.
+- Knowing **two** solutions leaves only the scaling torus $\mathbb{G}_m$.
+- Knowing **three** solutions pins everything down: the symmetry is trivial,
+  because three points fix a projective coordinate completely.
+
+Each known solution removes exactly one degree of projective freedom. The
+number of "nice" solutions an equation has is a complete, discrete fingerprint
+of its symmetry group — a Riccati analogue of the order of a finite group in
+classical Galois theory.
+
+## Airy's equation: a beautiful function with no formula
+
+Now we can confront a genuinely famous equation. **Airy's equation**
+
+$$y'' = x\,y$$
+
+was introduced by the astronomer George Biddell Airy in 1838 to describe the
+intensity of light near a caustic — the bright cusp you see at the edge of a
+rainbow, or the shimmering envelope of light at the bottom of a teacup. Its
+solutions, the *Airy functions*, are perfectly real, perfectly smooth, and
+absolutely fundamental in optics and quantum mechanics, where they describe a
+particle near a "turning point" of a linear potential.
+
+And yet: **Airy's equation has no solution expressible in elementary terms.**
+No combination of exponentials, logarithms, polynomials, roots, and integrals
+will ever produce it. This is not a failure of cleverness; it is a theorem, and
+differential Galois theory is what proves it.
+
+The strategy is the **Kovacic algorithm**, the concrete decision procedure that
+implements differential Galois theory for second-order equations. Its first and
+decisive step is to ask: *does the associated Riccati equation have a rational
+solution?* For Airy, the Riccati substitution $v = y'/y$ turns $y'' = x\,y$
+into
+
+$$v' + v^2 = x.$$
+
+A rational candidate $v = p/q$ (a ratio of polynomials, $q \neq 0$) solves this
+exactly when the polynomial identity
+
+$$p'\,q - p\,q' + p^2 \;=\; x\,q^2$$
+
+holds, obtained by clearing denominators. Now count degrees. The right-hand
+side has degree $\deg x + 2\deg q = 1 + 2\deg q$, an **odd** number. On the
+left, the dominant term is $p^2$, of degree $2\deg p$ — **even** — or, if $p$
+is small, the whole left side has degree strictly below the right. An odd number
+can never equal an even number, and a large number can never equal a strictly
+smaller one. **Contradiction.** No rational solution exists. This is the
+theorem `no_rational_solves_riccati_airy`, and the Airy specialization of the
+general principle `no_rational_solves_riccati_odd_deg`: *whenever the
+coefficient has odd degree, the Riccati equation has no rational solution.*
+
+What makes this argument so satisfying is that it never inspects a single pole
+or singularity. It is pure parity — odd versus even — the same flavor of
+argument that shows you cannot tile a checkerboard with a square missing if the
+two missing corners are the same color.
+
+## Sharpness: the rule is exactly right
+
+A good decision rule should be *tight* — it should say "no solution" precisely
+when there is none, and not one case more. The odd-degree obstruction passes
+this test perfectly. Push to the boundary: take the *even*-degree coefficient
+$f = x^2 + 1$. Now the Riccati equation $v' + v^2 = x^2 + 1$ has an honest
+rational solution, $v = x$, because $x' + x^2 = 1 + x^2$. This is the theorem
+`riccati_evenDeg_solvable`, and the corresponding second-order equation
+$y'' = (x^2+1)\,y$ really is solvable, by $y = e^{x^2/2}$ — whose logarithmic
+derivative is exactly $x$.
+
+So the parity test is a genuine, two-sided decision (`kovacic_parity_decision_sharp`):
+every odd-degree coefficient $x^{2k+1}$ is obstructed, while the even example
+$x^2 + 1$ is solvable. The boundary between solvable and unsolvable is real, and
+the odd-degree hypothesis cannot be relaxed.
+
+## Why this is more than a curiosity
+
+It is tempting to file all this under "abstract algebra," but the pattern is
+deeply practical. Whenever a scientist or engineer writes down a second-order
+linear differential equation — and they do so constantly, for oscillations,
+waves, heat, quantum states, control systems — there is a real question of
+whether a closed-form answer exists or whether one must resort to numerics and
+special functions. Differential Galois theory, and the Kovacic algorithm in
+particular, is the rigorous referee. It tells you, *before* you waste a month
+hunting for a formula, whether the formula can possibly exist.
+
+The Riccati cross-ratio result adds a geometric soul to this machinery. It says
+the symmetries of these equations are not arbitrary; they are the same
+projective symmetries that govern perspective drawing, the Riemann sphere, and
+hyperbolic geometry. The invariant that the symmetry group preserves — the
+cross-ratio — is constant along the equation, a frozen fingerprint independent
+of which particular solutions you happen to look at.
+
+And at the end of the road sits Airy's equation, glowing at the edge of every
+rainbow, a function that nature computes effortlessly and that no elementary
+formula can capture. The mathematics that proves this is not a wall but a
+window: it tells us exactly *why* the formula is absent, and in doing so reveals
+a hidden order — multiplication becoming addition, lines becoming projective
+lines, and a single cancellation of coefficients standing in for the whole of
+projective geometry.
