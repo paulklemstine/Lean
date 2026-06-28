@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c011c95b",
     "filename": "zero_knowledge_proofs_schnorr_protocol.json",
     "pkg_num": 160,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7862199999999999,
     "title": "Zero-Knowledge Proofs: The Schnorr Protocol and Maurer's Unified Homomorphism-Preimage Sigma-Protocol"
   },
   {
@@ -4668,8 +4668,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "zero_knowledge_proofs_schnorr_protocol",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7862199999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Zero-Knowledge Proofs: The Schnorr Protocol and Maurer's Unified Homomorphism-Preimage Sigma-Protocol"
     }

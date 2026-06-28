@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bd1f81a7",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Pólya tree coefficient divisor-sum recurrence\n\nThis cycle formalized the Pólya-tree (A000081) divisor-sum / Euler-transform\nrecurrence in `Catalog/Cryptography/PolyaTreeDivisorSu",
-      "quality_score": 0.80372,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-25T12:39:02",
-      "title": "Pólya tree coefficient divisor-sum recurrence"
-    },
-    {
       "cycle_id": "701dddb6",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Pólya tree coefficient recurrence\n\nDerived from the Stage 3/4 findings of this cycle (the divisor bridge `divisor_bridge`, the\nequivalence `polya_FE_iff_recurrence`, and the uniq",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-06-28T00:49:06",
       "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
+    },
+    {
+      "cycle_id": "c011c95b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Schnorr / Σ-protocol zero-knowledge\n\nThis cycle added three verified Lean files extending the catalog's Schnorr work\n(`SchnorrIdentification.lean`, `AffineSigmaExtraction.lean`):",
+      "quality_score": 0.7862199999999999,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-06-28T03:03:40",
+      "title": "Zero-Knowledge Proofs: Schnorr Protocol"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f0048c68",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThese are original research directions building on the formally verified index-two\ngeneration ceiling in `Catalog/Novelty/SymmetricGroupGeneration.lean`.\n\n## 1. From one obstructi",
-      "quality_score": 0.4162,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-24T09:33:10",
-      "title": "Symmetric Group Generation Probability"
-    },
     {
       "cycle_id": "91104b94",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-06-28T03:01:57",
       "title": "EML Kolmogorov-Arnold Representation"
+    },
+    {
+      "cycle_id": "c011c95b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Schnorr / Σ-protocol zero-knowledge\n\nThis cycle added three verified Lean files extending the catalog's Schnorr work\n(`SchnorrIdentification.lean`, `AffineSigmaExtraction.lean`):",
+      "quality_score": 0.7862199999999999,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-06-28T03:03:40",
+      "title": "Zero-Knowledge Proofs: Schnorr Protocol"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "11521acf",
-      "domain": "Novelty",
-      "name": "sum_weight",
-      "quality": 0.72888
-    },
-    {
-      "cycle_id": "11521acf",
-      "domain": "Novelty",
-      "name": "four_round_bound",
-      "quality": 0.72888
-    },
-    {
-      "cycle_id": "11521acf",
-      "domain": "Novelty",
-      "name": "aes_four_round_ge_25",
-      "quality": 0.72888
-    },
     {
       "cycle_id": "8ed8ca57",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "group_leftDvd",
       "quality": 0.71552
+    },
+    {
+      "cycle_id": "c011c95b",
+      "domain": "Novelty",
+      "name": "completeness",
+      "quality": 0.7862199999999999
+    },
+    {
+      "cycle_id": "c011c95b",
+      "domain": "Novelty",
+      "name": "special_soundness",
+      "quality": 0.7862199999999999
+    },
+    {
+      "cycle_id": "c011c95b",
+      "domain": "Novelty",
+      "name": "sim_accepts",
+      "quality": 0.7862199999999999
     }
   ],
-  "last_updated": "2026-06-28T03:01:57",
+  "last_updated": "2026-06-28T03:03:40",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7e57e1f5",
-        "quality": 0.70122,
-        "theorems": 17,
-        "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
-      },
-      {
         "cycle_id": "c25c1b9e",
         "quality": 0.7665600000000001,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.38602000000000003,
         "theorems": 15,
         "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
+      },
+      {
+        "cycle_id": "c011c95b",
+        "quality": 0.7862199999999999,
+        "theorems": 20,
+        "title": "Zero-Knowledge Proofs: Schnorr Protocol"
       }
     ],
     "NumberTheory": [
