@@ -1,67 +1,58 @@
-# Computational Evidence — EML Kolmogorov–Arnold rank-one frontier
+# Computational Evidence — Separable rank of EML Kolmogorov–Arnold targets
 
-This note records the small computations that guided the two new files
+This note records the small-case evidence gathered before formalizing
+`KolmogorovArnoldEMLSeparableRank.lean` and `KolmogorovArnoldEMLSeparableRankExact.lean`.
 
-* `Catalog/Applications/KolmogorovArnoldEMLSeparability.lean`
-* `Catalog/Applications/KolmogorovArnoldEMLProductSeparability.lean`
+The **separable rank** of a bivariate target `f(x,y)` is the least `r` with
+`f(x,y) = Σ_{k<r} a_k(x)·b_k(y)`. The central computational claim is that it
+equals the matrix rank of the evaluation matrix `M_{ij} = f(x_i, y_j)` sampled at
+sufficiently many points.
 
-The central object is the **cross-multiplicative invariant**
+## 1. Small-case calculations
 
-```
-CrossMul f  :=  ∀ x y x' y',  f x y · f x' y'  =  f x y' · f x' y .
-```
+### Product `x·y`
+Sample on `{0,1,2}²`: `M = [[0,0,0],[0,1,2],[0,2,4]]`. Row/column rank `= 1`
+(all rows are multiples of `(0,1,2)`). Matches `mul_sepRankLE_one` (rank 1).
 
-The theorems prove: for two-variable targets, `CrossMul f` is *exactly*
-multiplicative separability, which in turn is *exactly* existence of a rank-one
-EML representation `f x y = exp(ψ x + φ y)`.
+### Sum `x+y`
+Sample on `{0,1}²`: `M = [[0,1],[1,2]]`, `det = 0·2 − 1·1 = −1 ≠ 0`, so rank `= 2`.
+Hence separable rank `≥ 2`; and `x+y = x·1 + 1·y` gives `≤ 2`. Exact rank `= 2`.
+This is exactly `add_not_sepRankLE_one` + `add_sepRankLE_two`.
 
-## 1. Small-case calculations (the invariant, over ℚ — exact arithmetic)
+### Power-sum `p_N(x,y) = Σ_{k<N} xᵏ yᵏ`
+Sample at `t = (0,1,…,N−1)`. The matrix `M_{ij} = Σ_{k<N} t_iᵏ t_jᵏ` equals
+`V Vᵀ` with `V` the Vandermonde matrix `V_{ik} = t_iᵏ`.
 
-Define `cm f x y x' y' := (f x y * f x' y' == f x y' * f x' y)`.
+| N | sample points | det(M) = det(V)² | rank |
+|---|---------------|------------------|------|
+| 1 | {0}           | 1                | 1    |
+| 2 | {0,1}         | (1−0)² = 1       | 2    |
+| 3 | {0,1,2}       | (2·1·1)² = 4     | 3    |
+| 4 | {0,1,2,3}     | (12)² = 144      | 4    |
 
-| target `f`      | `cm f 2 3 5 7` | `cm f 1 1 0 0` |
-|-----------------|----------------|----------------|
-| `fprod = x·y`   | `true`         | `true`         |
-| `fsum  = x+y`   | `false`        | `false`        |
+`det(V) = Π_{i<j}(t_j − t_i)` is nonzero for distinct points, so the sample is
+invertible and the separable rank is exactly `N`. This is the heart of
+`powerSum_rank_ge` / `powerSum_sepRank_exact`: the outer-term count is **unbounded**.
 
-* The product `x·y` passes the invariant at every sampled 4-tuple (it is
-  multiplicatively separable; `a = b = id`), matching `mul_crossMul`.
-* The sum `x+y` fails it already at `(1,1),(0,0),(1,0),(0,1)`:
-  `(1+1)(0+0) = 0` but `(1+0)(0+1) = 1`. This is exactly the witness used in the
-  proof of `add_not_crossMul` (hence `add_not_mulSeparable`,
-  `add_not_rankOne_exp`).
+## 2. OEIS
 
-## 2. Counterexample hunt — does any rank-two target sneak into rank one?
+The exact-rank sequence of `p_N` is the identity `1,2,3,4,…` (A000027) by design.
+The Vandermonde determinants `det(V)` for `t=(0,…,N−1)` are the superfactorials
+`Π_{k<N} k!` = `1,1,2,12,288,…` (A000178); their squares appear as `det(M)` above.
 
-The "geometric-mixture" target
+## 3. Counterexample hunt
 
-```
-g x y = exp(x + y) + exp(2x + 3y)        (a sum of two rank-one EML terms)
-```
+- Claim "every continuous bivariate target has bounded separable rank": **FALSE**
+  — refuted by `p_N` (rank `N` for all `N`). This is now a theorem.
+- Claim "rank-1 ⇔ multiplicatively separable": tested on `x·y` (rank 1, separable)
+  and `x+y` (rank 2, not separable); consistent. Formalized as
+  `mulSeparable_iff_sepRankLE_one`.
+- Claim "matrix rank of a sample can exceed separable rank": **FALSE** for every
+  sample — the factorization `M = A·B` (`m×r` times `r×m`) caps it at `r`
+  (`sample_rank_le`).
 
-was sampled with `Float`:
+## 4. Conclusion
 
-```
-g 0 0 · g 1 1 ≈ 311.60        g 0 1 · g 1 0 ≈ 230.49
-```
-
-These differ, so `g` violates `CrossMul`; by the characterization it has **no**
-rank-one EML representation. This is the numerical seed for Future Direction F1
-(a strict rank hierarchy `rank-1 ⊊ rank-2`): a non-separable, strictly positive
-target that is a sum of two rank-one EML terms but not a single one.
-
-## 3. OEIS
-
-No integer sequence is involved; the content is an analytic characterization, so
-an OEIS search is not applicable.
-
-## 4. Take-away
-
-Every sampled case is consistent with the proved dichotomy:
-
-* `CrossMul` ⇔ multiplicative separability ⇔ rank-one EML (`exp(ψ+φ)`);
-* `x·y` lies on the rank-one side, `x+y` strictly off it;
-* `exp(x+y)+exp(2x+3y)` is genuinely rank ≥ 2.
-
-All formal statements are discharged with `0` sorries and depend only on
-`propext`, `Classical.choice`, `Quot.sound`.
+The evidence pinpointed the linear-algebra bridge (`separable rank = sampled
+matrix rank`) and the Vandermonde witness for unboundedness, both of which became
+the formal backbone of the two Lean files.

@@ -1,113 +1,102 @@
-# When Multiplication Hides Inside an Exponential: The Secret Geometry of Kolmogorov–Arnold Networks
+# How Many Ingredients Does a Surface Need? The Hidden Arithmetic of Separable Rank
 
-## A question that refuses to die
+## A theorem about building everything from almost nothing
 
-In 1900, David Hilbert stood before the International Congress of Mathematicians and read out a list of problems that would shape a century. His thirteenth problem asked something that sounds almost childish: *can every function of several variables be built out of functions of fewer variables?* Could the tangled, multidimensional relationships of nature always be unspooled into simpler, one-dimensional threads?
+In 1957, the nineteen‑year‑old Vladimir Arnold, working with his teacher Andrei Kolmogorov, demolished one of David Hilbert's famous problems. Hilbert had asked whether some functions of several variables are *irreducibly* multivariate — whether there exist surfaces so tangled that you can never build them out of simple one‑input curves. Kolmogorov and Arnold answered with a resounding *no*.
 
-For decades the answer seemed to be "no, surely not." Functions of three variables felt irreducibly three-dimensional. Then, in 1957, the Soviet mathematician Andrey Kolmogorov and his nineteen-year-old student Vladimir Arnold proved the opposite — and they proved it in the most spectacular way imaginable.
+Their **superposition theorem** says something almost unbelievable. Take any continuous function $f$ of $n$ variables on the unit cube $[0,1]^n$ — a temperature field, a price surface, a sound texture, anything. Then $f$ can be written as
 
-Their theorem says this: **every** continuous function $f$ of $n$ variables, no matter how complicated, can be written as a finite recipe built only from *addition* and a handful of *single-variable* functions. Precisely, there exist continuous one-variable functions so that
+$$f(x_1,\dots,x_n) = \sum_{q=0}^{2n} \Phi_q\!\left(\sum_{p=1}^{n} \psi_{q,p}(x_p)\right),$$
 
-$$f(x_1, \dots, x_n) = \sum_{q=0}^{2n} \Phi_q\!\left( \sum_{p=1}^{n} \psi_{q,p}(x_p) \right).$$
+where every $\Phi_q$ and every $\psi_{q,p}$ is a continuous function of a **single** variable. The whole infinite zoo of multivariate functions can be assembled from one‑dimensional building blocks, addition, and nothing else. For two variables ($n=2$), the magic number of outer functions is $2n+1 = 5$.
 
-Read that slowly. On the right there is no multiplication of variables, no interaction more complex than feeding a number into a function and adding the results. There are exactly $2n+1$ "outer" functions $\Phi_q$ and a grid of "inner" functions $\psi_{q,p}$, each eating a single coordinate. Every continuous surface over a cube — every weather model, every economic forecast, every image — is secretly a layered sandwich of curves and sums.
+It is one of the most surprising facts in analysis, and in recent years it has become fashionable again: the "Kolmogorov–Arnold Networks" (KANs) that have swept through machine learning are direct descendants of this theorem, replacing the fixed weights of a neural network with learnable one‑dimensional curves.
 
-For sixty years this was a beautiful theorem with almost no users. The inner functions Kolmogorov and Arnold conjured were monstrous: continuous but wildly non-smooth, impossible to write down, impossible to compute. The theorem promised a representation existed but handed you nothing you could actually draw.
+But the theorem leaves a tantalizing question wide open. It promises that building blocks *exist*, but it says almost nothing about *which* building blocks, or *how many* you really need for a particular surface. This article is about a precise, hard‑edged answer to the "how many" question — an answer that turns out to be governed by the oldest tool in linear algebra: the rank of a matrix.
 
-Then deep learning arrived, and suddenly the sandwich looked exactly like a neural network. The recent wave of *Kolmogorov–Arnold Networks* (KANs) takes the theorem literally: put learnable curves on the edges of a network instead of fixed weights, and let the data discover the inner and outer functions. The old existence theorem became an architecture.
+## EML functions: the universe's favorite building blocks
 
-But a nagging question remained, and it is the question this article is about. The theorem says the inner functions exist. **It never says what they look like.** If we want to *build* them — store them, compute them, reason about them — we need a concrete vocabulary. What if we insisted that every inner and outer function be drawn from one specific, well-behaved family of expressions?
+Among all the one‑dimensional curves you might reach for, a special family keeps showing up everywhere in science: the **EML functions**, built by composing just three operations — **E**xponentiation $\exp$, taking **L**ogarithms $\log$, and **M**ultiplying (together with adding and constants). These are the functions behind compound interest, radioactive decay, the Richter scale, entropy, the pH of your coffee, and the activation curves inside deep networks.
 
-## The exp–log–multiply vocabulary
+A natural and bold conjecture sharpens Kolmogorov–Arnold: *can the inner building blocks always be chosen from this clean EML family?* The simplest non‑trivial target to test is the humble product,
 
-The family we choose is deliberately frugal. Call an expression an **EML term** — short for *exp–log–multiply* — if it can be built from a single variable and constants using only four operations: addition, multiplication, the exponential $\exp$, and the logarithm $\log$. So $3x + 1$, $\exp(x)$, $\log(2x)$, and $\exp(\log x + 5)$ are all EML terms; an infinite power series or a fractal is not.
+$$f(x,y) = x\cdot y.$$
 
-EML terms are attractive for three reasons. They are *finite* — you can write each one on an index card. They are *computable* — your calculator already has all four buttons. And they are *transparent* — you can read the formula and understand the function, unlike the opaque weight matrices of an ordinary neural network.
+On the positive quadrant, where $x>0$ and $y>0$, there is a breathtakingly compact answer. Using the schoolbook identity $\log(xy)=\log x+\log y$ and then undoing the logarithm with an exponential,
 
-The conjecture, then, sharpens Kolmogorov and Arnold's existence theorem into something an engineer could love:
+$$x\cdot y = \exp\big(\log x + \log y\big).$$
 
-> **Can the inner and outer functions in a Kolmogorov–Arnold representation always be chosen to be EML terms?**
+Read this as a Kolmogorov–Arnold formula: the inner function is $\psi=\log$ (applied to each coordinate), the sum $\log x + \log y$ is taken, and a single outer function $\Phi=\exp$ finishes the job. **One** outer term, drawn entirely from the EML family. The theorem guaranteed at most five outer functions for two variables; the product needs just one.
 
-This article reports a precise, fully verified answer for the cleanest and most important case — and the answer turns out to be a story of triumph, obstruction, and a perfect dividing line.
+This elegance comes with fine print. The identity uses $\log x$, which only makes sense for $x>0$. Cross either axis and the formula collapses — $\exp$ is always positive, so it can never reproduce a product like $(-1)\cdot 1 = -1$. The clean "rank‑one" picture is a *local* miracle, not a global one. Over the whole plane you must fall back on a two‑piece construction, the polarization identity
 
-## The triumph: multiplication is an exponential in disguise
+$$x\cdot y = \tfrac14 (x+y)^2 - \tfrac14 (x-y)^2,$$
 
-Start with the most basic two-variable function that *isn't* a sum: the product $x \cdot y$. If anything resists being broken into one-dimensional pieces, surely it is multiplication, the very symbol of two things interacting.
+which uses **two** outer functions but works everywhere.
 
-And yet. Recall the schoolbook identity that turns multiplication into addition — the identity that powered slide rules and logarithm tables for three centuries:
+So already the product hints at a number attached to each surface — the smallest count of outer terms it truly requires. Making that number precise is the heart of the story.
 
-$$\log(x \cdot y) = \log x + \log y.$$
+## Separable rank: counting the irreducible ingredients
 
-Exponentiate both sides and you get something remarkable:
+Here is the central definition. We say a two‑variable function $f$ has **separable rank at most $r$** if it can be written as a sum of $r$ products of one‑variable functions:
 
-$$x \cdot y = \exp\big( \log x + \log y \big), \qquad x, y > 0.$$
+$$f(x,y) = \sum_{k=0}^{r-1} a_k(x)\, b_k(y).$$
 
-Look at what just happened. On the right, each variable is touched by exactly *one* inner function, $\log$. Those two outputs are *added*. Then a *single* outer function, $\exp$, is applied. This is a Kolmogorov–Arnold representation — with one inner function and one outer function, both EML terms, and both of exp/log "depth" exactly one. Kolmogorov's theorem promised at most $2n+1 = 5$ outer functions for two variables. Multiplication needs just **one**.
+Each term $a_k(x)\,b_k(y)$ is a "separable" piece — a curve in $x$ times a curve in $y$. The separable rank is the minimum number of such pieces you need. And crucially, when all the factors are positive, every single term is an EML expression: $a_k(x)\,b_k(y) = \exp\big(\log a_k(x) + \log b_k(y)\big)$. **The separable rank is exactly the number of EML outer `exp` terms in a sum‑of‑products Kolmogorov–Arnold representation.** Counting ingredients in the recipe is the same as counting EML exponentials.
 
-We call this a **rank-one EML representation**: the absolute minimum, a single outer $\exp$ wrapped around a sum of single-variable inner functions,
+With this lens, the earlier observations snap into focus.
 
-$$f(x_1, \dots, x_n) = \exp\!\left( \sum_{i} \psi_i(x_i) \right).$$
+- The product $x\cdot y$ is a *single* term $a(x)b(y)$ with $a=b=\mathrm{id}$. Its separable rank is $1$. (In the Lean development this is the lemma `mul_sepRankLE_one`.)
+- Rank $\le 1$ turns out to be *exactly* the classical notion of being **multiplicatively separable** — that $f(x,y)=a(x)\,b(y)$ for some single pair of curves. The two notions are provably the same (`mulSeparable_iff_sepRankLE_one`).
 
-The same trick scales effortlessly to any number of variables. For positive numbers $x_1, \dots, x_n$,
+So the product sits at the very bottom of the hierarchy. What about the sum?
 
-$$\prod_{i} x_i = \exp\!\left( \sum_i \log x_i \right).$$
+## The sum is genuinely two‑dimensional
 
-One outer $\exp$. One inner $\log$, shared across every coordinate. The full $n$-dimensional product — the most "interacting" function imaginable — collapses to the leanest possible superposition, for *every* $n$. The verified statement is the lemma `prod_eq_exp_sum_log`: for any finite family of positive reals, $\prod_i f(i) = \exp(\sum_i \log f(i))$.
+The most basic non‑separable surface is the sum, $f(x,y)=x+y$. We can certainly write it with two terms:
 
-## The obstruction: where the magic breaks
+$$x + y = x\cdot 1 + 1\cdot y,$$
 
-Every good magic trick has a moment where it could fail, and here it fails at the edge of the world.
+so its separable rank is at most $2$ (`add_sepRankLE_two`). The real question is whether one term could ever suffice. It cannot — and there is a beautiful, completely elementary way to *prove* it cannot, using nothing more than a $2\times 2$ table.
 
-The logarithm has a fatal flaw: it is undefined at zero and below. Watch what happens at the innocent-looking point $(0, 1)$. The true product is $0 \cdot 1 = 0$. But $\log 0$ is not a number, and when a formal system is forced to assign it *some* value (the convention $\log 0 = 0$ is standard), the EML formula computes
+Sample the surface at $x,y\in\{0,1\}$ and lay the four values in a grid:
 
-$$\exp(\log 0 + \log 1) = \exp(0 + 0) = 1 \neq 0.$$
+$$M = \begin{pmatrix} f(0,0) & f(0,1)\\ f(1,0) & f(1,1)\end{pmatrix} = \begin{pmatrix} 0 & 1\\ 1 & 2\end{pmatrix}.$$
 
-The elegant rank-one representation is **locally** perfect and **globally** broken. It works beautifully on the open positive quadrant and shatters the instant a coordinate touches the boundary. This is the verified theorem `expLog_fails_at_boundary`, and it is not a technicality — it is the price of using $\log$ as an inner function.
+The determinant of this matrix is $0\cdot 2 - 1\cdot 1 = -1$, which is *not* zero. And here is the punchline that connects everything: **if a function has separable rank at most $r$, then every grid of sampled values you can build from it has matrix rank at most $r$.**
 
-Is there a way to represent $x \cdot y$ that works *everywhere*, with no positivity caveat? Yes — and it costs us the transcendental elegance. The polarization identity,
+The reason is pure linear algebra. If $f(x,y)=\sum_{k<r} a_k(x)b_k(y)$, then the sampled matrix factors as a tall matrix (rows indexed by your $x$‑points, columns by $k$) times a wide matrix (rows indexed by $k$, columns by your $y$‑points). A product of an $m\times r$ matrix and an $r\times m$ matrix can never have rank exceeding $r$. This is the **sampling lower bound** (`sample_rank_le`), and its immediate corollary (`sepRankLE_ge_of_det_ne_zero`) is a sharp detector: if even one $m\times m$ sample has nonzero determinant, the separable rank must be at least $m$.
 
-$$x \cdot y = \tfrac{1}{4}(x + y)^2 - \tfrac{1}{4}(x - y)^2,$$
+Apply this to the sum. The $2\times 2$ sample has nonzero determinant, so the separable rank of $x+y$ is at least $2$. Combined with the easy upper bound, its rank is **exactly $2$** (`add_not_sepRankLE_one`). The sum is, in this precise and provable sense, irreducibly two‑dimensional: no single product of curves will ever capture it. A schoolchild's table of four numbers contains a rigorous impossibility proof.
 
-is a Kolmogorov–Arnold representation using two outer functions, $\pm\tfrac14 u^2$, and inner functions $\pm x$, $\pm y$. These are EML terms too — but *polynomial* ones, with zero exp/log depth. They are clumsier (two outer terms instead of one) but utterly robust: valid for all real $x$ and $y$, boundary and all. This is the verified theorem `mul_eq_polarization`, and its boundary success is `polarization_ok_at_boundary`.
+## Climbing forever: the power‑sum staircase
 
-So we have a genuine trade-off, and it is captured by a single invariant: the **exp/log depth** of the representation. Depth-one (transcendental) buys you rank one but only on the interior; depth-zero (polynomial) buys you global validity at the cost of more terms. The product is EML-representable in two qualitatively different ways, and the depth is exactly what separates "interior-only" from "everywhere."
+Now for the climax. Is there a ceiling on separable rank? Kolmogorov–Arnold caps the number of *inner* functions at $2n+1$ — five for two variables. Does some similar magic number cap the number of *outer* EML terms?
 
-## The dividing line: separability is destiny
+The answer is a firm **no**, and a single family of surfaces proves it. Consider the **power‑sum**
 
-Here is where the story turns from a clever trick into a theorem with teeth. We found that the *product* collapses to rank one. The natural question — the one that elevates the whole investigation — is: **which functions do?**
+$$p_N(x,y) = \sum_{k=0}^{N-1} x^k\, y^k = 1 + xy + x^2y^2 + \cdots + x^{N-1}y^{N-1}.$$
 
-The answer is astonishingly clean. A two-variable function $f(x, y)$ has a rank-one EML representation $\exp(\psi(x) + \varphi(y))$ if and only if it is **multiplicatively separable**: it factors as
+It is built as a sum of $N$ products, so its separable rank is at most $N$ (`powerSum_sepRankLE`). To prove that it needs *all* $N$ terms, we deploy the sampling detector with a classical and elegant choice of points: sample at $x,y \in \{0,1,2,\dots,N-1\}$. The resulting $N\times N$ matrix is precisely $V V^{\!\top}$, where $V$ is the **Vandermonde matrix** with entries $V_{ik} = i^{k}$. The Vandermonde determinant for distinct points is famously nonzero — it equals the product of all pairwise differences — and therefore
 
-$$f(x, y) = a(x) \cdot b(y)$$
+$$\det(V V^{\!\top}) = (\det V)^2 \neq 0.$$
 
-for some single-variable functions $a, b$. The reason is the same slide-rule magic running in reverse: $\exp$ turns a sum of inner functions into a *product* of factors, $\exp(\psi(x) + \varphi(y)) = e^{\psi(x)} \cdot e^{\varphi(y)}$, and those factors are automatically positive. Rank-one EML representability *is* positive product separability. In $n$ variables this is the verified equivalence `rankOneEMLn_iff_prodSeparable`: a function admits a single outer $\exp$ of a sum of inner functions exactly when it is a product of strictly positive one-variable factors.
+A nonzero $N\times N$ sample forces the separable rank up to at least $N$. With the matching upper bound, the separable rank of $p_N$ is **exactly $N$** (`powerSum_rank_ge`).
 
-But "is this function secretly a product?" sounds hard to check — you would have to guess the factors. The investigation produced a shortcut: a **four-point test** that detects separability without ever finding the factors. A function is multiplicatively separable precisely when it satisfies the *cross-multiplicative identity*
+Let that sink in. By dialing up $N$, we manufacture surfaces requiring as many EML outer terms as we please. The number of inner one‑dimensional functions stays pinned at the Kolmogorov–Arnold ceiling, but the number of outer EML exponentials marches off to infinity. The two notions of "complexity" decouple completely. There is no universal recipe with a fixed number of EML exponentials that bakes every two‑variable surface; the staircase of complexity has no top step.
 
-$$f(x, y) \cdot f(x', y') = f(x, y') \cdot f(x', y) \quad \text{for all } x, y, x', y'.$$
+## Why a Russian theorem and a Vandermonde matrix should be friends
 
-This is nothing but the statement that every $2 \times 2$ block of the function's value table has vanishing "multiplicative determinant" — the function's value grid has rank one in a multiplicative sense. The verified theorem `mulSeparable_iff_crossMul` proves this checkable identity is equivalent to separability, and `rankOne_exp_of_pos_crossMul` upgrades it: any strictly positive function passing the four-point test has an *explicit* rank-one EML representation. Even better, `rankOne_exp_continuous` guarantees that if the function's slices are continuous, the inner functions come out continuous too — exactly the regularity Kolmogorov and Arnold demanded.
+What makes this story satisfying is that three classical ideas, born in different centuries and different fields, lock together perfectly:
 
-And now the punchline, the sharpest result of all. Take the other elementary two-variable function, the *sum* $x + y$. Does it pass the four-point test? Compute one block:
+- **Kolmogorov–Arnold (1957)** tells us one‑dimensional building blocks always suffice — a statement about *existence*.
+- **EML functions** — exp, log, multiply — supply the most natural, science‑pervasive building blocks, and reveal that a separable term is literally an exponential of a sum of logs.
+- **Matrix rank and the Vandermonde determinant (18th century)** supply the *accounting*, converting a slippery question about infinitely many functions into a finite, checkable computation on a grid of samples.
 
-$$f(0,0)\cdot f(1,1) = 0 \cdot 2 = 0, \qquad f(0,1) \cdot f(1,0) = 1 \cdot 1 = 1.$$
+The bridge between them is the simple observation that *sampling a sum of products is a matrix factorization*. That one move turns analysis into arithmetic. To prove a surface is complicated, you no longer argue about continuous functions at all — you tabulate a handful of its values and compute a determinant. If the determinant is nonzero, the surface is provably irreducible below that size. It is a rare and beautiful instance where a deep representation theorem is fenced in by a fact a student can verify by hand.
 
-They disagree. The sum **fails** the cross-multiplicative identity, and therefore — provably, with no escape — it has **no** rank-one EML representation. This is the verified theorem `add_not_rankOne_exp`. You cannot write $x + y$ as $\exp(\psi(x) + \varphi(y))$, not on any region where the test fails, no matter how cleverly you choose $\psi$ and $\varphi$.
+## Where this points
 
-So the two most elementary binary operations of arithmetic sit on **opposite sides** of a precise mathematical boundary. Multiplication is rank-one EML; addition is not. The thing that distinguishes them is separability, and separability is detectable by a single, finite, four-point check.
+Several threads now beg to be pulled. The sampling bound gives an upper limit on rank for every finite grid; one expects the *true* separable rank to equal the largest rank you ever see across all grids — turning it into a fully computable invariant of a surface. Tensor‑product surfaces, where two independent two‑variable functions are multiplied, should have ranks that *multiply*, mirroring the Kronecker‑product rank law. And the contrast between the local rank‑one $\exp(\log x+\log y)$ form of the product and its global rank‑two polarization form suggests that crossing an axis can force a measurable "rank jump" — a quantitative shadow of the boundary where logarithms cease to exist.
 
-## Why this matters beyond the chalkboard
-
-This might look like a tour of identities every high-schooler half-knows. But pulling them into a single, rigorous frame does real work.
-
-**For machine learning.** Kolmogorov–Arnold Networks are spreading fast because they are more interpretable than standard neural nets. But interpretability is only as good as your vocabulary of inner functions. This investigation says: if your network is trying to model a *multiplicative* relationship — concentrations multiplying in a chemical rate law, probabilities multiplying for independent events, gains multiplying through a signal chain — then a single $\exp$-of-sums layer captures it exactly and minimally, and the inner functions are literally logarithms of your factors. Conversely, if your target is *additive*, forcing an $\exp$-headed layer onto it is mathematically doomed; the four-point test tells you so before you waste a single epoch of training. The cross-multiplicative identity is a cheap diagnostic you can run on data to decide *which kind of layer* you need.
-
-**For scientific modeling.** The boundary obstruction is a parable about domains. The most elegant model — the rank-one $\exp$–$\log$ form — silently lies at the edge of its valid region, returning $1$ where the truth is $0$. In a world of floating-point arithmetic that does not throw errors but quietly substitutes junk values, this is exactly the kind of bug that ships to production. The lesson, made precise, is that transcendental elegance and global robustness can be genuinely incompatible, and the exp/log depth is the dial that trades one for the other.
-
-**For mathematics itself.** Hilbert's thirteenth problem and the Kolmogorov–Arnold theorem are about *existence*. This work is about *construction and classification*: not merely "a representation exists" but "here is the explicit representation, here is the exact class of functions that admit the cleanest one, and here is a finite test to recognize them." The product and the sum become the two poles of a spectrum, and the whole geography of rank-one representability is mapped by the single notion of separability.
-
-## The frontier
-
-The story does not end at rank one. The obvious next move is to ask about *rank two and beyond*: functions that are sums of two or more rank-one EML terms, like $\exp(x+y) + \exp(2x + 3y)$. The conjecture — backed by numerical witnesses — is that such a function genuinely needs two terms, that the four-point test, being a rank-one detector, fails for it, and that there is a strict hierarchy: rank-one functions are a proper subset of rank-two, which are a proper subset of rank-three, and so on. The deeper conjecture is that the minimal number of EML terms needed equals the *rank of the function's value matrix* — that the slide-rule trick turns the whole theory of Kolmogorov–Arnold representation into the familiar, beloved theory of matrix rank.
-
-If that is true, then the question Hilbert asked in 1900 — how do functions of many variables decompose into functions of few — will have, at least for the EML vocabulary, an answer as clean as linear algebra. Multiplication taught us the first lesson: that interaction can hide inside an exponential. The rest of the frontier is learning to count exactly how many exponentials it takes.
+Underneath all of it lies a clean moral. The Kolmogorov–Arnold theorem tells you that everything can be built from simple parts. Separable rank tells you the *price*. And the price, it turns out, is written in the language of matrices and determinants — a currency mathematicians have been counting in for three hundred years.
