@@ -1,47 +1,46 @@
-# Computational Evidence — EML Universal Approximation (this cycle)
+# Computational Evidence — EML Complexity / Kolmogorov Bound
 
-Concise numerical sanity checks underpinning the two verified Lean files. The claims are
-qualitative density statements, so the evidence targets the *decisive* finite mechanisms:
-point separation by exponentials and the dimension obstruction for ridge features.
+Concise sanity checks done before/while formalizing
+`EML/KolmogorovComplexityBound.lean` and `EML/ComplexityDensityBridge.lean`.
 
-## 1. Exponential features separate points (1-D)
-For distinct `x ≠ y`, `exp x ≠ exp y` since `exp` is strictly monotone. Sample:
-| x | y | exp x | exp y | separated? |
-|---|---|-------|-------|------------|
-| 0 | 1 | 1.000 | 2.718 | yes |
-| -1| 1 | 0.368 | 2.718 | yes |
-| 0.5|0.5001|1.6487|1.6488| yes |
-This is the finite core of `injective_expCM_comp` / `coord_exp_family_separates`.
+## 1. Constant-free terms of bounded size: small cases
 
-## 2. Exponential monomials are linearly independent (Vandermonde / Wronskian)
-The functions `e^{k x}` (k = 0..N) sampled at distinct nodes `x₀ < … < x_N` form an
-exponential-Vandermonde matrix `Mₖⱼ = e^{k xⱼ}`. With `tⱼ = e^{xⱼ}` this is the classical
-Vandermonde in the distinct positive `tⱼ`, hence `det = ∏_{i<j}(tⱼ − tᵢ) ≠ 0`.
-Check (`N = 2`, nodes `0,1,2`, so `t = 1, e, e²`):
-det = (e−1)(e²−1)(e²−e) ≈ 1.718 · 6.389 · 4.671 ≈ 51.3 ≠ 0.
-This supports that `span{e^{kx}}` has full local rank — consistent with density
-(`exp_monomials_span_dense`).
+Counting constant-free EML terms (`var, +, ×, exp, log`) by `size` (node count):
 
-## 3. Ridge non-injectivity in dimension n ≥ 2 (sharpness)
-For any weight `w`, the functional `x ↦ ⟨w, x⟩` on `ℝⁿ` (n ≥ 2) has a kernel vector.
-Example `n = 2`, `w = (3, 5)`: take `v = (5, −3)`; then `⟨w, v⟩ = 15 − 15 = 0`, so
-`x = 0` and `x = v` collide. Hence `exp(⟨w,·⟩)` also collides: `e⁰ = e⁰`.
-Generic check: for random `w ∈ ℝ²`, `v = (w₂, −w₁)` always lies in the kernel.
-This is the finite witness behind `ridge_not_injective` (proved via the dimension count
-`finrank ℝⁿ = n ≤ finrank ℝ = 1`).
+| size n | terms of size exactly n |
+|-------:|------------------------:|
+| 1 | 1 (`var`) |
+| 2 | 2 (`exp var`, `log var`) |
+| 3 | 1 (`var+var = var*var`? distinct as terms) → `var+var`, `var*var`, `exp(exp var)`, `exp(log var)`, `log(exp var)`, `log(log var)` |
 
-## 4. Necessity of n coordinate features (n = 2 spot check)
-Using only `x ↦ e^{x₁}` cannot distinguish `(0,0)` from `(0,1)` (both give `e⁰ = 1`).
-Adding `x ↦ e^{x₂}` distinguishes them (`e⁰ = 1` vs `e¹ = e`). Confirms that the full
-coordinate family, not a strict subset, is needed — matching the positive/negative pair
-`coord_exp_family_separates` + `ridge_not_injective`.
+The exact term count is Catalan-like and clearly **finite at each size** — this is what
+`finite_termsLE` proves. The key qualitative fact (all that the Kolmogorov argument needs) is
+finiteness, not the exact count, so we formalize finiteness via the constructor inclusion
+`{t | size ≤ n+1} ⊆ {var} ∪ image2 add S S ∪ image2 mul S S ∪ expOf '' S ∪ logOf '' S`.
 
-## OEIS / sequences
-No integer sequence is intrinsic to these (continuous, qualitative) density results; the
-only combinatorial datum is the exponential-Vandermonde determinant, which is a product
-formula rather than a new sequence. No OEIS entry was pursued.
+## 2. Why the constant leaf had to be dropped
 
-## Counterexample hunt
-No counterexample to density was found: every finite test of point separation succeeded,
-and the only "failure" (single ridge feature) is exactly the obstruction we formalized as
-`ridge_not_injective`, confirming the hypothesis rather than refuting density.
+With a real-valued `const c` leaf, `{t | size ≤ 1} ⊇ {const c : c ∈ ℝ}` is already
+**uncountable**, so `finite_termsLE` would be FALSE. Counterexample-hunt outcome: any finite
+description alphabet works; reals as leaves break counting. Hence the constant-free algebra.
+
+## 3. Generators are EML-computable with linear size
+
+`expBasis k = exp(var + ⋯ + var)` (`k+1` copies):
+- `eval (expBasis k) = (x ↦ e^{(k+1)x})`  — verified symbolically (`repAdd_eval`, `expBasis_eval`).
+- `size (expBasis k) = 2k+2`  — verified (`expBasis_size`), giving `K(e^{(k+1)x}) ≤ 2k+2`.
+
+Spot check: `k=0`: `exp(var)`, size 2, `e^{1·x}`. `k=1`: `exp(var+var)`, size 4, `e^{2x}`.
+Both match `2k+2`.
+
+## 4. Incompressibility, conceptually
+
+`computableLE n` is the image of the finite set `termsLE n` under `eval`, hence finite; but
+`ℝ → ℝ` is infinite (constants inject). So `(computableLE n)ᶜ` is always nonempty
+(`exists_incompressible`). No counterexample to incompressibility exists by construction.
+
+## 5. No OEIS sequence claimed
+
+The exact size-count sequence is a weighted Catalan variant; we deliberately do not assert a
+specific OEIS ID, since the formal results depend only on finiteness, not the closed form
+(left as Future Direction 4).
