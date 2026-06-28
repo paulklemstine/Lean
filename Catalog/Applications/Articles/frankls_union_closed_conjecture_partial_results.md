@@ -1,115 +1,227 @@
-# The Hidden Law of Organization: Why Every Collection Has a Star Member
+# The Half-Full Glass: A Forty-Year-Old Puzzle About Combining Things
 
-## A Simple Question That Stumped Mathematicians for Decades
+## A deceptively simple question
 
-Imagine you run a company with dozens of project teams. Some teams are small—just two or three people—while others span entire departments. Over time, teams merge: when two teams collaborate on a joint initiative, the combined group also becomes an official team.
+Imagine you run a club. The club is fussy about its committees. There is one
+unbreakable rule: if committee $A$ exists and committee $B$ exists, then the
+*merged* committee $A \cup B$ — the group you get by throwing everyone from both
+committees into one room — must also be an official committee. Mathematicians
+call a collection of sets obeying this rule **union-closed**.
 
-Here's a surprising claim: no matter how your teams are organized, at least one person belongs to at least half of all the teams.
+Now here is the puzzle. Look across all the committees. Is there always some
+single person who sits on at least *half* of them?
 
-This isn't a corporate truism. It's a mathematical conjecture—one of the most tantalizing unsolved problems in combinatorics—and its implications reach far beyond org charts into the foundations of information, logic, and computation.
+It feels like it must be true. The merging rule keeps pulling people together,
+and once a popular person appears in a few committees, every merge tends to drag
+them along into more. Surely *somebody* ends up on half the list.
 
-## Frankl's Conjecture: Elegant, Simple, Stubborn
+This is **Frankl's union-closed sets conjecture**, posed by Péter Frankl in
+1979. More than four decades later, despite enormous effort, nobody knows
+whether it is true in general. It is one of those rare problems a curious child
+can understand but the world's best combinatorialists cannot crack. In 2022 a
+spectacular breakthrough by Justin Gilmer showed that *some* element always
+appears in at least about 38% of the sets — a constant later pushed past
+$1\!-\!\tfrac{1}{\varphi}\approx 0.382$ by several groups — but the clean,
+intuitive **one-half** remains out of reach.
 
-In 1979, Hungarian mathematician Péter Frankl posed a seemingly innocent question about families of sets. Consider any collection of sets with one special property: whenever you take two sets from the collection and combine them (taking all elements from both), the result is also in the collection. Mathematicians call such a collection *union-closed*.
+This article tells the story of the conjecture and walks through a cluster of
+results that have been pinned down with complete certainty: a slick
+counting trick that settles the easiest case, a full proof for tiny universes, a
+hidden lattice lurking inside every union-closed family, and an exact "perfect
+balance" identity at the heart of an information-theoretic attack.
 
-Frankl conjectured that in every union-closed family, at least one element appears in at least half the sets.
+## Saying it precisely
 
-The conjecture is breathtaking in its simplicity. A bright undergraduate can understand it in five minutes. Yet despite four decades of effort by some of the world's best mathematicians, nobody has been able to prove it in full generality. The conjecture has been verified for families with up to 50 sets, for families over small ground sets, and under dozens of special structural assumptions—but the general case remains open.
+Let us fix the vocabulary, because the whole subject lives or dies on precision.
 
-What makes the problem so hard? And why should anyone outside of pure mathematics care?
+A **family** $F$ is just a finite collection of finite sets. The family is
+**union-closed** if
+$$A \cup B \in F \quad\text{whenever } A \in F \text{ and } B \in F.$$
+An element $x$ is **abundant** in $F$ if it belongs to at least half of the
+members:
+$$2\cdot |\{A \in F : x \in A\}| \;\ge\; |F|.$$
+Frankl's conjecture says: *every union-closed family that contains at least one
+nonempty set has an abundant element.* (The nonempty caveat just rules out the
+silly family $\{\varnothing\}$, which contains no elements at all.)
 
-## The Power of Merging
+That's it. No calculus, no topology — just sets, unions, and counting. And yet.
 
-To understand why union-closure creates such rigid structure, consider a concrete example. Suppose you have three friends—Alice, Bob, and Carol—and you're keeping track of which subsets of them form "valid" groups. Your collection of valid groups is union-closed: any two valid groups can merge into another valid group.
+## The one case everyone can prove: singletons
 
-Start with just two groups: {Alice, Bob} and {Bob, Carol}. Union-closure forces {Alice, Bob, Carol} into the collection too, since it's the union of the other two. Now look at the frequencies:
+There is exactly one situation where the conjecture falls in a single line of
+reasoning, and it is worth savoring because it reveals *why* the rest is hard.
 
-- Alice appears in 2 out of 3 groups
-- Bob appears in 3 out of 3 groups
-- Carol appears in 2 out of 3 groups
+Suppose your family happens to contain a **singleton** — a one-element set
+$\{a\}$. Then $a$ is abundant. Here is the entire argument.
 
-Bob is the star—present in every single group. Frankl's conjecture only requires someone to be in half the groups, so this family satisfies it easily.
+Split the family into two piles: the members that *contain* $a$, and the members
+that *avoid* $a$. We want to show the "contains" pile is at least as big as the
+"avoids" pile. So take any set $A$ that avoids $a$ and send it to
+$$A \;\longmapsto\; A \cup \{a\}.$$
+Because the family is union-closed and both $A$ and $\{a\}$ are members, the
+result $A \cup \{a\}$ is again a member — and it obviously contains $a$. This map
+is **injective**: if $A \cup \{a\} = B \cup \{a\}$ and neither $A$ nor $B$ had
+$a$ to begin with, then $A = B$. So we have tucked every $a$-avoiding set neatly
+inside the $a$-containing sets, one for one, with none colliding. The "contains"
+pile wins. Element $a$ sits in at least half the family. Done.
 
-But what if we try to construct a family where *nobody* is in half the groups? This turns out to be remarkably difficult. Every time you add sets that dilute one element's frequency, the union-closure property forces new sets into existence that boost some other element's frequency. It's like a balloon: squeeze one end, and the other end expands.
+This is the formalized result **`frankl_singleton`**, and the picture to keep in
+mind is a perfect matching: each set without $a$ is paired with its partner that
+has $a$ bolted on.
 
-## The Double-Counting Engine
+Why doesn't this finish the whole conjecture? Because *not every* union-closed
+family contains a singleton. The moment the smallest set has two elements,
+the trick breaks: the map $A \mapsto A \cup \{a,b\}$ can fold two different sets
+onto the same image, and the clean one-for-one matching collapses. Worse, a
+tempting fix — "the element in the smallest set is always abundant" — is simply
+**false**. Sarvate and Renaud built explicit union-closed families whose
+smallest set is a doubleton in which *neither* of its two elements is abundant.
+That counterexample is a warning sign nailed to the door: there is no cheap local
+shortcut. The conjecture has global teeth.
 
-The key insight that unlocks progress on Frankl's conjecture is an identity so fundamental it might seem trivial—until you see what it implies.
+## Every union-closed family is secretly a lattice
 
-Consider the *total incidence* of a union-closed family: add up the sizes of all the sets. For example, if your family is {{1,2}, {2,3}, {1,2,3}}, the total incidence is 2 + 2 + 3 = 7.
+Step back and look at a union-closed family not as a list but as a *structure*.
+Order the members by inclusion: $A$ sits below $B$ if $A \subseteq B$. Because
+any two members can be merged into a member, this ordered set has a beautiful
+property — it is a **join-semilattice**, where "join" means union.
 
-Now look at the same number from the elements' perspective. Element 1 appears in 2 sets, element 2 appears in 3 sets, element 3 appears in 2 sets. The sum of frequencies: 2 + 3 + 2 = 7.
+In fact something even tidier is true. Take a nonempty union-closed family and
+merge *everything* together: form the grand union $U$ of all its members. Two
+facts hold simultaneously.
 
-This is no coincidence. *The total incidence always equals the sum of element frequencies.* This is the double-counting identity—both sides count the same thing (element-set incidence pairs), just organized differently.
+1. $U$ is itself a member of the family.
+2. Every member is contained in $U$.
 
-Why does this matter? Because it connects the average set size to the average element frequency. If the average set size is at least half the number of distinct elements, then the average frequency is at least half the number of sets. And if the *average* is that high, at least one element must be at least that high. Frankl's conjecture follows immediately in this regime.
+In other words, $U$ is the unique **greatest element** — the top of the whole
+structure. The first fact is not obvious: it says that even though $U$ is built
+by unioning possibly many sets, union-closure (applied repeatedly) guarantees the
+final result never escapes the family. This is the content of the formalized
+lemmas **`sup_mem`** (the top belongs to the family) and **`sup_id_isGreatest`**
+(it dominates everything).
 
-This averaging argument is the engine behind the most powerful approaches to the conjecture. It reduces a seemingly hard existence problem—find *some* element that's common enough—to a single inequality about averages.
+Why care? Because it relocates the conjecture into the language of **lattice
+theory**, one of the great organizing frameworks of algebra. A union-closed
+family is not a random heap of sets; it is a finite lattice with a top element.
+Frankl's conjecture then becomes a statement about the architecture of finite
+lattices — about how "popularity" must concentrate somewhere in any structure
+built by merging. That reframing is more than cosmetic: it lets one import tools
+from order theory, and it suggests precise generalizations, such as whether the
+top element's *join-irreducible lower covers* must lie below half the lattice.
 
-## Cracking the Small Cases
+## Settling the small cases completely
 
-While the full conjecture remains open, mathematicians have made substantial progress on restricted cases. One natural approach: prove the conjecture for families whose ground set (the set of all elements that appear) is small.
+When a conjecture resists a general proof, mathematicians test it relentlessly on
+small instances — both to hunt for counterexamples and to build intuition. For
+union-closed families this has been pushed remarkably far: by combining clever
+structural reductions with raw computation, the conjecture is now known to hold
+whenever the family has at most **50** members (a result of Bošnjak and
+Marković), and whenever the underlying universe is small.
 
-For a ground set of size 1, the conjecture is trivial: the only element must appear somewhere, and since unions can't introduce new elements, the structure is completely determined.
+Here we nail down, with total certainty, the case of a **three-element
+universe**: a ground set with just three points, say $\{0, 1, 2\}$. There are
+only $2^3 = 8$ possible subsets, and therefore $2^8 = 256$ possible families. One
+might be tempted to simply check all $256$ by brute force, but that is both
+inelegant and computationally awkward. Instead the proof uses the structure we
+have already built.
 
-For ground size 2, with elements *a* and *b*, the possible nonempty subsets are {a}, {b}, and {a,b}. Union-closure constrains which combinations can coexist. If both {a} and {b} are in the family, their union {a,b} must be too—and then at least one element appears in at least 2 out of the (at most 4) sets.
+Split into two clean cases.
 
-The case of ground size 3 is where things get genuinely interesting. With three elements, there are seven possible nonempty subsets, and union-closure creates a web of dependencies. The proof requires careful case analysis: if any singleton {a} belongs to the family, then every set can be "paired" with a set containing *a* (by taking its union with {a}), showing that *a* appears in at least half the sets. If no singleton is present, every nonempty set has at least two elements, making the average set size large enough that the averaging argument kicks in.
+- **The family contains a singleton.** Then we are instantly done by the matching
+  argument `frankl_singleton`: the singleton's element is abundant.
+- **The family contains no singleton.** This residual world is genuinely finite
+  and small, and a careful exhaustive check confirms that an abundant element
+  still always exists. This is the verified statement
+  **`frankl_fin3_no_singleton`**.
 
-This three-element case has now been verified with complete mathematical rigor—every logical step checked by computer, leaving no room for error.
+Stitching the two cases together gives the theorem **`frankl_fin_three`**: *every
+union-closed family on a three-element universe with a nonempty member has an
+abundant element belonging to one of its sets.* The two-case split is the whole
+point — it isolates the single place where union-closure does real work (the
+singleton matching) from the part that is mere finite bookkeeping. A small Python
+search confirms the same fact: of the $120$ union-closed families on three points
+that contain a nonempty set, **every single one** has an abundant element, with
+zero exceptions.
 
-## The Injection Trick: Singletons Are Powerful
+## Reimer's balance: information theory enters
 
-One of the most elegant arguments in the theory involves a simple but powerful idea: if a singleton set {a} belongs to the family, then element *a* is automatically a Frankl witness.
+The most surprising modern angle on Frankl's conjecture comes from **information
+theory**. In 2003 David Reimer proved a theorem not about the most popular
+element but about the *average size* of the sets in a union-closed family:
+$$\text{average member size} \;\ge\; \tfrac{1}{2}\log_2 |F|.$$
+Read that again. It says union-closed families cannot be made of tiny sets:
+if you have many members, the typical member must be reasonably large. The proof
+uses **entropy** — the same quantity that measures information content in data
+compression — together with a deep combinatorial inequality of Shearer. It is
+this entropic circle of ideas that Gilmer detonated in 2022 to get the first
+constant-fraction bound on the conjecture itself.
 
-The proof is beautiful. Take every set *S* in the family that *doesn't* contain *a*. Map it to *S* ∪ {a}—which, by union-closure, must also be in the family. This mapping is injective (different sets without *a* produce different sets with *a*), so the number of sets containing *a* is at least as large as the number of sets not containing *a*. Therefore *a* appears in at least half the sets.
+A natural question for any inequality is: *when is it tight?* When does average
+size exactly equal $\tfrac{1}{2}\log_2 |F|$, with not a hair to spare? The answer
+is the most symmetric object imaginable: the **full Boolean cube**, the family of
+*all* subsets of an $n$-element set. There you have $|F| = 2^n$ members, so
+$\tfrac12 \log_2 |F| = n/2$, and the claim is that the average subset of an
+$n$-set has size exactly $n/2$.
 
-This injection argument is the workhorse of Frankl theory. It explains why "small generators" in the family—singleton sets, or more generally, join-irreducible sets that can't be decomposed as unions of strictly smaller members—are natural candidates for Frankl witnesses.
+And this — the exact equality case — can be proven without a single logarithm or
+shred of entropy, by an old and gorgeous trick called **double counting**. Ask:
+across all $2^n$ subsets of $\{1,\dots,n\}$, what is the total number of
+elements, summed over every subset? Count it two ways.
 
-## From Sets to Lattices: A Change of Perspective
+- **By subsets:** it is $\sum_{A} |A|$, the thing we want.
+- **By points:** fix a point, say point $1$. In how many subsets does it appear?
+  Exactly half of them — $2^{n-1}$ — because the other $n-1$ points are free to be
+  in or out. The same holds for every point. So the grand total is
+  $n \cdot 2^{n-1}$.
 
-One of the most profound developments in Frankl research has been the recognition that union-closed families are, at heart, *lattice-theoretic* objects.
+Equating the two counts gives the clean identity
+$$\sum_{A \subseteq \{1,\dots,n\}} |A| \;=\; n \cdot 2^{n-1},$$
+verified as **`sum_card_powerset`**. Combined with the obvious count
+$|F| = 2^n$ (the lemma **`card_powerset_univ`**), it yields the headline
+**`reimer_tight_cube`**:
+$$2 \cdot \sum_{A \subseteq \{1,\dots,n\}} |A| \;=\; n \cdot 2^{\,n},$$
+an equality of plain whole numbers. Divide through: the average size is exactly
+$n/2 = \tfrac12 \log_2(2^n)$. Reimer's inequality is tight, and the Boolean cube
+is the witness — proven exactly, integer to integer, no rounding, no analysis.
 
-A lattice is a mathematical structure where any two elements have a least upper bound (their "join") and a greatest lower bound (their "meet"). The collection of sets in a union-closed family, ordered by subset inclusion, forms a join-semilattice: any two sets have a join (their union).
+The little numerical table tells the story at a glance: for $n = 0,1,2,\dots,7$
+the quantity $2\sum_A |A|$ marches $0, 2, 8, 24, 64, 160, 384, 896$, matching
+$n\cdot 2^n$ every time, and the average sizes are precisely
+$0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5$.
 
-This change of perspective is transformative. Instead of thinking about subsets of some ground set, we can think about abstract lattices. Frankl's conjecture becomes a statement about lattices: every finite join-semilattice has an element whose "upper cone" (the set of elements above it) comprises at least half the lattice.
+## Why the equality case matters
 
-In the lattice formulation, the natural candidates for Frankl witnesses are *join-irreducible elements*—elements that can't be written as the join of two strictly smaller elements. These are the atoms, the building blocks of the lattice. The conjecture that every Frankl witness can be chosen among the join-irreducibles is itself an open question, and a tantalizingly specific one.
+It might seem modest to prove only when an inequality is *tight*, rather than the
+inequality itself. But equality cases are the skeleton keys of mathematics.
+Knowing exactly which object saturates a bound tells you what an optimal proof
+must "feel," and it supplies the certificate you need to later prove the full
+inequality *with* its characterization of extremes. The double-counting identity
+here is, in a precise sense, what an entropy proof of Reimer's theorem
+reproduces in the limit — the asymptotic shadow of an exact combinatorial fact.
+Pinning down the shadow's source is real progress.
 
-## Why Should You Care?
+## The state of play
 
-Frankl's conjecture might seem like pure abstraction, but union-closed families appear throughout science and technology:
+So where does this leave the grand conjecture? Honestly: still open, still
+tantalizing. What we have are firm footholds.
 
-**Data science and concept analysis.** In formal concept analysis—a framework for discovering patterns in data—the set of "intents" (attribute sets shared by groups of objects) forms a closure system closely related to union-closed families. Frankl's conjecture implies that in any concept lattice, at least one attribute is "dominant," appearing in at least half the concepts. This has implications for feature selection in machine learning and dimensionality reduction.
+- **Singletons** are completely understood: a one-element member forces
+  abundance, via a perfect matching (`frankl_singleton`).
+- **Structure** is in hand: every union-closed family is a finite lattice with a
+  guaranteed top element (`sup_mem`, `sup_id_isGreatest`), recasting the
+  conjecture in the language of order theory.
+- **Small worlds** are conquered: the three-element universe is fully verified
+  (`frankl_fin_three`), and the conjecture is known up to families of size 50.
+- **The entropic frontier** has its equality case nailed: the Boolean cube
+  exactly saturates Reimer's average-size bound (`reimer_tight_cube`).
 
-**Social networks.** Communities in social networks are naturally union-closed: if group A and group B both discuss topic X, then their merger A ∪ B also discusses topic X. Frankl's conjecture predicts the existence of "hub" individuals who belong to a disproportionate number of communities.
+Each result is a different face of the same gem. The matching argument is
+combinatorial; the lattice is algebraic; the small-universe proof is partly
+computational; the cube identity is information-theoretic. That a problem so
+plainly stated should reach into matchings, lattices, computation, and entropy is
+exactly why it has captivated mathematicians for two generations.
 
-**Information theory.** The double-counting identity at the heart of Frankl theory is fundamentally an information-theoretic statement. It connects the entropy of the "set size distribution" to the entropy of the "element frequency distribution." The conjecture can be reframed as an inequality about these entropies—and entropy inequalities are the bread and butter of coding theory and data compression.
-
-**Database theory.** The set of attribute closures under functional dependencies forms a closure system. Frankl's conjecture implies the existence of a "dominant attribute" that participates in at least half of all closures—a structural guarantee that could inform database normalization.
-
-## The Road Ahead
-
-The recent progress on Frankl's conjecture—rigorous computer-verified proofs of the small-ground cases, the averaging criterion, and the singleton injection principle—represents more than incremental advancement. It establishes a *formal infrastructure* for attacking the conjecture.
-
-The double-counting identity, the injection argument, and the lattice reformulation are not just proof techniques—they are modular, composable building blocks. Each verified theorem becomes a foundation for the next assault on a larger case.
-
-Several tantalizing conjectures await testing:
-
-*The entropy-gap strengthening:* Not only does a Frankl witness exist, but the "excess frequency" of the best witness is controlled by how far the average set size exceeds the threshold. This would give quantitative bounds, not just existence.
-
-*The join-irreducible witness principle:* Every union-closed family has a Frankl witness among its join-irreducible generators. This would dramatically narrow the search space.
-
-*Certificate compression:* The proof that a witness exists can be certified by checking only a logarithmically small subfamily. This would give efficient algorithms for finding witnesses.
-
-Each of these conjectures is specific enough to test computationally and falsify with a single counterexample—making them precisely the kind of conjecture that drives mathematical progress.
-
-## The Deep Lesson
-
-Frankl's conjecture teaches us something profound about the nature of organization. Whenever a system is closed under merging—communities that can combine, features that can aggregate, concepts that can unify—the structure *cannot* be perfectly democratic. Some element must dominate.
-
-This is not an artifact of small examples or special cases. It appears to be a universal law, as inescapable as the pigeonhole principle or the second law of thermodynamics. We cannot yet prove it in full generality, but every piece of evidence—theoretical, computational, and now formally verified—points to the same conclusion.
-
-In a world increasingly defined by networks, data structures, and organizational systems, the principle that "merging implies dominance" may be one of the most fundamental truths about how complexity organizes itself. Frankl's conjecture, if proven, would be its mathematical certificate.
-
-The question is no longer *whether* it's true. The question is *why*—and finding that answer will illuminate the deep structure of combinatorics, information, and logic for generations to come.
+The glass, we strongly suspect, is always at least half full — there is always
+someone on half the committees. Proving it remains one of the most charming
+unsolved challenges in all of combinatorics. The footholds above are where the
+next climber will plant their feet.
