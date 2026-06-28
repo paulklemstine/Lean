@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "bfc7b99e",
     "filename": "the_non_existence_of_new_factorial_square_solution.json",
     "pkg_num": 199,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.44995,
     "title": "The Non-Existence of New Factorial Square Solutions: Brocard's Problem"
   },
   {
@@ -5806,8 +5806,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_non_existence_of_new_factorial_square_solution",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.44995,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Non-Existence of New Factorial Square Solutions: Brocard's Problem"
     }

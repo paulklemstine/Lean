@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4364c6f1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — 2D Ising Model Phase Transition\n\nBold, falsifiable conjectures distilled from this research cycle (Stages 3–4).\nEach is stated so that it can be *proved or refuted in Lean* on to",
-      "quality_score": 0.546,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-06-26T03:45:09",
-      "title": "Statistical Mechanics: Ising Model Phase Transition"
-    },
-    {
       "cycle_id": "8f6e0a03",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Quadratic irrational density in the ratio spectrum\n\nDerived from this cycle's findings (closure of the quadratic-irrational locus\nunder the integer Möbius action; the determinant",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-28T22:46:15",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+    },
+    {
+      "cycle_id": "bfc7b99e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Factorial Square Solutions\n\nGenerated from the cycle that produced\n`Catalog/Applications/FactorialSquareObstructions.lean`, which proved:\n\n* `factorial_not_perfect_power`: `n!` (",
+      "quality_score": 0.44995,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T22:47:15",
+      "title": "The Non-Existence of New Factorial Square Solutions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7327899999999999
     }
   ],
-  "last_updated": "2026-06-28T22:46:15",
+  "last_updated": "2026-06-28T22:47:15",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "251e4381",
-        "quality": 0.68488,
-        "theorems": 0,
-        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-      },
-      {
         "cycle_id": "07ec4039",
         "quality": 0.77992,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.7327899999999999,
         "theorems": 15,
         "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+      },
+      {
+        "cycle_id": "bfc7b99e",
+        "quality": 0.44995,
+        "theorems": 0,
+        "title": "The Non-Existence of New Factorial Square Solutions"
       }
     ],
     "Bridges": [
