@@ -1,85 +1,257 @@
-# The Hidden Mathematics of Efficiency: Why Your Computer's Best Tricks Are Laws of Nature
+# The Shape of a Perfect Search
 
-## The Library Paradox
+There is a moment, familiar to anyone who has ever flipped through a physical
+dictionary, that contains the entire theory of efficient computation in
+miniature. You want the word *quokka*. You don't start at *aardvark* and read
+forward. You split the book roughly in half, glance at the page, decide whether
+*quokka* lies to the left or the right, and throw away the half that can't
+contain it. Then you do it again. And again. A thousand-page dictionary
+surrenders its secret in about ten glances, not a thousand.
 
-Imagine you're looking for a specific book in a library of one million volumes, arranged alphabetically. You could start at shelf one and check every book in order—a strategy that might take a million steps. Or you could walk to the middle shelf, check the name, and instantly eliminate half the library. Then half again. Then half again. In just twenty steps, you'd find any book.
+That instinct has a name — **binary search** — and it is arguably the most
+important small algorithm ever discovered. It is also, famously, one of the
+hardest small algorithms to get *exactly* right. Donald Knuth observed that
+although the idea was published in 1946, the first *correct* version that
+handled all the boundary cases didn't appear until 1962. Sixteen years of
+off-by-one errors. Jon Bentley, who taught binary search to professional
+programmers for years, reported that roughly ninety percent of them failed to
+code it correctly when given a couple of hours to try.
 
-This isn't a clever shortcut. It's a fundamental law about how information works.
+This article is about what it means to pin binary search down so completely that
+there is *nothing left to get wrong* — to state precisely what it computes, to
+prove that it always computes that, and to prove exactly how fast it does so.
+And then it's about a small surprise: the same logarithmic search that finds a
+word in a dictionary turns out to navigate a far stranger space — the
+**factorial number system**, a counting system where each digit lives in a
+column of a different width, and where every whole number below a factorial gets
+a unique address.
 
-For decades, computer scientists have treated algorithms like binary search, shortest-path finding, and the Fast Fourier Transform as separate inventions—useful tools in a programmer's kit. But a new mathematical framework reveals something far more profound: these algorithms aren't just fast. They're *optimal* in a deep, physics-like sense. Each one extracts information from its input at the maximum rate allowed by the structure of the problem.
+## The trouble with "the middle"
 
-The implications are startling. Algorithms aren't arbitrary human inventions. They're discoveries—as inevitable as the laws of thermodynamics.
+Most people first meet binary search as "search a sorted array." That framing is
+true but misleading, because it bundles together two completely different ideas
+and makes them look like one. The first idea is *the search itself*. The second
+is *the assumption that the data is sorted*. Untangling them is the key to
+understanding why binary search is correct.
 
-## Three Laws of Efficient Computation
+Here is the cleaner way to think about it. Forget arrays. Imagine a switch that
+is **off** at some starting point and **on** at some ending point, and you want
+to find exactly where it flips. Formally, picture a function $p$ that takes a
+position $i$ and returns either *false* (off) or *true* (on). You know two
+anchor facts:
 
-The breakthrough begins with a deceptively simple question: *Why do efficient algorithms exist at all?*
+$$p(\text{lo}) = \text{false}, \qquad p(\text{hi}) = \text{true}.$$
 
-Consider three of the most important algorithms ever invented. Binary search finds an item in a sorted list. Dijkstra's algorithm finds the shortest route through a network. The Fast Fourier Transform multiplies large numbers and processes signals. On the surface, these algorithms solve completely different problems. But mathematically, they turn out to be siblings—three manifestations of a single principle.
+Somewhere strictly between $\text{lo}$ and $\text{hi}$, the switch must flip from
+off to on. Binary search finds that flip point. It looks at the midpoint
+$\text{mid} = \lfloor(\text{lo}+\text{hi})/2\rfloor$, asks the single question
+"is the switch on here?", and then keeps the half of the interval that still
+straddles the flip:
 
-**Binary search exploits order.** A sorted list has a hidden structure: any yes-or-no question about the data splits the possibilities cleanly in half. Each comparison eliminates exactly one bit of uncertainty. This is why binary search takes about 20 steps to search a million items—because log₂(1,000,000) ≈ 20. Each question is maximally informative.
+- If $p(\text{mid})$ is **true**, the flip is at or before the midpoint, so we
+  recurse on $[\text{lo}, \text{mid}]$.
+- If $p(\text{mid})$ is **false**, the flip is after the midpoint, so we recurse
+  on $[\text{mid}, \text{hi}]$.
 
-**Dijkstra's algorithm exploits monotonicity.** When you're finding shortest paths in a road network, there's a beautiful property: once you've confirmed the shortest route to a city, that answer never changes. The algorithm settles cities in order of increasing distance, like an expanding wavefront. Each step is irreversible and final—a one-way door that the algorithm walks through with mathematical certainty.
+We stop when the interval has shrunk to a single step — when $\text{hi}$ is just
+one past $\text{lo}$ — and we return $\text{hi}$.
 
-**The FFT exploits symmetry.** When multiplying polynomials or processing signals, the input has a hidden circular symmetry. The FFT decomposes the problem along this symmetry axis, splitting a size-*n* problem into two problems of size *n*/2. The key insight is that roots of unity—special numbers whose powers cycle back to 1—create a mathematical lever that transforms multiplication into simple pointwise operations.
+The beautiful thing about this "threshold" picture is what it does *not* require.
+It says nothing about the data being sorted. The only thing the algorithm leans
+on is the **loop invariant**: at every recursive call, the left anchor reads
+false and the right anchor reads true. That property is preserved *by
+construction* — whichever half we keep, we always keep an off-end and an on-end.
+This is the secret of writing binary search correctly. You don't reason about
+arrays and comparisons; you reason about a single invariant that can never be
+violated.
 
-## The Unifying Insight
+When this is made fully rigorous, the correctness statement reads like a
+contract. If $\text{lo} < \text{hi}$ with $p(\text{lo})$ false and $p(\text{hi})$
+true, then the index $r$ that binary search returns satisfies, all at once:
 
-What connects these three algorithms? Each one is a *certified state machine* with three properties:
+$$\text{lo} < r \le \text{hi}, \qquad p(r) = \text{true}, \qquad p(r-1) = \text{false}.$$
 
-1. **An invariant**: a mathematical promise that remains true at every step.
-2. **A potential function**: a number that strictly decreases with each step, guaranteeing termination.
-3. **A correctness certificate**: at termination, the output provably satisfies the specification.
+In words: the answer lies inside the interval, the switch is on at the answer,
+and the switch is off one step earlier. That is *exactly* the boundary — the
+first position where the predicate becomes true. There is no ambiguity, no
+off-by-one wiggle room, no special case lurking at the ends. The contract holds
+for **every** predicate satisfying the two anchor conditions, with no assumption
+of monotonicity whatsoever.
 
-This isn't just an analogy. It's a precise mathematical structure—what the researchers call an *information-efficient algorithm*. The potential function bounds the running time. The invariant ensures correctness. And the combination creates something remarkable: a formal proof that the algorithm is not just correct, but runs within a certified number of steps.
+Where does the sorted array come back in? Only at the very end, and only if you
+want it. If you are searching a sorted list for the first entry that is at least
+some target $t$, you simply take $p(i)$ to mean "the $i$-th entry is $\ge t$."
+Because the list is sorted, this predicate really is a clean off-then-on switch,
+and the boundary the search finds is precisely the first index whose entry
+reaches the target. Monotonicity — sortedness — is what turns the abstract flip
+point into the concrete "first index $\ge t$." It is a topping, not the cake.
 
-For binary search, the potential is the width of the search interval, which halves at each step. For Dijkstra, it's the number of unsettled vertices. For the FFT, it's the recursion depth in a divide-and-conquer tree. In each case, the potential's descent rate matches the problem's inherent information content.
+## Counting the glances
 
-## The Information Bridge
+Knowing binary search is correct is half the story. The other half is the
+promise that made it famous: it is *fast*. But how fast, exactly?
 
-Perhaps the most surprising result connects algorithms to information theory—the branch of mathematics founded by Claude Shannon that governs communication, compression, and entropy.
+Every step of the algorithm throws away half of the remaining interval. Start
+with a gap of width $g = \text{hi} - \text{lo}$; after one step the gap is at
+most about $g/2$; after two, about $g/4$; and so on until the gap is one. The
+number of halvings is the **logarithm** of $g$ — which is why a thousand-page
+dictionary needs only about ten glances ($2^{10} = 1024$).
 
-Here's the key theorem: if a search algorithm uses *k* comparisons to locate an item among *n* possibilities, then the search space has at most 2^*k* distinguishable outcomes. This means the algorithm's comparison trace is an *entropy certificate*—a mathematical proof that the information content of the problem is at most *k* bits.
+But "about a logarithm" is the kind of phrase that hides off-by-one demons, and
+this is where a genuinely interesting subtlety appears. There are two natural
+candidates for "the logarithm of $g$": the **floor logarithm**
+$\lfloor \log_2 g \rfloor$ and the **ceiling logarithm**
+$\lceil \log_2 g \rceil$. They differ exactly when $g$ is not a power of two, and
+choosing the wrong one quietly breaks any attempt at an exact bound.
 
-For binary search on a space of 2^*k* elements, this bound is tight. The entropy is exactly *k* bits, and binary search extracts exactly one bit per step. This isn't a coincidence or an approximation. It's a mathematical identity.
+Consider the smallest interesting case: a gap of three, say searching over
+positions $0$ to $3$. Trace the algorithm and you find it can take **two** steps
+in the worst case. Now look at the floor logarithm: $\lfloor \log_2 3 \rfloor =
+1$. One. The floor logarithm undercounts. You might patch this by writing "floor
+logarithm plus one," but that patch fails elsewhere, because the "plus one"
+slack gets consumed in a different branch of the recursion and the bookkeeping
+no longer lines up.
 
-The implication is profound: binary search isn't just *a* way to find things in sorted data. It's *the* way—the unique strategy that extracts information at the maximum possible rate. Any other deterministic comparison-based algorithm must use at least as many comparisons.
+The honest answer is the **ceiling logarithm**, and the reason is elegant. The
+ceiling logarithm obeys its own recurrence that mirrors the algorithm's
+recurrence *exactly*:
 
-## Tropical Geometry Meets Road Maps
+$$\lceil \log_2 g \rceil = \lceil \log_2 \lceil g/2 \rceil \rceil + 1.$$
 
-Another unexpected connection links shortest-path algorithms to an exotic branch of mathematics called *tropical geometry*.
+That $\lceil g/2 \rceil$ — a *ceiling* in the halving — is precisely the worst
+case the algorithm itself can be forced into, when an adversary keeps steering
+the search into the slightly larger of the two halves. Because the two
+recurrences match step for step, the bound comes out clean and, crucially,
+**tight**: the worst-case number of comparisons binary search performs over an
+interval of width $g$ is
 
-In tropical geometry, you replace ordinary addition with "take the minimum" and ordinary multiplication with "add." Under these strange rules, the familiar machinery of algebra still works—you can multiply matrices, solve equations, and find eigenvalues. But the results describe optimization problems instead of linear ones.
+$$\lceil \log_2 g \rceil,$$
 
-It turns out that Dijkstra's algorithm is secretly computing a tropical matrix closure. Each step of the algorithm corresponds to a tropical matrix operation. The final distance labels are the entries of the tropical closure of the weight matrix. This isn't a metaphor—it's a precise mathematical equivalence.
+no more, and — for adversarial inputs — no less. The gap-of-three example hits
+this exactly: two steps, and $\lceil \log_2 3 \rceil = 2$. This is the rare
+satisfaction of a complexity bound that is not merely an upper estimate with
+some looseness baked in, but the genuine, attained worst case.
 
-This connection opens a door between discrete computer science and continuous geometry. Shortest paths, which seem like a purely combinatorial problem, are actually special cases of tropical linear algebra. And tropical linear algebra, in turn, connects to algebraic geometry, mathematical physics, and optimization theory.
+A small practical note hides inside all this. The algorithm refers to the
+"position one before the answer," $r - 1$, and on whole numbers subtraction can
+misbehave at zero. It doesn't here, and the reason is the invariant again: the
+left anchor is always strictly below the answer, so $r$ is always at least one,
+and $r - 1$ is always a sensible position. The correctness and the safety come
+from the same source.
 
-## The Root of Speed
+## A number system with elastic columns
 
-The third cross-domain connection links the FFT to number theory—the ancient study of prime numbers and their properties.
+Now for the strange country that this same search can explore.
 
-The FFT requires special numbers called *primitive roots of unity*: values ω such that ω^*n* = 1 but no smaller power of ω equals 1. Over the real or complex numbers, these roots always exist (they're the vertices of a regular polygon in the complex plane). But what about computing modular arithmetic—arithmetic with remainders?
+We write numbers in base ten out of habit, not necessity. In base ten, the
+columns have fixed widths: ones, tens, hundreds, each ten times the last. But
+nothing forces the columns to grow at a constant rate. The **factorial number
+system** — the *factoradic* — lets each column grow faster than the last. Reading
+from the right, the place values are
+$$0! = 1, \quad 1! = 1, \quad 2! = 2, \quad 3! = 6, \quad 4! = 24, \ \ldots$$
+the factorials. And the rule for the digits is delightfully strict: the digit in
+the $i$-th column may only range from $0$ up to $i$. The ones-from-the-right
+column allows only $0$. The next allows $0$ or $1$. The next allows $0, 1, 2$.
+The columns get *wider* as the digits get *more permissive*, in perfect balance.
 
-It turns out that for any prime *p* and any *n* dividing *p* − 1, a primitive *n*th root of unity exists in arithmetic modulo *p*. This is a theorem with a beautiful proof: the multiplicative group of integers modulo a prime is cyclic, so it contains elements of every order dividing the group's size.
+A length-$k$ factoradic number is built from a digit function $c$ by the sum
 
-This theorem is the mathematical foundation of the Number Theoretic Transform (NTT), the integer-arithmetic cousin of the FFT. NTT is the engine behind modern cryptography, error-correcting codes, and large-number multiplication. The connection to number theory isn't decorative—it's the reason the algorithm works.
+$$\text{value}(c, k) = \sum_{i < k} c(i)\cdot i!,$$
 
-## A Conjecture and Its Test
+and we call a digit assignment **valid** when it respects the column limits,
+$c(i) \le i$ for every column $i < k$. This balance is not a coincidence; it is
+the whole point. Because the digits are capped exactly at $i$, the largest
+representable length-$k$ value is one short of a factorial:
 
-The new framework also generates falsifiable predictions—conjectures that could be disproven by a single counterexample.
+$$\text{value}(c, k) < k! \quad \text{whenever } c \text{ is valid.}$$
 
-One such conjecture states that binary search is *optimally information-efficient* among all deterministic comparison-based search algorithms for monotone predicates. Specifically, for any search space of size *n*, no deterministic algorithm can find the first true element of a monotone predicate using fewer than ⌈log₂(*n* + 1)⌉ comparisons in the worst case.
+This single inequality — that valid factoradic numbers of length $k$ stay
+strictly below $k!$ — is the engine that makes everything else run. It says the
+columns never overflow into the next factorial. From it follow the two
+"splitting" identities that read a factoradic number's structure directly:
+dividing a length-$(k{+}1)$ value by $k!$ recovers the top digit $c(k)$, and
+taking the remainder modulo $k!$ recovers everything below it. Division and
+remainder peel the number apart exactly along its columns.
 
-This conjecture has been computationally verified for all sizes up to 16 by exhaustive enumeration. For each size, the worst-case number of binary search comparisons exactly matches the information-theoretic lower bound. The conjecture remains open for general *n*, but its truth would establish binary search as a canonical information extractor—a mathematical object as fundamental as a prime number.
+Those identities deliver the system's headline property: **uniqueness**. If two
+valid digit assignments produce the same value, they must be the same
+assignment, digit for digit. Every whole number from $0$ up to $k! - 1$ has one
+and only one factoradic address of length $k$. And the address is easy to read
+off explicitly: the $i$-th digit of a number $n$ is
 
-## Why This Matters
+$$\text{digit}(n, i) = \left\lfloor \frac{n}{i!} \right\rfloor \bmod (i+1).$$
 
-The practical implications are immediate. Verified algorithms come with mathematical guarantees of correctness and performance. This matters enormously in safety-critical applications: aviation software, medical devices, financial systems, and autonomous vehicles. A formally verified binary search can never have an off-by-one error. A verified Dijkstra implementation provably finds the shortest path.
+Run the construction the other way and it closes the loop perfectly: for any
+$n < k!$, reassembling its extracted digits gives back $n$ exactly. The
+factoradic is therefore a flawless dictionary between the plain numbers
+$\{0, 1, \ldots, k!-1\}$ and the valid length-$k$ digit tuples — a bijection, in
+the mathematician's word.
 
-But the deeper significance is conceptual. The unified framework suggests that efficient algorithms are not products of human ingenuity alone—they're discoveries of pre-existing mathematical structure. The ordered structure of a sorted list *demands* binary search. The monotone structure of shortest paths *demands* Dijkstra. The cyclic symmetry of convolution *demands* the FFT.
+The factoradic is not a curiosity. It is the natural coordinate system for
+*permutations*. There are exactly $k!$ ways to arrange $k$ objects, and the
+factoradic gives each arrangement a number between $0$ and $k! - 1$ — a feature
+used in real software to enumerate, rank, and unrank permutations without storing
+them all.
 
-This perspective transforms computer science from engineering into natural science. Algorithms become not things we build, but things we find—laws of information flow as immutable as the speed of light or the uncertainty principle.
+## Where the two stories meet
 
-The library paradox is resolved: you can find any book in twenty steps not because you're clever, but because the universe of sorted information has a geometry that makes it so. Every halving of the search space is a physical act of entropy reduction, as real and as constrained as the second law of thermodynamics.
+Here is the payoff that ties the perfect search to the elastic number system.
 
-The next time you use a search engine, navigate with GPS, or stream music, remember: the algorithms making it possible aren't just fast. They're as fast as the laws of mathematics allow—and now we can prove it.
+Suppose you want to locate a target inside the space of all length-$k$
+factoradic numbers — equivalently, inside the integers $\{0, 1, \ldots, k! - 1\}$.
+How quickly can you do it, and is the space you're searching genuinely as large
+as it claims to be, or is it secretly full of gaps and padding?
+
+Both halves of this question have already been answered, and they snap together
+into a single statement. First, the search space is *dense and faithful*: every
+$n$ below $k!$ really is realized as the factoradic value of its own digits, so
+there are no holes — the range $[0, k!)$ is a true size-$k!$ image of the digit
+tuples, not a sparse scattering inside a larger padded interval. Second, the
+addresses are *unambiguous*: distinct targets below $k!$ have distinct digit
+codes, so a search key can never point to two different places. And third, the
+*cost* is logarithmic in the exact sense established earlier: binary search over
+$[0, k!)$ finishes in at most
+
+$$\lceil \log_2 k! \rceil$$
+
+comparisons — the ceiling logarithm of the factorial, the same tight bound that
+governs the dictionary search.
+
+What makes this combination satisfying is that the two ingredients are
+completely independent and only meet at the surface. The complexity bound is pure
+combinatorics: it knows nothing about factorials, permutations, or number
+systems — only about halving an interval. The factoradic facts are pure number
+theory: they know nothing about searching — only about how factorials partition
+the integers. Neither argument smuggles in the other. They compose cleanly at the
+one place they share: the size of the index space, $k!$. A reusable bound about
+*how fast you can search* meets a reusable fact about *what there is to search*,
+and the result is a precise, end-to-end guarantee.
+
+There is a tantalizing generality lurking here. The factoradic is just one
+member of a family of **mixed-radix** systems, where column $i$ has its own width
+$r_i$ (the factoradic takes $r_i = i + 1$). The same reasoning suggests that for
+*any* such system, binary search over its value space $[0, \prod_i r_i)$ costs
+the ceiling logarithm of the product of the radices, and the digit map is always
+a clean bijection onto that range. The logarithmic search cost is *uniform* across
+positional number systems — base ten, base two, factoradic, or any elastic-column
+scheme you care to invent.
+
+## Why bother being this careful?
+
+It would be fair to ask why anyone needs to nail down, to the last off-by-one,
+something as old and as well-loved as binary search. The answer is that the
+places where these algorithms run — flight controllers, medical devices,
+cryptographic libraries, the database under your bank account — are exactly the
+places where "ninety percent of programmers get it wrong" is not an amusing
+statistic but a liability. A search routine that is *provably* correct for every
+input, and *provably* logarithmic in the worst case, is a component you can build
+on without ever revisiting.
+
+But there is a deeper pleasure in it, too. When you strip binary search down to
+its threshold-finding core, you discover that its correctness needs no sorting,
+that its true cost is the ceiling logarithm and not the floor, and that the very
+same logarithmic sweep that finds a word in a dictionary also charts the
+factorial number system that catalogs every permutation. The humble act of
+splitting a problem in half, examined closely enough, turns out to connect the
+most practical of algorithms to the elegant arithmetic of factorials — a small
+idea with the reach of a large one.

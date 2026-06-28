@@ -1,50 +1,58 @@
-# Computational Evidence — Lucas-sequence identities
+# Computational Evidence — Formal Verification of Algorithms
 
-Target file: `Catalog/Applications/LucasSequenceIdentities.lean`.
+This cycle proves three results about classic algorithms. Evidence below was used
+to fix the statements *before* formalization (notably the ceil-log complexity bound).
 
-Lucas numbers `L : ℕ → ℕ`, `L 0 = 2`, `L 1 = 1`, `L (n+2) = L n + L (n+1)`.
-Fibonacci `F = Nat.fib`.
+## 1. Binary search complexity: floor-log vs ceil-log
 
-## 1. Small-case table
+`bsearchSteps p lo hi` counts loop iterations. We tabulate the worst case against
+`Nat.log 2 (hi-lo)` (floor) and `Nat.clog 2 (hi-lo)` (ceil):
 
-| n | F n | L n |
-|---|-----|-----|
-| 0 | 0   | 2   |
-| 1 | 1   | 1   |
-| 2 | 1   | 3   |
-| 3 | 2   | 4   |
-| 4 | 3   | 7   |
-| 5 | 5   | 11  |
-| 6 | 8   | 18  |
-| 7 | 13  | 29  |
+| gap g = hi - lo | worst-case steps | Nat.log 2 g | Nat.log 2 g + 1 | Nat.clog 2 g |
+|-----------------|------------------|-------------|-----------------|--------------|
+| 1               | 0                | 0           | 1               | 0            |
+| 2               | 1                | 1           | 2               | 1            |
+| 3               | 2                | 1           | 2               | 2            |
+| 4               | 2                | 2           | 3               | 2            |
+| 5               | 3                | 2           | 3               | 3            |
+| 8               | 3                | 3           | 4               | 3            |
+| 9               | 4                | 3           | 4               | 4            |
 
-`L` is OEIS A000032 (Lucas numbers): 2, 1, 3, 4, 7, 11, 18, 29, 47, …
+**Finding.** Steps equal `Nat.clog 2 g` exactly (tight). The candidate bound
+`Nat.log 2 g + 1` is also valid but *not* tight, and — crucially — its induction
+breaks at `g = 3` (the ceil branch produces gap `2` with `Nat.log 2 2 = 1 > 0 =
+Nat.log 2 1`, consuming the `+1` slack). This is why `bsearch_steps_le` is stated
+with `Nat.clog`. The `g = 3` equality `bsearchSteps = 2 = Nat.clog 2 3` is checked
+in Lean by `native_decide`.
 
-## 2. Conjectures checked by `#eval` before formalisation
+OEIS: the worst-case-steps sequence `0,1,2,2,3,3,3,3,4,...` (steps to binary-search
+`n` items) is the ceil-log-2, related to OEIS A004233 (`⌈log₂ n⌉`).
 
-Each was verified exhaustively over the indicated finite range (all returned `true`),
-using `decide`-style boolean sweeps in Lean (`List.range ... |>.all ...`).
+## 2. DFT/NTT character orthogonality
 
-| Identity | Range checked | Result |
-|----------|---------------|--------|
-| `∑_{i≤n} L i = L (n+2) − 1`            | n < 8           | ✓ true |
-| `∑_{i≤n} (L i)² = L n · L (n+1) + 2`   | n < 8           | ✓ true |
-| `2 F (m+n) = F m · L n + L m · F n`    | m, n < 6        | ✓ true |
-| `2 L (m+n) = L m · L n + 5 F m · F n`  | m, n < 6        | ✓ true |
-| `L (2n) = (L n)² − 2(−1)ⁿ`  (over ℤ)   | n < 8           | ✓ true |
-| `L (2n+1) = L n · L (n+1) − (−1)ⁿ` (ℤ) | n < 8           | ✓ true |
-| `L n · L (n+2) − (L (n+1))² = 5(−1)ⁿ` (ℤ) | n < 8        | ✓ true |
+For a primitive `n`-th root `ω`, `∑_{j<n} ω^{a j} (ω⁻¹)^{b j} = n·[a=b]`.
+Concrete check over `ℂ` with `n = 4`, `ω = i`:
+- `a=b=1`: `∑_j i^{j} (i⁻¹)^{j} = ∑_j 1 = 4`. ✔ (diagonal = n)
+- `a=1, b=0`: `∑_j i^{j} = 1 + i - 1 - i = 0`. ✔ (off-diagonal = 0)
+- `a=2, b=0`: `∑_j (i²)^j = ∑_j (-1)^j = 1-1+1-1 = 0`. ✔
 
-## 3. Counterexample hunt / failure analysis
+Over `ZMod 5` with `ω = 2` (order 4): `2,4,3,1` are the powers; the same
+orthogonality holds, giving the Number Theoretic Transform. This confirms the
+single proof covers both `ℂ` (DFT) and `ZMod p` (NTT).
 
-- The first hand-guessed Lucas–Cassini sign, `L n · L (n+2) − (L (n+1))² = −5(−1)ⁿ`,
-  was **falsified immediately**: at `n = 0`, `L0·L2 − L1² = 2·3 − 1 = 5`, whereas
-  `−5(−1)⁰ = −5`. Corrected to `+5(−1)ⁿ`, which then passed the full sweep.
-- No counterexamples were found for any of the seven retained identities within the tested ranges.
+## 3. Factoradic index space
 
-## 4. From evidence to proof
+`value (digit n) k = n` for `n < k!` was checked for `k = 4` (`4! = 24`): e.g.
+`n = 17 = 2·3! + 2·2! + 1·1! + 0·0!` → digits `(0,0,1,2,...)` recover `17`. The
+search-space size is exactly `k!`, so binary search costs `⌈log₂ k!⌉` comparisons.
 
-All seven conjectures were subsequently proved in Lean 4 with `0` sorries
-(`#print axioms` shows only `propext`, `Classical.choice`, `Quot.sound`). The numeric
-sweeps were therefore promoted to fully verified theorems; the table above records the
-exploratory stage only.
+## Counterexample hunt
+
+- Tried `bsearchSteps ≤ Nat.log 2 (hi-lo)` (no `+1`): **counterexample** at
+  `(0,3)` (steps `2 > 1`). Rejected.
+- Tried `idft_dft` without `(n:F) ≠ 0`: fails when `char F ∣ n` (e.g. `n = p` in
+  `ZMod p`), where `(n:F) = 0` and the `1/n` normalisation is undefined. Hypothesis
+  kept as essential.
+- No counterexample found to the three theorems as finally stated; all three are
+  machine-checked with `#print axioms` showing only `propext`, `Classical.choice`,
+  `Quot.sound`.
