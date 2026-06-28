@@ -1,459 +1,261 @@
-# The Onsager Critical Temperature of the 2D Ising Model: Self-Duality, Transfer Matrices, and the Peierls Argument
+# The Exact Two-Point Correlation Function of the Open One-Dimensional Ising Chain: Closed Form, Exponential Decay, and the Spectral-Gap Correlation Length
 
 **Author:** Aristotle
-**Date:** 2026-06-26
-**Domain:** Applications (Statistical Mechanics)
+
+**Date:** 2026-06-28
+
+**Domain:** Statistical Mechanics / Mathematical Physics
 
 ---
 
 ## Abstract
 
-The two-dimensional Ising model on the square lattice is the canonical solvable
-model of a thermodynamic phase transition. We present a self-contained, rigorous
-account of the three pillars of its low-energy theory: (i) the exact location of
-the critical point via Kramers–Wannier self-duality, yielding the celebrated
-Onsager value $T_c = 2/\ln(1+\sqrt 2) \approx 2.269$ (in units $J = k_B = 1$);
-(ii) the combinatorial and algebraic structure of the model on a finite periodic
-lattice, including the ground-state energy, universal energy bounds, and the
-global $\mathbb{Z}/2$ spin-flip symmetry; and (iii) the Peierls contour argument
-establishing spontaneous symmetry breaking — nonzero spontaneous magnetization —
-below $T_c$. The decisive analytic fact is that the inverse critical temperature
-$\beta_c = \tfrac12\ln(1+\sqrt 2)$ is the unique fixed point of the duality
-involution characterized by $\sinh(2\beta)\sinh(2\beta^{*}) = 1$; self-duality
-$\beta = \beta^*$ forces $\sinh(2\beta_c) = 1$, equivalently
-$\tanh(\beta_c) = \sqrt 2 - 1 = e^{-2\beta_c}$. We give full proof sketches for
-every result, complemented by transfer-matrix asymptotics and the sharp contrast
-with the one-dimensional chain, which has no phase transition. All statements are
-formalized and machine-checked; the present paper is the human-readable companion.
+We give a complete, self-contained derivation of the exact endpoint two-point spin correlation function of the open (free-boundary) one-dimensional Ising model, working directly from the finite sum over spin configurations rather than from any limiting or thermodynamic-limit argument. For a chain of $n$ nearest-neighbor bonds with coupling $J$ at inverse temperature $\beta$, we prove the closed form for the *unnormalized* signed configuration sum,
+$$\mathrm{corrNum}(\beta,J,n) = 2\,\big(2\sinh(\beta J)\big)^{n},$$
+and dividing by the partition function $Z = 2\,(2\cosh(\beta J))^n$ we obtain the headline identity
+$$\langle\sigma_0\,\sigma_n\rangle = \big(\tanh(\beta J)\big)^{n}.$$
+For positive temperature and coupling ($\beta, J > 0$) we recast this as a pure exponential, $\langle\sigma_0\sigma_n\rangle = e^{-g n}$, where the **spectral gap** $g = \log\coth(\beta J) = \log\cosh(\beta J) - \log\sinh(\beta J)$ is exactly the logarithm of the ratio of transfer-matrix eigenvalues; the reciprocal $\xi = 1/g$ is the correlation length. We prove $g>0$ for all positive temperatures and deduce $\langle\sigma_0\sigma_n\rangle \to 0$ as $n\to\infty$, i.e. the absence of long-range order in one dimension at every positive temperature. The argument rests on a transfer recursion obtained by peeling site $0$, driven by two single-bond identities: an **even** sum giving $2\cosh$ (governing the partition function) and an **odd**, signed sum giving $2\sinh$ (governing the correlation). We contrast these results with the two-dimensional Onsager critical temperature $T_c = 2/\ln(1+\sqrt2)$ and the Peierls low-temperature ordering threshold. All principal results are formalized and machine-checked.
+
+**Keywords:** Ising model, two-point correlation function, correlation length, spectral gap, transfer matrix, hyperbolic tangent, exponential decay, long-range order, statistical mechanics.
 
 ---
 
 ## 1. Introduction
 
-A *phase transition* is a non-analyticity of the free energy as a function of a
-control parameter. The Ising model is the simplest microscopic system exhibiting
-one in dimension $\ge 2$, and it has served for a century as the proving ground for
-ideas in statistical mechanics, probability, and combinatorics: mean-field theory,
-duality, the renormalization group, conformal field theory, and the rigorous theory
-of Gibbs measures all cut their teeth on it.
+The Ising model is the canonical microscopic model of cooperative phenomena in statistical mechanics. Introduced by Lenz and solved in one dimension by Ising (1924), it consists of two-state spins on a lattice with a nearest-neighbor interaction favoring alignment. Its one-dimensional version is exactly solvable and famously exhibits **no** spontaneous magnetization at any positive temperature; its two-dimensional version, solved exactly by Onsager (1944), exhibits a genuine phase transition at the critical temperature
+$$T_c = \frac{2}{\ln\left(1+\sqrt 2\right)}, \qquad \text{equivalently} \qquad \sinh(2\beta_c J) = 1, \quad e^{2\beta_c J} = 1 + \sqrt 2.$$
 
-The model assigns to each site $p$ of a lattice a spin $\sigma_p \in \{-1, +1\}$.
-Spins interact ferromagnetically with their nearest neighbors, and the
-configuration $\sigma$ carries Boltzmann weight $e^{-\beta H(\sigma)}$ at inverse
-temperature $\beta = 1/T$. In dimension one the model never orders at positive
-temperature; in dimension two it orders below a sharp critical temperature $T_c$,
-whose exact value was first obtained by Onsager (1944) and whose *location* had
-been determined three years earlier by Kramers and Wannier (1941) through a
-duality argument of remarkable economy.
+The decisive observable distinguishing an ordered from a disordered phase is the **two-point correlation function** $\langle\sigma_a\sigma_b\rangle$, which measures statistical dependence between distant spins. Long-range order is the statement that $\langle\sigma_0\sigma_n\rangle$ does not vanish as $n\to\infty$.
 
-This paper assembles a complete, rigorous treatment of the location of $T_c$ and
-of the existence of spontaneous magnetization. Throughout we work in natural units
-$J = k_B = 1$, so that energies are dimensionless and $\beta = 1/T$.
+This paper presents a rigorous, elementary, and fully formalized derivation of the exact endpoint correlation function of the **open** one-dimensional chain, obtained directly from the configuration sum. We avoid all generating-function shortcuts; the only inputs are two single-bond summation identities and induction on chain length. The result, $\langle\sigma_0\sigma_n\rangle = (\tanh\beta J)^n$, is then shown to encode, by pure algebra, every qualitative feature of the 1D model: exponential decay, the identification of the correlation length with the inverse transfer-matrix spectral gap, and the absence of long-range order. We close by situating these facts against the 2D Onsager and Peierls results, with which our development shares a project context.
 
-### Summary of main results
+### 1.1 Contributions
 
-- **Theorem A (`sinh_two_betaC`, `self_dual`).** At $\beta_c = \tfrac12\ln(1+\sqrt 2)$
-  the Kramers–Wannier self-duality holds: $\sinh(2\beta_c) = 1$, equivalently
-  $\sinh(2\beta_c)^2 = 1$.
-- **Theorem B (`tanh_betaC`, `tanh_betaC_eq_exp`).** In bond variables the same
-  fixed point reads $\tanh(\beta_c) = \sqrt 2 - 1 = e^{-2\beta_c}$.
-- **Theorem C (`TC_bounds`).** The critical temperature satisfies $2 < T_c < 3$,
-  with exact value $T_c = 2/\ln(1+\sqrt 2) \approx 2.269$; moreover
-  $\beta_c \cdot T_c = 1$ (`betaC_mul_TC`).
-- **Theorem D (ground state and bounds).** On the periodic lattice with
-  $N$ sites, $H(\sigma) \ge -2N$ for all $\sigma$, with equality exactly for the
-  two uniform configurations; the magnetization obeys $|M(\sigma)| \le N$.
-- **Theorem E (spin-flip symmetry).** $H(-\sigma) = H(\sigma)$ while
-  $M(-\sigma) = -M(\sigma)$: a symmetric Hamiltonian with an odd order parameter,
-  the algebraic precondition for spontaneous symmetry breaking.
-- **Theorem F (Peierls).** For $\beta$ large enough that $3\,e^{-2\beta} < 1$, the
-  contour expansion converges and the spontaneous magnetization is strictly
-  positive; the one-dimensional chain, with free energy density $\ln(2\cosh\beta)$,
-  exhibits no transition.
+1. A self-contained, induction-based proof of the closed form $\mathrm{corrNum}(\beta,J,n) = 2(2\sinh\beta J)^n$ for the unnormalized signed configuration sum (Theorem `corrNum_closed`).
+2. The exact correlation function $\langle\sigma_0\sigma_n\rangle = (\tanh\beta J)^n$ (Theorem `corr_eq_tanh_pow`).
+3. The exponential-decay representation $\langle\sigma_0\sigma_n\rangle = e^{-g n}$ with $g$ the transfer-matrix spectral gap (Theorem `corr_eq_exp_neg_gap`), together with strict positivity of the gap at all positive temperatures (Theorem `spectralGap_pos`).
+4. The asymptotic vanishing of correlations, $\langle\sigma_0\sigma_n\rangle\to 0$ (Theorem `corr_tendsto_zero`), establishing the absence of 1D long-range order.
+5. An explicit identification of *why* the partition function is governed by the even (cosh) single-bond sum while the correlation is governed by the odd (sinh) sum, and how their ratio reproduces the eigenvalue ratio $\lambda_-/\lambda_+ = \tanh\beta J$ of the transfer matrix.
 
 ---
 
-## 2. The model on a finite periodic lattice
+## 2. Setup and Definitions
 
-### 2.1 Definitions
+### 2.1 Configurations and spins
 
-We place the model on a discrete torus to guarantee a nonempty lattice with
-well-defined cyclic nearest neighbors and no boundary effects.
+We model a chain of $n$ bonds, hence $n+1$ sites indexed $0,1,\dots,n$. A **configuration** is a function $s\colon \{0,\dots,n\} \to \{\mathrm{true},\mathrm{false}\}$ assigning a Boolean to each site. The **spin value** of a Boolean is
+$$\mathrm{sp}(b) = \begin{cases} +1 & b = \mathrm{true},\\ -1 & b = \mathrm{false}.\end{cases}$$
+A basic identity we use repeatedly is that a spin squares to one:
+$$\mathrm{sp}(b)^2 = 1 \qquad \text{for all } b. \tag{$\star$}$$
+(In the formalization this is `sp_mul_self`.)
 
-**Definition 2.1 (Lattice).** Fix integers $m, n \ge 0$ and let the lattice be the
-torus $\Lambda = \mathbb{Z}/(m+1) \times \mathbb{Z}/(n+1)$, with
-$N := (m+1)(n+1)$ sites. Each site $p = (i,j)$ has a *right neighbor*
-$p\rightarrow = (i+1, j)$ and an *upper neighbor* $p\uparrow = (i, j+1)$, with all
-indices taken modulo the respective period.
+### 2.2 Boltzmann weight, partition function, correlation
 
-**Definition 2.2 (Spin configuration).** A *configuration* is a map
-$\sigma : \Lambda \to \{-1, +1\}$. The set of configurations has cardinality
-$2^N$.
+For coupling $J\in\mathbb R$ and inverse temperature $\beta\in\mathbb R$, the **Boltzmann weight** of a configuration $s$ on a chain of $n$ bonds is the product of the nearest-neighbor edge factors:
+$$\mathrm{weight}(\beta,J,n,s) = \prod_{i=0}^{n-1} \exp\!\big(\beta J\,\mathrm{sp}(s_i)\,\mathrm{sp}(s_{i+1})\big).$$
 
-**Definition 2.3 (Hamiltonian).** The ferromagnetic nearest-neighbor energy is
+The **free-boundary partition function** is the sum of weights over all $2^{n+1}$ configurations:
+$$Z(\beta,J,n) = \sum_{s} \mathrm{weight}(\beta,J,n,s).$$
 
-$$H(\sigma) \;=\; -\sum_{p \in \Lambda}\bigl(\sigma_p\,\sigma_{p\rightarrow} + \sigma_p\,\sigma_{p\uparrow}\bigr).$$
+The **unnormalized endpoint correlation** (the signed configuration sum) is
+$$\mathrm{corrNum}(\beta,J,n) = \sum_{s} \mathrm{sp}(s_0)\,\mathrm{sp}(s_n)\,\mathrm{weight}(\beta,J,n,s),$$
+and the **normalized two-point correlation** is the ratio
+$$\langle\sigma_0\sigma_n\rangle = \mathrm{corr}(\beta,J,n) = \frac{\mathrm{corrNum}(\beta,J,n)}{Z(\beta,J,n)}.$$
 
-Because each site contributes exactly two bonds (right and up) and the lattice is
-periodic, the sum ranges over exactly $2N$ distinct bonds, each counted once.
+### 2.3 Spectral gap and correlation length
 
-**Definition 2.4 (Magnetization).** The total magnetization is
-$M(\sigma) = \sum_{p\in\Lambda} \sigma_p$, and the magnetization *density* is
-$M(\sigma)/N$.
-
-**Definition 2.5 (Gibbs measure).** At inverse temperature $\beta \ge 0$ the
-probability of a configuration is $\mathbb{P}_\beta(\sigma) = e^{-\beta H(\sigma)}/Z(\beta)$,
-where $Z(\beta) = \sum_\sigma e^{-\beta H(\sigma)}$ is the partition function.
-
-### 2.2 Ground state and energy bounds
-
-**Theorem 2.6 (Energy lower bound and ground states).** For every configuration
-$\sigma$, $H(\sigma) \ge -2N$. Equality holds if and only if $\sigma$ is uniform
-(all $+1$ or all $-1$).
-
-*Proof sketch.* Each bond product $\sigma_p\sigma_q$ takes values in $\{-1, +1\}$,
-hence each of the two terms attached to a site is $\le 1$ and each site contributes
-$\le 2$ to $-H$. Summing over the $N$ sites (equivalently the $2N$ bonds) gives
-$-H(\sigma) \le 2N$, i.e. $H(\sigma) \ge -2N$; formally this is termwise
-domination of the bond sum by the constant function $2$ followed by
-`Finset.sum_le_sum`. Equality requires *every* bond to satisfy $\sigma_p\sigma_q = +1$,
-i.e. every pair of neighbors agrees; on a connected lattice this forces all spins
-equal, giving exactly the two uniform configurations. Conversely, for a uniform
-configuration every bond contributes $+1$, so $-H = 2N$ and $H = -2N$ is attained.
-∎
-
-**Theorem 2.7 (Magnetization bound).** For every $\sigma$, $|M(\sigma)| \le N$,
-with equality exactly for the two uniform configurations.
-
-*Proof sketch.* Each summand $\sigma_p \in \{-1,+1\}$ has absolute value $1$;
-the triangle inequality (`Finset.abs_sum_le_sum_abs`) over $N$ sites gives
-$|M(\sigma)| \le N$, with equality iff all spins share one sign. ∎
-
-### 2.3 The spin-flip symmetry
-
-**Theorem 2.8 (Global $\mathbb{Z}/2$ symmetry; `hamiltonian_flip`).** The
-Hamiltonian is invariant under the global spin flip $F : \sigma \mapsto -\sigma$:
-$H(-\sigma) = H(\sigma)$. The magnetization is odd: $M(-\sigma) = -M(\sigma)$.
-
-*Proof sketch.* For each bond, $(-\sigma_p)(-\sigma_q) = \sigma_p\sigma_q$ (the two
-sign changes cancel; formally a one-line `ring` identity), so every summand of
-$H$ is unchanged and hence so is the total. For $M$, each summand changes sign,
-$(-\sigma_p) = -\sigma_p$, so the sum negates. The map $F$ satisfies $F\circ F =
-\mathrm{id}$ and generates a group isomorphic to $\mathbb{Z}/2$. ∎
-
-**Remark 2.9 (The paradox of symmetry breaking).** Theorem 2.8 says the energy —
-and therefore the Gibbs measure at *finite* volume — treats up and down on equal
-footing: $\mathbb{P}_\beta(\sigma) = \mathbb{P}_\beta(-\sigma)$, whence the
-finite-volume average magnetization is *identically zero*. Spontaneous
-magnetization is therefore necessarily an *infinite-volume* phenomenon: it is the
-statement that, as $N \to \infty$, the Gibbs measure ceases to be ergodic and
-decomposes into two pure phases concentrated near the two ground states, each with
-nonzero magnetization density. Theorem 2.8 supplies the exact algebraic skeleton —
-a symmetric Hamiltonian with an odd order parameter — and §5 supplies the analytic
-mechanism by which the symmetry is broken.
+We define the **spectral gap**
+$$g(\beta,J) = \log\cosh(\beta J) - \log\sinh(\beta J) = \log\coth(\beta J),$$
+and the **correlation length** $\xi(\beta,J) = 1/g(\beta,J)$. As we shall see, $g$ is exactly $\log(\lambda_+/\lambda_-)$ where $\lambda_\pm = 2\cosh(\beta J),\,2\sinh(\beta J)$ are the transfer-matrix eigenvalues.
 
 ---
 
-## 3. Kramers–Wannier duality and the critical point
+## 3. Single-Bond Identities
 
-### 3.1 The duality involution
+The entire derivation pivots on two elementary identities for summing a single spin against a fixed neighbor $y$. Their distinction — one even, one odd — is the conceptual core of the paper.
 
-Kramers and Wannier observed that the partition function of the Ising model admits
-two complementary expansions: a *low-temperature* expansion organized by domain-wall
-contours separating regions of opposite spin, and a *high-temperature* expansion
-organized by closed loops of bonds. On the self-dual square lattice these two
-expansions are formally identical after a change of the coupling, yielding a map
-$\beta \mapsto \beta^*$ between low and high temperature.
+**Lemma 3.1 (Even single-bond sum, `sum_bool_exp`).** For any $c\in\mathbb R$ and any neighbor spin $y$,
+$$\sum_{b\in\{\pm1\}} \exp\!\big(c\,\mathrm{sp}(b)\,\mathrm{sp}(y)\big) = 2\cosh(c).$$
 
-**Definition 3.1 (Duality relation).** Two inverse temperatures $\beta, \beta^* > 0$
-are *Kramers–Wannier dual* if
+*Proof sketch.* Expanding over the two values $b=\pm1$ gives $\exp(c\,\mathrm{sp}(y)) + \exp(-c\,\mathrm{sp}(y))$. Using $\mathrm{sp}(y)=\pm1$ and $(\star)$, both cases collapse to $e^{c}+e^{-c} = 2\cosh c$ by the parity (evenness) of $\cosh$. The neighbor $y$ disappears entirely. $\square$
 
-$$\sinh(2\beta)\,\sinh(2\beta^*) \;=\; 1.$$
+**Lemma 3.2 (Odd single-bond sum, `sum_bool_sp_exp`).** For any $c\in\mathbb R$ and any neighbor spin $y$,
+$$\sum_{b\in\{\pm1\}} \mathrm{sp}(b)\,\exp\!\big(c\,\mathrm{sp}(b)\,\mathrm{sp}(y)\big) = 2\,\mathrm{sp}(y)\,\sinh(c).$$
 
-Since $x \mapsto \sinh(2x)$ is a strictly increasing bijection $(0,\infty) \to
-(0,\infty)$ with inverse $x \mapsto \tfrac12\operatorname{arsinh}(x)$, the dual is
-uniquely determined: $\beta^* = D(\beta) := \tfrac12\operatorname{arsinh}\!\bigl(1/\sinh(2\beta)\bigr)$.
+*Proof sketch.* Expanding gives $\exp(c\,\mathrm{sp}(y)) - \exp(-c\,\mathrm{sp}(y))$. By the oddness of $\sinh$ and $\mathrm{sp}(y)=\pm1$, this equals $2\,\mathrm{sp}(y)\sinh(c)$. Crucially the result *retains* a factor $\mathrm{sp}(y)$: the sign of the summed spin is transmitted to its neighbor. $\square$
 
-**Proposition 3.2 (Involution).** $D$ is an involution: $D(D(\beta)) = \beta$, and
-$D$ strictly decreases (small $\beta$ — high temperature — maps to large $\beta^*$ —
-low temperature, and vice versa).
-
-*Proof sketch.* The defining relation is symmetric in $\beta$ and $\beta^*$, so if
-$\beta^* = D(\beta)$ then $\beta = D(\beta^*)$, i.e. $D\circ D = \mathrm{id}$.
-Monotone-decreasing because $\sinh(2\beta^*) = 1/\sinh(2\beta)$ is decreasing in
-$\beta$ and $\operatorname{arsinh}$ is increasing. ∎
-
-### 3.2 The self-dual fixed point
-
-The physical principle is that a *single* phase transition, being a non-analyticity
-of the free energy, must be mapped to itself by the duality (which is an exact
-symmetry of the free energy). A point fixed by the involution satisfies
-$\beta = \beta^*$.
-
-**Definition 3.3 (Critical inverse temperature; `betaC`).**
-$\displaystyle \beta_c := \tfrac12\,\ln\!\bigl(1 + \sqrt 2\,\bigr).$
-
-**Definition 3.4 (Critical temperature; `TC`).**
-$\displaystyle T_c := \frac{2}{\ln(1 + \sqrt 2)}.$
-
-**Lemma 3.5 (`exp_two_betaC`).** $e^{2\beta_c} = 1 + \sqrt 2$.
-
-*Proof sketch.* By definition $2\beta_c = \ln(1+\sqrt 2)$, and $1 + \sqrt 2 > 0$,
-so $e^{2\beta_c} = e^{\ln(1+\sqrt 2)} = 1 + \sqrt 2$ by `Real.exp_log`. ∎
-
-**Lemma 3.6 (`exp_neg_two_betaC`).** $e^{-2\beta_c} = \sqrt 2 - 1$.
-
-*Proof sketch.* $e^{-2\beta_c} = 1/e^{2\beta_c} = 1/(1+\sqrt 2)$. Rationalizing,
-$1/(1+\sqrt 2) = (\sqrt 2 - 1)/((\sqrt 2 + 1)(\sqrt 2 - 1)) = (\sqrt 2 - 1)/(2-1) =
-\sqrt 2 - 1$, using $(\sqrt 2)^2 = 2$. ∎
-
-**Theorem 3.7 (Self-duality; `sinh_two_betaC`, `self_dual`).**
-$\sinh(2\beta_c) = 1$, and hence $\sinh(2\beta_c)^2 = 1$. Equivalently, setting
-$\beta = \beta^* = \beta_c$ solves the duality relation of Definition 3.1, so
-$\beta_c$ is a fixed point of $D$.
-
-*Proof sketch.* $\sinh(2\beta_c) = \tfrac12\bigl(e^{2\beta_c} - e^{-2\beta_c}\bigr)
-= \tfrac12\bigl((1+\sqrt 2) - (\sqrt 2 - 1)\bigr) = \tfrac12 \cdot 2 = 1$, using
-Lemmas 3.5–3.6. Squaring gives $\sinh(2\beta_c)^2 = 1$, which is precisely the
-duality relation with $\beta = \beta^* = \beta_c$. ∎
-
-**Theorem 3.8 (Uniqueness of the fixed point).** $\beta_c$ is the *unique*
-solution in $(0,\infty)$ of $\beta = D(\beta)$.
-
-*Proof sketch.* A fixed point satisfies $\sinh(2\beta)^2 = 1$, hence
-$\sinh(2\beta) = 1$ (positivity of $\sinh$ on $(0,\infty)$ rules out $-1$). Since
-$x\mapsto\sinh(2x)$ is strictly increasing, the equation $\sinh(2\beta) = 1$ has at
-most one solution; Theorem 3.7 exhibits $\beta_c$ as one. ∎
-
-### 3.3 The bond form
-
-The variable natural to the high-temperature expansion is $t = \tanh\beta$.
-
-**Theorem 3.9 (Bond self-duality; `tanh_betaC`, `tanh_betaC_eq_exp`).**
-
-$$\tanh(\beta_c) \;=\; \sqrt 2 - 1 \;=\; e^{-2\beta_c}.$$
-
-*Proof sketch.* Write $a = e^{\beta_c}$, so $a^2 = e^{2\beta_c} = 1+\sqrt 2$
-(Lemma 3.5). Then
-$$\tanh\beta_c = \frac{\sinh\beta_c}{\cosh\beta_c} = \frac{a - a^{-1}}{a + a^{-1}} = \frac{a^2 - 1}{a^2 + 1} = \frac{(1+\sqrt 2) - 1}{(1+\sqrt 2)+1} = \frac{\sqrt 2}{2 + \sqrt 2}.$$
-Rationalizing the last fraction by $2 - \sqrt 2$ and using $(\sqrt 2)^2 = 2$ gives
-$\sqrt 2(2-\sqrt 2)/((2+\sqrt 2)(2-\sqrt 2)) = (2\sqrt 2 - 2)/2 = \sqrt 2 - 1$. The
-final equality $\sqrt 2 - 1 = e^{-2\beta_c}$ is Lemma 3.6. ∎
-
-**Remark 3.10.** The identity $\tanh\beta_c = e^{-2\beta_c}$ is exactly the form in
-which Kramers and Wannier stated the self-dual point: it equates a single
-high-temperature bond weight ($\tanh\beta$) with a single low-temperature
-domain-wall weight ($e^{-2\beta}$).
-
-### 3.4 Numerics
-
-**Lemma 3.11 (`sqrt2_bracket`).** $1.41 < \sqrt 2 < 1.42$.
-
-*Proof sketch.* $1.41^2 = 1.9881 < 2 < 2.0164 = 1.42^2$; apply monotonicity of
-$\sqrt{\cdot}$ (`Real.sqrt_lt_sqrt`). ∎
-
-**Lemma 3.12 (`betaC_mul_TC`).** $\beta_c \cdot T_c = 1$; equivalently $T_c = 1/\beta_c$.
-
-*Proof sketch.* $\beta_c T_c = \tfrac12\ln(1+\sqrt 2)\cdot \tfrac{2}{\ln(1+\sqrt 2)} = 1$,
-valid since $\ln(1+\sqrt 2) > 0$ (as $1+\sqrt 2 > 1$). ∎
-
-**Theorem 3.13 (Bounds on $T_c$; `TC_bounds`).** $2 < T_c < 3$. (Exact value
-$T_c \approx 2.2692$.)
-
-*Proof sketch.* Let $L = \ln(1+\sqrt 2)$. From Lemma 3.11, $1+\sqrt 2 > 2$ so
-$L > \ln 2 > 0.693$; also $1 + \sqrt 2 < 1 + 1.42 = 2.42 < e$ (using
-$e > 2.718$, `Real.exp_one_gt_d9`), so $L < \ln e = 1$. Hence $0.693 < L < 1$.
-Since $T_c = 2/L$, the lower bound $L < 1$ gives $T_c > 2$, and the lower bound
-$L > 2/3$ gives $T_c < 3$. (The tighter bracket $2.26 < T_c < 2.27$ requires
-sharper exponential estimates and is not needed here.) ∎
+The contrast is the whole story. The even sum forgets the neighbor and yields $\cosh$; it will build the partition function. The odd sum remembers the neighbor and yields $\sinh$; it will build the correlation, propagating the endpoint sign bond by bond.
 
 ---
 
-## 4. Transfer matrices and the free energy
+## 4. The Partition Function (re-derived self-contained)
 
-The transfer-matrix method recasts the partition function as a trace of matrix
-powers, turning thermodynamics into linear algebra. We illustrate it on the
-exactly solvable one-dimensional chain, which both validates the method and
-furnishes the sharp contrast with two dimensions.
+### 4.1 Peeling a spin
 
-### 4.1 The one-dimensional transfer matrix
+**Lemma 4.1 (Weight factorization, `weight_cons`).** Prepending a spin $b$ to a configuration $t$ on $n$ bonds gives a configuration on $n+1$ bonds whose weight factorizes:
+$$\mathrm{weight}(\beta,J,n+1,\ b\!:\!t) = \exp\!\big(\beta J\,\mathrm{sp}(b)\,\mathrm{sp}(t_0)\big)\cdot \mathrm{weight}(\beta,J,n,t).$$
 
-**Definition 4.1.** For the periodic 1D chain of $N$ spins with Hamiltonian
-$H(\sigma) = -\sum_{i} \sigma_i\sigma_{i+1}$ (indices mod $N$), the *transfer
-matrix* is the $2\times 2$ matrix
+*Proof sketch.* The new chain has one extra bond, between the prepended spin $b$ and the old site $0$; all other bonds are unchanged. Pull the first factor out of the product. $\square$
 
-$$T(\beta) = \begin{pmatrix} e^{\beta} & e^{-\beta} \\ e^{-\beta} & e^{\beta}\end{pmatrix}.$$
+### 4.2 Transfer recursion and closed form
 
-**Theorem 4.2 (Partition function as a trace; `partitionFunction_eq`).** The
-partition function is $Z_N(\beta) = \operatorname{tr}\,T(\beta)^N = \lambda_+^N + \lambda_-^N$,
-where $\lambda_\pm = e^{\beta} \pm e^{-\beta} = 2\cosh\beta,\ 2\sinh\beta$ are the
-eigenvalues of $T(\beta)$.
+**Theorem 4.2 (Partition recursion, `Zfree_succ`).**
+$$Z(\beta,J,n+1) = \big(2\cosh(\beta J)\big)\,Z(\beta,J,n).$$
 
-*Proof sketch.* Summing $e^{-\beta H} = \prod_i e^{\beta\sigma_i\sigma_{i+1}}$ over
-all configurations factorizes into a product of matrix entries
-$T_{\sigma_i,\sigma_{i+1}}$; summing over internal indices with periodic boundary
-conditions yields the trace of $T^N$. The trace equals the sum of the $N$-th powers
-of the eigenvalues. The symmetric matrix $T$ has eigenvectors $(1,1)$ and $(1,-1)$
-with eigenvalues $\lambda_+ = e^\beta + e^{-\beta} = 2\cosh\beta$ and
-$\lambda_- = e^\beta - e^{-\beta} = 2\sinh\beta$. ∎
+*Proof sketch.* Re-index the sum over configurations on $n+1$ bonds as a sum over $(b,t)$, with $b$ the prepended spin and $t$ the rest. Use Lemma 4.1 and exchange the order of summation. The inner sum over $b$ is exactly the even single-bond sum (Lemma 3.1) with $c = \beta J$ and $y = t_0$, contributing $2\cosh(\beta J)$ independent of $t$; factoring it out leaves $Z(\beta,J,n)$. $\square$
 
-**Lemma 4.3 (Spectral gap; `lamPlus_gt_lamMinus`).** For every finite $\beta$,
-$\lambda_+ - \lambda_- = 2e^{-\beta} > 0$; in particular $0 < \lambda_- < \lambda_+$
-for $\beta > 0$.
+**Theorem 4.3 (Partition closed form, `Zfree_closed`).** For all $n\ge 0$,
+$$Z(\beta,J,n) = 2\,\big(2\cosh(\beta J)\big)^{n}.$$
 
-### 4.2 Free energy and the absence of a 1D transition
+*Proof sketch.* Induction. Base case $n=0$: a single site, no bonds, two configurations, each weight $1$, so $Z = 2$. Inductive step: apply Theorem 4.2 and the hypothesis. $\square$
 
-**Theorem 4.4 (Free energy density).**
-$\displaystyle \lim_{N\to\infty} \frac{1}{N}\ln Z_N(\beta) = \ln\lambda_+ = \ln(2\cosh\beta),$
-for every $\beta$.
-
-*Proof sketch.* Factor $Z_N = \lambda_+^N\bigl(1 + (\lambda_-/\lambda_+)^N\bigr)$.
-By Lemma 4.3, $r := \lambda_-/\lambda_+ \in [0,1)$, so $r^N \to 0$ geometrically and
-$\tfrac1N\ln Z_N = \ln\lambda_+ + \tfrac1N\ln(1 + r^N) \to \ln\lambda_+$. ∎
-
-**Corollary 4.5 (No 1D phase transition).** The free energy density
-$f(\beta) = \ln(2\cosh\beta)$ is real-analytic on all of $\mathbb{R}$, and the
-zero-field magnetization density vanishes identically. Hence the spin-flip
-symmetry of Theorem 2.8 is *never* spontaneously broken in one dimension.
-
-*Proof sketch.* $\cosh$ is entire and strictly positive, so $\ln\circ(2\cosh)$ is
-real-analytic; analyticity precludes the non-smoothness required of a phase
-transition. The eigenvalue gap $\lambda_+ - \lambda_- = 2e^{-\beta}$ never
-vanishes, so no level crossing — the only possible source of non-analyticity —
-occurs. ∎
-
-This is the precise sense in which "one dimension has no magnetism": the dominant
-eigenvalue is isolated for all temperatures, the free energy is smooth, and order
-never sets in. Two dimensions is qualitatively different, as we now show.
+**Theorem 4.4 (Positivity, `Zfree_pos`).** $Z(\beta,J,n) > 0$ for all $n$, since $\cosh > 0$ everywhere. This guarantees the normalized correlation is well defined.
 
 ---
 
-## 5. The Peierls argument: spontaneous magnetization below $T_c$
+## 5. The Two-Point Correlation Function
 
-We now sketch the rigorous proof that the 2D model orders at low temperature. The
-argument, due to Peierls (1936) and made rigorous by Griffiths and Dobrushin, is
-geometric and combinatorial.
+### 5.1 Signed transfer recursion
 
-### 5.1 Contours
+**Theorem 5.1 (Correlation recursion, `corrNum_succ`).**
+$$\mathrm{corrNum}(\beta,J,n+1) = \big(2\sinh(\beta J)\big)\,\mathrm{corrNum}(\beta,J,n).$$
 
-Fix a finite square region $\Lambda$ with $+$ boundary conditions (all spins on the
-boundary fixed to $+1$). Given a configuration, draw a unit edge of the dual
-lattice across every nearest-neighbor bond whose endpoints *disagree*. These edges
-assemble into a family of disjoint closed loops, the **contours**, which are
-precisely the domain walls separating $+$ regions from $-$ regions.
+*Proof sketch.* As in Theorem 4.2, re-index the configuration sum on $n+1$ bonds by the prepended spin $b$ and the remainder $t$, and use the weight factorization (Lemma 4.1). The observable contributes $\mathrm{sp}(b)\cdot\mathrm{sp}(s_{n+1})$; the endpoint factor $\mathrm{sp}(s_{n+1}) = \mathrm{sp}(t_n)$ is unaffected by the prepend, while $\mathrm{sp}(b)$ multiplies the Boltzmann factor. The inner sum over $b$ is therefore the *odd* single-bond sum (Lemma 3.2) with $c = \beta J$ and $y = t_0$, contributing $2\,\mathrm{sp}(t_0)\sinh(\beta J)$. The surviving $\mathrm{sp}(t_0)$ reconstitutes precisely the observable $\mathrm{sp}(t_0)\,\mathrm{sp}(t_n)$ of the shorter chain, leaving $2\sinh(\beta J)\cdot\mathrm{corrNum}(\beta,J,n)$. $\square$
 
-**Lemma 5.1 (Energy of a contour).** Flipping the spins inside a contour of length
-$L$ relative to the surrounding sea changes the energy by $+2L$ (each disagreeing
-bond costs $+2$ relative to an agreeing one). Hence in the $+$ ensemble a
-configuration whose contour set is $\Gamma$ has weight proportional to
-$\prod_{\gamma\in\Gamma} e^{-2\beta\,|\gamma|}$.
+The contrast with Theorem 4.2 is the technical heart: $Z$ recurses with the *even* factor $2\cosh$, while $\mathrm{corrNum}$ recurses with the *odd* factor $2\sinh$. The endpoint sign is carried down the chain by the residual $\mathrm{sp}(t_0)$ that the odd identity refuses to discard.
 
-### 5.2 The combinatorial bound
+### 5.2 Closed form and the headline identity
 
-**Lemma 5.2 (Contour counting).** The number of contours of length $L$ surrounding
-a fixed site is at most $L\cdot 3^{L}$ (at each step a self-avoiding domain wall has
-at most $3$ continuations, and there are at most $L$ choices for where the contour
-crosses a fixed ray to infinity).
+**Theorem 5.2 (Unnormalized closed form, `corrNum_closed`).** For all $n\ge 0$,
+$$\mathrm{corrNum}(\beta,J,n) = 2\,\big(2\sinh(\beta J)\big)^{n}.$$
 
-**Theorem 5.3 (Peierls bound; spontaneous magnetization).** Suppose $\beta$ is
-large enough that $3\,e^{-2\beta} < 1$. Then, uniformly in the volume, the
-probability that a fixed central site is surrounded by *some* contour (and hence is
-"flipped" relative to the boundary) is bounded by
+*Proof sketch.* Induction on $n$. Base case $n=0$: a single site, observable $\mathrm{sp}(s_0)^2 = 1$ by $(\star)$, summed over two configurations gives $2$. Inductive step: Theorem 5.1. $\square$
 
-$$\sum_{L\ge 4} L\,3^{L} e^{-2\beta L} \;=\; \sum_{L \ge 4} L\,\bigl(3e^{-2\beta}\bigr)^L \;<\; \tfrac12,$$
+**Theorem 5.3 (Exact correlation, `corr_eq_tanh_pow`).** For all $n\ge 0$,
+$$\langle\sigma_0\sigma_n\rangle = \big(\tanh(\beta J)\big)^{n}.$$
 
-for $\beta$ sufficiently large. Consequently the central spin has probability
-$> \tfrac12$ of agreeing with the boundary, the magnetization density is bounded
-below by a positive constant uniformly in the volume, and the infinite-volume
-$+$ and $-$ Gibbs states are distinct. Spontaneous magnetization is strictly
-positive for all such $\beta$.
+*Proof sketch.* Divide Theorem 5.2 by Theorem 4.3. The factors of $2$ cancel, and
+$$\frac{2(2\sinh\beta J)^n}{2(2\cosh\beta J)^n} = \left(\frac{\sinh\beta J}{\cosh\beta J}\right)^n = (\tanh\beta J)^n.$$
+Positivity of $Z$ (Theorem 4.4) makes the division legitimate. $\square$
 
-*Proof sketch.* By Lemmas 5.1–5.2 and a union bound, the probability that the
-central site is enclosed by a contour is at most the displayed geometric-type sum.
-The series $\sum_L L\,x^L = x/(1-x)^2$ converges for $x = 3e^{-2\beta} < 1$ and
-tends to $0$ as $\beta\to\infty$; pick $\beta$ large enough that the sum is below
-$\tfrac12$. Then the magnetization density at the center exceeds
-$1 - 2\cdot\tfrac12$ in the $+$ state versus the symmetric value in the $-$ state,
-so the two states differ and $m^*(\beta) > 0$. By monotonicity (FKG / Griffiths
-inequalities) the set of $\beta$ with $m^*(\beta) > 0$ is an interval
-$[\beta_c', \infty)$, and a matching high-temperature argument (Kramers–Wannier
-duality, §3) identifies its endpoint with $\beta_c$. ∎
-
-**Remark 5.4 (Energy versus entropy).** The Peierls argument is the quantitative
-form of the energy–entropy competition: the *energy* cost of a contour grows like
-$e^{-2\beta L}$ (favoring short walls at low temperature), while the *entropy* —
-the number of walls — grows like $3^L$. Order survives precisely when energy wins,
-$3e^{-2\beta} < 1$, i.e. $\beta > \tfrac12\ln 3 \approx 0.549$. This crude
-threshold is consistent with, but weaker than, the exact $\beta_c \approx 0.4407$;
-the gap reflects the looseness of the $3^L$ count and closes under the sharp
-duality analysis. In one dimension the analogous "contours" are point defects of
-fixed energy whose entropy grows with the system size, so entropy always wins and
-no order survives — exactly Corollary 4.5.
+This is the central result. It is exact for every $\beta, J, n$, with no thermodynamic-limit or approximation.
 
 ---
 
-## 6. Discussion
+## 6. Exponential Decay, Spectral Gap, and Absence of Order
 
-### 6.1 Self-duality as an organizing principle
+We now restrict to the physical regime $\beta, J > 0$.
 
-The thread running through this work is that the critical point is a *symmetry
-point*. The value $T_c = 2/\ln(1+\sqrt 2)$ is not an artifact of microscopic detail
-but the unique temperature invariant under the exact involution exchanging the
-model's low- and high-temperature descriptions. This perspective generalizes far
-beyond the Ising model: self-dual points govern lattice gauge theories, the
-percolation threshold $p_c = 1/2$ on the square lattice, the critical line of the
-six-vertex model, and — in a structurally identical move — the functional equation
-$s \leftrightarrow 1-s$ of the Riemann zeta function and T-duality
-$R\leftrightarrow 1/R$ in string theory. The Ising critical point is the simplest
-laboratory in which "the special point is the self-dual point" can be stated and
-proved cleanly.
+**Lemma 6.1 ($\tanh\beta J \in (0,1)$).** For $\beta, J > 0$ we have $0 < \tanh(\beta J) < 1$, since $\beta J > 0$, $\sinh(\beta J) > 0$, and $\sinh < \cosh$ on the positive axis.
 
-### 6.2 Three faces of one number
+**Theorem 6.2 (Exponential decay form, `corr_eq_exp_neg_gap`).** For $\beta, J > 0$,
+$$\langle\sigma_0\sigma_n\rangle = \exp\!\big(-g(\beta,J)\,n\big), \qquad g(\beta,J) = \log\cosh(\beta J) - \log\sinh(\beta J) = \log\coth(\beta J).$$
 
-The critical point is pinned down in three mutually reinforcing languages:
-transcendental ($\sinh(2\beta_c) = 1$), algebraic in bond variables
-($\tanh\beta_c = \sqrt 2 - 1$), and numeric ($2 < T_c < 3$, exactly
-$\approx 2.269$). Each guards against a different misreading: the transcendental
-form encodes the duality, the bond form connects to the lattice expansions, and the
-numeric bracket rules out any vacuous "definition equals itself" interpretation.
+*Proof sketch.* By Theorem 5.3, $\langle\sigma_0\sigma_n\rangle = (\tanh\beta J)^n$. Write $\tanh\beta J = e^{\log\tanh\beta J}$ (valid since $\tanh\beta J>0$ by Lemma 6.1), so the $n$-th power equals $e^{n\log\tanh\beta J}$. Finally $\log\tanh\beta J = \log\sinh\beta J - \log\cosh\beta J = -g(\beta,J)$. $\square$
 
-### 6.3 Relation to the full Onsager solution
+**Theorem 6.3 (Positive gap, `spectralGap_pos`).** For $\beta, J > 0$, $g(\beta,J) > 0$.
 
-The present treatment locates the critical point and proves the *existence* of
-spontaneous magnetization, but stops short of Onsager's exact free energy and Yang's
-formula for the spontaneous magnetization,
-$m^*(\beta) = \bigl(1 - \sinh^{-4}(2\beta)\bigr)^{1/8}$ for $\beta > \beta_c$, whose
-critical exponent $\beta_{\text{exp}} = 1/8$ is the prototypical non-mean-field
-exponent. A complete formalization of the Onsager free energy
-$-\beta f = \ln(2\cosh 2\beta) + \tfrac{1}{2\pi}\int_0^\pi \ln\tfrac12\bigl(1 + \sqrt{1 - \kappa^2\sin^2\theta}\bigr)\,d\theta$,
-with $\kappa = 2\sinh(2\beta)/\cosh^2(2\beta)$, remains a substantial open target.
+*Proof sketch.* Since $0 < \sinh(\beta J) < \cosh(\beta J)$, we have $\coth(\beta J) > 1$, so $g = \log\coth(\beta J) > 0$. Equivalently, $\tanh\beta J < 1$ from Lemma 6.1. $\square$
+
+The reciprocal $\xi = 1/g$ is the **correlation length**: correlations decay as $e^{-n/\xi}$. The name "spectral gap" reflects that $g = \log\big((2\cosh\beta J)/(2\sinh\beta J)\big) = \log(\lambda_+/\lambda_-)$, the logarithm of the ratio of transfer-matrix eigenvalues.
+
+**Theorem 6.4 (No long-range order, `corr_tendsto_zero`).** For $\beta, J > 0$,
+$$\lim_{n\to\infty} \langle\sigma_0\sigma_n\rangle = 0.$$
+
+*Proof sketch.* By Theorem 6.2 the correlation is $e^{-g n}$ with $g > 0$ (Theorem 6.3), and $e^{-g n}\to 0$. Equivalently, $|\tanh\beta J| < 1$ forces $(\tanh\beta J)^n \to 0$. $\square$
+
+Thus the open 1D Ising chain has no spontaneous long-range order at any positive temperature: distant spins decorrelate exponentially. As $\beta\to\infty$ (i.e. $T\to 0$), $\tanh\beta J\to 1$, $g\to 0$, and $\xi\to\infty$; order emerges only in the strict zero-temperature limit.
 
 ---
 
-## 7. Future work
+## 7. The Transfer Matrix Viewpoint
 
-- **A formal duality involution.** Promote Definition 3.1 to a verified
-  involution $D$ on $(0,\infty)$ with $\beta_c$ its unique fixed point, using the
-  strict monotonicity of $\sinh$ and its inverse $\operatorname{arsinh}$.
-- **Transfer-matrix thermodynamic limit.** Prove
-  $\tfrac1N\ln Z_N \to \ln(2\cosh\beta)$ rigorously from the exact finite-$N$
-  trace formula and $r^N \to 0$.
-- **The 1D no-transition theorem.** Establish real-analyticity of
-  $f(\beta) = \ln(2\cosh\beta)$ on $\mathbb{R}$ and identical-vanishing of the
-  magnetization, contrasting with the 2D Peierls result.
-- **Sharpening the Peierls threshold to $\beta_c$.** Combine the geometric contour
-  bound with the duality analysis to close the gap between the crude
-  $\tfrac12\ln 3$ and the exact $\beta_c$.
+The recursions of Sections 4–5 are the matrix-element shadows of a single $2\times2$ operator. Writing the transfer matrix in the spin basis,
+$$T = \begin{pmatrix} e^{\beta J} & e^{-\beta J} \\ e^{-\beta J} & e^{\beta J} \end{pmatrix},$$
+its eigenvalues are $\lambda_+ = e^{\beta J} + e^{-\beta J} = 2\cosh(\beta J)$ (eigenvector $(1,1)$, the symmetric/even mode) and $\lambda_- = e^{\beta J} - e^{-\beta J} = 2\sinh(\beta J)$ (eigenvector $(1,-1)$, the antisymmetric/odd mode). The dictionary is exact:
+
+| Object | Combinatorial origin | Spectral meaning |
+|---|---|---|
+| $Z = 2(2\cosh\beta J)^n$ | even single-bond sum | dominated by $\lambda_+^n$ |
+| $\mathrm{corrNum} = 2(2\sinh\beta J)^n$ | odd single-bond sum | $\propto \lambda_-^n$ |
+| $\langle\sigma_0\sigma_n\rangle = (\tanh\beta J)^n$ | ratio of the two | $(\lambda_-/\lambda_+)^n$ |
+| $g = \log\coth\beta J$ | $-\log\tanh\beta J$ | $\log(\lambda_+/\lambda_-)$ |
+
+This makes precise the general principle that the partition function is governed by the *largest* eigenvalue, while correlations are governed by the *ratio* of eigenvalues, and the correlation length is the inverse spectral gap. The 1D Ising chain is the cleanest possible illustration: both eigenvalues are elementary hyperbolic functions, and the entire physics is visible.
 
 ---
 
-## References (background, not required for the self-contained argument)
+## 8. Algorithms
 
-- L. Onsager, *Crystal statistics I. A two-dimensional model with an order-disorder
-  transition*, Phys. Rev. **65** (1944) 117–149.
-- H. A. Kramers and G. H. Wannier, *Statistics of the two-dimensional ferromagnet*,
-  Phys. Rev. **60** (1941) 252–262.
-- R. Peierls, *On Ising's model of ferromagnetism*, Proc. Cambridge Phil. Soc.
-  **32** (1936) 477–481.
-- C. N. Yang, *The spontaneous magnetization of a two-dimensional Ising model*,
-  Phys. Rev. **85** (1952) 808–816.
+### 8.1 Brute-force correlation by configuration enumeration
+
+To validate the closed forms one can compute $Z$ and $\mathrm{corrNum}$ directly by enumerating all $2^{n+1}$ configurations.
+
+```
+Algorithm BruteForceCorrelation(beta, J, n):
+  Z       <- 0
+  corrNum <- 0
+  for each s in {+1,-1}^(n+1):          # all configurations
+      w <- 1
+      for i in 0 .. n-1:
+          w <- w * exp(beta*J*s[i]*s[i+1])
+      Z       <- Z + w
+      corrNum <- corrNum + s[0]*s[n]*w
+  return corrNum / Z
+```
+Complexity: $O(n\,2^{n})$ time, $O(1)$ extra space. This is exponential and used only for small-$n$ validation against the closed form $(\tanh\beta J)^n$.
+
+### 8.2 Closed-form evaluation
+
+```
+Algorithm ClosedFormCorrelation(beta, J, n):
+  return tanh(beta*J)^n
+```
+Complexity: $O(\log n)$ via fast exponentiation (or $O(1)$ with a `pow`). This is the exact value, identical to the brute-force result up to floating point.
+
+### 8.3 Spectral-gap / correlation length
+
+```
+Algorithm SpectralGap(beta, J):
+  return log(cosh(beta*J)) - log(sinh(beta*J))     # = log(coth(beta*J))
+Algorithm CorrelationLength(beta, J):
+  return 1 / SpectralGap(beta, J)
+```
+Both $O(1)$. The correlation then equals $\exp(-\mathrm{SpectralGap}\cdot n)$.
+
+---
+
+## 9. Applications and Discussion
+
+The exact 1D correlation function is a workhorse template across the sciences. The transfer-matrix structure — partition function from the dominant eigenvalue, correlations from the eigenvalue ratio, correlation length from the inverse spectral gap — recurs in:
+
+- **Magnetism and critical phenomena**, where $\xi$ governs scattering line-widths and the approach to criticality.
+- **Polymer and biomolecular physics**, where helix–coil transitions are 1D Ising-like.
+- **Machine learning**, where Boltzmann machines and Hopfield networks are Ising systems and "stored memories" are ordered configurations.
+- **Quantum field theory and lattice gauge theory**, where the transfer matrix is the time-evolution operator and the spectral gap is a particle mass.
+
+The headline qualitative lesson — that one dimension forbids order at positive temperature because a single domain wall costs only finite energy while entropy grows with system size — generalizes to the Mermin–Wagner-type intuition that low dimension suppresses order.
+
+**Comparison with two dimensions.** The same nearest-neighbor rule in two dimensions yields, by Onsager's exact solution, a genuine phase transition at $T_c = 2/\ln(1+\sqrt2)$, equivalently the self-dual condition $\sinh(2\beta_c J) = 1$ with $e^{2\beta_c J} = 1+\sqrt2$ and $\beta_c = \tfrac12\log(1+\sqrt2)$. A complementary rigorous lower bound on the ordering temperature comes from the Peierls contour argument, which yields an explicit threshold $\beta_0 = \tfrac12\log 12$; since $1+\sqrt2 < 12$ one has $\beta_c < \beta_0$, consistent with both windows describing the same ordered phase. In one dimension neither phenomenon occurs: there is no contour argument because a single wall is too cheap, and $\xi$ diverges only at $T=0$.
+
+---
+
+## 10. Conclusion
+
+We have derived, from the bare configuration sum and a two-line induction, the exact endpoint two-point correlation function of the open one-dimensional Ising chain, $\langle\sigma_0\sigma_n\rangle = (\tanh\beta J)^n$, together with its exponential-decay representation $e^{-gn}$, the identification of $g = \log\coth(\beta J)$ as the transfer-matrix spectral gap, the strict positivity of the gap at all positive temperatures, and the consequent absence of long-range order. The decisive structural insight is the dichotomy between the *even* single-bond sum ($2\cosh$, building $Z$) and the *odd* single-bond sum ($2\sinh$, building the correlation): their per-bond ratio is exactly $\tanh\beta J = \lambda_-/\lambda_+$, the ratio of transfer-matrix eigenvalues. All principal results are formalized and machine-checked.
+
+---
+
+## 11. Future Directions
+
+- **Combinatorial = spectral partition function (periodic).** For the cyclic chain, prove $Z_{\mathrm{ring}}(\beta,J,n) = (2\cosh\beta J)^n + (2\sinh\beta J)^n$ for $n\ge 1$, matching the transfer-matrix trace.
+- **General two-point function.** Generalize the endpoint result to arbitrary sites $a\le b$: $\langle\sigma_a\sigma_b\rangle = (\tanh\beta J)^{b-a}$, establishing bulk translation invariance and equality of connected and full correlations at zero field.
+- **Correlation length asymptotics.** Prove $\xi(\beta,J)\sim \tfrac12 e^{2\beta J}$ as $\beta\to\infty$, i.e. $g(\beta,J) = 2e^{-2\beta J}(1+o(1))$.
+- **Field-dependent transfer matrix.** With external field $h$, study the largest eigenvalue $\lambda_+ = e^{\beta J}\cosh(\beta h) + \sqrt{e^{2\beta J}\sinh^2(\beta h) + e^{-2\beta J}}$, prove joint real-analyticity of $\log\lambda_+$ in $(\beta,h)$, and $m(\beta,0)=0$.
+- **Peierls meets Onsager (2D bridge).** Prove $\beta_c < \tfrac12\log 12$ with $\beta_c = \tfrac12\log(1+\sqrt2)$, i.e. $1+\sqrt2 < 12$, quantitatively relating the Peierls threshold to the Onsager critical point.
+
+---
+
+## References (context)
+
+This development is companion to formalizations of the 2D Onsager critical temperature ($T_c = 2/\ln(1+\sqrt2)$), the transfer-matrix method, and the Peierls argument within the same project. The 1D results above are self-contained and require none of those externally.
