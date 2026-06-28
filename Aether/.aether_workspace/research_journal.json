@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dfb56ea4",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Navier–Stokes Existence, Smoothness, and Turbulence\n\nDerived from this cycle's findings in `EnergyMethod.lean` (viscous energy\ndissipation) and `Bridge.lean` (the viscous ↔ tropi",
-      "quality_score": 0.52355,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-26T06:15:58",
-      "title": "Navier-Stokes Existence and Smoothness"
-    },
-    {
       "cycle_id": "01ec1037",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Signless Laplacian spectral radius of pure complexes\n\nDerived from this cycle's findings in `Core.lean`, `Simplex.lean`,\n`Bridge.lean`. The cycle established the *dimension-free",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T23:21:59",
       "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
+    },
+    {
+      "cycle_id": "4f7ad584",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Universal Approximation & Kolmogorov Complexity\n\nDerived from the cycle that produced `EML/KolmogorovComplexityBound.lean` and\n`EML/ComplexityDensityBridge.lean`. Each conjec",
+      "quality_score": 0.6244,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-06-28T23:48:50",
+      "title": "EML Universal Approximation"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7327899999999999
     }
   ],
-  "last_updated": "2026-06-28T23:21:59",
+  "last_updated": "2026-06-28T23:48:50",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "35f6557d",
-        "quality": 0.61504,
-        "theorems": 13,
-        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-      },
-      {
         "cycle_id": "37c46c25",
         "quality": 0.650914,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.57392,
         "theorems": 0,
         "title": "Ramsey Theory: Bounds and Constructions"
+      },
+      {
+        "cycle_id": "4f7ad584",
+        "quality": 0.6244,
+        "theorems": 24,
+        "title": "EML Universal Approximation"
       }
     ],
     "Bridges": [

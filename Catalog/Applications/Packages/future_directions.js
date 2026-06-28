@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "31c996e4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1932,7 +1932,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
   },
   {
-    "consumed_by_exp_id": "6a68949c",
+    "consumed_by_exp_id": "",
     "description": "For every binary delta-matroid and every nontrivial twuality operator $\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the partial-$\\bullet$ polynomial $^\\partial w_D^\\bullet(z)$ is either even, odd, or both even-interpolating and odd-interpolating.",
     "domains": [
       "Algebra"
@@ -1941,7 +1941,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T10:41:26.252321+00:00",
     "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
   },
@@ -2541,7 +2541,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite-type classification for Grassmannian partial-flag seeds"
   },
   {
-    "consumed_by_exp_id": "36e90b30",
+    "consumed_by_exp_id": "",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n \u2265 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domains": [
       "Bridges"
@@ -2550,7 +2550,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -5012,7 +5012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
   },
   {
-    "consumed_by_exp_id": "b9898a91",
+    "consumed_by_exp_id": "",
     "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k \u2265 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
     "domains": [
       "Logic"
@@ -5021,7 +5021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T22:09:21.864984+00:00",
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
   },
@@ -6171,7 +6171,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Restricted Rota-Baxter Lie algebras of arbitrary weight give rise to restricted post-Lie algebras via splitting property"
   },
   {
-    "consumed_by_exp_id": "3c64518a",
+    "consumed_by_exp_id": "",
     "description": "For any finite partial cube G, the following are equivalent:\n1. G is a minimal forbidden pc\u2011minor for the class of daisy cubes (that is, G is a partial cube that contains a non\u2011peripheral \u0398\u2011class and every proper pc\u2011minor of G is a daisy cube).\n2. There exist integers r \u2265 2 and s \u2265 1 such that G is isomorphic to the graph obtained from the Cartesian product P\u2083\u207f\u25a1Q\u209b by deleting the two vertices that are opposite in the P\u2083\u207f factor and lie in the same Q\u209b copy.  In other words, G \u2245 (P\u2083\u207f\u25a1Q\u209b) \\ {u, v} with u and v the two antipodal corners of the P\u2083\u207f factor.\n\nIn particular, the infinite family { (P\u2083\u207f\u25a1Q\u209b) \\ {u, v} | r \u2265 2, s \u2265 1 } is precisely the set of all minimal forbidden pc\u2011minors for daisy cubes.",
     "domains": [
       "Bridges"
@@ -6180,7 +6180,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19032v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-27T17:13:14.129734+00:00",
     "title": "Complete Characterization of Minimal Forbidden Partial\u2011Cube Minors for Daisy Cubes"
   },
@@ -8843,6 +8843,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Universal Approximation & Kolmogorov Complexity\n\nDerived from the cycle that produced `EML/KolmogorovComplexityBound.lean` and\n`EML/ComplexityDensityBridge.lean`. Each conjecture below is falsifiable and stated so it\ncan be attacked directly in Lean 4.\n\n## 1. The constant primitive is exactly one bit of incompressible information\n\n**Conjecture.** Extend the term algebra with a single new leaf `one` (`eval = 1`). Then for\nthe constant family `c_q : x \u21a6 q` with `q \u2208 \u211a`, the EML complexity `K(c_q)` is finite for\nevery rational `q`, but `sup_q K(c_q) = \u221e`; moreover the *constant-free* class computes **no**\nconstant function at all.\n\n*The key insight is...* that `const`/`one` is not a convenience but the unique generator whose\nabsence makes the entire constant subspace incompressible \u2014 our `dense_and_generators_EMLcomputable`\nalready isolates `k = 0` (the function `e^{0\u00b7x} = 1`) as the single density generator outside the\nconstant-free class.\n\n*Why now?* `EML/ComplexityDensityBridge.lean` pins the boundary to exactly one missing\nobject, so the next experiment (add `one`, recompute the finiteness/counting proofs) is a\nsmall, well-scoped delta on machinery that already compiles.\n\n## 2. A matching lower bound: `K(e^{k\u00b7x}) = \u0398(k)`\n\n**Conjecture.** The linear *upper* bound `K(e^{(k+1)x}) \u2264 2k+2` proved in `K_expBasis_le` is\ntight up to a constant: there is `c > 0` with `K(e^{(k+1)x}) \u2265 c\u00b7k` for all `k`.\n\n*The key insight is...* that a size-`s` constant-free term has a derivative whose \"exponential\nfrequency content\" is bounded by a function of `s` (each `exp` node can multiply the dominant\nexponent by at most the size of its argument), so a term computing `e^{k x}` must have size\ngrowing with `k`.\n\n*Why now?* We have the exact upper bound and the exact `size`/`eval` calculus; the missing\nhalf is a structural induction on terms bounding the top exponential rate, which is a finite,\nself-contained lemma rather than new theory.\n\n## 3. Depth\u2013accuracy law: minimal EML depth for \u03b5-approximation is `\u0398(log(1/\u03b5))` for\nreal-analytic targets\n\n**Conjecture.** For a fixed real-analytic `f` on `[a,b]`, the minimal EML *depth* needed for a\nuniform \u03b5-approximation grows like `log log (1/\u03b5)` (not `1/\u03b5`): exp/log compression makes depth\n*exponentially* cheaper than the naive `O(K(f)/\u03b5)` heuristic suggests.\n\n*The key insight is...* that `EML/DepthCompression.lean` already shows `exp(n\u00b7log x) = x\u207f` at\nconstant depth `3`; a degree-`d` polynomial \u03b5-approximant (Jackson/Chebyshev) then needs only\n`O(log d)` additional depth to assemble via balanced `add`/`mul` trees, and `d = O(log(1/\u03b5))`\nfor analytic `f`.\n\n*Why now?* The depth\u2194size tower `size + 1 \u2264 2^{depth+1}` (`size_succ_le_two_pow_depth`) gives\nthe exact currency to convert the existing depth-compression result into an accuracy law.\n\n## 4. Counting law for the *function* class: `|computableLE n|` grows like a fixed exponential\n\n**Conjecture.** `(computableLE n).ncard` (number of distinct functions exactly computable at\nsize `\u2264 n`) satisfies `log |computableLE n| = \u0398(n)`; the term-count is Catalan-like (`\u2248 4^n`)\nbut collapses to a single exponential at the level of *functions* because of EML identities\n(`exp\u2218log`, commutativity of `+`/`\u00d7`).\n\n*The key insight is...* that the gap between *syntactic* description length (terms) and\n*semantic* complexity (functions) is precisely the kernel of the evaluation map `eval`, and the\nEML rewrite rules quotient the Catalan growth down by a constant base.\n\n*Why now?* `finite_computableLE` already gives the finiteness; turning it into a sharp\ntwo-sided count only needs an explicit `Finset` enumeration of `termsLE n`, which the present\ninclusion proof scaffolds.\n\n## 5. Invariance theorem: EML complexity is universal up to an additive constant\n\n**Conjecture.** For any other \"reasonable\" exp/log function-description scheme `D`, there is a\nconstant `c_D` with `K_EML(f) \u2264 K_D(f) + c_D` for all `f` the two schemes share \u2014 the\nKolmogorov *invariance theorem* instantiated to function complexity.\n\n*The key insight is...* that EML terms can *simulate* any finite exp/log/poly description with\nonly constant overhead, exactly as universal Turing machines simulate one another, and our\nsubadditivity lemmas (`K_add_le`, `K_mul_le`, `K_exp_le`, `K_log_le`) are the simulation\nprimitives.\n\n*Why now?* The four subadditivity inequalities are already proved; the invariance theorem is\ntheir closure under a fixed finite interpreter, a natural and bounded next step.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2806",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4f7ad584",
+    "status": "available",
+    "timestamp": "2026-06-28T23:45:08.311510+00:00",
+    "title": "Derived from the cycle that produced `EML/KolmogorovComplexityBound.lean` and"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8854,6 +8869,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any formal system S, there exists a computable constant C such that the Kolmogorov complexity of the shortest proof of a theorem T is bounded by a function of the Chaitin-complexity of the theorem's statement plus C, provided T is 'structurally elegant' (possesses high symmetry in its representation). Test: Quantify the Kolmogorov complexity of proofs for a large dataset of theorems across different formalisms (Lean, Coq) and correlate them with the compressed size of the theorem statements; if the correlation coefficient exceeds a specific threshold across diverse mathematical domains, the hypothesis is supported. Impact: This would enable a 'complexity-based heuristic' for automated theorem provers to prune search spaces by predicting proof length based on statement entropy.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_2807",
+    "priority_score": 0.7155000000000001,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-28T23:48:31.482556+00:00",
+    "title": "Algorithmic Information-Theoretic Bound on the Complexity of Mathematical Proofs"
   },
   {
     "consumed_by_exp_id": "",
@@ -9058,21 +9087,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:25.385376+00:00",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-  },
-  {
-    "consumed_by_exp_id": "1c4cc4f0",
-    "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0416",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:26.588561+00:00",
-    "title": "EML Kolmogorov-Arnold Representation"
   },
   {
     "consumed_by_exp_id": "",

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4f7ad584",
     "filename": "eml_universal_approximation.json",
     "pkg_num": 200,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6244,
     "title": "EML Universal Approximation: Density Meets Kolmogorov Incompressibility"
   },
   {
@@ -5835,8 +5835,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "eml_universal_approximation",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6244,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Universal Approximation: Density Meets Kolmogorov Incompressibility"
     }
