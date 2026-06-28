@@ -12356,7 +12356,7 @@
       "MathComp/Algebra/PowerSeries",
       "MathComp/GroupTheory/Profinite"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "552f4622",
     "description": "Let k be a number field, p a prime, Σ a (possibly empty) set of p‑adic primes of k, and let N∞/k be the unique Σ‑ramified ℤₚ‑extension (assuming it exists). Denote by X_Σ(N∞) = Gal(M_Σ(N∞)/N∞) the Σ‑ramified unramified Iwasawa module, which is a module over the Iwasawa algebra Λ = ℤₚ⟦Gal(N∞/k)⟧ ≅ ℤₚ⟦T⟧. The conjecture asserts that X_Σ(N∞) is a torsion Λ‑module; equivalently, Λ‑rank X_Σ(N∞) = 0. This statement is a precise, falsifiable generalisation of Greenberg’s conjecture to arbitrary Σ‑ramified ℤₚ‑extensions and is amenable to formalisation in Lean‑4 using existing libraries for number fields, Galois groups, profinite groups and Iwasawa algebras.",
     "domain_bridges": [
       "AlgebraicNumberTheory ↔ CommutativeAlgebra (torsion modules over power series rings)",
@@ -12373,7 +12373,7 @@
     "proof_strategy": "Develop the necessary Lean infrastructure for (i) the construction of the maximal abelian pro‑p extension M_Σ(N∞) unramified outside Σ, (ii) the identification of Gal(N∞/k) with ℤₚ and thus the Iwasawa algebra Λ ≅ ℤₚ⟦T⟧, (iii) the module structure of X_Σ(N∞) over Λ, and (iv) a reduction to known finiteness results: show that the Λ‑rank of X_Σ(N∞) equals the λ‑invariant of the corresponding Iwasawa µ‑invariant, and use the control theorem together with known vanishing of µ‑invariant in the Σ‑ramified setting. The conjecture can be disproved by constructing a concrete Σ‑ramified ℤₚ‑extension (e.g., via explicit class field theory) where the λ‑invariant is shown to be positive, yielding a non‑torsion Λ‑module.",
     "research_mode": "team",
     "source_exp_id": "2606.22324v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T02:26:35.671962+00:00",
     "title": "Torsionness of Σ‑ramified Iwasawa modules over a ℤₚ‑extension"
   },
