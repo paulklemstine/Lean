@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "eee0a16a",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Brocard–Ramanujan Triangular Classification\n\nDerived from this cycle's findings (the geometric equivalence\n`n!/8 triangular ⟺ n!+1 square`, the general test `t triangular ⟺ 8t+1",
-      "quality_score": 0.42575842352941173,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-25T08:11:59",
-      "title": "Brocard-Ramanujan Triangular Classification"
-    },
-    {
       "cycle_id": "ef874ad4",
       "domain": "Probability",
       "key_insight": "# Future Directions — Ising Model Phase Transition\n\nThis research cycle established, fully formally (0 sorries), the exact solution of\nthe **one-dimensional Ising model** and the rigorous sense in whi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T13:40:59",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
+    },
+    {
+      "cycle_id": "3f134ce6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Inverse Sprugnoli/Riordan Arrays\n\nBuilding on `Catalog/Novelty/InverseSprugnoliArray.lean` (closed-form inverse of the\nPascal-like array `C(n+k,2k)`, both orthogonality direction",
+      "quality_score": 0.5751195652173913,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-28T14:31:11",
+      "title": "Existence of Inverse Sprugnoli Arrays with Closed-Form Coefficients"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.722996
     }
   ],
-  "last_updated": "2026-06-28T13:40:59",
+  "last_updated": "2026-06-28T14:31:11",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "e5555684",
-        "quality": 0.485834,
-        "theorems": 14,
-        "title": "Proof of Hegedçs bound via spectral constraints in combinatorial families"
-      },
-      {
         "cycle_id": "a530b001",
         "quality": 0.7436,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.518,
         "theorems": 0,
         "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
+      },
+      {
+        "cycle_id": "3f134ce6",
+        "quality": 0.5751195652173913,
+        "theorems": 12,
+        "title": "Existence of Inverse Sprugnoli Arrays with Closed-Form Coefficients"
       }
     ],
     "NumberTheory": [

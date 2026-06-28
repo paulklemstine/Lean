@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
   {
-    "consumed_by_exp_id": "fee52015",
+    "consumed_by_exp_id": "",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
       "Logic",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -2974,7 +2974,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Sharp Upper Bound for Uniform VC\u2011Dimension Families via Layered Stars"
   },
   {
-    "consumed_by_exp_id": "72418ed5",
+    "consumed_by_exp_id": "",
     "description": "For a connected signed graph \u03a3 and a non-isolated vertex v, the inequality \u03bb\u2081(\u03a3) \u2264 \u221a(\u03bb\u2081\u00b2(\u03a3\u2212v) + 2d(v) \u2212 1) holds, with equality if and only if \u03a3 is a signed star with v as the center or \u03a3 is a signed complete graph.",
     "domains": [
       "Physics"
@@ -2983,7 +2983,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T01:36:45.202062+00:00",
     "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
   },
@@ -5012,7 +5012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
   },
   {
-    "consumed_by_exp_id": "872fa119",
+    "consumed_by_exp_id": "",
     "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k \u2265 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
     "domains": [
       "Logic"
@@ -5021,7 +5021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T22:09:21.864984+00:00",
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
   },
@@ -8552,6 +8552,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Inverse Sprugnoli/Riordan Arrays\n\nBuilding on `Catalog/Novelty/InverseSprugnoliArray.lean` (closed-form inverse of the\nPascal-like array `C(n+k,2k)`, both orthogonality directions, the crux Vandermonde\nidentity, and row-sum spin-offs) and its companion\n`Catalog/Novelty/RiordanRowSumFibonacci.lean` (Fibonacci row sums of the same array).\n\nEach conjecture below is precise and falsifiable by `#eval` before any proof attempt.\n\n## C1. A one-parameter family of self-describing inverses\nFor `r \u2265 1` define `T^{(r)}_{n,k} = C(n + (r-1)k, r\u00b7k)` (the Riordan array\n`(1/(1-x), x/(1-x)^r)`; `r=2` is the array studied here). **Conjecture:** the inverse has\nclosed form `S^{(r)}_{n,k} = (-1)^{n+k} \u00b7 (rk+? )/(\u2026) \u00b7 C(rn, n-k)`-type ballot\ncoefficients, and the orthogonality sum again collapses to a single signed Vandermonde\n`\u03a3_i (-1)^i C(p+i,i) C(p,m-i) = (-1)^m`. Testable: tabulate `T^{(3)}` and invert.\n\n## C2. Diagonal / antidiagonal sums of the inverse are signed Motzkin/Catalan\nThe plain row sum of `S` is `[n=0]` and the alternating row sum is `(-1)^n C(2n,n)`.\n**Conjecture:** the antidiagonal sums `\u03a3_k S_{n-k,k}` and the weighted sums\n`\u03a3_k 2^k S_{n,k}` are (signed) Motzkin numbers / shifted Catalan numbers, with a linear\nrecurrence of order \u2264 2. Testable by `#eval` against OEIS A001006 / A000108.\n\n## C3. Inverse-array row polynomials are rescaled Chebyshev\nLet `P_n(x) = \u03a3_k S_{n,k} x^k`. Since `T`'s columns have g.f. `x^k/(1-x)^{2k+1}`\n(Chebyshev-like), **conjecture:** `P_n(x) = (-1)^n U_n( (something in x) )` for Chebyshev\n`U`, equivalently `P_n` satisfies a three-term recurrence\n`P_{n+1}(x) = a(x) P_n(x) + b(x) P_{n-1}(x)` with polynomial `a,b` of degree \u2264 1.\nTestable: compute `P_0..P_6` and fit the recurrence.\n\n## C4. Group-theoretic order in the Riordan/Sprugnoli group\n`T` and `S = T\u207b\u00b9` are distinct (S has alternating signs), so `T` is not an involution.\n**Conjecture:** `T` has infinite order in the Riordan group, and the entries of `T^m`\nare `C(n+k, 2k)`-analogues with `m`-dependent ballot weights; in particular\n`(T^m)_{n,0} = ` a polynomial in `m` of degree `n` (Fibonacci/Chebyshev in `m`).\nTestable: compute `T^2, T^3` numerically and inspect column 0.\n\n## C5. LU / Cholesky-type factorisation with Catalan pivots\n**Conjecture:** the symmetric Gram-type matrix `G = T T\u1d40` (or `S S\u1d40`) admits an exact\n`L D L\u1d40` factorisation in which `D` is diagonal with central-binomial / Catalan entries,\ngiving a second, factorisation-based proof of `det T = 1` and of orthogonality. Testable:\ncompute `G` for `n \u2264 6`, run exact LDL\u1d40 over `\u211a`, and read off the pivots.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2786",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3f134ce6",
+    "status": "available",
+    "timestamp": "2026-06-28T14:31:03.807830+00:00",
+    "title": "Building on `Catalog/Novelty/InverseSprugnoliArray.lean` (closed-form inverse of"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -9233,7 +9248,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "461fdf74",
+    "consumed_by_exp_id": "",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -9243,7 +9258,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },

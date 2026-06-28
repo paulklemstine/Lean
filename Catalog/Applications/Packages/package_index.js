@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3f134ce6",
     "filename": "existence_of_inverse_sprugnoli_arrays_with_closed_.json",
     "pkg_num": 184,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5751195652173913,
     "title": "Inverse Sprugnoli Arrays with Closed-Form Coefficients and Odd-Indexed Fibonacci Row Sums"
   },
   {
@@ -5371,8 +5371,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "existence_of_inverse_sprugnoli_arrays_with_closed_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5751195652173913,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Inverse Sprugnoli Arrays with Closed-Form Coefficients and Odd-Indexed Fibonacci Row Sums"
     }
