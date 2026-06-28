@@ -655,7 +655,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a530b001",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domain_bridges": [],
     "domains": [
@@ -668,7 +668,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -4180,7 +4180,7 @@
       "Mathlib.Analysis.Convex.Basic",
       "Mathlib.LinearAlgebra.AffineSpace.AffineSubspace"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f11db87",
     "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
     "domain_bridges": [
       "convex geometry ↔ finite set systems",
@@ -4197,7 +4197,7 @@
     "proof_strategy": "Formalize convex splinters as finite unions of convex sets satisfying the minimal affine-dependence containment axiom. Combine the paper's fractional Helly theorem for convex splinters with the standard Alon--Kleitman bootstrapping scheme: derive a weak epsilon-net or selection lemma appropriate to splinters, then use the (p,q)-property to obtain a bounded-size hitting set. The Lean development can separate the abstract finite-set-system part from the geometric input, so that the final theorem only requires the convex-splinter fractional Helly lemma and the Helly number 2d+1.",
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:24:48.021151+00:00",
     "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
   },
