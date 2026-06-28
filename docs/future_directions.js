@@ -5605,7 +5605,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved upper bound for P\u00f3lya tree coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cff6413b",
     "description": "For every edge density \u03b2 \u2208 [0,1] the minimum possible asymptotic density of semi\u2011induced copies of S_{2,1} in an n\u2011vertex graph G with edge density \u03b2 is given by the one\u2011parameter three\u2011class complement\u2011split construction: let t \u2208 [0,1] be the unique solution of \u03b2 = t(1 \u2212 t/2); then the minimum semi\u2011induced density equals p_min(\u03b2) = t\u00b2(1\u2212t).",
     "domains": [
       "Bridges"
@@ -5614,7 +5614,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T21:11:05.213329+00:00",
     "title": "Exact lower semi-inducibility profile for the red\u2011blue star S_{2,1}"
   },
@@ -7519,7 +7519,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact coherent rank for four-eigenvalue co-edge-regular graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db606ba2",
     "description": "Conjecture: For an s-connector graph G on N vertices and a q-edge-coloring of its edges, there exists a color j\u2208[q] such that G contains a monochromatic star K_{1, t_j} (a vertex with at least t_j incident edges of color j) if and only if N \u2265 \u03a3_{j=1}^q (t_j\u22121) + max{2s, s+max_j t_j}. This extends the exact Ramsey number for matchings proved in the paper to the setting of stars.",
     "domains": [
       "Algebra",
@@ -7529,12 +7529,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19851v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T15:24:21.269051+00:00",
     "title": "Exact multicolor Ramsey threshold for stars in s-connector graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0f7c830",
     "description": "The conjecture posits that for sufficiently large k, n_k exceeds e^{c log\u00b2k / log log k}, ensuring the interval (k, 2k) primes avoid divisibility by such primes.",
     "domains": [
       "Pythagorean",
@@ -7544,7 +7544,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T15:55:11.500060+00:00",
     "title": "Consecutive integers free of certain prime factors"
   },
@@ -7563,7 +7563,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zhu Algebra of $\\widehat{\\mathfrak{sl}}_n$ at Level 1 is Polynomial Ring"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b1625408",
     "description": "Assuming Hypothesis U (the existence of sufficiently many powersmooth shifted primes), for any \u03b5>0 there exists X0 such that for all x\u2265X0 and y satisfying exp((log\u2082 x)^{1+\u03b5}) \u2264 y \u2264 x / exp((log\u2082 x)^{1+\u03b5}), the counting function L(x,y) = #{n \u2264 x : \u03bb(n) \u2264 y} obeys L(x,y) \u2265 x \u00b7 (\u2112(x/y))^{\u22121\u2212\u03b5} when y \u2265 \u2112(x)\u00b2, and L(x,y) \u2265 x \u00b7 (\u2112(x,y))^{\u22121\u2212\u03b5} otherwise, where \u2112(x,y) = exp((log x \u00b7 log\u2083 x) / log\u2082 y). This matches the upper bound of Theorem 1.1 in the paper up to the \u03b5 in the exponent, establishing asymptotic sharpness.",
     "domains": [
       "Pythagorean"
@@ -7572,7 +7572,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19132v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T17:13:50.507382+00:00",
     "title": "Sharp lower bound for L(x,y) under Hypothesis U"
   },
