@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fdadfe48",
     "filename": "the_most_natural_next_step_is_to_attack_the_residu.json",
     "pkg_num": 181,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5959,
     "title": "One Known Solution Linearizes the Riccati Equation"
   },
   {
@@ -5284,8 +5284,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_most_natural_next_step_is_to_attack_the_residu",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5959,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "One Known Solution Linearizes the Riccati Equation"
     }
