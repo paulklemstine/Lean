@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9ecd5b8c",
     "filename": "eml_interpolation_theory_stone_weierstrass_for_exp.json",
     "pkg_num": 198,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7327899999999999,
     "title": "EML Interpolation Theory: Stone\u2013Weierstrass Density and Jackson-Type Rates for Exponential\u2013Logarithmic Networks"
   },
   {
@@ -5777,8 +5777,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "eml_interpolation_theory_stone_weierstrass_for_exp",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7327899999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "EML Interpolation Theory: Stone\u2013Weierstrass Density and Jackson-Type Rates for Exponential\u2013Logarithmic Networks"
     }

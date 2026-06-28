@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "4f7ad584",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
     "domains": [
       "EML",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -809,7 +809,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "31c996e4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -818,7 +818,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -838,7 +838,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "0a1f99db",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -847,7 +847,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -867,7 +867,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
   {
-    "consumed_by_exp_id": "cfea11f0",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
     "domains": [
       "MachineLearning",
@@ -878,12 +878,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "f589dfb5",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
       "Cryptography",
@@ -894,7 +894,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1436,20 +1436,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
   },
   {
-    "consumed_by_exp_id": "60145036",
-    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2688",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.25931v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-26T00:41:26.824635+00:00",
-    "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
@@ -1619,6 +1605,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erd\u0151s\u2013Straus Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 EML Interpolation Theory (this cycle)\n\nThis cycle extended the catalog's EML approximation programme in two directions\nthat were previously only available in dimension one or in two variables:\n\n* **`EML/MultivariateLipschitzRate.lean`** \u2014 the `d`-dimensional Lipschitz\n  Jackson rate. The grid quantizer `quant n` gives uniform error `L\u00b7d/(2n)`\n  (`mvJackson_error`) with an approximant taking `\u2264 (n+1)^d` values\n  (`gridSet_card_le`, `mvJackson_width`); the headline `mvJackson` shows accuracy\n  `\u03b5` needs width `\u2264 (n+1)^d` with `n \u2264 L\u00b7d/(2\u03b5)+1`, i.e. width `O(\u03b5^{-d})` \u2014 the\n  conjectured `\u03b5^{-n/\u03b1}` exponent at `\u03b1 = 1`, `n = d`. This is the *curse of\n  dimensionality* made explicit.\n* **`EML/LogSumExpMax.lean`** \u2014 the `d`-variable LogSumExp `lse t x =\n  (1/t)\u00b7log \u2211\u1d62 exp(t\u00b7x\u1d62)` is a one-sided EML over-approximation of `max` with\n  explicit slack `(log d)/t` (`lse_error`), converging as `t \u2192 \u221e`\n  (`lse_tendsto_max`). The `d = 2` case re-derives the catalog's `softmax_error`\n  (`lse_error_dim_two`), so the new theorem strictly subsumes it.\n\nThe contrast between these two files \u2014 **logarithmic** dimension dependence for\nthe smooth `max` surrogate vs. **exponential** dimension dependence for uniform\nLipschitz approximation \u2014 is the seed for the directions below.\n\n---\n\n## Conjecture 1 \u2014 Matching lower bound: the exponent `d` is necessary\n\n**Statement.** There is a constant `c_d > 0` such that for every `M` and every\nfunction `g : [0,1]^d \u2192 \u211d` taking at most `M` distinct values, some `1`-Lipschitz\n(`\u2113\u00b9`) `f` has `\u2016f \u2212 g\u2016_\u221e \u2265 c_d \u00b7 M^{-1/d}`. Equivalently, width `\u03a9(\u03b5^{-d})` is\nunavoidable, so `mvJackson` is rate-optimal.\n\n*The key insight is* that a `\u03b4`-separated grid of `(\u230a1/\u03b4\u230b+1)^d` points is a\n*fooling set*: a piecewise-constant `g` with fewer pieces must collapse two grid\npoints, and a Lipschitz `f` separating them forces error `\u2265 \u03b4/2`.\n\n*Why now?* The upper bound `mvJackson` is in place with explicit constants, so the\nonly missing half of the `\u0398(\u03b5^{-d})` characterization is this packing/pigeonhole\nlower bound \u2014 a self-contained combinatorial argument needing no new analysis.\n\n## Conjecture 2 \u2014 LogSumExp beats the curse for `max`-structured targets\n\n**Statement.** If `f = max` of `d` affine (ridge) functions on `[0,1]^d`, then the\nsingle EML network `lse t (\u27e8a_k\u00b7x + b_k\u27e9_k)` approximates `f` to accuracy `\u03b5`\nwith width `O(d)` and temperature `t = (log d)/\u03b5` \u2014 *polynomial*, not exponential,\nin `d`.\n\n*The key insight is* that `lse_error` gives dimension dependence `log d`, so when\nthe target is itself a `max` of few features the approximation cost decouples from\nthe ambient dimension entirely.\n\n*Why now?* `lse_error` (this cycle) supplies the exact `(log d)/t` slack; combined\nwith the catalog's affine/`max` calculus in `EML.AlgebraicMaxClosure` the whole\nconstruction is assembled from already-formalized pieces.\n\n## Conjecture 3 \u2014 A smooth (`C^\u221e`) EML Jackson rate via LogSumExp gluing\n\n**Statement.** Replacing the discontinuous grid quantizer by a LogSumExp partition\nof unity yields a `C^\u221e` EML approximant of any `\u2113\u00b9`-Lipschitz `f` with error\n`O(1/n) + O((log d)/t)` and width `O((n+1)^d)`; tuning `t = n` keeps the rate\n`O(d/n)` while making the network smooth.\n\n*The key insight is* that LogSumExp converts the piecewise-constant interpolant of\n`MultivariateLipschitzRate` into a globally smooth surrogate at only a `(log d)/t`\nadditive cost \u2014 trading the hard `max`-gluing of `AlgebraicMaxClosure` for a soft,\ndifferentiable one.\n\n*Why now?* Both ingredients \u2014 the grid rate and the certified `lse` slack \u2014 are\nnow theorems in the catalog, so the smooth rate is their direct composition.\n\n## Conjecture 4 \u2014 H\u00f6lder upgrade of the multivariate rate\n\n**Statement.** For `\u03b1`-H\u00f6lder `f` on `[0,1]^d` (`\u2113\u00b9`), the same quantizer gives\nerror `L\u00b7(d/(2n))^\u03b1`, hence width `O(\u03b5^{-d/\u03b1})` \u2014 the full mission exponent\n`\u03b5^{-n/\u03b1}` in all `n = d`, `\u03b1 \u2208 (0,1]`.\n\n*The key insight is* that the quantizer's `\u2113\u00b9` displacement bound `d/(2n)` is\nmetric-only, so composing it with the H\u00f6lder modulus `t \u21a6 L\u00b7t^\u03b1` (as in the\ncatalog's `HolderJacksonRate`) immediately yields the `\u03b1`-power rate.\n\n*Why now?* `quant_l1_error` already isolates the displacement bound, and\n`EML.HolderJacksonRate` already encodes the `\u03b1`-modulus bookkeeping in 1-D; the\nmultivariate H\u00f6lder rate is their merge.\n\n## Conjecture 5 \u2014 Temperature-sharpness of LogSumExp\n\n**Statement.** The slack bound is sharp: on the diagonal `x = c\u00b7\ud835\udfd9` the error\nequals exactly `(log d)/t`, and no EML smoothing of `max` built from a single\n`log \u2211 exp` layer can have slack `o((log d)/t)` uniformly.\n\n*The key insight is* that at equal coordinates every summand coincides, so\n`\u2211 = d\u00b7exp(t\u00b7c)` and the upper bound in `lse_le_max` is attained \u2014 turning the\ninequality into an equality and pinning the constant `log d`.\n\n*Why now?* The two-sided structure of `lse_error` already exposes the equality\ncase; formalizing sharpness needs only the diagonal evaluation, mirroring the\n`QuadraticApproxLowerBound` sharpness pattern already in the catalog.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2802",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9ecd5b8c",
+    "status": "available",
+    "timestamp": "2026-06-28T22:45:50.782686+00:00",
+    "title": "Catalog's EML approximation programme in two directions"
   },
   {
     "consumed_by_exp_id": "",
