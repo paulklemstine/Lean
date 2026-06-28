@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3f78044a",
     "filename": "formal_verification_of_algorithms.json",
     "pkg_num": 195,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5920639999999999,
     "title": "Verified Binary Search as Threshold Finding, with a Bridge to the Factorial Number System"
   },
   {
@@ -5690,8 +5690,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "formal_verification_of_algorithms",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5920639999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Verified Binary Search as Threshold Finding, with a Bridge to the Factorial Number System"
     }

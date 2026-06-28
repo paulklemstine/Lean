@@ -838,20 +838,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "0a1f99db",
-    "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "seed_352",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432688+00:00",
-    "title": "Ramsey Theory: Bounds and Constructions"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
     "domains": [
@@ -1608,6 +1594,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Formal Verification of Algorithms\n\nDerived from this cycle's findings (verified files: `BinarySearchVerified.lean`,\n`FourierTransformInversion.lean`, `BinarySearchFactoradicBridge.lean`).\n\n## Conjecture 1 \u2014 Binary search attains the ceil-log bound infinitely often\nFor every `m \u2265 1` there exist `lo < hi` and a predicate `p` with\n`bsearchSteps p lo hi = Nat.clog 2 (hi - lo) = m`; moreover the bound is tight on\n*every* gap `g` of the form `2^{m-1} < g \u2264 2^m`.\n**The key insight is** that the ceil-log recursion `clog 2 g = clog 2 \u2308g/2\u2309 + 1`\nmirrors the algorithm's own recursion exactly, so the inductive worst case is\nrealised by adversarially driving every step into the `\u2308g/2\u2309` (right) branch.\n**Why now?** We already proved the upper bound `bsearch_steps_le`; the matching\nlower-bound construction turns it into an exact `\u0398(log)` complexity theorem, the\nfirst fully tight, machine-checked complexity bound for the algorithm in-repo.\n\n## Conjecture 2 \u2014 A single inversion theorem subsumes DFT, NTT, and convolution\nThe map `DFT` is a ring isomorphism `(Fin n \u2192 F) \u2243+* (Fin n \u2192 F)` carrying\npointwise product to cyclic convolution, for any field `F` with a primitive\n`n`-th root and `n` invertible; hence `IFFT(FFT a \u22c6 FFT b) = a \u229b b` (cyclic\nconvolution) holds uniformly over `\u2102` and `ZMod p`.\n**The key insight is** that `idft_dft` already establishes bijectivity of a\n*linear* map; promoting it to a ring iso only needs the convolution theorem\n`DFT (a \u229b b) = DFT a * DFT b`, which is again pure character orthogonality.\n**Why now?** With inversion proved field-generically, the convolution corollary\nis the shortest path to a verified `O(n log n)` integer-multiplication / polynomial\n-multiplication kernel (Sch\u00f6nhage\u2013Strassen-style) over `ZMod p`.\n\n## Conjecture 3 \u2014 FFT evaluation refines the DFT specification with no new axioms\nThe recursive radix-2 FFT (`n = 2^k`) computes exactly the linear map `DFT`, and a\nverified refinement `FFT = DFT` can be proved by induction on `k` using only the\nsplitting identity `\u03c9\u00b2 ` is a primitive `(n/2)`-th root.\n**The key insight is** that correctness of the *fast* algorithm reduces entirely to\nthe already-proved *specification* `DFT`/`idft_dft`: the FFT contributes only a\ndivide-and-conquer evaluation order, not new mathematics.\n**Why now?** `FourierTransformInversion.lean` fixes the specification; refining a\nfast implementation against a proved spec is the standard verified-algorithm\npattern and needs no further Mathlib infrastructure.\n\n## Conjecture 4 \u2014 Logarithmic search cost is uniform across positional number systems\nFor any mixed-radix system with radices `r\u2080,\u2026,r_{k-1}` (the factoradic system being\n`r_i = i+1`), binary search over the value space `[0, \u220f r\u1d62)` costs\n`Nat.clog 2 (\u220f r\u1d62)` comparisons, and the digit map is a bijection onto that range.\n**The key insight is** that the bridge `BinarySearchFactoradicBridge` decouples the\n*combinatorial* search bound from the *number-theoretic* density/injectivity of the\nencoding, so it transfers verbatim to any system whose value map is a bijection\nonto an interval.\n**Why now?** The catalog already has the factoradic (`FactorialNumberSystem`) and\nmixed-radix (`MixedRadixNumberSystem`) files; this conjecture unifies their search\ncomplexity under one statement, a natural cross-file consolidation.\n\n## Conjecture 5 \u2014 Off-diagonal orthogonality fails precisely on non-domains\nThe vanishing `\u2211_{j<n} (\u03c9^a (\u03c9\u207b\u00b9)^b)^j = 0` for `a \u2260 b` holds **iff** the ambient\nring is an integral domain on the relevant differences; over `ZMod m` with `m`\ncomposite there is a primitive root `\u03c9` and indices `a \u2260 b` with the sum nonzero.\n**The key insight is** that the only step needing more than ring axioms is\n`x \u2260 1 \u21d2 x - 1` is not a zero divisor \u2014 exactly the domain hypothesis \u2014 so the\nboundary of FFT correctness is the domain property, not the root of unity.\n**Why now?** Having isolated the domain use in `geom_root_sum`, an explicit\ncomposite-modulus counterexample would sharply characterise *when* the NTT is\nwell-defined, guiding modulus selection in verified implementations.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2801",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3f78044a",
+    "status": "available",
+    "timestamp": "2026-06-28T21:18:37.194826+00:00",
+    "title": "Derived from this cycle's findings (verified files: `BinarySearchVerified.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1902,7 +1903,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "9ecd5b8c",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -1912,7 +1913,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
