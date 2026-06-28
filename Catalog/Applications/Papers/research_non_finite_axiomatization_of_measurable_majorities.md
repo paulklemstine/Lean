@@ -1,389 +1,273 @@
-# Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index
+# The Incoherence Index as an Arithmetic Invariant: An Order Formula and the Realizable Spectrum
 
 **Author:** Aristotle
-
-**Date:** 2026-06-27
-
-**Domain:** Novelty / Applications (Social Choice, Additive Combinatorics)
-
----
+**Date:** 2026-06-28
+**Domain:** Novelty / Social Choice Theory and Additive Combinatorics
 
 ## Abstract
 
-We study the *coherence* of standard social decision frames — finite sets of
-admissible majority adjustments modeled as atoms in the cyclic group
-$\mathbb{Z}/n\mathbb{Z}$ — and ask whether coherence can be certified by any fixed,
-bounded family of finite checks. We introduce the **incoherence index**
-$\mathrm{index}(F)$, the length of the shortest *perfectly balanced sequence* (a
-non-empty zero-sum word over the atoms), and the **width-$B$ fragment**
-$\mathrm{CoherentUpTo}(B, F)$, which a frame passes when it admits no balanced
-sequence of length $\le B$. Our central structural result is an exact threshold:
-for every incoherent frame,
-$$\mathrm{CoherentUpTo}(B, F) \iff B < \mathrm{index}(F).$$
-From this we derive **strict refinement**: for every $B$ there is a *maximal*
-frame passing the width-$B$ fragment but failing the width-$(B+1)$ fragment, so the
-hierarchy of finite fragments never collapses. Equivalently, the coherence
-criterion is **not finitely axiomatizable** by bounded fragments. The engine is the
-single-generator frame $\{1\} \subseteq \mathbb{Z}/n\mathbb{Z}$, which is maximal
-and whose incoherence index equals $n$ exactly — the maximum attainable on $n$
-states. We complement this with a saturation contrast — the maximal frame
-$\{1,3\} \subseteq \mathbb{Z}/4\mathbb{Z}$ has index only $2$ — showing the
-extremal index is the exclusive privilege of sparse generators, and with
-parity and unboundedness results placing the index in additive combinatorics as a
-Davenport-constant-style invariant. All results have been formally verified.
-
----
+We study *standard social decision frames* — finite sets of residues
+$F \subseteq \mathbb{Z}/n\mathbb{Z}$ whose elements ("atoms") model permissible
+majority-or-tie shifts — and their *incoherence index*, defined as the length of
+the shortest non-empty *perfectly balanced* (zero-sum) sequence of atoms. We
+prove that for a single-atom frame this index is exactly the additive order of
+its generator, $\mathrm{incoherenceIndex}(\{a\}) = \mathrm{addOrderOf}(a)$,
+recovering as a special case the known value $n$ for the unit frame $\{1\}$. We
+establish a structural monotonicity law — enlarging the atom set can only shorten
+the shortest violation — and use it together with the order formula to determine
+the realizable spectrum: on a fixed $\mathbb{Z}/n\mathbb{Z}$ the single-atom
+indices are precisely the divisors $d \ge 2$ of $n$, while across all frames
+*every* integer $d \ge 2$ is realized by a maximal frame. A small explicit
+multi-atom witness, $\mathrm{incoherenceIndex}(\{1,2\} \subseteq
+\mathbb{Z}/5\mathbb{Z}) = 3$, shows that multi-generator frames escape the
+divisor lattice that confines singletons. These results identify the incoherence
+index as a rank-one Davenport-type (shortest zero-sum) invariant and supply the
+quantitative engine behind the non-finite-axiomatizability of the coherence
+criterion. All results have been formally verified.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Majority-based aggregation rules can fail to be coherent: a sequence of pairwise
+majority comparisons may form a cycle, the abstract form of the Condorcet
+paradox. A natural quantitative refinement of "is this rule coherent?" is "*how
+long* must a contradiction be?" This paper isolates and answers that question for
+a clean cyclic model.
 
-A persistent fantasy in the certification of decision procedures is the *finite
-checklist*: a fixed, bounded battery of local tests that, once passed, guarantees a
-global consistency property. In software verification this is "bounded model
-checking"; in logic it is "finite axiomatizability"; in social choice it is the
-hope that consistency of a voting rule can be witnessed by inspecting only small
-coalitions or short preference cycles.
+We model a voting system as a finite set of allowed shifts in a cyclic group
+$\mathbb{Z}/n\mathbb{Z}$. A coherence violation is a non-empty multiset of shifts
+that sums to zero — a zero-sum sequence. The length of the shortest such
+violation, the *incoherence index*, measures robustness: a large index means many
+steps are required to manufacture a paradox.
 
-This paper isolates a clean arena where that fantasy is provably false, and false
-in the strongest constructive sense. We model collective decisions over $n$ states
-arranged cyclically and define coherence as the absence of any *closed loop* of
-admissible majority moves — a chain that returns the collective to its starting
-state. We then ask whether coherence is equivalent to the absence of *short* closed
-loops, for some uniform bound on length. The answer is no, and we exhibit, for
-every candidate bound, an explicit legitimate (maximal) frame defeating it.
+Our main contribution is to show that this index, far from being an ad-hoc count,
+is a classical arithmetic invariant. For single-atom frames it is the additive
+order of the generator; the order formula then determines the entire single-atom
+spectrum (the divisor lattice of $n$) and, combined with a monotonicity law,
+yields the full multi-atom spectrum (every $d \ge 2$). We also exhibit the
+smallest example of a frame whose index is a non-divisor, confirming that adding
+generators genuinely enlarges the realizable set.
 
-### 1.2 Contributions
+The companion development establishes that the coherence criterion is not
+finitely axiomatizable; the present results explain *why* by pinning the exact
+arithmetic of the indices that drive the unboundedness.
 
-1. A precise model of standard social decision frames as atom sets in
-   $\mathbb{Z}/n\mathbb{Z}$, with the *incoherence index* as the length of the
-   shortest perfectly balanced sequence (Section 2).
-2. The exact-threshold theorem
-   `coherentUpTo_iff_lt_incoherenceIndex`: the width-$B$ fragment is passed iff
-   $B < \mathrm{index}(F)$ (Section 4).
-3. The strict-refinement theorem `fragment_strictly_refines` and its corollary,
-   non-finite-axiomatizability of coherence (Section 4).
-4. The realization theorem `incoherenceIndex_singleton_one`: the single-generator
-   frame $\{1\}$ is maximal with index exactly $n$, the greatest attainable
-   (`incoherenceIndex_isGreatest`), together with parity (`even_incoherenceIndex`)
-   and unboundedness (`incoherence_unbounded`) (Section 3).
-5. The saturation contrast `incoherenceIndex_oneThree`: maximality alone does not
-   determine the index (Section 5).
-6. The placement of the index within additive combinatorics as a
-   Davenport-constant-style zero-sum invariant (Section 6).
+## 2. Definitions
 
-All statements have been formally machine-checked.
+Throughout, $n \ge 1$ and $\mathbb{Z}/n\mathbb{Z}$ is the additive cyclic group
+of order $n$.
 
----
+**Definition 1 (Frame).** A *standard social decision frame* on $n$ social states
+is a finite set $F \subseteq \mathbb{Z}/n\mathbb{Z}$. Its elements are called
+*atoms*.
 
-## 2. The model
-
-Throughout, $n$ is a positive natural number and arithmetic is in the cyclic group
-$\mathbb{Z}/n\mathbb{Z}$, whose elements are the residues $\{0, 1, \dots, n-1\}$
-with addition modulo $n$.
-
-**Definition 2.1 (Frame).** A *standard social decision frame* on $n$ social states
-is a finite subset $F \subseteq \mathbb{Z}/n\mathbb{Z}$. Its elements are called
-*atoms* and represent admissible majority-or-tie adjustments to the collective
-position. (In the intended interpretation the residue $0$ — "no change" — is not an
-atom, since it is never itself a majority-driven move; this convention is what
-forces the index away from $1$, see Proposition 3.6.)
-
-**Definition 2.2 (Perfectly balanced sequence).** A list $l = [x_1, \dots, x_k]$ is
+**Definition 2 (Balanced sequence).** A list $l = [x_1, \dots, x_k]$ is
 *perfectly balanced* for $F$, written $\mathrm{IsBalanced}(F, l)$, when
+(i) $l \neq []$, (ii) every $x_i \in F$, and (iii) $\sum_{i=1}^{k} x_i = 0$ in
+$\mathbb{Z}/n\mathbb{Z}$.
 
-1. $l \neq []$ (non-emptiness),
-2. every entry lies in $F$: $x_i \in F$ for all $i$, and
-3. the entries sum to zero: $x_1 + \cdots + x_k = 0$ in $\mathbb{Z}/n\mathbb{Z}$.
+**Definition 3 (Balanced lengths).** The set of attainable violation lengths is
+$$\mathrm{balancedLengths}(F) = \{\, k \in \mathbb{N} : \exists\, l,\ \mathrm{IsBalanced}(F, l)\ \wedge\ |l| = k \,\}.$$
 
-Such a sequence is a *closed loop*: a non-trivial chain of admissible moves
-returning the collective to its origin. Its existence is the signature of
-incoherence.
+**Definition 4 (Incoherence index).** The *incoherence index* is
+$$\mathrm{incoherenceIndex}(F) = \inf \mathrm{balancedLengths}(F),$$
+taken in $\mathbb{N}$ (so the value is $0$ when $\mathrm{balancedLengths}(F) =
+\varnothing$, i.e. when $F$ is coherent).
 
-**Definition 2.3 (Balanced lengths).** The set of attainable balanced-sequence
-lengths is
-$$\mathrm{balancedLengths}(F) = \{\, k \in \mathbb{N} \mid \exists\, l,\;
-\mathrm{IsBalanced}(F, l) \wedge |l| = k \,\}.$$
+**Definition 5 (Maximal frame).** A frame $F$ is *maximal* when its atoms
+generate the whole space: $\langle F \rangle = \mathbb{Z}/n\mathbb{Z}$, i.e. the
+additive subgroup closure of $F$ equals $\top$.
 
-**Definition 2.4 (Incoherence index).** The *incoherence index* of $F$ is
-$$\mathrm{index}(F) = \inf \,\mathrm{balancedLengths}(F),$$
-the length of a shortest perfectly balanced sequence, with the convention
-$\inf \emptyset = 0$. Thus $\mathrm{index}(F) = 0$ iff $F$ is *coherent* (admits no
-balanced sequence), and otherwise $\mathrm{index}(F) \ge 1$ is the minimal loop
-length. A frame is *incoherent* when $\mathrm{balancedLengths}(F) \neq \emptyset$.
+**Definition 6 (Coherence).** $F$ is *coherent* when it admits no balanced
+sequence at all; equivalently $\mathrm{balancedLengths}(F) = \varnothing$ and the
+index is $0$.
 
-**Definition 2.5 (Maximality).** A frame $F$ is *maximal*, written
-$\mathrm{IsMaximal}(F)$, when its atoms generate the whole group:
-$$\langle F \rangle = \mathbb{Z}/n\mathbb{Z},$$
-i.e. the additive subgroup generated by $F$ is all of $\mathbb{Z}/n\mathbb{Z}$.
-Maximal frames are the fully expressive decision procedures: every state is
-reachable by some chain of admissible moves.
+## 3. The Order Formula for Singleton Frames
 
-**Definition 2.6 (Width-$B$ fragment).** For $B \in \mathbb{N}$, the frame $F$ is
-*coherent up to $B$*, written $\mathrm{CoherentUpTo}(B, F)$, when
-$$\neg\, \exists\, l,\; \mathrm{IsBalanced}(F, l) \wedge |l| \le B,$$
-that is, $F$ admits no perfectly balanced sequence of length $\le B$. This is the
-"length-$B$ checklist": it passes a frame precisely when no closed loop of length at
-most $B$ exists.
+The heart of the paper is that the incoherence index of a one-atom frame is a
+group-theoretic order.
 
----
-
-## 3. The single-generator frame and the spectrum
-
-The driving examples are the *cyclic* frames $\{1\} \subseteq
-\mathbb{Z}/n\mathbb{Z}$. We collect their properties; they supply both the extremal
-index and the separators used in Section 4.
-
-**Lemma 3.1 (`isMaximal_singleton_one`).** For $n \ge 1$, the frame
+**Lemma 1 (Maximality of the unit frame).** For $n \ge 1$, the frame
 $\{1\} \subseteq \mathbb{Z}/n\mathbb{Z}$ is maximal.
 
-*Proof sketch.* The subgroup generated by the unit $1$ contains $1, 1+1, \dots$,
-i.e. every residue $x$ (write $x = x \cdot 1$). Hence $\langle \{1\}\rangle = \top$.
-∎
+*Proof sketch.* The cyclic group is generated by $1$, so the subgroup closure of
+$\{1\}$ is everything; each element $x$ equals $x.\mathrm{val} \cdot 1$. $\square$
 
-**Lemma 3.2 (`singleton_one_balanced_dvd`).** If $l$ is perfectly balanced for
-$\{1\} \subseteq \mathbb{Z}/n\mathbb{Z}$, then $n \mid |l|$.
+**Lemma 2 (Singleton lists are constant).** If every entry of a list $l$ lies in
+the singleton $\{a\}$, then $l = \mathrm{replicate}(|l|, a)$, the list of $|l|$
+copies of $a$.
 
-*Proof sketch.* Every entry of $l$ lies in the singleton $\{1\}$, so $l$ is the
-constant list $[1, 1, \dots, 1]$ of length $|l|$, and its sum is $|l| \cdot 1 =
-|l| \pmod n$. Balancedness gives $|l| \equiv 0 \pmod n$, i.e. $n \mid |l|$. ∎
+*Proof sketch.* Membership in a singleton forces each entry to equal $a$;
+a list all of whose entries equal $a$ is the replicate list. $\square$
 
-**Lemma 3.3 (`singleton_one_min_length`).** If $l$ is perfectly balanced for
-$\{1\} \subseteq \mathbb{Z}/n\mathbb{Z}$, then $|l| \ge n$.
+**Theorem 1 (Order Formula).** For any atom $a \in \mathbb{Z}/n\mathbb{Z}$
+(with $n \ge 1$),
+$$\mathrm{incoherenceIndex}(\{a\}) = \mathrm{addOrderOf}(a).$$
 
-*Proof sketch.* By Lemma 3.2, $n \mid |l|$, and by non-emptiness $|l| > 0$; a
-positive multiple of $n$ is at least $n$. ∎
+*Proof sketch.* We prove the two inequalities of an antisymmetry argument on the
+infimum.
 
-**Proposition 3.4 (`incoherenceIndex_le`).** For $n \ge 1$ and any non-empty frame
-$F$, $\mathrm{index}(F) \le n$.
+*Upper bound* ($\le$). The list $\mathrm{replicate}(\mathrm{addOrderOf}(a), a)$
+is balanced: it is non-empty since $\mathrm{addOrderOf}(a) > 0$ (the group is
+finite, so every element has finite order), all its entries are $a \in \{a\}$, and
+its sum is $\mathrm{addOrderOf}(a) \cdot a = 0$ by definition of additive order.
+Hence $\mathrm{addOrderOf}(a) \in \mathrm{balancedLengths}(\{a\})$ and the
+infimum is at most $\mathrm{addOrderOf}(a)$.
 
-*Proof sketch.* Pick any atom $a \in F$. The constant list $[a, a, \dots, a]$ of
-length $n$ has sum $n \cdot a = 0$ in $\mathbb{Z}/n\mathbb{Z}$, hence is balanced;
-so $n \in \mathrm{balancedLengths}(F)$ and the infimum is $\le n$. ∎
+*Lower bound* ($\ge$). The set $\mathrm{balancedLengths}(\{a\})$ is non-empty (by
+the witness above), so it suffices to show every element is $\ge
+\mathrm{addOrderOf}(a)$. Let $k = |l|$ for a balanced $l$. By Lemma 2,
+$l = \mathrm{replicate}(k, a)$, so its sum is $k \cdot a$. Balanced means
+$k \cdot a = 0$, which by the defining property of additive order
+($\mathrm{addOrderOf}(a) \mid m \iff m \cdot a = 0$) gives $\mathrm{addOrderOf}(a)
+\mid k$. Since $k = |l| > 0$ (the list is non-empty),
+$\mathrm{addOrderOf}(a) \le k$. $\square$
 
-**Theorem 3.5 (`incoherenceIndex_singleton_one`).** For $n \ge 1$,
-$$\mathrm{index}(\{1\} \subseteq \mathbb{Z}/n\mathbb{Z}) = n.$$
+**Corollary 1 (Unit frame).** $\mathrm{incoherenceIndex}(\{1\}) = n$.
 
-*Proof sketch.* The upper bound $\le n$ is Proposition 3.4 (the frame is
-non-empty). For the lower bound, every balanced sequence has length $\ge n$ by
-Lemma 3.3, so every element of $\mathrm{balancedLengths}(\{1\})$ is $\ge n$, whence
-the infimum is $\ge n$. The length-$n$ constant list realizes $n$, so the infimum is
-exactly $n$. ∎
+*Proof.* Substitute $a = 1$ into Theorem 1 and use
+$\mathrm{addOrderOf}(1) = n$ in $\mathbb{Z}/n\mathbb{Z}$. $\square$
 
-**Proposition 3.6 (the index is never $1$).** For a standard frame (one excluding
-the atom $0$), $\mathrm{index}(F) \neq 1$; hence the index lies in
-$\{0\} \cup \{2, 3, \dots\}$.
+Combined with the closed form $\mathrm{addOrderOf}(a) = n/\gcd(n, a)$ valid in
+$\mathbb{Z}/n\mathbb{Z}$, Theorem 1 gives a fully explicit value for every
+single-atom frame.
 
-*Proof sketch.* A balanced sequence of length $1$ is a single atom $x$ with
-$x = 0$. A standard frame excludes $0$, so no such sequence exists; thus
-$1 \notin \mathrm{balancedLengths}(F)$, and the index, being $0$ or $\ge 2$, is
-never $1$. ∎
+## 4. Monotonicity in the Atom Set
 
-**Theorem 3.7 (Sharpness, `incoherenceIndex_isGreatest`).** For every $n \ge 1$,
-$n$ is the *greatest* incoherence index attained by a non-empty frame on $n$
-states, and it is attained (by $\{1\}$):
-$$\max\{\, \mathrm{index}(F) \mid F \text{ non-empty} \,\} = n.$$
+**Lemma 3 (Monotonicity of balanced lengths).** If $F \subseteq G$ then
+$\mathrm{balancedLengths}(F) \subseteq \mathrm{balancedLengths}(G)$.
 
-*Proof sketch.* Attainment is Theorem 3.5; the upper bound is Proposition 3.4. ∎
+*Proof sketch.* A list balanced for $F$ remains balanced for $G$: non-emptiness
+and the zero-sum condition are unchanged, and every atom of $F$ is an atom of $G$
+by $F \subseteq G$. So its length lies in $\mathrm{balancedLengths}(G)$. $\square$
 
-**Theorem 3.8 (Parity, `even_incoherenceIndex`).** Suppose $2 \mid n$ and every
-atom of $F$ is "odd," meaning it maps to $1$ under the parity character
-$\mathbb{Z}/n\mathbb{Z} \to \mathbb{Z}/2\mathbb{Z}$. Then $\mathrm{index}(F)$ is
-even.
+**Theorem 2 (Saturation Law).** If $F \subseteq G$ and
+$\mathrm{balancedLengths}(F)$ is non-empty (i.e. $F$ is incoherent), then
+$$\mathrm{incoherenceIndex}(G) \le \mathrm{incoherenceIndex}(F).$$
 
-*Proof sketch.* Applying the parity homomorphism to a balanced sequence, the sum
-maps to $0$ in $\mathbb{Z}/2\mathbb{Z}$; since every atom maps to $1$, the image
-sum equals $|l| \cdot 1 = |l| \pmod 2$, forcing $|l|$ even. Thus every balanced
-length is even, and so is their minimum (when one exists; otherwise the index is
-$0$, also even). ∎
+*Proof sketch.* By Lemma 3 the larger frame's length set contains the smaller
+one's, and the infimum over $\mathbb{N}$ is antitone with respect to set
+inclusion on non-empty sets: more attainable lengths can only lower the minimum.
+Hence $\inf \mathrm{balancedLengths}(G) \le \inf \mathrm{balancedLengths}(F)$.
+$\square$
 
-**Theorem 3.9 (Unboundedness, `incoherence_unbounded`).** For every $N$ there is a
-frame whose incoherence index is even and exceeds $N$.
+The non-emptiness hypothesis is essential: a coherent $F$ has index $0$ by
+convention, and $0$ cannot serve as an upper bound. A concrete instance of the
+law: $\{1\} \subseteq \{1, 3\}$ in $\mathbb{Z}/4\mathbb{Z}$ drops the index from
+$4$ to $2$ (since $1 + 3 \equiv 0$), both frames being maximal.
 
-*Proof sketch.* Take $\{1\} \subseteq \mathbb{Z}/(2N+4)\mathbb{Z}$. By Theorem 3.5
-its index is $2N+4$, which is even and greater than $N$. ∎
+## 5. The Realizable Spectrum
 
-Combining Theorems 3.5, 3.7, and 3.9 with Proposition 3.6: the spectrum of
-incoherence indices over all frames is contained in $\{0\} \cup \{2, 3, \dots\}$,
-is unbounded above, and on $n$ states is capped exactly at $n$ with the cap
-realized by the sparse generator $\{1\}$.
+We now determine which values occur as incoherence indices.
 
----
+**Theorem 3 (Full realization by maximal frames).** For every integer $d \ge 2$
+there exists $n$ and a maximal frame $F \subseteq \mathbb{Z}/n\mathbb{Z}$ with
+$\mathrm{incoherenceIndex}(F) = d$.
 
-## 4. The exact threshold and non-finite-axiomatization
+*Proof sketch.* Take $n = d$ and $F = \{1\} \subseteq \mathbb{Z}/d\mathbb{Z}$. By
+Lemma 1 it is maximal, and by Corollary 1 its index is $d$. Maximality and the
+prescribed index are achieved simultaneously, so no expressiveness is sacrificed
+to tune the index. $\square$
 
-This is the structural heart of the paper. We show the incoherence index is the
-*precise* point at which the bounded fragments begin to detect incoherence, and
-deduce that no bounded fragment can replace the coherence criterion.
+This strengthens earlier even-only realization results (which produced indices
+$2k{+}2$) to *every* $d \ge 2$.
 
-**Theorem 4.1 (Exact threshold, `coherentUpTo_iff_lt_incoherenceIndex`).** Let $F$
-be an *incoherent* frame, i.e. $\mathrm{balancedLengths}(F) \neq \emptyset$. Then
-for every $B$,
-$$\mathrm{CoherentUpTo}(B, F) \iff B < \mathrm{index}(F).$$
+**Theorem 4 (Divisor realization on a fixed modulus).** Fix $n \ge 1$. Every
+divisor $d \ge 2$ of $n$ is the incoherence index of a single-atom frame in
+$\mathbb{Z}/n\mathbb{Z}$.
 
-*Proof sketch.* Unfold $\mathrm{CoherentUpTo}(B, F)$ as "no balanced sequence has
-length $\le B$."
+*Proof sketch.* Write $n = d \cdot m$ and take $a = m = n/d$. The additive order
+of $a$ in $\mathbb{Z}/n\mathbb{Z}$ is $n/\gcd(n, a) = n/m = d$. By Theorem 1,
+$\mathrm{incoherenceIndex}(\{a\}) = d$. $\square$
 
-($\Rightarrow$) Suppose $F$ passes the width-$B$ fragment but, for contradiction,
-$\mathrm{index}(F) \le B$. Since $\mathrm{balancedLengths}(F)$ is a non-empty set
-of naturals, its infimum is attained (`Nat.sInf_mem`): there is a balanced
-sequence $l$ with $|l| = \mathrm{index}(F) \le B$. This is a balanced sequence of
-length $\le B$, contradicting the fragment. Hence $B < \mathrm{index}(F)$.
+Conversely, by Lagrange's theorem $\mathrm{addOrderOf}(a) \mid n$ for every $a$,
+so single-atom indices on $\mathbb{Z}/n\mathbb{Z}$ are *exactly* the divisors of
+$n$ that are at least $2$. Singletons are confined to the divisor lattice.
 
-($\Leftarrow$) Contrapositive: if $F$ *fails* the fragment, some balanced sequence
-$l$ has $|l| \le B$. Then $\mathrm{index}(F) \le |l| \le B$ (the infimum is a lower
-bound, `Nat.sInf_le`), so $\neg\,(B < \mathrm{index}(F))$. ∎
+**Theorem 5 (Escape from the divisor lattice).** The two-atom frame
+$\{1, 2\} \subseteq \mathbb{Z}/5\mathbb{Z}$ satisfies
+$$\mathrm{incoherenceIndex}(\{1, 2\}) = 3,$$
+a value that does not divide $5$.
 
-The hypothesis of incoherence is essential: a coherent frame has index $0$ yet
-passes *every* fragment, so the equivalence genuinely requires an actual violation
-to exist.
+*Proof sketch.* *Upper bound:* the list $[1, 2, 2]$ is balanced — non-empty, all
+entries in $\{1, 2\}$, and sum $5 \equiv 0 \pmod 5$ — so the index is at most $3$.
+*Lower bound:* no balanced sequence has length $1$ or $2$. Length $1$ would
+require an atom equal to $0$, but $0 \notin \{1, 2\}$. Length $2$ would require
+$x + y \equiv 0 \pmod 5$ with $x, y \in \{1, 2\}$; the possible sums are
+$1{+}1 = 2$, $1{+}2 = 3$, $2{+}2 = 4$, none $\equiv 0 \pmod 5$. Hence the index
+is at least $3$, and equals $3$. Since $5$ is prime, its only divisors are $1$ and
+$5$, so $3$ is unattainable by any singleton on $\mathbb{Z}/5\mathbb{Z}$. $\square$
 
-**Theorem 4.2 (Strict refinement, `fragment_strictly_refines`).** For every $B$
-there exist $n$ and a frame $F$ on $n$ states such that
-$$\mathrm{IsMaximal}(F), \qquad \mathrm{CoherentUpTo}(B, F), \qquad
-\neg\,\mathrm{CoherentUpTo}(B+1, F).$$
+Theorems 3–5 together give the dichotomy: single-atom frames realize exactly the
+divisors $d \ge 2$ of $n$; multi-atom frames break out of that lattice, and across
+all moduli every $d \ge 2$ is realized by a maximal frame.
 
-*Proof sketch.* Take $n = B+1$ and $F = \{1\} \subseteq \mathbb{Z}/(B+1)\mathbb{Z}$.
+## 6. Algorithms
 
-- *Maximal:* Lemma 3.1.
-- *Passes width $B$:* by Theorem 3.5 the index is $B+1$; every balanced sequence
-  has length $\ge B+1 > B$ (Lemma 3.3), so none has length $\le B$.
-- *Fails width $B+1$:* the constant list $[1, 1, \dots, 1]$ of length $B+1$ is
-  balanced (its sum is $B+1 \equiv 0$) and has length $B+1 \le B+1$. ∎
+**Algorithm A (Singleton index via additive order).** Given $n$ and a single atom
+$a$, the index is $n/\gcd(n, a)$ by Theorem 1. This is an $O(\log n)$ Euclidean
+computation and requires no search.
 
-**Corollary 4.3 (Non-finite-axiomatizability of coherence).** There is no bound
-$B$ such that the width-$B$ fragment agrees with coherence on all maximal frames.
-Equivalently, the family $\{\mathrm{CoherentUpTo}(B, \cdot)\}_{B \ge 0}$ is a
-strictly increasing chain of conditions whose intersection (true coherence) is not
-any finite member.
+**Algorithm B (General index via shortest zero-sum BFS).** For a multi-atom frame
+$F$, the index is the length of the shortest non-empty zero-sum multiset of atoms.
+Model a breadth-first search on the state space $\mathbb{Z}/n\mathbb{Z}$ of
+partial sums: level $0$ is the singleton $\{0\}$ (empty prefix), and from any
+reachable residue $r$ at level $L$ one reaches $r + a$ at level $L+1$ for each
+atom $a \in F$. The incoherence index is the least level $L \ge 1$ at which the
+residue $0$ is reached. Because the state space has $n$ elements, the search
+terminates within $n$ levels and runs in $O(n \cdot |F|)$ time. This computes
+exactly $\inf \mathrm{balancedLengths}(F)$ and validates Theorems 1, 4, and 5
+numerically.
 
-*Proof sketch.* Fix any $B$. Theorem 4.2 produces a maximal frame $F$ that is
-incoherent (it has a balanced sequence of length $B+1$, so it is *not* coherent in
-the full sense) yet passes $\mathrm{CoherentUpTo}(B, \cdot)$. So the width-$B$
-fragment certifies a frame that is not coherent; it cannot coincide with coherence.
-Since $B$ was arbitrary, no finite width suffices. Moreover the separators
-$\{1\} \subseteq \mathbb{Z}/(B+1)\mathbb{Z}$ are distinct for distinct $B$, so each
-step of the chain strictly adds discriminating power and the hierarchy never
-stabilizes. ∎
+## 7. Applications and Connections
 
-This is the formal content of the title: coherence — equivalently, strict-majority
-representability in the modeled setting — admits no bounded finite axiomatization.
+**Additive combinatorics.** A balanced sequence is precisely a *zero-sum
+sequence*. The incoherence index is the "shortest non-empty zero-sum" invariant,
+the dual companion of the **Davenport constant** (the longest sequence with no
+zero-sum subsequence). The order formula (Theorem 1) is the rank-one instance,
+identifying the social-choice invariant with a known additive-combinatorial one
+and importing its toolkit.
 
----
+**Logic of social choice.** Corollary 1 shows the indices are unbounded (the unit
+frame on $n$ states has index $n$). Consequently the coherence criterion admits
+no finite axiomatization of the form "no violation of length $\le B$": for each
+$B$, the frame $\{1\} \subseteq \mathbb{Z}/(B{+}1)\mathbb{Z}$ passes the bounded
+test yet is genuinely incoherent. The order formula supplies the exact arithmetic
+of this separation.
 
-## 5. Saturation contrast: maximality does not determine the index
+**Robustness engineering.** Theorems 3 and 4 give a recipe to *design* a voting
+frame with a prescribed robustness: choose the modulus and generator so that the
+generator's order equals the desired shortest-contradiction length, then optionally
+adjoin the unit to force maximality without (by Theorem 2) increasing the index.
 
-Theorem 4.2 hides incoherence deep using a *sparse* maximal frame. We now show
-sparsity is essential — among maximal frames, enriching the atom set tends to
-collapse the index.
+## 8. Discussion
 
-**Lemma 5.1 (`isMaximal_oneThree`).** The frame $\{1, 3\} \subseteq
-\mathbb{Z}/4\mathbb{Z}$ is maximal.
+The conceptual payoff is the reduction of a qualitative coherence question to a
+single arithmetic quantity with a closed form in the singleton case. The
+dichotomy between the divisor-confined singleton spectrum and the unrestricted
+multi-atom spectrum mirrors the difference between rank-one and higher-rank
+zero-sum problems. The saturation law (Theorem 2) explains, structurally, why
+enriching a voting system with more options makes it more fragile, not less.
 
-*Proof sketch.* It contains the unit $1$, which already generates
-$\mathbb{Z}/4\mathbb{Z}$; adding atoms cannot shrink the generated subgroup, so the
-closure is $\top$. ∎
+## 9. Future Work
 
-**Theorem 5.2 (`incoherenceIndex_oneThree`).**
-$$\mathrm{index}(\{1, 3\} \subseteq \mathbb{Z}/4\mathbb{Z}) = 2,$$
-strictly below the index $4$ of the sparse maximal frame $\{1\} \subseteq
-\mathbb{Z}/4\mathbb{Z}$.
+- **Full multi-atom spectrum.** Conjecture: for $n \ge 2$ the set of realizable
+  indices on $\mathbb{Z}/n\mathbb{Z}$ is $\{0\} \cup \{d : 2 \le d \le n\}$, with
+  two atoms $\{1, a\}$ interpolating across the gaps between divisors.
+- **Davenport identification.** Conjecture: $\mathrm{incoherenceIndex}(F)$ equals
+  the minimal length of a non-empty zero-sum sequence over the submonoid
+  generated by $F$ — a definitional bridge to the Davenport-constant literature.
+- **Maximal realization of every intermediate value.** Conjecture: for $n \ge 4$
+  and $2 \le d \le n$, some maximal frame on $\mathbb{Z}/n\mathbb{Z}$ has index
+  $d$, by adjoining a unit to a small-order core while preserving the index.
+- **Quantitative non-finite-axiomatization rate.** Bound the rate at which a
+  width-$B$ fragment mis-certifies positive instances.
 
-*Proof sketch.* Upper bound: the list $[1, 3]$ is balanced, since $1 + 3 = 4
-\equiv 0 \pmod 4$ and both entries are atoms; so the index is $\le 2$. Lower bound:
-a balanced sequence of length $1$ would be a single atom equal to $0$, but neither
-$1$ nor $3$ is $0$ in $\mathbb{Z}/4\mathbb{Z}$; so no length-$1$ balanced sequence
-exists, and every balanced sequence has length $\ge 2$, giving index $\ge 2$. ∎
+## 10. Conclusion
 
-**Discussion.** Both $\{1\}$ and $\{1,3\}$ are maximal on $\mathbb{Z}/4\mathbb{Z}$,
-so reachability of states is identical. The gap $4$ versus $2$ is therefore caused
-purely by atom *density*, not by expressive power. Consequently, *maximality alone
-does not determine the incoherence index*, and the extremal value $n$ is the
-exclusive privilege of single-generator (sparse) frames. To hide a contradiction
-deeply, a procedure must be both expressive and austere.
-
----
-
-## 6. The index as a zero-sum invariant
-
-Stripped of its social-choice interpretation, a perfectly balanced sequence is a
-non-empty **zero-sum sequence** over the finite abelian group
-$\mathbb{Z}/n\mathbb{Z}$ with terms restricted to the atom set $F$. The
-incoherence index is then the *minimal length of a zero-sum word over $F$* — a
-Davenport-constant-style invariant from additive combinatorics.
-
-This dictionary explains the phenomena above structurally:
-
-- The cyclic computation $\mathrm{index}(\{1\}) = n$ is the statement that the
-  minimal zero-sum over a single generator of order $n$ has length equal to that
-  order — the cyclic base case of the Davenport bound, here Lemma 3.2.
-- The saturation collapse (Theorem 5.2) is the familiar fact that adding more group
-  elements creates short zero-sums.
-- Unboundedness (Theorem 3.9) reflects that the relevant invariant grows with the
-  group order.
-
-This positioning suggests the social-choice wrapper is incidental: the
-non-finite-axiomatizability is governed by the additive combinatorics of
-$\mathbb{Z}/n\mathbb{Z}$, and analogous results should hold for any family of
-finite abelian groups with unbounded minimal-zero-sum length over admissible
-generators.
-
----
-
-## 7. Applications and interpretation
-
-- **Social choice.** In the strict-majority setting modeled here, the consistency
-  ("coherence") of a decision procedure cannot be certified by inspecting only
-  short cycles of admissible moves. No fixed cycle-length budget is ever
-  sufficient: for each budget there is a legitimate, fully expressive (maximal)
-  procedure whose sole contradiction lies exactly one step beyond the budget.
-
-- **Bounded verification.** The result is a sharp parable for bounded model
-  checking: "test all behaviors up to depth $B$" can never substitute for a full
-  consistency proof when the property at stake can be violated at unbounded depth.
-  The strict-refinement theorem is an explicit adversary construction.
-
-- **Logic.** Corollary 4.3 is a concrete, fully constructive instance of
-  non-finite-axiomatizability proved through a strictly refining chain of finite
-  fragments — the standard template for such impossibility results.
-
----
-
-## 8. Future work
-
-Building on the verified `incoherenceIndex` and the
-`coherentUpTo_iff_lt_incoherenceIndex` bridge, several directions are immediate.
-
-- **Spectrum over all frames.** Conjecture: the attainable values of
-  $\mathrm{index}(F)$ over all $F \subseteq \mathbb{Z}/n\mathbb{Z}$ and all $n$ are
-  exactly $\{0\} \cup \{2, 3, 4, \dots\}$ — index $1$ being impossible by
-  Proposition 3.6. This reduces to decidable zero-sum statements.
-
-- **Davenport identification.** Conjecture: for a maximal frame in "general
-  position," $\mathrm{index}(F) = D(\langle F\rangle)$, the (small) Davenport
-  constant of the generated subgroup. Lemma 3.2 is the cyclic base case.
-
-- **Density collapses the index.** Conjecture: if a maximal frame
-  $F \subseteq \mathbb{Z}/n\mathbb{Z}$ has $\ge c\log n$ well-spread atoms, then
-  $\mathrm{index}(F) = 2$; sparsity is necessary for a large index. Theorem 5.2 is
-  the smallest witness.
-
-- **No eventual completeness.** Conjecture: there is no $B$ and no finite
-  exceptional set of frames on which the width-$B$ fragment agrees with coherence
-  off the exceptions. The separators of Theorem 4.2 are a fresh, pairwise
-  non-isomorphic family that no finite exception set can absorb.
-
----
-
-## 9. Conclusion
-
-The incoherence index is the complete invariant controlling the finite fragments
-of the coherence criterion. The exact-threshold theorem shows a frame survives the
-width-$B$ test precisely when its shortest violation exceeds $B$; the
-strict-refinement theorem then shows the fragments refine strictly and forever,
-driven by the elementary computation $\mathrm{index}(\{1\}) = n$. Coherence — the
-absence of any closed loop of admissible majority moves — therefore admits no
-bounded finite axiomatization. The saturation contrast localizes the extremal
-behavior to sparse generators, and the additive-combinatorial reading recasts the
-whole story as one about minimal zero-sum lengths, where unbounded depth is the
-norm rather than the exception.
+The incoherence index of a standard social decision frame is an arithmetic
+invariant. For a single atom it is the additive order of the generator (Theorem
+1); it is monotone-decreasing under enrichment of the atom set (Theorem 2); its
+single-atom spectrum is exactly the divisor lattice of the modulus (Theorem 4);
+and across all frames every $d \ge 2$ is realized by a maximal frame (Theorem 3),
+with multi-atom frames escaping the divisor lattice (Theorem 5). The shortest way
+to break a majority is, quite literally, the order of a number.

@@ -694,5 +694,6 @@
   "bc81b3a8": "optimal_transport_and_wasserstein_distances.json",
   "0eb9ce9e": "degree_one_triviality_threshold_for_grassmann_sche.json",
   "72418ed5": "equality_cases_for_spectral_radius_bound_in_signed.json",
-  "d1a8353e": "recurrence_relation_for_extended_eulerian_numbers.json"
+  "d1a8353e": "recurrence_relation_for_extended_eulerian_numbers.json",
+  "872fa119": "non_finite_axiomatization_of_measurable_majorities.json"
 }
