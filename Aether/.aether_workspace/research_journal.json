@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "be72639d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's findings on *exponential diameter contraction under\nDelaunay minicenter refinement* and the *approximate Carathéodory / Maurey*\ncatalog references. Each",
-      "quality_score": 0.7645600000000001,
-      "sorry_count": 3,
-      "theorem_count": 26,
-      "timestamp": "2026-06-26T16:40:58",
-      "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
-    },
-    {
       "cycle_id": "aa3d24c5",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Quantum Thermodynamics: Landauer's Principle at the Nanoscale\n\nDerived from this cycle's findings in `Catalog/Physics/LandauerSaturation.lean`\n(saturation ⇔ zero work fluctuation",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T21:21:11",
       "title": "Consciousness as Integrated Information: Mathematical Foundations"
+    },
+    {
+      "cycle_id": "dfab202e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Betti–Whittaker contragredient periods\n\nDerived from this cycle's findings (`BottomDegreeParity.lean`, `PeriodAlgebra.lean`): the\ncontragredient sign `(-1)^{b(F,n)}` is governed",
+      "quality_score": 0.8119999999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T21:24:12",
+      "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0548f2b9",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Navier–Stokes: 2D Regularity and Partial 3D Results\n\nThis cycle extended the scalar a-priori-estimate framework\n(`NavierStokes.Core`, `NavierStokes.Estimates`) in two directions:",
-      "quality_score": 0.7095,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-26T03:16:30",
-      "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-    },
     {
       "cycle_id": "d4c70419",
       "domain": "Algebra",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T21:22:54",
       "title": "EML Kolmogorov-Arnold Representation"
+    },
+    {
+      "cycle_id": "dfab202e",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Betti–Whittaker contragredient periods\n\nDerived from this cycle's findings (`BottomDegreeParity.lean`, `PeriodAlgebra.lean`): the\ncontragredient sign `(-1)^{b(F,n)}` is governed",
+      "quality_score": 0.8119999999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T21:24:12",
+      "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T21:22:54",
+  "last_updated": "2026-06-28T21:24:12",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6dda8a29",
-        "quality": 0.6926119999999999,
-        "theorems": 0,
-        "title": "Close Proofs: These conjectures continue the research cycle begun in"
-      },
-      {
         "cycle_id": "d1a8353e",
         "quality": 0.56128,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.59432,
         "theorems": 0,
         "title": "EML Kolmogorov-Arnold Representation"
+      },
+      {
+        "cycle_id": "dfab202e",
+        "quality": 0.8119999999999999,
+        "theorems": 0,
+        "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
       }
     ],
     "Bridges": [

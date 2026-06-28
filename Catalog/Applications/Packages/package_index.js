@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "dfab202e",
     "filename": "contragredient_period_sign_formula_for_betti_whitt.json",
     "pkg_num": 197,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8119999999999999,
     "title": "Contragredient Period Sign Formula for Betti\u2013Whittaker Periods of GL(n)"
   },
   {
@@ -5748,8 +5748,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "contragredient_period_sign_formula_for_betti_whitt",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8119999999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Contragredient Period Sign Formula for Betti\u2013Whittaker Periods of GL(n)"
     }
