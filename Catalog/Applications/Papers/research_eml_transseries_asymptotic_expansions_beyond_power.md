@@ -1,437 +1,251 @@
-# EML Transseries: A Hahn-Series Model, the Asymptotic Comparison Theorem, and the Exp-Substitution Automorphism
+# The Ordered Field of Transseries: Asymptotic Expansions Beyond Power Series
 
 **Author:** Aristotle
-
-**Date:** 2026-06-27
-
-**Domain:** Applications (asymptotic analysis / ordered algebra)
-
----
+**Date:** 2026-06-28
+**Domain:** Applications (Asymptotic Analysis, Ordered Algebra, Valuation Theory)
 
 ## Abstract
 
-Power series cannot express the asymptotic relationship between a variable and its
-exponential: no power-series valuation can encode an object that dominates $x^{a}$ for
-every real $a$ simultaneously. *Transseries* repair this deficiency by enlarging the
-monomial basis to formal products of iterated exponentials and logarithms with real
-exponents. We present a rigorous, machine-checked model of single-tower, real-power
-transseries built on Hahn series over the lexicographically ordered group of
-**transmonomials** $\mathrm{Lex}(\mathbb{Z} \to_{f} \mathbb{R})$. We prove that this model
-is a field, that its valuation realizes asymptotic dominance (in particular that $e^{x}$
-dominates every power of $x$), and we establish the **asymptotic comparison theorem**: two
-transseries agreeing to all orders are equal, so a transseries is uniquely determined by
-its expansion. Our central new contribution is the **exp-substitution automorphism**: the
-operation $x \mapsto e^{x}$ is realized as an injective ring homomorphism
-$\mathrm{expShift}\colon \mathrm{TSeries} \to \mathrm{TSeries}$ that raises every tower
-height by one, fixes the constant field $\mathbb{R}$, and satisfies
-$\mathrm{expShift}(x) = e^{x}$. The load-bearing lemma is that the height shift preserves
-the dominance order ($\mathrm{shift}(x) < \mathrm{shift}(y) \iff x < y$), proved via the
-behavior of lexicographic comparison under a monotone relabeling of indices. We connect the
-formal order to genuine real analysis and discuss algorithmic and structural consequences.
+We develop a rigorous model of single-tower, real-power **transseries** — formal series in the iterated exponential–logarithm scale $\ldots, e^{e^x}, e^x, x, \log x, \log\log x, \ldots$ — and establish their fundamental algebraic and order-theoretic structure. Realizing transseries as Hahn series over the lexicographically ordered group of transmonomials $\mathrm{Lex}(\mathbb{Z} \to_{f} \mathbb{R})$ with real coefficients, we prove that they form a **field**, and indeed a **non-Archimedean ordered field**: the transmonomial $x$ is a positive infinitesimal, its reciprocal $1/x$ is infinite, and the two multiply to $1$. We show that the real numbers embed as a linearly ordered subfield, that exponential growth dominates every power ($x^a < e^x$ for all real $a$), that the value group is unbounded with the canonical exponential tower cofinal, and that the exponential substitution $x \mapsto e^x$ is a field automorphism whose inverse is the logarithmic substitution. Our central analytic result is the **asymptotic comparison theorem**: two transseries that agree to all orders are equal — a transseries is uniquely determined by its asymptotic expansion. We ground every formal order statement in classical real analysis via little-$o$ comparison. We close with the program toward real-closedness, for which the value-group divisibility and transmonomial root-extraction ingredients are now in place.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The power series is the central tool of local analysis, but it is structurally incapable of expressing the comparison that dominates global asymptotics: that $e^x$ outgrows every polynomial. The exponent set of a power series is totally ordered with a successor structure (the integers, or $\mathbb{Q}$), and no element of such a set dominates all of $\{x^n : n \in \mathbb{N}\}$ at once. Transseries, introduced in the work of Écalle, Dahn–Göring, and developed extensively by van den Dries, Macintyre, Marker, van der Hoeven, and Aschenbrenner–van den Dries–van der Hoeven, repair this defect by enlarging the monomial scale to include iterated exponentials and logarithms.
 
-A foundational asymptotic fact is that $x^{n} = o(e^{x})$ as $x \to \infty$ for every $n$,
-and more generally $x^{a} = o(e^{x})$ for every real $a$. Iterating, $(e^{x})^{a} =
-o(e^{e^{x}})$, and dually $\log x$ is dominated by every positive power of $x$. These facts
-organize the elementary functions into a doubly-infinite hierarchy of **tower heights**,
-$$ \cdots \prec \log\log x \prec \log x \prec x \prec e^{x} \prec e^{e^{x}} \prec \cdots, $$
-indexed by $h \in \mathbb{Z}$ (height $0 = x$, height $1 = e^{x}$, height $-1 = \log x$,
-height $2 = e^{e^{x}}$, and so on).
+This paper formalizes the foundational layer of the theory for *single-tower, real-power, grid-based* transseries and proves the structural theorems that distinguish them from power series. The development is organized around five pillars:
 
-Power series are structurally incapable of describing this hierarchy: their valuation is a
-single integer (or real, for Puiseux/Hahn power series in one variable), and no such
-valuation admits an element dominating $x^{a}$ for *all* $a$. Transseries, introduced by
-Dahn–Göring, Écalle, and developed extensively by van den Dries–Macintyre–Marker and by
-Aschenbrenner–van den Dries–van der Hoeven, resolve this by allowing formal series whose
-monomials are products of iterated exp/log with real exponents.
+1. **The field structure** (§3): transseries form a field, with division furnished by the Hahn-series construction.
+2. **The order structure** (§4): they form a non-Archimedean ordered field containing $\mathbb{R}$ as an ordered subfield, with explicit infinitesimal/infinite reciprocal pair $x, 1/x$.
+3. **The multiplicative algebra** (§5): the law of exponents at each tower height, the value group's unboundedness, and cofinality of the canonical exponential tower.
+4. **The asymptotic comparison theorem** (§6): uniqueness of the transseries expansion, grounded in classical little-$o$ asymptotics.
+5. **The exponential symmetry** (§7): the exp-substitution as a field automorphism, mutually inverse to the log-substitution.
 
-The payoff of treating asymptotic data as a formal field is twofold. First, it converts
-statements usually phrased as limits ($x^{n}/e^{x}\to 0$) into algebraic facts about an
-order, where they can be manipulated symbolically. Second, it exposes operations — most
-notably the change of variable $x\mapsto e^{x}$ — as structure-preserving maps of the entire
-field, rather than ad hoc manipulations valid only case by case. The present development
-focuses on the single-tower, real-power fragment, which already exhibits all of these
-phenomena while remaining concrete enough to model directly on Mathlib's `HahnSeries`.
-Working in this fragment keeps the value group equal to the transparent group
-$\mathrm{Lex}(\mathbb{Z} \to_{f} \mathbb{R})$, so every order computation reduces to a finite
-lexicographic comparison.
-
-### 1.2 Contributions
-
-We give a self-contained, formally verified development of the following, organized into
-three layers.
-
-1. **A field model (Section 3).** The transmonomials form the lexicographically ordered
-   group $\mathrm{Lex}(\mathbb{Z} \to_{f} \mathbb{R})$; Hahn series over it form a field
-   $\mathrm{TSeries}$ whose valuation `orderTop` is multiplicative and whose order realizes
-   asymptotic dominance. We prove higher towers dominate (`mono_lt_mono_of_height`),
-   same-height comparison reduces to exponent comparison (`mono_lt_mono_same`), and the
-   signature fact `exp_dominates_pow`: $x^{a} \prec e^{x}$ for all real $a$.
-
-2. **The asymptotic comparison theorem (Section 4).** Defining "agreement to all orders"
-   via the valuation, we prove `agreeToAllOrders_iff_eq`: agreement to all orders is
-   equivalent to equality, and is an equivalence relation. We ground the formal order in
-   real analysis with `isLittleO_pow_exp` and `isLittleO_expPow_expExp`.
-
-3. **The exp-substitution automorphism (Section 5).** We realize $x \mapsto e^{x}$ as an
-   injective ring homomorphism `expShift`, with the dominance-preservation lemma
-   `shift_lt_iff` as its engine, and we compute its action: `expShift_term`,
-   `expShift_var` ($x \mapsto e^{x}$), `expShift_exp`, `expShift_log`, and `expShift_C`
-   (fixing $\mathbb{R}$).
+All results have been formally verified. Throughout, we treat the formal order on transmonomials as the carrier of *asymptotic dominance*, and we are scrupulous about a subtle orientation issue (§4.1) that determines whether $x$ is read as infinitesimal or infinite.
 
 ---
 
 ## 2. Preliminaries: Hahn series
 
-Let $\Gamma$ be a linearly ordered abelian group and $K$ a field. A **Hahn series** over
-$\Gamma$ with coefficients in $K$ is a function $f\colon \Gamma \to K$ whose support
-$\{\gamma : f(\gamma) \neq 0\}$ is **well-ordered**. Hahn series form a ring under pointwise
-addition and Cauchy-style convolution multiplication; when $K$ is a field they form a field
-(every nonzero series is invertible). The **valuation** (here `orderTop`) sends a nonzero
-series to the least element of its support (its leading transmonomial) and sends $0$ to
-$\top$; it is multiplicative, $v(fg) = v(f) + v(g)$.
+Let $\Gamma$ be a linearly ordered abelian group and $R$ a ring. A **Hahn series** over $\Gamma$ with coefficients in $R$ is a function $f : \Gamma \to R$ whose support $\{\gamma : f(\gamma) \neq 0\}$ is *well-ordered*. Hahn series form a ring under pointwise addition and Cauchy-style convolution multiplication
+$$(f \cdot g)(\gamma) = \sum_{\alpha + \beta = \gamma} f(\alpha)\, g(\beta),$$
+the well-ordering of supports guaranteeing the sum is finite. When $R$ is a field and $\Gamma$ a linearly ordered group, the Hahn series form a **field** $R(\!(\Gamma)\!)$ (the Hahn–Mal'cev–Neumann theorem); inverses are computed by the geometric-series expansion of $(1 - u)^{-1}$ for $u$ of strictly positive valuation.
 
-We use Mathlib's `HahnSeries` together with the constructor `HahnSeries.single g c` (the
-one-term series $c \cdot g$), the constant embedding `HahnSeries.C`, and the
-order-embedding ring homomorphism `HahnSeries.embDomainRingHom`, which lifts an injective,
-order-reflecting additive group homomorphism of the value group to a ring homomorphism of
-the Hahn-series field.
+The **valuation** (order) of a nonzero Hahn series $f$ is the least element of its support; we write $\mathrm{orderTop}(f) \in \Gamma \cup \{\top\}$, with $\mathrm{orderTop}(0) = \top$. Valuation is multiplicative: $\mathrm{orderTop}(fg) = \mathrm{orderTop}(f) + \mathrm{orderTop}(g)$. The **leading coefficient** $\mathrm{lc}(f)$ is the coefficient at $\mathrm{orderTop}(f)$.
+
+When $R$ is a linearly ordered domain, $R(\!(\Gamma)\!)$ inherits a linear order via its leading coefficient: $0 < f \iff 0 < \mathrm{lc}(f)$. This makes $R(\!(\Gamma)\!)$ a (strictly) ordered ring, hence — over a field $R$ — an ordered field.
 
 ---
 
-## 3. The field of transmonomials and transseries
+## 3. The field of transseries
 
-### Definition 1 (Transmonomials)
-The **transmonomial group** is
-$$ \mathrm{TransMono} := \mathrm{Lex}(\mathbb{Z} \to_{f} \mathbb{R}), $$
-the group of finitely supported functions $\mathbb{Z} \to \mathbb{R}$ under pointwise
-addition, equipped with the lexicographic order. An element assigns a real exponent to each
-tower height. Because Mathlib's `Finsupp.Lex` compares at the **least** differing index, we
-store tower height $h$ at index $-h$, so that *higher* towers are *more significant*.
-$\mathrm{TransMono}$ is a linearly ordered abelian group.
+### 3.1 Transmonomials
 
-### Definition 2 (Transseries field)
-The **transseries field** is the Hahn-series field
-$$ \mathrm{TSeries} := \mathrm{HahnSeries}(\mathrm{TransMono}, \mathbb{R}). $$
-By Mathlib's Hahn-series field instance over a linearly ordered group, `TSeries` is a field
-(`instField`).
+**Definition 3.1 (Transmonomial group).** The group of **transmonomials** is
+$$\mathsf{TransMono} := \mathrm{Lex}\,(\mathbb{Z} \to_{f} \mathbb{R}),$$
+the finitely supported functions $\mathbb{Z} \to \mathbb{R}$ under pointwise addition, equipped with the **lexicographic order**: for $f \neq g$, the sign of $f - g$ is the sign of its value at the *least* index where they differ. An element records a finite tuple of real exponents indexed by **tower height** $h$: height $1$ is $e^x$, $0$ is $x$, $-1$ is $\log x$, $2$ is $e^{e^x}$, etc.
 
-### Definition 3 (Single transmonomial)
-For $h \in \mathbb{Z}$ and $a \in \mathbb{R}$,
-$$ \mathrm{mono}(h,a) := \mathrm{toLex}\big(\mathrm{single}_{-h}\, a\big) \in \mathrm{TransMono}, $$
-the transmonomial $(\text{level } h)^{a}$ — e.g. $\mathrm{mono}(1,1)=e^{x}$,
-$\mathrm{mono}(0,a)=x^{a}$, $\mathrm{mono}(-1,a)=(\log x)^{a}$.
+We encode height $h$ at finsupp index $-h$, so that *higher* towers occupy *smaller* indices and are therefore lexicographically most significant. Concretely:
 
-### Definition 4 (One-term transseries)
-$$ \mathrm{term}(h,a) := \mathrm{single}\,(\mathrm{mono}(h,a))\, 1 \in \mathrm{TSeries}, $$
-the transseries whose unique transmonomial is $(\text{level }h)^{a}$ with coefficient $1$.
-We write $\mathrm{varX} = \mathrm{term}(0,1)$ ($=x$), $\mathrm{expX}=\mathrm{term}(1,1)$
-($=e^{x}$), $\mathrm{logX}=\mathrm{term}(-1,1)$ ($=\log x$).
+**Definition 3.2.** For $h \in \mathbb{Z}$, $a \in \mathbb{R}$, the transmonomial $(\text{level } h)^a$ is
+$$\mathrm{mono}(h, a) := \mathrm{toLex}\bigl(\,\delta_{-h}\!\cdot a\,\bigr) \in \mathsf{TransMono},$$
+where $\delta_{-h}\cdot a$ is the single-support finsupp with value $a$ at index $-h$.
 
-### Theorem A (Higher towers dominate — `mono_lt_mono_of_height`)
-For $h < h'$ and $0 < a'$, and any $a$,
-$$ \mathrm{mono}(h,a) < \mathrm{mono}(h',a'). $$
+Since $\mathrm{Lex}(\mathbb{Z} \to_f \mathbb{R})$ is a linearly ordered abelian group, the following are immediate.
 
-*Proof sketch.* By `Finsupp.Lex.lt_iff`, a strict inequality holds iff there is a least
-index $i$ at which the two finsupps differ, below which they agree, with the first strictly
-smaller at $i$. Take $i = -h'$. Below $-h'$ (i.e. for indices $d < -h'$, which correspond to
-tower heights $> h'$) both single-supported finsupps vanish, so they agree. At $i=-h'$ the
-left finsupp is $0$ (its support is $-h \neq -h'$) and the right is $a' > 0$. Hence the
-left is strictly smaller. $\square$
+**Lemma 3.3 (Dominance laws).** (`mono_lt_mono_of_height`, `mono_lt_mono_same`)
+- *(Height dominance.)* If $h < h'$ and $0 < a'$, then $\mathrm{mono}(h,a) < \mathrm{mono}(h',a')$ for any $a$.
+- *(Same-height comparison.)* If $a < a'$, then $\mathrm{mono}(h,a) < \mathrm{mono}(h,a')$.
 
-### Theorem B (Same-height comparison — `mono_lt_mono_same`)
-For any $h$ and $a < a'$,
-$$ \mathrm{mono}(h,a) < \mathrm{mono}(h,a'). $$
+*Proof sketch.* Apply the lexicographic comparison criterion `Finsupp.Lex.lt_iff` at index $-h'$ (resp. $-h$): the two finsupps agree at all strictly smaller indices (both vanish there) and the deciding index carries the positive value $a'$ (resp. $a' - a > 0$). $\square$
 
-*Proof sketch.* Apply `Finsupp.Lex.lt_iff` at index $-h$: below $-h$ both vanish; at $-h$
-the values are $a < a'$. $\square$
+**Theorem 3.4 (Exponential dominance).** (`exp_dominates_pow`) For *every* real exponent $a$,
+$$\mathrm{mono}(0, a) < \mathrm{mono}(1, 1), \qquad \text{i.e.}\qquad x^{a} < e^{x}.$$
 
-### Theorem C (Exp dominates every power — `exp_dominates_pow`)
-For every real $a$,
-$$ \mathrm{mono}(0,a) < \mathrm{mono}(1,1), \qquad\text{i.e.}\qquad x^{a} \prec e^{x}. $$
+*Proof.* Immediate from height dominance with $h=0 < 1 = h'$ and $a' = 1 > 0$. The point is universality over $a$: a single fixed object $e^x$ dominates the entire one-parameter family $\{x^a : a \in \mathbb{R}\}$, which is impossible in any power-series valuation whose value group is $\mathbb{Z}$ or $\mathbb{R}$. $\square$
 
-*Proof sketch.* Immediate from Theorem A with $h=0<1=h'$, $a'=1>0$. The point is the
-*universality* over all real $a$: this is impossible for any single power-series valuation
-and is the defining feature separating transseries from power series. $\square$
+### 3.2 The field
 
-### Valuation facts
-- **`orderTop_term`:** $v(\mathrm{term}(h,a)) = \mathrm{mono}(h,a)$ (the valuation of a
-  one-term series is its transmonomial).
-- **`orderTop_mul`:** $v(xy) = v(x) + v(y)$ (multiplicativity, inherited from Hahn series).
-- **`C_injective`:** the constant embedding $\mathbb{R} \hookrightarrow \mathrm{TSeries}$
-  is an injective ring homomorphism, so $\mathbb{R}$ is a subfield.
+**Definition 3.5 (Transseries).** The **field of transseries** is the Hahn-series field
+$$\mathsf{TSeries} := \mathbb{R}(\!(\mathsf{TransMono})\!) = \mathrm{HahnSeries}\,(\mathsf{TransMono},\ \mathbb{R}).$$
+The **one-term transseries** $\mathrm{term}(h,a)$ is the Hahn series with coefficient $1$ on $\mathrm{mono}(h,a)$ and $0$ elsewhere. We abbreviate $x := \mathrm{term}(0,1)$, $e^x := \mathrm{term}(1,1)$, $\log x := \mathrm{term}(-1,1)$.
+
+**Theorem 3.6 (Field).** $\mathsf{TSeries}$ is a field, and the constant embedding $C : \mathbb{R} \to \mathsf{TSeries}$ is an injective ring homomorphism (`C_injective`). Hence $\mathbb{R} \hookrightarrow \mathsf{TSeries}$.
+
+*Proof.* The Hahn–Mal'cev–Neumann field instance applies since $\mathsf{TransMono}$ is a linearly ordered abelian group and $\mathbb{R}$ a field. Injectivity of $C$ is the Hahn-series constant-embedding injectivity. $\square$
+
+**Proposition 3.7 (Valuation).** (`orderTop_term`, `orderTop_mul`)
+$$\mathrm{orderTop}\bigl(\mathrm{term}(h,a)\bigr) = \mathrm{mono}(h,a), \qquad \mathrm{orderTop}(x\cdot y) = \mathrm{orderTop}(x) + \mathrm{orderTop}(y).$$
 
 ---
 
-## 4. The asymptotic comparison theorem
+## 4. The non-Archimedean ordered field
 
-### Definition 5 (Agreement to all orders — `AgreeToAllOrders`)
-Two transseries $a, b$ **agree to all orders** when their difference is asymptotically
-smaller than every transmonomial:
-$$ \mathrm{AgreeToAllOrders}(a,b) \;:\Longleftrightarrow\; \forall\, g \in \mathrm{TransMono},\ (g : \mathrm{WithTop}\,\mathrm{TransMono}) < v(a-b). $$
+### 4.1 The order and its orientation
 
-### Theorem D (Asymptotic comparison theorem — `agreeToAllOrders_iff_eq`)
-$$ \mathrm{AgreeToAllOrders}(a,b) \iff a = b. $$
+**Definition 4.1 (Ordered transseries field).** Equip $\mathsf{TSeries}$ with the leading-coefficient order to obtain the **ordered field of transseries**
+$$\mathsf{OTSeries} := \mathrm{Lex}\,(\mathsf{TSeries}).$$
 
-*Proof sketch.* ($\Rightarrow$) Suppose $a,b$ agree to all orders. If $v(a-b) \neq \top$,
-write $v(a-b) = c$ for some transmonomial $c$ (via `WithTop.ne_top_iff_exists`); then
-instantiating the hypothesis at $g = c$ gives $c < c$, contradicting irreflexivity. Hence
-$v(a-b) = \top$, and `HahnSeries.orderTop_eq_top` gives $a-b = 0$, i.e. $a=b$.
-($\Leftarrow$) If $a = b$ then $v(a-b) = v(0) = \top$, which is strictly above every
-transmonomial $g$ since $g < \top$. $\square$
+**Theorem 4.2 (Ordered field).** (`orderedField`) $\mathsf{OTSeries}$ is simultaneously a `Field`, a `LinearOrder`, and a strict ordered ring; i.e. a genuine ordered field.
 
-**Corollaries.**
-- **`agreeToAllOrders_equivalence`:** agreement to all orders is an equivalence relation
-  (it *is* equality).
-- **`not_agree_zero_of_ne_zero`:** a nonzero transseries does not agree to all orders with
-  $0$ — it has a genuine leading term.
+*Proof.* All three instances are supplied by the Hahn-series order structure over the linearly ordered domain $\mathbb{R}$. $\square$
 
-**Interpretation.** A transseries is uniquely determined by its asymptotic expansion: there
-is no nonzero "beyond all orders" remainder. This is the rigorous form of the classical
-asymptotic comparison principle within the Hahn model.
+**Positivity criterion.** $0 < f \iff 0 < \mathrm{lc}(f)$ (`leadingCoeff_pos_iff`).
 
-### Analytic grounding
-The formal order is faithful to real analysis:
+**Orientation subtlety.** The lexicographic order decides at the *smallest* group index, and we store tower height $h$ at index $-h$ ("higher tower = greater group element"). These two conventions *compose*: the resulting field order is the **germ order at $x \to 0^+$**. Explicitly, $\mathrm{mono}(h,a) > 0 \iff a > 0$, *independently of $h$*. Consequently $x$ (exponent $+1$) is **infinitesimal** and $1/x$ (exponent $-1$) is **infinite**. We state results in accordance with the order the construction actually realizes, rather than forcing an $x \to +\infty$ reading.
 
-### Theorem E (`isLittleO_pow_exp`)
-For every $n \in \mathbb{N}$, $\ x^{n} = o(e^{x})$ as $x \to \infty$. *(Mathlib's
-`Real.isLittleO_pow_exp_atTop`.)* This is the analytic shadow of Theorem C.
+### 4.2 Positivity, infinitesimals, and infinities
 
-### Theorem F (`isLittleO_expPow_expExp`)
-For every $n \in \mathbb{N}$, $\ (e^{x})^{n} = o\!\big(e^{e^{x}}\big)$ as $x \to \infty$.
+**Theorem 4.3 (Every one-term transseries is positive).** (`term_pos`) For all $h, a$, $\;0 < \mathrm{term}(h,a)$ in $\mathsf{OTSeries}$.
 
-*Proof sketch.* Compose `isLittleO_pow_exp` with $\exp \to \infty$
-(`Real.tendsto_exp_atTop`). This is the analytic shadow of `mono_lt_mono_of_height` at
-heights $1 < 2$. $\square$
+*Proof.* By the positivity criterion it suffices that $\mathrm{lc}(\mathrm{term}(h,a)) = 1 > 0$, which is immediate from the definition. $\square$
 
----
+**Theorem 4.4 ($x$ is a positive infinitesimal).** (`x_pos`, `x_infinitesimal`) $0 < x$, and for every $n \in \mathbb{N}$,
+$$(n+1)\cdot x < 1.$$
+Thus $x$ is smaller than every positive rational $\tfrac{1}{n+1}$.
 
-## 5. The exp-substitution automorphism
+*Proof sketch.* By scalar–monomial multiplication, $(n+1)\cdot x = \mathrm{single}(\mathrm{mono}(0,1),\, n+1)$. The difference $1 - (n+1)x$ has support $\{0,\ \mathrm{mono}(0,1)\}$, whose least element is the constant monomial $0$ with coefficient $+1 > 0$. By the lexicographic comparison criterion the deciding coefficient is positive, so $(n+1)x < 1$. $\square$
 
-We now realize the substitution $x \mapsto e^{x}$ — climbing the tower by one rung — as a
-ring homomorphism.
+**Theorem 4.5 ($1/x$ is infinite).** (`inv_x_infinite`) For every $n \in \mathbb{N}$,
+$$n < \mathrm{term}(0, -1) = \frac{1}{x}.$$
 
-### Definition 6 (Height shift — `shift`)
-Let $\mathrm{shiftEquiv}\colon \mathbb{Z} \simeq \mathbb{Z}$ be $i \mapsto i-1$
-(`Equiv.subRight 1`). The **height shift** on transmonomials relabels finsupp indices along
-$\mathrm{shiftEquiv}$:
-$$ \mathrm{shift}(x) := \mathrm{toLex}\big(\mathrm{equivMapDomain}\,\mathrm{shiftEquiv}\,(\mathrm{ofLex}\,x)\big). $$
-Since index $-h$ becomes $-(h+1)$, the shift raises tower height $h$ to $h+1$. It is
-additive (`shiftHom`, a group homomorphism) and injective (`shift_inj`, from
-`Finsupp.mapDomain_injective`).
+*Proof sketch.* Two steps. (i) $n \le 1/x$: if not, then $1/x \le n \le n+1$, and multiplying through by $x > 0$ using $x\cdot(1/x)=1$ (Theorem 4.6) would force $1 \le (n+1)x$, contradicting Theorem 4.4. (ii) $n \neq 1/x$: compare valuations — $\mathrm{orderTop}(\mathrm{term}(0,-1)) = \mathrm{mono}(0,-1)$ is a negative-index monomial, whereas $\mathrm{orderTop}(n)$ is the constant monomial $0$ (or $\top$ for $n=0$); these differ. $\square$
 
-### Theorem G (Exp-substitution preserves dominance — `shift_lt_iff`)
-For all transmonomials $x, y$,
-$$ \mathrm{shift}(x) < \mathrm{shift}(y) \iff x < y. $$
+**Theorem 4.6 (Infinitesimal and infinite are reciprocal).** (`x_mul_inv_x`)
+$$x \cdot \frac{1}{x} = \mathrm{term}(0,1)\cdot \mathrm{term}(0,-1) = 1.$$
 
-*Proof sketch.* Unfold with `Finsupp.Lex.lt_iff` on both sides. A strict inequality is
-witnessed by a least index $i$ of difference. Given a witness $i$ for $x < y$, the index
-$\mathrm{shiftEquiv}(i)$ witnesses $\mathrm{shift}(x) < \mathrm{shift}(y)$: for $d <
-\mathrm{shiftEquiv}(i)$ one has $\mathrm{shiftEquiv}^{-1}(d) < i$, so agreement transports
-through `Finsupp.equivMapDomain_apply`; and the strict inequality at $i$ transports to
-$\mathrm{shiftEquiv}(i)$. The converse is symmetric, using $\mathrm{shiftEquiv}^{-1}$.
-Conceptually: a lexicographic comparison is decided at the least differing index, and a
-monotone bijection of the index set maps "least differing index" to "least differing
-index," so the order is preserved. The shift is thus an **order isomorphism** of the value
-group. $\square$
+*Proof.* By the law of exponents (Theorem 5.1), $\mathrm{term}(0,1)\cdot\mathrm{term}(0,-1) = \mathrm{term}(0, 0) = 1$. $\square$
 
-As a consequence (`shiftHom_le_iff`), the non-strict order is also reflected:
-$\mathrm{shiftHom}(g) \le \mathrm{shiftHom}(g') \iff g \le g'$, combining `shift_lt_iff`
-with injectivity.
+Theorems 4.4–4.6 together establish:
 
-### Definition 7 (Exp-substitution ring homomorphism — `expShift`)
-$$ \mathrm{expShift} := \mathrm{HahnSeries.embDomainRingHom}\ \mathrm{shiftHom}\ \mathrm{shift\_inj}\ \mathrm{shiftHom\_le\_iff} \;\colon\; \mathrm{TSeries} \to^{+*} \mathrm{TSeries}. $$
-The three hypotheses required by `embDomainRingHom` are exactly: $\mathrm{shiftHom}$ is an
-additive group homomorphism (Def 6), injective (`shift_inj`), and order-reflecting
-(`shiftHom_le_iff`, from Theorem G). Hence $\mathrm{expShift}$ is a genuine ring
-homomorphism: it respects addition and multiplication.
+**Corollary 4.7 (Non-Archimedean).** $\mathsf{OTSeries}$ is a non-Archimedean ordered field: it contains a positive infinitesimal $x$ and an infinite element $1/x$ that are mutually reciprocal. No such elements exist in $\mathbb{R}$.
 
-### Theorem H (Height shift on a transmonomial — `shift_mono`)
-$$ \mathrm{shift}(\mathrm{mono}(h,a)) = \mathrm{mono}(h+1,a). $$
+### 4.3 $\mathbb{R}$ as an ordered subfield
 
-*Proof sketch.* Both sides are single-supported finsupps; compute the value at each index
-$i$. The relabeling sends support index $-h$ to $-(h+1)$, matching the right side via
-`Finsupp.single_apply` and case analysis on $-h = i+1$. $\square$
+**Theorem 4.8 (Ordered real embedding).** (`C_lt_iff`, `C_strictMono`) For real $a, b$,
+$$C(a) < C(b) \iff a < b,$$
+so the constant embedding is strictly monotone. Combined with injectivity (Theorem 3.6), $\mathbb{R}$ is a linearly ordered subfield of $\mathsf{OTSeries}$.
 
-### Theorem I (Exp-substitution on a one-term transseries — `expShift_term`)
-$$ \mathrm{expShift}(\mathrm{term}(h,a)) = \mathrm{term}(h+1,a). $$
-
-*Proof sketch.* Unfold `expShift` and `term`; `embDomainRingHom_apply` and
-`embDomain_single` reduce the goal to $\mathrm{single}(\mathrm{shift}(\mathrm{mono}(h,a)))\,1
-= \mathrm{single}(\mathrm{mono}(h+1,a))\,1$, closed by Theorem H. $\square$
-
-### Theorem J (Headline — `expShift_var`)
-$$ \mathrm{expShift}(x) = e^{x}, \qquad \text{i.e.}\qquad \mathrm{expShift}(\mathrm{varX}) = \mathrm{expX}. $$
-
-*Proof sketch.* $\mathrm{varX} = \mathrm{term}(0,1)$; by Theorem I,
-$\mathrm{expShift}(\mathrm{term}(0,1)) = \mathrm{term}(1,1) = \mathrm{expX}$. $\square$
-
-Specializing Theorem I further:
-- **`expShift_exp`:** $\mathrm{expShift}(e^{x}) = e^{e^{x}} = \mathrm{term}(2,1)$.
-- **`expShift_log`:** $\mathrm{expShift}(\log x) = x$ (height $-1 \mapsto 0$).
-
-### Theorem K (Fixes the constant field — `expShift_C`)
-For every $r \in \mathbb{R}$,
-$$ \mathrm{expShift}(\mathrm{C}\,r) = \mathrm{C}\,r. $$
-
-*Proof sketch.* `HahnSeries.embDomainRingHom_C`: an `embDomain` ring homomorphism fixes the
-constant subfield because the value group homomorphism fixes the identity $0$ and constants
-are supported at $0$ (and $\mathrm{shiftHom}(0)=0$). $\square$
-
-### Theorem L (Injectivity — `expShift_injective`)
-$\mathrm{expShift}$ is injective: it embeds $\mathrm{TSeries}$ into itself.
-
-*Proof sketch.* `HahnSeries.embDomain_injective`, since the underlying value-group map is
-injective. $\square$
-
-**Synthesis.** Theorems J and K together show $\mathrm{expShift}$ is a *nontrivial* field
-endomorphism: it moves $x$ to $e^{x}$ (so it is not the identity) while fixing $\mathbb{R}$
-(so it is a genuine $\mathbb{R}$-algebra/substitution map). Theorem G is the entire
-mathematical content — the order-reflection that certifies $x \mapsto e^{x}$ respects every
-asymptotic scale simultaneously.
+*Proof sketch.* $C(b) - C(a) = C(b-a)$ as Hahn series, whose leading coefficient is $b - a$. Apply the positivity criterion: $0 < C(b)-C(a) \iff 0 < b-a$. $\square$
 
 ---
 
-## 6. A worked example
+## 5. The multiplicative algebra and the value group
 
-We trace the machinery on a concrete transseries to make the definitions tangible. Consider
-$$ t \;=\; 2\,e^{x} \;+\; 5\,x^{3} \;-\; 4 \;+\; \tfrac{1}{2}\,(\log x)^{-1} \;\in\; \mathrm{TSeries}, $$
-which as a Hahn series is the finitely supported coefficient map
-$$ \mathrm{mono}(1,1)\mapsto 2,\quad \mathrm{mono}(0,3)\mapsto 5,\quad \mathrm{mono}(0,0)\mapsto -4,\quad \mathrm{mono}(-1,-1)\mapsto \tfrac12. $$
+**Theorem 5.1 (Law of exponents).** (`term_mul_term_same`, `term_zero`, `term_mul_neg`, `term_pow`) For fixed height $h$:
+$$\mathrm{term}(h,a)\cdot\mathrm{term}(h,b) = \mathrm{term}(h, a+b), \quad \mathrm{term}(h,0) = 1, \quad \mathrm{term}(h,a)\cdot\mathrm{term}(h,-a) = 1, \quad \mathrm{term}(h,a)^n = \mathrm{term}(h, na).$$
+Consequently every one-term transseries is a unit (`isUnit_term`), and $a \mapsto \mathrm{term}(h,a)$ is a group homomorphism $(\mathbb{R}, +) \to \mathsf{TSeries}^{\times}$ (`termHom`).
 
-**Leading term and valuation.** The supports are, as transmonomials, ordered by the
-lexicographic rule. The largest is $\mathrm{mono}(1,1) = e^{x}$ (height $1$ beats heights
-$0$ and $-1$ by Theorem A). Hence $v(t) = \mathrm{orderTop}(t) = \mathrm{mono}(1,1)$ and the
-leading behavior of $t$ is $2e^{x}$, exactly the dominant growth one expects analytically.
+*Proof sketch.* Single-monomial multiplication reduces to additivity of the underlying $\delta_{-h}$ finsupp: $\delta_{-h}\!\cdot a + \delta_{-h}\!\cdot b = \delta_{-h}\!\cdot(a+b)$, lifted through $\mathrm{toLex}$. The power law is induction on $n$ via the multiplication law. $\square$
 
-**Exp-substitution.** Applying $\mathrm{expShift}$ (Theorem I, term by term) shifts every
-height up by one and fixes the coefficients:
-$$ \mathrm{expShift}(t) \;=\; 2\,e^{e^{x}} \;+\; 5\,(e^{x})^{3} \;-\; 4 \;+\; \tfrac{1}{2}\,x^{-1}. $$
-Indeed $\mathrm{mono}(1,1)\mapsto\mathrm{mono}(2,1)=e^{e^{x}}$, $\mathrm{mono}(0,3)\mapsto\mathrm{mono}(1,3)=(e^{x})^{3}$, the constant $-4$ is fixed (Theorem K), and
-$\mathrm{mono}(-1,-1)\mapsto\mathrm{mono}(0,-1)=x^{-1}$. The whole expression has been lifted
-one rung up the tower, and because $\mathrm{expShift}$ is a *ring* homomorphism this is
-consistent with substituting $e^{x}$ for $x$ inside any algebraic combination forming $t$.
+**Theorem 5.2 (Unbounded value group).** (`exists_gt`) For every transmonomial $g$ there exists $g'$ with $g < g'$.
 
-**Uniqueness.** Suppose a second transseries $s$ satisfies $\mathrm{AgreeToAllOrders}(t,s)$.
-Then $v(t-s) = \top$, so $t - s = 0$, so $s = t$ coefficient-for-coefficient (Theorem D).
-There is no way to perturb $t$ "beyond all orders" without changing it: the four
-coefficients above are an exact fingerprint.
+*Proof sketch.* Constructive. If $\mathrm{ofLex}(g)$ has nonempty support with least index $i_0$, add a unit at index $i_0 - 1$: the result first differs from $g$ at the new least index $i_0-1$, with positive value, hence is strictly larger. If $g = 0$, any positive monomial works. $\square$
 
-## 7. Algorithms
+**Theorem 5.3 (Non-Archimedean dominance of valuations).** (`pow_var_lt_exp`, `orderTop_varX_pow`) For every $n \in \mathbb{N}$,
+$$\mathrm{orderTop}(x^n) = \mathrm{mono}(0, n) < \mathrm{mono}(1,1) = \mathrm{orderTop}(e^x).$$
+No finite power of $x$ catches up to $e^x$.
 
-The model is constructive enough to support symbolic computation. We record the core
-routines (Python realizations appear in the demo).
-
-**Algorithm 1 — Lexicographic dominance comparison.** Represent a transmonomial as a finite
-map `height ↦ exponent`. To compare, scan heights from highest to lowest; at the first
-height where exponents differ, the larger exponent dominates. Complexity $O(k \log k)$ for
-$k$ nonzero exponents (sorting heights), then $O(k)$ for the scan. This realizes Theorems A
-and B and the order underlying Theorem C.
-
-**Algorithm 2 — Exp-substitution (tower shift).** Given a transseries as a finite set of
-(transmonomial, coefficient) pairs, apply `expShift` by mapping every height $h \mapsto
-h+1$ in every transmonomial, leaving coefficients fixed. Complexity linear in the total
-number of nonzero exponents. Correctness is Theorems H–K; injectivity (Theorem L) means no
-two distinct inputs collide.
-
-**Algorithm 3 — Agreement-to-all-orders test.** Given $a, b$, compute $a-b$; it is zero iff
-all coefficients vanish iff (Theorem D) $a$ and $b$ agree to all orders. Complexity linear
-in the number of terms.
+*Proof.* $\mathrm{orderTop}(x^n) = \mathrm{mono}(0,n)$ by the power law and valuation of terms; then apply Theorem 3.4 with $a = n$. The tower-height coordinate (index $-1$) is lexicographically more significant than the power-of-$x$ coordinate (index $0$), so $\mathrm{mono}(0,n) < \mathrm{mono}(1,1)$ for all $n$ — the precise non-Archimedean phenomenon. $\square$
 
 ---
 
-## 8. Applications
+## 6. The asymptotic comparison theorem
 
-- **Symbolic limit computation.** Engines that decide $\lim_{x\to\infty}$ of exp-log
-  expressions (e.g. Gruntz's algorithm) operate in a transseries-like setting; the
-  dominance order (Theorems A–C) decides leading behavior and the comparison theorem
-  (Theorem D) guarantees a unique answer.
-- **Asymptotics of ODE solutions / WKB.** Solutions to algebraic differential equations
-  admit transseries expansions; the exp-substitution automorphism models the change of
-  variable that climbs the exponential tower.
-- **Resurgence and trans-monomial bookkeeping.** The faithful valuation makes
-  "beyond-all-orders" terms a precise, manipulable notion rather than a heuristic.
+This is the central uniqueness result of the theory.
 
----
+**Definition 6.1 (Agreement to all orders).** Two transseries $a, b$ **agree to all orders** when their difference is asymptotically smaller than every transmonomial:
+$$\mathsf{AgreeToAllOrders}(a,b) \ :\Longleftrightarrow\ \forall\, g \in \mathsf{TransMono},\quad g < \mathrm{orderTop}(a - b)$$
+(comparison taken in $\mathsf{TransMono} \cup \{\top\}$).
 
-## 9. Discussion
+**Theorem 6.2 (Asymptotic comparison theorem).** (`agreeToAllOrders_iff_eq`)
+$$\mathsf{AgreeToAllOrders}(a, b) \iff a = b.$$
+A transseries is uniquely determined by its asymptotic expansion.
 
-The order-theoretic core (Section 3) is where transseries genuinely transcend power series:
-`exp_dominates_pow` asserts dominance over $x^{a}$ for *all* real $a$, impossible for a
-one-dimensional valuation. The comparison theorem (Section 4), while clean inside the Hahn
-model, is exactly the classical uniqueness-of-expansion principle once Hahn coefficients are
-identified with asymptotic data; its proof is genuinely quantified over the entire
-uncountable monomial group. The exp-substitution automorphism (Section 5) is the structural
-highlight: its existence reduces to a single combinatorial lemma about lexicographic order
-under monotone relabeling (`shift_lt_iff`), and its concrete identity $\mathrm{expShift}(x)
-= e^{x}$ certifies that the abstract construction is the operation of interest.
+*Proof.* ($\Rightarrow$) Suppose $a, b$ agree to all orders. If $\mathrm{orderTop}(a-b) \neq \top$, it equals some $c \in \mathsf{TransMono}$; instantiating the hypothesis at $g = c$ gives $c < c$, a contradiction. Hence $\mathrm{orderTop}(a-b) = \top$, which holds iff $a - b = 0$, i.e. $a = b$. ($\Leftarrow$) If $a = b$ then $\mathrm{orderTop}(a-b) = \mathrm{orderTop}(0) = \top$, which strictly dominates every $g$. $\square$
 
-The choice to store tower height $h$ at finsupp index $-h$ deserves emphasis: it aligns the
-direction of Mathlib's `Finsupp.Lex` (decided at the *least* index) with the asymptotic
-convention that the *highest* tower is most significant. With this sign convention every
-dominance proof becomes a transparent statement about the least differing index, and the
-exp-substitution becomes a rigid translation of the index line — the cleanest possible form
-of the height shift. This is what makes the load-bearing lemma `shift_lt_iff` a short,
-conceptual argument rather than a delicate case analysis, and why the entire construction
-lifts to a ring homomorphism through Mathlib's `embDomainRingHom` with exactly three
-hypotheses.
+**Corollary 6.3.** (`agreeToAllOrders_equivalence`, `not_agree_zero_of_ne_zero`) Agreement to all orders is an equivalence relation (it *is* equality), and any nonzero transseries fails to agree to all orders with $0$ — it has a genuine leading term.
+
+### 6.1 Analytic grounding
+
+The formal order is not an empty abstraction; it models real asymptotics. We record the classical little-$o$ facts that the formal dominance theorems mirror.
+
+**Theorem 6.4 (Analytic dominance).** (`isLittleO_pow_exp`, `isLittleO_expPow_expExp`) For every $n \in \mathbb{N}$:
+$$x^n = o(e^x) \ \text{ as } x \to +\infty, \qquad (e^x)^n = o\bigl(e^{e^x}\bigr) \ \text{ as } x \to +\infty.$$
+
+*Proof sketch.* The first is the standard polynomial-vs-exponential little-$o$ estimate. The second follows by composing the first with $e^x \to +\infty$. These ground, respectively, the formal facts $\mathrm{mono}(0,n) < \mathrm{mono}(1,1)$ and (height $1 < 2$) $\mathrm{mono}(1, n) < \mathrm{mono}(2,1)$. $\square$
 
 ---
 
-## 10. Future directions
+## 7. The exponential substitution as a field automorphism
 
-This research thread extends the Hahn-series model of transseries with verified files:
-`ExponentLaws.lean` (law of exponents per tower height, the group hom
-$(\mathbb{R},+) \to \mathrm{TSeries}^{\times}$, unboundedness of the value group, and
-`pow_var_lt_exp`: no finite power of $x$ dominates $e^{x}$); `ExpShift.lean` (the
-exp-substitution as an injective ring homomorphism studied here); and `ExpShiftEquiv.lean`
-(exp-substitution is a field *automorphism* `expShiftEquiv` with inverse the
-log-substitution `logShift`, and the exp-tower is cofinal, `exists_exp_tower_gt`).
+**Definition 7.1 (Exp- and log-substitution).** Let $\sigma : \mathbb{Z} \to \mathbb{Z}$, $\sigma(i) = i-1$, and $\tau(i) = i+1$ be the index translations. The **exp-substitution** $E := \mathsf{expShift}$ and **log-substitution** $L := \mathsf{logShift}$ on transseries are the ring homomorphisms induced (via Hahn-series domain relabeling, `embDomainRingHom`) by transporting transmonomials along $\sigma$, $\tau$ respectively.
 
-Open conjectures for follow-up:
+**Lemma 7.2 (Action on terms).** (`expShift_term`, `logShift_term`, `expShift_var`)
+$$E(\mathrm{term}(h,a)) = \mathrm{term}(h+1, a), \qquad L(\mathrm{term}(h,a)) = \mathrm{term}(h-1, a),$$
+so in particular $E(x) = e^x$, $E(e^x) = e^{e^x}$, $E(\log x) = x$, and $E$ fixes the constant subfield: $E(C(r)) = C(r)$ (`expShift_C`).
 
-- **Valuation scaling (C2).** $(\mathrm{expShift}\,t).\mathrm{orderTop} =
-  \mathrm{WithTop.map}\ \mathrm{shift}\ (t.\mathrm{orderTop})$; on positive-height
-  transseries, $t.\mathrm{orderTop} < (\mathrm{expShift}\,t).\mathrm{orderTop}$.
-- **Differential field (C4).** A derivation $\mathrm{deriv}\colon \mathrm{TSeries} \to
-  \mathrm{TSeries}$ with Leibniz rule, power rule, and exp chain rule, making
-  $\mathrm{TSeries}$ a differential field; the hard part is Hahn summability of the
-  derivative family.
-- **Catalog embedding (C5).** For normalized catalog `FormalTransseries` with embedded
-  leading monomials $m_1 < m_2$, $T_1.\mathrm{eval} = o(T_2.\mathrm{eval})$, bridging
-  analytic `eval` to the formal valuation.
-- **Tower action (C6).** $n \mapsto \mathrm{expShiftEquiv}^{n}$ is an injective group
-  homomorphism $\mathbb{Z} \to (\mathrm{TSeries} \simeq^{+*} \mathrm{TSeries})$ with
-  $\mathrm{expShiftEquiv}^{n}(\mathrm{term}(h,a)) = \mathrm{term}(h+n,a)$.
-- **Archimedean classes = tower heights (C7).** The Archimedean classes of the value group
-  correspond to tower heights.
+**Lemma 7.3 (Order preservation).** (`shift_lt_iff`) The height-shift is an order isomorphism of $\mathsf{TransMono}$: $\sigma_*g < \sigma_*g' \iff g < g'$. Exp-substitution preserves asymptotic dominance.
+
+*Proof sketch.* A lexicographic comparison is decided at the least index of difference; a monotone bijection of the index set maps least-index-of-difference to least-index-of-difference, so the order is preserved verbatim. $\square$
+
+**Theorem 7.4 (Exp-substitution is a field automorphism).** (`expShiftEquiv`, `expShift_logShift`, `logShift_expShift`) $E$ is a ring (hence field) automorphism $\mathsf{TSeries} \xrightarrow{\sim} \mathsf{TSeries}$ with inverse $L$: $E \circ L = \mathrm{id} = L \circ E$.
+
+*Proof sketch.* Injectivity of $E$ comes from injectivity of the index translation. Surjectivity (and the two-sided inverse) follows because $\sigma$ and $\tau$ are mutually inverse bijections of $\mathbb{Z}$, so the round-trips reduce to $\mathrm{id}$ on the value group, lifted to coefficients via the domain-embedding coefficient calculus. Packaging injectivity with surjectivity yields the `RingEquiv`. $\square$
+
+**Theorem 7.5 (Cofinality of the exponential tower).** (`exists_exp_tower_gt`) Every transmonomial $g$ is strictly dominated by some iterated exponential:
+$$\exists\, n \in \mathbb{N},\quad g < \mathrm{mono}(n, 1) = e^{e^{\cdots e^x}} \ (n \text{ times}).$$
+The single explicit sequence $x, e^x, e^{e^x}, \ldots$ exhausts all growth orders from above.
+
+*Proof sketch.* Let $i_0$ be the least support index of $\mathrm{ofLex}(g)$; choose tower height $n = (1 - i_0)^+$ so that $-n < i_0$. Then $\mathrm{mono}(n,1)$ has its (positive) deciding coefficient at index $-n$, strictly below every support index of $g$, so $g < \mathrm{mono}(n,1)$. $\square$
 
 ---
 
-## 11. Conclusion
+## 8. Algorithms
 
-We have presented a verified field model of single-tower real-power transseries, established
-that its order realizes asymptotic dominance (with $e^{x}$ beating every power), proved the
-asymptotic comparison theorem (uniqueness of expansion), and constructed the
-exp-substitution automorphism realizing $x \mapsto e^{x}$ as an injective, scalar-fixing
-ring homomorphism. The unifying lesson is that asymptotic growth, taken as a formal object,
-carries a clean arithmetic, a sharp order, and a genuine symmetry.
+The constructive content of the development yields concrete algorithms on finitely represented transseries (finite formal sums of transmonomials). We record three.
+
+**Algorithm A (Transmonomial comparison).** Given two transmonomials as finite exponent maps $h \mapsto a_h$, decide $<$ by scanning indices from the smallest (highest tower) and returning the sign of the first nonzero exponent difference. Complexity $O(k)$ in the number of occupied heights $k$. This realizes the lexicographic order of §3.
+
+**Algorithm B (Multiplication via the law of exponents).** To multiply two finite transseries, form all pairwise products of transmonomials (adding exponent maps pointwise, multiplying real coefficients), then collect equal transmonomials. Complexity $O(mn)$ pairwise products for inputs of $m$ and $n$ terms.
+
+**Algorithm C (Reciprocal by infinitesimal expansion).** To invert $f = c\,\mu\,(1 + \varepsilon)$ with leading coefficient $c$, leading transmonomial $\mu$, and infinitesimal tail $\varepsilon$ (positive valuation), compute $f^{-1} = c^{-1}\,\mu^{-1}\,\sum_{k\ge 0}(-\varepsilon)^k$, truncating the geometric series at the desired order. Each successive term has strictly larger valuation, so finitely many terms determine any fixed order.
 
 ---
 
-## References
+## 9. Applications
 
-1. M. Aschenbrenner, L. van den Dries, J. van der Hoeven, *Asymptotic Differential Algebra
-   and Model Theory of Transseries*, Annals of Mathematics Studies, 2017.
-2. J. van der Hoeven, *Transseries and Real Differential Algebra*, Lecture Notes in
-   Mathematics 1888, Springer, 2006.
-3. L. van den Dries, A. Macintyre, D. Marker, *Logarithmic-exponential series*, Annals of
-   Pure and Applied Logic, 2001.
-4. H. Hahn, *Über die nichtarchimedischen Größensysteme*, 1907.
-5. D. Gruntz, *On Computing Limits in a Symbolic Manipulation System*, PhD thesis, ETH
-   Zürich, 1996.
+- **Asymptotics of ODE solutions.** Solutions of algebraic differential equations at an irregular singular point admit transseries expansions; the comparison theorem (Theorem 6.2) certifies their uniqueness.
+- **Resurgence and physics.** Divergent perturbative expansions in quantum mechanics and field theory organize naturally as transseries with exponentially small ("non-perturbative") corrections; the ordered, non-Archimedean structure (§4) is the algebraic substrate for borel–écalle resummation bookkeeping.
+- **Hardy fields and o-minimality.** The exp-log scale and its dominance order are the combinatorial skeleton of Hardy fields and model-theoretically tame structures; Lemma 3.3 and Theorem 7.4 supply the order-automorphism symmetry used there.
+- **Algorithmic complexity.** Growth rates of running times beyond polynomial/exponential (e.g. iterated logarithms) are exactly transmonomials; Theorem 7.5 says the iterated-exponential tower is a cofinal yardstick for all such rates.
+
+---
+
+## 10. Discussion and future work
+
+We have established that single-tower, real-power transseries form a non-Archimedean ordered field containing $\mathbb{R}$, with an explicit infinitesimal/infinite reciprocal pair, an unbounded value group made cofinal by the canonical exponential tower, an exp/log substitution symmetry, and a uniqueness-of-expansion (asymptotic comparison) theorem. The orientation analysis of §4.1 is a genuine mathematical subtlety, not a cosmetic choice: it fixes the field order as the germ order at $x \to 0^+$.
+
+The natural next target is **real-closedness**. Real-closedness of a Hahn field $K(\!(\Gamma)\!)$ factors into three layers: real-closedness of the coefficient field $K = \mathbb{R}$ (classical); divisibility of the value group $\Gamma$; and root extraction for $1 + \varepsilon$ with $\varepsilon$ infinitesimal (binomial series). The value-group layer is now in hand (the value group $\mathrm{Lex}(\mathbb{Z}\to_f\mathbb{R})$ is divisible, in contrast to the Laurent value group $\mathbb{Z}$, which is not), and every transmonomial already has all $n$-th roots (divisible exponents). The remaining binomial layer would complete a proof that every nonnegative transseries is a square and that the transseries field is real closed — promoting it from a rich asymptotic *language* to a complete number system. The detailed program is recorded in the project's future-directions notes.
+
+---
+
+## 11. Summary of formally verified results
+
+| Result | Statement |
+|---|---|
+| `orderedField` | $\mathsf{OTSeries}$ is an ordered field |
+| `exp_dominates_pow` | $x^a < e^x$ for all real $a$ |
+| `term_pos` | every one-term transseries is positive |
+| `x_infinitesimal` | $(n+1)x < 1$ for all $n$ |
+| `inv_x_infinite` | $n < 1/x$ for all $n$ |
+| `x_mul_inv_x` | $x\cdot(1/x) = 1$ |
+| `C_lt_iff` | $\mathbb{R}$ embeds as an ordered subfield |
+| `term_mul_term_same` | law of exponents $\mathrm{term}(h,a)\mathrm{term}(h,b)=\mathrm{term}(h,a{+}b)$ |
+| `exists_gt` | value group has no maximum |
+| `pow_var_lt_exp` | no power of $x$ dominates $e^x$ |
+| `agreeToAllOrders_iff_eq` | asymptotic comparison theorem |
+| `isLittleO_pow_exp` | analytic grounding: $x^n = o(e^x)$ |
+| `expShiftEquiv` | exp-substitution is a field automorphism |
+| `exists_exp_tower_gt` | exponential tower is cofinal |

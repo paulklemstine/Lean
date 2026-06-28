@@ -1,58 +1,58 @@
-# THEOREM TRACE (internal — anti-hallucination control)
+# Computational Evidence — Ordered Transseries Field & Real-Closedness Ingredients
 
-Every theorem/definition named in ARTICLE.md and RESEARCH_PAPER.md must map to an
-actual Lean declaration in the Phase A output. This file records those mappings.
+This note records the small-case checks that motivated the theorems in
+`OrderedField.lean` and `RealClosureIngredients.lean`. All objects live in the
+transseries field `TSeries = HahnSeries (Lex (ℤ →₀ ℝ)) ℝ` of `Field.lean`, with its
+lexicographic (Lex) ordered-field structure.
 
-## From `Catalog/EML/Transseries/Field.lean`
+## 1. Divisibility of the value group `Lex (ℤ →₀ ℝ)`
 
-| Lean name | Statement | In ARTICLE | In PAPER |
-|---|---|---|---|
-| `TransMono` | `Lex (ℤ →₀ ℝ)`, the ordered group of transmonomials | yes | yes (Def 1) |
-| `TSeries` | `HahnSeries TransMono ℝ`, the transseries field | yes | yes (Def 2) |
-| `mono h a` | `toLex (Finsupp.single (-h) a)` — transmonomial of height `h`, exponent `a` | yes | yes (Def 3) |
-| `term h a` | `single (mono h a) 1` — the one-term transseries | yes | yes (Def 4) |
-| `mono_lt_mono_of_height` | `h < h' → 0 < a' → mono h a < mono h' a'` | yes | yes (Thm A) |
-| `mono_lt_mono_same` | `a < a' → mono h a < mono h a'` | yes | yes (Thm B) |
-| `exp_dominates_pow` | `mono 0 a < mono 1 1` for every real `a` | yes | yes (Thm C) |
-| `orderTop_term` | `(term h a).orderTop = mono h a` | no | yes |
-| `orderTop_mul` | `(x*y).orderTop = x.orderTop + y.orderTop` | no | yes |
-| `C_injective` | `ℝ ↪ TSeries` injective | no | yes |
+For `g = single 0 a` (a single real exponent at tower height `0`) and `n > 0`, the
+witness `g' = single 0 (a/n)` satisfies `n • g' = g`:
 
-## From `Catalog/EML/Transseries/AsymptoticComparison.lean`
+| g (exponent of x) | n | g' = g/n | check `n • g'` |
+|-------------------|---|----------|----------------|
+| 1                 | 2 | 1/2      | 2·(1/2) = 1 ✓  |
+| 1                 | 3 | 1/3      | 3·(1/3) = 1 ✓  |
+| 5                 | 2 | 5/2      | 2·(5/2) = 5 ✓  |
+| -1                | 2 | -1/2     | 2·(-1/2) = -1 ✓|
 
-| Lean name | Statement | In ARTICLE | In PAPER |
-|---|---|---|---|
-| `AgreeToAllOrders a b` | `∀ g, (g : WithTop TransMono) < (a-b).orderTop` | yes | yes (Def 5) |
-| `agreeToAllOrders_iff_eq` | `AgreeToAllOrders a b ↔ a = b` | yes (main) | yes (Thm D) |
-| `agreeToAllOrders_equivalence` | it is an equivalence relation | no | yes |
-| `isLittleO_pow_exp` | `(x^n) =o[atTop] exp` | yes | yes (Thm E) |
-| `isLittleO_expPow_expExp` | `(exp x)^n =o[atTop] exp(exp x)` | yes | yes (Thm F) |
+By contrast, over the **Laurent** value group `ℤ` the equation `2 • k = 1` has no
+solution (`k` would be `1/2 ∉ ℤ`). This is exactly `laurent_value_group_not_divisible`
+and the reason Laurent series are not real closed while transseries (real exponents) head
+toward it.
 
-## From `Catalog/EML/Transseries/ExpShift.lean` (featured Phase A output)
+## 2. Monomial roots (square / n-th root)
 
-| Lean name | Statement | In ARTICLE | In PAPER |
-|---|---|---|---|
-| `shiftEquiv` | `Equiv.subRight 1` on ℤ, `i ↦ i-1` | no | yes |
-| `shift x` | relabel finsupp index by `i ↦ i-1` | yes | yes (Def 6) |
-| `shiftHom` | `shift` as `TransMono →+ TransMono` | no | yes |
-| `shift_inj` | `shift` injective | no | yes |
-| `shift_lt_iff` | `shift x < shift y ↔ x < y` | yes | yes (Thm G) |
-| `shiftHom_le_iff` | `shiftHom g ≤ shiftHom g' ↔ g ≤ g'` | no | yes |
-| `expShift` | ring hom `TSeries →+* TSeries` | yes | yes (Def 7) |
-| `shift_mono` | `shift (mono h a) = mono (h+1) a` | yes | yes (Thm H) |
-| `expShift_term` | `expShift (term h a) = term (h+1) a` | yes | yes (Thm I) |
-| `expShift_var` | `expShift x = exp x` | yes (headline) | yes (Thm J) |
-| `expShift_exp` | `expShift (exp x) = exp(exp x)` (`term 2 1`) | yes | yes |
-| `expShift_log` | `expShift (log x) = x` | yes | yes |
-| `expShift_C` | `expShift (C r) = C r` | yes | yes (Thm K) |
-| `expShift_injective` | `expShift` injective | yes | yes (Thm L) |
+`(term h (a/n))^n = term h (n·(a/n)) = term h a` via the law of exponents `term_pow`:
 
-## From future directions (`ExpShiftEquiv.lean`, `ExponentLaws.lean`) — only referenced as future work, not stated as proved theorems in the main body.
+| term      | n | root term  | root^n      |
+|-----------|---|------------|-------------|
+| x   (h=0,a=1)  | 2 | x^(1/2)    | x ✓     |
+| x   (h=0,a=1)  | 3 | x^(1/3)    | x ✓     |
+| exp x (h=1,a=1)| 2 | (exp x)^(1/2) | exp x ✓ |
+| log x (h=-1,a=1)| 2 | (log x)^(1/2) | log x ✓ |
 
-| Lean name | Role |
-|---|---|
-| `expShiftEquiv` | exp-substitution is a field automorphism (future-directions text) |
-| `exists_exp_tower_gt` | exp-tower cofinal (future-directions text) |
-| `pow_var_lt_exp` | no finite power of x dominates exp (future-directions text) |
+Every transmonomial is therefore a square (`isSquare_term`) and has all `n`-th roots
+(`exists_nthRoot_term`) — the monomial layer of the real-closedness square property.
 
-No theorem is stated in the prose that does not appear above.
+## 3. Non-Archimedean order (orientation check)
+
+The Lex order decides comparisons at the **smallest** group index; `Field.lean` stores
+tower height `h` at index `-h` with "higher tower = greater group element". Composing the
+two conventions gives `mono h a > 0 ⟺ a > 0`, i.e. the **germ order at x → 0⁺**:
+
+- `x = term 0 1` is a positive **infinitesimal**: `(n+1)·x < 1` for every `n`
+  (`x_infinitesimal`). Sampled: `2x < 1`, `3x < 1`, … all hold (leading coefficient of
+  `1 - (n+1)x` is `+1` at the constant index `0`).
+- `1/x = term 0 (-1)` is **infinite**: `n < 1/x` for every `n` (`inv_x_infinite`), and
+  `x·(1/x) = 1` (`x_mul_inv_x`).
+
+Counterexample hunt: if the orientation were reversed, `x` would be infinite and
+`x_infinitesimal` would be **false**. We verified the deciding coefficient sign is `+1`
+at index `0`, confirming `x < 1`; the claim is robust. No counterexample exists.
+
+## 4. OEIS
+
+No integer sequence arises (the data here is structural/algebraic, parameterized by real
+exponents), so no OEIS lookup applies.
