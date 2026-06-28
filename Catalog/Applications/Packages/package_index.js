@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "28bd8499",
     "filename": "extremal_l1_mass_of_normalized_1_lipschitz_grid_he.json",
     "pkg_num": 189,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.643006,
     "title": "The Tallest Staircase: Extremal L1 Mass of Normalized 1-Lipschitz Grid Height Functions"
   },
   {
@@ -5516,8 +5516,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "extremal_l1_mass_of_normalized_1_lipschitz_grid_he",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.643006,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Tallest Staircase: Extremal L1 Mass of Normalized 1-Lipschitz Grid Height Functions"
     }
