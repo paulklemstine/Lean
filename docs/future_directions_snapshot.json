@@ -4467,7 +4467,7 @@
       "mathlib: NumberTheory.ArithmeticFunction",
       "mathlib: Analysis.Asymptotics.Asymptotics"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ac2d584",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domain_bridges": [
       "factorial divisibility to p-adic valuation inequalities",
@@ -4483,7 +4483,7 @@
     "proof_strategy": "Use Legendre's formula to translate a_1! ... a_k! | n! into simultaneous digit-sum inequalities. The paper proves the upper bound from the binary digit-sum obstruction and a density-one lower bound from mixed 2--3 rarefaction. The conjectural strengthening is that the binary obstruction is asymptotically sharp for almost all n. A proof would likely construct, for almost every n, admissible tuples a_i whose total excess is ((k - 1) / log 2 - o(1)) log n, while controlling all odd-prime valuation constraints by showing that the binary carry construction can be locally repaired at negligible logarithmic cost.",
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -11191,7 +11191,7 @@
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e73946ae",
     "description": "For every r ≥ 3, k ≥ 3, and n ≥ (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r²((r-2)(k-2)+1)))n² + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domain_bridges": [
       "hypergraph theory",
@@ -11207,7 +11207,7 @@
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T00:41:26.824635+00:00",
     "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
   },
@@ -11659,7 +11659,7 @@
       "math.AG",
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d24ca82",
     "description": "For any integer m ≥ 3, there exists a field F of characteristic 2 and two anisotropic quadratic forms φ and ψ over F of dimension 2^m, such that φ and ψ are Vishik-equivalent (i.e., for every field extension E/F, the dimension of the maximal totally isotropic subspace of φ_E equals that of ψ_E), yet φ and ψ are not similar.",
     "domain_bridges": [
       "Motivic Cohomology",
@@ -11675,7 +11675,7 @@
     "proof_strategy": "The proof would involve constructing a specific field extension (likely a function field of a quadric or a sequence of such extensions) and defining semi-singular forms (composed of a non-singular part and a totally singular part) that satisfy the isotropy index equality by construction via the properties of the Witt group in characteristic 2, while ensuring their similarity classes remain distinct using invariants like the Arf invariant or the dimension of the singular part.",
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T11:40:03.991489+00:00",
     "title": "Non-similarity of Vishik-equivalent semi-singular quadratic forms in characteristic 2"
   },
@@ -11714,7 +11714,7 @@
       "rational normal curve",
       "linear matroid represented by polynomial powers"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca01957a",
     "description": "Every Veronese circuit achieving the sharp bound dim L = (t+m-2)/m arises from a rational-normal-curve configuration, and conversely, rational-normal-curve configurations achieve this bound if and only if the number of linear forms satisfies t = m·(dim L - 1) + 2. This conjecture asserts that the main dimension bound is not only sharp but fully characterized by rational normal curve constructions.",
     "domain_bridges": [
       "Algebraic geometry (secant varieties of Veronese varieties)",
@@ -11731,7 +11731,7 @@
     "proof_strategy": "Characterize coefficient codes whose m-th Schur powers have full-support hyperplane structure, apply the Mirandola-Zémor Schur-product Kneser theorem to constrain extremal matroid structures, then prove that any extremal configuration must have the same underlying point configuration as a rational normal curve under the Veronese embedding. The converse direction follows by explicit computation of rational-normal-curve Veronese images.",
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T12:51:43.205360+00:00",
     "title": "Classification of extremal Veronese circuits via rational normal curves"
   },
@@ -12249,7 +12249,7 @@
       "homology of links in complexes",
       "stability versions of extremal theorems"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49c290ff",
     "description": "For a pure r-dimensional simplicial complex K on n vertices satisfying the homological condition H̃_t(lk_K(σ), ℝ) = 0 for all faces σ with |σ| = r-t, if the (r-1)-up signless Laplacian spectral radius q_{r-1}(K) is within ε of the upper bound tn - (t-1)(r+1), then K is within edit distance O(εn) of the extremal join structure Δ_{r+1-t} ⋆ Δ^{t}_{n-r-1+t}, where the edit distance counts vertices whose deletion makes the complexes isomorphic.",
     "domain_bridges": [
       "spectral graph theory",
@@ -12267,7 +12267,7 @@
     "proof_strategy": "Use variational characterizations of the signless Laplacian spectral radius, analyze the structure of near-extremal eigenvectors via Hodge decomposition on links, apply homological stability lemmas to control local deviations from the extremal structure, and employ combinatorial arguments to bound the global edit distance in terms of spectral gap.",
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T00:14:20.899782+00:00",
     "title": "Stability of Signless Laplacian Spectral Radius under Homological Link Restrictions"
   },
@@ -13463,7 +13463,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b012d1e8",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -13476,7 +13476,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -14230,7 +14230,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "434e8e33",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -14243,7 +14243,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

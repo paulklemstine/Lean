@@ -2726,7 +2726,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ac2d584",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domains": [
       "Bridges"
@@ -2735,7 +2735,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -6373,7 +6373,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Recurrence relation for extended Eulerian numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e73946ae",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
@@ -6382,7 +6382,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T00:41:26.824635+00:00",
     "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
   },
@@ -6636,7 +6636,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nilpotent Lie algebras obtained by ordered sets and Ricci solitons"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d24ca82",
     "description": "For any integer m \u2265 3, there exists a field F of characteristic 2 and two anisotropic quadratic forms \u03c6 and \u03c8 over F of dimension 2^m, such that \u03c6 and \u03c8 are Vishik-equivalent (i.e., for every field extension E/F, the dimension of the maximal totally isotropic subspace of \u03c6_E equals that of \u03c8_E), yet \u03c6 and \u03c8 are not similar.",
     "domains": [
       "Algebra"
@@ -6645,7 +6645,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T11:40:03.991489+00:00",
     "title": "Non-similarity of Vishik-equivalent semi-singular quadratic forms in characteristic 2"
   },
@@ -6664,7 +6664,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca01957a",
     "description": "Every Veronese circuit achieving the sharp bound dim L = (t+m-2)/m arises from a rational-normal-curve configuration, and conversely, rational-normal-curve configurations achieve this bound if and only if the number of linear forms satisfies t = m\u00b7(dim L - 1) + 2. This conjecture asserts that the main dimension bound is not only sharp but fully characterized by rational normal curve constructions.",
     "domains": [
       "Pythagorean",
@@ -6674,7 +6674,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T12:51:43.205360+00:00",
     "title": "Classification of extremal Veronese circuits via rational normal curves"
   },
@@ -6955,7 +6955,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Analytic derivation of the generating function for $k$-alternating permutations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49c290ff",
     "description": "For a pure r-dimensional simplicial complex K on n vertices satisfying the homological condition H\u0303_t(lk_K(\u03c3), \u211d) = 0 for all faces \u03c3 with |\u03c3| = r-t, if the (r-1)-up signless Laplacian spectral radius q_{r-1}(K) is within \u03b5 of the upper bound tn - (t-1)(r+1), then K is within edit distance O(\u03b5n) of the extremal join structure \u0394_{r+1-t} \u22c6 \u0394^{t}_{n-r-1+t}, where the edit distance counts vertices whose deletion makes the complexes isomorphic.",
     "domains": [
       "Algebra",
@@ -6965,7 +6965,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T00:14:20.899782+00:00",
     "title": "Stability of Signless Laplacian Spectral Radius under Homological Link Restrictions"
   },
@@ -7649,7 +7649,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b012d1e8",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -7659,7 +7659,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -8221,7 +8221,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "434e8e33",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8231,7 +8231,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
