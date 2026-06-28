@@ -1,248 +1,230 @@
-# Lines, Pencils, and the Hidden Arithmetic of Geometry
+# The Function That Refused to Be Boring
 
-## A function that can only see one dimension at a time
+## A surprise hiding in the geometry of lines
 
-Imagine you are handed an enormous catalogue of all the *lines* in a geometric
-world. Not lines on a sheet of paper, but lines inside a higher-dimensional
-space built over a finite arithmetic — a space where there are only $q$ numbers
-to count with instead of infinitely many. Your job is to invent a rule that
-labels each line either **YES** (1) or **NO** (0). A simple sorting rule.
+Mathematics has a quiet talent for surprises. You set up a tidy world, you list all the
+objects you expect to find in it, you become convinced the list is complete — and then,
+peering a little harder, you discover one more object that nobody invited. This is the story
+of one such gate-crasher: a "Boolean degree-one function" on a space of lines that absolutely
+should not exist according to the obvious catalog, yet provably does.
 
-There are astronomically many ways to sort lines into yes and no. But suppose
-someone adds a constraint that sounds innocent and turns out to be ferociously
-restrictive: your YES/NO rule must be **"degree one."** Loosely, it must be
-*smooth* with respect to the geometry — it can't wiggle wildly from line to line.
-It has to be expressible as a simple accumulation of local contributions, one per
-point, with nothing more elaborate allowed.
+To get there we need to wander through projective geometry, the strange arithmetic of finite
+fields, and an idea borrowed from the analysis of voting and influence. The destination is a
+single clean statement: **for every odd prime power $q \ge 3$ and every dimension $n \ge 4$,
+there is a "yes/no" function on the lines of a finite geometry that is as simple as possible
+in a precise spectral sense — degree one — and yet is not one of the handful of obvious
+examples.** It is genuinely new structure, and its existence has been pinned down exactly.
 
-The astonishing fact, conjectured and largely proven by mathematicians studying
-these *Grassmann schemes*, is that this single smoothness constraint nearly
-annihilates your freedom. Once $q \ge 3$ and the ambient space has dimension at
-least $4$, **the only YES/NO smooth rules that exist are the obvious ones**: say
-yes to everything, say no to everything, or say yes exactly to the lines passing
-through one chosen point — plus the mirror images of these. There is essentially
-nothing creative left to do. The geometry is *rigid*.
+## Functions on lines
 
-This article is about that rigidity, about the one exceptional case ($q = 2$,
-the famous **Fano plane**) where the rigidity cracks and exotic rules sneak in,
-and about a clean, elementary skeleton that captures why the whole phenomenon
-happens. We will build that skeleton from scratch, and along the way we will meet
-*point-pencils*, the surprising power of every line having the same length, and a
-small, beautiful obstruction that explains why you cannot simply glue two valid
-rules together to make a new one.
+Start with a finite world of points and lines. Take a vector space over a finite field with
+$q$ elements — think of $q$ as the number of "colours" available for coordinates — and look at
+its two-dimensional subspaces. In the language of projective geometry these are the *lines* of
+a projective space $\mathrm{PG}(n-1, q)$. The collection of all such lines, equipped with the
+natural relations between them, is called the **Grassmann scheme** $J_q(n,2)$. It is the
+$q$-analogue of the more familiar Johnson scheme of $k$-element subsets, and it is one of the
+fundamental playgrounds of algebraic combinatorics.
 
-## The world of lines over a finite field
+Now put a function on this world. A **function on lines** assigns a real number $f(\ell)$ to
+every line $\ell$. The functions we care about are the modest ones: those that only ever say
+*yes* or *no*. We call a function **Boolean** when it takes only the values $0$ and $1$:
 
-Start with $\mathbb{F}_q$, the field of $q$ elements — think of it as clock
-arithmetic where $q$ is prime: the numbers $0, 1, \dots, q-1$ with addition and
-multiplication wrapping around. Now build an $n$-dimensional vector space
-$\mathbb{F}_q^n$ over it. The **2-dimensional subspaces** of this space are what
-geometers call the *lines* of the projective geometry $\mathrm{PG}(n-1, q)$.
+$$f(\ell) = 0 \quad \text{or} \quad f(\ell) = 1 \quad \text{for every line } \ell.$$
 
-The collection of all these lines, with a natural notion of "closeness" between
-them, is the **Grassmann scheme** $J_q(n,2)$ — the $q$-analogue of the classical
-Johnson scheme. It is one of the central objects of algebraic combinatorics: a
-highly symmetric structure whose spectral theory (its eigenvalues and
-eigenspaces) encodes deep geometric truths.
+A Boolean function is just a *set* of lines in disguise — the set on which it answers $1$.
 
-For our story we strip this down to its combinatorial bones, and what remains is
-a structure every schoolchild half-knows: a **linear space** of points and lines
-where
+The simplest interesting Boolean functions are **point-pencils**. Fix a point $p$. The
+function that answers $1$ on exactly the lines passing through $p$ is its indicator,
 
-- every line contains exactly $q + 1$ points, and
-- any two distinct points lie on exactly one common line.
+$$\mathbf{1}[p \le \ell] = \begin{cases} 1 & \text{if } p \text{ lies on } \ell,\\ 0 & \text{otherwise.}\end{cases}$$
 
-That second axiom — *two points determine a unique line* — is Euclid's, reborn in
-a finite world. The first — *every line has the same length $q+1$* — is the
-combinatorial fingerprint of the underlying field, and, as we will see, it does
-an enormous amount of work.
+This is the "star" of lines through a single point. Dually, fix a plane $h$ and take the set of
+lines lying inside $h$; that is another natural Boolean function. Together with the two
+constants ($f \equiv 0$ and $f \equiv 1$) and the *complements* of everything (swap every
+$0$ and $1$), these form the obvious, hand-built examples.
 
-## Degree one, made elementary
+## Degree one
 
-Here is where the analytic notion of "smooth" becomes something you can compute
-on your fingers. A real-valued function $f$ on the lines is **degree $\le 1$** if
-there is a single constant $c$ and a **weight** $w(p)$ attached to each point $p$
-such that the value on any line $\ell$ is simply the constant plus the sum of the
-weights of the points lying on that line:
+Here is where a second idea enters, on loan from the analysis of Boolean functions in computer
+science and probability — the world of influences, juntas, and Fourier expansions. Every
+function on a nicely symmetric space can be decomposed by "frequency," and the lowest
+frequencies are the simplest. A function is **degree one** when, apart from a constant
+offset, it is built entirely out of the point-pencils:
 
-$$f(\ell) \;=\; c \;+\; \sum_{p \in \ell} w(p).$$
+$$f(\ell) = c + \sum_{p \in \ell} w(p),$$
 
-That is the entire definition. No products, no higher interactions — just a
-baseline plus a tally of point-contributions. In the language of the scheme this
-is exactly the top of the spectrum, the eigenspace $V_0 \oplus V_1$; but rendered
-this way it is pure bookkeeping.
+for some constant $c$ and some weighting $w$ of the points. Concretely: assign each point a
+real weight, and let a line's value be a baseline plus the total weight of the points it
+carries. Nothing more elaborate than summing weights over a line is allowed. That is exactly
+what "degree at most one" means here, and it is the lowest non-trivial rung of the spectral
+ladder.
 
-The function $f$ is **Boolean** if it only ever outputs $0$ or $1$:
+The objects at the heart of this story are the functions that are **both** Boolean **and**
+degree one at the same time — call them **Boolean degree-one functions**. They must answer in
+crisp yes/no fashion, *and* they must be expressible as a baseline plus a weighted point-count.
+That is a severe double constraint, and it is natural to guess that only the obvious examples
+survive it.
 
-$$f(\ell) = 0 \quad\text{or}\quad f(\ell) = 1 \qquad \text{for every line } \ell.$$
+## The official boring list
 
-A **Boolean degree one function** is one that is both: a genuine YES/NO labelling
-that also admits the smooth, additive description above. These are the objects
-whose entire population we want to count and classify.
+So let us write down the obvious examples — the ones every expert would produce on demand.
+A Boolean degree-one function on the lines is called **trivial** if it is one of:
 
-## The cast of "trivial" solutions
+- the constant $0$;
+- the constant $1$;
+- a point-pencil $\mathbf{1}[p \le \ell]$ (lines through a point);
+- a plane line-set $\mathbf{1}[\ell \le h]$ (lines inside a plane);
+- or the complement of any of these.
 
-Some Boolean degree one functions are obvious. Let us name them, because the
-deep theorem says these are *all* of them.
+These really are Boolean degree-one functions — the constants trivially so, the point-pencils
+by construction, and complements because the property survives the swap $f \mapsto 1 - f$.
+The grand conjecture in this area, advanced by Yuval Filmus and Ferdinand Ihringer, says that
+for $q \ge 3$ and $n \ge 4$ *these are the only ones*. Every Boolean degree-one function on
+$J_q(n,2)$ should be on the boring list.
 
-**The constants.** Always say $0$, or always say $1$. Take $w(p) = 0$ for every
-point and $c = 0$ (or $c = 1$). The tally is empty, the baseline carries the day.
+## Why you can't just add
 
-**The point-pencils.** Fix one point $p$. The **pencil** of $p$ is the set of all
-lines passing through $p$ — the "star" of lines radiating from that point. Its
-indicator function,
+The first instinct, when hunting for a new example, is to combine old ones. Why not add two
+point-pencils? Take two distinct points $p \ne p'$ and form
 
-$$\mathbf{1}[p \in \ell] = \begin{cases} 1 & \text{if } p \text{ lies on } \ell, \\ 0 & \text{otherwise,} \end{cases}$$
+$$\mathbf{1}[p \le \ell] + \mathbf{1}[p' \le \ell].$$
 
-is Boolean, and it is degree one: take $c = 0$ and the weight that is $1$ at $p$
-and $0$ everywhere else. Then $\sum_{q \in \ell} w(q)$ counts how many times $p$
-appears among the points of $\ell$, which is $1$ if $p \in \ell$ and $0$ if not.
-Exactly the indicator. These pencils are the prototypical non-constant solutions.
+This is still degree one — it is a sum of point-pencils, which is exactly the shape degree-one
+functions are allowed to have. But it is *not Boolean*. In any such geometry there is a unique
+line through any two distinct points, and on that one shared line both indicators fire at
+once, so the sum equals $2$. A function that ever says $2$ is not a yes/no function. This tiny
+observation — that the sum of two distinct pencils breaks Booleanness on their common line — is
+the seed of all the rigidity in the subject. It is why naive constructions fail and why people
+came to believe the boring list might be everything.
 
-**The complements.** If $f$ is a Boolean degree one function, so is $1 - f$. The
-value flips $0 \leftrightarrow 1$ (still Boolean), and the smooth description
-flips too: replace $c$ by $1 - c$ and every weight $w(p)$ by $-w(p)$. So every
-solution comes with its mirror image for free.
+And for the prime field $q = 2$, and in many other places, the conjecture *is* a theorem: there
+truly is nothing new. The boring list is complete. So the surprise is all the more striking
+when we find that, for odd $q \ge 3$, the list is **not** complete after all.
 
-(There is also a dual family — the "hyperplane" families $\mathbf{1}[\ell \subseteq H]$
-of lines lying inside a fixed hyperplane — which by a point/hyperplane duality
-behave just like pencils. We focus on the pencils; the duals are their reflection.)
+## The magic number
 
-## How many solutions must there be?
+The gate-crasher comes from a classical geometric construction of Aiden Bruen and Keldon
+Drudge from 1999, living in three-dimensional projective space $\mathrm{PG}(3,q)$ — the case
+$n = 4$. Their object is a **Cameron–Liebler line class**: a set of lines obeying a strong
+regularity condition that makes its indicator a Boolean degree-one function. Such a class
+carries a single integer fingerprint, its **parameter** $x$, and the class always has exactly
 
-Even before classifying everything, we can *count from below*. Suppose our linear
-space is rich enough to tell points apart — formally:
+$$x \cdot (q^2 + q + 1)$$
 
-- every point lies on **some** line,
-- every point is **avoided** by some line, and
-- any two distinct points can be **separated**: there is a line through one but
-  not the other.
+lines. The parameter is the whole story: the boring classes are precisely those with one of six
+boring parameter values, namely
 
-These are mild richness conditions, true in any honest projective geometry. Under
-them, the pencils of distinct points are genuinely different functions. The
-reason is delightfully direct: if points $p$ and $p'$ differ, pick a separating
-line $\ell$ — one through $p$ but not $p'$. Then the pencil of $p$ outputs $1$ on
-$\ell$ while the pencil of $p'$ outputs $0$. The functions disagree somewhere, so
-they are distinct. (Formally, this is the injectivity of the map sending a point
-to its pencil.)
+$$x \in \{\,0,\ 1,\ 2,\ q^2 - 1,\ q^2,\ q^2 + 1\,\}.$$
 
-Counting them up: the two constants plus one pencil per point gives at least
+These correspond, in order, to the empty class, a point-pencil, a plane's worth of lines, and
+the complements of those three. If a Cameron–Liebler class has any *other* parameter, its
+indicator is a Boolean degree-one function that cannot be on the trivial list.
 
-$$|P| + 2$$
+Bruen and Drudge built one with the audacious parameter
 
-distinct Boolean degree one functions, where $|P|$ is the number of points. They
-are packaged as an *injection* from "points-plus-two-bits" into the space of
-functions, every one of whose images is verified to be Boolean degree one. So the
-trivial solutions are abundant — there are at least $|P| + 2$ of them — and the
-rigidity theorem says, for $q \ge 3$, that (together with the dual hyperplane
-families and complements) they are the *whole story*.
+$$x = \frac{q^2 + 1}{2}.$$
 
-## Why symmetry forces constancy
+Everything interesting flows from this single fraction. First, is it even a whole number? For
+odd $q$, yes: $q^2$ is odd, so $q^2 + 1$ is even, and the division is exact. Spelled out as an
+identity,
 
-Now comes the first piece of real magic, and it leans entirely on every line
-having the same length $q+1$.
+$$2 \cdot \frac{q^2+1}{2} = q^2 + 1,$$
 
-Suppose your weight is **symmetric** — it does not single out any point, assigning
-the *same* value $a$ to every point. Then on a line $\ell$ the tally is just $a$
-added to itself once per point on the line:
+which is the rigorous way of certifying that $x$ is a genuine integer and not a fraction in
+disguise. (For *even* $q$ this fails — $q^2 + 1$ becomes odd — which is exactly why this
+particular construction is an odd-$q$ phenomenon.)
 
-$$f(\ell) = c + \sum_{p \in \ell} a = c + (q+1)\,a.$$
+## Its own mirror image
 
-But $q+1$ is the same number for *every* line. So $f$ takes the identical value
-$c + (q+1)a$ on every single line — it is **constant**. There is no room for a
-non-trivial symmetric solution. This is the clean, abstract reason the only
-*symmetric* (automorphism-invariant) Boolean degree one functions are the boring
-constants. The uniform line size — the regularity of the scheme — is doing all
-the work. In our framework this is the theorem `const_weight_is_constant`.
+The number $x = (q^2+1)/2$ has a beautiful self-referential property. Complementing a
+Cameron–Liebler class — swapping the lines it contains for the lines it omits — sends a class
+of parameter $x$ to one of parameter $q^2 + 1 - x$. For the Bruen–Drudge value,
 
-## The obstruction: why you can't just add two pencils
+$$\frac{q^2+1}{2} = (q^2+1) - \frac{q^2+1}{2},$$
 
-The most tempting way to manufacture a *new* solution is to combine old ones.
-Take two distinct points $p$ and $p'$ and add their pencils:
+so the parameter is **its own mirror image**: the class and its complement carry the *same*
+fingerprint. Equivalently, the class contains exactly half of all the lines in the space. This
+self-complementary symmetry is not a curiosity; it is a powerful design constraint that
+dramatically narrows where such an object can live, and it is the structural signature that
+distinguishes the Bruen–Drudge example from everything on the boring list.
 
-$$g(\ell) = \mathbf{1}[p \in \ell] + \mathbf{1}[p' \in \ell].$$
+## Six boring values, and a number that dodges them all
 
-This is still degree one — sums of degree one functions are degree one; the
-weights just add. So smoothness survives. But is $g$ Boolean? Watch what happens
-on the unique line $\ell^\*$ joining $p$ and $p'$ (the second axiom guarantees it
-exists). That line passes through *both* points, so
+To certify that the example is genuinely new, we must show its parameter avoids all six boring
+values. Two simple bounds do the job. For $q \ge 3$ we have $q^2 \ge 9$, and so:
 
-$$g(\ell^\*) = 1 + 1 = 2.$$
+- $x = (q^2+1)/2$ is **greater than $2$** (since $q^2 + 1 \ge 10$, we get $x \ge 5$); this rules
+  out $0$, $1$, and $2$.
+- $x$ is **strictly less than $q^2 - 1$**; this rules out $q^2 - 1$, $q^2$, and $q^2 + 1$.
 
-The value $2$ is neither $0$ nor $1$. The function has burst out of the Boolean
-range. The very axiom that makes the geometry coherent — two points lie on a
-common line — is what sabotages the naive gluing: that shared line is forced to
-register a $2$. This little fact (the theorem `two_pencils_not_boolean`) is the
-seed of the whole rigidity phenomenon: you cannot cheaply combine trivial
-solutions to escape triviality, because the geometry keeps colliding your
-contributions on shared lines.
+Putting the two bounds together, $2 < x < q^2 - 1$, so $x$ lands strictly between the small
+boring values and the large ones and matches none of
 
-## The exceptional plane: $q = 2$ and Fano
+$$\{\,0,\ 1,\ 2,\ q^2-1,\ q^2,\ q^2+1\,\}.$$
 
-Every good rigidity theorem has its rebel, and here the rebel is $q = 2$. The
-smallest projective plane, $\mathrm{PG}(2,2)$, is the celebrated **Fano plane**:
-$7$ points, $7$ lines, every line holding exactly $3$ points, every point on
-exactly $3$ lines. It is the most symmetric tiny geometry in existence, drawn as
-a triangle with its medians and inscribed circle, and it is $J_2(3,2)$ in our
-notation.
+The Bruen–Drudge parameter therefore lies in the forbidden middle zone, exactly where no
+trivial class can reach. Take the smallest case $q = 3$: then $x = (9+1)/2 = 5$, the boring set
+is $\{0, 1, 2, 8, 9, 10\}$, and $5$ is comfortably outside it. The class has $5 \cdot 13 = 65$
+lines out of a total of $130$ — precisely half, as self-complementarity demands.
 
-When $q = 2$, the arithmetic over the field with two elements is special — adding
-is the same as subtracting, and $1 + 1 = 0$. This collapse breaks the obstruction
-above just enough that **non-trivial** Boolean degree one functions appear, rules
-that are not constants, not pencils, not hyperplane families, and not complements
-of any of these. The boundary between $q = 2$ and $q \ge 3$ is precisely the
-fault line the main theorem traces. Studying the Fano plane concretely is how one
-sees the exception in the flesh, and it is what makes the $q \ge 3$ rigidity
-remarkable rather than automatic.
+## Putting it together
 
-## Why anyone should care
+Now the pieces snap into place. There is a bridge — the **Filmus–Ihringer correspondence** —
+between the geometric world and the functional world: Cameron–Liebler line classes of
+$\mathrm{PG}(3,q)$ are *exactly* the Boolean degree-one functions on the lines $J_q(4,2)$, and
+under this dictionary the *trivial* classes correspond precisely to the *trivial* Boolean
+degree-one functions. So a class whose parameter dodges the six boring values must map to a
+Boolean degree-one function off the boring list.
 
-This may sound like a private game played by combinatorialists, but the structure
-echoes loudly elsewhere.
+Feed the Bruen–Drudge class through this dictionary. Its indicator is, by the construction, a
+Boolean degree-one function on $J_q(4,2)$. Its parameter is $(q^2+1)/2$, which we just showed is
+not trivial. Therefore its image cannot be a constant, a point-pencil, a plane line-set, or any
+of their complements. It is a *non-trivial* Boolean degree-one function — the very object the
+naive analysis said should not exist.
 
-**The analysis of Boolean functions.** In theoretical computer science, "low
-degree" Boolean functions on the hypercube (think: voting rules, decision
-procedures, error-correcting codes) are famously constrained — the
-Friedgut–Kalai–Naor theorem and its descendants say low-degree Boolean functions
-must be *juntas*, depending on only a few coordinates. The Grassmann story is the
-same melody transposed into the world of subspaces: degree one plus Boolean
-equals "essentially a single point's pencil." The point-pencils are the
-geometric juntas.
+The result is the cleanest possible refutation of "the boring list is everything": for odd
+$q \ge 3$ there is always at least one more.
 
-**Coding theory and design theory.** Pencils and hyperplane families are exactly
-the kinds of structured subsets that build optimal codes and combinatorial
-designs over finite fields. Knowing that *no other* small-degree Boolean
-structures exist tells designers that these classical constructions are not just
-convenient — they are, in a precise sense, the only ones.
+## Climbing to higher dimensions
 
-**The shape of rigidity itself.** The phenomenon — a mild smoothness constraint
-crushing an exponential sea of possibilities down to a short, fully understood
-list — is one of the recurring miracles of modern combinatorics. It is the same
-spirit as stability theorems, as the classification of extremal configurations,
-as the idea that "almost optimal implies almost structured." Here it appears in
-an unusually clean and provable form.
+The construction lives in three-dimensional space, the $n = 4$ case. But the surprise does not
+stop there. A line of $\mathrm{PG}(3,q)$ is also a line of any larger $\mathrm{PG}(n-1,q)$ once
+we embed the small space inside the big one. Embedding a three-dimensional subspace into an
+$(n-1)$-dimensional one carries the Bruen–Drudge example along for the ride, producing a
+non-trivial Boolean degree-one function on $J_q(n,2)$ for **every** $n \ge 4$. One construction,
+infinitely many spaces.
 
-## What we actually built
+## Why this matters
 
-Stripped to essentials, the framework is a finite linear space — points, lines,
-$q+1$ points per line, two points on a unique line — together with three
-notions: *Boolean* (outputs in $\{0,1\}$), *degree $\le 1$* (a constant plus a
-sum of point-weights), and their conjunction. On this skeleton we established,
-with no gaps:
+It is tempting to file this away as a technical footnote, but it speaks to something larger.
+Across mathematics and computer science there is a recurring dream of *classification*: prove
+that a class of simple objects consists of nothing but the obvious examples. When such a
+theorem holds, it is enormously useful — it means structure equals simplicity, and any
+low-complexity object can be recognized on sight. The analysis of low-degree Boolean functions
+underpins parts of theoretical computer science, coding theory, and the study of error-resilient
+computation, precisely because "degree one means trivial" is such a convenient hammer.
 
-- the trivial solutions really qualify — the constants, every point-pencil, and
-  all complements are Boolean degree one;
-- there are at least $|P| + 2$ of them, via an explicit, verified injection that
-  separates distinct points by a line;
-- every *symmetric* degree-one function is constant, because every line has the
-  same length $q+1$;
-- and you cannot build a new Boolean solution by adding two pencils, because
-  their unique common line is forced to read $2$.
+The Bruen–Drudge example is a warning and a guide. It shows that the convenient hammer has
+exceptions, and it pins down *exactly* where: odd characteristic, the self-complementary
+half-and-half regime, parameter $(q^2+1)/2$. Knowing the precise shape of the exception is what
+lets the broader classification program proceed honestly — you cannot prove a clean theorem
+until you know which "clean" statements are actually false.
 
-Together these are the load-bearing walls of the rigidity theorem. The grand
-conjecture — that for $q \ge 3$ and $n \ge 4$ *nothing else exists* — stands on
-exactly this foundation, with the Fano plane standing quietly to one side as the
-beautiful exception that proves the rule.
+There is also an aesthetic payoff. The whole argument rests on one number, $(q^2+1)/2$, and on
+three almost childishly simple facts about it: it is a whole number, it equals its own
+reflection $q^2 + 1 - x$, and it sits strictly between $2$ and $q^2 - 1$. From those three
+arithmetic truths — integrality, self-complementarity, and a pair of inequalities — flows the
+existence of an object that resisted the obvious classification. It is a reminder that the
+deepest surprises in mathematics often turn on the simplest sums.
 
-Geometry, it turns out, has an arithmetic of its own, and that arithmetic is far
-stingier with its secrets than its size would ever suggest.
+## The number to remember
+
+If you take one thing away, let it be the fraction. In a finite projective space of odd order
+$q \ge 3$, look at the lines; ask for a yes/no function that is spectrally as simple as
+possible; expect only the boring stars and planes; and then notice the half-and-half class with
+fingerprint
+
+$$x = \frac{q^2 + 1}{2}.$$
+
+It is whole, it is its own mirror, it dodges every boring value — and it is the function that
+refused to be boring.

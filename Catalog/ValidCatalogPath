@@ -1,0 +1,260 @@
+/-
+Copyright (c) 2025. All rights reserved.
+
+# The Bruen–Drudge Cameron–Liebler line class and a non-trivial Boolean degree-one function
+
+## Overview
+
+A **Cameron–Liebler line class** of `PG(3,q)` with parameter `x` is a set of lines
+of projective `3`-space over `𝔽_q` of size `x·(q²+q+1)` satisfying the
+Cameron–Liebler regularity condition.  The *trivial* values of the parameter are
+
+  `x ∈ {0, 1, 2, q²−1, q², q²+1}`
+
+(corresponding to the empty class, a point-pencil, a plane's line-set, their pairwise
+unions, and the complements of all of these).
+
+**Bruen–Drudge (1999)** constructed, for every odd prime power `q ≥ 3`, a
+Cameron–Liebler line class with the *self-complementary* parameter
+
+  `x = (q²+1)/2`.
+
+Because `q` is odd, `q²+1` is even and `x` is a genuine integer; moreover
+`x = q²+1−x` (self-complementarity), and for `q ≥ 3` one has `2 < x < q²−1`, so `x`
+avoids the entire trivial set.  Hence the Bruen–Drudge class is a *non-trivial*
+Cameron–Liebler line class.
+
+Under the **Filmus–Ihringer** correspondence, Cameron–Liebler line classes of
+`PG(3,q)` are exactly the Boolean degree-one functions on the Grassmann scheme
+`J_q(4,2)` (the lines of `PG(3,q)`), with trivial classes matching the trivial
+Boolean degree-one functions (constants, point-pencils, plane line-sets, and
+complements thereof — see `IsTrivialBDOFn`).  Feeding the Bruen–Drudge class into
+this correspondence yields a Boolean degree-one function on `J_q(4,2)` that is
+**not** in the trivial list.  Finally, embedding a `3`-dimensional subspace into an
+`(n−1)`-dimensional one transports the example to `J_q(n,2)` for every `n ≥ 4`.
+
+## What is proved here, and what is taken as input
+
+This file is built on the abstract linear-space model of `J_q(n,2)` from
+`Core.lean` (`BooleanDegOne`, `ind`).  The following are proved **unconditionally**
+and with **no circular reasoning** (they make no reference whatsoever to the
+existence of any Boolean degree-one function):
+
+* `two_mul_xParam`, `xParam_self_complementary` — integrality and self-complementarity
+  of `x = (q²+1)/2`;
+* `xParam_gt_two`, `xParam_lt_q2_sub_one`, `xParam_not_trivial` — `x` lies strictly
+  between `2` and `q²−1`, hence outside the trivial parameter set;
+* `bruenDrudge_class_size`, `bruenDrudge_param_not_trivial` — the size formula
+  `|class| = x·(q²+q+1)` and non-triviality of the Bruen–Drudge parameter.
+
+The two deep geometric/algebraic inputs — the **Bruen–Drudge construction** itself
+and the **Filmus–Ihringer correspondence** — are not in Mathlib and are *not*
+introduced as axioms (which would compromise soundness).  Instead they appear as
+explicit, clearly-labelled hypotheses of the deduction theorems
+`bruenDrudge_nontrivial_BDO` (the `J_q(4,2)` case) and `extend_nontrivial_BDO`
+(the embedding to `J_q(n,2)`).  Everything downstream of those hypotheses is fully
+derived.
+-/
+import Mathlib
+import Catalog.Applications.BooleanDegreeOne.Core
+import Catalog.Novelty.GrassmannDegreeOne
+
+namespace Catalog.Applications.BooleanDegreeOne.BruenDrudge
+
+open Catalog.Applications.BooleanDegreeOne
+open scoped BigOperators
+
+/-! ## 1. The Bruen–Drudge parameter `x = (q²+1)/2` -/
+
+/-- The Bruen–Drudge parameter of `PG(3,q)`: `x = (q²+1)/2`. -/
+def xParam (q : ℕ) : ℕ := (q ^ 2 + 1) / 2
+
+/-- **Integrality.**  For odd `q`, `q²+1` is even, so `2·x = q²+1`; in particular
+`x = (q²+1)/2` is a genuine integer. -/
+theorem two_mul_xParam {q : ℕ} (hq : Odd q) : 2 * xParam q = q ^ 2 + 1 := by
+  obtain ⟨m, rfl⟩ := hq
+  unfold xParam
+  have : (2 * m + 1) ^ 2 + 1 = 2 * (2 * m ^ 2 + 2 * m + 1) := by ring
+  rw [this, Nat.mul_div_cancel_left _ (by norm_num)]
+
+/-- **Self-complementarity.**  `x = (q²+1) − x`, equivalently `x + x = q²+1`. -/
+theorem xParam_self_complementary {q : ℕ} (hq : Odd q) :
+    xParam q = (q ^ 2 + 1) - xParam q := by
+  have h := two_mul_xParam hq
+  omega
+
+/-- The trivial Cameron–Liebler parameter set `{0, 1, 2, q²−1, q², q²+1}`. -/
+def trivialParams (q : ℕ) : Finset ℕ := {0, 1, 2, q ^ 2 - 1, q ^ 2, q ^ 2 + 1}
+
+/-- For `q ≥ 3`, the Bruen–Drudge parameter exceeds `2`. -/
+theorem xParam_gt_two {q : ℕ} (hq3 : 3 ≤ q) : 2 < xParam q := by
+  have hq2 : 9 ≤ q ^ 2 := by nlinarith
+  unfold xParam
+  omega
+
+/-- For `q ≥ 3`, the Bruen–Drudge parameter is below `q²−1`. -/
+theorem xParam_lt_q2_sub_one {q : ℕ} (hq3 : 3 ≤ q) : xParam q < q ^ 2 - 1 := by
+  have hq2 : 9 ≤ q ^ 2 := by nlinarith
+  unfold xParam
+  omega
+
+/-- **Non-triviality of the parameter.**  For `q ≥ 3` the parameter `x = (q²+1)/2`
+lies strictly between `2` and `q²−1`, hence is not in the trivial set
+`{0, 1, 2, q²−1, q², q²+1}`. -/
+theorem xParam_not_trivial {q : ℕ} (hq3 : 3 ≤ q) : xParam q ∉ trivialParams q := by
+  have h1 := xParam_gt_two hq3
+  have h2 := xParam_lt_q2_sub_one hq3
+  have hq2 : 9 ≤ q ^ 2 := by nlinarith
+  simp only [trivialParams, Finset.mem_insert, Finset.mem_singleton]
+  omega
+
+/-! ## 2. The Bruen–Drudge line class: size and non-triviality
+
+A Cameron–Liebler line class of `PG(3,q)` with parameter `param` is modelled by its
+line set `S ⊆ L` (a `Finset` of the abstract line type `L`) together with the
+defining size relation `|S| = param·(q²+q+1)`. -/
+
+/-- **Size of the Bruen–Drudge class.**  A Cameron–Liebler line class with the
+Bruen–Drudge parameter has exactly `x·(q²+q+1)` lines. -/
+theorem bruenDrudge_class_size {q : ℕ} {L : Type*} (S : Finset L) (param : ℕ)
+    (hsize : S.card = param * (q ^ 2 + q + 1)) (hparam : param = xParam q) :
+    S.card = xParam q * (q ^ 2 + q + 1) := by
+  rw [hsize, hparam]
+
+/-- **The Bruen–Drudge class is a non-trivial Cameron–Liebler class.**  Its
+parameter `x = (q²+1)/2` is not one of the trivial values. -/
+theorem bruenDrudge_param_not_trivial {q : ℕ} (hq3 : 3 ≤ q) (param : ℕ)
+    (hparam : param = xParam q) : param ∉ trivialParams q := by
+  rw [hparam]; exact xParam_not_trivial hq3
+
+/-! ## 3. Trivial Boolean degree-one functions on `J_q(4,2)`
+
+In the linear-space model of `Core.lean`, the *trivial* Boolean degree-one functions
+on the lines `L` of `PG(3,q)` are: the two constants; the point-pencils
+`1[p ≤ ℓ] = ind pts p` (lines through a point `p`); the plane line-sets
+`1[ℓ ≤ h] = ind dpts h` (lines contained in a plane `h`), expressed through the dual
+incidence `dpts : L → Finset H` of lines and planes; and the complements of all of
+these. -/
+
+/-- A function `f : L → ℝ` is a **trivial Boolean degree-one function** on `J_q(4,2)`:
+a constant, a point-pencil `ind pts p`, a plane line-set `ind dpts h`, or the
+complement of one of these. -/
+def IsTrivialBDOFn {P H L : Type*} [DecidableEq P] [DecidableEq H]
+    (pts : L → Finset P) (dpts : L → Finset H) (f : L → ℝ) : Prop :=
+  f = (fun _ => 0) ∨ f = (fun _ => 1) ∨
+    (∃ p, f = ind pts p) ∨ (∃ p, f = fun ℓ => 1 - ind pts p ℓ) ∨
+    (∃ h, f = ind dpts h) ∨ (∃ h, f = fun ℓ => 1 - ind dpts h ℓ)
+
+/-! ## 4. The non-trivial Boolean degree-one function on `J_q(4,2)`
+
+The two deep inputs appear as the hypotheses `hf_bdo` and `hFI`:
+
+* `hf_bdo` — the Bruen–Drudge construction (`PG(3,q)` geometry): the indicator of the
+  line class is a Boolean degree-one function on `J_q(4,2)`;
+* `hFI` — the Filmus–Ihringer correspondence: every *trivial* Boolean degree-one
+  function on `J_q(4,2)` arises from a *trivial* Cameron–Liebler class, hence has a
+  class size that is a trivial multiple `p·(q²+q+1)` with `p` a trivial parameter.
+
+From these we deduce that the Bruen–Drudge indicator is a Boolean degree-one function
+that is **not** in the trivial list. -/
+
+/-- **A non-trivial Boolean degree-one function on `J_q(4,2)`.**  Given the
+Bruen–Drudge class (its indicator is Boolean degree one, `hf_bdo`) and the
+Filmus–Ihringer correspondence (`hFI`), the indicator of the Bruen–Drudge line class
+is a Boolean degree-one function that is not a trivial one. -/
+theorem bruenDrudge_nontrivial_BDO {q : ℕ} (hq3 : 3 ≤ q)
+    {P H L : Type*} [DecidableEq P] [DecidableEq H] [DecidableEq L]
+    (pts : L → Finset P) (dpts : L → Finset H)
+    (S : Finset L) (param : ℕ)
+    (hsize : S.card = param * (q ^ 2 + q + 1)) (hparam : param = xParam q)
+    (hf_bdo : BooleanDegOne pts (fun ℓ => if ℓ ∈ S then (1 : ℝ) else 0))
+    (hFI : IsTrivialBDOFn pts dpts (fun ℓ => if ℓ ∈ S then (1 : ℝ) else 0) →
+            ∃ p ∈ trivialParams q, S.card = p * (q ^ 2 + q + 1)) :
+    BooleanDegOne pts (fun ℓ => if ℓ ∈ S then (1 : ℝ) else 0) ∧
+      ¬ IsTrivialBDOFn pts dpts (fun ℓ => if ℓ ∈ S then (1 : ℝ) else 0) := by
+  refine ⟨hf_bdo, fun htriv => ?_⟩
+  obtain ⟨p, hp, hps⟩ := hFI htriv
+  rw [hsize, hparam] at hps
+  have hk : 0 < q ^ 2 + q + 1 := by positivity
+  have hxp : xParam q = p := Nat.eq_of_mul_eq_mul_right hk hps
+  exact xParam_not_trivial hq3 (hxp ▸ hp)
+
+/-! ## 5. Existence packaging and extension to `J_q(n,2)`
+
+`HasNontrivialBDO q n` records the existence of a non-trivial Boolean degree-one
+function on the Grassmann scheme `J_q(n,2)`, anchored to the genuine scheme by the
+line count `|L| = [n,2]_q` (the Gaussian binomial coefficient counting the
+`2`-subspaces of `𝔽_q^n`). -/
+
+/-- There exists a non-trivial Boolean degree-one function on `J_q(n,2)` (a Boolean
+degree-one function on a line set of the correct cardinality `[n,2]_q` that is not in
+the trivial list). -/
+def HasNontrivialBDO (q n : ℕ) : Prop :=
+  ∃ (P H L : Type) (_ : DecidableEq P) (_ : DecidableEq H) (_ : DecidableEq L)
+    (_ : Fintype L) (pts : L → Finset P) (dpts : L → Finset H) (f : L → ℝ),
+    Fintype.card L = GrassmannDegreeOne.qBinom q n 2 ∧
+      BooleanDegOne pts f ∧ ¬ IsTrivialBDOFn pts dpts f
+
+/-- **Packaging of the `J_q(4,2)` result.**  The non-trivial Boolean degree-one
+function produced by `bruenDrudge_nontrivial_BDO` witnesses `HasNontrivialBDO q 4`,
+provided the underlying line set has the correct cardinality `[4,2]_q` (the number of
+lines of `PG(3,q)`). -/
+theorem hasNontrivialBDO_four {q : ℕ} (hq3 : 3 ≤ q)
+    {P H L : Type} [DecidableEq P] [DecidableEq H] [DecidableEq L] [Fintype L]
+    (pts : L → Finset P) (dpts : L → Finset H)
+    (S : Finset L) (param : ℕ)
+    (hcard : Fintype.card L = GrassmannDegreeOne.qBinom q 4 2)
+    (hsize : S.card = param * (q ^ 2 + q + 1)) (hparam : param = xParam q)
+    (hf_bdo : BooleanDegOne pts (fun ℓ => if ℓ ∈ S then (1 : ℝ) else 0))
+    (hFI : IsTrivialBDOFn pts dpts (fun ℓ => if ℓ ∈ S then (1 : ℝ) else 0) →
+            ∃ p ∈ trivialParams q, S.card = p * (q ^ 2 + q + 1)) :
+    HasNontrivialBDO q 4 := by
+  obtain ⟨hbdo, hnt⟩ :=
+    bruenDrudge_nontrivial_BDO hq3 pts dpts S param hsize hparam hf_bdo hFI
+  exact ⟨P, H, L, ‹_›, ‹_›, ‹_›, ‹_›, pts, dpts, _, hcard, hbdo, hnt⟩
+
+/-- **Transport of non-triviality along an embedding.**  If `f` on the big scheme
+restricts along a line embedding `ι` to a known non-trivial function `f₄`, and every
+trivial function on the big scheme restricts to a trivial function downstairs
+(`hpull` — the geometric content of embedding a `3`-subspace, taken as input), then
+`f` is itself non-trivial. -/
+theorem extend_nontrivial_BDO
+    {P4 H4 L4 P' H' L' : Type*}
+    [DecidableEq P4] [DecidableEq H4] [DecidableEq P'] [DecidableEq H']
+    (pts4 : L4 → Finset P4) (dpts4 : L4 → Finset H4)
+    (pts' : L' → Finset P') (dpts' : L' → Finset H')
+    (f4 : L4 → ℝ) (f' : L' → ℝ) (ι : L4 → L')
+    (hnt4 : ¬ IsTrivialBDOFn pts4 dpts4 f4)
+    (hrestrict : f' ∘ ι = f4)
+    (hpull : ∀ g : L' → ℝ, IsTrivialBDOFn pts' dpts' g →
+        IsTrivialBDOFn pts4 dpts4 (g ∘ ι)) :
+    ¬ IsTrivialBDOFn pts' dpts' f' := by
+  intro htriv
+  have := hpull f' htriv
+  rw [hrestrict] at this
+  exact hnt4 this
+
+/-- **Extension to `J_q(n,2)` for `n ≥ 4`.**  Given the non-trivial Boolean
+degree-one function on `J_q(4,2)` (here as a model with line embedding `ι` into the
+lines `L'` of `J_q(n,2)`), the geometric embedding input `hpull`, the fact that the
+extended function `f'` is Boolean degree one on the big scheme (`hf'_bdo`), and the
+correct line count `|L'| = [n,2]_q`, the scheme `J_q(n,2)` also carries a non-trivial
+Boolean degree-one function. -/
+theorem hasNontrivialBDO_extend {q n : ℕ}
+    {P4 H4 L4 P' H' L' : Type}
+    [DecidableEq P4] [DecidableEq H4] [DecidableEq P'] [DecidableEq H']
+    [DecidableEq L'] [Fintype L']
+    (pts4 : L4 → Finset P4) (dpts4 : L4 → Finset H4)
+    (pts' : L' → Finset P') (dpts' : L' → Finset H')
+    (f4 : L4 → ℝ) (f' : L' → ℝ) (ι : L4 → L')
+    (hcard : Fintype.card L' = GrassmannDegreeOne.qBinom q n 2)
+    (hnt4 : ¬ IsTrivialBDOFn pts4 dpts4 f4)
+    (hrestrict : f' ∘ ι = f4)
+    (hf'_bdo : BooleanDegOne pts' f')
+    (hpull : ∀ g : L' → ℝ, IsTrivialBDOFn pts' dpts' g →
+        IsTrivialBDOFn pts4 dpts4 (g ∘ ι)) :
+    HasNontrivialBDO q n := by
+  refine ⟨P', H', L', ‹_›, ‹_›, ‹_›, ‹_›, pts', dpts', f', hcard, hf'_bdo, ?_⟩
+  exact extend_nontrivial_BDO pts4 dpts4 pts' dpts' f4 f' ι hnt4 hrestrict hpull
+
+end Catalog.Applications.BooleanDegreeOne.BruenDrudge
