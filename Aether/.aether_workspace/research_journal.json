@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f25c8810",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nThis note sketches research directions that build on the direct, non-circular\nfactoradic development in `Catalog/NumberTheory/FactorialNumberSystem.lean`. Each\ndirection states it",
-      "quality_score": 0.7545600000000001,
-      "sorry_count": 4,
-      "theorem_count": 734,
-      "timestamp": "2026-06-25T03:46:44",
-      "title": "Alien Number Systems: Beyond Base-N"
-    },
-    {
       "cycle_id": "4ab1c862",
       "domain": "Logic",
       "key_insight": "# FUTURE DIRECTIONS — Betti–Whittaker Periods and Contragredients of GL(n)\n\nDerived from this cycle's findings (`BettiWhittakerPeriods.lean`,\n`BettiWhittakerFunctionalEquation.lean`). This cycle estab",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T11:39:22",
       "title": "The most natural next step is to attack the residue class isolated by the"
+    },
+    {
+      "cycle_id": "4bc14309",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Prismatic Purity for F-Crystals (Phase A, cycle 1)\n\nDerived from this cycle's findings in `CodimTwoExtension.lean` and\n`RestrictionEquivalence.lean`. Each conjecture is falsifiab",
+      "quality_score": 0.49242371929824563,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-28T12:12:09",
+      "title": "Prismatic Purity for F-Crystals on Regular Schemes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8043199999999999
     }
   ],
-  "last_updated": "2026-06-28T11:39:22",
+  "last_updated": "2026-06-28T12:12:09",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "8ffddeae",
-        "quality": 0.76734,
-        "theorems": 16,
-        "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
-      },
-      {
         "cycle_id": "b1625408",
         "quality": 0.69204,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.3921804000000001,
         "theorems": 0,
         "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+      },
+      {
+        "cycle_id": "4bc14309",
+        "quality": 0.49242371929824563,
+        "theorems": 8,
+        "title": "Prismatic Purity for F-Crystals on Regular Schemes"
       }
     ],
     "Bridges": [

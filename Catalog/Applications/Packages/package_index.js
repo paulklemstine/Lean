@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4bc14309",
     "filename": "prismatic_purity_for_f_crystals_on_regular_schemes.json",
     "pkg_num": 181,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.49242371929824563,
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
   {
@@ -5284,8 +5284,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "prismatic_purity_for_f_crystals_on_regular_schemes",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.49242371929824563,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Prismatic Purity for F-Crystals on Regular Schemes"
     }
