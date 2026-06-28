@@ -5020,7 +5020,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0eb9ce9e",
     "description": "Conjecture: For any prime power q and integers k, n with 2 ≤ k ≤ n/2, if n ≥ 2k+1 then every Boolean degree-one function on the Grassmann scheme J_q(n,k) is trivial (i.e., a linear combination of point indicators and their duals with coefficients in {0,1}). This extends the known result for q=2 and matches the thresholds proved for q=3,4,5 in the case k=2.",
     "domain_bridges": [
       "finite geometry",
@@ -5036,7 +5036,7 @@
     "proof_strategy": "Use the harmonic analysis on the Grassmann association scheme: compute the eigenvalues of the adjacency matrices, apply the linear programming bound for Boolean degree-one functions, and show that the feasible region of the corresponding linear program reduces to the trivial solutions when n ≥ 2k+1. The key step is to establish a sufficient gap between the first and second eigenspaces that forces the coefficients to be 0 or 1.",
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T05:25:46.726799+00:00",
     "title": "Degree-one triviality threshold for Grassmann schemes"
   },
