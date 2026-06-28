@@ -1,31 +1,40 @@
-# Theorem Trace — Möbius-Ladder Symmetry Certificate
+# Theorem Trace — Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs
 
-Internal anti-hallucination map. Every name below is taken verbatim from the
-Phase A Lean file `Catalog/Geometry/MobiusLadderCertificate.lean`
-(namespace `MobiusLadderCertificate`). The prose in `ARTICLE.md` and
-`RESEARCH_PAPER.md` states only these results.
+This internal file maps every Lean name from the Phase A output to its
+mathematical statement and records where it is discussed in `ARTICLE.md` and
+`RESEARCH_PAPER.md`. No result outside this list is claimed anywhere in the
+package.
 
-| Lean name | Kind | Mathematical statement | In ARTICLE.md | In RESEARCH_PAPER.md |
-|---|---|---|---|---|
-| `adj3` | def | Adjacency on `ZMod 6`: `j = i+1 ∨ i = j+1 ∨ j = i+3` | "rim plus rungs" description | Def. 1 |
-| `adj3_symm` | thm | `adj3` is a symmetric relation | implicit | Def. 1 (well-definedness) |
-| `MobiusLadder3` | def | The simple graph `M₃` on `ZMod 6` | "the graph M₃" | Def. 1 |
-| `MobiusLadder3.cubic` | thm | `∀ v, degree v = 3` | "every junction has exactly three cables" | Thm. 1 |
-| `MobiusLadder3.card_edges` | thm | `edgeFinset.card = 9` | "nine edges" | Prop. 2 |
-| `MobiusLadder3.adj_iff_parity` | thm | `Adj i j ↔ i.val % 2 ≠ j.val % 2` (`M₃ ≅ K₃,₃`) | "it IS the utility graph K₃,₃" | Thm. 3 |
-| `IsSym` | def | `σ` preserves adjacency both ways | "a symmetry" | Def. 4 |
-| `isSym_one` | thm | identity is a symmetry | "doing nothing is a symmetry" | Lem. 5(i) |
-| `isSym_mul` | thm | symmetries closed under composition | "chaining symmetries" | Lem. 5(ii) |
-| `isSym_inv` | thm | symmetries closed under inverse | "undoing a symmetry" | Lem. 5(iii) |
-| `baseEdge` | def | `s(0,1)` | "the anchor edge" | Def. 6 |
-| `cert` | def | nine explicit permutations | "nine moves" | Def. 6 |
-| `cert_isSym` | thm | every `σ ∈ cert` is a symmetry | "each move is legal" | Lem. 7 |
-| `cert_covers` | thm | images of `baseEdge` under `cert` hit all 9 edges | "the anchor reaches everywhere" | Lem. 8 |
-| `edge_transitive` | thm | any edge maps to any edge by a symmetry | MAIN: "all edges alike" | Thm. 9 (main) |
-| `isSym_addRight` | thm | translation `x ↦ x+c` is a symmetry | "rotations are symmetries" | Lem. 10 |
-| `vertex_transitive` | thm | any vertex maps to any vertex by a symmetry | "all corners alike" | Thm. 11 |
+## Definitions / structures (file: `Defs.lean`)
 
-No theorem outside this list is asserted as proved in the prose. The broader
-"Hamiltonian compression factor κ ≥ 2" program (half-rotation order-2
-automorphism, infinite Möbius-ladder family) is presented only as context and
-future work, not as a proved result of this file.
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `diam` | `diam n = (n/2 : ZMod n)`, the diameter element. | "the half-turn step" | Def. 2.1 |
+| `MLAdj` | `MLAdj n a b ↔ a-b = 1 ∨ a-b = -1 ∨ a-b = diam n`; the Möbius-ladder circulant adjacency with connection set `{±1, n/2}`. | "the wiring rule" | Def. 2.2 |
+| `TwoSymHamCycle` | A structure bundling `order : ZMod n ≃ ZMod n`, `auto : ZMod n ≃ ZMod n`, with `consecutive`, `preserves`, `involutive`, `nontrivial`, `rotation`. It is the witness for `κ(Γ) ≥ 2`. | "what a 2-symmetric cycle is" | Def. 2.3 |
+
+## Supporting arithmetic lemmas (file: `Defs.lean`)
+
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `two_mul_diam` | `Even n → (2 : ZMod n) * diam n = 0`. | "two half-turns cancel" | Lemma 3.1 |
+| `neg_diam` | `Even n → -diam n = diam n`. | "the half-turn is its own reverse" | Lemma 3.2 |
+| `diam_ne_zero` | `4 ≤ n → diam n ≠ 0`. | "a real, nontrivial swap" | Lemma 3.3 |
+
+## Main theorems (file: `MobiusLadder.lean`)
+
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `mobiusLadder_twoSymmetric` | For even `n ≥ 4`, `Nonempty (TwoSymHamCycle n (MLAdj n))`. | Main theorem (plain language) | Theorem 4.1 |
+| `mobiusLadder_cubic` | For even `n ≥ 4` and any `a`, `(univ.filter (MLAdj n a ·)).card = 3`. | "every junction has three roads" | Theorem 4.2 |
+
+## Base-case instances (file: `Instances.lean`)
+
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `MLAdj_four_eq_complete` | `MLAdj 4 a b ↔ a ≠ b` (i.e. `ML(4) = K₄`). | "the smallest example" | Prop. 5.1 |
+| `MLAdj_six_eq_completeBipartite` | `MLAdj 6 a b ↔ a.val % 2 ≠ b.val % 2` (i.e. `ML(6) = K_{3,3}`). | "the utility graph" | Prop. 5.2 |
+| `K4_kappa_ge_two` | `Nonempty (TwoSymHamCycle 4 (MLAdj 4))`. | base case κ(K₄) ≥ 2 | Cor. 5.3 |
+| `K33_kappa_ge_two` | `Nonempty (TwoSymHamCycle 6 (MLAdj 6))`. | base case κ(K₃,₃) ≥ 2 | Cor. 5.4 |
+| `K4_cubic` | `(univ.filter (MLAdj 4 a ·)).card = 3`. | K₄ is cubic | Cor. 5.5 |
+| `K33_cubic` | `(univ.filter (MLAdj 6 a ·)).card = 3`. | K₃,₃ is cubic | Cor. 5.6 |
