@@ -5518,7 +5518,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excluded minors for Z_n-gainable biased graphs"
   },
   {
-    "consumed_by_exp_id": "8ffddeae",
+    "consumed_by_exp_id": "",
     "description": "For any dimension d \u2265 2 and any positive integer N, the number of spanning trees of the d-dimensional grid graph with free boundaries (Cartesian product of d path graphs) having exactly N vertices is maximized when the side lengths are as equal as possible (i.e., differ by at most 1). Moreover, any maximizer must have this balanced shape.",
     "domains": [
       "Bridges"
@@ -5527,7 +5527,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24016v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T18:14:54.853800+00:00",
     "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
   },
@@ -5603,20 +5603,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T20:50:03.486421+00:00",
     "title": "Improved upper bound for P\u00f3lya tree coefficients"
-  },
-  {
-    "consumed_by_exp_id": "cff6413b",
-    "description": "For every edge density \u03b2 \u2208 [0,1] the minimum possible asymptotic density of semi\u2011induced copies of S_{2,1} in an n\u2011vertex graph G with edge density \u03b2 is given by the one\u2011parameter three\u2011class complement\u2011split construction: let t \u2208 [0,1] be the unique solution of \u03b2 = t(1 \u2212 t/2); then the minimum semi\u2011induced density equals p_min(\u03b2) = t\u00b2(1\u2212t).",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2597",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23351v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-26T21:11:05.213329+00:00",
-    "title": "Exact lower semi-inducibility profile for the red\u2011blue star S_{2,1}"
   },
   {
     "consumed_by_exp_id": "",
@@ -8013,6 +7999,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Finite Height \u2194 Semistability (Breuil\u2013Kisin shadow)\n\nBuilt on `Speculative/AutoResearch/FiniteHeightConverse.lean`, which proves, for a\nBreuil\u2013Kisin module presented by its Frobenius matrix `A` over a commutative ring `\ud835\udd16` with\nEisenstein element `E`:\n\n* **Converse** `NewtonConcentrated \u27f9 FiniteHeight` (`det A \u2223 E^N \u27f9` height `\u2264 N`,\n  constructively via `B = c \u2022 adjugate A`);\n* the **equivalence** `FiniteHeight \u2194 NewtonConcentrated` (`\u2194 \u2203 N, det A \u2223 E^N`);\n* height `0` = unit determinant (\u00e9tale); monotonicity; closure under `\u2295`; detection by the\n  determinant; non-vacuity over `\u211a[X]`.\n\nThe following conjectures are precise, falsifiable, and each is a concrete Lean target.\n\n## C1 \u2014 Tensor sub-additivity of height\nIf `\ud835\udd10` has height `\u2264 a` and `\ud835\udd11` has height `\u2264 b`, then the tensor product `\ud835\udd10 \u2297 \ud835\udd11`\n(Kronecker product `A \u2297\u2096 C` of Frobenius matrices) has height `\u2264 a + b`, and\n`det(A \u2297\u2096 C) = (det A)^{rank \ud835\udd11} \u00b7 (det C)^{rank \ud835\udd10}`.\n*Test:* model `\u2297` via `Matrix.kronecker`; combine `Matrix.det_kronecker` with\n`finiteHeight_iff_det`. Falsified if some rank-`2 \u2297 2` example exceeds `a + b`.\n\n## C2 \u2014 Duality preserves finite height\nThe dual `\ud835\udd10^\u2228` (Frobenius matrix `(det A) \u2022 A\u207b\u00b9 = adjugate A` up to the determinant twist)\nis of finite height iff `\ud835\udd10` is, and `height(\ud835\udd10^\u2228) + height(\ud835\udd10)` is controlled by the\n`E`-valuation of `det A`. *Test:* `det (adjugate A) = (det A)^{rank-1}`\n(`Matrix.det_adjugate`), so `NewtonConcentrated` transfers; bound the dual height.\n\n## C3 \u2014 Two-out-of-three in short exact sequences\nFor a block-upper-triangular Frobenius `[[A, *],[0, C]]` (an extension `0 \u2192 \ud835\udd10' \u2192 \ud835\udd10 \u2192 \ud835\udd10'' \u2192 0`\nof Breuil\u2013Kisin modules), `\ud835\udd10` is of finite height iff both `\ud835\udd10'` and `\ud835\udd10''` are, since\n`det = det A \u00b7 det C`. *Test:* `Matrix.det_fromBlocks_zero\u2082\u2081` already gives the determinant;\ngeneralize `finiteHeight_directSum` to a nonzero upper-right block.\n\n## C4 \u2014 Sharp height = top elementary divisor (Smith normal form)\nOver a DVR `\ud835\udd16 = k[[u]]`, `E = u`, the **minimal** height of `\ud835\udd10` equals the `u`-adic\nvaluation of the **largest** elementary divisor of `A` (its last Smith-normal-form exponent),\nnot merely `v_u(det A)`; the two agree iff `\ud835\udd10` is cyclic over `\ud835\udd16[\u03c6]`. *Test:* implement\nSmith normal form for `k[[u]]`-matrices (PID) and compare the maximal exponent with the least\n`h` such that `u^h \u2022 I = A \u00b7 B`. Falsified by any non-cyclic module whose largest exponent is\nstrictly below `v_u(det A)` while still being the minimal height.\n\n## C5 \u2014 Monodromy refinement: crystalline vs semistable\nEnrich a Breuil\u2013Kisin module with a second operator `N` (the monodromy) satisfying\n`N \u2218 \u03c6 = E \u00b7 (something) \u00b7 \u03c6 \u2218 N` in matrix form. Conjecture: a finite-height module is\n**crystalline** (no monodromy) iff there is a basis in which `N = 0`, and **semistable but\nnot crystalline** iff `N \u2260 0` is nilpotent commuting with `A` up to the `E`-twist. This is the\nmatrix shadow distinguishing the two regimes that the present file collapses. *Test:* define\nthe `(A, N)` pair, prove that `N` nilpotent + finite height is closed under `\u2295`/`\u2297`, and that\n`N = 0` is detected by an integral conjugation.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2749",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f347664d",
+    "status": "available",
+    "timestamp": "2026-06-28T05:03:32.880944+00:00",
+    "title": "Built on `Speculative/AutoResearch/FiniteHeightConverse.lean`, which proves, for"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8086,7 +8087,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "dbb7efcb",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -8096,7 +8097,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -8349,7 +8350,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "4554c3a3",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -8359,7 +8360,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -8454,7 +8455,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "9ee5d694",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8464,7 +8465,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

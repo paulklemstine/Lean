@@ -9648,7 +9648,7 @@
       "math.CO/05C30",
       "math.SP/05C50"
     ],
-    "consumed_by_exp_id": "8ffddeae",
+    "consumed_by_exp_id": "",
     "description": "For any dimension d ≥ 2 and any positive integer N, the number of spanning trees of the d-dimensional grid graph with free boundaries (Cartesian product of d path graphs) having exactly N vertices is maximized when the side lengths are as equal as possible (i.e., differ by at most 1). Moreover, any maximizer must have this balanced shape.",
     "domain_bridges": [
       "spectral graph theory",
@@ -9664,7 +9664,7 @@
     "proof_strategy": "Extend the heat-trace Schur-concavity argument from perfect-power volumes to arbitrary N by showing that the logarithm of the spanning tree count is a symmetric Schur-concave function of the logarithmic side lengths. Use discrete majorization and smoothing techniques to prove that any imbalance in side lengths can be locally adjusted to increase the spanning tree count, thereby establishing that the unique maximizers (up to permutation) are the balanced tuples.",
     "research_mode": "team",
     "source_exp_id": "2606.24016v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T18:14:54.853800+00:00",
     "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
   },
@@ -9794,30 +9794,6 @@
     "status": "available",
     "timestamp": "2026-06-26T20:50:03.486421+00:00",
     "title": "Improved upper bound for Pólya tree coefficients"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.CO:2305.XXXX"
-    ],
-    "consumed_by_exp_id": "cff6413b",
-    "description": "For every edge density β ∈ [0,1] the minimum possible asymptotic density of semi‑induced copies of S_{2,1} in an n‑vertex graph G with edge density β is given by the one‑parameter three‑class complement‑split construction: let t ∈ [0,1] be the unique solution of β = t(1 − t/2); then the minimum semi‑induced density equals p_min(β) = t²(1−t).",
-    "domain_bridges": [
-      "extremal combinatorics",
-      "graphons"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2597",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Apply a transfer argument to reduce the extremal problem to optimizing over degree distributions. Use Lagrange multipliers to show that an optimal distribution is supported on at most three points. Realize these three points by a three‑class complement‑split graphon (two clique parts and an independent set part with adjustable internal density). Solve the moment equations linking the graphon parameters to β and to the semi‑induced count, yielding the explicit formula p_min(β)=t²(1−t) where t satisfies β=t(1−t/2).",
-    "research_mode": "team",
-    "source_exp_id": "2606.23351v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-26T21:11:05.213329+00:00",
-    "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
   },
   {
     "ambition_level": "extension",
@@ -14049,6 +14025,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Finite Height ↔ Semistability (Breuil–Kisin shadow)\n\nBuilt on `Speculative/AutoResearch/FiniteHeightConverse.lean`, which proves, for a\nBreuil–Kisin module presented by its Frobenius matrix `A` over a commutative ring `𝔖` with\nEisenstein element `E`:\n\n* **Converse** `NewtonConcentrated ⟹ FiniteHeight` (`det A ∣ E^N ⟹` height `≤ N`,\n  constructively via `B = c • adjugate A`);\n* the **equivalence** `FiniteHeight ↔ NewtonConcentrated` (`↔ ∃ N, det A ∣ E^N`);\n* height `0` = unit determinant (étale); monotonicity; closure under `⊕`; detection by the\n  determinant; non-vacuity over `ℚ[X]`.\n\nThe following conjectures are precise, falsifiable, and each is a concrete Lean target.\n\n## C1 — Tensor sub-additivity of height\nIf `𝔐` has height `≤ a` and `𝔑` has height `≤ b`, then the tensor product `𝔐 ⊗ 𝔑`\n(Kronecker product `A ⊗ₖ C` of Frobenius matrices) has height `≤ a + b`, and\n`det(A ⊗ₖ C) = (det A)^{rank 𝔑} · (det C)^{rank 𝔐}`.\n*Test:* model `⊗` via `Matrix.kronecker`; combine `Matrix.det_kronecker` with\n`finiteHeight_iff_det`. Falsified if some rank-`2 ⊗ 2` example exceeds `a + b`.\n\n## C2 — Duality preserves finite height\nThe dual `𝔐^∨` (Frobenius matrix `(det A) • A⁻¹ = adjugate A` up to the determinant twist)\nis of finite height iff `𝔐` is, and `height(𝔐^∨) + height(𝔐)` is controlled by the\n`E`-valuation of `det A`. *Test:* `det (adjugate A) = (det A)^{rank-1}`\n(`Matrix.det_adjugate`), so `NewtonConcentrated` transfers; bound the dual height.\n\n## C3 — Two-out-of-three in short exact sequences\nFor a block-upper-triangular Frobenius `[[A, *],[0, C]]` (an extension `0 → 𝔐' → 𝔐 → 𝔐'' → 0`\nof Breuil–Kisin modules), `𝔐` is of finite height iff both `𝔐'` and `𝔐''` are, since\n`det = det A · det C`. *Test:* `Matrix.det_fromBlocks_zero₂₁` already gives the determinant;\ngeneralize `finiteHeight_directSum` to a nonzero upper-right block.\n\n## C4 — Sharp height = top elementary divisor (Smith normal form)\nOver a DVR `𝔖 = k[[u]]`, `E = u`, the **minimal** height of `𝔐` equals the `u`-adic\nvaluation of the **largest** elementary divisor of `A` (its last Smith-normal-form exponent),\nnot merely `v_u(det A)`; the two agree iff `𝔐` is cyclic over `𝔖[φ]`. *Test:* implement\nSmith normal form for `k[[u]]`-matrices (PID) and compare the maximal exponent with the least\n`h` such that `u^h • I = A · B`. Falsified by any non-cyclic module whose largest exponent is\nstrictly below `v_u(det A)` while still being the minimal height.\n\n## C5 — Monodromy refinement: crystalline vs semistable\nEnrich a Breuil–Kisin module with a second operator `N` (the monodromy) satisfying\n`N ∘ φ = E · (something) · φ ∘ N` in matrix form. Conjecture: a finite-height module is\n**crystalline** (no monodromy) iff there is a basis in which `N = 0`, and **semistable but\nnot crystalline** iff `N ≠ 0` is nilpotent commuting with `A` up to the `E`-twist. This is the\nmatrix shadow distinguishing the two regimes that the present file collapses. *Test:* define\nthe `(A, N)` pair, prove that `N` nilpotent + finite height is closed under `⊕`/`⊗`, and that\n`N = 0` is detected by an integral conjugation.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2749",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f347664d",
+    "status": "available",
+    "timestamp": "2026-06-28T05:03:32.880944+00:00",
+    "title": "Built on `Speculative/AutoResearch/FiniteHeightConverse.lean`, which proves, for"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -14147,7 +14143,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "dbb7efcb",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -14160,7 +14156,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -14500,7 +14496,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4554c3a3",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domain_bridges": [],
     "domains": [
@@ -14513,7 +14509,7 @@
     "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -14640,7 +14636,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9ee5d694",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -14653,7 +14649,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
