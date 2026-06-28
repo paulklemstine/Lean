@@ -14051,7 +14051,7 @@
       "MullerSpeyer2020",
       "GeorgeElectrical"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dc303029",
     "description": "We propose that the boundary correlation matrix of an Ising model on a reduced planar graph in a disk can be expressed as a non-recursive function of the discrete CKP equation variables, which transform under Ising Y-Δ moves. This factorization through discrete CKP variables provides a direct solution to the inverse Ising problem, analogous to the chamber ansatz in electrical networks.",
     "domain_bridges": [
       "discrete_integrable_systems",
@@ -14066,7 +14066,7 @@
     "proof_strategy": "Construct a correspondence between Ising model parameters and discrete CKP variables using Y-Δ move invariance, then show that the boundary correlations are polynomial functions in these variables, enabling recovery of coupling constants via algebraic inversion.",
     "research_mode": "team",
     "source_exp_id": "2606.15082v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T23:54:36.461922+00:00",
     "title": "Inverse Ising Problem for Reduced Planar Graphs via Discrete CKP and Y-Δ Moves"
   },
