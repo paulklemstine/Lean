@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f7ad584",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
     "domains": [
       "EML",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31c996e4",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1932,7 +1932,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a68949c",
     "description": "For every binary delta-matroid and every nontrivial twuality operator $\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the partial-$\\bullet$ polynomial $^\\partial w_D^\\bullet(z)$ is either even, odd, or both even-interpolating and odd-interpolating.",
     "domains": [
       "Algebra"
@@ -1941,7 +1941,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T10:41:26.252321+00:00",
     "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
   },
@@ -4275,7 +4275,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dominant Orchard Denominator Root Comes from the Last Complete-Graph Matching Factor"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12b5f4b2",
     "description": "In the h=1 specialization of additive strong blocking sets, i.e. ordinary strong blocking sets in PG(2,2), a finite set S of projective points is strong blocking if and only if it contains at least 6 of the 7 points. Equivalently, the shortest nondegenerate minimal binary linear code of dimension 3 has length 6 under the projective-system correspondence.",
     "domains": [
       "Geometry",
@@ -4285,7 +4285,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T10:08:51.465617+00:00",
     "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
   },
