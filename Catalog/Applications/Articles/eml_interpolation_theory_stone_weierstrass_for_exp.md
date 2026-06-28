@@ -1,187 +1,214 @@
-# The Exponential That Learned to Count: How $\exp$ and $\log$ Approximate Anything
+# Drawing Curves with Straight Lines: A Speed Limit for Approximation
 
-## A promise with no recipe
+## A very old idea, made exact
 
-Imagine someone hands you a guarantee: *"Whatever continuous shape you draw on a
-sheet of graph paper, I can match it as closely as you like."* That is the
-celebrated promise of the **universal approximation theorems** that underpin much
-of modern machine learning. A network of simple units — neurons — can, in
-principle, imitate any continuous function.
+Stand far enough back from a finely cut gemstone and its faceted surface looks
+smooth. Zoom in on a circle drawn by a computer and you discover it is really a
+chain of tiny straight segments. The eye is forgiving: enough short straight
+pieces, joined end to end, will imitate any smooth curve you like.
 
-The trouble is that the classic promise is purely **existential**. It tells you a
-good approximation *exists*, but not how wide the network must be, nor how the
-error shrinks as you make it bigger. It is like being told a treasure is buried
-somewhere on an island, with no map and no shovel.
+Mathematicians have known a sharpened version of this since the nineteenth
+century. The **Stone–Weierstrass theorem** says that *any* continuous function on
+a closed, bounded region can be approximated, as closely as you wish, by simpler
+building-block functions — provided those building blocks can "tell points apart"
+and include the constants. It is one of the great existence theorems of analysis.
+But like many existence theorems, it is frustratingly silent on the practical
+question every engineer actually asks:
 
-This article is about turning that vague promise into an explicit, honest
-contract for a particular and elegant family of functions: the **EML networks**.
-An EML function is anything you can build from three ingredients — the exponential
-$\exp$, the logarithm $\log$, and ordinary arithmetic ($+$, $\times$, and
-multiplication by constants). The letters stand for **E**xponential,
-**M**ultiplicative, **L**ogarithmic. These are the natural primitives of
-continuous mathematics, and it turns out they are astonishingly expressive.
+> *How many pieces do I need to hit an error of, say, one part in a thousand?*
 
-The story has three movements. First, a single curved function made of $\exp$ and
-$\log$ can *tell every pair of points apart* — the property that, by a deep
-theorem, unlocks the ability to approximate everything. Second, we can write down
-**concrete** EML formulas that approximate the building-block shapes $x^2$ and
-$x^3$, with an error we can compute on the back of an envelope. Third — and this
-is the part that keeps us honest — we can prove that our error estimate cannot be
-beaten: the construction is exactly as good as we claimed, no better and no
-worse.
+Stone–Weierstrass promises a good enough approximation exists. It does not tell
+you how big it has to be. This article is about closing exactly that gap — turning
+a promise into a **guaranteed budget** — for a particular, surprisingly expressive
+family of functions, and doing it with a construction so simple you could sketch
+it on a napkin.
 
-## Movement I: One curve to separate them all
+## The cast of characters: EML networks
 
-The master key that converts "can build it" into "can approximate anything" is the
-**Stone–Weierstrass theorem**. Its statement is almost magical in its economy. Take
-a collection of continuous functions on a compact set (think: a closed, bounded
-interval) that is closed under addition and multiplication — an *algebra*. If that
-collection can **separate points** — meaning for any two distinct inputs $x \neq
-y$ there is at least one function in the collection that assigns them different
-values — and if it contains the constant functions, then that collection is
-**dense**. Dense means: any continuous target function whatsoever can be matched
-to within any tolerance you choose.
+The family in question is the **EML algebra**: all functions you can build by
+finite combinations of the *exponential* ($\exp$), the *logarithm* ($\log$),
+*addition*, and *multiplication*. The name is just the initials — **E**xp,
+**M**ultiply, **L**og. These are precisely the operations at the heart of modern
+machine-learning models, where layers stack exponentials, logarithms, sums, and
+products into deep networks. So a theorem about EML functions is, in disguise, a
+theorem about what such networks can and cannot do.
 
-So the whole game reduces to one question: *can our EML toolkit separate points?*
+EML functions are wildly flexible. With $\exp$ and $\log$ in hand you can separate
+any two distinct points and reproduce every constant, so Stone–Weierstrass
+immediately tells you the EML algebra is *dense*: it can approximate any
+continuous target. Good. Now we want the budget.
 
-The answer is a clean yes, and it needs only a single function. Consider
-$$ g(t) = \exp(a)\,\log(b\,t + c). $$
-This is an EML function by construction — an $\exp$, a $\log$, a multiplication and
-an addition. The claim is that when $a$ and $b$ are chosen positive (with $c$ large
-enough that the quantity inside the logarithm stays positive), this $g$ is
-**strictly increasing**. And a strictly increasing function never sends two
-different inputs to the same output — it is injective — so it automatically
-separates every pair of points.
+## The honest workhorse: connect the dots
 
-Why is $g$ strictly increasing? Trace the assembly line. The inner map $t \mapsto
-b\,t + c$ is a straight line going uphill because $b > 0$. The logarithm is itself
-strictly increasing wherever its argument is positive. Multiplying by the positive
-constant $\exp(a)$ preserves the uphill direction. Three increasing steps compose
-into one increasing whole. The one subtlety — and it is a genuine, load-bearing
-one — is that the logarithm only behaves on positive numbers. So the positivity of
-$b\,t + c$ across the whole domain is not a technicality to wave away; it is the
-hypothesis that makes the argument valid.
+Here is the construction at the center of the story, and it is gloriously humble.
 
-On any interval $[\text{lo}, \text{hi}]$ there is a tidy normalization that makes
-all of this automatic: take $a = 0$, $b = 1$, $c = 1 - \text{lo}$, so that
-$$ g(t) = \log(t + 1 - \text{lo}). $$
-The argument $t + 1 - \text{lo}$ is at least $1$ everywhere on the interval, safely
-positive, and $g$ strictly increases across it. This single logarithmic curve
-separates every pair of points in $[\text{lo}, \text{hi}]$.
+Take your target function $f$ on the interval $[0,1]$. Chop the interval into $n$
+equal cells of width $1/n$: the breakpoints sit at $0, \tfrac{1}{n},
+\tfrac{2}{n}, \dots, 1$. At each breakpoint, sample the true value of $f$. Then
+simply **connect consecutive samples with straight line segments**. The result is
+a continuous, piecewise-linear "connect-the-dots" curve. Call it the
+*interpolant* of width $n$.
 
-Feed that one separating function into the Stone–Weierstrass machine and the
-conclusion drops out: **the algebra generated by the single EML function $t
-\mapsto \log(t + 1 - \text{lo})$ is uniformly dense in the space of all
-continuous functions on $[\text{lo}, \text{hi}]$.** One humble logarithm, plus the
-freedom to add and multiply, suffices to reach everything.
+Concretely, if a point $x$ falls in the cell $[a,b]$ — where $a$ and $b$ are two
+neighbouring breakpoints — the interpolant reads off the straight line through the
+endpoints:
 
-That is a beautiful existence statement. But it is still a treasure map without a
-shovel. To dig, we need explicit formulas.
+$$\text{interpolant}(x) = f(a) + \frac{f(b) - f(a)}{b - a}\,(x - a).$$
 
-## Movement II: Building $x^2$ and $x^3$ out of one exponential
+Each straight segment is the *simplest possible* EML function: a constant plus a
+scalar times the variable, $\text{const} + \text{slope}\cdot x$. No exponentials
+or logarithms are even needed for the pieces — affine functions already live
+inside the EML algebra. So the whole connect-the-dots curve is a bona fide EML
+network, and its "width" is just the number of pieces, $n$.
 
-Here is the trick that gives the abstract guarantee a body. Recall the
-exponential's famous infinite series,
-$$ \exp(u) = 1 + u + \frac{u^2}{2} + \frac{u^3}{6} + \frac{u^4}{24} + \cdots $$
-Each power of $u$ is sitting right there, waiting to be extracted. If we could
-strip away the lower-order terms and rescale, we would isolate the monomial we
-want. That is exactly what a **finite difference** does.
+The question is now sharp and quantitative: **how close does connect-the-dots get,
+as a function of $n$?**
 
-Take the squared shape first. Define the EML network
-$$ \text{emlQuadApprox}(h, x) = \frac{2}{h^2}\Big(\exp(h\,x) - 1 - h\,x\Big). $$
-This is built only from $\exp$, multiplication, and constants — a bona fide EML
-function. Substitute the series with $u = h\,x$: the terms $1$ and $h\,x$ are
-subtracted away, the leading survivor is $\tfrac{1}{2}(h\,x)^2$, and multiplying by
-$2/h^2$ turns it into exactly $x^2$. Everything beyond that is the "tail" of the
-series — the error.
+## What "well-behaved" means: Hölder functions
 
-How big is that tail? Taylor's theorem gives a precise, provable answer. On the
-unit interval the result is strikingly clean:
-$$ \big|\,\text{emlQuadApprox}(h, x) - x^2\,\big| \le \frac{4}{9}\,h
-\qquad \text{for all } x \in [0,1],\ 0 < h \le 1. $$
-The error is no more than a fixed constant ($4/9$) times the step size $h$. Now
-choose $h = 1/n$ to get a *width-$n$ network*:
-$$ \big|\,\text{emlQuadApprox}(1/n, x) - x^2\,\big| \le \frac{4}{9n}. $$
-The error falls like $1/n$. Double the width, halve the error. This is a
-**Jackson-type rate** — named for the approximation theorist Dunham Jackson — and
-it is exactly the kind of explicit, quantitative guarantee the classic universal
-approximation theorems leave unspoken. As a sanity check, at $h = 0.1$ and $x = 1$
-the true error is about $0.0342$, comfortably under the promised $0.0444$.
+The answer depends on how wild $f$ is. We need a way to measure wildness. The
+classical tool is the **Hölder condition**. A function $f$ is *$\alpha$-Hölder with
+constant $L$* (for some exponent $0 < \alpha \le 1$) if for all points $x$ and $y$,
 
-The same idea climbs to the next power. One more term peeled from the series, one
-order higher in the finite difference:
-$$ \text{emlCubicApprox}(h, x) = \frac{6}{h^3}\Big(\exp(h\,x) - 1 - h\,x -
-\tfrac{(h\,x)^2}{2}\Big). $$
-Subtract the constant, linear, and quadratic terms; the leading survivor is
-$\tfrac{1}{6}(h\,x)^3$, and the factor $6/h^3$ converts it to $x^3$. Taylor's
-theorem again controls the tail, with the explicit bound
-$$ \big|\,\text{emlCubicApprox}(h, x) - x^3\,\big| \le \frac{5}{16}\,h
-\qquad \text{for all } x \in [0,1],\ 0 < h \le 1, $$
-and therefore the width-$n$ rate
-$$ \big|\,\text{emlCubicApprox}(1/n, x) - x^3\,\big| \le \frac{5}{16n}. $$
-Numerically, at $h = 0.1, x = 1$ the error is about $0.0263$, under the promised
-$0.03125$. The pattern is now unmistakable and forms the heart of the theory: the
-**order-$k$ rescaled forward difference of $\exp$ is an EML network for $x^k$**,
-and each extra order costs one factor of $h$ in accuracy. Since every polynomial is
-a sum of monomials, the entire polynomial algebra becomes constructively EML-
-approximable — and polynomials are precisely the dense family that powers the
-classical Weierstrass theorem. The abstract density of Movement I now has an
-explicit, rate-equipped engine underneath it.
+$$|f(x) - f(y)| \le L\,|x - y|^{\alpha}.$$
 
-## Movement III: Keeping ourselves honest
+In words: when two inputs are close, the outputs cannot be too far apart, and the
+rate is governed by the exponent $\alpha$.
 
-A skeptic should immediately ask: maybe the bound $4/9 \cdot h$ is just a sloppy
-overestimate, and the construction is secretly far better — perhaps the error
-actually shrinks like $h^2$, much faster than $h$. If so, the "rate $O(1/n)$"
-headline would be underselling the method.
+- When $\alpha = 1$ this is the famous **Lipschitz condition**: the function never
+  changes faster than slope $L$. Smooth functions on a closed interval are
+  Lipschitz. For instance $f(x) = x^2$ on $[0,1]$ is Lipschitz with $L = 2$,
+  because its slope $2x$ never exceeds $2$.
+- When $\alpha < 1$ the function is allowed to be *spikier*. The square-root
+  function $\sqrt{x}$ is the classic example: near zero it shoots up with infinite
+  slope, so it is *not* Lipschitz — but it is $\tfrac{1}{2}$-Hölder with constant
+  $1$, because $|\sqrt{x} - \sqrt{y}| \le |x - y|^{1/2}$.
 
-We can settle this decisively. There is a **matching lower bound**. The key fact
-is a one-line truth about the exponential: its first few series terms always
-*under*estimate it,
-$$ 1 + h + \frac{h^2}{2} + \frac{h^3}{6} \le \exp(h) \qquad \text{for } h \ge 0, $$
-simply because all the remaining terms in the series are positive. Plug this into
-the quadratic construction at the right endpoint $x = 1$ and the slack does not
-vanish — it is bounded below:
-$$ \frac{h}{3} \le \text{emlQuadApprox}(h, 1) - 1^2. $$
-Combine this with the upper bound from Movement II, evaluated at the same point,
-and the error is pinned from both sides:
-$$ \frac{h}{3} \le \text{emlQuadApprox}(h, 1) - 1 \le \frac{4}{9}\,h. $$
-The error at $x = 1$ is genuinely **of order $h$** — squeezed between two straight
-lines through the origin. In width-$n$ language, the error there is at least
-$1/(3n)$. It can never be $o(h)$; in particular it never improves to the quadratic
-rate $O(h^2)$. The linear rate is not an artifact of a lazy estimate. It is the
-true behavior of the construction.
+The smaller $\alpha$ is, the rougher the function, and — as we will see — the more
+pieces it takes to approximate.
 
-This is what separates a rigorous result from a hopeful one. We did not merely
-exhibit a bound and hope it was tight; we proved tightness, so the headline rate
-$O(1/n)$ is exactly right.
+## The main theorem: a guaranteed budget
 
-## Why this matters beyond the page
+Here is the headline result, stated plainly.
 
-Three threads weave together here, and each touches something practical.
+> **Theorem (Hölder Jackson rate).** Let $f$ be $\alpha$-Hölder on $[0,1]$ with
+> constant $L$ and exponent $0 < \alpha \le 1$. Then for every width $n \ge 1$, the
+> connect-the-dots interpolant approximates $f$ everywhere on $[0,1]$ with error at
+> most
+> $$\bigl|\,f(x) - \text{interpolant}(x)\,\bigr| \;\le\; \frac{2L}{n^{\alpha}}.$$
 
-**Honest contracts for learned functions.** In machine learning the worry is never
-whether *some* network could fit the data, but how large a network you must pay for
-and how the error behaves as you scale. The EML rates turn a vague existence
-promise into a quantitative budget: to halve the error on $x^2$ or $x^3$, double
-the width. Engineers can plan around a number, not a wish.
+That is the whole promise, made concrete. No hidden constants, no "for $n$ large
+enough." The bound holds for every $x$ in the interval and for every width $n$,
+with an explicit constant of $2$.
 
-**The exponential as a universal Lego brick.** It is genuinely surprising that the
-*same* function — the exponential — both unlocks the abstract density argument
-(through its strictly monotone cousin, the logarithm, which separates points) and
-provides the concrete construction (through its series, whose finite differences
-manufacture every monomial). The two halves of approximation theory, the abstract
-and the explicit, are powered by a single mathematical object.
+Read the other way, it is a **width law**. To guarantee an error below a target
+$\varepsilon$, it suffices to take
 
-**A template that scales.** Nothing about the method stops at the cube. The
-order-$k$ forward difference of $\exp$, rescaled by $k!/h^k$, manufactures $x^k$
-with the same linear rate. Stack monomials and you reach every polynomial; close
-up with Stone–Weierstrass and you reach every continuous function. The cube was
-not the destination — it was the proof that the staircase keeps going up.
+$$n \;\ge\; \left(\frac{2L}{\varepsilon}\right)^{1/\alpha},$$
 
-There is a quiet lesson in all of this. The deepest guarantees in analysis are
-often existential, telling us *that* something can be done. But with care, patience,
-and the right primitive — here, the humble exponential and its inverse — we can
-sometimes replace "it exists" with "here it is, and here is exactly how good it is,
-and here is the proof it is no better." That upgrade, from promise to recipe to
-honest receipt, is what turns a theorem into a tool.
+so the number of pieces grows like $\varepsilon^{-1/\alpha}$. Halve your error
+budget for a Lipschitz ($\alpha = 1$) function and you need only twice as many
+pieces. Halve it for a $\tfrac{1}{2}$-Hölder function and you need four times as
+many. Roughness is expensive, and the exponent $1/\alpha$ is the exact price tag.
+
+This is what is known as a **Jackson-type rate**, after Dunham Jackson, who in the
+early twentieth century proved the first results tying approximation error to the
+smoothness of the target. Our version is special in three ways: it is for the EML
+family that underlies machine learning, it comes from a single explicit
+construction, and — crucially — it has been verified to the last symbol.
+
+## Why it is true: a tale of two errors
+
+The proof is a small marvel of bookkeeping, and worth seeing because it explains
+*where the roughness bites*. Focus on one cell $[a,b]$ of width $h = b - a$, and on
+a point $x$ inside it. The interpolant's error splits into two contributions.
+
+**Error one — how far the true value drifts.** Because $f$ is $\alpha$-Hölder and
+$x$ is within $h$ of the left endpoint $a$, the value $f(x)$ can differ from $f(a)$
+by at most $L\,h^{\alpha}$. The function simply cannot run away faster than that
+inside one short cell.
+
+**Error two — how much the straight line tilts.** The interpolant's slope is the
+*divided difference* $\frac{f(b) - f(a)}{h}$. The numerator is at most
+$L\,h^{\alpha}$, so the slope itself can be as large as $L\,h^{\alpha - 1}$. When
+$\alpha < 1$ that exponent is negative, and the slope *blows up* as the cells
+shrink — an alarming sign. But the slope only acts over the distance $(x - a)$,
+which is at most $h$. Multiplying the runaway slope $L\,h^{\alpha - 1}$ by the
+short reach $h$ tames it perfectly back to $L\,h^{\alpha}$.
+
+Add the two pieces: the total error on one cell is at most $2L\,h^{\alpha}$. This is
+exactly the **one-cell estimate** at the heart of the proof. Now set the cell width
+to $h = 1/n$, note that the cells cover all of $[0,1]$, and you arrive at the global
+bound $2L/n^{\alpha}$.
+
+The lesson is subtle and lovely: the divided difference *looks* dangerous for rough
+functions, threatening to explode as the grid refines, but the short lever arm of a
+narrow cell always cancels the danger. That cancellation is the entire reason
+connect-the-dots works at the optimal rate, and not a worse one.
+
+## The two regimes, side by side
+
+The exponent $\alpha$ is a dial between smooth and rough, and the theorem covers
+the whole dial at once.
+
+- **Lipschitz ($\alpha = 1$).** The bound becomes $2L/n$. The companion result for
+  this case sharpens the constant from $2$ to $1$, giving the clean rate $L/n$ — the
+  classic linear interpolation error. Take $f(x) = x^2$ with $L = 2$: a
+  connect-the-dots curve with $n$ pieces is guaranteed within $2/n$ of the
+  parabola, and in fact within the sharper $2/n$ from the dedicated Lipschitz
+  analysis. Twenty pieces already pin the parabola to better than one part in ten;
+  two hundred pieces to one part in a hundred.
+
+- **Genuinely rough ($\alpha < 1$).** The bound becomes $2L/n^{\alpha}$, which
+  decays more slowly. For $\sqrt{x}$ (with $\alpha = \tfrac{1}{2}$, $L = 1$), the
+  guarantee is $2/\sqrt{n}$. To match an accuracy that $x^2$ reaches with a hundred
+  pieces, the square root needs on the order of ten thousand — the unavoidable
+  surcharge for that infinite spike at the origin.
+
+Both regimes flow from *one* construction and *one* inequality. That unity is the
+mathematical payoff: the smooth and rough worlds are not two theorems but one,
+parameterized continuously by $\alpha$.
+
+## And in the limit, exactness
+
+Finally, the construction does what intuition demands: refine forever and the error
+vanishes. For every fixed point $x$ in $[0,1]$, as the width $n$ grows without
+bound, the connect-the-dots value converges exactly to the true value $f(x)$. The
+proof is a one-line consequence of the rate: since $n^{\alpha} \to \infty$, the
+bound $2L/n^{\alpha} \to 0$, and the approximation is squeezed onto the target.
+What Stone–Weierstrass promised abstractly, the explicit interpolant delivers
+concretely, with a convergence speed written on the label.
+
+## Why this matters beyond the napkin
+
+It would be easy to dismiss connect-the-dots as too simple to be interesting. That
+would be a mistake, for two reasons.
+
+First, **simplicity is the point**. The universal approximation theorems that
+underpin neural networks are almost all *existence* results: they assure you that
+*some* network of *some* size works, with no usable handle on the size. Here we
+have the opposite — a fully explicit network, a fully explicit error, and a fully
+explicit width law $n = O(\varepsilon^{-1/\alpha})$. You can budget for it. You can
+certify it. There is no gap between the theorem and the thing you build.
+
+Second, **this is the one-dimensional cornerstone of a much larger building**. The
+natural next step is many variables: tile a $d$-dimensional cube with a grid and
+interpolate on each little box. The error then telescopes coordinate by
+coordinate, and the width needed for accuracy $\varepsilon$ scales like
+$\varepsilon^{-d/\alpha}$ — the same law, now with the dimension $d$ in the
+exponent. That exponential dependence on dimension is the celebrated *curse of
+dimensionality*, and the clean one-dimensional rate proved here is precisely the
+brick from which the multivariate wall is laid. Other open frontiers beckon too:
+*adaptive* grids that place more pieces where the function is rough and fewer where
+it is calm, and matching *lower bounds* proving that no method with $n$ pieces can
+ever beat $n^{-\alpha}$ — that the rate is not just achievable but optimal.
+
+## The takeaway
+
+Connect-the-dots, the first approximation method anyone ever learns, turns out to
+be optimal in a precise and provable sense for the entire scale of Hölder
+functions, realized inside the exp–log algebra that powers modern machine
+learning. Its error is not merely "small for large $n$" — it is exactly
+$2L/n^{\alpha}$, every point, every width, with a constant you can write down. The
+nineteenth century told us smooth curves can be drawn with straight lines. The
+result here tells us, to the digit, how many lines it takes.
