@@ -1376,7 +1376,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fee52015",
+    "consumed_by_exp_id": "",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the Böhm tree for undecidability of equivalence.",
     "domain_bridges": [],
     "domains": [
@@ -1389,7 +1389,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -4379,33 +4379,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "Bruen and Drudge 1999",
-      "Filmus and Ihringer 2019",
-      "Gavrilyuk and Mogilnykh 2014"
-    ],
-    "consumed_by_exp_id": "e44edf9a",
-    "description": "For q ≥ 3 and n ≥ 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
-    "domain_bridges": [
-      "Quadratic forms on vector spaces",
-      "Combinatorial designs",
-      "Algebraic geometry of Grassmann varieties"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2376",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct a specific Boolean degree one function using a quadratic form (e.g., a conic or quadric) that violates triviality conditions, inspired by the q=3, n=4, k=2 example.",
-    "research_mode": "team",
-    "source_exp_id": "2606.23465v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T17:44:54.697706+00:00",
-    "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "Erdős Problem 550",
       "Chvátal's theorem",
       "Burr's bound"
@@ -4861,7 +4834,7 @@
       "math.CO",
       "cs.IT"
     ],
-    "consumed_by_exp_id": "8999eb20",
+    "consumed_by_exp_id": "",
     "description": "Let G be a simple left d-regular bipartite graph with d ≥ 2 and girth at least 2k + 2. Then the minimum distance of the binary linear code B(G) is at least k + 1. This connects the combinatorial structure of optimal small-set expanders (characterized by girth) to the coding-theoretic properties of their associated codes, which is central to the paper's application to post-quantum key exchange.",
     "domain_bridges": [
       "graph_theory",
@@ -4878,7 +4851,7 @@
     "proof_strategy": "By contradiction: assume a codeword x ∈ B(G) of Hamming weight w with 1 ≤ w ≤ k. Let S = supp(x). Since girth ≥ 2k + 2 ≥ 2w + 2, the induced subgraph on S ∪ N(S) is acyclic (any cycle has length ≤ 2w < 2k + 2). In this forest, each vertex in S has degree d (left-regularity) and each vertex in N(S) has even degree ≥ 2 (parity-check condition from x ∈ B(G)). Degree-sum gives d|S| = Σ_{v∈N(S)} deg(v) ≥ 2|N(S)|, so |N(S)| ≤ d|S|/2. But the forest property gives d|S| = edges ≤ vertices − 1 = |S| + |N(S)| − 1, so |N(S)| ≥ (d−1)|S| + 1. Combining yields (d−1)|S| + 1 ≤ d|S|/2, i.e., (d−2)|S|/2 ≤ −1, contradicting d ≥ 2 and |S| ≥ 1.",
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:53:07.212970+00:00",
     "title": "Girth bounds minimum distance of bipartite graph codes"
   },
@@ -15146,6 +15119,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Quantum Thermodynamics / Landauer at the Nanoscale\n\nThe current cycle added `Catalog/Physics/LandauerSubadditivity.lean`: marginals and\nmutual information of a joint PMF, a strengthened Gibbs inequality under absolute\ncontinuity (`relativeEntropy_nonneg'`), the entropy-decomposition identity\n`I(X;Y) = H(X)+H(Y)−H(X,Y)`, subadditivity of Shannon entropy, the `kT·I(X;Y)`\ncorrelation saving for joint erasure, and a concrete perfectly-correlated two-bit\nexample with a strict saving. The following conjectures are bold but testable\nextensions, each anchored to existing catalog machinery.\n\n## C1. Strong subadditivity (tripartite)\n**Conjecture.** For a joint PMF `p` on `X × Y × Z`,\n`H(X,Y,Z) + H(Y) ≤ H(X,Y) + H(Y,Z)`,\nequivalently the conditional mutual information `I(X;Z | Y) ≥ 0`.\n*Test path.* Define a doubly-conditioned relative entropy and reduce to\n`relativeEntropy_nonneg'`. This is strictly stronger than the subadditivity proved\nthis cycle and is the classical shadow of the (hard) quantum SSA.\n\n## C2. Conditional Landauer bound (erasure with side information)\n**Conjecture.** Erasing memory `X` while retaining correlated side information `Y`\ncosts at least `kT·H(X|Y)` where `H(X|Y) = H(X,Y) − H(Y)`, and `H(X|Y) ≤ H(X)` always,\nwith equality iff `X ⟂ Y`.\n*Test path.* Combine `landauer_general_erasure_bound` (LandauerMaxEntropy) with the\ndecomposition identity from this file. Predicts: a demon holding a perfect copy erases\nfor free (`H(X|Y) = 0` for the perfectly correlated pair).\n\n## C3. Saturation of subadditivity ⇔ independence\n**Conjecture.** `H(X,Y) = H(X) + H(Y)` if and only if `p = pX⊗pY`.\n*Test path.* The forward direction needs the equality case of Gibbs:\n`D(p‖q) = 0 ↔ p = q` on the support, an analogue of `LandauerSaturation`'s\nzero-fluctuation characterisation. One direction (`mutualInfo_indep_eq_zero`) is done.\n\n## C4. Data-processing inequality (monotonicity of relative entropy)\n**Conjecture.** For a stochastic (column-stochastic) map `T : X → Δ(X')`,\n`D(Tp ‖ Tq) ≤ D(p ‖ q)`. Specialising to a coarse-graining gives `I(X;Y) ≥ I(f(X);Y)`:\npost-processing cannot create correlation, hence cannot increase the Landauer saving.\n*Test path.* Log-sum inequality (provable from `Real.log_le_sub_one_of_pos`, as in\n`relativeEntropy_nonneg'`). This is the engine behind most second-law refinements.\n\n## C5. Mutual-information fluctuation theorem\n**Conjecture.** Pairing this file's `I(X;Y)` with `LandauerFluctuationBound`, the\nprobability that a single correlated-erasure realisation *fails* to achieve the\n`kT·I(X;Y)` saving by margin `ξ` is at most `exp(−ξ/(kT))`.\n*Test path.* Re-run the Chernoff/Markov argument of `second_law_violation_bound` with\nthe free-energy reference shifted by the mutual information. Connects the average\ncorrelation saving to its nanoscale fluctuations.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_2790",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "461fdf74",
+    "status": "available",
+    "timestamp": "2026-06-28T16:05:05.328514+00:00",
+    "title": "The current cycle added `Catalog/Physics/LandauerSubadditivity.lean`: marginals "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -15617,7 +15610,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "140a33ad",
+    "consumed_by_exp_id": "",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domain_bridges": [],
     "domains": [
@@ -15630,7 +15623,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },

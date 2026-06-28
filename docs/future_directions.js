@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
   {
-    "consumed_by_exp_id": "fee52015",
+    "consumed_by_exp_id": "",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
       "Logic",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -2684,20 +2684,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
   {
-    "consumed_by_exp_id": "e44edf9a",
-    "description": "For q \u2265 3 and n \u2265 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2376",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23465v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T17:44:54.697706+00:00",
-    "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q \u2265 3 and n \u2265 4"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For fixed integers $k \\ge 2$ and $1 \\le m_1 \\le \\cdots \\le m_k$, there exists an integer $n_0$ such that for all $n \\ge n_0$ and every $n$-vertex tree $T$, the Ramsey number satisfies $R(T, K_{m_1, \\ldots, m_k}) \\le (k-1)(R(T, K_{m_1, m_2})-1)+m_1$.",
     "domains": [
@@ -2929,7 +2915,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "SIC Overlap Units are Products of Square Roots of Stark Units"
   },
   {
-    "consumed_by_exp_id": "8999eb20",
+    "consumed_by_exp_id": "",
     "description": "Let G be a simple left d-regular bipartite graph with d \u2265 2 and girth at least 2k + 2. Then the minimum distance of the binary linear code B(G) is at least k + 1. This connects the combinatorial structure of optimal small-set expanders (characterized by girth) to the coding-theoretic properties of their associated codes, which is central to the paper's application to post-quantum key exchange.",
     "domains": [
       "Cryptography",
@@ -2939,7 +2925,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:53:07.212970+00:00",
     "title": "Girth bounds minimum distance of bipartite graph codes"
   },
@@ -8609,6 +8595,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Quantum Thermodynamics / Landauer at the Nanoscale\n\nThe current cycle added `Catalog/Physics/LandauerSubadditivity.lean`: marginals and\nmutual information of a joint PMF, a strengthened Gibbs inequality under absolute\ncontinuity (`relativeEntropy_nonneg'`), the entropy-decomposition identity\n`I(X;Y) = H(X)+H(Y)\u2212H(X,Y)`, subadditivity of Shannon entropy, the `kT\u00b7I(X;Y)`\ncorrelation saving for joint erasure, and a concrete perfectly-correlated two-bit\nexample with a strict saving. The following conjectures are bold but testable\nextensions, each anchored to existing catalog machinery.\n\n## C1. Strong subadditivity (tripartite)\n**Conjecture.** For a joint PMF `p` on `X \u00d7 Y \u00d7 Z`,\n`H(X,Y,Z) + H(Y) \u2264 H(X,Y) + H(Y,Z)`,\nequivalently the conditional mutual information `I(X;Z | Y) \u2265 0`.\n*Test path.* Define a doubly-conditioned relative entropy and reduce to\n`relativeEntropy_nonneg'`. This is strictly stronger than the subadditivity proved\nthis cycle and is the classical shadow of the (hard) quantum SSA.\n\n## C2. Conditional Landauer bound (erasure with side information)\n**Conjecture.** Erasing memory `X` while retaining correlated side information `Y`\ncosts at least `kT\u00b7H(X|Y)` where `H(X|Y) = H(X,Y) \u2212 H(Y)`, and `H(X|Y) \u2264 H(X)` always,\nwith equality iff `X \u27c2 Y`.\n*Test path.* Combine `landauer_general_erasure_bound` (LandauerMaxEntropy) with the\ndecomposition identity from this file. Predicts: a demon holding a perfect copy erases\nfor free (`H(X|Y) = 0` for the perfectly correlated pair).\n\n## C3. Saturation of subadditivity \u21d4 independence\n**Conjecture.** `H(X,Y) = H(X) + H(Y)` if and only if `p = pX\u2297pY`.\n*Test path.* The forward direction needs the equality case of Gibbs:\n`D(p\u2016q) = 0 \u2194 p = q` on the support, an analogue of `LandauerSaturation`'s\nzero-fluctuation characterisation. One direction (`mutualInfo_indep_eq_zero`) is done.\n\n## C4. Data-processing inequality (monotonicity of relative entropy)\n**Conjecture.** For a stochastic (column-stochastic) map `T : X \u2192 \u0394(X')`,\n`D(Tp \u2016 Tq) \u2264 D(p \u2016 q)`. Specialising to a coarse-graining gives `I(X;Y) \u2265 I(f(X);Y)`:\npost-processing cannot create correlation, hence cannot increase the Landauer saving.\n*Test path.* Log-sum inequality (provable from `Real.log_le_sub_one_of_pos`, as in\n`relativeEntropy_nonneg'`). This is the engine behind most second-law refinements.\n\n## C5. Mutual-information fluctuation theorem\n**Conjecture.** Pairing this file's `I(X;Y)` with `LandauerFluctuationBound`, the\nprobability that a single correlated-erasure realisation *fails* to achieve the\n`kT\u00b7I(X;Y)` saving by margin `\u03be` is at most `exp(\u2212\u03be/(kT))`.\n*Test path.* Re-run the Chernoff/Markov argument of `second_law_violation_bound` with\nthe free-energy reference shifted by the mutual information. Connects the average\ncorrelation saving to its nanoscale fluctuations.\n",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_2790",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "461fdf74",
+    "status": "available",
+    "timestamp": "2026-06-28T16:05:05.328514+00:00",
+    "title": "The current cycle added `Catalog/Physics/LandauerSubadditivity.lean`: marginals "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8960,7 +8961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "140a33ad",
+    "consumed_by_exp_id": "",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -8970,7 +8971,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },

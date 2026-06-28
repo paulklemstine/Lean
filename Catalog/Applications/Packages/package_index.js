@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "461fdf74",
     "filename": "quantum_thermodynamics_landauers_principle_at_the_.json",
     "pkg_num": 188,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.37835341176470594,
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
   {
@@ -5487,8 +5487,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "quantum_thermodynamics_landauers_principle_at_the_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.37835341176470594,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
     }

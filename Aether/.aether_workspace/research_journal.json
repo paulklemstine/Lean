@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fb5aee47",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThese are freeform research directions building on the unconditional square\nobstruction for factorials proved in\n`Catalog/NumberTheory/FactorialNotSquare.lean`.\n\n## 1. Bounded com",
-      "quality_score": 0.30151606086956523,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-25T14:46:15",
-      "title": "Brocard-Ramanujan Triangular Classification"
-    },
-    {
       "cycle_id": "701dddb6",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Pólya tree coefficient recurrence\n\nDerived from the Stage 3/4 findings of this cycle (the divisor bridge `divisor_bridge`, the\nequivalence `polya_FE_iff_recurrence`, and the uniq",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-28T15:37:33",
       "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
+    },
+    {
+      "cycle_id": "461fdf74",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Quantum Thermodynamics / Landauer at the Nanoscale\n\nThe current cycle added `Catalog/Physics/LandauerSubadditivity.lean`: marginals and\nmutual information of a joint PMF, a stren",
+      "quality_score": 0.37835341176470594,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T16:05:36",
+      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7050400000000001
     }
   ],
-  "last_updated": "2026-06-28T15:37:33",
+  "last_updated": "2026-06-28T16:05:36",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "bac3bfcc",
-        "quality": 0.562048,
-        "theorems": 0,
-        "title": "Statistical Mechanics: Ising Model Phase Transition"
-      },
-      {
         "cycle_id": "fdadfe48",
         "quality": 0.5959,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.7050400000000001,
         "theorems": 13,
         "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
+      },
+      {
+        "cycle_id": "461fdf74",
+        "quality": 0.37835341176470594,
+        "theorems": 0,
+        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
       }
     ],
     "NumberTheory": [
