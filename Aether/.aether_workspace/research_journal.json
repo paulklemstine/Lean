@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ab7f1188",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Duality of RC Sublevel Homotopy Types\n\nDerived from this cycle's findings (see the Lab Notes in `Homogeneous.lean`,\n`Duality.lean`, `Examples.lean`).  Each conjecture is bold and",
-      "quality_score": 0.49574803827751207,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-26T05:32:41",
-      "title": "Duality of Sublevel Set Homotopy Types for RC Functions on Finite‑Dimensional Banach Spaces"
-    },
-    {
       "cycle_id": "dfb56ea4",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Navier–Stokes Existence, Smoothness, and Turbulence\n\nDerived from this cycle's findings in `EnergyMethod.lean` (viscous energy\ndissipation) and `Bridge.lean` (the viscous ↔ tropi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T23:19:56",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+    },
+    {
+      "cycle_id": "60145036",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Tightness of the Density Threshold for Configurations in Linear Hypergraphs\n\nThis cycle (see `Catalog/Novelty/LinearHypergraphConfigTightness.lean`) upgraded the catalog's\none-si",
+      "quality_score": 0.3726553552511416,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T23:21:59",
+      "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7327899999999999
     }
   ],
-  "last_updated": "2026-06-28T23:19:56",
+  "last_updated": "2026-06-28T23:21:59",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ce5b4268",
-        "quality": 0.71224,
-        "theorems": 14,
-        "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_"
-      },
-      {
         "cycle_id": "8999eb20",
         "quality": 0.7782,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.55062,
         "theorems": 0,
         "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+      },
+      {
+        "cycle_id": "60145036",
+        "quality": 0.3726553552511416,
+        "theorems": 0,
+        "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
       }
     ],
     "NumberTheory": [

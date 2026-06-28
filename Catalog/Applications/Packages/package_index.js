@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "60145036",
     "filename": "tightness_of_the_density_threshold_for_configurati.json",
     "pkg_num": 200,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3726553552511416,
     "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
   },
   {
@@ -5835,8 +5835,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "tightness_of_the_density_threshold_for_configurati",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3726553552511416,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
     }
