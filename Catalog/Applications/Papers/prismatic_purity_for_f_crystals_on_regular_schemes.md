@@ -1,52 +1,39 @@
-# Computational Evidence — Prismatic Purity for F-Crystals
+# Theorem Trace (internal anti-hallucination ledger)
 
-We give concise evidence for the two formalized pillars: **faithfulness of restriction**
-(an injectivity phenomenon) and the **dimension-one Hartogs/normality** input.
+Every result below is taken **verbatim** from the Phase A Lean output. No theorem is
+invented; no name is paraphrased into a grander claim. Columns: Lean name — informal
+statement — where it appears in ARTICLE.md (A) and RESEARCH_PAPER.md (P).
 
-## 1. Dimension-one extension (normality): small cases over ℤ ⊆ ℚ
+## `Catalog/Novelty/FrobeniusModule.lean` (namespace `PrismaticPurity`)
 
-A rational number `q` "extends" (is a global section) iff it is an algebraic integer.
-Testing `q = a/b` in lowest terms against monic integer polynomials:
+| Lean name | Statement | A | P |
+|---|---|---|---|
+| `FMod` | An `F`-crystal model: an `R`-module `M` with a `φ`-semilinear endomorphism `F : M →ₛₗ[φ] M`. | ✓ | ✓ |
+| `FHom` | Morphism of `F`-crystals: an `R`-linear map `hom` with `hom (E.F x) = E'.F (hom x)`. | ✓ | ✓ |
+| `FHom.idMor`, `FHom.comp`, `FHom.id_comp`, `FHom.comp_id`, `FHom.comp_assoc` | The category axioms for `F`-crystals. | ✓ | ✓ |
+| `triv` | The trivial/unit `F`-crystal `(R, φ)`. | ✓ | ✓ |
+| `restriction_faithful` | If the target restriction `ρF.hom` is injective, two morphisms with equal restriction are equal. | ✓ | ✓ |
+| `purityHomEquiv` | Faithfulness + a Hartogs extension operator ⟹ restriction is a bijection `FHom E F ≃ FHom EU FU`. | ✓ | ✓ |
+| `cZ`, `cQ`, `rhoZQ`, `rhoZQ_injective`, `trivZ_faithful` | Concrete `ℤ ⊆ ℚ` instance; restriction to the generic point is injective. | ✓ | ✓ |
 
-| q       | monic ℤ-poly with root q?            | integral over ℤ? | in ℤ? | consistent |
-|---------|--------------------------------------|------------------|-------|------------|
-| 3       | x − 3                                | yes              | yes   | ✓          |
-| −2      | x + 2                                | yes              | yes   | ✓          |
-| 1/2     | none (rational root thm: ±1)         | no               | no    | ✓          |
-| 2/3     | none                                 | no               | no    | ✓          |
-| 5/1     | x − 5                                | yes              | yes   | ✓          |
+## `Catalog/Novelty/DimensionOnePurity.lean` (namespace `PrismaticPurity.DimOne`)
 
-Rational-root theorem ⇒ a rational integral over ℤ must have denominator 1. No
-counterexample exists: this is exactly `ℤ` integrally closed in `ℚ` (`hartogs_Z`).
+| Lean name | Statement | A | P |
+|---|---|---|---|
+| `hartogs_dim_one` | Over an integrally closed domain `R` with fraction field `K`, every `x ∈ K` integral over `R` lies in the image of `R → K`. | ✓ | ✓ |
+| `extension_unique` | `algebraMap R K` is injective. | ✓ | ✓ |
+| `hartogs_dim_one_unique` | `∃!` global section extending an integral element. | ✓ | ✓ |
+| `hartogs_Z` | Over `ℤ ⊆ ℚ`: a rational that is integral over `ℤ` is an integer. | ✓ | ✓ |
+| `hartogs_polyQ` | Over `ℚ[X] ⊆ RatFunc ℚ`: an integral rational function is a polynomial. | ✓ | ✓ |
 
-## 2. Non-example confirming the hypothesis is load-bearing
+## `Catalog/Novelty/PrismaticPurityFoundation.lean` (namespace `PrismaticPurity.Foundation`)
 
-Take the non-maximal order `R = ℤ[2i] ⊂ ℤ[i] ⊂ ℚ(i)` (not integrally closed).
-The element `i` satisfies `x² + 1 = 0`, monic over `R`, so `i` is integral over `R`.
-But `i ∉ ℤ[2i]`. Hence the extension statement **fails** without normality — confirming
-`hartogs_dim_one`'s `[IsIntegrallyClosed R]` hypothesis is necessary, not cosmetic.
-
-## 3. Faithfulness over ℤ (generic-point restriction)
-
-The restriction map `ℤ → ℚ` (`rhoZQ`) is injective (ℤ is a domain). Sample check that a
-ℤ-linear endomorphism of the trivial crystal is recovered from its ℚ-restriction:
-
-| endo on ℤ (mult. by k) | restriction to ℚ (mult. by k) | recovered? |
-|------------------------|-------------------------------|------------|
-| ×0                     | ×0                            | yes        |
-| ×1                     | ×1                            | yes        |
-| ×7                     | ×7                            | yes        |
-| ×(−3)                  | ×(−3)                         | yes        |
-
-Distinct ℤ-endomorphisms have distinct ℚ-restrictions ⇒ faithfulness holds, matching
-`trivZ_faithful` / `restriction_faithful`.
-
-## 4. OEIS
-
-No integer sequence is central to the claim; the content is structural (injectivity +
-integral closedness), so no OEIS lookup applies.
-
-## Conclusion
-
-All small cases are consistent with the formalized theorems; the single non-example
-pins down exactly where the regularity/normality hypothesis is required.
+| Lean name | Statement | A | P |
+|---|---|---|---|
+| `IsXIntegral` | `f ∈ K` is `x`-integral iff `∃ n, (algebraMap R K x)^n * f ∈ range`. | ✓ | ✓ |
+| `isXIntegral_of_mem_range` | Every global section is `x`-integral (take `n = 0`). | ✓ | ✓ |
+| `hartogs_UFD` | Over a UFD `R` with fraction field `K`, `x ≠ 0`, `IsRelPrime x y`, `f` both `x`- and `y`-integral ⟹ `f ∈ range`. | ✓ | ✓ |
+| `regularLocalDimOne_isUFD` | A Noetherian local domain with principal maximal ideal is a UFD. | ✓ | ✓ |
+| `xIntegralSubalg` | The localization subalgebra `R[1/x] ⊆ K` of `x`-integral elements. | ✓ | ✓ |
+| `equalizer_inf` | `xIntegralSubalg x ⊓ xIntegralSubalg y = ⊥` (i.e. `R[1/x] ∩ R[1/y] = R`). | ✓ | ✓ |
+| `fibonacci_inter_eq_bot` | The `ℤ ⊆ ℚ` instance of the equalizer with consecutive Fibonacci numbers as the coprime pair. | ✓ | ✓ |

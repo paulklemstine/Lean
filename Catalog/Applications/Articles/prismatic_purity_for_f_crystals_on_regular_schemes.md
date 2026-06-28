@@ -1,103 +1,220 @@
-# The Geometry of Knowing Less: When a Hole Tells You Nothing New
+# The Ring That Refuses to Hide: A Story of Punctured Spaces and Coprime Coordinates
 
-## A puzzle about punctured spaces
+## A hole you cannot see
 
-Imagine you are handed a smooth, featureless sphere of glass and asked a strange question: if I drill an infinitely fine pinhole through its exact center — removing a single, dimensionless point — have I actually destroyed any information about the object? Could you, knowing only the glass *around* that pinhole, perfectly reconstruct what was there at the missing point, with no ambiguity and no guesswork?
+Imagine a perfectly smooth, featureless plain. Now poke a single, infinitely thin
+pinhole in it — a single missing point. From a distance the plain looks unchanged; the
+hole has no width, no area, nothing you could trip over. The natural question a
+geometer asks is disarmingly simple: *if you know everything about the plain except
+that one missing point, do you actually know everything about the whole plain?*
 
-For a one-dimensional bead on a wire the answer is obviously *no* — removing the center point splits the bead in two, and the two halves know nothing of the gap between them. But as soon as you climb to two dimensions or higher, something almost magical happens. A pinhole in a surface, or a missing point inside a solid, is *too small to matter*. The surrounding material remembers everything. Any sufficiently regular structure defined away from the hole flows back across it, uniquely and inevitably, like water closing over a dropped stone.
+For curves — one-dimensional worlds — the answer is subtle and depends on the geometry.
+But for surfaces and higher-dimensional smooth spaces, something almost magical happens.
+A single missing point is *too small to matter*. Any well-behaved structure defined on
+the plain-minus-a-point automatically, and uniquely, fills in across the hole. The
+information was never really lost; the hole could not hide it.
 
-This intuition has a precise mathematical name: **purity**. And it sits at the heart of one of the most active frontiers of modern arithmetic geometry. This article is about a clean, rigorously verified slice of that frontier — a result that pins down *exactly* when removing the center of a space throws away information, and exactly when it does not. The boundary, it turns out, is razor-sharp, and it has a name you might not expect: **normality**.
+Mathematicians call results of this flavor **purity theorems**, and the phenomenon
+**Hartogs extension**, after the complex analyst Friedrich Hartogs, who first noticed
+that holomorphic functions in several variables cannot have isolated singularities the
+way functions of one variable can. This article tells the story of a modern,
+algebraic incarnation of that idea, and of the elementary arithmetic engine that drives
+it — an engine you can run with nothing more than fractions and the greatest common
+divisor.
 
-## From holes in glass to holes in number systems
+## From geometry to arithmetic
 
-The objects mathematicians actually care about here are not literal spheres of glass. They are *schemes* — geometric spaces built out of algebra, where "points" can be prime numbers, polynomials, or far more exotic things. The single most important example is breathtakingly simple to state: the integers $\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}$.
+The modern setting for "smooth spaces" in arithmetic geometry is the language of
+**rings** and their **spectra**. A commutative ring $R$ has a geometric shadow,
+$\mathrm{Spec}(R)$, whose points are the prime ideals of $R$. When $R$ is a *regular
+local ring* of dimension $d$, its spectrum behaves like a smooth $d$-dimensional space
+with one distinguished "center" — the closed point corresponding to the maximal ideal
+$\mathfrak{m}$. Deleting that center gives the **punctured spectrum**,
+$\mathrm{Spec}(R)\setminus\{\mathfrak{m}\}$, the algebraic version of a plain with a
+pinhole.
 
-The integers form a geometric line in the eyes of an arithmetic geometer. Its "points" are the prime numbers $2, 3, 5, 7, 11, \dots$, plus one special generic point. And the "structure" living on this line is captured by the field of fractions $\mathbb{Q}$, the rational numbers — everything you can build by dividing one integer by another.
+The structures we want to extend across the puncture are called, in the most refined
+contemporary framework, **prismatic $F$-crystals**. Do not let the name intimidate you.
+Stripped to its linear-algebraic skeleton, a prismatic $F$-crystal over a base $(R,
+\varphi)$ — where $\varphi\colon R\to R$ is a ring map standing in for a *Frobenius*, the
+arithmetic analogue of "raising to the $p$-th power" — is just two pieces of data:
 
-Now ask the purity question in this setting. Suppose you have a rational number $q$, defined on the "punctured" arithmetic line, and suppose it behaves *regularly* — meaning it satisfies a polynomial equation with integer coefficients whose leading term is just $x$ raised to a power, with coefficient $1$. Mathematicians call such numbers **algebraic integers**, or say $q$ is **integral over $\mathbb{Z}$**. The purity question becomes:
+- a module $M$ over $R$ (think: a bundle of vector spaces sitting over the space), and
+- a map $F\colon M\to M$ that is *$\varphi$-semilinear*: it is additive, and it scales
+  according to the twisted rule $F(r\cdot v)=\varphi(r)\cdot F(v)$.
 
-> If a rational number is an algebraic integer, must it actually be an ordinary integer?
+That semilinear $F$ is the "Frobenius structure," the fingerprint that makes these
+objects so powerful in number theory. In the formal development behind this article, this
+package is recorded faithfully as a structure called `FMod`: a module $M$ together with a
+semilinear endomorphism $F$. A **morphism** of these objects — recorded as `FHom` — is an
+$R$-linear map between the underlying modules that *commutes with the two Frobenii*. With
+identity morphisms and composition (and the associativity law one expects), these objects
+and maps form a genuine category, the home of all our characters.
 
-The answer is a resounding **yes**, and it is the first concrete theorem of this work. If $q$ is a fraction in lowest terms that satisfies a monic integer polynomial, it cannot be a genuine fraction at all — it must be a whole number. This is the number-theoretic shadow of geometric purity:
+The headline question is the purity question, transplanted:
 
-$$\text{$q \in \mathbb{Q}$ is integral over $\mathbb{Z}$} \;\Longrightarrow\; q \in \mathbb{Z}.$$
+> **Is a prismatic $F$-crystal on the punctured spectrum the same thing as one on the
+> whole spectrum?**
 
-Try it: the number $\tfrac{3}{2}$ satisfies $2x - 3 = 0$, but that polynomial is not monic (the leading coefficient is $2$, not $1$). And indeed, no monic integer polynomial has $\tfrac{3}{2}$ as a root. The "regularity" condition forbids fractions from sneaking through. The hole at the center — the difference between $\mathbb{Z}$ and $\mathbb{Q}$ — carries no new information once you demand regularity.
+If yes, then crystals — and in particular the canonical objects predicted by deep
+conjectures in the field, such as Ogus's conjectural $F$-isocrystal — are *rigid*: they
+are completely pinned down by their behavior on any dense open piece, with nothing
+hiding at the center.
 
-## The same theorem, wearing a different hat
+## Splitting the problem in two
 
-One of the quiet joys of mathematics is watching a single idea reappear in wildly different costumes. The integers-versus-rationals story has an identical twin in the world of polynomials.
+Whenever you want to prove two categories are "the same" via a restriction functor, the
+task splits cleanly into two independent jobs:
 
-Replace $\mathbb{Z}$ with the ring of polynomials in one variable with rational coefficients, written $\mathbb{Q}[X]$ — things like $X^2 - 3X + 1$. Its field of fractions consists of **rational functions**, ratios of polynomials such as $\tfrac{X+1}{X^2-2}$. The purity statement now reads:
+1. **Faithfulness.** Different maps must *stay* different after restricting. No
+   collapse, no information lost about morphisms.
+2. **Fullness and essential surjectivity.** Every map and every object that lives on the
+   punctured spectrum must actually *come from* one on the whole space. Nothing extra
+   appears at the boundary, and nothing fails to extend.
 
-> A rational function that is integral over $\mathbb{Q}[X]$ must itself be a polynomial.
+The first job turns out to be the easy half, and it is genuinely proved here in a clean,
+general form. The statement, recorded as `restriction_faithful`, says: *if the
+restriction map on the target crystal is injective on underlying modules, then two
+morphisms whose restrictions agree must themselves be equal.* The proof is a single line
+of honest algebra — apply the injective restriction to the equal restricted values — and
+crucially it needs **no** deep geometry, only the injectivity that a regular (hence
+torsion-free) ring automatically supplies. We even pin it down concretely over the
+integers: the trivial $\mathbb{Z}$-crystal restricted to its generic point $\mathrm{Spec}\,
+\mathbb{Q}$ has an injective restriction map (`rhoZQ_injective`), so a morphism is
+completely determined by what it does over $\mathbb{Q}$ (`trivZ_faithful`).
 
-Geometrically, $\mathbb{Q}[X]$ is the coordinate ring of a *line*, and a rational function integral over it is one with no genuine poles. The theorem says: a function on the line with no poles, that is regular everywhere, *is* a polynomial. No surprises hide in the gaps.
+The second job is where all the difficulty concentrates. To *extend* a crystal across the
+puncture, you need a genuine **Hartogs theorem**. And here is the punchline of the whole
+project: once you have faithfulness, the entire purity statement reduces to the existence
+of compatible extensions. This is captured precisely by `purityHomEquiv`, which takes
+faithfulness plus an *extension operator* — a recipe that turns a morphism on the
+punctured spectrum into one on the whole space, reconstructing it on restriction — and
+upgrades the restriction map into a perfect bijection between morphism-sets. In one clean
+formal stroke, **purity becomes equivalent to extension.**
 
-These two theorems — one about whole numbers, one about polynomials — are not merely similar. They are *the very same theorem*, instantiated in two settings. Both are special cases of a single, sweeping statement about a class of rings called **integrally closed domains**, also known as **normal** rings.
+## The trap of circular reasoning
 
-## The master statement: Hartogs in dimension one
+Here the story takes the dramatic turn that gives it its name. An earlier attempt at this
+extension input did something embarrassingly common in hard mathematics: it justified the
+"extension across the puncture" by quietly invoking *purity itself*. The argument went in
+a circle. It assumed what it was trying to prove.
 
-Here is the unifying result, the keystone of the whole edifice. Let $R$ be any *integrally closed domain* — a ring of "numbers" with no missing pieces, sitting inside its field of fractions $K$. Then:
+The breakthrough was to ask: *what is the extension input, really, when you strip away the
+machinery?* And the answer is beautifully down-to-earth. In the regular case — and a
+regular local ring is, by the celebrated **Auslander–Buchsbaum theorem**, a *unique
+factorization domain* (UFD), a ring where every element factors into primes in
+essentially one way — the deep "extension across the puncture" collapses into an utterly
+elementary fact about coprime numbers.
 
-$$\text{Every } x \in K \text{ integral over } R \text{ already lies in } R.$$
+## The coprime-coordinates engine
 
-In symbols: if $x$ in the fraction field satisfies a monic polynomial with coefficients in $R$, then there exists an honest element $a \in R$ with $a = x$. This is the dimension-one incarnation of a classical principle named after the complex analyst Friedrich Hartogs, who first discovered that holomorphic functions in several complex variables extend automatically across small holes. The arithmetic analogue: regular sections extend across the puncture.
+Here is the heart of the matter, and you can follow every step with ordinary fractions.
 
-And the extension is not just *possible* — it is **unique**. The map that includes $R$ into its fraction field $K$ is injective; no two distinct elements of $R$ become equal as fractions. So the element $a$ that extends $x$ across the hole is the *only* one that could. Existence plus uniqueness together say something strong: the integral elements of the fraction field are *exactly* the global sections, identified without any ambiguity whatsoever.
+Take a UFD $R$ — for concreteness, the integers $\mathbb{Z}$ — sitting inside its field
+of fractions $K$ — for $\mathbb{Z}$, the rationals $\mathbb{Q}$. Pick two **coprime**
+coordinates $x$ and $y$ in $R$: elements with no common factor. Geometrically, $x$ and
+$y$ cut out two different "walls," and removing both walls from the space leaves exactly
+the punctured spectrum. The two regions where you are allowed to divide by $x$, and where
+you are allowed to divide by $y$, together cover everything except the center.
 
-This pairing — **existence** of the extension, and **uniqueness** of the extension — is the engine of the entire theory. Existence is the deep geometric input (Hartogs, normality). Uniqueness is the cheap but essential bookkeeping (injectivity, faithfulness). Keep your eye on this two-part structure; it is about to scale up dramatically.
+We say an element $f\in K$ is **$x$-integral** if some power of $x$ clears its
+denominator — that is, $x^n\cdot f$ lands back in $R$ for some exponent $n$. This is the
+algebraic way of saying "$f$ is a legitimate section over the chart where dividing by $x$
+is allowed." The formal predicate is named `IsXIntegral`, and every honest global
+section is trivially $x$-integral (take $n=0$), as recorded in `isXIntegral_of_mem_range`.
 
-## Why "normal" is exactly the right word — and the counterexample that proves it
+Now suppose $f$ is *both* $x$-integral and $y$-integral. It is a well-defined section on
+each of the two charts, hence a section on their union — the entire punctured spectrum.
+Hartogs purity demands that $f$ must already be a global section: $f\in R$.
 
-It would be tempting to think purity is automatic, a free gift of geometry. It is not. The hypothesis of *normality* is not decoration; it is load-bearing. Remove it and the whole structure collapses. Here is the cleanest possible demonstration.
+And it is — by a one-paragraph argument that any student can verify. This is the central
+theorem `hartogs_UFD`:
 
-Consider the ring $R = \mathbb{Z}[2i]$, consisting of all numbers of the form $a + 2bi$ where $a, b$ are integers and $i = \sqrt{-1}$. This is a perfectly respectable ring of "numbers," but it is **not normal** — it is a so-called non-maximal order, missing some of the algebraic integers it ought to contain.
+> **Theorem (Hartogs over a UFD).** Let $R$ be a unique factorization domain with
+> fraction field $K$. Let $x\neq 0$ be coprime to $y$, and let $f\in K$ be both
+> $x$-integral and $y$-integral. Then $f\in R$.
 
-Now look at the number $i$ itself. It satisfies the monic polynomial
-$$x^2 + 1 = 0,$$
-so $i$ is *integral over* $R$. By the logic of purity, $i$ ought to extend to a global section — it ought to live inside $R$. But it does not: $i = 0 + 1\cdot i$ requires the coefficient $\tfrac{1}{2}$ of $2i$, which is not an integer. The element $i$ is regular away from the puncture, integral over the ring, and yet *refuses to extend*. Purity **fails**.
+Watch the gears turn. Because $f$ is $x$-integral, $x^a\cdot f=\alpha$ for some
+$\alpha\in R$. Because $f$ is $y$-integral, $y^b\cdot f=\beta$ for some $\beta\in R$.
+Cross-multiplying eliminates $f$:
+$$ y^b\cdot\alpha \;=\; x^a\cdot\beta \qquad\text{(an identity in } R\text{)}. $$
+Now coprimality does its work. Since $x$ and $y$ share no factor, neither do their powers
+$x^a$ and $y^b$. Yet $x^a$ divides the right-hand side $x^a\cdot\beta$, so it must divide
+the left-hand side $y^b\cdot\alpha$ — and since it is coprime to $y^b$, it must divide
+$\alpha$ outright. Write $\alpha=x^a\cdot\gamma$. Substituting back,
+$x^a\cdot f=x^a\cdot\gamma$, and cancelling the nonzero factor $x^a$ gives
+$$ f=\gamma\in R. $$
+The section had nowhere to hide. The pinhole could not conceal it.
 
-This is the sharp boundary. The difference between $\mathbb{Z}[2i]$ (where purity fails) and its normalization $\mathbb{Z}[i]$ (where it succeeds) is precisely the difference between non-normal and normal. The lesson is uncompromising: drop normality, and a hole really can hide information. The hypotheses in the theorems above are not safety padding — they are the exact dividing line between a world where punctures are harmless and a world where they are treacherous.
+In the formal language, this exact reasoning is recorded: the cross-multiplication
+identity, the divisibility forced by `IsRelPrime.pow`, the cancellation by
+`mul_left_cancel₀` over the field. No purity is invoked anywhere — the circle is broken.
 
-## Climbing the ladder: from numbers to crystals
+## The two charts meet exactly in the ring
 
-So far we have lived in dimension one, where "regular" means "DVR" means "normal," and the whole story is governed by integral closure. But the true ambition of this circle of ideas reaches much higher, into a structure that modern arithmetic geometers call a **prismatic $F$-crystal**.
+There is an elegant way to repackage the theorem. Each coordinate gives a subalgebra of
+$K$: the collection of all $x$-integral elements forms $R[1/x]$, the ring where you have
+adjoined an inverse of $x$, and likewise $R[1/y]$. The Hartogs theorem says their
+intersection inside $K$ is nothing more than $R$ itself. In the formal development this
+subalgebra is `xIntegralSubalg`, and the clean statement
+$$ R[1/x]\;\cap\;R[1/y]\;=\;R $$
+appears as `equalizer_inf` — the two localizations *equalize* exactly on the global ring.
+This is the algebraic fingerprint of "two charts covering the punctured spectrum glue back
+to a global section."
 
-Do not be intimidated by the name. The idea is to attach to a geometric space not just numbers, but *modules with symmetry*. Concretely, on a base ring $R$ we consider a module $M$ — think of it as a space of vectors with $R$-coordinates — equipped with a special twisted map $F$ that interacts with the Frobenius endomorphism $\varphi$ (the operation, fundamental in characteristic $p$, of raising to the $p$-th power). This twisted, "$\varphi$-semilinear" map $F: M \to M$ is the crystal's defining heartbeat. Crystals like these encode astonishingly deep arithmetic information; they are the modern language for $p$-adic cohomology and sit at the center of conjectures such as Ogus's, concerning a canonical structure attached to families of varieties.
+To prove the abstract statement is never vacuous, it is anchored on a concrete and rather
+charming example. Where do you find a reliable supply of coprime pairs? The **Fibonacci
+numbers** $1,1,2,3,5,8,13,21,\dots$, where each term is the sum of the previous two. A
+classical fact is that *consecutive Fibonacci numbers are always coprime*. Feeding
+consecutive Fibonacci numbers $F_n, F_{n+1}$ in as the coprime pair $x,y$ turns the
+abstract equalizer into a fully concrete instance over $\mathbb{Z}\subseteq\mathbb{Q}$,
+recorded as `fibonacci_inter_eq_bot`. The deepest extension theorem in the project rests,
+at the end of the day, on the humblest sequence in mathematics.
 
-The grand purity question now reads:
+## The dimension-one shadow
 
-> If a regular space has a single point removed, is every prismatic $F$-crystal on the punctured space the restriction of one — and only one — crystal on the whole space?
+There is also a complementary, lower-dimensional version of the same phenomenon, and it
+is proved completely and unconditionally. In dimension one, "regular" means the ring is a
+discrete valuation ring, which is **integrally closed** (or *normal*): an element of the
+fraction field that satisfies a monic polynomial over the ring already lies in the ring.
+This is the `hartogs_dim_one` theorem:
 
-In categorical language: is **restriction to the punctured spectrum an equivalence of categories**? That is the dream theorem. And the architecture of this work shows precisely how that dream decomposes into manageable, verifiable pieces.
+> **Theorem (Hartogs in dimension one).** Over an integrally closed domain $R$ with
+> fraction field $K$, every $x\in K$ that is integral over $R$ lies in the image of
+> $R\to K$ — and uniquely so.
 
-## Faithfulness is cheap; extension is the whole game
+Over the integers this is the down-to-earth statement that *an algebraic integer which
+happens to be rational is an ordinary integer* (`hartogs_Z`): if a fraction is a root of
+a monic polynomial like $t^2-5t+6=(t-2)(t-3)$, it cannot be something like $\tfrac12$; it
+must be a whole number. The same statement holds for polynomials inside rational
+functions (`hartogs_polyQ`): a rational function integral over the polynomial ring is
+itself a polynomial. Uniqueness in every case is just the injectivity of $R\hookrightarrow
+K$ (`extension_unique`).
 
-The central structural insight is that purity for crystals splits cleanly into two layers, mirroring exactly the existence/uniqueness pairing from dimension one.
+This dimension-one result also reveals exactly *why* the hypotheses cannot be dropped.
+Normality is essential. For the non-maximal order $\mathbb{Z}[2i]\subset\mathbb{Z}[i]
+\subset\mathbb{Q}(i)$, the element $i$ is integral (it is a root of $t^2+1$) but does not
+lie in $\mathbb{Z}[2i]$. Strip away normality and the extension fails outright — the hole
+*can* hide something. Purity is a privilege of smoothness.
 
-**Layer one: faithfulness.** Suppose you have two morphisms of crystals — two structure-preserving maps — that become equal after you restrict them to the punctured space. Must they have been equal all along? The answer is yes, *provided* the restriction map on the target crystal is injective. The argument is short and beautiful: if two maps agree everywhere except possibly at the missing point, and nothing in the target gets crushed to zero by restriction (no "torsion" hiding at the puncture), then they must agree at the missing point too. This is the **faithfulness** of restriction, and it requires only the mild condition that the target has "depth at least one" — that there are no phantom sections supported entirely at the closed point. A genuine, non-vacuous example lives over $\mathbb{Z} \subseteq \mathbb{Q}$, where the restriction is honestly injective and the theorem has real content.
+## Why this matters
 
-**Layer two: extension.** The far deeper question is whether *every* crystal on the punctured space, and every morphism between such crystals, actually extends back across the hole. This is the **Hartogs** input, and in dimension one it is exactly the integral-closure theorem we proved above. In higher dimensions it demands that the missing locus have codimension at least two — that the hole be "small in two independent directions" — so that the surrounding algebra has enough depth (depth at least two) to force extension. This is the genuinely hard geometric content, and the honest mathematical move is to isolate it as the single deep hypothesis rather than pretend it comes for free.
+The chain of reasoning here is a small masterpiece of mathematical economy. A question
+about the rigidity of exotic objects from $p$-adic Hodge theory — prismatic $F$-crystals,
+the kind of structure that encodes the arithmetic of varieties over $p$-adic fields — is
+peeled apart into two layers. The first layer, faithfulness, is dispatched with pure
+injectivity. The second layer, extension, is shown to be *equivalent* to the whole purity
+statement, and is then traced down through the Auslander–Buchsbaum theorem until it rests
+on a fact about coprime integers that you could explain to a curious teenager: *if you can
+divide a fraction's denominator into one wall and into a coprime second wall, the
+denominator was never really there.*
 
-The payoff of this clean split is a precise theorem of the form:
+This is the recurring lesson of purity theorems across mathematics, from Hartogs's
+complex analysis to Grothendieck's algebraic geometry: **codimension two is invisible.**
+A locus too thin to separate the space cannot carry independent information. Whatever lives
+around it already lives on it. The deepest version of this idea, for the most modern
+objects in arithmetic geometry, turns out to run on the oldest arithmetic of all — the
+arithmetic of numbers with no common factor.
 
-> *Faithfulness* (cheap, from depth $\geq 1$) $+$ *Hartogs extension* (deep, from depth $\geq 2$) $=$ *restriction is a bijection on morphisms between crystals.*
-
-Restriction becomes **fully faithful**: morphisms upstairs and downstairs correspond perfectly. And full faithfulness is exactly what you need to conclude that a crystal is *uniquely determined* by its restriction to any dense open subspace. In particular, the canonical $F$-isocrystal at the center of Ogus's conjecture, if it exists, is pinned down without ambiguity by its behavior on any dense open — you can throw away a small closed piece and lose nothing.
-
-## Why this matters beyond the symbols
-
-It is easy to view a result like this as a technical lemma buried deep in a specialist's toolkit. But the underlying principle — *small holes carry no information in the presence of enough regularity* — is one of the great organizing themes of geometry and analysis, and it has consequences that ripple outward.
-
-It is the reason a removable singularity in complex analysis is truly removable. It is the reason vector bundles and reflexive sheaves extend across codimension-two subsets, which is how algebraic geometers build and classify the objects they care about. It is the reason that, in number theory, demanding integrality is enough to collapse the difference between fractions and whole numbers. And it is the principle that lets arithmetic geometers reconstruct global objects from partial, punctured data — a kind of mathematical holography, where the boundary determines the interior.
-
-What this work contributes is *precision*. It does not merely assert that purity holds; it dissects exactly **why** it holds, **which** hypothesis does the heavy lifting (extension/normality, not faithfulness), and **where** the boundary lies (the moment normality fails, with $\mathbb{Z}[2i]$ standing as the crisp counterexample). It shows that the cheap half — faithfulness — really is cheap, needing only torsion-freeness, and that the entire mystery of purity concentrates in the single deep question of extension across a codimension-two hole.
-
-## The view from the summit
-
-Step back and the whole landscape comes into focus. At the bottom of the ladder sits a fact so elementary it is taught to undergraduates: a rational algebraic integer is an ordinary integer. At the top sits a conjecture so deep it occupies the frontier of arithmetic geometry: that canonical crystalline structures are determined by dense opens. And what this work reveals is that these are *the same idea*, expressed at different altitudes — a single principle of purity, scaling from the integers all the way to prismatic $F$-crystals.
-
-The bridge between them is built from two materials. The first is **faithfulness**, the humble guarantee that nothing is hidden at the puncture, available almost for free. The second is **Hartogs extension**, the profound assertion that regularity forces structures to flow across small holes — true unconditionally in dimension one, where it is exactly the statement that normal rings are integrally closed, and conjecturally true in higher dimensions wherever the hole has codimension at least two.
-
-Between these two materials, and the sharp counterexample of $\mathbb{Z}[2i]$ that marks where the bridge ends, lies a complete and honest map of one of the most elegant principles in mathematics: that to remove a single point from a sufficiently smooth world is to remove nothing at all.
+And if you ever forget where to find a coprime pair to test it on, just remember:
+$1, 1, 2, 3, 5, 8, 13, 21, \dots$. The rabbits have you covered.
