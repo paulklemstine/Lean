@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1e3d4863",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Whitehead Problem (ZFC-provable boundary)\n\nDerived from the Stage 3 analysis and Stage 4 critique of the cycle formalized in\n`Logic/WhiteheadIndependence.lean` and `Logic/Whitehe",
-      "quality_score": 0.729932,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-24T08:09:25",
-      "title": "Whitehead Problem: Independence from ZFC"
-    },
-    {
       "cycle_id": "bcd85103",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\nThe following freeform directions extend the concrete quotient model of basic\ncubical shapes developed in `QuotientCircleTorus.lean`.\n\n## 1. A dependent eliminator for the quotien",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-28T01:56:26",
       "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
+    },
+    {
+      "cycle_id": "ca01957a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — n-Queens Completion Threshold\n\nThis cycle formalized (0 sorries) the structural skeleton of the n-queens completion\nproblem in `Catalog/Applications/NQueens/{Basic,Completion,Thr",
+      "quality_score": 0.6280000000000001,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-06-28T02:59:41",
+      "title": "Tight asymptotic bound for the n‑queens completion threshold"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71552
     }
   ],
-  "last_updated": "2026-06-28T01:56:26",
+  "last_updated": "2026-06-28T02:59:41",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bd70abee",
-        "quality": 0.7003299999999999,
-        "theorems": 27,
-        "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
-      },
-      {
         "cycle_id": "e8be0a2a",
         "quality": 0.8740959999999999,
         "theorems": 31,
@@ -3141,6 +3135,12 @@
         "quality": 0.7101600000000001,
         "theorems": 11,
         "title": "Proof Complexity: Resolution and Cutting Planes"
+      },
+      {
+        "cycle_id": "ca01957a",
+        "quality": 0.6280000000000001,
+        "theorems": 20,
+        "title": "Tight asymptotic bound for the n‑queens completion threshold"
       }
     ],
     "Bridges": [

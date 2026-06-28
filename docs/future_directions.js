@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "551fc26b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -997,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -2396,7 +2396,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
   },
   {
-    "consumed_by_exp_id": "9e0667c2",
+    "consumed_by_exp_id": "",
     "description": "Every Hamiltonian connected cubic edge-transitive graph \u0393 has Hamiltonian compression factor \u03ba(\u0393) \u2265 2, i.e., it admits a 2-symmetric Hamiltonian cycle: there exists a Hamiltonian cycle C and an automorphism g of order 2 such that g acts on C as a rotation by |V(\u0393)|/2 positions. This is supported by exhaustive computation on all such graphs up to 10,000 vertices, where every Hamiltonian cubic edge-transitive graph was found to have \u03ba \u2265 2.",
     "domains": [
       "Physics"
@@ -2405,7 +2405,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21941v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T13:48:00.738680+00:00",
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
   },
@@ -3465,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Linear Codes Achieve List-Decoding Capacity with Concentration"
   },
   {
-    "consumed_by_exp_id": "0a880828",
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
     "domains": [
       "Pythagorean",
@@ -3475,7 +3475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T13:54:36.235382+00:00",
     "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
@@ -6955,7 +6955,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Period Relation for Betti\u2011Whittaker Periods of Contragredient Generic Cohomological Representations of GL(n)"
   },
   {
-    "consumed_by_exp_id": "49c290ff",
+    "consumed_by_exp_id": "",
     "description": "For any finite group \u0393, real-valued function f: \u0393 \u2192 \u211d, and directed cycle C\u2099 of length n, the homomorphism density satisfies t(C\u2099, \ud835\udc9e_f) \u2265 (\ud835\udd3c_{g\u2208\u0393} f(g))^(2n). This provides a concrete falsifiable statement about the Sidorenko inequality for directed cycles in the two-sided correlation construction.",
     "domains": [
       "Algebra"
@@ -6964,7 +6964,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T22:16:26.574008+00:00",
     "title": "Sidorenko Inequality for Directed Cycles in Two-Sided Group Correlation Kernels"
   },
@@ -7013,7 +7013,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Analytic derivation of the generating function for $k$-alternating permutations"
   },
   {
-    "consumed_by_exp_id": "552f4622",
+    "consumed_by_exp_id": "",
     "description": "For a pure r-dimensional simplicial complex K on n vertices satisfying the homological condition H\u0303_t(lk_K(\u03c3), \u211d) = 0 for all faces \u03c3 with |\u03c3| = r-t, if the (r-1)-up signless Laplacian spectral radius q_{r-1}(K) is within \u03b5 of the upper bound tn - (t-1)(r+1), then K is within edit distance O(\u03b5n) of the extremal join structure \u0394_{r+1-t} \u22c6 \u0394^{t}_{n-r-1+t}, where the edit distance counts vertices whose deletion makes the complexes isomorphic.",
     "domains": [
       "Algebra",
@@ -7023,7 +7023,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-27T00:14:20.899782+00:00",
     "title": "Stability of Signless Laplacian Spectral Radius under Homological Link Restrictions"
   },
@@ -7893,6 +7893,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 n-Queens Completion Threshold\n\nThis cycle formalized (0 sorries) the structural skeleton of the n-queens completion\nproblem in `Catalog/Applications/NQueens/{Basic,Completion,Threshold}.lean`:\n\n- the row-pigeonhole upper bound `|S| \u2264 n` (`nonAttacking_card_le`);\n- the local 3-blocking counting bound and the greedy one-step extension\n  `nonAttacking_extend` (`3|S| < n \u21d2 S` extends);\n- the constructive `n/3` reachability density (`exists_nonAttacking_third`), bracketing\n  the maximum non-attacking number into `[n/3, n]` as a real density in `[1/3, 1]`;\n- the small-board impossibilities `n = 2, 3` (`no_solution_two`, `no_solution_three`);\n- a catalog bridge to the Glock\u2013K\u00fchn\u2013Osthus rational thresholds of\n  `Catalog/Novelty/C5Threshold.lean` (`reach_ratio_lt_nwThreshold`).\n\nThe mission's headline conjecture `limsup qc(n)/n = 0.216` is research-level and was\n**not** asserted as a (sorry-bearing) theorem; the constant `0.216 = 27/125` is recorded\nas `qcConjecturedConst` and shown to sit strictly below the proved reachability density\n`1/3` (`qcConjectured_lt_reach`). The directions below are derived from this cycle.\n\n## 1. Sharpen the local blocking constant from 3 to an amortized value\n\n**Conjecture.** The greedy reachability bound can be improved from `n/3` to `(1-o(1))\u00b7n`:\nfor every `\u03b5 > 0` and all large `n`, any non-attacking placement of size `\u2264 (1-\u03b5)n` whose\nqueens are \"spread out\" can be extended.\n\nThe key insight is... that the constant `3` in `nonAttacking_extend` counts a *worst-case*\nsingle row, but averaged over the `n-|S|` free rows the total number of blocked cells is\n`(column + 2\u00b7diagonal)` contributions that cannot all concentrate in one row simultaneously;\na double-counting/defect form of the union bound should beat `3|S| < n`.\n\n**Why now?** We already have the exact image-finset decomposition (`C1,C2,C3`) inside\n`exists_free_col`; replacing the crude `card_union_le` by a defect-version\n(`card_union = card + card - card_inter`) is a localized, mechanizable change.\n\n## 2. Formalize the existence of a full solution for every `n \u2265 4`\n\n**Conjecture (Ahrens/Hoffman, formalizable).** For every `n \u2209 {2,3}` there is an explicit\n`IsSolution n S`, given by closed-form column functions depending on `n mod 6`.\n\nThe key insight is... that the classical constructions are *arithmetic progressions of\ncolumns* (`c(r) = 2r mod n` style with small corrections), so non-attack reduces to\nshowing four affine maps are injective mod `n`, i.e. `gcd`-conditions \u2014 precisely the\n`omega`/`ZMod` reasoning our `no_solution_two/three` proofs already exercise in miniature.\n\n**Why now?** Our `IsSolution` predicate and `solution_rows_eq` already pin a solution to a\npermutation of rows; only the explicit column permutation and its four injectivity checks\nremain, and these are finite modular arithmetic facts.\n\n## 3. A toroidal (modular) n-queens dichotomy\n\n**Conjecture (P\u00f3lya).** The *toroidal* n-queens problem \u2014 diagonals taken mod `n` \u2014 has a\nsolution **iff** `gcd(n, 6) = 1`.\n\nThe key insight is... that on the torus the diagonal and anti-diagonal constraints become\n`r \u00b1 c` *mod n*, so a linear placement `c(r) = k\u00b7r` is non-attacking iff `k`, `k-1`, `k+1`\nare all units mod `n`, which is possible exactly when `6 \u2224 ` the relevant residues.\n\n**Why now?** The torus removes the boundary corner cases that make the affine board analysis\ndelicate, turning the whole problem into a single statement about units of `ZMod n`, a domain\nwhere Mathlib's `ZMod`/`Nat.Coprime` API is strong.\n\n## 4. Completion-threshold lower bound via random greedy\n\n**Conjecture.** `qc(n) \u2265 c\u00b7n` for some explicit `c > 0` is provable by a *random* greedy:\norder rows randomly and place a non-attacking queen whenever one exists; the expected number\nof failures is `o(n)`.\n\nThe key insight is... that `nonAttacking_extend` already guarantees deterministic progress\nwhile `3|S| < n`; a probabilistic deferral argument (R\u00f6dl nibble flavour) should push the\ndeterministic `1/3` toward the conjectured `0.216`, matching it from below.\n\n**Why now?** The deterministic engine is in place and sound; layering a finite expectation\ncomputation on top is exactly the kind of additive counting our union-bound lemmas support.\n\n## 5. Tightness of the `[n/3, n]` bracket\n\n**Conjecture.** The reachability density `1/3` proved here is *not* tight for the maximum\nnon-attacking number (which is `n` for `n \u2265 4`), but **is** essentially tight for the weaker\n\"every greedy order succeeds\" guarantee: there exist orders that stall at `~n/3`.\n\nThe key insight is... that an adversarial placement filling one diagonal band forces the\n`3|S|`-blocking bound to be met with equality in a designated row, so greedy can genuinely\nstall near `n/3`, separating *one-step extendability* from *completability*.\n\n**Why now?** Our explicit `C1 \u222a C2 \u222a C3` forbidden-column structure gives a direct recipe for\nan extremal stalling configuration; constructing and verifying it is a finite, decidable check\non top of the existing definitions.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2741",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ca01957a",
+    "status": "available",
+    "timestamp": "2026-06-28T02:59:32.635832+00:00",
+    "title": "This cycle formalized (0 sorries) the structural skeleton of the n-queens comple"
   },
   {
     "consumed_by_exp_id": "",
