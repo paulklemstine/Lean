@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "758d973b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Degree-normalized linked tree-cut decompositions\n\nThis cycle reduced the *degree-normalization clause* of the conjecture (exact\nstabilization along finite-degree ends, divergence",
-      "quality_score": 0.51744,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-24T12:15:24",
-      "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
-    },
-    {
       "cycle_id": "1670a4b8",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nThis cycle settled the two-colour Schur number `S(2) = 4` exactly and supplied\nthe extremal construction for the lower bound `S(3) ≥ 13`",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T03:52:42",
       "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
+    },
+    {
+      "cycle_id": "552f4622",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Σ-ramified Iwasawa modules over a ℤ_p-extension\n\nThis cycle formalized the algebraic engine of torsionness for Σ-ramified Iwasawa\nmodules in the bounded-rank regime (`μ = 0`, `λ",
+      "quality_score": 0.642034,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-28T04:01:53",
+      "title": "Torsionness of Σ‑ramified Iwasawa modules over a ℤₚ‑extension"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70384
     }
   ],
-  "last_updated": "2026-06-28T03:52:42",
+  "last_updated": "2026-06-28T04:01:53",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e3ff7cf5",
-        "quality": 0.7938000000000001,
-        "theorems": 13,
-        "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-ind"
-      },
-      {
         "cycle_id": "a33a1330",
         "quality": 0.6787,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.7800670000000001,
         "theorems": 14,
         "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
+      },
+      {
+        "cycle_id": "552f4622",
+        "quality": 0.642034,
+        "theorems": 5,
+        "title": "Torsionness of Σ‑ramified Iwasawa modules over a ℤₚ‑extension"
       }
     ],
     "Bridges": [

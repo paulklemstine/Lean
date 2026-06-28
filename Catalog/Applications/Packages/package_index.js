@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "552f4622",
     "filename": "torsionness_of_ramified_iwasawa_modules_over_a_ext.json",
     "pkg_num": 163,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.642034,
     "title": "Torsionness of Iwasawa Modules Finitely Generated Over the Coefficient Ring"
   },
   {
@@ -4755,8 +4755,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "torsionness_of_ramified_iwasawa_modules_over_a_ext",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.642034,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Torsionness of Iwasawa Modules Finitely Generated Over the Coefficient Ring"
     }
