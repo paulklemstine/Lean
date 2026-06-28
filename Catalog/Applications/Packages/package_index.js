@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0a880828",
     "filename": "existence_of_a_natural_boundary_for_the_prime_zeta.json",
     "pkg_num": 162,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.70384,
     "title": "A Natural Boundary for the Prime-Ideal Zeta Function of Imaginary Quadratic Fields"
   },
   {
@@ -4726,8 +4726,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "existence_of_a_natural_boundary_for_the_prime_zeta",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.70384,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "A Natural Boundary for the Prime-Ideal Zeta Function of Imaginary Quadratic Fields"
     }

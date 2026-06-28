@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "c7101b5e",
+    "consumed_by_exp_id": "",
     "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
     "domains": [
       "Computation",
@@ -428,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432811+00:00",
     "title": "Formal Verification of Algorithms"
   },
@@ -793,7 +793,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kaplansky's Conjectures"
   },
   {
-    "consumed_by_exp_id": "72f7aee6",
+    "consumed_by_exp_id": "",
     "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
     "domains": [
       "Computation",
@@ -803,7 +803,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:16.651864+00:00",
     "title": "Random Matrices: Edge Universality"
   },
@@ -4694,7 +4694,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scattering Determinant Critical Line Conjecture"
   },
   {
-    "consumed_by_exp_id": "f347664d",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that if a p-adic Galois representation becomes semistable after passing to some finite extension, then it must already have been of finite E-height. This would provide a characterization of finite height representations in terms of their behavior under finite extensions.",
     "domains": [
       "Algebra",
@@ -4704,7 +4704,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26043v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T17:11:00.832064+00:00",
     "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representations"
   },
@@ -7956,6 +7956,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Natural Boundary of Imaginary Quadratic Prime Zeta Functions\n\nDerived from the verified results of this cycle:\n\n* `Catalog/Novelty/ImaginaryQuadraticPrimeZeta.lean` \u2014 the Gaussian prime-ideal\n  zeta `P_{\u211a(i)}(s)`: convergence for `s > 1`, divergence for `s \u2264 1/2`,\n  positivity, and a bridge `P_{\u211a(i)}(s) \u2264 2\u00b7primeZeta(s)` to the catalog's\n  rational prime zeta (`Catalog/Novelty/PrimeZetaAbscissa.lean`).\n* `Catalog/Novelty/ImaginaryQuadraticPrimeZetaGeneral.lean` \u2014 the abstract\n  splitting-data model `P_K(s) = \u2211_p (deg1 p)\u00b7p^{-s} + (inert p)\u00b7p^{-2s}` with\n  the same `[1/2, 1]` abscissa bracket and the `s \u2264 0` regularization\n  obstruction, instantiated back to `\u211a(i)`.\n\nThe cycle established the *unconditional* bracket `[1/2, 1]` and isolated the one\nremaining field-dependent ingredient \u2014 positive density of the split primes \u2014 as\nthe gateway to the sharp abscissa and the conjectural natural boundary.\n\n---\n\n## Conjecture 1 \u2014 Sharp abscissa is exactly `1`\n\nFor every imaginary quadratic field `K` with class number one, the prime-ideal\nzeta `P_K(s)` converges for `s > 1` and **diverges at `s = 1`**; i.e. the\nabscissa of convergence is exactly `1`, closing the proved bracket `[1/2, 1]`.\n\n* **The key insight is...** that the gap `(1/2, 1]` of the proved bracket is\n  controlled entirely by the *split* primes (those with `\u03c7_d(p) = +1`), whose\n  reciprocal sum `\u2211_{\u03c7_d(p)=+1} 1/p` diverges by Dirichlet density `1/2`; the\n  inert primes only contribute the convergent tail `\u2211 p^{-2s}`.\n* **Why now?** Mathlib already contains Dirichlet's theorem\n  (`Nat.infinite_setOf_prime_and_eq_mod`) and the non-summability of the von\n  Mangoldt function over an invertible residue class\n  (`ArithmeticFunction.vonMangoldt.not_summable_residueClass_prime_div`); an Abel\n  partial-summation bridge from `\u039b(p)/p` to `1/p` over a residue class would\n  immediately upgrade our `s \u2264 1/2` divergence to the sharp `s = 1`.\n\n## Conjecture 2 \u2014 Natural boundary on the imaginary axis `Re(s) = 0`\n\nThe analytic continuation of `P_K(s)` (via `log \u03b6_K`) admits the line\n`Re(s) = 0` as a **natural boundary**: it cannot be continued to any open set\nmeeting the imaginary axis.\n\n* **The key insight is...** that `P_K(s) = \u2211_{k\u22651} (\u03bc(k)/k)\u00b7log \u03b6_K(ks)`, so each\n  nontrivial zero `\u03c1` of `\u03b6_K` produces a singularity of `P_K` at every point\n  `\u03c1/k`; these accumulate densely on `Re(s) = 0`, exactly as in Landau\u2013Walfisz\n  for the rational prime zeta, and class-number-one forces `\u03b6_K = \u03b6\u00b7L(\u00b7,\u03c7_d)`,\n  so the zeros of both `\u03b6` and `L(\u00b7,\u03c7_d)` contribute.\n* **Why now?** Mathlib's L-function infrastructure (`L(\u00b7,\u03c7)`, functional\n  equations, the explicit `\u03b6_K = \u03b6\u00b7L(\u00b7,\u03c7_d)` factorisation for quadratic fields)\n  is mature enough to formalise the M\u00f6bius\u2013log expansion; the only missing\n  elementary step is the accumulation-of-singularities lemma, which our\n  abscissa-bracket file already frames as a half-line obstruction.\n\n## Conjecture 3 \u2014 No zeta-regularized \"product of all prime ideals\"\n\nThe formal value `P_K(-1) = \u2211_\ud835\udd2d N(\ud835\udd2d)` (the exponent governing the regularized\nproduct `\u220f_\ud835\udd2d N(\ud835\udd2d)`) is **not** recoverable by analytic continuation across\n`Re(s) = 0`: unlike `\u03b6(-1) = -1/12`, there is no canonical finite value.\n\n* **The key insight is...** that the natural boundary of Conjecture 2 sits\n  strictly between the abscissa `s = 1` and the target `s = -1`, so any path of\n  continuation from the convergence region to `s = -1` must cross `Re(s) = 0` and\n  is therefore blocked \u2014 the obstruction is *topological*, not merely a pole.\n  Our `primeIdealZetaG_not_summable_nonpos` already proves the series itself has\n  no value on `s \u2264 0`.\n* **Why now?** With Conjecture 2 formalised, the non-regularizability is a\n  corollary; the comparison `P_K(s) \u2264 2\u00b7primeZeta(s)` proved here gives the\n  quantitative control needed to localise the boundary between the two regimes.\n\n## Conjecture 4 \u2014 Uniformity across the nine class-number-one fields\n\nThe abscissa, the natural boundary `Re(s) = 0`, and the non-regularizability are\nidentical for all nine imaginary quadratic fields of class number one\n(`d \u2208 {1,2,3,7,11,19,43,67,163}`), depending only on the degree (`= 2`) and the\nsplitting density (`= 1/2`), not on `d`.\n\n* **The key insight is...** that our general file already proves the bracket and\n  the obstruction from *degree-only* hypotheses (`deg1 \u2264 2`, `inert \u2264 1`,\n  `deg1 + inert \u2265 1`); the field `d` enters solely through the quadratic\n  character `\u03c7_d`, which has Dirichlet density `1/2` for every `d`.\n* **Why now?** The finitely many fields are explicitly enumerable (Heegner\u2013Stark),\n  so a single uniform proof plus nine decidable splitting instances would settle\n  the whole family at once.\n\n## Conjecture 5 \u2014 Mertens-type second-order law at the abscissa\n\nAs `s \u2192 1\u207a`, `P_K(s) = -\u00bd\u00b7log(s-1) + C_K + o(1)` for an explicit field constant\n`C_K`, the imaginary-quadratic analogue of Mertens' `\u2211_{p\u2264x} 1/p`.\n\n* **The key insight is...** that the `\u00bd` coefficient is the split density, and the\n  numerics here (`s = 1` column growing like `log log` while `s = 0.5` grows like\n  a power) already exhibit the predicted `-\u00bd log(s-1)` blow-up rate.\n* **Why now?** Mathlib's Mertens estimates for the rationals plus the\n  `\u03b6_K = \u03b6\u00b7L(\u00b7,\u03c7_d)` factorisation make the constant `C_K` computable in terms of\n  `\u03b3`, `L(1,\u03c7_d)`, and an Euler-product correction \u2014 all already available.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2745",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0a880828",
+    "status": "available",
+    "timestamp": "2026-06-28T03:52:32.347449+00:00",
+    "title": "Derived from the verified results of this cycle:"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8292,7 +8307,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "4554c3a3",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -8302,7 +8317,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -8395,21 +8410,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-03T22:10:08.377996+00:00",
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
-  },
-  {
-    "consumed_by_exp_id": "9ee5d694",
-    "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
-    "domains": [
-      "EML",
-      "Logic"
-    ],
-    "id": "fd_0552",
-    "priority_score": 0.5099999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.956863+00:00",
-    "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
   {
     "consumed_by_exp_id": "",
