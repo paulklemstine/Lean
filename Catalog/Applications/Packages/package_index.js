@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "dbb7efcb",
     "filename": "eml_differential_equations_odes_with_exponential_l.json",
     "pkg_num": 166,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.79816,
     "title": "EML Differential Equations: Logarithmic Derivatives, Galois Torsors, and a Sharp Kovacic Parity Decision for Airy"
   },
   {
@@ -4842,8 +4842,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "eml_differential_equations_odes_with_exponential_l",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.79816,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "EML Differential Equations: Logarithmic Derivatives, Galois Torsors, and a Sharp Kovacic Parity Decision for Airy"
     }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2e536cee",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Discrepancy of Random Linear Codes for Hamming Balls\n\nDerived from this cycle's findings: an exact averaging identity (`sum_inter_ball`),\nthe explicit ball-volume formula (`ball_",
-      "quality_score": 0.7725600000000001,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-26T01:31:23",
-      "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
-    },
-    {
       "cycle_id": "1983a01c",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Bourgain's Slicing Problem\n\nThis research cycle established a fully verified, dimension-free model of *isotropic position*\nfor the discrete cube `{-1,1}ⁿ` (`DiscreteCube.lean`),",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-06-28T05:31:58",
       "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
+    },
+    {
+      "cycle_id": "dbb7efcb",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — EML Differential Equations\n\nDerived from this cycle's findings (`EMLReductionOfOrder`, `EMLFirstOrderGroup`,\n`EMLRiccatiNormalForm`) together with the existing obstruction layer",
+      "quality_score": 0.79816,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T05:34:37",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ceeb135f",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE DIRECTIONS — Euler–Mascheroni constant: irrationality approaches\n\nCycle 1 established (all fully proved, 0 sorries):\n\n* `irrational_iff_forall_eps_linear_form` — the abstract Diophantine engi",
-      "quality_score": 0.6807300000000001,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-24T17:02:37",
-      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-    },
     {
       "cycle_id": "449dda28",
       "domain": "Applications",
@@ -2501,15 +2491,19 @@
       "theorem_count": 16,
       "timestamp": "2026-06-28T05:31:58",
       "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
+    },
+    {
+      "cycle_id": "dbb7efcb",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — EML Differential Equations\n\nDerived from this cycle's findings (`EMLReductionOfOrder`, `EMLFirstOrderGroup`,\n`EMLRiccatiNormalForm`) together with the existing obstruction layer",
+      "quality_score": 0.79816,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T05:34:37",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bd70abee",
-      "domain": "Applications",
-      "name": "cusick_bias_propagation",
-      "quality": 0.7003299999999999
-    },
     {
       "cycle_id": "f8a707b1",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Applications",
       "name": "balanced_of_maximizer",
       "quality": 0.76734
+    },
+    {
+      "cycle_id": "dbb7efcb",
+      "domain": "Novelty",
+      "name": "firstOrder_prod",
+      "quality": 0.79816
     }
   ],
-  "last_updated": "2026-06-28T05:31:58",
+  "last_updated": "2026-06-28T05:34:37",
   "open_questions": [
     {
       "context": "## Verified results (all `sorry`-free)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "6fa4f641",
-        "quality": 0.7798419999999999,
-        "theorems": 9,
-        "title": "Maximum size of cycle-containing families of vectors"
-      },
-      {
         "cycle_id": "417ceff0",
         "quality": 0.49606231111111115,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.535421090909091,
         "theorems": 13,
         "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representat"
+      },
+      {
+        "cycle_id": "dbb7efcb",
+        "quality": 0.79816,
+        "theorems": 14,
+        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
       }
     ],
     "NumberTheory": [
