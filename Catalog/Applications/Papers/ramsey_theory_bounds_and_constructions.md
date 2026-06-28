@@ -1,65 +1,59 @@
-# Computational Evidence — Probabilistic Ramsey Lower Bound
+# Computational Evidence — Ramsey number function `R(s,t)`
 
-Evidence supporting the formalized results in
-`Applications/RamseyProbabilisticLowerBound.lean`. All numbers below were computed
-with Lean `#eval` over exact `ℕ` arithmetic (`Nat.choose`), so they are exact, not
-floating point.
+This cycle introduces `ramseyNumber s t = sInf {n | Arrows n s t}` and proves
+its exact small values, order properties, the Erdős–Szekeres bounds, and a
+diagonal sandwich. Below is the numerical sanity-checking that guided the
+formalization.
 
-## 1. The first-moment threshold `2·C(n,k) < 2^{C(k,2)}`
+## 1. Exact small values (known, all formalized this cycle)
 
-The probabilistic method gives `R(k,k) > n` whenever `2·C(n,k) < 2^{C(k,2)}`
-(`arrows_lower_bound_counting`). Evaluating the predicate
-`chk n k := decide (2 * n.choose k < 2 ^ (k.choose 2))`:
+| R(s,t) | t=1 | t=2 | t=3 | t=4 |
+|--------|-----|-----|-----|-----|
+| s=1    | 1   | 1   | 1   | 1   |
+| s=2    | 1   | 2   | 3   | 4   |
+| s=3    | 1   | 3   | 6   | 9   |
+| s=4    | 1   | 4   | 9   | 18  |
 
-| k | largest n with `chk n k = true` | conclusion |
-|---|---|---|
-| 5 | 11 | `R(5,5) > 11` (i.e. `≥ 12`) |
-| 6 | 17 | `R(6,6) > 17` (i.e. `≥ 18`) |
+The shaded diagonal/off-diagonal entries proved as `ramseyNumber_* = …`:
+`R(3,3)=6`, `R(3,4)=9`, `R(4,3)=9`, `R(4,4)=18`, and `R(2,t+1)=t+1`.
+These match OEIS A212954 (table of two-colour Ramsey numbers) and the classical
+small-Ramsey survey values.
 
-(The true values are `R(5,5) ≥ 43`, `R(6,6) ≥ 102`; the first-moment bound is
-correct but, as expected, far from optimal — see Future Direction 1, the deletion
-method.)
+## 2. Erdős–Szekeres binomial bound `R(s,t) ≤ C(s+t-2, s-1)`
 
-## 2. The exponential corollary `R(2m, 2m) > 2^m`
+Spot checks against the exact table (the bound is tight at small `s` or `t`,
+loose on the diagonal):
 
-`ramsey_diagonal_lower` requires `m ≥ 2`. Checking `chk (2^m) (2*m)`:
+| (s,t) | R(s,t) | C(s+t-2,s-1) |
+|-------|--------|--------------|
+| (2,4) | 4      | C(4,1)=4 (tight) |
+| (3,3) | 6      | C(4,2)=6 (tight) |
+| (3,4) | 9      | C(5,2)=10 |
+| (4,4) | 18     | C(6,3)=20 |
 
-| m | n = 2^m | k = 2m | `2·C(n,k) < 2^{C(k,2)}` |
-|---|---------|--------|--------------------------|
-| 0 | 1  | 0  | false (vacuous, k=0) |
-| 1 | 2  | 2  | false (2·1 = 2, 2^1 = 2) |
-| 2 | 4  | 4  | **true** (2·1 = 2 < 64) |
-| 3 | 8  | 6  | **true** |
-| 4 | 16 | 8  | **true** |
-| 5 | 32 | 10 | **true** |
+All rows satisfy `R ≤ C(...)`, confirming `ramseyNumber_le_choose`.
 
-The threshold `m ≥ 2` in the theorem is sharp for this argument: `m = 1` fails
-(equality `2 = 2`), confirming the hypothesis `hm : 2 ≤ m` is necessary, not
-cosmetic.
+## 3. Erdős–Szekeres recursion `R(s,t) ≤ R(s-1,t) + R(s,t-1)`
 
-## 3. Bracketing the diagonal
+- `R(3,3)=6 ≤ R(2,3)+R(3,2) = 3+3 = 6` (tight).
+- `R(3,4)=9 ≤ R(2,4)+R(3,3) = 4+6 = 10`.
+- `R(4,4)=18 ≤ R(3,4)+R(4,3) = 9+9 = 18` (tight).
 
-Combining with the catalog's upper bound `R(k+1,k+1) ≤ 4^k`
-(`Applications/RamseyDiagonalBound.arrows_diagonal_pow`), the diagonal Ramsey
-number now satisfies, on the common `Arrows` framework,
+Tightness at `(3,3)` and `(4,4)` is the well-known phenomenon; the proved lemma
+`ramseyNumber_recursion` is the (shifted, non-degenerate) inequality.
 
-```
-2^{k/2}  <  R(k,k)  ≤  4^{k-1}.
-```
+## 4. Diagonal sandwich `2^m < R(2m,2m) ≤ 4^(2m-1)` (m ≥ 2)
 
-For example `k = 4`: `2^2 = 4 < R(4,4) = 18 ≤ 4^3 = 64`, consistent with the exact
-value `R(4,4) = 18` proved in `Applications/RamseyFourFour.lean`.
+| m | 2^m | R(2m,2m) | 4^(2m-1) |
+|---|-----|----------|----------|
+| 2 | 4   | R(4,4)=18 | 4^3 = 64 |
+| 3 | 8   | R(6,6) ∈ [102,160] | 4^5 = 1024 |
 
-## 4. Van der Waerden small cases
+For `m=2` the bracket `4 < 18 ≤ 64` is verified directly against the exact value
+`R(4,4)=18`. The general statement is `ramseyNumber_diagonal_sandwich`.
 
-`mono_three_AP` asserts a monochromatic 3-AP in every finite colouring of `ℕ`.
-The least van der Waerden number `W(2,3) = 9`: every 2-colouring of `{0,…,8}` has a
-monochromatic 3-term AP, and `{0,…,7}` admits the colouring `RRBBRRBB` with none —
-classical small-case data consistent with the formalized infinite statement.
+## 5. Counterexample hunt
 
-## Why this evidence is sufficient
-
-The Lean theorems are exact and parameterized in `k`/`m`; the tables above only
-confirm the hypotheses are satisfiable and the threshold `m ≥ 2` is tight. No
-counterexample search is needed because the universal claims are *proved*, not
-conjectured — the evidence is calibration, not verification.
+The universal claims under test — symmetry `R(s,t)=R(t,s)`, monotonicity, and the
+two bounds — were checked on every entry of the `s,t ≤ 4` table with no violation.
+No counterexample found; all became theorems.
