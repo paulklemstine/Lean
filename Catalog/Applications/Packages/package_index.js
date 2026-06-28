@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "cfea11f0",
     "filename": "optimal_transport_and_wasserstein_distances.json",
     "pkg_num": 199,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.65976,
     "title": "Finite Optimal Transport and Wasserstein Distances"
   },
   {
@@ -5806,8 +5806,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "optimal_transport_and_wasserstein_distances",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.65976,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Finite Optimal Transport and Wasserstein Distances"
     }

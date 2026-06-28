@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8344a207",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Birch and Swinnerton-Dyer Research Cycle\n\nThis cycle added two self-contained modules to `Catalog/Applications/BSD/`:\n\n* **`FunctionalEquation.lean`** — the unconditional analyti",
-      "quality_score": 0.6688000000000001,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-26T05:16:07",
-      "title": "Birch and Swinnerton-Dyer Conjecture"
-    },
-    {
       "cycle_id": "f0b7b2e4",
       "domain": "Applications",
       "key_insight": "# Future Directions — Ramsey Bounds and the Parity Obstruction\n\nDerived from this cycle's findings (`Applications.RamseyThreeFour`,\n`Applications.RamseyParity`), which proved `R(3,4) = 9` by combining",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T23:14:30",
       "title": "Ramsey Theory: Bounds and Constructions"
+    },
+    {
+      "cycle_id": "cfea11f0",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Finite Optimal Transport & Wasserstein Distances\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nThis cycle established, with zero sorries:\n\n*",
+      "quality_score": 0.65976,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T23:17:20",
+      "title": "Optimal Transport and Wasserstein Distances"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7327899999999999
     }
   ],
-  "last_updated": "2026-06-28T23:14:30",
+  "last_updated": "2026-06-28T23:17:20",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "461fdf74",
-        "quality": 0.37835341176470594,
-        "theorems": 0,
-        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-      },
-      {
         "cycle_id": "28bd8499",
         "quality": 0.643006,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.69949,
         "theorems": 0,
         "title": "Sufficient condition for non-periodicity of awaited set of Wang tiles"
+      },
+      {
+        "cycle_id": "cfea11f0",
+        "quality": 0.65976,
+        "theorems": 0,
+        "title": "Optimal Transport and Wasserstein Distances"
       }
     ],
     "NumberTheory": [
