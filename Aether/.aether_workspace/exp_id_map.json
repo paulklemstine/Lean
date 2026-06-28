@@ -683,5 +683,6 @@
   "bac3bfcc": "statistical_mechanics_ising_model_phase_transition.json",
   "00e5c711": "wall_menger_separator_optimality_conjecture.json",
   "6ac1dc4e": "rainbow_triangle_density_lower_bound_conjecture.json",
-  "e5dd524d": "eml_fixed_point_theorem_exp_log_iteration_converge.json"
+  "e5dd524d": "eml_fixed_point_theorem_exp_log_iteration_converge.json",
+  "fdadfe48": "the_most_natural_next_step_is_to_attack_the_residu.json"
 }
