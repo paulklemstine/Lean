@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8999eb20",
     "filename": "girth_bounds_minimum_distance_of_bipartite_graph_c.json",
     "pkg_num": 191,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7782,
     "title": "Girth Bounds the Minimum Distance of a Bipartite Graph Code"
   },
   {
@@ -5574,8 +5574,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "girth_bounds_minimum_distance_of_bipartite_graph_c",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7782,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Girth Bounds the Minimum Distance of a Bipartite Graph Code"
     }

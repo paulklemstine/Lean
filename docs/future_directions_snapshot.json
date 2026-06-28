@@ -2267,6 +2267,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Girth and the codes of bipartite graphs\n\nDerived from the cycle of work formalized in\n`Catalog/Novelty/BipartiteGraphCodeGirth.lean` and\n`Catalog/Novelty/BipartiteGraphCodeGirthApplications.lean`, where we proved that a\nsimple left-`d`-regular bipartite graph (`d ≥ 2`) with girth `≥ 2k+2` has a code\n`B(G)` of minimum distance `≥ k+1`.\n\nThe proof isolated two reusable facts: (i) a finite graph with an edge and **no\nvertex of degree one** contains a cycle; (ii) a cycle of a bipartite graph has\nlength `2·(#left vertices)`. These suggest the following bold, testable\nconjectures.\n\n## 1. Sharpness via Moore-type extremal graphs\n**Conjecture.** For every `d ≥ 2` and `k ≥ 1` there is a left-`d`-regular\nbipartite graph with girth exactly `2k+2` whose code `B(G)` has minimum distance\n*exactly* `k+1`, and these are the unique distance-minimizers among graphs of that\ngirth.\n**The key insight is** that the cycle extracted in the proof has length exactly\n`2·(weight of the codeword)`, so a shortest cycle is *itself* a minimum-weight\ncodeword — distance and girth are two views of the same extremal object.\n**Why now?** The formal proof already produces the minimum-weight codeword as a\ngraph cycle; turning the inequality into an equality only requires formalizing the\nincidence graphs of generalized polygons (e.g. the Fano plane for `d = 3, k = 2`),\nwhich are finite and `decide`-checkable.\n\n## 2. A degree-sequence generalization (drop regularity)\n**Conjecture.** Left-regularity is unnecessary: if every left vertex has degree\n`≥ 2` and `G` has girth `≥ 2k+2`, then `B(G)` still has minimum distance `≥ k+1`.\n**The key insight is** that the proof never used the *exact* value `d`, only that\nthe restricted graph has **no degree-one vertex**; the even-degree condition on the\nright and `degree ≥ 2` on the left are all that the cycle-extraction lemma needs.\n**Why now?** The load-bearing lemma `exists_isCycle_of_no_degree_one` is already\nstated for *arbitrary* finite graphs, so the generalization is a matter of\nreplacing the regularity hypothesis `hreg` by a pointwise `2 ≤ degree` bound.\n\n## 3. Spectral expansion ⇒ girth ⇒ distance, fully formal\n**Conjecture.** If the bipartite adjacency operator of `G` has second singular\nvalue `σ₂ ≤ d^{1/2}·(1+o(1))` (a near-Ramanujan small-set expander), then the\ngirth is `Ω(log_{d-1} n)`, hence `B(G)` has minimum distance `Ω(log n)`.\n**The key insight is** that the combinatorial bridge \"girth ⇒ distance\" is now a\ntheorem, so the remaining gap to \"expansion ⇒ good codes\" is purely the spectral\ngirth lower bound, decoupling the analysis from the coding theory.\n**Why now?** With the girth→distance step machine-checked, effort can concentrate\non the spectral→girth step (Alon–Boppana / trace-method bounds), which Mathlib's\ngrowing linear-algebra and spectral-theory libraries can begin to support.\n\n## 4. Higher-weight (list-decoding) analogue\n**Conjecture.** If `G` has girth `≥ 2k+2`, then any two distinct codewords of\n`B(G)` of weight `≤ k` are at Hamming distance `≥ k+1`, and more generally the\nnumber of codewords inside any Hamming ball of radius `k/2` is at most one.\n**The key insight is** that a small *symmetric difference* of two codewords is\nagain a codeword (the code is linear), so the single-codeword bound bootstraps to\na *pairwise* separation bound by applying the main theorem to `S₁ △ S₂`.\n**Why now?** Linearity of `B(G)` over `GF(2)` makes the symmetric-difference step\nelementary, and the main theorem is already phrased for an arbitrary codeword `S`,\nso it applies verbatim to `S₁ △ S₂`.\n\n## 5. Exact converse in the `2`-regular regime\n**Conjecture.** If `G` is **both** left- and right-`2`-regular (so, as a graph, a\ndisjoint union of even cycles) then `B(G)` has minimum distance *exactly*\n`girth/2`; equivalently the left-vertex set of a shortest cycle is a\nminimum-weight codeword. For `d > 2` this equality can fail strictly, and\ncharacterizing when `distance = ⌊girth/2⌋` is the open problem.\n**The key insight is** that at degree `2` every right vertex on a cycle is met\nexactly twice and every right vertex *off* it not at all, so the cycle's\nleft-vertex set is *literally* a codeword — while for `d > 2` the `d-2` off-cycle\nedges of each cycle vertex destroy parity, which is exactly the obstruction to a\nclean converse.\n**Why now?** The forward direction already converts a codeword into a cycle; in\nthe `2`-regular case the reverse map \"cycle ↦ its left-vertex set\" is a short,\ndirectly formalizable Finset parity computation, making the equality `distance =\ngirth/2` an immediately attackable formal target.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2794",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8999eb20",
+    "status": "available",
+    "timestamp": "2026-06-28T17:21:05.669242+00:00",
+    "title": "Derived from the cycle of work formalized in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -2381,26 +2401,6 @@
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "8f5c44bc",
-    "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "fd_0555",
-    "lineage_refs": [],
-    "priority_score": 0.7,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:08.217813+00:00",
-    "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
     "ambition_level": "extension",
@@ -2681,7 +2681,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "140a33ad",
+    "consumed_by_exp_id": "",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domain_bridges": [],
     "domains": [
@@ -2694,7 +2694,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },

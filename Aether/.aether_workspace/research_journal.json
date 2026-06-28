@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d4e980c4",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's formalization (`WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`). Each conjecture is bold, fals",
-      "quality_score": 0.713,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-26T13:13:27",
-      "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
-    },
-    {
       "cycle_id": "f014f8e3",
       "domain": "Novelty",
       "key_insight": "# Future Directions — AFL Matching Bound for Random-Like Hypergraphs\n\nDerived from this cycle's findings (see the Lab Notes in `Basic.lean`, `Bounds.lean`,\n`Examples.lean`, and `ComputationalEvidence.",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T16:59:26",
       "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
+    },
+    {
+      "cycle_id": "8999eb20",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Girth and the codes of bipartite graphs\n\nDerived from the cycle of work formalized in\n`Catalog/Novelty/BipartiteGraphCodeGirth.lean` and\n`Catalog/Novelty/BipartiteGraphCodeGirthA",
+      "quality_score": 0.7782,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T17:21:24",
+      "title": "Girth bounds minimum distance of bipartite graph codes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fb2780d5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — GL(1) Langlands / Global Class Field Theory (cyclotomic case)\n\nDerived from this cycle's verified results in `GaloisDuality.lean` and `QuadraticHecke.lean`\n(building on the exist",
-      "quality_score": 0.7235799999999999,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-25T18:22:22",
-      "title": "Langlands Correspondence: GL(1) Case"
-    },
     {
       "cycle_id": "ab9c78a7",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T16:59:26",
       "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
+    },
+    {
+      "cycle_id": "8999eb20",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Girth and the codes of bipartite graphs\n\nDerived from the cycle of work formalized in\n`Catalog/Novelty/BipartiteGraphCodeGirth.lean` and\n`Catalog/Novelty/BipartiteGraphCodeGirthA",
+      "quality_score": 0.7782,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T17:21:24",
+      "title": "Girth bounds minimum distance of bipartite graph codes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71224
     }
   ],
-  "last_updated": "2026-06-28T16:59:26",
+  "last_updated": "2026-06-28T17:21:24",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ef629b7b",
-        "quality": 0.722996,
-        "theorems": 17,
-        "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
-      },
-      {
         "cycle_id": "42ce6f47",
         "quality": 0.518,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.71224,
         "theorems": 14,
         "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_"
+      },
+      {
+        "cycle_id": "8999eb20",
+        "quality": 0.7782,
+        "theorems": 0,
+        "title": "Girth bounds minimum distance of bipartite graph codes"
       }
     ],
     "NumberTheory": [
