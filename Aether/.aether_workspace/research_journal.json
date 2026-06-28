@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "72f1519b",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Degree-4 vertices in the flip graph of the m×n Miura-ori\n\nThis cycle established a rigorous combinatorial core (`Catalog/Pythagorean/MiuraFlipDegree.lean`):\nthe local degree-4 fl",
-      "quality_score": 0.5317089325931801,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-24T15:18:53",
-      "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
-    },
-    {
       "cycle_id": "c235005e",
       "domain": "Geometry",
       "key_insight": "# Future Directions — T-Ideals of Acyclic Path Algebras\n\nThis cycle proved the *containment* half of the mission statement: for a finite\nacyclic quiver `Q` with longest path length `n - 1`, the symmet",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-28T05:04:52",
       "title": "Formal Verification of Algorithms"
+    },
+    {
+      "cycle_id": "4554c3a3",
+      "domain": "Applications",
+      "key_insight": "",
+      "quality_score": 0.630526,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-28T05:27:57",
+      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73264
     }
   ],
-  "last_updated": "2026-06-28T05:04:52",
+  "last_updated": "2026-06-28T05:27:57",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f31c8198",
-        "quality": 0.565585,
-        "theorems": 15,
-        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-      },
-      {
         "cycle_id": "8170e958",
         "quality": 0.5594,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.6887099999999999,
         "theorems": 9,
         "title": "Formal Verification of Algorithms"
+      },
+      {
+        "cycle_id": "4554c3a3",
+        "quality": 0.630526,
+        "theorems": 9,
+        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
       }
     ],
     "Bridges": [

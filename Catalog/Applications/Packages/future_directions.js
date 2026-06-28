@@ -5605,7 +5605,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved upper bound for P\u00f3lya tree coefficients"
   },
   {
-    "consumed_by_exp_id": "cff6413b",
+    "consumed_by_exp_id": "",
     "description": "For every edge density \u03b2 \u2208 [0,1] the minimum possible asymptotic density of semi\u2011induced copies of S_{2,1} in an n\u2011vertex graph G with edge density \u03b2 is given by the one\u2011parameter three\u2011class complement\u2011split construction: let t \u2208 [0,1] be the unique solution of \u03b2 = t(1 \u2212 t/2); then the minimum semi\u2011induced density equals p_min(\u03b2) = t\u00b2(1\u2212t).",
     "domains": [
       "Bridges"
@@ -5614,7 +5614,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T21:11:05.213329+00:00",
     "title": "Exact lower semi-inducibility profile for the red\u2011blue star S_{2,1}"
   },
@@ -6112,20 +6112,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-27T14:19:26.493155+00:00",
     "title": "Improved lower bound for r-graphs with 0 or 2 edges in every (r+1)-set"
-  },
-  {
-    "consumed_by_exp_id": "53e074b6",
-    "description": "For a simple field extension L = K(\u03b8) in characteristic p > 0 with minimal polynomial f \u2208 K[x], and any purely inseparable field extension N/K, the numerical invariant m_{f,N} associated to the compositum NL/N (as defined in the paper) coincides with the invariant m_f associated to L/K. That is, m_{f,N} = m_f. This would imply that the criterion for NL = (NL)^{pi}(NL)^{sep} depends only on L/K and not on the choice of purely inseparable extension N/K.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2632",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19962v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-27T14:43:20.786451+00:00",
-    "title": "Invariance of the field invariant m_f under purely inseparable base change"
   },
   {
     "consumed_by_exp_id": "",
@@ -8040,6 +8026,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The order-k forward difference of exp, rescaled by k!/h^k, is an EML network for x^k with rate O(1/n). With x^2 (QuadraticApproxRate) and now x^3 (CubicApproxRate) in hand, the entire polynomial algebra is constructively EML-approximable, providing the explicit, rate-equipped backbone for the Stone-Weierstrass density of EML.StoneWeierstrassApprox. Concrete next steps: (1) establish the general degree-k rate with an explicit closed form for the constant C_k, generalizing 4/9 (k=2) and 5/16 (k=3); (2) prove matching lower bounds for x^3 and general x^k, mirroring the Theta(h) sharpness result for x^2; (3) extend the explicit rates from monomials to general Lipschitz and Lip_alpha targets, aiming at the conjectured width O(eps^{-n/alpha}) on compact subsets of R^n; (4) combine the explicit monomial networks with the pullback density transfer (eml_pullback_universalApproximation) to obtain explicit multivariate rates on injective images of intervals; (5) investigate whether alternative EML templates (e.g. logarithmic finite differences) yield smaller constants or higher-order rates for smooth targets.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2751",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4554c3a3",
+    "status": "available",
+    "timestamp": "2026-06-28T05:27:47.714504+00:00",
+    "title": "The order-k forward difference of exp, rescaled by k!/h^k, is an EML network for"
   },
   {
     "consumed_by_exp_id": "",
