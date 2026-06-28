@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a59363e7",
     "filename": "exact_ratio_spectrum_of_lagrange_constants_under_i.json",
     "pkg_num": 165,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.631596,
     "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
   },
   {
@@ -4813,8 +4813,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "exact_ratio_spectrum_of_lagrange_constants_under_i",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.631596,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
     }

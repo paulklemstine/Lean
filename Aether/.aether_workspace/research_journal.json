@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cd0ef092",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Proof Automation: Custom Lean 4 Tactics\n\nDerived from this cycle's findings (Stage 3 Analysis & Stage 4 Critique on the\n`tropical_simp`, `number_theory_decide`, `spectral_bound`",
-      "quality_score": 0.7045299999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-24T13:14:57",
-      "title": "Proof Automation: Custom Lean 4 Tactics"
-    },
-    {
       "cycle_id": "168f9c96",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Conformability of odd-order regular graphs\n\nDerived from this cycle's findings (`ConformabilityOddOrder.lean`,\n`PerfectTrianglePacking.lean`). Each conjecture is falsifiable.\n\n##",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-28T04:28:31",
       "title": "Random Matrices: Edge Universality"
+    },
+    {
+      "cycle_id": "a59363e7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Exact Ratio Spectrum of Lagrange Constants\n\nDerived from this cycle's findings (Core invariances, the dilation lower bound,\nand the `Bad ⊆ Irrational` bridge). Each conjecture is",
+      "quality_score": 0.631596,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-28T04:30:44",
+      "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73264
     }
   ],
-  "last_updated": "2026-06-28T04:28:31",
+  "last_updated": "2026-06-28T04:30:44",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a33a1330",
-        "quality": 0.6787,
-        "theorems": 11,
-        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-      },
-      {
         "cycle_id": "dd8b8392",
         "quality": 0.47243587450980395,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.642034,
         "theorems": 5,
         "title": "Torsionness of Σ‑ramified Iwasawa modules over a ℤₚ‑extension"
+      },
+      {
+        "cycle_id": "a59363e7",
+        "quality": 0.631596,
+        "theorems": 17,
+        "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Trans"
       }
     ],
     "Bridges": [
