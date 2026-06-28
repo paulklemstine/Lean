@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-27T23:51:47.495307+00:00",
+  "last_updated": "2026-06-28T00:24:56.886098+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -13330,6 +13330,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-27T23:51:46.984746+00:00",
       "title": "Falsifiability of Multigraded Regularity Conjecture for Schubert Varieties via Pl\u00fccker Embedding"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2788,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 163,
+      "domain": "Novelty",
+      "duration_seconds": 1344.912248134613,
+      "end_time": 1782605496.3880117,
+      "files_integrated": 7,
+      "job_id": "ba81674a",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16b",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16b",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6773,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.471,
+        "novelty": 0.95,
+        "proof_depth": 0.2658,
+        "usefulness": 0.5829
+      },
+      "quality_score": 0.79596,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782604151.4757636,
+      "strategy_count": 0,
+      "theorem_count": 13,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 13,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-28T00:24:56.532885+00:00",
+      "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
     }
   ]
 }

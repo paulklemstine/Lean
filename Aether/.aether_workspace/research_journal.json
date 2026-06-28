@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7ca7bb8c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — NISQ Error Mitigation via Algebraic Topology\n\nDerived from this cycle's findings in `Persistence.lean`, `ErrorMitigation.lean`,\nand `Betti.lean`.  The cycle established a single",
-      "quality_score": 0.886574,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-25T05:24:17",
-      "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
-    },
-    {
       "cycle_id": "1311df1d",
       "domain": "Geometry",
       "key_insight": "# Future directions\n\nThis file lists concrete next steps building on\n`Catalog/Geometry/PolygonClusterTypeA.lean`, which formalizes the polygon / associahedron\nmodel of the finite type `A_{m-3}` cluste",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-06-27T23:23:06",
       "title": "Maximum size of cycle-containing families of vectors"
+    },
+    {
+      "cycle_id": "ba81674a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Brualdi–Quinn–Massey strong chromatic index\n\nThese conjectures are derived from this cycle's findings: (i) the conflict-graph\nformulation of `χ'_s`, (ii) the universal star-cliqu",
+      "quality_score": 0.79596,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-28T00:24:51",
+      "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "81f9ab1d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Beyond the Ordered Hahn-Field Layer\n\nThis file sketches research directions that build on the ordered non-Archimedean field\n`OrderedTSeries = Lex (HahnSeries TransMonoᵒᵈ ℝ)` estab",
-      "quality_score": 0.702,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-24T05:17:33",
-      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-    },
     {
       "cycle_id": "d453f6ce",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-06-27T23:51:43",
       "title": "Falsifiability of Multigraded Regularity Conjecture for Schubert Varieties via Plücker Embedding"
+    },
+    {
+      "cycle_id": "ba81674a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Brualdi–Quinn–Massey strong chromatic index\n\nThese conjectures are derived from this cycle's findings: (i) the conflict-graph\nformulation of `χ'_s`, (ii) the universal star-cliqu",
+      "quality_score": 0.79596,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-28T00:24:51",
+      "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "913e3580",
-      "domain": "Applications",
-      "name": "cc_ne",
-      "quality": 0.7981560000000001
-    },
-    {
-      "cycle_id": "913e3580",
-      "domain": "Applications",
-      "name": "phiT_X",
-      "quality": 0.7981560000000001
-    },
-    {
-      "cycle_id": "913e3580",
-      "domain": "Applications",
-      "name": "phiT_p",
-      "quality": 0.7981560000000001
-    },
     {
       "cycle_id": "9871aa6d",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "shatter_containsCycle",
       "quality": 0.7798419999999999
+    },
+    {
+      "cycle_id": "ba81674a",
+      "domain": "Novelty",
+      "name": "pascalRiordanA_pos",
+      "quality": 0.79596
+    },
+    {
+      "cycle_id": "ba81674a",
+      "domain": "Novelty",
+      "name": "strongChromaticIndex_riordan_complete_bipartite",
+      "quality": 0.79596
+    },
+    {
+      "cycle_id": "ba81674a",
+      "domain": "Novelty",
+      "name": "strongChromaticIndex_riordan_binomial",
+      "quality": 0.79596
     }
   ],
-  "last_updated": "2026-06-27T23:51:43",
+  "last_updated": "2026-06-28T00:24:51",
   "open_questions": [
     {
       "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2ff65a6a",
-        "quality": 0.6490400000000001,
-        "theorems": 23,
-        "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-      },
-      {
         "cycle_id": "935abbfb",
         "quality": 0.484642,
         "theorems": 7,
@@ -3637,6 +3631,12 @@
         "quality": 0.49606231111111115,
         "theorems": 18,
         "title": "Falsifiability of Multigraded Regularity Conjecture for Schubert Varieties via P"
+      },
+      {
+        "cycle_id": "ba81674a",
+        "quality": 0.79596,
+        "theorems": 13,
+        "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
       }
     ],
     "NumberTheory": [

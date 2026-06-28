@@ -2726,7 +2726,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
   },
   {
-    "consumed_by_exp_id": "4ac2d584",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domains": [
       "Bridges"
@@ -2735,7 +2735,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -6229,7 +6229,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: Maximizer of u^T R[S] u is proportional to diag(K^+)"
   },
   {
-    "consumed_by_exp_id": "2f2206c6",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for a vertex\u2011transitive graph G and a fixed vertex v0, the finitary upho poset P(G,v0) of walks starting at v0 is multiplicable (i.e., admits an LCIF monoid structure whose left\u2011divisibility order recovers the poset order) if and only if the automorphism group Aut(G) contains a regular subgroup. This condition is equivalent to G being a Cayley graph. The conjecture refines the Fu\u2011Peng\u2011Zhang conjecture and captures the phenomenon exhibited by the Petersen graph (non\u2011Cayley \u2192 non\u2011multiplicable) and its line graph (Cayley \u2192 multiplicable).",
     "domains": [
       "Pythagorean",
@@ -6239,7 +6239,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.17549v3",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-27T19:43:35.047839+00:00",
     "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
   },
@@ -6360,11 +6360,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "description": "The extended Eulerian numbers A(n,k,s) = \u2211_{j=0}^k (-1)^j C(n+1,j) (k+1-j-s)^n satisfy the recurrence A(n,k,s) = (k+1-s) A(n-1,k,s) + (n-k+s) A(n-1,k-1,s) for n \u2265 1, with boundary conditions A(0,0,s)=1 and A(n,k,s)=0 for k<0 or k>n. This generalizes the classical Eulerian recurrence (s=0).",
     "domains": [
       "Bridges"
     ],
     "id": "fd_2649",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.15178v1",
+    "status": "available",
+    "timestamp": "2026-06-28T00:27:35.663578+00:00",
+    "title": "Recurrence relation for extended Eulerian numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2650",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -6373,16 +6387,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "e73946ae",
+    "consumed_by_exp_id": "",
     "description": "Every planar graph admits a conflict-free coloring with exactly 4 colors, and this statement is equivalent to the Four Color Theorem over ZFC set theory. More precisely, for any planar graph G, there exists a vertex coloring f: V(G) \u2192 {1,2,3,4} such that every vertex v has a neighbor w where color f(w) appears exactly once in the open neighborhood N(v), and the existence of such a 4-coloring for all planar graphs is interderivable with the Four Color Theorem.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2650",
+    "id": "fd_2651",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T01:10:10.263546+00:00",
     "title": "Equivalence Between Four Color Theorem and Conflict-Free Chromatic Number of Planar Graphs"
   },
@@ -6393,7 +6407,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2651",
+    "id": "fd_2652",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -6408,7 +6422,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2652",
+    "id": "fd_2653",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -6423,7 +6437,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2653",
+    "id": "fd_2654",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -6438,7 +6452,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2654",
+    "id": "fd_2655",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -6452,7 +6466,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2655",
+    "id": "fd_2656",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -6466,7 +6480,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2656",
+    "id": "fd_2657",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -6480,7 +6494,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2657",
+    "id": "fd_2658",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -6495,7 +6509,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2658",
+    "id": "fd_2659",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -6510,7 +6524,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2659",
+    "id": "fd_2660",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -6525,7 +6539,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2660",
+    "id": "fd_2661",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -6540,7 +6554,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2661",
+    "id": "fd_2662",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -6555,7 +6569,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2662",
+    "id": "fd_2663",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -6569,7 +6583,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2663",
+    "id": "fd_2664",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -6584,7 +6598,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2664",
+    "id": "fd_2665",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -6599,7 +6613,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2665",
+    "id": "fd_2666",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -6613,7 +6627,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2666",
+    "id": "fd_2667",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -6627,7 +6641,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2667",
+    "id": "fd_2668",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -6636,16 +6650,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-similarity of Vishik-equivalent semi-singular quadratic forms in characteristic 2"
   },
   {
-    "consumed_by_exp_id": "2d24ca82",
+    "consumed_by_exp_id": "",
     "description": "Formalize the regularization of the sum of all prime numbers by defining a specific analytic continuation of the prime zeta function P(s) = \u2211 p^(-s) into a domain beyond its natural boundary (Re(s) = 0), and prove that the regularized sum (the value of the continuation at s = -1) converges to a specific constant value.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2668",
+    "id": "fd_2669",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T12:14:49.178600+00:00",
     "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
   },
@@ -6656,7 +6670,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2669",
+    "id": "fd_2670",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6665,17 +6679,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Classification of extremal Veronese circuits via rational normal curves"
   },
   {
-    "consumed_by_exp_id": "ca01957a",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For an odd prime p, integer \u2113 with 1 \u2264 \u2113 \u2264 (p-1)/2, and a symmetric subset S \u2286 Z_p\\{0\\} with 0 \u2209 S, the undirected Cayley graph Cay(Z_p,S) contains a cycle C_{2\u2113+1} as a subgraph if and only if S contains a subset of size 2\u2113+1 whose elements sum to zero in Z_p.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2670",
+    "id": "fd_2671",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T13:28:08.471007+00:00",
     "title": "Zero-sum characterization of odd cycles in symmetric Cayley graphs over prime cyclic groups"
   },
@@ -6686,7 +6700,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2671",
+    "id": "fd_2672",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6700,7 +6714,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2672",
+    "id": "fd_2673",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6714,7 +6728,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2673",
+    "id": "fd_2674",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6729,7 +6743,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2674",
+    "id": "fd_2675",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6743,7 +6757,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2675",
+    "id": "fd_2676",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6758,7 +6772,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2676",
+    "id": "fd_2677",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6772,7 +6786,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2677",
+    "id": "fd_2678",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6786,7 +6800,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2678",
+    "id": "fd_2679",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6800,7 +6814,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2679",
+    "id": "fd_2680",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6815,7 +6829,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2680",
+    "id": "fd_2681",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6830,7 +6844,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2681",
+    "id": "fd_2682",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6845,7 +6859,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2682",
+    "id": "fd_2683",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6859,7 +6873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2683",
+    "id": "fd_2684",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6874,7 +6888,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2684",
+    "id": "fd_2685",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6888,7 +6902,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2685",
+    "id": "fd_2686",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6903,7 +6917,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2686",
+    "id": "fd_2687",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -6918,7 +6932,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2687",
+    "id": "fd_2688",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -6932,7 +6946,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2688",
+    "id": "fd_2689",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -6947,7 +6961,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2689",
+    "id": "fd_2690",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -6956,16 +6970,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of Signless Laplacian Spectral Radius under Homological Link Restrictions"
   },
   {
-    "consumed_by_exp_id": "49c290ff",
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts the existence of a uniform classification of F-isocrystals on analyticly good rigid spaces, motivated by the analytic and prismatic structures reviewed.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2690",
+    "id": "fd_2691",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-27T00:50:47.487415+00:00",
     "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
   },
@@ -6976,7 +6990,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2691",
+    "id": "fd_2692",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22513v1",
@@ -6991,7 +7005,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2692",
+    "id": "fd_2693",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22324v1",
@@ -7005,7 +7019,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2693",
+    "id": "fd_2694",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22422v1",
@@ -7019,7 +7033,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2694",
+    "id": "fd_2695",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22253v1",
@@ -7033,7 +7047,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2695",
+    "id": "fd_2696",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22458v1",
@@ -7047,7 +7061,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2696",
+    "id": "fd_2697",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22010v1",
@@ -7061,7 +7075,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2697",
+    "id": "fd_2698",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22064v1",
@@ -7076,7 +7090,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2698",
+    "id": "fd_2699",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
@@ -7091,7 +7105,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2699",
+    "id": "fd_2700",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22106v1",
@@ -7106,7 +7120,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2700",
+    "id": "fd_2701",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22011v2",
@@ -7120,7 +7134,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2701",
+    "id": "fd_2702",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21927v1",
@@ -7135,7 +7149,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2702",
+    "id": "fd_2703",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21859v1",
@@ -7149,7 +7163,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2703",
+    "id": "fd_2704",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21902v1",
@@ -7164,7 +7178,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2704",
+    "id": "fd_2705",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21870v1",
@@ -7179,7 +7193,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2705",
+    "id": "fd_2706",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21534v1",
@@ -7193,7 +7207,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2706",
+    "id": "fd_2707",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21548v1",
@@ -7208,7 +7222,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2707",
+    "id": "fd_2708",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21780v1",
@@ -7223,7 +7237,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2708",
+    "id": "fd_2709",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21313v1",
@@ -7237,7 +7251,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2709",
+    "id": "fd_2710",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21383v1",
@@ -7251,7 +7265,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2710",
+    "id": "fd_2711",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21159v1",
@@ -7266,7 +7280,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2711",
+    "id": "fd_2712",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20984v1",
@@ -7281,7 +7295,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2712",
+    "id": "fd_2713",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20831v1",
@@ -7295,7 +7309,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2713",
+    "id": "fd_2714",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23721v1",
@@ -7309,7 +7323,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2714",
+    "id": "fd_2715",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20397v1",
@@ -7323,7 +7337,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2715",
+    "id": "fd_2716",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -7337,7 +7351,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2716",
+    "id": "fd_2717",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -7351,7 +7365,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2717",
+    "id": "fd_2718",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20043v1",
@@ -7365,7 +7379,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2718",
+    "id": "fd_2719",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19981v1",
@@ -7380,7 +7394,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2719",
+    "id": "fd_2720",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19851v1",
@@ -7395,7 +7409,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2720",
+    "id": "fd_2721",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -7409,7 +7423,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2721",
+    "id": "fd_2722",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19234v1",
@@ -7423,7 +7437,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2722",
+    "id": "fd_2723",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19132v1",
@@ -7438,7 +7452,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_2723",
+    "id": "fd_2724",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18794v1",
@@ -7453,7 +7467,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2724",
+    "id": "fd_2725",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.17955v1",
@@ -7467,7 +7481,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2725",
+    "id": "fd_2726",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.17854v1",
@@ -7482,7 +7496,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2726",
+    "id": "fd_2727",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.16495v1",
@@ -7497,7 +7511,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2727",
+    "id": "fd_2728",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15891v1",
@@ -7512,7 +7526,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2728",
+    "id": "fd_2729",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15758v1",
@@ -7527,7 +7541,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2729",
+    "id": "fd_2730",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15498v1",
@@ -7536,18 +7550,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exactgirth of the inclusion graph of annihilators in connected commutative rings"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c193d06",
     "description": "We propose that the boundary correlation matrix of an Ising model on a reduced planar graph in a disk can be expressed as a non-recursive function of the discrete CKP equation variables, which transform under Ising Y-\u0394 moves. This factorization through discrete CKP variables provides a direct solution to the inverse Ising problem, analogous to the chamber ansatz in electrical networks.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2730",
+    "id": "fd_2731",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15082v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T23:54:36.461922+00:00",
     "title": "Inverse Ising Problem for Reduced Planar Graphs via Discrete CKP and Y-\u0394 Moves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G and H be connected graphs that are 2\u2011isomorphic via a bijection \u03c4 on edges, and let U be a unimodular matrix with L_H = U L_G U\u1d40 (as guaranteed by Whitney\u2019s theorem). For distinct vertices a,b of G and c,d of H such that \u03c4 maps edge (a,b) to edge (c,d), the restriction of U to the space of harmonic vectors with respect to {a,b} is a linear bijection onto the space of harmonic vectors with respect to {c,d}. Moreover, this map sends the constant all\u2011ones vector to itself. This statement can be formalised in Lean\u202f4 using the existing libraries for matrices, graphs, and linear algebra.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2732",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.15018v1",
+    "status": "available",
+    "timestamp": "2026-06-28T00:28:32.268183+00:00",
+    "title": "Unimodular bijection preserves two-point harmonic spaces under 2\u2011isomorphism"
   },
   {
     "consumed_by_exp_id": "",
@@ -7621,7 +7649,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "b012d1e8",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -7631,7 +7659,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -8193,7 +8221,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "434e8e33",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8203,7 +8231,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ba81674a",
     "filename": "brualdi_quinn_massey_strong_chromatic_index_conjec.json",
     "pkg_num": 156,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.79596,
     "title": "Brualdi\u2013Quinn\u2013Massey Strong Chromatic Index: Tightness and a Fibonacci\u2013Riordan Bridge"
   },
   {
@@ -4552,8 +4552,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "brualdi_quinn_massey_strong_chromatic_index_conjec",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.79596,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Brualdi\u2013Quinn\u2013Massey Strong Chromatic Index: Tightness and a Fibonacci\u2013Riordan Bridge"
     }
