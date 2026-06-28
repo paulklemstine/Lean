@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "449dda28",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThese build on the verified base layer in `MonomialOrder.lean` (monomial signs, monomial\narithmetic, square roots of positive square-compatible monomials, and infinitesimals).\n\n##",
-      "quality_score": 0.67296,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-24T17:28:48",
-      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-    },
-    {
       "cycle_id": "935bc3f6",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — EML Universal Approximation\n\nThis cycle established (all fully verified, 0 sorries):\n\n- `EML/ExponentialPolynomialDensity.lean`: a single **injective** feature `g`, and in\n  part",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T05:34:37",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "b1625408",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Gorenstein Polytopes, Joins, and Free Sums\n\nThe verified result `Geometry/GorensteinJoin.lean` *refutes* the mission title: the join of\nGorenstein polytopes is always Gorenstein,",
+      "quality_score": 0.69204,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-28T06:03:35",
+      "title": "Join of Gorenstein Polytopes is Not Necessarily Gorenstein"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79816
     }
   ],
-  "last_updated": "2026-06-28T05:34:37",
+  "last_updated": "2026-06-28T06:03:35",
   "open_questions": [
     {
       "context": "## Verified results (all `sorry`-free)",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ca01957a",
-        "quality": 0.6280000000000001,
-        "theorems": 20,
-        "title": "Tight asymptotic bound for the n‑queens completion threshold"
-      },
-      {
         "cycle_id": "f73687d8",
         "quality": 0.5230660465116279,
         "theorems": 18,
@@ -3141,6 +3135,12 @@
         "quality": 0.76734,
         "theorems": 16,
         "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
+      },
+      {
+        "cycle_id": "b1625408",
+        "quality": 0.69204,
+        "theorems": 9,
+        "title": "Join of Gorenstein Polytopes is Not Necessarily Gorenstein"
       }
     ],
     "Bridges": [

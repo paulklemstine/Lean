@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b1625408",
     "filename": "join_of_gorenstein_polytopes_is_not_necessarily_go.json",
     "pkg_num": 167,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.69204,
     "title": "The Join of Gorenstein Polytopes Is Always Gorenstein"
   },
   {
@@ -4871,8 +4871,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "join_of_gorenstein_polytopes_is_not_necessarily_go",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.69204,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Join of Gorenstein Polytopes Is Always Gorenstein"
     }
