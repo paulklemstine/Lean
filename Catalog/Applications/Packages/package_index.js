@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e5555684",
     "filename": "proof_of_hegeds_bound_via_spectral_constraints_in_.json",
     "pkg_num": 175,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.485834,
     "title": "The Spectral Fisher Bound: Uniform Set Families via Heged\u0171s' Eigenvalue Condition"
   },
   {
@@ -5103,8 +5103,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "proof_of_hegeds_bound_via_spectral_constraints_in_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.485834,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Spectral Fisher Bound: Uniform Set Families via Heged\u0171s' Eigenvalue Condition"
     }

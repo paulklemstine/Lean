@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "72ef5a59",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Partial-Twuality Polynomials in Binary Delta-Matroids\n\nDerived from the Stage 3/4 findings of this research cycle (formalised in\n`Twist.lean`, `Interpolation.lean`, `Examples.lea",
-      "quality_score": 0.6934400000000001,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-24T22:33:13",
-      "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
-    },
-    {
       "cycle_id": "1d985141",
       "domain": "Tropical",
       "key_insight": "# Future directions\n\nA few freeform research directions building on\n`Catalog/Tropical/TropicalPolynomialFunctions.lean`.\n\n## 1. A tropical fundamental theorem of algebra in Lean\n\nFormalize the break-p",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T08:11:13",
       "title": "Plethystic Triviality of the Shifted t-Schur Basis"
+    },
+    {
+      "cycle_id": "e5555684",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hegedűs bound via spectral constraints\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. The cycle proved (0 sorries):\n\n* `gram_posDef_card_le`",
+      "quality_score": 0.485834,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T08:27:00",
+      "title": "Proof of Hegedçs bound via spectral constraints in combinatorial families"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7861499999999999
     }
   ],
-  "last_updated": "2026-06-28T08:11:13",
+  "last_updated": "2026-06-28T08:27:00",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c011c95b",
-        "quality": 0.7862199999999999,
-        "theorems": 20,
-        "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-      },
-      {
         "cycle_id": "0a880828",
         "quality": 0.70384,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.7861499999999999,
         "theorems": 14,
         "title": "Plethystic Triviality of the Shifted t-Schur Basis"
+      },
+      {
+        "cycle_id": "e5555684",
+        "quality": 0.485834,
+        "theorems": 14,
+        "title": "Proof of Hegedçs bound via spectral constraints in combinatorial families"
       }
     ],
     "NumberTheory": [
