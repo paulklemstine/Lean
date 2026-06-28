@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c37a84a2",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nFollow-up conjectures from the cycle that produced\n`Catalog/Computation/RankOfApparitionSDS.lean` (abstract rank-of-apparition theory\nfor strong divisibility sequences, generalizi",
-      "quality_score": 0.5709080000000001,
-      "sorry_count": 0,
-      "theorem_count": 1,
-      "timestamp": "2026-06-25T00:45:50",
-      "title": "Close Proofs: These conjectures continue the research cycle begun in"
-    },
-    {
       "cycle_id": "99725b45",
       "domain": "Novelty",
       "key_insight": "# Future Directions — C5-decompositions and the 5/8 threshold\n\nDerived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-divisibility,\nedge-count `|E| = 5·#cycles`, the pentagon wi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T09:42:01",
       "title": "Excluded minors for Z_n-gainable biased graphs"
+    },
+    {
+      "cycle_id": "8d0e7e8c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Excluded minors for Z_n-gainable biased graphs\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle. The formalised\nresults (`ZnGain.lean`, `ZnGainSharp.lean`) s",
+      "quality_score": 0.57208,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T09:53:52",
+      "title": "Excluded minors for Z_n-gainable biased graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8043199999999999
     }
   ],
-  "last_updated": "2026-06-28T09:42:01",
+  "last_updated": "2026-06-28T09:53:52",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cff6413b",
-        "quality": 0.8251200000000001,
-        "theorems": 17,
-        "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
-      },
-      {
         "cycle_id": "c0f7c830",
         "quality": 0.63496,
         "theorems": 11,
@@ -3635,6 +3629,12 @@
       {
         "cycle_id": "8d0e7e8c",
         "quality": 0.7360800000000001,
+        "theorems": 0,
+        "title": "Excluded minors for Z_n-gainable biased graphs"
+      },
+      {
+        "cycle_id": "8d0e7e8c",
+        "quality": 0.57208,
         "theorems": 0,
         "title": "Excluded minors for Z_n-gainable biased graphs"
       }
