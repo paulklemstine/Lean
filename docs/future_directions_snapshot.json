@@ -655,7 +655,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a530b001",
+    "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domain_bridges": [],
     "domains": [
@@ -668,7 +668,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -3181,35 +3181,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Schur Q-functions",
-      "strict partitions",
-      "neutral fermion vertex operators",
-      "odd power-sum symmetric functions",
-      "Lean mathlib: MvPolynomial, PowerSeries, Finsupp, Nat.Odd"
-    ],
-    "consumed_by_exp_id": "9a7cbc8b",
-    "description": "Let Γ_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism φ_t of Γ_R by φ_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_λ denotes the Schur Q-function indexed by a strict partition λ in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_λ denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition λ one has S^t_λ = φ_t(Q_λ). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n ↦ (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |λ|.",
-    "domain_bridges": [
-      "vertex-operator constructions ↔ plethystic substitutions",
-      "Clifford algebra modes ↔ symmetric-function bases",
-      "formal Laurent series identities ↔ polynomial algebra automorphisms"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2332",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Define the scaling algebra automorphism Φ_t on the odd power-sum ring by Φ_t(p_n) = (1 - t^n)p_n. Show coefficientwise that Φ_t ∂/∂p_n Φ_t⁻¹ = (1 - t^n)⁻¹ ∂/∂p_n. Therefore the odd GJZ field Y(z;t) is conjugate to the t=0 neutral-fermion field: Y(z;t) = Φ_t Y(z;0) Φ_t⁻¹. Since Φ_t fixes the vacuum vector 1, applying the negative Fourier modes indexed by a strict partition λ gives S^t_λ = Φ_t(S^0_λ) = Φ_t(Q_λ). In Lean, avoid infinite series by working degreewise in a truncated odd-variable polynomial algebra up to degree |λ|, then pass to the abstract graded Γ formulation.",
-    "research_mode": "team",
-    "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T14:06:13.272860+00:00",
-    "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Mathlib.Combinatorics.SimpleGraph.Basic",
       "Mathlib.Combinatorics.SimpleGraph.Connectivity",
       "Mathlib.LinearAlgebra.Matrix.Determinant",
@@ -4180,7 +4151,7 @@
       "Mathlib.Analysis.Convex.Basic",
       "Mathlib.LinearAlgebra.AffineSpace.AffineSubspace"
     ],
-    "consumed_by_exp_id": "5f11db87",
+    "consumed_by_exp_id": "",
     "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
     "domain_bridges": [
       "convex geometry ↔ finite set systems",
@@ -4197,7 +4168,7 @@
     "proof_strategy": "Formalize convex splinters as finite unions of convex sets satisfying the minimal affine-dependence containment axiom. Combine the paper's fractional Helly theorem for convex splinters with the standard Alon--Kleitman bootstrapping scheme: derive a weak epsilon-net or selection lemma appropriate to splinters, then use the (p,q)-property to obtain a bounded-size hitting set. The Lean development can separate the abstract finite-set-system part from the geometric input, so that the final theorem only requires the convex-splinter fractional Helly lemma and the Helly number 2d+1.",
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:24:48.021151+00:00",
     "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
   },
@@ -14263,6 +14234,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Prismatic Purity for F-Crystals\n\nDerived from this cycle's findings (faithfulness is cheap; the deep input is\ncodimension-≥2 Hartogs extension; normality is exactly the dimension-one boundary).\n\n## 1. Unconditional dimension-one purity equivalence on Hom-sets\n**Conjecture.** For a DVR `R` with fraction field `K`, the `extend` operator required by\n`purityHomEquiv` can be built unconditionally from `hartogs_dim_one`, yielding an\n*honest* `Equiv` `FHom E F ≃ FHom EU FU` with no hypotheses beyond regularity in\ndimension one.\n**The key insight is** that in dimension one the abstract extension hypothesis of\n`purityHomEquiv` is *literally* `hartogs_dim_one` applied entrywise to a chosen basis,\nso the only missing glue is functoriality of `extend`.\n**Why now?** `hartogs_dim_one` and `restriction_faithful` are already formalized and\nverified in this cycle; only the assembly remains.\n\n## 2. Codimension-two Hartogs for finite free modules\n**Conjecture.** For a regular local ring `R` of dimension `≥ 2`, a finite free\n`R`-module restricted to the punctured spectrum has its global sections equal to `R^n`\n(no new sections, no obstruction to extending sections).\n**The key insight is** that `depth ≥ 2` ⇒ `H⁰` and `H¹` of the local cohomology at the\nmaximal ideal vanish, which is the algebraic engine behind both fullness and essential\nsurjectivity of restriction.\n**Why now?** Mathlib now carries depth and regular-sequence machinery; the dimension-one\ncase is settled here, giving a concrete induction base.\n\n## 3. Frobenius-equivariant Hartogs\n**Conjecture.** The extension of sections across a codimension-≥2 locus is automatically\ncompatible with any `φ`-semilinear `F`, so the extended morphism is again a morphism of\n`F`-crystals (not merely of modules).\n**The key insight is** that `F`-equivariance is a *closed* condition cut out by a\ntorsion-free module of \"defects\", and a torsion-free module with no sections on the\npuncture has none globally — reducing equivariance of the extension to faithfulness.\n**Why now?** `restriction_faithful` already encodes exactly this torsion-free\ncancellation; promoting it from morphisms to the equivariance defect is a direct reuse.\n\n## 4. Purity transfers Ogus's canonical F-isocrystal across dense opens\n**Conjecture.** If purity holds for `F`-crystals on `Spec(A/I)`, then the canonical\n`F`-isocrystal of Ogus's conjecture is uniquely determined by its restriction to any\ndense open, with the determination being functorial.\n**The key insight is** that uniqueness-up-to-isomorphism follows from full faithfulness\nalone (the `Equiv` on Hom-sets), independently of the harder essential-surjectivity half.\n**Why now?** `purityHomEquiv` isolates the Hom-set bijection as the *only* ingredient\nneeded for such uniqueness statements.\n\n## 5. Sharpness: failure of purity for non-normal bases\n**Conjecture.** For every non-normal Noetherian local domain there is an `F`-crystal whose\nrestriction to the punctured spectrum does not extend, so purity *characterizes*\nnormality among such bases.\n**The key insight is** the explicit non-example `i ∈ ℚ(i)` integral over `ℤ[2i]` but not\nin it: integral-but-not-global sections exist precisely when the ring is not integrally\nclosed.\n**Why now?** This cycle pinned down the non-example concretely; generalizing it to a\nuniversal obstruction is the natural next falsifiable test.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2757",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5d028d25",
+    "status": "available",
+    "timestamp": "2026-06-28T06:56:05.174713+00:00",
+    "title": "Derived from this cycle's findings (faithfulness is cheap; the deep input is"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -14854,7 +14845,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ce8c041d",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -14867,7 +14858,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

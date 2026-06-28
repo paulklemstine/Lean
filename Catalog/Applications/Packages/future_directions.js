@@ -491,7 +491,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Theory: Self-Adjoint Operators"
   },
   {
-    "consumed_by_exp_id": "a530b001",
+    "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
       "Computation",
@@ -501,7 +501,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -2077,20 +2077,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "9a7cbc8b",
-    "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2332",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T14:06:13.272860+00:00",
-    "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every finite connected simple graph G on n \u2265 2 vertices with unit edge resistances, let R_G be its effective-resistance matrix and define \u0394(G) = (-1)^(n-1) det(R_G). Conjecture: 2^n (n-1) / n^n \u2264 \u0394(G) \u2264 2^(n-2) (n-1). Moreover, equality on the left holds exactly for the complete graph K_n, and equality on the right holds exactly for trees. This extends the Graham--Pollak tree determinant formula and predicts that adding simple edges monotonically decreases the signed resistance determinant down to the complete graph.",
     "domains": [
@@ -2584,7 +2570,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inflated line-transversal counterexamples have sphere homotopy type"
   },
   {
-    "consumed_by_exp_id": "5f11db87",
+    "consumed_by_exp_id": "",
     "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
     "domains": [
       "Geometry"
@@ -2593,7 +2579,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:24:48.021151+00:00",
     "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
   },
@@ -8131,6 +8117,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Prismatic Purity for F-Crystals\n\nDerived from this cycle's findings (faithfulness is cheap; the deep input is\ncodimension-\u22652 Hartogs extension; normality is exactly the dimension-one boundary).\n\n## 1. Unconditional dimension-one purity equivalence on Hom-sets\n**Conjecture.** For a DVR `R` with fraction field `K`, the `extend` operator required by\n`purityHomEquiv` can be built unconditionally from `hartogs_dim_one`, yielding an\n*honest* `Equiv` `FHom E F \u2243 FHom EU FU` with no hypotheses beyond regularity in\ndimension one.\n**The key insight is** that in dimension one the abstract extension hypothesis of\n`purityHomEquiv` is *literally* `hartogs_dim_one` applied entrywise to a chosen basis,\nso the only missing glue is functoriality of `extend`.\n**Why now?** `hartogs_dim_one` and `restriction_faithful` are already formalized and\nverified in this cycle; only the assembly remains.\n\n## 2. Codimension-two Hartogs for finite free modules\n**Conjecture.** For a regular local ring `R` of dimension `\u2265 2`, a finite free\n`R`-module restricted to the punctured spectrum has its global sections equal to `R^n`\n(no new sections, no obstruction to extending sections).\n**The key insight is** that `depth \u2265 2` \u21d2 `H\u2070` and `H\u00b9` of the local cohomology at the\nmaximal ideal vanish, which is the algebraic engine behind both fullness and essential\nsurjectivity of restriction.\n**Why now?** Mathlib now carries depth and regular-sequence machinery; the dimension-one\ncase is settled here, giving a concrete induction base.\n\n## 3. Frobenius-equivariant Hartogs\n**Conjecture.** The extension of sections across a codimension-\u22652 locus is automatically\ncompatible with any `\u03c6`-semilinear `F`, so the extended morphism is again a morphism of\n`F`-crystals (not merely of modules).\n**The key insight is** that `F`-equivariance is a *closed* condition cut out by a\ntorsion-free module of \"defects\", and a torsion-free module with no sections on the\npuncture has none globally \u2014 reducing equivariance of the extension to faithfulness.\n**Why now?** `restriction_faithful` already encodes exactly this torsion-free\ncancellation; promoting it from morphisms to the equivariance defect is a direct reuse.\n\n## 4. Purity transfers Ogus's canonical F-isocrystal across dense opens\n**Conjecture.** If purity holds for `F`-crystals on `Spec(A/I)`, then the canonical\n`F`-isocrystal of Ogus's conjecture is uniquely determined by its restriction to any\ndense open, with the determination being functorial.\n**The key insight is** that uniqueness-up-to-isomorphism follows from full faithfulness\nalone (the `Equiv` on Hom-sets), independently of the harder essential-surjectivity half.\n**Why now?** `purityHomEquiv` isolates the Hom-set bijection as the *only* ingredient\nneeded for such uniqueness statements.\n\n## 5. Sharpness: failure of purity for non-normal bases\n**Conjecture.** For every non-normal Noetherian local domain there is an `F`-crystal whose\nrestriction to the punctured spectrum does not extend, so purity *characterizes*\nnormality among such bases.\n**The key insight is** the explicit non-example `i \u2208 \u211a(i)` integral over `\u2124[2i]` but not\nin it: integral-but-not-global sections exist precisely when the ring is not integrally\nclosed.\n**Why now?** This cycle pinned down the non-example concretely; generalizing it to a\nuniversal obstruction is the natural next falsifiable test.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2757",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5d028d25",
+    "status": "available",
+    "timestamp": "2026-06-28T06:56:05.174713+00:00",
+    "title": "Derived from this cycle's findings (faithfulness is cheap; the deep input is"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8572,7 +8573,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "ce8c041d",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8582,7 +8583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
