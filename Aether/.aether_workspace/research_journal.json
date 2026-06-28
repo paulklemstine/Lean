@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1311df1d",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThis file lists concrete next steps building on\n`Catalog/Geometry/PolygonClusterTypeA.lean`, which formalizes the polygon / associahedron\nmodel of the finite type `A_{m-3}` cluste",
-      "quality_score": 0.8125600000000002,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-25T07:43:02",
-      "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
-    },
-    {
       "cycle_id": "bd1f81a7",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Pólya tree coefficient divisor-sum recurrence\n\nThis cycle formalized the Pólya-tree (A000081) divisor-sum / Euler-transform\nrecurrence in `Catalog/Cryptography/PolyaTreeDivisorSu",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-28T00:24:51",
       "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
+    },
+    {
+      "cycle_id": "2f2206c6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Multiplicability of Upho Posets from Vertex-Transitive Graphs\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle.  The cycle established two `sorr",
+      "quality_score": 0.71552,
+      "sorry_count": 1,
+      "theorem_count": 15,
+      "timestamp": "2026-06-28T00:49:06",
+      "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d453f6ce",
-      "domain": "Cryptography",
-      "key_insight": "# FUTURE DIRECTIONS — Secret Sharing & Verifiable Variants\n\nDerived from this cycle's verified results in `ShamirSecretSharing.lean`\n(`shamir_reconstruction`, `shamir_privacy`, `shamir_insufficient`)",
-      "quality_score": 0.5671600000000001,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-24T06:14:11",
-      "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
-    },
     {
       "cycle_id": "f9dc8407",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-28T00:24:51",
       "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
+    },
+    {
+      "cycle_id": "2f2206c6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Multiplicability of Upho Posets from Vertex-Transitive Graphs\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle.  The cycle established two `sorr",
+      "quality_score": 0.71552,
+      "sorry_count": 1,
+      "theorem_count": 15,
+      "timestamp": "2026-06-28T00:49:06",
+      "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9871aa6d",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.7236
-    },
-    {
-      "cycle_id": "9871aa6d",
-      "domain": "Novelty",
-      "name": "and",
-      "quality": 0.7236
-    },
-    {
-      "cycle_id": "9871aa6d",
-      "domain": "Novelty",
-      "name": "deligne_bound_iff",
-      "quality": 0.7236
-    },
     {
       "cycle_id": "11521acf",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "strongChromaticIndex_riordan_binomial",
       "quality": 0.79596
+    },
+    {
+      "cycle_id": "2f2206c6",
+      "domain": "Novelty",
+      "name": "leftDvd_refl",
+      "quality": 0.71552
+    },
+    {
+      "cycle_id": "2f2206c6",
+      "domain": "Novelty",
+      "name": "leftDvd_trans",
+      "quality": 0.71552
+    },
+    {
+      "cycle_id": "2f2206c6",
+      "domain": "Novelty",
+      "name": "group_leftDvd",
+      "quality": 0.71552
     }
   ],
-  "last_updated": "2026-06-28T00:24:51",
+  "last_updated": "2026-06-28T00:49:06",
   "open_questions": [
-    {
-      "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
-      "cycle_id": "e9b0b276",
-      "domain": "Cryptography",
-      "sorry_count": 1,
-      "timestamp": "2026-06-16T06:43:15"
-    },
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
       "cycle_id": "e42393e4",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-06-27T22:08:34"
+    },
+    {
+      "context": "`sorry`-free Lean proof of Sabidussi's theorem.",
+      "cycle_id": "2f2206c6",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-06-28T00:49:06"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "935abbfb",
-        "quality": 0.484642,
-        "theorems": 7,
-        "title": "Character Class Contradiction"
-      },
-      {
         "cycle_id": "2e08d081",
         "quality": 0.71083,
         "theorems": 6,
@@ -3637,6 +3631,12 @@
         "quality": 0.79596,
         "theorems": 13,
         "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
+      },
+      {
+        "cycle_id": "2f2206c6",
+        "quality": 0.71552,
+        "theorems": 15,
+        "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
       }
     ],
     "NumberTheory": [

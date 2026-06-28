@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2f2206c6",
     "filename": "multiplicability_of_upho_posets_from_vertex_transi.json",
     "pkg_num": 157,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.71552,
     "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
   },
   {
@@ -4581,8 +4581,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "multiplicability_of_upho_posets_from_vertex_transi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.71552,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
     }
