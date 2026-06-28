@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31c996e4",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -852,7 +852,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a1f99db",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -861,7 +861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -881,7 +881,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cfea11f0",
     "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
     "domains": [
       "MachineLearning",
@@ -892,12 +892,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f589dfb5",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
       "Cryptography",
@@ -908,7 +908,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -3553,7 +3553,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bfc7b99e",
     "description": "The conjecture asserts no primes exceeding 7 satisfy $n! + 1 = m^2$ for $n < p$. This is falsifiable via computational checks.",
     "domains": [
       "Pythagorean"
@@ -3562,7 +3562,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T17:29:38.955405+00:00",
     "title": "The Non-Existence of New Factorial Square Solutions"
   },
@@ -4275,7 +4275,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dominant Orchard Denominator Root Comes from the Last Complete-Graph Matching Factor"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12b5f4b2",
     "description": "In the h=1 specialization of additive strong blocking sets, i.e. ordinary strong blocking sets in PG(2,2), a finite set S of projective points is strong blocking if and only if it contains at least 6 of the 7 points. Equivalently, the shortest nondegenerate minimal binary linear code of dimension 3 has length 6 under the projective-system correspondence.",
     "domains": [
       "Geometry",
@@ -4285,7 +4285,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T10:08:51.465617+00:00",
     "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
   },
@@ -9106,7 +9106,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ecd5b8c",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -9116,7 +9116,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
