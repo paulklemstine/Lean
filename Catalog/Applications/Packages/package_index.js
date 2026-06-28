@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "00e5c711",
     "filename": "wall_menger_separator_optimality_conjecture.json",
     "pkg_num": 179,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.61002,
     "title": "Wall-Menger Separator Optimality: Tight Min-Cut / Max-Disjoint-Paths for Grid Graphs"
   },
   {
@@ -5219,8 +5219,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "wall_menger_separator_optimality_conjecture",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.61002,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Wall-Menger Separator Optimality: Tight Min-Cut / Max-Disjoint-Paths for Grid Graphs"
     }

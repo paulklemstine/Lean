@@ -881,7 +881,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
   {
-    "consumed_by_exp_id": "bc81b3a8",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
     "domains": [
       "MachineLearning",
@@ -892,7 +892,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
@@ -1151,7 +1151,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s-Faber-Lov\u00e1sz Conjecture"
   },
   {
-    "consumed_by_exp_id": "42ce6f47",
+    "consumed_by_exp_id": "",
     "description": "Prove the Jacobian conjecture for polynomial maps of degree 2 in all dimensions. Formalize the reduction to degree 3 (Dru\u017ckowski's theorem). Construct explicit counterexample candidates and verify they fail. Prove the conjecture implies the Dixmier conjecture.",
     "domains": [
       "Algebra",
@@ -1161,7 +1161,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432638+00:00",
     "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
   },
@@ -1946,21 +1946,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
   },
   {
-    "consumed_by_exp_id": "4bc14309",
-    "description": "For any bounded prism (A, I) where A/I is a regular local ring of dimension d, the restriction functor from the category of prismatic F-crystals on Spec(A/I) to the category of prismatic F-crystals on the punctured spectrum Spec(A/I) \\ {m} is an equivalence of categories. This extends the paper's primitive purity theorem for Frobenius modules to the full setting of prismatic F-crystals, and would imply that the canonical F-isocrystal from Ogus's conjecture is uniquely determined by its restriction to any dense open subscheme.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2323",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22637v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T11:00:28.938025+00:00",
-    "title": "Prismatic Purity for F-Crystals on Regular Schemes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domains": [
@@ -2382,7 +2367,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quadratic irrational density in the ratio spectrum"
   },
   {
-    "consumed_by_exp_id": "ef629b7b",
+    "consumed_by_exp_id": "",
     "description": "The sum of the elements in the $n$-th row of the Pascal-like Riordan array defined by the power series pair $(1/(1-x), x/(1-x)^2)$, whose entries are given by the binomial coefficient $t_{n,k} = \\binom{n+k}{2k}$, equals the $(2n+1)$-th Fibonacci number. This is derived from the paper's demonstration that the generating function of the row sums is $(1-x)/(1-3x+x^2)$, which characterizes the odd-indexed Fibonacci sequence.",
     "domains": [
       "Bridges"
@@ -2391,7 +2376,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22070v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T13:29:49.823733+00:00",
     "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
   },
@@ -8319,7 +8304,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
   },
   {
-    "consumed_by_exp_id": "fdadfe48",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThe most natural next step is to attack the residue class isolated by the\nprime-core reduction: primes `p \u2261 1 (mod 8)`. The key insight is that the four\nelementary families already dispatch every residue except this one, so the entire\ndifficulty of Erd\u0151s\u2013Straus is concentrated in a single arithmetic progression,\nand any constructive scheme that handles it would, via\n`erdosStraus_of_primes_one_mod_eight`, close the problem unconditionally. A\npromising route is to formalize the classical covering-congruence constructions\nof Mordell, which solve `4/p` for all `p` outside a sparse set of residues modulo\nsmall moduli (e.g. residues that are quadratic non-residues modulo `4`, or that\nfall into specific classes mod `3\u00b78`, `5\u00b78`, `7\u00b78`, \u2026). Why now? Because the\npresent development supplies exactly the reusable scaffolding \u2014 the predicate, the\nwitness-verification idioms, and divisor inheritance \u2014 that such a formalization\nwould otherwise have to rebuild from scratch.\n\nA second direction is computational certification at scale. The key insight is\nthat `ErdosStrausSolution n` is witnessed by a finite triple whose correctness is\na single rational identity, so a verified search procedure could emit witnesses\nfor enormous ranges and check them by `decide`/`norm_num`, turning empirical\ntables (which currently confirm the conjecture far beyond `10^17`) into\nmachine-checked theorems for explicit bounds. Why now? Because Lean's `decide`\nkernel reduction and `norm_num` extensions are mature enough to validate millions\nof rational identities reliably, and the bounded theorem `erdosStraus_upto_100`\ndemonstrates the pattern end to end; scaling it is an engineering problem, not a\nmathematical one.\n\nA third direction concerns the structure of the witness map itself.\nThe key insight is that the family witnesses are not ad hoc but instances of a small\nnumber of algebraic identities (the `1/a + 1/(a\u00b7n)` split and its halving, and the\n`(n+3)/(2na)` collapse), so one could formalize a *parametrized solver*: a single\nlemma taking residue data and returning a witness, from which all four families\nbecome corollaries. Why now? Because unifying the families would both shrink the\nproof and expose precisely which algebraic degrees of freedom remain unused for\nthe `1 (mod 8)` case, potentially suggesting the missing construction.\n\nA fourth direction is to connect this development to Mathlib's number-theoretic\ninfrastructure on quadratic residues and Dirichlet characters. The key insight is\nthat the obstruction at `p \u2261 1 (mod 8)` is governed by solvability of congruences\nthat quadratic reciprocity controls, so importing Mathlib's reciprocity and\nLegendre-symbol API could let one phrase the open core as a clean statement about\nrepresentability rather than as a raw existential over triples. Why now? Because\nMathlib's quadratic reciprocity and `ZMod` character theory are now stable and\nwell-supported, making it feasible to translate the analytic-number-theory\nheuristics for Erd\u0151s\u2013Straus into formal, checkable hypotheses.\n",
     "domains": [
       "Pythagorean",
@@ -8329,9 +8314,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "199a5960",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Wall\u2013Menger Separator Optimality\n\nThis cycle established, fully formally (0 sorries), that for the left/right cut of\nthe `(m+1) \u00d7 (n+1)` grid (wall) graph:\n\n- there exist `m+1` pairwise vertex-disjoint left\u2192right paths\n  (`grid_disjoint_paths`), and\n- every `A`\u2013`B` separator has at least `m+1` vertices, with a column achieving\n  exactly `m+1` (`grid_separator_optimal`),\n\nso the minimum separator equals the maximum number of disjoint paths = `m+1`\n(Menger tightness, height-only and width-independent). The abstract easy\ndirection of Menger (`menger_separator_lower_bound`) and a reusable discrete\nintermediate value theorem along a walk (`walk_exists_mem_support_of_le`) were\nalso proved generically.\n\nBelow are bold, testable conjectures for follow-up cycles.\n\n## Conjecture 1 \u2014 Two-sided cut equals min dimension\nFor the `(m+1) \u00d7 (n+1)` grid, the minimum vertex separator between **two opposite\ncorners** (rather than full opposite columns) equals `min(m, n) + 1`. More\ngenerally, the corner-to-corner connectivity is exactly `min(m,n)+1`.\n*Test:* extend `walk_exists_mem_support_of_le` to a 2D \"monotone staircase\"\nargument; build `min(m,n)+1` disjoint corner-to-corner paths.\n\n## Conjecture 2 \u2014 The hard direction of Menger on grids\nFor the grid left/right cut, **every** minimum separator of size `m+1` is a\n\"transversal\" hitting each row exactly once, and from any such separator one can\nreconstruct `m+1` disjoint paths. Formally: the converse of\n`menger_separator_lower_bound` holds for grids \u2014 if every `A`\u2013`B` separator has\nsize `\u2265 k`, then there exist `k` pairwise vertex-disjoint `A`\u2013`B` paths.\n*Test:* prove the converse first for `k = 1` (connectivity), then induct.\n\n## Conjecture 3 \u2014 Subdivided walls preserve the cut value\nLet `W_r` be the elementary wall of order `r` (a brick-wall subdivision of a\ngrid). Then the minimum separator between its left and right \"pegs\" equals `r`,\nmatching `r` disjoint left\u2192right paths, and this is invariant under edge\nsubdivision. *Test:* model subdivision via `pathGraph` insertions and show the\ncolumn-coordinate IVT argument is subdivision-invariant.\n\n## Conjecture 4 \u2014 Treewidth lower bound from separators\nThe `(m+1) \u00d7 (n+1)` grid has treewidth `\u2265 min(m, n) + 1`, derivable from the\nseparator-optimality result: a small tree decomposition would yield a small\nbalanced separator contradicting Conjecture 1. *Test:* connect\n`menger_separator_lower_bound` to a balanced-separator / bramble formulation.\n\n## Conjecture 5 \u2014 Generalized box products\nFor any two connected graphs `G`, `H`, the minimum separator in `G \u25a1 H` between\n`{x | x.2 = a}` and `{x | x.2 = b}` (fixing the `H`-coordinate endpoints along an\n`a`\u2013`b` path in `H`) is exactly the `H`-distance-indexed family size `= |V(G)|`,\nprovided `H` has an induced `a`\u2013`b` path. *Test:* the `rowHom`/IVT machinery\ngeneralizes verbatim with `f = d_H(\u00b7, a)` replacing the column index.\n",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2771",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "00e5c711",
+    "status": "available",
+    "timestamp": "2026-06-28T10:39:54.566148+00:00",
+    "title": "This cycle established, fully formally (0 sorries), that for the left/right cut "
   },
   {
     "consumed_by_exp_id": "",
@@ -8494,7 +8493,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "6dda8a29",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -8503,7 +8502,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -8656,7 +8655,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "e5dd524d",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -8666,7 +8665,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
