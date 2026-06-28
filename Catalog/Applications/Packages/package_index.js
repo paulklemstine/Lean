@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "42ce6f47",
     "filename": "jacobian_conjecture_degree_2_and_3_cases.json",
     "pkg_num": 183,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.518,
     "title": "The Jacobian Conjecture: A Verified Bridge Theorem with Degree-2 and Cubic-Linear Cases"
   },
   {
@@ -5342,8 +5342,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "jacobian_conjecture_degree_2_and_3_cases",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.518,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Jacobian Conjecture: A Verified Bridge Theorem with Degree-2 and Cubic-Linear Cases"
     }
