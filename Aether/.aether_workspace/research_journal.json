@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cc1a412b",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Quadratic Irrational Density in the Ratio Spectrum\n\nThese conjectures extend the results formalized in\n`Catalog/Computation/QuadraticRatioSpectrum.lean`, where we proved:\n\n- the",
-      "quality_score": 0.6594499999999999,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-25T01:31:25",
-      "title": "Quadratic irrational density in the ratio spectrum"
-    },
-    {
       "cycle_id": "7242c7d6",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThe following are concrete follow-up directions building on the Airy\nexponential–polynomial obstruction (`no_airyCoeff_eq_X_mul` and\n`no_nonzero_expPoly_solves_airy`).\n\n## 1. Gene",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T10:40:03",
       "title": "Wall-Menger Separator Optimality Conjecture"
+    },
+    {
+      "cycle_id": "6ac1dc4e",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Rainbow triangle density (`LiNingShiZhang2024`)\n\nThese conjectures are derived from this cycle's findings: a full formal framework for\nedge-coloured graphs (`Defs.lean`), the ext",
+      "quality_score": 0.34884000000000004,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T10:41:07",
+      "title": "Rainbow triangle density lower bound conjecture"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8043199999999999
     }
   ],
-  "last_updated": "2026-06-28T10:40:03",
+  "last_updated": "2026-06-28T10:41:07",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "4554c3a3",
-        "quality": 0.630526,
-        "theorems": 9,
-        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-      },
-      {
         "cycle_id": "9ee5d694",
         "quality": 0.6915199999999999,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.61002,
         "theorems": 0,
         "title": "Wall-Menger Separator Optimality Conjecture"
+      },
+      {
+        "cycle_id": "6ac1dc4e",
+        "quality": 0.34884000000000004,
+        "theorems": 0,
+        "title": "Rainbow triangle density lower bound conjecture"
       }
     ],
     "Bridges": [

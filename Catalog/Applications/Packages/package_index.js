@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6ac1dc4e",
     "filename": "rainbow_triangle_density_lower_bound_conjecture.json",
     "pkg_num": 180,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.34884000000000004,
     "title": "Rainbow Triangle Density: The Extremal Bound \u2308(n-1)(n-3)/8\u2309"
   },
   {
@@ -5248,8 +5248,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "rainbow_triangle_density_lower_bound_conjecture",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.34884000000000004,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Rainbow Triangle Density: The Extremal Bound \u2308(n-1)(n-3)/8\u2309"
     }
