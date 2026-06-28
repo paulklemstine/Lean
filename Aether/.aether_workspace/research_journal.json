@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1311df1d",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThis file lists concrete next steps building on\n`Catalog/Geometry/PolygonClusterTypeA.lean`, which formalizes the polygon / associahedron\nmodel of the finite type `A_{m-3}` cluste",
-      "quality_score": 0.8125600000000002,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-25T07:43:02",
-      "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
-    },
-    {
       "cycle_id": "eee0a16a",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Brocard–Ramanujan Triangular Classification\n\nDerived from this cycle's findings (the geometric equivalence\n`n!/8 triangular ⟺ n!+1 square`, the general test `t triangular ⟺ 8t+1",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T13:09:12",
       "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
+    },
+    {
+      "cycle_id": "6dda8a29",
+      "domain": "Applications",
+      "key_insight": "# FUTURE_DIRECTIONS\n\nDerived from this cycle's work closing `sorry` placeholders in the catalog. The\ncycle completed the cross-domain bridge\n`Catalog/Speculative/AutoResearch/MixedRadixFactorialBridge",
+      "quality_score": 0.6926119999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T13:40:59",
+      "title": "Close Proofs: These conjectures continue the research cycle begun in"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.722996
     }
   ],
-  "last_updated": "2026-06-28T13:09:12",
+  "last_updated": "2026-06-28T13:40:59",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "b1625408",
-        "quality": 0.69204,
-        "theorems": 9,
-        "title": "Join of Gorenstein Polytopes is Not Necessarily Gorenstein"
-      },
-      {
         "cycle_id": "53e074b6",
         "quality": 0.6700199999999998,
         "theorems": 7,
@@ -3141,6 +3135,12 @@
         "quality": 0.49242371929824563,
         "theorems": 8,
         "title": "Prismatic Purity for F-Crystals on Regular Schemes"
+      },
+      {
+        "cycle_id": "6dda8a29",
+        "quality": 0.6926119999999999,
+        "theorems": 0,
+        "title": "Close Proofs: These conjectures continue the research cycle begun in"
       }
     ],
     "Bridges": [

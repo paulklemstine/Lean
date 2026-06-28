@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6dda8a29",
     "filename": "close_proofs_these_conjectures_continue_the_resear.json",
     "pkg_num": 183,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6926119999999999,
     "title": "Primitive Prime Divisors of Fibonacci Numbers: A Hybrid Proof of Carmichael's Theorem"
   },
   {
@@ -5342,8 +5342,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6926119999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Primitive Prime Divisors of Fibonacci Numbers: A Hybrid Proof of Carmichael's Theorem"
     }

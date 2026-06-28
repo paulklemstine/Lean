@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T13:09:15.760957+00:00",
+  "last_updated": "2026-06-28T13:41:02.033010+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -15308,6 +15308,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-28T13:09:15.515312+00:00",
       "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1244,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 205,
+      "domain": "Applications",
+      "duration_seconds": 1594.647432088852,
+      "end_time": 1782653327.504327,
+      "files_integrated": 7,
+      "job_id": "6dda8a29",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16a",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16a",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6244,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.4092,
+        "novelty": 0.71,
+        "proof_depth": 0.2803,
+        "usefulness": 0.5652
+      },
+      "quality_score": 0.6926119999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782651732.856895,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-28T13:41:01.773110+00:00",
+      "title": "Close Proofs: These conjectures continue the research cycle begun in"
     }
   ]
 }
