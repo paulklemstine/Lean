@@ -491,7 +491,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Theory: Self-Adjoint Operators"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a530b001",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
       "Computation",
@@ -501,7 +501,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -2584,7 +2584,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inflated line-transversal counterexamples have sphere homotopy type"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f11db87",
     "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
     "domains": [
       "Geometry"
@@ -2593,7 +2593,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:24:48.021151+00:00",
     "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
   },
@@ -5605,7 +5605,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved upper bound for P\u00f3lya tree coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cff6413b",
     "description": "For every edge density \u03b2 \u2208 [0,1] the minimum possible asymptotic density of semi\u2011induced copies of S_{2,1} in an n\u2011vertex graph G with edge density \u03b2 is given by the one\u2011parameter three\u2011class complement\u2011split construction: let t \u2208 [0,1] be the unique solution of \u03b2 = t(1 \u2212 t/2); then the minimum semi\u2011induced density equals p_min(\u03b2) = t\u00b2(1\u2212t).",
     "domains": [
       "Bridges"
@@ -5614,7 +5614,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T21:11:05.213329+00:00",
     "title": "Exact lower semi-inducibility profile for the red\u2011blue star S_{2,1}"
   },
@@ -6114,7 +6114,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved lower bound for r-graphs with 0 or 2 edges in every (r+1)-set"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53e074b6",
     "description": "For a simple field extension L = K(\u03b8) in characteristic p > 0 with minimal polynomial f \u2208 K[x], and any purely inseparable field extension N/K, the numerical invariant m_{f,N} associated to the compositum NL/N (as defined in the paper) coincides with the invariant m_f associated to L/K. That is, m_{f,N} = m_f. This would imply that the criterion for NL = (NL)^{pi}(NL)^{sep} depends only on L/K and not on the choice of purely inseparable extension N/K.",
     "domains": [
       "Algebra"
@@ -6123,7 +6123,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19962v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T14:43:20.786451+00:00",
     "title": "Invariance of the field invariant m_f under purely inseparable base change"
   },
@@ -7519,7 +7519,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bound on symmetric differences of intersecting families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db606ba2",
     "description": "Conjecture that the coherent rank of co-edge-regular graphs with four eigenvalues and smallest eigenvalue -2q-1 is exactly q+4, matching the proven lower bound and establishing tightness.",
     "domains": [
       "Pythagorean"
@@ -7528,12 +7528,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19981v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T14:46:46.630781+00:00",
     "title": "Exact coherent rank for four-eigenvalue co-edge-regular graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0f7c830",
     "description": "Conjecture: For an s-connector graph G on N vertices and a q-edge-coloring of its edges, there exists a color j\u2208[q] such that G contains a monochromatic star K_{1, t_j} (a vertex with at least t_j incident edges of color j) if and only if N \u2265 \u03a3_{j=1}^q (t_j\u22121) + max{2s, s+max_j t_j}. This extends the exact Ramsey number for matchings proved in the paper to the setting of stars.",
     "domains": [
       "Algebra",
@@ -7543,7 +7543,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19851v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T15:24:21.269051+00:00",
     "title": "Exact multicolor Ramsey threshold for stars in s-connector graphs"
   },
@@ -8513,7 +8513,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce8c041d",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8523,7 +8523,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

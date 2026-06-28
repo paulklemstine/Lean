@@ -9800,7 +9800,7 @@
     "catalog_references": [
       "math.CO:2305.XXXX"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cff6413b",
     "description": "For every edge density β ∈ [0,1] the minimum possible asymptotic density of semi‑induced copies of S_{2,1} in an n‑vertex graph G with edge density β is given by the one‑parameter three‑class complement‑split construction: let t ∈ [0,1] be the unique solution of β = t(1 − t/2); then the minimum semi‑induced density equals p_min(β) = t²(1−t).",
     "domain_bridges": [
       "extremal combinatorics",
@@ -9815,7 +9815,7 @@
     "proof_strategy": "Apply a transfer argument to reduce the extremal problem to optimizing over degree distributions. Use Lagrange multipliers to show that an optimal distribution is supported on at most three points. Realize these three points by a three‑class complement‑split graphon (two clique parts and an independent set part with adjustable internal density). Solve the moment equations linking the graphon parameters to β and to the semi‑induced count, yielding the explicit formula p_min(β)=t²(1−t) where t satisfies β=t(1−t/2).",
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T21:11:05.213329+00:00",
     "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
   },
@@ -10710,7 +10710,7 @@
       "math.RA",
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53e074b6",
     "description": "For a simple field extension L = K(θ) in characteristic p > 0 with minimal polynomial f ∈ K[x], and any purely inseparable field extension N/K, the numerical invariant m_{f,N} associated to the compositum NL/N (as defined in the paper) coincides with the invariant m_f associated to L/K. That is, m_{f,N} = m_f. This would imply that the criterion for NL = (NL)^{pi}(NL)^{sep} depends only on L/K and not on the choice of purely inseparable extension N/K.",
     "domain_bridges": [
       "Commutative Algebra",
@@ -10725,7 +10725,7 @@
     "proof_strategy": "Use the explicit formulas for m_f and m_{f,N} in terms of the coefficients of the separable presentation f(x) = f^{sep}(x^{p^n}) = ∑ λ_i x^{i p^n}. Analyze how the purely inseparable extension N/K affects the coefficients when viewing f as a polynomial over N. Show that the combinatorial conditions defining the invariants (likely involving p-adic valuations of indices where λ_i ≠ 0) are unchanged by purely inseparable base change.",
     "research_mode": "team",
     "source_exp_id": "2606.19962v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T14:43:20.786451+00:00",
     "title": "Invariance of the field invariant m_f under purely inseparable base change"
   },
@@ -13266,7 +13266,7 @@
       "CoherentRank",
       "EigenvalueBounds"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db606ba2",
     "description": "Conjecture that the coherent rank of co-edge-regular graphs with four eigenvalues and smallest eigenvalue -2q-1 is exactly q+4, matching the proven lower bound and establishing tightness.",
     "domain_bridges": [
       "AlgebraicGraphTheory",
@@ -13282,7 +13282,7 @@
     "proof_strategy": "Characterize the coherent algebra basis by analyzing orbits of the automorphism group derived from the projective plane structure, demonstrating that no additional linearly independent matrices arise beyond those counted in the lower bound.",
     "research_mode": "team",
     "source_exp_id": "2606.19981v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T14:46:46.630781+00:00",
     "title": "Exact coherent rank for four-eigenvalue co-edge-regular graphs"
   },
@@ -13291,7 +13291,7 @@
     "catalog_references": [
       "arXiv:2406.00001"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0f7c830",
     "description": "Conjecture: For an s-connector graph G on N vertices and a q-edge-coloring of its edges, there exists a color j∈[q] such that G contains a monochromatic star K_{1, t_j} (a vertex with at least t_j incident edges of color j) if and only if N ≥ Σ_{j=1}^q (t_j−1) + max{2s, s+max_j t_j}. This extends the exact Ramsey number for matchings proved in the paper to the setting of stars.",
     "domain_bridges": [
       "Extremal graph theory",
@@ -13307,7 +13307,7 @@
     "proof_strategy": "Assume a minimal counterexample G with N vertices satisfying the bound but lacking the desired monochromatic star. Use the s-connector property to find large bipartite subgraphs with missing colors, then apply a double‑counting argument on the number of colored edges incident to each vertex to derive a contradiction, mirroring the counting method for matchings but adapted to stars via vertex‑degree considerations.",
     "research_mode": "team",
     "source_exp_id": "2606.19851v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T15:24:21.269051+00:00",
     "title": "Exact multicolor Ramsey threshold for stars in s-connector graphs"
   },
@@ -14747,7 +14747,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce8c041d",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -14760,7 +14760,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
