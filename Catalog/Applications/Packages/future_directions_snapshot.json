@@ -9800,7 +9800,7 @@
     "catalog_references": [
       "math.CO:2305.XXXX"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cff6413b",
     "description": "For every edge density β ∈ [0,1] the minimum possible asymptotic density of semi‑induced copies of S_{2,1} in an n‑vertex graph G with edge density β is given by the one‑parameter three‑class complement‑split construction: let t ∈ [0,1] be the unique solution of β = t(1 − t/2); then the minimum semi‑induced density equals p_min(β) = t²(1−t).",
     "domain_bridges": [
       "extremal combinatorics",
@@ -9815,7 +9815,7 @@
     "proof_strategy": "Apply a transfer argument to reduce the extremal problem to optimizing over degree distributions. Use Lagrange multipliers to show that an optimal distribution is supported on at most three points. Realize these three points by a three‑class complement‑split graphon (two clique parts and an independent set part with adjustable internal density). Solve the moment equations linking the graphon parameters to β and to the semi‑induced count, yielding the explicit formula p_min(β)=t²(1−t) where t satisfies β=t(1−t/2).",
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T21:11:05.213329+00:00",
     "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
   },
@@ -13266,7 +13266,7 @@
     "catalog_references": [
       "arXiv:2406.00001"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db606ba2",
     "description": "Conjecture: For an s-connector graph G on N vertices and a q-edge-coloring of its edges, there exists a color j∈[q] such that G contains a monochromatic star K_{1, t_j} (a vertex with at least t_j incident edges of color j) if and only if N ≥ Σ_{j=1}^q (t_j−1) + max{2s, s+max_j t_j}. This extends the exact Ramsey number for matchings proved in the paper to the setting of stars.",
     "domain_bridges": [
       "Extremal graph theory",
@@ -13282,14 +13282,14 @@
     "proof_strategy": "Assume a minimal counterexample G with N vertices satisfying the bound but lacking the desired monochromatic star. Use the s-connector property to find large bipartite subgraphs with missing colors, then apply a double‑counting argument on the number of colored edges incident to each vertex to derive a contradiction, mirroring the counting method for matchings but adapted to stars via vertex‑degree considerations.",
     "research_mode": "team",
     "source_exp_id": "2606.19851v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T15:24:21.269051+00:00",
     "title": "Exact multicolor Ramsey threshold for stars in s-connector graphs"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": "Consecutive integers free of certain prime factors",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0f7c830",
     "description": "The conjecture posits that for sufficiently large k, n_k exceeds e^{c log²k / log log k}, ensuring the interval (k, 2k) primes avoid divisibility by such primes.",
     "domain_bridges": "Number Theory",
     "domains": [
@@ -13302,7 +13302,7 @@
     "proof_strategy": "existence proof",
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T15:55:11.500060+00:00",
     "title": "Consecutive integers free of certain prime factors"
   },
@@ -13337,7 +13337,7 @@
       "11N25",
       "11N37"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b1625408",
     "description": "Assuming Hypothesis U (the existence of sufficiently many powersmooth shifted primes), for any ε>0 there exists X0 such that for all x≥X0 and y satisfying exp((log₂ x)^{1+ε}) ≤ y ≤ x / exp((log₂ x)^{1+ε}), the counting function L(x,y) = #{n ≤ x : λ(n) ≤ y} obeys L(x,y) ≥ x · (ℒ(x/y))^{−1−ε} when y ≥ ℒ(x)², and L(x,y) ≥ x · (ℒ(x,y))^{−1−ε} otherwise, where ℒ(x,y) = exp((log x · log₃ x) / log₂ y). This matches the upper bound of Theorem 1.1 in the paper up to the ε in the exponent, establishing asymptotic sharpness.",
     "domain_bridges": [
       "analytic number theory",
@@ -13352,7 +13352,7 @@
     "proof_strategy": "Use Hypothesis U to construct many n whose prime factorization consists of primes p with p−1 being y‑smooth, ensuring λ(n) divides a smooth number ≤ y. Combine a weighted sieve (or Turán–Kubilius inequality) to count such n, and optimize the parameters to obtain the claimed lower bound. The argument mirrors the proof of the upper bound but reverses the inequality by exhibiting a positive proportion of integers with small Carmichael function.",
     "research_mode": "team",
     "source_exp_id": "2606.19132v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T17:13:50.507382+00:00",
     "title": "Sharp lower bound for L(x,y) under Hypothesis U"
   },
