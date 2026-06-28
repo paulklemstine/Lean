@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7101b5e",
     "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
     "domains": [
       "Computation",
@@ -428,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432811+00:00",
     "title": "Formal Verification of Algorithms"
   },
@@ -793,7 +793,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kaplansky's Conjectures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72f7aee6",
     "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
     "domains": [
       "Computation",
@@ -803,7 +803,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:16.651864+00:00",
     "title": "Random Matrices: Edge Universality"
   },
@@ -4694,7 +4694,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scattering Determinant Critical Line Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f347664d",
     "description": "We conjecture that if a p-adic Galois representation becomes semistable after passing to some finite extension, then it must already have been of finite E-height. This would provide a characterization of finite height representations in terms of their behavior under finite extensions.",
     "domains": [
       "Algebra",
@@ -4704,7 +4704,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26043v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T17:11:00.832064+00:00",
     "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representations"
   },
@@ -5518,7 +5518,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excluded minors for Z_n-gainable biased graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ffddeae",
     "description": "For any dimension d \u2265 2 and any positive integer N, the number of spanning trees of the d-dimensional grid graph with free boundaries (Cartesian product of d path graphs) having exactly N vertices is maximized when the side lengths are as equal as possible (i.e., differ by at most 1). Moreover, any maximizer must have this balanced shape.",
     "domains": [
       "Bridges"
@@ -5527,7 +5527,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24016v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T18:14:54.853800+00:00",
     "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
   },
@@ -5795,7 +5795,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a59363e7",
     "description": "For any integer matrix \\(M = \\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}\\) with non\u2011zero determinant and \\(\\gcd(a,b,c,d)=1\\), the set of ratios of Lagrange constants\n\\[\\mathcal{V}(M) := \\{ k(Mx)/k(x) : x \\in \\mathrm{Bad}\\}\\]\ncoincides with the closed interval \\([|\\det M|^{-1},\\,|\\det M|]\\). In other words, every value between the extremal bounds given by Lagarias\u2013Shallit is attained by some badly approximable number, and no values outside the interval occur.",
     "domains": [
       "Algebra"
@@ -5804,7 +5804,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T04:17:04.862367+00:00",
     "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Transformations"
   },
@@ -8292,7 +8292,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4554c3a3",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -8302,7 +8302,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
