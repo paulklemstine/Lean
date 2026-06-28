@@ -655,7 +655,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a530b001",
+    "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domain_bridges": [],
     "domains": [
@@ -668,7 +668,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -3187,7 +3187,7 @@
       "odd power-sum symmetric functions",
       "Lean mathlib: MvPolynomial, PowerSeries, Finsupp, Nat.Odd"
     ],
-    "consumed_by_exp_id": "9a7cbc8b",
+    "consumed_by_exp_id": "",
     "description": "Let Γ_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism φ_t of Γ_R by φ_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_λ denotes the Schur Q-function indexed by a strict partition λ in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_λ denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition λ one has S^t_λ = φ_t(Q_λ). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n ↦ (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |λ|.",
     "domain_bridges": [
       "vertex-operator constructions ↔ plethystic substitutions",
@@ -3203,7 +3203,7 @@
     "proof_strategy": "Define the scaling algebra automorphism Φ_t on the odd power-sum ring by Φ_t(p_n) = (1 - t^n)p_n. Show coefficientwise that Φ_t ∂/∂p_n Φ_t⁻¹ = (1 - t^n)⁻¹ ∂/∂p_n. Therefore the odd GJZ field Y(z;t) is conjugate to the t=0 neutral-fermion field: Y(z;t) = Φ_t Y(z;0) Φ_t⁻¹. Since Φ_t fixes the vacuum vector 1, applying the negative Fourier modes indexed by a strict partition λ gives S^t_λ = Φ_t(S^0_λ) = Φ_t(Q_λ). In Lean, avoid infinite series by working degreewise in a truncated odd-variable polynomial algebra up to degree |λ|, then pass to the abstract graded Γ formulation.",
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -4180,7 +4180,7 @@
       "Mathlib.Analysis.Convex.Basic",
       "Mathlib.LinearAlgebra.AffineSpace.AffineSubspace"
     ],
-    "consumed_by_exp_id": "5f11db87",
+    "consumed_by_exp_id": "",
     "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
     "domain_bridges": [
       "convex geometry ↔ finite set systems",
@@ -4197,7 +4197,7 @@
     "proof_strategy": "Formalize convex splinters as finite unions of convex sets satisfying the minimal affine-dependence containment axiom. Combine the paper's fractional Helly theorem for convex splinters with the standard Alon--Kleitman bootstrapping scheme: derive a weak epsilon-net or selection lemma appropriate to splinters, then use the (p,q)-property to obtain a bounded-size hitting set. The Lean development can separate the abstract finite-set-system part from the geometric input, so that the final theorem only requires the convex-splinter fractional Helly lemma and the Helly number 2d+1.",
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:24:48.021151+00:00",
     "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
   },
@@ -7043,35 +7043,6 @@
   },
   {
     "ambition_level": "extension",
-    "catalog_references": [
-      "Moss--Pedersen coherence criterion for measurable strict-majority frames",
-      "Conjecture 5.7 of Moss--Pedersen, resolved negatively by unbounded incoherence index",
-      "Conjecture B.25 middle-layer family from Moss--Pedersen",
-      "Mathlib: Finset, Fintype, List.countP, finite Boolean cubes"
-    ],
-    "consumed_by_exp_id": "5870167a",
-    "description": "For every k >= 1 and every n >= 2*k + 1, there exists a maximal standard social decision frame on exactly 2*n voters whose shortest perfectly balanced majority obstruction has length exactly 2*k + 2. Equivalently, the sparse infinite sequence of universe sizes supplied by the geometric construction can be filled in: once the half-size n is at least 2*k + 1, every larger even electorate size supports a maximal standard frame with incoherence index 2*k + 2.",
-    "domain_bridges": [
-      "zero-sum sequences in the middle layer of the Boolean cube",
-      "oriented matroids and antipodal orientations",
-      "finite additive measure representation of qualitative probability",
-      "hypergraph discrepancy and balanced block designs"
-    ],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_2491",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Start from the paper's construction at the base size 2*(2*k+1). To pass from n to n+1, add one complementary pair of new voters whose membership profiles across the distinguished obstruction blocks are complementary (k+1)-subsets of the 2*k+2 obstruction positions), so the existing obstruction remains perfectly balanced and all distinguished blocks remain half-sized. Then orient all newly created middle-layer complementary pairs by a rational lexicographic perturbation extending the original separating functional. The key finite-avoidance lemma is that the perturbation can be chosen outside the finite union of hyperplanes corresponding to balanced majority sequences of length <= 2*k; hence no shorter obstruction is introduced. Iterating gives all n >= 2*k+1.",
-    "research_mode": "team",
-    "source_exp_id": "2606.25954v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T04:15:17.784537+00:00",
-    "title": "Cofinite realization of every even incoherence index by maximal standard frames"
-  },
-  {
-    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "For any integer parameters \\(a,b,c,d\\) with \\(a,b,c,d\\ge 0\\) and any base \\(q\\) with \\(|q|<1\\), define the rank‑four Nahm sum\n\\[\\Phi_{a,b,c,d}(q) \\;:=\\; \\sum_{i,j,k,l\\ge 0}\\frac{q^{\\frac12(i^2+aj^2+bk^2+cl^2)-ij-jk-kl-dj+ek+fl}}{(q;q)_i\\,(q;q)_j\\,(q;q)_k\\,(q;q)_l} .\\]\nThe conjecture asserts that when the coefficient matrix of the quadratic form is positive‑definite and the linear terms satisfy a certain balance condition (namely \\(e=\\frac{a+b}{2}\\) and \\(f=\\frac{b+c}{2}\\)), the sum collapses to a simple product of Euler functions:\n\\[\\Phi_{a,b,c,d}(q) \\;=\\; C_{a,b,c,d}\\, q^{\\kappa_{a,b,c,d}}\\,\\frac{J_{m}^{\\,s}}{J_{1}^{\\,t}},\\]\nwhere \\(J_m = (q^m; q^m)_\\infty\\), the exponent \\(\\kappa_{a,b,c,d}\\) and the constants \\(C_{a,b,c,d}, m, s, t\\) are explicit rational functions of \\(a,b,c,d\\). This family contains the four identities proved in the paper as the special cases\n\\((a,b,c,d) = (1,0,0,2), (0,2,2,2), (1,0,0,1), (2,2,2,2)\\).\n\n**Conjecture (Precise Form).** Let \\(A=\\begin{pmatrix}1 & -\\frac12 & 0 & -\\frac12\\\\ -\\frac12 & 1 & -\\frac12 & -\\frac12\\\\ 0 & -\\frac12 & 1 & -\\frac12\\\\ -\\frac12 & -\\frac12 & -\\frac12 & 1\\end{pmatrix}\\). For any integer vector \\(\\mathbf{u}=(u_1,u_2,u_3,u_4)\\) with \\(u_i\\ge 0\\) define\n\\[\\Phi_{\\mathbf{u}}(q) = \\sum_{i,j,k,l\\ge 0} \\frac{q^{\\frac12\\,(i,j,k,l)A(i,j,k,l)^T + \\mathbf{u}\\cdot(i,j,k,l)}}{(q;q)_i (q;q)_j (q;q)_k (q;q)_l}.\\]\nThen\n\\[\\Phi_{\\mathbf{u}}(q) = 2^{\\alpha(\\mathbf{u})}\\, q^{\\beta(\\mathbf{u})}\\, \\frac{J_{2}^{\\, \\gamma(\\mathbf{u})}}{J_{1}^{\\, \\delta(\\mathbf{u})}},\\]\nwhere the integer‑valued functions \\(\\alpha,\\beta,\\gamma,\\delta\\) are given by\n\\[\\alpha(\\mathbf{u}) = u_1+u_2+u_3+u_4 - 2,\\quad \\beta(\\mathbf{u}) = -\\frac{\\lVert\\mathbf{u}\\rVert_1}{2},\\]\n\\[\\gamma(\\mathbf{u}) = 6 - \\frac{\\lVert\\mathbf{u}\\rVert_1}{2},\\quad \\delta(\\mathbf{u}) = 6 - \\frac{\\lVert\\mathbf{u}\\rVert_1}{2}.\\]\nIn particular, for \\(\\mathbf{u} = (0,0,0,0)\\) we recover the first identity of Theorem 1, and for \\(\\mathbf{u} = (2,2,2,2)\\) we recover Theorem 2.\n\n**Why this is falsifiable.** The statement gives an explicit closed‑form product for each \\(\\Phi_{\\mathbf{u}}\\). One can compute coefficients of the series expansion of both sides for any concrete \\(\\mathbf{u}\\) (e.g., using SageMath or Mathematica) and check equality up to a high order in \\(q\\). A single counter‑example disproves the conjecture.\n\n**Domain**: Number Theory (q‑series, modular forms) and Combinatorics.\n\n**Catalog references**: [Cao‑Wang 2025, Conjecture 3.2], [Cao‑Wang 2025, Conjecture 3.4], [Andrews‑Berndt 2005, q‑series identities].\n\n**Domain bridges**: Connects the theory of Nahm sums (modular q‑hypergeometric series) with the classical theory of theta functions and Euler products.\n\n**Ambition level**: \"extension\" – it extends the proven four identities to an infinite family.\n\n**Proof strategy**: Use the Bailey‑pair / Bailey‑chain machinery to transform the multi‑sum into a product. The quadratic form matrix \\(A\\) is unimodular, enabling a change of variables that separates the sum",
@@ -9328,7 +9299,7 @@
     "catalog_references": [
       "2409.07877"
     ],
-    "consumed_by_exp_id": "e5555684",
+    "consumed_by_exp_id": "",
     "description": "Formulates a concise formalism in Lean 4 to verify an instance of Hegedçs' eigenvalue condition using Gram matrix eigenvalues and algebraic constraints, making the bound falsifiable through explicit construction.",
     "domain_bridges": [
       "combinatorics",
@@ -9344,7 +9315,7 @@
     "proof_strategy": "Leverage the lemma on norm equality and linear independence to tighten dimension bounds via spectral arguments.",
     "research_mode": "team",
     "source_exp_id": "2606.24624v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T11:13:57.875110+00:00",
     "title": "Proof of Hegedçs bound via spectral constraints in combinatorial families"
   },
@@ -14320,6 +14291,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: invariants under purely inseparable base change\n\nThese conjectures are derived from this cycle's findings, namely that the separable degree\n`m_f = (minpoly K θ).natSepDegree` is invariant under purely inseparable base change while the\ninseparable exponent/degree and the total degree are not (proved in `Invariance.lean`,\n`Criterion.lean`).\n\n## Conjecture 1 — Invariance for arbitrary finite extensions, not just simple ones\n\n**Statement.** For every finite extension `L/K` (not necessarily simple) and every purely\ninseparable `N/K`, the separable degree is preserved: `[NL : N]_s = [L : K]_s`.\n\nThe key insight is that the *separable closure* `L_s` of `K` in `L` is linearly disjoint from any\npurely inseparable `N`, so `N · L_s / N` has the same degree as `L_s / K`, and the inseparable tail\ncontributes separable degree `1` on both sides. **Why now?** Mathlib already provides\n`sepDegree_adjoin_eq_of_isAlgebraic_of_isPurelyInseparable'` for adjoined sets; lifting it to the\n`finSepDegree` of a general finite `L/K` is a packaging step that this cycle's simple-extension\nproof makes concrete and testable.\n\n## Conjecture 2 — The inseparable exponent is invariant *iff* `N` is independent of `L`\n\n**Statement.** For `L = K(θ)` with `f(X) = g(X^{p^e})`, the inseparable exponent over `N` equals\n`e` if and only if the maximal purely inseparable subextension of `L/K` is linearly disjoint from\n`N` over `K`; otherwise it strictly drops.\n\nThe key insight is that purely inseparable base change can only *absorb* part of the inseparable\ntower of `θ`, and it absorbs exactly the part that already lies in `N`. **Why now?** This cycle\nisolated the collapsing example `N = K(θ)` (exponent `1 → 0`); turning the binary \"invariant vs.\nnot\" into a precise linear-disjointness criterion is the natural next refinement.\n\n## Conjecture 3 — `m_f = 1` is the exact obstruction to the splitting criterion failing trivially\n\n**Statement.** The simple compositum satisfies `NL = (NL)^{pi}(NL)^{sep}` automatically whenever\n`m_f = 1` (purely inseparable case) or `m_f = deg f` (separable case); the only extensions where\nthe criterion has nontrivial content are the genuinely \"mixed\" ones with `1 < m_f < deg f`.\n\nThe key insight is that the two extremal values of `m_f` force `L` to be its own purely inseparable\n(resp. separable) part, making the splitting trivial; base-change invariance of `m_f` then shows\nthis trichotomy is intrinsic to `L/K`. **Why now?** With invariance of `m_f` established, the\nsplitting criterion can be re-expressed entirely in terms of the rigid invariant, isolating the\nnontrivial regime for further study.\n\n## Conjecture 4 — A base-change-invariant refinement: the whole factorisation type of `f`\n\n**Statement.** Not only `m_f` but the entire multiset of separable degrees of the irreducible\nfactors of `f.map (algebraMap K N)` is determined by `f` and is invariant as `N` ranges over purely\ninseparable extensions.\n\nThe key insight is that purely inseparable base change preserves separability of the separable part\n`g`, so the separable factorisation pattern cannot change even though inseparable multiplicities\ncan. **Why now?** The single-number invariance proved here is the `natSepDegree` shadow of this\nfiner factorisation-type invariance; the machinery (`map_irreducible_of_isPurelyInseparable`) is\nalready in Mathlib.\n\n## Conjecture 5 — Transfer to the perfect closure\n\n**Statement.** For `N = K^{1/p^∞}` the perfect closure, `m_{f,N} = m_f` and moreover `NL/N` is\nseparable; hence `m_f = [NL : N]`, giving an intrinsic formula `m_f = [K^{1/p^∞}(θ) : K^{1/p^∞}]`.\n\nThe key insight is that over a perfect field every algebraic extension is separable, so the\nseparable degree becomes an honest degree, and base-change invariance pins it to `m_f`. **Why now?**\nThis cycle's `finSepDegree_simple_base_change` is exactly the finite-stage approximation; passing to\nthe perfect closure converts the separable-degree invariant into a concrete field degree.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2759",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "53e074b6",
+    "status": "available",
+    "timestamp": "2026-06-28T07:24:54.664238+00:00",
+    "title": "These conjectures are derived from this cycle's findings, namely that the separa"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -14911,7 +14902,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ce8c041d",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -14924,7 +14915,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

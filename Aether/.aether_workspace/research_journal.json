@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d3c0af99",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Minor-Closed Classes Below Density 3/2\n\nDerived from this cycle's findings (`OrderFramework.lean`, `ForestDensity.lean`,\n`MinorModel.lean`).  Each conjecture is bold, falsifiable",
-      "quality_score": 0.63104,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-06-24T20:19:40",
-      "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
-    },
-    {
       "cycle_id": "50adb4ee",
       "domain": "Physics",
       "key_insight": "# Future Directions — Homological Necessity for Spectral Bounds\n\nDerived from this cycle's findings (formalized in `Core.lean`, `ConeAcyclic.lean`,\n`LinkRigidity.lean`): cones/apices force the reduced",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-06-28T06:56:13",
       "title": "Prismatic Purity for F-Crystals on Regular Schemes"
+    },
+    {
+      "cycle_id": "53e074b6",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: invariants under purely inseparable base change\n\nThese conjectures are derived from this cycle's findings, namely that the separable degree\n`m_f = (minpoly K θ).natSepDegree` is i",
+      "quality_score": 0.6700199999999998,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-28T07:25:03",
+      "title": "Invariance of the field invariant m_f under purely inseparable base change"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.747936
     }
   ],
-  "last_updated": "2026-06-28T06:56:13",
+  "last_updated": "2026-06-28T07:25:03",
   "open_questions": [
     {
       "context": "## Verified results (all `sorry`-free)",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f73687d8",
-        "quality": 0.5230660465116279,
-        "theorems": 18,
-        "title": "EML Kolmogorov-Arnold Representation"
-      },
-      {
         "cycle_id": "49c290ff",
         "quality": 0.48585960124610594,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.69204,
         "theorems": 9,
         "title": "Join of Gorenstein Polytopes is Not Necessarily Gorenstein"
+      },
+      {
+        "cycle_id": "53e074b6",
+        "quality": 0.6700199999999998,
+        "theorems": 7,
+        "title": "Invariance of the field invariant m_f under purely inseparable base change"
       }
     ],
     "Bridges": [

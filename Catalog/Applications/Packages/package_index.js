@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "53e074b6",
     "filename": "invariance_of_the_field_invariant_m_f_under_purely.json",
     "pkg_num": 171,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6700199999999998,
     "title": "Invariance of the Separable Invariant m_f under Purely Inseparable Base Change"
   },
   {
@@ -4987,8 +4987,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "invariance_of_the_field_invariant_m_f_under_purely",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6700199999999998,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Invariance of the Separable Invariant m_f under Purely Inseparable Base Change"
     }
