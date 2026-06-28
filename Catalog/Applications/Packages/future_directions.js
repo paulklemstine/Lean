@@ -1450,20 +1450,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q \u2265 3 and n \u2265 4"
   },
   {
-    "consumed_by_exp_id": "ce5b4268",
-    "description": "For the polynomial f(x) = x^q + bx^2 + cx + d over F_{q^2}, we conjecture that f is a permutation polynomial if and only if specific explicit conditions on the coefficients hold: when q is odd, f permutes F_{q^2} iff b, c, d satisfy g(b,c,d) \u2260 0 where g is an explicit polynomial expression derived from Weil sum evaluation; when q is even, f permutes F_{q^2} iff h(b,c,d) \u2260 0 with h being another explicit expression. The precise forms of g and h relate to the discriminant of the associated Weil sum and can be computed via the number of solutions to the equation f(x) = f(y) for x \u2260 y.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2653",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.14529v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-28T02:23:31.130528+00:00",
-    "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
-  },
-  {
     "consumed_by_exp_id": "dc303029",
     "description": "This conjecture posits that for a totally degenerating family of polarized abelian varieties, the existence of a non-Archimedean balanced metric would imply uniform control over the convergence rates of Hilbert\u2013Chow stability criteria, which in turn constrains the possible bounds on the volumes of moduli spaces in such families.",
     "domains": [
@@ -1648,6 +1634,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erd\u0151s\u2013Straus Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Permutation polynomials `x^q + b x^2 + c x + d` over `F_{q^2}`\n\nDerived from this cycle's findings (see\n`Catalog/Novelty/PermutationPolynomialFq2.lean` and\n`Catalog/Novelty/PermutationPolynomialCounting.lean`). What is **proved**: the\nlinear (`b = 0`) and `q`-even cases admit a clean, Weil-free norm criterion\n`N(a) \u2260 N(c)`, with an exact count `p+1` of exceptional coefficients. What\nremains genuinely open is the honest `b \u2260 0`, `q` odd regime, where a\ndiscriminant/Weil-sum obstruction appears. The conjectures below are bold and\nfalsifiable.\n\n---\n\n## Conjecture 1 (general `b`, odd `q`: cubic discriminant criterion)\nFor odd `q` and `b \u2260 0`, `f(x) = x^q + b x^2 + c x + d` permutes `F_{q^2}` iff a\nsingle explicit polynomial `g(b,c) \u2208 F_{q^2}[b,c]` of degree bounded by an\nabsolute constant is non-zero, and `g` specializes to `c^{q+1} - 1` (up to a\nunit) as `b \u2192 0`.\n\n- The key insight is that the difference `f(x) - f(y)` factors through\n  `(x - y)` as `(x-y)\u00b7(x^{q-1}+\u2026+ b(x+y) + c)`, so non-permutation is governed\n  by the number of `F_{q^2}`-points of the affine curve\n  `(x^q - y^q)/(x-y) + b(x+y) + c = 0`; by Weil's bound this point count is\n  `q + O(\u221aq)`, so for large `q` the criterion degenerates to a *single*\n  low-degree resultant condition on `(b, c)`.\n- Why now? The `b = 0` reduction is fully formalized here, giving the exact\n  boundary value (`g|_{b=0} = c^{q+1}-1`) that any correct general `g` must\n  match \u2014 a precise, checkable constraint that earlier informal treatments\n  lacked.\n\n## Conjecture 2 (exact exceptional count is always `\u2261 1 (mod q-1)` plus a bounded defect)\nFor every `(b, q)` the number `M(b,c\\text{-free})` of coefficients `c` making\n`x^q + b x^2 + c x` a non-permutation equals `q + 1` when `b = 0` and differs\nfrom `q + 1` by at most `2\u221aq` for `b \u2260 0`.\n\n- The key insight is that `card_norm_one` pins the `b = 0` value to exactly\n  `q + 1`, and the Weil bound forces only a `\u221aq`-size perturbation when the\n  quadratic term is switched on, so the count cannot jump wildly.\n- Why now? We have the exact baseline `p + 1` as a *theorem*\n  (`card_norm_one`), turning a vague \"about `q`\" heuristic into a sharp\n  conjecture with a provable anchor.\n\n## Conjecture 3 (norm-map dichotomy is the *only* obstruction in characteristic 2)\nIn characteristic `2`, for **every** `n`, the polynomial\n`f(x) = x^{2^k} + b x^2 + c x + d` over `F_{2^{2k}}` permutes iff a norm\ninequality of the shape `N(\u03b1) \u2260 N(\u03b3)` holds for explicit `\u03b1, \u03b3` built from\n`b, c` \u2014 i.e. the clean criterion survives all of characteristic `2`, never\nneeding a genuine Weil sum.\n\n- The key insight is that `permPoly_charTwo_iff` proves this for `k = 1`\n  (`F_4`) via the collapse `b x^2 = b\u00b7\\mathrm{Frob}(x)`; the same additive\n  structure of `x \u21a6 x^{2^k}` suggests the quadratic term stays \"linear modulo\n  Frobenius powers\" throughout characteristic `2`.\n- Why now? The `k = 1` collapse is formalized with `0` sorries, isolating the\n  precise algebraic reason (Frobenius linearity of squaring) that should\n  generalize.\n\n## Conjecture 4 (density of permutational coefficients tends to 1)\nFix `b`. As `q \u2192 \u221e`, the fraction of pairs `(c, d) \u2208 F_{q^2}^2` for which\n`x^q + b x^2 + c x + d` permutes tends to `1`; moreover the rate is\n`1 - O(1/q)`.\n\n- The key insight is that `card_permutation_coeffs` already gives the exact\n  density `1 - (q+1)/q^2 = 1 - O(1/q)` in the linear case, and adding the\n  bounded-defect Conjecture 2 keeps the density `\u2192 1` for `b \u2260 0`.\n- Why now? The exact linear-case density is a theorem here, so the limiting\n  statement is a clean extrapolation rather than a guess.\n\n## Conjecture 5 (the criterion lifts to a finite-field invariant, not just `F_{q^2}`)\nThe Boolean \"is `x^q + c x` a permutation of `F_{q^2}`\" is invariant under the\nbase change `F_{q^2} \u2192 F_{q^{2m}}` exactly when `gcd(m, ?) = 1`; precisely,\n`x^q + c x` permutes `F_{q^{2m}}` iff `N_{F_{q^{2m}}/F_{q^m}}(c) \u2260 1`, and this\nagrees with the `F_{q^2}` criterion iff `m` is odd.\n\n- The key insight is that our criterion is *exactly* a norm condition\n  (`linearized_bijective_iff`), and norms are functorial under field extension,\n  so the permutation property must transform predictably under base change.\n- Why now? Phrasing the criterion as `N(a) \u2260 N(c)` (rather than an ad-hoc\n  coefficient condition) is what makes the functorial behavior conjecturable;\n  that reformulation is the content proved in this cycle.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2793",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ce5b4268",
+    "status": "available",
+    "timestamp": "2026-06-28T16:59:06.730933+00:00",
+    "title": "Derived from this cycle's findings (see"
   },
   {
     "consumed_by_exp_id": "",
@@ -1960,7 +1961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "140a33ad",
+    "consumed_by_exp_id": "",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -1970,12 +1971,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "07ec4039",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -1985,7 +1986,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },

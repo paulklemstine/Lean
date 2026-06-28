@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "72d240c8",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Hochschild homology of group algebras\n\nDerived from the cycle that produced\n`Catalog/Novelty/HochschildH0GroupAlgebra.lean`, where we proved the `R`-linear\nequivalence `HH₀(R[G])",
-      "quality_score": 0.7694400000000001,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-26T12:45:03",
-      "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
-    },
-    {
       "cycle_id": "d4e980c4",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's formalization (`WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`). Each conjecture is bold, fals",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-28T15:37:33",
       "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
+    },
+    {
+      "cycle_id": "ce5b4268",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Permutation polynomials `x^q + b x^2 + c x + d` over `F_{q^2}`\n\nDerived from this cycle's findings (see\n`Catalog/Novelty/PermutationPolynomialFq2.lean` and\n`Catalog/Novelty/Permu",
+      "quality_score": 0.71224,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T16:59:26",
+      "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "364ec557",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Differential Algebra\n\nBold, falsifiable conjectures derived from this cycle (formalised results live in\n`EMLDifferentialAlgebra.lean` and `EMLDifferentialCorollaries.lean`).",
-      "quality_score": 0.57649,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-25T18:18:51",
-      "title": "EML Differential Algebra: Closure Properties"
-    },
     {
       "cycle_id": "fb2780d5",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T16:11:06",
       "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
+    },
+    {
+      "cycle_id": "ce5b4268",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Permutation polynomials `x^q + b x^2 + c x + d` over `F_{q^2}`\n\nDerived from this cycle's findings (see\n`Catalog/Novelty/PermutationPolynomialFq2.lean` and\n`Catalog/Novelty/Permu",
+      "quality_score": 0.71224,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T16:59:26",
+      "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7e57e1f5",
-      "domain": "Novelty",
-      "name": "ranges",
-      "quality": 0.70122
-    },
-    {
-      "cycle_id": "7e57e1f5",
-      "domain": "Novelty",
-      "name": "mirror_involutive",
-      "quality": 0.70122
-    },
-    {
-      "cycle_id": "7e57e1f5",
-      "domain": "Novelty",
-      "name": "euler_mirror",
-      "quality": 0.70122
-    },
     {
       "cycle_id": "c25c1b9e",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "isMaximal_singleton_one",
       "quality": 0.7050400000000001
+    },
+    {
+      "cycle_id": "ce5b4268",
+      "domain": "Novelty",
+      "name": "exists_primitiveRoot_pSucc",
+      "quality": 0.71224
+    },
+    {
+      "cycle_id": "ce5b4268",
+      "domain": "Novelty",
+      "name": "normOne_eq_nthRoots",
+      "quality": 0.71224
+    },
+    {
+      "cycle_id": "ce5b4268",
+      "domain": "Novelty",
+      "name": "card_norm_one",
+      "quality": 0.71224
     }
   ],
-  "last_updated": "2026-06-28T16:11:06",
+  "last_updated": "2026-06-28T16:59:26",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "7e2e6a70",
-        "quality": 0.36300923636363636,
-        "theorems": 0,
-        "title": "A Sharp Upper Bound for Uniform VC‑Dimension Families via Layered Stars"
-      },
-      {
         "cycle_id": "ef629b7b",
         "quality": 0.722996,
         "theorems": 17,
@@ -3637,6 +3631,12 @@
         "quality": 0.643006,
         "theorems": 0,
         "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
+      },
+      {
+        "cycle_id": "ce5b4268",
+        "quality": 0.71224,
+        "theorems": 14,
+        "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_"
       }
     ],
     "NumberTheory": [
