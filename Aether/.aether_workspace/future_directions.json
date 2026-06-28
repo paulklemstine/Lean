@@ -48035,7 +48035,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO/05C05",
         "math.CO/05C30",
@@ -48043,7 +48043,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "8ffddeae",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48058,7 +48058,7 @@
         "Bridges"
       ],
       "id": "fd_2591",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-28T03:31:01.188196+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spanning_tree_product_paths_maximized_at_balanced_sides {d : ℕ} (hd : 2 ≤ d) {N : ℕ} (hN : 0 < N) : \\n    ∃ (ns : Fin d → ℕ), (∏ i : Fin d, ns i) = N ∧ (∀ i j : Fin d, |ns i - ns j| ≤ 1) ∧ (∀ (ms : Fin d → ℕ), (∏ i : Fin d, ms i) = N → spanning_tree_count (product_of_paths ns) ≥ spanning_tree_count (product_of_paths ms)) ∧ (∀ (ms : Fin d → ℕ), (∏ i : Fin d, ms i) = N → spanning_tree_count (product_of_paths ns) = spanning_tree_count (product_of_paths ms) → (∀ i j : Fin d, |ms i - ms j| ≤ 1)) := by sorry",
       "lineage_refs": [],
@@ -48072,7 +48072,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24016v1",
       "source_path": "http://arxiv.org/abs/2606.24016v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-26T18:14:54.853800+00:00",
       "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"

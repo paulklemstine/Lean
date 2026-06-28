@@ -9648,7 +9648,7 @@
       "math.CO/05C30",
       "math.SP/05C50"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ffddeae",
     "description": "For any dimension d ≥ 2 and any positive integer N, the number of spanning trees of the d-dimensional grid graph with free boundaries (Cartesian product of d path graphs) having exactly N vertices is maximized when the side lengths are as equal as possible (i.e., differ by at most 1). Moreover, any maximizer must have this balanced shape.",
     "domain_bridges": [
       "spectral graph theory",
@@ -9664,7 +9664,7 @@
     "proof_strategy": "Extend the heat-trace Schur-concavity argument from perfect-power volumes to arbitrary N by showing that the logarithm of the spanning tree count is a symmetric Schur-concave function of the logarithmic side lengths. Use discrete majorization and smoothing techniques to prove that any imbalance in side lengths can be locally adjusted to increase the spanning tree count, thereby establishing that the unique maximizers (up to permutation) are the balanced tuples.",
     "research_mode": "team",
     "source_exp_id": "2606.24016v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T18:14:54.853800+00:00",
     "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
   },
