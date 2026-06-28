@@ -1175,7 +1175,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bc81b3a8",
     "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1189,7 +1189,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
@@ -4944,7 +4944,7 @@
       "Sun and Das (2020)",
       "Lan et al. (2023)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72418ed5",
     "description": "For a connected signed graph Σ and a non-isolated vertex v, the inequality λ₁(Σ) ≤ √(λ₁²(Σ−v) + 2d(v) − 1) holds, with equality if and only if Σ is a signed star with v as the center or Σ is a signed complete graph.",
     "domain_bridges": [
       "spectral graph theory",
@@ -4960,7 +4960,7 @@
     "proof_strategy": "Use eigenvalue interlacing inequalities and structural analysis of signed graphs. Leverage Rayleigh quotient bounds and properties of signed stars/complete graphs to characterize equality conditions.",
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T01:36:45.202062+00:00",
     "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
   },
@@ -5020,7 +5020,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0eb9ce9e",
     "description": "Conjecture: For any prime power q and integers k, n with 2 ≤ k ≤ n/2, if n ≥ 2k+1 then every Boolean degree-one function on the Grassmann scheme J_q(n,k) is trivial (i.e., a linear combination of point indicators and their duals with coefficients in {0,1}). This extends the known result for q=2 and matches the thresholds proved for q=3,4,5 in the case k=2.",
     "domain_bridges": [
       "finite geometry",
@@ -5036,7 +5036,7 @@
     "proof_strategy": "Use the harmonic analysis on the Grassmann association scheme: compute the eigenvalues of the adjacency matrices, apply the linear programming bound for Boolean degree-one functions, and show that the feasible region of the corresponding linear program reduces to the trivial solutions when n ≥ 2k+1. The key step is to establish a sufficient gap between the first and second eigenspaces that forces the coefficients to be 0 or 1.",
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T05:25:46.726799+00:00",
     "title": "Degree-one triviality threshold for Grassmann schemes"
   },
@@ -8720,7 +8720,7 @@
       "arXiv:2606.23853",
       "MossPedersen2026"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "872fa119",
     "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k ≥ 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
     "domain_bridges": [
       "finite measure theory",
@@ -8736,7 +8736,7 @@
     "proof_strategy": "Construct explicit maximal frames with increasing incoherence indices via orthogonal half-spaces in rational vector spaces, then show all shorter obstructions are excluded",
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T22:09:21.864984+00:00",
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
   },
@@ -10235,7 +10235,7 @@
       "Sprugnoli group inverses",
       "Inverse power series in formal power series ring"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f134ce6",
     "description": "Propose that for any Sprugnoli array $(g(x), f_1(x), f_2(x))$ in the first family, there exists a unique inverse array $(g^{-1}(x), f_1^{-1}(x), f_2^{-1}(x))$ whose coefficients are closed-form expressions involving only summation symbols, binomial coefficients, and arithmetic operations, as described in the paper's Section 3. This inverse must satisfy the condition that the matrix product of the original and inverse arrays yields the identity matrix.",
     "domain_bridges": [
       "Riordan group theory",
@@ -10251,7 +10251,7 @@
     "proof_strategy": "Verify via induction on matrix dimensions, leveraging the weighted composition law from the Sprugnoli group's fundamental theorem. Construct inverse coefficients recursively using the paper's closed-form expressions and verify the identity matrix condition through modular arithmetic constraints.",
     "research_mode": "team",
     "source_exp_id": "2606.22070v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T06:01:14.131396+00:00",
     "title": "Existence of Inverse Sprugnoli Arrays with Closed-Form Coefficients"
   },
@@ -11165,7 +11165,7 @@
       "arXiv:2405.12345 (hypothetical paper on extended Eulerian numbers)",
       "Comtet, L. (1974). Advanced Combinatorics"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1a8353e",
     "description": "The extended Eulerian numbers A(n,k,s) = ∑_{j=0}^k (-1)^j C(n+1,j) (k+1-j-s)^n satisfy the recurrence A(n,k,s) = (k+1-s) A(n-1,k,s) + (n-k+s) A(n-1,k-1,s) for n ≥ 1, with boundary conditions A(0,0,s)=1 and A(n,k,s)=0 for k<0 or k>n. This generalizes the classical Eulerian recurrence (s=0).",
     "domain_bridges": [
       "math.NT",
@@ -11180,7 +11180,7 @@
     "proof_strategy": "Manipulate the sum definition by splitting (k+1-j-s)^n = (k+1-j-s)(k+1-j-s)^{n-1} and reindexing sums, analogous to the classical proof for Eulerian numbers using the Worpitzky identity or generating functions.",
     "research_mode": "team",
     "source_exp_id": "2606.15178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-28T00:27:35.663578+00:00",
     "title": "Recurrence relation for extended Eulerian numbers"
   },
@@ -14157,7 +14157,7 @@
       "MathSciNet MR4471234",
       "Lean Mathlib: Data.Matrix.Basic, FieldTheory.Finite, Algebra.Polynomial"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e767b4b1",
     "description": "For integers m,n with 1 ≤ m ≤ n, a contiguous m×n matrix over a finite field 𝔽_q is defined by choosing a sequence a_1,…,a_{m+n‑1}∈𝔽_q and forming the matrix whose (i,j)‑entry equals a_{i+j‑1}. Such a matrix is *super‑regular* if every square sub‑matrix obtained by selecting a contiguous set of rows and columns has non‑zero determinant. The paper proves a closed formula for the case (m,n) = (4,4) and gives formulas for (3,4), (3,5), (3,6). The conjecture extends this to all m,n: there exists an explicit polynomial‑in‑q expression P_{m,n}(q) together with a finite set of exceptional primes S_{m,n} such that for every prime power q with char(𝔽_q)∉S_{m,n}, the number of contiguous super‑regular m×n matrices over 𝔽_q equals P_{m,n}(q). Moreover, the exceptional primes are exactly those dividing a certain discriminant D_{m,n} that can be computed from the resultant of the defining polynomial inequalities.",
     "domain_bridges": [
       "Finite field counting (Weil conjectures, rational point counts)",
@@ -14174,7 +14174,7 @@
     "proof_strategy": "Apply the recursive linear‑substitution procedure of the paper to the system of polynomial inequalities defining super‑regularity for general (m,n).  Show that after finitely many linear eliminations the resulting system consists only of univariate polynomials whose zero‑counts are given by c_i(q).  Prove that the final expression is a polynomial F_{m,n} in q and the c_i(q), and that the only dependence on the characteristic is via the vanishing of a finite list of primes (the primes dividing the discriminants of the intermediate univariate polynomials).  Formalize each step in Lean: define the matrix construction, encode the non‑vanishing of all contiguous minors as a list of polynomial inequalities, implement the recursive algorithm as a computable function, and verify that it terminates and yields the claimed closed form.  Finally, extract from the Lean term the explicit polynomial P_{m,n}(q) and the exceptional set S_{m,n}.",
     "research_mode": "team",
     "source_exp_id": "2606.14296v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-28T03:05:12.439035+00:00",
     "title": "Uniform formula for the number of contiguous super‑regular m×n matrices over finite fields"
   },
@@ -15921,7 +15921,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "461fdf74",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domain_bridges": [],
     "domains": [
@@ -15934,7 +15934,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
