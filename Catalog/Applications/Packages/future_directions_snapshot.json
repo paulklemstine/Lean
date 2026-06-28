@@ -1196,7 +1196,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c011c95b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -1210,7 +1210,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1316,7 +1316,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "551fc26b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domain_bridges": [],
     "domains": [
@@ -1329,7 +1329,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -11710,7 +11710,7 @@
       "math.AG",
       "math.NT"
     ],
-    "consumed_by_exp_id": "ca01957a",
+    "consumed_by_exp_id": "",
     "description": "For any integer m ≥ 3, there exists a field F of characteristic 2 and two anisotropic quadratic forms φ and ψ over F of dimension 2^m, such that φ and ψ are Vishik-equivalent (i.e., for every field extension E/F, the dimension of the maximal totally isotropic subspace of φ_E equals that of ψ_E), yet φ and ψ are not similar.",
     "domain_bridges": [
       "Motivic Cohomology",
@@ -11726,7 +11726,7 @@
     "proof_strategy": "The proof would involve constructing a specific field extension (likely a function field of a quadric or a sequence of such extensions) and defining semi-singular forms (composed of a non-singular part and a totally singular part) that satisfy the isotropy index equality by construction via the properties of the Witt group in characteristic 2, while ensuring their similarity classes remain distinct using invariants like the Arf invariant or the dimension of the singular part.",
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T11:40:03.991489+00:00",
     "title": "Non-similarity of Vishik-equivalent semi-singular quadratic forms in characteristic 2"
   },
@@ -12247,7 +12247,7 @@
       "RudnevShkredov",
       "LewRect"
     ],
-    "consumed_by_exp_id": "49c290ff",
+    "consumed_by_exp_id": "",
     "description": "If the endpoint restriction conjecture for the 3-dimensional paraboloid P₃ over finite fields (where -1 is not a square) holds, then the integer lattice points on the 3-dimensional Euclidean paraboloid form a Λ(3) set, characterized by having additive energy bounded by O(|S|³^(2/3)) for subsets S of size O(1).",
     "domain_bridges": [
       "Fourier Analysis on Finite Fields",
@@ -12264,7 +12264,7 @@
     "proof_strategy": "Leverage point-line incidence bounds in finite fields to analyze additive energy of lattice points, requiring new refinements of bilinear estimates or incidence geometry tools.",
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T23:16:39.649655+00:00",
     "title": "Endpoint Restriction Conjecture for P₃ Implies Λ(3) Structure of Lattice Points"
   },
@@ -12354,7 +12354,7 @@
       "Mathlib/Combinatorics/SimplicialComplex",
       "Mathlib/RingTheory/Ideal/Operations"
     ],
-    "consumed_by_exp_id": "552f4622",
+    "consumed_by_exp_id": "",
     "description": "For a finite simple co‑chordal graph G let \\(\\overline G\\) be its chordal complement and let \\(\\kappa(\\overline G)\\) denote the size of a smallest vertex separator of \\(\\overline G\\) (i.e., the minimum cardinality of a set whose removal disconnects \\(\\overline G\\)). The conjecture asserts that the projective dimension of the edge ideal \\(I(G)\\) is given by\n\\[\\operatorname{pdim}\\bigl(S/I(G)\\bigr) = |V(G)| - \\kappa(\\overline G) - 1.\\]\nEquivalently, the largest homological degree appearing in the linear strand formula (1) of the paper coincides exactly with the complement’s minimal separator size. This provides a purely graph‑theoretic invariant that determines the homological invariant \\(\\operatorname{pdim}\\) for the whole class of co‑chordal graphs, extending the partial result proved in the paper for glued clique complexes where \\(\\kappa(\\overline G)=\\min\\{r_m\\}\\). The statement is falsifiable: one can compute \\(\\kappa(\\overline G)\\) and \\(\\operatorname{pdim}(S/I(G))\\) for any co‑chordal graph (e.g., via Macaulay2) and check equality.",
     "domain_bridges": [
       "graph_theory",
@@ -12371,7 +12371,7 @@
     "proof_strategy": "1. Formalize finite simple graphs, edge ideals, and chordal/complement notions in Lean using existing graph libraries. 2. Define vertex separators and prove basic properties (existence, minimality). 3. Show that for a co‑chordal graph G, its complement \\(\\overline G\\) is chordal, hence admits a perfect elimination ordering; use this ordering to construct the glued clique complex described in the paper. 4. Prove that the minimal separator size of \\(\\overline G\\) equals the minimum intersection size \\(\\min_{m}\\{r_m\\}\\) appearing in the glued complex (by analysing the perfect elimination ordering and the way facets are glued). 5. Using the explicit Betti formula (1) from the paper, translate the bound on the maximal homological degree into the expression \\(|V(G)|-\\min\\{r_m\\}-1\\). 6. Combine steps 4 and 5 to obtain the desired equality \\(\\operatorname{pdim}(S/I(G)) = |V(G)|-\\kappa(\\overline G)-1\\). 7. Verify base cases (trees, split graphs, threshold graphs) by computation and then lift to",
     "research_mode": "team",
     "source_exp_id": "2606.22513v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-27T01:35:45.911433+00:00",
     "title": "Projective Dimension of Edge Ideals of Co‑Chordal Graphs via Minimal Separators"
   },
@@ -13743,6 +13743,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Regularized Sum of Primes via Analytic Continuation\n\nDerived from this cycle's findings: the prime Dirichlet series\n`P(s) = ∑_p p^{-s}` has abscissa of convergence exactly `1`\n(`primeZeta_summable_iff`), diverges on the whole half-line `s ≤ 1`\n(`primeZeta_not_summable_of_le_one`, in particular at the \"sum of all primes\"\npoint `s = -1`), while the *full* zeta function carries the regularized value\n`ζ(-1) = -1/12` (`riemannZeta_neg_one_eq`).  The honest obstruction is the\n**natural boundary** of `P` at `Re s = 0`.\n\n## Conjecture 1 — The analytic-continuation strip of `P`\n`P(s)` extends holomorphically to the strip `0 < Re s ≤ 1` via\n`P(s) = ∑_{n≥1} μ(n)/n · log ζ(ns)`, and this continuation diverges to `+∞` as\n`s → 1⁺`.\n- The key insight is that `log ζ` (not `ζ`) is the right transform: the Euler\n  product `riemannZeta_eulerProduct_exp_log` already expresses `ζ` through a\n  prime sum, and Möbius inversion peels off the prime-power tail.\n- Why now? Mathlib has the logarithmic Euler product and Möbius machinery\n  (`ArithmeticFunction.moebius`, `riemannZeta_eulerProduct_exp_log`), so the\n  Selberg–Delange-free, `0 < Re s ≤ 1` continuation is finally in formal reach.\n\n## Conjecture 2 — Natural boundary at `Re s = 0`\nThe continued `P` admits no holomorphic extension across any point of the line\n`Re s = 0`; the line is a natural boundary.\n- The key insight is that the singularities of `log ζ(ns)` at the zeros and the\n  pole of `ζ` accumulate densely on `Re s = 0` as `n → ∞`, blocking continuation.\n- Why now? With Conjecture 1's `μ/n · log ζ(ns)` representation formalized, the\n  obstruction becomes a concrete density-of-singularities statement rather than a\n  vague \"physics\" claim.\n\n## Conjecture 3 — Zeta-regularization is the only consistent prime value\nAny summation method that (i) is linear, (ii) is stable, and (iii) agrees with\nthe Dirichlet series where it converges assigns the *full*-zeta value at `s=-1`\nto `∑ n` but **cannot** assign any finite value to `∑ p` consistent with the\nprime Euler product.\n- The key insight is that the prime sum's divergence is multiplicative, not\n  additive: it is governed by `log ζ`, whose `s=-1` behaviour is singular while\n  `ζ(-1)` itself is finite.\n- Why now? `primeZeta_not_summable_neg_one` together with `riemannZeta_neg_one_eq`\n  pins both endpoints formally, so the impossibility can be stated as a precise\n  theorem about regularization functionals.\n\n## Conjecture 4 — Bounded gaps do not regularize the prime sum\nFor every fixed bound `B`, the existence of infinitely many prime pairs within\ndistance `B` (the Maynard–Tao regime) leaves the abscissa of `P` unchanged at\n`1` and the value at `s=-1` undefined.\n- The key insight is that abscissa of convergence is a density invariant\n  insensitive to local clustering; `bounded_gaps_and_prime_zeta_divergence`\n  already exhibits the coexistence in one statement.\n- Why now? The catalog's `TwinPrimeGaps` development gives a formal handle on the\n  bounded-gaps hypothesis, letting us quantify exactly what clustering cannot do.\n\n## Conjecture 5 — A Bernoulli-type closed form for `P` at negative integers via continuation\nIf the strip-continuation of Conjecture 1 is pushed (through a functional\nequation for `P` built from that of `ζ`) to negative integers, the resulting\n\"regularized `P(-k)`\" is a universal rational combination of `ζ(-k)`-values\nweighted by `μ`.\n- The key insight is that `μ`-weighted superpositions of the explicit\n  `riemannZeta_neg_nat_eq_bernoulli` values produce closed forms, mirroring how\n  `ζ(-1) = -1/12` emerges from `B₂`.\n- Why now? The negative-integer zeta values are already formal in Mathlib, so the\n  remaining work is purely the bookkeeping of the `μ/n` weights.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2737",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2d24ca82",
+    "status": "available",
+    "timestamp": "2026-06-28T01:55:05.483059+00:00",
+    "title": "Derived from this cycle's findings: the prime Dirichlet series"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -13958,6 +13978,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Cycle 2d24ca82 (Q=0.584) proved 11 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the regularization of the sum of all prime numbers by defining a specific analytic continuation of the prime zeta function P(s) = ∑ p^(-s) into a domain beyond its natural boundary (Re(s) = ",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_2d24ca82_00ec2200",
+    "lineage_refs": [],
+    "priority_score": 0.6335454545454546,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2d24ca82",
+    "status": "available",
+    "timestamp": "2026-06-28T01:55:20.711166+00:00",
+    "title": "Close Proofs: Regularized Sum of Primes via Analytic Continuation Beyond the Natural"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -14035,7 +14074,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f73687d8",
+    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domain_bridges": [],
     "domains": [
@@ -14048,7 +14087,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },

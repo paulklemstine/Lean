@@ -897,7 +897,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "c011c95b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
       "Cryptography",
@@ -908,7 +908,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "551fc26b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -997,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -6665,7 +6665,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nilpotent Lie algebras obtained by ordered sets and Ricci solitons"
   },
   {
-    "consumed_by_exp_id": "ca01957a",
+    "consumed_by_exp_id": "",
     "description": "For any integer m \u2265 3, there exists a field F of characteristic 2 and two anisotropic quadratic forms \u03c6 and \u03c8 over F of dimension 2^m, such that \u03c6 and \u03c8 are Vishik-equivalent (i.e., for every field extension E/F, the dimension of the maximal totally isotropic subspace of \u03c6_E equals that of \u03c8_E), yet \u03c6 and \u03c8 are not similar.",
     "domains": [
       "Algebra"
@@ -6674,7 +6674,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T11:40:03.991489+00:00",
     "title": "Non-similarity of Vishik-equivalent semi-singular quadratic forms in characteristic 2"
   },
@@ -6955,7 +6955,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Girth of the deleted co-maximal subgroup graph is three for non-nilpotent finite groups"
   },
   {
-    "consumed_by_exp_id": "49c290ff",
+    "consumed_by_exp_id": "",
     "description": "If the endpoint restriction conjecture for the 3-dimensional paraboloid P\u2083 over finite fields (where -1 is not a square) holds, then the integer lattice points on the 3-dimensional Euclidean paraboloid form a \u039b(3) set, characterized by having additive energy bounded by O(|S|\u00b3^(2/3)) for subsets S of size O(1).",
     "domains": [
       "Pythagorean",
@@ -6965,7 +6965,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T23:16:39.649655+00:00",
     "title": "Endpoint Restriction Conjecture for P\u2083 Implies \u039b(3) Structure of Lattice Points"
   },
@@ -7013,7 +7013,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
   },
   {
-    "consumed_by_exp_id": "552f4622",
+    "consumed_by_exp_id": "",
     "description": "For a finite simple co\u2011chordal graph\u202fG let \\(\\overline G\\) be its chordal complement and let \\(\\kappa(\\overline G)\\) denote the size of a smallest vertex separator of \\(\\overline G\\) (i.e., the minimum cardinality of a set whose removal disconnects \\(\\overline G\\)). The conjecture asserts that the projective dimension of the edge ideal \\(I(G)\\) is given by\n\\[\\operatorname{pdim}\\bigl(S/I(G)\\bigr) = |V(G)| - \\kappa(\\overline G) - 1.\\]\nEquivalently, the largest homological degree appearing in the linear strand formula (1) of the paper coincides exactly with the complement\u2019s minimal separator size. This provides a purely graph\u2011theoretic invariant that determines the homological invariant \\(\\operatorname{pdim}\\) for the whole class of co\u2011chordal graphs, extending the partial result proved in the paper for glued clique complexes where \\(\\kappa(\\overline G)=\\min\\{r_m\\}\\). The statement is falsifiable: one can compute \\(\\kappa(\\overline G)\\) and \\(\\operatorname{pdim}(S/I(G))\\) for any co\u2011chordal graph (e.g., via Macaulay2) and check equality.",
     "domains": [
       "Algebra",
@@ -7023,7 +7023,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22513v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-27T01:35:45.911433+00:00",
     "title": "Projective Dimension of Edge Ideals of Co\u2011Chordal Graphs via Minimal Separators"
   },
@@ -7838,6 +7838,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Regularized Sum of Primes via Analytic Continuation\n\nDerived from this cycle's findings: the prime Dirichlet series\n`P(s) = \u2211_p p^{-s}` has abscissa of convergence exactly `1`\n(`primeZeta_summable_iff`), diverges on the whole half-line `s \u2264 1`\n(`primeZeta_not_summable_of_le_one`, in particular at the \"sum of all primes\"\npoint `s = -1`), while the *full* zeta function carries the regularized value\n`\u03b6(-1) = -1/12` (`riemannZeta_neg_one_eq`).  The honest obstruction is the\n**natural boundary** of `P` at `Re s = 0`.\n\n## Conjecture 1 \u2014 The analytic-continuation strip of `P`\n`P(s)` extends holomorphically to the strip `0 < Re s \u2264 1` via\n`P(s) = \u2211_{n\u22651} \u03bc(n)/n \u00b7 log \u03b6(ns)`, and this continuation diverges to `+\u221e` as\n`s \u2192 1\u207a`.\n- The key insight is that `log \u03b6` (not `\u03b6`) is the right transform: the Euler\n  product `riemannZeta_eulerProduct_exp_log` already expresses `\u03b6` through a\n  prime sum, and M\u00f6bius inversion peels off the prime-power tail.\n- Why now? Mathlib has the logarithmic Euler product and M\u00f6bius machinery\n  (`ArithmeticFunction.moebius`, `riemannZeta_eulerProduct_exp_log`), so the\n  Selberg\u2013Delange-free, `0 < Re s \u2264 1` continuation is finally in formal reach.\n\n## Conjecture 2 \u2014 Natural boundary at `Re s = 0`\nThe continued `P` admits no holomorphic extension across any point of the line\n`Re s = 0`; the line is a natural boundary.\n- The key insight is that the singularities of `log \u03b6(ns)` at the zeros and the\n  pole of `\u03b6` accumulate densely on `Re s = 0` as `n \u2192 \u221e`, blocking continuation.\n- Why now? With Conjecture 1's `\u03bc/n \u00b7 log \u03b6(ns)` representation formalized, the\n  obstruction becomes a concrete density-of-singularities statement rather than a\n  vague \"physics\" claim.\n\n## Conjecture 3 \u2014 Zeta-regularization is the only consistent prime value\nAny summation method that (i) is linear, (ii) is stable, and (iii) agrees with\nthe Dirichlet series where it converges assigns the *full*-zeta value at `s=-1`\nto `\u2211 n` but **cannot** assign any finite value to `\u2211 p` consistent with the\nprime Euler product.\n- The key insight is that the prime sum's divergence is multiplicative, not\n  additive: it is governed by `log \u03b6`, whose `s=-1` behaviour is singular while\n  `\u03b6(-1)` itself is finite.\n- Why now? `primeZeta_not_summable_neg_one` together with `riemannZeta_neg_one_eq`\n  pins both endpoints formally, so the impossibility can be stated as a precise\n  theorem about regularization functionals.\n\n## Conjecture 4 \u2014 Bounded gaps do not regularize the prime sum\nFor every fixed bound `B`, the existence of infinitely many prime pairs within\ndistance `B` (the Maynard\u2013Tao regime) leaves the abscissa of `P` unchanged at\n`1` and the value at `s=-1` undefined.\n- The key insight is that abscissa of convergence is a density invariant\n  insensitive to local clustering; `bounded_gaps_and_prime_zeta_divergence`\n  already exhibits the coexistence in one statement.\n- Why now? The catalog's `TwinPrimeGaps` development gives a formal handle on the\n  bounded-gaps hypothesis, letting us quantify exactly what clustering cannot do.\n\n## Conjecture 5 \u2014 A Bernoulli-type closed form for `P` at negative integers via continuation\nIf the strip-continuation of Conjecture 1 is pushed (through a functional\nequation for `P` built from that of `\u03b6`) to negative integers, the resulting\n\"regularized `P(-k)`\" is a universal rational combination of `\u03b6(-k)`-values\nweighted by `\u03bc`.\n- The key insight is that `\u03bc`-weighted superpositions of the explicit\n  `riemannZeta_neg_nat_eq_bernoulli` values produce closed forms, mirroring how\n  `\u03b6(-1) = -1/12` emerges from `B\u2082`.\n- Why now? The negative-integer zeta values are already formal in Mathlib, so the\n  remaining work is purely the bookkeeping of the `\u03bc/n` weights.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2737",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2d24ca82",
+    "status": "available",
+    "timestamp": "2026-06-28T01:55:05.483059+00:00",
+    "title": "Derived from this cycle's findings: the prime Dirichlet series"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -7998,6 +8013,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 2d24ca82 (Q=0.584) proved 11 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the regularization of the sum of all prime numbers by defining a specific analytic continuation of the prime zeta function P(s) = \u2211 p^(-s) into a domain beyond its natural boundary (Re(s) = ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_2d24ca82_00ec2200",
+    "priority_score": 0.6335454545454546,
+    "research_mode": "team",
+    "source_exp_id": "2d24ca82",
+    "status": "available",
+    "timestamp": "2026-06-28T01:55:20.711166+00:00",
+    "title": "Close Proofs: Regularized Sum of Primes via Analytic Continuation Beyond the Natural"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -8055,7 +8084,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
   {
-    "consumed_by_exp_id": "f73687d8",
+    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domains": [
       "EML",
@@ -8065,7 +8094,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },

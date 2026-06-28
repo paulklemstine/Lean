@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2d24ca82",
     "filename": "regularized_sum_of_primes_via_analytic_continuatio.json",
     "pkg_num": 158,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5835454545454546,
     "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
   },
   {
@@ -4610,8 +4610,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "regularized_sum_of_primes_via_analytic_continuatio",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5835454545454546,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
     }

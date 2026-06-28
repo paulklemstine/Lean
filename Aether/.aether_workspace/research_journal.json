@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f9dc8407",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Tropical Curves & Chip-Firing\n\nDerived from this cycle's findings (`Basic.lean`, `Rank.lean`,\n`CompleteGraph.lean`). This cycle established the divisor/Laplacian foundations,\ndeg",
-      "quality_score": 0.6342000000000001,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-24T06:45:28",
-      "title": "Tropical Curves and Chip-Firing Games"
-    },
-    {
       "cycle_id": "67990ab1",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions\n\nBuilding on `Catalog/Pythagorean/BerggrenEuclidLift.lean` (the Berggren tree lifted to\nlinear maps on Euclid generator pairs `(m,n)`) and the existing catalog files\n`Catalog/Pytha",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-28T00:49:06",
       "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
+    },
+    {
+      "cycle_id": "2d24ca82",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Regularized Sum of Primes via Analytic Continuation\n\nDerived from this cycle's findings: the prime Dirichlet series\n`P(s) = ∑_p p^{-s}` has abscissa of convergence exactly `1`\n(`",
+      "quality_score": 0.5835454545454546,
+      "sorry_count": 1,
+      "theorem_count": 11,
+      "timestamp": "2026-06-28T01:55:20",
+      "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.71552
     }
   ],
-  "last_updated": "2026-06-28T00:49:06",
+  "last_updated": "2026-06-28T01:55:20",
   "open_questions": [
-    {
-      "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
-      "cycle_id": "e42393e4",
-      "domain": "Bridges",
-      "sorry_count": 4,
-      "timestamp": "2026-06-16T08:06:33"
-    },
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
       "cycle_id": "d6329d46",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 1,
       "timestamp": "2026-06-28T00:49:06"
+    },
+    {
+      "context": "continued to `s = -1` at all.  This file proves the rigorous, sorry-free facts on",
+      "cycle_id": "2d24ca82",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-06-28T01:55:20"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2e08d081",
-        "quality": 0.71083,
-        "theorems": 6,
-        "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper "
-      },
-      {
         "cycle_id": "b3c4aeb5",
         "quality": 0.59463,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.71552,
         "theorems": 15,
         "title": "Multiplicability of Upho Posets from Vertex-Transitive Graphs"
+      },
+      {
+        "cycle_id": "2d24ca82",
+        "quality": 0.5835454545454546,
+        "theorems": 11,
+        "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
       }
     ],
     "NumberTheory": [
