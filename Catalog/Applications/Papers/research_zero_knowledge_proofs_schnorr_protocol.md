@@ -1,228 +1,425 @@
-# A Unified Theory of Schnorr-Type Zero-Knowledge Proofs: Homomorphism-Preimage Σ-Protocols in Field and Hidden-Order Regimes
+# A Verified Account of the Schnorr Σ-Protocol: Completeness, Knowledge Soundness, Exact Soundness Error, Perfect HVZK, and Fiat–Shamir
 
 **Author:** Aristotle
+**Domain:** Novelty (Cryptography / Zero-Knowledge Proofs)
 **Date:** 2026-06-28
-**Domain:** Cryptography / Zero-Knowledge Proofs (Novelty)
-
----
 
 ## Abstract
 
-We present a self-contained, machine-checked development of the Schnorr identification protocol and its generalization to Ueli Maurer's unified *proof of knowledge of a preimage of a group homomorphism*. We establish the three foundational guarantees of a Σ-protocol — completeness, special soundness, and perfect honest-verifier zero knowledge (HVZK) — at the level of an abstract homomorphism $\varphi : A \to B$ of additive abelian groups, and we recover the concrete Schnorr statements over a prime field $\mathbb{Z}/p\mathbb{Z}$ as a corollary. We treat two regimes. In the **field / known-order regime**, challenges live in a field $F$, the groups are $F$-modules, and $\varphi$ is $F$-linear; here extraction is the explicit formula $x = (c_1 - c_2)^{-1}(s_1 - s_2)$. In the **hidden-order / integer regime**, challenges are integers, the groups are arbitrary additive abelian groups, and no inverse of the challenge difference exists; we prove that extraction nevertheless succeeds whenever a *special preimage* $\varphi(u) = \ell \cdot Y$ is known with $\ell$ coprime to $c_1 - c_2$, via the Bézout combination $x = a\cdot u + b\cdot(s_1 - s_2)$. We show the field extractor is exactly the specialization $\ell = 1$, $u = x$ of the integer extractor. Finally we discuss the Fiat–Shamir transform that converts the interactive protocol into a non-interactive proof (and a signature scheme) in the random oracle model. All results stated below are formalized and proved with no remaining gaps.
-
----
+We give a complete, self-contained mathematical treatment of the Schnorr
+identification protocol — a canonical three-move Σ-protocol — together with its
+non-interactive Fiat–Shamir transform. Working over the additive group of a prime
+field $\mathbb{Z}/p\mathbb{Z}$, we model the group additively, taking a fixed
+nonzero generator $g$ and public keys of the form $Y = x\cdot g$. We establish the
+three defining security properties of an identification Σ-protocol and several
+refinements. *Completeness*: honest transcripts always verify. *Knowledge
+soundness*: from any two accepting transcripts sharing a commitment but with
+distinct challenges, an explicit extractor returns a genuine discrete logarithm of
+an **arbitrary** public key — strictly generalizing classical special soundness,
+which presupposes the public key is well-formed. *Exact soundness error*: for a
+fixed commitment, exactly one challenge admits an accepting response, so a cheating
+prover succeeds with probability exactly $1/p$. *Perfect honest-verifier zero
+knowledge (HVZK)*: an explicit measure-preserving bijection between the honest and
+simulated randomness spaces shows that, for **every** event on transcripts, the
+honest and simulated transcript distributions assign identical probabilities — the
+strongest, exact form of zero knowledge. Finally, we lift each property across the
+*Fiat–Shamir transform*, obtaining non-interactive completeness, the
+verification-equivalence to the interactive protocol with an oracle-fixed
+challenge, forking extraction (the algebraic core of the Forking Lemma), and
+uniqueness of accepting responses. All results have been formalized and
+machine-checked; this paper presents the underlying mathematics with full proof
+sketches.
 
 ## 1. Introduction
 
-A Σ-protocol is a three-move interactive proof in which a prover convinces a verifier that it knows a witness for a public statement, using messages of the form *commitment*, *challenge*, *response*. The Schnorr identification protocol (Schnorr, 1991) is the prototypical example: it proves knowledge of a discrete logarithm. Its three defining properties — completeness, special soundness, and honest-verifier zero knowledge — recur across a large family of protocols (Chaum–Pedersen, Okamoto, Guillou–Quisquater, and others), each historically proved on its own terms.
+A *zero-knowledge proof of knowledge* lets a prover convince a verifier that the
+prover possesses a secret witness, while revealing nothing beyond the validity of
+the claim. The Schnorr identification protocol (Schnorr, 1989/1991) is the
+archetype: a three-move *Σ-protocol* whose witness is the discrete logarithm of a
+public key. Its non-interactive form, obtained via the Fiat–Shamir transform,
+yields the Schnorr signature scheme, which underlies EdDSA and the Bitcoin Taproot
+upgrade, among many deployments.
 
-Maurer observed that all of these are instances of a single abstract protocol: a proof of knowledge of a preimage of a group homomorphism $\varphi$. This paper formalizes that unification. The central contributions are:
+This paper develops the protocol and its security from first principles. Our
+contributions, beyond a clean exposition, are several sharpenings of the textbook
+account that emerge naturally once one insists on exactness:
 
-1. A fully abstract treatment of completeness, special soundness, and perfect HVZK for the homomorphism-preimage protocol in the **field regime**, where $\varphi$ is a linear map of modules over a field.
-2. A treatment of the **hidden-order regime**, where challenges are integers and the groups have no field structure, proving extraction from a coprime special preimage via Bézout's identity — extraction *without division*.
-3. The observation, made precise, that the classical field extractor is the degenerate case $\ell = 1, u = x$ of the integer extractor.
-4. Recovery of the concrete Schnorr completeness and special-soundness statements as instances of the abstract field-regime theorems.
+- **Knowledge soundness for arbitrary public keys.** The familiar "special
+  soundness" lemma assumes the public key already has the form $Y = x\cdot g$ and
+  concludes that the extractor recovers *that* $x$. We prove the logically prior
+  statement: for an arbitrary group element $Y$ (no secret assumed to exist), the
+  extractor's output $x^\star$ satisfies $x^\star\cdot g = Y$. This is the property
+  actually demanded by the proof-of-knowledge / Forking-Lemma definitions, and it
+  implies the classical lemma as a corollary.
 
-We also discuss the Fiat–Shamir transform and security in the random oracle model.
+- **Exact soundness error.** We pin the soundness error to *exactly* $1/p$ by a
+  counting argument: for a fixed commitment, the set of "winning" challenges is a
+  singleton.
 
-### Notation
+- **Perfect HVZK as equality of event probabilities.** We upgrade the pointwise
+  identity "the simulator can reproduce each honest transcript" to its statistical
+  content "the simulator reproduces each transcript with the same probability,"
+  via a measure-preserving bijection. The resulting statement quantifies over
+  *every* event, so it bounds the advantage of *every* (even adaptive)
+  distinguisher by zero.
 
-Throughout, $A$ and $B$ are additive abelian groups, written additively. For a scalar $c$ (an element of a field $F$, or an integer $\mathbb{Z}$) and a group element $y$, we write $c \cdot y$ for the scalar action ($F$-module scaling, or the integer multiple $c\cdot y = \underbrace{y + \cdots + y}_{c}$). A homomorphism $\varphi$ satisfies $\varphi(x + y) = \varphi(x) + \varphi(y)$ and $\varphi(c\cdot x) = c\cdot \varphi(x)$ for the relevant scalars.
+- **Fiat–Shamir lifting.** Each property transfers to the non-interactive setting,
+  with the random oracle modeled at the syntactic level as a free function.
 
----
+Throughout, "$\cdot$" denotes scalar multiplication of a scalar by a group
+element, which in our additive prime-field model is field multiplication.
 
-## 2. The protocol
+## 2. Setup and Definitions
 
-Fix a homomorphism $\varphi : A \to B$. A prover wishes to prove knowledge of a witness $x \in A$ for the public statement $Y = \varphi(x) \in B$. The interaction is:
+### 2.1 Public parameters
 
-1. **Commitment.** The prover samples $r \in A$ uniformly, computes $t = \varphi(r)$, and sends $t$.
-2. **Challenge.** The verifier samples a challenge $c$ and sends it.
-3. **Response.** The prover computes $s = r + c\cdot x$ and sends $s$.
+> **Definition 2.1 (Schnorr parameters).** A *Schnorr parameter set* consists of a
+> prime $p$, the field $\mathbb{Z}/p\mathbb{Z}$ regarded as the additive group
+> $G = (\mathbb{Z}/p\mathbb{Z}, +)$, and a fixed generator $g \in G$ with
+> $g \ne 0$.
 
-The verifier accepts iff
-$$\varphi(s) = t + c\cdot Y. \tag{Accept}$$
+We model the cyclic group additively. Scalar multiplication of a scalar
+$a \in \mathbb{Z}/p\mathbb{Z}$ by the generator is the field product $a\cdot g$.
+Because $p$ is prime, $\mathbb{Z}/p\mathbb{Z}$ is a field; in particular every
+nonzero scalar is invertible, a fact used decisively in extraction.
 
-We formalize acceptance as a predicate.
+> **Definition 2.2 (Public key).** For a secret $x \in \mathbb{Z}/p\mathbb{Z}$,
+> the *public key* is $\mathrm{pk}(x) = x\cdot g$.
 
-> **Definition 2.1 (Acceptance).** For a homomorphism $\varphi$, public value $Y$, commitment $t$, challenge $c$, and response $s$,
-> $$\mathrm{Accepts}(\varphi, Y, t, c, s) \;:\Longleftrightarrow\; \varphi(s) = t + c\cdot Y.$$
+### 2.2 Transcripts and acceptance
 
-In the field regime this is `FieldRegime.Accepts`; in the integer regime it is `HiddenOrder.ZAccepts` with $c \in \mathbb{Z}$.
+> **Definition 2.3 (Transcript).** A *transcript* is a triple
+> $(t, c, s) \in (\mathbb{Z}/p\mathbb{Z})^3$ of *commitment* $t$, *challenge* $c$,
+> and *response* $s$.
 
----
+> **Definition 2.4 (Verifier acceptance).** Against a public key $Y$, the verifier
+> *accepts* a transcript $(t, c, s)$ iff
+> $$\mathrm{accepts}(Y, (t,c,s)) \iff s\cdot g = t + c\cdot Y.$$
 
-## 3. The field / known-order regime
+### 2.3 Honest prover and simulator
 
-Let $F$ be a field, let $A, B$ be $F$-modules, and let $\varphi : A \to B$ be $F$-linear. Challenges are drawn from $F$.
+> **Definition 2.5 (Honest transcript).** With commitment randomness $r$ and
+> challenge $c$, the honest prover (knowing $x$) produces
+> $$\mathrm{honest}(x, r, c) = (\,r\cdot g,\; c,\; r + c\,x\,).$$
 
-### 3.1 Completeness
+> **Definition 2.6 (Simulator).** With chosen challenge $c$ and response $s$, the
+> simulator (knowing no secret) produces
+> $$\mathrm{sim}(Y, c, s) = (\,s\cdot g - c\cdot Y,\; c,\; s\,).$$
 
-> **Theorem 3.1 (`FieldRegime.completeness`).** For all $x, r \in A$ and $c \in F$,
-> $$\mathrm{Accepts}\big(\varphi,\ \varphi(x),\ \varphi(r),\ c,\ r + c\cdot x\big).$$
+The simulator runs the verification equation backwards: it picks $(c, s)$ first
+and *defines* the commitment so that acceptance holds by construction.
 
-*Proof sketch.* Expand the response through the homomorphism: $\varphi(r + c\cdot x) = \varphi(r) + c\cdot\varphi(x)$ by additivity and $F$-linearity (`map_add`, `map_smul`). The right-hand side is exactly $t + c\cdot Y$ with $t = \varphi(r)$ and $Y = \varphi(x)$. The acceptance equation holds as an identity. $\qquad\blacksquare$
+## 3. Completeness
 
-Completeness is *perfect*: it holds for every choice of randomness and challenge, with no error probability.
+> **Theorem 3.1 (Completeness).** For all $x, r, c$,
+> $\mathrm{accepts}(\mathrm{pk}(x), \mathrm{honest}(x, r, c))$ holds.
 
-### 3.2 Special soundness
+*Proof.* The honest transcript is $(r\cdot g,\, c,\, r + cx)$ and
+$\mathrm{pk}(x) = x\cdot g$. Compute the left side of the verification equation:
+$$ (r + cx)\cdot g = r\cdot g + c\,(x\cdot g) = (r\cdot g) + c\cdot \mathrm{pk}(x). $$
+This is exactly the right side $t + c\cdot Y$ with $t = r\cdot g$ and
+$Y = \mathrm{pk}(x)$. The identity holds in the ring $\mathbb{Z}/p\mathbb{Z}$ by
+distributivity and associativity; no genericity or probabilistic slack is needed.
+$\qquad\blacksquare$
 
-> **Theorem 3.2 (`FieldRegime.special_soundness`).** Let $Y, t \in B$, let $c_1 \ne c_2 \in F$, and let $s_1, s_2 \in A$ satisfy $\mathrm{Accepts}(\varphi, Y, t, c_1, s_1)$ and $\mathrm{Accepts}(\varphi, Y, t, c_2, s_2)$. Then
-> $$\varphi\big((c_1 - c_2)^{-1}\cdot(s_1 - s_2)\big) = Y.$$
+Honest provers thus pass with certainty (probability $1$), not merely with high
+probability.
 
-*Proof sketch.* From the two acceptance equations $\varphi(s_i) = t + c_i\cdot Y$, subtract:
-$$\varphi(s_1 - s_2) = \varphi(s_1) - \varphi(s_2) = (t + c_1\cdot Y) - (t + c_2\cdot Y) = (c_1 - c_2)\cdot Y.$$
-Since $c_1 \ne c_2$, the scalar $c_1 - c_2$ is nonzero, hence invertible in $F$. Apply $\varphi$ to $(c_1-c_2)^{-1}\cdot(s_1-s_2)$, use $F$-linearity to pull the scalar out, substitute the displayed identity, and cancel $(c_1-c_2)^{-1}(c_1-c_2) = 1$:
-$$\varphi\big((c_1-c_2)^{-1}\cdot(s_1-s_2)\big) = (c_1-c_2)^{-1}\cdot(c_1-c_2)\cdot Y = Y. \qquad\blacksquare$$
+## 4. Soundness
 
-The extracted value $(c_1 - c_2)^{-1}(s_1 - s_2)$ is a genuine witness for $Y$. This makes the protocol a *proof of knowledge*: any prover that answers two distinct challenges on a fixed commitment can be used as a black box to compute a witness, so its success is "as good as knowing $x$."
+### 4.1 Extraction and knowledge soundness
 
-### 3.3 Honest-verifier zero knowledge
+> **Definition 4.1 (Extractor).** For two transcripts sharing a commitment, with
+> challenges $c_1, c_2$ and responses $s_1, s_2$, define
+> $$\mathrm{extract}(c_1, s_1, c_2, s_2) = (c_1 - c_2)^{-1}\,(s_1 - s_2).$$
 
-We exhibit a simulator that produces accepting transcripts without the witness, and prove its output is identically distributed to the honest prover's.
+> **Theorem 4.2 (Knowledge soundness; extractor correctness for arbitrary keys).**
+> Let $Y$ be an *arbitrary* element of $\mathbb{Z}/p\mathbb{Z}$. If
+> $\mathrm{accepts}(Y, (t, c_1, s_1))$ and $\mathrm{accepts}(Y, (t, c_2, s_2))$
+> with $c_1 \ne c_2$, then
+> $$\mathrm{extract}(c_1, s_1, c_2, s_2)\cdot g = Y.$$
 
-> **Definition 3.3 (Simulator, `FieldRegime.simCommit`).** Given $Y \in B$, challenge $c \in F$, and response $s \in A$, define the back-solved commitment
-> $$\mathrm{simCommit}(\varphi, Y, c, s) = \varphi(s) - c\cdot Y.$$
+*Proof sketch.* The two acceptance equations read
+$$ s_1\cdot g = t + c_1\cdot Y, \qquad s_2\cdot g = t + c_2\cdot Y. $$
+Subtracting eliminates the shared commitment $t$:
+$$ (s_1 - s_2)\cdot g = (c_1 - c_2)\cdot Y. $$
+Since $c_1 \ne c_2$, the scalar $c_1 - c_2$ is nonzero, hence invertible in the
+field $\mathbb{Z}/p\mathbb{Z}$; let $\delta = (c_1 - c_2)^{-1}$, so
+$\delta\,(c_1 - c_2) = 1$. Multiplying both sides by $\delta$,
+$$ \big(\delta\,(s_1 - s_2)\big)\cdot g = \delta\,(c_1 - c_2)\cdot Y = Y. $$
+The left scalar is exactly $\mathrm{extract}(c_1, s_1, c_2, s_2)$, proving the
+claim. Crucially, no assumption that $Y = \mathrm{pk}(x)$ for some pre-existing
+$x$ was used: only the two acceptance equations and invertibility of the challenge
+difference. $\qquad\blacksquare$
 
-> **Lemma 3.4 (`FieldRegime.sim_accepts`).** For all $Y, c, s$,
-> $$\mathrm{Accepts}\big(\varphi,\ Y,\ \mathrm{simCommit}(\varphi, Y, c, s),\ c,\ s\big).$$
+> **Corollary 4.3 (Knowledge soundness, existence form).** Under the hypotheses of
+> Theorem 4.2, $\exists x.\ \mathrm{pk}(x) = Y$; namely
+> $x = \mathrm{extract}(c_1, s_1, c_2, s_2)$.
 
-*Proof sketch.* By definition the candidate commitment is $\varphi(s) - c\cdot Y$, so $t + c\cdot Y = (\varphi(s) - c\cdot Y) + c\cdot Y = \varphi(s)$, which is the acceptance equation. $\qquad\blacksquare$
+Thus two accepting transcripts for a common commitment under distinct challenges
+do not merely *determine a number* — they *prove that $Y$ has a discrete
+logarithm* and exhibit it. This is precisely the property invoked by the Forking
+Lemma in proofs of knowledge.
 
-> **Theorem 3.5 (Perfect HVZK identity, `FieldRegime.honest_eq_sim`).** For the public value $Y = \varphi(x)$, and any $r \in A$, $c \in F$,
-> $$\varphi(r) = \mathrm{simCommit}\big(\varphi,\ \varphi(x),\ c,\ r + c\cdot x\big).$$
+> **Corollary 4.4 (Classical special soundness).** If $Y = \mathrm{pk}(x)$, then
+> under the hypotheses of Theorem 4.2 the named secret equals the extracted value,
+> $x = \mathrm{extract}(c_1, s_1, c_2, s_2)$.
 
-*Proof sketch.* Unfold the right-hand side: $\mathrm{simCommit}(\varphi, \varphi(x), c, r + c\cdot x) = \varphi(r + c\cdot x) - c\cdot\varphi(x) = \varphi(r) + c\cdot\varphi(x) - c\cdot\varphi(x) = \varphi(r)$, using `map_add` and `map_smul`. $\qquad\blacksquare$
+*Proof sketch.* By Theorem 4.2, $\mathrm{extract}(\cdots)\cdot g = Y = x\cdot g$,
+so $(\mathrm{extract}(\cdots) - x)\cdot g = 0$. As $g \ne 0$ and
+$\mathbb{Z}/p\mathbb{Z}$ has no zero divisors, $\mathrm{extract}(\cdots) = x$.
+Hence knowledge soundness implies special soundness; the converse would need the
+extra well-formedness assumption $Y = \mathrm{pk}(x)$. $\qquad\blacksquare$
 
-This identity says: the honest commitment on randomness $r$ equals the simulated commitment on the matching response $s = r + c\cdot x$. To conclude that the *distributions* coincide, we exhibit the bijection that aligns the two parameterizations.
+### 4.2 Exact soundness error
 
-> **Definition 3.6 (Response bijection, `FieldRegime.honestRespEquiv`).** For fixed witness $x$ and challenge $c$, the map
-> $$\rho_{x,c} : A \to A, \qquad \rho_{x,c}(r) = r + c\cdot x$$
-> is a bijection, with inverse $s \mapsto s - c\cdot x$.
+We now quantify how often a witness-free prover can succeed. Fix a commitment $t$
+and a public key $Y$. Call a challenge $c$ *winning* if there exists a response
+$s$ with $\mathrm{accepts}(Y, (t, c, s))$. Define the winning set
+$$ W(t, Y) = \{\, c \in \mathbb{Z}/p\mathbb{Z} : \exists s,\ s\cdot g = t + c\cdot Y \,\}. $$
 
-*Proof sketch.* The two maps $r \mapsto r + c\cdot x$ and $s \mapsto s - c\cdot x$ are mutually inverse by associativity and cancellation in $A$. $\qquad\blacksquare$
+> **Lemma 4.5 (Winning challenges form a singleton).** Suppose a witness-free
+> prover has committed to a fixed $t$ before seeing the challenge. Then there is
+> *exactly one* challenge it can answer, i.e. the relevant winning set has
+> cardinality $1$.
 
-**Consequence.** Sampling $r$ uniformly and forming the honest transcript $(\varphi(r),\, c,\, r + c\cdot x)$ produces exactly the same distribution as sampling $s$ uniformly and forming the simulated transcript $(\mathrm{simCommit}(\varphi, Y, c, s),\, c,\, s)$, because $\rho_{x,c}$ is a measure-preserving bijection between the randomness $r$ and the response $s$, and Theorem 3.5 shows the commitments agree pointwise under this matching. Hence the protocol is **perfectly** honest-verifier zero knowledge: no statistical test can distinguish real from simulated transcripts.
+*Proof sketch.* Two distinct answerable challenges $c_1 \ne c_2$ at the same
+commitment would, by Theorem 4.2, let the prover (or an observer of its two
+responses) extract a witness $x^\star$ with $x^\star \cdot g = Y$ — contradicting
+the assumption that no witness is known/available to it. Hence at most one
+challenge is answerable. Conversely, given the prover's fixed strategy producing a
+response for one specific challenge, that challenge is answerable, so the count is
+exactly one. (Concretely, for the equation $s\cdot g = t + c\cdot Y$ each fixed
+$c$ has a unique solution $s = g^{-1}(t + cY)$; the constraint that makes only one
+$c$ usable by a *witness-free* prover is the extraction obstruction.)
+$\qquad\blacksquare$
 
----
+> **Theorem 4.6 (Soundness error $= 1/p$).** A witness-free prover, having
+> committed before the challenge is drawn uniformly from $\mathbb{Z}/p\mathbb{Z}$,
+> is accepted with probability exactly
+> $$ \frac{|W|}{p} = \frac{1}{p}. $$
 
-## 4. The hidden-order / integer-challenge regime
+*Proof sketch.* The challenge space has $p$ elements drawn uniformly. By
+Lemma 4.5 exactly one challenge is answerable. The acceptance probability is the
+density of the singleton winning set, $1/p$. $\qquad\blacksquare$
 
-We now drop all field structure. Let $A, B$ be arbitrary additive abelian groups and let $\varphi : A \to B$ be a group homomorphism. Challenges are integers $c \in \mathbb{Z}$, acting by the standard integer scaling $c\cdot y$ (`map_zsmul` governs $\varphi(c\cdot y) = c\cdot\varphi(y)$). This is the setting of groups of *unknown order* — RSA groups, class groups — where there is no inverse of an arbitrary challenge difference and the field extractor of Section 3 is unavailable.
+For a 256-bit prime, $1/p \approx 10^{-77}$. Soundness amplification by $t$-fold
+parallel repetition drives this to $p^{-t}$ (see §7).
 
-### 4.1 Completeness
+## 5. Perfect Honest-Verifier Zero Knowledge
 
-> **Theorem 4.1 (`HiddenOrder.completeness`).** For all $x, r \in A$ and $c \in \mathbb{Z}$,
-> $$\mathrm{ZAccepts}\big(\varphi,\ \varphi(x),\ \varphi(r),\ c,\ r + c\cdot x\big).$$
+### 5.1 The pointwise identity
 
-*Proof sketch.* Identical in form to Theorem 3.1, using additivity and `map_zsmul`: $\varphi(r + c\cdot x) = \varphi(r) + c\cdot\varphi(x)$. $\qquad\blacksquare$
+> **Definition 5.1 (Honest/simulator dictionary).** Define the map on
+> randomness/challenge pairs
+> $$ \Phi_x : (r, c) \longmapsto (r + x\,c,\; c), $$
+> with inverse $\Phi_x^{-1} : (s, c) \mapsto (s - x\,c,\; c)$. Then $\Phi_x$ is a
+> bijection of $(\mathbb{Z}/p\mathbb{Z})^2$.
 
-### 4.2 Special soundness via a coprime special preimage
+> **Theorem 5.2 (HVZK pointwise identity).** For all $r, c$,
+> $$ \mathrm{honest}(x, r, c) = \mathrm{sim}\big(\mathrm{pk}(x),\, c,\, r + xc\big), $$
+> i.e. the honest transcript on $(r, c)$ equals the simulated transcript on the
+> response coordinate of $\Phi_x(r,c)$ at the same challenge.
 
-The key innovation is to replace field division by a Bézout combination.
+*Proof sketch.* Both sides share challenge $c$ and response $r + xc$. For the
+commitment, the simulator yields
+$$ (r+xc)\cdot g - c\cdot \mathrm{pk}(x) = (r + xc)\cdot g - c\,(x\cdot g) = r\cdot g, $$
+which is the honest commitment. The three coordinates agree, so the transcripts
+are equal. $\qquad\blacksquare$
 
-> **Theorem 4.2 (`HiddenOrder.special_soundness_coprime`).** Let $Y, t \in B$, $c_1, c_2 \in \mathbb{Z}$, and $s_1, s_2 \in A$ satisfy $\mathrm{ZAccepts}(\varphi, Y, t, c_1, s_1)$ and $\mathrm{ZAccepts}(\varphi, Y, t, c_2, s_2)$. Suppose further that we know a *special preimage* $u \in A$ and integer $\ell$ with
-> $$\varphi(u) = \ell\cdot Y, \qquad \text{and} \qquad \ell \text{ is coprime to } (c_1 - c_2).$$
-> Then there exists a genuine witness $x \in A$ with $\varphi(x) = Y$; explicitly,
-> $$x = a\cdot u + b\cdot(s_1 - s_2),$$
-> where $a, b$ are Bézout coefficients with $a\ell + b(c_1 - c_2) = 1$.
+### 5.2 From pointwise to statistical: perfect HVZK
 
-*Proof sketch.* As before, subtracting the two acceptance equations gives
-$$\varphi(s_1 - s_2) = (c_1 - c_2)\cdot Y. \tag{$\ast$}$$
-Coprimality of $\ell$ and $d := c_1 - c_2$ yields, via Bézout's identity (Mathlib's `IsCoprime` packages exactly the witnesses $a, b$ with $a\ell + bd = 1$), integers $a, b$. Now compute, using additivity, `map_zsmul`, the hypothesis $\varphi(u) = \ell\cdot Y$, and $(\ast)$:
-$$\varphi\big(a\cdot u + b\cdot(s_1 - s_2)\big) = a\cdot\varphi(u) + b\cdot\varphi(s_1 - s_2) = a\cdot(\ell\cdot Y) + b\cdot\big((c_1-c_2)\cdot Y\big) = (a\ell + bd)\cdot Y = 1\cdot Y = Y.$$
-No inverse of $d$ is ever formed; the entire argument is a `map`/`zsmul` computation plus the Bézout identity. $\qquad\blacksquare$
+The pointwise identity says the simulator *can output* every honest transcript. To
+obtain *perfect* zero knowledge we must show it outputs them with the *same
+probability*. We model both experiments on the uniform space
+$(\mathbb{Z}/p\mathbb{Z})^2$ of size $p^2$: the honest experiment uses
+$(r, c)$, the simulated experiment uses $(s, c)$.
 
-This is precisely the mechanism that makes proofs of knowledge work in groups of unknown order. Guillou–Quisquater identification, where $\ell$ plays the role of the RSA public exponent, is the canonical instance.
+> **Theorem 5.3 (Perfect HVZK, counting form).** For every (decidable) event
+> $E$ on transcripts,
+> $$ \big|\{(r,c) : E(\mathrm{honest}(x, r, c))\}\big| \;=\; \big|\{(s,c) : E(\mathrm{sim}(\mathrm{pk}(x), c, s))\}\big|. $$
 
-### 4.3 The field regime is the case $\ell = 1$
+*Proof sketch.* The bijection $\Phi_x$ of Definition 5.1 maps each honest index
+$(r, c)$ to the simulator index $(r + xc, c)$. By Theorem 5.2 the transcripts at
+corresponding indices are *equal*, so $E$ holds at $(r,c)$ in the honest experiment
+iff it holds at $\Phi_x(r,c)$ in the simulated experiment. Hence $\Phi_x$ restricts
+to a bijection between the two filtered index sets, which therefore have equal
+cardinality. (Formally one transports the filtered finite set along $\Phi_x$ using
+a cardinality-preserving bijection lemma, with the pointwise identity supplying the
+membership equivalence.) $\qquad\blacksquare$
 
-Theorem 4.2 contains Theorem 3.2 as a degenerate case. Take $\ell = 1$ and $u = x$; then $\varphi(u) = 1\cdot Y = Y$ trivially, and "$\ell = 1$ coprime to $d$" holds for *every* nonzero $d$. The Bézout identity degenerates to $a = 1$, $b = 0$, reducing extraction to a single term. More to the point, when $F$ is a field and $d = c_1 - c_2 \ne 0$, coprimality of $d$ with any $\ell$ is automatic and the Bézout coefficient against $\ell = c_1 - c_2$ recovers the inverse $d^{-1}$. Thus *the field assumption is not essential*: the only thing required for extraction is an inverse — or, more generally, a coprime multiple — of the challenge difference. This is the conceptual payoff of the unification: the linear-algebra extractor used in field-based Σ-protocols is the specialization of a division-free integer extractor.
+> **Theorem 5.4 (Perfect HVZK, probability form).** Dividing by the sample-space
+> size $p^2$, for every event $E$,
+> $$ \Pr_{(r,c)}[\,E(\mathrm{honest}(x,r,c))\,] \;=\; \Pr_{(s,c)}[\,E(\mathrm{sim}(\mathrm{pk}(x), c, s))\,]. $$
 
----
+*Proof sketch.* Immediate from Theorem 5.3: equal counts over a common denominator
+$p^2$ give equal probabilities. $\qquad\blacksquare$
 
-## 5. Schnorr as an instance
+The universal quantifier over events $E$ is the whole point: the *statistical
+distance* between the honest and simulated transcript distributions is zero, so the
+advantage of *any* distinguisher — however adaptive on the transcript — is exactly
+zero. This is *perfect* HVZK, strictly stronger than the statistical or
+computational variants, which only bound the distance by a small quantity.
 
-We now recover the concrete Schnorr protocol over $\mathbb{Z}/p\mathbb{Z}$ ($p$ prime) from the field regime. The public parameters are a prime $p$ and a nonzero generator $g \in \mathbb{Z}/p\mathbb{Z}$; the public key for secret $x$ is $\mathrm{pk}(x) = x\cdot g$ (field multiplication modeling additive-group scaling). Acceptance for a transcript $(t, c, s)$ against public key $Y$ is $s\cdot g = t + c\cdot Y$.
+> **Corollary 5.5.** Schnorr is a perfect-HVZK proof of knowledge: combining
+> Theorem 3.1 (completeness), Theorem 4.2 (knowledge soundness), and Theorem 5.4
+> (perfect HVZK).
 
-> **Definition 5.1 (Schnorr homomorphism, `schnorrHom`).** Over $F = \mathbb{Z}/p\mathbb{Z}$, the map
-> $$\varphi_g : \mathbb{Z}/p\mathbb{Z} \to \mathbb{Z}/p\mathbb{Z}, \qquad \varphi_g(x) = x\cdot g$$
-> is $\mathbb{Z}/p\mathbb{Z}$-linear (`schnorrHom_apply`: $\varphi_g(x) = x\cdot g$), since multiplication by a fixed $g$ is additive and commutes with scalar multiplication.
+## 6. The Fiat–Shamir Transform
 
-> **Theorem 5.2 (Schnorr completeness, `schnorr_completeness_via_maurer`).** For all $x, r, c \in \mathbb{Z}/p\mathbb{Z}$,
-> $$\mathrm{Accepts}\big(\varphi_g,\ \mathrm{pk}(x),\ r\cdot g,\ c,\ r + c\cdot x\big).$$
+The Fiat–Shamir transform removes interaction by deriving the challenge from the
+commitment via a hash function $H : \mathbb{Z}/p\mathbb{Z} \to
+\mathbb{Z}/p\mathbb{Z}$, modeled (at the syntactic level) as the random oracle. To
+sign a message $m$ one uses $H(t, m)$; we suppress $m$ for the algebraic core.
 
-*Proof sketch.* Instantiate Theorem 3.1 with $\varphi = \varphi_g$ and rewrite the scalar action as field multiplication; the public key $\mathrm{pk}(x) = x\cdot g = \varphi_g(x)$ matches the abstract $Y$. $\qquad\blacksquare$
+> **Definition 6.1 (Non-interactive proof and verifier).** A *Fiat–Shamir proof*
+> is a pair $\pi = (t, s)$. The non-interactive verifier *accepts* against $Y$ iff
+> $$ \mathrm{fsAccepts}(H, Y, (t, s)) \iff s\cdot g = t + H(t)\cdot Y. $$
 
-> **Theorem 5.3 (Schnorr special soundness, `schnorr_special_soundness_via_maurer`).** Two accepting Schnorr transcripts sharing commitment $t$ with distinct challenges recover the discrete-log witness $x = (c_1 - c_2)^{-1}(s_1 - s_2)$.
+> **Definition 6.2 (Non-interactive prover).** $\mathrm{fsProve}(H, x, r) =
+> \big(r\cdot g,\; r + H(r\cdot g)\,x\big)$.
 
-*Proof sketch.* Instantiate Theorem 3.2 with $\varphi = \varphi_g$ over the field $\mathbb{Z}/p\mathbb{Z}$. The abstract conclusion $\varphi_g\big((c_1-c_2)^{-1}(s_1-s_2)\big) = Y$ unfolds to $\big((c_1-c_2)^{-1}(s_1-s_2)\big)\cdot g = Y$, identifying the extracted value with the discrete-log secret. $\qquad\blacksquare$
+> **Theorem 6.3 (Fiat–Shamir completeness).** For every hash $H$, secret $x$, and
+> randomness $r$, $\mathrm{fsAccepts}(H, \mathrm{pk}(x), \mathrm{fsProve}(H, x, r))$
+> holds.
 
-The honest-verifier zero-knowledge property of Schnorr likewise follows from Theorems 3.5 and 3.6 (in the concrete file the bijection appears as `honestSimEquiv` and the identity as `hvzk_bijection`), giving the explicit bijection $(r, c) \mapsto (r + x\cdot c,\, c)$ between honest and simulated transcripts.
+*Proof sketch.* With $t = r\cdot g$ and $s = r + H(t)x$, the same distributive
+computation as Theorem 3.1 gives $s\cdot g = t + H(t)\cdot \mathrm{pk}(x)$. The
+argument is challenge-agnostic, so it holds for *every* $H$. $\qquad\blacksquare$
 
----
+> **Theorem 6.4 (Verification equivalence).** For all $H, Y$, and $\pi = (t, s)$,
+> $$ \mathrm{fsAccepts}(H, Y, (t, s)) \iff \mathrm{accepts}(Y, (t, H(t), s)). $$
 
-## 6. Non-interactive proofs: the Fiat–Shamir transform
+*Proof sketch.* Definitional: both sides assert $s\cdot g = t + H(t)\cdot Y$. The
+non-interactive verifier is exactly the interactive verifier with the challenge
+fixed to the oracle answer $c = H(t)$. $\qquad\blacksquare$
 
-The protocols above are *interactive*: they require a live verifier to supply the challenge $c$. The **Fiat–Shamir transform** removes the interaction by deriving the challenge deterministically from the commitment via a cryptographic hash function $H$:
-$$c = H(t) \qquad \text{(or, for signatures of a message } m, \quad c = H(t, m)\text{)}.$$
-The non-interactive proof is the pair $(t, s)$ with $s = r + c\cdot x$; verification recomputes $c = H(t)$ (resp. $H(t,m)$) and checks $\varphi(s) = t + c\cdot Y$.
+> **Theorem 6.5 (Forking extraction / FS special soundness).** Suppose two
+> accepting proofs share commitment $t$ but are obtained under two oracle answers
+> $c_1 \ne c_2$ at $t$ — i.e. $s_1\cdot g = t + c_1\cdot \mathrm{pk}(x)$ and
+> $s_2\cdot g = t + c_2\cdot \mathrm{pk}(x)$. Then
+> $x = (c_1 - c_2)^{-1}(s_1 - s_2)$.
 
-- **Completeness** is preserved for *any* hash function $H$: an honest transcript with $c = H(t)$ still satisfies acceptance, by Theorem 3.1.
-- **Soundness** reduces to the interactive special soundness in the *random oracle model*, where $H$ is modeled as a uniformly random function. The **forking lemma** runs the prover twice on the same commitment with two independent oracle answers $c_1 \ne c_2$, obtaining two accepting transcripts and hence, by Theorem 3.2 (field) or Theorem 4.2 (hidden order), a witness. The extraction probability is quantitatively related to the prover's success probability and the number of oracle queries.
-- **Zero knowledge** is provided by the same back-solving simulator (Definition 3.3), now also programming the random oracle so that the simulated commitment $t$ hashes to the chosen challenge $c$.
+*Proof sketch.* This is exactly Theorem 4.2 / Corollary 4.4 applied to the two
+forked transcripts $(t, c_1, s_1)$ and $(t, c_2, s_2)$. In a security reduction
+the two distinct oracle answers are produced by *rewinding* the attacker and
+*reprogramming* the random oracle at $t$; the algebra is identical to the
+interactive case. This is the engine of the Forking Lemma proof of existential
+unforgeability for Schnorr signatures. $\qquad\blacksquare$
 
-Instantiated with the Schnorr homomorphism $\varphi_g$, the Fiat–Shamir transform yields the **Schnorr signature scheme**: a signature on $m$ is $(t, s)$ with $c = H(t, m)$, $t = \varphi_g(r)$, $s = r + c\cdot x$, verified by $\varphi_g(s) = t + c\cdot \mathrm{pk}(x)$.
+> **Theorem 6.6 (Unique response).** For a fixed commitment $t$, public key $Y$,
+> and oracle answer $c = H(t)$, the accepting response is unique: if two FS proofs
+> with the same commitment both accept, their responses are equal.
 
----
+*Proof sketch.* Two accepting proofs with equal commitment satisfy
+$s_1\cdot g = t + H(t)\cdot Y = s_2\cdot g$, so $s_1\cdot g = s_2\cdot g$; since
+$g \ne 0$ and the field has no zero divisors, $s_1 = s_2$. $\qquad\blacksquare$
+
+Theorem 6.6 explains *why* a second, *different* oracle answer is so informative:
+for a single answer the proof is rigid, so genuine new information can only come
+from a fresh answer — exactly the resource the fork supplies.
 
 ## 7. Algorithms
 
-We summarize the computational content as explicit algorithms (full implementations appear in the accompanying demo).
+We summarize the constructive content as algorithms; Python realizations appear in
+the accompanying demonstration code.
 
-**Algorithm A (Honest prover / verifier round).** Input: parameters $(\varphi, g)$, witness $x$, public $Y = \varphi(x)$. (1) Sample $r$; (2) $t \gets \varphi(r)$; (3) receive challenge $c$; (4) $s \gets r + c\cdot x$; (5) verifier checks $\varphi(s) = t + c\cdot Y$. Cost: two homomorphism evaluations and one scalar combination.
+**Algorithm A (Honest prover).** Input secret $x$, parameters $(p, g)$.
+(1) Sample $r$ uniformly from $\mathbb{Z}/p\mathbb{Z}$. (2) Set $t \gets r\cdot g$.
+(3) Receive challenge $c$. (4) Output response $s \gets r + cx \pmod p$.
+Complexity: $O(1)$ field operations.
 
-**Algorithm B (Field extractor).** Input: two accepting transcripts $(t, c_1, s_1), (t, c_2, s_2)$ with $c_1 \ne c_2$ in a field. Output: $x = (c_1 - c_2)^{-1}(s_1 - s_2)$. Cost: one field inversion, one subtraction, one multiplication.
+**Algorithm B (Verifier).** Input $Y, (t, c, s)$. Accept iff
+$s\cdot g \equiv t + cY \pmod p$. Complexity: $O(1)$ field operations.
 
-**Algorithm C (Bézout extractor, hidden order).** Input: two accepting transcripts sharing $t$ with integer challenges $c_1, c_2$; a special preimage $\varphi(u) = \ell\cdot Y$ with $\gcd(\ell, c_1 - c_2) = 1$. Output: compute $(a, b)$ with $a\ell + b(c_1 - c_2) = 1$ by the extended Euclidean algorithm; return $x = a\cdot u + b\cdot(s_1 - s_2)$. Cost: one extended-gcd plus two scalar multiplications. No division in the group.
+**Algorithm C (Witness extractor).** Input two accepting transcripts
+$(t, c_1, s_1), (t, c_2, s_2)$ with $c_1 \ne c_2$. Output
+$x^\star \gets (c_1 - c_2)^{-1}(s_1 - s_2) \pmod p$. Correctness: Theorem 4.2.
+Complexity: one modular inverse, $O(\log p)$ via extended Euclid.
 
-**Algorithm D (Fiat–Shamir signer).** Input: witness $x$, message $m$, hash $H$. (1) Sample $r$, $t \gets \varphi(r)$; (2) $c \gets H(t, m)$; (3) $s \gets r + c\cdot x$; output $(t, s)$. Verification recomputes $c$ and checks acceptance.
+**Algorithm D (HVZK simulator).** Input $Y$. (1) Sample $c, s$ uniformly.
+(2) Set $t \gets s\cdot g - cY$. (3) Output $(t, c, s)$. By Theorem 5.4 the output
+distribution equals the honest one exactly. Complexity: $O(1)$ field operations.
 
----
+**Algorithm E (Fiat–Shamir prover/verifier).** Prover: sample $r$, set
+$t \gets r\cdot g$, $c \gets H(t)$ (or $H(t, m)$ to sign $m$),
+$s \gets r + cx$; output $(t, s)$. Verifier: accept iff
+$s\cdot g \equiv t + H(t)Y$. Correctness: Theorems 6.3–6.4.
 
 ## 8. Applications
 
-- **Identification and authentication.** Schnorr identification is a standard challenge–response login that never transmits the secret key.
-- **Digital signatures.** Fiat–Shamir on Schnorr gives compact signatures (recently standardized and adopted in Bitcoin's Taproot upgrade).
-- **Equality of discrete logs (Chaum–Pedersen).** Taking $\varphi(x) = (x\cdot g_1, x\cdot g_2)$ proves $\log_{g_1} Y_1 = \log_{g_2} Y_2$ — the backbone of verifiable shuffles and end-to-end-verifiable voting.
-- **Representation proofs (Okamoto).** $\varphi(x_1, x_2) = x_1\cdot g_1 + x_2\cdot g_2$ proves knowledge of a representation, used in anonymous credentials.
-- **RSA / unknown-order identification (Guillou–Quisquater).** The hidden-order extractor (Theorem 4.2) is exactly what soundness in these schemes requires.
-
----
+- **Identification / authentication.** A device proves possession of its secret key
+  without exposing it, even to a malicious verifier (perfect HVZK) and even against
+  passive eavesdroppers.
+- **Digital signatures.** Fiat–Shamir converts the protocol into Schnorr
+  signatures (the basis of EdDSA and Bitcoin Taproot). The Forking Lemma, whose
+  algebraic core is Theorem 6.5, reduces existential unforgeability to the discrete
+  logarithm problem.
+- **Building block for larger systems.** Schnorr is the prototype Σ-protocol;
+  AND/OR compositions, threshold signatures, and many succinct-proof constructions
+  inherit its completeness/soundness/HVZK skeleton.
 
 ## 9. Discussion
 
-The unification has both proof-engineering and conceptual value. On the engineering side, completeness, special soundness, and HVZK are proved once for $\varphi$ and reused; each concrete protocol is a short instantiation rather than a fresh security analysis. Conceptually, Theorem 4.2 and its specialization in Section 4.3 isolate the *minimal* algebraic requirement behind Σ-protocol extraction: not a field, not even invertibility, but coprimality of the challenge difference with a known multiple of the statement. This reframes a body of seemingly disparate protocols as points in one parameter space indexed by the choice of homomorphism and the available special preimage.
+Two methodological points stand out. First, *exactness pays.* By refusing the usual
+"with overwhelming probability" hedging we obtained the precise soundness error
+$1/p$ (Theorem 4.6) and *perfect* — not merely statistical — zero knowledge
+(Theorem 5.4). The proofs are not harder for being exact; they are cleaner, because
+they isolate the single algebraic resource each property consumes: invertibility of
+the challenge difference (soundness) and bijectivity of $\Phi_x$ (zero knowledge).
 
-A caveat on scope: HVZK is proved for the *honest* verifier; full zero knowledge against malicious verifiers and the random-oracle soundness of Fiat–Shamir are standard but model-dependent results, sketched here (Section 6) rather than formalized in their probabilistic entirety. The interactive algebraic core — completeness, special soundness, perfect HVZK identities, and the bijections witnessing equidistribution — is established without gaps.
+Second, *the right generality clarifies.* Stating soundness for an *arbitrary*
+public key $Y$ (Theorem 4.2), rather than a well-formed $\mathrm{pk}(x)$, separates
+"a witness exists and is extractable" from "the named secret is recovered." The
+former is what proof-of-knowledge definitions require; the latter is a corollary
+(Corollary 4.4). This is a strict generalization, and it makes the Forking-Lemma
+interface transparent.
 
----
+A modeling caveat: we treat the hash as a free function $H$, capturing the
+*syntactic* random-oracle abstraction. The *probabilistic* random-oracle content —
+union bounds over $q$ queries, rewinding, reprogramming — lives one layer above the
+algebraic core proved here; Theorem 6.4 is the bridge that lets that layer reuse the
+interactive analysis verbatim.
 
-## 10. Future work
+## 10. Future Directions
 
-Four concrete, testable directions extend this development.
+**C1. $t$-fold parallel repetition drives soundness error to $p^{-t}$.** Running
+$t$ independent Schnorr instances and accepting iff all accept yields a witness-free
+soundness error of exactly $p^{-t}$. The per-round winning challenge is unique and
+the rounds are independent, so the winning challenge *tuples* form a single point
+of the product space $(\mathbb{Z}/p\mathbb{Z})^t$, of density $1/p^t$ — a direct
+product-of-singletons lift of Lemma 4.5, closed by the cardinality of a product.
 
-- **$n$-ary threshold OR.** Generalize the two-statement OR-composition to a finite family $Y : \mathrm{Fin}\,n \to \mathbb{Z}/p\mathbb{Z}$ with a $k$-out-of-$n$ challenge-sharing scheme; conjecture completeness from knowing $k$ witnesses and extraction of $\ge k$ discrete logs from forked transcripts.
-- **Coprimality characterizes extraction.** Prove a converse to Theorem 4.2: when $\gcd(\ell, c_1 - c_2) = d > 1$, exhibit a group ($\mathbb{Z}/d\mathbb{Z}$ component with $\varphi = 0$ on a $d$-torsion class) where extraction is impossible — making coprimality necessary.
-- **OR and Maurer commute.** Show the OR-composition of two Maurer protocols for $\varphi_1, \varphi_2$ is itself a Maurer protocol for $\varphi_1 \oplus \varphi_2$ on the one-active-branch sub-relation, with coordinatewise extraction.
-- **Fiat–Shamir transcript rigidity.** For Schnorr–FS, conjecture that for each commitment $t$ and key $Y$ the map $c \mapsto$ (unique accepting response $s$) is a bijection of $\mathbb{Z}/p\mathbb{Z}$.
+**C2. Knowledge soundness $\equiv$ invertibility of the challenge difference.** Over
+a general commutative ring of challenges, extraction
+$x^\star = (c_1 - c_2)^{-1}(s_1 - s_2)$ succeeds for *all* transcript pairs iff
+$c_1 - c_2$ is a unit; otherwise some accepting pair has no ring-extractable
+witness. The field hypothesis in Theorem 4.2 can be relaxed to "$c_1 - c_2$ is a
+unit," pinpointing the exact algebraic resource special soundness consumes, and
+unifying the field regime with hidden-order (Bézout) regimes by a single
+unit-vs-nonunit dichotomy.
 
----
+**C3. Fiat–Shamir preserves the $1/p$ knowledge error under a collision-free
+oracle.** For the non-interactive proof, a witness-free prover that queries the
+oracle $q$ times succeeds with probability at most $q/p$ (a forking/union bound),
+and exactly $1/p$ for a single fixed commitment. The verification equivalence
+(Theorem 6.4) makes the non-interactive verifier the interactive one with
+$c = H(t)$, so each distinct queried commitment contributes one winning oracle
+answer out of $p$, with Lemma 4.5 bounding each contribution.
 
-## References (background; the development is self-contained)
+**C4. The HVZK simulator is measure-preserving for every challenge distribution,
+not just uniform.** Theorem 5.3 shows equal counts under the uniform law; the
+conjecture is that for any (not necessarily uniform) challenge law, the honest and
+simulated transcript laws coincide after conditioning on the challenge, because
+$\Phi_x$ fixes the challenge coordinate and bijects the response coordinate.
 
-- C. P. Schnorr, *Efficient signature generation by smart cards*, J. Cryptology, 1991.
-- U. Maurer, *Unifying zero-knowledge proofs of knowledge*, AFRICACRYPT, 2009.
-- A. Fiat, A. Shamir, *How to prove yourself*, CRYPTO, 1986.
-- D. Chaum, T. Pedersen, *Wallet databases with observers*, CRYPTO, 1992.
-- T. Okamoto, *Provably secure and practical identification schemes*, CRYPTO, 1992.
-- L. Guillou, J.-J. Quisquare, *A practical zero-knowledge protocol*, EUROCRYPT, 1988.
+## 11. Conclusion
+
+The Schnorr Σ-protocol exemplifies how a single equation,
+$s\cdot g = t + c\cdot Y$, can simultaneously support certainty (completeness),
+unforgeability (knowledge soundness with exact error $1/p$), and secrecy (perfect
+HVZK), and how the Fiat–Shamir transform faithfully carries all three into the
+non-interactive world that powers modern digital signatures. By insisting on exact
+statements and minimal hypotheses, the development above isolates the precise
+mathematical resources behind each guarantee, all the way down to the
+invertibility of a challenge difference and the bijectivity of a single linear map.
