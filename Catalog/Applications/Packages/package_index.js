@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "12b5f4b2",
     "filename": "fano_plane_threshold_for_additive_strong_blocking_.json",
     "pkg_num": 200,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6807300000000001,
     "title": "Six of Seven: The Fano-Plane Threshold for Strong Blocking Sets (h = 1)"
   },
   {
@@ -5835,8 +5835,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "fano_plane_threshold_for_additive_strong_blocking_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6807300000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Six of Seven: The Fano-Plane Threshold for Strong Blocking Sets (h = 1)"
     }
