@@ -241,6 +241,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c8e22e5a (Q=0.804), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solu",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_c8e22e5a_455a96d6",
+    "priority_score": 0.9043199999999999,
+    "research_mode": "team",
+    "source_exp_id": "c8e22e5a",
+    "status": "available",
+    "timestamp": "2026-06-28T09:38:33.624886+00:00",
+    "title": "Deepening: EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
     "domains": [
       "Algebra"
@@ -506,7 +520,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "bac3bfcc",
+    "consumed_by_exp_id": "",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -517,7 +531,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -2812,7 +2826,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
   {
-    "consumed_by_exp_id": "00e5c711",
+    "consumed_by_exp_id": "",
     "description": "In the wall version of Menger's theorem (Theorem 1 of the paper), the separator bound f can be taken to equal s' - 1, matching the classical Menger bound. Specifically: for all positive integers s' and t', there exists an integer t such that for any vertex set A and any wall W of size at least t, either there exists a vertex set X of size at most s' - 1 that separates A from the branch vertices of W, or there exists a subwall W' of size at least t' together with s' vertex-disjoint A-W'-paths each ending in a distinct nail of W'.",
     "domains": [
       "Pythagorean"
@@ -2821,7 +2835,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T21:19:02.613185+00:00",
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
@@ -7347,21 +7361,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Shifted Gessel-Type Formula for Shifted $t$-Gessel Coordinates"
   },
   {
-    "consumed_by_exp_id": "6ac1dc4e",
-    "description": "Conjecture: Every edge\u2011colored graph G on n\u22653 vertices with minimum colour degree \u03b4c(G)\u2265(n+1)/2 satisfies rt(G)\u2265\u2308((n\u22121)(n\u22123))/8\u2309. Moreover, equality can occur only for the unique extremal construction obtained from a proper (n\u22121)-edge\u2011colouring of K_n when n is odd.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2717",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22106v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-27T05:39:53.561317+00:00",
-    "title": "Rainbow triangle density lower bound conjecture"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "We conjecture a precise necessary and sufficient condition on a non\u2011empty graph\u202fF (allowing isolated vertices) for which the Cameron\u2013Puleo inequality\n\n\\[\\operatorname{sat}(n, K_{1}\\vee F) = n-1+\\operatorname{sat}(n-1, F)\\]\n\nholds for all integers \\(n > |V(F)|\\). The conjecture predicts that equality fails exactly when F contains a component that is a complete graph on at least three vertices together with at least one isolated vertex. In all other cases \u2013 i.e. when every non\u2011trivial component of\u202fF is a star or a matching \u2013 equality holds. This unifies the known results for \\(F=K_{p-1}\\cup K_{1}\\), \\(F=K_{2}\\cup qK_{1}\\) and \\(F=2K_{2}\\cup qK_{1}\\) and gives a clean combinatorial description of the extremal situation.",
     "domains": [
@@ -8260,7 +8259,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
   },
   {
-    "consumed_by_exp_id": "fdadfe48",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThe most natural next step is to attack the residue class isolated by the\nprime-core reduction: primes `p \u2261 1 (mod 8)`. The key insight is that the four\nelementary families already dispatch every residue except this one, so the entire\ndifficulty of Erd\u0151s\u2013Straus is concentrated in a single arithmetic progression,\nand any constructive scheme that handles it would, via\n`erdosStraus_of_primes_one_mod_eight`, close the problem unconditionally. A\npromising route is to formalize the classical covering-congruence constructions\nof Mordell, which solve `4/p` for all `p` outside a sparse set of residues modulo\nsmall moduli (e.g. residues that are quadratic non-residues modulo `4`, or that\nfall into specific classes mod `3\u00b78`, `5\u00b78`, `7\u00b78`, \u2026). Why now? Because the\npresent development supplies exactly the reusable scaffolding \u2014 the predicate, the\nwitness-verification idioms, and divisor inheritance \u2014 that such a formalization\nwould otherwise have to rebuild from scratch.\n\nA second direction is computational certification at scale. The key insight is\nthat `ErdosStrausSolution n` is witnessed by a finite triple whose correctness is\na single rational identity, so a verified search procedure could emit witnesses\nfor enormous ranges and check them by `decide`/`norm_num`, turning empirical\ntables (which currently confirm the conjecture far beyond `10^17`) into\nmachine-checked theorems for explicit bounds. Why now? Because Lean's `decide`\nkernel reduction and `norm_num` extensions are mature enough to validate millions\nof rational identities reliably, and the bounded theorem `erdosStraus_upto_100`\ndemonstrates the pattern end to end; scaling it is an engineering problem, not a\nmathematical one.\n\nA third direction concerns the structure of the witness map itself.\nThe key insight is that the family witnesses are not ad hoc but instances of a small\nnumber of algebraic identities (the `1/a + 1/(a\u00b7n)` split and its halving, and the\n`(n+3)/(2na)` collapse), so one could formalize a *parametrized solver*: a single\nlemma taking residue data and returning a witness, from which all four families\nbecome corollaries. Why now? Because unifying the families would both shrink the\nproof and expose precisely which algebraic degrees of freedom remain unused for\nthe `1 (mod 8)` case, potentially suggesting the missing construction.\n\nA fourth direction is to connect this development to Mathlib's number-theoretic\ninfrastructure on quadratic residues and Dirichlet characters. The key insight is\nthat the obstruction at `p \u2261 1 (mod 8)` is governed by solvability of congruences\nthat quadratic reciprocity controls, so importing Mathlib's reciprocity and\nLegendre-symbol API could let one phrase the open core as a clean statement about\nrepresentability rather than as a raw existential over triples. Why now? Because\nMathlib's quadratic reciprocity and `ZMod` character theory are now stable and\nwell-supported, making it feasible to translate the analytic-number-theory\nheuristics for Erd\u0151s\u2013Straus into formal, checkable hypotheses.\n",
     "domains": [
       "Pythagorean",
@@ -8270,9 +8269,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "199a5960",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Differential Equations (Riccati Galois Cycle)\n\nDerived from this cycle's findings:\n* `EMLRiccatiMobius.lean` \u2014 the Riccati Galois group is `\u2286 PGL\u2082(constants)`; the\n  cross-ratio of four solutions is constant.\n* `EMLRiccatiOneSolution.lean` \u2014 one known solution `v\u2080` linearizes the Riccati\n  equation via `v = v\u2080 + 1/u`, `u\u2032 = (2v\u2080 + p)u + 1`.\n* `EMLRiccatiSolutionStructure.lean` \u2014 the reciprocal-shifts `1/(v \u2212 v\u2080)` form an\n  affine line over the constants (`Stab(v\u2080) = G\u2090 \u22ca G\u2098`), and three solutions fix the\n  projective coordinate.\n\nThe unifying pattern: the Riccati Galois action degenerates along the chain\n`PGL\u2082(constants)  \u2283  G\u2090 \u22ca G\u2098 (one solution)  \u2283  G\u2098 (two solutions)  \u2283  1 (three solutions)`,\neach step removing one degree of projective freedom. The following conjectures push this\npattern in bold, testable directions.\n\n---\n\n## Conjecture 1 \u2014 Three-solution closed form is *effective*: a M\u00f6bius reconstruction map\n\nFor any differential field `K` and three distinct solutions `a, b, c` of\n`v\u2032 + v\u00b2 + p\u00b7v + q = 0`, every solution `v` equals `M\u00f6bius_{a,b,c}(\u03ba)` for a constant\n`\u03ba \u2208 constantsSubfield K`, where `M\u00f6bius_{a,b,c}` is the explicit fractional-linear map\nsending the standard frame to `(a, b, c)`. Conversely every constant `\u03ba` (avoiding one\npole value) yields a solution.\n\n*The key insight is* that `riccati_generalSolution_crossRatio_isConstant` already shows\nthe cross-ratio `\u03ba = crossRatio v b a c` is constant, so inverting the cross-ratio in its\nlast argument is a *rational* (M\u00f6bius) reconstruction of `v` from `\u03ba` \u2014 turning the\nimplicit invariant into an explicit solution formula and a genuine bijection\n`{solutions} \u2243 constants \u222a {\u221e}`.\n\n*Why now?* The constant `\u03ba` and the cross-ratio machinery are formalized this cycle; the\nonly missing piece is the algebraic inversion of a M\u00f6bius map over the constants\nsubfield, which is pure field algebra (`field_simp`/`ring`) with no new analytic input.\n\n---\n\n## Conjecture 2 \u2014 The Riccati Galois degeneration chain is *strict and complete*\n\nIn a differential field whose constants are algebraically closed, the differential\nGalois group of `v\u2032 + v\u00b2 + p\u00b7v + q = 0` is *exactly* one of `PGL\u2082`, the affine group\n`G\u2090 \u22ca G\u2098`, the torus `G\u2098`, a finite group, or trivial \u2014 and the number of *rational*\n(constant-field-defined) solutions is `0, 1, 2,` or `\u221e` respectively, with no other\npossibility.\n\n*The key insight is* that each known solution strictly shrinks the stabilizer by one\nprojective dimension (this cycle: `PGL\u2082 \u2192 G\u2090\u22caG\u2098 \u2192 G\u2098`), so the *count* of rational\nsolutions is a complete discrete invariant of the Galois group \u2014 a Riccati analogue of\nthe order of a finite linear group.\n\n*Why now?* The first three rungs of the chain are now formal; proving the dichotomy\n\"`0, 1, 2,` or `\u221e` solutions\" reduces to the affine/`G\u2098` torsor statements already in\n`EMLRiccatiSolutionStructure.lean` plus a \"three coincident \u21d2 all coincide\" rigidity\nlemma provable from the cross-ratio.\n\n---\n\n## Conjecture 3 \u2014 Airy's projective monodromy is *irreducible* (no invariant solution)\n\nAiry's Riccati equation `v\u2032 + v\u00b2 = x` over `\u211d(x)` (or any field where `x\u2032 = 1`,\n`x` transcendental) has **no** solution fixed by the differential Galois group \u2014 i.e. no\nrational solution \u2014 and moreover **no finite Galois-orbit** of solutions of size `1` or\n`2`; the orbit structure forces the full `SL\u2082`-type (Bessel/Airy) Galois group.\n\n*The key insight is* that the catalog's odd-degree obstruction (`EMLAiryRiccati`,\n`no_rational_solves_riccati_odd_deg`) kills the `0`-rung (one rational solution); the\n*two-solution* rung is killed because two rational solutions would, by this cycle's\n`reciprocalDiff_difference_homogeneous`, force a rational solution of the homogeneous\nequation `w\u2032 = 2v\u2080\u00b7w`, again obstructed by a degree-parity count.\n\n*Why now?* The bridge from \"no rational solution\" (catalog) to \"no small Galois orbit\"\nis exactly the affine/homogeneous reduction proved this cycle; the remaining step is a\nsecond degree-parity lemma in `\u211d[X]`, the same technique already in the catalog.\n\n---\n\n## Conjecture 4 \u2014 Cross-ratio constancy characterizes Riccati equations\n\nAmong all first-order ODEs `v\u2032 = F(x, v)` with `F` rational in `v`, the equations for\nwhich the cross-ratio of *every* four solutions is constant are **exactly** the Riccati\nequations (`F` quadratic in `v`, i.e. `F = \u03b1 + \u03b2v + \u03b3v\u00b2`).\n\n*The key insight is* that this cycle proves Riccati \u21d2 constant cross-ratio\n(`riccati_crossRatio_isConstant`); the converse should follow because constancy of all\ncross-ratios forces the M\u00f6bius (`PGL\u2082`) action on the solution sheaf, whose infinitesimal\ngenerators are exactly degree-`\u2264 2` vector fields in `v` \u2014 the Lie-theoretic signature of\nRiccati.\n\n*Why now?* The forward direction is formalized; the converse is a finite-dimensionality\nargument on the Lie algebra of fibrewise symmetries, expressible with the same\n`Derivation`/`field_simp` toolkit and needing no measure theory or analysis.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2767",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c8e22e5a",
+    "status": "available",
+    "timestamp": "2026-06-28T09:38:25.032853+00:00",
+    "title": "Derived from this cycle's findings:"
   },
   {
     "consumed_by_exp_id": "",
@@ -8435,7 +8449,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "6dda8a29",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -8444,7 +8458,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -8597,7 +8611,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "e5dd524d",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -8607,7 +8621,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -8717,7 +8731,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "ce8c041d",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8727,7 +8741,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

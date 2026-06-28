@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c8e22e5a",
     "filename": "eml_differential_equations_odes_with_exponential_l.json",
     "pkg_num": 177,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8043199999999999,
     "title": "The Projective Galois Structure of the Riccati Equation for EML ODEs"
   },
   {
@@ -5161,8 +5161,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "eml_differential_equations_odes_with_exponential_l",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8043199999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Projective Galois Structure of the Riccati Equation for EML ODEs"
     }
