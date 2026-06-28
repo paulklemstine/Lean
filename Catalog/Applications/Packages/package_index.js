@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "bac3bfcc",
     "filename": "statistical_mechanics_ising_model_phase_transition.json",
     "pkg_num": 178,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.562048,
     "title": "Statistical Mechanics: The Exact Two-Point Correlation of the 1D Ising Chain"
   },
   {
@@ -5190,8 +5190,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.562048,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Statistical Mechanics: The Exact Two-Point Correlation of the 1D Ising Chain"
     }

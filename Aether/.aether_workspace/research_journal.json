@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "99725b45",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — C5-decompositions and the 5/8 threshold\n\nDerived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-divisibility,\nedge-count `|E| = 5·#cycles`, the pentagon wi",
-      "quality_score": 0.708,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-25T01:28:18",
-      "title": "Asymptotic C5-decomposition threshold equals 5/8"
-    },
-    {
       "cycle_id": "eb2eee3d",
       "domain": "Applications",
       "key_insight": "# Future Directions — Perfect Numbers & the Abundancy Index\n\nDerived from this cycle's findings (Euclid–Euler classification, the abundancy-index\ndictionary, divisibility monotonicity, prime-power def",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T10:07:45",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "cycle_id": "bac3bfcc",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Statistical Mechanics: Ising Model Phase Transition\n\nThis cycle added `Catalog/Physics/IsingCorrelation.lean`, which proves from first\nprinciples (directly from the configuration",
+      "quality_score": 0.562048,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T10:10:55",
+      "title": "Statistical Mechanics: Ising Model Phase Transition"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8043199999999999
     }
   ],
-  "last_updated": "2026-06-28T10:07:45",
+  "last_updated": "2026-06-28T10:10:55",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cff6413b",
-        "quality": 0.8251200000000001,
-        "theorems": 17,
-        "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
-      },
-      {
         "cycle_id": "c0f7c830",
         "quality": 0.63496,
         "theorems": 11,
@@ -3637,6 +3631,12 @@
         "quality": 0.7360800000000001,
         "theorems": 0,
         "title": "Excluded minors for Z_n-gainable biased graphs"
+      },
+      {
+        "cycle_id": "bac3bfcc",
+        "quality": 0.562048,
+        "theorems": 0,
+        "title": "Statistical Mechanics: Ising Model Phase Transition"
       }
     ],
     "NumberTheory": [
