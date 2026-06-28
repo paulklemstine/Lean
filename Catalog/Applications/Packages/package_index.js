@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9e0667c2",
     "filename": "hamiltonian_compression_factor_of_cubic_edge_trans.json",
     "pkg_num": 161,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7800670000000001,
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
   },
   {
@@ -4697,8 +4697,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "hamiltonian_compression_factor_of_cubic_edge_trans",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7800670000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
     }

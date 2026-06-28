@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "701dddb6",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Pólya tree coefficient recurrence\n\nDerived from the Stage 3/4 findings of this cycle (the divisor bridge `divisor_bridge`, the\nequivalence `polya_FE_iff_recurrence`, and the uniq",
-      "quality_score": 0.78684,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-25T16:30:34",
-      "title": "Pólya tree coefficient recurrence formula"
-    },
-    {
       "cycle_id": "7ae59772",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Normality of Mathematical Constants\n\nDerived from the Stage 3/4 findings of this cycle (combinatorial theory of\nsimple normality in `Catalog/Algebra/NormalNumbers/`). Each conjec",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-06-28T03:03:40",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+    },
+    {
+      "cycle_id": "9e0667c2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Hamiltonian Compression Factor of Cubic Graphs\n\nDerived from this cycle's findings: for every even `n ≥ 4` the cubic circulant\n`ML(n)` admits a 2-symmetric Hamiltonian cycle (`mo",
+      "quality_score": 0.7800670000000001,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T03:29:47",
+      "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "44e772b7",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Boolean Degree One Functions on `J_q(n,2)`\n\nDerived from the Stage 3 / Stage 4 findings of this cycle (see the Lab Notes in\n`Catalog/Shared/GrassmannJq2LineCounts.lean` and\n`Cata",
-      "quality_score": 0.69522,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-24T10:58:09",
-      "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
-    },
     {
       "cycle_id": "43854327",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-06-28T03:26:34",
       "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
+    },
+    {
+      "cycle_id": "9e0667c2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Hamiltonian Compression Factor of Cubic Graphs\n\nDerived from this cycle's findings: for every even `n ≥ 4` the cubic circulant\n`ML(n)` admits a 2-symmetric Hamiltonian cycle (`mo",
+      "quality_score": 0.7800670000000001,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T03:29:47",
+      "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8ed8ca57",
-      "domain": "Novelty",
-      "name": "sum_weight",
-      "quality": 0.7478369230769231
-    },
-    {
-      "cycle_id": "8ed8ca57",
-      "domain": "Novelty",
-      "name": "by",
-      "quality": 0.7478369230769231
-    },
-    {
-      "cycle_id": "8ed8ca57",
-      "domain": "Novelty",
-      "name": "bestIdx_spec",
-      "quality": 0.7478369230769231
-    },
     {
       "cycle_id": "905ed2dd",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "sim_accepts",
       "quality": 0.7862199999999999
+    },
+    {
+      "cycle_id": "9e0667c2",
+      "domain": "Applications",
+      "name": "two_mul_diam",
+      "quality": 0.7800670000000001
+    },
+    {
+      "cycle_id": "9e0667c2",
+      "domain": "Applications",
+      "name": "neg_diam",
+      "quality": 0.7800670000000001
+    },
+    {
+      "cycle_id": "9e0667c2",
+      "domain": "Applications",
+      "name": "diam_ne_zero",
+      "quality": 0.7800670000000001
     }
   ],
-  "last_updated": "2026-06-28T03:26:34",
+  "last_updated": "2026-06-28T03:29:47",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f2fdcb78",
-        "quality": 0.84592,
-        "theorems": 19,
-        "title": "Ramsey Theory: Bounds and Constructions"
-      },
-      {
         "cycle_id": "e3ff7cf5",
         "quality": 0.7938000000000001,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.48585960124610594,
         "theorems": 9,
         "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
+      },
+      {
+        "cycle_id": "9e0667c2",
+        "quality": 0.7800670000000001,
+        "theorems": 14,
+        "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
       }
     ],
     "Bridges": [
