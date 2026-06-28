@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0548f2b9",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Navier–Stokes: 2D Regularity and Partial 3D Results\n\nThis cycle extended the scalar a-priori-estimate framework\n(`NavierStokes.Core`, `NavierStokes.Estimates`) in two directions:",
-      "quality_score": 0.7095,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-26T03:16:30",
-      "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-    },
-    {
       "cycle_id": "0f17133d",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Girth–Expansion Equivalence\n\nThis cycle established that the *literal* bridge \"left-`d`-regular graph is an\n`s`-optimal small-set expander ⇔ girth `≥ 2s+2`\" is **one-directional*",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-06-28T06:56:13",
       "title": "Prismatic Purity for F-Crystals on Regular Schemes"
+    },
+    {
+      "cycle_id": "9a7cbc8b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings:\n- Headline identity `S^t_λ = φ_t(Q_λ)` (`Sfun_eq_phiT_Qfun`) and its strict-partition form",
+      "quality_score": 0.7861499999999999,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T08:11:13",
+      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6ddef5de",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nThe verified deterministic backbone in `Catalog/Physics/OUProcessMoments.lean`\n(VP/OU marginal mean and variance, their moment ODEs, long-time convergence, and\nthe Gaussian score",
-      "quality_score": 0.66248,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-24T21:36:22",
-      "title": "Diffusion Models as Stochastic Differential Equations"
-    },
     {
       "cycle_id": "72ef5a59",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T08:05:45",
       "title": "Super-exponential growth of the number of symmetric chain decompositions of M(n)"
+    },
+    {
+      "cycle_id": "9a7cbc8b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings:\n- Headline identity `S^t_λ = φ_t(Q_λ)` (`Sfun_eq_phiT_Qfun`) and its strict-partition form",
+      "quality_score": 0.7861499999999999,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T08:11:13",
+      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e8be0a2a",
-      "domain": "Applications",
-      "name": "shift_lt_iff",
-      "quality": 0.8740959999999999
-    },
-    {
-      "cycle_id": "f2fdcb78",
-      "domain": "Applications",
-      "name": "and",
-      "quality": 0.84592
-    },
-    {
-      "cycle_id": "f2fdcb78",
-      "domain": "Applications",
-      "name": "The",
-      "quality": 0.84592
-    },
     {
       "cycle_id": "f2fdcb78",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "extension_unique",
       "quality": 0.747936
+    },
+    {
+      "cycle_id": "9a7cbc8b",
+      "domain": "Novelty",
+      "name": "cc_ne",
+      "quality": 0.7861499999999999
+    },
+    {
+      "cycle_id": "9a7cbc8b",
+      "domain": "Novelty",
+      "name": "cc_mul_dd",
+      "quality": 0.7861499999999999
+    },
+    {
+      "cycle_id": "9a7cbc8b",
+      "domain": "Novelty",
+      "name": "Phi_X",
+      "quality": 0.7861499999999999
     }
   ],
-  "last_updated": "2026-06-28T08:05:45",
+  "last_updated": "2026-06-28T08:11:13",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f3fa5004",
-        "quality": 0.38602000000000003,
-        "theorems": 15,
-        "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
-      },
-      {
         "cycle_id": "c011c95b",
         "quality": 0.7862199999999999,
         "theorems": 20,
@@ -3637,6 +3631,12 @@
         "quality": 0.6639999999999999,
         "theorems": 14,
         "title": "Super-exponential growth of the number of symmetric chain decompositions of M(n)"
+      },
+      {
+        "cycle_id": "9a7cbc8b",
+        "quality": 0.7861499999999999,
+        "theorems": 14,
+        "title": "Plethystic Triviality of the Shifted t-Schur Basis"
       }
     ],
     "NumberTheory": [

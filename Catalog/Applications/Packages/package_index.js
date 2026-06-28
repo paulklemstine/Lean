@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9a7cbc8b",
     "filename": "plethystic_triviality_of_the_shifted_t_schur_basis.json",
     "pkg_num": 174,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7861499999999999,
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
   {
@@ -5074,8 +5074,8 @@ window.PACKAGE_GRAPH = {
       "hue": 101,
       "id": "plethystic_triviality_of_the_shifted_t_schur_basis",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7861499999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Plethystic Triviality of the Shifted t-Schur Basis"
     }

@@ -439,6 +439,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 9a7cbc8b (Q=0.786), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Let Γ_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism φ_t of Γ_R by φ_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_λ denotes the Schur Q-function indexed by a strict partition λ in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_λ denotes the shi",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_9a7cbc8b_9329d8ad",
+    "lineage_refs": [],
+    "priority_score": 0.8861499999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9a7cbc8b",
+    "status": "available",
+    "timestamp": "2026-06-28T08:11:14.122623+00:00",
+    "title": "Deepening: Plethystic Triviality of the Shifted t-Schur Basis"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
     "domain_bridges": [],
     "domains": [
@@ -14336,6 +14355,26 @@
     "status": "available",
     "timestamp": "2026-06-28T08:05:36.727843+00:00",
     "title": "Persistent Homology Witnesses Quantum Criticality: Topological Signatures in Man"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: There exists a sharp threshold in the computational complexity of evaluating discretized quantum gravity path integrals (e.g., Regge calculus or spin foam models) as a function of the spacetime discretization scale ε, such that for ε finer than a critical value ε_c the exact amplitude computation becomes #P‑hard, while for ε coarser than ε_c it is solvable in polynomial time. Test: Construct explicit families of triangulated manifolds parameterized by ε, implement exact amplitude calculators (via tensor network contraction or state‑sum evaluation), and empirically measure runtime growth. Prove that for ε < ε_c the problem is reducible from known #P‑complete counting problems (e.g., counting perfect matchings), and for ε > ε_c provide a polynomial‑time algorithm (e.g., via tree‑width boundedness). Impact: Establishes a rigorous bridge between computational complexity theory and the emergence of continuum spacetime, offering a testable criterion for when a discrete quantum gravity model yields a tractable effective field theory. It would guide the design of simulable quantum gravity models, inform the limits of quantum simulation of spacetime, and suggest that the “smooth” regime of gravity is a computationally easy phase while the deep quantum regime is intrinsically intractable.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_2765",
+    "lineage_refs": [],
+    "priority_score": 0.7156190476190477,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-28T08:11:06.656037+00:00",
+    "title": "Computational Complexity Phase Transition in Quantum Gravity Path Integrals"
   },
   {
     "ambition_level": "extension",
