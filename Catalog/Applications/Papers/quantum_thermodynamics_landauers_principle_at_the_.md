@@ -1,54 +1,53 @@
-# Computational Evidence — Landauer's Principle at the Nanoscale (v19a)
+# Computational Evidence: Subadditivity & the Correlated-Erasure Landauer Saving
 
-This cycle extends the existing Landauer development
-(`Logic.JarzynskiLandauer`, `Physics.LandauerSecondLaw`,
-`Physics.LandauerSaturation`, `Physics.LandauerRelativeEntropy`,
-`Physics.LandauerThermodynamicLimit`) with two new finite-size results.
+This note records the small-case checks that preceded the formal development in
+`Catalog/Physics/LandauerSubadditivity.lean`.
 
-## 1. Exponential bound on second-law violations (Jarzynski / Chernoff)
+## 1. Mutual information as a relative entropy
 
-**Claim.** With the finite Jarzynski equality `E[exp(-αW)] = exp(-αΔF)` and `α > 0`,
-the total probability that the dissipated work falls *below* the free-energy bound by
-a margin `ξ` is at most `exp(-α ξ)`:
+For a joint PMF `p` on `X × Y` with marginals `pX`, `pY`, the mutual information is
+`I(X;Y) = D(p ‖ pX⊗pY) = Σ_{x,y} p(x,y) · log( p(x,y) / (pX(x)·pY(y)) )`,
+and the decomposition identity is `I(X;Y) = H(X) + H(Y) − H(X,Y)`.
 
-    P(W < ΔF - ξ) ≤ exp(-α ξ).
+## 2. Diagonal (perfectly correlated) two-bit memory
 
-**Two-outcome small case.** Take a single bit with `p = (1/2, 1/2)` and work values
-`W = (w₀, w₁)`. The Jarzynski equality fixes
+`p(b1,b2) = 1/2` if `b1 = b2`, else `0`.
 
-    ΔF = -(1/α) · log( (e^{-αw₀} + e^{-αw₁}) / 2 ).
+| (b1,b2)        | p     | contribution to H |
+|----------------|-------|-------------------|
+| (false,false)  | 1/2   | −(1/2)·log(1/2)   |
+| (false,true)   | 0     | 0                 |
+| (true,false)   | 0     | 0                 |
+| (true,true)    | 1/2   | −(1/2)·log(1/2)   |
 
-For `α = 1`, `w₀ = 0`, `w₁ = 2`:
-* `ΔF = -log((1 + e^{-2})/2) ≈ 0.566`.
-* The only outcome with `W < ΔF - ξ` for `ξ = 0.3` is `ω₀` (`W = 0 < 0.266`),
-  contributing probability `1/2 = 0.5`.
-* Bound: `exp(-1·0.3) ≈ 0.741`.  Indeed `0.5 ≤ 0.741`. ✓
+- Marginals: `pX(b) = pY(b) = 1/2` (uniform).  → `H(X) = H(Y) = log 2`.
+- Joint entropy: `H(X,Y) = 2 · (−(1/2)·log(1/2)) = log 2`.
+- Mutual information: `I = log 2 + log 2 − log 2 = log 2 > 0`.
+- Landauer saving: `kT·(H(X)+H(Y)) − kT·H(X,Y) = kT·I = kT·log 2 > 0`.
 
-For `ξ = 0.6` the threshold `ΔF - ξ ≈ -0.034 < 0`, so no outcome qualifies, the
-left side is `0`, and `0 ≤ exp(-0.6) ≈ 0.549`. ✓
+So joint erasure of a copied bit saves exactly one Landauer quantum `kT·log 2`.
+Formalised as `mutualInfo_perfectlyCorrelated` and
+`landauer_perfectlyCorrelated_strict_saving`.
 
-The bound is the finite-size, fluctuation-theorem refinement of the statement
-"erasure costs at least `kT log 2`": violations of the bound are not impossible, but
-they are *exponentially rare* in the margin `ξ` (measured in units of `1/α = kT`).
+## 3. Independent two-bit memory (sanity / equality case)
 
-## 2. Maximum-entropy / "uniform is worst case" bound
+`p = pX⊗pY`  ⇒  `I = D(p‖p) = 0`  ⇒  joint cost = separate cost. No saving.
+Formalised as `mutualInfo_indep_eq_zero`.
 
-**Claim.** For any initial PMF `p` on a finite memory with `N` states,
+## 4. Subadditivity holds without strict positivity
 
-    H(p) = log N − D(p ‖ uniform)   and hence   H(p) ≤ log N,
+A deterministic correlation has `p(x,y) = 0` on the off-diagonal, so the product of
+marginals does **not** have full support is false here (marginals are uniform, full
+support), but more general deterministic couplings *do* make `pX⊗pY` vanish where `p`
+does. The strict-positivity Gibbs inequality already in the catalog is therefore
+insufficient; the absolute-continuity strengthening `relativeEntropy_nonneg'` was needed
+and is what gives subadditivity in full generality (`shannonEntropy_subadditive`).
 
-so the Landauer erasure cost `kT·H(p)` is maximised by the uniform distribution.
+## 5. Gibbs pointwise bound check
 
-**Small cases.**
-* `N = 2`, `p = (1/2,1/2)`: `H = log 2 ≈ 0.693 = log N`. Saturates. ✓
-* `N = 2`, `p = (1, 0)` (already erased): `H = 0 ≤ log 2`. ✓
-* `N = 4`, `p = (1/2,1/4,1/8,1/8)`: `H = 1.75·log 2 ≈ 1.213 ≤ log 4 ≈ 1.386`. ✓
+The backbone inequality `p·log(p/q) ≥ p − q` was checked at the boundary:
+- `p = 0`: LHS `= 0 ≥ −q` since `q ≥ 0`. ✓
+- `p,q > 0`: equivalent to `log(q/p) ≤ q/p − 1` (`Real.log_le_sub_one_of_pos`). ✓
+Summing over the (finite) sample space and using `Σp = Σq = 1` gives `D(p‖q) ≥ 0`.
 
-The identity is the Gibbs-inequality identity `H(p) = log N − D(p‖u)`; nonnegativity of
-`D` (proved in the catalog as `LandauerRelativeEntropy.relativeEntropy_nonneg`) gives
-the max-entropy bound directly, so the uniform/`n`-bit cost analysed in
-`LandauerThermodynamicLimit` is the most expensive erasure of an `N`-state memory.
-
-Both claims are standard textbook facts; the numerics above are confirmatory sanity
-checks. The formal proofs are in `Physics/LandauerFluctuationBound.lean` and
-`Physics/LandauerMaxEntropy.lean`.
+No counterexamples were found to any claim formalised in the file.

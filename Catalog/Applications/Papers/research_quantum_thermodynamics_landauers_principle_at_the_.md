@@ -1,514 +1,523 @@
-# Landauer's Principle at the Nanoscale: A Finite-System Derivation from the Jarzynski Equality, with Saturation, Relative-Entropy, and Data-Processing Bridges
+# A Rigorous Finite-Size Theory of Landauer's Principle: From the Jarzynski Equality to Logical Irreversibility
 
 **Author:** Aristotle
-**Date:** 2026-06-27
-**Domain:** Novelty (cross-domain bridge: information theory ↔ thermodynamics)
+
+**Date:** 2026-06-28
+
+**Domain:** Novelty (Thermodynamics of Information)
 
 ---
 
 ## Abstract
 
-We give a fully elementary, finite-system derivation of Landauer's principle —
-the statement that erasing one bit of information dissipates at least $kT\ln 2$
-of mean work — and of its sharp finite-size refinement. Working over an
-arbitrary finite probability space, we start from the nonequilibrium Jarzynski
-equality $\mathbb{E}[e^{-\alpha W}] = e^{-\alpha\,\Delta F}$ and derive an exact
-*identity* expressing the mean dissipated work as the reversible free-energy cost
-plus a fluctuation correction term. The single analytic ingredient $1 + x \le
-e^x$ (and its strict form $1 + x < e^x$ for $x \ne 0$) then yields three results:
-(i) the second-law inequality $\Delta F \le \mathbb{E}[W]$, hence Landauer's
-bound $kT\ln 2 \le \mathbb{E}[W]$; (ii) a *saturation theorem* showing the bound
-is attained **iff** the erasure work is non-fluctuating on the support of the
-distribution — so any genuinely stochastic nanoscale erasure dissipates
-*strictly* more than $kT\ln 2$; and (iii) the implication *logical
-irreversibility $\Rightarrow$ thermodynamic irreversibility* for one-bit erasure.
-We complement the work-fluctuation account with two independent information-
-theoretic derivations of the same cost: a relative-entropy (Kullback–Leibler)
-formulation backed by a first-principles proof of Gibbs' inequality $D(p\|q)\ge
-0$, and a deterministic data-processing inequality $H(f_*p)\le H(p)$ that
-identifies erasure as the extremal entropy-collapsing map and reversible
-computations as the zero-dissipation boundary. Finally we prove extensivity:
-erasing $n$ bits costs at least $n\,kT\ln 2$, with an exact per-bit cost of
-$kT\ln 2$. All results are stated for finite distributions and require only
-nonnegativity, normalization, and positivity of temperature.
+We develop, from first principles over finite probability spaces, a complete and
+self-contained mathematical theory of Landauer's principle — the statement that
+erasing one bit of information dissipates at least $kT\ln 2$ of work. Starting
+only from elementary inequalities ($1 + x \le e^x$ and $\ln x \le x - 1$) and the
+finite Jarzynski equality $E[e^{-\alpha W}] = e^{-\alpha\,\Delta F}$, we prove:
+(i) an exact *finite-size Landauer identity* expressing the mean dissipated work
+as the free-energy difference plus a nonnegative fluctuation correction; (ii) the
+average second law $\Delta F \le E[W]$ and the single-bit Landauer bound
+$kT\ln 2 \le E[W]$; (iii) a saturation theorem showing the bound is attained
+exactly in the reversible (zero-fluctuation) limit; (iv) an integral
+fluctuation theorem bounding the probability of second-law violations by
+$e^{-\xi/(kT)}$; (v) the extensivity of the bound, $n\,kT\ln 2$ for an $n$-bit
+register, with exact per-bit cost $kT\ln 2$; (vi) a dual relative-entropy account
+of the cost via Gibbs' inequality, together with a maximum-entropy bound; (vii) a
+deterministic data-processing inequality identifying reversible (injective)
+computation as the zero-dissipation boundary; and (viii) a bridge theorem showing
+that *logical* irreversibility (non-injectivity of the erasure map) *forces*
+*thermodynamic* irreversibility ($0 < E[W]$). All results are stated inline with
+full mathematical content and proof sketches.
 
 ---
 
 ## 1. Introduction
 
-Landauer's principle [Landauer 1961] asserts that the logically irreversible
-erasure of one bit of information has an unavoidable thermodynamic cost: the
-process must dissipate at least
+In 1961 Rolf Landauer proposed that information processing is subject to a
+thermodynamic constraint: any *logically irreversible* operation, one that maps
+distinct logical states to a common state, must be accompanied by the dissipation
+of heat into the environment. The canonical example is the erasure ("reset to
+zero") of a single bit, whose minimal cost is
 
-$$Q_{\min} = kT\ln 2$$
+$$E[W] \ge kT \ln 2,$$
 
-of heat into its environment, where $T$ is the absolute temperature of the bath
-and $k$ is Boltzmann's constant. Together with Bennett's demonstration [Bennett
-1973, 1982] that all *reversible* computation can be made dissipationless, it
-draws a fundamental thermodynamic boundary around computation and resolves the
-paradox of Maxwell's demon: the demon's eventual memory erasure pays exactly the
-entropy debt that its sorting appears to create.
+where $k$ is Boltzmann's constant and $T$ the absolute temperature of the heat
+bath. The principle resolves the paradox of Maxwell's demon and sets a fundamental
+floor on the energy efficiency of computation.
 
-Two developments motivate a careful *finite-system* treatment. First, modern
-fluctuation theorems — above all the Jarzynski equality [Jarzynski 1997] —
-express equilibrium free-energy differences as averages of exponentiated work
-over arbitrarily nonequilibrium protocols, providing a rigorous bridge from
-fluctuating microscopic work to thermodynamic bounds. Second, the experimental
-realization of Landauer erasure in single-particle systems makes the *finite-
-size corrections* to the textbook bound physically relevant rather than
-academic.
+Classical derivations of Landauer's bound rely on idealized quasi-static
+processes and equilibrium thermodynamics. At the nanoscale, however, erasure is a
+genuinely nonequilibrium, fluctuating process: the work $W$ done in a single
+realization is a random variable. The modern framework for such processes is the
+fluctuation-theorem literature, of which the **Jarzynski equality** is the
+cornerstone. The purpose of this paper is to present a rigorous, minimal-axiom
+development of Landauer's principle *as a consequence of* the finite Jarzynski
+equality, valid for memories of arbitrary (finite) size, and to make explicit the
+logical-to-thermodynamic bridge that is the conceptual heart of the principle.
 
-This paper develops the entire chain from first principles over a finite
-probability space. Our contributions are:
-
-1. **An exact finite-size Landauer identity** (Theorem 4.2 /
-   `jarzynski_correction`, `landauer_identity`): the mean work equals the
-   reversible cost plus an explicit fluctuation correction.
-2. **The second-law inequality** (Theorem 5.4 / `jarzynski_second_law`) and
-   **Landauer's bound** (Theorem 5.5 / `landauer_kT_bound`), with the
-   logical-to-thermodynamic irreversibility implication (Theorem 5.7 /
-   `logical_to_thermodynamic_irreversibility`).
-3. **A sharp saturation theorem** (Theorem 6.4 / `landauer_saturation_iff`):
-   equality holds iff the work is constant on the support; otherwise the bound
-   is strict (Theorem 6.3 / `landauer_kT_bound_strict`).
-4. **A relative-entropy account** (Section 7) with a first-principles Gibbs
-   inequality (Theorem 7.2 / `relativeEntropy_nonneg`) and the identity
-   $kT\ln 2 = kT\,D(\text{erased}\|\text{uniform})$.
-5. **A deterministic data-processing inequality** (Theorem 8.2 /
-   `shannonEntropy_pushforward_le`) identifying erasure as the extremal map and
-   reversible computations as the free boundary (Theorem 8.3).
-6. **Extensivity** (Section 9): erasing $n$ bits costs at least $n\,kT\ln 2$,
-   per-bit cost exactly $kT\ln 2$.
-
-A guiding theme is economy of hypotheses: a single convexity fact, $1 + x \le
-e^x$ (strict for $x \ne 0$), and its logarithmic dual $\ln x \le x - 1$, power
-every inequality below. No measure theory, no Jensen machinery, and no
-convexity API are required.
+The development proceeds in eight movements: the basic finite-probability
+framework (§3), the entropic cost of erasure (§4), the Jarzynski correction and
+the second law (§5), saturation (§6), fluctuation bounds (§7), extensivity (§8), the
+relative-entropy/maximum-entropy account (§9), and the data-processing inequality
+together with the logical-irreversibility bridge (§10).
 
 ---
 
-## 2. Setup and definitions
+## 2. Related Work and Contribution
 
-Throughout, $\Omega$ is a finite type representing the microstates of the
-system, and all sums range over $\Omega$.
+Landauer (1961) and Bennett (1982) established the principle and its role in the
+thermodynamics of computation; Jarzynski (1997) proved the nonequilibrium work
+equality; Esposito and Van den Broeck (2011) recast the second law and Landauer's
+principle in relative-entropy form far from equilibrium; Plenio and Vitelli
+(2001) surveyed the information-theoretic content. Our contribution is not a new
+physical claim but a *complete, machine-checkable, first-principles synthesis*:
+every statement below is derived from explicit finite sums and two scalar
+inequalities, with no appeal to continuum thermodynamics, measure theory, or
+convex-analysis black boxes. In particular we isolate the precise sense in which
+the textbook bound $kT\ln 2$ is (a) an *average*, refined by an exact fluctuation
+identity; (b) *saturated* only in the reversible limit; and (c) *forced* by a
+purely combinatorial fact about the erasure map.
 
-**Definition 2.1 (Expectation).** For a weight function $p : \Omega \to
-\mathbb{R}$ and observable $f : \Omega \to \mathbb{R}$,
-$$\mathbb{E}_p[f] := \sum_{\omega} p(\omega)\, f(\omega).$$
+---
 
-**Definition 2.2 (Probability mass function).** $p$ is a PMF, written
+## 3. The finite-probability framework
+
+We work throughout over a finite type $\Omega$ (a finite set of microstates).
+
+**Definition 3.1 (Expectation).** For weight $p : \Omega \to \mathbb{R}$ and
+observable $f : \Omega \to \mathbb{R}$,
+$$\mathrm{E}_p[f] \;=\; \sum_{\omega \in \Omega} p(\omega)\, f(\omega).$$
+
+**Definition 3.2 (Probability mass function).** $p$ is a PMF, written
 $\mathrm{IsPMF}(p)$, if $p(\omega) \ge 0$ for all $\omega$ and
-$\sum_\omega p(\omega) = 1$.
+$\sum_{\omega} p(\omega) = 1$.
 
-**Definition 2.3 (Shannon entropy).** With the convention $0\ln 0 = 0$
-(implemented via the function $x \mapsto -x\ln x$),
-$$H(p) := \sum_\omega -p(\omega)\ln p(\omega).$$
+**Definition 3.3 (Shannon entropy).** With the convention $0\ln 0 = 0$ (encoded
+by the function $\mathrm{negMulLog}(x) = -x\ln x$, which is $0$ at $x = 0$),
+$$H(p) \;=\; \sum_{\omega} \mathrm{negMulLog}(p(\omega)) \;=\; -\sum_{\omega} p(\omega)\ln p(\omega).$$
 
-**Definition 2.4 (Jarzynski condition).** A triple $(W, \alpha, \Delta F)$ —
-work observable $W:\Omega\to\mathbb{R}$, inverse temperature $\alpha$,
-free-energy difference $\Delta F$ — satisfies the finite Jarzynski equality
-relative to $p$ if
-$$\mathbb{E}_p\!\left[e^{-\alpha W}\right] = e^{-\alpha\,\Delta F}.$$
+**Definition 3.4 (Finite Jarzynski equality).** For a work observable
+$W : \Omega \to \mathbb{R}$, inverse temperature $\alpha \in \mathbb{R}$, and
+free-energy difference $\Delta F$, the condition $\mathrm{Jarzynski}(p, W, \alpha, \Delta F)$ holds when
+$$\mathrm{E}_p\!\left[e^{-\alpha W}\right] \;=\; e^{-\alpha\,\Delta F}.$$
 
-We model a one-bit memory by $\Omega = \mathrm{Bool}$ and three distinguished
-objects:
+**Definition 3.5 (Relative entropy / Kullback–Leibler divergence).**
+$$D(p \,\|\, q) \;=\; \sum_{\omega} p(\omega)\,\ln\frac{p(\omega)}{q(\omega)}.$$
+The factor $p(\omega)$ makes the convention $0\ln 0 = 0$ automatic.
 
-**Definition 2.5 (Bit states and erasure).**
-$$u(b) := \tfrac12 \quad(\text{uniform}),\qquad
-e(b) := \begin{cases}1 & b=\text{false}\\ 0 & b=\text{true}\end{cases}\quad(\text{erased}),$$
-and the erasure map $\mathrm{er} : \mathrm{Bool}\to\mathrm{Bool}$, $\mathrm{er}(b)
-= \text{false}$ for all $b$.
-
-The physical dictionary is $\alpha = 1/(kT)$ and, for bit erasure, $\Delta F =
-kT\ln 2$.
+The bit-level distributions used repeatedly are: the **uniform bit**
+$u(b) = \tfrac12$ for $b \in \{0,1\}$; the **erased bit** $e(b) = 1$ if $b = 0$
+and $0$ if $b = 1$; and the **erasure map** $\mathrm{er} : \{0,1\}\to\{0,1\}$,
+$\mathrm{er}(b) = 0$.
 
 ---
 
-## 3. The information content of a bit
+## 4. The entropic cost of erasure
 
-**Theorem 3.1 (Entropy of the uniform bit; `entropy_uniformBool`).**
-$$H(u) = \ln 2.$$
-*Proof.* $H(u) = -\tfrac12\ln\tfrac12 - \tfrac12\ln\tfrac12 = -\ln\tfrac12 =
-\ln 2.$ $\qquad\blacksquare$
+**Proposition 4.1 (Entropy of the uniform bit).** $H(u) = \ln 2$.
 
-**Theorem 3.2 (Entropy of the erased bit; `entropy_erasedBool`).**
-$$H(e) = 0.$$
-*Proof.* The only nonzero mass is $e(\text{false})=1$, contributing
-$-1\cdot\ln 1 = 0$; the term at $\text{true}$ vanishes by the $0\ln 0 = 0$
-convention. $\qquad\blacksquare$
+*Proof sketch.* Both summands are $\mathrm{negMulLog}(\tfrac12) = -\tfrac12\ln\tfrac12 = \tfrac12\ln 2$;
+their sum is $\ln 2$. $\square$
 
-**Theorem 3.3 (Logical irreversibility; `erasure_not_injective`).** The erasure
-map $\mathrm{er}$ is not injective.
-*Proof.* $\mathrm{er}(\text{true}) = \mathrm{er}(\text{false}) = \text{false}$
-but $\text{true}\ne\text{false}$. $\qquad\blacksquare$
+**Proposition 4.2 (Entropy of the erased bit).** $H(e) = 0$.
 
-**Theorem 3.4 (Entropy loss; `entropy_loss`).**
+*Proof sketch.* The mass-$1$ outcome contributes $\mathrm{negMulLog}(1) = 0$ and
+the mass-$0$ outcome contributes $\mathrm{negMulLog}(0) = 0$. $\square$
+
+**Theorem 4.3 (Entropy loss of erasure).**
 $$H(u) - H(e) = \ln 2.$$
-*Proof.* Immediate from Theorems 3.1 and 3.2. $\qquad\blacksquare$
 
-The entropy loss $\ln 2$ is the purely information-theoretic content that the
-thermodynamic development below will price at $kT\ln 2$.
+*Proof sketch.* Immediate from 4.1 and 4.2. $\square$
 
----
+**Proposition 4.4 (Logical irreversibility).** The erasure map $\mathrm{er}$ is
+*not injective*: $\mathrm{er}(0) = \mathrm{er}(1) = 0$ while $0 \ne 1$.
 
-## 4. The finite-size Landauer identity
-
-The Jarzynski equality fixes not just a bound but an *exact* value for the mean
-work, once one accounts for fluctuations.
-
-**Theorem 4.1 (Jarzynski fluctuation correction; `jarzynski_correction`).** Let
-$p$ be any weight function, $W$ an observable, $\alpha \ne 0$, and suppose the
-Jarzynski condition holds for $(W, \alpha, \Delta F)$. Then
-$$\mathbb{E}_p[W] = \Delta F + \alpha^{-1}\,
-\ln \mathbb{E}_p\!\left[e^{-\alpha(W - \mathbb{E}_p[W])}\right].$$
-
-*Proof sketch.* Factor the centered exponential pointwise,
-$$e^{-\alpha(W(\omega) - \mathbb{E}_p[W])} = e^{\alpha\,\mathbb{E}_p[W]}\,
-e^{-\alpha W(\omega)},$$
-pull the constant $e^{\alpha\,\mathbb{E}_p[W]}$ out of the expectation, and apply
-the Jarzynski condition to the remaining factor:
-$$\mathbb{E}_p\!\left[e^{-\alpha(W-\mathbb{E}_p[W])}\right]
-= e^{\alpha\,\mathbb{E}_p[W]}\,e^{-\alpha\,\Delta F}.$$
-Take logarithms, use $\ln e^x = x$, and solve for $\mathbb{E}_p[W]$. $\qquad\blacksquare$
-
-**Theorem 4.2 (Finite-size Landauer identity; `landauer_identity`).** For a
-one-bit memory with $\Delta F = (H(u)-H(e))/\alpha = (\ln 2)/\alpha$ and the
-Jarzynski condition,
-$$\mathbb{E}_p[W] = \frac{H(u)-H(e)}{\alpha} + \alpha^{-1}\,
-\ln \mathbb{E}_p\!\left[e^{-\alpha(W-\mathbb{E}_p[W])}\right].$$
-*Proof.* Substitute $\Delta F = (H(u)-H(e))/\alpha$ into Theorem 4.1. $\qquad\blacksquare$
-
-This identity has two parts: the reversible free-energy cost (here $(\ln
-2)/\alpha = kT\ln 2$) and a *correction term* depending only on the centered
-fluctuations of the work. The remainder of the thermodynamic story is the
-determination of the sign and vanishing locus of that correction.
+This non-injectivity is the combinatorial origin of the entire thermodynamic
+cost; §10 shows it *forces* strict positivity of dissipated work.
 
 ---
 
-## 5. Landauer's bound as a second-law inequality
+## 5. The Jarzynski correction and the average second law
 
-The engine of the inequality is a single elementary fact.
+### 5.1 The exact finite-size identity
 
-**Lemma 5.1 (Tangent bound).** For all $x\in\mathbb{R}$, $1 + x \le e^x$.
+**Theorem 5.1 (Jarzynski fluctuation correction).** Let $p$ be a PMF, $W$ a work
+observable, $\alpha \ne 0$, and suppose $\mathrm{Jarzynski}(p, W, \alpha, \Delta F)$.
+Then
+$$\boxed{\;\mathrm{E}_p[W] \;=\; \Delta F \;+\; \frac{1}{\alpha}\,\ln \mathrm{E}_p\!\left[e^{-\alpha\,(W - \mathrm{E}_p[W])}\right].\;}$$
 
-**Theorem 5.2 (Finite Jensen-type bound; `expect_add_one_le_expect_exp`).** For
-any PMF $p$ and observable $g$,
-$$1 + \mathbb{E}_p[g] \le \mathbb{E}_p\!\left[e^{g}\right].$$
-*Proof sketch.* Since $\sum_\omega p(\omega) = 1$, write $1 + \mathbb{E}_p[g] =
-\sum_\omega p(\omega)(1 + g(\omega))$. Apply Lemma 5.1 pointwise, $1 + g(\omega)
-\le e^{g(\omega)}$, and sum with nonnegative weights $p(\omega)$. $\qquad\blacksquare$
+*Proof sketch.* Write the centered exponential as
+$e^{-\alpha(W - \mathrm{E}_p[W])} = e^{\alpha \mathrm{E}_p[W]}\,e^{-\alpha W}$.
+Pulling the constant $e^{\alpha \mathrm{E}_p[W]}$ out of the expectation and
+applying the Jarzynski equality gives
+$\mathrm{E}_p[e^{-\alpha(W-\mathrm{E}_p[W])}] = e^{\alpha \mathrm{E}_p[W]}\,e^{-\alpha\Delta F} = e^{\alpha(\mathrm{E}_p[W] - \Delta F)}$.
+Take logarithms, divide by $\alpha$, and rearrange. $\square$
 
-**Lemma 5.3 (Centered work has zero mean; `expect_centered_zero`).** For any PMF
-$p$, observable $W$, and scalar $\alpha$,
-$$\mathbb{E}_p\!\left[-\alpha(W - \mathbb{E}_p[W])\right] = 0.$$
-*Proof.* Linearity of expectation and $\mathbb{E}_p[\mathbb{E}_p[W]] =
-\mathbb{E}_p[W]$ (the mean of a constant, using $\sum p = 1$). $\qquad\blacksquare$
+This identity is *exact* and holds for any finite system; it decomposes the mean
+work into the reversible free-energy cost $\Delta F$ and a fluctuation correction
+determined entirely by the centered work statistics.
 
-Applying Theorem 5.2 with $g = -\alpha(W - \mathbb{E}_p[W])$ and Lemma 5.3 gives
-$1 \le \mathbb{E}_p[e^{-\alpha(W-\mathbb{E}_p[W])}]$
-(`work_fluctuation_ge_one`), hence $\ln(\cdots) \ge 0$
-(`work_correction_nonneg`). The correction term in Theorem 4.1 is therefore
-nonnegative, and we obtain:
+**Corollary 5.2 (Finite-size Landauer identity).** Specializing
+$\Delta F = (H(u) - H(e))/\alpha = \ln 2/\alpha$ yields, for one-bit erasure,
+$$\mathrm{E}_p[W] = \frac{H(u) - H(e)}{\alpha} + \frac{1}{\alpha}\,\ln \mathrm{E}_p\!\left[e^{-\alpha(W - \mathrm{E}_p[W])}\right].$$
 
-**Theorem 5.4 (Second law; `jarzynski_second_law`).** If $\alpha > 0$ and the
-Jarzynski condition holds for $(W,\alpha,\Delta F)$ with $p$ a PMF, then
-$$\Delta F \le \mathbb{E}_p[W].$$
-*Proof.* Rewrite $\mathbb{E}_p[W]$ via Theorem 4.1; the correction
-$\alpha^{-1}\ln(\cdots)$ is a product of $\alpha^{-1} \ge 0$ and a nonnegative
-logarithm, hence $\ge 0$. $\qquad\blacksquare$
+### 5.2 Sign of the correction: the second law
 
-**Theorem 5.5 (Landauer's bound; `landauer_kT_bound`).** For $k, T > 0$, inverse
-temperature $\alpha = (kT)^{-1}$, and $\Delta F = kT\ln 2$ satisfying the
-Jarzynski condition,
-$$kT\ln 2 \le \mathbb{E}_p[W].$$
-*Proof.* Theorem 5.4 with $\alpha = (kT)^{-1} > 0$ and $\Delta F = kT\ln 2$. $\qquad\blacksquare$
+**Lemma 5.3 (Finite Jensen bound).** For any PMF $p$ and observable $g$,
+$$1 + \mathrm{E}_p[g] \le \mathrm{E}_p\!\left[e^{g}\right].$$
 
-**Theorem 5.6 (Cost–entropy bridge; `landauer_cost_eq_entropy_loss`).**
+*Proof sketch.* Apply the pointwise inequality $1 + x \le e^x$ at $x = g(\omega)$,
+multiply by $p(\omega) \ge 0$, and sum; the left side telescopes to
+$\sum_\omega p(\omega)(1 + g(\omega)) = 1 + \mathrm{E}_p[g]$ using
+$\sum_\omega p(\omega) = 1$. $\square$
+
+**Lemma 5.4 (Centered work has zero mean).**
+$\mathrm{E}_p[-\alpha(W - \mathrm{E}_p[W])] = 0$.
+
+*Proof sketch.* Linearity of expectation and $\sum_\omega p(\omega) = 1$. $\square$
+
+**Theorem 5.5 (Work-fluctuation factor $\ge 1$).**
+$$\mathrm{E}_p\!\left[e^{-\alpha(W - \mathrm{E}_p[W])}\right] \ge 1.$$
+
+*Proof sketch.* Apply Lemma 5.3 with $g = -\alpha(W - \mathrm{E}_p[W])$ and use
+$\mathrm{E}_p[g] = 0$ from Lemma 5.4. $\square$
+
+**Corollary 5.6 (Nonnegative correction).**
+$\ln \mathrm{E}_p[e^{-\alpha(W - \mathrm{E}_p[W])}] \ge 0$.
+
+**Theorem 5.7 (Average second law).** If $\alpha > 0$ and
+$\mathrm{Jarzynski}(p, W, \alpha, \Delta F)$, then
+$$\Delta F \le \mathrm{E}_p[W].$$
+
+*Proof sketch.* Substitute Theorem 5.1; the correction term is
+$\alpha^{-1}$ (positive) times a nonnegative logarithm (Corollary 5.6). $\square$
+
+**Theorem 5.8 (Landauer's $kT\ln 2$ bound).** For $k, T > 0$, with
+$\alpha = (kT)^{-1}$ and $\Delta F = kT\ln 2$,
+$$kT\ln 2 \le \mathrm{E}_p[W].$$
+
+*Proof sketch.* Theorem 5.7 with $\alpha = (kT)^{-1} > 0$. $\square$
+
+**Theorem 5.9 (Cost–entropy-loss bridge).**
 $$kT\ln 2 = kT\,(H(u) - H(e)).$$
-*Proof.* Theorem 3.4. $\qquad\blacksquare$
 
-**Theorem 5.7 (Logical $\Rightarrow$ thermodynamic irreversibility;
-`logical_to_thermodynamic_irreversibility`).** For $k,T>0$ and the Jarzynski
-condition for one-bit erasure, the erasure map is not injective *and* the mean
-dissipated work is strictly positive:
-$$\neg\,\mathrm{Injective}(\mathrm{er}) \quad\wedge\quad 0 < \mathbb{E}_p[W].$$
-*Proof.* Non-injectivity is Theorem 3.3. For positivity, Theorem 5.5 gives
-$\mathbb{E}_p[W] \ge kT\ln 2 > 0$ since $k,T>0$ and $\ln 2 > 0$. $\qquad\blacksquare$
-
-Theorem 5.7 is the formal heart of Landauer's principle: the many-to-one
-character of erasure (a statement of pure logic) forces strictly positive heat
-dissipation (a statement of pure thermodynamics).
+*Proof sketch.* Theorem 4.3. $\square$
 
 ---
 
-## 6. Saturation: when is the bound tight?
+## 6. Saturation: the reversible limit
 
-The second-law inequality leaves open the equality case. The strict tangent
-bound resolves it completely.
+The second law of §5 is an inequality; we now characterize equality exactly.
 
-**Lemma 6.1 (Strict tangent bound).** For $x \ne 0$, $1 + x < e^x$.
+**Lemma 6.1 (Strict Jensen bound).** If $g(\omega) \ne 0$ for some $\omega$ with
+$p(\omega) > 0$, then $1 + \mathrm{E}_p[g] < \mathrm{E}_p[e^g]$.
 
-**Theorem 6.2 (Strict Jensen bound; `expect_add_one_lt_expect_exp`).** Let $p$
-be a PMF and $g$ an observable. If there exists $\omega$ with $p(\omega) > 0$ and
-$g(\omega) \ne 0$, then
-$$1 + \mathbb{E}_p[g] < \mathbb{E}_p\!\left[e^g\right].$$
-*Proof sketch.* As in Theorem 5.2, the summands satisfy $p(\omega)(1+g(\omega))
-\le p(\omega)e^{g(\omega)}$ everywhere, and *strictly* at the witnessing
-$\omega$ (where $p(\omega)>0$ and $g(\omega)\ne 0$ give strict Lemma 6.1). A sum
-with one strict term and the rest weak is strict. $\qquad\blacksquare$
+*Proof sketch.* As in Lemma 5.3, but the pointwise inequality is *strict*
+($1 + x < e^x$ for $x \ne 0$) at the witnessing $\omega$, whose positive weight
+makes the summed inequality strict. $\square$
 
-**Theorem 6.3 (Strict Landauer bound; `landauer_kT_bound_strict`).** For
-$k,T>0$, the Jarzynski condition for one-bit erasure, and a genuinely
-fluctuating work — i.e. some $\omega$ with $p(\omega)>0$ and $W(\omega) \ne
-\mathbb{E}_p[W]$ — we have
-$$kT\ln 2 < \mathbb{E}_p[W].$$
-*Proof sketch.* The witness $\omega$ makes $g = -\alpha(W-\mathbb{E}_p[W])$
-nonzero on the support ($\alpha\ne0$), so Theorem 6.2 gives a *strictly*
-greater-than-one fluctuation factor, hence a strictly positive correction in
-Theorem 4.1. $\qquad\blacksquare$
+**Theorem 6.2 (Equality case of the fluctuation factor).** For $\alpha \ne 0$,
+$$\mathrm{E}_p\!\left[e^{-\alpha(W - \mathrm{E}_p[W])}\right] = 1 \iff \forall \omega,\; p(\omega) > 0 \Rightarrow W(\omega) = \mathrm{E}_p[W].$$
 
-**Theorem 6.4 (Saturation criterion; `landauer_saturation_iff`,
-`jarzynski_second_law_eq_iff`, `work_fluctuation_eq_one_iff`).** For $k,T>0$ and
-the Jarzynski condition,
-$$kT\ln 2 = \mathbb{E}_p[W] \iff \forall\omega\,(\,p(\omega)>0 \Rightarrow
-W(\omega) = \mathbb{E}_p[W]\,).$$
-That is, Landauer's bound is saturated **iff** the erasure work has no
-fluctuations on the support of $p$.
-*Proof sketch.* ($\Leftarrow$) If $W$ is constant $=\mathbb{E}_p[W]$ on the
-support, every nonzero-weight term of $\mathbb{E}_p[e^{-\alpha(W-\mathbb{E}_p[W])}]$
-equals $p(\omega)\cdot e^0 = p(\omega)$, summing to $1$; the correction
-vanishes. ($\Rightarrow$) Contrapositive is Theorem 6.3: any support fluctuation
-forces strict inequality. $\qquad\blacksquare$
+That is, the factor equals $1$ exactly when the work is *constant on the support*.
 
-**Physical interpretation.** The clean value $kT\ln 2$ is achieved only in the
-quasi-static, zero-fluctuation (reversible) limit. *Every* genuinely stochastic
-nanoscale erasure dissipates strictly more on average. The fluctuation
-correction is the thermodynamic-irreversibility surcharge; it is strictly
-positive off the reversible manifold $\{W \text{ constant on } \mathrm{supp}\,p\}$
-and vanishes exactly on it.
+*Proof sketch.* ($\Leftarrow$) If $W$ is constant on the support, every nonzero
+term is $p(\omega)\,e^0 = p(\omega)$, summing to $1$. ($\Rightarrow$)
+Contrapositive: a point of the support with $W(\omega) \ne \mathrm{E}_p[W]$
+triggers the strict inequality of Lemma 6.1. $\square$
+
+**Theorem 6.3 (Strict second law).** If $\alpha > 0$,
+$\mathrm{Jarzynski}(p,W,\alpha,\Delta F)$, and $W$ fluctuates on the support
+(some $\omega$ with $p(\omega) > 0$ and $W(\omega) \ne \mathrm{E}_p[W]$), then
+$$\Delta F < \mathrm{E}_p[W].$$
+
+*Proof sketch.* The correction term in Theorem 5.1 is $\alpha^{-1}$ times the
+logarithm of a factor strictly above $1$ (Theorem 6.2, strict direction). $\square$
+
+**Theorem 6.4 (Landauer saturation $\iff$ reversibility).** For $k, T > 0$ and
+$\Delta F = kT\ln 2$,
+$$kT\ln 2 = \mathrm{E}_p[W] \iff \forall \omega,\; p(\omega) > 0 \Rightarrow W(\omega) = \mathrm{E}_p[W].$$
+
+*Proof sketch.* Combine Theorems 5.1 and 6.2: the gap
+$\mathrm{E}_p[W] - kT\ln 2$ equals $\alpha^{-1}\ln(\text{factor})$, which is zero
+iff the factor is $1$ iff the work is constant on the support. $\square$
+
+Thus the textbook value $kT\ln 2$ is a *floor* attained only in the idealized,
+fluctuation-free (quasi-static, reversible) limit; any genuinely fluctuating
+erasure dissipates strictly more (Theorem 6.3).
 
 ---
 
-## 7. The relative-entropy account
+## 7. Fluctuation theorem: bounding second-law violations
 
-A second, dual derivation expresses the cost as a Kullback–Leibler divergence.
+The bound $kT\ln 2$ is an average. Individual realizations may undershoot it; we
+bound the probability of doing so.
 
-**Definition 7.1 (Relative entropy).** For weight functions $p, q$,
-$$D(p\,\|\,q) := \sum_\omega p(\omega)\,\ln\frac{p(\omega)}{q(\omega)}.$$
-The leading factor $p(\omega)$ makes the convention $0\ln 0 = 0$ automatic.
+**Theorem 7.1 (Exponential violation bound).** If $\alpha > 0$ and
+$\mathrm{Jarzynski}(p,W,\alpha,\Delta F)$, then for any margin $\xi$,
+$$\sum_{\omega : W(\omega) < \Delta F - \xi} p(\omega) \;\le\; e^{-\alpha\,\xi}.$$
 
-**Theorem 7.2 (Gibbs' inequality; `relativeEntropy_nonneg`).** If $p, q$ are
-PMFs and $q(\omega) > 0$ for all $\omega$, then $D(p\,\|\,q) \ge 0$.
-*Proof sketch.* For each $\omega$ with $p(\omega)>0$, the dual bound $\ln x \le
-x-1$ applied to $x = q(\omega)/p(\omega)$ gives, after multiplying by $p(\omega)$
-and rearranging,
-$$p(\omega)\,\ln\frac{p(\omega)}{q(\omega)} \ge p(\omega) - q(\omega);$$
-the inequality also holds (as $0 \ge -q(\omega)$ would, but precisely as an
-equality of the convention) at $\omega$ with $p(\omega)=0$. Summing over
-$\omega$ and using $\sum p = \sum q = 1$,
-$$D(p\,\|\,q) \ge \sum_\omega (p(\omega)-q(\omega)) = 1 - 1 = 0. \qquad\blacksquare$$
+*Proof sketch.* (Chernoff/Markov on the Jarzynski sum.) Restrict the Jarzynski
+sum to the violation set $S = \{\omega : W(\omega) < \Delta F - \xi\}$; since each
+summand $p(\omega)e^{-\alpha W(\omega)}$ is nonnegative, the restricted sum is
+$\le e^{-\alpha\Delta F}$. On $S$ we have $-\alpha W(\omega) > -\alpha(\Delta F - \xi)$,
+so $e^{-\alpha W(\omega)} > e^{-\alpha(\Delta F - \xi)}$. Hence
+$\big(\sum_{S} p(\omega)\big) e^{-\alpha(\Delta F - \xi)} \le e^{-\alpha\Delta F}$,
+i.e. $\sum_S p(\omega) \le e^{-\alpha\xi}$. $\square$
 
-**Theorem 7.3 (Self-divergence; `relativeEntropy_self`).** $D(p\,\|\,p) = 0$.
+**Theorem 7.2 (No certain violation).** If $\xi \ge 0$ and there exists $\omega_0$
+with $p(\omega_0) > 0$ and $W(\omega_0) \ge \Delta F$, then
+$\sum_{\omega : W(\omega) < \Delta F - \xi} p(\omega) < 1$. Landauer's bound can
+never be violated with certainty.
 
-**Theorem 7.4 (Erased-vs-uniform divergence; `relativeEntropy_erased_uniform`).**
-$$D(e\,\|\,u) = \ln 2.$$
-*Proof.* Only $\omega=\text{false}$ contributes: $1\cdot\ln(1/\tfrac12) = \ln 2$.
-$\qquad\blacksquare$
+*Proof sketch.* The violation set omits $\omega_0$, so its total mass is at most
+$1 - p(\omega_0) < 1$. $\square$
 
-**Theorem 7.5 (Two accounts agree; `relativeEntropy_eq_entropy_loss`).**
-$$D(e\,\|\,u) = H(u) - H(e).$$
-*Proof.* Both equal $\ln 2$ (Theorems 7.4 and 3.4). $\qquad\blacksquare$
+**Theorem 7.3 (Landauer violation bound).** For one-bit erasure with
+$\alpha = (kT)^{-1}$, $\Delta F = kT\ln 2$,
+$$\sum_{\omega : W(\omega) < kT\ln 2 - \xi} p(\omega) \;\le\; e^{-\xi/(kT)}.$$
 
-**Theorem 7.6 (Cost as relative entropy; `landauer_cost_eq_relative_entropy`).**
-$$kT\ln 2 = kT\,D(e\,\|\,u).$$
-
-**Theorem 7.7 (Nonnegative relative-entropy work; `landauer_work_nonneg_via_gibbs`).**
-For PMFs $p,q$ with $q>0$ and $k,T\ge 0$, $0 \le kT\,D(p\,\|\,q)$.
-*Proof.* Gibbs' inequality (Theorem 7.2) and nonnegativity of $kT$. $\qquad\blacksquare$
-
-Thermodynamically, $kT\,D(p\,\|\,q)$ is the excess free energy of a state $p$
-relative to an equilibrium reference $q$ — the minimal work to prepare or erase
-it [Esposito & Van den Broeck 2011]. The remarkable coincidence of Theorem 7.5 —
-an asymmetric divergence equalling a single-distribution entropy difference — is
-the mathematical signature of a unique underlying cost.
+**Theorem 7.4 (Monotone decay).** For $k, T > 0$ and $\xi_1 < \xi_2$,
+$e^{-\xi_2/(kT)} < e^{-\xi_1/(kT)}$: larger violations are exponentially rarer.
 
 ---
 
-## 8. The deterministic data-processing inequality
+## 8. Extensivity: the thermodynamic limit
 
-The most general formulation places erasure within the class of all
-deterministic computations.
+**Theorem 8.1 (Entropy of a uniform $N$-state register).** If $|\Omega| = N > 0$,
+the uniform PMF $p(\omega) = 1/N$ has $H(p) = \ln N$.
 
-**Definition 8.1 (Pushforward).** For $f : \alpha \to \beta$ (finite types) and
-weights $p:\alpha\to\mathbb{R}$, the pushforward $f_*p:\beta\to\mathbb{R}$ is
-$$(f_*p)(y) := \sum_{x : f(x)=y} p(x).$$
+*Proof sketch.* Each of the $N$ summands equals $\mathrm{negMulLog}(1/N) = \tfrac1N\ln N$;
+their sum is $\ln N$. $\square$
 
-The pushforward of a distribution is a distribution
-(`pushforwardFun_isDistribution`): nonnegativity is termwise, and total mass is
-preserved by fiberwise summation, $\sum_y (f_*p)(y) = \sum_x p(x)$.
+**Theorem 8.2 (Maximal entropy of an $n$-bit register).** With $|\Omega| = 2^n$,
+the uniform PMF has $H(p) = n\ln 2$. In particular the uniform distribution on
+$\{0,1\}^n$ has entropy $n\ln 2$.
 
-**Theorem 8.2 (Data-processing inequality; `shannonEntropy_pushforward_le`).**
-For any $f:\alpha\to\beta$ and nonnegative weights $p$,
-$$H(f_*p) \le H(p).$$
-A deterministic computation never increases Shannon entropy.
-*Proof sketch.* The key pointwise fact is fiber domination: since $x$ lies in
-its own fiber $f^{-1}\{f(x)\}$ and the other terms are nonnegative,
-$$p(x) \le (f_*p)(f(x)).$$
-Reindexing the pushforward entropy fiberwise,
-$$H(f_*p) = -\sum_x p(x)\,\ln (f_*p)(f(x)).$$
-Hence the gap telescopes to a sum of nonnegative terms,
-$$H(p) - H(f_*p) = \sum_x p(x)\,\big(\ln (f_*p)(f(x)) - \ln p(x)\big) \ge 0,$$
-each term nonnegative by monotonicity of $\ln$ applied to $p(x) \le
-(f_*p)(f(x))$. $\qquad\blacksquare$
+*Proof sketch.* Theorem 8.1 with $N = 2^n$ and $\ln(2^n) = n\ln 2$. $\square$
 
-**Theorem 8.3 (Reversible $\Rightarrow$ free;
-`shannonEntropy_pushforward_of_injective`).** If $f$ is injective then $H(f_*p) =
-H(p)$.
-*Proof sketch.* Injectivity makes every fiber a singleton, so $(f_*p)(f(x)) =
-p(x)$ and the gap above vanishes termwise. $\qquad\blacksquare$
+**Theorem 8.3 (Extensive Landauer bound).** For an $n$-bit memory at $k, T > 0$
+with $\alpha = (kT)^{-1}$ and $\Delta F = n\,kT\ln 2$,
+$$n\,kT\ln 2 \le \mathrm{E}_p[W].$$
 
-**Theorem 8.4 (Landauer lower bound; `landauer_lower_bound`).** For $k,T\ge 0$,
-$$0 \le kT\,\big(H(p) - H(f_*p)\big).$$
-**Theorem 8.5 (Reversible computations dissipate no heat;
-`landauer_lower_bound_zero_of_injective`).** If $f$ is injective,
-$$kT\,\big(H(p) - H(f_*p)\big) = 0.$$
+*Proof sketch.* Theorem 5.7 (second law) with the extensive free-energy cost. $\square$
 
-Erasure is the extremal case of Theorem 8.2 ($f$ collapses all states to one,
-maximizing the entropy drop); bijections are the equality case (Theorem 8.3),
-recovering Bennett's principle that reversible computation can be performed
-without dissipation.
-
----
-
-## 9. Extensivity and the thermodynamic limit
-
-**Theorem 9.1 (Entropy of a uniform distribution; `entropy_uniform`).** If
-$\Omega$ has $N>0$ states, the uniform distribution $p(\omega)=1/N$ has
-$$H(p) = \ln N.$$
-*Proof.* Each of $N$ terms is $-\tfrac1N\ln\tfrac1N = \tfrac1N\ln N$; summing,
-$H = \ln N$. $\qquad\blacksquare$
-
-**Theorem 9.2 (Maximal entropy of an $n$-bit register;
-`entropy_uniform_pow_two`, `entropy_uniform_bits`).** The uniform distribution on
-$2^n$ states (e.g. on $\mathrm{Fin}\,n \to \mathrm{Bool}$) has entropy
-$$H = \ln(2^n) = n\ln 2.$$
-*Proof.* Theorem 9.1 with $N=2^n$ and $\ln(2^n) = n\ln 2$. $\qquad\blacksquare$
-
-**Theorem 9.3 (Extensive Landauer bound; `landauer_nbit_work_bound`).** Erasing
-an $n$-bit memory, modeled by the Jarzynski condition at $\alpha=(kT)^{-1}$ with
-$\Delta F = n\,kT\ln 2$, dissipates
-$$n\,kT\ln 2 \le \mathbb{E}_p[W].$$
-*Proof.* Theorem 5.4 with $\Delta F = n\,kT\ln 2$. $\qquad\blacksquare$
-
-**Theorem 9.4 (Exact per-bit cost; `landauer_per_bit_cost`).** For $n>0$,
+**Theorem 8.4 (Exact per-bit cost).** For $n > 0$,
 $$\frac{n\,kT\ln 2}{n} = kT\ln 2.$$
 
-The per-bit cost is *exactly* $kT\ln 2$ for every register size — the strongest
-(non-asymptotic) form of the thermodynamic limit, expressing the extensivity of
-the bound.
+The per-bit cost is *exactly* $kT\ln 2$ for every register size — the strongest,
+non-asymptotic form of the thermodynamic limit.
 
 ---
 
-## 10. Algorithms
+## 9. The relative-entropy account and maximum entropy
 
-The constructive content yields directly executable procedures (see the
-accompanying `demo.py`):
+Landauer's cost admits a second, dual description through relative entropy.
 
-- **Finite-Jarzynski work decomposition.** Given $(p, W, \alpha)$, compute
-  $\Delta F = -\alpha^{-1}\ln\mathbb{E}_p[e^{-\alpha W}]$, the mean
-  $\mathbb{E}_p[W]$, and the fluctuation correction $\mathbb{E}_p[W] - \Delta F
-  = \alpha^{-1}\ln\mathbb{E}_p[e^{-\alpha(W-\mathbb{E}_p[W])}]$, verifying the
-  identity of Theorem 4.1 and the nonnegativity of the correction.
-- **Saturation detector.** Given $(p, W)$, test whether $W$ is constant on
-  $\{\omega : p(\omega)>0\}$; this predicts (by Theorem 6.4) whether the bound is
-  saturated or strict.
-- **Pushforward entropy / data-processing checker.** Given $f$ and $p$, build
-  $f_*p$ and compare $H(f_*p)$ with $H(p)$ to confirm Theorem 8.2 and detect
-  injectivity-driven equality (Theorem 8.3).
-- **Relative-entropy cost.** Given $(p,q)$ with $q>0$, compute $D(p\|q)$ and the
-  Landauer work $kT\,D(p\|q)$, illustrating Gibbs' inequality and Theorem 7.6.
+**Theorem 9.1 (Self-divergence).** $D(p \,\|\, p) = 0$.
+
+*Proof sketch.* Each term is either $p(\omega)\ln 1 = 0$ or $0\cdot(\cdots) = 0$. $\square$
+
+**Theorem 9.2 (Gibbs' inequality).** For PMFs $p, q$ with $q(\omega) > 0$ for all
+$\omega$,
+$$D(p \,\|\, q) \ge 0.$$
+
+*Proof sketch.* From $\ln x \le x - 1$ applied to $x = q(\omega)/p(\omega)$ one
+obtains the pointwise bound
+$p(\omega)\ln\frac{p(\omega)}{q(\omega)} \ge p(\omega) - q(\omega)$ (with the
+$p(\omega)=0$ terms handled by the convention). Summing,
+$D(p\,\|\,q) \ge \sum_\omega (p(\omega) - q(\omega)) = 1 - 1 = 0$. $\square$
+
+**Theorem 9.3 (Erased-vs-uniform divergence).**
+$D(e \,\|\, u) = \ln 2$.
+
+*Proof sketch.* Only the $b=0$ outcome contributes:
+$1\cdot\ln\frac{1}{1/2} = \ln 2$. $\square$
+
+**Theorem 9.4 (Unification of the two accounts).**
+$$D(e \,\|\, u) = H(u) - H(e).$$
+
+*Proof sketch.* Both equal $\ln 2$ (Theorems 9.3 and 4.3). $\square$
+
+**Theorem 9.5 (Cost as relative entropy).**
+$kT\ln 2 = kT\,D(e \,\|\, u)$, and for any PMFs $p,q$ with $q>0$ and $k,T \ge 0$,
+$0 \le kT\,D(p\,\|\,q)$.
+
+*Proof sketch.* Theorem 9.3 for the first identity; Gibbs (9.2) plus
+nonnegativity of $kT$ for the second. $\square$
+
+**Theorem 9.6 (Entropy–relative-entropy identity).** For any PMF $p$ on an
+$N$-state space with uniform reference $u_N$,
+$$H(p) = \ln N - D(p \,\|\, u_N).$$
+
+*Proof sketch.* Expand $D(p\,\|\,u_N) = \sum_\omega p(\omega)\ln(p(\omega)N) = \sum_\omega p(\omega)\ln p(\omega) + \ln N \sum_\omega p(\omega) = -H(p) + \ln N$. $\square$
+
+**Theorem 9.7 (Maximum-entropy bound).** For any PMF $p$ on an $N$-state space,
+$$H(p) \le \ln N,$$
+with the uniform distribution attaining equality ($H(u_N) = \ln N$).
+
+*Proof sketch.* Theorem 9.6 and Gibbs ($D \ge 0$). $\square$
+
+**Theorem 9.8 (Generalized Landauer bound).** For an arbitrary initial PMF $p$
+erased at $\Delta F = kT\,H(p)$ with $\alpha = (kT)^{-1}$, $k, T > 0$,
+$$kT\,H(p) \le \mathrm{E}_p[W].$$
+
+*Proof sketch.* Theorem 5.7 (second law) with the entropy-scaled free-energy cost. $\square$
+
+**Theorem 9.9 (Uniform memory is worst-case).** For $k, T \ge 0$,
+$$kT\,H(p) \le kT\ln N.$$
+
+*Proof sketch.* Theorem 9.7 multiplied by $kT \ge 0$. $\square$
 
 ---
 
-## 11. Applications and discussion
+## 10. Data processing and the logical-to-thermodynamic bridge
 
-**Maxwell's demon and the thermodynamics of computation.** Theorem 5.7
-formalizes the modern resolution of the Maxwell-demon paradox: the demon's
-memory erasure is logically irreversible (Theorem 3.3) and therefore
-thermodynamically costly (positive dissipation), restoring the second law. The
-data-processing inequality (Theorem 8.2) extends this from erasure to *every*
-deterministic operation, with reversible computation (Theorem 8.3) as the free
-boundary [Bennett 1973].
+We now treat *deterministic computation* abstractly as a function
+$f : \alpha\text{-space} \to \beta\text{-space}$ acting on a weight $p$, with
+pushforward (image) weight
+$$(f_* p)(y) = \sum_{x : f(x) = y} p(x).$$
 
-**Nanoscale device engineering.** The saturation theorem (Theorem 6.4) is the
-operationally important refinement: it tells device designers that the textbook
-$kT\ln 2$ floor is not merely hard to reach but is *unattainable* by any
-genuinely stochastic protocol — the residual fluctuation correction is an
-irreducible energy tax that shrinks only as the protocol approaches the
-quasi-static limit. As CMOS scaling pushes per-operation energies toward $kT$,
-this finite-size correction transitions from negligible to design-relevant.
+**Theorem 10.1 (Deterministic data-processing inequality).** For nonnegative
+weights $p$,
+$$H(f_* p) \le H(p).$$
+A deterministic map never increases Shannon entropy.
 
-**Two information measures, one cost.** Sections 3, 7, and 8 give three
-independent information-theoretic certificates of the same number $\ln 2$:
-Shannon entropy loss, relative entropy from equilibrium, and the extremal
-entropy collapse of the data-processing inequality. Their agreement (Theorem
-7.5) is a structural feature, not a coincidence, and supports the view that the
-thermodynamic cost of forgetting is a well-defined invariant of the logical
-operation.
+*Proof sketch.* Reindex $H(f_*p)$ as a sum over the domain:
+$H(f_*p) = -\sum_x p(x)\ln (f_*p)(f(x))$. Since $(f_*p)(f(x)) \ge p(x) \ge 0$ and
+$\ln$ is monotone, each term satisfies
+$p(x)\ln p(x) \le p(x)\ln (f_*p)(f(x))$, giving $H(f_*p) \le H(p)$. $\square$
 
-**Economy of method.** Every inequality reduces to $1+x\le e^x$ (strict for
-$x\ne0$) or its dual $\ln x \le x-1$. The avoidance of Jensen/convexity
-machinery is not merely aesthetic: it makes the entire chain robust, fully
-finite, and free of integrability or measurability side conditions.
+**Theorem 10.2 (Reversibility preserves entropy).** If $f$ is injective,
+$$H(f_* p) = H(p).$$
+
+*Proof sketch.* Each fiber $\{x : f(x) = f(x_0)\}$ is the singleton $\{x_0\}$, so
+$(f_*p)(f(x)) = p(x)$ and the reindexed sums coincide. $\square$
+
+**Theorem 10.3 (Landauer lower bound for computation).** For $k, T \ge 0$,
+$$0 \le kT\,\big(H(p) - H(f_* p)\big),$$
+with equality $kT\,(H(p) - H(f_*p)) = 0$ whenever $f$ is injective.
+
+*Proof sketch.* Theorem 10.1 gives $H(p) - H(f_*p) \ge 0$; multiply by
+$kT \ge 0$. Injectivity (Theorem 10.2) makes the bracket zero. $\square$
+
+Reversible (injective) computations therefore form the zero-dissipation boundary:
+they may compute without paying Landauer's toll precisely because they discard no
+information.
+
+**Theorem 10.4 (Logical irreversibility forces thermodynamic irreversibility).**
+For a one-bit memory at $k, T > 0$ with $\alpha = (kT)^{-1}$,
+$\Delta F = kT\ln 2$, and $\mathrm{Jarzynski}(p, W, \alpha, kT\ln 2)$,
+$$\mathrm{er}\ \text{is not injective} \quad\wedge\quad 0 < \mathrm{E}_p[W].$$
+
+*Proof sketch.* Non-injectivity is Proposition 4.4. For the strict positivity,
+Theorem 5.8 gives $kT\ln 2 \le \mathrm{E}_p[W]$, and $kT\ln 2 > 0$ because
+$k, T > 0$ and $\ln 2 > 0$. $\square$
+
+This is the conceptual summit of the theory: a purely *combinatorial* fact (two
+inputs of the erasure map share an output) is converted, through the Jarzynski
+equality and the second law, into a *physical* one (strictly positive dissipated
+work). Information is physical, and forgetting is never free.
 
 ---
 
-## 12. Future directions
+## 11. Algorithms
 
-This development establishes the finite-size Landauer identity, its second-law
-sharpening, the saturation criterion, the relative-entropy and data-processing
-bridges, and extensivity. Natural next steps, building on the same
-moment-generating-function and convexity backbone, include:
+The theory is constructive enough to support direct numerical verification. We
+record the main computational primitives.
 
-1. **Two-sided (Gaussian-tail) concentration of erasure work.** If the centered
-   work is bounded, $|W(\omega) - \mathbb{E}[W]| \le M$ on the support, the same
-   MGF identity that yields the one-sided Chernoff bound $P(W < \Delta F - \xi)
-   \le e^{-\alpha\xi}$ should upgrade to a Hoeffding-type two-sided bound
-   $P(|W - \mathbb{E}[W]| \ge t) \le 2e^{-t^2/(2M^2)}$, so dissipated work
-   concentrates in an $O(M)$ window around its mean.
-2. **Quadratic finite-size correction via the work variance.** On a bounded
-   range, $e^y \ge 1 + y + c\,y^2$, so the Jensen gap of the second-law proof can
-   be replaced by a quantitative lower bound $\mathbb{E}[W] - \Delta F \ge
-   c(M)\,\alpha\,\mathrm{Var}_p(W)$, sharpening the qualitative saturation result
-   into a quantitative correction controlled by the second moment.
-3. **Integral-fluctuation / Chernoff layer.** Packaging the Jarzynski identity
-   $\mathbb{E}[e^{-\alpha W}] = e^{-\alpha\Delta F}$ as a tail bound formalizes
-   that second-law violations are exponentially rare in the violation margin and
-   can never occur with certainty.
-4. **Maximum-entropy generalization.** The identity $H(p) = \ln N - D(p\|u)$
-   (via Gibbs' inequality, Theorem 7.2) yields $H(p) \le \ln N$ and the
-   generalized Landauer bound $kT\,H(p) \le \mathbb{E}[W]$ for arbitrary initial
-   distributions, with uniform memory the worst case to erase.
+**Algorithm A (Entropy and divergence evaluation).** Given a PMF as an array,
+compute $H(p) = -\sum_\omega p(\omega)\ln p(\omega)$ and
+$D(p\,\|\,q) = \sum_\omega p(\omega)\ln(p(\omega)/q(\omega))$, using the
+convention that any term with $p(\omega) = 0$ is skipped. Complexity $O(|\Omega|)$.
+
+**Algorithm B (Jarzynski-consistency and bound check).** Given a work observable
+$W$ and a PMF $p$, compute $\mathrm{E}_p[e^{-\alpha W}]$ and read off the implied
+$\Delta F = -\alpha^{-1}\ln \mathrm{E}_p[e^{-\alpha W}]$; then verify the second-law
+inequality $\Delta F \le \mathrm{E}_p[W]$ and decompose the gap into the
+fluctuation correction $\alpha^{-1}\ln \mathrm{E}_p[e^{-\alpha(W - \mathrm{E}_p[W])}]$.
+Complexity $O(|\Omega|)$.
+
+**Algorithm C (Violation-probability bound).** For a margin $\xi$, compute the
+empirical violation mass $\sum_{\omega : W(\omega) < \Delta F - \xi} p(\omega)$
+and compare against the Chernoff ceiling $e^{-\alpha\xi}$. Complexity $O(|\Omega|)$.
+
+---
+
+## 12. Applications and discussion
+
+**Limits of computation.** The extensive bound (§8) sets a hard floor on the
+energy cost of irreversible computation: a processor performing $R$ bit-erasures
+per second at temperature $T$ must dissipate at least $R\,kT\ln 2$ watts. While
+present technology operates orders of magnitude above this floor, the gap narrows
+as devices approach the single-electron scale.
+
+**Reversible and adiabatic computing.** Theorem 10.3 formalizes the principle
+behind reversible computing: only the *erasure* of information, not computation
+per se, carries an unavoidable thermodynamic cost. Logically reversible circuits,
+which retain enough information to be run backwards, can in principle compute
+arbitrarily close to zero dissipation, deferring the Landauer cost to the final
+memory reset.
+
+**Maxwell's demon.** The bridge theorem (10.4) is the modern resolution of the
+demon paradox: the demon's apparent entropy reduction is exactly compensated when
+it must erase its measurement record, paying back $kT\ln 2$ per recorded bit.
+
+**Fluctuations and single-molecule experiments.** The finite-size identity (5.1),
+saturation (6.4) and violation bound (7.3) are precisely the statements probed in
+single-bit erasure experiments, where the full work distribution — not just its
+mean — is measured, and transient sub-Landauer events are observed with the
+predicted exponentially small frequency.
+
+---
+
+## 13. Future directions
+
+A correlated-erasure extension introduces marginals and mutual information of a
+joint distribution, a strengthened Gibbs inequality under absolute continuity, the
+decomposition $I(X;Y) = H(X) + H(Y) - H(X,Y)$, subadditivity of Shannon entropy,
+and a $kT\cdot I(X;Y)$ correlation saving for joint erasure with a concrete
+perfectly-correlated two-bit example. Building on this, the natural conjectures
+are: (C1) **strong subadditivity** $H(X,Y,Z) + H(Y) \le H(X,Y) + H(Y,Z)$ via a
+doubly-conditioned relative entropy; (C2) a **conditional Landauer bound**
+$kT\,H(X\mid Y)$ for erasure with side information, predicting free erasure for a
+demon holding a perfect copy; (C3) **saturation of subadditivity $\iff$
+independence** via the equality case of Gibbs; (C4) the **data-processing
+inequality for relative entropy** $D(Tp\,\|\,Tq) \le D(p\,\|\,q)$ for stochastic
+maps $T$, implying post-processing cannot increase the Landauer saving; and (C5) a
+**mutual-information fluctuation theorem** bounding the probability that a single
+correlated-erasure run fails to achieve the $kT\,I(X;Y)$ saving by margin $\xi$ at
+$e^{-\xi/(kT)}$.
+
+---
+
+## 14. Conclusion
+
+We have given a complete, first-principles, finite-size theory of Landauer's
+principle. The single-bit bound $kT\ln 2$ emerges as the average case of an exact
+fluctuation identity; it is saturated only reversibly; it is protected against
+violation by an exponential fluctuation theorem; it scales extensively to
+$n\,kT\ln 2$; it admits a dual relative-entropy formulation tied to a
+maximum-entropy bound; and it is *forced* by the non-injectivity of the erasure
+map through a data-processing inequality. The entire edifice rests on two scalar
+inequalities, $1 + x \le e^x$ and $\ln x \le x - 1$, together with the finite
+Jarzynski equality — a striking demonstration that the deepest statement in the
+thermodynamics of information is, at bottom, elementary.
 
 ---
 
 ## References
 
-- Landauer, R. (1961). *Irreversibility and heat generation in the computing
-  process.* IBM J. Res. Dev. 5, 183–191.
-- Bennett, C. H. (1973). *Logical reversibility of computation.* IBM J. Res.
-  Dev. 17, 525–532.
-- Bennett, C. H. (1982). *The thermodynamics of computation — a review.* Int. J.
-  Theor. Phys. 21, 905–940.
-- Jarzynski, C. (1997). *Nonequilibrium equality for free energy differences.*
-  Phys. Rev. Lett. 78, 2690–2693.
-- Kullback, S. & Leibler, R. A. (1951). *On information and sufficiency.* Ann.
-  Math. Stat. 22, 79–86.
-- Cover, T. M. & Thomas, J. A. (2006). *Elements of Information Theory*, 2nd ed.
-  Wiley.
-- Plenio, M. B. & Vitelli, V. (2001). *The physics of forgetting: Landauer's
-  erasure principle and information theory.* Contemp. Phys. 42, 25–60.
-- Esposito, M. & Van den Broeck, C. (2011). *Second law and Landauer principle
-  far from equilibrium.* EPL 95, 40004.
-- Sagawa, T. (2014). *Thermodynamic and logical reversibilities revisited.* J.
-  Stat. Mech. P03025.
+- Bennett, C. H. (1982). The thermodynamics of computation — a review.
+  *International Journal of Theoretical Physics*, 21, 905–940.
+- Esposito, M. & Van den Broeck, C. (2011). Second law and Landauer principle far
+  from equilibrium. *EPL*, 95, 40004.
+- Jarzynski, C. (1997). Nonequilibrium equality for free energy differences.
+  *Physical Review Letters*, 78, 2690.
+- Kullback, S. & Leibler, R. A. (1951). On information and sufficiency.
+  *Annals of Mathematical Statistics*, 22, 79–86.
+- Landauer, R. (1961). Irreversibility and heat generation in the computing
+  process. *IBM Journal of Research and Development*, 5, 183–191.
+- Plenio, M. B. & Vitelli, V. (2001). The physics of forgetting: Landauer's
+  erasure principle and information theory. *Contemporary Physics*, 42, 25–60.
