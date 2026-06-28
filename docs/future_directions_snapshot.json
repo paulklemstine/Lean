@@ -1097,7 +1097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31c996e4",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domain_bridges": [],
     "domains": [
@@ -1109,7 +1109,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -2909,7 +2909,7 @@
       "YanJin2024",
       "Bouchet1987"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a68949c",
     "description": "For every binary delta-matroid and every nontrivial twuality operator $\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the partial-$\\bullet$ polynomial $^\\partial w_D^\\bullet(z)$ is either even, odd, or both even-interpolating and odd-interpolating.",
     "domain_bridges": [
       "Delta-matroid theory",
@@ -2925,7 +2925,7 @@
     "proof_strategy": "Formalize delta-matroids and binary delta-matroids over a finite ground set, define the five twuality operators (twist, loop complementation, and their compositions), and construct the partial-twuality polynomial using the width function. Establish the parity and interpolation properties of the polynomial coefficients by analyzing how the twuality operators transform the feasible sets of a binary delta-matroid.",
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T10:41:26.252321+00:00",
     "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
   },
@@ -4090,7 +4090,7 @@
       "Nat.even_iff",
       "Nat.odd_iff"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "36e90b30",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n ≥ 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domain_bridges": [
       "factorial Diophantine equations",
@@ -4108,7 +4108,7 @@
     "proof_strategy": "Formalize the triangular equivalence lemma: for n ≥ 4, n! + 1 = m^2 iff there exists y such that y*(y+1)/2 = n!/8 and m = 2*y + 1. Then attempt to prove the classification by combining modular exclusions for residue classes of n with factorial divisibility facts and higher-power congruence obstructions. The conjecture is suitable for Lean because it can be stated entirely over Nat using factorials, squares, divisibility by 8, and triangular numbers.",
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -8720,7 +8720,7 @@
       "arXiv:2606.23853",
       "MossPedersen2026"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b9898a91",
     "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k ≥ 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
     "domain_bridges": [
       "finite measure theory",
@@ -8736,7 +8736,7 @@
     "proof_strategy": "Construct explicit maximal frames with increasing incoherence indices via orthogonal half-spaces in rational vector spaces, then show all shorter obstructions are excluded",
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T22:09:21.864984+00:00",
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
   },
@@ -10821,7 +10821,7 @@
       "Benz2012",
       "paper:arXiv:2107.XXXX"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3c64518a",
     "description": "For any finite partial cube G, the following are equivalent:\n1. G is a minimal forbidden pc‑minor for the class of daisy cubes (that is, G is a partial cube that contains a non‑peripheral Θ‑class and every proper pc‑minor of G is a daisy cube).\n2. There exist integers r ≥ 2 and s ≥ 1 such that G is isomorphic to the graph obtained from the Cartesian product P₃ⁿ□Qₛ by deleting the two vertices that are opposite in the P₃ⁿ factor and lie in the same Qₛ copy.  In other words, G ≅ (P₃ⁿ□Qₛ) \\ {u, v} with u and v the two antipodal corners of the P₃ⁿ factor.\n\nIn particular, the infinite family { (P₃ⁿ□Qₛ) \\ {u, v} | r ≥ 2, s ≥ 1 } is precisely the set of all minimal forbidden pc‑minors for daisy cubes.",
     "domain_bridges": [
       "Partial cubes ↔ isometric subgraphs of hypercubes",
@@ -10838,7 +10838,7 @@
     "proof_strategy": "The proof will proceed by induction on the isometric dimension of a minimal forbidden partial cube G containing a non‑peripheral Θ‑class. First, we show that any such G must have a Θ‑class whose associated convex halfspace is a proper subset of the vertex set and whose peripheral halfspace is a single vertex—this vertex is an ‘extremal’ corner in the hypercube representation. Next, we prove that removing this corner yields a subgraph that is still a partial cube but has one fewer Θ‑class. Repeating this operation at each step forces G to decompose as a Cartesian product of P₃‑factors and a Qₛ‑factor, with the removed corners precisely the two distinct antipodal vertices in the P₃ⁿ component. A structural lemma about minimal non‑peripheral Θ‑classes in partial cubes is required, which can be formalized using the convexity and evenness conditions of Θ‑classes. The final step is to verify that any graph outside this family contains a proper pc‑minor that also fails the peripheral Θ‑class ",
     "research_mode": "team",
     "source_exp_id": "2606.19032v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T17:13:14.129734+00:00",
     "title": "Complete Characterization of Minimal Forbidden Partial‑Cube Minors for Daisy Cubes"
   },
@@ -15784,7 +15784,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "861a2b8d",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -15796,7 +15796,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },

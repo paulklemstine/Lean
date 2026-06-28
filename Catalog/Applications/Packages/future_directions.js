@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31c996e4",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1932,7 +1932,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a68949c",
     "description": "For every binary delta-matroid and every nontrivial twuality operator $\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the partial-$\\bullet$ polynomial $^\\partial w_D^\\bullet(z)$ is either even, odd, or both even-interpolating and odd-interpolating.",
     "domains": [
       "Algebra"
@@ -1941,7 +1941,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T10:41:26.252321+00:00",
     "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
   },
@@ -2541,7 +2541,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite-type classification for Grassmannian partial-flag seeds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "36e90b30",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n \u2265 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domains": [
       "Bridges"
@@ -2550,7 +2550,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -5012,7 +5012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b9898a91",
     "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k \u2265 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
     "domains": [
       "Logic"
@@ -5021,7 +5021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T22:09:21.864984+00:00",
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
   },
@@ -6171,7 +6171,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Restricted Rota-Baxter Lie algebras of arbitrary weight give rise to restricted post-Lie algebras via splitting property"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3c64518a",
     "description": "For any finite partial cube G, the following are equivalent:\n1. G is a minimal forbidden pc\u2011minor for the class of daisy cubes (that is, G is a partial cube that contains a non\u2011peripheral \u0398\u2011class and every proper pc\u2011minor of G is a daisy cube).\n2. There exist integers r \u2265 2 and s \u2265 1 such that G is isomorphic to the graph obtained from the Cartesian product P\u2083\u207f\u25a1Q\u209b by deleting the two vertices that are opposite in the P\u2083\u207f factor and lie in the same Q\u209b copy.  In other words, G \u2245 (P\u2083\u207f\u25a1Q\u209b) \\ {u, v} with u and v the two antipodal corners of the P\u2083\u207f factor.\n\nIn particular, the infinite family { (P\u2083\u207f\u25a1Q\u209b) \\ {u, v} | r \u2265 2, s \u2265 1 } is precisely the set of all minimal forbidden pc\u2011minors for daisy cubes.",
     "domains": [
       "Bridges"
@@ -6180,7 +6180,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19032v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T17:13:14.129734+00:00",
     "title": "Complete Characterization of Minimal Forbidden Partial\u2011Cube Minors for Daisy Cubes"
   },
@@ -9002,7 +9002,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "861a2b8d",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -9011,7 +9011,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
