@@ -121,6 +121,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle cff6413b (Q=0.825), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every edge density \u03b2 \u2208 [0,1] the minimum possible asymptotic density of semi\u2011induced copies of S_{2,1} in an n\u2011vertex graph G with edge density \u03b2 is given by the one\u2011parameter three\u2011class complement\u2011split construction: let t \u2208 [0,1] be the unique solution of \u03b2 = t(1 \u2212 t/2); then the minimum semi",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_cff6413b_d3784f3b",
+    "priority_score": 0.92512,
+    "research_mode": "team",
+    "source_exp_id": "cff6413b",
+    "status": "available",
+    "timestamp": "2026-06-28T06:24:49.213579+00:00",
+    "title": "Deepening: Exact lower semi-inducibility profile for the red\u2011blue star S_{2,1}"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -491,7 +505,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Theory: Self-Adjoint Operators"
   },
   {
-    "consumed_by_exp_id": "a530b001",
+    "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
       "Computation",
@@ -501,7 +515,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -1946,7 +1960,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
   },
   {
-    "consumed_by_exp_id": "5d028d25",
+    "consumed_by_exp_id": "",
     "description": "For any bounded prism (A, I) where A/I is a regular local ring of dimension d, the restriction functor from the category of prismatic F-crystals on Spec(A/I) to the category of prismatic F-crystals on the punctured spectrum Spec(A/I) \\ {m} is an equivalence of categories. This extends the paper's primitive purity theorem for Frobenius modules to the full setting of prismatic F-crystals, and would imply that the canonical F-isocrystal from Ogus's conjecture is uniquely determined by its restriction to any dense open subscheme.",
     "domains": [
       "Algebra",
@@ -1956,7 +1970,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T11:00:28.938025+00:00",
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
@@ -2584,7 +2598,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inflated line-transversal counterexamples have sphere homotopy type"
   },
   {
-    "consumed_by_exp_id": "5f11db87",
+    "consumed_by_exp_id": "",
     "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
     "domains": [
       "Geometry"
@@ -2593,7 +2607,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:24:48.021151+00:00",
     "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
   },
@@ -7665,21 +7679,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Congruence Modulo Cyclotomic Polynomial"
   },
   {
-    "consumed_by_exp_id": "cff12e07",
-    "description": "The paper conjectures that for fixed m > 1, the number of symmetric chain decompositions (SCDs) of the minuscule lattice L(m,n) grows super-exponentially with n. This conjecture is extended to the lattice M(n) of partitions into distinct parts at most n. We propose formalizing the lower bound for the growth rate of #SCD(M(n)) to prove it exceeds any exponential function of n.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2739",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.15891v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-27T22:38:24.430692+00:00",
-    "title": "Super-exponential growth of the number of symmetric chain decompositions of M(n)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "This conjecture posits that for a totally degenerating family of polarized abelian varieties, the existence of a non-Archimedean balanced metric would imply uniform control over the convergence rates of Hilbert\u2013Chow stability criteria, which in turn constrains the possible bounds on the volumes of moduli spaces in such families.",
     "domains": [
@@ -8099,6 +8098,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Lower semi-inducibility profile of the red-blue star `S_{2,1}`\n\nThis cycle established (in `RedBlueStarS21Profile.lean`, `RedBlueStarS21Optimization.lean`,\n`RedBlueStarS21CatalogBridge.lean`):\n\n- `\u03b2(t) = t(1 \u2212 t/2)` is a strictly increasing bijection `[0,1] \u2192 [0,1/2]`, so the construction\n  parameter `t` exists and is unique exactly on `\u03b2 \u2208 [0, 1/2]` (`exists_unique_param`).\n- The universal claim \"for every `\u03b2 \u2208 [0,1]`\" is **ill-posed for `\u03b2 > 1/2`**\n  (`claim_illposed_above_half`, `refutation_three_quarters`).\n- The star functional `f(d) = d\u00b2(1 \u2212 d)` is a bump bounded by `4/27`, and the *mean-only*\n  relaxation of the minimum is `0` for every `\u03b2` (`relaxed_infimum_zero`): positivity of the\n  true minimum is a graph-realizability effect.\n\nThe conjectures below are derived from these findings.\n\n## Conjecture 1 \u2014 Corrected boundary value (`p_min(1/2) > 0`)\nThe minimum semi-induced `S_{2,1}` density at edge density `1/2` is **strictly positive**, with\n`p_min(1/2) = 1/12`, attained in the limit by the threshold graphon `W(x,y) = 1 \u21d4 x + y > 1`.\n*The key insight is...* that the headline formula's prediction `p_min(1/2) = 0` is impossible\nbecause universal vertices force every vertex's degree up, so degrees cannot concentrate at\n`{0,1}` while keeping density `1/2`; the bump `f` therefore cannot integrate to `0`.\n*Why now?* This cycle proved both `relaxed_infimum_zero` (mean alone allows `0`) and the bump\nbounds, isolating realizability as the exact obstruction and pinning the candidate value `1/12`.\n\n## Conjecture 2 \u2014 Threshold graphons are the extremizers on `[0, 1/2]`\nFor every `\u03b2 \u2208 [0, 1/2]`, the minimum of the `f`-average `\u222b d(x)\u00b2(1 \u2212 d(x)) dx` over graphons\nof edge density `\u03b2` is attained by a threshold graphon `W(x,y) = 1 \u21d4 x + y > \u03b8` (with\n`\u03b8` chosen so the edge density is `\u03b2`).\n*The key insight is...* that `f` is concave-then-convex (`f'' = 2 \u2212 6d`, sign change at\n`d = 1/3`), and minimizing a fixed-mean average of such a functional over the graphical\n\"convex corner\" of degree sequences selects the extreme threshold structure.\n*Why now?* The bump's exact curvature was made explicit this cycle (`starFunctional_le` via\n`(3d \u2212 2)\u00b2`), giving the concrete convexity data needed to test the threshold-extremizer claim\ncomputationally before a Lean proof.\n\n## Conjecture 3 \u2014 The true low-density profile is `p_min(\u03b2) = \u03b2\u00b2 \u2212 \u03b2\u00b3 + o` only near `0`\nNear `\u03b2 = 0`, the leading behaviour of the true minimum profile matches the construction\nformula `t\u00b2(1 \u2212 t)` to first order (since `t = \u03b2 + O(\u03b2\u00b2)` there), but the two diverge before\n`\u03b2 = 1/2`.\n*The key insight is...* inverting `\u03b2 = t \u2212 t\u00b2/2` gives `t = 1 \u2212 \u221a(1 \u2212 2\u03b2) = \u03b2 + \u03b2\u00b2/2 + O(\u03b2\u00b3)`,\nso `t\u00b2(1 \u2212 t) = \u03b2\u00b2 + O(\u03b2\u00b3)`; the formula is asymptotically correct at the bottom and only fails\nas `\u03b2 \u2192 1/2`.\n*Why now?* The strictly-monotone bijection `edgeDensity_strictMonoOn` proved this cycle makes\nthe inverse `t(\u03b2)` well-defined and analytic on `[0,1/2)`, enabling a rigorous local expansion.\n\n## Conjecture 4 \u2014 Complement symmetry covers `\u03b2 \u2208 [1/2, 1]` via `S_{1,2}`\nThe upper half-range `\u03b2 \u2208 [1/2, 1]` is governed not by this formula but by the *complement*\npattern `S_{1,2}` (one red, two blue leaves): `p_min^{S_{2,1}}(\u03b2) = p_min^{S_{1,2}}(1 \u2212 \u03b2)`,\nrecovering a full profile on `[0,1]` by gluing the two halves at `\u03b2 = 1/2`.\n*The key insight is...* complementing a graph swaps edges and non-edges, turning a semi-induced\n`S_{2,1}` (two red, one blue) into a semi-induced `S_{1,2}` and mapping edge density `\u03b2` to\n`1 \u2212 \u03b2`; the construction parameter `t` then re-enters through `1 \u2212 \u03b2 = t(1 \u2212 t/2)`.\n*Why now?* This cycle showed the single-formula construction tops out at `\u03b2 = 1/2`\n(`edgeDensity_le_half`), making a second, complementary mechanism for the upper half not just\nnatural but necessary.\n\n## Conjecture 5 \u2014 A realizability lower bound matching `4/27` everywhere it binds\nThere is a density threshold `\u03b2*` such that for `\u03b2` in a neighbourhood of the bump location the\nminimum profile is bounded below by a positive constant tied to `4/27`, the bump maximum.\n*The key insight is...* `starFunctional_max` shows a single neighbour-density of `2/3`\ncontributes `4/27`; a positive fraction of such vertices is unavoidable at densities forcing\nmany vertices into the bump interior `(1/3, 1)`.\n*Why now?* The exact bump maximum and its location were formalized this cycle, giving the\nconstant against which any realizability lower bound must be calibrated.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2755",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cff6413b",
+    "status": "available",
+    "timestamp": "2026-06-28T06:24:39.278592+00:00",
+    "title": "(in `RedBlueStarS21Profile.lean`, `RedBlueStarS21Optimiza"
   },
   {
     "consumed_by_exp_id": "",
@@ -8543,7 +8557,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "ce8c041d",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8553,7 +8567,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

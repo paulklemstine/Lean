@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1983a01c",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Bourgain's Slicing Problem\n\nThis research cycle established a fully verified, dimension-free model of *isotropic position*\nfor the discrete cube `{-1,1}ⁿ` (`DiscreteCube.lean`),",
-      "quality_score": 0.7400800000000001,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-06-26T01:35:24",
-      "title": "Bourgain's Slicing Problem"
-    },
-    {
       "cycle_id": "0dc2bca1",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Fourier Analysis on Finite Groups (Combinatorics)\n\nThis cycle established, for `A ⊆ ℤ/Nℤ`, the spectral toolkit on `ZMod.dft`\n(orthogonality, convolution theorem, Parseval/Planch",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T05:34:37",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "cff6413b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Lower semi-inducibility profile of the red-blue star `S_{2,1}`\n\nThis cycle established (in `RedBlueStarS21Profile.lean`, `RedBlueStarS21Optimization.lean`,\n`RedBlueStarS21Catalog",
+      "quality_score": 0.8251200000000001,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-28T06:24:48",
+      "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "935bc3f6",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — EML Universal Approximation\n\nThis cycle established (all fully verified, 0 sorries):\n\n- `EML/ExponentialPolynomialDensity.lean`: a single **injective** feature `g`, and in\n  part",
-      "quality_score": 0.7770400000000002,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-06-24T18:22:31",
-      "title": "EML Universal Approximation"
-    },
     {
       "cycle_id": "71ab9721",
       "domain": "MachineLearning",
@@ -2501,21 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-06-28T06:03:35",
       "title": "Join of Gorenstein Polytopes is Not Necessarily Gorenstein"
+    },
+    {
+      "cycle_id": "cff6413b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Lower semi-inducibility profile of the red-blue star `S_{2,1}`\n\nThis cycle established (in `RedBlueStarS21Profile.lean`, `RedBlueStarS21Optimization.lean`,\n`RedBlueStarS21Catalog",
+      "quality_score": 0.8251200000000001,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-28T06:24:48",
+      "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f8a707b1",
-      "domain": "Novelty",
-      "name": "proves",
-      "quality": 0.7756646153846154
-    },
-    {
-      "cycle_id": "f8a707b1",
-      "domain": "Novelty",
-      "name": "that",
-      "quality": 0.7756646153846154
-    },
     {
       "cycle_id": "f8a707b1",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "firstOrder_prod",
       "quality": 0.79816
+    },
+    {
+      "cycle_id": "cff6413b",
+      "domain": "Novelty",
+      "name": "edgeDensity_lt_nwThreshold",
+      "quality": 0.8251200000000001
+    },
+    {
+      "cycle_id": "cff6413b",
+      "domain": "Novelty",
+      "name": "edgeDensity_ceiling_lt_C5",
+      "quality": 0.8251200000000001
     }
   ],
-  "last_updated": "2026-06-28T06:03:35",
+  "last_updated": "2026-06-28T06:24:48",
   "open_questions": [
     {
       "context": "## Verified results (all `sorry`-free)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "417ceff0",
-        "quality": 0.49606231111111115,
-        "theorems": 18,
-        "title": "Falsifiability of Multigraded Regularity Conjecture for Schubert Varieties via P"
-      },
-      {
         "cycle_id": "ba81674a",
         "quality": 0.79596,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.79816,
         "theorems": 14,
         "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+      },
+      {
+        "cycle_id": "cff6413b",
+        "quality": 0.8251200000000001,
+        "theorems": 17,
+        "title": "Exact lower semi-inducibility profile for the red‑blue star S_{2,1}"
       }
     ],
     "NumberTheory": [

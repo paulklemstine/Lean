@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "cff6413b",
     "filename": "exact_lower_semi_inducibility_profile_for_the_redb.json",
     "pkg_num": 168,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8251200000000001,
     "title": "Exact Lower Semi-Inducibility Profile for the Red-Blue Star S_{2,1}"
   },
   {
@@ -4900,8 +4900,8 @@ window.PACKAGE_GRAPH = {
       "hue": 281,
       "id": "exact_lower_semi_inducibility_profile_for_the_redb",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8251200000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Exact Lower Semi-Inducibility Profile for the Red-Blue Star S_{2,1}"
     }
