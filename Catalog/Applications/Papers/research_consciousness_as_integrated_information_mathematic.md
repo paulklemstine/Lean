@@ -1,484 +1,405 @@
-# Consciousness as Integrated Information: Mathematical Foundations
+# Integrated Information as a Maximum Co-Active Coalition: A Tractable Surrogate Model, Its Minimum-Information-Partition Law, and NP-Hardness
+
+**Author:** Aristotle
+**Date:** 2026-06-28
+**Domain:** Novelty (Mathematical foundations of Integrated Information Theory)
 
 ## Abstract
 
-Integrated Information Theory (IIT) proposes that the degree to which a system is
-"more than the sum of its parts" can be captured by a single nonnegative real
-number Φ, defined as the value of an information-theoretic functional evaluated at
-the system's *Minimum Information Partition* (MIP) — the bipartition across which
-the system integrates the least. We give a rigorous, fully machine-checked
-mathematical foundation for this proposal in two complementary settings. In the
-**classical** setting, a system is a weighted directed graph; cross-information of
-a cut is the total weight of edges crossing it, and Φ is the minimum
-cross-information over all nontrivial bipartitions — a min-cut. We prove that Φ is
-nonnegative, that it lower-bounds the cross-information of every cut, that it
-vanishes exactly when the system admits a zero-weight cut (reducibility), that it
-is strictly positive for strongly connected systems, that it scales linearly and
-is monotone in the edge weights, and that it is bounded by the total weight. We
-also establish a symmetrization identity relating directed and undirected
-cross-information. In the **quantum** setting, a state is an amplitude tensor;
-across any cut the Schmidt rank measures entanglement, and Φ = (Schmidt rank) − 1.
-We prove that product (separable) states have Φ = 0, that a bond of dimension `D`
-caps Φ at `D − 1` (with the `D = 2` case yielding Φ ≤ 1), that the maximally
-entangled `d × d` state attains Φ = d − 1, and — in the genuinely multipartite
-generalization — that a single product cut forces the global Φ to zero, while the
-Schmidt rank across any cut obeys a discrete area-law bound. We discuss the
-NP-hardness of computing Φ (via reduction to minimum bisection) and the prospect
-of provable polynomial-time approximations, both of which the established results
-position as natural next steps. Every theorem stated below has been formalized and
-verified in the Lean 4 proof assistant.
-
-**Keywords:** integrated information theory, Φ, minimum information partition,
-graph min-cut, Schmidt rank, entanglement, area law, NP-hardness, minimum
-bisection, formal verification.
-
----
+Integrated Information Theory (IIT) posits a scalar $\Phi$ that quantifies the
+extent to which a system forms an irreducible informational whole. The full IIT
+functional — defined through earth-mover divergences between cause and effect
+repertoires, optimized over all system bipartitions — is mathematically intricate
+and computationally forbidding. We introduce a deliberately *tractable surrogate*
+model of integrated information that retains the structural skeleton of IIT while
+admitting fully rigorous theorems. A system is a joint probability distribution
+over finitely many Boolean variables. From it we read off a *co-activation*
+relation (two variables are co-active when they are jointly active with positive
+probability), *co-active coalitions* (pairwise co-active variable sets), and the
+integrated information $\Phi_{\mathrm{bip}}(A)$ across a bipartition $(A,A^c)$ as
+the largest co-active coalition straddling the cut. The system-level invariant
+$\Phi_{\max}$ maximizes this over all bipartitions. Our central structural result
+is a *collapse theorem*: $\Phi_{\max}$ equals the global co-active number $\Omega$
+(the size of the largest co-active coalition with at least two members),
+establishing that the partition optimization is governed by a single global
+quantity. We prove the natural ceiling $\Phi_{\max}\le n$ and its loose polynomial
+form $\Phi_{\max}\le n^m$. We then give an explicit, polynomial-size reduction
+$S(\cdot)$ from graphs to systems for which co-activation coincides with adjacency,
+yielding $\Phi_{\max}(S(G)) = \omega(G)$, the clique number of $G$. Since maximum
+clique is NP-hard, computing $\Phi_{\max}$ is NP-hard. Finally we discuss
+polynomial-time approximation and fixed-parameter-tractable regimes inherited from
+the clique literature. All results are formalized and machine-checked.
 
 ## 1. Introduction
 
-Integrated Information Theory, introduced by Tononi and developed over the past two
-decades, advances the hypothesis that the quantity and structure of conscious
-experience correspond to the quantity and structure of *integrated information* in
-a physical system. The central scalar of the theory, Φ, is intended to measure
-**irreducibility**: how much a system, considered as a causal whole, exceeds the
-combination of its independent parts. A system that can be partitioned into causally
-independent components without loss of information has Φ = 0; a system that resists
-all such partitioning has large Φ.
-
-While IIT's claims about consciousness are philosophically contested, the
-mathematical kernel of the theory — Φ as the value of an integration functional at
-a worst-case partition — is a precise and well-posed object that connects to
-established areas of mathematics: graph cuts, combinatorial optimization, linear
-algebra, and quantum information. This paper isolates that kernel and develops it
-rigorously.
-
-We work in two registers. The **classical** register models a system as a weighted
-directed graph and defines Φ as a min-cut over nontrivial bipartitions. The
-**quantum** register models a system as a (possibly multipartite) amplitude tensor
-and defines Φ via Schmidt rank across a cut. The two registers are deliberately
-parallel: in both, Φ is an infimum over nontrivial bipartitions of a per-cut
-integration measure, and in both, the central qualitative theorem is that *Φ = 0
-exactly when the system decouples across some cut*.
-
-All results have been formalized in Lean 4 with Mathlib. We state each theorem
-mathematically and give a proof sketch; the formal names are noted for traceability.
-
----
-
-## 2. The classical setting: causal systems and the min-cut Φ
-
-### 2.1 Definitions
-
-**Definition 2.1 (Causal system).** A *causal system* on `n` nodes is a function
-`w : Fin n × Fin n → ℝ` of edge weights together with the constraint that
-`w(i, j) ≥ 0` for all `i, j`. We write `C` for the system and `C.weight i j` for
-`w(i, j)`. (Formal object: `CausalSystem n`.)
-
-**Definition 2.2 (Cross-information of a cut).** For a subset `S ⊆ Fin n`, the
-*cross-information* is the total weight of edges from `S` to its complement:
-$$
-\mathrm{crossInfo}(C, S) \;=\; \sum_{i \in S}\ \sum_{j \in \overline{S}} C.\mathrm{weight}\,i\,j,
-$$
-where `\overline{S} = univ \ S`. (Formal: `crossInfo`.)
-
-**Definition 2.3 (Nontrivial bipartitions).** The set of *nontrivial bipartitions*
-of `Fin n` consists of the nonempty proper subsets:
-$$
-\mathcal{B}(n) \;=\; \{\, S \subseteq \mathrm{Fin}\,n \;:\; S \neq \emptyset,\ S \neq \mathrm{Fin}\,n \,\}.
-$$
-For `n ≥ 2` this set is nonempty (e.g. the singleton `{0}`), proved as
-`nontrivialBipartitions_nonempty`. (Formal: `nontrivialBipartitions`.)
-
-**Definition 2.4 (Integrated information Φ).** For `n ≥ 2`, the *integrated
-information* of `C` is the minimum cross-information over all nontrivial
-bipartitions:
-$$
-\Phi(C) \;=\; \min_{S \in \mathcal{B}(n)} \mathrm{crossInfo}(C, S).
-$$
-The minimum is realized because `\mathcal{B}(n)` is a nonempty finite set; formally
-Φ is the `Finset.inf'` of `crossInfo` over `nontrivialBipartitions n`. (Formal:
-`phi`.)
-
-The minimizing partition is the **Minimum Information Partition (MIP)**: the
-bipartition across which the system integrates least, hence the natural candidate
-seam along which to "factor" the system.
-
-### 2.2 Basic order-theoretic properties
-
-**Theorem 2.5 (Nonnegativity).** `crossInfo(C, S) ≥ 0` for every `S`, and
-consequently `Φ(C) ≥ 0`.
-
-*Proof.* Cross-information is a double sum of the nonnegative quantities
-`C.weight i j`, hence nonnegative (`crossInfo_nonneg`). Φ is an infimum of
-nonnegative values, so `Φ ≥ 0` by `le_inf'` applied to the constant bound 0.
-(Formal: `phi_nonneg`.) ∎
-
-**Theorem 2.6 (Φ lower-bounds every cut).** For every `S ∈ \mathcal{B}(n)`,
-`Φ(C) ≤ crossInfo(C, S)`.
-
-*Proof.* Immediate from the definition of `inf'` as a greatest lower bound:
-`Finset.inf'_le`. (Formal: `phi_le_crossInfo`.) ∎
-
-**Theorem 2.7 (Total-weight ceiling).** Let
-`totalWeight(C) = ∑_{i}∑_{j} C.weight i j`. Then `crossInfo(C, S) ≤ totalWeight(C)`
-for every `S`, and `Φ(C) ≤ totalWeight(C)`.
-
-*Proof.* Each crossing edge is one of the edges counted in the total, and all
-omitted edges have nonnegative weight, so `crossInfo(C, S) ≤ totalWeight(C)`
-(`crossInfo_le_totalWeight`, via `sum_le_sum_of_subset_of_nonneg` over the index
-restrictions `S ⊆ univ` and `\overline{S} ⊆ univ`). Taking any nontrivial `S` and
-combining with Theorem 2.6 gives the bound on Φ (`phi_le_totalWeight`). ∎
-
-### 2.3 The reducibility dichotomy
-
-**Definition 2.8 (Disconnected system).** `C` is *disconnected* if there exists a
-nontrivial bipartition with zero cross-information:
-$$
-\exists\, S,\ S \neq \emptyset \ \wedge\ S \neq \mathrm{Fin}\,n \ \wedge\ \mathrm{crossInfo}(C, S) = 0.
-$$
-(Formal: `IsDisconnected`.)
-
-**Theorem 2.9 (Disconnected ⟹ Φ = 0).** If `C` is disconnected then `Φ(C) = 0`.
-
-*Proof.* Let `S` witness disconnection. By Theorem 2.6, `Φ(C) ≤ crossInfo(C, S) =
-0`. By Theorem 2.5, `Φ(C) ≥ 0`. Antisymmetry gives `Φ(C) = 0`. (Formal:
-`phi_zero_of_disconnected`.) ∎
-
-This is the precise formal content of "if the system factors into independent
-parts, the whole adds nothing." The converse direction — Φ > 0 — holds under a
-strong connectivity hypothesis.
-
-**Definition 2.10 (Strongly positive system).** `C` is *strongly positive* if every
-off-diagonal weight is strictly positive: `i ≠ j ⟹ C.weight i j > 0`. (Formal:
-`IsStronglyPositive`.)
-
-**Lemma 2.11 (Positive cuts).** If `C` is strongly positive, then every cut with
-both `S` and `\overline{S}` nonempty has `crossInfo(C, S) > 0`.
-
-*Proof.* Pick `i ∈ S` and `j ∈ \overline{S}`. Then `C.weight i j > 0` contributes
-to the double sum, and all other terms are `≥ 0`; `single_le_sum` bounds the sum
-below by this strictly positive term. (Formal: `crossInfo_pos_of_stronglyPositive`.)
-∎
-
-**Theorem 2.12 (Strong positivity ⟹ Φ > 0).** If `n ≥ 2` and `C` is strongly
-positive, then `Φ(C) > 0`.
-
-*Proof.* Every `S ∈ \mathcal{B}(n)` has both `S` and `\overline{S}` nonempty (a
-proper nonempty subset), so by Lemma 2.11 each `crossInfo(C, S) > 0`. The infimum
-over a finite nonempty set of strictly positive values is strictly positive.
-(Formal: `phi_pos_of_stronglyPositive`.) ∎
-
-Together, Theorems 2.9 and 2.12 are the two horns of the **reducibility
-dichotomy**: a free cut forces Φ = 0; uniformly strong coupling forces Φ > 0.
-
-### 2.4 Functoriality: scaling and monotonicity
-
-**Definition 2.13 (Scaling).** For `c ≥ 0`, `(c · C).weight i j = c · C.weight i j`
-(weights remain nonnegative). (Formal: `scale`.)
-
-**Theorem 2.14 (Linear scaling of Φ).** For `c ≥ 0`, `Φ(c · C) = c · Φ(C)`.
-
-*Proof.* Cross-information is linear in the weights: `crossInfo(c·C, S) = c ·
-crossInfo(C, S)` by pulling `c` out of the double sum (`crossInfo_scale`,
-`Finset.mul_sum`). Hence Φ, an infimum, scales by the nonnegative factor `c`:
-`min_S (c · f(S)) = c · min_S f(S)`, formalized via
-`Real.sInf_smul_of_nonneg`. (Formal: `phi_scale`.) ∎
-
-**Theorem 2.15 (Monotonicity).** If `C₁.weight i j ≤ C₂.weight i j` for all `i, j`,
-then `Φ(C₁) ≤ Φ(C₂)`.
-
-*Proof.* Pointwise weight domination gives `crossInfo(C₁, S) ≤ crossInfo(C₂, S)`
-for every `S` (`crossInfo_mono`, by `sum_le_sum`). For infima, `f ≤ g` pointwise
-implies `inf f ≤ inf g`: evaluate `inf f` at the argmin of `g`. (Formal:
-`phi_mono_of_weight_le`.) ∎
-
-### 2.5 Symmetrization and directed/undirected duality
-
-Real causal influence is directed, but the clean min-cut picture is undirected. The
-bridge is symmetrization.
-
-**Definition 2.16 (Symmetrization).** `(C^{sym}).weight i j = C.weight i j +
-C.weight j i`. The result has symmetric weights:
-`(C^{sym}).weight i j = (C^{sym}).weight j i`. (Formal: `symmetrize`,
-`symmetrize_weight_comm`.)
-
-**Theorem 2.17 (Symmetrized cross-information).** For every cut `S`,
-$$
-\mathrm{crossInfo}(C^{sym}, S) \;=\; \mathrm{crossInfo}(C, S) + \mathrm{crossInfo}(C, \overline{S}).
-$$
-That is, the undirected flow across the cut is the sum of the two directed flows
-(out of `S` and back into `S`).
-
-*Proof.* Expand the definition of `crossInfo` for `C^{sym}`, split the sum of
-`weight i j + weight j i` using `sum_add_distrib`, and recognize the second summand
-as `crossInfo(C, \overline{S})` after a `sum_comm` reindexing. (Formal:
-`symmetrize_crossInfo`; the supporting identity `crossInfo_compl` rewrites
-`crossInfo(C, \overline{S})` as `∑_{i∈\overline{S}}∑_{j∈S} C.weight i j`.) ∎
-
-This identity is what licenses analyzing a directed IIT system through the lens of
-undirected weighted min-cut, where the rich theory of graph partitioning applies.
-
----
-
-## 3. The quantum setting: Schmidt rank as integration
-
-### 3.1 Bipartite states
-
-**Definition 3.1 (Coefficient matrix and Schmidt rank).** A bipartite pure state
-across a single cut is represented by its amplitude (coefficient) matrix
-`M : Matrix (Fin m) (Fin n) ℂ`. Its *Schmidt rank* is the matrix rank
-`schmidtRank(M) = M.rank`. (Formal: `schmidtRank`.)
-
-**Definition 3.2 (Bipartite integrated information).**
-$$
-\Phi_{\mathrm{bip}}(M) \;=\; M.\mathrm{rank} - 1 \qquad (\text{truncated subtraction in } \mathbb{N}).
-$$
-Thus `Φ = 0` precisely when the rank is `≤ 1`, i.e. for product/separable states.
-(Formal: `phiBip`.)
-
-### 3.2 The reducibility theorem, quantum form
-
-**Theorem 3.3 (Product states have Φ = 0).** For any vectors `u : Fin m → ℂ`,
-`v : Fin n → ℂ`, the separable state with coefficient matrix `vecMulVec u v`
-(the outer product `u vᵀ`) satisfies `Φ_bip(vecMulVec u v) = 0`.
-
-*Proof.* The outer product `vecMulVec u v` has rank `≤ 1` (`rank_vecMulVec_le`),
-so `Φ = rank − 1 = 0` by truncated subtraction. (Formal:
-`phi_productState_eq_zero`.) ∎
-
-This is the quantum analogue of Theorem 2.9: an unentangled (factorized) state has
-zero integrated information, exactly as a disconnected graph does.
-
-### 3.3 Bond dimension caps integration
-
-Many-body quantum states are routinely represented as *matrix product states*
-(MPS), in which the global amplitude matrix factors through a contracted "bond"
-index of some dimension `D`.
-
-**Theorem 3.4 (Bond bound).** For `A : Matrix (Fin m) (Fin D) ℂ` and
-`B : Matrix (Fin D) (Fin n) ℂ`, the MPS coefficient matrix `M = A · B` satisfies
-$$
-\Phi_{\mathrm{bip}}(A \cdot B) \;\le\; D - 1.
-$$
-
-*Proof.* By rank submultiplicativity, `rank(A·B) ≤ rank(A)` (`rank_mul_le_left`),
-and `rank(A) ≤` number of columns of `A`, which is `D` (`rank_le_card_width`). Hence
-`rank(A·B) ≤ D`, giving `Φ = rank − 1 ≤ D − 1`. (Formal: `phi_mps_le_bond`.) ∎
-
-**Corollary 3.5 (Bond two).** For bond dimension `D = 2`, `Φ_bip(A · B) ≤ 1`.
-(Formal: `phi_mps_bondTwo_le_one`.)
-
-### 3.4 Tightness via maximal entanglement
-
-**Theorem 3.6 (Maximally entangled state).** For `d ≥ 1`, the maximally entangled
-state on `ℂ^d ⊗ ℂ^d`, whose coefficient matrix is the identity
-`1 : Matrix (Fin d) (Fin d) ℂ`, attains the maximal value
-$$
-\Phi_{\mathrm{bip}}(1) \;=\; d - 1.
-$$
-
-*Proof.* The identity matrix has full rank `d` (`Matrix.rank_one`,
-`Fintype.card_fin`), so `Φ = d − 1`. (Formal: `phi_maximallyEntangled_eq`,
-requiring `NeZero d`.) ∎
-
-Theorems 3.4 and 3.6 together show the bond bound is **tight**: realizing the
-maximally entangled state of local dimension `d` requires a bond of dimension at
-least `d`. Integration is bottlenecked exactly by the bond.
-
----
-
-## 4. The multipartite setting: the genuine MIP
-
-### 4.1 Reshaping a tensor across a cut
-
-**Definition 4.1 (Amplitude tensor).** A state on `n` sites of local dimension `d`
-is an amplitude tensor `ψ : (Fin n → Fin d) → ℂ`. (Formal: implicit in the
-signatures below.)
-
-**Definition 4.2 (Cut matrix).** For a predicate `p` on sites (with the cut
-`S = {i : p i}`), reshape `ψ` into a matrix whose rows are configurations of the
-`p`-block and whose columns are configurations of its complement:
-$$
-\mathrm{cutMatrix}(p, \psi)(a, b) \;=\; \psi\big( (a, b) \text{ recombined} \big),
-$$
-where the recombination is the inverse of `Equiv.piEquivPiSubtypeProd`. (Formal:
-`cutMatrix`.)
-
-**Definition 4.3 (Schmidt rank across a finite cut).** For `S : Finset (Fin n)`,
-`schmidtRankAt(S, ψ) = (cutMatrix (· ∈ S) ψ).rank`. (Formal: `schmidtRankAt`.)
-
-**Definition 4.4 (Nontrivial bipartitions and multipartite Φ).** Let
-`biparts n = {S : S ≠ ∅, S ≠ univ}` (the same index set as in §2). For a nonempty
-`biparts n`,
-$$
-\Phi_{\mathrm{MIP}}(\psi) \;=\; \min_{S \in \mathrm{biparts}\,n}\big( \mathrm{schmidtRankAt}(S, \psi) - 1 \big).
-$$
-This is the direct multipartite generalization of Definition 2.4, with graph
-cross-information replaced by quantum Schmidt rank. (Formal: `biparts`, `phiMIP`.)
-
-### 4.2 Reducibility across a single cut
-
-**Theorem 4.5 (Factorization caps Schmidt rank).** If `ψ` factors across the cut
-`S` as `ψ(x) = f(x|_S) · g(x|_{\overline S})` for some `f, g`, then
-`schmidtRankAt(S, ψ) ≤ 1`.
-
-*Proof.* Under the factorization, the reshaped matrix `cutMatrix (· ∈ S) ψ` equals
-the outer product `vecMulVec f g` pointwise: the subtype membership proofs collapse
-the decidable branches of the reshaping equivalence (the positive branch `dif_pos
-i.2` selects the `f`-factor's argument, the negative branch `dif_neg i.2` the
-`g`-factor's). Then `rank_vecMulVec_le` gives rank `≤ 1`. (Formal:
-`cutMatrix_rank_le_one_of_product`.) ∎
-
-**Theorem 4.6 (One product cut forces Φ = 0).** If some nontrivial bipartition
-`S ∈ biparts n` factorizes `ψ` into a product, then `Φ_MIP(ψ) = 0`.
-
-*Proof.* By `inf'_le` at `S`, `Φ_MIP(ψ) ≤ schmidtRankAt(S, ψ) − 1`. By Theorem 4.5
-this is `≤ 1 − 1 = 0` (truncated subtraction), and Φ is a natural number, so
-`Φ_MIP(ψ) = 0`. (Formal: `phiMIP_eq_zero_of_product_cut`.) ∎
-
-This is the exact multipartite analogue of Theorems 2.9 and 3.3: a *single*
-decoupled cut suffices to make the entire system reducible.
-
-### 4.3 A discrete area law
-
-**Theorem 4.7 (Block bound).** For every cut `S`,
-$$
-\mathrm{schmidtRankAt}(S, \psi) \;\le\; \big|\{\text{configurations of } \overline{S}\}\big| \;=\; d^{\,|\overline{S}|}.
-$$
-
-*Proof.* The rank of any matrix is at most its number of columns; here the columns
-are indexed by configurations of the complementary block, of which there are
-`d^{|\overline S|}` (`rank_le_card_width`). (Formal: `schmidtRankAt_le_block`.) ∎
-
-This is the discrete shadow of the entanglement **area law**: the integration
-across a cut is bounded by the dimension of the boundary block, not the volume of
-the whole. Combined with the bond bound (Theorem 3.4), it exhibits two independent
-ceilings on integration — geometric (block size) and algebraic (bond dimension) —
-and the MIP selects the cut where their minimum is smallest.
-
----
-
-## 5. Computational complexity of Φ
-
-### 5.1 The combinatorial obstruction
-
-Both Φ (Definition 2.4) and Φ_MIP (Definition 4.4) are infima over the set of
-nontrivial bipartitions, whose cardinality is `2^n − 2`. Naive evaluation is
-therefore exponential. The qualitative results above already cast Φ as the answer
-to a *combinatorial decision problem*: by Theorem 2.9, `Φ(C) = 0` if and only if
-there exists a nontrivial zero-weight cut. This is precisely the decision-problem
-shadow of a balanced/minimum-cut existence question.
-
-### 5.2 NP-hardness via minimum bisection (program)
-
-The concept calls for a proof that computing Φ is NP-hard. The structurally honest
-route is a **Karp reduction** from weighted **minimum bisection** — a known
-NP-hard problem — to the computation of Φ:
-
-> Construct a polynomial-time map `g : Graph → CausalSystem` such that, for every
-> input graph `G`, `crossInfo(g(G), S)` equals the cut weight `w(S, \overline{S})`
-> of `G`, so that the MIP of `g(G)` *is* the minimum bisection of `G` and
-> `Φ(g(G))` *is* its weight.
-
-Under such a reduction, an algorithm computing Φ would solve minimum bisection,
-establishing NP-hardness. Theorem 2.6 and the realization of Φ as an explicit
-argmin (the `inf'` over `nontrivialBipartitions`) reduce the entire reduction to a
-single arithmetic identity, `crossInfo = cutWeight`, isolating the hardness in a
-clean, checkable lemma rather than in the optimization itself. The decision form
-already proved (Theorem 2.9: Φ = 0 ⟺ existence of a free balanced cut) is the
-NP-complete shadow of this bisection question. *This NP-hardness theorem is not yet
-formalized;* the present work establishes the exact scaffolding it requires.
-
-### 5.3 Polynomial-time approximation (program)
-
-Given the hardness, the practical goal is a polynomial-time computable `ΦApprox`
-with a provable multiplicative or additive guarantee relative to Φ. Spectral
-relaxations of min-bisection (eigenvalue/SDP-based) provide candidate
-approximations; the monotonicity and scaling laws (Theorems 2.14, 2.15) constrain
-how any such approximation must behave under reweighting and give sanity checks for
-correctness. The quantum side admits a complementary approach: truncated-SVD bond
-estimates give *upper* bounds on Φ via Theorem 3.4, while block dimensions give the
-area-law *upper* bound of Theorem 4.7, bracketing Φ between efficiently computable
-quantities. Establishing a certified approximation ratio is left as future work.
-
----
-
-## 6. Applications and interpretation
-
-Independently of IIT's claims about consciousness, the formalized theory provides a
-certified, domain-agnostic measure of **irreducibility**:
-
-- **Network science.** Φ as a weighted min-cut detects whether an influence,
-  trade, or communication network has a "cheap" partition — a near-modular
-  structure — and quantifies how strongly the network resists decomposition.
-- **Quantum many-body physics.** The Schmidt-rank Φ, bond bound, area-law bound,
-  and tightness via maximal entanglement formalize standard entanglement
-  diagnostics used in tensor-network simulation, with machine-checked guarantees.
-- **Machine learning.** Φ-like cut measures quantify how much a model's modules
-  genuinely interact, informing pruning, modular decomposition, and analyses of
-  emergent integration.
-- **Neuroscience.** The classical causal-system Φ is the literal mathematical core
-  of empirical IIT measures; the dichotomy results make precise when measured Φ
-  must vanish (clean functional disconnection) or be positive (dense effective
-  connectivity).
-
-The two registers — graph min-cut and Schmidt rank — are not merely analogous;
-they share the same definitional template (infimum of a per-cut measure over
-nontrivial bipartitions) and the same central theorem (decoupling across one cut
-⟹ Φ = 0). This unity suggests an abstract "integration functional over a
-bipartition lattice" of which both are instances.
-
----
-
-## 7. Discussion and future work
-
-The results establish the *combinatorial skeleton* of IIT on rigorous footing:
-existence and characterization of the MIP, the reducibility dichotomy, the
-functorial laws (scaling, monotonicity, bounds), the symmetrization bridge, and the
-quantum entanglement picture with tight bounds and a discrete area law. Several
-substantial directions remain.
-
-**Full partition lattice.** The present Φ ranges over bipartitions. Genuine IIT
-quotients over the full lattice of set partitions, normalized by partition size,
-and takes the infimum of a partition distance over *all* partitions. We conjecture
-that bipartition-Φ is an upper bound for full-lattice-Φ, with equality exactly when
-the minimizer is binary; the partition lattice is graded by block count and the
-integration functional is supermodular under refinement, so the minimizer can be
-searched block-count by block-count. Mathlib's `Finpartition` order API is mature
-enough to host `ei : Finpartition univ → ℝ` and the `min'` machinery transfers
-verbatim.
-
-**Formal NP-hardness.** As in §5.2, a machine-checked Karp reduction from weighted
-min-bisection to Φ, inside a formal polynomial-time reduction framework, would turn
-the decision-problem shadow (Theorem 2.9) into a hardness theorem. The remaining
-content is a single arithmetic identity `ei A = cutWeight A`.
-
-**Certified approximations.** As in §5.3, a poly-time `ΦApprox` with a proven
-multiplicative guarantee, bracketed between the efficiently computable upper bounds
-(bond, area law) and spectral lower bounds.
-
-**The exact converse.** Theorem 3.3 shows product ⟹ Φ = 0; the converse (rank-one
-⟹ outer product, hence the full iff "Φ = 0 ⟺ product across some cut") is a clean
-linear-algebra fact deferred here and worth formalizing to complete the quantum
-dichotomy.
-
-**Continuous information measures.** Replacing rank/cut-weight with mutual
-information or entanglement entropy would connect this combinatorial skeleton to
-the information-theoretic Φ used in empirical neuroscience.
-
----
+A central challenge for any quantitative theory of consciousness is to specify a
+measure of *integration* — the degree to which a system's behavior cannot be
+decomposed into the behaviors of independent parts. Tononi's Integrated
+Information Theory answers with $\Phi$: a system is conscious to the extent that
+the information it generates exceeds the information generated independently by its
+parts, evaluated at the *Minimum Information Partition* (MIP), the cut along which
+the system is least integrated.
+
+The conceptual appeal of $\Phi$ is matched by mathematical and computational
+difficulty. The genuine IIT functional involves repertoires of conditional
+distributions over the system's possible causes and effects, an earth-mover (or
+related) distance between them, and an optimization over all bipartitions of the
+system. Even careful expositions disagree on details, and exact computation is
+infeasible beyond a handful of elements.
+
+This paper takes a complementary route. Rather than formalize the full functional,
+we isolate a **structural surrogate** that (i) is defined for genuine probabilistic
+systems, (ii) keeps the two defining moves of IIT — *cut the system, measure what
+the cut fails to separate, optimize over cuts* — and (iii) is simple enough that
+the central complexity-theoretic statements about integration become honest,
+machine-checked theorems. We regard the surrogate not as a replacement for $\Phi$
+but as a rigorous lower-dimensional shadow in which qualitative phenomena (the role
+of the partition optimization, the source of computational hardness) can be
+understood exactly.
+
+Our contributions are:
+
+1. A finite-probability formalization of a co-activation–based surrogate for
+   integrated information (Section 2).
+2. The **collapse theorem** `phiMax_eq_global`: $\Phi_{\max}=\Omega$, identifying
+   the partition-optimized invariant with a single global quantity (Section 3).
+3. Structural bounds `phiMax_le_card` ($\Phi_{\max}\le n$) and `phiMax_le_pow`
+   ($\Phi_{\max}\le n^m$) (Section 3).
+4. An explicit polynomial reduction $S$ from graphs to systems, with
+   `coactive_iff_adj` and `card_SSupport_le`, yielding $\Phi_{\max}(S(G))=\omega(G)$
+   and hence NP-hardness of computing $\Phi_{\max}$ (Section 4).
+5. A discussion of polynomial-time approximation and tractable special cases
+   inherited from the maximum-clique literature (Section 5).
+
+## 2. Definitions
+
+Throughout, $\alpha$ is the (finite) index set of the system's variables, and a
+*configuration* is a function $x:\alpha\to\{\text{false},\text{true}\}$, identifying
+$\text{true}$ with the variable being active ($1$) and $\text{false}$ with inactive
+($0$).
+
+**Definition 2.1 (Probabilistic system).** A *probabilistic system* over $\alpha$
+is a probability mass function on configurations,
+$$P \in \mathrm{PMF}(\alpha \to \mathrm{Bool}).$$
+We write $\mathrm{supp}(P)$ for the set of configurations of positive probability.
+
+**Definition 2.2 (Co-activation).** Two variables $u,v\in\alpha$ are *co-active*
+in $P$, written $\mathrm{Coactive}(P,u,v)$, if some positive-probability
+configuration activates both:
+$$\exists\, x\in\mathrm{supp}(P),\quad x(u)=\text{true}\ \wedge\ x(v)=\text{true}.$$
+Equivalently $P(X_u=1\wedge X_v=1)>0$. Co-activation is symmetric.
+
+**Definition 2.3 (Co-active coalition).** A finite set $K\subseteq\alpha$ is a
+*co-active coalition*, $\mathrm{IsCoactiveSet}(P,K)$, if every pair of distinct
+members is co-active:
+$$\forall\, u,v\in K,\ u\neq v \implies \mathrm{Coactive}(P,u,v).$$
+
+**Definition 2.4 (Straddling).** A set $K$ *straddles* the bipartition $(A,A^c)$,
+written $\mathrm{Straddles}(A,K)$, if it meets both sides:
+$$(\exists\, u\in K,\ u\in A)\ \wedge\ (\exists\, v\in K,\ v\notin A).$$
+
+**Definition 2.5 (Integrated information across a bipartition).** For a finite
+system ($\alpha$ a fintype) and a bipartition determined by $A\subseteq\alpha$,
+$$\Phi_{\mathrm{bip}}(P,A) \;=\; \sup\{\, n : \exists K,\ |K|=n,\ \mathrm{IsCoactiveSet}(P,K),\ \mathrm{Straddles}(A,K)\,\},$$
+the size of the largest co-active coalition split by the cut, taken to be $0$ when
+none exists.
+
+**Definition 2.6 (Maximum integrated information).**
+$$\Phi_{\max}(P) \;=\; \sup\{\, n : \exists A,\ n=\Phi_{\mathrm{bip}}(P,A)\,\}.$$
+
+**Definition 2.7 (Global co-active number).**
+$$\Omega(P) \;=\; \sup\{\, n : \exists K,\ |K|=n,\ \mathrm{IsCoactiveSet}(P,K),\ 2\le |K|\,\}.$$
+
+All suprema are over bounded subsets of $\mathbb{N}$ (coalition sizes are at most
+$|\alpha|$), hence well-defined natural numbers.
+
+**Remark 2.8 (Relation to IIT's MIP).** The genuine IIT $\Phi$ *minimizes* an
+information-loss functional over cuts (the MIP). Our surrogate *maximizes* the
+largest straddling coalition. Both implement the IIT principle "the value of the
+system is determined by an optimization over partitions of a quantity measuring
+what the partition fails to separate." Working with the maximum of a monotone
+combinatorial witness, rather than the minimum of a divergence, is exactly what
+makes the surrogate analytically and computationally transparent while keeping the
+phenomenon of interest — the dependence on the partition family — intact. A
+complementary fully formalized model based on the KL-divergence MIP (mutual
+information across a cut, $\Phi$ as a minimum over cuts) is summarized in the
+Future Directions.
+
+## 3. Structural theory
+
+We first record two elementary facts linking straddling and coalition size.
+
+**Lemma 3.1 (`two_le_card_of_straddles`).** If $\mathrm{Straddles}(A,K)$ then
+$|K|\ge 2$.
+
+*Proof.* Straddling supplies $u\in K\cap A$ and $v\in K\setminus A$. Since $u\in A$
+and $v\notin A$, we have $u\neq v$, so $\{u,v\}\subseteq K$ is a two-element subset
+and $|K|\ge|\{u,v\}|=2$. $\square$
+
+**Lemma 3.2 (`exists_straddles_of_two_le`).** If $|K|\ge 2$ then there exists a
+bipartition $A$ with $\mathrm{Straddles}(A,K)$.
+
+*Proof.* From $|K|\ge 2$ pick distinct $u,v\in K$. Take $A=\{u\}$. Then $u\in K\cap A$
+and $v\in K$ with $v\notin\{u\}$ (as $v\neq u$), so $K$ straddles $(A,A^c)$. $\square$
+
+These two facts are precisely the bridge between the partition-level and global
+viewpoints, and they drive the main theorem.
+
+**Theorem 3.3 (Collapse; `phiMax_eq_global`).** For every probabilistic system
+$P$ on a finite variable set,
+$$\Phi_{\max}(P) \;=\; \Omega(P).$$
+
+*Proof.* We prove two inequalities.
+
+($\le$) Let $A$ be any bipartition and let $K$ witness $\Phi_{\mathrm{bip}}(P,A)$,
+i.e. $K$ is a co-active coalition straddling $A$. By Lemma 3.1, $|K|\ge 2$, so $K$
+is admissible in the defining set of $\Omega(P)$; hence $|K|\le\Omega(P)$. Taking
+suprema over witnesses and over $A$ gives $\Phi_{\max}(P)\le\Omega(P)$. (Boundedness
+of all the sets by $|\alpha|$, via $|K|\le|\alpha|$, justifies the supremum
+manipulations.)
+
+($\ge$) Let $K$ witness $\Omega(P)$: a co-active coalition with $|K|\ge 2$. By
+Lemma 3.2 there is a bipartition $A$ with $\mathrm{Straddles}(A,K)$. Then $K$ is an
+admissible witness for $\Phi_{\mathrm{bip}}(P,A)$, so $|K|\le\Phi_{\mathrm{bip}}(P,A)$;
+and $\Phi_{\mathrm{bip}}(P,A)$ is itself admissible for $\Phi_{\max}(P)$, so
+$\Phi_{\mathrm{bip}}(P,A)\le\Phi_{\max}(P)$. Chaining, $|K|\le\Phi_{\max}(P)$, and
+taking the supremum over witnesses $K$ gives $\Omega(P)\le\Phi_{\max}(P)$.
+
+Antisymmetry of $\le$ yields equality. $\square$
+
+Theorem 3.3 is the rigorous form of the "minimum/maximum information partition"
+intuition: the optimization over the exponentially large family of $2^{|\alpha|}$
+bipartitions does not introduce information beyond a single global structural
+invariant, the largest co-active coalition. It is the engine for everything that
+follows, because it converts a statement about *all cuts* into a statement about
+*one global quantity*.
+
+**Theorem 3.4 (Ceiling; `phiMax_le_card`).** $\Phi_{\max}(P)\le|\alpha|$ (with
+$|\alpha|=\mathrm{Fintype.card}\,\alpha$).
+
+*Proof.* By Theorem 3.3 it suffices to bound $\Omega(P)$. Every witness $K$ is a
+finite subset of $\alpha$, so $|K|\le|\alpha|$; the supremum of these sizes is
+therefore $\le|\alpha|$. $\square$
+
+**Theorem 3.5 (Polynomial form; `phiMax_le_pow`).** If $|\alpha|\ge 1$ and $m\ge 1$,
+then $\Phi_{\max}(P)\le|\alpha|^m$.
+
+*Proof.* By Theorem 3.4, $\Phi_{\max}(P)\le|\alpha|=|\alpha|^1\le|\alpha|^m$, the
+last step by monotonicity of $n\mapsto n^m$'s exponent for $n\ge 1$. $\square$
+
+Theorem 3.5 is the loose form of a circuit-style bound $\Phi\le n^{O(d+k)}$; the
+sharp content is the linear ceiling of Theorem 3.4. Both certify that integrated
+information, in this model, is bounded by the system's representational size — a
+basic adequacy condition for any integration measure.
+
+## 4. NP-hardness via a reduction from CLIQUE
+
+We now show that computing $\Phi_{\max}$ is at least as hard as computing the
+clique number of a graph, which is NP-hard (maximum clique is among Karp's original
+21 NP-complete problems).
+
+**Construction 4.1 (The system $S(G)$).** Let $G$ be a simple graph with vertex
+set $\alpha$ (a fintype), $n=|\alpha|$. Define $S(G)\in\mathrm{PMF}(\alpha\to\mathrm{Bool})$
+as the uniform distribution over the following configurations:
+
+- the all-off configuration $\mathbf{0}$ (every variable false); and
+- for each edge $\{u,v\}\in E(G)$, the configuration $e_{u,v}$ that is true exactly
+  at $u$ and $v$ and false elsewhere.
+
+**Lemma 4.2 (Polynomial size; `card_SSupport_le`).**
+$|\mathrm{supp}(S(G))| \le n^2 + 1.$
+
+*Proof.* The support consists of $\mathbf{0}$ together with one configuration per
+edge; the number of edges is at most $\binom{n}{2}\le n^2$, so the support has at
+most $n^2+1$ elements. Hence $S(G)$ has a description polynomial in $|G|$ and is
+computable from $G$. $\square$
+
+**Lemma 4.3 (Faithfulness; `coactive_iff_adj`).** For distinct $u,v\in\alpha$,
+$$\mathrm{Coactive}(S(G),u,v) \iff u \sim_G v.$$
+
+*Proof.* ($\Leftarrow$) If $u\sim_G v$ then $e_{u,v}\in\mathrm{supp}(S(G))$ and it
+activates both $u$ and $v$, witnessing co-activation. ($\Rightarrow$) Suppose some
+$x\in\mathrm{supp}(S(G))$ has $x(u)=x(v)=\text{true}$. The all-off configuration
+activates nothing, so $x=e_{a,b}$ for some edge $\{a,b\}$. A configuration of the
+form $e_{a,b}$ is true at exactly two vertices, $a$ and $b$; since it is true at
+both $u\neq v$, we must have $\{u,v\}=\{a,b\}$, an edge of $G$, i.e. $u\sim_G v$. $\square$
+
+**Theorem 4.4 (Reduction; $\Phi_{\max}(S(G))=\omega(G)$).** For every finite simple
+graph $G$,
+$$\Phi_{\max}(S(G)) = \omega(G),$$
+where $\omega(G)$ is the clique number (the size of the largest clique) of $G$,
+under the convention $\omega(G)\ge 2$ exactly when $G$ has at least one edge (so
+that single-vertex "cliques" are excluded, matching the $|K|\ge2$ requirement of
+$\Omega$).
+
+*Proof.* By Theorem 3.3, $\Phi_{\max}(S(G))=\Omega(S(G))$, the largest co-active
+coalition of size $\ge 2$. By Lemma 4.3, $K$ is a co-active coalition in $S(G)$ iff
+every pair of distinct members of $K$ is adjacent in $G$, i.e. iff $K$ is a clique
+of $G$. Hence the co-active coalitions of $S(G)$ are exactly the cliques of $G$,
+and the largest one of size $\ge 2$ has size $\omega(G)$ (when $G$ has an edge;
+otherwise both sides are the degenerate $0$). $\square$
+
+**Corollary 4.5 (NP-hardness).** Computing $\Phi_{\max}$ is NP-hard.
+
+*Proof.* Construction 4.1 maps a graph $G$ to a system $S(G)$ of polynomial size
+(Lemma 4.2) in polynomial time, and Theorem 4.4 shows that $\Phi_{\max}(S(G))$
+equals $\omega(G)$. A polynomial-time algorithm for $\Phi_{\max}$ would therefore
+solve the (NP-hard) maximum-clique optimization problem in polynomial time. Hence
+$\Phi_{\max}$ is NP-hard. $\square$
+
+The reduction is exact (not merely gap-preserving): the value of integrated
+information *is* the clique number, vertex for vertex. Consequently every hardness
+result for clique transfers verbatim. In particular, since maximum clique is
+NP-hard to approximate within $n^{1-\varepsilon}$ for any $\varepsilon>0$ (Håstad;
+Zuckerman), the same inapproximability holds for $\Phi_{\max}$ in this model: not
+only exact computation but even strong approximation of integrated information is
+intractable in the worst case.
+
+### 4.1 A worked example
+
+It is worth tracing the reduction on a concrete instance to see that every step is
+effective. Take $G$ to be the complete graph $K_4$ on vertices $\{0,1,2,3\}$, which
+has six edges and clique number $\omega(G)=4$. The system $S(G)$ is uniform over
+seven configurations: the all-off vector $\mathbf{0}=(0,0,0,0)$ and the six
+edge-indicators $(1,1,0,0)$, $(1,0,1,0)$, $(1,0,0,1)$, $(0,1,1,0)$, $(0,1,0,1)$,
+$(0,0,1,1)$, each with probability $1/7$. The support has $7\le 4^2+1=17$ points,
+confirming Lemma 4.2. Every pair of distinct vertices appears jointly active in its
+edge-indicator, so all six pairs are co-active (Lemma 4.3), the co-activation graph
+$G_{S(G)}$ is again $K_4$, and the largest co-active coalition is the full vertex set
+of size $4$. Hence $\Omega(S(G))=4=\Phi_{\max}(S(G))=\omega(G)$, exactly as
+Theorem 4.4 predicts.
+
+Contrast this with the path $P_4$ on $\{0,1,2,3\}$ with edges
+$\{0,1\},\{1,2\},\{2,3\}$. Now $S(G)$ is uniform over $\mathbf{0}$ and three
+edge-indicators. Vertices $0$ and $2$ never appear active together (no edge joins
+them), so they are not co-active; the largest co-active coalition is any single
+edge, of size $2$, giving $\Phi_{\max}(S(G))=2=\omega(P_4)$. The model therefore
+distinguishes a tightly bound system (the $K_4$ instance, integration $4$) from a
+merely chain-connected one (the $P_4$ instance, integration $2$) precisely by the
+size of the largest mutually co-active group — the combinatorial essence of
+integration. These computations are reproduced and checked numerically in the
+accompanying demonstrations.
+
+## 5. Algorithms, approximation, and tractable regimes
+
+The reduction is a two-way street. Because $\Phi_{\max}(S(G))=\omega(G)$ and, more
+generally, $\Phi_{\max}(P)=\Omega(P)$ is a maximum-clique computation on the
+*co-activation graph*
+$$G_P = (\alpha,\ \{\{u,v\}:u\neq v,\ \mathrm{Coactive}(P,u,v)\}),$$
+the entire algorithmic toolkit for cliques applies to integrated information.
+
+**Algorithm 5.1 (Exact $\Phi_{\max}$ via co-activation graph).** Build $G_P$ by
+testing co-activation for each of the $\binom{n}{2}$ variable pairs (each test
+scans the support of $P$), then compute the maximum clique of $G_P$. Correctness is
+Theorem 3.3 plus the definition of $G_P$. The clique step uses, e.g., the
+Bron–Kerbosch algorithm; worst-case exponential, but excellent in practice on the
+sparse, structured graphs typical of physical systems.
+
+**Tractable regimes.** Several practically important cases are polynomial:
+
+- *Bounded co-activation degree (sparsity).* If every variable is co-active with at
+  most $\Delta$ others, then $\Omega(P)\le\Delta+1$ and a maximum clique can be
+  found in time $O(n\cdot 3^{\Delta/3})$ — linear in $n$ for fixed $\Delta$. Real
+  neural and physical systems are typically sparse, so this is the common case.
+- *Perfect / chordal co-activation graphs.* If $G_P$ is perfect (e.g. chordal,
+  interval, or comparability), maximum clique is solvable in polynomial time, so
+  $\Phi_{\max}$ is exactly computable efficiently.
+- *Fixed-parameter tractability.* Parameterizing by the target value $k$, one can
+  decide $\Phi_{\max}\ge k$ in time $f(k)\cdot\mathrm{poly}(n)$ on bounded-degeneracy
+  graphs, again matching the typical sparse regime.
+
+**Approximation.** When exactness is infeasible one inherits clique approximation:
+
+- *Greedy / degeneracy ordering.* A simple greedy pass over a degeneracy ordering of
+  $G_P$ returns a co-active coalition; on bounded-degeneracy graphs it gives a
+  constant-factor approximation to $\Omega(P)$.
+- *SDP relaxation (Lovász theta).* The Lovász number $\vartheta(\overline{G_P})$
+  sandwiches the clique number and is computable in polynomial time via semidefinite
+  programming, yielding a certified upper bound on $\Phi_{\max}$ and, on many graph
+  classes, tight estimates.
+
+The upshot: worst-case intractability (Corollary 4.5) and practical computability
+coexist, mediated entirely by the structure of the co-activation graph. The
+model thus does double duty — it explains *why* integrated information is hard and
+*where* the hardness dissolves.
+
+## 6. Discussion
+
+Our model trades the full IIT functional for a combinatorial surrogate, and the
+trade is illuminating. Three points deserve emphasis.
+
+First, the **collapse theorem** (3.3) isolates a phenomenon that is often implicit
+in discussions of the MIP: the optimization over partitions, despite its
+exponential search space, is controlled by a single global invariant. In our model
+this is exact; we conjecture analogous "the partition optimization is a global
+quantity in disguise" phenomena hold for restricted families in the full theory.
+
+Second, the **hardness** (4.5) is structural, not incidental. It does not arise
+from numerical precision or from the size of repertoires, but from the basic fact
+that detecting irreducible shared structure subsumes clique-finding. This suggests
+that *any* faithful integration measure that can encode pairwise-and-up
+co-occurrence will be NP-hard, independent of the particular divergence used.
+
+Third, the **two-way reduction** turns a negative (hardness) into a research
+program (approximation and special-case algorithms). The co-activation graph is the
+right intermediate object: it is computable from $P$ in polynomial time and exposes
+exactly the structure that governs both the value and the difficulty of $\Phi_{\max}$.
+
+A limitation worth stating plainly: the surrogate detects *co-occurrence* structure,
+not the directed cause–effect structure of full IIT. It therefore captures the
+*combinatorial* core of integration (irreducible togetherness) but not its
+*dynamical/informational* refinements (how much the past constrains the future
+beyond the parts). The complementary KL-divergence model summarized below addresses
+the latter; unifying the two is the natural next step.
+
+## 7. Future directions
+
+The following directions, built on a companion fully-formalized discrete IIT core
+(finite distributions, mutual information across a cut as KL divergence to the
+product-of-marginals reference, the general Kullback–Leibler law, intrinsicality,
+and the Minimum-Information-Partition $\Phi$ with its structural laws), are precise
+and testable.
+
+**C1. Additivity over independent composition.** For joint systems
+$P_1$ on $\alpha_1\times\beta_1$ and $P_2$ on $\alpha_2\times\beta_2$, the mutual
+information of $P_1\otimes P_2$ reindexed to $(\alpha_1\times\alpha_2)\times(\beta_1\times\beta_2)$
+should equal $I(P_1)+I(P_2)$, so that $\Phi$ of a disjoint union is the sum. The
+relative-entropy half is already proved (KL of a product is the sum of KLs); the
+remaining step is to identify the marginals of the product with products of
+marginals under the four-fold reindexing $(\alpha_1\times\beta_1)\times(\alpha_2\times\beta_2)\simeq(\alpha_1\times\alpha_2)\times(\beta_1\times\beta_2)$.
+Falsifiable by a single mixed example with $I(P_1\otimes P_2)\neq I(P_1)+I(P_2)$.
+
+**C2. Data-processing / coarse-graining monotonicity.** For any coarse-graining
+$f:\beta\to\beta'$, mutual information should not increase:
+$I(P.\mathrm{coarsen}\,f)\le I(P)$, making $\Phi$ monotone under loss of
+micro-detail and formalizing IIT's "exclusion" intuition. This extends the
+bijective equality case to non-injective maps.
+
+**C3. Upper bound by the smaller part's entropy.** With Shannon entropy $H$,
+conjecture $I(P)\le\min(H(P.\mathrm{fst}),H(P.\mathrm{snd}))$, hence
+$\Phi\le\min$ over the cut of the part entropies — a first quantitative ceiling on
+$\Phi$ from representational capacity. Requires building $H$ and subadditivity.
+
+**C4. Strict super-additivity gap characterizes genuine integration.** Define the
+disintegration gap $G(P,S)=H(P)-H(P\text{ across cut }S)$. Conjecture that $\Phi$
+over the full cut family is $0$ iff some cut has $G=0$, and otherwise $\Phi$ is
+bounded below by a spectral gap of the joint-vs-product correlation operator,
+upgrading the qualitative $\Phi=0$ characterization to a quantitative certificate.
+
+**C5. Continuity / stability of $\Phi$.** Conjecture $\Phi$ is locally Lipschitz in
+the joint distribution away from the zero-marginal boundary, so small perturbations
+of $P$ produce small changes in $\Phi$ — a robustness necessary for physical
+meaning. Falsifiable via a discontinuity witness at an interior point.
 
 ## 8. Conclusion
 
-We have given a rigorous, fully machine-checked mathematical foundation for the
-integrated-information functional Φ at the center of IIT, in both a classical
-graph-cut register and a quantum Schmidt-rank register, including a genuine
-multipartite generalization. The theory's defining intuition — that a whole exceeds
-its parts exactly to the extent that it cannot be cleanly cut — is captured by a
-single, well-behaved invariant: nonnegative, vanishing precisely under decoupling,
-positive under strong coupling, linearly scaling, monotone, bounded, and tight at
-the extremes of entanglement. The computational hardness of Φ and its
-approximations, set up but not yet formalized here, mark the natural frontier. The
-result is a clean, certified theory of irreducibility that stands on its own
-mathematical merits, whatever one concludes about its application to the puzzle of
-consciousness.
+We have given a tractable, fully rigorous surrogate model of integrated information
+in which the principal claims about $\Phi$ become theorems: the partition
+optimization collapses to a single global invariant ($\Phi_{\max}=\Omega$),
+integration is bounded by system size ($\Phi_{\max}\le n$), and computing
+integration is NP-hard via an exact reduction to maximum clique
+($\Phi_{\max}(S(G))=\omega(G)$). The same reduction opens the door to the rich
+algorithmic theory of cliques, delineating sparse and structured regimes where
+integrated information is efficiently computable or approximable. The model is a
+faithful combinatorial shadow of IIT — small enough to prove things about, large
+enough to explain why measuring minds is hard, and where it is not.

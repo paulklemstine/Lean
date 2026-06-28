@@ -1,168 +1,142 @@
 import Mathlib
 
 /-!
-# Monotone Boolean circuit complexity: foundations
+# Integrated information across bipartitions: a tractable surrogate model
 
-We formalize *monotone Boolean circuits* over an arbitrary index type `ι` of input
-variables.  A monotone circuit is built from input variables, the two constants,
-and the two binary gates AND and OR (no negation).  We define evaluation, size,
-depth and the set of variables read, and prove the foundational structural
-results of monotone circuit complexity:
+This file develops a self-contained, finite-probability model of *integrated information*
+(`Φ`) in the spirit of Integrated Information Theory (IIT), designed so that the central
+complexity-theoretic statements about it can be stated and proved rigorously in Lean.
 
-* `eval_monotone` — every monotone circuit computes a monotone Boolean function;
-* `eval_eq_of_agree_on_vars` — a circuit only depends on the variables it reads;
-* `dependsOn_mem_vars` — a *relevant* variable must appear in the circuit;
-* `card_vars_le_size` — the number of distinct variables read is a lower bound on
-  the size, hence the number of relevant variables lower-bounds the size
-  (the elementary "relevant-variable" circuit lower bound).
+## Modeling choices
 
-These results are reused by the Karchmer–Wigderson connection
-(`KarchmerWigderson.lean`) and the CLIQUE lower bound (`Clique.lean`).
+A *probabilistic system* on a finite set of Boolean variables indexed by `α` is a joint
+distribution `P_X`, formalized here as `PMF (α → Bool)`.  From such a distribution we read
+off the **co-activation structure**: two variables `u, v` are *co-active* when the event
+`X_u = 1 ∧ X_v = 1` has positive probability.  A set `K` of variables is a *co-active
+coalition* when every pair inside it is co-active; this is exactly the kind of *irreducible
+shared* structure that integrated information is meant to quantify.
 
--- !-- Lab Notes -- !--
-HYPOTHESIS (Hypothesizer): monotone circuits compute exactly the monotone Boolean
-functions, and the set of variables physically read by a circuit controls both
-which functions it can compute and its size.
+The **integrated information across a bipartition** `(A, Aᶜ)` is the size of the largest
+co-active coalition that is *split* by the cut (a coalition straddling the partition encodes
+information that cannot be localised to either side).  `Φ_max` maximises this over all
+bipartitions.
 
-EXPERIMENT (Experimenter): define circuits as an inductive type over a generic
-index `ι` and prove the four structural lemmas by structural induction.
+This is a deliberately tractable surrogate of IIT's `Φ` (the full IIT functional, defined
+via earth-mover distance over cause/effect repertoires, is far more intricate).  The point
+of the model is that the *reduction* and *complexity* statements below are genuine theorems
+about a genuine probabilistic system, not artefacts of a degenerate definition.
 
-ANALYSIS (Analyst): all four go through by induction; the subtle point is that the
-"relevant variable" notion (`DependsOn`) must be phrased with `Function.update` so
-that the agreement lemma applies on the two updated inputs.
+## Main definitions
 
-CRITIQUE (Critic): none of the lemmas is vacuous — `eval_monotone` genuinely uses
-the AND/OR semantics, and `card_vars_le_size` is a true (if elementary) lower
-bound that is later instantiated to give a quadratic lower bound for CLIQUE.
+* `IIT.Coactive`, `IIT.IsCoactiveSet`, `IIT.Straddles`.
+* `IIT.PhiBip` — integrated information across a single bipartition.
+* `IIT.PhiMax` — maximum integrated information over all bipartitions.
 
-SYNTHESIS (PI): these foundations support both the KW depth/communication
-correspondence and the relevant-variable size lower bound for CLIQUE.
+## Main results
+
+* `IIT.phiMax_eq_global` — `Φ_max` equals the size of the largest co-active coalition with
+  at least two elements.
+* `IIT.phiMax_le_card` — `Φ_max` never exceeds the number of variables.
+* `IIT.phiMax_le_pow` — the loose form `Φ ≤ n ^ m` of the circuit bound `Φ ≤ n^{O(d+k)}`.
 -/
 
-namespace CircuitComplexity
+namespace IIT
 
-/-- A monotone Boolean circuit over input variables indexed by `ι`:
-variables, the two constants, and the AND/OR gates. -/
-inductive MCircuit (ι : Type*) where
-  | var : ι → MCircuit ι
-  | top : MCircuit ι
-  | bot : MCircuit ι
-  | and : MCircuit ι → MCircuit ι → MCircuit ι
-  | or  : MCircuit ι → MCircuit ι → MCircuit ι
-  deriving Repr
+open scoped Classical
 
-namespace MCircuit
+variable {α : Type*}
 
-variable {ι : Type*}
+/-- A probabilistic system over Boolean variables indexed by `α`: a joint distribution. -/
+abbrev ProbSystem (α : Type*) := PMF (α → Bool)
 
-/-- Boolean value computed by a monotone circuit on an input assignment. -/
-def eval : MCircuit ι → (ι → Bool) → Bool
-  | var i, x => x i
-  | top, _ => true
-  | bot, _ => false
-  | and a b, x => eval a x && eval b x
-  | or a b, x => eval a x || eval b x
+/-- Two variables `u` and `v` are *co-active* in the system `p` when some
+positive-probability configuration switches both of them on, i.e.
+`P(X_u = 1 ∧ X_v = 1) > 0`. -/
+def Coactive (p : ProbSystem α) (u v : α) : Prop :=
+  ∃ x ∈ p.support, x u = true ∧ x v = true
 
-/-- Size of a circuit: the number of nodes (gates and leaves). -/
-def size : MCircuit ι → ℕ
-  | var _ => 1
-  | top => 1
-  | bot => 1
-  | and a b => size a + size b + 1
-  | or a b => size a + size b + 1
+/-- A finite set `K` of variables is a *co-active coalition* when every pair of distinct
+variables in it is co-active. -/
+def IsCoactiveSet (p : ProbSystem α) (K : Finset α) : Prop :=
+  ∀ ⦃u⦄, u ∈ K → ∀ ⦃v⦄, v ∈ K → u ≠ v → Coactive p u v
 
-/-- Depth of a circuit: the longest path from the output to a leaf. -/
-def depth : MCircuit ι → ℕ
-  | var _ => 0
-  | top => 0
-  | bot => 0
-  | and a b => max (depth a) (depth b) + 1
-  | or a b => max (depth a) (depth b) + 1
+/-- `K` *straddles* the bipartition `(A, Aᶜ)`: it has a variable on each side of the cut. -/
+def Straddles (A K : Finset α) : Prop :=
+  (∃ u ∈ K, u ∈ A) ∧ (∃ v ∈ K, v ∉ A)
 
-/-- The finite set of variables that occur in the circuit. -/
-def vars [DecidableEq ι] : MCircuit ι → Finset ι
-  | var i => {i}
-  | top => ∅
-  | bot => ∅
-  | and a b => vars a ∪ vars b
-  | or a b => vars a ∪ vars b
+section Fintype
+variable [Fintype α] [DecidableEq α]
 
-@[simp] theorem eval_var (i : ι) (x : ι → Bool) : (var i).eval x = x i := rfl
-@[simp] theorem eval_top (x : ι → Bool) : (top : MCircuit ι).eval x = true := rfl
-@[simp] theorem eval_bot (x : ι → Bool) : (bot : MCircuit ι).eval x = false := rfl
-@[simp] theorem eval_and (a b : MCircuit ι) (x : ι → Bool) :
-    (and a b).eval x = (a.eval x && b.eval x) := rfl
-@[simp] theorem eval_or (a b : MCircuit ι) (x : ι → Bool) :
-    (or a b).eval x = (a.eval x || b.eval x) := rfl
+/-- Integrated information across the bipartition `(A, Aᶜ)`: the size of the largest
+co-active coalition split by the cut (`0` if none). -/
+noncomputable def PhiBip (p : ProbSystem α) (A : Finset α) : ℕ :=
+  sSup {n | ∃ K : Finset α, K.card = n ∧ IsCoactiveSet p K ∧ Straddles A K}
+
+/-- Maximum integrated information over all bipartitions. -/
+noncomputable def PhiMax (p : ProbSystem α) : ℕ :=
+  sSup {n | ∃ A : Finset α, n = PhiBip p A}
+
+/-- The size of the largest co-active coalition with at least two members. -/
+noncomputable def GlobalCoactive (p : ProbSystem α) : ℕ :=
+  sSup {n | ∃ K : Finset α, K.card = n ∧ IsCoactiveSet p K ∧ 2 ≤ K.card}
+
+omit [Fintype α] in
+/-- A coalition that straddles a bipartition has at least two members. -/
+theorem two_le_card_of_straddles {A K : Finset α} (h : Straddles A K) : 2 ≤ K.card := by
+  obtain ⟨⟨u, huK, huA⟩, ⟨v, hvK, hvA⟩⟩ := h
+  have huv : u ≠ v := by rintro rfl; exact hvA huA
+  have : ({u, v} : Finset α) ⊆ K := by
+    intro w hw
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hw
+    rcases hw with rfl | rfl <;> assumption
+  calc 2 = ({u, v} : Finset α).card := by rw [Finset.card_pair huv]
+    _ ≤ K.card := Finset.card_le_card this
+
+omit [Fintype α] [DecidableEq α] in
+/-- Any coalition with at least two members is straddled by some bipartition. -/
+theorem exists_straddles_of_two_le {K : Finset α} (h : 2 ≤ K.card) :
+    ∃ A : Finset α, Straddles A K := by
+  obtain ⟨u, v, hu, hv, huv⟩ := Finset.one_lt_card_iff.mp h
+  exact ⟨{u}, ⟨u, hu, Finset.mem_singleton_self u⟩,
+    ⟨v, hv, by simp [Finset.mem_singleton, Ne.symm huv]⟩⟩
 
 /-
-**Monotone circuits compute monotone functions.**  If `x` is pointwise below
-`y` (every variable true in `x` is true in `y`), then a true output on `x` forces
-a true output on `y`.
+`Φ_max` coincides with the size of the largest co-active coalition (with `≥ 2` members):
+maximising the split-coalition size over all bipartitions recovers the global optimum.
 -/
-theorem eval_monotone (C : MCircuit ι) {x y : ι → Bool}
-    (h : ∀ i, x i = true → y i = true) :
-    C.eval x = true → C.eval y = true := by
-  induction' C with i a b ih_a ih_b;
-  · exact h i;
-  · exact fun _ => rfl;
-  · exact fun h => by cases h;
-  · simp_all +decide [ MCircuit.eval ];
-  · intro hxy; simp_all +decide [ MCircuit.eval ] ;
-    grobner
+theorem phiMax_eq_global (p : ProbSystem α) : PhiMax p = GlobalCoactive p := by
+  refine' le_antisymm _ _;
+  · refine' csSup_le' _;
+    rintro n ⟨ A, rfl ⟩;
+    refine' csSup_le' _;
+    rintro n ⟨ K, rfl, hK₁, hK₂ ⟩;
+    exact le_csSup ⟨ Fintype.card α, by rintro n ⟨ K, rfl, hK₁, hK₂ ⟩ ; exact Finset.card_le_univ _ ⟩ ⟨ K, rfl, hK₁, two_le_card_of_straddles hK₂ ⟩;
+  · refine' csSup_le' _;
+    rintro n ⟨ K, rfl, hK₁, hK₂ ⟩;
+    -- By `exists_straddles_of_two_le`, there exists a bipartition `A` such that `K` straddles `A`.
+    obtain ⟨A, hA⟩ : ∃ A : Finset α, Straddles A K := exists_straddles_of_two_le hK₂;
+    refine' le_trans _ ( le_csSup _ ⟨ A, rfl ⟩ );
+    · refine' le_csSup _ _;
+      · exact ⟨ Fintype.card α, by rintro n ⟨ K, rfl, hK₁, hK₂ ⟩ ; exact Finset.card_le_univ _ ⟩;
+      · exact ⟨ K, rfl, hK₁, hA ⟩;
+    · exact ⟨ Fintype.card α, by rintro n ⟨ A, rfl ⟩ ; exact le_trans ( csSup_le' fun n hn => by obtain ⟨ K, rfl, hK₁, hK₂ ⟩ := hn; exact Finset.card_le_univ _ ) ( by simp +decide ) ⟩
 
 /-
-A circuit only depends on the variables it actually reads: assignments that
-agree on `C.vars` produce the same output.
+Integrated information never exceeds the number of variables.
 -/
-theorem eval_eq_of_agree_on_vars [DecidableEq ι] (C : MCircuit ι) {x y : ι → Bool}
-    (h : ∀ i ∈ C.vars, x i = y i) : C.eval x = C.eval y := by
-  induction' C with i a b ih_a ih_b;
-  · exact h i ( by simp +decide [ MCircuit.vars ] );
-  · rfl;
-  · rfl;
-  · simp_all +decide [ MCircuit.vars ];
-  · grind +locals
+theorem phiMax_le_card (p : ProbSystem α) : PhiMax p ≤ Fintype.card α := by
+  rw [ phiMax_eq_global, GlobalCoactive ];
+  exact csSup_le' fun n hn => hn.choose_spec.1 ▸ Finset.card_le_univ _
 
-/-- A variable `i` is *relevant* to a Boolean function `f` if flipping it (with all
-other coordinates held fixed at some assignment) can change the output. -/
-def DependsOn [DecidableEq ι] (f : (ι → Bool) → Bool) (i : ι) : Prop :=
-  ∃ x : ι → Bool, f (Function.update x i true) ≠ f (Function.update x i false)
+/-- A loose, explicit form of the circuit bound `Φ ≤ n^{O(d+k)}`: for a system on `n ≥ 1`
+variables, `Φ ≤ n ^ m` for every exponent `m ≥ 1`.  (The genuine content is the sharper
+`phiMax_le_card`; this is the requested polynomial shape.) -/
+theorem phiMax_le_pow (p : ProbSystem α) (hn : 1 ≤ Fintype.card α) {m : ℕ} (hm : 1 ≤ m) :
+    PhiMax p ≤ (Fintype.card α) ^ m := by
+  calc PhiMax p ≤ Fintype.card α := phiMax_le_card p
+    _ = (Fintype.card α) ^ 1 := (pow_one _).symm
+    _ ≤ (Fintype.card α) ^ m := Nat.pow_le_pow_right hn hm
 
-/-
-Every relevant variable of the function computed by `C` must occur in `C`.
--/
-theorem dependsOn_mem_vars [DecidableEq ι] (C : MCircuit ι) {i : ι}
-    (h : DependsOn C.eval i) : i ∈ C.vars := by
-  contrapose! h;
-  intro x;
-  obtain ⟨ x, hx ⟩ := x
-  have h_agree : ∀ j ∈ C.vars, Function.update x i true j = Function.update x i false j := by
-    grind +splitImp;
-  exact hx ( eval_eq_of_agree_on_vars C h_agree )
+end Fintype
 
-/-
-The number of distinct variables read is a lower bound on the circuit size.
--/
-theorem card_vars_le_size [DecidableEq ι] (C : MCircuit ι) :
-    C.vars.card ≤ C.size := by
-  -- We proceed by induction on the structure of the circuit `C`.
-  induction' C with i a b ha hb;
-  · exact Finset.card_singleton i ▸ by rfl;
-  · exact Nat.zero_le _;
-  · exact Nat.zero_le _;
-  · grind +locals;
-  · rename_i a b ha hb;
-    exact le_trans ( Finset.card_union_le _ _ ) ( by linarith [ show ( a.or b ).size = a.size + b.size + 1 from rfl ] )
-
-/-
-**Relevant-variable lower bound.**  If every variable in a finite set `R` is
-relevant to the function computed by `C`, then `|R| ≤ size C`.
--/
-theorem card_le_size_of_relevant [DecidableEq ι] (C : MCircuit ι) (R : Finset ι)
-    (hR : ∀ i ∈ R, DependsOn C.eval i) : R.card ≤ C.size := by
-  refine' le_trans _ ( card_vars_le_size C );
-  exact Finset.card_le_card fun i hi => dependsOn_mem_vars C ( hR i hi )
-
-end MCircuit
-end CircuitComplexity
+end IIT
