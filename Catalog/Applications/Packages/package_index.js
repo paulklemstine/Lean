@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "bc81b3a8",
     "filename": "optimal_transport_and_wasserstein_distances.json",
     "pkg_num": 185,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5376,
     "title": "Optimal Transport on a Line: A Formally Verified Theory of the 1-Wasserstein Distance"
   },
   {
@@ -5400,8 +5400,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "optimal_transport_and_wasserstein_distances",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5376,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Optimal Transport on a Line: A Formally Verified Theory of the 1-Wasserstein Distance"
     }

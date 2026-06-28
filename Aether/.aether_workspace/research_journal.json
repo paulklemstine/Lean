@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ef874ad4",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Ising Model Phase Transition\n\nThis research cycle established, fully formally (0 sorries), the exact solution of\nthe **one-dimensional Ising model** and the rigorous sense in whi",
-      "quality_score": 0.512,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-06-25T08:43:24",
-      "title": "Statistical Mechanics: Ising Model Phase Transition"
-    },
-    {
       "cycle_id": "73a5599a",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Diffusion Models as Stochastic Differential Equations\n\nDerived from this cycle's verified results (`OUProcess.lean`,\n`FokkerPlanck.lean`, `ReverseTime.lean`), which establish, wi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-06-28T14:31:11",
       "title": "Existence of Inverse Sprugnoli Arrays with Closed-Form Coefficients"
+    },
+    {
+      "cycle_id": "bc81b3a8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Optimal Transport & Wasserstein Distances\n\nThis cycle established, fully formally (0 sorries, only standard axioms), the 1D\ndiscrete theory of the 1-Wasserstein distance `W₁` via",
+      "quality_score": 0.5376,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T14:33:30",
+      "title": "Optimal Transport and Wasserstein Distances"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.722996
     }
   ],
-  "last_updated": "2026-06-28T14:31:11",
+  "last_updated": "2026-06-28T14:33:30",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a530b001",
-        "quality": 0.7436,
-        "theorems": 15,
-        "title": "Circuit Complexity: Monotone Lower Bounds"
-      },
-      {
         "cycle_id": "5870167a",
         "quality": 0.69256,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.5751195652173913,
         "theorems": 12,
         "title": "Existence of Inverse Sprugnoli Arrays with Closed-Form Coefficients"
+      },
+      {
+        "cycle_id": "bc81b3a8",
+        "quality": 0.5376,
+        "theorems": 0,
+        "title": "Optimal Transport and Wasserstein Distances"
       }
     ],
     "NumberTheory": [
