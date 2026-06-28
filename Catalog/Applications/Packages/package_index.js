@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "52a20f8b",
     "filename": "eml_kolmogorov_arnold_representation.json",
     "pkg_num": 196,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.59432,
     "title": "EML Kolmogorov\u2013Arnold Separable Rank: Counting Outer exp Terms by Matrix Sampling"
   },
   {
@@ -5719,8 +5719,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "eml_kolmogorov_arnold_representation",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.59432,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Kolmogorov\u2013Arnold Separable Rank: Counting Outer exp Terms by Matrix Sampling"
     }

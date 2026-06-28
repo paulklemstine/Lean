@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0dc2bca1",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Fourier Analysis on Finite Groups (Combinatorics)\n\nThis cycle established, for `A ⊆ ℤ/Nℤ`, the spectral toolkit on `ZMod.dft`\n(orthogonality, convolution theorem, Parseval/Planch",
-      "quality_score": 0.7367999999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-26T02:43:22",
-      "title": "Fourier Analysis on Finite Groups"
-    },
-    {
       "cycle_id": "0548f2b9",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Navier–Stokes: 2D Regularity and Partial 3D Results\n\nThis cycle extended the scalar a-priori-estimate framework\n(`NavierStokes.Core`, `NavierStokes.Estimates`) in two directions:",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T21:21:11",
       "title": "Consciousness as Integrated Information: Mathematical Foundations"
+    },
+    {
+      "cycle_id": "52a20f8b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Kolmogorov–Arnold separable rank\n\nDerived from this cycle's findings in `KolmogorovArnoldEMLSeparableRank.lean` and\n`KolmogorovArnoldEMLSeparableRankExact.lean`, where we int",
+      "quality_score": 0.59432,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T21:22:54",
+      "title": "EML Kolmogorov-Arnold Representation"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T21:21:11",
+  "last_updated": "2026-06-28T21:22:54",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "4bc14309",
-        "quality": 0.49242371929824563,
-        "theorems": 8,
-        "title": "Prismatic Purity for F-Crystals on Regular Schemes"
-      },
-      {
         "cycle_id": "6dda8a29",
         "quality": 0.6926119999999999,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.5333106912442396,
         "theorems": 23,
         "title": "Logic-Physics Bridge: Consistency of Physical Theories"
+      },
+      {
+        "cycle_id": "52a20f8b",
+        "quality": 0.59432,
+        "theorems": 0,
+        "title": "EML Kolmogorov-Arnold Representation"
       }
     ],
     "Bridges": [
