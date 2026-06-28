@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T19:51:00.729535+00:00",
+  "last_updated": "2026-06-28T20:11:59.609684+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -16167,6 +16167,49 @@
       "theorem_novelty_new": 13,
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-28T19:51:00.316996+00:00",
+      "title": "Continued Fractions and Diophantine Approximation"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.327,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 240,
+      "domain": "Applications",
+      "duration_seconds": 1587.92116689682,
+      "end_time": 1782675752.2282734,
+      "files_integrated": 7,
+      "job_id": "23de9107",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.552,
+        "cross_domain": 0.95,
+        "grade": "substantial",
+        "importance": 0.2884,
+        "novelty": 0.62,
+        "proof_depth": 0.1463,
+        "usefulness": 0.5482
+      },
+      "quality_score": 0.5948,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782674164.3071065,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 13,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-28T20:11:59.453644+00:00",
       "title": "Continued Fractions and Diophantine Approximation"
     }
   ]

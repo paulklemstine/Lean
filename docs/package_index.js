@@ -10,7 +10,7 @@ window.PACKAGE_INDEX = [
     "filename": "continued_fractions_and_diophantine_approximation.json",
     "pkg_num": 193,
     "quality": "partial",
-    "quality_score": 0.68045,
+    "quality_score": 0.5948,
     "title": "Continued Fractions and Diophantine Approximation: The Lagrange Constant"
   },
   {
@@ -5632,7 +5632,7 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "continued_fractions_and_diophantine_approximation",
       "primary_domain": "Bridges",
-      "priority_score": 0.68045,
+      "priority_score": 0.5948,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Continued Fractions and Diophantine Approximation: The Lagrange Constant"
