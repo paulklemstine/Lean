@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0ffedaae",
     "filename": "random_graphs_erds_rnyi_threshold_phenomena.json",
     "pkg_num": 191,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.69956,
     "title": "Random Graphs: Erd\u0151s\u2013R\u00e9nyi Threshold Phenomena via the First and Second Moment Methods"
   },
   {
@@ -5574,8 +5574,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.69956,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Random Graphs: Erd\u0151s\u2013R\u00e9nyi Threshold Phenomena via the First and Second Moment Methods"
     }

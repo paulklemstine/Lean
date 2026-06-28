@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a8f472f7",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Satisfactory Multipliers for 2D Lacunary Distance Graphs\n\nThis cycle established three pillars (all in `Catalog/Algebra/LacunaryTorus/`,\nall 0-sorry, axioms `propext`/`Classical.",
-      "quality_score": 0.56056,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-25T22:45:18",
-      "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
-    },
-    {
       "cycle_id": "e8c93c85",
       "domain": "Shared",
       "key_insight": "# Future Directions — Interval Property for Connected Slice-Projections\n\nDerived from this cycle's findings:\n\n* `DiscreteConcave.superlevel_isInterval`: discrete concavity ⇒ the positive\n  set is an i",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-28T18:43:56",
       "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+    },
+    {
+      "cycle_id": "0ffedaae",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Erdős–Rényi Threshold Phenomena\n\nThis cycle generalized the catalog's triangle (`K_3`) threshold to the full\n**general clique `K_r` appearance threshold** in `Algebra/ErdosRenyi/",
+      "quality_score": 0.69956,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-28T18:50:39",
+      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T18:43:56",
+  "last_updated": "2026-06-28T18:50:39",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3f134ce6",
-        "quality": 0.5751195652173913,
-        "theorems": 12,
-        "title": "Existence of Inverse Sprugnoli Arrays with Closed-Form Coefficients"
-      },
-      {
         "cycle_id": "bc81b3a8",
         "quality": 0.5376,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.39200000000000007,
         "theorems": 0,
         "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and "
+      },
+      {
+        "cycle_id": "0ffedaae",
+        "quality": 0.69956,
+        "theorems": 11,
+        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
       }
     ],
     "NumberTheory": [
