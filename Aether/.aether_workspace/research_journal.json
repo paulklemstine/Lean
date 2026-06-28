@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "bcd85103",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nThe following freeform directions extend the concrete quotient model of basic\ncubical shapes developed in `QuotientCircleTorus.lean`.\n\n## 1. A dependent eliminator for the quotien",
-      "quality_score": 0.63257,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-24T08:39:04",
-      "title": "Type Theory: Cubical Type Theory Foundations"
-    },
-    {
       "cycle_id": "f0048c68",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThese are original research directions building on the formally verified index-two\ngeneration ceiling in `Catalog/Novelty/SymmetricGroupGeneration.lean`.\n\n## 1. From one obstructi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-06-28T02:59:41",
       "title": "Tight asymptotic bound for the n‑queens completion threshold"
+    },
+    {
+      "cycle_id": "f73687d8",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Kolmogorov–Arnold rank-one frontier\n\nDerived from this cycle's findings in\n`Catalog/Applications/KolmogorovArnoldEMLSeparability.lean` and\n`Catalog/Applications/KolmogorovArn",
+      "quality_score": 0.5230660465116279,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-06-28T03:01:57",
+      "title": "EML Kolmogorov-Arnold Representation"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71552
     }
   ],
-  "last_updated": "2026-06-28T02:59:41",
+  "last_updated": "2026-06-28T03:01:57",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e8be0a2a",
-        "quality": 0.8740959999999999,
-        "theorems": 31,
-        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-      },
-      {
         "cycle_id": "4398a39a",
         "quality": 0.6822699999999999,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.6280000000000001,
         "theorems": 20,
         "title": "Tight asymptotic bound for the n‑queens completion threshold"
+      },
+      {
+        "cycle_id": "f73687d8",
+        "quality": 0.5230660465116279,
+        "theorems": 18,
+        "title": "EML Kolmogorov-Arnold Representation"
       }
     ],
     "Bridges": [

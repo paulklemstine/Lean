@@ -13872,6 +13872,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — EML Kolmogorov–Arnold rank-one frontier\n\nDerived from this cycle's findings in\n`Catalog/Applications/KolmogorovArnoldEMLSeparability.lean` and\n`Catalog/Applications/KolmogorovArnoldEMLProductSeparability.lean`, which prove:\n\n* rank-one EML representability `f = exp(ψ x + φ y)` ⇔ multiplicative\n  separability ⇔ the 4-point cross-multiplicative identity `CrossMul`;\n* the additive target `x + y` has **no** rank-one EML representation;\n* in `n` variables, rank-one EML = positive product separability.\n\nThe natural next questions concern the **minimal number of rank-one EML terms**\n— the genuine Kolmogorov–Arnold \"`2n+1`\" count.\n\n## F1. Strict rank hierarchy: `rank-1 ⊊ rank-2`.\n**Conjecture.** The strictly positive target `g(x,y) = exp(x+y) + exp(2x+3y)`\nis a sum of two rank-one EML terms but admits no single rank-one EML\nrepresentation; hence the EML rank filtration is strict at level 1.\n**The key insight is** that `CrossMul` is a *multiplicative* 2×2-minor condition,\nso a generic sum of two distinct exponentials breaks it while remaining a length-2\nsuperposition.\n**Why now?** This cycle already pins `CrossMul` as the exact rank-one detector and\ngives a numerically validated separating witness (`g 0 0·g 1 1 ≠ g 0 1·g 1 0`),\nso only a transcendental inequality (bounding `e`) stands between us and the proof.\n\n## F2. Rank = matrix rank of the log-Hankel form.\n**Conjecture.** For strictly positive `f`, the minimal number of rank-one EML\nterms needed equals the rank of the \"exponential-bilinear\" structure: `f` is a\nsum of `r` terms `∑_{k<r} exp(ψ_k x + φ_k y)` iff a naturally associated kernel\nhas rank `r`.\n**The key insight is** that `exp` turns additive inner sums into multiplicative\nouter factors, so EML rank is literally the (nonnegative) factorization rank of\nthe value matrix `[f(x_i, y_j)]`.\n**Why now?** The `n`-variable file shows the rank-one layer is *exactly* the\npositive-product (rank-one matrix) layer; promoting \"rank one\" to \"rank `r`\" is\nthe obvious and well-posed continuation.\n\n## F3. Additive targets need an identity outer, never an `exp` outer.\n**Conjecture.** A continuous `f(x,y) = u(x) + v(y)` has an EML Kolmogorov–Arnold\nrepresentation with a *single* outer term iff that outer term is affine (not\ntranscendental): no single `exp`/`log`-headed outer EML term represents a\nnon-constant additive target.\n**The key insight is** that any `exp`-headed outer forces the multiplicative\n`CrossMul` identity, which additive non-constant targets provably violate\n(`add_not_crossMul`).\n**Why now?** `add_not_rankOne_exp` is the `exp` case; generalizing the obstruction\nfrom `exp` to every transcendental-headed outer term is a direct strengthening.\n\n## F4. Quantitative `2n+1` for non-separable continuous targets.\n**Conjecture.** Every continuous `f : [0,1]^n → ℝ` admits a Kolmogorov–Arnold\nsuperposition with at most `2n+1` outer terms whose inner functions are\n*continuous EML terms* (finite `exp`/`log`/`+`/`×` compositions), and `2n+1`\ncannot be lowered for some target.\n**The key insight is** that EML inner functions are dense among continuous\ninjective features (cf. `EMLActivationDensity`), so the classical K-A inner\nfunctions can be approximated within the EML algebra while preserving the count.\n**Why now?** This cycle settles the rank-one (separable) extreme exactly; the\ndensity machinery already in the catalog makes the general continuous case the\nright and reachable target.\n\n## F5. Decidability of the rank-one frontier from finite data.\n**Conjecture.** Rank-one EML representability of a strictly positive `f` is\ndecidable from any `3×3` grid of sample values: `f` is rank-one iff every `2×2`\nsub-grid satisfies `CrossMul`.\n**The key insight is** that `CrossMul` is a *local* (4-point) identity, so global\nseparability is detected by finitely many cross-product checks.\n**Why now?** The proved `mulSeparable_iff_crossMul` reduces an infinite functional\nproperty to a finite identity, making a finite-sample decision procedure\nimmediate to formalize.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2742",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f73687d8",
+    "status": "available",
+    "timestamp": "2026-06-28T03:01:49.327152+00:00",
+    "title": "Derived from this cycle's findings in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
