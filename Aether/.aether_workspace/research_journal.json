@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e8c93c85",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Interval Property for Connected Slice-Projections\n\nDerived from this cycle's findings:\n\n* `DiscreteConcave.superlevel_isInterval`: discrete concavity ⇒ the positive\n  set is an i",
-      "quality_score": 0.6236999999999999,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-26T00:40:19",
-      "title": "Interval Property for Connected Slice-Projections of Polymatroids"
-    },
-    {
       "cycle_id": "2e536cee",
       "domain": "Computation",
       "key_insight": "# Future Directions — Discrepancy of Random Linear Codes for Hamming Balls\n\nDerived from this cycle's findings: an exact averaging identity (`sum_inter_ball`),\nthe explicit ball-volume formula (`ball_",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-06-28T18:50:39",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+    },
+    {
+      "cycle_id": "203b440f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Frankl's Union-Closed Conjecture\n\nDerived from this cycle's findings (the singleton injection `frankl_singleton`,\nthe top-element lemma `sup_mem`, the 3-universe theorem `frankl_",
+      "quality_score": 0.68208,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T19:21:09",
+      "title": "Frankl's Union-Closed Conjecture: Partial Results"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T18:50:39",
+  "last_updated": "2026-06-28T19:21:09",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "bc81b3a8",
-        "quality": 0.5376,
-        "theorems": 0,
-        "title": "Optimal Transport and Wasserstein Distances"
-      },
-      {
         "cycle_id": "0eb9ce9e",
         "quality": 0.63032,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.69956,
         "theorems": 11,
         "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+      },
+      {
+        "cycle_id": "203b440f",
+        "quality": 0.68208,
+        "theorems": 0,
+        "title": "Frankl's Union-Closed Conjecture: Partial Results"
       }
     ],
     "NumberTheory": [

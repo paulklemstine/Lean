@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "203b440f",
     "filename": "frankls_union_closed_conjecture_partial_results.json",
     "pkg_num": 192,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.68208,
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
   {
@@ -5603,8 +5603,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "frankls_union_closed_conjecture_partial_results",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.68208,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Frankl's Union-Closed Conjecture: Partial Results"
     }

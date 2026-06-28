@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T18:50:51.523478+00:00",
+  "last_updated": "2026-06-28T19:21:13.968371+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -16039,6 +16039,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-28T18:50:50.901017+00:00",
       "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5376,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 238,
+      "domain": "Novelty",
+      "duration_seconds": 1684.5746784210205,
+      "end_time": 1782673798.342412,
+      "files_integrated": 8,
+      "job_id": "203b440f",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7026,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.551,
+        "novelty": 0.8718,
+        "proof_depth": 0.4135,
+        "usefulness": 0.6818
+      },
+      "quality_score": 0.68208,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782672113.7677336,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-28T19:21:12.939568+00:00",
+      "title": "Frankl's Union-Closed Conjecture: Partial Results"
     }
   ]
 }
