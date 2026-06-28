@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "c610946b",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "3f78044a",
+    "consumed_by_exp_id": "",
     "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
     "domains": [
       "Computation",
@@ -428,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432811+00:00",
     "title": "Formal Verification of Algorithms"
   },
@@ -837,7 +837,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Representation Theory: Character Tables of S_n"
   },
   {
-    "consumed_by_exp_id": "ee0a5f6b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Jones polynomial via the Kauffman bracket. Prove invariance under Reidemeister moves. Compute Jones polynomials for the trefoil, figure-eight, and torus knots. Prove that the Jones polynomial detects the unknot for alternating knots.",
     "domains": [
       "Topology",
@@ -847,7 +847,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432668+00:00",
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
@@ -927,21 +927,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432807+00:00",
     "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
-  },
-  {
-    "consumed_by_exp_id": "5773b0b9",
-    "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "fd_0454",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:29.664610+00:00",
-    "title": "Logic-Physics Bridge: Consistency of Physical Theories"
   },
   {
     "consumed_by_exp_id": "",
@@ -1374,7 +1359,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "333b621d",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
     "domains": [
       "Computation",
@@ -1384,7 +1369,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.975605+00:00",
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
@@ -3553,7 +3538,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
   },
   {
-    "consumed_by_exp_id": "bfc7b99e",
+    "consumed_by_exp_id": "",
     "description": "The conjecture asserts no primes exceeding 7 satisfy $n! + 1 = m^2$ for $n < p$. This is falsifiable via computational checks.",
     "domains": [
       "Pythagorean"
@@ -3562,7 +3547,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T17:29:38.955405+00:00",
     "title": "The Non-Existence of New Factorial Square Solutions"
   },
@@ -8710,6 +8695,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Width vs Depth Trade-offs for ReLU Networks\n\nThis cycle closed the **deep upper-bound** side of the depth\u2013width tradeoff,\ncomplementing the catalog's shallow lower bound\n(`TentDepthSeparation.depth_separation_width_lower_bound`). The new results:\n\n* `DeepTentEfficiency.tentBlock_eval` \u2014 the tent map is *exactly* a 2-neuron ReLU\n  block (`|y| = relu y + relu (-y)`).\n* `DeepTentEfficiency.deepTent_realizes` / `deepTent_size` / `deep_size_log` \u2014\n  `tent^[k]` is realized by `k` stacked 2-neuron blocks of total size `2k`,\n  i.e. size `= 2\u00b7log\u2082(2^k)`: logarithmic in the oscillation count.\n* `DeepTentEfficiency.depth_width_separation` \u2014 two-sided: size `2k` deep vs width\n  `\u2265 2^k(1-2\u03b5)/A` shallow.\n* `LogarithmicDepthLaw.width_depth_gap_unbounded` \u2014 the ratio shallow-width /\n  deep-size diverges (engine: `linear_lt_two_pow`, `sq_le_two_pow`).\n\n## Conjecture 1 \u2014 Multi-input deep efficiency on `[-1,1]^n`.\nA continuous `f : [-1,1]^n \u2192 \u211d` is `\u03b5`-approximable by a ReLU network of width\n`n+4` and depth `O(log(1/\u03b5))` per coordinate, the deep tent being applied\ncoordinatewise inside a Kolmogorov\u2013Arnold-style outer sum.\n*The key insight is...* that the scalar `tentBlock` already gives an exact\n`2`-neuron oscillator, so a width-`(n+4)` carry-register architecture can refine\neach coordinate to dyadic resolution `2^{-k}` using depth `k`, decoupling depth\n(resolution) from width (dimension).\n*Why now?* The exact scalar realization (`tentBlock_eval`) and the size law\n(`deep_size_log`) are in place; only a vector-valued `ReLUBlock` (input `Fin d \u2192\n\u211d`) and a coordinatewise composition lemma are missing.\n\n## Conjecture 2 \u2014 Sharpness of the `2^k(1-2\u03b5)/A` shallow bound.\nThere is a *shallow* network of width `\u0398(2^k)` matching `tent^[k]` to any `\u03b5 > 0`,\nso the catalog lower bound is tight up to the constant `(1-2\u03b5)/A`.\n*The key insight is...* that the `2n`-ramp interpolant of\n`QuantitativeBoundsCore.reluInterpNet` with `n = 2^k` nodes reproduces the\npiecewise-linear `tent^[k]` exactly, giving a matching upper bound to the\ntotal-variation lower bound.\n*Why now?* `reluInterpNet_eq_on_cell` already proves exact reproduction of\npiecewise-linear targets on a uniform grid; instantiating it at the dyadic grid of\n`tent^[k]` is the remaining step.\n\n## Conjecture 3 \u2014 Depth\u2013accuracy law for Lipschitz targets.\nFor `L`-Lipschitz `f` on `[0,1]`, a depth-`O(log(1/\u03b5))`, constant-width network\ncombining `deepTent` (address bits) with a readout achieves uniform error `\u03b5`,\nbeating the shallow width `O(L/\u03b5)` of `quantitative_uat_width`.\n*The key insight is...* that `deepTent k` computes the `k` leading binary digits\nof the input via its dyadic alternation (`tent_iterate_dyadic`), turning function\napproximation into table lookup whose depth scales with bit-precision `log(1/\u03b5)`.\n*Why now?* The digit-extraction behaviour is already formalized\n(`tent_iterate_dyadic`), and the quantitative shallow comparison\n`quantitative_uat_width` gives the exact `O(1/\u03b5)` baseline to beat.\n\n## Conjecture 4 \u2014 Strict depth hierarchy `L \u2192 L+1`.\nFor every `L` there is a function exactly representable by a depth-`(L+1)`,\nconstant-width network whose best depth-`L` constant-width approximation incurs\nerror bounded below by a positive constant \u2014 a per-layer (not just shallow-vs-deep)\nseparation.\n*The key insight is...* that one extra tent layer doubles the oscillation count,\nand the total-variation accounting of `discreteTV` is additive across layers, so a\nfixed neuron budget caps the variation a depth-`L` net can manufacture.\n*Why now?* `tent_discreteTV` (variation `= 2^k`) and\n`shallowNet_discreteTV_le` (variation `\u2264 \u03a3|a_j|`) already provide the conserved\nquantity; the open step is a composition bound on the variation of depth-`L` nets.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2797",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8f5c44bc",
+    "status": "available",
+    "timestamp": "2026-06-28T19:46:38.436240+00:00",
+    "title": "This cycle closed the **deep upper-bound** side of the depth\u2013width tradeoff,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -9046,7 +9046,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "9ecd5b8c",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -9056,7 +9056,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },

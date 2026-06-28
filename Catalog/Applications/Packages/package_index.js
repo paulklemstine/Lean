@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8f5c44bc",
     "filename": "ml_universal_approximation_width_vs_depth_trade_of.json",
     "pkg_num": 193,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.65133,
     "title": "ML Universal Approximation: A Two-Sided Depth-Width Separation via the Tent Map"
   },
   {
@@ -5632,8 +5632,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "ml_universal_approximation_width_vs_depth_trade_of",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.65133,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "ML Universal Approximation: A Two-Sided Depth-Width Separation via the Tent Map"
     }
