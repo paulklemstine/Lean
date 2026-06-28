@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "04a6a732",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — NISQ Error Mitigation via Algebraic Topology\n\nDerived from the Phase-A cycle that produced `FiltrationPersistence.lean`,\n`NearestCodeword.lean`, and `AgreementComplex.lean` (buil",
-      "quality_score": 0.6946599999999999,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-24T23:27:00",
-      "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
-    },
-    {
       "cycle_id": "b45eb1d8",
       "domain": "Applications",
       "key_insight": "# Future Directions — Stability of Cayley Digraphs of Abelian Groups\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nAll conjectures are stated relative to the frame",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T09:10:15",
       "title": "Cofinite realization of every even incoherence index by maximal standard frames"
+    },
+    {
+      "cycle_id": "f6f6439c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Linear one-set wall–Menger bound\n\nDerived from this cycle's findings (the greedy packing–cover duality\n`packing_cover_duality`/`wall_menger_separator_bound`, the subwall tiling\n`",
+      "quality_score": 0.5631599999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T09:13:33",
+      "title": "Linear one-set wall-Menger bound for elementary walls"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7436
     }
   ],
-  "last_updated": "2026-06-28T09:10:15",
+  "last_updated": "2026-06-28T09:13:33",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f347664d",
-        "quality": 0.535421090909091,
-        "theorems": 13,
-        "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representat"
-      },
-      {
         "cycle_id": "dbb7efcb",
         "quality": 0.79816,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.69256,
         "theorems": 0,
         "title": "Cofinite realization of every even incoherence index by maximal standard frames"
+      },
+      {
+        "cycle_id": "f6f6439c",
+        "quality": 0.5631599999999999,
+        "theorems": 0,
+        "title": "Linear one-set wall-Menger bound for elementary walls"
       }
     ],
     "NumberTheory": [

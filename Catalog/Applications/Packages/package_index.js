@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f6f6439c",
     "filename": "linear_one_set_wall_menger_bound_for_elementary_wa.json",
     "pkg_num": 177,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5631599999999999,
     "title": "Linear One-Set Wall-Menger Bound for Elementary Walls"
   },
   {
@@ -5161,8 +5161,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "linear_one_set_wall_menger_bound_for_elementary_wa",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5631599999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Linear One-Set Wall-Menger Bound for Elementary Walls"
     }
