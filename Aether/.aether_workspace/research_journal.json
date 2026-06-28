@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4ab1c862",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — Betti–Whittaker Periods and Contragredients of GL(n)\n\nDerived from this cycle's findings (`BettiWhittakerPeriods.lean`,\n`BettiWhittakerFunctionalEquation.lean`). This cycle estab",
-      "quality_score": 0.5380114482758622,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-25T05:17:17",
-      "title": "GeneralizedPeriod Relation for Betti-Whittaker Periods and Contragredient Representations of GL(n)"
-    },
-    {
       "cycle_id": "7ca7bb8c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — NISQ Error Mitigation via Algebraic Topology\n\nDerived from this cycle's findings in `Persistence.lean`, `ErrorMitigation.lean`,\nand `Betti.lean`.  The cycle established a single",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-28T12:12:09",
       "title": "Prismatic Purity for F-Crystals on Regular Schemes"
+    },
+    {
+      "cycle_id": "7e2e6a70",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Uniform VC-Dimension Families via Layered Stars\n\nThis cycle verified the **lower-bound / base-layer** side of the layered-star conjecture:\nthe star around a fixed point is a `(d+",
+      "quality_score": 0.36300923636363636,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T12:42:06",
+      "title": "A Sharp Upper Bound for Uniform VC‑Dimension Families via Layered Stars"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8043199999999999
     }
   ],
-  "last_updated": "2026-06-28T12:12:09",
+  "last_updated": "2026-06-28T12:42:06",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5d028d25",
-        "quality": 0.747936,
-        "theorems": 11,
-        "title": "Prismatic Purity for F-Crystals on Regular Schemes"
-      },
-      {
         "cycle_id": "cff12e07",
         "quality": 0.6639999999999999,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.5959,
         "theorems": 0,
         "title": "The most natural next step is to attack the residue class isolated by the"
+      },
+      {
+        "cycle_id": "7e2e6a70",
+        "quality": 0.36300923636363636,
+        "theorems": 0,
+        "title": "A Sharp Upper Bound for Uniform VC‑Dimension Families via Layered Stars"
       }
     ],
     "NumberTheory": [

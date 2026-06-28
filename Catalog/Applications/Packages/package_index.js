@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7e2e6a70",
     "filename": "a_sharp_upper_bound_for_uniform_vcdimension_famili.json",
     "pkg_num": 182,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.36300923636363636,
     "title": "A Sharp Upper Bound for Uniform VC-Dimension Families via Layered Stars"
   },
   {
@@ -5313,8 +5313,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "a_sharp_upper_bound_for_uniform_vcdimension_famili",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.36300923636363636,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "A Sharp Upper Bound for Uniform VC-Dimension Families via Layered Stars"
     }
