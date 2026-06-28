@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5870167a",
     "filename": "cofinite_realization_of_every_even_incoherence_ind.json",
     "pkg_num": 176,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.69256,
     "title": "Cofinite Realization and the Boundary Obstruction of Even Incoherence Indices in Maximal Standard Frames"
   },
   {
@@ -5132,8 +5132,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "cofinite_realization_of_every_even_incoherence_ind",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.69256,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Cofinite Realization and the Boundary Obstruction of Even Incoherence Indices in Maximal Standard Frames"
     }

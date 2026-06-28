@@ -506,7 +506,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "bac3bfcc",
+    "consumed_by_exp_id": "",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -517,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -2812,7 +2812,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
   {
-    "consumed_by_exp_id": "00e5c711",
+    "consumed_by_exp_id": "",
     "description": "In the wall version of Menger's theorem (Theorem 1 of the paper), the separator bound f can be taken to equal s' - 1, matching the classical Menger bound. Specifically: for all positive integers s' and t', there exists an integer t such that for any vertex set A and any wall W of size at least t, either there exists a vertex set X of size at most s' - 1 that separates A from the branch vertices of W, or there exists a subwall W' of size at least t' together with s' vertex-disjoint A-W'-paths each ending in a distinct nail of W'.",
     "domains": [
       "Pythagorean"
@@ -2821,7 +2821,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T21:19:02.613185+00:00",
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
@@ -5503,7 +5503,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact asymptotic value of the average stack-sorting depth"
   },
   {
-    "consumed_by_exp_id": "8d0e7e8c",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For every integer n \u2265 2, a biased graph is gainable over the cyclic group Z_n if and only if it contains none of the minors ( (n+1)K2, \u2205 ), \u00b1K3, or -K4.",
     "domains": [
       "Pythagorean",
@@ -5513,7 +5513,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23826v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T17:27:31.523329+00:00",
     "title": "Excluded minors for Z_n-gainable biased graphs"
   },
@@ -8248,6 +8248,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 incoherence indices of maximal standard frames\n\nDerived from this cycle's findings (see `CofiniteRealization.lean`,\n`BoundaryObstruction.lean`, `ComputationalEvidence.md`). Each conjecture is\nfalsifiable by the exact shortest-zero-sum search already used here.\n\n## C1. The forbidden interval `(N/2, N)` for even electorates\n\n**Conjecture.** For every even `N` and every maximal standard frame `F` on `N`\nvoters, `incoherenceIndex F \u2264 N/2` or `incoherenceIndex F = N`; equivalently, no\nmaximal frame has index strictly between `N/2` and `N`.\n\nThe key insight is that an index exceeding `N/2` forces every atom to be a\ngenerator (already proved: `atoms_generate_of_index_gt_half`), and a frame of\ntwo distinct generators of an even cyclic group always admits a balanced\nsequence of length at most `N/2`. Why now? The generator-forcing lemma is in\nhand and `boundary_obstruction_k1` is the `N=6` instance; only the sharp\ntwo-generator bound (C2) is missing to upgrade the concrete refutation to a\ntheorem for all even `N`.\n\n## C2. Tight two-generator bound\n\n**Conjecture.** For even `N` and distinct units `a \u2260 b` of `ZMod N`,\n`incoherenceIndex {a,b} \u2264 N/2`, with equality realized by `{1, N/2+1}`.\n\nThe key insight is that `p\u2022a + q\u2022b = 0` reduces (multiplying by `a\u207b\u00b9`) to a\nsingle congruence `p + q\u00b7t \u2261 0` with `t = b\u00b7a\u207b\u00b9 \u2260 1`, so the shortest relation is\nthe smallest `q \u2265 1` with `q + (q\u00b7(N - t) mod N) \u2264 N/2`, a three-distance /\ncontinued-fraction estimate. Why now? Computation shows the bound is *exactly*\n`N/2` (never exceeded) across all tested even `N`, so the statement is sharp and\nready to formalize; it is the last ingredient for C1.\n\n## C3. Exact onset threshold for realization\n\n**Conjecture.** For each `k \u2265 1` there is a threshold `n\u2080(k)` with\n`2*k+1 < n\u2080(k) \u2264 2*k^2 + 2*k + 1` such that the index `2*k+2` is realized by a\nmaximal frame on `2*n` voters **iff** `n \u2265 n\u2080(k)` (for `n > k`), and\n`n\u2080(k)/k^2 \u2192 2`.\n\nThe key insight is that the two-atom family `{1, N-(2*k+1)}` already realizes\n`2*k+2` for all `2*n > (2*k+1)^2`, while small electorates fail; the true onset\nsits between the boundary `2*k+1` and the sufficient bound `2*k^2+2*k+1`, and\nshould be pinned down by allowing three-atom frames near the boundary. Why now?\n`cofinite_realization` gives the upper bound `2*k^2+2*k+1` and the data already\nexhibits sporadic small-`n` successes (e.g. `k=2, n=10`), bracketing `n\u2080(k)`.\n\n## C4. Parity dichotomy of the realizable spectrum\n\n**Conjecture.** The realizable-index spectrum of maximal frames on `N` voters\nomits the single value `(N+1)/2` when `N` is odd, but omits the entire block\n`{N/2+1, \u2026, N-1}` when `N` is even; thus the \"incoherence gap\" above `N/2` is\ngoverned by the parity of `N`.\n\nThe key insight is that for even `N` every order-`< N` atom yields a balanced\nsequence of length `\u2264 N/2` (halving is available), whereas for odd `N` the\nclosest a proper-divisor atom can get is `N/3`, leaving exactly one reachable\nvalue above `N/2`. Why now? The exhaustive tables in `ComputationalEvidence.md`\ndisplay precisely this even/odd dichotomy, and C1\u2013C2 supply the even half.\n\n## C5. Cofinite realization of every index `\u2261 0 (mod d)`\n\n**Conjecture.** Fix `d \u2265 2`. For all sufficiently large `N` divisible by a\nsuitable factor, the index `d` is realized by a maximal frame\n`{1, N-(d-1)} \u2286 ZMod N` whenever `(d-1)^2 < N`, generalizing the even case `d =\n2*k+2` proved here to arbitrary target lengths (not only even ones).\n\nThe key insight is that the lower-bound argument of `coFrame_balanced_length_ge`\nused evenness only cosmetically: the counting identity `sum = length - q\u00b7d`\nand the bound `q\u00b7(d-1) \u2264 (d-1)^2 < N` work verbatim for any `d`. Why now? The\nproof in `CofiniteRealization.lean` already isolates the arithmetic obstruction,\nso dropping the parity packaging is a direct generalization to test next.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2765",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5870167a",
+    "status": "available",
+    "timestamp": "2026-06-28T09:10:06.073994+00:00",
+    "title": "Derived from this cycle's findings (see `CofiniteRealization.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8321,7 +8336,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "c8e22e5a",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -8331,7 +8346,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -8405,20 +8420,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
-  },
-  {
-    "consumed_by_exp_id": "6dda8a29",
-    "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "sorry_fill_a0dd96a5_00b573d8",
-    "priority_score": 0.5771458702064898,
-    "research_mode": "team",
-    "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
-    "timestamp": "2026-06-16T12:52:43.615426+00:00",
-    "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
   {
     "consumed_by_exp_id": "",
@@ -8569,7 +8570,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "e5dd524d",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -8579,7 +8580,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -8689,7 +8690,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "ce8c041d",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8699,7 +8700,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

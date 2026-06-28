@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ef60a392",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Cusick's Sum-of-Digits Explicit Bound\n\nDerived from the carry-reformulation cycle in `CusickSumOfDigits.lean`,\n`CusickCarryReformulation.lean`, and `CusickDensityWitness.lean`.",
-      "quality_score": 0.77328,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-24T23:02:00",
-      "title": "Cusick's Sum-of-Digits Explicit Bound"
-    },
-    {
       "cycle_id": "04a6a732",
       "domain": "Novelty",
       "key_insight": "# Future Directions — NISQ Error Mitigation via Algebraic Topology\n\nDerived from the Phase-A cycle that produced `FiltrationPersistence.lean`,\n`NearestCodeword.lean`, and `AgreementComplex.lean` (buil",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-28T08:50:01",
       "title": "Circuit Complexity: Monotone Lower Bounds"
+    },
+    {
+      "cycle_id": "5870167a",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — incoherence indices of maximal standard frames\n\nDerived from this cycle's findings (see `CofiniteRealization.lean`,\n`BoundaryObstruction.lean`, `ComputationalEvidence.md`). Each",
+      "quality_score": 0.69256,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T09:10:15",
+      "title": "Cofinite realization of every even incoherence index by maximal standard frames"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7436
     }
   ],
-  "last_updated": "2026-06-28T08:50:01",
+  "last_updated": "2026-06-28T09:10:15",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "72f7aee6",
-        "quality": 0.73264,
-        "theorems": 9,
-        "title": "Random Matrices: Edge Universality"
-      },
-      {
         "cycle_id": "f347664d",
         "quality": 0.535421090909091,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.7436,
         "theorems": 15,
         "title": "Circuit Complexity: Monotone Lower Bounds"
+      },
+      {
+        "cycle_id": "5870167a",
+        "quality": 0.69256,
+        "theorems": 0,
+        "title": "Cofinite realization of every even incoherence index by maximal standard frames"
       }
     ],
     "NumberTheory": [
