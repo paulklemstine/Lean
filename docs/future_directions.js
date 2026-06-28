@@ -1151,7 +1151,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s-Faber-Lov\u00e1sz Conjecture"
   },
   {
-    "consumed_by_exp_id": "42ce6f47",
+    "consumed_by_exp_id": "",
     "description": "Prove the Jacobian conjecture for polynomial maps of degree 2 in all dimensions. Formalize the reduction to degree 3 (Dru\u017ckowski's theorem). Construct explicit counterexample candidates and verify they fail. Prove the conjecture implies the Dixmier conjecture.",
     "domains": [
       "Algebra",
@@ -1161,7 +1161,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432638+00:00",
     "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
   },
@@ -2382,20 +2382,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quadratic irrational density in the ratio spectrum"
   },
   {
-    "consumed_by_exp_id": "ef629b7b",
-    "description": "The sum of the elements in the $n$-th row of the Pascal-like Riordan array defined by the power series pair $(1/(1-x), x/(1-x)^2)$, whose entries are given by the binomial coefficient $t_{n,k} = \\binom{n+k}{2k}$, equals the $(2n+1)$-th Fibonacci number. This is derived from the paper's demonstration that the generating function of the row sums is $(1-x)/(1-3x+x^2)$, which characterizes the odd-indexed Fibonacci sequence.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2354",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22070v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T13:29:49.823733+00:00",
-    "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Every Hamiltonian connected cubic edge-transitive graph \u0393 has Hamiltonian compression factor \u03ba(\u0393) \u2265 2, i.e., it admits a 2-symmetric Hamiltonian cycle: there exists a Hamiltonian cycle C and an automorphism g of order 2 such that g acts on C as a rotation by |V(\u0393)|/2 positions. This is supported by exhaustive computation on all such graphs up to 10,000 vertices, where every Hamiltonian cubic edge-transitive graph was found to have \u03ba \u2265 2.",
     "domains": [
@@ -2812,7 +2798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
   {
-    "consumed_by_exp_id": "00e5c711",
+    "consumed_by_exp_id": "",
     "description": "In the wall version of Menger's theorem (Theorem 1 of the paper), the separator bound f can be taken to equal s' - 1, matching the classical Menger bound. Specifically: for all positive integers s' and t', there exists an integer t such that for any vertex set A and any wall W of size at least t, either there exists a vertex set X of size at most s' - 1 that separates A from the branch vertices of W, or there exists a subwall W' of size at least t' together with s' vertex-disjoint A-W'-paths each ending in a distinct nail of W'.",
     "domains": [
       "Pythagorean"
@@ -2821,7 +2807,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T21:19:02.613185+00:00",
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
@@ -7347,7 +7333,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Recursive exact formula for M_d(n) for n \u2265 2(d+2)"
   },
   {
-    "consumed_by_exp_id": "6ac1dc4e",
+    "consumed_by_exp_id": "",
     "description": "This conjecture posits a precise asymptotic relationship for shifted asymptotic expansions of a family of symmetric functions indexed by strict partitions, validated through a finite Gessel-type identity.",
     "domains": [
       "Pythagorean",
@@ -7357,7 +7343,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-27T05:14:07.112543+00:00",
     "title": "Shifted Gessel-Type Formula for Shifted $t$-Gessel Coordinates"
   },
@@ -8290,7 +8276,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
   },
   {
-    "consumed_by_exp_id": "fdadfe48",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nThe most natural next step is to attack the residue class isolated by the\nprime-core reduction: primes `p \u2261 1 (mod 8)`. The key insight is that the four\nelementary families already dispatch every residue except this one, so the entire\ndifficulty of Erd\u0151s\u2013Straus is concentrated in a single arithmetic progression,\nand any constructive scheme that handles it would, via\n`erdosStraus_of_primes_one_mod_eight`, close the problem unconditionally. A\npromising route is to formalize the classical covering-congruence constructions\nof Mordell, which solve `4/p` for all `p` outside a sparse set of residues modulo\nsmall moduli (e.g. residues that are quadratic non-residues modulo `4`, or that\nfall into specific classes mod `3\u00b78`, `5\u00b78`, `7\u00b78`, \u2026). Why now? Because the\npresent development supplies exactly the reusable scaffolding \u2014 the predicate, the\nwitness-verification idioms, and divisor inheritance \u2014 that such a formalization\nwould otherwise have to rebuild from scratch.\n\nA second direction is computational certification at scale. The key insight is\nthat `ErdosStrausSolution n` is witnessed by a finite triple whose correctness is\na single rational identity, so a verified search procedure could emit witnesses\nfor enormous ranges and check them by `decide`/`norm_num`, turning empirical\ntables (which currently confirm the conjecture far beyond `10^17`) into\nmachine-checked theorems for explicit bounds. Why now? Because Lean's `decide`\nkernel reduction and `norm_num` extensions are mature enough to validate millions\nof rational identities reliably, and the bounded theorem `erdosStraus_upto_100`\ndemonstrates the pattern end to end; scaling it is an engineering problem, not a\nmathematical one.\n\nA third direction concerns the structure of the witness map itself.\nThe key insight is that the family witnesses are not ad hoc but instances of a small\nnumber of algebraic identities (the `1/a + 1/(a\u00b7n)` split and its halving, and the\n`(n+3)/(2na)` collapse), so one could formalize a *parametrized solver*: a single\nlemma taking residue data and returning a witness, from which all four families\nbecome corollaries. Why now? Because unifying the families would both shrink the\nproof and expose precisely which algebraic degrees of freedom remain unused for\nthe `1 (mod 8)` case, potentially suggesting the missing construction.\n\nA fourth direction is to connect this development to Mathlib's number-theoretic\ninfrastructure on quadratic residues and Dirichlet characters. The key insight is\nthat the obstruction at `p \u2261 1 (mod 8)` is governed by solvability of congruences\nthat quadratic reciprocity controls, so importing Mathlib's reciprocity and\nLegendre-symbol API could let one phrase the open core as a clean statement about\nrepresentability rather than as a raw existential over triples. Why now? Because\nMathlib's quadratic reciprocity and `ZMod` character theory are now stable and\nwell-supported, making it feasible to translate the analytic-number-theory\nheuristics for Erd\u0151s\u2013Straus into formal, checkable hypotheses.\n",
     "domains": [
       "Pythagorean",
@@ -8300,9 +8286,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "199a5960",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Certified Dequantization of Neural Classifiers\n\nThese directions grow out of an under-exploited structural coincidence in the\ncatalog: three independently verified files already encode the *same* dictionary\nbetween the tropical (max-plus) world and the smooth (log-sum-exp / softmax)\nworld, but no result yet glues them into a single certified guarantee.\n\nAnchor files (all verified in the catalog):\n- `Tropical/NeuralNetworks/TropicalDegreeRobustness.lean` \u2014 robustness radius\n  `r* = margin / (2\u00b7K\u00b7d)` from the tropical degree `d` and weight-norm product `K`.\n- `Tropical/NeuralNetworks/SoftMaxConvergence.lean` / `NDimLogSumExp.lean` \u2014\n  quantitative dequantization gap `0 \u2264 softMax_c(x) \u2212 max(x) \u2264 (log n)/c`.\n- `Bridges/ConvexTropicalBridge.lean` \u2014 LSE sandwich `max \u2264 LSE \u2264 max + log n`.\n- `Bridges/ResNetTropicalCertified.lean` \u2014 Lipschitz/certified-radius algebra.\n\n---\n\n## Direction 1 (SELECTED) \u2014 Certified robustness of a finite-temperature classifier from its tropical skeleton\n\nA ReLU/max-plus classifier `T` is the `c \u2192 \u221e` limit of the smooth softmax\nclassifier `S_c`. The tropical world has a clean certified robustness radius\n(`TropicalDegreeRobustness`); the smooth world is what is actually deployed and\ndifferentiable. **The key insight is that the per-layer dequantization gap is\n*uniformly* bounded by `(log n)/c` in sup-norm, so the smooth classifier's margin\ndiffers from the tropical skeleton's margin by at most an explicit `O(depth\u00b7log n / c)`\nterm \u2014 which converts the tropical robustness radius into a *certified radius for\nthe deployed smooth network*: `r \u2265 (\u03b3 \u2212 2L\u00b7depth\u00b7log n / c) / (2\u00b7K\u00b7d)`, recovering\n`\u03b3/(2Kd)` as `c \u2192 \u221e`.** Why now? Both endpoints are already fully formalized and\nverified in the catalog; the only missing piece is the uniform-gap propagation\nlemma and the margin-perturbation bookkeeping, both of which are elementary\ninequalities (sup-norm of a max of affine pieces) that the LSE files already\ncontain in the two-point case. This is a concrete pipeline: input a max-plus\nnetwork, read off `(K, d, depth, n)`, choose temperature `c`, output a certified\nradius.\n\n## Direction 2 \u2014 Optimal temperature schedule as a closed-form extremum\n\nGiven the bracket `\u03b3 \u2212 2L\u00b7depth\u00b7log n / c`, the certified radius is monotone\nincreasing in `c`, but training stability and gradient magnitude degrade as\n`c \u2192 \u221e`. **The key insight is that if one penalizes the certified radius by a\nsmoothness cost `\u03bc\u00b7c` (Lipschitz constant of `S_c` grows linearly in `c`), the\nobjective `r(c) \u2212 \u03bcc` has a unique interior maximizer with a closed form, giving a\n*provably optimal* temperature rather than a hyperparameter.** Why now? Direction 1\nsupplies `r(c)` as an explicit elementary function of `c`; extremizing it is a\nsingle-variable calculus lemma well inside the subagent's range, and the\nmonotonicity `softMax_gap_decreasing` is already proved.\n\n## Direction 3 \u2014 Tropical-degree growth bound and an expressivity/robustness trade-off\n\nThe certified radius scales as `1/d` with the tropical degree `d`, while `d` is\nexactly the count of linear regions / Newton-polytope vertices that measures\nexpressivity. **The key insight is that for a depth-`L` width-`w` max-plus network\n`d \u2264 w^L`, so the certified radius decays at most geometrically in depth \u2014 turning\na qualitative \"deeper = less robust\" folklore claim into a quantitative,\nmachine-checked inequality relating expressivity and certified robustness.** Why\nnow? `TropicalDegreeRobustness` already isolates `d` as the controlling quantity;\nbounding `d` for a composition of max-plus layers is a finite combinatorial\ncounting argument (max distributes over max) suitable for `decide`/induction.\n\n## Direction 4 \u2014 n-dimensional dequantization gap as a Jensen/entropy gap\n\n`ConvexTropicalBridge` and `NDimLogSumExp` both encode `LSE(x) \u2212 max(x)`; this\nquantity is exactly the (scaled) entropy of the softmax distribution. **The key\ninsight is that the dequantization error equals `(1/c)\u00b7H(softmax_c(x))` where `H`\nis Shannon entropy, so the tropical limit is *precisely* the zero-entropy\n(deterministic-argmax) limit, linking `Tropical/FiberEntropy.lean` and\n`Tropical/MutualInformation.lean` to the robustness pipeline.** Why now? The exact\nidentity `softMax(c,a,a) = a + (log 2)/c` is already proved (the maximum-entropy\ncase), so the general entropy identity is a direct `Finset.sum` computation that\nslots into the existing entropy files.\n\n## Direction 5 \u2014 Min-plus reachability certificate via matrix powers\n\n`Tropical/MinPlusAlgebra.lean` provides min-plus matrix algebra; shortest-path /\nreachability DP is min-plus matrix exponentiation. **The key insight is that the\nsame dequantization sandwich gives a certified two-sided bound between exact\nmin-plus reachability costs and their finite-temperature (soft-Bellman) relaxations\nused in reinforcement learning, with gap `\u2264 (log n)\u00b7(path length)/c`.** Why now?\nThe min-plus algebra is formalized, and the per-step gap is the one-dimensional LSE\nbound already in the catalog; the contribution is propagating it through `k` matrix\nproducts by induction.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2769",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ce8c041d",
+    "status": "available",
+    "timestamp": "2026-06-28T10:07:36.667072+00:00",
+    "title": "These directions grow out of an under-exploited structural coincidence in the"
   },
   {
     "consumed_by_exp_id": "",
@@ -8465,7 +8466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "6dda8a29",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -8474,7 +8475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -8627,7 +8628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "e5dd524d",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -8637,7 +8638,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

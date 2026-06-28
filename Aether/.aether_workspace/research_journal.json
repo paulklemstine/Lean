@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c37a84a2",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nFollow-up conjectures from the cycle that produced\n`Catalog/Computation/RankOfApparitionSDS.lean` (abstract rank-of-apparition theory\nfor strong divisibility sequences, generalizi",
-      "quality_score": 0.5709080000000001,
-      "sorry_count": 0,
-      "theorem_count": 1,
-      "timestamp": "2026-06-25T00:45:50",
-      "title": "Close Proofs: These conjectures continue the research cycle begun in"
-    },
-    {
       "cycle_id": "99725b45",
       "domain": "Novelty",
       "key_insight": "# Future Directions — C5-decompositions and the 5/8 threshold\n\nDerived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-divisibility,\nedge-count `|E| = 5·#cycles`, the pentagon wi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T09:42:01",
       "title": "Excluded minors for Z_n-gainable biased graphs"
+    },
+    {
+      "cycle_id": "ce8c041d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Certified Dequantization of Neural Classifiers\n\nThese directions grow out of an under-exploited structural coincidence in the\ncatalog: three independently verified files already",
+      "quality_score": 0.5816,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T10:07:45",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8043199999999999
     }
   ],
-  "last_updated": "2026-06-28T09:42:01",
+  "last_updated": "2026-06-28T10:07:45",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a59363e7",
-        "quality": 0.631596,
-        "theorems": 17,
-        "title": "Exact Ratio Spectrum of Lagrange Constants under Integer Linear Fractional Trans"
-      },
-      {
         "cycle_id": "c7101b5e",
         "quality": 0.6887099999999999,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.8043199999999999,
         "theorems": 11,
         "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+      },
+      {
+        "cycle_id": "ce8c041d",
+        "quality": 0.5816,
+        "theorems": 14,
+        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
       }
     ],
     "Bridges": [

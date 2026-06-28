@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ce8c041d",
     "filename": "eml_transseries_asymptotic_expansions_beyond_power.json",
     "pkg_num": 178,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5816,
     "title": "EML Transseries: A Real-Exponent Hahn-Series Model with Dominance, Asymptotic Comparison, and Ingredients of Real Closure"
   },
   {
@@ -5190,8 +5190,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5816,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Transseries: A Real-Exponent Hahn-Series Model with Dominance, Asymptotic Comparison, and Ingredients of Real Closure"
     }
