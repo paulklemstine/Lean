@@ -1137,27 +1137,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cfea11f0",
-    "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Analysis",
-      "Geometry"
-    ],
-    "id": "seed_369",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432786+00:00",
-    "title": "Optimal Transport and Wasserstein Distances"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
@@ -2188,6 +2167,26 @@
     "status": "available",
     "timestamp": "2026-06-28T21:18:37.194826+00:00",
     "title": "Derived from this cycle's findings (verified files: `BinarySearchVerified.lean`,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Mathematical Foundations of Integrated Information (Φ)\n\nBuilt on `Catalog/Novelty/IntegratedInformation.lean`, which establishes the\ndiscrete IIT core: finite distributions `FinDist`, mutual information across a\ncut as KL divergence to the product-of-marginals reference, the general\nKullback–Leibler law (`klDiv_nonneg`, `klDiv_eq_zero_iff`), intrinsicality\n(`mutualInfo_congr`), and the Minimum-Information-Partition `Φ` with its\nstructural laws (`Phi_nonneg`, `Phi_eq_zero_iff`, `Phi_le_of_subset`).\n\nThe following conjectures are precise and testable; each names the Lean objects\nit would extend.\n\n## C1. Additivity over independent composition\nFor joint systems `P₁ : FinDist (α₁ × β₁)` and `P₂ : FinDist (α₂ × β₂)`, the\nmutual information of `prod P₁ P₂` reindexed to `(α₁×α₂) × (β₁×β₂)` equals\n`mutualInfo P₁ + mutualInfo P₂`. Consequence: integrated information is additive\nover physically independent subsystems, so `Φ` of a disjoint union is the sum.\n*Falsifiable*: a single mixed example with `I(P₁⊗P₂) ≠ I(P₁)+I(P₂)` would refute.\nThe relative-entropy half is already proved: `klDiv_prod` shows\n`KL(p₁⊗p₂ ‖ q₁⊗q₂) = KL(p₁‖q₁) + KL(p₂‖q₂)`; the remaining step is to identify\nthe marginals of `prod P₁ P₂` with the products of the marginals of `P₁, P₂`\nunder the four-fold reindexing `(α₁×β₁)×(α₂×β₂) ≃ (α₁×α₂)×(β₁×β₂)`.\n\n## C2. Data-processing / coarse-graining monotonicity\nFor any (deterministic or stochastic) coarse-graining `f : β → β'`, pushing the\nsecond part forward cannot increase mutual information:\n`mutualInfo (P.coarsen f) ≤ mutualInfo P`. This would make `Φ` a monotone under\nloss of micro-detail, formalizing IIT's \"exclusion\" intuition. Extends\n`mutualInfo_congr` (the bijective, equality case) to non-injective maps.\n\n## C3. Upper bound by the smaller part's entropy\nDefine Shannon entropy `H` on `FinDist`. Conjecture `mutualInfo P ≤ min (H P.fst) (H P.snd)`,\nhence `Φ ≤ min over the cut of the part entropies`. This bounds achievable\nintegration by the representational capacity of the smallest part and gives the\nfirst *quantitative* ceiling on `Φ`. Requires building `H` and subadditivity.\n\n## C4. Strict super-additivity gap characterizes genuine integration\nDefine the \"disintegration gap\" `G(P,S) = H(P) − H(P across cut S)`. Conjecture\n`Φ` over the full cut family is `0` iff some cut has `G = 0`, and otherwise\n`Φ` is bounded below by the minimal positive eigenvalue-type gap of the joint\nvs. product correlation operator. A spectral lower bound on `Φ` would turn the\nqualitative `Phi_eq_zero_iff` into a quantitative certificate.\n\n## C5. Continuity / stability of Φ\nConjecture `Φ` is (locally Lipschitz) continuous in the joint distribution away\nfrom the zero-marginal boundary: small perturbations of `P.prob` produce small\nchanges in `Φ`. This robustness is necessary for `Φ` to be physically\nmeaningful. Falsifiable via a discontinuity witness at an interior point.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2802",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "333b621d",
+    "status": "available",
+    "timestamp": "2026-06-28T21:21:00.882416+00:00",
+    "title": "Built on `Catalog/Novelty/IntegratedInformation.lean`, which establishes the"
   },
   {
     "ambition_level": "extension",

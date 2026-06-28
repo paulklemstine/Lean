@@ -853,22 +853,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
   {
-    "consumed_by_exp_id": "cfea11f0",
-    "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
-    "domains": [
-      "MachineLearning",
-      "Analysis",
-      "Geometry"
-    ],
-    "id": "seed_369",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432786+00:00",
-    "title": "Optimal Transport and Wasserstein Distances"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
@@ -1606,6 +1590,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-28T21:18:37.194826+00:00",
     "title": "Derived from this cycle's findings (verified files: `BinarySearchVerified.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Mathematical Foundations of Integrated Information (\u03a6)\n\nBuilt on `Catalog/Novelty/IntegratedInformation.lean`, which establishes the\ndiscrete IIT core: finite distributions `FinDist`, mutual information across a\ncut as KL divergence to the product-of-marginals reference, the general\nKullback\u2013Leibler law (`klDiv_nonneg`, `klDiv_eq_zero_iff`), intrinsicality\n(`mutualInfo_congr`), and the Minimum-Information-Partition `\u03a6` with its\nstructural laws (`Phi_nonneg`, `Phi_eq_zero_iff`, `Phi_le_of_subset`).\n\nThe following conjectures are precise and testable; each names the Lean objects\nit would extend.\n\n## C1. Additivity over independent composition\nFor joint systems `P\u2081 : FinDist (\u03b1\u2081 \u00d7 \u03b2\u2081)` and `P\u2082 : FinDist (\u03b1\u2082 \u00d7 \u03b2\u2082)`, the\nmutual information of `prod P\u2081 P\u2082` reindexed to `(\u03b1\u2081\u00d7\u03b1\u2082) \u00d7 (\u03b2\u2081\u00d7\u03b2\u2082)` equals\n`mutualInfo P\u2081 + mutualInfo P\u2082`. Consequence: integrated information is additive\nover physically independent subsystems, so `\u03a6` of a disjoint union is the sum.\n*Falsifiable*: a single mixed example with `I(P\u2081\u2297P\u2082) \u2260 I(P\u2081)+I(P\u2082)` would refute.\nThe relative-entropy half is already proved: `klDiv_prod` shows\n`KL(p\u2081\u2297p\u2082 \u2016 q\u2081\u2297q\u2082) = KL(p\u2081\u2016q\u2081) + KL(p\u2082\u2016q\u2082)`; the remaining step is to identify\nthe marginals of `prod P\u2081 P\u2082` with the products of the marginals of `P\u2081, P\u2082`\nunder the four-fold reindexing `(\u03b1\u2081\u00d7\u03b2\u2081)\u00d7(\u03b1\u2082\u00d7\u03b2\u2082) \u2243 (\u03b1\u2081\u00d7\u03b1\u2082)\u00d7(\u03b2\u2081\u00d7\u03b2\u2082)`.\n\n## C2. Data-processing / coarse-graining monotonicity\nFor any (deterministic or stochastic) coarse-graining `f : \u03b2 \u2192 \u03b2'`, pushing the\nsecond part forward cannot increase mutual information:\n`mutualInfo (P.coarsen f) \u2264 mutualInfo P`. This would make `\u03a6` a monotone under\nloss of micro-detail, formalizing IIT's \"exclusion\" intuition. Extends\n`mutualInfo_congr` (the bijective, equality case) to non-injective maps.\n\n## C3. Upper bound by the smaller part's entropy\nDefine Shannon entropy `H` on `FinDist`. Conjecture `mutualInfo P \u2264 min (H P.fst) (H P.snd)`,\nhence `\u03a6 \u2264 min over the cut of the part entropies`. This bounds achievable\nintegration by the representational capacity of the smallest part and gives the\nfirst *quantitative* ceiling on `\u03a6`. Requires building `H` and subadditivity.\n\n## C4. Strict super-additivity gap characterizes genuine integration\nDefine the \"disintegration gap\" `G(P,S) = H(P) \u2212 H(P across cut S)`. Conjecture\n`\u03a6` over the full cut family is `0` iff some cut has `G = 0`, and otherwise\n`\u03a6` is bounded below by the minimal positive eigenvalue-type gap of the joint\nvs. product correlation operator. A spectral lower bound on `\u03a6` would turn the\nqualitative `Phi_eq_zero_iff` into a quantitative certificate.\n\n## C5. Continuity / stability of \u03a6\nConjecture `\u03a6` is (locally Lipschitz) continuous in the joint distribution away\nfrom the zero-marginal boundary: small perturbations of `P.prob` produce small\nchanges in `\u03a6`. This robustness is necessary for `\u03a6` to be physically\nmeaningful. Falsifiable via a discontinuity witness at an interior point.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2802",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "333b621d",
+    "status": "available",
+    "timestamp": "2026-06-28T21:21:00.882416+00:00",
+    "title": "Built on `Catalog/Novelty/IntegratedInformation.lean`, which establishes the"
   },
   {
     "consumed_by_exp_id": "",

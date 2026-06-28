@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ab42f98e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Cryptography from Iterated Collatz Maps\n\nDerived from this cycle's findings (see `Map.lean`, `Reversibility.lean`,\n`HashCollision.lean`). Each conjecture is bold, falsifiable, and",
-      "quality_score": 0.70551,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-26T13:59:07",
-      "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
-    },
-    {
       "cycle_id": "be72639d",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nDerived from this cycle's findings on *exponential diameter contraction under\nDelaunay minicenter refinement* and the *approximate Carathéodory / Maurey*\ncatalog references. Each",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-06-28T17:25:51",
       "title": "EML Universal Approximation: Density of EML Functions"
+    },
+    {
+      "cycle_id": "333b621d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Mathematical Foundations of Integrated Information (Φ)\n\nBuilt on `Catalog/Novelty/IntegratedInformation.lean`, which establishes the\ndiscrete IIT core: finite distributions `FinD",
+      "quality_score": 0.72324,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T21:21:11",
+      "title": "Consciousness as Integrated Information: Mathematical Foundations"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9e1a2820",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — Generalized Gawron–Miska–Ulas unboundedness\n\nThis cycle proved the Gawron–Miska–Ulas unboundedness conjecture on the union\n`{m = 2, all b ≥ 2} ∪ {2 ≤ m ≤ b}` of the parameter ran",
-      "quality_score": 0.52704,
-      "sorry_count": 1,
-      "theorem_count": 20,
-      "timestamp": "2026-06-26T02:42:00",
-      "title": "Generalized Gawron–Miska–Ulas unboundedness for arbitrary integer bases"
-    },
     {
       "cycle_id": "0dc2bca1",
       "domain": "Combinatorics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T21:18:51",
       "title": "Formal Verification of Algorithms"
+    },
+    {
+      "cycle_id": "333b621d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Mathematical Foundations of Integrated Information (Φ)\n\nBuilt on `Catalog/Novelty/IntegratedInformation.lean`, which establishes the\ndiscrete IIT core: finite distributions `FinD",
+      "quality_score": 0.72324,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T21:21:11",
+      "title": "Consciousness as Integrated Information: Mathematical Foundations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T21:18:51",
+  "last_updated": "2026-06-28T21:21:11",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "72418ed5",
-        "quality": 0.43096,
-        "theorems": 0,
-        "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
-      },
-      {
         "cycle_id": "872fa119",
         "quality": 0.7050400000000001,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.5920639999999999,
         "theorems": 0,
         "title": "Formal Verification of Algorithms"
+      },
+      {
+        "cycle_id": "333b621d",
+        "quality": 0.72324,
+        "theorems": 0,
+        "title": "Consciousness as Integrated Information: Mathematical Foundations"
       }
     ],
     "NumberTheory": [

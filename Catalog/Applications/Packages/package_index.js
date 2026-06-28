@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "333b621d",
     "filename": "consciousness_as_integrated_information_mathematic.json",
     "pkg_num": 196,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.72324,
     "title": "Consciousness as Integrated Information: A Maximum Co-Active Coalition Model and Its NP-Hardness"
   },
   {
@@ -5719,8 +5719,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "consciousness_as_integrated_information_mathematic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.72324,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Consciousness as Integrated Information: A Maximum Co-Active Coalition Model and Its NP-Hardness"
     }
