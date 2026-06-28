@@ -506,7 +506,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bac3bfcc",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -517,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -2812,7 +2812,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00e5c711",
     "description": "In the wall version of Menger's theorem (Theorem 1 of the paper), the separator bound f can be taken to equal s' - 1, matching the classical Menger bound. Specifically: for all positive integers s' and t', there exists an integer t such that for any vertex set A and any wall W of size at least t, either there exists a vertex set X of size at most s' - 1 that separates A from the branch vertices of W, or there exists a subwall W' of size at least t' together with s' vertex-disjoint A-W'-paths each ending in a distinct nail of W'.",
     "domains": [
       "Pythagorean"
@@ -2821,7 +2821,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T21:19:02.613185+00:00",
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
@@ -8260,7 +8260,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fdadfe48",
     "description": "# Future Directions\n\nThe most natural next step is to attack the residue class isolated by the\nprime-core reduction: primes `p \u2261 1 (mod 8)`. The key insight is that the four\nelementary families already dispatch every residue except this one, so the entire\ndifficulty of Erd\u0151s\u2013Straus is concentrated in a single arithmetic progression,\nand any constructive scheme that handles it would, via\n`erdosStraus_of_primes_one_mod_eight`, close the problem unconditionally. A\npromising route is to formalize the classical covering-congruence constructions\nof Mordell, which solve `4/p` for all `p` outside a sparse set of residues modulo\nsmall moduli (e.g. residues that are quadratic non-residues modulo `4`, or that\nfall into specific classes mod `3\u00b78`, `5\u00b78`, `7\u00b78`, \u2026). Why now? Because the\npresent development supplies exactly the reusable scaffolding \u2014 the predicate, the\nwitness-verification idioms, and divisor inheritance \u2014 that such a formalization\nwould otherwise have to rebuild from scratch.\n\nA second direction is computational certification at scale. The key insight is\nthat `ErdosStrausSolution n` is witnessed by a finite triple whose correctness is\na single rational identity, so a verified search procedure could emit witnesses\nfor enormous ranges and check them by `decide`/`norm_num`, turning empirical\ntables (which currently confirm the conjecture far beyond `10^17`) into\nmachine-checked theorems for explicit bounds. Why now? Because Lean's `decide`\nkernel reduction and `norm_num` extensions are mature enough to validate millions\nof rational identities reliably, and the bounded theorem `erdosStraus_upto_100`\ndemonstrates the pattern end to end; scaling it is an engineering problem, not a\nmathematical one.\n\nA third direction concerns the structure of the witness map itself.\nThe key insight is that the family witnesses are not ad hoc but instances of a small\nnumber of algebraic identities (the `1/a + 1/(a\u00b7n)` split and its halving, and the\n`(n+3)/(2na)` collapse), so one could formalize a *parametrized solver*: a single\nlemma taking residue data and returning a witness, from which all four families\nbecome corollaries. Why now? Because unifying the families would both shrink the\nproof and expose precisely which algebraic degrees of freedom remain unused for\nthe `1 (mod 8)` case, potentially suggesting the missing construction.\n\nA fourth direction is to connect this development to Mathlib's number-theoretic\ninfrastructure on quadratic residues and Dirichlet characters. The key insight is\nthat the obstruction at `p \u2261 1 (mod 8)` is governed by solvability of congruences\nthat quadratic reciprocity controls, so importing Mathlib's reciprocity and\nLegendre-symbol API could let one phrase the open core as a clean statement about\nrepresentability rather than as a raw existential over triples. Why now? Because\nMathlib's quadratic reciprocity and `ZMod` character theory are now stable and\nwell-supported, making it feasible to translate the analytic-number-theory\nheuristics for Erd\u0151s\u2013Straus into formal, checkable hypotheses.\n",
     "domains": [
       "Pythagorean",
@@ -8270,7 +8270,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "199a5960",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
   },
@@ -8435,7 +8435,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6dda8a29",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -8444,7 +8444,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -8597,7 +8597,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5dd524d",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -8607,7 +8607,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -8717,7 +8717,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce8c041d",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8727,7 +8727,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
