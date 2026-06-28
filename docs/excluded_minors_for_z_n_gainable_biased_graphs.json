@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-06-28T09:41:47Z",
+  "date": "2026-06-28T09:53:46Z",
   "key_results": [
     "parallelEdges_not_gainable: (n+1)K2 is not Z/n-gainable for every n >= 2 (pigeonhole, no primality).",
     "gainableBy_of_isMinor: Z/n-gainability is closed under the labelled-minor relation.",
