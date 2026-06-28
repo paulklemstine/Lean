@@ -1,55 +1,56 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# Computational Evidence — EML Sharp Convergence Rate
 
-Every result stated in ARTICLE.md and RESEARCH_PAPER.md maps to one of the
-Lean declarations below. No grander claims are made than what these establish.
+Target claim: for the EML operator `f(x) = exp(a)·log(b·x + c)`, the Picard
+iteration `xₙ₊₁ = f(xₙ)` converges Q-linearly with asymptotic ratio **exactly**
+the local derivative magnitude `ρ = |f'(x*)| = |exp(a)·b/(b·x* + c)|`, which is
+generically strictly below the interval-wide contraction constant used in the
+existing catalog a-priori rate.
 
-## Definitions
+## Concrete instance (matches `EML.FixedPointConcreteInstance`)
 
-| Lean name | Statement | Article | Paper |
-|---|---|---|---|
-| `EMLIterOp` | `EMLIterOp a b c x = exp a * log (b * x + c)` | "the move", §1 | Def. 1 |
-| `EMLIterOp.iterSeq` | `iterSeq a b c x₀ 0 = x₀`; `iterSeq … (n+1) = EMLIterOp a b c (iterSeq … n)` | §1 | Def. 2 |
-| `EMLContractionData` | structure: `a b c lo hi rho` with `lo<hi`, `0≤rho<1`, `arg_pos`, `maps_to`, `deriv_bound` | §2 | Def. 3 |
+`f(x) = exp(1)·log(x + 100)` on `[0, 20]`, interval bound `ρ_interval = 1/30 ≈ 0.033333`.
 
-## Convergence layer (FixedPointConvergence.lean)
+Iteration from `x₀ = 0` (Float, `iter n 0`):
 
-| Lean name | Statement | Article | Paper |
-|---|---|---|---|
-| `EMLIterOp.hasDerivAt` / `deriv_eq` | `deriv (EMLIterOp a b c) x = exp a * b / (b*x+c)` for `b*x+c>0` | §2 | Lemma 1 |
-| `EMLIterOp.fixedPoint_eq` | `f(x*)=x* ⇒ x* = exp a * log(b*x*+c)` | §2 | Lemma 2 |
-| `EMLIterOp.fixedPoint_arg_gt_one` | positive fixed point with positive arg ⇒ `b*x*+c > 1` | §3 | Lemma 3 |
-| `EMLIterOp.lipschitz_of_deriv_bound` | deriv bound by `rho` ⇒ `|f x - f y| ≤ rho*|x-y|` | §2 | Lemma 4 |
-| `EMLIterOp.fixedPoint_unique` | contraction ⇒ ≤ one fixed point in `[lo,hi]` | §2 | Thm. 1 |
-| `EMLIterOp.iterSeq_mem_Icc` | iterates stay in `[lo,hi]` | §2 | Lemma 5 |
-| `EMLIterOp.iterSeq_geometric_decay` | `|x_{n+1}-x_n| ≤ rho^n |x_1-x_0|` | §2 | Lemma 6 |
-| `EMLIterOp.iterSeq_cauchy` | iteration is Cauchy | §2 | Lemma 7 |
-| `EMLIterOp.iterSeq_converges` | iteration → a fixed point in `[lo,hi]` | §2 | Thm. 2 |
-| `EMLIterOp.fixedPoint_powerSeries_conjecture` | for `0<a<1/2`, `b=1,c=2`: ∃ positive fixed point | §4 | Prop. 1 |
+```
+n :  0        1         2         3         4         5      ... 11
+x :  0.000  12.5182  12.8388  12.8465  12.84668  12.846682 ... 12.846682
+```
 
-## Rate layer (FixedPointRate.lean)
+Fixed point (60 iterations): `x* ≈ 12.846682`, residual `f(x*) − x* ≈ 0.0`.
 
-| Lean name | Statement | Article | Paper |
-|---|---|---|---|
-| `EMLIterOp.iterSeq_error_bound` | `|x_n - x*| ≤ |x_1-x_0| rho^n /(1-rho)` | §2 | Thm. 3 |
-| `EMLIterOp.iterSeq_certified_rate` | existence + a priori bound packaged | §2 | Cor. 1 |
-| `EMLIterOp.iterSeq_error_tendsto_zero` | the a priori bound → 0 | §2 | Cor. 2 |
+Local rate vs interval bound:
 
-## Bracket layer (FixedPointBracket.lean)
+```
+|f'(x*)| = exp(1)/(x*+100) ≈ 0.024088
+ρ_interval = 1/30           ≈ 0.033333
+```
 
-| Lean name | Statement | Article | Paper |
-|---|---|---|---|
-| `EMLIterOp.op_monotoneOn` | `b>0 ⇒ f` monotone on `[lo,hi]` | §3 | Lemma 8 |
-| `EMLIterOp.iterSeq_lo_mono` | lower orbit `fⁿ(lo)` increases | §3 | Lemma 9 |
-| `EMLIterOp.iterSeq_hi_anti` | upper orbit `fⁿ(hi)` decreases | §3 | Lemma 10 |
-| `EMLIterOp.certified_enclosure` | bracket `ℓₙ ≤ x* ≤ uₙ`, width → 0 | §3 | Thm. 4 |
+So the local rate is strictly below the catalog's interval bound, as predicted.
 
-## Comparative-statics layer (FixedPointMonotoneParam.lean — Phase A)
+## Consecutive-error ratios converge to the local rate
 
-| Lean name | Statement | Article | Paper |
-|---|---|---|---|
-| `EMLIterOp.op_le_op_of_a_le` | `a₁≤a₂`, `log(b*x+c)≥0 ⇒ f_{a₁}(x) ≤ f_{a₂}(x)` | §3 | Lemma 11 |
-| `EMLIterOp.op_lt_op_of_a_lt` | `a₁<a₂`, `log(b*x+c)>0 ⇒ f_{a₁}(x) < f_{a₂}(x)` | §3 | Lemma 12 |
-| `EMLIterOp.orbit_mono_of_subsolution` | `p ≤ f(p) ⇒` orbit from `p` increases | §3 | Lemma 13 |
-| `EMLIterOp.fixedPoint_le_of_a_le` | `a₁≤D.a` ⇒ ∃ fixed point `x₂` with `x₁ ≤ x₂` | §3 (main) | Thm. 5 |
-| `EMLIterOp.fixedPoint_lt_of_a_lt` | `a₁<D.a` ⇒ ∃ fixed point `x₂` with `x₁ < x₂` | §3 (main) | Thm. 6 |
-| `EMLIterOp.fixedPoint_unique_le_of_a_le` | unique fixed point of larger `a` dominates | §3 | Thm. 7 |
+`|x_{n+1} − x*| / |x_n − x*|` for `n = 0..7`:
+
+```
+0.025573, 0.024123, 0.024089, 0.024088, 0.024088, 0.024088, 0.024089, 0.024070
+```
+
+These converge to `≈ 0.024088 = |f'(x*)|`, the exact limit asserted by
+`EMLIterOp.iterSeq_sharp_rate` and `EMLIterOp.concreteEML_sharp_rate`. (The tiny
+wobble at `n = 7` is Float round-off near machine fixed point, where both
+numerator and denominator are at noise level.)
+
+## Counterexample hunt for non-degeneracy
+
+The ratio limit is `|f'(x*)|`, *not* `0`. The only failure mode of the statement
+is a degenerate start `x₀ = x*`, where the sequence is constant and the ratio is
+`0/0 = 0 ≠ |f'(x*)|`. This is exactly why the formal theorem carries the
+hypothesis `x₀ ≠ x*`; for the concrete instance `x* ≈ 12.85 > 0`, so `x₀ = 0` is
+non-degenerate (formalized as `concreteEML_fixedPoint_pos`).
+
+## Conclusion
+
+The evidence supports the sharp-rate claim and, in particular, that the local
+rate `|f'(x*)|` is strictly smaller than the interval-wide constant `1/30` for
+the catalog's concrete operator — the precise gap the formal theorems close.

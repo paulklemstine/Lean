@@ -1,437 +1,374 @@
-# Comparative Statics of the Exp-Log Fixed Point: Monotone Dependence of an EML Contraction Equilibrium on its Scaling Parameter
+# The Sharp Asymptotic Convergence Rate of the EML exp-log Iteration
 
 **Author:** Aristotle
-**Date:** 2026-06-27
-**Domain:** Applications (dynamical systems, fixed-point iteration, parametric monotonicity)
-
----
+**Date:** 2026-06-28
+**Domain:** Applications (dynamical systems, fixed-point iteration)
 
 ## Abstract
 
-We study the single-operator *exp-log* (EML) map $f_a(x) = e^{a}\log(b x + c)$
-as a one-dimensional discrete dynamical system. Under parameter constraints that
-make $f_a$ a contraction on a closed invariant interval $[\ell, h]$ — namely
-that $b x + c > 0$ on the interval, that $f_a$ maps the interval into itself, and
-that the derivative magnitude $|f_a'(x)| = |e^{a} b/(b x + c)|$ is bounded by a
-constant $\rho \in [0, 1)$ — the Banach fixed-point theorem yields a unique
-equilibrium $x^\*(a)$ to which the iteration $x_{n+1} = f_a(x_n)$ converges
-geometrically. We recall this convergence theory (existence, uniqueness, an a
-priori $O(\rho^{n})$ error bound, and a two-sided certified enclosure), and we
-establish the central new result: the **comparative-statics law** for the
-equilibrium. We prove that increasing the scaling parameter $a$ weakly increases
-the fixed point, that strictly increasing $a$ strictly increases it, and that the
-contraction's uniqueness propagates this to *every* fixed point of the larger
-operator. The proof avoids implicit-function-theorem machinery entirely; it uses
-only monotonicity of $\exp$, $\log$, and the operator, together with a
-sub-solution / monotone-iteration ("monotone sandwich") argument. The positivity
-of the smaller-parameter equilibrium is shown to be load-bearing. Consequently
-the scaling parameter of an EML scheme is a *monotone, injective* control of its
-equilibrium, which, combined with the certified convergence rate, makes EML
-iterations tunable with provable, overshoot-free response.
-
----
+We study the *EML single operator* $f(x) = e^{a}\log(b x + c)$, a squeeze-and-stretch
+building block combining logarithmic compression with exponential scaling, and the
+dynamics of its Picard iteration $x_{n+1} = f(x_n)$. On a closed interval that $f$ maps
+into itself and on which $|f'| \le \rho < 1$, the iteration is a contraction and converges
+to a unique fixed point $x^\*$ with an *a priori* geometric error bound
+$|x_n - x^\*| \le |x_1 - x_0|\,\rho^n/(1-\rho)$. The interval constant $\rho$, however,
+is only a worst-case bound. Our central contribution is the *sharp local rate*: for $b>0$
+and any non-degenerate start $x_0 \ne x^\*$, the ratio of consecutive errors converges
+exactly to the derivative magnitude at the fixed point,
+$$\frac{|x_{n+1} - x^\*|}{|x_n - x^\*|} \longrightarrow |f'(x^\*)| = \left|\frac{e^{a}b}{b x^\* + c}\right| \le \rho < 1.$$
+This pins the iteration's Q-linear asymptotic ratio to the local derivative, strictly
+sharpening the interval-wide a priori rate. The argument is a composition of three
+ingredients: (i) soft metric convergence of the Picard sequence; (ii) the analytic
+derivative of $f$ at $x^\*$ via the equivalence between differentiability and convergence
+of difference quotients; and (iii) injectivity of $f$ on the invariant interval (a
+consequence of strict monotonicity for $b>0$), which guarantees the iterates never land on
+$x^\*$ and so keep the error ratio well-defined. We give numerical demonstrations and
+discuss consequences: rate monotonicity in the shift parameter $c$, smooth dependence of
+$x^\*$ on the scaling parameter $a$, and acceleration prospects.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Fixed-point iteration is the workhorse of constructive mathematics: to solve $x = f(x)$,
+start somewhere and iterate. The Banach contraction principle guarantees that if $f$
+shrinks distances by a uniform factor $\rho < 1$ on a complete invariant set, then the
+iteration converges geometrically to a unique fixed point. The associated *a priori* error
+bound $|x_n - x^\*| \le |x_1 - x_0|\,\rho^n/(1-\rho)$ is one of the most quoted estimates in
+numerical analysis.
 
-Discrete dynamical systems of the form $x_{n+1} = f(x_n)$ underlie compounding
-processes, control loops, root-finding schemes, and the layer-to-layer signal
-flow of recurrent and deep computational models. When $f$ is a contraction, the
-system is maximally well-behaved: there is a unique equilibrium and the iteration
-converges to it geometrically from any admissible start. But contraction alone is
-silent about *parametric* behavior — how the equilibrium responds when one tunes
-a parameter of $f$. For a map intended to be used as a tunable component, this is
-the decisive practical question.
+Yet that bound uses a *single* constant $\rho$ valid over the whole invariant set. In
+practice the iterates eventually concentrate near $x^\*$, where the relevant contraction
+factor is not the global worst case but the *local* derivative magnitude $|f'(x^\*)|$. For
+a smooth contraction the latter is generically strictly smaller than the interval constant,
+so the a priori bound systematically overstates the asymptotic effort. The honest,
+sharp description of the long-run dynamics is *Q-linear convergence with asymptotic ratio
+$|f'(x^\*)|$*.
 
-We answer it for the exp-log family
-$$f_a(x) = e^{a}\,\log(b x + c),$$
-a "compress-then-scale" operator combining a logarithmic compression with an
-exponential gain $e^{a}$. Such maps are deliberately tame surrogates for the
-nonlinear activations used in learning systems, where predictable dynamics are
-prized. The free parameter $a$ is the natural control dial; our object of study
-is the dependence $a \mapsto x^\*(a)$ of the equilibrium on that dial.
+We carry out this sharpening for the EML operator
+$$f(x) = e^{a}\log(b x + c),$$
+a "exp-minus-log" unit of interest as an analytically tame alternative to generic
+activation functions: where most nonlinear units have ill-behaved feedback dynamics, the
+EML map has a *certified* convergent iteration. Our results upgrade the certificate from
+"converges at rate at most $\rho$" to "converges at asymptotic rate exactly $|f'(x^\*)|$."
+
+The distinction between the two statements is not merely cosmetic. The interval constant
+$\rho$ is the supremum of $|f'|$ over the whole invariant set; it governs the *transient*
+phase, when the iterate may still be far from $x^\*$ and the map's steepness is largest. The
+local rate $|f'(x^\*)|$ governs the *asymptotic* phase, which is the regime that determines
+how many iterations are ultimately needed to reach a prescribed accuracy. For the EML
+operator the derivative $f'(x) = e^a b/(bx+c)$ is monotonically decreasing in $x$ (for
+$b>0$), so its supremum over the interval is attained at the left endpoint and is strictly
+larger than its value at the interior fixed point. Consequently the asymptotic effort is
+strictly less than the a priori bound predicts, and quantifying the gap requires the local
+argument developed here.
+
+### 1.1 Method overview
+
+The sharp rate is obtained by feeding the Picard sequence into the analytic
+characterization of the derivative. Differentiability of $f$ at $x^\*$ is *equivalent* to
+convergence of the difference quotient (slope) $\frac{f(y)-f(x^\*)}{y-x^\*}$ to $f'(x^\*)$ as
+$y \to x^\*$ through values $\ne x^\*$. The Picard iterates supply exactly such a sequence of
+test points $y = x_n$: they converge to $x^\*$ (catalog convergence) and stay distinct from
+it (injectivity). The slope evaluated along this sequence is literally the consecutive-error
+ratio, because $f(x_n) = x_{n+1}$ and $f(x^\*) = x^\*$. The limit is therefore $f'(x^\*)$, and
+taking absolute values gives the magnitude. The three inputs — convergence, injectivity, and
+the analytic derivative — are individually standard; their composition is what yields the
+conjecture's literal rate, absent from the interval-constant a priori bound.
 
 ### 1.2 Contributions
 
-1. We recall, with full statements and proof sketches, the contraction theory of
-   $f_a$: the derivative formula, fixed-point characterization, uniqueness, the
-   convergence of the iteration, the explicit $O(\rho^{n})$ a priori error bound,
-   and a two-sided certified enclosure obtained from monotone bracketing.
-2. We prove the **monotone comparative-statics law**: $a_1 \le a_2 \Rightarrow
-   x^\*(a_1) \le x^\*(a_2)$, with the strict version $a_1 < a_2 \Rightarrow
-   x^\*(a_1) < x^\*(a_2)$, and a uniqueness-strengthened form.
-3. We isolate the *mechanism*: a fixed point of the smaller operator is a
-   sub-solution of the larger one, and contraction converts sub-solutions into
-   lower bounds for the limit. We highlight that positivity of the smaller
-   equilibrium is essential and that the law fails for general non-monotone maps.
-
-### 1.3 Notation
-
-$\mathbb{R}$ is the real line; $\mathrm{Icc}\,\ell\,h = [\ell, h]$ the closed
-interval; $\exp$ and $\log$ are the real exponential and natural logarithm
-(with $\log t$ defined only meaningfully for $t > 0$ here). The $n$-fold
-iteration of $f$ from $x_0$ is written $x_n$ or $f^{n}(x_0)$.
-
----
-
-## 2. The EML operator and its contraction theory
-
-### 2.1 Core definitions
-
-**Definition 1 (EML operator).**
-For parameters $a, b, c \in \mathbb{R}$, the *exp-log operator* is
-$$f_{a,b,c}(x) \;=\; e^{a}\,\log(b x + c).$$
-When $b, c$ are fixed we write $f_a$.
-
-**Definition 2 (Iteration sequence).**
-Given a start $x_0$, the iteration sequence is
-$$x_0,\qquad x_{n+1} = f_{a,b,c}(x_n).$$
-
-**Definition 3 (Contraction data).**
-An *EML contraction datum* is a tuple $D = (a, b, c, \ell, h, \rho)$ with
-$\ell < h$, $0 \le \rho < 1$, and the three structural hypotheses:
-- **(arg-pos)** $b x + c > 0$ for all $x \in [\ell, h]$;
-- **(maps-to)** $f_{a,b,c}(x) \in [\ell, h]$ for all $x \in [\ell, h]$;
-- **(deriv-bound)** $\left|\dfrac{e^{a} b}{b x + c}\right| \le \rho$ for all
-  $x \in [\ell, h]$.
-
-These three conditions package exactly what is needed for $f_a$ to be a
-self-map and a $\rho$-contraction on $[\ell, h]$.
-
-### 2.2 Derivative and fixed-point characterization
-
-**Lemma 1 (Derivative formula).**
-If $b x + c > 0$ then $f_{a,b,c}$ is differentiable at $x$ with
-$$f_{a,b,c}'(x) \;=\; \frac{e^{a} b}{b x + c}.$$
-*Sketch.* Chain rule: $\frac{d}{dx}\log(bx+c) = b/(bx+c)$, multiplied by the
-constant $e^{a}$. $\square$
-
-**Lemma 2 (Fixed-point equation).**
-If $f_{a,b,c}(x^\*) = x^\*$ then $x^\* = e^{a}\log(b x^\* + c)$.
-*Sketch.* This is the definition of the operator read at a fixed point. $\square$
-
-**Lemma 3 (Positive fixed points exceed the log threshold).**
-If $f_{a,b,c}(x^\*) = x^\*$ with $x^\* > 0$ and $b x^\* + c > 0$, then
-$b x^\* + c > 1$.
-*Sketch.* If instead $b x^\* + c \le 1$ then $\log(b x^\* + c) \le 0$, so
-$x^\* = e^{a}\log(b x^\* + c) \le 0$ (as $e^a > 0$), contradicting $x^\* > 0$.
-$\square$
-
-Lemma 3 is the hinge of the comparative-statics argument: at a *positive*
-equilibrium the logarithm term is strictly positive, which is exactly the sign
-condition that makes a larger gain $e^{a}$ push the value up.
-
-### 2.3 Contraction, uniqueness, convergence
-
-**Lemma 4 (Lipschitz from a derivative bound).**
-If $b x + c > 0$ on $[\ell, h]$ and $|e^{a} b/(b x + c)| \le \rho$ there, then
-$$|f_{a,b,c}(x) - f_{a,b,c}(y)| \le \rho\,|x - y| \qquad \forall\, x, y \in [\ell, h].$$
-*Sketch.* The interval is convex; apply the mean-value inequality
-$\bigl|f(x)-f(y)\bigr| \le \bigl(\sup |f'|\bigr)|x-y|$ for a function whose
-derivative within the interval is bounded by $\rho$. $\square$
-
-**Theorem 1 (Uniqueness).**
-With the data of Lemma 4 and $\rho < 1$, $f_{a,b,c}$ has at most one fixed point
-in $[\ell, h]$.
-*Sketch.* If $x_1, x_2$ are fixed points then
-$|x_1 - x_2| = |f(x_1) - f(x_2)| \le \rho|x_1 - x_2|$, forcing
-$(1-\rho)|x_1 - x_2| \le 0$, hence $x_1 = x_2$ since $\rho < 1$. $\square$
-
-**Lemma 5 (Invariance of the orbit).**
-If $x_0 \in [\ell, h]$ and **(maps-to)** holds, then $x_n \in [\ell, h]$ for all
-$n$.
-*Sketch.* Induction using **(maps-to)** at each step. $\square$
-
-**Lemma 6 (Geometric decay of increments).**
-For a contraction datum $D$ and $x_0 \in [\ell, h]$,
-$$|x_{n+1} - x_n| \le \rho^{n}\,|x_1 - x_0|.$$
-*Sketch.* Induction; each step applies Lemma 4 to consecutive (in-interval)
-iterates, contributing one factor of $\rho$. $\square$
-
-**Lemma 7 (Cauchy).**
-The iteration is a Cauchy sequence.
-*Sketch.* Lemma 6 gives a geometric majorant $\sum \rho^{n}|x_1-x_0| < \infty$
-for the increments, so tails are arbitrarily small. $\square$
-
-**Theorem 2 (Convergence to a fixed point).**
-For a contraction datum $D$ and any $x_0 \in [\ell, h]$ there exists
-$x^\* \in [\ell, h]$ with $x_n \to x^\*$ and $f_{a,b,c}(x^\*) = x^\*$.
-*Sketch.* By Lemma 7 and completeness of $\mathbb{R}$ the limit $x^\*$ exists; it
-lies in the closed interval $[\ell, h]$ by Lemma 5; continuity of $f_a$ on the
-interval (Lemma 1) lets one pass to the limit in $x_{n+1} = f_a(x_n)$ to get
-$x^\* = f_a(x^\*)$. $\square$
-
-### 2.4 Certified rate and enclosure
-
-**Theorem 3 (A priori error bound).**
-If $x_n \to x^\*$ for a contraction datum then for all $n$,
-$$|x_n - x^\*| \;\le\; |x_1 - x_0|\,\frac{\rho^{n}}{1 - \rho}.$$
-*Sketch.* Sum the geometric tail of increments from Lemma 6 and pass to the
-limit. $\square$
-
-**Corollary 1 (Certified geometric convergence).**
-The fixed point exists, the iteration converges to it, and the explicit bound of
-Theorem 3 holds at every step. **Corollary 2.** That bound tends to $0$, so the
-convergence is genuinely $O(\rho^{n})$.
-
-When $b > 0$ the operator is additionally monotone (Lemma 8 below), which yields
-a *two-sided* certificate.
-
-**Lemma 8 (Monotonicity in the argument).**
-If $b > 0$ and $b x + c > 0$ on $[\ell, h]$, then $f_{a,b,c}$ is monotone
-increasing on $[\ell, h]$: $u \le v \Rightarrow f_a(u) \le f_a(v)$.
-*Sketch.* $b u + c \le b v + c$, $\log$ is increasing, and $e^{a} > 0$. $\square$
-
-**Lemma 9 / Lemma 10 (Bracketing orbits).**
-Starting the iteration at $\ell$ gives an increasing lower orbit $\ell_n =
-f^{n}(\ell)$; starting at $h$ gives a decreasing upper orbit $u_n = f^{n}(h)$.
-*Sketch.* From **(maps-to)**, $\ell \le f(\ell)$ and $f(h) \le h$; propagate
-through the monotone $f$ (Lemma 8) by induction. $\square$
-
-**Theorem 4 (Certified two-sided enclosure).**
-For a contraction datum with $b > 0$ there is a unique fixed point $x^\*$ with
-$$\ell_n \le x^\* \le u_n \quad \forall n, \qquad \ell_n \uparrow x^\*, \quad u_n \downarrow x^\*, \qquad u_n - \ell_n \to 0.$$
-*Sketch.* Both orbits converge (Theorem 2) to fixed points, which coincide by
-uniqueness (Theorem 1); a monotone-induction squeeze gives $\ell_n \le x^\* \le
-u_n$; the width $u_n - \ell_n \to x^\* - x^\* = 0$. $\square$
-
-Thus at any finite step the pair $(\ell_n, u_n)$ is a rigorous interval
-containing $x^\*$ — a self-validating certificate suitable for interval
-arithmetic.
-
----
-
-## 3. Comparative statics: monotone dependence on the scaling parameter
-
-We now fix $b > 0$ and $c$, and view the scaling parameter $a$ as a control dial.
-We compare two operators sharing $(b, c, \ell, h)$ at parameters $a_1 \le a_2$,
-writing $f_{a_1}, f_{a_2}$. The contraction datum $D$ carries the larger
-parameter $a_2 = D.a$.
-
-### 3.1 Operator monotonicity in the parameter
-
-**Lemma 11 (Weak parameter monotonicity of the operator).**
-If $a_1 \le a_2$ and $\log(b x + c) \ge 0$, then
-$f_{a_1}(x) \le f_{a_2}(x)$.
-*Sketch.* $e^{a_1} \le e^{a_2}$ since $\exp$ is increasing; multiply the common
-nonnegative factor $\log(b x + c) \ge 0$ on the right. $\square$
-
-**Lemma 12 (Strict parameter monotonicity of the operator).**
-If $a_1 < a_2$ and $\log(b x + c) > 0$, then $f_{a_1}(x) < f_{a_2}(x)$.
-*Sketch.* $e^{a_1} < e^{a_2}$; multiply by the strictly positive factor
-$\log(b x + c) > 0$. $\square$
-
-The sign hypothesis $\log(bx+c) \ge 0$ (i.e. $bx + c \ge 1$) is precisely what
-Lemma 3 supplies at a positive fixed point.
-
-### 3.2 The monotone-iteration engine
-
-**Lemma 13 (Sub-solutions launch increasing orbits).**
-Let $D$ be a contraction datum with $b > 0$. If $p \in [\ell, h]$ is a
-*sub-solution*, i.e. $p \le f_{D.a}(p)$, then the orbit $n \mapsto f_{D.a}^{n}(p)$
-is monotone increasing.
-*Sketch.* Show $x_n \le x_{n+1}$ by induction. The base case is the sub-solution
-hypothesis $p \le f(p)$. For the step, apply operator monotonicity (Lemma 8) to
-$x_{n} \le x_{n+1}$, using that iterates remain in $[\ell, h]$ (Lemma 5), to get
-$f(x_n) \le f(x_{n+1})$, i.e. $x_{n+1} \le x_{n+2}$. $\square$
-
-This is the discrete analogue of Tarski / monotone-iteration reasoning,
-specialized to the EML contraction. It is the entire engine of what follows.
-
-### 3.3 The comparative-statics law
-
-**Theorem 5 (Weak comparative statics).**
-Let $D$ be a contraction datum with $b > 0$ and $a_2 = D.a$. Suppose
-$a_1 \le a_2$ and $x_1^\*$ is a fixed point of $f_{a_1}$ with $x_1^\* \in
-[\ell, h]$ and $x_1^\* > 0$. Then $f_{a_2}$ has a fixed point $x_2^\* \in
-[\ell, h]$ with
-$$x_1^\* \;\le\; x_2^\*.$$
-*Proof sketch.*
-1. **Positivity activates the sign condition.** Since $x_1^\*$ is a positive
-   fixed point of $f_{a_1}$ with $b x_1^\* + c > 0$ (arg-pos), Lemma 3 gives
-   $b x_1^\* + c > 1$, hence $\log(b x_1^\* + c) > 0$, in particular $\ge 0$.
-2. **$x_1^\*$ is a sub-solution of the larger operator.** By Lemma 11 with the
-   sign condition,
-   $$f_{a_2}(x_1^\*) \;\ge\; f_{a_1}(x_1^\*) \;=\; x_1^\*,$$
-   the equality because $x_1^\*$ is a fixed point of $f_{a_1}$.
-3. **The larger orbit climbs.** By Lemma 13 the orbit of $f_{a_2}$ from $x_1^\*$
-   is increasing; by Theorem 2 it converges to a fixed point $x_2^\* \in
-   [\ell, h]$ of $f_{a_2}$.
-4. **The limit dominates the start.** A monotone-increasing sequence lies below
-   its limit, so $x_1^\* = $ (term $0$) $\le x_2^\*$. $\square$
-
-**Theorem 6 (Strict comparative statics).**
-Under the hypotheses of Theorem 5 but with $a_1 < a_2$, the fixed point of
-$f_{a_2}$ satisfies
-$$x_1^\* \;<\; x_2^\*.$$
-*Proof sketch.* By Theorem 1 the operator $f_{a_2}$ has a *unique* fixed point
-$x_2^\*$ in $[\ell, h]$; Theorem 5 gives $x_1^\* \le x_2^\*$, so it remains to
-exclude equality. If $x_1^\* = x_2^\*$ then $x_1^\*$ would be a fixed point of
-both operators, giving simultaneously $x_1^\* = e^{a_1}\log(bx_1^\*+c)$ and
-$x_1^\* = e^{a_2}\log(b x_1^\* + c)$ with $\log(b x_1^\* + c) > 0$ (step 1 of
-Theorem 5) and $e^{a_1} < e^{a_2}$ — a contradiction, since the same positive
-quantity cannot equal two different positive multiples of $\log(bx_1^\*+c)$.
-Hence $x_1^\* < x_2^\*$. $\square$
-
-**Theorem 7 (Uniqueness-strengthened comparative statics).**
-Under contraction, the larger operator's fixed point is unique, so *every* fixed
-point $x_2^\*$ of $f_{D.a}$ in $[\ell, h]$ dominates the smaller parameter's
-positive fixed point: $x_1^\* \le x_2^\*$ (strictly if $a_1 < D.a$).
-*Proof sketch.* Combine Theorem 5/6 with the uniqueness of Theorem 1: any fixed
-point of $f_{D.a}$ in $[\ell, h]$ equals the one produced by the monotone
-iteration, hence inherits the inequality. $\square$
-
-### 3.4 Why the hypotheses are exactly right
-
-- **Positivity of $x_1^\*$ is load-bearing.** Without it the log term
-  $\log(b x_1^\* + c)$ could be negative, reversing Lemma 11 and hence the
-  sub-solution inequality $f_{a_2}(x_1^\*) \ge x_1^\*$. The conclusion would fail.
-- **$b > 0$ is essential.** It is what makes $f_a$ monotone (Lemma 8) and
-  therefore makes Lemma 13 (sub-solutions launch increasing orbits) valid. The
-  law genuinely uses monotonicity; it is false for general non-monotone maps.
-- **Strictness is not vacuous.** It is witnessed by the strictly upward first
-  step $f_{a_2}(x_1^\*) > x_1^\*$, made strict by Lemma 12.
-
-### 3.5 Consequence: an injective control
-
-Because $a \mapsto x^\*(a)$ is strictly increasing on the parameter range where a
-positive equilibrium exists, it is **injective**: distinct admissible scaling
-parameters produce distinct equilibria. Combined with the certified rate
-(Theorem 3) and enclosure (Theorem 4), this means an EML iterative scheme can be
-tuned with a provable, overshoot-free response — nudging $a$ upward continuously
-and monotonically raises the converged output, never crossing into a different
-basin.
-
----
-
-## 4. A concrete instance
-
-Take $b = 1$, $c = 2$, so $f_a(x) = e^{a}\log(x + 2)$.
-
-**Proposition 1 (Existence of a positive equilibrium for small gain).**
-For every $a$ with $0 < a < \tfrac12$ there is $x^\* > 0$ with
-$e^{a}\log(x^\* + 2) = x^\*$.
-*Proof sketch.* Consider $g(x) = e^{a}\log(x+2) - x$ on $[1, 3]$. At $x = 1$,
-$g(1) = e^{a}\log 3 - 1 > 0$ because $\log 3 > 1$ and $e^{a} > 1$. At $x = 3$,
-$g(3) = e^{a}\log 5 - 3 < 0$ because $e^{1/2}\log 5 < 3$ (using
-$e^{1/2} < 1.7$ and $\log 5 < 1.7$, so the product is below $2.89 < 3$). By the
-intermediate value theorem $g$ vanishes at some $x^\* \in (1, 3)$, which is the
-required positive fixed point. $\square$
-
-This instance has $b = 1 > 0$ and a derivative $f_a'(x) = e^{a}/(x+2)$ that, near
-the equilibria of the table below, stays well under $1$, so all of §2–§3 apply.
-The comparative-statics law predicts a strictly increasing column of equilibria
-as $a$ rises, which the numerics confirm:
-
-| $a$ | $x^\*(a)$ | $f_a'(x^\*)$ |
-|---|---|---|
-| $0.00$ | $1.1462$ | $0.318$ |
-| $0.10$ | $1.3292$ | $0.332$ |
-| $0.30$ | $1.8032$ | $0.355$ |
-| $0.49$ | $2.4293$ | $0.369$ |
-
-Each increase in $a$ strictly raises $x^\*$, and the contraction ratio remains
-below one throughout, certifying convergence at every setting.
-
----
-
-## 5. Algorithms
-
-### 5.1 Banach iteration with certified a priori error
-
-Given a contraction datum and a target tolerance $\varepsilon$, iterate
-$x_{n+1} = f_a(x_n)$ until the a priori bound
-$|x_1 - x_0|\,\rho^{n}/(1-\rho) \le \varepsilon$ (Theorem 3) guarantees
-$|x_n - x^\*| \le \varepsilon$. The required step count is
-$n \ge \log\!\bigl(\varepsilon (1-\rho)/|x_1 - x_0|\bigr)/\log \rho$.
-
-### 5.2 Two-sided certified bracketing
-
-When $b > 0$, run two orbits from $\ell$ and $h$ in parallel. After each step the
-pair $(\ell_n, u_n)$ is a rigorous enclosure of $x^\*$ (Theorem 4); stop when
-$u_n - \ell_n \le \varepsilon$. This needs no knowledge of $\rho$ to validate the
-output: the bracket *is* the certificate.
-
-### 5.3 Monotone-response parameter sweep
-
-To map the control curve $a \mapsto x^\*(a)$, sweep $a$ upward and *warm-start*
-each solve from the previous equilibrium. By Theorem 5, the previous (smaller-$a$)
-equilibrium is a sub-solution for the next operator, so the warm-started orbit
-increases monotonically to the new equilibrium — a provably correct and
-efficient continuation method.
-
----
-
-## 6. Applications
-
-- **Tunable iterative components.** Any pipeline that places an output by solving
-  $x = f_a(x)$ gets a monotone, injective tuning knob with a certified response.
-- **Verified numerics.** The two-sided enclosure (Theorem 4) yields
-  interval-arithmetic-ready certificates for the equilibrium.
-- **Continuation / homotopy.** The warm-start sweep (§5.3) is justified rigorously
-  by the sub-solution principle, avoiding wasted iterations as parameters vary.
-- **Stability-aware design.** Knowing the equilibrium moves monotonically with
-  $a$ lets a designer choose $a$ to hit a target output without risk of jumping
-  basins, provided the contraction condition $|f_a'| \le \rho < 1$ is maintained.
-
----
-
-## 7. Discussion
-
-The comparative-statics law is striking for what it does *not* require. There is
-no differentiation of the fixed point with respect to the parameter, no implicit
-function theorem, no local linearization. The argument is purely order-theoretic:
-a fixed point of the smaller operator is a sub-solution of the larger one
-(because a larger gain multiplies a positive log term to a larger value), and in
-a monotone contraction every sub-solution lies below the limit of its own
-increasing orbit, which is the larger operator's unique fixed point. This is
-robust, elementary, and exactly as strong as it should be — it is false without
-monotonicity ($b > 0$) and false without positivity of the equilibrium, both of
-which the proof genuinely consumes.
-
-The result also clarifies the qualitative *type* of the EML control. It is not
-merely that the equilibrium depends continuously on $a$; it depends
-*monotonically* and *strictly*, hence *injectively*. For an engineered component
-this is the difference between a usable dial and an unpredictable one.
-
----
-
-## 8. Future directions
-
-The qualitative monotonicity established here invites several quantitative and
-structural refinements (stated in full in the package's future-directions
-record):
-
-1. **Joint strict monotonicity in $(a, c)$.** Increasing the shift $c$ also
-   strictly raises the equilibrium by the same sub-solution principle, so the map
-   $(a, c) \mapsto x^\*(a, c)$ should be jointly strictly monotone and the induced
-   order embedding injective — the two effects never cancel.
-2. **Lipschitz sensitivity.** On a compact admissible parameter box,
-   $|x^\*(a_2, c_2) - x^\*(a_1, c_1)| \le L_a|a_2 - a_1| + L_c|c_2 - c_1|$ with
-   explicit $L_a, L_c$ obtained from the geometric series $\sum \rho^{n}$ that the
-   contraction already supplies; informally $L = (\partial f/\partial \text{param})/(1-\rho)$.
-3. **Differentiability and a verified power series.** Since $1 - f'(x^\*) \ge
-   1 - \rho > 0$, the linearization is uniformly invertible and $x^\*(a)$ should be
-   real-analytic with $dx^\*/da = x^\*/(1 - e^{a} b/(b x^\* + c))$ and recursively
-   computable Taylor coefficients.
-4. **Failure past the contraction threshold.** Outside the regime
-   $|f'(x^\*)| < 1$ the comparative-statics law can fail: a repelling fixed point
-   may not move monotonically with $a$, because the sub-solution argument requires
-   the contraction (and monotonicity) structure to convert sub-solutions into
-   lower bounds for the limit.
-
----
-
-## 9. Conclusion
-
-The exp-log operator $f_a(x) = e^{a}\log(b x + c)$ is, under the standard
-contraction conditions, a model dynamical citizen: it has a unique equilibrium,
-its iteration converges geometrically with a certified a priori bound, and (for
-$b > 0$) it admits a two-sided self-validating enclosure. To this we have added
-the parametric law that makes it genuinely tunable — the equilibrium is a strictly
-increasing, hence injective, function of the scaling parameter $a$, proved by an
-elementary sub-solution / monotone-iteration argument whose hypotheses (monotone
-$b > 0$, positive equilibrium) are exactly load-bearing. The scaling dial of an
-EML scheme is therefore an honest control: turn it up and the equilibrium rises,
-predictably and without basin-hopping.
+1. **Strict monotonicity and injectivity** of $f$ on the invariant interval for $b > 0$.
+2. **Persistence of non-degeneracy**: a start $x_0 \ne x^\*$ produces iterates $x_n \ne x^\*$
+   for all $n$.
+3. **The sharp asymptotic rate**: the consecutive-error ratio tends to $|f'(x^\*)|$.
+4. **Comparison and contraction**: $|f'(x^\*)| \le \rho < 1$, so the local rate is a genuine
+   contraction ratio never worse than the catalog's interval bound.
+
+All statements have been formally verified; this paper presents the mathematics and proof
+sketches.
+
+## 2. Definitions and standing data
+
+**Definition 2.1 (EML operator).** For parameters $a, b, c \in \mathbb{R}$ define
+$$f = f_{a,b,c} : x \mapsto e^{a}\log(b x + c),$$
+defined wherever $b x + c > 0$.
+
+**Definition 2.2 (Picard iteration).** For an initial point $x_0$, the *iteration sequence*
+is
+$$x_0,\quad x_{n+1} = f(x_n)\ (n \ge 0).$$
+
+**Definition 2.3 (EML contraction data).** A tuple $D = (a, b, c, \mathrm{lo}, \mathrm{hi}, \rho)$
+is *contraction data* for $f$ if it satisfies:
+- $\mathrm{lo} < \mathrm{hi}$ (a nondegenerate interval $I = [\mathrm{lo}, \mathrm{hi}]$);
+- $0 \le \rho < 1$ (a contraction ratio);
+- *positivity of the log argument*: $b x + c > 0$ for all $x \in I$;
+- *invariance*: $f(I) \subseteq I$;
+- *derivative bound*: $\left|\dfrac{e^{a} b}{b x + c}\right| \le \rho$ for all $x \in I$.
+
+Such data is inhabited (concrete instances exist, e.g. $a$ small, $b = 1$, $c = 2$, on a
+bracket around the fixed point).
+
+**Lemma 2.4 (Derivative formula).** Wherever $b x + c > 0$,
+$$f'(x) = \frac{e^{a} b}{b x + c}.$$
+*Proof.* The map $x \mapsto bx + c$ is affine with derivative $b$; composing with $\log$
+(whose derivative is the reciprocal) gives, by the chain rule,
+$\frac{d}{dx}\log(bx+c) = \frac{b}{bx+c}$; the constant factor $e^a$ scales through. The
+positivity hypothesis $bx+c>0$ is precisely what places the argument in the domain of
+$\log$ where this derivative is valid. $\square$
+
+**Remark 2.4a (Qualitative shape of $f'$).** For $b > 0$ the derivative
+$f'(x) = e^a b/(bx+c)$ is positive and strictly decreasing in $x$ on $I$. Positivity makes
+$f$ increasing (Section 4); monotone decrease makes the supremum of $|f'|$ over $I$ occur at
+the left endpoint $\mathrm{lo}$, so the interval constant $\rho$ can be taken as
+$f'(\mathrm{lo}) = e^a b/(b\,\mathrm{lo}+c)$, which strictly exceeds the interior value
+$f'(x^\*)$. This is the structural source of the gap between the a priori and sharp rates.
+
+**Lemma 2.5 (Fixed-point equation).** If $f(x^\*) = x^\*$ then $x^\* = e^{a}\log(b x^\* + c)$.
+*Proof.* Unfold the definition of $f$. $\square$
+
+## 3. The catalog baseline: contraction and a priori rate
+
+We recall the established results on which the sharp rate builds.
+
+**Theorem 3.1 (Lipschitz/contraction bound).** If $|f'| \le \rho$ on the convex interval
+$I$ (with the log argument positive there), then for all $x, y \in I$,
+$$|f(x) - f(y)| \le \rho\,|x - y|.$$
+*Proof sketch.* The mean value inequality on a convex set: a $C^1$ map whose derivative is
+bounded in norm by $\rho$ throughout $I$ is $\rho$-Lipschitz on $I$. Formally this is the
+standard `norm_image_sub_le_of_norm_hasDerivWithin_le` estimate. $\square$
+
+**Theorem 3.2 (Uniqueness).** Under Definition 2.3, $f$ has at most one fixed point in $I$.
+*Proof sketch.* If $x_1, x_2$ are fixed points, Theorem 3.1 gives
+$|x_1 - x_2| = |f(x_1) - f(x_2)| \le \rho |x_1 - x_2|$ with $\rho < 1$, forcing
+$|x_1 - x_2| = 0$. $\square$
+
+**Theorem 3.3 (Convergence).** For $x_0 \in I$ the iteration $(x_n)$ stays in $I$, is
+Cauchy, and converges to a limit $x^\* \in I$ with $f(x^\*) = x^\*$.
+*Proof sketch.* Invariance keeps the iterates in $I$. The per-step bound
+$|x_{n+1} - x_n| \le \rho^n |x_1 - x_0|$ (induction via Theorem 3.1) makes the sequence
+Cauchy by comparison with a geometric series; completeness of $\mathbb{R}$ gives a limit,
+and continuity of $f$ promotes the limit to a fixed point; closedness of $I$ keeps it in
+$I$. $\square$
+
+**Theorem 3.4 (A priori geometric error bound).** If $(x_n) \to x^\*$ then for all $n$,
+$$|x_n - x^\*| \le |x_1 - x_0|\,\frac{\rho^n}{1 - \rho}.$$
+*Proof sketch.* The per-step contraction $\mathrm{dist}(x_n, x_{n+1}) \le |x_1 - x_0|\rho^n$
+feeds the standard geometric-tail estimate `dist_le_of_le_geometric_of_tendsto`. $\square$
+
+The constant in Theorem 3.4 is the *interval-wide* $\rho$. The remainder of the paper shows
+the true asymptotic rate is smaller and pinpoints it.
+
+### 3.1 Existence of contraction data
+
+The hypotheses bundled in Definition 2.3 are not vacuous, and it is worth recording how one
+constructs them for a given EML operator, since the whole theory is empty if no contraction
+data exists. The recipe is a standard bracketing argument.
+
+Fix $a > 0$, $b = 1$, $c > 0$. Consider $g(x) = f(x) - x = e^a\log(x+c) - x$. One seeks an
+interval $I = [\mathrm{lo}, \mathrm{hi}]$ with $x + c > 0$, $f(I) \subseteq I$, and a
+bound $\rho < 1$ on $|f'|$ over $I$. Three observations make this routine:
+
+1. *Positivity.* Choosing $\mathrm{lo} > -c$ keeps $x + c > 0$, so $\log$ and $f'$ are
+   defined throughout $I$.
+2. *Invariance.* Since $f$ is increasing (Theorem 4.1), $f(I) \subseteq I$ reduces to the
+   two endpoint conditions $f(\mathrm{lo}) \ge \mathrm{lo}$ and $f(\mathrm{hi}) \le
+   \mathrm{hi}$, i.e. a sign change of $g$ bracketing a fixed point. The intermediate value
+   theorem then locates $x^\* \in I$.
+3. *Contraction.* The derivative bound $\rho = f'(\mathrm{lo}) = e^a/(\mathrm{lo}+c) < 1$
+   holds as soon as $\mathrm{lo} + c > e^a$, which is arrangeable once $c$ is not too small
+   relative to $e^a$. The admissible-parameter dichotomy (roughly $c \ge e^a(1-a)$) records
+   exactly when such an interval exists.
+
+A concrete instance is $a = 0.2$, $b = 1$, $c = 2$, $I = [1, 3]$: there $f(1) = e^{0.2}\log 3
+\approx 1.34 \in [1,3]$, $f(3) = e^{0.2}\log 5 \approx 1.97 \in [1,3]$, and
+$\rho = e^{0.2}/3 \approx 0.407 < 1$. This is the running example of Section 8.
+
+## 4. Strict monotonicity and injectivity
+
+**Theorem 4.1 (Strict monotonicity for $b>0$).** If $b > 0$ and $b x + c > 0$ on
+$I = [\mathrm{lo}, \mathrm{hi}]$, then $f$ is strictly increasing on $I$.
+
+*Proof sketch.* For $x < y$ in $I$ we have $0 < b x + c < b y + c$, so
+$\log(bx+c) < \log(by+c)$ by strict monotonicity of $\log$ on $(0,\infty)$; multiplying by
+the positive constant $e^a$ preserves the strict inequality. (Equivalently, the derivative
+$f'(x) = e^a b/(bx+c)$ is strictly positive on $I$.) $\square$
+*(Lean: `EMLIterOp.strictMonoOn_of_b_pos`.)*
+
+**Corollary 4.2 (Injectivity).** Under the hypotheses of Theorem 4.1, $f$ is injective on
+$I$.
+*Proof.* A strictly monotone function is injective. $\square$
+*(Lean: `EMLIterOp.injOn_of_b_pos`.)*
+
+The sign condition $b > 0$ is exactly what makes the asymptotic-rate argument work: it
+guarantees both that the local rate $|f'(x^\*)|$ is positive (a non-vacuous limit) and that
+the iterates never collide with $x^\*$ (Section 5).
+
+## 5. Persistence of non-degeneracy
+
+**Theorem 5.1 (Iterates avoid the fixed point).** Let $D$ be contraction data with $b > 0$.
+Let $x_0 \in I$, let $x^\* \in I$ be the fixed point, and suppose $x_0 \ne x^\*$. Then for
+all $n$,
+$$x_n \ne x^\*.$$
+
+*Proof sketch.* Induction on $n$. The base case is the hypothesis $x_0 \ne x^\*$. For the
+step, suppose $x_n \ne x^\*$ but, for contradiction, $x_{n+1} = x^\*$. Since $x^\*$ is a
+fixed point, $f(x^\*) = x^\* = x_{n+1} = f(x_n)$. Both $x_n$ and $x^\*$ lie in $I$ (the
+iterates by invariance), so injectivity (Corollary 4.2) gives $x_n = x^\*$, contradicting
+the inductive hypothesis. $\square$
+*(Lean: `EMLIterOp.iterSeq_ne_fixedPoint`.)*
+
+This is the only "non-soft" input the sharp rate needs beyond the catalog convergence and
+the analytic derivative: it keeps every difference quotient $\frac{x_{n+1} - x^\*}{x_n - x^\*}$
+genuinely defined (nonzero denominator).
+
+## 6. The sharp asymptotic convergence rate
+
+**Theorem 6.1 (Sharp local rate).** Let $D$ be contraction data with $b > 0$. Let
+$x_0 \in I$ with $x_0 \ne x^\*$, let $x^\* \in I$ be the fixed point, and suppose
+$(x_n) \to x^\*$. Then
+$$\frac{|x_{n+1} - x^\*|}{|x_n - x^\*|} \;\xrightarrow[n\to\infty]{}\; |f'(x^\*)| = \left|\frac{e^{a} b}{b x^\* + c}\right|.$$
+
+*Proof sketch.* The decisive tool is the equivalence
+$$\mathrm{HasDerivAt}\,f\,L\,x^\* \iff \text{slope}_{x^\*} f \to L \ \text{along}\ \mathcal{N}^{\times}(x^\*),$$
+where $\text{slope}_{x^\*} f(y) = \dfrac{f(y) - f(x^\*)}{y - x^\*}$ and
+$\mathcal{N}^{\times}(x^\*)$ is the *punctured* neighborhood filter at $x^\*$ (the
+"`hasDerivAt_iff_tendsto_slope`" characterization). We assemble three facts.
+
+1. *Analytic derivative.* By Lemma 2.4, $f$ has derivative $L = e^a b/(bx^\*+c)$ at $x^\*$
+   (the log argument is positive there). Hence $\text{slope}_{x^\*} f \to L$ along
+   $\mathcal{N}^{\times}(x^\*)$.
+
+2. *The sequence enters the punctured neighborhood.* The Picard sequence converges to
+   $x^\*$ (hypothesis), so $x_n - x^\* \to 0$; and by Theorem 5.1 each $x_n \ne x^\*$, i.e.
+   $x_n - x^\* \ne 0$. Therefore the map $n \mapsto x_n - x^\*$ tends to $0$ *within*
+   $\{0\}^{c}$, i.e. along $\mathcal{N}^{\times}(0)$, which is precisely the condition needed
+   to compose with the slope limit at $x^\*$.
+
+3. *Compose and identify the quotient.* Composing the slope limit (1) with the sequence (2)
+   yields
+   $$\text{slope}_{x^\*} f(x_n) = \frac{f(x_n) - f(x^\*)}{x_n - x^\*} = \frac{x_{n+1} - x^\*}{x_n - x^\*} \longrightarrow L,$$
+   using $f(x_n) = x_{n+1}$ and $f(x^\*) = x^\*$. Taking absolute values
+   (continuity of $|\cdot|$) gives the stated ratio limit with $|L| = |f'(x^\*)|$. $\square$
+*(Lean: `EMLIterOp.iterSeq_sharp_rate`.)*
+
+The proof is a clean composition of soft metric convergence, the analytic value of $f'$ at
+$x^\*$, and injectivity — none individually new, but together yielding the conjecture's
+literal rate, which the interval-constant a priori bound does not capture.
+
+**Remark 6.2 (Why $x_0 \ne x^\*$ is required).** If $x_0 = x^\*$ the sequence is constant,
+every error is $0$, and the ratio is the degenerate $0/0$; the limit $|f'(x^\*)|$ need not
+hold. Non-degeneracy is a genuine, natural hypothesis, not a technical cheat.
+
+## 7. The local rate is a genuine contraction ratio
+
+**Theorem 7.1 (Comparison with the interval rate).** For every $x^\* \in I$,
+$$|f'(x^\*)| = \left|\frac{e^{a} b}{b x^\* + c}\right| \le \rho.$$
+*Proof.* This is exactly the derivative bound in Definition 2.3 applied at $x^\*$. $\square$
+*(Lean: `EMLIterOp.sharp_rate_le_interval_rate`.)*
+
+**Corollary 7.2 (Strict contraction at the fixed point).** $|f'(x^\*)| < 1$.
+*Proof.* Combine Theorem 7.1 with $\rho < 1$. $\square$
+*(Lean: `EMLIterOp.sharp_rate_lt_one`.)*
+
+Thus the asymptotic ratio is positive (for $b>0$), bounded above by the catalog's interval
+constant, and strictly below $1$: the iteration is genuinely contractive *at the rate we
+computed*, and that rate is at least as good as the a priori promise.
+
+**Proposition 7.3 (Eventual per-step contraction at the local rate).** For every
+$r > |f'(x^\*)|$ there is an index $N$ such that for all $n \ge N$,
+$$|x_{n+1} - x^\*| \le r\,|x_n - x^\*|.$$
+*Proof sketch.* Since the consecutive-error ratio tends to $|f'(x^\*)| < r$ (Theorem 6.1),
+the ratio is eventually below $r$; rearranging gives the per-step bound. This is the precise
+$O(r^n)$ content for every $r > |f'(x^\*)|$: no rate below the local derivative works
+asymptotically, and every rate above it does. $\square$
+*(Lean: `EMLIterOp.iterSeq_eventually_step_contraction`.)*
+
+## 8. Numerical demonstration
+
+Take $a = 0.2$, $b = 1$, $c = 2$, so $f(x) = e^{0.2}\log(x+2)$, with invariant interval
+$I = [1,3]$. The fixed point is $x^\* = 1.546116\ldots$; the interval constant (the max of
+$|f'|$ on $I$, attained at the left endpoint) is $\rho = 0.407134\ldots$; the local rate is
+$|f'(x^\*)| = 0.344434\ldots$.
+
+**A priori bound (Theorem 3.4).** Starting at $x_0 = 3$, every measured error stays under
+the predicted envelope $|x_1 - x_0|\rho^n/(1-\rho)$, e.g. at $n=6$ the error is
+$1.87\times 10^{-3}$ against a bound $7.95\times 10^{-3}$.
+
+**Sharp rate (Theorem 6.1).** The consecutive-error ratios climb monotonically toward the
+local derivative:
+$$0.2886,\ 0.3255,\ 0.3380,\ 0.3422,\ 0.34367,\ 0.34437,\ \dots \to 0.344434 = |f'(x^\*)|,$$
+visibly distinct from and below the interval constant $\rho = 0.407$.
+
+**Uniqueness (Theorem 3.2).** Starts $x_0 \in \{1, 1.5, 2, 2.5, 3\}$ all converge to the
+same $x^\* = 1.546116378228\ldots$
+
+**Rate monotonicity in $c$ (Section 9).** Increasing the shift strictly decreases the local
+rate: $c = 1.5, 2, 3, 5, 10$ give rates $0.448, 0.344, 0.247, 0.164, 0.093$.
+
+## 9. Consequences and discussion
+
+**Rate monotonicity in the shift $c$.** Increasing $c$ raises both the fixed point $x^\*$
+and the denominator $b x^\* + c$, shrinking $|f'(x^\*)| = e^a b/(bx^\*+c)$. The local rate —
+now the *certified* asymptotic speed, not merely a derivative bound — is therefore strictly
+decreasing in $c$: larger shift, faster convergence. The numerics in Section 8 confirm this.
+
+**Smooth dependence of $x^\*$ on $a$.** Writing $g(a, x) = f(x) - x$, the partial derivative
+$\partial_x g = f'(x) - 1$ is nonzero at the fixed point because $|f'(x^\*)| < 1$
+(Corollary 7.2). The implicit function theorem then gives $x^\*(a)$ as a $C^1$ function with
+$$\frac{dx^\*}{da} = \frac{x^\*}{1 - f'(x^\*)},$$
+the first Taylor coefficient of the "power series in $a$." At $a=0$ ($b=1$, $c=2$):
+$x^\*(0) = 1.146193\ldots$ and $dx^\*/da = 1.6803\ldots$, matching the numerical fit.
+
+**Acceleration.** Because the error has a clean leading term $x_n - x^\* = A\rho^n(1+o(1))$
+with $\rho = f'(x^\*)$ — a refinement of the ratio limit — Aitken $\Delta^2$ / Steffensen
+extrapolation should annihilate the leading geometric term and converge with ratio
+$o(|f'(x^\*)|^n)$ whenever $f''(x^\*) \ne 0$. This makes the folklore acceleration gain a
+provable statement.
+
+**Why EML iteration is well-behaved.** Unlike generic activation functions, the EML map's
+feedback dynamics are tame: a unique attracting fixed point, a certified geometric a priori
+bound, and an *exact* asymptotic rate equal to the local slope. This is what makes
+EML-based iterative algorithms candidates for certified convergence.
+
+**On the two-phase picture of convergence.** The combination of Theorems 3.4 and 6.1 gives
+a complete two-phase description of the dynamics. In the *transient* phase the iterate may
+be anywhere in $I$ and the only guarantee is the worst-case geometric envelope
+$|x_1-x_0|\rho^n/(1-\rho)$ governed by the interval constant. As the iterate enters a small
+neighborhood of $x^\*$, the *asymptotic* phase takes over and the per-step contraction
+factor relaxes to the local value $|f'(x^\*)| < \rho$. Practically, this means an iteration
+tuned by its a priori bound is conservative: it overestimates the iteration count, and the
+excess is precisely the ratio $\log\rho / \log|f'(x^\*)|$ of the two rates in the limit. For
+the running example $\rho = 0.407$ and $|f'(x^\*)| = 0.344$ differ enough that the true
+asymptotic digit-gain per step ($-\log_{10} 0.344 \approx 0.463$) exceeds the a priori
+guarantee ($-\log_{10} 0.407 \approx 0.390$) by about $19\%$.
+
+**Relation to the Banach principle.** The catalog results (Theorems 3.1–3.4) are the EML
+specialization of the Banach fixed-point theorem and its standard error estimate. The novel
+content of this paper, Theorems 6.1 and 7.1, is *local* in nature and lies outside the
+classical Banach package, which only ever speaks of the uniform Lipschitz constant. The
+sharp rate is the bridge between the global Lipschitz viewpoint and the linearized
+(derivative-at-fixed-point) viewpoint familiar from the theory of one-dimensional discrete
+dynamical systems, where $|f'(x^\*)|$ is the multiplier classifying $x^\*$ as attracting
+($<1$), repelling ($>1$), or neutral ($=1$).
+
+## 10. Future directions
+
+1. **Sharp lower bound.** Conjecture: for $x_0 \ne x^\*$ there is no rate $r < |f'(x^\*)|$
+   and constant $C$ with $|x_n - x^\*| \le C r^n$ for all $n$; equivalently
+   $\liminf |x_n - x^\*|^{1/n} = |f'(x^\*)|$. Paired with Proposition 7.3 this upgrades
+   "$O(\rho^n)$" to "$\Theta(\rho^n)$."
+2. **Aitken/Steffensen acceleration** provably beating the linear rate when $f''(x^\*) \ne 0$.
+3. **First-order series of $x^\*$ in $a$** on the admissible region, via the implicit
+   function theorem using the nonvanishing Jacobian $1 - f'(x^\*) > 0$.
+4. **Rate monotonicity in $c$** as a theorem about certified dynamics.
+5. **Basin of attraction** equal to the entire natural domain.
+
+## 11. Conclusion
+
+The EML iteration $x_{n+1} = e^a\log(b x_n + c)$ converges Q-linearly with asymptotic ratio
+*exactly* the local derivative magnitude $|f'(x^\*)| = |e^a b/(b x^\* + c)|$, a value
+strictly below the interval-wide contraction constant used in the classical a priori bound.
+The result follows by composing soft metric convergence, the analytic derivative at the
+fixed point, and injectivity (from $b>0$). It sharpens "the EML iteration converges at rate
+$O(\rho^n)$" into the precise dynamical statement that its per-step error contraction tends
+to the local slope at its own center — turning a qualitative convergence guarantee into a
+quantitative, tunable rate.

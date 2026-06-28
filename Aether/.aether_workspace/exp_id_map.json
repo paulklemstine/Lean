@@ -682,5 +682,6 @@
   "ce8c041d": "eml_transseries_asymptotic_expansions_beyond_power.json",
   "bac3bfcc": "statistical_mechanics_ising_model_phase_transition.json",
   "00e5c711": "wall_menger_separator_optimality_conjecture.json",
-  "6ac1dc4e": "rainbow_triangle_density_lower_bound_conjecture.json"
+  "6ac1dc4e": "rainbow_triangle_density_lower_bound_conjecture.json",
+  "e5dd524d": "eml_fixed_point_theorem_exp_log_iteration_converge.json"
 }
