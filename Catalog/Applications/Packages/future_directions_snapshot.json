@@ -2693,7 +2693,7 @@
     "catalog_references": [
       "DrmotaKauersSpiegelhofer2016"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3fa5004",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->∞} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domain_bridges": [
       "math.CO",
@@ -2708,7 +2708,7 @@
     "proof_strategy": "exact deconvolution replaced by finite stopped random-walk law and first-exit median analysis",
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -11189,7 +11189,7 @@
     "catalog_references": [
       "arXiv:2405.XXXXX"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e73946ae",
     "description": "Conjecture that the sum of all odd parts in all partitions of 5n+1 without repeated odd parts is divisible by 5, i.e., SODO(5n+1) ≡ 0 (mod 5) for all n ∈ ℕ.",
     "domain_bridges": [
       "Combinatorics",
@@ -11205,7 +11205,7 @@
     "proof_strategy": "Derive the generating function for SODO(n) using theta function identities, reduce it modulo 5, and show that the coefficients for exponents congruent to 1 mod 5 vanish.",
     "research_mode": "team",
     "source_exp_id": "2606.14680v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-28T00:49:53.249580+00:00",
     "title": "Congruence for the sum of odd parts in partitions without repeated odd parts modulo 5"
   },
@@ -11657,7 +11657,7 @@
       "Gromov, 1995",
       "Laurention et al., 2018"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d24ca82",
     "description": "This paper explores the construction of nilpotent Lie algebras with arbitrarily high nilpotency using structured ordered sets and investigates their implications for algebraic Ricci solitons.",
     "domain_bridges": [
       "algebraic geometry",
@@ -11673,7 +11673,7 @@
     "proof_strategy": "Constructive adaptation of existing existence techniques with tailored order-preserving constructions",
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T11:14:03.330176+00:00",
     "title": "Nilpotent Lie algebras obtained by ordered sets and Ricci solitons"
   },
@@ -11710,7 +11710,7 @@
       "ArXiv: math.NT",
       "ArXiv: hep-th"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca01957a",
     "description": "Formalize the regularization of the sum of all prime numbers by defining a specific analytic continuation of the prime zeta function P(s) = ∑ p^(-s) into a domain beyond its natural boundary (Re(s) = 0), and prove that the regularized sum (the value of the continuation at s = -1) converges to a specific constant value.",
     "domain_bridges": [
       "Complex Analysis",
@@ -11726,7 +11726,7 @@
     "proof_strategy": "1. Define the prime zeta function P(s) as a Dirichlet series. 2. Implement the singular expansion of P(s) near the imaginary axis using the relationship between P(s) and the Riemann zeta function ζ(s) via the Mobius inversion formula: P(s) = ∑_{n=1}^∞ μ(n)/n * log ζ(ns). 3. Use the properties of the logarithm of the Riemann zeta function near its zeros and poles to construct a regularized limit or a specific path-dependent continuation. 4. Evaluate the resulting expression at s = -1.",
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T12:14:49.178600+00:00",
     "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
   },
@@ -12247,7 +12247,7 @@
     "catalog_references": [
       "arXiv:2506.18294"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49c290ff",
     "description": "This paper presents an analytic approach to characterize permutations with restricted descent sets using generating functions and modular arithmetic.",
     "domain_bridges": [
       "combinatorics",
@@ -12262,7 +12262,7 @@
     "proof_strategy": "Functional equation via residue-class decomposition",
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T23:43:29.466890+00:00",
     "title": "Analytic derivation of the generating function for $k$-alternating permutations"
   },
@@ -13312,7 +13312,7 @@
       "Theorem 3.61 in sharp",
       "Corollary 2.4 in Huckaba"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c193d06",
     "description": "Conjecture that for any commutative ring R with 1, if the inclusion graph of annihilators Γ'(R) is connected and contains a cycle, then its girth is exactly 6.",
     "domain_bridges": [
       "graph theory",
@@ -13329,7 +13329,7 @@
     "proof_strategy": "Analyze minimal prime ideals and their annihilator containments to bound possible cycles, use the existing diameter ≤4 result, and provide explicit rings where the bound is attained.",
     "research_mode": "team",
     "source_exp_id": "2606.15498v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T23:31:30.244011+00:00",
     "title": "Exactgirth of the inclusion graph of annihilators in connected commutative rings"
   },
@@ -14281,7 +14281,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "434e8e33",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -14294,7 +14294,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

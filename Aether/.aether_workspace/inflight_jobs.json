@@ -560,7 +560,7 @@
     "thread_id": "th_6c038b64",
     "cycle_index": 0
   },
-  "552f4622": {
+  "0ee638f9-d59d-4ee4-aa7c-5cd70267f3ce": {
     "job_id": "552f4622",
     "cycle_n": 173,
     "concept": {
@@ -581,9 +581,9 @@
     },
     "prompt": "                # MATHEMATICAL RESEARCH MISSION: Torsionness of \u03a3\u2011ramified Iwasawa modules over a \u2124\u209a\u2011extension\n\n                ## Objective / Task Brief:\n                Create a team to research this mathematical direction. Brainstorm new hypotheses, run experiments, analyze results, take notes, iterate. Combine all the researchers' findings into clean, verified Lean 4 files, and then brainstorm a list of the next research directions.\n\n                ## Deliverables & Acceptance Criteria:\n                1. **Lean 4 Proofs**: Fully verified, compiling Lean 4 files under the appropriate Catalog directory. Main theorems must be fully proved (0 sorries).\n                2. **Lab Notes**: Include inline comment blocks (`-- !-- Lab Notes -- !--`) in the Lean files detailing your hypotheses, experimental outcomes, insights, and failure analysis.\n                3. **FUTURE_DIRECTIONS.md**: Outlining 3-5 bold, testable mathematical conjectures for follow-up cycles based on your combined findings.\n\n                ## Constraints (Strictly Enforced):\n                - **NO prose or documentation articles**: Do NOT output ARTICLE.md, RESEARCH_PAPER.md, python algorithms, HTML widgets, or PACKAGE.json. Focus 100% of your compute on standard Lean 4 code and proofs.\n\n                ## Context & Resources:\n                - Domain: Applications\n                - Existing Catalog References: MathComp/NumberTheory/NumberFields, MathComp/Algebra/PowerSeries, MathComp/GroupTheory/Profinite\n\n\n### Recent Discoveries in Catalog\nNo previous research cycles completed yet. This is a cold start \u2014 prioritize sorry_fill on the priority targets (CarmichaelComposite, Fib_gcd_identity) to close known open problems, or target cross-domain bridge theorems for novelty.\n\n\n                ## RESEARCH CORE METHODOLOGY:\n1. **Catalog Leverage**: Examine existing catalog theorems carefully. Your theorems should extend, generalize, or connect catalog results.\n2. **Pure Math Focus**: Focus 100% of your compute on standard Lean 4 definitions, lemmas, and theorems. Prove non-trivial math that represents genuine progress.\n3. **Falsifiable Conjectures**: Formulate precise conjectures in FUTURE_DIRECTIONS.md to guide future research cycles.\n\n### Perpetual Scientific Iteration (do not stop at first synthesis)\nWhen the research team comes together with results, do not stop. Treat the synthesized findings as the next problem statement and immediately run the full scientific-method loop again: hypothesize, experiment, review, synthesize, critique. Repeat this cycle continuously within the available context window, refining, deepening, and cross-checking until forced to emit output. Use Aristotle to its fullest.\n\n\n\n### Computational Evidence Stage (Recommended)\n\nBefore writing the formal Lean 4 proof, you are strongly encouraged to produce\ncomputational evidence for the claim. Create a file named `ComputationalEvidence.md`\nin the project directory with:\n\n1. **Small-case calculations** \u2014 compute the first several instances of the object/conjecture.\n2. **OEIS search results** \u2014 if a sequence appears, note its OEIS ID and first terms.\n3. **Counterexample hunt** \u2014 test the universal claim on a representative sample; report any counterexample found.\n4. **Plots or tables** \u2014 include any relevant visual/numerical data.\n\nIf you choose to skip this stage, you MUST explicitly justify why computational\nevidence is unnecessary or infeasible in a `SkipEvidenceJustification.md` file.\n\nDo not let the evidence stage dominate the project; keep it concise and directly\nrelevant to the theorem you intend to prove.\n",
     "project_dir": "/home/raver1975/lean/Aether/.aether_workspace/projects/552f4622",
-    "project_id": null,
-    "status": "preparing",
-    "dispatch_time": 0.0,
+    "project_id": "0ee638f9-d59d-4ee4-aa7c-5cd70267f3ce",
+    "status": "dispatched",
+    "dispatch_time": 1782607843.9949212,
     "complete_time": 0.0,
     "result_lean": null,
     "result_demo": null,

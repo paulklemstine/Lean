@@ -1817,7 +1817,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3fa5004",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domains": [
       "Bridges"
@@ -1826,7 +1826,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -6373,7 +6373,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Recurrence relation for extended Eulerian numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e73946ae",
     "description": "Conjecture that the sum of all odd parts in all partitions of 5n+1 without repeated odd parts is divisible by 5, i.e., SODO(5n+1) \u2261 0 (mod 5) for all n \u2208 \u2115.",
     "domains": [
       "Pythagorean",
@@ -6383,7 +6383,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14680v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-28T00:49:53.249580+00:00",
     "title": "Congruence for the sum of odd parts in partitions without repeated odd parts modulo 5"
   },
@@ -6637,7 +6637,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vector\u2011Space Erd\u0151s Matching Conjecture (full case)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d24ca82",
     "description": "This paper explores the construction of nilpotent Lie algebras with arbitrarily high nilpotency using structured ordered sets and investigates their implications for algebraic Ricci solitons.",
     "domains": [
       "Algebra"
@@ -6646,7 +6646,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T11:14:03.330176+00:00",
     "title": "Nilpotent Lie algebras obtained by ordered sets and Ricci solitons"
   },
@@ -6665,7 +6665,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-similarity of Vishik-equivalent semi-singular quadratic forms in characteristic 2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca01957a",
     "description": "Formalize the regularization of the sum of all prime numbers by defining a specific analytic continuation of the prime zeta function P(s) = \u2211 p^(-s) into a domain beyond its natural boundary (Re(s) = 0), and prove that the regularized sum (the value of the continuation at s = -1) converges to a specific constant value.",
     "domains": [
       "Pythagorean"
@@ -6674,7 +6674,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T12:14:49.178600+00:00",
     "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
   },
@@ -6956,7 +6956,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Endpoint Restriction Conjecture for P\u2083 Implies \u039b(3) Structure of Lattice Points"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49c290ff",
     "description": "This paper presents an analytic approach to characterize permutations with restricted descent sets using generating functions and modular arithmetic.",
     "domains": [
       "Pythagorean"
@@ -6965,7 +6965,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T23:43:29.466890+00:00",
     "title": "Analytic derivation of the generating function for $k$-alternating permutations"
   },
@@ -7014,7 +7014,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Projective Dimension of Edge Ideals of Co\u2011Chordal Graphs via Minimal Separators"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "552f4622",
     "description": "Let k be a number field, p a prime, \u03a3 a (possibly empty) set of p\u2011adic primes of k, and let N\u221e/k be the unique \u03a3\u2011ramified \u2124\u209a\u2011extension (assuming it exists). Denote by X_\u03a3(N\u221e) = Gal(M_\u03a3(N\u221e)/N\u221e) the \u03a3\u2011ramified unramified Iwasawa module, which is a module over the Iwasawa algebra \u039b = \u2124\u209a\u27e6Gal(N\u221e/k)\u27e7 \u2245 \u2124\u209a\u27e6T\u27e7. The conjecture asserts that X_\u03a3(N\u221e) is a torsion \u039b\u2011module; equivalently, \u039b\u2011rank\u202fX_\u03a3(N\u221e) = 0. This statement is a precise, falsifiable generalisation of Greenberg\u2019s conjecture to arbitrary \u03a3\u2011ramified \u2124\u209a\u2011extensions and is amenable to formalisation in Lean\u20114 using existing libraries for number fields, Galois groups, profinite groups and Iwasawa algebras.",
     "domains": [
       "Algebra",
@@ -7024,7 +7024,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22324v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T02:26:35.671962+00:00",
     "title": "Torsionness of \u03a3\u2011ramified Iwasawa modules over a \u2124\u209a\u2011extension"
   },
@@ -7550,7 +7550,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Archimedean balanced metrics and their implications for totally degenerate abelian geometries"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c193d06",
     "description": "Conjecture that for any commutative ring R with 1, if the inclusion graph of annihilators \u0393'(R) is connected and contains a cycle, then its girth is exactly 6.",
     "domains": [
       "Pythagorean",
@@ -7560,7 +7560,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15498v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T23:31:30.244011+00:00",
     "title": "Exactgirth of the inclusion graph of annihilators in connected commutative rings"
   },
@@ -8251,7 +8251,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "434e8e33",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8261,7 +8261,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
