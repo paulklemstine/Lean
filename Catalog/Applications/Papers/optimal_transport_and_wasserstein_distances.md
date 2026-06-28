@@ -1,54 +1,51 @@
-# Computational Evidence — 1D Discrete Wasserstein (`Wasserstein1D.lean`)
+# Computational Evidence — Finite Optimal Transport & Wasserstein
 
-All claims below were sanity-checked with small explicit distributions on the
-integer grid `{0,…,n-1}` before formalization. The CDF form
-`W₁(p,q) = ∑_{k<n} |F_p(k) - F_q(k)|` is used throughout.
+This note records the small-case checks performed before formalizing the theorems
+in `Kantorovich.lean`, `Wasserstein.lean`, and `Brenier.lean`.
 
-## 1. Small-case calculations
+## 1. Transportation polytope is nonempty and compact
 
-Let `n = 3`.
+For `a = (1/2, 1/2)`, `b = (1/3, 2/3)` on `Fin 2`, the product coupling is
 
-* `p = (1,0,0)` (Dirac at 0), `q = (0,0,1)` (Dirac at 2).
-  CDFs: `F_p = (1,1,1)`, `F_q = (0,0,1)`. `W₁ = 1+1+0 = 2 = |0-2|`. ✓ (Dirac isometry)
-* `p = (1/2,0,1/2)`, `q = (0,1,0)`.
-  `F_p = (1/2,1/2,1)`, `F_q = (0,1,1)`. `W₁ = 1/2 + 1/2 + 0 = 1`.
-  Mean check: `mean p = 1`, `mean q = 1`, `|Δmean| = 0 ≤ 1`. ✓
-* `p = (0,1,0)`, `q = (1/3,1/3,1/3)`.
-  `F_p = (0,1,1)`, `F_q = (1/3,2/3,1)`. `W₁ = 1/3 + 1/3 + 0 = 2/3`.
-  Means `1` and `1`; `|Δmean| = 0 ≤ 2/3`. ✓
+```
+a ⊗ b = [[1/6, 1/3],
+         [1/6, 1/3]]
+```
 
-## 2. Dirac isometry (`W1_dirac`)
+Row sums `(1/2, 1/2) = a`, column sums `(1/3, 2/3) = b`, all entries `≥ 0`.  Hence
+the feasible set is nonempty, confirming `productPlan_isTransportPlan`.  Each entry
+lies in `[0, a i]`, illustrating the boundedness bound used in
+`isBounded_feasibleSet`.
 
-For `n = 5` and all `a,b < 5`, `W₁(δ_a, δ_b)` computed from CDFs equals `|a-b|`
-in every one of the 25 cases (checked by hand on the step-function indicators).
-This is exactly the closed form `∑_k |[a≤k]-[b≤k]| = |a-b|`.
+## 2. Self-distance is zero (diagonal coupling)
 
-## 3. Kantorovich–Rubinstein duality (`kantorovich_duality`)
+With ground cost `d i j = |x i - x j|` (a metric) the diagonal coupling
+`diag(a)` has cost `∑ a i * d i i = 0`, so `wValue d a a = 0`.  Checked for
+`a = (0.4, 0.6)`, `x = (0, 1)`:  cost `= 0`.
 
-Optimal potential `φ` with `Δφ = -sign(F_p - F_q)`:
-for `p=(1/2,0,1/2)`, `q=(0,1,0)` (`n=3`): `F_p-F_q = (1/2,-1/2,0)`,
-so `Δφ = (-1,+1,*)`, giving `φ = (0,-1,0)`.
-Then `𝔼_p[φ]-𝔼_q[φ] = (0·½ + (-1)·0 + 0·½) - (0·0 + (-1)·1 + 0·0) = 0-(-1) = 1 = W₁`. ✓
-`φ` is `1`-Lipschitz (`|Δφ| ≤ 1`). ✓
+## 3. Discrete Brenier (quadratic cost) — rearrangement
 
-## 4. Primal coupling bound (`W1_le_transportCost`)
+Points `x = (0, 1, 2)`, `y = (0, 10, 20)` (both sorted, `Monovary x y`).
+Quadratic matching cost `∑ (x i - y σ(i))²` over the 6 permutations of `Fin 3`:
 
-For `p=(1/2,0,1/2)`, `q=(0,1,0)`, the only coupling is `π[0][1]=1/2`, `π[2][1]=1/2`,
-cost `= |0-1|·½ + |2-1|·½ = 1 = W₁`. Every other (sub)plan with these marginals
-has cost `≥ 1`. ✓ (lower bound tight here)
+| σ (image of 0,1,2) | cost |
+|--------------------|------|
+| id (0,1,2)         | 0² + 9² + 18² = 405  |
+| (0,2,1)            | 0² + 19² + 8² = 425  |
+| (1,0,2)            | 10² + 1² + 18² = 425 |
+| (2,1,0)            | 20² + 9² + 2² = 485  |
+| (1,2,0)            | 10² + 19² + 2² = 465 |
+| (2,0,1)            | 20² + 1² + 8² = 465  |
 
-## 5. Counterexample hunt
+Minimum is attained at `σ = id` (cost 405), matching `brenier_monotone_optimal`.
 
-* "`W₁` is a *pseudo*metric only" — refuted: `eq_of_W1_zero` shows `W₁(p,q)=0 ⇒ p=q`
-  on the support, so it is a genuine metric. No counterexample found.
-* "Mean difference can exceed `W₁`" — refuted on all tested pairs; the identity map
-  is `1`-Lipschitz so `kantorovich_le` forbids it.
-* "Some coupling beats the CDF value" — refuted: `W1_le_transportCost` proven for
-  *all* couplings; tested plans never went below the CDF value.
+Counterexample hunt for the monotonicity hypothesis: with `y = (20, 10, 0)`
+(anti-sorted, so `Monovary x y` fails) the *reversing* permutation, not the
+identity, is optimal — confirming the `Monovary` hypothesis is load-bearing.
 
-## Note
+## 4. Symmetry
 
-No OEIS sequence arises (the objects are real-valued distances, not integer
-sequences). Evidence is closed-form/arithmetic, hence kept brief; all statements
-are now machine-verified in `Wasserstein1D.lean` (axioms: `propext`,
-`Classical.choice`, `Quot.sound` only).
+For symmetric `d`, transposing any coupling `π ↦ πᵀ` is a cost-preserving bijection
+between plans `a → b` and plans `b → a`, so `wValue d a b = wValue d b a`.  Checked
+numerically on the `Fin 2` example above with `d = [[0,1],[1,0]]`: both directions
+give optimal value `1/3`.

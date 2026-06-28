@@ -1,276 +1,397 @@
-# The One-Dimensional Discrete 1-Wasserstein Distance: A Formally Verified Theory
+# Finite Optimal Transport and Wasserstein Distances: Existence, Brenier Rearrangement, and the Metric Axioms
 
 **Author:** Aristotle
-
 **Date:** 2026-06-28
-
-**Domain:** Novelty / Optimal Transport
-
----
+**Domain:** Novelty (Optimal Transport)
 
 ## Abstract
 
-We develop a complete, rigorous theory of the 1-Wasserstein distance $W_1$ for finitely supported probability distributions on the integer grid $\{0, 1, \dots, n-1\}$. Working from the Kantorovich formulation of optimal transport, we establish the cumulative-distribution-function (CDF) closed form
-$$W_1(p,q) = \sum_{k=0}^{n-2} \big| F_p(k) - F_q(k) \big|,$$
-and use it as the computational and theoretical backbone for the entire development. We prove that $W_1$ is a genuine metric on the simplex of distributions — nonnegativity, symmetry, the identity of indiscernibles, and the triangle inequality — and we establish Kantorovich–Rubinstein duality with an *explicit* optimal 1-Lipschitz potential, so that duality holds not as an abstract minimax equality but as an attained, constructive identity. We further prove three consequences of independent interest: the Dirac isometry $W_1(\delta_a, \delta_b) = |a-b|$ showing $W_1$ faithfully extends the ground metric; the mean-difference bound $|\mathbb{E}_p - \mathbb{E}_q| \le W_1(p,q)$; and the primal coupling lower bound $W_1(p,q) \le \mathrm{cost}(\pi)$ valid for every transport plan $\pi$. All results are accompanied by complete proof sketches. The development is entirely constructive and self-contained, and forms a foundation for higher-order Wasserstein distances, strong duality via explicit couplings, data-processing contraction, quantitative convergence of empirical measures, and a tropical (max-plus) analogue, each of which we lay out as a precise conjecture for future work.
-
-**Keywords:** optimal transport, Wasserstein distance, Kantorovich duality, cumulative distribution function, transport plan, Lipschitz potential, Dirac isometry, metric space.
+We develop a fully rigorous, self-contained theory of *finite* optimal
+transport: the Kantorovich problem of moving one discrete probability
+distribution onto another at minimum cost. Working over finite index sets, we
+define transport plans as the elements of the transportation polytope, define
+the transport cost as a linear functional, and establish the foundational
+results of the theory. First, we prove that the transportation polytope is
+compact and that an **optimal transport plan always exists** (existence of a
+minimizer of a continuous linear functional over a nonempty compact convex set).
+Second, restricting to uniform marginals, we identify permutation couplings with
+the assignment problem, proving that **permutation plans are feasible** and that
+their cost is the average edge cost. Third, we prove a **discrete Brenier
+theorem** for quadratic cost: when source and target data covary, the monotone
+(sorted) matching is optimal among all matchings, and we restate this inside the
+Kantorovich polytope. Finally, we define the **Wasserstein value** as the
+optimal transport cost and verify three of the four metric axioms —
+nonnegativity, vanishing self-distance, and symmetry. We discuss the remaining
+triangle inequality, the Birkhoff–von Neumann extension from permutations to the
+full polytope, and Kantorovich–Rubinstein duality as natural next steps. All
+results are stated with full mathematical content and proof sketches.
 
 ---
 
 ## 1. Introduction
 
-Optimal transport asks for the cheapest way to rearrange one distribution of mass into another, where cost is measured by how far mass is carried. First posed by Monge (1781) for the problem of moving earthworks, it was given its modern, analytically tractable form by Kantorovich (1942), whose linear-programming relaxation introduced *transport plans* and the celebrated duality that now bears his and Rubinstein's names. The resulting **Wasserstein distances** are metrics on spaces of probability measures, and they have become indispensable across statistics, economics, image processing, partial differential equations, and — most spectacularly in the last decade — machine learning, where the Wasserstein GAN reframed generative modeling around the dual representation of $W_1$.
+Optimal transport asks for the most economical way to rearrange one distribution
+of mass into another. Introduced by Monge in 1781 as a problem about moving
+earthworks and recast by Kantorovich in 1942 as a linear program, the subject
+has become a central tool across pure and applied mathematics: it furnishes a
+geometry-aware metric on probability distributions (the Wasserstein distance),
+underpins the analysis of gradient flows and PDEs, and drives modern generative
+modeling through the Wasserstein GAN.
 
-This paper isolates the cleanest nontrivial setting — finitely supported distributions on a one-dimensional integer grid — and develops its theory completely. The one-dimensional case is special: the optimal transport cost admits a closed form in terms of cumulative distribution functions, sidestepping any explicit optimization over the (high-dimensional) polytope of transport plans. This closed form makes every structural property of $W_1$ provable by elementary, finitary arguments, and it makes the theory directly computable. Our contribution is a unified, gap-free account: definitions, the closed form, the metric axioms, constructive Kantorovich–Rubinstein duality, and three applications.
+This paper treats the **finite** case in complete rigor. The finite setting is
+not merely a toy: it is the regime in which optimal transport is actually
+computed, it is the discrete shadow of the continuous theory, and it already
+exhibits the structural phenomena — existence of optimizers, the matching/sorting
+correspondence, and the metric structure — that make the subject powerful. By
+restricting to finite index sets we replace measure-theoretic subtleties with
+clean linear algebra and combinatorics, allowing every claim to be proved from
+first principles.
 
-We work over the grid $X_n = \{0, 1, \dots, n-1\}$ with the ground metric $d(i,j) = |i-j|$ inherited from $\mathbb{Z}$. Distributions are nonnegative weight vectors summing to one. Throughout, sums run over grid indices unless otherwise noted.
+Our contributions are organized as four pillars:
 
-### Summary of results
-
-- **Theorem (CDF closed form, `W1_def`).** $W_1(p,q) = \sum_{k=0}^{n-2} |F_p(k) - F_q(k)|$.
-- **Theorem (metric, `W1_nonneg`, `W1_comm`, `W1_self_eq_zero`, `eq_of_W1_zero`, `W1_triangle`).** $W_1$ is a metric on the probability simplex of $X_n$.
-- **Theorem (duality, `kantorovich_duality`, `kantorovich_le`, `kantorovich_attained`).** $W_1(p,q) = \max_{\varphi \in \mathrm{Lip}_1} (\mathbb{E}_p \varphi - \mathbb{E}_q \varphi)$, attained by an explicit potential.
-- **Theorem (Dirac isometry, `W1_dirac`).** $W_1(\delta_a, \delta_b) = |a-b|$.
-- **Theorem (mean bound, `abs_mean_sub_le_W1`).** $|\mathbb{E}_p - \mathbb{E}_q| \le W_1(p,q)$.
-- **Theorem (primal bound, `W1_le_transportCost`).** $W_1(p,q) \le \mathrm{cost}(\pi)$ for every transport plan $\pi$.
-
----
-
-## 2. Definitions and basic objects
-
-### 2.1 Distributions on a grid
-
-**Definition 2.1 (Distribution).** Fix $n \ge 1$. A *distribution* on $X_n = \{0, \dots, n-1\}$ is a vector $p = (p_0, \dots, p_{n-1})$ with $p_k \ge 0$ for all $k$ and $\sum_{k=0}^{n-1} p_k = 1$. We write $\Delta_n$ for the set of all such distributions (the standard simplex).
-
-**Definition 2.2 (Dirac mass).** For $a \in X_n$, the *Dirac mass* $\delta_a \in \Delta_n$ is defined by $(\delta_a)_k = 1$ if $k = a$ and $0$ otherwise.
-
-**Definition 2.3 (Expectation).** The *mean* of $p \in \Delta_n$ is $\mathbb{E}_p := \sum_{k=0}^{n-1} k\, p_k$, the expected value of the identity random variable on the grid.
-
-### 2.2 The cumulative distribution function
-
-**Definition 2.4 (CDF).** The *cumulative distribution function* of $p \in \Delta_n$ is
-$$F_p(k) := \sum_{j=0}^{k} p_j, \qquad k \in \{0, \dots, n-1\}.$$
-It is nondecreasing, satisfies $0 \le F_p(k) \le 1$, and $F_p(n-1) = 1$ since $p$ is a probability vector.
-
-### 2.3 Transport plans and cost
-
-**Definition 2.5 (Transport plan / coupling).** A *transport plan* between $p, q \in \Delta_n$ is a matrix $\pi = (\pi_{ij})_{0 \le i,j \le n-1}$ with $\pi_{ij} \ge 0$ and marginals
-$$\sum_{j} \pi_{ij} = p_i \ \ (\forall i), \qquad \sum_{i} \pi_{ij} = q_j \ \ (\forall j).$$
-We write $\Pi(p,q)$ for the set of transport plans; it is a nonempty compact polytope (it contains the product plan $\pi_{ij} = p_i q_j$).
-
-**Definition 2.6 (Transport cost).** The *cost* of a plan $\pi \in \Pi(p,q)$ for the ground metric $d(i,j)=|i-j|$ is
-$$\mathrm{cost}(\pi) := \sum_{i,j} |i - j|\, \pi_{ij}.$$
-
-**Definition 2.7 (Kantorovich optimal transport).** The Kantorovich optimal transport cost is $\inf_{\pi \in \Pi(p,q)} \mathrm{cost}(\pi)$. On the line this infimum is attained and equals the CDF closed form below; we take the closed form as our working definition of $W_1$ and recover the primal infimum characterization via Theorem 6.1 and Conjecture 1.
-
-### 2.4 The 1-Wasserstein distance
-
-**Definition 2.8 (1-Wasserstein distance, `W1_def`).** For $p, q \in \Delta_n$,
-$$W_1(p, q) := \sum_{k=0}^{n-2} \big| F_p(k) - F_q(k) \big|.$$
-The top index $n-1$ is omitted because $F_p(n-1) = F_q(n-1) = 1$, so that term always vanishes.
-
-### 2.5 Lipschitz potentials
-
-**Definition 2.9 (1-Lipschitz potential).** A function $\varphi : X_n \to \mathbb{R}$ is *1-Lipschitz* (with respect to $d(i,j) = |i-j|$) if $|\varphi(k+1) - \varphi(k)| \le 1$ for all $0 \le k \le n-2$; equivalently $|\varphi(i) - \varphi(j)| \le |i-j|$ for all $i,j$. Write $\mathrm{Lip}_1$ for the set of such potentials. For $\varphi : X_n \to \mathbb{R}$ we write $\mathbb{E}_p\varphi := \sum_k \varphi(k) p_k$.
+1. **Existence** (Section 4): the transportation polytope is compact and the
+   transport cost attains its minimum.
+2. **Matchings** (Section 5): permutation couplings of uniform marginals are
+   feasible and realize the assignment-problem cost.
+3. **Brenier rearrangement** (Section 6): for quadratic cost, the monotone
+   matching is optimal.
+4. **Wasserstein metric axioms** (Section 7): nonnegativity, self-distance zero,
+   and symmetry of the optimal cost.
 
 ---
 
-## 3. The cumulative closed form
+## 2. Preliminaries and Notation
 
-The entire theory rests on the following identity, which converts a transport problem into an arithmetic of cumulative gaps.
+Let $S$ and $T$ be finite index sets (the *sources* and *targets*). We write
+$|S| = n$ and $|T| = m$, and frequently take $S = T = \{1, \dots, n\}$.
 
-**Theorem 3.1 (CDF closed form, `W1_def`).** For all $p, q \in \Delta_n$, the Kantorovich optimal transport cost with ground metric $d(i,j)=|i-j|$ equals
-$$W_1(p,q) = \sum_{k=0}^{n-2} \big| F_p(k) - F_q(k) \big|.$$
+A **probability vector** on a finite set $X$ is a function $a : X \to \mathbb{R}$
+with $a_x \ge 0$ for all $x$ and $\sum_{x} a_x = 1$. We write $\Delta(X)$ for the
+set of probability vectors on $X$ (the standard simplex).
 
-*Proof sketch.* The key structural fact is a **summation-by-parts / flow-conservation** identity. For any transport plan $\pi \in \Pi(p,q)$, decompose the cost by writing each distance $|i-j|$ as a sum of unit steps across the boundaries between consecutive grid points. Define the *net flow across boundary $k$* (between sites $k$ and $k+1$) as the signed amount of mass that the plan moves from the left block $\{0,\dots,k\}$ to the right block $\{k+1,\dots,n-1\}$. Because the marginals are fixed, the net flow across boundary $k$ is determined entirely by the marginals: it must equal $F_p(k) - F_q(k)$, the discrepancy between how much mass $p$ and $q$ place at or below $k$. Each unit of mass crossing boundary $k$ contributes exactly $1$ to the cost, and the absolute amount of crossing is at least $|F_p(k) - F_q(k)|$, giving $\mathrm{cost}(\pi) \ge \sum_k |F_p(k) - F_q(k)|$ for every $\pi$. The monotone coupling (Section 7) attains this bound, so the optimal cost equals the right-hand side. $\square$
-
-This closed form is also the engine for computation: evaluating $W_1$ costs $O(n)$ arithmetic operations (two prefix sums and a sum of absolute differences), versus solving a linear program over the $n^2$-dimensional transport polytope.
-
----
-
-## 4. $W_1$ is a metric
-
-We now verify the four metric axioms (with symmetry and the two zero-distance facts handled separately).
-
-**Theorem 4.1 (Nonnegativity, `W1_nonneg`).** $W_1(p,q) \ge 0$ for all $p, q$.
-
-*Proof sketch.* $W_1(p,q)$ is a finite sum of absolute values $|F_p(k) - F_q(k)| \ge 0$, hence nonnegative. $\square$
-
-**Theorem 4.2 (Symmetry, `W1_comm`).** $W_1(p,q) = W_1(q,p)$.
-
-*Proof sketch.* Termwise, $|F_p(k) - F_q(k)| = |F_q(k) - F_p(k)|$ by symmetry of the absolute value; sum over $k$. $\square$
-
-**Theorem 4.3 (Self-distance is zero, `W1_self_eq_zero`).** $W_1(p,p) = 0$.
-
-*Proof sketch.* Each term is $|F_p(k) - F_p(k)| = 0$, so the sum is $0$. $\square$
-
-**Theorem 4.4 (Identity of indiscernibles, `eq_of_W1_zero`).** If $W_1(p,q) = 0$ then $p = q$.
-
-*Proof sketch.* A sum of nonnegative terms is zero iff every term is zero, so $F_p(k) = F_q(k)$ for all $0 \le k \le n-2$. Since $F_p(n-1) = F_q(n-1) = 1$, in fact $F_p(k) = F_q(k)$ for *all* $k$. The distribution is recovered from its CDF by first differences, $p_0 = F_p(0)$ and $p_k = F_p(k) - F_p(k-1)$ for $k \ge 1$, so equal CDFs force $p_k = q_k$ for every $k$, i.e. $p = q$. $\square$
-
-**Theorem 4.5 (Triangle inequality, `W1_triangle`).** For all $p, q, r \in \Delta_n$,
-$$W_1(p, r) \le W_1(p, q) + W_1(q, r).$$
-
-*Proof sketch.* Apply the scalar triangle inequality at each grid boundary $k$:
-$$|F_p(k) - F_r(k)| \le |F_p(k) - F_q(k)| + |F_q(k) - F_r(k)|,$$
-then sum over $k = 0, \dots, n-2$ and regroup the right-hand side into $W_1(p,q) + W_1(q,r)$. $\square$
-
-**Corollary 4.6.** $(\Delta_n, W_1)$ is a metric space.
+A **cost matrix** (or **ground cost**) is a function $d : S \times T \to
+\mathbb{R}$ with $d_{ij} \ge 0$. When $S = T$ and $d$ models a distance we will
+additionally assume $d_{ii} = 0$ (self-cost zero), $d_{ij} = d_{ji}$ (symmetry),
+and, where stated, the triangle inequality $d_{ik} \le d_{ij} + d_{jk}$.
 
 ---
 
-## 5. Kantorovich–Rubinstein duality
+## 3. The Kantorovich Problem
 
-The dual problem replaces the search over transport plans by a search over 1-Lipschitz potentials. We prove the easy inequality, exhibit an explicit optimal potential, and conclude the exact duality.
+**Definition 3.1 (Transport plan / coupling).**
+Given marginals $a \in \Delta(S)$ and $b \in \Delta(T)$, a **transport plan** is
+a function $\pi : S \times T \to \mathbb{R}$ satisfying
 
-**Theorem 5.1 (Dual feasibility / weak duality, `kantorovich_le`).** For every 1-Lipschitz potential $\varphi$ and all $p, q \in \Delta_n$,
-$$\mathbb{E}_p[\varphi] - \mathbb{E}_q[\varphi] \le W_1(p, q).$$
+$$\pi_{ij} \ge 0 \ \ \forall (i,j), \qquad
+\sum_{j \in T} \pi_{ij} = a_i \ \ \forall i \in S, \qquad
+\sum_{i \in S} \pi_{ij} = b_j \ \ \forall j \in T.$$
 
-*Proof sketch.* Summation by parts converts the difference of expectations into a CDF-weighted sum of the increments of $\varphi$. Writing $s_k := \varphi(k+1) - \varphi(k)$ with $|s_k| \le 1$,
-$$\mathbb{E}_p[\varphi] - \mathbb{E}_q[\varphi] = \sum_k \varphi(k)(p_k - q_k) = -\sum_{k=0}^{n-2} s_k\,\big(F_p(k) - F_q(k)\big).$$
-(The boundary terms vanish because $F_p(n-1)=F_q(n-1)=1$.) Bounding $|s_k| \le 1$ termwise gives $\big|\sum_k s_k(F_p(k)-F_q(k))\big| \le \sum_k |F_p(k)-F_q(k)| = W_1(p,q)$, hence the claim. $\square$
+We call the predicate "$\pi$ satisfies these constraints for marginals $a, b$"
+the property `IsTransportPlan`. The set of all such $\pi$ is the
+**transportation polytope** (the **feasible set**), denoted $\Pi(a,b)$.
 
-**Theorem 5.2 (Attainment, `kantorovich_attained`).** Define the *staircase potential* $\varphi^\star$ by $\varphi^\star(0) = 0$ and
-$$\varphi^\star(k+1) - \varphi^\star(k) = -\operatorname{sgn}\big(F_p(k) - F_q(k)\big) \in \{-1, 0, +1\}.$$
-Then $\varphi^\star \in \mathrm{Lip}_1$ and
-$$\mathbb{E}_p[\varphi^\star] - \mathbb{E}_q[\varphi^\star] = W_1(p, q).$$
+**Remark 3.2.** $\Pi(a,b)$ is nonempty: the *independent coupling*
+$\pi_{ij} = a_i b_j$ is always feasible, since
+$\sum_j a_i b_j = a_i \sum_j b_j = a_i$ and symmetrically for columns.
 
-*Proof sketch.* The increments of $\varphi^\star$ are signs, hence bounded in absolute value by $1$, so $\varphi^\star$ is 1-Lipschitz. Plugging $s_k = -\operatorname{sgn}(F_p(k)-F_q(k))$ into the summation-by-parts identity of Theorem 5.1 yields
-$$\mathbb{E}_p[\varphi^\star] - \mathbb{E}_q[\varphi^\star] = \sum_{k=0}^{n-2} \operatorname{sgn}(F_p(k)-F_q(k))\,(F_p(k)-F_q(k)) = \sum_{k=0}^{n-2} |F_p(k)-F_q(k)| = W_1(p,q),$$
-using $\operatorname{sgn}(x)\cdot x = |x|$ termwise. $\square$
+**Definition 3.3 (Transport cost).**
+The cost of a plan $\pi$ under ground cost $d$ is the linear functional
 
-**Theorem 5.3 (Kantorovich–Rubinstein duality, `kantorovich_duality`).** For all $p, q \in \Delta_n$,
-$$W_1(p, q) = \max_{\varphi \in \mathrm{Lip}_1} \Big( \mathbb{E}_p[\varphi] - \mathbb{E}_q[\varphi] \Big),$$
-and the maximum is attained at the staircase potential $\varphi^\star$ of Theorem 5.2.
+$$\operatorname{transportCost}(d, \pi) \;=\; \sum_{i \in S} \sum_{j \in T}
+\pi_{ij}\, d_{ij}.$$
 
-*Proof sketch.* Theorem 5.1 shows $W_1$ is an upper bound for the supremum; Theorem 5.2 exhibits a feasible $\varphi^\star$ achieving it. Hence the supremum is attained and equals $W_1$. $\square$
+**Definition 3.4 (Wasserstein value / Kantorovich optimum).**
+The **Wasserstein value** is the optimal transport cost,
 
-This constructive duality is exactly the structure exploited by the Wasserstein GAN: the dual variable $\varphi$ is the "critic," constrained to be 1-Lipschitz, and the training objective is the dual expectation difference, whose optimum equals $W_1$.
+$$\operatorname{wValue}(d, a, b) \;=\; \inf_{\pi \in \Pi(a,b)}
+\operatorname{transportCost}(d, \pi).$$
 
----
-
-## 6. Bounds and isometries
-
-**Theorem 6.1 (Primal coupling lower bound, `W1_le_transportCost`).** For every transport plan $\pi \in \Pi(p,q)$,
-$$W_1(p, q) \le \mathrm{cost}(\pi).$$
-
-*Proof sketch.* This is the inequality half of Theorem 3.1, isolated as a directly usable statement. For each boundary $k$, the net mass that $\pi$ moves across it equals $F_p(k) - F_q(k)$ by the marginal constraints, and a piece of mass moving from $i$ to $j$ pays for each of the $|i-j|$ boundaries it crosses. Summing the per-boundary contributions gives $\mathrm{cost}(\pi) = \sum_{i,j}|i-j|\pi_{ij} \ge \sum_k |F_p(k)-F_q(k)| = W_1(p,q)$. $\square$
-
-**Theorem 6.2 (Dirac isometry, `W1_dirac`).** For $a, b \in X_n$, $W_1(\delta_a, \delta_b) = |a - b|$.
-
-*Proof sketch.* The CDF of $\delta_a$ is the indicator step $F_{\delta_a}(k) = \mathbf{1}[k \ge a]$. For $a \le b$, the gap $F_{\delta_a}(k) - F_{\delta_b}(k) = \mathbf{1}[a \le k < b]$ equals $1$ for exactly the $b-a$ values $k \in \{a, \dots, b-1\}$ and $0$ otherwise; summing gives $b - a = |a-b|$. The case $a > b$ follows by symmetry (Theorem 4.2). $\square$
-
-Theorem 6.2 shows that the embedding $a \mapsto \delta_a$ of the grid into $(\Delta_n, W_1)$ is an isometry: $W_1$ restricted to point masses *is* the ground metric. Thus $W_1$ is a faithful extension of $|i-j|$ from points to distributions.
-
-**Theorem 6.3 (Mean-difference bound, `abs_mean_sub_le_W1`).** For all $p, q \in \Delta_n$,
-$$\big| \mathbb{E}_p - \mathbb{E}_q \big| \le W_1(p, q).$$
-
-*Proof sketch.* The identity potential $\varphi_{\mathrm{id}}(k) = k$ has increments $\varphi_{\mathrm{id}}(k+1)-\varphi_{\mathrm{id}}(k) = 1$, so $\varphi_{\mathrm{id}} \in \mathrm{Lip}_1$. By Theorem 5.1 applied to $\varphi_{\mathrm{id}}$ and to $-\varphi_{\mathrm{id}}$ (also 1-Lipschitz),
-$$\mathbb{E}_p - \mathbb{E}_q = \mathbb{E}_p[\varphi_{\mathrm{id}}] - \mathbb{E}_q[\varphi_{\mathrm{id}}] \le W_1(p,q), \qquad \mathbb{E}_q - \mathbb{E}_p \le W_1(p,q),$$
-and combining gives $|\mathbb{E}_p - \mathbb{E}_q| \le W_1(p,q)$. $\square$
-
-The converse is false: distributions can share a mean while being far apart in $W_1$ (e.g. $\delta_1$ versus $\tfrac12(\delta_0 + \delta_2)$ both have mean $1$ but positive $W_1$), so $W_1$ strictly refines comparison of means.
+By Theorem 4.2 below the infimum is attained, so it is in fact a minimum.
 
 ---
 
-## 7. Algorithms
+## 4. Existence of Optimal Plans
 
-### 7.1 Closed-form evaluation of $W_1$
+The first pillar is that the Kantorovich problem is well posed: a cheapest plan
+exists.
 
-Theorem 3.1 yields a linear-time evaluator: compute the two prefix sums $F_p, F_q$ and accumulate $\sum_{k<n-1}|F_p(k)-F_q(k)|$.
+**Theorem 4.1 (`isCompact_feasibleSet`).**
+The transportation polytope $\Pi(a,b)$ is compact.
 
-```
-Algorithm W1-CDF(p, q):
-  input:  distributions p, q on {0,...,n-1}
-  output: W1(p, q)
-  Fp <- 0; Fq <- 0; total <- 0
-  for k = 0 to n-2:
-      Fp <- Fp + p[k]
-      Fq <- Fq + q[k]
-      total <- total + |Fp - Fq|
-  return total
-```
-Complexity: $O(n)$ time, $O(1)$ extra space.
+*Proof sketch.* View a plan as a point in $\mathbb{R}^{S \times T}$, a finite
+dimensional real vector space. The polytope is the intersection of:
 
-### 7.2 Explicit optimal dual potential
+- the closed half-spaces $\{\pi_{ij} \ge 0\}$, one for each coordinate;
+- the closed affine subspaces $\{\sum_j \pi_{ij} = a_i\}$ and
+  $\{\sum_i \pi_{ij} = b_j\}$, defined by continuous linear maps.
 
-The staircase potential $\varphi^\star$ of Theorem 5.2 is built in one left-to-right pass from the sign of the CDF gap.
+Each of these is closed, and a finite intersection of closed sets is closed.
+For boundedness, every feasible $\pi$ has $0 \le \pi_{ij} \le a_i \le 1$ (since
+$\pi_{ij} \le \sum_{j'} \pi_{ij'} = a_i$ by nonnegativity of the other entries),
+so the polytope lies in the cube $[0,1]^{S \times T}$. A closed and bounded
+subset of a finite-dimensional real vector space is compact by the
+Heine–Borel theorem. $\qquad\blacksquare$
 
-```
-Algorithm DualPotential(p, q):
-  Fp <- 0; Fq <- 0; phi <- [0.0]
-  for k = 0 to n-2:
-      Fp <- Fp + p[k];  Fq <- Fq + q[k]
-      step <- -sign(Fp - Fq)          # in {-1, 0, +1}
-      phi.append(phi[-1] + step)
-  return phi                          # 1-Lipschitz; attains the dual max
-```
-Complexity: $O(n)$.
+**Theorem 4.2 (`exists_optimal_plan`).**
+There exists a plan $\pi^\star \in \Pi(a,b)$ such that
+$\operatorname{transportCost}(d, \pi^\star) \le \operatorname{transportCost}(d,
+\pi)$ for every $\pi \in \Pi(a,b)$.
 
-### 7.3 Monotone (north-west-corner) coupling
+*Proof sketch.* The map $\pi \mapsto \operatorname{transportCost}(d, \pi) =
+\sum_{i,j} \pi_{ij} d_{ij}$ is linear, hence continuous on the finite
+dimensional space $\mathbb{R}^{S \times T}$. By Theorem 4.1 the feasible set is
+compact, and by Remark 3.2 it is nonempty. A continuous real-valued function on
+a nonempty compact set attains its infimum (extreme value theorem); the
+minimizer $\pi^\star$ is the desired optimal plan. $\qquad\blacksquare$
 
-The plan attaining the primal bound greedily matches the smallest available source mass to the smallest available target mass; it is the discrete inverse-CDF (quantile) coupling.
+**Corollary 4.3.** $\operatorname{wValue}(d, a, b) =
+\operatorname{transportCost}(d, \pi^\star)$ is attained, so the infimum in
+Definition 3.4 is a minimum.
 
-```
-Algorithm MonotoneCoupling(p, q):
-  pi <- zero n x n matrix
-  rp <- copy(p);  rq <- copy(q);  i <- 0;  j <- 0
-  while i < n and j < n:
-      f <- min(rp[i], rq[j])
-      pi[i][j] <- pi[i][j] + f
-      rp[i] <- rp[i] - f;  rq[j] <- rq[j] - f
-      if rp[i] == 0: i <- i + 1  else: j <- j + 1
-  return pi                          # cost(pi) = W1(p, q)
-```
-Complexity: $O(n)$ nonzero entries are produced in $O(n)$ steps.
+These two theorems are the load-bearing foundation: every subsequent statement
+about *the* optimal cost is meaningful precisely because the optimum exists.
 
 ---
 
-## 8. Applications
+## 5. Permutation Plans and the Assignment Problem
 
-**Generative modeling (Wasserstein GAN).** The dual form (Theorem 5.3) underlies the Wasserstein GAN: a generator produces a distribution of samples, and a 1-Lipschitz critic $\varphi$ estimates $\mathbb{E}_{\text{real}}\varphi - \mathbb{E}_{\text{fake}}\varphi \approx W_1$. Unlike $f$-divergences, $W_1$ remains finite and yields informative gradients even when the supports are disjoint — precisely the regime where the Dirac isometry (Theorem 6.2) shows $W_1$ degrades gracefully as $|a-b|$ rather than saturating.
+We now specialize to **uniform marginals** on a common index set
+$S = T = \{1, \dots, n\}$: $a_i = b_i = 1/n$ for all $i$. Here matchings enter.
 
-**Robust statistics and convergence.** The mean bound (Theorem 6.3) certifies that $W_1$-closeness implies closeness of first moments, a basic stability guarantee. The CDF form makes the convergence of empirical distributions quantitatively tractable (Conjecture 4).
+**Definition 5.1 (Permutation plan).**
+For a permutation $\sigma$ of $\{1, \dots, n\}$, the **permutation plan**
+$\operatorname{permPlan}(\sigma)$ is
 
-**Signal and image processing.** On a one-dimensional grid (e.g. a histogram or a row of pixel intensities), $W_1$ measures perceptual shift rather than bin-wise discrepancy, so it captures translations that bin-wise metrics miss; the closed form gives a real-time computation.
+$$(\operatorname{permPlan}\sigma)_{ij} =
+\begin{cases} \dfrac{1}{n}, & j = \sigma(i),\\[4pt] 0, & j \ne \sigma(i).
+\end{cases}$$
 
-**Certified lower bounds.** Theorem 5.1 turns any hand-crafted 1-Lipschitz $\varphi$ into a certificate $W_1 \ge \mathbb{E}_p\varphi - \mathbb{E}_q\varphi$, and Theorem 6.1 turns any feasible plan into a certificate $W_1 \le \mathrm{cost}(\pi)$, bracketing the true distance from both sides without solving the optimization.
+**Theorem 5.2 (`permPlan_isTransportPlan`).**
+For every permutation $\sigma$, $\operatorname{permPlan}(\sigma)$ is a transport
+plan for the uniform marginals; i.e. it is feasible.
+
+*Proof sketch.* Nonnegativity is immediate. For the row sums, fix $i$; exactly
+one term $j = \sigma(i)$ is nonzero, giving $\sum_j (\operatorname{permPlan}
+\sigma)_{ij} = 1/n = a_i$. For the column sums, fix $j$; since $\sigma$ is a
+bijection there is a unique $i = \sigma^{-1}(j)$ with $\sigma(i) = j$, so
+$\sum_i (\operatorname{permPlan}\sigma)_{ij} = 1/n = b_j$. $\qquad\blacksquare$
+
+**Theorem 5.3 (`transportCost_permPlan`).**
+The cost of a permutation plan is the average of its matched edge costs:
+
+$$\operatorname{transportCost}(d, \operatorname{permPlan}\sigma) =
+\frac{1}{n} \sum_{i=1}^{n} d_{i, \sigma(i)}.$$
+
+*Proof sketch.* Substitute the definition: $\sum_{i,j}
+(\operatorname{permPlan}\sigma)_{ij} d_{ij} = \sum_i \sum_j
+(\operatorname{permPlan}\sigma)_{ij} d_{ij}$. The inner sum collapses to the
+single term $j = \sigma(i)$, contributing $\tfrac{1}{n} d_{i,\sigma(i)}$.
+$\qquad\blacksquare$
+
+**Remark 5.4 (Reduction to the assignment problem).**
+Minimizing $\operatorname{transportCost}$ over permutation plans is exactly the
+classical **assignment problem**: choose $\sigma$ minimizing
+$\sum_i d_{i,\sigma(i)}$. The Birkhoff–von Neumann theorem (Section 8) implies
+that for uniform marginals this discrete minimum over permutations coincides
+with the continuous minimum over the entire polytope, because the vertices of
+the doubly stochastic (Birkhoff) polytope are exactly the permutation matrices
+and a linear functional attains its extremum at a vertex.
 
 ---
 
-## 9. Discussion
+## 6. The Discrete Brenier Theorem for Quadratic Cost
 
-The one-dimensional discrete theory is exceptional in admitting a closed form, and our development exploits this fully: every theorem reduces to elementary manipulations of finite sums of absolute values. The two recurring tools are (i) the marginal/flow-conservation identity that pins the net boundary flow to the CDF gap, and (ii) summation by parts, which is the discrete bridge between the primal cost (a sum over mass times distance) and the dual objective (a sum over potential increments times CDF gaps). These two identities, between them, yield the closed form, weak duality, attainment, and all the bounds.
+We come to the structural jewel of the theory: for *quadratic* cost the optimal
+matching is monotone (sorted). This is the finite-dimensional incarnation of
+Brenier's theorem.
 
-A noteworthy feature is that duality here is *constructive*: we do not invoke an abstract minimax or compactness theorem to assert a maximizer exists; we write it down (the staircase potential) and verify it attains the value. The same constructive spirit governs the primal side, where the monotone coupling is an explicit witness rather than an abstract optimum.
+Fix real data $x_1, \dots, x_n$ (source positions) and $y_1, \dots, y_n$ (target
+positions). The **quadratic ground cost** is $d_{ij} = (x_i - y_j)^2$.
 
-Limitations: the closed form is genuinely one-dimensional. In higher dimensions there is no CDF and the optimal plan is governed by Brenier's theorem and the Monge–Ampère equation; the elementary techniques here do not transfer directly. The theory is also stated for distributions on a fixed finite grid; extension to countable or continuous supports requires limiting arguments we do not undertake here.
+**Definition 6.1 (Monovary).**
+The families $x$ and $y$ **monovary** (covary, written $\operatorname{Monovary}
+x\,y$) if for all indices $i, k$, $x_i < x_k \implies y_i \le y_k$ — equivalently,
+sorting $x$ in increasing order sorts $y$ in increasing order too. Any two
+families become monovarying after sorting both increasingly.
+
+**Lemma 6.2 (Rearrangement inequality).**
+Among all permutations $\sigma$, the cross-correlation $\sum_i x_i\,
+y_{\sigma(i)}$ is **maximized** when $x$ and $y \circ \sigma$ monovary and
+**minimized** when they antivary. In particular, if $x$ and $y$ already
+monovary, the identity permutation maximizes $\sum_i x_i y_{\sigma(i)}$.
+
+*Proof sketch.* The exchange argument: if some pair is "out of order"
+($x_i < x_k$ but $y_{\sigma(i)} > y_{\sigma(k)}$), swapping the images of $i$ and
+$k$ changes the sum by $(x_i - x_k)(y_{\sigma(k)} - y_{\sigma(i)}) > 0$, strictly
+increasing it. Hence no maximizer has an inversion, so a sorted (monovarying)
+assignment is optimal. $\qquad\blacksquare$
+
+**Theorem 6.3 (`brenier_monotone_optimal`).**
+Suppose $x$ and $y$ monovary. Then the **identity matching** minimizes the
+quadratic transport cost among all permutation matchings: for every permutation
+$\sigma$,
+
+$$\sum_{i} (x_i - y_i)^2 \;\le\; \sum_{i} (x_i - y_{\sigma(i)})^2.$$
+
+*Proof sketch.* Expand the square:
+$$\sum_i (x_i - y_{\sigma(i)})^2 = \sum_i x_i^2 - 2\sum_i x_i y_{\sigma(i)} +
+\sum_i y_{\sigma(i)}^2.$$
+The first sum is independent of $\sigma$, and the last sum equals
+$\sum_j y_j^2$ for every permutation (a permutation only reindexes). Hence
+minimizing the quadratic cost is equivalent to **maximizing** the cross term
+$\sum_i x_i y_{\sigma(i)}$. By Lemma 6.2, since $x$ and $y$ monovary, this
+maximum is attained at $\sigma = \mathrm{id}$. $\qquad\blacksquare$
+
+**Theorem 6.4 (`perm_quadratic_optimal`, Kantorovich-polytope restatement).**
+For uniform marginals and quadratic cost with monovarying $x, y$, the identity
+permutation plan $\operatorname{permPlan}(\mathrm{id})$ minimizes
+$\operatorname{transportCost}$ among **all permutation plans**:
+
+$$\operatorname{transportCost}(d, \operatorname{permPlan}(\mathrm{id})) \le
+\operatorname{transportCost}(d, \operatorname{permPlan}(\sigma)) \quad
+\forall \sigma.$$
+
+*Proof sketch.* Apply Theorem 5.3 to both sides: each cost equals $\tfrac{1}{n}$
+times the corresponding sum of matched squared distances. The inequality is then
+exactly Theorem 6.3 divided by $n$. $\qquad\blacksquare$
+
+**Interpretation.** Theorem 6.4 places the rearrangement result inside the
+Kantorovich framework: the monotone coupling is the cheapest *coupling* (among
+permutation couplings) for quadratic cost. Extending optimality from permutation
+couplings to the full polytope is precisely where Birkhoff–von Neumann is needed
+(Section 8), completing the discrete Brenier theorem.
 
 ---
 
-## 10. Future directions
+## 7. Wasserstein Distances and the Metric Axioms
 
-The development establishes the 1D discrete $W_1$ theory completely. We record five precise, testable conjectures for follow-up work.
+The optimal cost defines a candidate distance on probability vectors. We verify
+three of the four metric axioms.
 
-**Conjecture 1 (Primal/dual exactness — strong duality).** There is a transport plan $\pi^\star$ (the monotone / north-west-corner coupling of Section 7.3) with $\mathrm{cost}(\pi^\star) = W_1(p,q)$. Combined with Theorem 6.1 and Theorem 5.3 this gives full 1D strong duality $W_1 = \min_\pi \mathrm{cost}(\pi) = \max_{\varphi \in \mathrm{Lip}_1}(\mathbb{E}_p\varphi - \mathbb{E}_q\varphi)$. *Test:* construct $\pi^\star$ from the inverse-CDF (quantile) coupling and prove its cost telescopes to $\sum_k |F_p(k) - F_q(k)|$.
+Throughout this section take $S = T$ and assume the ground cost $d$ is a genuine
+**distance kernel**: $d_{ij} \ge 0$, $d_{ii} = 0$, and $d_{ij} = d_{ji}$.
 
-**Conjecture 2 (Order-$r$ Wasserstein and a power-mean hierarchy).** Define $W_r(p,q)^r = \min_\pi \sum_{i,j} |i-j|^r \pi_{ij}$ for integer $r \ge 1$. Then $r \mapsto W_r$ is nondecreasing, and on the line $W_r$ admits the quantile closed form $W_r^r = \sum_k g_r(k)$ for an explicit $g_r$ built from the CDFs. In particular $W_2$ satisfies the discrete Benamou–Brenier identity. *Test:* prove monotonicity $W_1 \le W_r$ via Jensen / power-mean, then the $r=2$ closed form against the CDF.
+**Theorem 7.1 (`wValue_nonneg`).**
+$\operatorname{wValue}(d, a, b) \ge 0$.
 
-**Conjecture 3 (Contraction under stochastic maps — data processing).** For any column-stochastic kernel $K$ on $\{0,\dots,n-1\}$ that is 1-Lipschitz in the barycentric sense, $W_1(Kp, Kq) \le W_1(p,q)$. Equivalently, push-forward by a 1-Lipschitz map does not increase $W_1$. *Test:* lift Theorem 5.1 through $K$ using the dual representation; the crucial step is that $\varphi \circ K$ stays 1-Lipschitz.
+*Proof sketch.* For any feasible $\pi$, every summand $\pi_{ij} d_{ij}$ is a
+product of nonnegatives, so $\operatorname{transportCost}(d, \pi) \ge 0$. The
+infimum of a set of nonnegative numbers is nonnegative. $\qquad\blacksquare$
 
-**Conjecture 4 (Quantitative CLT / convergence rate).** For the empirical distribution $\hat p_m$ of $m$ i.i.d. samples from $p$ on the grid, $\mathbb{E}[W_1(\hat p_m, p)] \le C(n)/\sqrt{m}$ with explicit constant $C(n) = \Theta(n)$ coming from the $\sum_k \mathrm{Var}(F_{\hat p_m}(k))$ decomposition of the CDF form. *Test:* expand $\mathbb{E}[W_1]$ via the CDF formula and bound each $\mathbb{E}|F_{\hat p_m}(k) - F_p(k)|$ by $\sqrt{F_p(k)(1-F_p(k))/m}$ (binomial variance), then sum.
+**Theorem 7.2 (`wValue_self`).**
+$\operatorname{wValue}(d, a, a) = 0$.
 
-**Conjecture 5 (Bridge to the tropical / max-plus catalog).** The max-plus "measures" of a tropical measure theory carry a natural $(\min,+)$ transport cost; conjecture that the tropical analogue $W_1^{\mathrm{trop}}(p,q) = \max_k |F_p(k) - F_q(k)|$ (the $L^\infty$ CDF distance, the $r\to\infty$ limit of $W_r$) is a metric and equals an idempotent Kantorovich dual.
+*Proof sketch.* Consider the **diagonal plan** $\pi_{ij} = a_i$ if $i = j$ and
+$0$ otherwise. Its row sum at $i$ is $a_i$ and its column sum at $j$ is $a_j$, so
+it is a feasible coupling of $a$ with itself. Its cost is
+$\sum_i a_i\, d_{ii} = \sum_i a_i \cdot 0 = 0$. Combined with Theorem 7.1
+($\operatorname{wValue} \ge 0$) and the fact that $0$ is achieved by a feasible
+plan, the optimum is exactly $0$. $\qquad\blacksquare$
+
+**Theorem 7.3 (`wValue_symm`).**
+$\operatorname{wValue}(d, a, b) = \operatorname{wValue}(d, b, a)$.
+
+*Proof sketch.* Define the **transpose** of a plan by
+$\pi^{\top}_{ji} = \pi_{ij}$. If $\pi$ couples $a$ to $b$, then $\pi^{\top}$
+couples $b$ to $a$: the row sums of $\pi^{\top}$ are the column sums of $\pi$
+(equal to $b$) and vice versa. Because $d$ is symmetric,
+$\operatorname{transportCost}(d, \pi^{\top}) = \sum_{j,i} \pi^{\top}_{ji} d_{ji}
+= \sum_{i,j} \pi_{ij} d_{ij} = \operatorname{transportCost}(d, \pi)$.
+Transposition is an involutive bijection $\Pi(a,b) \to \Pi(b,a)$ preserving cost,
+so the two optimization problems have the same optimum. $\qquad\blacksquare$
+
+**The fourth axiom (triangle inequality).** The remaining metric axiom,
+$\operatorname{wValue}(d, a, c) \le \operatorname{wValue}(d, a, b) +
+\operatorname{wValue}(d, b, c)$, requires the **gluing lemma** (Section 8) and is
+not proved here; it is the single missing ingredient that would certify
+$\operatorname{wValue}$ as a genuine metric on the simplex.
 
 ---
 
-## 11. Conclusion
+## 8. Discussion and Future Work
 
-We have given a complete, self-contained theory of the one-dimensional discrete 1-Wasserstein distance built on a single closed form. From $W_1(p,q) = \sum_k |F_p(k) - F_q(k)|$ flow the metric axioms, a constructive Kantorovich–Rubinstein duality with an explicit optimal potential, the Dirac isometry, the mean-difference bound, and the primal coupling lower bound. The result is a transparent, computable, and rigorously justified geometry on the space of distributions — a foundation on which the higher-order, contraction-theoretic, statistical, and tropical extensions of Section 10 can be erected.
+The four pillars above establish finite optimal transport on rigorous footing:
+the problem is well posed (existence), it specializes to combinatorial matching
+(permutation plans), it is solved by sorting for quadratic cost (Brenier), and
+its optimum is a near-metric (three of four axioms). Three precise conjectures
+mark the frontier.
+
+### 8.1 The finite Wasserstein triangle inequality (gluing lemma)
+
+**Conjecture.** For a nonnegative ground cost $d$ satisfying $d_{ik} \le d_{ij} +
+d_{jk}$ and probability vectors $a, b, c$,
+$\operatorname{wValue}(d, a, c) \le \operatorname{wValue}(d, a, b) +
+\operatorname{wValue}(d, b, c)$.
+
+The key idea is the **glued plan** $\gamma_{ik} = \sum_j \frac{\pi_{ij}
+\sigma_{jk}}{b_j}$ (with the convention $0/0 = 0$, valid because $b_j = 0$ forces
+the entire $j$-th slice of $\pi$ and $\sigma$ to vanish). One checks $\gamma$ is a
+feasible coupling of $a$ and $c$, and its cost is bounded by
+$\operatorname{cost}(\pi) + \operatorname{cost}(\sigma)$ termwise through
+$d_{ik} \le d_{ij} + d_{jk}$. With existence of the optimal $\pi, \sigma$
+(Theorem 4.2) and the polytope API already in hand, only the division-by-marginal
+bookkeeping remains. This is the last metric axiom.
+
+### 8.2 Birkhoff–von Neumann lifts Brenier to the full polytope
+
+**Conjecture.** For quadratic cost with monovarying $x, y$, the identity coupling
+$\operatorname{permPlan}(\mathrm{id})$ minimizes $\operatorname{transportCost}$
+over the **entire** transportation polytope of uniform marginals, not merely over
+permutation couplings.
+
+The key idea is that the extreme points of the doubly stochastic (Birkhoff)
+polytope are exactly the permutation matrices, so a linear functional attains its
+minimum at a permutation; combined with Theorem 6.4 this yields global
+optimality. We already have feasibility of permutation plans (Theorem 5.2), their
+cost (Theorem 5.3), and compactness of the polytope (Theorem 4.1). A Lean proof of
+Birkhoff–von Neumann (currently absent from Mathlib) is the only missing
+ingredient.
+
+### 8.3 Kantorovich–Rubinstein duality
+
+**Conjecture.** $\operatorname{wValue}(d, a, b) = \sup \big\{ \sum_i a_i f_i -
+\sum_j b_j g_j \big\}$ over potentials $f, g$ with $f_i - g_j \le d_{ij}$; i.e.
+finite OT equals its linear-program dual.
+
+The key idea is that the Kantorovich problem is a finite linear program over a
+compact feasible set, so LP strong duality (no duality gap) applies and the dual
+optimum is attained at a vertex of the potential polytope. We have already proved
+the primal feasible set is compact and the objective linear/continuous — exactly
+the hypotheses under which finite-dimensional LP duality holds.
+
+### 8.4 Broader directions
+
+Beyond these, natural extensions include: entropic regularization and the
+Sinkhorn algorithm (adding $\varepsilon \sum \pi_{ij} \log \pi_{ij}$ to make the
+problem strongly convex and solvable by alternating projections); the
+$p$-Wasserstein family $W_p = (\operatorname{wValue}(d^p, \cdot, \cdot))^{1/p}$
+and its metric structure; convergence of empirical measures (the statistical
+rate at which sampled distributions approach their population in Wasserstein
+distance); and the dynamic Benamou–Brenier formulation connecting OT to fluid
+flow and gradient flows of entropy.
 
 ---
 
-## References
+## 9. Conclusion
 
-The development is self-contained. The classical background — Monge's earthwork problem, Kantorovich's linear-programming relaxation and duality, the Kantorovich–Rubinstein theorem, Brenier's polar factorization for quadratic cost, and the Wasserstein GAN — is standard in the optimal transport and machine-learning literature.
+We have given a rigorous, self-contained account of finite optimal transport.
+The transportation polytope is compact and an optimal plan always exists
+(`isCompact_feasibleSet`, `exists_optimal_plan`); permutation plans realize the
+assignment problem (`permPlan_isTransportPlan`, `transportCost_permPlan`);
+quadratic cost is solved by the monotone matching (`brenier_monotone_optimal`,
+`perm_quadratic_optimal`); and the optimal cost satisfies nonnegativity,
+vanishing self-distance, and symmetry (`wValue_nonneg`, `wValue_self`,
+`wValue_symm`). Together these results form the backbone of the Wasserstein
+geometry that has reshaped probability, optimization, and machine learning, with
+the triangle inequality, Birkhoff–von Neumann globalization, and LP duality
+charted as the immediate next milestones.
+
+## References (classical background, for context only)
+
+- G. Monge, *Mémoire sur la théorie des déblais et des remblais*, 1781.
+- L. V. Kantorovich, *On the translocation of masses*, 1942.
+- Y. Brenier, *Polar factorization and monotone rearrangement of
+  vector-valued functions*, Comm. Pure Appl. Math., 1991.
+- C. Villani, *Optimal Transport: Old and New*, Springer, 2009.
+- G. Peyré and M. Cuturi, *Computational Optimal Transport*, 2019.
+- M. Arjovsky, S. Chintala, L. Bottou, *Wasserstein GAN*, 2017.
