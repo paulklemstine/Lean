@@ -9619,7 +9619,7 @@
       "Funk 2015",
       "ArXiv:2305.xxx"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d0e7e8c",
     "description": "Conjecture: For every integer n ≥ 2, a biased graph is gainable over the cyclic group Z_n if and only if it contains none of the minors ( (n+1)K2, ∅ ), ±K3, or -K4.",
     "domain_bridges": [
       "biased graphs",
@@ -9637,7 +9637,7 @@
     "proof_strategy": "Prove the equivalence by induction on the size of the graph, using the theory of partial groups to reduce to Z_2 and Z_3 cases and applying known excluded minor classifications for those groups.",
     "research_mode": "team",
     "source_exp_id": "2606.23826v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T17:27:31.523329+00:00",
     "title": "Excluded minors for Z_n-gainable biased graphs"
   },
