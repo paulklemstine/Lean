@@ -8162,6 +8162,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Star Ramsey thresholds in structured host graphs\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this cycle. The proved\nresults (`Threshold.lean`, `Graphs.lean`, `CatalogBridge.lean`) establish the **exact local\nthreshold** `(\u2211_j (t_j \u2212 1)) + 1` for forcing a monochromatic star, the graph-level forcing\ndirection, and the bridge to the catalog's matching pigeonhole. What remains open is the\n*global converse* and the role of the `s`-connector structure.\n\n## Conjecture 1 \u2014 Global avoidance equals bounded-degree edge decomposition\nA finite graph `G` admits a `q`-edge-colouring with **no** monochromatic star `K_{1,t_j}`\n(every vertex has `< t_j` edges of colour `j`) **iff** `E(G)` can be partitioned into colour\nclasses `G_1,\u2026,G_q` with `\u0394(G_j) \u2264 t_j \u2212 1`. In particular this is possible whenever the\nmaximum degree satisfies `\u0394(G) \u2264 \u2211_j (t_j \u2212 1)`.\n- **The key insight is** that avoiding stars globally is *exactly* a de Werra balanced\n  edge-colouring with prescribed per-class degree caps, so the star\u2013Ramsey converse is an\n  edge-decomposition theorem, not a counting one.\n- **Why now?** The forcing direction is already proved (`hasMonoStar_of_degree`); only the\n  decomposition lemma is missing, and Mathlib now has enough `SimpleGraph` degree API\n  (`SimpleGraph.degree`, `neighborFinset`) to attempt an Eulerian-orientation construction.\n\n## Conjecture 2 \u2014 The `max_j t_j` term is purely global\nFor the complete graph `K_N` (the `s`-minimal connector), the exact star threshold is\n`N = (\u2211_j (t_j \u2212 1)) + 2`, with **no** `+max_j t_j` correction; the extra `max{2s, s+max_j t_j}`\nterm of the matching-style formula appears only for `s \u2265 2` connectors where forced edge sharing\nacross a cut of size `s` blocks the local construction.\n- **The key insight is** that a single vertex never sees colour interaction, so any deviation\n  from the affine bound `\u2211(t_j\u22121)+1` is a cut/connectivity phenomenon measured by `s`.\n- **Why now?** `ComputationalEvidence.md` already exhibits the `q=2, t=(2,2)` gap between the\n  proposed formula (`N\u22655`) and the proved forcing (`N=4`), pinning the discrepancy to global\n  structure.\n\n## Conjecture 3 \u2014 Sharp two-sided threshold for regular hosts\nIf `G` is `d`-regular and `d \u2264 \u2211_j (t_j \u2212 1)`, then `G` admits a star-free `q`-colouring; hence\nfor `d`-regular `G` the star\u2013Ramsey property holds **iff** `d \u2265 (\u2211_j (t_j \u2212 1)) + 1`, with no\ncorrection term at all.\n- **The key insight is** that regularity removes the degree imbalance that the `max_j t_j` term\n  compensates for, collapsing the threshold to the clean local value.\n- **Why now?** Regular graphs have `1`-factorization / Eulerian tools already in reach, making\n  this the easiest non-complete case in which to test Conjecture 1's decomposition.\n\n## Conjecture 4 \u2014 Unified pigeonhole for stars and matchings\nFor a `q`-colouring of a matching `M`, the colour `j` maximizing the class size simultaneously\nrealizes both the star bound (`class \u2265 \u2308#M/q\u2309`) and the matching bound (`q\u00b7class \u2265 #M`), and the\ntwo thresholds coincide exactly when all `t_j` are equal.\n- **The key insight is** that `StarRamsey.sum_cc` and the catalog's `card_biUnion` are the same\n  identity, so stars and matchings are extracted from one maximal colour class.\n- **Why now?** `CatalogBridge.star_and_matching_pigeonhole` already proves the conjunction; the\n  remaining step is the equality-case analysis, a finite `omega`/`Finset` argument.\n\n## Conjecture 5 \u2014 Hypergraph star threshold\nFor `r`-uniform hypergraphs, a \"star\" at `v` being `t_j` incident edges of colour `j`, the exact\nlocal threshold is again `(\u2211_j (t_j \u2212 1)) + 1` on the *codegree-1* incidence count, independent\nof the uniformity `r`.\n- **The key insight is** that the avoidance construction (`avoidanceF`) never used that elements\n  of `E` are graph edges \u2014 it works for any finite incidence set, so it lifts verbatim to\n  hypergraphs.\n- **Why now?** `forcingF`/`avoidanceF` are already stated over an abstract `Finset \u03b1`; only the\n  hypergraph incidence wrapper needs to be added.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2760",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "db606ba2",
+    "status": "available",
+    "timestamp": "2026-06-28T07:31:39.171022+00:00",
+    "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this cycl"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8319,6 +8334,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle db606ba2 (Q=0.623) proved 9 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: For an s-connector graph G on N vertices and a q-edge-coloring of its edges, there exists a color j\u2208[q] such that G contains a monochromatic star K_{1, t_j} (a vertex with at least t_j inc",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_db606ba2_f8e06a61",
+    "priority_score": 0.6728000000000001,
+    "research_mode": "team",
+    "source_exp_id": "db606ba2",
+    "status": "available",
+    "timestamp": "2026-06-28T07:31:47.790067+00:00",
+    "title": "Close Proofs: Exact multicolor Ramsey threshold for stars in s-connector graphs"
   },
   {
     "consumed_by_exp_id": "",

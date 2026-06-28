@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "db606ba2",
     "filename": "exact_multicolor_ramsey_threshold_for_stars_in_s_c.json",
     "pkg_num": 172,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6228,
     "title": "Exact Local Threshold for Monochromatic Stars in Multicolored Graphs"
   },
   {
@@ -5016,8 +5016,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "exact_multicolor_ramsey_threshold_for_stars_in_s_c",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6228,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Exact Local Threshold for Monochromatic Stars in Multicolored Graphs"
     }

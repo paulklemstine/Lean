@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "50adb4ee",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Homological Necessity for Spectral Bounds\n\nDerived from this cycle's findings (formalized in `Core.lean`, `ConeAcyclic.lean`,\n`LinkRigidity.lean`): cones/apices force the reduced",
-      "quality_score": 0.49653899999999995,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-24T20:28:23",
-      "title": "Necessity of Homological Condition for Spectral Radius Bound"
-    },
-    {
       "cycle_id": "5a434903",
       "domain": "Probability",
       "key_insight": "# Future directions\n\n## 1. Monotone closure of the full Alon–Shikhelman counting hierarchy\n\nThe wrappers proved here transport a single cubic bound across the subgraph order, but the same\nmechanism sh",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-06-28T07:25:03",
       "title": "Invariance of the field invariant m_f under purely inseparable base change"
+    },
+    {
+      "cycle_id": "db606ba2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Star Ramsey thresholds in structured host graphs\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this cycle. The proved\nresults (`Threshold.lean`, `Graphs",
+      "quality_score": 0.6228,
+      "sorry_count": 3,
+      "theorem_count": 9,
+      "timestamp": "2026-06-28T07:31:47",
+      "title": "Exact multicolor Ramsey threshold for stars in s-connector graphs"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.747936
     }
   ],
-  "last_updated": "2026-06-28T07:25:03",
+  "last_updated": "2026-06-28T07:31:47",
   "open_questions": [
-    {
-      "context": "## Verified results (all `sorry`-free)",
-      "cycle_id": "bfb62bb9",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-06-16T10:49:08"
-    },
     {
       "context": "Main results (all `sorry`-free):",
       "cycle_id": "2ec4044e",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 2,
       "timestamp": "2026-06-28T05:31:58"
+    },
+    {
+      "context": "for the star half; the conjunction is `sorry`-free and uses both results literally.; `omega`.  Both `sorry`-free.; `sorry`-free.",
+      "cycle_id": "db606ba2",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-06-28T07:31:47"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "49c290ff",
-        "quality": 0.48585960124610594,
-        "theorems": 9,
-        "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
-      },
-      {
         "cycle_id": "9e0667c2",
         "quality": 0.7800670000000001,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.6700199999999998,
         "theorems": 7,
         "title": "Invariance of the field invariant m_f under purely inseparable base change"
+      },
+      {
+        "cycle_id": "db606ba2",
+        "quality": 0.6228,
+        "theorems": 9,
+        "title": "Exact multicolor Ramsey threshold for stars in s-connector graphs"
       }
     ],
     "Bridges": [
