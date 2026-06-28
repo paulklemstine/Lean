@@ -1,83 +1,54 @@
-# Computational Evidence — Golden Ratio Diophantine Approximation
+# Computational Evidence
 
-Topic: continued fractions and Diophantine approximation, with the golden ratio
-`φ = (1+√5)/2` as the extremal (badly approximable) example.  Evidence supports
-the two formalized theorems:
+Concise numerical support for the theorems in this directory.
 
-* `GoldenRatio.badly_approximable`: `|φ − p/q| ≥ (1/3)/q²` for all `q ≥ 1`.
-* `GoldenRatioHurwitz.hurwitz_constant_sharp`: for `c > √5`, only finitely many
-  `p/q` satisfy `|φ − p/q| < 1/(c q²)`.
+## 1. Dirichlet bound `Lc x ≤ 1` (file `LagrangeConstantBridge.lean`)
 
-## 1. Convergents of `φ` are ratios of consecutive Fibonacci numbers
+The Lagrange constant is `Lc x = liminf_{q→∞} q·‖q·x‖`, where `‖·‖` is the
+distance to the nearest integer.  For `x = √2`, evaluating `q·‖q·x‖` along the
+continued-fraction convergents `p/q` of `√2`:
 
-`φ = [1;1,1,1,…]`, so its convergents are `F(n+1)/F(n)`.  The Binet identity
-(`GoldenRatio.fib_binet`) gives `F(n+1) − φ·F(n) = ψⁿ` with `ψ = (1−√5)/2`,
-`|ψ| ≈ 0.618034`.  Hence `|φ − F(n+1)/F(n)| = |ψ|ⁿ / F(n)` and
+| p   | q   | q·‖q·√2‖ |
+|-----|-----|----------|
+| 1   | 1   | 0.41421  |
+| 3   | 2   | 0.34315  |
+| 7   | 5   | 0.35534  |
+| 17  | 12  | 0.35325  |
+| 41  | 29  | 0.35361  |
+| 99  | 70  | 0.35354  |
+| 239 | 169 | 0.35355  |
 
-```
-q² · |φ − F(n+1)/F(n)| = F(n) · |ψ|ⁿ  →  1/√5 ≈ 0.4472136 .
-```
+The sequence converges to `1/(2√2) ≈ 0.35355`, comfortably below `1`.  This is
+consistent with `Lc_le_one_of_irrational` (every irrational has `Lc ≤ 1`) and in
+fact below the Hurwitz threshold `1/√5 ≈ 0.4472`, illustrating that the `≤ 1`
+bound is far from tight for quadratic irrationals.  Computed with
+`#eval` over `Float`-valued convergents.
 
-(The limit uses `φ·|ψ| = 1`.)
+## 2. Denominator unboundedness (`DiophantineApproximation.lean`)
 
-## 2. Table: `q² · |φ − p/q|` along the convergents
+The convergents `1/1, 3/2, 7/5, 17/12, 41/29, 99/70, 239/169, …` of `√2` have
+strictly increasing denominators `1 < 2 < 5 < 12 < 29 < 70 < 169 < …`, each
+satisfying `|√2 − p/q| < 1/q²`.  This is the finite-sample shadow of
+`irrational_den_unbounded`: arbitrarily large denominators occur among the
+Dirichlet-good approximations.
 
-Computed in Lean (`Float`); see the `#eval` reproduced below.
+## 3. Liouville vanishing constant (`LagrangeConstantBridge.lean`)
 
-| p   | q   | q²·|φ − p/q| |
-|-----|-----|--------------|
-| 1   | 1   | 0.618034 |
-| 2   | 1   | 0.381966 |
-| 3   | 2   | 0.472136 |
-| 5   | 3   | 0.437694 |
-| 8   | 5   | 0.450850 |
-| 13  | 8   | 0.445825 |
-| 21  | 13  | 0.447744 |
-| 34  | 21  | 0.447011 |
-| 55  | 34  | 0.447291 |
-| 89  | 55  | 0.447184 |
-| 144 | 89  | 0.447225 |
-| 233 | 144 | 0.447209 |
+For the Liouville number `L = Σ 10^{−k!}`, the truncations `a_n / 10^{n!}` give
+`|L − a_n/b_n| < 1/b_n^{n}` with denominators `b_n = 10^{n!}` growing as
+`10^{1}, 10^{1}, 10^{2}, 10^{6}, 10^{24}, …` (since `n! = 1,1,2,6,24,…`).
+Then `b_n·‖b_n·L‖ < b_n · b_n / b_n^{n} = 1/b_n^{n−2} → 0`, so the Lagrange
+constant collapses to `0`, matching `Lc_eq_zero_of_liouville`.
 
-Limit `1/√5 = 0.447214…`.
+## 4. Counterexample hunt
 
-Observations:
-* Every value is `> 1/3 = 0.3333…`, consistent with `badly_approximable`.
-* The values oscillate around and converge to `1/√5`, so no fixed `c > √5`
-  admits infinitely many `p/q` with `q²|φ − p/q| < 1/c` — consistent with
-  `hurwitz_constant_sharp`.  The convergents realize the boundary rate `1/√5`,
-  which is exactly why the constant cannot be improved.
+* `Lc x ≤ 1` for irrationals: no counterexample possible — Dirichlet guarantees
+  `q·‖q·x‖ < 1` infinitely often.  The rational `x = 1/2` has `Lc = 0` as well
+  (eventually `‖q·x‖ = 0`), so the bound is not specific to irrationals, but the
+  catalog framing is about irrational `x` where `Lc > 0` is possible.
+* Liouville quadratic non-root: tested that `transcendental_liouvilleNumber`
+  numbers are never roots of small integer quadratics; consistent with
+  `liouville_not_root_quadratic`.
 
-Reproduce:
-```lean
-def phiF : Float := (1 + Float.sqrt 5)/2
-def fib : Nat → Nat | 0 => 0 | 1 => 1 | (n+2) => fib n + fib (n+1)
-#eval (List.range 12).map (fun n =>
-  let q := fib (n+1); let p := fib (n+2);
-  (p, q, (Float.ofNat q)^2 * (phiF - (Float.ofNat p)/(Float.ofNat q)).abs))
-```
-
-## 3. Counterexample hunt for `badly_approximable`
-
-A brute-force scan over `1 ≤ q ≤ 5000` and the two nearest numerators
-`p ∈ {⌊qφ⌋, ⌈qφ⌉}` (the only candidates that could violate a `1/q²`-type bound)
-finds **no** pair with `q²|φ − p/q| < 1/3`; the minimum observed value is the
-convergent value `0.381966` at `(p,q) = (2,1)` and the running minimum tends to
-`1/√5`.  No counterexample to either theorem was found.
-
-## 4. Norm form identity (the engine)
-
-The proofs rest on the integer "norm" `N(p,q) = p² − pq − q² = (p−qφ)(p−qψ)`.
-Small values confirm `N ≠ 0` for `q ≥ 1` (since `5` is not a perfect square):
-
-| (p,q) | N = p²−pq−q² |
-|-------|--------------|
-| (1,1) | −1 |
-| (2,1) | +1 |
-| (3,2) | −1 |
-| (5,3) | +1 |
-| (8,5) | −1 |
-
-Along the convergents `|N| = 1` exactly (these are the solutions of the Pell-like
-`|p² − pq − q²| = 1`), which is the arithmetic reason `φ` sits at the bottom of
-the Lagrange/Markov spectrum.
+All formal statements are verified in Lean with only the standard axioms
+`propext, Classical.choice, Quot.sound`.
