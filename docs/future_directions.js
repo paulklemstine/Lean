@@ -121,20 +121,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle cff6413b (Q=0.825), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every edge density \u03b2 \u2208 [0,1] the minimum possible asymptotic density of semi\u2011induced copies of S_{2,1} in an n\u2011vertex graph G with edge density \u03b2 is given by the one\u2011parameter three\u2011class complement\u2011split construction: let t \u2208 [0,1] be the unique solution of \u03b2 = t(1 \u2212 t/2); then the minimum semi",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_cff6413b_d3784f3b",
-    "priority_score": 0.92512,
-    "research_mode": "team",
-    "source_exp_id": "cff6413b",
-    "status": "available",
-    "timestamp": "2026-06-28T06:24:49.213579+00:00",
-    "title": "Deepening: Exact lower semi-inducibility profile for the red\u2011blue star S_{2,1}"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -505,7 +491,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Theory: Self-Adjoint Operators"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a530b001",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
       "Computation",
@@ -515,7 +501,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -2091,7 +2077,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9a7cbc8b",
     "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
     "domains": [
       "Algebra"
@@ -2100,7 +2086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -2598,7 +2584,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inflated line-transversal counterexamples have sphere homotopy type"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f11db87",
     "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
     "domains": [
       "Geometry"
@@ -2607,7 +2593,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:24:48.021151+00:00",
     "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
   },
@@ -5359,7 +5345,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "\u03a8_f-Lindemann\u2013Weierstrass Conjecture for Algebraic Independence of B\u00f6ttcher Coordinates"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5555684",
     "description": "Formulates a concise formalism in Lean 4 to verify an instance of Heged\u00e7s' eigenvalue condition using Gram matrix eigenvalues and algebraic constraints, making the bound falsifiable through explicit construction.",
     "domains": [
       "Algebra",
@@ -5369,7 +5355,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24624v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T11:13:57.875110+00:00",
     "title": "Proof of Heged\u00e7s bound via spectral constraints in combinatorial families"
   },
@@ -6128,7 +6114,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved lower bound for r-graphs with 0 or 2 edges in every (r+1)-set"
   },
   {
-    "consumed_by_exp_id": "53e074b6",
+    "consumed_by_exp_id": "",
     "description": "For a simple field extension L = K(\u03b8) in characteristic p > 0 with minimal polynomial f \u2208 K[x], and any purely inseparable field extension N/K, the numerical invariant m_{f,N} associated to the compositum NL/N (as defined in the paper) coincides with the invariant m_f associated to L/K. That is, m_{f,N} = m_f. This would imply that the criterion for NL = (NL)^{pi}(NL)^{sep} depends only on L/K and not on the choice of purely inseparable extension N/K.",
     "domains": [
       "Algebra"
@@ -6137,7 +6123,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19962v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-27T14:43:20.786451+00:00",
     "title": "Invariance of the field invariant m_f under purely inseparable base change"
   },
@@ -6548,11 +6534,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a finite field \ud835\udd3d_q with q>2, if the point set of the projective space PG(m-1, q) can be partitioned into (n-1)-dimensional subspaces (i.e., an (n-1)-spread exists), then n divides m. This follows from counting points in each subspace and using the divisibility properties of q^a-1.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2661",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.13836v1",
+    "status": "available",
+    "timestamp": "2026-06-28T06:31:29.742968+00:00",
+    "title": "Divisibility condition for spreads in finite projective spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2661",
+    "id": "fd_2662",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -6566,7 +6567,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2662",
+    "id": "fd_2663",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -6581,7 +6582,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2663",
+    "id": "fd_2664",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -6596,7 +6597,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2664",
+    "id": "fd_2665",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -6611,7 +6612,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2665",
+    "id": "fd_2666",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -6626,7 +6627,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2666",
+    "id": "fd_2667",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -6640,7 +6641,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2667",
+    "id": "fd_2668",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -6654,7 +6655,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2668",
+    "id": "fd_2669",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -6668,7 +6669,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2669",
+    "id": "fd_2670",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -6683,7 +6684,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2670",
+    "id": "fd_2671",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -6698,7 +6699,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2671",
+    "id": "fd_2672",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -6713,7 +6714,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2672",
+    "id": "fd_2673",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -6728,7 +6729,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2673",
+    "id": "fd_2674",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -6743,7 +6744,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2674",
+    "id": "fd_2675",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -6757,7 +6758,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2675",
+    "id": "fd_2676",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -6772,7 +6773,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2676",
+    "id": "fd_2677",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -6787,7 +6788,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2677",
+    "id": "fd_2678",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -6801,7 +6802,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2678",
+    "id": "fd_2679",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -6815,7 +6816,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2679",
+    "id": "fd_2680",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -6829,7 +6830,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2680",
+    "id": "fd_2681",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -6844,7 +6845,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2681",
+    "id": "fd_2682",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6859,7 +6860,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2682",
+    "id": "fd_2683",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -6874,7 +6875,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2683",
+    "id": "fd_2684",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6888,7 +6889,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2684",
+    "id": "fd_2685",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6902,7 +6903,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2685",
+    "id": "fd_2686",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6917,7 +6918,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2686",
+    "id": "fd_2687",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6931,7 +6932,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2687",
+    "id": "fd_2688",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6946,7 +6947,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2688",
+    "id": "fd_2689",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6960,7 +6961,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2689",
+    "id": "fd_2690",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6974,7 +6975,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2690",
+    "id": "fd_2691",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6988,7 +6989,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2691",
+    "id": "fd_2692",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -7003,7 +7004,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2692",
+    "id": "fd_2693",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -7018,7 +7019,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2693",
+    "id": "fd_2694",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -7033,7 +7034,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2694",
+    "id": "fd_2695",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -7047,7 +7048,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2695",
+    "id": "fd_2696",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -7062,7 +7063,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2696",
+    "id": "fd_2697",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -7076,7 +7077,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2697",
+    "id": "fd_2698",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -7091,7 +7092,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2698",
+    "id": "fd_2699",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -7106,7 +7107,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2699",
+    "id": "fd_2700",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -7120,7 +7121,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2700",
+    "id": "fd_2701",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -7135,7 +7136,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2701",
+    "id": "fd_2702",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -7149,7 +7150,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2702",
+    "id": "fd_2703",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
@@ -7164,7 +7165,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2703",
+    "id": "fd_2704",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22513v1",
@@ -7179,7 +7180,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2704",
+    "id": "fd_2705",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22324v1",
@@ -7193,7 +7194,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2705",
+    "id": "fd_2706",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22422v1",
@@ -7207,7 +7208,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2706",
+    "id": "fd_2707",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22253v1",
@@ -7221,7 +7222,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2707",
+    "id": "fd_2708",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22458v1",
@@ -7235,7 +7236,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2708",
+    "id": "fd_2709",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22010v1",
@@ -7249,7 +7250,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2709",
+    "id": "fd_2710",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22064v1",
@@ -7264,7 +7265,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2710",
+    "id": "fd_2711",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
@@ -7279,7 +7280,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2711",
+    "id": "fd_2712",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22106v1",
@@ -7294,7 +7295,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2712",
+    "id": "fd_2713",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22011v2",
@@ -7308,7 +7309,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2713",
+    "id": "fd_2714",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21927v1",
@@ -7323,7 +7324,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2714",
+    "id": "fd_2715",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21859v1",
@@ -7337,7 +7338,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2715",
+    "id": "fd_2716",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21902v1",
@@ -7352,7 +7353,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2716",
+    "id": "fd_2717",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21870v1",
@@ -7367,7 +7368,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2717",
+    "id": "fd_2718",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21534v1",
@@ -7381,7 +7382,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2718",
+    "id": "fd_2719",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21548v1",
@@ -7396,7 +7397,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2719",
+    "id": "fd_2720",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21780v1",
@@ -7411,7 +7412,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2720",
+    "id": "fd_2721",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21313v1",
@@ -7425,7 +7426,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2721",
+    "id": "fd_2722",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21383v1",
@@ -7439,7 +7440,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2722",
+    "id": "fd_2723",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21159v1",
@@ -7454,7 +7455,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2723",
+    "id": "fd_2724",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20984v1",
@@ -7469,7 +7470,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2724",
+    "id": "fd_2725",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20831v1",
@@ -7483,7 +7484,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2725",
+    "id": "fd_2726",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23721v1",
@@ -7497,7 +7498,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2726",
+    "id": "fd_2727",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20397v1",
@@ -7511,7 +7512,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2727",
+    "id": "fd_2728",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -7520,30 +7521,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "NoSquareSideDiceSolutionConjecture"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "The conjecture asserts that terminal cycle lengths in odd bases are bounded by (B-1)/2, achieving equality only for prime B.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2728",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20439v1",
-    "status": "available",
-    "timestamp": "2026-06-27T13:58:50.027566+00:00",
-    "title": "Maximum Cycle Length Bound in Odd Bases"
-  },
-  {
     "consumed_by_exp_id": "db606ba2",
-    "description": "Conjecture that for any intersecting family F \u2286 ( [n] choose k ) with n \u2265 60\u00b7k^(3/2) and k \u2265 50, the size of the family of symmetric differences SD(F) is at most \u03a3_{\u2113=0}^{k-1} binom(n-1, 2\u2113).",
+    "description": "The conjecture asserts that terminal cycle lengths in odd bases are bounded by (B-1)/2, achieving equality only for prime B.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2729",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.20043v1",
+    "source_exp_id": "2606.20439v1",
     "status": "in_progress",
+    "timestamp": "2026-06-27T13:58:50.027566+00:00",
+    "title": "Maximum Cycle Length Bound in Odd Bases"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any intersecting family F \u2286 ( [n] choose k ) with n \u2265 60\u00b7k^(3/2) and k \u2265 50, the size of the family of symmetric differences SD(F) is at most \u03a3_{\u2113=0}^{k-1} binom(n-1, 2\u2113).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2730",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20043v1",
+    "status": "available",
     "timestamp": "2026-06-27T14:19:38.119794+00:00",
     "title": "Bound on symmetric differences of intersecting families"
   },
@@ -7553,7 +7554,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2730",
+    "id": "fd_2731",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19981v1",
@@ -7568,7 +7569,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2731",
+    "id": "fd_2732",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19851v1",
@@ -7583,7 +7584,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2732",
+    "id": "fd_2733",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -7597,7 +7598,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2733",
+    "id": "fd_2734",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19234v1",
@@ -7611,7 +7612,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2734",
+    "id": "fd_2735",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19132v1",
@@ -7626,7 +7627,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_2735",
+    "id": "fd_2736",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18794v1",
@@ -7641,7 +7642,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2736",
+    "id": "fd_2737",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.17955v1",
@@ -7655,7 +7656,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2737",
+    "id": "fd_2738",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.17854v1",
@@ -7664,19 +7665,34 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound on the Integrality Gap of the Rectangle Piercing Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cff12e07",
     "description": "A conjecture asserting the validity of a specific congruence modulo \u03a6_n(q) when n \u22611 mod4, aligning with established hypergeometric summation properties.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2738",
+    "id": "fd_2739",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.16495v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T21:38:50.447440+00:00",
     "title": "Congruence Modulo Cyclotomic Polynomial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper conjectures that for fixed m > 1, the number of symmetric chain decompositions (SCDs) of the minuscule lattice L(m,n) grows super-exponentially with n. This conjecture is extended to the lattice M(n) of partitions into distinct parts at most n. We propose formalizing the lower bound for the growth rate of #SCD(M(n)) to prove it exceeds any exponential function of n.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2740",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.15891v1",
+    "status": "available",
+    "timestamp": "2026-06-27T22:38:24.430692+00:00",
+    "title": "Super-exponential growth of the number of symmetric chain decompositions of M(n)"
   },
   {
     "consumed_by_exp_id": "",
@@ -7685,7 +7701,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2740",
+    "id": "fd_2741",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15758v1",
@@ -7700,7 +7716,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2741",
+    "id": "fd_2742",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15498v1",
@@ -7714,7 +7730,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2742",
+    "id": "fd_2743",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15082v1",
@@ -7728,7 +7744,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2743",
+    "id": "fd_2744",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15018v1",
@@ -7743,7 +7759,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2744",
+    "id": "fd_2745",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14656v1",
@@ -7757,7 +7773,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2745",
+    "id": "fd_2746",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14599v1",
@@ -7771,7 +7787,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2746",
+    "id": "fd_2747",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14538v1",
@@ -7786,7 +7802,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2747",
+    "id": "fd_2748",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14464v1",
@@ -7801,7 +7817,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2748",
+    "id": "fd_2749",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14296v1",
@@ -7816,7 +7832,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2749",
+    "id": "fd_2750",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14190v1",
@@ -7831,7 +7847,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2750",
+    "id": "fd_2751",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14345v1",
@@ -7845,7 +7861,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2751",
+    "id": "fd_2752",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14020v1",
@@ -7860,7 +7876,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2752",
+    "id": "fd_2753",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.13903v1",
@@ -7875,7 +7891,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2753",
+    "id": "fd_2754",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.13764v1",
@@ -7890,13 +7906,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2754",
+    "id": "fd_2755",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.13863v1",
     "status": "available",
     "timestamp": "2026-06-28T06:04:20.795992+00:00",
     "title": "Semistable reduction of smooth quartics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates a quantitative improvement over the known lower bounds on the image size of non-special polynomials in localization settings, leveraging a carefully constructed error structure.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2756",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.13619v1",
+    "status": "available",
+    "timestamp": "2026-06-28T06:31:42.844764+00:00",
+    "title": "Split primes and the Elekes-R\u00f3nyai problem"
   },
   {
     "consumed_by_exp_id": "",
@@ -8098,36 +8128,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Lower semi-inducibility profile of the red-blue star `S_{2,1}`\n\nThis cycle established (in `RedBlueStarS21Profile.lean`, `RedBlueStarS21Optimization.lean`,\n`RedBlueStarS21CatalogBridge.lean`):\n\n- `\u03b2(t) = t(1 \u2212 t/2)` is a strictly increasing bijection `[0,1] \u2192 [0,1/2]`, so the construction\n  parameter `t` exists and is unique exactly on `\u03b2 \u2208 [0, 1/2]` (`exists_unique_param`).\n- The universal claim \"for every `\u03b2 \u2208 [0,1]`\" is **ill-posed for `\u03b2 > 1/2`**\n  (`claim_illposed_above_half`, `refutation_three_quarters`).\n- The star functional `f(d) = d\u00b2(1 \u2212 d)` is a bump bounded by `4/27`, and the *mean-only*\n  relaxation of the minimum is `0` for every `\u03b2` (`relaxed_infimum_zero`): positivity of the\n  true minimum is a graph-realizability effect.\n\nThe conjectures below are derived from these findings.\n\n## Conjecture 1 \u2014 Corrected boundary value (`p_min(1/2) > 0`)\nThe minimum semi-induced `S_{2,1}` density at edge density `1/2` is **strictly positive**, with\n`p_min(1/2) = 1/12`, attained in the limit by the threshold graphon `W(x,y) = 1 \u21d4 x + y > 1`.\n*The key insight is...* that the headline formula's prediction `p_min(1/2) = 0` is impossible\nbecause universal vertices force every vertex's degree up, so degrees cannot concentrate at\n`{0,1}` while keeping density `1/2`; the bump `f` therefore cannot integrate to `0`.\n*Why now?* This cycle proved both `relaxed_infimum_zero` (mean alone allows `0`) and the bump\nbounds, isolating realizability as the exact obstruction and pinning the candidate value `1/12`.\n\n## Conjecture 2 \u2014 Threshold graphons are the extremizers on `[0, 1/2]`\nFor every `\u03b2 \u2208 [0, 1/2]`, the minimum of the `f`-average `\u222b d(x)\u00b2(1 \u2212 d(x)) dx` over graphons\nof edge density `\u03b2` is attained by a threshold graphon `W(x,y) = 1 \u21d4 x + y > \u03b8` (with\n`\u03b8` chosen so the edge density is `\u03b2`).\n*The key insight is...* that `f` is concave-then-convex (`f'' = 2 \u2212 6d`, sign change at\n`d = 1/3`), and minimizing a fixed-mean average of such a functional over the graphical\n\"convex corner\" of degree sequences selects the extreme threshold structure.\n*Why now?* The bump's exact curvature was made explicit this cycle (`starFunctional_le` via\n`(3d \u2212 2)\u00b2`), giving the concrete convexity data needed to test the threshold-extremizer claim\ncomputationally before a Lean proof.\n\n## Conjecture 3 \u2014 The true low-density profile is `p_min(\u03b2) = \u03b2\u00b2 \u2212 \u03b2\u00b3 + o` only near `0`\nNear `\u03b2 = 0`, the leading behaviour of the true minimum profile matches the construction\nformula `t\u00b2(1 \u2212 t)` to first order (since `t = \u03b2 + O(\u03b2\u00b2)` there), but the two diverge before\n`\u03b2 = 1/2`.\n*The key insight is...* inverting `\u03b2 = t \u2212 t\u00b2/2` gives `t = 1 \u2212 \u221a(1 \u2212 2\u03b2) = \u03b2 + \u03b2\u00b2/2 + O(\u03b2\u00b3)`,\nso `t\u00b2(1 \u2212 t) = \u03b2\u00b2 + O(\u03b2\u00b3)`; the formula is asymptotically correct at the bottom and only fails\nas `\u03b2 \u2192 1/2`.\n*Why now?* The strictly-monotone bijection `edgeDensity_strictMonoOn` proved this cycle makes\nthe inverse `t(\u03b2)` well-defined and analytic on `[0,1/2)`, enabling a rigorous local expansion.\n\n## Conjecture 4 \u2014 Complement symmetry covers `\u03b2 \u2208 [1/2, 1]` via `S_{1,2}`\nThe upper half-range `\u03b2 \u2208 [1/2, 1]` is governed not by this formula but by the *complement*\npattern `S_{1,2}` (one red, two blue leaves): `p_min^{S_{2,1}}(\u03b2) = p_min^{S_{1,2}}(1 \u2212 \u03b2)`,\nrecovering a full profile on `[0,1]` by gluing the two halves at `\u03b2 = 1/2`.\n*The key insight is...* complementing a graph swaps edges and non-edges, turning a semi-induced\n`S_{2,1}` (two red, one blue) into a semi-induced `S_{1,2}` and mapping edge density `\u03b2` to\n`1 \u2212 \u03b2`; the construction parameter `t` then re-enters through `1 \u2212 \u03b2 = t(1 \u2212 t/2)`.\n*Why now?* This cycle showed the single-formula construction tops out at `\u03b2 = 1/2`\n(`edgeDensity_le_half`), making a second, complementary mechanism for the upper half not just\nnatural but necessary.\n\n## Conjecture 5 \u2014 A realizability lower bound matching `4/27` everywhere it binds\nThere is a density threshold `\u03b2*` such that for `\u03b2` in a neighbourhood of the bump location the\nminimum profile is bounded below by a positive constant tied to `4/27`, the bump maximum.\n*The key insight is...* `starFunctional_max` shows a single neighbour-density of `2/3`\ncontributes `4/27`; a positive fraction of such vertices is unavoidable at densities forcing\nmany vertices into the bump interior `(1/3, 1)`.\n*Why now?* The exact bump maximum and its location were formalized this cycle, giving the\nconstant against which any realizability lower bound must be calibrated.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2755",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "cff6413b",
-    "status": "available",
-    "timestamp": "2026-06-28T06:24:39.278592+00:00",
-    "title": "(in `RedBlueStarS21Profile.lean`, `RedBlueStarS21Optimiza"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Sharp lower bounds for `L(x,y)` (smooth-number count)\n\nBuilt on `Catalog/Novelty/SmoothNumberLowerBound.lean`, where:\n\n- `L x y` = number of `y`-smooth integers in `(0, x]`;\n- `primeContribution x y = \u2211_{y < p \u2264 x, p prime} \u230ax/p\u230b`;\n- proved unconditionally `x - primeContribution x y \u2264 L x y` (`L_lower_sieve`);\n- proved this is an **equality** when no `n \u2264 x` has two distinct prime factors\n  `> y` (`L_eq_sieve_of_no_double_large_factor`);\n- proved `L x y = x \u2194 no prime in (y, x]` (`L_eq_iff_no_prime_between`) and the\n  Bertrand consequence `L (2y) y < 2y` (`L_two_mul_lt`).\n\nThe following conjectures are precise and Lean-targetable for the next cycle.\n\n## C1 \u2014 Exact sharpness threshold (iff form)\n**Conjecture.** `L x y = x - primeContribution x y` holds **iff** for all\ndistinct primes `p, q \u2208 (y, x]` one has `p * q > x`.\nThe current `L_eq_sieve_of_no_double_large_factor` is the `\u2190` direction; the\nconverse should follow by exhibiting `pq \u2264 x` as a doubly-counted integer that\nmakes the union bound strict. A convenient sufficient closed form: the equality\nholds whenever `x < (y+1)^2` is replaced by `x < p\u2081 p\u2082` for the two smallest\nprimes `p\u2081 < p\u2082` in `(y, x]`.\n\n## C2 \u2014 Second-order (Bonferroni) bracketing\n**Conjecture.** The two-term inclusion\u2013exclusion correction brackets `L`:\n```\nx - \u2211_{p} \u230ax/p\u230b + \u2211_{p<q} \u230ax/(pq)\u230b \u2265 L x y \u2265 x - \u2211_{p} \u230ax/p\u230b ,\n```\nsums over primes in `(y, x]`. More generally, truncating Legendre's formula at\nan even/odd number of terms gives upper/lower bounds (Bonferroni inequalities).\nTarget: formalize the depth-2 upper bound, then general `Brun`-style truncation.\n\n## C3 \u2014 Mertens-calibrated Hypothesis U\n**Conjecture.** For `2 \u2264 y \u2264 x`, `primeContribution x y \u2264 x \u00b7 (ln ln x \u2212 ln ln y) + C\u00b7x/ln y`\nfor an absolute constant `C` (a Mertens-type estimate for `\u2211_{y<p\u2264x} 1/p` times\n`x`, plus the `\u230a\u00b7\u230b` defect bounded by `\u03c0(x) \u2212 \u03c0(y)`). Consequently Hypothesis U\nwith `c = x(1 \u2212 (ln ln x \u2212 ln ln y)) \u2212 C x/ln y` is satisfied, yielding an\nexplicit density lower bound `L x y / x \u2265 1 \u2212 ln u + o(1)` for `u = ln x / ln y`\nin the Dickman range `1 \u2264 u \u2264 2` (matching `\u03c1(u) = 1 \u2212 ln u`).\n\n## C4 \u2014 Buchstab dual for rough numbers\n**Conjecture.** Let `R x y = #{n \u2208 (0,x] : every prime factor of n is > y}`\n(`y`-rough numbers). Then `R x y = x \u2212 L'` for a complementary smoothness notion,\nand `R` satisfies the elementary Buchstab recursion\n`R x y = R x (y\u22121) \u2212 R (x / y) (y\u22121)` when `y` is prime. Formalize this and derive\n`R x y \u2265 x \u220f_{p \u2264 y}(1 \u2212 1/p) \u2212 2^{\u03c0(y)}` (Legendre/Brun lower bound).\n\n## C5 \u2014 Prime-gap upgrades of the deficiency theorem\n**Conjecture.** Every strengthening of Bertrand sharpens `L_two_mul_lt`:\n- (Nagura) for `y \u2265 25`, a prime lies in `(y, 6y/5]`, hence `L (\u23086y/5\u2309) y < \u23086y/5\u2309`.\n- Conditionally (or via known unconditional results for large `y`), a prime lies\n  in `(y, y + y^{0.525}]`, giving `L (y + \u230ay^{0.525}\u230b) y < y + \u230ay^{0.525}\u230b`.\nThis makes `L`'s deficiency a quantitative *detector* of prime gaps and is a clean\nbridge from 11N25 to 11N05/11N13.\n",
-    "domains": [
-      "Pythagorean",
-      "Bridges"
-    ],
-    "id": "fd_2756",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c0f7c830",
-    "status": "available",
-    "timestamp": "2026-06-28T06:27:43.219649+00:00",
-    "title": "Built on `Catalog/Novelty/SmoothNumberLowerBound.lean`, where:"
   },
   {
     "consumed_by_exp_id": "",
@@ -8572,7 +8572,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce8c041d",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8582,7 +8582,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
