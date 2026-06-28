@@ -881,7 +881,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bc81b3a8",
     "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
     "domains": [
       "MachineLearning",
@@ -892,7 +892,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
@@ -2974,7 +2974,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Sharp Upper Bound for Uniform VC\u2011Dimension Families via Layered Stars"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72418ed5",
     "description": "For a connected signed graph \u03a3 and a non-isolated vertex v, the inequality \u03bb\u2081(\u03a3) \u2264 \u221a(\u03bb\u2081\u00b2(\u03a3\u2212v) + 2d(v) \u2212 1) holds, with equality if and only if \u03a3 is a signed star with v as the center or \u03a3 is a signed complete graph.",
     "domains": [
       "Physics"
@@ -2983,7 +2983,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T01:36:45.202062+00:00",
     "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
   },
@@ -3016,7 +3016,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exactevaluation of the vector-space Erd\u0151s Matching number m_q(n,k,s)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0eb9ce9e",
     "description": "Conjecture: For any prime power q and integers k, n with 2 \u2264 k \u2264 n/2, if n \u2265 2k+1 then every Boolean degree-one function on the Grassmann scheme J_q(n,k) is trivial (i.e., a linear combination of point indicators and their duals with coefficients in {0,1}). This extends the known result for q=2 and matches the thresholds proved for q=3,4,5 in the case k=2.",
     "domains": [
       "Pythagorean"
@@ -3025,7 +3025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T05:25:46.726799+00:00",
     "title": "Degree-one triviality threshold for Grassmann schemes"
   },
@@ -5853,7 +5853,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Determinantal Consistency"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f134ce6",
     "description": "Propose that for any Sprugnoli array $(g(x), f_1(x), f_2(x))$ in the first family, there exists a unique inverse array $(g^{-1}(x), f_1^{-1}(x), f_2^{-1}(x))$ whose coefficients are closed-form expressions involving only summation symbols, binomial coefficients, and arithmetic operations, as described in the paper's Section 3. This inverse must satisfy the condition that the matrix product of the original and inverse arrays yields the identity matrix.",
     "domains": [
       "Pythagorean"
@@ -5862,7 +5862,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22070v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T06:01:14.131396+00:00",
     "title": "Existence of Inverse Sprugnoli Arrays with Closed-Form Coefficients"
   },
@@ -6359,7 +6359,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gap-free floor of semiprime subset-sum set tends to zero"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1a8353e",
     "description": "The extended Eulerian numbers A(n,k,s) = \u2211_{j=0}^k (-1)^j C(n+1,j) (k+1-j-s)^n satisfy the recurrence A(n,k,s) = (k+1-s) A(n-1,k,s) + (n-k+s) A(n-1,k-1,s) for n \u2265 1, with boundary conditions A(0,0,s)=1 and A(n,k,s)=0 for k<0 or k>n. This generalizes the classical Eulerian recurrence (s=0).",
     "domains": [
       "Bridges"
@@ -6368,7 +6368,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15178v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-28T00:27:35.663578+00:00",
     "title": "Recurrence relation for extended Eulerian numbers"
   },
@@ -8015,7 +8015,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniform formula for the number of contiguous super\u2011regular m\u00d7n matrices over finite fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e767b4b1",
     "description": "This conjecture formalizes the classification of quotient matrices arising from perfect 2-colorings of generalized Petersen graphs GP(n,k), linking their existence to specific divisibility conditions on n and k. The theorem establishes a one-to-one correspondence between these matrices and the intersection arrays of covering radius one completely regular codes in this graph family.",
     "domains": [
       "Pythagorean",
@@ -8025,7 +8025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14190v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-28T03:30:44.853408+00:00",
     "title": "Classification of Covering Radius One Completely Regular Codes in Generalized Petersen Graphs via Quotient Matrices"
   },
@@ -8949,7 +8949,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "847a7b4e",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8959,7 +8959,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
