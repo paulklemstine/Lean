@@ -706,5 +706,6 @@
   "e44edf9a": "existence_of_non_trivial_boolean_degree_one_functi.json",
   "37c46c25": "eml_fixed_point_theorem_exp_log_iteration_converge.json",
   "0ffedaae": "random_graphs_erds_rnyi_threshold_phenomena.json",
-  "203b440f": "frankls_union_closed_conjecture_partial_results.json"
+  "203b440f": "frankls_union_closed_conjecture_partial_results.json",
+  "8f5c44bc": "ml_universal_approximation_width_vs_depth_trade_of.json"
 }

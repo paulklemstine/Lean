@@ -1,110 +1,120 @@
-# The Folding Trick: Why Deep Networks Beat Wide Ones
+# The Folded Ruler: Why Deep Networks Beat Wide Ones
 
-## A paper-folding puzzle
+Imagine you are handed a strip of paper and asked to draw a zig-zag line that climbs and falls a thousand times — a thousand sharp peaks marching across the page. You have two ways to do it.
 
-Take a strip of paper one meter long. Mark the left end "0" and the right end "1". Now fold it in half so the two ends meet, then unfold and look at the crease pattern. Fold again, and again. After ten folds, you have created a landscape of 1,024 tiny peaks and valleys packed into the original meter. The pattern is intricate — yet you produced it with ten almost identical, almost effortless motions.
+The first way is to draw every peak by hand, one after another. A thousand peaks means a thousand strokes. This is the *wide* strategy: brute force, one piece of machinery per feature.
 
-This humble act of repeated folding is, it turns out, the secret behind one of the most important facts in modern artificial intelligence: **depth is exponentially more powerful than width.** A neural network that stacks many simple layers can express shapes that a single enormously wide layer cannot match without becoming astronomically large. This article tells the story of that fact — not as engineering folklore, but as a clean, provable piece of mathematics, with every claim stated precisely and verified.
+The second way is sneakier. Fold the paper in half, then in half again, and again — ten times. A single zig-zag drawn across the folded stack, when unfolded, becomes more than a thousand zig-zags. Ten folds, one drawing. This is the *deep* strategy: each fold doubles the complexity for free.
 
-## Neural networks, demystified
+This little parable is, almost literally, the central drama of modern deep learning. The "folds" are the layers of a neural network. The question of whether folding really beats hand-drawing — whether **depth** is fundamentally more powerful than **width** — is one of the most important theoretical questions about why deep learning works at all. This article is about a clean, complete, two-sided answer to that question, built around one of the most elegant objects in mathematics: the *tent map*.
 
-Strip away the hype and a neural network is just a recipe for building a function out of very simple parts. The simplest part is the **ReLU**, short for "rectified linear unit." It is the almost laughably plain function
+## The tent and the fold
 
-> **relu(x) = max(x, 0).**
+Start with a single triangular bump. On the interval from $0$ to $1$, define the **tent map**:
 
-It returns its input if the input is positive, and zero otherwise. A graph of it looks like a hockey stick: flat along the negative axis, then a straight 45-degree ramp going up. That's it. That's the engine.
+$$\mathrm{tent}(x) = 1 - |2x - 1|.$$
 
-From this single bent line you can build anything piecewise-linear by adding shifted, scaled copies together. A **layer** of a network is a batch of such ReLUs computed in parallel; the number of ReLUs in a layer is its **width**. Stacking layers — feeding the output of one into the next — gives **depth**. The two great questions of the field are: *What can these networks represent?* and *How big must they be to do it?*
+Read it slowly. At $x = 0$ the value is $1 - |{-1}| = 0$. At $x = \tfrac12$ it is $1 - 0 = 1$. At $x = 1$ it is $1 - |1| = 0$. In between it rises in a straight line to a peak and falls in a straight line back down. It is a perfect symmetric tent, one peak, base from $0$ to $1$.
 
-"Big" comes in two flavors. A **wide, shallow** network has one enormous layer. A **deep, narrow** network has many small layers. Both can, in principle, approximate any reasonable function. The deep question is whether one flavor is fundamentally more economical than the other. The answer is a resounding yes, and the cleanest way to see it is to build the paper-folding machine out of ReLUs.
+Now do something playful: feed the tent map into itself. Compute $\mathrm{tent}(\mathrm{tent}(x))$. The output of the inner tent sweeps from $0$ up to $1$ and back down to $0$ as $x$ goes from $0$ to $1$. The outer tent turns *that* single sweep into a full up-and-down. The result is a function with **two** peaks. Compose three times and you get four peaks. Compose $k$ times — written $\mathrm{tent}^{[k]}$ — and you get exactly $2^k$ peaks.
 
-## The tent map: one fold, made of two ramps
+This is the mathematics of folding. Each composition is a fold. One application gives $1$ peak's worth of oscillation, $k$ applications give $2^k$. The number of wiggles explodes *geometrically* in the number of compositions, even though each composition is the same simple tent.
 
-Here is the mathematical equivalent of a single fold. Define the **tent map**:
+There is a beautifully precise way to see the explosion. Lay down a grid of dyadic points across $[0,1]$: the points $0, \tfrac{1}{2^k}, \tfrac{2}{2^k}, \ldots, 1$, of which there are $2^k + 1$. On this grid, the $k$-fold tent takes the values
 
-> **tent(x) = 1 − |2x − 1|.**
+$$\mathrm{tent}^{[k]}\!\left(\frac{i}{2^k}\right) = i \bmod 2,$$
 
-On the interval from 0 to 1, this draws a perfect symmetric triangle: it starts at 0 when x = 0, climbs steadily to its peak of 1 at the midpoint x = 1/2, then descends back to 0 at x = 1. A tent. A single fold of our paper strip.
+that is, $0, 1, 0, 1, 0, 1, \ldots$ — a perfect alternation. The function jumps up by $1$, then down by $1$, then up by $1$, all the way across, $2^k$ times. It is a maximally jagged sawtooth.
 
-The first thing to notice is that the tent map *is a neural network layer*. The absolute value function hides a pair of ReLUs, because for any number y,
+## Measuring jaggedness: total variation
 
-> **|y| = relu(y) + relu(−y).**
+To compare "how wiggly" two functions are, we need a number. The right one is **discrete total variation**: walk across the grid and add up the absolute sizes of every step,
 
-Substituting y = 2x − 1 gives an exact, two-line identity:
+$$\mathrm{TV}_k(g) = \sum_{i=0}^{2^k - 1} \left| g\!\left(\frac{i+1}{2^k}\right) - g\!\left(\frac{i}{2^k}\right)\right|.$$
 
-> **tent(x) = 1 − relu(2x − 1) − relu(1 − 2x).**
+For the $k$-fold tent, every one of the $2^k$ steps has size exactly $1$, so its total variation is exactly $2^k$. Jaggedness, quantified.
 
-This is a one-hidden-layer ReLU network of **width two**. No approximation, no hand-waving: the tent is literally two rectified ramps, one catching the rising part and one the falling part, combined by simple addition. This is the formally verified statement we call `tent_relu_repr`.
+Total variation is the hero of this story because it is *conserved* in a useful sense. It cannot be faked, and it cannot be hidden. If you want to build a function that wiggles $2^k$ times, you must pay for $2^k$ units of total variation somewhere in your machinery. The whole depth-versus-width theorem is, at heart, an accounting argument about who can afford that bill.
 
-The tent map is also gentle in a precise sense: it is **2-Lipschitz**. "Lipschitz" is a mathematician's word for "has a bounded slope." A function is *K*-Lipschitz if, no matter which two points you pick, the output never changes faster than *K* times the input:
+## What a neuron can buy
 
-> **|f(a) − f(b)| ≤ K · |a − b|.**
+Both wide and deep networks are built from the same atom: the **rectified linear unit**, or ReLU,
 
-The tent's steepest slope is 2 (it climbs from 0 to 1 over a horizontal distance of 1/2), so it is 2-Lipschitz. We call this `tent_lipschitz`. The Lipschitz constant is the single most important number in this whole story; hold onto it.
+$$\mathrm{relu}(y) = \max(y, 0).$$
 
-## Folding again: composition is depth
+It is the simplest possible nonlinearity: pass the signal through if positive, otherwise output zero. A single hidden layer — a **shallow** network of width $w$ — combines $w$ of these ramps:
 
-Now we fold the fold. **Composition** means applying the tent map to its own output. Apply it once, twice, *k* times, and write the result as **tentᵏ** (the "*k*-fold tent"). In network terms, each composition is one more layer. So tentᵏ is a ReLU network of depth *k* and constant width — exactly our paper-folding machine, expressed in silicon-friendly arithmetic.
+$$\text{shallow}(x) = c + \sum_{j=1}^{w} a_j \,\mathrm{relu}(x - t_j).$$
 
-What does tentᵏ look like? Something remarkable happens. Each application of the tent map takes the existing graph and reflects its right half back over its left half — it doubles the number of triangles. One tent has a single peak. Two folds (tent²) produce two peaks. Three folds, four peaks. After *k* folds you have a sawtooth of **2ᵏ⁻¹ peaks**, each a perfect triangle, all crammed into the unit interval. The output never leaves the range from 0 to 1 — the height of the landscape stays modest — but the *number* of oscillations explodes exponentially.
+Each term is a ramp that switches on at threshold $t_j$ and then climbs with slope $a_j$. This is the "draw every peak by hand" machine. How much total variation can $w$ such ramps produce? Here is the elementary but decisive fact: across any single cell of the grid, one ramp can change by at most the cell's width times its slope, and the absolute changes can never exceed the weight $|a_j|$ summed across the whole interval. Adding up,
 
-Three facts pin this down precisely, all formally verified:
+$$\mathrm{TV}_k(\text{shallow}) \le \sum_{j=1}^{w} |a_j|.$$
 
-- **It pins the left corner.** tentᵏ(0) = 0 for every *k*. The point 0 is a fixed point of the tent map, and folding never moves it. (`tent_iterate_zero`.)
-- **It has a razor-thin first ramp.** The very first peak of tentᵏ sits at x = (1/2)ᵏ, and there the value is exactly 1. (`tent_iterate_peak`.) Combine this with the previous fact: the *k*-fold tent rockets from 0 all the way up to 1 across a horizontal distance of just **2⁻ᵏ**. At ten folds, that ramp is one part in a thousand wide. At twenty folds, one part in a million.
-- **Its slope is brutal.** Composing a 2-Lipschitz map *k* times yields a **2ᵏ-Lipschitz** map. (`tent_iterate_lipschitz`.) The slopes multiply: two folds give slope 4, three give 8, and ten give 1,024. This is the inevitable arithmetic of stacking — a tiny cost per layer (a factor of 2) compounds into an exponential.
+A shallow network's jaggedness is bounded by the total magnitude of its weights. To buy $2^k$ units of wiggle, it must spend $2^k$ units of weight. And if no single neuron's weight may exceed a cap $A$ — a wholly realistic constraint, since real networks cannot use astronomically large numbers — then the number of neurons itself must satisfy
 
-Here, then, is a function — buildable by a *narrow* network whose size grows only **linearly** with depth *k* — that is simultaneously bounded in height yet steeper than any cliff and busier than any comb. The question is whether a shallow network can keep up.
+$$w \ge \frac{2^k}{A}.$$
 
-## Why width can't fake depth
+The width must be **exponential** in the number of folds.
 
-A shallow ReLU network with bounded weights is, mathematically, just a Lipschitz function whose constant *K* is controlled by its width and the size of its weights. To match the *k*-fold tent's frantic oscillation it would need an enormous slope — and slope, for a Lipschitz function, is exactly what you cannot have for free. This tension is the heart of the **depth-separation theorem**, our main result, which we can now state in full:
+There is one subtlety worth honoring. Real networks rarely match a target *exactly*; they approximate it to some tolerance $\varepsilon$. Does approximation let a shallow network cheat? No — and the reason is a gentle one. If a shallow network stays within $\varepsilon$ of the alternating tent at every grid point, then at each step it must still travel almost the full distance of $1$, losing at most $2\varepsilon$ to the wiggle room at the two endpoints. So its total variation is still at least $2^k(1 - 2\varepsilon)$, and the width bound sharpens only slightly to
 
-> **Depth-separation theorem (`relu_depth_separation`).** Let *g* be any *K*-Lipschitz function, and suppose K · 2⁻ᵏ + 2ε < 1. Then *g* cannot approximate tentᵏ to within ε everywhere on the interval [0, 1]. That is, there is necessarily some point x in [0, 1] where |tentᵏ(x) − g(x)| > ε.
+$$w \ge \frac{2^k(1 - 2\varepsilon)}{A}.$$
 
-The proof is a three-line squeeze, and its logic is worth savoring because it is completely elementary. Look at just two points: the left corner x = 0 and the first peak x = (1/2)ᵏ. The true function tentᵏ takes the values 0 and 1 at these two points — it has *climbed a full unit*. The two points are only 2⁻ᵏ apart horizontally.
+As long as $\varepsilon < \tfrac12$ — that is, as long as the approximation is good enough to be worth anything — the exponential wall stands. (At $\varepsilon = \tfrac12$ the wall vanishes, and rightly so: a flat line at height $\tfrac12$ is within $\tfrac12$ of *everything*, so it "approximates" the tent in a vacuous, useless sense.)
 
-Now suppose, for contradiction, that *g* tracks tentᵏ within ε everywhere. Then at x = 0, *g* must be within ε of 0; at the peak, *g* must be within ε of 1. So *g* itself must climb at least 1 − 2ε across those two points. But *g* is *K*-Lipschitz, so the most it can climb across a gap of width 2⁻ᵏ is K · 2⁻ᵏ. Putting these together forces
+This is the **shallow lower bound**, and it is half the story. It says: hand-drawing $2^k$ peaks costs exponentially many strokes.
 
-> **1 − 2ε ≤ K · 2⁻ᵏ,  i.e.  K · 2⁻ᵏ + 2ε ≥ 1,**
+## What folding buys
 
-which directly contradicts our assumption. Done. The approximation is impossible.
+Now the other half — and the part that makes the separation real rather than a one-sided complaint. We must show that the deep, folding machine genuinely does the job cheaply.
 
-Rearrange the inequality and the punchline appears: to approximate the depth-*k* tent at any fixed accuracy ε < 1/2, a Lipschitz (bounded-weight, shallow) network must have
+Begin with a small miracle of bookkeeping. The absolute value, which looks like it needs special hardware, is secretly built from two ReLUs:
 
-> **K ≥ (1 − 2ε) · 2ᵏ.**
+$$|y| = \mathrm{relu}(y) + \mathrm{relu}(-y).$$
 
-Its Lipschitz constant — and therefore its weight-times-width budget — must grow like **2ᵏ**. A deep network achieves with *k* small layers what a shallow network can only achieve by ballooning to exponential size. Depth buys exponential expressiveness.
+If $y > 0$, the first term gives $y$ and the second gives $0$. If $y < 0$, the first gives $0$ and the second gives $-y = |y|$. Either way, the sum is $|y|$. So the entire tent map collapses into a **two-neuron block**:
 
-## The threshold is razor-sharp
+$$\mathrm{tent}(x) = 1 - \mathrm{relu}(2x - 1) - \mathrm{relu}(1 - 2x).$$
 
-A skeptic might wonder whether the strange-looking condition "K · 2⁻ᵏ + 2ε < 1" is just a convenient slack that could be tightened. It cannot — and we proved exactly why. The *k*-fold tent is itself 2ᵏ-Lipschitz and of course approximates itself perfectly (ε = 0). Plug K = 2ᵏ and ε = 0 into the budget:
+Two ReLUs, exactly — not approximately — reproduce the tent. This identity is purely algebraic; there is no limiting process, no error term, no continuity argument hiding in the basement. It is an *equation*.
 
-> **2ᵏ · 2⁻ᵏ + 2·0 = 1,**
+The consequence cascades immediately. Since one fold is two neurons, $k$ folds are $k$ stacked copies of the same two-neuron block. We can describe a deep network as a list of such blocks, evaluated by composition — the output of one block feeds the input of the next — and define its total size as the sum of the neuron counts. Then the $k$-fold tent is realized **exactly** by a network of
 
-landing exactly on the boundary value of 1 (`relu_depth_separation_sharp`). The theorem forbids everything strictly below this threshold and the threshold is achieved by the honest self-approximation. The inequality is sharp; it cannot be relaxed from "<" to "≤". This is the kind of detail that separates a slogan from a theorem.
+$$\text{total size} = 2k.$$
 
-A concrete illustration drives it home. At depth k = 3, consider the laziest possible "shallow" model: the flat constant function g(x) = 1/2, which is 0-Lipschitz (K = 0). Can it approximate the depth-3 tent to accuracy 3/8? The budget reads 0 · 2⁻³ + 2 · (3/8) = 3/4 < 1, so the theorem says **no** — and indeed it cannot, because the true function spans the full distance from 0 to 1 while a flat line at 1/2 is always 1/2 away from one of the corners, exceeding 3/8.
+Pause on the contrast. The target $\mathrm{tent}^{[k]}$ has $2^k$ oscillations. The deep network that produces it, exactly, uses $2k$ neurons. The deep size is the *logarithm* of the oscillation count:
 
-## Two mechanisms, one phenomenon
+$$2k = 2\log_2\!\left(2^k\right).$$
 
-There is a subtle and beautiful point buried in this construction. There are two completely different ways a deep network can outrun a shallow one, and the tent map isolates the more interesting one.
+This is the **logarithmic-size law**. Depth converts a linear budget of neurons into an exponential budget of complexity. Where the shallow machine needs $2^k/A$ neurons, the deep machine needs $2k$. For $k = 20$ — a million oscillations — the shallow network needs on the order of a million neurons; the deep one needs forty.
 
-The first, cruder mechanism is **range explosion**: iterate a map that grows, like x ↦ 2x or an exponential, and the output values themselves blow up. A shallow network then fails simply because it cannot reach high enough. This is a real effect, but it feels like cheating — of course you can't approximate something that runs off to infinity.
+## The two sides meet
 
-The tent map does something far more subtle. Its output **never leaves [0, 1]**. The height of the landscape is fixed and modest. The difficulty lives entirely in the *oscillation* — the exponential number of peaks and the razor-thin ramps — not in the magnitude. This is the genuinely *neural*, piecewise-linear mechanism behind depth separation, the one identified in the work of Telgarsky and others as the real reason depth matters. Our theorem captures it in its purest analytic form: equal output range, exponential oscillation, provable impossibility.
+Put the halves together and you get a genuine, two-sided **depth–width separation**. There is a single concrete target, $\mathrm{tent}^{[k]}$, such that:
 
-## Why this matters beyond the page
+- a **deep** network of constant width $2$ and total size $2k$ realizes it *exactly*; yet
+- **any** shallow network that merely approximates it to accuracy $\varepsilon < \tfrac12$, with weights capped at $A$, is forced to width at least $2^k(1 - 2\varepsilon)/A$.
 
-The width-versus-depth trade-off is not an academic curiosity. It is the mathematical justification for the single most consequential design decision of the deep-learning era: the move from shallow, fat networks to deep, slim ones. Every modern architecture — the convolutional networks that recognize faces, the transformers that power language models — is *deep* for exactly the reason this theorem makes rigorous. Depth is not a fashion; it is an exponential efficiency.
+Linear cost on one side, exponential cost on the other, for the very same function. This is not a statement that deep networks *can sometimes* be smaller. It is a statement that for an explicit family of targets they are *unavoidably, exponentially* smaller — and the proof carries the exact constants.
 
-The broader picture frames the universal-approximation landscape as a budget problem. To approximate a *K*-Lipschitz target on [−1, 1]ⁿ to accuracy ε:
+How big can the gap get? Take the ratio of the forced shallow width to the actual deep size,
 
-- a **shallow** network needs width that scales roughly like ε⁻¹ in one dimension (and far worse, like ε⁻ⁿ, in *n* dimensions — the curse of dimensionality);
-- a **deep** network can get away with depth scaling like log(1/ε), an exponential saving.
+$$\frac{2^k(1 - 2\varepsilon)/A}{2k}.$$
 
-The tent map is the sharpest possible witness to the gap between these two budgets. It says: here is a single, concrete, bounded function that a deep network draws effortlessly with *k* tiny folds, and that no shallow network can imitate without an exponential, 2ᵏ-sized blowup. The folding paper strip, it turns out, was never just a puzzle. It was a proof.
+The numerator grows like $2^k$; the denominator grows like $k$. Exponential beats linear, always and eventually. For any target ratio $R$ you care to name — a thousandfold, a millionfold — there is a depth $k$ beyond which the shallow network is at least $R$ times larger than the deep one. The advantage of depth is not bounded by any constant; it is **unbounded**.
 
-## The takeaway
+## Why this matters beyond the tent
 
-Strip everything down and the message is a single image: **folding is cheap, but unfolding is expensive.** A deep network folds — it composes simple steps, and a tiny per-step cost compounds into exponential intricacy. A shallow network must somehow draw the unfolded result in one stroke, and the bookkeeping of all those creases costs it exponentially. The tent map turns this intuition into theorems you can check line by line: it is two ReLUs wide, it folds the unit interval onto itself, and after *k* folds it is a function that is provably, sharply, exponentially beyond the reach of any gently-sloped competitor. That is why, when in doubt, we go deep.
+It is fair to ask whether a story about triangular bumps tells us anything about real networks that recognize faces or translate languages. It does, in two ways.
+
+First, the tent is not a contrived curiosity; it is the cleanest possible instance of a universal phenomenon. Composition multiplies complexity. Every deep architecture — convolutional, residual, transformer — is in the business of composing simple transformations so that complexity compounds. The tent map is the hydrogen atom of that physics: simple enough to analyze completely, rich enough to exhibit the exponential payoff in full. The lesson it teaches — *depth manufactures oscillation for free, and width must buy it linearly* — is the mechanism, stripped to its bones.
+
+Second, the argument exposes *why* the trade-off holds, not merely *that* it holds. The currency is total variation: a conserved, additive measure of complexity that depth mints geometrically and width can only purchase in proportion to its weight budget. This is a transferable idea. Whenever a learning problem has a complexity measure that compounds under composition, depth will tend to win, and one can hope to prove it by the same accounting.
+
+A few honest caveats keep the picture sharp. The clean statements here are one-dimensional, a single input and a single output per fold; extending the exact realization to functions on $[-1,1]^n$ requires vector-valued blocks and is the natural next step. The strict numerical gap $2k < 2^k$ kicks in at $k = 3$ — for the first few folds the two budgets are comparable — which is exactly why the dramatic separation is an *asymptotic* statement about deep stacks. And the shallow bound needs the weight cap $A$; without it, a network could in principle smuggle complexity into infinitely precise numbers, which is the correct boundary of the theorem rather than a flaw in it.
+
+## The shape of the answer
+
+Strip away the formalism and what remains is a single, vivid image. To make a thousand peaks, you can carve each one — and pay a thousand times — or you can fold the paper ten times and draw once. The folds are layers. The peaks are the patterns a network can represent. And the theorem says, with the full force of proof and exact constants, that the folder always wins, and wins by a margin that grows without bound.
+
+Depth is not a convenience. It is leverage. A tent, folded $k$ times, oscillates $2^k$ ways while costing only $2k$ — and no flat-stacked, hand-drawn machine, however wide, can keep up. That is the mathematical heart of why the deepest revolution in artificial intelligence was, quite literally, a matter of depth.

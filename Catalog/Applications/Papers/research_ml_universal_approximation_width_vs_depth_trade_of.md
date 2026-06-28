@@ -1,257 +1,195 @@
-# Depth Separation for ReLU Networks via the Iterated Tent Map: A Sharp, Range-Preserving Lipschitz Obstruction
+# A Two-Sided Depth–Width Separation for ReLU Networks via the Tent Map
+
+**Author:** Aristotle
+**Date:** 2026-06-28
+**Domain:** Applications (Machine Learning / Approximation Theory)
 
 ## Abstract
 
-We give a fully self-contained, elementary, and sharp proof of depth separation for rectified-linear-unit (ReLU) neural networks. The construction is built entirely from the **tent map** `tent(x) = 1 − |2x − 1|`, which we show is an exact one-hidden-layer ReLU network of width two. Its *k*-fold self-composition `tentᵏ` is then a depth-*k*, constant-width ReLU network whose total size grows only linearly in *k*. We establish that `tentᵏ` keeps its output confined to the unit interval [0, 1] while developing an exponentially steep first ramp — it climbs from 0 to 1 across a horizontal distance of exactly 2⁻ᵏ — and consequently has Lipschitz constant exactly 2ᵏ. Our main theorem shows that **any** *K*-Lipschitz function *g* with K · 2⁻ᵏ + 2ε < 1 fails to approximate `tentᵏ` to uniform accuracy ε on [0, 1]. Since a shallow ReLU network with bounded weights realizes a Lipschitz function whose constant is controlled by its width-times-weight budget, matching a depth-*k* network forces that budget to grow like 2ᵏ — exponential depth separation. We prove the separation threshold is sharp: the self-approximation (K = 2ᵏ, ε = 0) lands exactly on the boundary K · 2⁻ᵏ + 2ε = 1, so the strict inequality cannot be weakened to a non-strict one. Unlike obstructions based on range explosion, ours is *range-preserving*: the hardness comes purely from oscillation packed into a vanishing interval, isolating the genuinely piecewise-linear (Telgarsky-style) mechanism behind depth separation. All results are accompanied by formal, machine-checked proofs.
-
-**Keywords:** depth separation, ReLU networks, universal approximation, Lipschitz lower bounds, tent map, expressivity, width–depth trade-off.
-
----
+We give a complete, two-sided depth–width separation for rectified-linear-unit (ReLU) neural networks, built around the iterated tent map. On the one hand (the *shallow lower bound*), the $k$-fold tent $\mathrm{tent}^{[k]}$ oscillates $2^k$ times on $[0,1]$, and any single-hidden-layer ReLU network that approximates it to accuracy $\varepsilon < \tfrac12$ at the dyadic grid, under a per-neuron weight cap $A>0$, must have width at least $2^k(1-2\varepsilon)/A$ — exponential in the depth $k$. On the other hand (the *deep upper bound*), the tent map is realized *exactly* by a two-neuron ReLU block via the identity $|y| = \mathrm{relu}(y) + \mathrm{relu}(-y)$, so $\mathrm{tent}^{[k]}$ is realized exactly by $k$ stacked copies of that block, a depth-$k$, constant-width-$2$ network of total size $2k$. Hence the deep network's size equals $2\log_2(2^k)$ — logarithmic in the oscillation count it produces — while the matching shallow width is exponential. Combining the two bounds yields the separation: a single explicit target is realized by a deep network of size $2k$ yet forces shallow width $\ge 2^k(1-2\varepsilon)/A$. The gap between the two is unbounded: for every ratio $R$ there is a depth at which the forced shallow width exceeds $R$ times the deep size. The central invariant throughout is discrete total variation, a conserved additive measure of complexity that depth mints geometrically and shallow width can purchase only in proportion to its $L^1$ weight mass. All results are stated with explicit constants and have been formally verified.
 
 ## 1. Introduction
 
-### 1.1 The width–depth question
+A persistent puzzle in the theory of deep learning is why depth helps. Classical universal approximation theorems show that a single hidden layer of sufficient width can approximate any continuous function on a compact set, so depth is not necessary for *expressivity in principle*. The interesting question is one of *efficiency*: are there functions that deep networks represent with far fewer parameters than any shallow network? A positive answer — a **depth–width separation** — was given in influential form by Telgarsky, who used the iterated triangle (tent) map to exhibit functions that deep networks compute compactly but that shallow networks require exponentially many units to approximate.
 
-A feedforward ReLU network is a finite composition of affine maps interleaved with the coordinatewise nonlinearity `relu(x) = max(x, 0)`. Two structural budgets govern its cost: **width** (the number of units in a layer) and **depth** (the number of layers). The universal approximation theorem guarantees that, given enough width, even a single hidden layer can approximate any continuous function on a compact set to arbitrary accuracy. This naturally raises a quantitative question: for a fixed accuracy, is one shape of network — wide-and-shallow versus narrow-and-deep — fundamentally more economical than the other?
+This paper presents a self-contained, two-sided, constant-explicit version of that separation, organized around a single conserved quantity: discrete total variation. The contribution is twofold.
 
-The empirical answer, embodied in every successful modern architecture, is that depth is dramatically more efficient. The theoretical counterpart is the family of **depth-separation theorems**: explicit functions computable by a polynomially-sized deep network but requiring exponentially-sized shallow networks. The seminal analytic example, due to Telgarsky, uses iterated triangle (sawtooth) functions whose oscillation count grows exponentially with depth, defeating the limited number of linear pieces a shallow network can produce.
+1. **The shallow lower bound** (Section 4). Total variation can only drop by $2\varepsilon$ per node under an $\varepsilon$-approximation, and a shallow ReLU network's total variation over any grid is bounded by its $L^1$ weight mass $\sum_j |a_j|$. Chaining these gives weight mass $\ge 2^k(1-2\varepsilon)$ and, under a per-neuron cap $A$, width $\ge 2^k(1-2\varepsilon)/A$.
 
-### 1.2 Contribution
+2. **The deep upper bound** (Section 5). The tent map equals a two-neuron ReLU block *exactly* — not merely in a limit — via $|y| = \mathrm{relu}(y) + \mathrm{relu}(-y)$. Stacking $k$ such blocks realizes $\mathrm{tent}^{[k]}$ exactly with total size $2k$, i.e. $2\log_2(2^k)$ neurons for $2^k$ oscillations.
 
-This paper formalizes a clean, sharp version of this phenomenon using only the tent map and elementary real analysis. Our contributions are:
+Section 6 combines the two into a single separation statement and shows the gap is unbounded. Section 7 gives algorithms; Section 8 discusses applications and limitations; Section 9 lists future directions.
 
-1. **An exact width-two ReLU representation** of the tent map (Theorem 4.1), making the connection to neural networks literal rather than approximate.
-2. **A precise geometric description** of the *k*-fold tent: it fixes the left endpoint (Lemma 4.4), reaches value 1 at x = 2⁻ᵏ (Theorem 4.5), and is exactly 2ᵏ-Lipschitz (Theorem 4.3), all while remaining range-confined to [0, 1] (Lemma 4.2).
-3. **A depth-separation theorem** (Theorem 5.1) giving an explicit, easily-checkable failure condition for any Lipschitz approximant, with a two-point squeeze proof.
-4. **A sharpness theorem** (Theorem 5.2) proving the threshold inequality cannot be relaxed.
-5. A discussion contrasting our **range-preserving** obstruction with **range-exploding** ones, clarifying which mechanism is genuinely neural.
+The decisive methodological choice is to replace analytic crossing-counting (intermediate value theorem) with an algebraic, additive *total-variation accounting*. This avoids continuity machinery entirely, makes the deep realization *exact*, and yields weight-magnitude-sensitive bounds with explicit constants.
 
-Every statement below has been formally verified in a proof assistant; here we present the mathematics and proof sketches.
+## 2. Preliminaries and Definitions
 
----
+Throughout, $\mathrm{relu}(y) = \max(y, 0)$.
 
-## 2. Related work and context
+### 2.1 The tent map and its iterates
 
-The idea that deep networks express highly oscillatory functions cheaply traces to Telgarsky's sawtooth construction and to work by Eldan–Shamir, Safran–Shamir, and others establishing depth separations under various norms and architectures. Earlier counting arguments (Montúfar–Pascanu–Cho–Bengio) bound the number of linear regions of a deep ReLU network from below, exponentially in depth. The tent map is the canonical building block of these arguments because composing it doubles the number of monotone pieces.
+**Definition 2.1 (Tent map).** The tent map on $[0,1]$ is
+$$\mathrm{tent}(x) = 1 - |2x - 1|.$$
+It satisfies $\mathrm{tent}(0)=0$, $\mathrm{tent}(\tfrac12)=1$, $\mathrm{tent}(1)=0$, and maps $[0,1]$ onto $[0,1]$.
 
-Within the present catalog, this result complements a related obstruction for the iterated *exponential* tower (`not_uniformApprox_of_small_lipschitz` in `MachineLearning.DepthSeparation.Separation`), whose hardness arises because the function's *range* explodes. The novelty here is that the tent's range is fixed at [0, 1]; the difficulty is purely oscillatory, which is the more informative and more genuinely neural mechanism.
+We write $\mathrm{tent}^{[k]}$ for the $k$-fold composition $\mathrm{tent}\circ\cdots\circ\mathrm{tent}$ ($k$ times), with $\mathrm{tent}^{[0]} = \mathrm{id}$.
 
----
+### 2.2 Discrete total variation
 
-## 3. Preliminaries and definitions
+**Definition 2.2 (Discrete total variation).** For $g:\mathbb{R}\to\mathbb{R}$ and $k\in\mathbb{N}$, the discrete total variation over the $2^k$-cell dyadic grid of $[0,1]$ is
+$$\mathrm{TV}_k(g) = \sum_{i=0}^{2^k-1}\left|\,g\!\left(\frac{i+1}{2^k}\right) - g\!\left(\frac{i}{2^k}\right)\right|.$$
 
-We work over the real numbers. We write `f^[k]` for the *k*-fold composition of `f` with itself, with `f^[0]` the identity. We write `Icc a b` for the closed interval [a, b].
+### 2.3 Shallow networks
 
-**Definition 3.1 (ReLU).** The rectified linear unit is `relu(x) = max(x, 0)`.
+**Definition 2.3 (Shallow network).** A single-hidden-layer ("shallow") ReLU network of width $w$ with output weights $a:\{0,\dots,w-1\}\to\mathbb{R}$, thresholds $t:\{0,\dots,w-1\}\to\mathbb{R}$, and output bias $c\in\mathbb{R}$ computes
+$$\mathrm{shallow}_{w,a,t,c}(x) = c + \sum_{j=0}^{w-1} a_j\,\mathrm{relu}(x - t_j).$$
+Its width is $w$ and its $L^1$ weight mass is $\sum_{j} |a_j|$.
 
-**Definition 3.2 (Lipschitz constant).** A function `f : ℝ → ℝ` is *K*-Lipschitz (written `LipschitzWith K f`) if for all x, y, |f(x) − f(y)| ≤ K · |x − y|. Equivalently, in distance form, dist(f(x), f(y)) ≤ K · dist(x, y).
+### 2.4 Deep networks as block compositions
 
-**Definition 3.3 (Tent map).** The tent map is
+**Definition 2.4 (Scalar ReLU block).** A scalar ReLU block $B$ consists of a neuron count $m\in\mathbb{N}$, an output bias $c\in\mathbb{R}$, output weights $a:\{0,\dots,m-1\}\to\mathbb{R}$, input weights $w:\{0,\dots,m-1\}\to\mathbb{R}$, and thresholds $t:\{0,\dots,m-1\}\to\mathbb{R}$. It computes
+$$B(x) = c + \sum_{j=0}^{m-1} a_j\,\mathrm{relu}(w_j x - t_j),$$
+and has size $\mathrm{size}(B) = m$.
 
-> tent(x) = 1 − |2x − 1|.
+**Definition 2.5 (Deep network evaluation and size).** A deep network is a finite list of blocks $L = [B_1, B_2, \dots, B_n]$, evaluated by composition:
+$$\mathrm{evalNet}([\,], x) = x, \qquad \mathrm{evalNet}(B :: L, x) = B(\mathrm{evalNet}(L, x)).$$
+Its total size is $\mathrm{netSize}(L) = \sum_{i} \mathrm{size}(B_i)$.
 
-On [0, 1] it is the symmetric triangle with value 0 at the endpoints and peak value 1 at x = 1/2.
+**Definition 2.6 (Tent block and deep tent).** The *tent block* is the two-neuron block
+$$\mathrm{tentBlock} = \bigl(m=2,\; c=1,\; a=(-1,-1),\; w=(2,-2),\; t=(1,-1)\bigr),$$
+so $\mathrm{tentBlock}(x) = 1 - \mathrm{relu}(2x-1) - \mathrm{relu}(-2x+1)$. The *deep tent of depth $k$* is the $k$-fold stack $\mathrm{deepTent}(k) = [\underbrace{\mathrm{tentBlock}, \dots, \mathrm{tentBlock}}_{k}]$.
 
-**Definition 3.4 (Depth-*k* tent network).** The depth-*k* tent network is the *k*-fold composition `tent^[k]`. Realized as a neural network, it stacks *k* identical width-two ReLU blocks (Theorem 4.1), so its total parameter count is O(*k*) — linear in depth.
+## 3. The Conserved Currency: Total Variation of the Deep Tent
 
-**Definition 3.5 (Shallow Lipschitz model).** A one-hidden-layer ReLU network x ↦ b + Σⱼ aⱼ · relu(wⱼ x + cⱼ) of width *m* is Lipschitz with constant at most Σⱼ |aⱼ wⱼ| ≤ m · (max |aⱼ|)(max |wⱼ|). Thus bounded-weight shallow networks are exactly Lipschitz functions whose constant is controlled by their width-times-weight budget. This is why a Lipschitz lower bound is a genuine architectural lower bound.
+The engine of the entire separation is that $\mathrm{tent}^{[k]}$ is maximally oscillatory on the dyadic grid.
 
----
+**Lemma 3.1 (Dyadic alternation).** For all $k, j\in\mathbb{N}$ with $j\le 2^k$,
+$$\mathrm{tent}^{[k]}\!\left(\frac{j}{2^k}\right) = (j \bmod 2).$$
 
-## 4. The construction: tent maps as ReLU networks
+*Proof sketch.* Induct on $k$. The base case $k=0$ is immediate ($\mathrm{tent}^{[0]}=\mathrm{id}$ and $j\in\{0,1\}$). For the inductive step, split on whether $j\le 2^k$ or $j>2^k$. In the first region, one application of the tent halves the argument and the inductive hypothesis applies after the algebraic simplification $\mathrm{tent}(j/2^{k+1}) = j/2^k$ (valid for $j\le 2^k$, where $2j/2^{k+1}-1 \le 0$). In the second region, write $j = 2^k + m$ with $m\le 2^k$; then $\mathrm{tent}(j/2^{k+1}) = (2^k - m)/2^k$, and the inductive hypothesis at $2^k - m$ together with the parity identity $(2^k - m)\bmod 2 = j \bmod 2$ closes the case. $\square$
 
-### 4.1 The tent map is a width-two ReLU layer
+**Lemma 3.2 (Consecutive differences).** For $i + 1 \le 2^k$,
+$$\left|\mathrm{tent}^{[k]}\!\left(\frac{i+1}{2^k}\right) - \mathrm{tent}^{[k]}\!\left(\frac{i}{2^k}\right)\right| = 1.$$
 
-**Theorem 4.1 (`tent_relu_repr`).** For all x,
+*Proof sketch.* By Lemma 3.1 both values are $(i+1)\bmod 2$ and $i\bmod 2$, which always differ by exactly $1$. $\square$
 
-> tent(x) = 1 − relu(2x − 1) − relu(1 − 2x).
+**Theorem 3.3 (Total variation of the deep tent).** For all $k$,
+$$\mathrm{TV}_k\!\left(\mathrm{tent}^{[k]}\right) = 2^k.$$
 
-*Proof sketch.* For any real y, |y| = max(y, 0) + max(−y, 0) = relu(y) + relu(−y). Setting y = 2x − 1 gives |2x − 1| = relu(2x − 1) + relu(1 − 2x). Substituting into the definition of the tent map and simplifying yields the identity. ∎
+*Proof sketch.* The sum in Definition 2.2 has $2^k$ terms, each equal to $1$ by Lemma 3.2. $\square$
 
-This exhibits the tent map as a one-hidden-layer ReLU network with two hidden units (one for each branch of the absolute value), an output bias of 1, and output weights −1.
+Total variation is the *conserved, additive* quantity at the heart of the argument: depth produces $2^k$ units of it from $\mathrm{tent}^{[k]}$, and we will show shallow networks must pay for every unit.
 
-### 4.2 Range confinement
+## 4. The Shallow Lower Bound
 
-**Lemma 4.2 (`tent_mapsTo`).** The tent map sends [0, 1] into [0, 1].
+We show that any shallow $\varepsilon$-approximant inherits most of the deep tent's total variation, and that a shallow network's total variation is capped by its weight mass.
 
-*Proof sketch.* For x ∈ [0, 1] we have −1 ≤ 2x − 1 ≤ 1, hence |2x − 1| ≤ 1, so tent(x) = 1 − |2x − 1| ∈ [0, 1]. The lower bound uses |2x − 1| ≤ 1; the upper bound uses |2x − 1| ≥ 0. ∎
+**Lemma 4.1 (Ramp difference bound).** For thresholds $t$ and $a\le b$,
+$$0 \le \mathrm{relu}(b - t) - \mathrm{relu}(a - t) \le b - a.$$
 
-By induction, every iterate `tent^[k]` also maps [0, 1] into [0, 1]. This is the crucial structural feature distinguishing our obstruction from range-explosion arguments: the output magnitude never grows.
+*Proof sketch.* The map $y\mapsto\mathrm{relu}(y-t)$ is non-decreasing and $1$-Lipschitz; a four-way case split on the signs of $a-t$ and $b-t$ verifies both inequalities. $\square$
 
-### 4.3 The ascending branch
+**Theorem 4.2 (Shallow total variation $\le$ weight mass).** For every $k$, width $w$, and shallow network parameters $a,t,c$,
+$$\mathrm{TV}_k\!\left(\mathrm{shallow}_{w,a,t,c}\right) \le \sum_{j=0}^{w-1} |a_j|.$$
 
-**Lemma 4.3a (`tent_eq_two_mul`).** For x ≤ 1/2, tent(x) = 2x.
+*Proof sketch.* Across each cell, the bias $c$ cancels and the network's increment is $\sum_j a_j\bigl(\mathrm{relu}(\cdot)-\mathrm{relu}(\cdot)\bigr)$. By the triangle inequality and Lemma 4.1, the absolute increment over a cell of width $\Delta = 2^{-k}$ is at most $\sum_j |a_j|\,\Delta$. Summing over the $2^k$ cells gives $\sum_j |a_j|\cdot 2^k\cdot 2^{-k} = \sum_j |a_j|$. $\square$
 
-*Proof sketch.* For x ≤ 1/2 we have 2x − 1 ≤ 0, so |2x − 1| = 1 − 2x and tent(x) = 1 − (1 − 2x) = 2x. ∎
+**Theorem 4.3 (Approximants inherit total variation).** Let $g$ approximate $\mathrm{tent}^{[k]}$ to accuracy $\varepsilon$ at all dyadic nodes: $\bigl|\mathrm{tent}^{[k]}(i/2^k) - g(i/2^k)\bigr|\le\varepsilon$ for all $i\le 2^k$. Then
+$$2^k(1 - 2\varepsilon) \le \mathrm{TV}_k(g).$$
 
-This identity is the engine of the iteration analysis: near the left endpoint the tent map acts as the doubling map, which is what propagates the steep ramp inward under composition.
+*Proof sketch.* For each cell, the reverse triangle inequality gives
+$$|g(\tfrac{i+1}{2^k}) - g(\tfrac{i}{2^k})| \ge |\mathrm{tent}^{[k]}(\tfrac{i+1}{2^k}) - \mathrm{tent}^{[k]}(\tfrac{i}{2^k})| - 2\varepsilon = 1 - 2\varepsilon,$$
+using Lemma 3.2. Summing over the $2^k$ cells gives the bound. $\square$
 
-### 4.4 The Lipschitz constant grows exponentially with depth
+**Theorem 4.4 (Depth–width separation, weight form).** Any shallow network approximating $\mathrm{tent}^{[k]}$ to accuracy $\varepsilon < \tfrac12$ at all dyadic nodes has $L^1$ weight mass
+$$\sum_{j=0}^{w-1} |a_j| \ge 2^k(1 - 2\varepsilon).$$
 
-**Theorem 4.3 (`tent_lipschitz`, `tent_iterate_lipschitz`).** The tent map is 2-Lipschitz, and `tent^[k]` is 2ᵏ-Lipschitz.
+*Proof.* Chain Theorem 4.3 (with $g = \mathrm{shallow}_{w,a,t,c}$) and Theorem 4.2. $\square$
 
-*Proof sketch.* The absolute value is 1-Lipschitz; precomposing with x ↦ 2x − 1 scales the constant by 2, and the outer affine map 1 − (·) preserves it, so tent is 2-Lipschitz (formally, via a case analysis on the signs inside the absolute values, or via `abs_sub_abs_le_abs_sub`). The composition law for Lipschitz maps, LipschitzWith K f and LipschitzWith K g ⟹ LipschitzWith (K·K) (g ∘ f), iterated *k* times, gives LipschitzWith (2ᵏ) (tent^[k]). ∎
+**Theorem 4.5 (Depth–width separation, width form).** If additionally every neuron weight satisfies $|a_j| \le A$ for some $A > 0$, then approximating $\mathrm{tent}^{[k]}$ to accuracy $\varepsilon < \tfrac12$ forces width
+$$w \ge \frac{2^k(1 - 2\varepsilon)}{A}.$$
 
-Thus the deep network's slope budget compounds: each layer contributes a factor of 2.
+*Proof.* From Theorem 4.4, $2^k(1-2\varepsilon)\le\sum_j|a_j|\le wA$; divide by $A$. $\square$
 
-### 4.5 The exponentially steep ramp
+The bound degrades gracefully as $\varepsilon\to\tfrac12$ (the floor $2^k(1-2\varepsilon)\to0$), which is correct: a constant $\tfrac12$ trivially "approximates" within $\tfrac12$. The guard $\varepsilon<\tfrac12$ keeps the floor positive, and the per-neuron cap $A$ is necessary — without it, infinite-precision weights evade any width bound.
 
-**Lemma 4.4 (`tent_iterate_zero`).** For all k, tent^[k](0) = 0.
+## 5. The Deep Upper Bound
 
-*Proof sketch.* The point 0 is a fixed point: tent(0) = 1 − |−1| = 0. By induction, applying the tent map to 0 repeatedly stays at 0. ∎
+We now show the deep side is genuinely cheap, by an *exact* algebraic realization.
 
-**Theorem 4.5 (`tent_iterate_peak`).** For all k, tent^[k]((1/2)ᵏ) = 1.
+**Theorem 5.1 (Tent equals a two-neuron block).** For all $x$,
+$$\mathrm{tentBlock}(x) = \mathrm{tent}(x).$$
 
-*Proof sketch.* Induct on k. The base case is the identity at value 1 (with (1/2)⁰ = 1 and tent⁰ the identity; the inductive structure is set up so the peak value is reached). For the step, note (1/2)^{k+1} ≤ 1/2, so by Lemma 4.3a, tent((1/2)^{k+1}) = 2 · (1/2)^{k+1} = (1/2)ᵏ. Therefore
+*Proof sketch.* Expand the block: $\mathrm{tentBlock}(x) = 1 - \mathrm{relu}(2x-1) - \mathrm{relu}(-2x+1)$. The key identity is $|y| = \mathrm{relu}(y) + \mathrm{relu}(-y)$: setting $y = 2x-1$ gives $\mathrm{relu}(2x-1) + \mathrm{relu}(1-2x) = |2x-1|$, so the block equals $1 - |2x-1| = \mathrm{tent}(x)$. The identity is purely algebraic, with no limiting process. $\square$
 
-> tent^[k+1]((1/2)^{k+1}) = tent^[k](tent((1/2)^{k+1})) = tent^[k]((1/2)ᵏ) = 1
+**Theorem 5.2 (Exact deep realization).** For all $k$,
+$$\mathrm{evalNet}\bigl(\mathrm{deepTent}(k)\bigr) = \mathrm{tent}^{[k]} \quad\text{as functions.}$$
 
-by the inductive hypothesis. ∎
+*Proof sketch.* Induct on $k$. The base case is the identity ($\mathrm{evalNet}([\,]) = \mathrm{id} = \mathrm{tent}^{[0]}$). For the step, $\mathrm{evalNet}(\mathrm{deepTent}(k+1), x) = \mathrm{tentBlock}(\mathrm{evalNet}(\mathrm{deepTent}(k), x))$; apply the inductive hypothesis and Theorem 5.1, and recognize $\mathrm{tent}\circ\mathrm{tent}^{[k]} = \mathrm{tent}^{[k+1]}$ via $\mathrm{iterate\_succ}'$. The realization is *exact*, not approximate. $\square$
 
-**Corollary 4.6 (steep ramp).** Combining Lemma 4.4 and Theorem 4.5, the function `tent^[k]` climbs from 0 (at x = 0) to 1 (at x = 2⁻ᵏ) over a horizontal interval of width exactly 2⁻ᵏ. Its average slope on this interval is 2ᵏ, consistent with (and witnessing the tightness of) Theorem 4.3.
+**Theorem 5.3 (Linear deep size).** $\mathrm{netSize}(\mathrm{deepTent}(k)) = 2k$.
 
-This single steep ramp is all the geometry we need for the lower bound. (A strictly stronger but more involved argument counts all 2ᵏ⁻¹ peaks; see §7.)
+*Proof sketch.* The list is $k$ copies of a size-$2$ block; the sum of sizes is $2k$. $\square$
 
----
+**Corollary 5.4 (Deep total variation).** $\mathrm{TV}_k\bigl(\mathrm{evalNet}(\mathrm{deepTent}(k))\bigr) = 2^k.$
 
-## 5. The depth-separation theorem
+*Proof.* Rewrite by Theorem 5.2 and apply Theorem 3.3. $\square$
 
-### 5.1 Main result
+**Theorem 5.5 (Logarithmic-size law).** The deep network realizing $2^k$ oscillations uses
+$$\mathrm{netSize}(\mathrm{deepTent}(k)) = 2\log_2\!\left(2^k\right) = 2k$$
+neurons: size grows logarithmically in the oscillation count.
 
-**Theorem 5.1 (Depth separation, `relu_depth_separation`).** Let k ∈ ℕ, let g : ℝ → ℝ, and let K, ε ∈ ℝ. Suppose
+*Proof.* $\log_2(2^k) = k$ (by $\mathrm{Nat.log\_pow}$), and the result follows from Theorem 5.3. $\square$
 
-- *(Lipschitz)* for all x, y: |g(x) − g(y)| ≤ K · |x − y|, and
-- *(budget)* K · (1/2)ᵏ + 2ε < 1.
+**Theorem 5.6 (Strict numerical gap).** For all $k\ge 3$,
+$$2k < 2^k.$$
 
-Then it is **not** the case that for all x ∈ [0, 1], |tent^[k](x) − g(x)| ≤ ε. In other words, g fails to ε-approximate the depth-k tent network uniformly on [0, 1].
+*Proof sketch.* Induction from the base case $k=3$ ($6 < 8$); for $k\ge 3$, $2^{k+1} = 2\cdot 2^k > 2\cdot 2k > 2(k+1)$. For $k=0,1,2$ one has equality up to $6 < 8$, so the strict gap is asymptotic and the dramatic separation is guarded by $k\ge 3$. $\square$
 
-*Proof sketch.* We argue by contraposition: assume g does ε-approximate `tent^[k]` everywhere on [0, 1] and derive K · 2⁻ᵏ + 2ε ≥ 1. Evaluate at the two witness points x = 0 and x = (1/2)ᵏ, both of which lie in [0, 1].
+## 6. The Two-Sided Separation and Its Unbounded Gap
 
-- At x = 0: |tent^[k](0) − g(0)| = |0 − g(0)| ≤ ε, so |g(0)| ≤ ε.
-- At x = (1/2)ᵏ: |tent^[k]((1/2)ᵏ) − g((1/2)ᵏ)| = |1 − g((1/2)ᵏ)| ≤ ε, so g((1/2)ᵏ) ≥ 1 − ε.
+**Theorem 6.1 (Two-sided depth–width separation).** Fix $k$, a shallow width $w$ with parameters $a,t,c$, an accuracy $\varepsilon$, and a weight cap $A>0$ with $|a_j|\le A$ for all $j$. Suppose the shallow network approximates the deep tent at all dyadic nodes:
+$$\left|\mathrm{evalNet}(\mathrm{deepTent}(k))\!\left(\tfrac{i}{2^k}\right) - \mathrm{shallow}_{w,a,t,c}\!\left(\tfrac{i}{2^k}\right)\right| \le \varepsilon \quad \text{for all } i\le 2^k.$$
+Then both
+$$\mathrm{netSize}(\mathrm{deepTent}(k)) = 2k \qquad\text{and}\qquad \frac{2^k(1-2\varepsilon)}{A} \le w.$$
 
-Hence g rises by at least (1 − ε) − ε = 1 − 2ε between these points. But by the Lipschitz hypothesis,
+*Proof.* The size equality is Theorem 5.3. For the width bound, rewrite the hypothesis via the exact realization (Theorem 5.2) so that it reads as an approximation of $\mathrm{tent}^{[k]}$, then apply Theorem 4.5. $\square$
 
-> g((1/2)ᵏ) − g(0) ≤ |g((1/2)ᵏ) − g(0)| ≤ K · |(1/2)ᵏ − 0| = K · 2⁻ᵏ.
+Theorem 6.1 is the heart of the paper: a *single explicit target* is realized by a deep network of total size $2k$ (linear in depth) yet forces *any* shallow $\varepsilon$-approximant ($\varepsilon<\tfrac12$, weight cap $A$) to width $\ge 2^k(1-2\varepsilon)/A$ (exponential in depth).
 
-Combining, 1 − 2ε ≤ K · 2⁻ᵏ, i.e. K · 2⁻ᵏ + 2ε ≥ 1, the negation of the budget hypothesis. ∎
+**Theorem 6.2 (Unbounded gap).** For every ratio $R$ there exists a depth $k$ at which the forced shallow width exceeds $R$ times the deep size; equivalently,
+$$\frac{2^k(1-2\varepsilon)/A}{2k} \xrightarrow[k\to\infty]{} \infty.$$
 
-### 5.2 Interpretation: an exponential architectural lower bound
+*Proof sketch.* The numerator grows like $2^k$ while the denominator grows like $k$; since $2^k$ eventually dominates any polynomial (in particular $k$, via the auxiliary bounds $k < 2^k$ and $k^2 \le 2^k$ for large $k$), the ratio diverges. Hence for any $R$ there is a $k$ with $2^k(1-2\varepsilon)/A > R\cdot 2k$. $\square$
 
-Rearranging the budget condition, any *K*-Lipschitz approximant achieving uniform error ε < 1/2 must satisfy
+The depth advantage is therefore not bounded by any constant: it is unbounded.
 
-> K ≥ (1 − 2ε) · 2ᵏ.
+## 7. Algorithms
 
-By Definition 3.5, a bounded-weight shallow ReLU network is Lipschitz with constant bounded by its width-times-weight budget. Therefore approximating the depth-*k*, constant-width, O(k)-sized tent network to any fixed accuracy below 1/2 forces a shallow network's budget to grow like 2ᵏ — exponential in the depth it is trying to emulate. This is depth separation: an exponential gap in resource cost between deep and shallow realizations of the same function.
+We summarize the constructive content as algorithms (Python implementations in the accompanying demo).
 
-### 5.3 Sharpness
+**Algorithm A (Deep tent evaluation).** Given depth $k$ and input $x$, apply the tent map $k$ times. Complexity $O(k)$ arithmetic operations; the realized function has $2^k$ pieces. This is the explicit deep network of Definition 2.6.
 
-**Theorem 5.2 (Sharpness, `relu_depth_separation_sharp`).** For all k,
+**Algorithm B (Discrete total-variation meter).** Given a function $g$ and resolution $k$, evaluate $g$ at the $2^k+1$ dyadic nodes and sum the absolute consecutive differences. Complexity $O(2^k)$ evaluations. Used to certify both $\mathrm{TV}_k(\mathrm{tent}^{[k]}) = 2^k$ and the shallow upper bound $\mathrm{TV}_k(\mathrm{shallow})\le\sum_j|a_j|$.
 
-> (2ᵏ) · (1/2)ᵏ + 2 · 0 = 1.
+**Algorithm C (Shallow width lower bound).** Given depth $k$, accuracy $\varepsilon<\tfrac12$, and weight cap $A$, return $\lceil 2^k(1-2\varepsilon)/A\rceil$ as the minimum shallow width forced by Theorem 4.5. Constant time.
 
-*Proof sketch.* (2ᵏ)(1/2)ᵏ = (2 · 1/2)ᵏ = 1ᵏ = 1, and the +2·0 term vanishes. ∎
+## 8. Applications and Discussion
 
-Interpretation: the depth-*k* tent is 2ᵏ-Lipschitz (Theorem 4.3) and trivially approximates itself with ε = 0. Plugging K = 2ᵏ, ε = 0 into the budget expression yields exactly the boundary value 1. Thus the strict inequality "K · 2⁻ᵏ + 2ε < 1" in Theorem 5.1 is the best possible: it cannot be weakened to "≤ 1", since the honest self-approximation meets the boundary with equality. The threshold is sharp.
+**Why depth helps, mechanistically.** The separation isolates the mechanism behind the empirical success of depth: *composition multiplies complexity*. Each tent block contributes only two neurons but doubles the oscillation count; total variation, the conserved currency, grows geometrically with depth and only linearly with shallow weight mass. The same accounting principle applies whenever a problem possesses a complexity measure that compounds under composition.
 
-### 5.4 A concrete instance
+**Exactness vs. approximation.** Because the deep realization is exact (Theorem 5.2), there is no approximation error on the deep side; the entire tolerance $\varepsilon$ is granted to the shallow competitor, which still cannot avoid the exponential wall. This asymmetry strengthens the separation.
 
-**Example.** At depth k = 3, take the constant function g(x) = 1/2, the extreme "shallow" case (it is 0-Lipschitz, so K = 0). The budget reads 0 · (1/2)³ + 2 · (3/8) = 3/4 < 1, so by Theorem 5.1, g cannot approximate tent³ to accuracy 3/8 on [0, 1]. Indeed it cannot: tent³ attains both 0 and 1, while a constant 1/2 is always exactly 1/2 from one of those values, exceeding 3/8. (This is the formally checked `example` in the source.)
+**Scope and limitations.** The formalism is scalar (one input and one output per block), matching the one-dimensional tent. Extending the exact realization to $f:[-1,1]^n\to\mathbb{R}$ requires vector-valued blocks (input $\{0,\dots,d-1\}\to\mathbb{R}$) and a coordinatewise composition lemma; this is the route to the width-$(n+4)$, depth-$O(\log(1/\varepsilon))$ statements for continuous functions on $[-1,1]^n$. The size measure counts hidden neurons, the standard notion for the trade-off. The strict numerical gap $2k<2^k$ holds for $k\ge3$, so the dramatic separation is asymptotic.
 
----
+## 9. Future Directions
 
-## 6. Algorithms
+- **Multi-input deep efficiency on $[-1,1]^n$.** A continuous $f:[-1,1]^n\to\mathbb{R}$ should be $\varepsilon$-approximable by a ReLU network of width $n+4$ and depth $O(\log(1/\varepsilon))$ per coordinate, applying the deep tent coordinatewise inside a Kolmogorov–Arnold-style outer sum. The exact scalar realization already gives a two-neuron oscillator; a width-$(n+4)$ carry-register architecture can refine each coordinate to dyadic resolution $2^{-k}$ using depth $k$, decoupling depth (resolution) from width (dimension). Only a vector-valued block and a coordinatewise composition lemma are missing.
 
-The construction is constructive and immediately implementable. We summarize the key procedures (full code in the accompanying `demo.py`).
+- **Sharpness of the $2^k(1-2\varepsilon)/A$ shallow bound.** There should be a shallow network of width $\Theta(2^k)$ matching $\mathrm{tent}^{[k]}$ to any $\varepsilon>0$, so the lower bound is tight up to the constant $(1-2\varepsilon)/A$. A $2n$-ramp interpolant with $n=2^k$ nodes reproduces the piecewise-linear $\mathrm{tent}^{[k]}$ exactly; instantiating an exact-reproduction interpolant on the dyadic grid is the remaining step.
 
-### 6.1 Evaluating the depth-*k* tent network
+- **Depth–accuracy law for Lipschitz targets.** For $L$-Lipschitz $f$ on $[0,1]$, a depth-$O(\log(1/\varepsilon))$, constant-width network combining the deep tent (address bits) with a readout should achieve uniform error $\varepsilon$, beating the shallow width $O(L/\varepsilon)$. The deep tent computes the leading binary digits of the input via its dyadic alternation, turning function approximation into table lookup whose depth scales with bit-precision $\log(1/\varepsilon)$.
 
-```
-function tent(x):                # one width-2 ReLU block
-    return 1 - relu(2x - 1) - relu(1 - 2x)
+## 10. Conclusion
 
-function tent_iterate(x, k):     # depth-k network, O(k) work
-    for i in 1..k: x = tent(x)
-    return x
-```
-
-### 6.2 Empirical Lipschitz constant (verifies Theorem 4.3)
-
-```
-function empirical_lipschitz(k, samples):
-    grid = uniform points on [0,1]
-    return max over adjacent pairs of |f(x_i) - f(x_j)| / |x_i - x_j|,  f = tent_iterate(·, k)
-# Expected output ≈ 2^k
-```
-
-### 6.3 Certifying separation failure (verifies Theorem 5.1)
-
-```
-function separation_witness(g, K, eps, k):
-    assert K * 2^{-k} + 2*eps < 1            # budget hypothesis
-    a = |tent_iterate(0,k)   - g(0)|         # error at left endpoint
-    b = |tent_iterate(2^{-k},k) - g(2^{-k})| # error at first peak
-    return max(a, b) > eps                    # guaranteed True by Theorem 5.1
-```
-
-### 6.4 Counting linear pieces / level crossings (foundation for §7)
-
-```
-function count_crossings(k, level):
-    sample tent_iterate on a fine grid; count sign changes of (f - level)
-# Expected output ≈ 2^k for level in (0,1)
-```
-
----
-
-## 7. Toward a width lower bound (strengthening)
-
-Theorem 5.1 uses a single steep ramp and bounds the Lipschitz constant — equivalently, the weight magnitude — of a shallow approximant. A complementary, weight-independent bound counts oscillations. The function `tent^[k]` crosses any level c ∈ (0, 1) exactly 2ᵏ times. A one-hidden-layer ReLU network of width *w* is continuous piecewise-linear with at most *w* + 1 affine pieces, hence crosses any level at most *w* + 1 times. Matching the crossing count forces
-
-> w ≥ 2ᵏ − 1,
-
-an exact **width** lower bound holding *regardless of weight magnitude*. The missing ingredient for a fully formal proof is the combinatorial lemma "a continuous function with p affine pieces has at most p solutions to f = c," which is within reach of the existing ascending-branch identity (Lemma 4.3a) and the peak structure (Theorem 4.5). This would upgrade the present Lipschitz separation to the strongest form of Telgarsky's theorem.
-
----
-
-## 8. Applications and significance
-
-1. **Justifying depth in practice.** The result is a rigorous, sharp witness to the empirical superiority of deep architectures. It explains why stacking layers — rather than widening a single one — yields exponential expressivity gains for oscillatory or hierarchical targets.
-
-2. **Curse of dimensionality and the n-dimensional picture.** Tensorizing the construction (F(x) = ∏ᵢ tent^[k](xᵢ) on [−1,1]ⁿ) yields a shallow cost scaling like ε⁻ⁿ versus a deep cost scaling like depth ≈ n · log(1/ε), the quantitative width-vs-depth trade-off named in the title. The 1-D tent is the irreducible core of this gap.
-
-3. **A clean teaching example.** Because every step is elementary — a two-point squeeze plus the doubling-map identity — the construction is an ideal pedagogical entry point to expressivity theory, with no measure theory or Fourier analysis required.
-
-4. **A template for range-preserving lower bounds.** Many hardness results inadvertently rely on range explosion. The tent map demonstrates how to obtain hardness from oscillation alone, a methodologically cleaner standard for future separation results.
-
----
-
-## 9. Discussion
-
-The elegance of the tent construction lies in the separation of concerns it achieves. *Composition* (depth) is cheap: it costs one width-two block per layer, O(k) parameters total. *Oscillation* (expressivity) is the output: 2ᵏ⁻¹ peaks. *Lipschitz growth* (the cost a shallow model must pay) is the compounded slope: 2ᵏ. The depth-separation theorem is then nothing more than the observation that these three quantities are locked together, and that a Lipschitz competitor must pay in slope for the oscillation it cannot fold.
-
-It is worth emphasizing once more that the obstruction is range-preserving. A naive separation — iterate x ↦ 2x and observe the output reaches 2ᵏ — is technically a depth separation but morally a triviality: of course a bounded shallow model cannot reach unbounded heights. The tent keeps everything in [0, 1], forcing the difficulty into the geometry of oscillation, which is exactly the regime where real neural networks operate and where the question is interesting.
-
----
-
-## 10. Future work
-
-See the accompanying future-directions note for the full program. In brief: (1) upgrade the Lipschitz lower bound to a weight-independent width lower bound w ≥ 2ᵏ − 1 via a piecewise-linear crossing-count lemma (§7); (2) prove the matching shallow *upper* bound — every K-Lipschitz function on [0,1] is ε-approximated by the piecewise-linear interpolant on ⌈K/ε⌉ nodes, itself a width-⌈K/ε⌉ ReLU network — closing the Θ(K/ε) shallow vs Θ(log(1/ε)) deep gap quantitatively; and (3) lift the entire construction to [−1, 1]ⁿ via tensorized tents to obtain the ε⁻ⁿ versus n·log(1/ε) high-dimensional separation.
-
----
-
-## Appendix A. Summary of formal results
-
-| Name | Statement |
-|---|---|
-| `tent_relu_repr` | tent(x) = 1 − relu(2x − 1) − relu(1 − 2x) (width-2 ReLU layer) |
-| `tent_lipschitz` | tent is 2-Lipschitz |
-| `tent_mapsTo` | tent maps [0,1] into [0,1] |
-| `tent_eq_two_mul` | x ≤ 1/2 ⟹ tent(x) = 2x |
-| `tent_iterate_lipschitz` | tent^[k] is 2ᵏ-Lipschitz |
-| `tent_iterate_zero` | tent^[k](0) = 0 |
-| `tent_iterate_peak` | tent^[k]((1/2)ᵏ) = 1 |
-| `relu_depth_separation` | K·2⁻ᵏ + 2ε < 1 ⟹ no K-Lipschitz g is an ε-approximant of tent^[k] on [0,1] |
-| `relu_depth_separation_sharp` | (2ᵏ)(1/2)ᵏ + 2·0 = 1 (threshold is sharp) |
-
-All entries are formally verified.
+We have given a complete, two-sided, constant-explicit depth–width separation for ReLU networks. The iterated tent map oscillates $2^k$ times, forcing exponential shallow width $\ge 2^k(1-2\varepsilon)/A$, yet is realized exactly by a deep network of size $2k$ — logarithmic in the oscillation count. The gap is unbounded. The unifying invariant is discrete total variation: depth mints it geometrically, shallow width buys it linearly. This is the mathematical core of why depth is leverage, not merely convenience.
