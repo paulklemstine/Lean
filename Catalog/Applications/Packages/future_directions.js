@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fee52015",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
       "Logic",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -2929,7 +2929,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "SIC Overlap Units are Products of Square Roots of Stark Units"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8999eb20",
     "description": "Let G be a simple left d-regular bipartite graph with d \u2265 2 and girth at least 2k + 2. Then the minimum distance of the binary linear code B(G) is at least k + 1. This connects the combinatorial structure of optimal small-set expanders (characterized by girth) to the coding-theoretic properties of their associated codes, which is central to the paper's application to post-quantum key exchange.",
     "domains": [
       "Cryptography",
@@ -2939,7 +2939,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:53:07.212970+00:00",
     "title": "Girth bounds minimum distance of bipartite graph codes"
   },
@@ -6417,7 +6417,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Minimal Covering Polytopes with Exactly 2d Facets in Every Dimension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce5b4268",
     "description": "For the polynomial f(x) = x^q + bx^2 + cx + d over F_{q^2}, we conjecture that f is a permutation polynomial if and only if specific explicit conditions on the coefficients hold: when q is odd, f permutes F_{q^2} iff b, c, d satisfy g(b,c,d) \u2260 0 where g is an explicit polynomial expression derived from Weil sum evaluation; when q is even, f permutes F_{q^2} iff h(b,c,d) \u2260 0 with h being another explicit expression. The precise forms of g and h relate to the discriminant of the associated Weil sum and can be computed via the number of solutions to the equation f(x) = f(y) for x \u2260 y.",
     "domains": [
       "Pythagorean"
@@ -6426,7 +6426,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.14529v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-28T02:23:31.130528+00:00",
     "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
   },
@@ -7957,7 +7957,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Super-exponential growth of the number of symmetric chain decompositions of M(n)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dc303029",
     "description": "This conjecture posits that for a totally degenerating family of polarized abelian varieties, the existence of a non-Archimedean balanced metric would imply uniform control over the convergence rates of Hilbert\u2013Chow stability criteria, which in turn constrains the possible bounds on the volumes of moduli spaces in such families.",
     "domains": [
       "Pythagorean",
@@ -7967,7 +7967,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.15758v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T23:02:04.414507+00:00",
     "title": "Non-Archimedean balanced metrics and their implications for totally degenerate abelian geometries"
   },
@@ -8960,7 +8960,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "140a33ad",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -8970,7 +8970,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },

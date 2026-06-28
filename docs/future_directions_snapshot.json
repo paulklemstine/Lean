@@ -1376,7 +1376,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fee52015",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the Böhm tree for undecidability of equivalence.",
     "domain_bridges": [],
     "domains": [
@@ -1389,7 +1389,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -4861,7 +4861,7 @@
       "math.CO",
       "cs.IT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8999eb20",
     "description": "Let G be a simple left d-regular bipartite graph with d ≥ 2 and girth at least 2k + 2. Then the minimum distance of the binary linear code B(G) is at least k + 1. This connects the combinatorial structure of optimal small-set expanders (characterized by girth) to the coding-theoretic properties of their associated codes, which is central to the paper's application to post-quantum key exchange.",
     "domain_bridges": [
       "graph_theory",
@@ -4878,7 +4878,7 @@
     "proof_strategy": "By contradiction: assume a codeword x ∈ B(G) of Hamming weight w with 1 ≤ w ≤ k. Let S = supp(x). Since girth ≥ 2k + 2 ≥ 2w + 2, the induced subgraph on S ∪ N(S) is acyclic (any cycle has length ≤ 2w < 2k + 2). In this forest, each vertex in S has degree d (left-regularity) and each vertex in N(S) has even degree ≥ 2 (parity-check condition from x ∈ B(G)). Degree-sum gives d|S| = Σ_{v∈N(S)} deg(v) ≥ 2|N(S)|, so |N(S)| ≤ d|S|/2. But the forest property gives d|S| = edges ≤ vertices − 1 = |S| + |N(S)| − 1, so |N(S)| ≥ (d−1)|S| + 1. Combining yields (d−1)|S| + 1 ≤ d|S|/2, i.e., (d−2)|S|/2 ≤ −1, contradicting d ≥ 2 and |S| ≥ 1.",
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:53:07.212970+00:00",
     "title": "Girth bounds minimum distance of bipartite graph codes"
   },
@@ -11269,7 +11269,7 @@
       "Finite field trace and norm maps",
       "Canonical additive characters"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce5b4268",
     "description": "For the polynomial f(x) = x^q + bx^2 + cx + d over F_{q^2}, we conjecture that f is a permutation polynomial if and only if specific explicit conditions on the coefficients hold: when q is odd, f permutes F_{q^2} iff b, c, d satisfy g(b,c,d) ≠ 0 where g is an explicit polynomial expression derived from Weil sum evaluation; when q is even, f permutes F_{q^2} iff h(b,c,d) ≠ 0 with h being another explicit expression. The precise forms of g and h relate to the discriminant of the associated Weil sum and can be computed via the number of solutions to the equation f(x) = f(y) for x ≠ y.",
     "domain_bridges": [
       "Character theory",
@@ -11286,7 +11286,7 @@
     "proof_strategy": "Use the Weil sum characterization: f permutes F_{q^2} iff the equation y(f(x)-f(z)) = 0 has exactly one solution for each y ∈ F_{q^2}, which translates to computing the Weil sum S = sum_{x,z∈F_{q^2}} χ(y(f(x)-f(z))) and showing it equals q^2 precisely when the conjectured coefficient conditions hold. The proof involves expanding the character sum, completing the square in the exponent, and applying Gauss sum evaluations.",
     "research_mode": "team",
     "source_exp_id": "2606.14529v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-28T02:23:31.130528+00:00",
     "title": "Complete Characterization of Permutation Polynomials x^q + bx^2 + cx + d over F_{q^2}"
   },
@@ -14046,7 +14046,7 @@
       "Yang, 'The Geometry of Calabi-Yau Varieties'",
       "Li et al., 'Extreme Approximations in Geometry'"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dc303029",
     "description": "This conjecture posits that for a totally degenerating family of polarized abelian varieties, the existence of a non-Archimedean balanced metric would imply uniform control over the convergence rates of Hilbert–Chow stability criteria, which in turn constrains the possible bounds on the volumes of moduli spaces in such families.",
     "domain_bridges": [
       "arXiv:2109.09574",
@@ -14062,7 +14062,7 @@
     "proof_strategy": "Constructive existence with uniformity guarantees",
     "research_mode": "team",
     "source_exp_id": "2606.15758v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T23:02:04.414507+00:00",
     "title": "Non-Archimedean balanced metrics and their implications for totally degenerate abelian geometries"
   },
@@ -15617,7 +15617,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "140a33ad",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domain_bridges": [],
     "domains": [
@@ -15630,7 +15630,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
