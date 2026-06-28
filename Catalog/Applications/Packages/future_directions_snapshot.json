@@ -1196,7 +1196,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c011c95b",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -1210,7 +1210,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1316,7 +1316,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "551fc26b",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domain_bridges": [],
     "domains": [
@@ -1329,7 +1329,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -5869,7 +5869,7 @@
       "https://arxiv.org/abs/2001.12345",
       "https://arxiv.org/abs/2203.67890"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a880828",
     "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
     "domain_bridges": [
       "zeta-regularization",
@@ -5886,7 +5886,7 @@
     "proof_strategy": "Leverage analytic continuation of Dirichlet L-functions and properties of their critical strips to establish the natural boundary's extent and position, then apply techniques from complex analysis to demonstrate the absence of meromorphic continuation beyond the boundary.",
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T13:54:36.235382+00:00",
     "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
@@ -11709,7 +11709,7 @@
       "Gromov, 1995",
       "Laurention et al., 2018"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca01957a",
     "description": "This paper explores the construction of nilpotent Lie algebras with arbitrarily high nilpotency using structured ordered sets and investigates their implications for algebraic Ricci solitons.",
     "domain_bridges": [
       "algebraic geometry",
@@ -11725,7 +11725,7 @@
     "proof_strategy": "Constructive adaptation of existing existence techniques with tailored order-preserving constructions",
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T11:14:03.330176+00:00",
     "title": "Nilpotent Lie algebras obtained by ordered sets and Ricci solitons"
   },
@@ -12245,7 +12245,7 @@
     "catalog_references": [
       "math.GR:2305.01887"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49c290ff",
     "description": "Conjecture: Let G be a finite group. If G is not nilpotent and the deleted co-maximal subgroup graph Γ*(G) contains a cycle, then the girth of Γ*(G) equals 3. Equivalently, Γ*(G) has girth 4 only when G is nilpotent.",
     "domain_bridges": [
       "Graph Theory"
@@ -12260,7 +12260,7 @@
     "proof_strategy": "First, use the paper's result that Γ*(G) is either a star or contains a cycle of length 3 or 4. Second, show that if G is not nilpotent then Γ*(G) cannot be a star (by the classification of star groups). Third, construct three subgroups H, K, L such that each pair product equals G but no pair of them is contained in a maximal subgroup that would force a 4‑cycle, yielding a triangle. This construction relies on the existence of a non‑normal maximal subgroup and its core, together with a Sylow subgroup not contained in that maximal subgroup.",
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T22:52:34.019998+00:00",
     "title": "Girth of the deleted co-maximal subgroup graph is three for non-nilpotent finite groups"
   },
@@ -12353,7 +12353,7 @@
     "catalog_references": [
       "Ogu84"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "552f4622",
     "description": "This conjecture predicts the existence of a uniform classification of F-isocrystals on analyticly good rigid spaces, motivated by the analytic and prismatic structures reviewed.",
     "domain_bridges": [
       "agricalgebra",
@@ -12369,7 +12369,7 @@
     "proof_strategy": "Construction of a p-adic construction with explicit consistency conditions",
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T00:50:47.487415+00:00",
     "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
   },
@@ -13308,7 +13308,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c193d06",
     "description": "The paper conjectures that for fixed m > 1, the number of symmetric chain decompositions (SCDs) of the minuscule lattice L(m,n) grows super-exponentially with n. This conjecture is extended to the lattice M(n) of partitions into distinct parts at most n. We propose formalizing the lower bound for the growth rate of #SCD(M(n)) to prove it exceeds any exponential function of n.",
     "domain_bridges": [
       "Order Theory",
@@ -13325,7 +13325,7 @@
     "proof_strategy": "Define the poset M(n) as a subset of the power set of {1,..., n} with a specific order. Define the property of being a symmetric chain decomposition. Use a constructive method to show that for sufficiently large n, the number of ways to extend a partial SCD to a full SCD grows faster than c^n for any constant c, likely by relating SCDs to the number of standard Young tableaux or similar combinatorial structures that exhibit super-exponential growth.",
     "research_mode": "team",
     "source_exp_id": "2606.15891v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T22:38:24.430692+00:00",
     "title": "Super-exponential growth of the number of symmetric chain decompositions of M(n)"
   },
@@ -14087,7 +14087,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f73687d8",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domain_bridges": [],
     "domains": [
@@ -14100,7 +14100,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
