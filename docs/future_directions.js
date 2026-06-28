@@ -491,7 +491,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Theory: Self-Adjoint Operators"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a530b001",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
       "Computation",
@@ -501,7 +501,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -1946,7 +1946,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5d028d25",
     "description": "For any bounded prism (A, I) where A/I is a regular local ring of dimension d, the restriction functor from the category of prismatic F-crystals on Spec(A/I) to the category of prismatic F-crystals on the punctured spectrum Spec(A/I) \\ {m} is an equivalence of categories. This extends the paper's primitive purity theorem for Frobenius modules to the full setting of prismatic F-crystals, and would imply that the canonical F-isocrystal from Ogus's conjecture is uniquely determined by its restriction to any dense open subscheme.",
     "domains": [
       "Algebra",
@@ -1956,7 +1956,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T11:00:28.938025+00:00",
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
@@ -2584,7 +2584,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inflated line-transversal counterexamples have sphere homotopy type"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f11db87",
     "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
     "domains": [
       "Geometry"
@@ -2593,7 +2593,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:24:48.021151+00:00",
     "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
   },
@@ -6114,7 +6114,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved lower bound for r-graphs with 0 or 2 edges in every (r+1)-set"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53e074b6",
     "description": "For a simple field extension L = K(\u03b8) in characteristic p > 0 with minimal polynomial f \u2208 K[x], and any purely inseparable field extension N/K, the numerical invariant m_{f,N} associated to the compositum NL/N (as defined in the paper) coincides with the invariant m_f associated to L/K. That is, m_{f,N} = m_f. This would imply that the criterion for NL = (NL)^{pi}(NL)^{sep} depends only on L/K and not on the choice of purely inseparable extension N/K.",
     "domains": [
       "Algebra"
@@ -6123,7 +6123,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19962v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T14:43:20.786451+00:00",
     "title": "Invariance of the field invariant m_f under purely inseparable base change"
   },
@@ -7520,7 +7520,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Maximum Cycle Length Bound in Odd Bases"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db606ba2",
     "description": "Conjecture that for any intersecting family F \u2286 ( [n] choose k ) with n \u2265 60\u00b7k^(3/2) and k \u2265 50, the size of the family of symmetric differences SD(F) is at most \u03a3_{\u2113=0}^{k-1} binom(n-1, 2\u2113).",
     "domains": [
       "Pythagorean"
@@ -7529,7 +7529,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20043v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T14:19:38.119794+00:00",
     "title": "Bound on symmetric differences of intersecting families"
   },
@@ -8543,7 +8543,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce8c041d",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8553,7 +8553,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
