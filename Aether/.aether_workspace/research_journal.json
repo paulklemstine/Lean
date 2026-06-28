@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8f6e0a03",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Quadratic irrational density in the ratio spectrum\n\nDerived from this cycle's findings (closure of the quadratic-irrational locus\nunder the integer Möbius action; the determinant",
-      "quality_score": 0.67124,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-26T04:44:57",
-      "title": "Quadratic irrational density in the ratio spectrum"
-    },
-    {
       "cycle_id": "8344a207",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Birch and Swinnerton-Dyer Research Cycle\n\nThis cycle added two self-contained modules to `Catalog/Applications/BSD/`:\n\n* **`FunctionalEquation.lean`** — the unconditional analyti",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T22:47:15",
       "title": "The Non-Existence of New Factorial Square Solutions"
+    },
+    {
+      "cycle_id": "0a1f99db",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — derived from the `ramseyNumber` cycle\n\nThis cycle turned the catalog's `Arrows` lemmas into a single numeric function\n`ramseyNumber : ℕ → ℕ → ℕ` carrying exact values, monotonici",
+      "quality_score": 0.57392,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T23:14:30",
+      "title": "Ramsey Theory: Bounds and Constructions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7327899999999999
     }
   ],
-  "last_updated": "2026-06-28T22:47:15",
+  "last_updated": "2026-06-28T23:14:30",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "07ec4039",
-        "quality": 0.77992,
-        "theorems": 12,
-        "title": "EML Universal Approximation: Density of EML Functions"
-      },
-      {
         "cycle_id": "35f6557d",
         "quality": 0.61504,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.44995,
         "theorems": 0,
         "title": "The Non-Existence of New Factorial Square Solutions"
+      },
+      {
+        "cycle_id": "0a1f99db",
+        "quality": 0.57392,
+        "theorems": 0,
+        "title": "Ramsey Theory: Bounds and Constructions"
       }
     ],
     "Bridges": [

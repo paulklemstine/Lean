@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4f7ad584",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for ε-approximation is O(K(f)/ε), connecting to Kolmogorov complexity.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -1097,7 +1097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "31c996e4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domain_bridges": [],
     "domains": [
@@ -1109,7 +1109,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -2909,7 +2909,7 @@
       "YanJin2024",
       "Bouchet1987"
     ],
-    "consumed_by_exp_id": "6a68949c",
+    "consumed_by_exp_id": "",
     "description": "For every binary delta-matroid and every nontrivial twuality operator $\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the partial-$\\bullet$ polynomial $^\\partial w_D^\\bullet(z)$ is either even, odd, or both even-interpolating and odd-interpolating.",
     "domain_bridges": [
       "Delta-matroid theory",
@@ -2925,7 +2925,7 @@
     "proof_strategy": "Formalize delta-matroids and binary delta-matroids over a finite ground set, define the five twuality operators (twist, loop complementation, and their compositions), and construct the partial-twuality polynomial using the width function. Establish the parity and interpolation properties of the polynomial coefficients by analyzing how the twuality operators transform the feasible sets of a binary delta-matroid.",
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T10:41:26.252321+00:00",
     "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
   },
@@ -7345,7 +7345,7 @@
       "Mathlib.LinearAlgebra.Dimension.Finrank",
       "Mathlib.Data.Finset.Card"
     ],
-    "consumed_by_exp_id": "12b5f4b2",
+    "consumed_by_exp_id": "",
     "description": "In the h=1 specialization of additive strong blocking sets, i.e. ordinary strong blocking sets in PG(2,2), a finite set S of projective points is strong blocking if and only if it contains at least 6 of the 7 points. Equivalently, the shortest nondegenerate minimal binary linear code of dimension 3 has length 6 under the projective-system correspondence.",
     "domain_bridges": [
       "minimal linear codes ↔ strong blocking sets",
@@ -7362,7 +7362,7 @@
     "proof_strategy": "Represent points of PG(2,2) as 1-dimensional submodules of V = (ZMod 2)^3 and lines as 2-dimensional submodules. In the Fano plane every line has exactly 3 points and any two distinct points determine a unique line. A set S is strong blocking exactly when every line contains at least two points of S. If S is strong blocking, its complement cannot contain two points, since those two points would determine a line meeting S in only one point; hence |S| ≥ 6. Conversely, if |S| ≥ 6, every line misses at most one point, so it contains at least two points of S and therefore its intersection with S spans the line.",
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T10:08:51.465617+00:00",
     "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
   },
@@ -10811,36 +10811,6 @@
     "status": "available",
     "timestamp": "2026-06-27T16:34:22.443319+00:00",
     "title": "Restricted Rota-Baxter Lie algebras of arbitrary weight give rise to restricted post-Lie algebras via splitting property"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Djokovic1973",
-      "Winkler1984",
-      "XieXu2025",
-      "Benz2012",
-      "paper:arXiv:2107.XXXX"
-    ],
-    "consumed_by_exp_id": "3c64518a",
-    "description": "For any finite partial cube G, the following are equivalent:\n1. G is a minimal forbidden pc‑minor for the class of daisy cubes (that is, G is a partial cube that contains a non‑peripheral Θ‑class and every proper pc‑minor of G is a daisy cube).\n2. There exist integers r ≥ 2 and s ≥ 1 such that G is isomorphic to the graph obtained from the Cartesian product P₃ⁿ□Qₛ by deleting the two vertices that are opposite in the P₃ⁿ factor and lie in the same Qₛ copy.  In other words, G ≅ (P₃ⁿ□Qₛ) \\ {u, v} with u and v the two antipodal corners of the P₃ⁿ factor.\n\nIn particular, the infinite family { (P₃ⁿ□Qₛ) \\ {u, v} | r ≥ 2, s ≥ 1 } is precisely the set of all minimal forbidden pc‑minors for daisy cubes.",
-    "domain_bridges": [
-      "Partial cubes ↔ isometric subgraphs of hypercubes",
-      "Θ‑classes ↔ convex halfspaces",
-      "Daisy cubes ↔ down‑sets in Boolean lattices",
-      "Minor theory for partial cubes"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2636",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The proof will proceed by induction on the isometric dimension of a minimal forbidden partial cube G containing a non‑peripheral Θ‑class. First, we show that any such G must have a Θ‑class whose associated convex halfspace is a proper subset of the vertex set and whose peripheral halfspace is a single vertex—this vertex is an ‘extremal’ corner in the hypercube representation. Next, we prove that removing this corner yields a subgraph that is still a partial cube but has one fewer Θ‑class. Repeating this operation at each step forces G to decompose as a Cartesian product of P₃‑factors and a Qₛ‑factor, with the removed corners precisely the two distinct antipodal vertices in the P₃ⁿ component. A structural lemma about minimal non‑peripheral Θ‑classes in partial cubes is required, which can be formalized using the convexity and evenness conditions of Θ‑classes. The final step is to verify that any graph outside this family contains a proper pc‑minor that also fails the peripheral Θ‑class ",
-    "research_mode": "team",
-    "source_exp_id": "2606.19032v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-27T17:13:14.129734+00:00",
-    "title": "Complete Characterization of Minimal Forbidden Partial‑Cube Minors for Daisy Cubes"
   },
   {
     "ambition_level": "grand_challenge",
@@ -15512,6 +15482,26 @@
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — derived from the `ramseyNumber` cycle\n\nThis cycle turned the catalog's `Arrows` lemmas into a single numeric function\n`ramseyNumber : ℕ → ℕ → ℕ` carrying exact values, monotonicity, symmetry, the\nErdős–Szekeres recursion and binomial bound, and a diagonal sandwich. The\nfollowing conjectures are the natural next falsifiable targets.\n\n## 1. Off-diagonal closed form `R(3,t) ≤ ⌈t² / something⌉` via iterated recursion\n**Conjecture.** `ramseyNumber 3 (t+1) ≤ ramseyNumber 3 t + t` for all `t ≥ 1`,\nhence `R(3,t) ≤ C(t+1,2) + 1 = (t² + t + 2)/2`.\n**The key insight is** that the proved `ramseyNumber_recursion` plus the proved\nbase case `ramseyNumber_two_succ` (`R(2,t)=t`) already telescopes: `R(3,t+1) ≤\nR(2,t+1) + R(3,t) = (t+1) + R(3,t)`, so a single `Nat.rec` over `t` yields the\nquadratic upper bound with no new combinatorics.\n**Why now?** Both ingredients (`ramseyNumber_recursion`, `ramseyNumber_two_succ`)\nare theorems in this cycle; only the induction packaging remains.\n\n## 2. Strict monotonicity on the diagonal\n**Conjecture.** `ramseyNumber s s < ramseyNumber (s+1) (s+1)` for all `s ≥ 1`.\n**The key insight is** that the recursion gives `R(s+1,s+1) ≤ 2·R(s,s+1)` while\nthe extremal lower-bound colourings (pentagon, circulant, Paley) used for the\nexact values can be \"lifted\" by one vertex, so the gap is provably ≥ 1; combining\n`ramseyNumber_mono_left`/`_right` with one strict anti-arrow should close it.\n**Why now?** Monotonicity (`ramseyNumber_mono_left`, `ramseyNumber_mono_right`)\nis proved; strictness only needs a single new `¬ Arrows` witness per step.\n\n## 3. The probabilistic bound is super-polynomial in the function\n**Conjecture.** `ramseyNumber k k` grows faster than every polynomial in `k`:\nfor each `d` there is `K` with `k^d < ramseyNumber k k` for `k ≥ K`.\n**The key insight is** that `ramseyNumber_diagonal_sandwich` already gives\n`2^m < R(2m,2m)`, and `2^m` dominates every polynomial; the only gap is relating\n`R(k,k)` to `R(2⌊k/2⌋, 2⌊k/2⌋)` via the proved monotonicity.\n**Why now?** The exponential lower bound on the function (`lt_ramseyNumber_diagonal`)\nis a theorem this cycle; the polynomial-domination step is pure `Nat` analysis.\n\n## 4. Sub-additivity / log-convexity of the diagonal\n**Conjecture.** `ramseyNumber (s+t) (s+t) ≤ ramseyNumber (2s) (2s) ·\nramseyNumber (2t) (2t)` — a multiplicative companion to the additive recursion.\n**The key insight is** that product constructions of Ramsey colourings correspond\nto taking categorical products of the extremal graphs, so the achieved thresholds\nmultiply; the additive `ramseyNumber_recursion` is the degenerate `t=1` shadow of\nthis multiplicative law.\n**Why now?** With `ramseyNumber` and `ramseyNumber_le`/`_mem` in place, a product\ncolouring lemma plugs straight into the same `sInf` API.\n\n## 5. Tightness certificate of the binomial bound\n**Conjecture.** For `s,t ≥ 1`, the Erdős–Szekeres binomial bound is tight\n(`ramseyNumber s t = (s+t-2).choose (s-1)`) **iff** `min(s,t) ≤ 2` or `(s,t) = (3,3)`,\nand strict (`<`) everywhere else.\n**The key insight is** that the proved exact values already settle the small cases:\n`R(2,t)=t=C(t,1)` and `R(3,3)=6=C(4,2)` give equality, whereas `R(3,4)=9<C(5,2)=10`\nand `R(4,4)=18<C(6,3)=20` give the first strict gaps — so the equality locus is\nexactly the boundary `min(s,t)≤2` together with the exceptional corner `(3,3)`.\n**Why now?** All the exact values needed to test the equality locus\n(`R(3,3), R(3,4), R(4,4), R(2,t)`) and the bound `ramseyNumber_le_choose` are\ntheorems in this cycle, so the `iff` is checkable on the relevant cases.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2804",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0a1f99db",
+    "status": "available",
+    "timestamp": "2026-06-28T23:13:59.632774+00:00",
+    "title": "This cycle turned the catalog's `Arrows` lemmas into a single numeric function"
   },
   {
     "ambition_level": "extension",

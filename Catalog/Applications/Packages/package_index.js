@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0a1f99db",
     "filename": "ramsey_theory_bounds_and_constructions.json",
     "pkg_num": 199,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.57392,
     "title": "Ramsey Theory: The Ramsey Number as a Computable Function with Exact Values and Bounds"
   },
   {
@@ -5806,8 +5806,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "ramsey_theory_bounds_and_constructions",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.57392,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Ramsey Theory: The Ramsey Number as a Computable Function with Exact Values and Bounds"
     }

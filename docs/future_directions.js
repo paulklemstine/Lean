@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "4f7ad584",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
     "domains": [
       "EML",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "31c996e4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1932,7 +1932,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
   },
   {
-    "consumed_by_exp_id": "6a68949c",
+    "consumed_by_exp_id": "",
     "description": "For every binary delta-matroid and every nontrivial twuality operator $\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the partial-$\\bullet$ polynomial $^\\partial w_D^\\bullet(z)$ is either even, odd, or both even-interpolating and odd-interpolating.",
     "domains": [
       "Algebra"
@@ -1941,7 +1941,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T10:41:26.252321+00:00",
     "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
   },
@@ -4275,7 +4275,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dominant Orchard Denominator Root Comes from the Last Complete-Graph Matching Factor"
   },
   {
-    "consumed_by_exp_id": "12b5f4b2",
+    "consumed_by_exp_id": "",
     "description": "In the h=1 specialization of additive strong blocking sets, i.e. ordinary strong blocking sets in PG(2,2), a finite set S of projective points is strong blocking if and only if it contains at least 6 of the 7 points. Equivalently, the shortest nondegenerate minimal binary linear code of dimension 3 has length 6 under the projective-system correspondence.",
     "domains": [
       "Geometry",
@@ -4285,7 +4285,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T10:08:51.465617+00:00",
     "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
   },
@@ -6169,20 +6169,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-27T16:34:22.443319+00:00",
     "title": "Restricted Rota-Baxter Lie algebras of arbitrary weight give rise to restricted post-Lie algebras via splitting property"
-  },
-  {
-    "consumed_by_exp_id": "3c64518a",
-    "description": "For any finite partial cube G, the following are equivalent:\n1. G is a minimal forbidden pc\u2011minor for the class of daisy cubes (that is, G is a partial cube that contains a non\u2011peripheral \u0398\u2011class and every proper pc\u2011minor of G is a daisy cube).\n2. There exist integers r \u2265 2 and s \u2265 1 such that G is isomorphic to the graph obtained from the Cartesian product P\u2083\u207f\u25a1Q\u209b by deleting the two vertices that are opposite in the P\u2083\u207f factor and lie in the same Q\u209b copy.  In other words, G \u2245 (P\u2083\u207f\u25a1Q\u209b) \\ {u, v} with u and v the two antipodal corners of the P\u2083\u207f factor.\n\nIn particular, the infinite family { (P\u2083\u207f\u25a1Q\u209b) \\ {u, v} | r \u2265 2, s \u2265 1 } is precisely the set of all minimal forbidden pc\u2011minors for daisy cubes.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2636",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19032v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-27T17:13:14.129734+00:00",
-    "title": "Complete Characterization of Minimal Forbidden Partial\u2011Cube Minors for Daisy Cubes"
   },
   {
     "consumed_by_exp_id": "",
@@ -8810,6 +8796,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 derived from the `ramseyNumber` cycle\n\nThis cycle turned the catalog's `Arrows` lemmas into a single numeric function\n`ramseyNumber : \u2115 \u2192 \u2115 \u2192 \u2115` carrying exact values, monotonicity, symmetry, the\nErd\u0151s\u2013Szekeres recursion and binomial bound, and a diagonal sandwich. The\nfollowing conjectures are the natural next falsifiable targets.\n\n## 1. Off-diagonal closed form `R(3,t) \u2264 \u2308t\u00b2 / something\u2309` via iterated recursion\n**Conjecture.** `ramseyNumber 3 (t+1) \u2264 ramseyNumber 3 t + t` for all `t \u2265 1`,\nhence `R(3,t) \u2264 C(t+1,2) + 1 = (t\u00b2 + t + 2)/2`.\n**The key insight is** that the proved `ramseyNumber_recursion` plus the proved\nbase case `ramseyNumber_two_succ` (`R(2,t)=t`) already telescopes: `R(3,t+1) \u2264\nR(2,t+1) + R(3,t) = (t+1) + R(3,t)`, so a single `Nat.rec` over `t` yields the\nquadratic upper bound with no new combinatorics.\n**Why now?** Both ingredients (`ramseyNumber_recursion`, `ramseyNumber_two_succ`)\nare theorems in this cycle; only the induction packaging remains.\n\n## 2. Strict monotonicity on the diagonal\n**Conjecture.** `ramseyNumber s s < ramseyNumber (s+1) (s+1)` for all `s \u2265 1`.\n**The key insight is** that the recursion gives `R(s+1,s+1) \u2264 2\u00b7R(s,s+1)` while\nthe extremal lower-bound colourings (pentagon, circulant, Paley) used for the\nexact values can be \"lifted\" by one vertex, so the gap is provably \u2265 1; combining\n`ramseyNumber_mono_left`/`_right` with one strict anti-arrow should close it.\n**Why now?** Monotonicity (`ramseyNumber_mono_left`, `ramseyNumber_mono_right`)\nis proved; strictness only needs a single new `\u00ac Arrows` witness per step.\n\n## 3. The probabilistic bound is super-polynomial in the function\n**Conjecture.** `ramseyNumber k k` grows faster than every polynomial in `k`:\nfor each `d` there is `K` with `k^d < ramseyNumber k k` for `k \u2265 K`.\n**The key insight is** that `ramseyNumber_diagonal_sandwich` already gives\n`2^m < R(2m,2m)`, and `2^m` dominates every polynomial; the only gap is relating\n`R(k,k)` to `R(2\u230ak/2\u230b, 2\u230ak/2\u230b)` via the proved monotonicity.\n**Why now?** The exponential lower bound on the function (`lt_ramseyNumber_diagonal`)\nis a theorem this cycle; the polynomial-domination step is pure `Nat` analysis.\n\n## 4. Sub-additivity / log-convexity of the diagonal\n**Conjecture.** `ramseyNumber (s+t) (s+t) \u2264 ramseyNumber (2s) (2s) \u00b7\nramseyNumber (2t) (2t)` \u2014 a multiplicative companion to the additive recursion.\n**The key insight is** that product constructions of Ramsey colourings correspond\nto taking categorical products of the extremal graphs, so the achieved thresholds\nmultiply; the additive `ramseyNumber_recursion` is the degenerate `t=1` shadow of\nthis multiplicative law.\n**Why now?** With `ramseyNumber` and `ramseyNumber_le`/`_mem` in place, a product\ncolouring lemma plugs straight into the same `sInf` API.\n\n## 5. Tightness certificate of the binomial bound\n**Conjecture.** For `s,t \u2265 1`, the Erd\u0151s\u2013Szekeres binomial bound is tight\n(`ramseyNumber s t = (s+t-2).choose (s-1)`) **iff** `min(s,t) \u2264 2` or `(s,t) = (3,3)`,\nand strict (`<`) everywhere else.\n**The key insight is** that the proved exact values already settle the small cases:\n`R(2,t)=t=C(t,1)` and `R(3,3)=6=C(4,2)` give equality, whereas `R(3,4)=9<C(5,2)=10`\nand `R(4,4)=18<C(6,3)=20` give the first strict gaps \u2014 so the equality locus is\nexactly the boundary `min(s,t)\u22642` together with the exceptional corner `(3,3)`.\n**Why now?** All the exact values needed to test the equality locus\n(`R(3,3), R(3,4), R(4,4), R(2,t)`) and the bound `ramseyNumber_le_choose` are\ntheorems in this cycle, so the `iff` is checkable on the relevant cases.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2804",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0a1f99db",
+    "status": "available",
+    "timestamp": "2026-06-28T23:13:59.632774+00:00",
+    "title": "This cycle turned the catalog's `Arrows` lemmas into a single numeric function"
   },
   {
     "consumed_by_exp_id": "",
