@@ -491,7 +491,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Theory: Self-Adjoint Operators"
   },
   {
-    "consumed_by_exp_id": "a530b001",
+    "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
       "Computation",
@@ -501,7 +501,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -3058,20 +3058,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of Cayley Digraphs of Even Order with K2"
   },
   {
-    "consumed_by_exp_id": "f6f6439c",
-    "description": "For positive integers s and r, set T(s,r) = (8*s + 4)*r and F(s) = 4*s - 4. Conjecture: in every finite simple graph G, for every vertex set A and every elementary wall W in G of height at least T(s,r), either there is a vertex set X with |X| \u2264 F(s) separating A from the branch vertices of W, or W contains an r-subwall W' for which there are s pairwise vertex-disjoint A--W' paths whose W'-endvertices are distinct nails of W' and whose internal vertices avoid A \u222a V(W'). This gives an explicit linear-in-r wall-size bound and an explicit separator bound depending only on s, strengthening the existential bound pattern of the paper in the one-terminal-set case.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2408",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23121v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T07:12:31.058915+00:00",
-    "title": "Linear one-set wall-Menger bound for elementary walls"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "This paper investigates the interpolation properties of partial-twuality polynomials defined on set systems associated with binary delta-matroids, extending existing results to all nontrivial twuals and highlighting the role of categorical structure.",
     "domains": [
@@ -4117,7 +4103,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ratio Spectrum of Lagrange Constants Under Linear Fractional Transformations"
   },
   {
-    "consumed_by_exp_id": "5870167a",
+    "consumed_by_exp_id": "",
     "description": "For every k >= 1 and every n >= 2*k + 1, there exists a maximal standard social decision frame on exactly 2*n voters whose shortest perfectly balanced majority obstruction has length exactly 2*k + 2. Equivalently, the sparse infinite sequence of universe sizes supplied by the geometric construction can be filled in: once the half-size n is at least 2*k + 1, every larger even electorate size supports a maximal standard frame with incoherence index 2*k + 2.",
     "domains": [
       "Geometry"
@@ -4126,7 +4112,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T04:15:17.784537+00:00",
     "title": "Cofinite realization of every even incoherence index by maximal standard frames"
   },
@@ -8191,6 +8177,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Hadwiger\u2013Debrunner `(p,q)` for convex splinters\n\nDerived from this cycle's findings in `Combinatorial.lean` and `HellyBridge.lean`.\nThis cycle proved (0 sorries) that the `(p,q)`-to-transversal passage factors as\n`set-class-agnostic combinatorics \u00d7 (one Helly number)`, with the Helly number\n`d+1` for convex sets (via Mathlib's `Convex.helly_theorem`) and `2d+1` for\nconvex splinters (Arocha\u2013Bracho\u2013Montejano, supplied as a hypothesis). The\nfollowing conjectures are the natural next falsifiable targets.\n\n**Category declaration.** This target is a *cross-domain bridge* between\n**Geometry** (`Convex.helly_theorem`, `EuclideanSpace`) and **Combinatorics**\n(`Finset`-indexed `(p,q)`-property and transversals). Each direction below keeps\nthat bridge orientation.\n\n---\n\n## C1. A dimension-independent transversal bound at the Helly threshold `q = h`\n\n**Conjecture.** For a family with Helly number `h` (abstract `HasHellyNumber`-style,\nuniformly over all subfamilies) and the `(p, h)`-property with `p \u2265 h`, the\ntransversal number is bounded by a constant `N(h, p)` independent of `|s|` \u2014 in\nfact `\u03c4 \u2264 binom(p-1, h-1)` should already follow from fractional Helly.\n\n**The key insight is** that our `exists_transversal_of_pqProperty_full` bound\n`\u03c4 \u2264 |s| - q + 1` is the *trivial* one-shot bound; iterating the Helly extraction\n(remove one common point, recurse) replaces `|s|` by a quantity controlled only\nby the *fractional* Helly constant, which is dimension/`h`-driven, not `|s|`-driven.\n\n**Why now?** Mathlib already has `Convex.helly_theorem`; the missing ingredient is\na *fractional* Helly statement, which our `HasHellyNumber` abstraction is shaped to\naccept as a drop-in hypothesis, so the combinatorial recursion can be formalised\nimmediately on top of this cycle's core.\n\n---\n\n## C2. The splinter Helly theorem `2d+1` as a Radon-type statement in Mathlib\n\n**Conjecture.** Convex splinters in `\u211d^d` (in the Arocha\u2013Bracho\u2013Montejano sense)\nsatisfy a Radon-type partition lemma with `2d+2` points, and hence have Helly\nnumber exactly `2d+1`; this is provable in Lean by the same colourful-Radon\nscaffolding that underlies `Mathlib/Analysis/Convex/Radon.lean`.\n\n**The key insight is** that our `convex_hasHellyNumber` shows the *only* thing the\n`(p,q)` machinery needs from geometry is `HasHellyNumber s F h`; therefore proving\nthe splinter case reduces entirely to discharging that one predicate at `h = 2d+1`,\ndecoupled from the transversal bookkeeping.\n\n**Why now?** The convex Radon/Helly pipeline is already in Mathlib at the exact\nversion we build against, so the splinter generalisation is an incremental\nmodification (a `2d+2`-point partition replacing the `d+2`-point one) rather than\na from-scratch development.\n\n---\n\n## C3. Sharpness of the threshold: a splinter family failing `(2d, 2d)` but not `(2d+1, 2d+1)`\n\n**Conjecture.** For every `d` there is a finite family of convex splinters in `\u211d^d`\nwith the `(2d, 2d)`-property (every `2d`-subfamily intersecting) yet **no** common\npoint \u2014 certifying that the Helly threshold cannot be lowered below `2d+1`.\n\n**The key insight is** that the gap between the convex threshold `d+1` and the\nsplinter threshold `2d+1` must be *witnessed* by an explicit construction, and our\n`HasHellyNumber` predicate makes \"threshold `h` fails\" a precisely stateable,\nrefutable Lean proposition (`\u00ac HasHellyNumber s F h`).\n\n**Why now?** With the abstract predicate in hand, a candidate construction (unions\nof two parallel slabs) can be tested computationally first, then formalised,\nclosing the loop between the upper bound (C2) and its sharpness.\n\n---\n\n## C4. Monotone-in-`q` transversal interpolation\n\n**Conjecture.** Combining `HasPQProperty.weaken_q` with a fractional-Helly input\nyields a *monotone family of bounds* `N(d, p, q)` that is non-increasing in `q`\nand meets the classical Hadwiger\u2013Debrunner value `N(d, p, d+1)` at the convex\nthreshold and a strictly larger value at `q = 2d+1` for splinters.\n\n**The key insight is** that `weaken_q` already proves the `(p,q)`-property is\nmonotone in `q` *for free*, so the only `q`-dependence left to quantify is inside\nthe Helly/fractional-Helly constant \u2014 isolating exactly where the convex/splinter\ndistinction injects its cost.\n\n**Why now?** `HasPQProperty.weaken_q` is proved in this cycle with 0 sorries; the\ninterpolation conjecture is the immediate quantitative refinement it invites.\n\n---\n\n## C5. A `(p,q)` theorem for finite Boolean combinations of convex sets\n\n**Conjecture.** Families whose members are unions of at most `k` convex sets in\n`\u211d^d` admit a Helly number `\u2264 k(d+1)`, and therefore inherit the entire\ntransversal theory of this cycle with `h := k(d+1)`.\n\n**The key insight is** that \"convex splinter\" is one instance of a broader pattern:\n*any* set class with a finite Helly number plugs into `pqProperty_helly_transversal_one`\nunchanged; the splinter result is the `k = 2` (slab-union) shadow of this family.\n\n**Why now?** The abstract bridge is already proved and parameterised purely by `h`,\nso each new set class is a single `HasHellyNumber` lemma away from a full\ntransversal theorem \u2014 making `k`-fold unions the cheapest next bridge to build.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2761",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5f11db87",
+    "status": "available",
+    "timestamp": "2026-06-28T07:54:15.187356+00:00",
+    "title": "Derived from this cycle's findings in `Combinatorial.lean` and `HellyBridge.lean"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 5f11db87 (Q=0.698) proved 8 theorems in Applications but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at mos",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_5f11db87_68e28566",
+    "priority_score": 0.7482,
+    "research_mode": "team",
+    "source_exp_id": "5f11db87",
+    "status": "available",
+    "timestamp": "2026-06-28T07:58:49.789596+00:00",
+    "title": "Close Proofs: Hadwiger--Debrunner (p,q) theorem for convex splinters"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8632,7 +8647,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "ce8c041d",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8642,7 +8657,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

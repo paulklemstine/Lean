@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5f11db87",
     "filename": "hadwiger__debrunner_pq_theorem_for_convex_splinter.json",
     "pkg_num": 173,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6981999999999999,
     "title": "Hadwiger\u2013Debrunner (p,q) Theorem for Convex Splinters"
   },
   {
@@ -5045,8 +5045,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "hadwiger__debrunner_pq_theorem_for_convex_splinter",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6981999999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Hadwiger\u2013Debrunner (p,q) Theorem for Convex Splinters"
     }

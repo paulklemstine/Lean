@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5a434903",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n## 1. Monotone closure of the full Alon–Shikhelman counting hierarchy\n\nThe wrappers proved here transport a single cubic bound across the subgraph order, but the same\nmechanism sh",
-      "quality_score": 0.333456,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-24T20:57:48",
-      "title": "Extremal Graph Theory: Turán and Szemerédi"
-    },
-    {
       "cycle_id": "18853638",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nDerived from *A Sharp Generalized Uniform–Witness Bound for Families with\nPrescribed Missing–Trace Size* (`RESEARCH_PAPER.md`) and its formal companion\n`Catalog/Bridges/UniformWit",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-28T07:31:47",
       "title": "Exact multicolor Ramsey threshold for stars in s-connector graphs"
+    },
+    {
+      "cycle_id": "5f11db87",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Hadwiger–Debrunner `(p,q)` for convex splinters\n\nDerived from this cycle's findings in `Combinatorial.lean` and `HellyBridge.lean`.\nThis cycle proved (0 sorries) that the `(p,q)`",
+      "quality_score": 0.6981999999999999,
+      "sorry_count": 2,
+      "theorem_count": 8,
+      "timestamp": "2026-06-28T07:58:49",
+      "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.747936
     }
   ],
-  "last_updated": "2026-06-28T07:31:47",
+  "last_updated": "2026-06-28T07:58:49",
   "open_questions": [
-    {
-      "context": "Main results (all `sorry`-free):",
-      "cycle_id": "2ec4044e",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-06-16T11:25:17"
-    },
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
       "cycle_id": "a0dd96a5",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-06-28T07:31:47"
+    },
+    {
+      "context": "All four compile with no `sorry` and only the standard axioms.; All compile with no `sorry`; the convex chain bottoms out in genuine Mathlib",
+      "cycle_id": "5f11db87",
+      "domain": "Applications",
+      "sorry_count": 2,
+      "timestamp": "2026-06-28T07:58:49"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "9e0667c2",
-        "quality": 0.7800670000000001,
-        "theorems": 14,
-        "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
-      },
-      {
         "cycle_id": "552f4622",
         "quality": 0.642034,
         "theorems": 5,
@@ -3141,6 +3135,12 @@
         "quality": 0.6228,
         "theorems": 9,
         "title": "Exact multicolor Ramsey threshold for stars in s-connector graphs"
+      },
+      {
+        "cycle_id": "5f11db87",
+        "quality": 0.6981999999999999,
+        "theorems": 8,
+        "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
       }
     ],
     "Bridges": [
