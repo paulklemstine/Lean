@@ -506,7 +506,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bac3bfcc",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -517,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -2812,7 +2812,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00e5c711",
     "description": "In the wall version of Menger's theorem (Theorem 1 of the paper), the separator bound f can be taken to equal s' - 1, matching the classical Menger bound. Specifically: for all positive integers s' and t', there exists an integer t such that for any vertex set A and any wall W of size at least t, either there exists a vertex set X of size at most s' - 1 that separates A from the branch vertices of W, or there exists a subwall W' of size at least t' together with s' vertex-disjoint A-W'-paths each ending in a distinct nail of W'.",
     "domains": [
       "Pythagorean"
@@ -2821,7 +2821,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T21:19:02.613185+00:00",
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
@@ -3058,7 +3058,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of Cayley Digraphs of Even Order with K2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6f6439c",
     "description": "For positive integers s and r, set T(s,r) = (8*s + 4)*r and F(s) = 4*s - 4. Conjecture: in every finite simple graph G, for every vertex set A and every elementary wall W in G of height at least T(s,r), either there is a vertex set X with |X| \u2264 F(s) separating A from the branch vertices of W, or W contains an r-subwall W' for which there are s pairwise vertex-disjoint A--W' paths whose W'-endvertices are distinct nails of W' and whose internal vertices avoid A \u222a V(W'). This gives an explicit linear-in-r wall-size bound and an explicit separator bound depending only on s, strengthening the existential bound pattern of the paper in the one-terminal-set case.",
     "domains": [
       "Pythagorean"
@@ -3067,7 +3067,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T07:12:31.058915+00:00",
     "title": "Linear one-set wall-Menger bound for elementary walls"
   },
@@ -4117,7 +4117,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ratio Spectrum of Lagrange Constants Under Linear Fractional Transformations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5870167a",
     "description": "For every k >= 1 and every n >= 2*k + 1, there exists a maximal standard social decision frame on exactly 2*n voters whose shortest perfectly balanced majority obstruction has length exactly 2*k + 2. Equivalently, the sparse infinite sequence of universe sizes supplied by the geometric construction can be filled in: once the half-size n is at least 2*k + 1, every larger even electorate size supports a maximal standard frame with incoherence index 2*k + 2.",
     "domains": [
       "Geometry"
@@ -4126,7 +4126,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T04:15:17.784537+00:00",
     "title": "Cofinite realization of every even incoherence index by maximal standard frames"
   },
@@ -5503,7 +5503,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact asymptotic value of the average stack-sorting depth"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d0e7e8c",
     "description": "Conjecture: For every integer n \u2265 2, a biased graph is gainable over the cyclic group Z_n if and only if it contains none of the minors ( (n+1)K2, \u2205 ), \u00b1K3, or -K4.",
     "domains": [
       "Pythagorean",
@@ -5513,7 +5513,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23826v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T17:27:31.523329+00:00",
     "title": "Excluded minors for Z_n-gainable biased graphs"
   },
@@ -8293,7 +8293,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c8e22e5a",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -8303,7 +8303,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -8661,7 +8661,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce8c041d",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -8671,7 +8671,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

@@ -675,7 +675,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bac3bfcc",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domain_bridges": [],
     "domains": [
@@ -689,7 +689,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -4641,7 +4641,7 @@
       "wall_decomposition",
       "flat_wall_theorem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00e5c711",
     "description": "In the wall version of Menger's theorem (Theorem 1 of the paper), the separator bound f can be taken to equal s' - 1, matching the classical Menger bound. Specifically: for all positive integers s' and t', there exists an integer t such that for any vertex set A and any wall W of size at least t, either there exists a vertex set X of size at most s' - 1 that separates A from the branch vertices of W, or there exists a subwall W' of size at least t' together with s' vertex-disjoint A-W'-paths each ending in a distinct nail of W'.",
     "domain_bridges": [
       "min_max_relations_in_graphs",
@@ -4657,7 +4657,7 @@
     "proof_strategy": "Attempt to prove f = s' - 1 suffices by adapting the classical Menger argument to walls: if no separator of size s' - 1 exists between A and the branch vertices of W, then by Menger's theorem there are s' disjoint paths from A to the branch vertices. The challenge is controlling where these paths attach in W. Use the flat wall theorem and the hierarchical structure of subwalls to reroute paths so they end in distinct nails of a suitable subwall W'. A counterexample strategy would construct a wall where many A-W paths must converge on the same nail of every large subwall.",
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T21:19:02.613185+00:00",
     "title": "Wall-Menger Separator Optimality Conjecture"
   },
@@ -5097,7 +5097,7 @@
       "Robertson-Seymour wall terminology",
       "vertex-disjoint path packing versus vertex separator duality"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6f6439c",
     "description": "For positive integers s and r, set T(s,r) = (8*s + 4)*r and F(s) = 4*s - 4. Conjecture: in every finite simple graph G, for every vertex set A and every elementary wall W in G of height at least T(s,r), either there is a vertex set X with |X| ≤ F(s) separating A from the branch vertices of W, or W contains an r-subwall W' for which there are s pairwise vertex-disjoint A--W' paths whose W'-endvertices are distinct nails of W' and whose internal vertices avoid A ∪ V(W'). This gives an explicit linear-in-r wall-size bound and an explicit separator bound depending only on s, strengthening the existential bound pattern of the paper in the one-terminal-set case.",
     "domain_bridges": [
       "graph minor wall structure to finite max-flow/min-cut reasoning",
@@ -5113,7 +5113,7 @@
     "proof_strategy": "Formalize elementary walls as finite grid-like subgraphs with branch vertices and nails. Use finite Menger to obtain many disjoint paths from A to the branch vertices when no separator of size F(s) exists. Prove a combinatorial routing lemma inside a sufficiently large elementary wall: from at least 4*s-3 disjoint attachments to branch vertices of a wall of height at least (8*s+4)*r, one can select an r-subwall W' and reroute s of the paths through the wall so that they terminate at distinct nails of W' while preserving vertex-disjointness and avoiding V(W') internally. The main Lean burden is the wall routing lemma; the Menger step can be isolated behind an existing or separately formalized finite Menger theorem.",
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T07:12:31.058915+00:00",
     "title": "Linear one-set wall-Menger bound for elementary walls"
   },
@@ -7049,7 +7049,7 @@
       "Conjecture B.25 middle-layer family from Moss--Pedersen",
       "Mathlib: Finset, Fintype, List.countP, finite Boolean cubes"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5870167a",
     "description": "For every k >= 1 and every n >= 2*k + 1, there exists a maximal standard social decision frame on exactly 2*n voters whose shortest perfectly balanced majority obstruction has length exactly 2*k + 2. Equivalently, the sparse infinite sequence of universe sizes supplied by the geometric construction can be filled in: once the half-size n is at least 2*k + 1, every larger even electorate size supports a maximal standard frame with incoherence index 2*k + 2.",
     "domain_bridges": [
       "zero-sum sequences in the middle layer of the Boolean cube",
@@ -7066,7 +7066,7 @@
     "proof_strategy": "Start from the paper's construction at the base size 2*(2*k+1). To pass from n to n+1, add one complementary pair of new voters whose membership profiles across the distinguished obstruction blocks are complementary (k+1)-subsets of the 2*k+2 obstruction positions), so the existing obstruction remains perfectly balanced and all distinguished blocks remain half-sized. Then orient all newly created middle-layer complementary pairs by a rational lexicographic perturbation extending the original separating functional. The key finite-avoidance lemma is that the perturbation can be chosen outside the finite union of hyperplanes corresponding to balanced majority sequences of length <= 2*k; hence no shorter obstruction is introduced. Iterating gives all n >= 2*k+1.",
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T04:15:17.784537+00:00",
     "title": "Cofinite realization of every even incoherence index by maximal standard frames"
   },
@@ -9619,7 +9619,7 @@
       "Funk 2015",
       "ArXiv:2305.xxx"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d0e7e8c",
     "description": "Conjecture: For every integer n ≥ 2, a biased graph is gainable over the cyclic group Z_n if and only if it contains none of the minors ( (n+1)K2, ∅ ), ±K3, or -K4.",
     "domain_bridges": [
       "biased graphs",
@@ -9637,7 +9637,7 @@
     "proof_strategy": "Prove the equivalence by induction on the size of the graph, using the theory of partial groups to reduce to Z_2 and Z_3 cases and applying known excluded minor classifications for those groups.",
     "research_mode": "team",
     "source_exp_id": "2606.23826v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T17:27:31.523329+00:00",
     "title": "Excluded minors for Z_n-gainable biased graphs"
   },
@@ -14522,7 +14522,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c8e22e5a",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -14535,7 +14535,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -15015,7 +15015,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce8c041d",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -15028,7 +15028,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
