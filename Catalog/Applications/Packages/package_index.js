@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "07ec4039",
     "filename": "eml_universal_approximation_density_of_eml_functio.json",
     "pkg_num": 191,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.77992,
     "title": "EML Universal Approximation on the Unit Cube: Coordinate-Exponential Density and Depth Compression of Monomials"
   },
   {
@@ -5574,8 +5574,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "eml_universal_approximation_density_of_eml_functio",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.77992,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "EML Universal Approximation on the Unit Cube: Coordinate-Exponential Density and Depth Compression of Monomials"
     }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f014f8e3",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — AFL Matching Bound for Random-Like Hypergraphs\n\nDerived from this cycle's findings (see the Lab Notes in `Basic.lean`, `Bounds.lean`,\n`Examples.lean`, and `ComputationalEvidence.",
-      "quality_score": 0.7510892307692308,
-      "sorry_count": 2,
-      "theorem_count": 13,
-      "timestamp": "2026-06-26T13:14:44",
-      "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hypergraphs"
-    },
-    {
       "cycle_id": "ab42f98e",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions: Cryptography from Iterated Collatz Maps\n\nDerived from this cycle's findings (see `Map.lean`, `Reversibility.lean`,\n`HashCollision.lean`). Each conjecture is bold, falsifiable, and",
@@ -499,19 +489,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T17:21:24",
       "title": "Girth bounds minimum distance of bipartite graph codes"
+    },
+    {
+      "cycle_id": "07ec4039",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Universal Approximation: Density & Depth\n\nDerived from the cycle that produced `Catalog/EML/CubeDensity.lean` (density of the\ncoordinate-exponential EML algebra on `[0,1]ⁿ`,",
+      "quality_score": 0.77992,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-28T17:25:51",
+      "title": "EML Universal Approximation: Density of EML Functions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ab9c78a7",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Extremal Graph Theory (Turán / Kruskal–Katona / Removal / Roth)\n\nDerived from this cycle's findings. The cycle added two compiling, sorry-free Lean files:\n\n* `KruskalKatonaGraphB",
-      "quality_score": 0.72533,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-25T18:50:27",
-      "title": "Extremal Graph Theory: Turán and Szemerédi"
-    },
     {
       "cycle_id": "54abcfb1",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T17:21:24",
       "title": "Girth bounds minimum distance of bipartite graph codes"
+    },
+    {
+      "cycle_id": "07ec4039",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Universal Approximation: Density & Depth\n\nDerived from the cycle that produced `Catalog/EML/CubeDensity.lean` (density of the\ncoordinate-exponential EML algebra on `[0,1]ⁿ`,",
+      "quality_score": 0.77992,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-28T17:25:51",
+      "title": "EML Universal Approximation: Density of EML Functions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c25c1b9e",
-      "domain": "Novelty",
-      "name": "det_one_sub_Jmat",
-      "quality": 0.7665600000000001
-    },
-    {
-      "cycle_id": "c25c1b9e",
-      "domain": "Novelty",
-      "name": "det_Jmat_sub_one",
-      "quality": 0.7665600000000001
-    },
-    {
-      "cycle_id": "c25c1b9e",
-      "domain": "Novelty",
-      "name": "det_KresMat",
-      "quality": 0.7665600000000001
-    },
     {
       "cycle_id": "470fcb83",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "card_norm_one",
       "quality": 0.71224
+    },
+    {
+      "cycle_id": "07ec4039",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.77992
+    },
+    {
+      "cycle_id": "07ec4039",
+      "domain": "Applications",
+      "name": "cannot",
+      "quality": 0.77992
+    },
+    {
+      "cycle_id": "07ec4039",
+      "domain": "Applications",
+      "name": "should",
+      "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T17:21:24",
+  "last_updated": "2026-06-28T17:25:51",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "5f11db87",
-        "quality": 0.6981999999999999,
-        "theorems": 8,
-        "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
-      },
-      {
         "cycle_id": "c8e22e5a",
         "quality": 0.8043199999999999,
         "theorems": 11,
@@ -3141,6 +3135,12 @@
         "quality": 0.68488,
         "theorems": 0,
         "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+      },
+      {
+        "cycle_id": "07ec4039",
+        "quality": 0.77992,
+        "theorems": 12,
+        "title": "EML Universal Approximation: Density of EML Functions"
       }
     ],
     "Bridges": [

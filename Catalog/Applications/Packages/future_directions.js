@@ -434,6 +434,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 07ec4039 (Q=0.780), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_07ec4039_b15609dc",
+    "priority_score": 0.8799199999999999,
+    "research_mode": "team",
+    "source_exp_id": "07ec4039",
+    "status": "available",
+    "timestamp": "2026-06-28T17:25:51.959911+00:00",
+    "title": "Deepening: EML Universal Approximation: Density of EML Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
     "domains": [
       "Algebra"
@@ -1300,21 +1314,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "0ffedaae",
-    "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
-    "domains": [
-      "Combinatorics",
-      "Probability"
-    ],
-    "id": "seed_355",
-    "priority_score": 0.82,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432742+00:00",
-    "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
     "domains": [
@@ -1664,6 +1663,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-28T17:21:05.669242+00:00",
     "title": "Derived from the cycle of work formalized in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Universal Approximation: Density & Depth\n\nDerived from the cycle that produced `Catalog/EML/CubeDensity.lean` (density of the\ncoordinate-exponential EML algebra on `[0,1]\u207f`, with explicit shallow-feature range bounds)\nand `Catalog/EML/DepthCompression.lean` (exp/log collapse the depth of monomials from `n` to a\nconstant `3`, with an unbounded depth gap).\n\nThe cycle established two complementary facts: density is qualitative and domain-agnostic among\ncompacta, while *depth* is governed by the multiplicative complexity of the target and is\ncollapsed by `exp`/`log`. The following conjectures push on the seam between these two findings.\n\n---\n\n## Conjecture 1 \u2014 Depth lower bound for multiplication-only EML terms\n\nEvery EML term in the `mul`-only fragment (no `exp`/`log`) that evaluates to `x\u207f` on `(0,\u221e)`\nhas depth `\u2265 \u2308log\u2082 n\u2309`, and the balanced binary product attains `\u2308log\u2082 n\u2309`. Hence the true\nmultiplication-only minimal depth is `\u0398(log n)`, not the linear `n` of the naive right-nested\nterm, but it is still unbounded \u2014 so exp/log compression (to constant depth) remains genuine.\n\n- **The key insight is** that multiplication is associative, so the minimal depth to combine `n`\n  copies of `x` is the depth of an optimal binary tree on `n` leaves, namely `\u2308log\u2082 n\u2309`; exp/log\n  beats even this optimum by turning the product into a single scalar multiply inside one `exp`.\n- **Why now?** `DepthCompression.lean` already proves the upper bounds for both representations;\n  the missing piece is a matching lower bound for the mul-only fragment, which formalizes the\n  *separation* (constant vs. unbounded) rather than just an upper-bound comparison.\n\n## Conjecture 2 \u2014 Quantitative depth/width law on the cube\n\nOn `[0,1]\u207f`, approximating an `L`-Lipschitz target to uniform error `\u03b5` with a coordinate-\nexponential EML network requires width `\u0398(\u03b5^{-n})` at constant depth, but width `\u0398(\u03b5^{-1})`\nper coordinate if depth is allowed to grow like `log(1/\u03b5)`. There is an explicit depth\u2013width\nexchange constant.\n\n- **The key insight is** that the explicit feature range `[1, e]` proved in\n  `coordExp_bounds_unitCube` pins the modulus of continuity of each shallow layer, turning the\n  qualitative density of `CubeDensity.lean` into a quantitative width count via a Jackson-type\n  estimate.\n- **Why now?** The catalog already contains the one-variable Jackson rate\n  (`EML.LipschitzJacksonRate`) and the multivariate density; combining them with the new cube\n  bounds is the natural next quantitative step.\n\n## Conjecture 3 \u2014 `exp`/`log` are necessary for constant-depth high-degree representation\n\nNo EML term of depth `< 3` represents `x\u207f` on `(0,\u221e)` for `n \u2265 2`, and depth `3` is achievable\n*only* by using at least one `exp` and one `log`. Thus constant-depth representation of all\nmonomials forces the presence of both transcendental primitives.\n\n- **The key insight is** that depth-`\u2264 2` terms are polynomials of bounded structure whose\n  monomial degree is capped by the number of `mul` layers, so unbounded degree at fixed depth is\n  impossible without the degree-linearising effect of `log` followed by `exp`.\n- **Why now?** `DepthCompression.lean` proves `exp`/`log` *suffice* for constant depth; the dual\n  necessity statement would complete the characterization and justify `exp`/`log` as irreducible\n  EML primitives.\n\n## Conjecture 4 \u2014 Cube density transfers to mixed Sobolev targets with depth-3 read-out\n\nEvery `f \u2208 C([0,1]\u207f)` is the uniform limit of depth-`\u2264 4` EML networks: depth `3` exp/log\nmonomials in the coordinate features, summed (one extra `add` layer) with scalar weights. Hence\n*shallow* (bounded-depth) EML networks are already dense, and depth beyond `4` buys only\nwidth/constant savings, never new expressivity.\n\n- **The key insight is** that the dense exponential-polynomial algebra of `CubeDensity.lean` is\n  spanned by products of coordinate exponentials, each of which is a depth-3 exp/log monomial in\n  the feature, so the whole dense set lives at bounded depth.\n- **Why now?** With density (`CubeDensity.lean`) and constant-depth monomials\n  (`DepthCompression.lean`) both in hand, the only remaining step is the depth bookkeeping for the\n  finite linear combination \u2014 a concrete, falsifiable target.\n\n## Conjecture 5 \u2014 Depth compression is sharp under a \"no-exp/log\" oracle separation\n\nDefine the *EML depth complexity* `D(f)` as the minimal depth of an exact EML representation of\n`f` on `(0,\u221e)`. Then `D(x\u207f) = 3` for all `n \u2265 1`, but the *mul-only* depth complexity\n`D_{\u00d7}(x\u207f) = \u2308log\u2082 n\u2309 \u2192 \u221e`. The ratio `D_{\u00d7}/D` is unbounded, witnessing an exponential\nexpressivity separation between the full EML algebra and its `exp`/`log`-free fragment.\n\n- **The key insight is** that `eml_depth_unbounded_gap` already exhibits an unbounded *additive*\n  gap; promoting it to an unbounded *ratio* against the optimal mul-only depth (Conjecture 1) is\n  the strongest possible separation statement at the depth level.\n- **Why now?** The additive gap is formalized; Conjecture 1's logarithmic lower bound is the one\n  missing ingredient needed to convert it into a clean complexity-theoretic separation.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2795",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "07ec4039",
+    "status": "available",
+    "timestamp": "2026-06-28T17:25:34.463795+00:00",
+    "title": "Derived from the cycle that produced `Catalog/EML/CubeDensity.lean` (density of "
   },
   {
     "consumed_by_exp_id": "",
