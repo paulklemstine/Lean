@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0cb84107",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Primes of the Form n² + 1\n\nDerived from the Stage 3 analysis and Stage 4 critique of this research cycle.\nEach conjecture is bold and falsifiable, with the decisive insight and a",
-      "quality_score": 0.506378,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-25T22:37:23",
-      "title": "Primes of the Form n²+1"
-    },
-    {
       "cycle_id": "a8f472f7",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Satisfactory Multipliers for 2D Lacunary Distance Graphs\n\nThis cycle established three pillars (all in `Catalog/Algebra/LacunaryTorus/`,\nall 0-sorry, axioms `propext`/`Classical.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T17:30:42",
       "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
+    },
+    {
+      "cycle_id": "37c46c25",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — EML Fixed-Point Dynamics (cycle v16b)\n\nDerived from this cycle's results:\n\n* `EML/FixedPointSensitivity.lean` — exact first-order sensitivity\n  `dx*/da = x*·(x*+c)/(x*+c − exp a)",
+      "quality_score": 0.650914,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-28T18:43:56",
+      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T17:30:42",
+  "last_updated": "2026-06-28T18:43:56",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ce8c041d",
-        "quality": 0.5816,
-        "theorems": 14,
-        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-      },
-      {
         "cycle_id": "00e5c711",
         "quality": 0.61002,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.61504,
         "theorems": 13,
         "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+      },
+      {
+        "cycle_id": "37c46c25",
+        "quality": 0.650914,
+        "theorems": 10,
+        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
       }
     ],
     "Bridges": [

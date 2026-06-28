@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "c610946b",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "23de9107",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -997,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1374,7 +1374,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "333b621d",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
     "domains": [
       "Computation",
@@ -1384,7 +1384,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.975605+00:00",
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
@@ -3551,20 +3551,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-24T17:05:28.615107+00:00",
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
-  },
-  {
-    "consumed_by_exp_id": "bfc7b99e",
-    "description": "The conjecture asserts no primes exceeding 7 satisfy $n! + 1 = m^2$ for $n < p$. This is falsifiable via computational checks.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2444",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23485v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T17:29:38.955405+00:00",
-    "title": "The Non-Existence of New Factorial Square Solutions"
   },
   {
     "consumed_by_exp_id": "",
@@ -8536,7 +8522,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
-    "consumed_by_exp_id": "203b440f",
+    "consumed_by_exp_id": "",
     "description": "Formalize Frankl's conjecture and prove it for families of size \u2264 50 (Bo\u0161njak-Markovi\u0107). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domains": [
       "Combinatorics",
@@ -8546,7 +8532,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432728+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
@@ -8652,6 +8638,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 EML Fixed-Point Dynamics (cycle v16b)\n\nDerived from this cycle's results:\n\n* `EML/FixedPointSensitivity.lean` \u2014 exact first-order sensitivity\n  `dx*/da = x*\u00b7(x*+c)/(x*+c \u2212 exp a)` of the fixed point in the scaling\n  parameter (implicit differentiation).\n* `Bridges/EMLNeuralContractionBridge.lean` \u2014 the EML contraction ratio `\u03c1` is a\n  certified ResNet residual-block Lipschitz budget via clamping (cross-domain:\n  EML \u00d7 MachineLearning).\n\nThe recurring discovery this cycle is that **one transcendental quantity,\n`x*+c \u2212 exp a` (equivalently `1 \u2212 \u03c1`), simultaneously governs convergence speed,\nparameter sensitivity, and the residual-network depth budget.** The conjectures\nbelow push on that unification.\n\n---\n\n## 1. The full power series of `x*(a)`, with radius of convergence `|x*+c \u2212 exp a|`-controlled\n\n**Conjecture.** On the attracting branch the fixed point `x*(a)` is real-analytic\nin `a`, with second-order coefficient computable by differentiating the\nsensitivity identity once more, and its radius of convergence is exactly the\ndistance in `a` to the fold threshold `c = exp(a)(1\u2212a)`.\n\nThe key insight is that the first-order slope already factors through the single\nnon-degeneracy quantity `1 \u2212 \u03c1`, so every higher coefficient must be a rational\nfunction of `(x*, c, exp a)` with denominator a power of `1 \u2212 \u03c1`, forcing the\nradius of convergence to be set by the nearest zero of `1 \u2212 \u03c1` (the fold).\n\nWhy now? This cycle proved the first coefficient and identified the denominator;\nthe second-order step is a mechanical re-differentiation of\n`fixedPointBranch_hasDerivAt`, and Mathlib's `HasDerivAt`/`AnalyticAt` API makes\nthe analyticity statement reachable.\n\n## 2. Sharp comparison: EML residual depth-`K` budget is sub-exponential iff `\u03c1 < 1`\n\n**Conjecture.** For the clamped EML residual block of ratio `\u03c1`, the depth-`K`\nLipschitz constant `(1+\u03c1)^K` is bounded by `exp(K\u03c1)` for every `K`, and this\nupper companion to the Bernoulli lower bound is tight as `\u03c1 \u2192 0`; consequently a\nstack of EML layers is globally Lipschitz with constant growing only like\n`exp(K\u03c1)`, never the feed-forward `L^K` blow-up.\n\nThe key insight is that `1 + \u03c1 \u2264 exp \u03c1` upgrades the additive ResNet law into a\ntwo-sided envelope `1 + K\u03c1 \u2264 (1+\u03c1)^K \u2264 exp(K\u03c1)`, pinning EML residual depth cost\nbetween a linear floor and an exponential-of-linear ceiling.\n\nWhy now? The lower (Bernoulli) half is already formalized in this cycle's bridge;\nthe upper half is `Real.add_one_le_exp` raised to the `K`, directly composable\nwith `eml_residual_network_certified`.\n\n## 3. Sensitivity sign flips at the repelling branch\n\n**Conjecture.** On the *repelling* branch (`\u03c1 > 1`, the second fixed point of\n`EML/FixedPointStability.lean`) the same formula gives a **negative** slope\n`dx*/da < 0`: raising `a` lowers the repeller, so the two branches move in\nopposite directions and the gap `x_attract \u2212 x_repel` is strictly increasing in\n`a`.\n\nThe key insight is that the closed form `x*\u00b7(x*+c)/(x*+c \u2212 exp a)` changes sign\nexactly through the denominator, so the proven positivity lemma\n`fixedPointBranch_deriv_pos` has an exact mirror with the inequality reversed,\nand subtracting the two slopes bounds the branch separation rate.\n\nWhy now? Both branches and their stability are already constructed\n(`exists_attracting_fixedPoint`, `exists_repelling_fixedPoint`), and the\nsensitivity theorem is stated for an arbitrary differentiable branch, so it\napplies verbatim to the repeller.\n\n## 4. A `ContractingWith` instance and Mathlib's `efixedPoint` for EML\n\n**Conjecture.** The clamped EML map is a Mathlib `ContractingWith \u03c1` self-map of\n`\u211d`, so `EMLIterOp` convergence, uniqueness, and the a priori error bound all\nfollow from `ContractingWith.fixedPoint` / `apriori_dist_iterate_fixedPoint_le`\nrather than the hand-rolled catalog proofs.\n\nThe key insight is that this cycle already produced the missing ingredient \u2014 a\n*global* `\u03c1`-Lipschitz EML map (`clampedEML_global_lipschitz`) \u2014 which is exactly\nthe hypothesis `ContractingWith` demands; clamping is the bridge from\ninterval-contraction to the global metric API.\n\nWhy now? `clampedEML_global_lipschitz` gives the global `LipschitzWith \u03c1` bound\non a complete space (`\u211d`), the single prerequisite for instantiating Mathlib's\nBanach fixed-point packaging.\n\n## 5. Multi-parameter sensitivity gradient `\u2207_{(a,c)} x*`\n\n**Conjecture.** Treating `x*` as a function of both `a` and `c`, the gradient is\n`(\u2202x*/\u2202a, \u2202x*/\u2202c) = (x*/(1\u2212\u03c1), (\u03c1/(1\u2212\u03c1)) \u00b7 (\u22121/(x*+c))\u00b7(x*+c))`-type closed\nforms sharing the denominator `1 \u2212 \u03c1`, and the ratio `\u2202x*/\u2202a : \u2202x*/\u2202c` is\nparameter-free along the neutral curve.\n\nThe key insight is that the same implicit-function computation, differentiating\nin `c` instead of `a`, reuses the identical derivative-of-`G` machinery, so the\nfull Jacobian is one denominator `1 \u2212 \u03c1` away from the single-parameter result.\n\nWhy now? The `c`-direction proof is a copy of `fixedPointBranch_hasDerivAt` with\n`Real.hasDerivAt_log` differentiated through `c`, requiring no new analytic\ninput.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_2793",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "37c46c25",
+    "status": "available",
+    "timestamp": "2026-06-28T18:43:31.882415+00:00",
+    "title": "Derived from this cycle's results:"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8740,7 +8741,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
-    "consumed_by_exp_id": "8f5c44bc",
+    "consumed_by_exp_id": "",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -8750,7 +8751,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -8988,7 +8989,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "9ecd5b8c",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -8998,7 +8999,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
