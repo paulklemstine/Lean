@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f3fa5004",
     "filename": "explicit_bias_lower_bound_for_the_density_of_n_wit.json",
     "pkg_num": 158,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.38602000000000003,
     "title": "Binary Digit-Reversal Invariance of Cusick Densities (Exact Five-Bit Instances)"
   },
   {
@@ -4610,8 +4610,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "explicit_bias_lower_bound_for_the_density_of_n_wit",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.38602000000000003,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Binary Digit-Reversal Invariance of Cusick Densities (Exact Five-Bit Instances)"
     }

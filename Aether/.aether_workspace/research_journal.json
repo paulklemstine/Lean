@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "67990ab1",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nBuilding on `Catalog/Pythagorean/BerggrenEuclidLift.lean` (the Berggren tree lifted to\nlinear maps on Euclid generator pairs `(m,n)`) and the existing catalog files\n`Catalog/Pytha",
-      "quality_score": 0.48928166666666667,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-24T07:42:44",
-      "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
-    },
-    {
       "cycle_id": "1e3d4863",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Whitehead Problem (ZFC-provable boundary)\n\nDerived from the Stage 3 analysis and Stage 4 critique of the cycle formalized in\n`Logic/WhiteheadIndependence.lean` and `Logic/Whitehe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-06-28T01:55:20",
       "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
+    },
+    {
+      "cycle_id": "f3fa5004",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Explicit bias bounds for the Cusick density `c_t`\n\nContext: `c_t = dens { n : s₂(n) ≤ s₂(n + t) }`, `s₂` the binary digit sum.\nThe Drmota–Kauers–Spiegelhofer (2016) theorem gives",
+      "quality_score": 0.38602000000000003,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-28T01:56:26",
+      "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71552
     }
   ],
-  "last_updated": "2026-06-28T01:55:20",
+  "last_updated": "2026-06-28T01:56:26",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "b3c4aeb5",
-        "quality": 0.59463,
-        "theorems": 9,
-        "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
-      },
-      {
         "cycle_id": "7e57e1f5",
         "quality": 0.70122,
         "theorems": 17,
@@ -3637,6 +3631,12 @@
         "quality": 0.5835454545454546,
         "theorems": 11,
         "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
+      },
+      {
+        "cycle_id": "f3fa5004",
+        "quality": 0.38602000000000003,
+        "theorems": 15,
+        "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
       }
     ],
     "NumberTheory": [
