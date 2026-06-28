@@ -1,56 +1,69 @@
-# Computational Evidence — EML Sharp Convergence Rate
+# Computational Evidence — EML Fixed-Point Sensitivity & Neural Contraction Bridge
 
-Target claim: for the EML operator `f(x) = exp(a)·log(b·x + c)`, the Picard
-iteration `xₙ₊₁ = f(xₙ)` converges Q-linearly with asymptotic ratio **exactly**
-the local derivative magnitude `ρ = |f'(x*)| = |exp(a)·b/(b·x* + c)|`, which is
-generically strictly below the interval-wide contraction constant used in the
-existing catalog a-priori rate.
+This note records the small-case numerical evidence gathered before formalizing
+the two Lean files of this cycle:
 
-## Concrete instance (matches `EML.FixedPointConcreteInstance`)
+* `EML/FixedPointSensitivity.lean`
+* `Bridges/EMLNeuralContractionBridge.lean`
 
-`f(x) = exp(1)·log(x + 100)` on `[0, 20]`, interval bound `ρ_interval = 1/30 ≈ 0.033333`.
+The EML single operator is `f(x) = exp(a)·log(b·x + c)`; throughout we take
+`b = 1`.
 
-Iteration from `x₀ = 0` (Float, `iter n 0`):
+## 1. First-order sensitivity `dx*/da`
 
-```
-n :  0        1         2         3         4         5      ... 11
-x :  0.000  12.5182  12.8388  12.8465  12.84668  12.846682 ... 12.846682
-```
-
-Fixed point (60 iterations): `x* ≈ 12.846682`, residual `f(x*) − x* ≈ 0.0`.
-
-Local rate vs interval bound:
+Claim (formalized as `EMLIterOp.fixedPointBranch_deriv_eq`):
+the fixed point `x*(a)` satisfies
 
 ```
-|f'(x*)| = exp(1)/(x*+100) ≈ 0.024088
-ρ_interval = 1/30           ≈ 0.033333
+dx*/da = x* / (1 − ρ) = x*·(x*+c) / (x*+c − exp a),   ρ = exp a /(x*+c) = f'(x*).
 ```
 
-So the local rate is strictly below the catalog's interval bound, as predicted.
+Test (`#eval`, c = 2, a = 0.5; `x*` obtained by 200 iterations):
 
-## Consecutive-error ratios converge to the local rate
+| quantity                               | value     |
+|----------------------------------------|-----------|
+| `x*`                                   | 2.468061  |
+| `ρ = exp a /(x*+c)`                    | 0.369002  |
+| formula slope `x*/(1−ρ)`               | 3.911358  |
+| finite difference `(x*(a+h)−x*(a−h))/2h`| 3.911358  |
+| closed form `x*(x*+c)/(x*+c−exp a)`    | 3.911358  |
 
-`|x_{n+1} − x*| / |x_n − x*|` for `n = 0..7`:
+The analytic formula and the central finite difference agree to all printed
+digits, confirming the implicit-differentiation derivation. The slope is positive
+(equilibrium increases with `a`), refining the catalog's qualitative
+`fixedPoint_lt_of_a_lt` into an exact rate.
 
-```
-0.025573, 0.024123, 0.024089, 0.024088, 0.024088, 0.024088, 0.024089, 0.024070
-```
+## 2. Non-degeneracy condition
 
-These converge to `≈ 0.024088 = |f'(x*)|`, the exact limit asserted by
-`EMLIterOp.iterSeq_sharp_rate` and `EMLIterOp.concreteEML_sharp_rate`. (The tiny
-wobble at `n = 7` is Float round-off near machine fixed point, where both
-numerator and denominator are at noise level.)
+The formula's denominator `x*+c − exp a` is exactly the implicit-function
+non-degeneracy quantity. It vanishes precisely on the neutral threshold
+`c = exp(a)(1−a)` analysed in `EML/FixedPointThreshold.lean`, where `ρ = 1` and
+the slope blows up — the fold bifurcation where the attracting and repelling
+branches (see `EML/FixedPointStability.lean`) collide. This is consistent across
+the catalog's existing existence dichotomy and the new sensitivity result.
 
-## Counterexample hunt for non-degeneracy
+## 3. Neural-contraction bridge ratio
 
-The ratio limit is `|f'(x*)|`, *not* `0`. The only failure mode of the statement
-is a degenerate start `x₀ = x*`, where the sequence is constant and the ratio is
-`0/0 = 0 ≠ |f'(x*)|`. This is exactly why the formal theorem carries the
-hypothesis `x₀ ≠ x*`; for the concrete instance `x* ≈ 12.85 > 0`, so `x₀ = 0` is
-non-degenerate (formalized as `concreteEML_fixedPoint_pos`).
+For the concrete instance `f(x) = exp(1)·log(x + 100)` on `[0,20]`
+(`EML/FixedPointConcreteInstance.lean`), the contraction ratio is `ρ = 1/30`.
+The bridge file certifies the clamped EML residual block is `(1+ρ) = 31/30`
+-Lipschitz and that a depth-`K` stack obeys `(1+1/30)^K ≥ 1 + K/30`
+(Bernoulli floor). Sanity values:
 
-## Conclusion
+| K  | `1 + K/30` (floor) | `(1+1/30)^K` |
+|----|--------------------|--------------|
+| 1  | 1.0333             | 1.0333       |
+| 5  | 1.1667             | 1.1779       |
+| 20 | 1.6667             | 1.9509       |
 
-The evidence supports the sharp-rate claim and, in particular, that the local
-rate `|f'(x*)|` is strictly smaller than the interval-wide constant `1/30` for
-the catalog's concrete operator — the precise gap the formal theorems close.
+The Bernoulli lower bound holds with increasing slack, as expected for a
+genuinely convex `(1+ρ)^K`.
+
+## Counterexample hunt (literal conjecture)
+
+The conjecture's literal universal test case (`a ∈ (0,1)`, `b = 1`, `c ∈ (0,1)`)
+is already known to be **false** in part of the box (no fixed point when
+`c < exp(a)(1−a)`; e.g. `a = c = 1/2`), recorded in
+`EML/FixedPointThreshold.lean` / `EML/FixedPointExistenceDichotomy.lean`. This
+cycle therefore targets the *quantitative* structure on the admissible region
+rather than re-testing the falsified universal claim.
