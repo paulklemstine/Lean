@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d1a8353e",
     "filename": "recurrence_relation_for_extended_eulerian_numbers.json",
     "pkg_num": 188,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.56128,
     "title": "A One-Parameter Deformation of the Eulerian Numbers and Its Recurrence"
   },
   {
@@ -5487,8 +5487,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "recurrence_relation_for_extended_eulerian_numbers",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.56128,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "A One-Parameter Deformation of the Eulerian Numbers and Its Recurrence"
     }
