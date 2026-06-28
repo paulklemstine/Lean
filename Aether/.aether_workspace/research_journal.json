@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d4c70419",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Erdős–Rényi threshold phenomena\n\nDerived from this cycle's findings (`Model.lean`, `SecondMoment.lean`,\n`Concrete.lean`).  Each conjecture is bold, falsifiable, and accompanied b",
-      "quality_score": 0.65696,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-26T03:18:31",
-      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-    },
-    {
       "cycle_id": "f6b20d87",
       "domain": "Novelty",
       "key_insight": "# Future Directions — OEIS A080170 binomial GCD (`D(k) = gcd_{2≤q≤k+1} C(qk,k)`)\n\nDerived from the Stage-3 analysis and Stage-4 critique of this research cycle.\nThe headline outcome was a **disproof**",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T21:24:12",
       "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
+    },
+    {
+      "cycle_id": "2b7b775f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Diophantine sufficient conditions for Wang-stripe aperiodicity\n\nDerived from the cycle that produced `WangStripeAperiodicity.lean` and\n`WangQuadraticDiophantine.lean` (chain prov",
+      "quality_score": 0.69949,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T21:48:47",
+      "title": "Sufficient condition for non-periodicity of awaited set of Wang tiles"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T21:24:12",
+  "last_updated": "2026-06-28T21:48:47",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "872fa119",
-        "quality": 0.7050400000000001,
-        "theorems": 13,
-        "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
-      },
-      {
         "cycle_id": "461fdf74",
         "quality": 0.37835341176470594,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.72324,
         "theorems": 0,
         "title": "Consciousness as Integrated Information: Mathematical Foundations"
+      },
+      {
+        "cycle_id": "2b7b775f",
+        "quality": 0.69949,
+        "theorems": 0,
+        "title": "Sufficient condition for non-periodicity of awaited set of Wang tiles"
       }
     ],
     "NumberTheory": [

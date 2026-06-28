@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T21:24:15.951117+00:00",
+  "last_updated": "2026-06-28T21:48:51.253589+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -16426,6 +16426,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-28T21:24:15.648862+00:00",
       "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1414,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 246,
+      "domain": "Novelty",
+      "duration_seconds": 1597.7712242603302,
+      "end_time": 1782683046.463117,
+      "files_integrated": 8,
+      "job_id": "2b7b775f",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19b",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6414,
+        "cross_domain": 0.95,
+        "grade": "substantial",
+        "importance": 0.4282,
+        "novelty": 0.83,
+        "proof_depth": 0.256,
+        "usefulness": 0.603
+      },
+      "quality_score": 0.69949,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782681448.6918926,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-28T21:48:50.468279+00:00",
+      "title": "Sufficient condition for non-periodicity of awaited set of Wang tiles"
     }
   ]
 }

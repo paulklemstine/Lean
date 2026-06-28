@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2b7b775f",
     "filename": "sufficient_condition_for_non_periodicity_of_awaite.json",
     "pkg_num": 198,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.69949,
     "title": "A Diophantine Sufficient Condition for Wang-Stripe Aperiodicity"
   },
   {
@@ -5777,8 +5777,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "sufficient_condition_for_non_periodicity_of_awaite",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.69949,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "A Diophantine Sufficient Condition for Wang-Stripe Aperiodicity"
     }
