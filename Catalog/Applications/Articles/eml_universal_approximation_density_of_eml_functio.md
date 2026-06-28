@@ -1,244 +1,200 @@
-# One Neuron Is Enough: The Hidden Simplicity Behind Universal Approximation
+# The Two Secret Ingredients of Learning: How `exp` and `log` Tame the Universe of Functions
 
-## A puzzle about machines that learn anything
+## A machine that can imitate anything
 
-Modern artificial intelligence rests on a quietly astonishing promise. Give a neural
-network enough capacity, the theory says, and it can imitate *any* continuous
-relationship between inputs and outputs — the price of a house from its features, the
-next word in a sentence, the trajectory of a falling leaf. This promise has a name:
-**universal approximation**. It is the reason engineers trust that, with enough data and
-patience, a network *could* in principle learn the pattern hiding in their problem.
+Imagine you are handed a black box. You feed it numbers, it spits numbers back. You don't
+know what is inside — maybe it predicts tomorrow's temperature, maybe it grades photographs,
+maybe it models the price of electricity. You are told only one thing: the box implements
+some *continuous* rule, meaning small changes in the input produce small changes in the
+output. No sudden jumps, no teleportation.
 
-But universality, as usually told, is a story about *size*. Pile up enough neurons,
-the classical theorems whisper, and you can get arbitrarily close to your target. The
-mental image is one of brute force: a vast hidden layer, thousands of units firing in
-concert, collectively sculpting a function out of raw numerical clay.
+Now you are given a challenge. Using only a handful of very simple, fixed building blocks,
+build your *own* box that mimics the mysterious one so closely that no measurement could ever
+tell them apart. Not approximately-ish. As close as you like — name your tolerance, and your
+imitation will stay inside it everywhere at once.
 
-This article is about a much sharper, almost mischievous truth. It turns out that the
-engine of universality is not *quantity* at all. The real magic comes from a single,
-humble property that almost every activation function in machine learning happens to
-possess — and once you see it, the whole forest of "universal approximation theorems"
-collapses into one tidy idea you can hold in your hand.
+This is the dream behind every neural network, every curve-fitter, every "universal
+approximator" in modern machine learning. And it turns out the dream is not just a hope; it is
+a theorem. The remarkable fact is that the building blocks can be astonishingly humble. In this
+article we follow one particularly elegant recipe, the **EML** recipe — short for
+**E**xponential, **M**ultiplicative, **L**ogarithmic — and we uncover two surprises hiding
+inside it. The first is *what* it can build (everything). The second is *how cheaply* it can
+build it (much more cheaply than you would guess), and that second surprise is where the real
+drama lives.
 
-The property is **injectivity**: never sending two different inputs to the same output.
-And the punchline is this:
+## The playground: the unit cube
 
-> A *single* neuron with a strictly increasing activation — sigmoid, tanh, softplus,
-> arctan, take your pick — followed by an ordinary polynomial, can approximate any
-> continuous function on a bounded domain as closely as you like.
+Let us fix the stage. Our inputs are lists of $n$ numbers, each between $0$ and $1$. The set of
+all such lists is the **unit cube**,
 
-No wide hidden layer. No army of units. One neuron, one polynomial. Let us see why.
+$$[0,1]^n = \{\, x = (x_1, x_2, \ldots, x_n) : 0 \le x_i \le 1 \text{ for each } i \,\}.$$
 
-## The cast of characters: the activation zoo
+For $n=1$ this is just a line segment; for $n=2$ a square; for $n=3$ an ordinary cube; and for
+larger $n$ a higher-dimensional generalization that we still, comfortingly, call a cube. The
+unit cube is the canonical home of approximation theory because so many real problems live
+there after rescaling: pixel intensities, normalized sensor readings, probabilities, fractions.
+A pleasant first fact, almost too obvious to state but genuinely load-bearing, is that this
+cube is **compact** — it is closed and bounded, with no edges missing and nothing running off
+to infinity. Compactness is the technical glue that makes uniform approximation possible at
+all, and the cube has it because it is a product of the closed intervals $[0,1]$, each of which
+is itself compact.
 
-Every artificial neuron does two things. First it forms a weighted combination of its
-inputs — a simple linear gadget. Then it passes that number through a nonlinear
-*activation function*, the spark of nonlinearity that lets networks bend and curve.
+## One nonlinearity to rule them all
 
-Over the decades, practitioners have accumulated a small menagerie of favorite
-activations. Four of them are the heroes of our story:
+Here is the building block. For each coordinate $x_i$ we form a single feature by exponentiating
+it:
 
-- The **logistic sigmoid**, $\sigma(x) = \dfrac{1}{1 + e^{-x}}$, the classic S-curve
-  that squashes any real number into the interval $(0,1)$. It was the workhorse of early
-  neural networks and still rules the world of probabilities.
-- The **softplus**, $s(x) = \log(1 + e^{x})$, a smooth, gentle ramp that rises like a
-  hill from nearly flat on the left to nearly straight on the right.
-- The **hyperbolic tangent**, $\tanh(x) = \dfrac{e^{x} - e^{-x}}{e^{x} + e^{-x}}$, the
-  sigmoid's symmetric cousin, squashing inputs into $(-1, 1)$.
-- The **arctangent**, $\arctan(x)$, the inverse of the tangent function, another smooth
-  S-curve flattening out toward $\pm \pi/2$.
+$$x \longmapsto e^{x_i}.$$
 
-They look different. They come from different corners of mathematics — probability,
-analysis, trigonometry. Practitioners argue about which one trains fastest or
-generalizes best. But beneath the surface they share one secret feature that, as we will
-see, is the *only* thing that matters for universality.
+That's it. One exponential per input coordinate. We call these the **coordinate exponential
+features**. From them we are allowed to do only the most pedestrian algebra: add features,
+multiply features, and scale them by ordinary real numbers. The collection of *all* functions
+you can assemble this way — every sum of products of the $e^{x_i}$, with real coefficients — is
+called the *algebra generated* by the features. Concretely, because multiplying exponentials
+adds their exponents, every such function is a finite combination
 
-## The one property that rules them all
+$$x \longmapsto \sum_k c_k \, e^{k_1 x_1 + k_2 x_2 + \cdots + k_n x_n},$$
 
-Look again at those four curves. Trace each from left to right. Every one of them is
-*always climbing*. They never dip, never plateau into a flat stretch, never double back.
-In mathematics we call such a function **strictly monotone** (here, strictly
-increasing): whenever $x < y$, we are guaranteed $\sigma(x) < \sigma(y)$.
+a so-called **exponential polynomial** in the coordinates. These are smooth, explicit, and
+trivial to evaluate.
 
-This is more than an aesthetic observation. A strictly increasing function can never
-return the same value twice. If $\sigma(a) = \sigma(b)$ then $a$ and $b$ cannot be
-different — for if, say, $a < b$, we would need $\sigma(a) < \sigma(b)$, a
-contradiction. So strict monotonicity forces **injectivity**: distinct inputs always go
-to distinct outputs. The function loses no information; it merely re-encodes the line.
+The first headline result says these humble combinations are enough to imitate *anything*
+continuous on the cube.
 
-Each of our four activations earns its injectivity through a one-line argument:
+> **Density Theorem (informal).** Every continuous function on the unit cube $[0,1]^n$ can be
+> approximated, as accurately as you wish and uniformly across the entire cube, by an
+> exponential polynomial in the coordinate features $e^{x_1}, \ldots, e^{x_n}$.
 
-- **Sigmoid**: as $x$ grows, $-x$ shrinks, so $e^{-x}$ shrinks, so the denominator
-  $1 + e^{-x}$ shrinks, so the fraction $\frac{1}{1+e^{-x}}$ grows. Strictly increasing.
-- **Softplus**: as $x$ grows, $e^x$ grows, so $1 + e^x$ grows, and the logarithm — itself
-  strictly increasing — carries that growth forward. Strictly increasing.
-- **Tanh**: its slope is $1/\cosh^2(x)$, and since $\cosh$ is never zero, this slope is
-  *always strictly positive*. A function with everywhere-positive slope only ever climbs.
-- **Arctan**: it is the inverse of a strictly increasing function on its principal
-  branch, and inverses of increasing functions increase. Strictly increasing.
+Formally, the closure of the algebra generated by the coordinate exponential features is the
+*whole* space of continuous functions. In sharper, more usable language: given any continuous
+target $f$ and any error budget $\varepsilon > 0$, there exists an exponential polynomial $p$
+with
 
-Four different reasons, one shared conclusion. Hold that thought, because injectivity is
-about to do all the heavy lifting.
+$$\sup_{x \in [0,1]^n} \big| p(x) - f(x) \big| < \varepsilon.$$
 
-## Separating the world, point by point
+## Why a single exponential is enough
 
-Why should injectivity have anything to do with approximating arbitrary functions? The
-bridge is a celebrated nineteenth- and twentieth-century result called the
-**Stone–Weierstrass theorem**, one of the crown jewels of analysis.
+The proof is a beautiful instance of one of analysis's greatest theorems, the **Stone–Weierstrass
+theorem**. Stone–Weierstrass gives a checklist: a family of continuous functions on a compact
+space generates a dense algebra provided (a) it contains the constant functions, and (b) it
+**separates points** — meaning that for any two distinct inputs, at least one function in the
+family assigns them different values. Condition (a) is automatic since we are allowed real
+coefficients. Everything therefore hinges on point separation.
 
-Here is its spirit. Suppose you have a collection of "building-block" functions on some
-domain. You are allowed to add them, multiply them, and scale them by constants — the
-operations of ordinary algebra. The resulting family of all such combinations is called
-the **subalgebra generated** by your blocks. Stone and Weierstrass proved a remarkable
-sufficient condition for this generated family to be *dense* — that is, able to
-approximate every continuous function on a closed, bounded domain to any precision:
+And here the magic of the exponential appears. Take two distinct points $x \ne y$ in the cube.
+Being different, they must disagree in *some* coordinate: there is an index $i$ with
+$x_i \ne y_i$. Because the exponential function is strictly increasing — and hence one-to-one —
+$e^{x_i} \ne e^{y_i}$. So the single feature $x \mapsto e^{x_i}$ already tells the two points
+apart. The family separates points, the checklist is satisfied, and density follows.
 
-> If your building blocks can **separate points** — meaning that for any two distinct
-> locations in the domain, at least one block assigns them different values — then the
-> functions you can build from them are dense. You can hit any continuous target.
+Notice the elegant division of labor that this argument reveals. The *width* of the network —
+how many features you need — is forced by the dimension: you need one exponential per
+coordinate, because in dimension two or higher no single combined feature
+$x \mapsto w_1 x_1 + \cdots + w_n x_n$ can ever be one-to-one (a line cannot faithfully record
+a plane's worth of information). But the *nonlinearity* — the ingredient that lets you bend
+straight lines into arbitrary shapes — is supplied entirely by one transcendental function,
+$\exp$. Width comes from dimension; expressive power comes from $\exp$.
 
-It is a profound trade. All you must verify is the modest, almost trivial-sounding
-ability to *tell points apart*. In return you receive the sweeping power to reproduce
-every continuous function on the domain.
+## A measuring tape for the shallow layer
 
-And here is where our humble property pays off spectacularly. A single injective function
-*already* separates points all by itself. If $g$ is injective and $x \ne y$, then by
-definition $g(x) \ne g(y)$ — the two points are separated, with $g$ as the witness. One
-injective function does the entire job that Stone–Weierstrass asks of an entire family.
+Density is a *qualitative* statement: it promises that good approximations exist, but says
+nothing about how big or wild the pieces must be. The unit cube lets us add something the
+abstract theorem cannot see — *quantitative* control.
 
-Chaining these observations together gives the centerpiece of this work, which we may
-state precisely. Let $X$ be any compact (closed and bounded, in the familiar setting)
-domain, and let $C(X,\mathbb{R})$ denote the continuous real-valued functions on it.
+> **Shallow-feature bounds.** For every input $x$ in the cube and every coordinate $i$,
+> $$1 \le e^{x_i} \le e.$$
 
-> **Single-feature universality.** If $g : X \to \mathbb{R}$ is a continuous *injective*
-> function, then the subalgebra it generates — all polynomials in $g$, that is all finite
-> combinations $c_0 + c_1 g + c_2 g^2 + \cdots + c_d g^d$ — is uniformly dense in
-> $C(X,\mathbb{R})$.
+The reasoning is a two-line calculation: since $0 \le x_i \le 1$ and $\exp$ is increasing,
+$e^0 \le e^{x_i} \le e^1$, and $e^0 = 1$ while $e^1 = e \approx 2.718$. So every single-layer
+feature lives in the snug interval $[1, e]$. This little fact matters more than it looks. It
+pins down the *modulus of continuity* of each shallow layer — how fast the features can change
+— and that is precisely the raw material from which explicit approximation rates and width
+counts are built. Density tells you a good imitation exists; bounds like these begin to tell
+you how large it has to be.
 
-In the formal development this is the theorem `adjoin_singleton_dense`, and its companion
-`adjoin_singleton_approx` packages the same fact in the working engineer's language:
-for any target function $f$ and any tolerance $\varepsilon > 0$, there is a polynomial
-$p$ in $g$ with $\|p - f\| < \varepsilon$, the error measured in the worst-case
-(uniform) sense across the whole domain.
+## The second surprise: depth is a resource, and `exp`/`log` spend it wisely
 
-## From abstract features to real neurons
+So far the exponential has played a supporting role — one nonlinearity among many possibilities.
+The second half of our story promotes it, together with its inverse the logarithm, to
+indispensable status. The setting shifts from *which* functions we can build to *how expensive*
+it is to build them, where the cost we track is **depth**: the number of nested operations
+stacked one inside another, the analog of how many layers a neural network has.
 
-Now we assemble the pieces. A single neuron computes $g(x) = \sigma(w \cdot x + b)$: it
-forms a linear combination of the inputs, then applies an activation $\sigma$. Two facts
-make this neuron an injective feature in its own right.
+Consider the simplest interesting target, the monomial
 
-First, **composition preserves injectivity**: if $\sigma$ is injective and the inner map
-is injective, their composition is injective too. Distinct inputs survive the first map
-distinct, and the second map keeps them distinct. (In the formalization this is the
-small but pivotal lemma `injective_comp`.)
+$$x \longmapsto x^n,$$
 
-Second, our four activations are *all* injective, as we proved above. So a neuron built
-from any of them, sitting atop an injective feature, is itself an injective feature.
+on the positive numbers. There are two honest ways to construct it from EML primitives.
 
-Feeding that into single-feature universality yields the headline result, captured by the
-theorem `activation_feature_dense` and its quantitative twin `activation_feature_approx`:
+**The naive way.** Just multiply $x$ by itself $n$ times:
 
-> **One activated neuron plus a polynomial is universal.** For any compact domain, any
-> injective continuous activation $\sigma$, and any injective input feature $g$, the
-> functions $c_0 + c_1\,(\sigma\circ g) + c_2\,(\sigma\circ g)^2 + \cdots$ are dense in
-> the continuous functions on that domain.
+$$x^n = \underbrace{x \cdot x \cdots x}_{n \text{ factors}}.$$
 
-Specialized to the most concrete possible setting — a single input ranging over an
-interval $[a,b]$, with $g$ the identity coordinate — we obtain four clean corollaries,
-one per activation, named `sigmoid_dense_Icc`, `softplus_dense_Icc`, `tanh_dense_Icc`,
-and `arctan_dense_Icc`. Each says: *polynomials in this one activation are dense on the
-interval.* And a single umbrella theorem, `activation_dense_Icc`, states it once and for
-all for any strictly monotone continuous activation, swallowing all four special cases
-into one.
+Each multiplication adds a layer. Written as a nested expression, this construction has depth
+exactly $n$. To represent $x^{100}$ this way you need a tower one hundred operations tall.
 
-There is a pleasing economy here. The mathematician's instinct is to prove one general
-theorem and watch the special cases tumble out. That is exactly what happens: the
-strict-monotonicity interface `strictMono_feature_dense` takes *monotone plus continuous*
-as input and returns universality. Each activation then reduces to a one-line
-monotonicity check — sigmoid, softplus, tanh, arctan each "plug in" and inherit
-universality automatically.
+**The clever way.** Use the identity that every student of logarithms knows,
+$x^n = e^{n \ln x}$:
 
-## The exponential ancestor
+$$x^n = \exp\!\big(n \cdot \ln x\big).$$
 
-Where did the single-feature principle come from? Its first incarnation concerned the
-**exponential function** $e^x$, the most famous injective function of all. Because $e^x$
-is strictly increasing, polynomials in $e^x$ — the so-called **exponential polynomials**,
-finite combinations $\sum_k c_k\, e^{k x}$ — are dense in the continuous functions on any
-interval. This is the theorem `exponentialPolynomials_dense_Icc`, and a refinement,
-`exp_monomials_span_dense`, shows you do not even need genuine products of distinct
-features: the plain linear span of the powers $e^{0}, e^{x}, e^{2x}, e^{3x}, \ldots$
-already suffices.
+Read off the structure: take the logarithm of $x$, multiply by the constant $n$, then
+exponentiate. That is **three** operations, no matter how large $n$ is. The tower for
+$x^{100}$ and the tower for $x^{1{,}000{,}000}$ are the same height.
 
-This exponential result is the seed. The leap of the present work is the realization,
-recorded as a "hypothesis confirmed" in the research notes, that *nothing about the
-exponential's analytic personality was ever used* — only its injectivity. The exponential
-was a red herring dressed as a hero. Strip away its special status and you find that
-*any* injective continuous function works just as well, and the whole activation zoo
-walks through the door.
+Both expressions compute the identical function on the positive reals — this is a theorem, not
+a slogan — yet their depths could hardly be more different. This is the **depth-compression
+theorem**:
 
-## What is genuinely surprising — and what is not
+> **Depth Compression.** For every degree $n \ge 4$, the naive product $x \cdots x$ and the
+> exp/log form $\exp(n \ln x)$ define the same function on $(0, \infty)$, while the exp/log
+> form is *strictly shallower*: its depth is the constant $3$, versus depth $n$ for the
+> product.
 
-It is worth being honest about where the surprise lives.
+The gap between the two depths is $n - 3$, and as the degree climbs this gap grows without
+bound:
 
-The surprising part is the **collapse of variety into a single principle**. The
-literature treats "sigmoid networks are universal," "tanh networks are universal," and so
-on as separate theorems, each with its own proof tailored to the activation's quirks.
-Here they all descend from one fact — injectivity via strict monotonicity — applied
-through one theorem. Diversity of activation is revealed to be irrelevant to *whether*
-you can approximate; it is a cosmetic choice from the standpoint of pure expressive power.
+> **Unbounded Gap.** The depth savings $n - 3$ from using exp/log tends to infinity as the
+> degree $n$ does.
 
-The *unsurprising* — but important — flip side is that this tells you nothing about
-**how efficiently** you approximate. Density is a yes/no question: *can* you get
-arbitrarily close? It says nothing about the *degree* of polynomial or the number of
-terms you need to hit a given accuracy. That quantitative question — the **approximation
-rate**, how the cost scales with the desired precision and the smoothness of the target —
-is where activations genuinely differ, and where the harder, more practical mathematics
-begins. The research notes flag this explicitly: the universal-approximation *content*
-lives entirely in injectivity; everything else is about *rates*.
+In plain terms: a *fixed, shallow* EML circuit of depth three can represent monomials of
+*arbitrarily high* degree exactly, while a multiplication-only circuit is forced to grow taller
+and taller. The exponential and logarithm act as a kind of mathematical lever — they convert a
+runaway multiplicative cost into a single cheap scalar multiplication tucked inside one
+exponential. This is the precise, provable sense in which "going deep" can be traded for
+"using the right nonlinearity," and it is the structural reason $\exp$ and $\log$ earn their
+place as primitive operations rather than conveniences.
 
-There is even a sharp boundary lurking here. Consider a *non*-injective activation, such
-as a Gaussian bump $\rho(x) = e^{-x^2}$, which is symmetric and so sends $x$ and $-x$ to
-the same value. A single Gaussian feature can fail to separate points — it literally
-cannot tell a value from its negative — and so a lone Gaussian neuron is *not* universal
-in this single-feature sense. To recover universality with such activations you genuinely
-need a *family* of them, several units working together. Injectivity is not merely
-sufficient for the single-neuron miracle; it is essentially the dividing line.
+## Why this matters beyond the blackboard
 
-## Why this matters
+The two results, taken together, tell a coherent story about expressive power that echoes
+through modern computation.
 
-At first glance this might look like a piece of mathematical housekeeping — tidying a
-folklore drawer. But the reframing carries real weight.
+The density theorem is the theoretical license behind the entire enterprise of function
+approximation. It says that a single smooth nonlinearity, replicated across input coordinates
+and combined with elementary algebra, is genuinely universal — there is no continuous behavior
+on the cube it cannot capture. This is the same promise that underwrites neural networks,
+kernel methods, and surrogate models in engineering, just delivered through a particularly
+transparent and explicit family of approximants where every piece can be written down in
+closed form.
 
-For the **theorist**, it isolates the true mechanism of universality. When you understand
-that injectivity (point separation) is the load-bearing wall, you know exactly which
-modifications to an architecture preserve universality and which threaten it. Swap one
-strictly monotone activation for another: safe. Introduce a symmetry that collapses
-distinct inputs: dangerous. The principle becomes a design compass.
+The depth-compression theorem speaks to *efficiency*, the concern that actually decides which
+methods win in practice. Two architectures can have the same theoretical reach yet differ
+enormously in how compactly they express the same function. The monomial example is a clean,
+fully provable microcosm of a phenomenon that pervades deep learning lore — that depth and the
+choice of nonlinearity are tradeable resources, and that the transcendental functions $\exp$
+and $\log$ are extraordinarily efficient currency. They turn the linear cost of repeated
+multiplication into a constant. Anyone who has computed $a^b$ on a calculator as
+$e^{b \ln a}$, or who knows why slide rules worked, has felt this lever in their own hands;
+here it is sharpened into a theorem with an explicit, unbounded payoff.
 
-For the **educator**, it offers a strikingly clean narrative. Instead of four proofs for
-four activations, there is one idea — *injective features separate points, and separation
-plus algebra gives density* — that a student can grasp in an afternoon and then watch
-unfold across the entire activation zoo.
-
-And for the **engineer**, it is a reminder of where to spend effort. If universality is
-"free" the moment your activation is monotone, then the interesting engineering questions
-are never *whether* a network can fit the data, but *how cheaply* — how few units, how low
-a degree, how little data. The existence theorems are settled; the economics are not.
-
-## The shape of the idea
-
-Step back and the whole argument fits on a single breath:
-
-1. The standard activations are strictly increasing.
-2. Strictly increasing means injective: no two inputs collide.
-3. An injective function separates points: it tells every pair of locations apart.
-4. Stone–Weierstrass: point-separating building blocks generate everything continuous.
-5. Therefore one injective activation, plus polynomial read-out, is universal.
-
-Five steps, and the menagerie of universal approximation theorems becomes a single, well-lit
-room. The sigmoid, the tanh, the softplus, the arctan — different masks worn by the same
-underlying actor. What makes a neuron universal was never its particular curve. It was the
-simplest promise a function can make: *I will never confuse two different things.*
-
-That, in the end, is the quiet lesson. The power to approximate everything grows not from
-complexity but from a refusal to lose information — one injective step at a time.
+There is a final aesthetic lesson worth savoring. The work cleanly separates two things that
+are easy to conflate. *Density* — the ability to approximate everything — is a soft,
+qualitative property; it is inherited from a single fact (points can be told apart) and is
+indifferent to the shape of the domain, holding on any compact set. *Depth and quantitative
+cost*, by contrast, depend on the fine structure of the target and the geometry of the domain;
+that is where the cube's explicit $[1, e]$ bounds and the monomial's degree enter. Knowing
+which questions are soft and which are sharp is half the battle in mathematics. Here, with two
+short and complete arguments, both halves are won — and the humble exponential, the function
+that grows just fast enough to know itself as its own derivative, stands revealed as both the
+universal builder and the great compressor of computation.

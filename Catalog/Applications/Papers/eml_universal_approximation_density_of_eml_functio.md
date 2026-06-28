@@ -1,47 +1,46 @@
-# Computational Evidence — EML Universal Approximation via Standard ML Activations
+# Computational Evidence — EML Universal Approximation: Density & Depth Compression
 
-The main results (`Catalog/Applications/EMLActivationDensity.lean`) are *structural*
-density statements: a single strictly-monotone continuous activation, composed with an
-injective feature, generates a uniformly dense subalgebra of `C(X, ℝ)` on a compact `X`.
-The whole content reduces to **injectivity of the activation**, which follows from strict
-monotonicity. There is therefore no universal claim over a parameter family to falsify by
-sampling; the "experiment" is the monotonicity check itself, which is discharged formally.
+This note records the small-case computations that motivated the two Lean files
+`Catalog/EML/CubeDensity.lean` and `Catalog/EML/DepthCompression.lean`.
 
-For completeness we record small sanity checks confirming strict monotonicity of each
-activation on sample grids (these match the formally proved `StrictMono` lemmas).
+## 1. Depth tables for the two monomial representations
 
-## Sigmoid `σ(x) = 1/(1+e^{-x})`
-| x   | -2     | -1     | 0      | 1      | 2      |
-|-----|--------|--------|--------|--------|--------|
-| σ(x)| 0.1192 | 0.2689 | 0.5000 | 0.7311 | 0.8808 |
+Computed in Lean via `#eval (List.range 8).map (fun n => (n, (monoNaive n).depth, (monoExpLog n).depth))`:
 
-Strictly increasing. ✓ (formal: `strictMono_sigmoid`)
+| degree `n` | `depth (monoNaive n)` (mul-only) | `depth (monoExpLog n)` (exp/log) | gap |
+|:----------:|:-------------------------------:|:--------------------------------:|:---:|
+| 0 | 0 | 3 | -3 |
+| 1 | 1 | 3 | -2 |
+| 2 | 2 | 3 | -1 |
+| 3 | 3 | 3 |  0 |
+| 4 | 4 | 3 | +1 |
+| 5 | 5 | 3 | +2 |
+| 6 | 6 | 3 | +3 |
+| 7 | 7 | 3 | +4 |
 
-## Softplus `s(x) = log(1+e^x)`
-| x   | -2     | -1     | 0      | 1      | 2      |
-|-----|--------|--------|--------|--------|--------|
-| s(x)| 0.1269 | 0.3133 | 0.6931 | 1.3133 | 2.1269 |
+Observation: the multiplication-only depth is exactly `n` (linear), while the exp/log depth is
+the constant `3`. The crossover is at `n = 4`, after which exp/log is strictly shallower and the
+gap `n - 3` grows without bound. This is precisely `Term.eml_depth_compression`
+(threshold `n ≥ 4`) and `Term.eml_depth_unbounded_gap` (unbounded gap).
 
-Strictly increasing. ✓ (formal: `strictMono_softplus`)
+## 2. Value agreement (counterexample hunt)
 
-## tanh
-| x   | -2      | -1      | 0      | 1      | 2      |
-|-----|---------|---------|--------|--------|--------|
-| tanh| -0.9640 | -0.7616 | 0.0000 | 0.7616 | 0.9640 |
+The identity `exp(n · log x) = xⁿ` was checked symbolically and proved on `(0, ∞)`
+(`Term.monoExpLog_eval`). The guard `0 < x` is essential and is *not* removable:
 
-Strictly increasing. ✓ (formal: `strictMono_tanh`)
+- At `x = 0`: `monoNaive n` gives `0ⁿ = 0` (for `n ≥ 1`), while `monoExpLog n` gives
+  `exp(n · log 0) = exp(n · 0) = 1` in Mathlib's convention `log 0 = 0`. So the two terms
+  disagree at `x = 0` — the theorem is correctly stated only on `(0, ∞)`.
+- At `x < 0`: `log x = 0` in Mathlib, so `monoExpLog` is constant `1`, again disagreeing.
 
-## arctan
-| x     | -2      | -1      | 0     | 1      | 2      |
-|-------|---------|---------|-------|--------|--------|
-| arctan| -1.1071 | -0.7854 | 0.000 | 0.7854 | 1.1071 |
+This confirms the boundary of the compression theorem is exactly `(0, ∞)`, matching the
+domain on which `log` is the genuine inverse of `exp`.
 
-Strictly increasing. ✓ (formal: `Real.arctan_strictMono`)
+## 3. Cube density / shallow-feature bounds
 
-## Counterexample hunt
-The only way the density theorem could fail is if some activation were *not* injective.
-All four candidates are strictly monotone on all of ℝ (no plateaus), so no
-injectivity-breaking counterexample exists; the formal `StrictMono` proofs certify this.
-A *bounded non-monotone* activation (e.g. a Gaussian bump `e^{-x²}`) would break
-injectivity and is correctly outside the scope of these theorems — flagged as a future
-direction in `FUTURE_DIRECTIONS.md`.
+For the cube file, the shallow coordinate feature `x ↦ exp(xᵢ)` on `[0,1]` ranges over
+`[exp 0, exp 1] = [1, e] ≈ [1, 2.718]`, verifying the explicit bound
+`coordExp_bounds_unitCube` numerically (endpoints `1` and `e`).
+
+No counterexample to any claimed theorem was found; all finite checks agree with the proved
+statements.
