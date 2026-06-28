@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cfcd856c",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Continuous Noether & Conservation Laws\n\nDerived from this cycle's findings in `NoetherConservation.lean`,\n`KeplerConservation.lean`, and `NoetherDiscreteContinuousBridge.lean`.",
-      "quality_score": 0.66768,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-26T01:32:54",
-      "title": "Noether's Theorem: Symmetries and Conservation Laws"
-    },
-    {
       "cycle_id": "1983a01c",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Bourgain's Slicing Problem\n\nThis research cycle established a fully verified, dimension-free model of *isotropic position*\nfor the discrete cube `{-1,1}ⁿ` (`DiscreteCube.lean`),",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-28T19:46:59",
       "title": "ML Universal Approximation: Width vs Depth Trade-offs"
+    },
+    {
+      "cycle_id": "23de9107",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Continued Fractions and Diophantine Approximation\n\nDerived from this cycle's findings (Dirichlet bound `Lc ≤ 1`, denominator\nunboundedness, and `Lc = 0` for Liouville numbers).",
+      "quality_score": 0.68045,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-28T19:48:53",
+      "title": "Continued Fractions and Diophantine Approximation"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77992
     }
   ],
-  "last_updated": "2026-06-28T19:46:59",
+  "last_updated": "2026-06-28T19:48:53",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6ac1dc4e",
-        "quality": 0.34884000000000004,
-        "theorems": 0,
-        "title": "Rainbow triangle density lower bound conjecture"
-      },
-      {
         "cycle_id": "e5dd524d",
         "quality": 0.3921804000000001,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.65133,
         "theorems": 10,
         "title": "ML Universal Approximation: Width vs Depth Trade-offs"
+      },
+      {
+        "cycle_id": "23de9107",
+        "quality": 0.68045,
+        "theorems": 14,
+        "title": "Continued Fractions and Diophantine Approximation"
       }
     ],
     "Bridges": [
