@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0eb9ce9e",
     "filename": "degree_one_triviality_threshold_for_grassmann_sche.json",
     "pkg_num": 186,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.63032,
     "title": "Degree-One Triviality Threshold for Grassmann Schemes: A Verified Gaussian-Binomial Backbone"
   },
   {
@@ -5429,8 +5429,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "degree_one_triviality_threshold_for_grassmann_sche",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.63032,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Degree-One Triviality Threshold for Grassmann Schemes: A Verified Gaussian-Binomial Backbone"
     }

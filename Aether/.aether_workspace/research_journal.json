@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "73a5599a",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Diffusion Models as Stochastic Differential Equations\n\nDerived from this cycle's verified results (`OUProcess.lean`,\n`FokkerPlanck.lean`, `ReverseTime.lean`), which establish, wi",
-      "quality_score": 0.69548,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-25T08:52:40",
-      "title": "Diffusion Models as Stochastic Differential Equations"
-    },
-    {
       "cycle_id": "854c699d",
       "domain": "Computation",
       "key_insight": "# Future Directions\n\nThe following directions build on the component-kernel theorem\n(`specModSig_eq_card_components`) and its corollaries. Each is phrased so that\nthe next concrete formalization step",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-28T14:33:30",
       "title": "Optimal Transport and Wasserstein Distances"
+    },
+    {
+      "cycle_id": "0eb9ce9e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Degree-one triviality threshold for Grassmann schemes\n\nDerived from this cycle's findings in `Catalog/Novelty/GrassmannDegreeOne.lean`\n(Gaussian-binomial backbone: `qBinom_one`,",
+      "quality_score": 0.63032,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-28T14:41:11",
+      "title": "Degree-one triviality threshold for Grassmann schemes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.722996
     }
   ],
-  "last_updated": "2026-06-28T14:33:30",
+  "last_updated": "2026-06-28T14:41:11",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5870167a",
-        "quality": 0.69256,
-        "theorems": 0,
-        "title": "Cofinite realization of every even incoherence index by maximal standard frames"
-      },
-      {
         "cycle_id": "f6f6439c",
         "quality": 0.5631599999999999,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.5376,
         "theorems": 0,
         "title": "Optimal Transport and Wasserstein Distances"
+      },
+      {
+        "cycle_id": "0eb9ce9e",
+        "quality": 0.63032,
+        "theorems": 0,
+        "title": "Degree-one triviality threshold for Grassmann schemes"
       }
     ],
     "NumberTheory": [
