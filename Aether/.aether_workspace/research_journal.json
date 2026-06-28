@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0f17133d",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Girth–Expansion Equivalence\n\nThis cycle established that the *literal* bridge \"left-`d`-regular graph is an\n`s`-optimal small-set expander ⇔ girth `≥ 2s+2`\" is **one-directional*",
-      "quality_score": 0.76536,
-      "sorry_count": 1,
-      "theorem_count": 10,
-      "timestamp": "2026-06-26T07:57:04",
-      "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
-    },
-    {
       "cycle_id": "151fa435",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Continued Fractions and Diophantine Approximation\n\nDerived from this cycle's findings (files\n`Catalog/Novelty/GoldenRatioApproximation.lean` and\n`Catalog/Novelty/GoldenRatioHurwi",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T08:11:13",
       "title": "Plethystic Triviality of the Shifted t-Schur Basis"
+    },
+    {
+      "cycle_id": "a530b001",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Monotone Circuit Complexity\n\nThis cycle assembled a three-pronged formal toolkit for monotone Boolean circuit\nlower bounds:\n\n* `Basic.lean` — circuits, evaluation, size/depth/var",
+      "quality_score": 0.7436,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-28T08:50:01",
+      "title": "Circuit Complexity: Monotone Lower Bounds"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1d985141",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\nA few freeform research directions building on\n`Catalog/Tropical/TropicalPolynomialFunctions.lean`.\n\n## 1. A tropical fundamental theorem of algebra in Lean\n\nFormalize the break-p",
-      "quality_score": 0.751851,
-      "sorry_count": 1,
-      "theorem_count": 12,
-      "timestamp": "2026-06-24T22:34:09",
-      "title": "Proof Strategy Mining from Deep Mathematics"
-    },
     {
       "cycle_id": "ef60a392",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-28T08:27:00",
       "title": "Proof of Hegedçs bound via spectral constraints in combinatorial families"
+    },
+    {
+      "cycle_id": "a530b001",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Monotone Circuit Complexity\n\nThis cycle assembled a three-pronged formal toolkit for monotone Boolean circuit\nlower bounds:\n\n* `Basic.lean` — circuits, evaluation, size/depth/var",
+      "quality_score": 0.7436,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-28T08:50:01",
+      "title": "Circuit Complexity: Monotone Lower Bounds"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f2fdcb78",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.84592
-    },
-    {
-      "cycle_id": "2e08d081",
-      "domain": "Novelty",
-      "name": "F_dvd_term",
-      "quality": 0.71083
-    },
-    {
-      "cycle_id": "2e08d081",
-      "domain": "Novelty",
-      "name": "primepower_succ_dvd_F",
-      "quality": 0.71083
-    },
     {
       "cycle_id": "2e08d081",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "Phi_X",
       "quality": 0.7861499999999999
+    },
+    {
+      "cycle_id": "a530b001",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.7436
+    },
+    {
+      "cycle_id": "a530b001",
+      "domain": "Novelty",
+      "name": "numGates_var",
+      "quality": 0.7436
+    },
+    {
+      "cycle_id": "a530b001",
+      "domain": "Novelty",
+      "name": "numGates_top",
+      "quality": 0.7436
     }
   ],
-  "last_updated": "2026-06-28T08:27:00",
+  "last_updated": "2026-06-28T08:50:01",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0a880828",
-        "quality": 0.70384,
-        "theorems": 14,
-        "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadrat"
-      },
-      {
         "cycle_id": "72f7aee6",
         "quality": 0.73264,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.485834,
         "theorems": 14,
         "title": "Proof of Hegedçs bound via spectral constraints in combinatorial families"
+      },
+      {
+        "cycle_id": "a530b001",
+        "quality": 0.7436,
+        "theorems": 15,
+        "title": "Circuit Complexity: Monotone Lower Bounds"
       }
     ],
     "NumberTheory": [

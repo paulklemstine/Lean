@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a530b001",
     "filename": "circuit_complexity_monotone_lower_bounds.json",
     "pkg_num": 175,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7436,
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
@@ -5103,8 +5103,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "circuit_complexity_monotone_lower_bounds",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7436,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Circuit Complexity: Monotone Lower Bounds"
     }
