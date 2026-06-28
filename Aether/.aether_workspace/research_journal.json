@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "91104b94",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Consciousness as Integrated Information\n\nThis cycle established a fully verified core for Integrated Information Theory\n(IIT) in `Catalog/Novelty/IntegratedInformation.lean`:\n\n-",
-      "quality_score": 0.67432,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-24T10:36:07",
-      "title": "Consciousness as Integrated Information"
-    },
-    {
       "cycle_id": "44e772b7",
       "domain": "Shared",
       "key_insight": "# Future Directions — Boolean Degree One Functions on `J_q(n,2)`\n\nDerived from the Stage 3 / Stage 4 findings of this cycle (see the Lab Notes in\n`Catalog/Shared/GrassmannJq2LineCounts.lean` and\n`Cata",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-06-28T03:03:40",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+    },
+    {
+      "cycle_id": "49c290ff",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — derived from the Law-of-Apparition cycle\n\nThis cycle proved the concrete law of apparition `p ∣ F_{p−1} ∨ p ∣ F_{p+1}`\n(`FibonacciApparitionLaw.lean`), its rank form `α(p) ∣ p−1",
+      "quality_score": 0.48585960124610594,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-28T03:26:34",
+      "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7862199999999999
     }
   ],
-  "last_updated": "2026-06-28T03:03:40",
+  "last_updated": "2026-06-28T03:26:34",
   "open_questions": [
     {
       "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "4398a39a",
-        "quality": 0.6822699999999999,
-        "theorems": 15,
-        "title": "Proof Automation: Custom Lean 4 Tactics"
-      },
-      {
         "cycle_id": "f2fdcb78",
         "quality": 0.84592,
         "theorems": 19,
@@ -3141,6 +3135,12 @@
         "quality": 0.5230660465116279,
         "theorems": 18,
         "title": "EML Kolmogorov-Arnold Representation"
+      },
+      {
+        "cycle_id": "49c290ff",
+        "quality": 0.48585960124610594,
+        "theorems": 9,
+        "title": "Constructing a canonical F-isocrystal to enhance the Gauss--Manin connection"
       }
     ],
     "Bridges": [

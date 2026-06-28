@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "551fc26b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -997,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -3465,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Linear Codes Achieve List-Decoding Capacity with Concentration"
   },
   {
-    "consumed_by_exp_id": "0a880828",
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
     "domains": [
       "Pythagorean",
@@ -3475,7 +3475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T13:54:36.235382+00:00",
     "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
@@ -4694,7 +4694,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scattering Determinant Critical Line Conjecture"
   },
   {
-    "consumed_by_exp_id": "f347664d",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that if a p-adic Galois representation becomes semistable after passing to some finite extension, then it must already have been of finite E-height. This would provide a characterization of finite height representations in terms of their behavior under finite extensions.",
     "domains": [
       "Algebra",
@@ -4704,7 +4704,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26043v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T17:11:00.832064+00:00",
     "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representations"
   },
@@ -7014,7 +7014,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Endpoint Restriction Conjecture for P\u2083 Implies \u039b(3) Structure of Lattice Points"
   },
   {
-    "consumed_by_exp_id": "552f4622",
+    "consumed_by_exp_id": "",
     "description": "This paper presents an analytic approach to characterize permutations with restricted descent sets using generating functions and modular arithmetic.",
     "domains": [
       "Pythagorean"
@@ -7023,7 +7023,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T23:43:29.466890+00:00",
     "title": "Analytic derivation of the generating function for $k$-alternating permutations"
   },
@@ -7926,6 +7926,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 derived from the Law-of-Apparition cycle\n\nThis cycle proved the concrete law of apparition `p \u2223 F_{p\u22121} \u2228 p \u2223 F_{p+1}`\n(`FibonacciApparitionLaw.lean`), its rank form `\u03b1(p) \u2223 p\u22121 \u2228 \u03b1(p) \u2223 p+1`, and the\nFibonacci-Fermat corollary `p \u2223 F_{p\u00b2\u22121}` (`FibonacciApparitionLawRank.lean`).\nThe decisive technical device was the **square-free binomial normal form**\n`2^n F_n = 2 \u2211_j C(n,2j+1) 5^j`, which Frobenius-collapses modulo `p`.\n\nEach conjecture below is falsifiable and immediately testable by `#eval`.\n\n## C1. Legendre refinement (sharp branch selection)\n**Statement.** For an odd prime `p \u2260 5`: if `p \u2261 \u00b11 (mod 5)` then `\u03b1(p) \u2223 p \u2212 1`;\nif `p \u2261 \u00b12 (mod 5)` then `\u03b1(p) \u2223 p + 1` (and not `p \u2212 1`). Equivalently\n`\u03b1(p) \u2223 p \u2212 (5|p)` with `(5|p)` the Legendre symbol.\n**The key insight is** that our proof already produces `F_p \u2261 5^{(p\u22121)/2} (mod p)`,\nand `5^{(p\u22121)/2} \u2261 (5|p)` by Euler's criterion; Cassini then forces the branch\nmatching the sign of `(5|p)`.\n**Why now?** The current files reduce everything to `5^{(p\u22121)/2} mod p`; only\n`ZMod.euler_criterion` + quadratic reciprocity (`legendreSym.quadratic_reciprocity`,\nboth in Mathlib) are missing to upgrade the disjunction into the exact branch.\n\n## C2. Prime-power lifting of the rank (regulator law)\n**Statement.** For a prime `p \u2260 5` and `k \u2265 1`, `\u03b1(p^k) = p^{k\u22121} \u00b7 \u03b1(p)` unless\n`p` is a Wall\u2013Sun\u2013Sun prime (none known); unconditionally\n`\u03b1(p) \u2223 \u03b1(p^k) \u2223 p^{k\u22121} \u03b1(p)`.\n**The key insight is** that the binomial normal form computes `F_n mod p^2` just as\nit computes `F_n mod p`: the second-order term `\u2211 (C(p,k)/p) ...` controls the jump\nfrom `\u03b1(p)` to `\u03b1(p^2)`.\n**Why now?** The catalog's `rank_dvd_of_dvd` already gives `\u03b1(p) \u2223 \u03b1(p^k)`; the\nnormal form supplies the missing upper bound, making the full equation a finite\n`mod p\u00b2` computation.\n\n## C3. Uniform law of apparition for all Lucas sequences `U_n(P,Q)`\n**Statement.** For a nondegenerate Lucas sequence `U(P,Q)` with discriminant\n`D = P\u00b2 \u2212 4Q`, every prime `p \u2224 2QD` satisfies `\u03b1_U(p) \u2223 p \u2212 (D|p)`.\n**The key insight is** that the binomial identity generalizes verbatim:\n`2^{n\u22121} U_n = \u2211_j C(n,2j+1) P^{n\u22121\u22122j} D^j`, and the Frobenius collapse depends only\non `(D|p)`, not on the specific `P,Q`.\n**Why now?** The catalog already abstracts strong divisibility sequences\n(`UnifiedRankOfApparition`); plugging the generalized normal form turns the\nFibonacci theorem here into the generic Lucas theorem with no new ideas.\n\n## C4. Density of \"first-kind\" primes\n**Statement.** The set of primes `p` with `\u03b1(p) \u2223 p \u2212 1` (i.e. `p \u2261 \u00b11 mod 5`) has\nnatural density `1/2` among all primes; likewise the `p + 1` branch.\n**The key insight is** that branch selection is governed entirely by `p mod 5`\n(by C1), so Dirichlet's theorem on primes in arithmetic progressions gives equal\ndensities to the residue classes `{1,4}` and `{2,3} mod 5`.\n**Why now?** Mathlib has `Nat.setOf_prime ... ` Dirichlet-density infrastructure in\nprogress; C1 reduces the analytic question to a residue count mod 5.\n\n## C5. A Fibonacci pseudoprime test sharper than Fermat\n**Statement.** Define `n` \"F-probable-prime\" if `n \u2223 F_{n\u2212(5|n)}`. Then every prime\n`\u2260 5` passes, and the composite failures (Fibonacci pseudoprimes, OEIS A081264)\nare strictly rarer than base-2 Fermat pseudoprimes below `10^k` for all `k \u2264 9`.\n**The key insight is** that `prime_dvd_fib_psq_sub_one` already certifies the prime\ndirection; the test's strength is the scarcity of `n` for which the rank divides\n`n \u2212 (5|n)` without `n` being prime.\n**Why now?** The proved corollary is exactly the soundness half of the test; the\nremaining (empirical, then provable) half is a counting statement amenable to the\ncatalog's `native_decide` verification style used in `CarmichaelProof.lean`.\n",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_2743",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "49c290ff",
+    "status": "available",
+    "timestamp": "2026-06-28T03:26:26.474511+00:00",
+    "title": "Concrete law of apparition `p \u2223 F_{p\u22121} \u2228 p \u2223 F_{p+1}`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8260,21 +8275,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-  },
-  {
-    "consumed_by_exp_id": "4554c3a3",
-    "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0493",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:45.995091+00:00",
-    "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
     "consumed_by_exp_id": "",
