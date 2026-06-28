@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "3f78044a",
+    "consumed_by_exp_id": "",
     "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
     "domains": [
       "Computation",
@@ -428,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432811+00:00",
     "title": "Formal Verification of Algorithms"
   },
@@ -837,7 +837,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Representation Theory: Character Tables of S_n"
   },
   {
-    "consumed_by_exp_id": "ee0a5f6b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Jones polynomial via the Kauffman bracket. Prove invariance under Reidemeister moves. Compute Jones polynomials for the trefoil, figure-eight, and torus knots. Prove that the Jones polynomial detects the unknot for alternating knots.",
     "domains": [
       "Topology",
@@ -847,7 +847,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432668+00:00",
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
@@ -1374,7 +1374,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "333b621d",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
     "domains": [
       "Computation",
@@ -1384,7 +1384,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.975605+00:00",
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
@@ -1744,7 +1744,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Separator Bound for Wall Connectors"
   },
   {
-    "consumed_by_exp_id": "dfab202e",
+    "consumed_by_exp_id": "",
     "description": "For a number field F with r\u2081 real embeddings and r\u2082 pairs of complex conjugate embeddings, and for every integer n \u2265 2, the bottom-degree Betti-Whittaker periods of a generic cohomological automorphic representation \u03c0 of GL\u2099 over F and its contragredient \u03c0\u2228 satisfy p^b(\u03c0\u2228) = (-1)^{b(F,n)} \u00b7 p^b(\u03c0), where b(F,n) = r\u2081\u00b7\u230an\u00b2/4\u230b + r\u2082\u00b7n(n-1)/2 is the bottom cohomological degree. This removes the regularity assumptions in Chen's earlier result and extends the contragredient period relation to the full class of generic cohomological representations.",
     "domains": [
       "Algebra",
@@ -1754,7 +1754,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T05:20:19.284015+00:00",
     "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
   },
@@ -3436,7 +3436,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Regularity of arbitrary-core joins with clique blocks"
   },
   {
-    "consumed_by_exp_id": "2b7b775f",
+    "consumed_by_exp_id": "",
     "description": "A precise, falsifiable conjecture linking the density parameters \u03b1 and \u03b2 of vertical and horizontal stripes in aperiodic Wang tile families to a Diophantine condition on pairs of quadratic irrationals.",
     "domains": [
       "Pythagorean"
@@ -3445,7 +3445,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T11:55:24.898021+00:00",
     "title": "Sufficient condition for non-periodicity of awaited set of Wang tiles"
   },
@@ -3553,7 +3553,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
   },
   {
-    "consumed_by_exp_id": "bfc7b99e",
+    "consumed_by_exp_id": "",
     "description": "The conjecture asserts no primes exceeding 7 satisfy $n! + 1 = m^2$ for $n < p$. This is falsifiable via computational checks.",
     "domains": [
       "Pythagorean"
@@ -3562,7 +3562,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T17:29:38.955405+00:00",
     "title": "The Non-Existence of New Factorial Square Solutions"
   },
@@ -8755,6 +8755,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Logic\u2013Physics Bridge: Consistency of Physical Theories\n\nDerived from this cycle's findings (`Provability.lean`, `Incompleteness.lean`,\n`Bridge.lean`). This cycle proved, for any abstract GL theory: L\u00f6b's theorem\n(`loeb_rule`), G\u00f6del II (`goedel_two`), self-independence of the consistency sentence\n(`con_independent_self`), downward transfer of consistency along extension\n(`physical_implies_math`), the *failure* of upward transfer\n(`math_not_implies_physical`), and cross-theory independence of `Con(T)` over `PA`\n(`con_T_independent_of_PA`), all witnessed non-vacuously by the standard Kripke model\n`stdSys`.\n\nThe conjectures below are bold, falsifiable refinements.\n\n## 1. The \"physical reflection gap\" is exactly one consistency step\n\n**Conjecture.** For a recursively axiomatized physical theory `T` extending `PA`, the\nsentence `Con(T)` is strictly stronger than `Con(PA)` over `PA`: `PA \u22a2 Con(T) \u2192 Con(PA)`\nbut `PA \u22ac Con(PA) \u2192 Con(T)`. Equivalently, `T` adds *exactly one* unit of consistency\nstrength visible to `PA`.\n\nThe key insight is that our `con_T_independent_of_PA` already isolates the\n`PA`-verifiable implication `Con(T) \u2192 Con(PA)` (`hbridge`) as the *only* bridge needed;\nthe missing converse is precisely a G\u00f6del\u2013Rosser gap that should be formalizable by a\nsecond diagonalization relative to `T`.\n\nWhy now? `Provability.lean` gives an indexed `box i` that already lets one theory speak\nof another's provability predicate, so both directions live in the *same* formula\nlanguage \u2014 the converse implication is now a statable, attackable Lean goal rather than\nan informal meta-claim.\n\n## 2. \u03a3\u2081-soundness is necessary, not merely sufficient, for independence\n\n**Conjecture.** A consistent GL theory `S` satisfies \"`Con` is independent over `S`\" if\nand only if `S` is \u03a3\u2081-sound (`S \u22ac \u25a1\u22a5`). The \"if\" is `con_independent_self`; the \"only\nif\" should hold because a non-\u03a3\u2081-sound consistent theory proves `\u00ac Con` (it proves\n`\u25a1\u22a5`), so `Con` is *decided* (refuted), not independent.\n\nThe key insight is that the box-true model `trueSys` is the extremal counterexample: it\nis consistent yet proves `\u00ac Con`, so it pins down the exact boundary \u2014 independence\nfails the instant \u03a3\u2081-soundness fails.\n\nWhy now? We have both models side by side (`trueSys` non-\u03a3\u2081-sound, `stdSys` \u03a3\u2081-sound)\nwith computed truth tables (see `ComputationalEvidence.md`), so the equivalence can be\nproved by abstracting the property that distinguishes them rather than guessed.\n\n## 3. Consistency forms a strict semilattice under theory union, with no top\n\n**Conjecture.** On GL theories ordered by `Simulates`, the consistent ones are closed\n*downward* but the join (catalog `ProofSystemCollapse.union`) of two consistent theories\ncan be inconsistent; moreover there is no consistent theory simulating all consistent\ntheories. Formally: `Consistent` is a proper order ideal with empty supremum.\n\nThe key insight is that `physical_implies_math` already proves downward closure, while\n`math_not_implies_physical` shows a consistent theory sitting below an inconsistent one;\ncombining these with the catalog's lattice structure on proof systems should yield the\nno-top result by a fixed-point/diagonal argument.\n\nWhy now? `Bridge.lean` reuses the catalog's `Simulates` preorder and `union` join\ndirectly, so the lattice-theoretic statement is expressible with existing vocabulary and\nthe two transfer theorems are the exact halves the proof needs.\n\n## 4. A physical theory cannot certify the consistency of its own measurement sector\n\n**Conjecture.** If a physical theory `T` is partitioned into a \"kinematics\" subtheory\n`K` and a \"dynamics/measurement\" subtheory `D` with `T = K \u2294 D` (catalog `union`), then\n`T \u22ac Con(D)` whenever `D` interprets `PA`. No consistent physical theory can internally\ncertify the consistency of any of its `PA`-strong components.\n\nThe key insight is that `goedel_two` applies to *every* `PA`-strong GL subtheory, and\n`physical_implies_math` propagates the component's incompleteness to the whole theory:\ninternal certification of any strong sector would contradict G\u00f6del II for that sector.\n\nWhy now? The indexed-`box` language lets `T` name `D`'s provability predicate (`box d`),\nso \"`T` certifies `Con(D)`\" is a single formula `Con d` provable-in-`T` \u2014 exactly the\nshape `con_T_independent_of_PA` already manipulates.\n\n## 5. The standard-model independence is robust under frame surgery\n\n**Conjecture.** Independence of `Con i` over `stdSys` survives replacing the frame\n`(\u2115, <)` by any infinite converse-well-founded frame of unbounded height; conversely it\n*fails* for every frame of finite height (where `\u25a1\u22a5` eventually becomes valid).\n\nThe key insight is that the only frame property our L\u00f6b proof (`box_a_valid`) used is\nconverse-well-foundedness, while the \u03a3\u2081-soundness witness (`stdSys_sigma_sound`) used a\nsingle world of height \u2265 1 \u2014 so unbounded height is exactly the dividing line.\n\nWhy now? `box_a_valid` already isolates the well-foundedness induction from the specific\norder, so generalizing the carrier from `\u2115` to an arbitrary `[WellFoundedLT]` type is a\nmechanical refactor that turns a conjecture about \"the\" standard model into a theorem\nabout a class of models.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_2800",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5773b0b9",
+    "status": "available",
+    "timestamp": "2026-06-28T20:52:37.560677+00:00",
+    "title": "Derived from this cycle's findings (`Provability.lean`, `Incompleteness.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -8972,7 +8987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
   {
-    "consumed_by_exp_id": "52a20f8b",
+    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domains": [
       "EML",
@@ -8982,7 +8997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
@@ -9091,7 +9106,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "9ecd5b8c",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -9101,7 +9116,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },

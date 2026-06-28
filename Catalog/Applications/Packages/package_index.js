@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5773b0b9",
     "filename": "logic_physics_bridge_consistency_of_physical_theor.json",
     "pkg_num": 194,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5333106912442396,
     "title": "Logic\u2013Physics Bridge: The Proof-Theoretic Consistency of Physical Theories"
   },
   {
@@ -5661,8 +5661,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "logic_physics_bridge_consistency_of_physical_theor",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5333106912442396,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Logic\u2013Physics Bridge: The Proof-Theoretic Consistency of Physical Theories"
     }
