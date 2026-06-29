@@ -676,21 +676,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "52860675",
-    "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
-    "domains": [
-      "Bridges",
-      "Tropical"
-    ],
-    "id": "fd_0536",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:06.637226+00:00",
-    "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
     "domains": [
@@ -1653,18 +1638,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every \u03c4_k-maximal graph on n vertices (with n \u2265 2k+2) has exactly (k+1)(n-1)-1 edges. A graph is \u03c4_k-maximal if it contains no subgraph with k+1 edge-disjoint spanning trees, yet adding any edge from its complement creates such a subgraph.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2829",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "available",
+    "timestamp": "2026-06-29T06:06:52.919140+00:00",
+    "title": "Edge count equality for \u03c4_k-maximal graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2828",
+    "id": "fd_2830",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
     "status": "available",
     "timestamp": "2026-06-29T05:46:31.738498+00:00",
     "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any integers d>1, e>1 with (e-3) divisible by d, the number of d-balanced e-regular partitions in a block of e-weight w equals the binomial coefficient \\(\\binom{w + (e-3)/d}{w}\\).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2831",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T06:07:11.760301+00:00",
+    "title": "Binomial Count Conjecture for d-balanced e-regular Partitions"
   },
   {
     "consumed_by_exp_id": "",
@@ -1942,7 +1956,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c8c7501",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -1951,7 +1965,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T03:32:05.123415+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },

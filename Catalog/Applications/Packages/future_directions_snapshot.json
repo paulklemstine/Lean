@@ -900,26 +900,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "52860675",
-    "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges",
-      "Tropical"
-    ],
-    "id": "fd_0536",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:06.637226+00:00",
-    "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
     "domain_bridges": [],
@@ -2380,6 +2360,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Nash-Williams-Tutte theorem on spanning tree packing",
+      "Bondy-Murty graph theory notation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every τ_k-maximal graph on n vertices (with n ≥ 2k+2) has exactly (k+1)(n-1)-1 edges. A graph is τ_k-maximal if it contains no subgraph with k+1 edge-disjoint spanning trees, yet adding any edge from its complement creates such a subgraph.",
+    "domain_bridges": [
+      "Extremal graph theory",
+      "Spanning tree packing numbers",
+      "Edge connectivity"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2829",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the Nash-Williams/Tutte criterion to show that any τ_k-maximal graph must achieve the upper bound. Assume for contradiction that |E(G)| < (k+1)(n-1)-1, then construct an edge e in Gᶜ such that G+e still lacks k+1 edge-disjoint spanning trees, violating τ_k-maximality.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "available",
+    "timestamp": "2026-06-29T06:06:52.919140+00:00",
+    "title": "Edge count equality for τ_k-maximal graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "grunbaum_yaakobi_conjecture",
       "schilling2021coupon",
       "burchard_finite_geometry",
@@ -2397,7 +2403,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2828",
+    "id": "fd_2830",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2406,6 +2412,33 @@
     "status": "available",
     "timestamp": "2026-06-29T05:46:31.738498+00:00",
     "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Divisible Arm Lengths, Crystal Reflections, and Enumeration of Newly Found Decomposition Columns (arXiv:23XX.XXXXX)",
+      "Symmetric group representation theory and crystal bases"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any integers d>1, e>1 with (e-3) divisible by d, the number of d-balanced e-regular partitions in a block of e-weight w equals the binomial coefficient \\(\\binom{w + (e-3)/d}{w}\\).",
+    "domain_bridges": [
+      "Crystal bases in Lie theory",
+      "Representation theory of the symmetric group",
+      "Algebraic combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2831",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T06:07:11.760301+00:00",
+    "title": "Binomial Count Conjecture for d-balanced e-regular Partitions"
   },
   {
     "ambition_level": "extension",
@@ -2780,7 +2813,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c8c7501",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -2792,7 +2825,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T03:32:05.123415+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
