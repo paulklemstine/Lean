@@ -38,7 +38,7 @@ cd Aether && python3 aether_tick.py --ollama-cloud
 
 ### View the Knowledge Graph
 
-Open `Catalog/Applications/Packages/index.html` in a browser, or visit the GitHub Pages deployment. The frontend supports light and dark themes with tabbed package views, interactive demos, auto-run visualizations, and a regenerate button for edited outputs.
+Open `Packages/index.html` in a browser, or visit the GitHub Pages deployment. The frontend supports light and dark themes with tabbed package views, interactive demos, auto-run visualizations, and a regenerate button for edited outputs.
 
 ## Architecture
 
@@ -83,10 +83,10 @@ Aether is fully self-managing: it detects its own code changes via mtime watchdo
 | `Aether/.aether_workspace/` | Runtime state, logs, and tracked tooling (including git hooks and the archive DB) |
 | `Archive/` | Long-term content-addressable archive of all Aristotle projects (can be split across WSL and external drives) |
 | `Catalog/` | Published research packages (JSON + Lean) + web visualization. **Canonical frontend source.** |
-| `docs/` | GitHub Pages website (synced from `Catalog/Applications/Packages/`). **DO NOT EDIT DIRECTLY.** |
+| `docs/` | GitHub Pages website (synced from `Packages/`). **DO NOT EDIT DIRECTLY.** |
 
 > [!WARNING]
-> The `docs/` folder is automatically synchronized from `Catalog/Applications/Packages/`. If you are making changes to the website frontend (HTML, JS, CSS), you **must** make them in `Catalog/Applications/Packages/` to prevent them from being overwritten during the next Aether tick.
+> The `docs/` folder is automatically synchronized from `Packages/`. If you are making changes to the website frontend (HTML, JS, CSS), you **must** make them in `Packages/` to prevent them from being overwritten during the next Aether tick.
 
 ## Key Files
 
@@ -132,14 +132,14 @@ Aether is fully self-managing: it detects its own code changes via mtime watchdo
 
 | File | Purpose |
 |------|---------|
-| `Catalog/Applications/Packages/index.html` | Web viewer for all research packages |
-| `Catalog/Applications/Packages/update_index.py` | Bundles packages into `packages_db.js`, adds quality scores |
-| `Catalog/Applications/Packages/js/packages.js` | Frontend rendering — tabbed views, interactive demos, light/dark themes |
-| `Catalog/Applications/Packages/style.css` | Frontend styling — fixed sidebar layout, gradient titles, responsive design |
+| `Packages/index.html` | Web viewer for all research packages |
+| `Packages/update_index.py` | Bundles packages into `packages_db.js`, adds quality scores |
+| `Packages/js/packages.js` | Frontend rendering — tabbed views, interactive demos, light/dark themes |
+| `Packages/style.css` | Frontend styling — fixed sidebar layout, gradient titles, responsive design |
 
 ## Frontend Features
 
-The package viewer at `Catalog/Applications/Packages/index.html` provides:
+The package viewer at `Packages/index.html` provides:
 
 - **Light/Dark Themes** — Toggle between themes with CSS custom properties; light mode uses appropriate gradients and backgrounds
 - **Tabbed Package Views** — Lean 4 Proofs (with original file paths), Article, Paper, Future Directions, Interactive
@@ -220,7 +220,7 @@ The judge returns a numeric score and a verdict. Low-scoring results are either 
 
 ## GitHub Pages
 
-The website is served from the `docs/` directory on the `master` branch (branch-based deployment, no Actions minutes). After each tick, `docs/` is synced from `Catalog/Applications/Packages/`.
+The website is served from the `docs/` directory on the `master` branch (branch-based deployment, no Actions minutes). After each tick, `docs/` is synced from `Packages/`.
 
 GitHub Pages settings: **Source → Deploy from a branch → master → /docs**
 
