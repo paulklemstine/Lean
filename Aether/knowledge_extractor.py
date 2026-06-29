@@ -1587,9 +1587,10 @@ Research mode: {concept.research_mode}
                     else:
                         # Strip _aristotle project directory prefixes from relative path
                         # e.g. 47bf2ccd_aristotle/Bridges/file.lean -> Bridges/file.lean
+                        # also retry dirs: 47bf2ccd_retry2_aristotle/Bridges/file.lean
                         clean_parts = []
                         for p in rel.parts:
-                            if re.match(r'^[0-9a-f]+_aristotle$', p):
+                            if re.match(r'^[0-9a-f]+(_retry[0-9]+)?_aristotle$', p):
                                 continue
                             clean_parts.append(p)
                         local_equiv = self.catalog_root / Path(*clean_parts) if clean_parts else self.catalog_root / rel

@@ -928,6 +928,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             del extractor.inflight[pid]
         print(f"[Tick] Cleaned up {len(retry_stuck_keys)} retry-queued jobs stuck >1h")
 
+    # Defensive: remove any stray Catalog/{job_id}_retry{N}_aristotle/ staging
+    # dirs left over from retry integration.
+    _clean_catalog_retry_dirs()
+
 
     # ── Self-healing: auto-prune low-quality directions ──
     try:
@@ -1516,6 +1520,29 @@ def _clean_stale_git_locks():
                 print(f"[Tick] Found {lock_file} but git is running. Leaving it alone.")
         except Exception as e:
             print(f"[Tick] Failed to clean stale git lock: {e}")
+
+
+def _clean_catalog_retry_dirs() -> int:
+    """Remove stray Catalog/{job_id}_retry{N}_aristotle/ staging dirs.
+
+    Aristotle's result tarballs name the project output folder
+    '{job_id}_retry{N}_aristotle/'. Integration strips that prefix and places
+    files under Catalog/{domain}/...; this removes any leftover staging dirs
+    each tick so they don't accumulate in the Catalog top level.
+    """
+    import shutil
+    catalog = REPO_ROOT / "Catalog"
+    removed = 0
+    for d in catalog.glob("*_retry*_aristotle"):
+        if d.is_dir():
+            try:
+                shutil.rmtree(d, ignore_errors=True)
+                removed += 1
+            except Exception as e:
+                print(f"[Cleanup] Warning: failed to remove retry dir {d}: {e}")
+    if removed:
+        print(f"[Cleanup] Removed {removed} stray retry dir(s) from Catalog")
+    return removed
 
 
 def rebuild_commit_push() -> bool:
