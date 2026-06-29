@@ -1395,7 +1395,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-29T05:26:29.809366+00:00",
     "title": "Limit Points of Largest Matching Roots of Graphs"
   },
@@ -1995,6 +1995,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T11:25:09.618081+00:00",
     "title": "Explicit quantitative lower bound on the geometric fractional chromatic number of the augmented 29-vertex configuration"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all integers k >= 1 and n >= 3, the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} as its automorphism group is exactly 2^{n+1} + 2k, generalizing the paper's result for k=1 via iterated application of Proposition 2.3.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2863",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:32:03.368083+00:00",
+    "title": "Minimum Poset Size for Z_2^k x Z_{2^n} Automorphism Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There exists a finite unit-distance graph G embeddable in the Euclidean plane \u211d\u00b2 such that the ratio of its independence number \u03b1(G) to its number of vertices |V(G)| is strictly less than 1/4. This answers Erd\u0151s's 1987 question in the negative and implies that the fractional chromatic number of the plane \u03c7_f(\u211d\u00b2) > 4, strengthening de Grey's result that \u03c7(\u211d\u00b2) \u2265 5.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2864",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:32:26.849906+00:00",
+    "title": "Existence of a finite unit-distance graph with independence ratio below 1/4"
   },
   {
     "consumed_by_exp_id": "",

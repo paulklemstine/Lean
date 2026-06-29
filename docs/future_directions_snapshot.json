@@ -1983,7 +1983,7 @@
     "proof_strategy": "The strategy involves formalizing the matching polynomial as a coefficient-based polynomial and using the property that for trees, the matching root coincides with the spectral radius. One would use the theory of Perron-Frobenius eigenvalues for graph adjacency matrices and extend it to the matching polynomial using the fact that the matching polynomial of any graph $G$ divides the characteristic polynomial of its path-tree (Godsil's theorem). The proof would require constructing graph sequences via graph operations (like adding vertices or edges) that converge to specific real numbers, utilizing the continuity of the largest root with respect to graph limits.",
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-29T05:26:29.809366+00:00",
     "title": "Limit Points of Largest Matching Roots of Graphs"
   },
@@ -3102,6 +3102,60 @@
     "status": "available",
     "timestamp": "2026-06-29T11:25:09.618081+00:00",
     "title": "Explicit quantitative lower bound on the geometric fractional chromatic number of the augmented 29-vertex configuration"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "poset_automorphism_group",
+      "abelian_group_realization",
+      "minimum_poset_size"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all integers k >= 1 and n >= 3, the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} as its automorphism group is exactly 2^{n+1} + 2k, generalizing the paper's result for k=1 via iterated application of Proposition 2.3.",
+    "domain_bridges": [
+      "finite_group_theory",
+      "order_theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2863",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the upper bound by iteratively applying Proposition 2.3 to adjoin k pairs of mutually incomparable elements below a minimal poset for Z_{2^n}. For the lower bound, extend the orbit and structural analysis from the paper to track the fixed points and orbits under the Z_2^k action.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:32:03.368083+00:00",
+    "title": "Minimum Poset Size for Z_2^k x Z_{2^n} Automorphism Groups"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Erdős unit-distance problem",
+      "fractional chromatic number of the plane",
+      "independence ratio"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "There exists a finite unit-distance graph G embeddable in the Euclidean plane ℝ² such that the ratio of its independence number α(G) to its number of vertices |V(G)| is strictly less than 1/4. This answers Erdős's 1987 question in the negative and implies that the fractional chromatic number of the plane χ_f(ℝ²) > 4, strengthening de Grey's result that χ(ℝ²) ≥ 5.",
+    "domain_bridges": [
+      "Graph theory (independence number, fractional chromatic number)",
+      "Metric geometry (unit-distance embeddings in ℝ²)",
+      "Linear programming (geometric fractional colorings as LP solutions)"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2864",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Follow the paper's three-step framework: (1) Start with the 27-vertex configuration G₂₇ of Matolcsi-Ruzsa-Varga-Zsámboki, which has geometric fractional chromatic number exactly 4. (2) Characterize all 23 extremal geometric fractional colorings of G₂₇ (forming an 11-dimensional convex polytope) and show that adding two carefully chosen augmentation vertices forces the geometric fractional chromatic number strictly above 4. (3) Apply the two blow-up procedures (using amenability of the Euclidean motion group, then large discrete cubes in the additive lattice) to construct a finite unit-distance graph with independence ratio < 1/4. The formalization would require defining geometric fractional chromatic number, verifying the LP characterization of extremal colorings, and constructing the augmentation.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:32:26.849906+00:00",
+    "title": "Existence of a finite unit-distance graph with independence ratio below 1/4"
   },
   {
     "ambition_level": "extension",
