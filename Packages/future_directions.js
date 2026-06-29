@@ -1991,20 +1991,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Independence Ratio Constraint"
   },
   {
-    "consumed_by_exp_id": "60fa5375",
-    "description": "The Diophantine equation P_{14}(n) = t^4, which simplifies to 6n^2 - 5n = t^4, has exactly five integer solutions: (n,t) \u2208 {(0,0), (1,1), (1,-1), (-2000, 70), (-2000, -70)}. This corresponds to Theorem 1(i) for k=5 in the paper, establishing the full solution set for the 14-gonal numbers that are perfect fourth powers.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2885",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28227v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T18:48:46.554593+00:00",
-    "title": "Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any odd prime p and non-negative integer w, the number of 2-balanced p-regular partitions in a block of p-weight w is exactly the binomial coefficient (w + (p-3)/2) choose w. A partition is p-regular if no part is repeated p or more times, and it is 2-balanced if every hook of length divisible by p has an even arm length.",
     "domains": [
@@ -2484,6 +2470,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 fourth powers among polygonal numbers\n\nThis cycle studied which 14-gonal numbers `P\u2081\u2084(n) = 6n\u00b2 \u2212 5n` are perfect fourth\npowers. The product structure `n\u00b7(6n \u2212 5)`, the coprimality dichotomy at the\nprime `5`, and the resulting reduction to quartic Thue equations suggest the\nfollowing bold, testable conjectures.\n\n## Conjecture 1 \u2014 The complete fourth-power list is `{0, 1, \u22122000}`\n\nThe integers `n` for which `6n\u00b2 \u2212 5n` is a perfect fourth power are exactly\n`n \u2208 {0, 1, \u22122000}`, giving the fourth powers `0, 1, 24 010 000`.\n\n*The key insight is* that the equation splits cleanly at the prime `5`: when `5 \u2224 n`\nthe two factors `n` and `6n \u2212 5` are coprime and must individually be (signed)\nfourth powers, while when `5 \u2223 n` the same coprimality reappears one level down\nbetween `m` and `6m \u2212 1`, and both descents terminate in a *finite* list of\nquartic Thue equations (`6a\u2074 \u2212 b\u2074 = 5` and `e\u2074 \u2212 150c\u2074 = 1`) whose only\nnonnegative solutions are tiny.  Strikingly, the two coprime sub-equations behave\nasymmetrically: the negative branch reduces to `b\u2074 \u2212 6a\u2074 = 5`, which is outright\nimpossible modulo `16` (fourth powers are `0` or `1` there, so the left side lands\nin `{0,1,10,11}`, never `5`) \u2014 eliminating every solution with `n < 0` not\ndivisible by `5` \u2014 whereas the positive branch `6a\u2074 \u2212 b\u2074 = 5` survives every such\ncongruence because `5 = 6 \u2212 1` is attainable, isolating the genuine analytic core.\n\n*Why now?* The descent has been carried out completely and rigorously up to those\ntwo Thue equations; effective lower bounds for linear forms in logarithms now make\nthe complete resolution of each individual quartic Thue equation routine, so the\nlast analytic gap is finally closable rather than merely plausible.\n\n## Conjecture 2 \u2014 The largest solution is always divisible by the \"linear prime\"\n\nFor every order `k` such that `P_k(n) = t\u2074` has a solution with `|n| > 1`, the\nsolution of largest absolute value satisfies `p \u2223 n`, where `p` is the prime\nappearing in the linear coefficient of `P_k` (here `p = 5`, the coefficient of the\nlinear term in `6n\u00b2 \u2212 5n`).\n\n*The key insight is* that the \"large\" branch of the descent is precisely the branch\nin which the linear prime divides `n`: extracting that prime from both `n` and `t`\nlowers the height of the surviving Thue equation, and large solutions can only\nemerge from this height-lowering step, never from the coprime branch.\n\n*Why now?* The 14-gonal case exhibits this exactly \u2014 `n = \u22122000` is divisible by\n`5` while the small solutions `n = 0, 1` are the degenerate and coprime cases \u2014 so\na single clean structural mechanism, rather than numerical coincidence, can be\ntested immediately across the polygonal families.\n\n## Conjecture 3 \u2014 A uniform finiteness theorem for `P_k(n) = t^d`\n\nFor every fixed polygonal order `k \u2265 5` and every fixed exponent `d \u2265 3`, the\nequation `P_k(n) = t^d` has only finitely many integer solutions `(n, t)`, and the\nnumber of solutions is bounded by an absolute constant independent of `k` and `d`.\n\n*The key insight is* that completing the square turns each such equation into a\nsuper-elliptic curve `x\u00b2 = (constant)\u00b7t^d + (constant)` of fixed genus `\u2265 1`, on\nwhich the integral points are governed by a single uniform height bound once `d \u2265 3`.\n\n*Why now?* The 14-gonal/\u200bfourth-power case produces the explicit model\n`x\u00b2 \u2212 24t\u2074 = 25`; the same completion of the square works verbatim for all `k` and\n`d`, so the family is finally presented in a single normalised shape where a\nuniform bound is a concrete, falsifiable target.\n\n## Conjecture 4 \u2014 Coprime-branch solutions are exactly the near-trivial ones\n\nWhenever `P_k(n) = t\u2074` with `gcd(n, (k-4)/2)` trivial (the coprime branch), the\nonly solutions are the \"near-trivial\" `n \u2208 {0, 1}`.\n\n*The key insight is* that in the coprime branch both factors are genuine fourth\npowers, forcing `(k-2)\u00b7a\u2074 \u2212 (k-4) = b\u2074`; for `a \u2265 2` the gap between consecutive\nfourth powers grows faster than the left-hand side can jump, leaving no room for a\nsolution beyond `a = 1`.\n\n*Why now?* The descent isolating the coprime branch is fully explicit, so the\nremaining claim is a self-contained statement about a one-parameter family of\nquartic equations \u2014 exactly the regime where gap/spacing arguments and Thue bounds\nare sharpest.\n\n## Conjecture 5 \u2014 Density zero with an explicit rate\n\nThe count of `n` with `|n| \u2264 X` for which `6n\u00b2 \u2212 5n` is a perfect fourth power is\n`O(1)` (in fact eventually constant), and more generally the count of `n \u2264 X` for\nwhich `P_k(n)` is a perfect `d`-th power is `O((log X)^{c})` for an absolute\nconstant `c`, uniformly in `k` and `d \u2265 3`.\n\n*The key insight is* that solutions correspond to integral points on a fixed-genus\ncurve, and the conjectural uniform bounds on integral points on such curves convert\ndirectly into a poly-logarithmic counting estimate.\n\n*Why now?* With the explicit curve models in hand for the whole polygonal family,\nthe counting function becomes a concrete object that can be tabulated and stress-\ntested against the predicted growth rate over large ranges.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2910",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "60fa5375",
+    "status": "available",
+    "timestamp": "2026-06-29T23:28:03.323629+00:00",
+    "title": "This cycle studied which 14-gonal numbers `P\u2081\u2084(n) = 6n\u00b2 \u2212 5n` are perfect fourth"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2598,6 +2599,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 60fa5375 (Q=0.519) proved 18 theorems in Combinatorics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Diophantine equation P_{14}(n) = t^4, which simplifies to 6n^2 - 5n = t^4, has exactly five integer solutions: (n,t) \u2208 {(0,0), (1,1), (1,-1), (-2000, 70), (-2000, -70)}. This corresponds to Theore",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "sorry_fill_60fa5375_4df640a2",
+    "priority_score": 0.5686266666666667,
+    "research_mode": "team",
+    "source_exp_id": "60fa5375",
+    "status": "available",
+    "timestamp": "2026-06-29T23:28:11.082472+00:00",
+    "title": "Close Proofs: Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
   },
   {
     "consumed_by_exp_id": "",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f2499c75",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nThis cycle extended the catalog's idempotent large-deviation theory\n(`Catalog/Tropical/MeasureTheory/{Basic,LargeDeviations,DualityGap}.",
-      "quality_score": 0.68192,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-26T12:39:36",
-      "title": "Idempotent Probability: Large Deviations"
-    },
-    {
       "cycle_id": "72d240c8",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Hochschild homology of group algebras\n\nDerived from the cycle that produced\n`Catalog/Novelty/HochschildH0GroupAlgebra.lean`, where we proved the `R`-linear\nequivalence `HH₀(R[G])",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-06-29T22:39:38",
       "title": "Kähler-Einstein Metrics and K-Stability"
+    },
+    {
+      "cycle_id": "60fa5375",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — fourth powers among polygonal numbers\n\nThis cycle studied which 14-gonal numbers `P₁₄(n) = 6n² − 5n` are perfect fourth\npowers. The product structure `n·(6n − 5)`, the coprimalit",
+      "quality_score": 0.5186266666666667,
+      "sorry_count": 4,
+      "theorem_count": 18,
+      "timestamp": "2026-06-29T23:28:10",
+      "title": "Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.73856
     }
   ],
-  "last_updated": "2026-06-29T22:39:38",
+  "last_updated": "2026-06-29T23:28:10",
   "open_questions": [
-    {
-      "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
-      "cycle_id": "a0dd96a5",
-      "domain": "Combinatorics",
-      "sorry_count": 5,
-      "timestamp": "2026-06-16T12:52:43"
-    },
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
       "cycle_id": "16e95997",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 2,
       "timestamp": "2026-06-28T07:58:49"
+    },
+    {
+      "context": "Main results (all sorry-free):; sorry-free, to an explicit finite list of quartic Thue equations whose known; What survived: the entire *structural* reduction is fully formal and sorry-free.",
+      "cycle_id": "60fa5375",
+      "domain": "Combinatorics",
+      "sorry_count": 4,
+      "timestamp": "2026-06-29T23:28:10"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "971b371e",
-        "quality": 0.3106280036849378,
-        "theorems": 121,
-        "title": "Perfect Numbers: Structure of Even Perfects"
-      },
-      {
         "cycle_id": "42f0bfda",
         "quality": 0.5537937826789618,
         "theorems": 96,
@@ -3265,6 +3259,12 @@
         "quality": 0.64372,
         "theorems": 11,
         "title": "Graph Coloring: Chromatic Polynomial Theory"
+      },
+      {
+        "cycle_id": "60fa5375",
+        "quality": 0.5186266666666667,
+        "theorems": 18,
+        "title": "Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
       }
     ],
     "Computation": [
