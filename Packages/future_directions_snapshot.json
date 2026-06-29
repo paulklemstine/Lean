@@ -2553,7 +2553,7 @@
       "math.CO",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43fcf247",
     "description": "The number of 2-balanced p-regular partitions in any block of p-weight w for an odd prime p is precisely the binomial coefficient C(w + (p-3)/2, w). A partition is 2-balanced p-regular if it is p-regular and every hook of length divisible by p has an even arm length.",
     "domain_bridges": [
       "Representation Theory"
@@ -2568,7 +2568,7 @@
     "proof_strategy": "Formalize partitions, Young diagrams, hooks, and arm lengths. Define p-regularity and the 2-balanced condition. Establish blocks, p-cores, and p-weights. Prove that the count is independent of the p-core by demonstrating that crystal reflections preserve the 2-balanced property, and finally compute the count explicitly in a RoCK block to arrive at the binomial formula.",
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T10:45:11.578131+00:00",
     "title": "Enumeration of 2-balanced p-regular partitions in blocks"
   },
@@ -3306,7 +3306,7 @@
       "finite_geometry",
       "coupon_collector"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "99e4c1c9",
     "description": "For every prime power q ≥ 2, the expected time to collect all n = q² + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum–Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domain_bridges": [
       "finite_geometry_to_probability",
@@ -3323,7 +3323,7 @@
     "proof_strategy": "Use the 2-(q²+q+1, q+1, 1) design properties of projective planes to derive exact inclusion-exclusion formulas for the expected coverage time. The key structural insight is that in a projective plane, any two points lie on exactly one common line, creating systematic 'clustering' that delays coverage. Compare the resulting expression term-by-term against the full model's expected time using the fact that the full model minimizes certain overlap statistics while the projective plane maximizes them. A potential approach leverages the eigenvalue structure of the incidence matrix to bound the probability that k specific coupons remain uncollected after t draws.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
@@ -3471,7 +3471,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "feb44fa2",
     "description": "Every $\\tau_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges, for integers $k \\ge 1$ and $n \\ge 2k+2$. A graph $G$ is $\\tau_k$-maximal if it contains no subgraph admitting $k+1$ edge-disjoint spanning trees (i.e., its spanning tree packing number $\\tau(G) \\le k$), but adding any edge from its complement creates a graph that does admit $k+1$ edge-disjoint spanning trees (i.e., $\\tau(G+e) \\ge k+1$ for all $e \\notin E(G)$).",
     "domain_bridges": [
       "extremal graph theory",
@@ -3488,7 +3488,7 @@
     "proof_strategy": "The authors have already established the upper bound $|E(G)| \\le (k+1)(n-1)-1$. To prove the conjecture, one must establish the matching lower bound $|E(G)| \\ge (k+1)(n-1)-1$. This likely involves induction on $k$ and $n$, leveraging the Nash-Williams/Tutte theorem to relate edge counts across partitions, and analyzing the structural properties and edge-connectivity bounds of $\\tau_k$-maximal graphs to show that fewer edges would contradict the maximality condition.",
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:55:49.745314+00:00",
     "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
   },
@@ -3555,7 +3555,7 @@
       "geometric_fractional_chromatic_number",
       "extremal_coloring_polytope"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9b3d24f",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G₂₇ constructed by Matolcsi, Ruzsa, Varga, and Zsámboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes χ_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domain_bridges": [
       "linear_programming",
@@ -3572,7 +3572,7 @@
     "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph with its coordinates. Encode the geometric fractional chromatic number as a linear program over measurable functions. Use the finite-dimensional reduction (the LP with 182304 variables capturing the constraints on finite sub-configurations) to extract the extreme points computationally. Verify each of the 23 extremal colorings satisfies all unit-distance constraints and achieves total weight exactly 4, and confirm no other extreme points exist via vertex enumeration on the LP's feasible polytope.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G₂₇ Have Exactly 23 Vertices"
   },
@@ -4968,7 +4968,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f4fe8b8",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -4981,7 +4981,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
