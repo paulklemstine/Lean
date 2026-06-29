@@ -16737,7 +16737,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "2d3811cb",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16763,7 +16763,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.873771+00:00",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
@@ -34931,7 +34931,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "5bc59f51",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34961,7 +34961,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28157v1",
       "source_path": "http://arxiv.org/abs/2606.28157v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T03:31:25.863443+00:00",
       "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
@@ -36287,6 +36287,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For all integers $k \\ge 1$, $n \\ge 0$, and $s \\in \\mathbb{Z}$, the coefficient of $q^n z^s$ in the normalized Jacobi triple product tail $J_k(z,q)$ is a non-negative integer. This resolves Merca's stronger nonnegativity conjecture on truncated Jacobi triple product series and generalizes the coefficientwise positivity of truncated pentagonal number series.",
+      "domain_bridges": [
+        "q-series",
+        "partition_theory",
+        "formal_power_series"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2840",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem normalized_jtp_tail_coeff_nonneg (k : ℕ) (hk : 1 ≤ k) (n : ℕ) (s : ℤ) :\n    0 ≤ (normalizedJacobiTripleProductTail k).coeff n s := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the formal bivariate series $J_k(z,q)$ and the generalized minimal-excludant for partitions. Construct the sign-reversing involution to show that the coefficients of $J_k(z,q)$ correspond to alternating sums of sizes of invariant subsets. Then formalize the injective lift operator on Frobenius arms combined with Konan's size- and length-preserving bijection to prove the invariant subsets are weakly increasing in $k$, which directly implies the non-negativity of the coefficients.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27507v1",
+      "source_path": "http://arxiv.org/abs/2606.27507v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T09:51:27.157957+00:00",
+      "title": "Coefficientwise Positivity of Normalized Jacobi Triple Product Tails"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "grunbaum_yaakobi_conjecture",
         "schilling2021coupon",
         "burchard_finite_geometry",
@@ -36310,7 +36355,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2840",
+      "id": "fd_2841",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_coverage_time_gt_random (q : ℕ) (hq : 2 ≤ q) : \n  expected_coverage_time (line_family (PG(2, q))) > expected_coverage_time (uniform_family (q^2 + q + 1) (q + 1))",
@@ -36356,7 +36401,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2841",
+      "id": "fd_2842",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem count_d_balanced_e_regular_partitions {d e w : ℕ} (hd : d > 1) (he : e > 1) (hdiv : (e - 3) % d = 0) : (Finset.card (setOf (d-balanced e-regular partitions in block of e-weight w))) = Nat.choose (w + (e - 3) / d) w := by sorry",
@@ -36398,7 +36443,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2842",
+      "id": "fd_2843",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃ (L : Fin n → Fin n → Fin n),\n  (∀ r : Fin n, Function.Bijective (fun x => L r x)) ∧\n  (∀ c1 c2 : Fin n, c1 ≠ c2 → (∀ p q : Fin n,\n    (∑ r : Fin n, if L r c1 = p ∧ L r c2 = q then 1 else 0) = (∑ r : Fin n, if L r c1 = q ∧ L r c2 = p then 1 else 0)))",
@@ -36446,7 +36491,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2843",
+      "id": "fd_2844",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem signless_laplacian_tK3_free_extremal_improved_bound {t n : ℕ} (ht : t ≥ 2) (hn : n ≥ 3 * t) :\n  UniqueExtremalGraph (tK3Free t) (signlessLaplacianSpectralRadius) n =\n    KJoin (CompleteGraph (t-1)) (CompleteBipartiteGraph ⌊(n-t+1)/2⌋ ⌈(n-t+1)/2⌉) := by sorry",
@@ -36490,7 +36535,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2844",
+      "id": "fd_2845",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The nerve theorem applies to finite simplicial complexes and preserves finiteness properties",
@@ -36540,7 +36585,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2845",
+      "id": "fd_2846",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regular_maniplex_automorphism_equivalence (n : ℕ) (M : Maniplex n) (h : Regular M) : Isomorphism (AutomorphismGroup M) (AutomorphismGroup (FlagGraph M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneSkeleton M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneCoskeleton M))",
@@ -36586,7 +36631,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2846",
+      "id": "fd_2847",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def r (n : ℕ) : ℤ := -- coefficient of q^n in ρ(q) as defined in the paper\n  sorry\n\ntheorem sign_law_rho : ∀ n : ℕ, r (3 * n) > 0 ∧ r (3 * n + 1) ≤ 0 ∧ r (3 * n + 2) ≤ 0 ∧ (r (3 * n + 1) = 0 → n = 1) ∧ (r (3 * n + 2) = 0 → n = 0 ∨ n = 2 ∨ n = 3 ∨ n = 6) := by sorry",
@@ -36632,7 +36677,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2847",
+      "id": "fd_2848",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem franke_weight_k (k : ℤ) : ∀ (F : AutomorphicForm k), ∃ (F_cusp : CuspForm k) (c : Finsupp ℕ (LaurentCoeff (EisensteinSeries k))), F = F_cusp + ∑ i, c i • i := by sorry",
@@ -36683,7 +36728,7 @@
         "Geometry",
         "Algebra"
       ],
-      "id": "fd_2848",
+      "id": "fd_2849",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem unramified_equals_descent_rc {K : Type*} [Field K] [IsPAdicFunctionField K] {X : Scheme K} [IsSmooth X] [IsProper X] [IsGeometricallyIntegral X] [IsRationallyConnected X] : adelicPointsUnramifiedObstruction X = adelicPointsDescentObstruction X := by sorry",
@@ -36729,7 +36774,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2849",
+      "id": "fd_2850",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mcdqls_exists (n : ℕ) (h : n ≥ 4) : ∃ (L : Fin n → Fin n → Vector ℂ n), IsMaxCardDiagQuantumLatinSquare L ∧ ∀ i j k l, (i ≠ k ∨ j ≠ l) → ¬IsGlobalPhaseEquiv (L i j) (L k l) := by\n  sorry",
@@ -36780,7 +36825,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2850",
+      "id": "fd_2851",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem curd_partition_m1_2k_exists_iff {m n : ℕ} (hm : m ≥ 3) (hn : n ≥ m) :\n    (∃ (X : Type) (F : Finset X) (_ : F.card = n)\n       (blocks : Finset (Finset X))\n       (classes : Finset (Finset (Finset X))),\n     -- each class partitions F\n     (∀ c ∈ classes, ∀ x ∈ F, ∃! b ∈ c, x ∈ b) ∧\n     -- each class has block structure m^1 2^{(n-m)/2}\n     (∀ c ∈ classes, ∃! b ∈ c, b.card = m) ∧\n     (∀ c ∈ classes, ∀ b ∈ c, b ≠ (⟨_, by aesop⟩ : Finset X) → b.card = 2) ∧\n     -- each pair in exactly one block\n     (∀ x ∈ F, ∀ y ∈ F, x ≠ y →\n       (∃! b ∈ blocks, x ∈ b ∧ y ∈ b)) ∧\n     -- blocks = union of classes\n     blocks = classes.biUnion id)\n    ↔ (n % 2 = m % 2 ∧ (m * m - 2 * m + n) ∣ n * (n - 1)) :=\n  sorry",
@@ -36825,7 +36870,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2851",
+      "id": "fd_2852",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sixth_moment_sharp_lower_bound (ε : ℝ) (hε : ε > 0) :\n    ∃ T₀ : ℝ, ∀ T : ℝ, T ≥ T₀ →\n      (∫ t in (0)..T, ‖riemannZeta (1/2 + Complex.I * t)‖₊ ^ 6) ≥\n        (42 - ε) * c₃ * T * (Real.log T) ^ 9 :=\n  by\n    sorry\n-- where c₃ : ℝ is defined via the Euler product for a₃\n-- a₃ = ∏_p (1 - 1/p)^9 * ∑_m (Γ(m+3)/(Γ(m+1)*Γ(3)))^2 * p^(-m)\n-- and c₃ = a₃ / 9!",
@@ -36844,6 +36889,53 @@
       "thread_id": "",
       "timestamp": "2026-06-29T09:33:31.386723+00:00",
       "title": "Sharp lower bound for the sixth moment of the Riemann zeta function"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.AG",
+        "math.RT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any partition λ of n and any support pattern S ⊆ [n] × [n], the number of n × n nilpotent matrices over F_q with Jordan canonical form type λ and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian–Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
+      "domain_bridges": [
+        "Algebraic geometry (Hessenberg varieties and Springer fibers)",
+        "Representation theory (Hall-Littlewood polynomials and Green functions)",
+        "Combinatorics (chromatic quasisymmetric functions and rook theory)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2853",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem nilpotent_count_prescribed_support_polynomial (n : ℕ) (λ : Partition n) (S : Set (Fin n × Fin n)) : ∃ p : Polynomial ℤ, ∀ (q : ℕ) (hq : 1 < q), nilpotentCountWithSupport q n λ S = p.eval (q : ℤ) := sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Leverage the paper's Hall scalar product formula expressing the count in terms of skew modified Hall-Littlewood functions and q-Whittaker functions. For Hessenberg supports, connect to chromatic quasisymmetric functions and the Shareshian-Wachs theorem relating Hessenberg variety point counts to chromatic quasisymmetric function evaluations. For general supports, develop combinatorial-algebraic tools showing the relevant Hall scalar products specialize to polynomials in q, potentially using geometric methods on Springer fibers and deformation arguments to reduce arbitrary supports to Hessenberg-type patterns.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27497v1",
+      "source_path": "http://arxiv.org/abs/2606.27497v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T09:52:47.763963+00:00",
+      "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
     },
     {
       "ambition_level": "extension",
@@ -39024,11 +39116,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "29c1c9b2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39039,7 +39131,7 @@
         "Algebra"
       ],
       "id": "seed_021",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T09:52:58.678448+00:00",
       "last_reviewed_at": "2026-06-16T10:48:49.752102+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39053,7 +39145,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:00.118535+00:00",
       "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
@@ -42579,11 +42671,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f67eb57b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42595,7 +42687,7 @@
         "Probability"
       ],
       "id": "seed_355",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T09:52:52.610423+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42609,7 +42701,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432742+00:00",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
@@ -42852,7 +42944,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -42868,7 +42960,7 @@
         "Analysis"
       ],
       "id": "seed_362",
-      "last_attempt_time": "2026-06-29T09:33:36.753335+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43254,7 +43346,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "d63f7dca",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43281,7 +43373,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432794+00:00",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"

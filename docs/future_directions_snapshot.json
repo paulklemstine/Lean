@@ -998,7 +998,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d63f7dca",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -1012,7 +1012,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1515,7 +1515,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f67eb57b",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1528,7 +1528,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -1745,7 +1745,7 @@
       "unit_distance_graphs",
       "geometric_fractional_chromatic_number"
     ],
-    "consumed_by_exp_id": "5bc59f51",
+    "consumed_by_exp_id": "",
     "description": "The paper demonstrates that augmenting the 27-vertex unit-distance graph G27 with a specific pair of vertices results in a 29-vertex graph with geometric fractional chromatic number strictly greater than 4. The authors note that such augmentations are exceedingly rare. This conjecture posits that, up to Euclidean isometry, this specific 2-vertex augmentation is the unique way to add two vertices to G27 such that the resulting unit-distance graph has a geometric fractional chromatic number strictly greater than 4.",
     "domain_bridges": [
       "Linear Programming",
@@ -1762,7 +1762,7 @@
     "proof_strategy": "Formalize the 27-vertex graph G27 and the convex polytope of its 23 extremal geometric fractional colorings. Then, perform a verified exhaustive search or algebraic classification over all possible 2-vertex additions, verifying that only the specific pair identified in the paper yields a unit-distance graph where the geometric fractional chromatic number exceeds 4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T03:31:25.863443+00:00",
     "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
   },
@@ -2514,6 +2514,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all integers $k \\ge 1$, $n \\ge 0$, and $s \\in \\mathbb{Z}$, the coefficient of $q^n z^s$ in the normalized Jacobi triple product tail $J_k(z,q)$ is a non-negative integer. This resolves Merca's stronger nonnegativity conjecture on truncated Jacobi triple product series and generalizes the coefficientwise positivity of truncated pentagonal number series.",
+    "domain_bridges": [
+      "q-series",
+      "partition_theory",
+      "formal_power_series"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2840",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the formal bivariate series $J_k(z,q)$ and the generalized minimal-excludant for partitions. Construct the sign-reversing involution to show that the coefficients of $J_k(z,q)$ correspond to alternating sums of sizes of invariant subsets. Then formalize the injective lift operator on Frobenius arms combined with Konan's size- and length-preserving bijection to prove the invariant subsets are weakly increasing in $k$, which directly implies the non-negativity of the coefficients.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27507v1",
+    "status": "available",
+    "timestamp": "2026-06-29T09:51:27.157957+00:00",
+    "title": "Coefficientwise Positivity of Normalized Jacobi Triple Product Tails"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "grunbaum_yaakobi_conjecture",
       "schilling2021coupon",
       "burchard_finite_geometry",
@@ -2531,7 +2557,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2840",
+    "id": "fd_2841",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2558,7 +2584,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2841",
+    "id": "fd_2842",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
@@ -2581,7 +2607,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2842",
+    "id": "fd_2843",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit pairwise reflection‑symmetric Latin squares for n = 2^k using affine permutations of the vector space (GF(2))^k, and prove non‑existence for other n by parity or orbit‑counting arguments.",
@@ -2610,7 +2636,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2843",
+    "id": "fd_2844",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the stability method used in the paper by analyzing the structure of near-extremal graphs for smaller $n$. Leverage the known exact result for $t=2$ ($n \\geq 6$) as a base case. Use spectral perturbation arguments to show that any deviation from the conjectured extremal graph reduces the spectral radius when $n \\geq 3t$. The key is to tighten the eigenvalue interlacing bounds and degree sequence estimates that currently require $n \\geq 28t-17$.",
@@ -2635,7 +2661,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2844",
+    "id": "fd_2845",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence argument via combinatorial dimension tracking",
@@ -2666,7 +2692,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2845",
+    "id": "fd_2846",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that the natural projection maps from the flag graph to both the 1-skeleton and 1-coskeleton graphs are covering maps that induce isomorphisms on automorphism groups for regular maniplexes, leveraging the fixed-point-free involution structure and vertex-transitivity properties established in the paper.",
@@ -2693,7 +2719,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2846",
+    "id": "fd_2847",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Watson's identity 2ρ(q) + ω(q) = T(q) to relate ρ(q) to the mock theta function ω(q) and a theta-eta product T(q). Obtain explicit Rademacher-type expansions with rigorous error bounds for the coefficients of ω(q) and T(q). Combine these to derive explicit inequalities for r(n) for all sufficiently large n, and verify the remaining small n by direct computation.",
@@ -2720,7 +2746,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2847",
+    "id": "fd_2848",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the automorphic Green's identity to weight k Eisenstein series and automorphic forms. Use the meromorphic continuation and functional equation of the weight k Eisenstein series. Show that the boundary terms in the Green's identity for the truncated weight k Eisenstein series yield the projection onto the cuspidal subspace and the Laurent coefficients at the poles.",
@@ -2752,7 +2778,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2848",
+    "id": "fd_2849",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow the strategy of the number field case: (1) establish that the unramified obstruction is contained in the descent obstruction (already shown in the paper for general smooth integral varieties), (2) prove the reverse inclusion by showing that any descent obstruction arising from a torsor under a commutative linear algebraic group can be detected by H^3_nr(X, Q/Z(2)), using the arithmetic dualities and Poitou-Tate-style exact sequences developed for p-adic function fields, (3) for rationally connected varieties, leverage the vanishing of higher unramified cohomology beyond degree 3 to show the descent obstruction cannot be strictly finer.",
@@ -2779,7 +2805,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2849",
+    "id": "fd_2850",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish base cases n = 4, 5, 6, 7, 8 via direct constructions using row-quantum Latin rectangles and special complete mappings of finite groups, then apply the singular direct product construction recursively to extend existence to all n ≥ 4, leveraging the algebraic properties of complete mappings in groups of odd order and direct products for even orders.",
@@ -2811,7 +2837,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2850",
+    "id": "fd_2851",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow Wilson's fundamental construction approach for PBDs: (1) formalize the necessary conditions (parity, divisibility), (2) establish a set of 'starter' CURDs via the paper's prime power and cyclic constructions, (3) develop a recursive construction showing that if CURDs exist for parameters (m₁, n₁) and (m₂, n₂), then a CURD exists for suitably combined parameters, (4) prove that the necessary conditions are closed under the recursive operations, (5) show every parameter pair satisfying the necessary conditions decomposes into starter instances.",
@@ -2837,7 +2863,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2851",
+    "id": "fd_2852",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the two-piece amplification method of the paper by optimizing the amplifier weights over a wider class of Dirichlet polynomials, potentially incorporating shifted-convolution estimates and spectral theory of automorphic forms. The current method achieves 34.1 out of the conjectured 42; closing the gap requires either stronger amplification or a hybrid approach combining amplification with the resonator method of Radziwiłł–Soundararajan, plus refined estimates for the off-diagonal main terms that currently are only captured partially.",
@@ -2846,6 +2872,34 @@
     "status": "available",
     "timestamp": "2026-06-29T09:33:31.386723+00:00",
     "title": "Sharp lower bound for the sixth moment of the Riemann zeta function"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.AG",
+      "math.RT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any partition λ of n and any support pattern S ⊆ [n] × [n], the number of n × n nilpotent matrices over F_q with Jordan canonical form type λ and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian–Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
+    "domain_bridges": [
+      "Algebraic geometry (Hessenberg varieties and Springer fibers)",
+      "Representation theory (Hall-Littlewood polynomials and Green functions)",
+      "Combinatorics (chromatic quasisymmetric functions and rook theory)"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2853",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the paper's Hall scalar product formula expressing the count in terms of skew modified Hall-Littlewood functions and q-Whittaker functions. For Hessenberg supports, connect to chromatic quasisymmetric functions and the Shareshian-Wachs theorem relating Hessenberg variety point counts to chromatic quasisymmetric function evaluations. For general supports, develop combinatorial-algebraic tools showing the relevant Hall scalar products specialize to polynomials in q, potentially using geometric methods on Springer fibers and deformation arguments to reduce arbitrary supports to Hessenberg-type patterns.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27497v1",
+    "status": "available",
+    "timestamp": "2026-06-29T09:52:47.763963+00:00",
+    "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
   {
     "ambition_level": "extension",
@@ -3043,7 +3097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29c1c9b2",
     "description": "Resolve whether the general 7th-degree equation can be solved using functions of only 2 variables. Formalize Kolmogorov's superposition theorem and explore its implications for approximation theory.",
     "domain_bridges": [],
     "domains": [
@@ -3055,7 +3109,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:00.118535+00:00",
     "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
   },
@@ -3180,7 +3234,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2d3811cb",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -3193,7 +3247,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
