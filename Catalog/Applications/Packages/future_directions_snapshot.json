@@ -2313,6 +2313,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO:05C31",
+      "math.CO:05C50",
+      "math.CO:05C70"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The set of limit points of the largest matching roots of all finite simple graphs is exactly L = { 2 * cos(π/k) | k ∈ ℕ, k ≥ 3 } ∪ [ √τ + τ^{-1/2}, ∞ ), where τ = (1+√5)/2 is the golden ratio. In particular, for each integer k ≥ 3 there exists a sequence of pairwise distinct graphs (G_n) such that μ(G_n) → 2 * cos(π/k) as n → ∞.",
+    "domain_bridges": [
+      "Spectral Graph Theory",
+      "Matching Polynomials",
+      "Real Algebraic Geometry"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2831",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "To show that each 2*cos(π/k) is a limit point, construct a family of graphs consisting of a path P_{m_k} (whose largest matching root equals 2*cos(π/(m_k+1))) together with a bounded‑size gadget whose largest matching root is strictly less than 2*cos(π/k). By choosing m_k → ∞ so that 2*cos(π/(m_k+1)) ↑ 2*cos(π/k) and taking disjoint unions with the gadget, the largest matching root of the union equals that of the path and converges to 2*cos(π/k). Distinctness is ensured by varying m_k. The converse direction (no other limit points below √τ+τ^{-1/2}) follows from known bounds on matching roots of graphs with maximum degree ≤ 2 and a discharging argument that any graph with larger degree forces its largest matching root to exceed the threshold, combined with the characterization of limit points via rooted trees.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28162v1",
+    "status": "available",
+    "timestamp": "2026-06-29T06:42:13.213073+00:00",
+    "title": "Limit points of largest matching roots below the golden‑ratio threshold"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "grunbaum_yaakobi_conjecture",
       "schilling2021coupon",
       "burchard_finite_geometry",
@@ -2330,7 +2357,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2831",
+    "id": "fd_2832",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2357,7 +2384,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2832",
+    "id": "fd_2833",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
@@ -2380,7 +2407,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2833",
+    "id": "fd_2834",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit pairwise reflection‑symmetric Latin squares for n = 2^k using affine permutations of the vector space (GF(2))^k, and prove non‑existence for other n by parity or orbit‑counting arguments.",
@@ -2389,6 +2416,35 @@
     "status": "available",
     "timestamp": "2026-06-29T06:25:21.502180+00:00",
     "title": "Pairwise Reflection-Symmetric Latin Squares Exist Exactly for Powers of Two"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Zhang2024_2K3",
+      "ZhangLei2024_2K3",
+      "ZhangWang2024_3K3",
+      "NiWangKang2023_tKr"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for $t \\geq 2$ and $n \\geq 28t-17$, the unique $tK_3$-free graph of order $n$ maximizing the signless Laplacian spectral radius is $K_{t-1} \\vee K_{\\lfloor (n-t+1)/2 \\rfloor, \\lceil (n-t+1)/2 \\rceil}$. For $t=2$, this holds for all $n \\geq 6 = 3 \\cdot 2$. We conjecture that the bound $28t-17$ can be universally improved to $3t$ for all $t \\geq 2$.",
+    "domain_bridges": [
+      "spectral_graph_theory",
+      "extremal_graph_theory",
+      "turán_type_problems"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2835",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the stability method used in the paper by analyzing the structure of near-extremal graphs for smaller $n$. Leverage the known exact result for $t=2$ ($n \\geq 6$) as a base case. Use spectral perturbation arguments to show that any deviation from the conjectured extremal graph reduces the spectral radius when $n \\geq 3t$. The key is to tighten the eigenvalue interlacing bounds and degree sequence estimates that currently require $n \\geq 28t-17$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28121v1",
+    "status": "available",
+    "timestamp": "2026-06-29T06:44:32.889471+00:00",
+    "title": "Improved Bound for Signless Laplacian Spectral Radius of $tK_3$-Free Graphs"
   },
   {
     "ambition_level": "extension",

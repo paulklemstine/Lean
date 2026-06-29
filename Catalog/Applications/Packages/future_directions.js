@@ -1589,12 +1589,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: The set of limit points of the largest matching roots of all finite simple graphs is exactly L = { 2 * cos(\u03c0/k) | k \u2208 \u2115, k \u2265 3 } \u222a [ \u221a\u03c4 + \u03c4^{-1/2}, \u221e ), where \u03c4 = (1+\u221a5)/2 is the golden ratio. In particular, for each integer k \u2265 3 there exists a sequence of pairwise distinct graphs (G_n) such that \u03bc(G_n) \u2192 2 * cos(\u03c0/k) as n \u2192 \u221e.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2831",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28162v1",
+    "status": "available",
+    "timestamp": "2026-06-29T06:42:13.213073+00:00",
+    "title": "Limit points of largest matching roots below the golden\u2011ratio threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2831",
+    "id": "fd_2832",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -1609,7 +1623,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2832",
+    "id": "fd_2833",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
@@ -1623,13 +1637,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2833",
+    "id": "fd_2834",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
     "status": "available",
     "timestamp": "2026-06-29T06:25:21.502180+00:00",
     "title": "Pairwise Reflection-Symmetric Latin Squares Exist Exactly for Powers of Two"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for $t \\geq 2$ and $n \\geq 28t-17$, the unique $tK_3$-free graph of order $n$ maximizing the signless Laplacian spectral radius is $K_{t-1} \\vee K_{\\lfloor (n-t+1)/2 \\rfloor, \\lceil (n-t+1)/2 \\rceil}$. For $t=2$, this holds for all $n \\geq 6 = 3 \\cdot 2$. We conjecture that the bound $28t-17$ can be universally improved to $3t$ for all $t \\geq 2$.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2835",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28121v1",
+    "status": "available",
+    "timestamp": "2026-06-29T06:44:32.889471+00:00",
+    "title": "Improved Bound for Signless Laplacian Spectral Radius of $tK_3$-Free Graphs"
   },
   {
     "consumed_by_exp_id": "",
