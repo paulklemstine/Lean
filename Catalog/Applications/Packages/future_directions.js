@@ -1408,17 +1408,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The only non-negative integer solutions (n, t) to the Diophantine equation P_14(n) = t^3 are (0,0), (1,1), and (5,5), where P_s(n) = ((s-2)n^2 - (s-4)n)/2 denotes the n-th s-gonal number. This corresponds to the k=5 case of Theorem 1(ii) in the paper.",
+    "description": "For integers k \u2265 1 and n \u2265 2k+2, any \u03c4_k-maximal graph G of order n has exactly (k+1)(n-1)-1 edges. This resolves the conjecture proposed in the paper by upgrading the established upper bound to an exact equality.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2812",
     "priority_score": 0.8,
     "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "available",
+    "timestamp": "2026-06-29T03:48:47.894402+00:00",
+    "title": "Exact Edge Count of \u03c4_k-maximal Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The only non-negative integer solutions (n, t) to the Diophantine equation P_14(n) = t^3 are (0,0), (1,1), and (5,5), where P_s(n) = ((s-2)n^2 - (s-4)n)/2 denotes the n-th s-gonal number. This corresponds to the k=5 case of Theorem 1(ii) in the paper.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2813",
+    "priority_score": 0.8,
+    "research_mode": "team",
     "source_exp_id": "2606.28227v1",
     "status": "available",
     "timestamp": "2026-06-29T03:32:01.660417+00:00",
     "title": "Classification of Perfect Cubes in 14-gonal Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime p and non-negative integer w, the number of 2-balanced p-regular partitions with p-core \u03ba and p-weight w is independent of \u03ba and equals C(w + (p\u22123)/2, w), where a partition \u03bb is 2-balanced p-regular if it is p-regular and every hook of \u03bb whose length is divisible by p has even arm length. This is the key enumeration result from the paper, connecting the crystal-reflection invariance of d-balanced partitions to an explicit binomial counting formula via RoCK blocks.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2814",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T03:49:32.425118+00:00",
+    "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
   },
   {
     "consumed_by_exp_id": "",

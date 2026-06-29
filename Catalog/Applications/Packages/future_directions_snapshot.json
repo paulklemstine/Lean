@@ -1929,6 +1929,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "Nash-Williams_Tutte_Theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For integers k ≥ 1 and n ≥ 2k+2, any τ_k-maximal graph G of order n has exactly (k+1)(n-1)-1 edges. This resolves the conjecture proposed in the paper by upgrading the established upper bound to an exact equality.",
+    "domain_bridges": [
+      "Graph Connectivity",
+      "Matroid Theory",
+      "Submodular Functions"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2812",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Assume for contradiction that G is a τ_k-maximal graph with fewer than (k+1)(n-1)-1 edges. Using the Nash-Williams/Tutte characterization, analyze the properties of the partitions of V(G) that violate the condition for k+1 edge-disjoint spanning trees, and show that adding any edge in the complement cannot create a subgraph admitting k+1 edge-disjoint spanning trees, contradicting τ_k-maximality.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "available",
+    "timestamp": "2026-06-29T03:48:47.894402+00:00",
+    "title": "Exact Edge Count of τ_k-maximal Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.NT"
     ],
     "consumed_by_exp_id": "",
@@ -1940,7 +1966,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2812",
+    "id": "fd_2813",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Translate the Diophantine equation 6n^2 - 5n = t^3 into an elliptic curve problem, compute the Mordell-Weil group of the corresponding curve, and use linear forms in logarithms along with modular methods to bound and verify the finite set of integer points.",
@@ -1949,6 +1975,35 @@
     "status": "available",
     "timestamp": "2026-06-29T03:32:01.660417+00:00",
     "title": "Classification of Perfect Cubes in 14-gonal Numbers"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "partition_theory",
+      "symmetric_group_representation",
+      "crystal_bases",
+      "block_theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime p and non-negative integer w, the number of 2-balanced p-regular partitions with p-core κ and p-weight w is independent of κ and equals C(w + (p−3)/2, w), where a partition λ is 2-balanced p-regular if it is p-regular and every hook of λ whose length is divisible by p has even arm length. This is the key enumeration result from the paper, connecting the crystal-reflection invariance of d-balanced partitions to an explicit binomial counting formula via RoCK blocks.",
+    "domain_bridges": [
+      "combinatorics_to_representation_theory",
+      "partitions_to_crystal_graphs",
+      "hooks_to_core_weight_decomposition"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2814",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize partitions, Young diagrams, hook lengths, arm/leg lengths, p-regular partitions, p-cores, and p-weights. Then prove that crystal (affine) reflections preserve the 2-balanced property, establishing that the count is independent of the p-core. This reduces the problem to counting 2-balanced p-regular partitions in RoCK blocks, where explicit combinatorial analysis yields the binomial formula C(w + (p−3)/2, w). The core-weight decomposition and RoCK block machinery constitute the major formalization bottleneck.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T03:49:32.425118+00:00",
+    "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
   },
   {
     "ambition_level": "extension",
