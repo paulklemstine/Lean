@@ -518,7 +518,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "87caa6a1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
     "domain_bridges": [],
     "domains": [
@@ -531,7 +531,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.880463+00:00",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
@@ -680,7 +680,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "21b9e424",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -694,7 +694,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -1040,7 +1040,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "032698b5",
+    "consumed_by_exp_id": "",
     "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension ≥ 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
     "domain_bridges": [],
     "domains": [
@@ -1053,7 +1053,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432660+00:00",
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
@@ -2651,38 +2651,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "pairwise_balanced_design",
-      "resolvable_design",
-      "CURD",
-      "block_design",
-      "parallel_class",
-      "affine_plane"
-    ],
-    "consumed_by_exp_id": "1eb7e7f0",
-    "description": "For all integers m ≥ 3 and n ≥ m with n ≡ m (mod 2) and (m² − 2m + n) ∣ n(n−1), there exists a Class-Uniformly Resolvable Design on n varieties with partition m^1 2^{(n−m)/2} and λ = 1. The paper establishes these as necessary conditions and proves existence when m is a power of an odd prime (via affine plane-derived construction) and when m = 2k for certain cyclic designs. The conjecture asserts these divisibility and parity conditions are also sufficient, making the existence problem completely solved.",
-    "domain_bridges": [
-      "finite_field_theory",
-      "cyclic_designs",
-      "number_theory_divisibility",
-      "combinatorial_constructions"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2851",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Follow Wilson's fundamental construction approach for PBDs: (1) formalize the necessary conditions (parity, divisibility), (2) establish a set of 'starter' CURDs via the paper's prime power and cyclic constructions, (3) develop a recursive construction showing that if CURDs exist for parameters (m₁, n₁) and (m₂, n₂), then a CURD exists for suitably combined parameters, (4) prove that the necessary conditions are closed under the recursive operations, (5) show every parameter pair satisfying the necessary conditions decomposes into starter instances.",
-    "research_mode": "team",
-    "source_exp_id": "2606.27519v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T09:08:52.620285+00:00",
-    "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "math.NT",
       "Riemann_zeta_moments",
       "Keating-Snaith_conjecture"
@@ -3504,6 +3472,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Pairings, BLS Signatures, and Aggregation\n\nThis cycle established the algebraic security spine of pairing-based signatures:\nbilinearity and completeness (the BLS verification equation), the alternating /\nantisymmetry property of the Weil pairing, the MOV transport of the elliptic-curve\ndiscrete log into a finite field, a tight reduction showing that forging a BLS\nsignature *is* computing a Diffie–Hellman value, and a proof that naive\nsame-message aggregation is broken by a rogue-key telescoping attack while\ndistinct-message aggregation binds every signer. The following conjectures push\nbeyond what was settled here.\n\n## 1. Tightness is an exact equality, not just a reduction\n\n**Conjecture.** For a nondegenerate bilinear pairing, the set of values that pass\nthe verification equation against a fixed public key and a fixed hash is a\n*singleton*, and that singleton coincides exactly with the Diffie–Hellman value of\nthe key/hash pair. Consequently the forgery advantage and the Diffie–Hellman\nadvantage are equal — not merely related by a loss factor — for every adversary.\n\nThe key insight is that nondegeneracy turns the completeness equation from a\none-way certificate into a two-way characterization: a passing signature is forced\nto equal the unique Diffie–Hellman combination, so there is no slack in the\nreduction to absorb.\n\nWhy now? The community has invested heavily in *tight* security proofs to allow\nsmaller parameters; an equality-level reduction, rather than an inequality, would\nlet implementers calibrate group sizes against the underlying hard problem with no\nsafety margin lost to the proof.\n\n## 2. The aggregation identity is a homomorphism whose kernel is the attack surface\n\n**Conjecture.** The map sending a family of signatures to their aggregate is a\ngroup homomorphism from the product of per-signer signature spaces into the single\nsignature space, and every successful rogue-key forgery corresponds to a nontrivial\nelement of its kernel. Forcing distinct messages collapses that kernel to the\nidentity.\n\nThe key insight is that the same summation law that compresses many signatures\ninto one is linear, so forgeries are exactly the linear relations among public\nkeys that a verifier fails to separate — and \"distinctness of messages\" is the\nprecise condition that removes those relations.\n\nWhy now? Aggregate and threshold signatures are being deployed at scale in\nconsensus protocols, where rogue-key defenses (proof-of-possession, message\nprefixing) are bolted on heuristically; a kernel-level characterization would tell\ndesigners exactly which defenses are necessary and which are redundant.\n\n## 3. Embedding degree controls a sharp security cliff\n\n**Conjecture.** There is a threshold phenomenon governed solely by the order of the\nself-pairing value: when that order is at least the order of the base point, the\ndiscrete log is recovered exactly, and below the threshold the recoverable\ninformation degrades by an explicitly computable congruence modulus. The security\nof a curve is therefore a step function of its embedding degree, not a smooth\ntrade-off.\n\nThe key insight is that the pairing reduces the discrete log to a single\ncongruence modulo the order of the self-pairing value, so all of the curve's\nsecret-hiding capacity is concentrated in that one number.\n\nWhy now? Pairing-friendly curves are deliberately engineered with small embedding\ndegree for efficiency, sitting exactly where this cliff lives; a precise threshold\nstatement would convert a folklore \"small embedding degree is dangerous\" warning\ninto a quantitative design constraint.\n\n## 4. Alternation is the unique obstruction to self-pairing discrete-log attacks\n\n**Conjecture.** Among all bilinear pairings on a fixed group, the alternating ones\nare precisely those for which pairing a point with itself reveals nothing about its\ndiscrete log. Equivalently, any non-alternating bilinear pairing leaks discrete-log\ninformation through self-pairing, and the alternating Weil pairing is the canonical\nleak-free choice.\n\nThe key insight is that the antisymmetry forced by alternation makes the\nself-pairing trivial, so the diagonal of the pairing — the one input an adversary\nalways has access to — carries no exploitable structure.\n\nWhy now? New pairing constructions and \"self-pairings\" are being proposed for\nadvanced protocols; a clean statement of when the diagonal is safe would screen\nthese constructions before they are trusted with secret material.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2876",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e94880cd",
+    "status": "available",
+    "timestamp": "2026-06-29T16:48:55.056581+00:00",
+    "title": "Algebraic security spine of pairing-based signatures:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3602,7 +3590,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3ec587ed",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -3615,7 +3603,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -3779,7 +3767,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d7a2dfdf",
+    "consumed_by_exp_id": "",
     "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
     "domain_bridges": [],
     "domains": [
@@ -3792,14 +3780,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.353451+00:00",
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7f917f25",
+    "consumed_by_exp_id": "",
     "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
     "domain_bridges": [],
     "domains": [
@@ -3812,7 +3800,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.236800+00:00",
     "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
