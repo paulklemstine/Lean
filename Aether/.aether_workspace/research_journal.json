@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "151fa435",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Continued Fractions and Diophantine Approximation\n\nDerived from this cycle's findings (files\n`Catalog/Novelty/GoldenRatioApproximation.lean` and\n`Catalog/Novelty/GoldenRatioHurwi",
-      "quality_score": 0.7885600000000001,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-06-26T07:59:40",
-      "title": "Continued Fractions and Diophantine Approximation"
-    },
-    {
       "cycle_id": "5c41b780",
       "domain": "Bridges",
       "key_insight": "# FUTURE DIRECTIONS — Tightness of the unit-shift bound for Euler's totient\n\nDerived from the v19 scientific-method cycle formalized in\n`Bridges/TotientShiftWitnesses.lean` and `Bridges/TotientUnitShi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-29T05:14:56",
       "title": "Langlands Correspondence: GL(1) Case"
+    },
+    {
+      "cycle_id": "c78b961d",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Extremal Graph Theory (Turán / Kruskal–Katona / Roth)\n\nBold, falsifiable conjectures derived from this cycle's findings\n(`Shared/TuranMantel.lean`, `Shared/RothThreeAP.lean`,\n`Sh",
+      "quality_score": 0.4367097362637363,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-29T08:19:46",
+      "title": "Extremal Graph Theory: Turán and Szemerédi"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79664
     }
   ],
-  "last_updated": "2026-06-29T05:14:56",
+  "last_updated": "2026-06-29T08:19:46",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "c1948da4",
-        "quality": 0.6361600000000001,
-        "theorems": 23,
-        "title": "Cellular Automata at the Ordinals: Transfinite Computation"
-      },
-      {
         "cycle_id": "d6f5cc61",
         "quality": 0.36854137254901964,
         "theorems": 186,
@@ -3947,6 +3941,12 @@
         "quality": 0.6236999999999999,
         "theorems": 15,
         "title": "Interval Property for Connected Slice-Projections of Polymatroids"
+      },
+      {
+        "cycle_id": "c78b961d",
+        "quality": 0.4367097362637363,
+        "theorems": 9,
+        "title": "Extremal Graph Theory: Turán and Szemerédi"
       }
     ],
     "Tropical": [

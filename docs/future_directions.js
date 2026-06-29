@@ -76,7 +76,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "e0366114",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -85,7 +85,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -401,7 +401,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Legendre's Conjecture"
   },
   {
-    "consumed_by_exp_id": "1c33e118",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -410,7 +410,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -537,7 +537,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homological Algebra: Derived Functors"
   },
   {
-    "consumed_by_exp_id": "c78b961d",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -546,7 +546,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -1950,6 +1950,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Extremal Graph Theory (Tur\u00e1n / Kruskal\u2013Katona / Roth)\n\nBold, falsifiable conjectures derived from this cycle's findings\n(`Shared/TuranMantel.lean`, `Shared/RothThreeAP.lean`,\n`Shared/KruskalKatonaShadow.lean`).\n\n## 1. Stability form of Mantel/Tur\u00e1n\n**Conjecture.** If a triangle-free graph on `n` vertices has `4\u00b7e \u2265 n\u00b2 - c\u00b7n`\nedges (within `O(n)` of the Mantel bound), then it is \"close\" to balanced\ncomplete bipartite: it can be made bipartite by deleting at most `O(c)` edges.\n**The key insight is** that the equality case `mantel_sharp` (uniquely\n`K_{k,k}`) should be robust \u2014 near-extremal graphs inherit near-extremal\nstructure.\n**Why now?** We have the clean integer bound `turan_edge_bound` and the exact\nextremal witness `mantel_sharp` in Lean; stability is the natural next layer and\nMathlib already carries the Tur\u00e1n uniqueness theorem to anchor it.\n\n## 2. Quantitative density threshold for 3-APs in `ZMod N`\n**Conjecture.** There is an explicit `f(N) \u2192 0` such that every `A \u2286 ZMod N`\nwith `|A| \u2265 f(N)\u00b7N` contains a non-degenerate 3-AP, and `f` can be taken\nsub-constant (not just a fixed `\u03b5`).\n**The key insight is** that `exists_nontrivial_threeAP_zmod` currently needs a\nfixed density `\u03b5` with `cornersTheoremBound \u03b5 \u2264 N`; pushing `\u03b5 = \u03b5(N) \u2192 0`\nturns Roth from \"positive density\" into the quantitative regime.\n**Why now?** The positive existence wrapper is in place; coupling it with the\nexplicit `cornersTheoremBound` lets us track how small `\u03b5` may shrink with `N`.\n\n## 3. Iterated-shadow growth dichotomy\n**Conjecture.** For an `r`-uniform family with `|\ud835\udc9c| = C(k,r)` exactly, every\nintermediate shadow is forced: `|\u2202^[i] \ud835\udc9c| \u2265 C(k, r-i)` with equality iff `\ud835\udc9c`\nis (colex-)isomorphic to the full `k`-set system.\n**The key insight is** that `shadow_card_ge` (the `i=1` slice) is the first step\nof a rigid staircase; the Lov\u00e1sz form already gives all `i`, so the open part is\nthe *equality characterization*, not the bound.\n**Why now?** Mathlib's `kruskal_katona_lovasz_form` supplies every iterate; the\nrigidity statement is the missing combinatorial refinement.\n\n## 4. Hypergraph removal \u21d2 multidimensional Roth via the catalog bridge\n**Conjecture.** The contrast captured by `mantel_extremal_kills_triangles`\n(extremal graphs realize 0 of the `C(n,3)` first-moment triangles) generalizes:\nthe triangle removal lemma plus the Erd\u0151s\u2013R\u00e9nyi first-moment count yields a\npurely combinatorial proof of corner-free set sparsity matching\n`corners_theorem`.\n**The key insight is** that the deterministic extremal count and the random\nexpected count `expected_cliques` bound the same object from two sides, pinching\nthe corner density.\n**Why now?** Both `SimpleGraph.triangle_removal` and the catalog's\n`ErdosRenyiClique.expected_cliques` are formalized; the bridge file shows they\ncan be linked in one statement.\n\n## 5. Spectral Mantel\n**Conjecture.** A triangle-free graph satisfies `\u03bb\u2081(G) \u2264 \u221a(e)` with the same\nextremal graphs `K_{k,k}` as `mantel`, giving a spectral strengthening of the\nedge bound.\n**The key insight is** that `4 e \u2264 n\u00b2` is the combinatorial shadow of the\nspectral inequality `\u03bb\u2081\u00b2 \u2264 e` for triangle-free graphs (Nosal), and the\nextremal cases coincide.\n**Why now?** With the edge-count Mantel proved and Mathlib's growing spectral\ngraph theory, the eigenvalue version is a concrete, testable next target.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2844",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c78b961d",
+    "status": "available",
+    "timestamp": "2026-06-29T08:19:37.358950+00:00",
+    "title": "Bold, falsifiable conjectures derived from this cycle's findings"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2409,7 +2424,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "p-adic Langlands for GL\u2082(Q_p)"
   },
   {
-    "consumed_by_exp_id": "0cf0e6d6",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
     "domains": [
       "Tropical",
@@ -2419,7 +2434,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.975644+00:00",
     "title": "Tropical Compactification of Moduli Spaces"
   },
@@ -2572,21 +2587,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
-  },
-  {
-    "consumed_by_exp_id": "ed30f379",
-    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0465",
-    "priority_score": 0.24999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:30.568365+00:00",
-    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
   {
     "consumed_by_exp_id": "",
