@@ -1237,27 +1237,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a5d79835",
-    "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical",
-      "Computation",
-      "Geometry"
-    ],
-    "id": "seed_374",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432797+00:00",
-    "title": "Tropical Convexity and Linear Programming"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domain_bridges": [],
@@ -3662,6 +3641,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "math.SP"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every real number greater than or equal to τ^(1/2) + τ^(-1/2), where τ = (√5 + 1) / 2 is the golden ratio, is a limit point of the largest matching roots of finite simple graphs. Specifically, for any such real number γ, there exists a sequence of graphs whose largest matching roots are all distinct and converge to γ. This implies that the set of limit points contains the entire interval [τ^(1/2) + τ^(-1/2), ∞).",
+    "domain_bridges": [
+      "Graph Theory",
+      "Real Analysis",
+      "Algebraic Number Theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2898",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an explicit sequence of finite simple graphs (such as paths with attached star graphs or other specific compositions) whose largest matching roots can be continuously tuned to converge to any given real number γ ≥ τ^(1/2) + τ^(-1/2). The proof involves showing that the set of achievable largest matching roots is dense in this interval or directly forms the continuum, likely utilizing the interplay between the matching polynomial and the characteristic polynomial of paths/trees to produce the desired limits.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28162v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:35:25.493552+00:00",
+    "title": "Limit Point Continuum of Largest Matching Roots"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MRVZ_27_vertex_graph",
       "geometric_fractional_chromatic_number",
       "extremal_coloring_polytope"
@@ -3677,7 +3682,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2898",
+    "id": "fd_2899",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph with its coordinates. Encode the geometric fractional chromatic number as a linear program over measurable functions. Use the finite-dimensional reduction (the LP with 182304 variables capturing the constraints on finite sub-configurations) to extract the extreme points computationally. Verify each of the 23 extremal colorings satisfies all unit-distance constraints and achieves total weight exactly 4, and confirm no other extreme points exist via vertex enumeration on the LP's feasible polytope.",
@@ -3707,7 +3712,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2899",
+    "id": "fd_2900",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the inequality E_PG(q) > E_full(q) by computing or bounding the expected coverage times via inclusion-exclusion. The expected coverage time for a fair mechanism F on [n] with block size ℓ is E[F] = ∫₀^∞ (1 - ∏_{S∈F}(1 - e^{-|S∩T|t}/|F|)) dt for the set T of already-collected coupons, which can be reformulated as E[F] = ∑_{k=1}^{n} (-1)^{k+1} ∑_{A∈([n] choose k)} 1/(1 - P_F(A)) where P_F(A) is the probability a random block from F contains A. The key comparison reduces to showing that the projective plane mechanism has a larger sum over k-subset intersection statistics than the full model. Use the fact that in PG(2,q), every pair of distinct points lies on exactly one line, and every line has exactly q+1 points, to compute the k-wise intersection probabilities exactly and compare term by term with the full model.",
@@ -3726,7 +3731,7 @@
       "crystal_bases",
       "decomposition_matrices"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8ad2491",
     "description": "For integers d, e > 1 with d | (e-1), and for any non-negative integer w and any e-core κ, the number of d-balanced e-regular partitions with e-core κ and e-weight w equals C(w + (e-1)/d - 1, w), independently of κ. Here a partition λ is d-balanced e-regular if it is e-regular (no part repeated e or more times) and every hook of λ whose length is divisible by e has arm length divisible by d. The special case d=2, e=p (odd prime) yields C(w + (p-3)/2, w) partitions per block of p-weight w, which controls complete columns of symmetric-group decomposition matrices.",
     "domain_bridges": [
       "partition_theory",
@@ -3738,13 +3743,13 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2900",
+    "id": "fd_2901",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two stages, both formalizable. First, show that the crystal (affine) reflection operators preserve the d-balanced property, which implies the count is independent of the e-core (since all e-cores in the same weight are connected by crystal reflections). Second, compute the count in a RoCK block—a distinguished e-core where the enumeration reduces to counting d-balanced e-regular e-quotients of weight w, which are in bijection with certain restricted integer compositions counted by the binomial coefficient. Formalizing this requires: (1) defining hook lengths, arm/leg lengths, e-regularity, and d-balanced property for partitions in Mathlib; (2) constructing the e-core and e-quotient bijection; (3) defining the affine crystal reflection operators on e-regular partitions and proving they preserve d-balancedness; (4) the RoCK block reduction and final binomial enumeration.",
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:56:20.535355+00:00",
     "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
   },
@@ -3767,7 +3772,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2901",
+    "id": "fd_2902",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Translate the pairwise reflection symmetry condition into the property that the permutation mapping any column to another in the Latin square is an involution. Use the theory of Latin squares and quasigroups to show that this property forces the corresponding quasigroup to be isotopic to an associative quasigroup of exponent 2, which is necessarily an elementary abelian 2-group.",
@@ -3776,6 +3781,34 @@
     "status": "available",
     "timestamp": "2026-06-29T21:16:44.577326+00:00",
     "title": "Unavoidable Group-Theoretic Structure in Pairwise Reflection-Symmetric Latin Squares"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "extremal_graph_theory",
+      "spectral_graph_theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer $t \\ge 2$ and $n \\ge 28t - 17$, the unique $tK_3$-free graph of order $n$ with maximum signless Laplacian spectral radius is the join graph $K_{t-1} \\vee K_{\\lfloor(n-t+1)/2\\rfloor, \\lceil(n-t+1)/2\\rceil}$.",
+    "domain_bridges": [
+      "Linear Algebra",
+      "Graph Theory",
+      "Combinatorics"
+    ],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2903",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the signless Laplacian matrix as Q(G) = D(G) + A(G) and its spectral radius as its largest eigenvalue. Define the tK3-free property as the absence of t pairwise vertex-disjoint triangles. Define the graph join operation and complete bipartite graphs. Establish the extremality and uniqueness by translating the asymptotic bounds and perturbation arguments from the paper into exact computations, ultimately showing that any deviation from the specified join structure either violates the tK3-free condition or decreases the spectral radius.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28121v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:35:48.483864+00:00",
+    "title": "Extremal Signless Laplacian Spectral Radius of tK3-Free Graphs"
   },
   {
     "ambition_level": "extension",

@@ -38967,6 +38967,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "math.SP"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every real number greater than or equal to τ^(1/2) + τ^(-1/2), where τ = (√5 + 1) / 2 is the golden ratio, is a limit point of the largest matching roots of finite simple graphs. Specifically, for any such real number γ, there exists a sequence of graphs whose largest matching roots are all distinct and converge to γ. This implies that the set of limit points contains the entire interval [τ^(1/2) + τ^(-1/2), ∞).",
+      "domain_bridges": [
+        "Graph Theory",
+        "Real Analysis",
+        "Algebraic Number Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2898",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Real.Basic\nimport Mathlib.Combinatorics.SimpleGraph.Basic\n\nnoncomputable def tau : ℝ := (1 + Real.sqrt 5) / 2\nnoncomputable def threshold : ℝ := Real.sqrt tau + Real.sqrt (tau⁻¹)\n\naxiom largestMatchingRoot {V : Type*} (G : SimpleGraph V) : ℝ\n\ntheorem continuum_of_matching_root_limits :\n    ∀ γ : ℝ, γ ≥ threshold →\n    ∃ seq : ℕ → Σ V, SimpleGraph V,\n      (∀ i j : ℕ, i ≠ j → largestMatchingRoot (seq i).2 ≠ largestMatchingRoot (seq j).2) ∧\n      ∀ ε > 0, ∃ N : ℕ, ∀ n ≥ N,\n        |largestMatchingRoot (seq n).2 - γ| < ε := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct an explicit sequence of finite simple graphs (such as paths with attached star graphs or other specific compositions) whose largest matching roots can be continuously tuned to converge to any given real number γ ≥ τ^(1/2) + τ^(-1/2). The proof involves showing that the set of achievable largest matching roots is dense in this interval or directly forms the continuum, likely utilizing the interplay between the matching polynomial and the characteristic polynomial of paths/trees to produce the desired limits.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28162v1",
+      "source_path": "http://arxiv.org/abs/2606.28162v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T21:35:25.493552+00:00",
+      "title": "Limit Point Continuum of Largest Matching Roots"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "MRVZ_27_vertex_graph",
         "geometric_fractional_chromatic_number",
         "extremal_coloring_polytope"
@@ -38988,7 +39033,7 @@
         "Geometry",
         "Algebra"
       ],
-      "id": "fd_2898",
+      "id": "fd_2899",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_colorings_of_G27 (G : UnitDistanceGraph) (hG : G = G27) : let P := geometricFractionalColoringPolytope G; P.dim = 11 ∧ (P.extremePoints).ncard = 23 ∧ ∀ c ∈ P.extremePoints, c.totalWeight = 4",
@@ -39037,7 +39082,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2899",
+      "id": "fd_2900",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_slower_than_full {q : ℕ} (hq : Fact (Nat.Prime q)) : let n := q^2 + q + 1; let ℓ := q + 1; let E_PG : ℝ := expected_coverage_time (projective_plane_mechanism q); let E_full : ℝ := expected_coverage_time (full_mechanism n ℓ); E_PG > E_full := by sorry",
@@ -39061,7 +39106,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.RT",
@@ -39071,7 +39116,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a8ad2491",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39087,8 +39132,8 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2900",
-      "last_attempt_time": "",
+      "id": "fd_2901",
+      "last_attempt_time": "2026-06-29T21:35:54.073359+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem d_balanced_e_regular_partitions_in_block_count (d e : ℕ) (hd : d > 1) (he : e > 1) (hdiv : (e - 1) % d = 0) (w : ℕ) (κ : Partition) (hκ : IsECore e κ) : Finset.card (Finset.filter (fun λ : Partition => IsDBalanced d e λ ∧ IsERegular e λ ∧ eWeight e λ = w ∧ eCore e λ = κ) (Finset.univ)) = Nat.choose (w + (e - 1) / d - 1) w := by\n  sorry",
       "lineage_refs": [],
@@ -39102,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28305v1",
       "source_path": "http://arxiv.org/abs/2606.28305v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T20:56:20.535355+00:00",
       "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
@@ -39135,7 +39180,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2901",
+      "id": "fd_2902",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Combinatorics.LatinSquares.Basic\n\n-- Conjecture: A pairwise reflection symmetric Latin square of order n = 2^k\n-- is isotopic to the Cayley table of an elementary abelian 2-group.\ntheorem pairwise_reflection_symmetric_isotopic_abelian_2_group\n    {n : ℕ} (hn : ∃ k : ℕ, n = 2^k)\n    (A : Matrix (Fin n) (Fin n) (Fin n))\n    (hLS : LatinSquare A)\n    (hPRS : PairwiseReflectionSymmetric A) :\n    ∃ (G : Type) [Fintype G] [CommGroup G] (_ : ∀ g : G, g * g = 1),\n    IsIsotopic A (CayleyTable G) :=\n  sorry",
@@ -39154,6 +39199,53 @@
       "thread_id": "",
       "timestamp": "2026-06-29T21:16:44.577326+00:00",
       "title": "Unavoidable Group-Theoretic Structure in Pairwise Reflection-Symmetric Latin Squares"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "extremal_graph_theory",
+        "spectral_graph_theory"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any integer $t \\ge 2$ and $n \\ge 28t - 17$, the unique $tK_3$-free graph of order $n$ with maximum signless Laplacian spectral radius is the join graph $K_{t-1} \\vee K_{\\lfloor(n-t+1)/2\\rfloor, \\lceil(n-t+1)/2\\rceil}$.",
+      "domain_bridges": [
+        "Linear Algebra",
+        "Graph Theory",
+        "Combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Physics"
+      ],
+      "id": "fd_2903",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem max_signless_laplacian_spectral_radius_of_tK3_free \n    {t n : ℕ} (ht : 2 ≤ t) (hn : 28 * t - 17 ≤ n)\n    {G : SimpleGraph (Fin n)} \n    (h_tK3_free : ¬HasTDisjointTriangles G t)\n    (h_max : ∀ (H : SimpleGraph (Fin n)), ¬HasTDisjointTriangles H t → \n              signlessLaplacianSpectralRadius H ≤ signlessLaplacianSpectralRadius G) :\n    Nonempty (G ≃ JoinGraph (CompleteGraph (t - 1)) \n                             (CompleteBipartiteGraph (⌊(n - t + 1) / 2⌋) (⌈(n - t + 1) / 2⌉)))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the signless Laplacian matrix as Q(G) = D(G) + A(G) and its spectral radius as its largest eigenvalue. Define the tK3-free property as the absence of t pairwise vertex-disjoint triangles. Define the graph join operation and complete bipartite graphs. Establish the extremality and uniqueness by translating the asymptotic bounds and perturbation arguments from the paper into exact computations, ultimately showing that any deviation from the specified join structure either violates the tK3-free condition or decreases the spectral radius.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28121v1",
+      "source_path": "http://arxiv.org/abs/2606.28121v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T21:35:48.483864+00:00",
+      "title": "Extremal Signless Laplacian Spectral Radius of tK3-Free Graphs"
     },
     {
       "ambition_level": "extension",
@@ -45671,7 +45763,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432797+00:00",
       "title": "Tropical Convexity and Linear Programming"

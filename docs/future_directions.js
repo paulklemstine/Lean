@@ -928,22 +928,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "a5d79835",
-    "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
-    "domains": [
-      "Tropical",
-      "Computation",
-      "Geometry"
-    ],
-    "id": "seed_374",
-    "priority_score": 0.82,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432797+00:00",
-    "title": "Tropical Convexity and Linear Programming"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domains": [
@@ -2242,12 +2226,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every real number greater than or equal to \u03c4^(1/2) + \u03c4^(-1/2), where \u03c4 = (\u221a5 + 1) / 2 is the golden ratio, is a limit point of the largest matching roots of finite simple graphs. Specifically, for any such real number \u03b3, there exists a sequence of graphs whose largest matching roots are all distinct and converge to \u03b3. This implies that the set of limit points contains the entire interval [\u03c4^(1/2) + \u03c4^(-1/2), \u221e).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2898",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28162v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:35:25.493552+00:00",
+    "title": "Limit Point Continuum of Largest Matching Roots"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2898",
+    "id": "fd_2899",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2262,7 +2260,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2899",
+    "id": "fd_2900",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -2271,17 +2269,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Projective Plane Mechanisms Dominate the Full Model in Expected Coverage Time"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8ad2491",
     "description": "For integers d, e > 1 with d | (e-1), and for any non-negative integer w and any e-core \u03ba, the number of d-balanced e-regular partitions with e-core \u03ba and e-weight w equals C(w + (e-1)/d - 1, w), independently of \u03ba. Here a partition \u03bb is d-balanced e-regular if it is e-regular (no part repeated e or more times) and every hook of \u03bb whose length is divisible by e has arm length divisible by d. The special case d=2, e=p (odd prime) yields C(w + (p-3)/2, w) partitions per block of p-weight w, which controls complete columns of symmetric-group decomposition matrices.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2900",
+    "id": "fd_2901",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:56:20.535355+00:00",
     "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
   },
@@ -2292,13 +2290,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2901",
+    "id": "fd_2902",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
     "status": "available",
     "timestamp": "2026-06-29T21:16:44.577326+00:00",
     "title": "Unavoidable Group-Theoretic Structure in Pairwise Reflection-Symmetric Latin Squares"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer $t \\ge 2$ and $n \\ge 28t - 17$, the unique $tK_3$-free graph of order $n$ with maximum signless Laplacian spectral radius is the join graph $K_{t-1} \\vee K_{\\lfloor(n-t+1)/2\\rfloor, \\lceil(n-t+1)/2\\rceil}$.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2903",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28121v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:35:48.483864+00:00",
+    "title": "Extremal Signless Laplacian Spectral Radius of tK3-Free Graphs"
   },
   {
     "consumed_by_exp_id": "",
