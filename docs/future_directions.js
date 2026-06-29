@@ -420,7 +420,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "690c1add",
     "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
     "domains": [
       "Algebra",
@@ -430,7 +430,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432630+00:00",
     "title": "Homological Algebra: Derived Functors"
   },
@@ -967,7 +967,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -1630,7 +1630,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalization of Franke's theorem to higher weight automorphic forms via Green's identity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "47d1dc51",
     "description": "Let K be the function field of a smooth projective geometrically integral curve over a p-adic field. For any smooth, proper, geometrically integral, rationally connected K-variety X, the unramified cohomological obstruction with respect to H^3_nr(X, Q/Z(2)) coincides with the descent obstruction: X(A_K)^{H^3_nr} = X(A_K)^{descent}. This is the analogue over p-adic function fields of Colliot-Th\u00e9l\u00e8ne's conjecture that the Brauer-Manin obstruction is the only obstruction for rationally connected varieties over number fields, replacing the Brauer-Manin obstruction with the unramified obstruction as justified by cohomological dimension constraints.",
     "domains": [
       "Geometry",
@@ -1640,7 +1640,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27699v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T08:26:12.505105+00:00",
     "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
   },
@@ -1910,7 +1910,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete Integer Solutions to P_30(n) = t^3"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04928e2c",
     "description": "In the coupon collector's problem with n=7 coupons and draws of size \u2113=3, the expected time to collect all coupons under the Fano plane mechanism (uniformly sampling from the 7 lines of PG(2,2)) strictly exceeds the expected time under the full model (uniformly sampling from all C(7,3)=35 three-element subsets). Both are fair mechanisms: each coupon appears in exactly 3 of the 7 Fano lines and in exactly 15 of the 35 triples. This disproves the Grunbaum-Yaakobi conjecture that the full model maximizes expected coverage time among fair mechanisms.",
     "domains": [
       "Pythagorean"
@@ -1919,7 +1919,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T15:41:31.789327+00:00",
     "title": "Fano Plane Mechanism Strictly Dominates Full Model in Expected Coverage Time"
   },
@@ -2139,6 +2139,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T18:26:42.958632+00:00",
     "title": "Minimum Independence Ratio Constraint"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Diophantine equation P_{14}(n) = t^4, which simplifies to 6n^2 - 5n = t^4, has exactly five integer solutions: (n,t) \u2208 {(0,0), (1,1), (1,-1), (-2000, 70), (-2000, -70)}. This corresponds to Theorem 1(i) for k=5 in the paper, establishing the full solution set for the 14-gonal numbers that are perfect fourth powers.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2885",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T18:48:46.554593+00:00",
+    "title": "Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2886",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28216v1",
+    "status": "available",
+    "timestamp": "2026-06-29T18:49:21.986832+00:00",
+    "title": "Projective Plane Coupon Collection Slowness"
   },
   {
     "consumed_by_exp_id": "",
