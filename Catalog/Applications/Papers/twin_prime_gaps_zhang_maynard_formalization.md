@@ -1,22 +1,58 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# Computational Evidence — Bounded Prime Gaps
 
-Every theorem/definition below is taken verbatim from the Phase A Lean output.
-No result is stated in ARTICLE.md or RESEARCH_PAPER.md that is not in this table.
+All claims below are also discharged in Lean (no `native_decide`); this file records
+the numerical exploration that motivated the formal statements.
 
-| Lean name | Kind | Mathematical statement | In ARTICLE.md | In RESEARCH_PAPER.md |
-|---|---|---|---|---|
-| `IsAdmissible` | def (Admissible.lean) | A finite `H ⊆ ℤ` is admissible iff for every prime `p` there is a residue `r ∈ ℤ/pℤ` with `h ≢ r (mod p)` for all `h ∈ H`. | "missing residue" idea, §The Local Obstruction | Definition 1 |
-| `exists_missing_residue` | thm (Admissible.lean) | If `p` prime and `H.card < p` then there is a residue `r mod p` missed by `H`. | "big primes are free" pigeonhole | Lemma 2 (Pigeonhole) |
-| `isAdmissible_iff_small_primes` | thm (Admissible.lean) | `IsAdmissible H ↔ ∀ p prime, p ≤ H.card → ∃ r mod p missed by H`. | "infinite check becomes finite" | Theorem 3 (Finiteness/Decidability) |
-| `twinTuple_admissible` | thm (Admissible.lean) | `IsAdmissible {0, 2}`. | twin example | Proposition 4 |
-| `consecutive_not_admissible` | thm (Admissible.lean) | `¬ IsAdmissible {0, 1}`. | "why not n and n+1" | Proposition 5 |
-| `primeGap` | def (BoundedGaps.lean) | `primeGap n = nth Prime (n+1) − nth Prime n`. | "the gap sequence" | Definition 6 |
-| `next_prime_le_of_prime_lt` | thm (BoundedGaps.lean) | If `p`,`q` prime and `p < q` then `nth Prime (count Prime p + 1) ≤ q`. | "next prime can't skip past q" | Lemma 7 |
-| `exists_index_gap_le` | thm (BoundedGaps.lean) | If for all `N` there exist primes `p<q≤p+B` with `N≤p`, then for all `M` there is `n≥M` with `primeGap n ≤ B`. | "bounded pairs force bounded consecutive gaps" | Theorem 8 |
-| `liminf_primeGap_le` | thm (BoundedGaps.lean) | Infinitely many bounded prime pairs (gap `≤ B`) imply `liminf primeGap ≤ B`. | main reduction | Theorem 9 (Main Reduction) |
-| `liminf_primeGap_le_246` | thm/corollary (BoundedGaps.lean docstring) | Maynard–Tao numerical corollary: `liminf primeGap ≤ 246`. | headline 246 | Corollary 10 |
+## 1. First prime gaps `p_{n+1} - p_n`
+Primes: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53 …
 
-Referenced-but-not-restated (mentioned only as framework/future work, matching the Phase A docstrings & future directions, never claimed as proved here beyond their stated role):
-- `InfinitelyOftenTuplePrime` (analytic input predicate)
-- `liminf_le_of_infinitelyOften` (bridge lemma)
-- `selberg_weight_eq_squarefree_indicator` (GPY/Selberg weight bridge)
+| n  | p_n | p_{n+1} | gap |
+|----|-----|---------|-----|
+| 0  | 2   | 3       | 1   |
+| 1  | 3   | 5       | 2   |
+| 2  | 5   | 7       | 2   |
+| 3  | 7   | 11      | 4   |
+| 4  | 11  | 13      | 2   |
+| 5  | 13  | 17      | 4   |
+| 6  | 17  | 19      | 2   |
+| 7  | 19  | 23      | 4   |
+| 8  | 23  | 29      | 6   |
+
+**Observation:** the only odd gap is `gap(0) = 1`; every later gap is even.
+This is exactly `primeGap_even` (gaps of odd primes are differences of odd numbers)
+and forces `not_boundedPrimeGaps_one` (gaps `≤ 1` occur only at `n = 0`).
+The gap sequence is OEIS **A001223** (differences between consecutive primes);
+the record (maximal) gaps are **A005250**.
+
+## 2. Admissible triple `{0, 2, 6}` and prime constellations
+Admissibility check via the finite reduction (`p ≤ |H| = 3`, i.e. `p ∈ {2, 3}`):
+
+- mod 2: residues of `{0,2,6}` are `{0,0,0} = {0}` → class `1` is free. ✓
+- mod 3: residues of `{0,2,6}` are `{0,2,0} = {0,2}` → class `1` is free. ✓
+
+So `{0,2,6}` is admissible (`admissible_zero_two_six`). Realising constellations
+`{n, n+2, n+6}` all prime:
+
+| n  | n, n+2, n+6     | all prime? |
+|----|------------------|------------|
+| 5  | 5, 7, 11         | yes        |
+| 11 | 11, 13, 17       | yes        |
+| 17 | 17, 19, 23       | yes        |
+| 41 | 41, 43, 47       | yes        |
+
+`prime_triple_five` and `prime_triple_eleven` formalize the first two.
+
+## 3. Counterexample hunt — non-admissible tuples are sterile
+The tuple `{0, 1}` is **not** admissible: mod 2 it covers both classes `{0,1}`,
+so for every `n` one of `n, n+1` is even. Indeed `{n, n+1}` both prime only for
+`n = 2` (giving `2,3`). This matches `finite_constellation_of_not_admissible`:
+non-admissibility ⇒ finitely many full prime constellations. No counterexample to
+the formalized statements was found.
+
+## 4. The headline target
+Maynard (2014): there is an admissible 50-tuple of diameter 246, and the sieve
+yields `liminf (p_{n+1} - p_n) ≤ 246`. Our `boundedPrimeGaps_iff_liminf` shows the
+combinatorial `BoundedPrimeGaps 246` is *literally* this `liminf` bound; the
+remaining (open, in this development) content is the sieve producing the infinitude.
+External signal: the polymath8 admissible-tuples tables (diameters 246, 1402, …) are
+all **even**, which motivated Future Direction 5.

@@ -1,110 +1,205 @@
-# The Arithmetic of Closeness: How Mathematicians Tamed the Gaps Between Primes
+# When Loops Can't Cancel: The One Forbidden Pattern Behind Cyclic Gain Graphs
 
-## A pattern that refuses to die
+## A puzzle about roads between two towns
 
-Write out the prime numbers — the whole numbers greater than $1$ divisible only by themselves and $1$ — and a curious habit jumps out almost immediately:
+Imagine two towns connected by several parallel roads. On each road we paint
+a number — but not an ordinary number. We work on a *clock* with $n$ hours, so
+the only available labels are $0, 1, 2, \dots, n-1$, and arithmetic wraps
+around: on a $12$-hour clock, $10 + 5 = 3$. Mathematicians call this clock the
+cyclic group $\mathbb{Z}/n$.
 
-$$3, 5, \quad 5, 7, \quad 11, 13, \quad 17, 19, \quad 29, 31, \quad 41, 43, \dots$$
+Now play a game. Drive out of the first town along one road and back along
+another. As you go, add up the labels — but *subtract* a label whenever you
+travel a road backwards. If a round trip ever sums to exactly $0$ on the clock,
+we say that little loop is **balanced**. Balanced loops are the enemy: they are
+coincidences, hidden symmetries, ambiguities that make the labelling useless
+for telling roads apart.
 
-Again and again, two primes appear separated by just $2$. These are the **twin primes**, and they have haunted mathematics for more than two thousand years. The list seems to go on forever — $10{,}016{,}957$ and $10{,}016{,}959$ are twins, and so are far larger pairs found by computer search — yet nobody has ever proved that the supply never runs out. The **Twin Prime Conjecture** — that there are infinitely many primes $p$ with $p+2$ also prime — remains open to this day.
+So here is the question. With $k$ roads between the towns, can you always paint
+the labels so that *no* round trip cancels — so that every two-road loop is
+**unbalanced**?
 
-But primes thin out as you climb higher. Among the first ten numbers there are four primes; among ten consecutive numbers near a billion you might find none. The "average" gap between consecutive primes near a number $x$ grows like $\ln x$, so by the time you reach hundred-digit numbers the typical gap is hundreds of digits wide. From that vantage point, the persistence of pairs that stay only $2$ apart looks like a small miracle. Do primes really keep huddling together forever, even as the crowd disperses?
+The answer is beautifully crisp. You can do it **exactly when $k \le n$**, and
+not a road more. With $n+1$ roads, failure is guaranteed no matter how cleverly
+you paint. And that one failing configuration — call it $(n+1)K_2$, the
+"$(n+1)$ parallel edges" pattern — turns out to be the *single, unavoidable
+fingerprint* of impossibility across a whole world of more complicated
+networks. This article is the story of that fingerprint.
 
-In 2013 the world got a stunning partial answer. A previously little-known mathematician, **Yitang Zhang**, proved that *some* fixed finite gap is hit infinitely often: there are infinitely many pairs of consecutive primes differing by at most $70{,}000{,}000$. The bound was enormous and nobody cared — what mattered was that it was *finite*. For the first time, humanity knew that primes never stop coming in bounded clusters. Within months, a worldwide collaboration and then a brilliant new method due to **James Maynard** and **Terence Tao** crushed the bound from seventy million down to **$246$**.
+## Gains, balance, and why coincidences matter
 
-This article tells the story of the *logical skeleton* of that achievement — the part you can hold in your hand and reason about completely, without the heavy analytic machinery. It turns out that two ideas carry an astonishing amount of the weight: a combinatorial gatekeeper called **admissibility**, and a simple bookkeeping argument that converts "bounded pairs" into "bounded consecutive gaps." Both can be stated precisely, and both can be proved with nothing more exotic than the pigeonhole principle and careful counting.
+The roads-between-towns picture is a special case of a rich and old idea: the
+**gain graph** (also called a voltage graph or, in its most general form, a
+*biased graph*). The ingredients are simple:
 
-## The shape of the question
+- a graph — vertices and edges;
+- a group of "gains" — here the clock $\mathbb{Z}/n$, where we can add and
+  negate;
+- a label $g(e)$ on each edge, drawn from the group.
 
-To hunt for many primes close together, you don't look for two primes at a time — you look for a whole *pattern*. Fix a finite set of integer offsets, say
+Walk around any closed loop in the graph, adding the label of each edge you
+traverse forwards and subtracting it when you traverse it backwards. The
+running total is the **gain of the loop**. A loop is **balanced** when its gain
+is the identity element $0$.
 
-$$H = \{0, 2\},$$
+This abstract setup quietly models a surprising range of real situations.
+Electrical engineers see *voltages*: a loop is balanced when Kirchhoff's law is
+satisfied and no net potential builds up around it. Crystallographers and
+physicists studying periodic structures see *frustration*: an unbalanced loop
+is one where local rules can't be globally reconciled, the same phenomenon that
+makes certain magnets "frustrated." Scheduling and frequency-assignment
+problems see *conflicts*: a balanced loop is an unwanted collision of
+assignments. In every case, the question "can I label things so the bad loops
+never appear?" is the question of **gainability**.
 
-and ask: are there infinitely many integers $n$ such that *all* of $n+0$ and $n+2$ are prime? That is exactly the twin prime question. Replace $H$ by a larger set like $\{0, 4, 6, 10, 12, 16\}$ and you are asking for clusters of six primes in a short window. The set $H$ is called a **tuple**, and the dream — the prime $k$-tuple conjecture of Hardy and Littlewood — is that as long as no *obvious* obstruction forbids it, every such pattern is realized by infinitely many all-prime translates.
+We say a biased graph is **$\mathbb{Z}/n$-gainable** when there exists a clock
+labelling that *realises its prescribed pattern of balance* — every loop the
+design declares balanced really sums to $0$, and every loop it declares
+unbalanced really does not. Gainability is the precise sense in which a
+combinatorial blueprint can be implemented with honest clock arithmetic.
 
-So the first question is: what is the "obvious obstruction"? When can we tell, just by looking at $H$, that the pattern $\{n + h : h \in H\}$ can almost never be all primes?
+## The simplest obstruction is the deepest
 
-## The local obstruction: admissibility
+Return to the two towns. A parallel class of $k$ roads has exactly one kind of
+loop: a **digon**, the round trip out road $i$ and back road $j$, with gain
+$g(i) - g(j)$. That digon is balanced precisely when $g(i) = g(j)$. To make
+*every* digon unbalanced, the labels $g(1), \dots, g(k)$ must be **pairwise
+distinct** points on the clock.
 
-Here is the killer example. Take $H = \{0, 1\}$. We are asking for infinitely many $n$ where $n$ and $n+1$ are both prime. But of any two consecutive integers, one is always even! So apart from the single fluke $2, 3$, one of $n$, $n+1$ is divisible by $2$ and therefore not prime. The pattern is dead on arrival — and the cause is purely *local*, visible already modulo the prime $2$.
+Now the whole problem collapses to counting. The clock $\mathbb{Z}/n$ has
+exactly $n$ positions. You can place $k$ distinct markers on $n$ positions if
+and only if $k \le n$. This is nothing more than the **pigeonhole principle**:
+with $n+1$ roads and only $n$ clock positions, two roads must share a label,
+and that pair instantly forms a balanced loop.
 
-This is the heart of **admissibility**. Look at $H$ through the lens of a single prime $p$: reduce every offset modulo $p$ and see which residue classes $\{0, 1, \dots, p-1\}$ get hit. If, for some prime $p$, the offsets manage to cover *every* residue class, then no matter which $n$ you pick, one of the numbers $n + h$ will land in the "divisible by $p$" class — and a number divisible by $p$ (and bigger than $p$) is never prime. The pattern is doomed.
+> **Theorem (Parallel-class threshold).** The parallel class of $k$ edges is
+> $\mathbb{Z}/n$-gainable if and only if $k \le n$.
 
-A tuple is called **admissible** precisely when this never happens — when, for every prime $p$, there is at least one residue class modulo $p$ that the offsets *miss*. Formally:
+For $k \le n$ the construction is explicit and effortless: pick any injection
+of the $k$ roads into the $n$ clock positions — say label road $i$ with $i$
+itself — and every digon $i \ne j$ now has gain $i - j \ne 0$. For $k = n+1$
+the pigeonhole forbids it absolutely.
 
-> **Definition (admissibility).** A finite set $H \subseteq \mathbb{Z}$ is *admissible* if for every prime $p$ there exists a residue $r \in \mathbb{Z}/p\mathbb{Z}$ such that no element $h \in H$ satisfies $h \equiv r \pmod{p}$.
+What makes this small fact powerful is not the fact itself but its **stability**.
+The pattern $(n+1)K_2$ doesn't just fail in isolation; it *infects* every
+larger network that contains it.
 
-That missing class is the escape hatch: if class $r$ is empty, you can steer $n$ so that the forbidden "$\equiv 0$" slot is never occupied, leaving every $n + h$ free to be prime.
+## Minors: the right notion of "contains a pattern"
 
-For $H = \{0, 1\}$, modulo $2$ the offsets cover *both* classes $0$ and $1$ — no class is missed — so $\{0,1\}$ is **not** admissible. This is the formal version of "$n$ and $n+1$ can't both be large primes."
+Graph theorists long ago discovered that the natural way to say "structure $B$
+hides inside structure $G$" is the language of **minors**. A minor is obtained
+by deleting edges and vertices and by merging (contracting) connected pieces.
+The crowning achievement of the field — the Graph Minor Theorem of Robertson
+and Seymour — shows that enormous families of graphs are characterised by a
+*finite list of forbidden minors*. Planar graphs, famously, are exactly the
+graphs that avoid two forbidden patterns. The forbidden minors are the
+irreducible "reasons" a graph fails to have a property.
 
-For $H = \{0, 2\}$ — the twin tuple — modulo $2$ both offsets are even, so the class $1$ is missed. Modulo $3$ the offsets are $0$ and $2$, missing class $1$. And for every larger prime there's plenty of room. So $\{0, 2\}$ **is** admissible — consistent with the belief that twin primes never stop.
+For gain graphs the right version is the **labelled minor**, which respects not
+only the shape of the graph but its gains and balances: a labelled-minor
+embedding carries each loop of the smaller pattern to a loop of the larger one,
+matching balanced to balanced. The decisive structural fact is that
+**gainability is preserved when you pass to a minor**.
 
-## An infinite test that's secretly finite
+> **Theorem (Minor-closedness).** If a biased graph is gainable over a group,
+> then so is every one of its labelled minors. A working labelling of the whole
+> can always be *pulled back* to a working labelling of any pattern inside it.
 
-Admissibility as defined asks you to check *every* prime $p$ — and there are infinitely many primes. That sounds like a verification you could never finish. The first genuinely satisfying theorem of this story is that the infinite check collapses to a finite one.
+The proof is a one-line miracle once set up correctly: a minor embedding gives
+a map of edges and a record of which were reversed; pulling the ambient
+labelling back along that map (negating where an edge was flipped) reproduces
+exactly the right gains, because the signed sum around a loop is preserved under
+this pullback. Balance is matched on the nose, so a realisation upstairs becomes
+a realisation downstairs.
 
-The reason is the **pigeonhole principle**. Suppose your tuple $H$ has $k$ elements. Pick any prime $p$ bigger than $k$. When you reduce the $k$ offsets modulo $p$, you produce at most $k$ residues — but there are $p > k$ classes available. You cannot fill $p$ pigeonholes with only $k$ pigeons, so at least one class is automatically empty. In other words:
+Minor-closedness has a contrapositive that does all the work: **if a pattern is
+*not* gainable, then nothing containing it can be gainable either.** Combine
+this with the pigeonhole obstruction and we get a sweeping necessary condition.
 
-> **Pigeonhole lemma.** If $p$ is prime and the number of elements of $H$ is smaller than $p$, then some residue class modulo $p$ is missed by $H$.
+> **Theorem (Universal obstruction).** Any $\mathbb{Z}/n$-gainable biased graph
+> contains no $(n+1)K_2$ minor. The forbidden fingerprint can never appear in a
+> success story.
 
-Every prime larger than the size of $H$ is therefore *free* — admissibility there is guaranteed, no work required. The only primes that could possibly cause trouble are the ones no larger than $k = |H|$. This gives the structural punchline:
+## The clean dividing line
 
-> **Finiteness theorem.** A tuple $H$ is admissible if and only if, for every prime $p$ less than or equal to the number of elements of $H$, some residue class modulo $p$ is missed.
+For the family of *parallel-class* graphs — any number of roads bundled between
+two towns, with an arbitrary declared pattern of which roads are "the same"
+(grouped into **balance classes**) — the obstruction is not merely necessary;
+it is the *whole story*. Counting balance classes, one proves the perfectly
+matched pair of facts:
 
-A condition quantified over all infinitely many primes turns out to be equivalent to a check over a tiny finite list. For a $50$-element tuple you only ever inspect primes up to $50$ — that is, $2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47$. Admissibility becomes something a computer can decide in microseconds, and something a human can verify by hand. This is what makes the whole Maynard–Tao search practical: to find good prime patterns you must sift through enormous numbers of candidate tuples, and you can only do that because each admissibility test is cheap.
+> **Theorem (Excluded-minor characterisation).** A parallel-class biased graph
+> is $\mathbb{Z}/n$-gainable **if and only if** it has no $(n+1)K_2$ minor —
+> equivalently, if and only if its number of balance classes is at most $n$.
 
-## From "bounded pairs" to "bounded gaps"
+In one direction, a clock labelling that separates the classes injects the
+balance classes into the $n$ clock positions, so there can be at most $n$ of
+them, and no $(n+1)K_2$ can hide inside. In the other, whenever there are at
+most $n$ classes we simply drop each class onto its own distinct clock position
+and check that the construction realises every digon's balance correctly. The
+two halves meet exactly at the threshold $n$.
 
-Admissibility is the *input* side of the story — the local green light. The *output* side is the headline everyone quotes: the gap between consecutive primes is at most $246$ infinitely often. But there is a subtle gap (pun intended) between what the deep sieve theorems actually deliver and what the headline says.
+The upshot is a statement of striking economy:
 
-The sieve machinery — the genuinely hard analytic part, building on the distribution of primes in arithmetic progressions — produces pairs of primes that are close. Concretely, it yields, for arbitrarily large starting points $N$, two primes $p < q$ with $q \le p + B$ for a fixed bound $B$. But $p$ and $q$ are merely *some* primes near each other; they need not be *consecutive*. The headline is about $p_{n+1} - p_n$, the difference between a prime and the very next one. How do we get from "a close pair exists" to "two neighbors are close"?
+> **$(n+1)K_2$ is the *unique* excluded minor for $\mathbb{Z}/n$-gainability of
+> parallel classes.** It is forbidden (it is not gainable), and it is *minimal*
+> in being forbidden — delete any single one of its $n+1$ roads and the
+> survivor $nK_2$ becomes gainable.
 
-The bridge is beautifully simple, and it is the second pillar we can prove completely. List the primes in order, $p_0 = 2, p_1 = 3, p_2 = 5, \dots$, and define the **prime gap sequence**
+A single, explicit, human-sized pattern governs an entire infinite family.
 
-$$\text{primeGap}(n) = p_{n+1} - p_n.$$
+## Bigger clocks are more forgiving
 
-Now suppose you are handed a close pair $p < q$ with $q \le p + B$. Let $p$ be the $n$-th prime, $p = p_n$. The very next prime $p_{n+1}$ is, by definition, the smallest prime strictly bigger than $p$. Since $q$ is *a* prime strictly bigger than $p$, the next prime cannot leap past it:
+There is one more twist that turns a clean fact into a structured landscape.
+How does gainability change as we change the clock? Replacing $\mathbb{Z}/m$ by
+a larger clock can only *help* — but only in a precise arithmetic sense.
 
-$$p_{n+1} \le q.$$
+The key is that whenever $m$ divides $n$, the small clock sits faithfully
+inside the big one: there is an injective, addition-preserving map
+$\mathbb{Z}/m \hookrightarrow \mathbb{Z}/n$ sending the generator $1$ to
+$n/m$, which has exact order $m$. Any working labelling on the small clock can
+be transported through this embedding, and because the map is injective it never
+accidentally creates a balanced loop. More generally, *any* injective
+homomorphism between gain groups carries a realisation forward.
 
-This is the crucial counting step — call it "the next prime can't skip past $q$." It follows from nothing more than counting how many primes lie below $q$. And once you have it, the consecutive gap is trapped:
+> **Theorem (Divisibility law).** If $m$ divides $n$, then every
+> $\mathbb{Z}/m$-gainable biased graph is also $\mathbb{Z}/n$-gainable. Larger
+> cyclic clocks gain a *superset* of the patterns the smaller ones can.
 
-$$p_{n+1} - p_n \le q - p \le B.$$
+This factors the entire dependence on the modulus through the elegant lattice
+of cyclic groups ordered by divisibility. The threshold $k \le n$ for parallel
+classes is the visible shadow of this law: doubling the clock from $\mathbb{Z}/n$
+to $\mathbb{Z}/2n$ doubles the number of roads you can keep mutually
+unbalanced.
 
-So *every* close pair conceals a close pair of *neighbors*. If close pairs exist for arbitrarily large starting points, then close consecutive gaps exist arbitrarily far out:
+## Why primality is a red herring
 
-> **Infinitely-often theorem.** If for every $N$ there are primes $p < q \le p + B$ with $N \le p$, then for every $M$ there is an index $n \ge M$ with $\text{primeGap}(n) \le B$.
+A natural guess, when a counting obstruction lives in $\mathbb{Z}/n$, is that
+the *prime* moduli are special — that the arithmetic of $n$ matters. Here it
+emphatically does not. The pigeonhole argument and the digon characterisation
+use only one fact about the clock: that $\mathbb{Z}/n$ has exactly $n$ elements.
+Whether $n$ is prime, a prime power, or a product of many primes is completely
+irrelevant to the parallel-class story. The threshold is always $n$, and the
+excluded minor is always $(n+1)K_2$. What primality *does* affect lives deeper —
+in richer obstructions built from triangles and tetrahedra (the signed-graph
+phenomena $\pm K_3$ and $-K_4$) — but those require finer structure than the
+loop-counting world of parallel classes can see.
 
-Notice what this says: there are infinitely many neighboring prime pairs within $B$ of each other. Translating into the language analysts prefer, the *limit inferior* of the gap sequence is at most $B$:
+## The shape of the result
 
-> **Main reduction.** Infinitely many bounded prime pairs (each within $B$) imply
-> $$\liminf_{n \to \infty} \big(p_{n+1} - p_n\big) \le B.$$
+Step back and the architecture is satisfying. A child's counting argument —
+you can't put $n+1$ pigeons in $n$ holes — is promoted, by the structural
+machinery of minors, into a complete classification. The lone forbidden pattern
+$(n+1)K_2$ is
 
-Plug in the Maynard–Tao value $B = 246$ and you get the famous statement in its cleanest form:
+- **necessary**: it can never appear inside anything gainable;
+- **sufficient**: avoiding it (for parallel classes) guarantees gainability;
+- **minimal**: it is the smallest such forbidden pattern, irreducible;
+- **uniform**: it works for every clock size $n \ge 1$, prime or not;
+- **monotone**: it relaxes predictably as clocks grow along divisibility.
 
-$$\liminf_{n \to \infty} \big(p_{n+1} - p_n\big) \le 246.$$
-
-In words: no matter how far out you go among the primes, you will always eventually find two *consecutive* primes differing by at most $246$. The gaps between primes grow on average — but they keep dipping back down, infinitely often, below a fixed ceiling.
-
-## Why splitting the problem matters
-
-What is elegant about this architecture is its *cleanliness*. The entire difficulty of the theorem — the sieve weights, the equidistribution of primes in arithmetic progressions, the Bombieri–Vinogradov theorem, the variational optimization that Maynard and Tao perfected — is quarantined into a single statement: "bounded prime pairs exist arbitrarily far out." Everything *around* that statement is elementary:
-
-- **Admissibility** tells you which patterns are even allowed to work, and the pigeonhole argument makes that test finite and decidable.
-- **The reduction** takes the hard theorem's output — close pairs — and converts it, by pure counting, into the headline about consecutive gaps.
-
-This separation is not just tidy; it is how modern mathematics manages overwhelming complexity. By isolating the analytic black box behind a precise interface, the surrounding logic can be checked independently and reused. If tomorrow someone proves the close-pair statement with $B = 12$ (the conjectured frontier of current methods) or even $B = 2$ (the full Twin Prime Conjecture), the reduction above instantly upgrades it to a statement about consecutive primes — no extra work required.
-
-## The variational heart, in one sentence
-
-It would be unfair to leave the impression that the hard part is a mere black box with no shape. The engine inside is a **variational problem**, in the lineage of Goldston–Pintz–Yıldırım (GPY) and perfected by Maynard. Roughly: you attach a cleverly chosen weight to each integer $n$ — a weight that is large exactly when the tuple $\{n + h : h \in H\}$ is rich in primes — and you tune the weight to maximize a ratio measuring "expected primes per cluster." The weights live on the *squarefree* divisors of a product (the GPY/Selberg sieve), and the optimization becomes a finite-dimensional eigenvalue problem. Maynard's insight was that with enough tuning parameters, this optimum can be pushed past a critical threshold that guarantees *more than one* prime in the cluster — and once you are guaranteed two primes in a bounded window infinitely often, the reduction above does the rest. The frontier number $246$ is precisely the smallest *diameter* of an admissible $50$-element tuple, chosen to fit just inside what the optimization can deliver.
-
-## The takeaway
-
-The primes are deterministic — fixed forever by the definition of divisibility — yet they behave with a statistical wildness that has resisted understanding for millennia. The bounded-gaps theorem is a rare and hard-won island of certainty in that ocean: a guarantee that closeness never fully dies out. And remarkably, the *logic* of the result splits into two halves a curious reader can fully grasp:
-
-1. **Admissibility** — a local, finitely-checkable pigeonhole condition deciding which patterns of primes are even possible (twins yes, consecutive integers no).
-2. **The reduction** — a counting argument turning "some close pair exists" into "some neighbors are close," and hence into the clean limit statement $\liminf (p_{n+1} - p_n) \le 246$.
-
-The deep analytic engine fills the one remaining slot: *the close pairs really do exist*. Stack the three together and you reach one of the most celebrated results of twenty-first-century mathematics — that among the ever-thinning primes, companionship endures, forever, within a distance of $246$.
+This is the recurring dream of structural mathematics: replace a property that
+seems to require checking infinitely many cases with a finite, explicit list of
+forbidden fingerprints. Here the list has length one. Two towns, $n+1$ roads,
+a clock with $n$ hours — and an impossibility you can see, name, and never
+escape.
