@@ -342,7 +342,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Groups of Spheres: Low-Dimensional"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fbe92f0e",
     "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
     "domains": [
       "Physics",
@@ -352,7 +352,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432770+00:00",
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
@@ -1546,7 +1546,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
   {
-    "consumed_by_exp_id": "03cc3887",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves\u2011Jing\u2011Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q\u2011Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (\u2011u;s)_\\u221e / ((\u2011u;t)_\\u221e (u;s)_\\u221e). Moreover, the q\u2011expansion of F(t,s;u) has palindromic coefficients and satisfies a finite\u2011order linear recurrence; after removing the alternating signs the coefficients are non\u2011negative integers.",
     "domains": [
       "Pythagorean"
@@ -1555,7 +1555,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T06:24:54.047368+00:00",
     "title": "Generalized scalar factor for mixed modified Greaves\u2011Jing\u2011Zhu operators"
   },
@@ -1675,12 +1675,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
+    "description": "The conjecture posits that non-trivial first homology groups arise only in specific exceptional cases like the Petersen graph or similar structures under Neumaier's classification, ruling out triviality in other contexts.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_2839",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27328v1",
+    "status": "available",
+    "timestamp": "2026-06-29T09:33:10.755240+00:00",
+    "title": "Trivial Homology Exceptions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2840",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -1695,7 +1710,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2840",
+    "id": "fd_2841",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
@@ -1709,7 +1724,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2841",
+    "id": "fd_2842",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
@@ -1724,7 +1739,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2842",
+    "id": "fd_2843",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
@@ -1739,7 +1754,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2843",
+    "id": "fd_2844",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
@@ -1754,7 +1769,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2844",
+    "id": "fd_2845",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
@@ -1768,7 +1783,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2845",
+    "id": "fd_2846",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
@@ -1783,7 +1798,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2846",
+    "id": "fd_2847",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -1798,7 +1813,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2847",
+    "id": "fd_2848",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27699v1",
@@ -1813,7 +1828,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2848",
+    "id": "fd_2849",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27758v1",
@@ -1828,13 +1843,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2849",
+    "id": "fd_2850",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27519v1",
     "status": "available",
     "timestamp": "2026-06-29T09:08:52.620285+00:00",
     "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every \u03b5 > 0, there exists T\u2080(\u03b5) > 0 such that for all T \u2265 T\u2080(\u03b5), \u222b\u2080\u1d40 |\u03b6(1/2 + it)|\u2076 dt \u2265 (42 - \u03b5) \u00b7 c\u2083 \u00b7 T \u00b7 (log T)\u2079, where c\u2083 = a\u2083/9! and a\u2083 is the Keating\u2013Snaith arithmetic factor defined by the Euler product \u220f_p (1 - 1/p)\u2079 \u03a3_{m\u22650} (\u0393(m+3)/(\u0393(m+1)\u00b7\u0393(3)))\u00b2 \u00b7 p\u207b\u1d50. This asserts that the lim inf of M\u2083(T)/(c\u2083\u00b7T\u00b7(log T)\u2079) equals 42, matching the Keating\u2013Snaith conjecture from the lower bound side, and would improve the current unconditional constant of 34.1 established in the paper.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2851",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27323v1",
+    "status": "available",
+    "timestamp": "2026-06-29T09:33:31.386723+00:00",
+    "title": "Sharp lower bound for the sixth moment of the Riemann zeta function"
   },
   {
     "consumed_by_exp_id": "",
@@ -2633,7 +2662,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "ed30f379",
+    "consumed_by_exp_id": "",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -2643,7 +2672,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },

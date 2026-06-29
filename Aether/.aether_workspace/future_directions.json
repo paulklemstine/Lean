@@ -13735,7 +13735,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "ed30f379",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13761,7 +13761,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:30.568365+00:00",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
@@ -35836,7 +35836,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "03cc3887",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35866,7 +35866,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28108v1",
       "source_path": "http://arxiv.org/abs/2606.28108v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T06:24:54.047368+00:00",
       "title": "Generalized scalar factor for mixed modified Greaves‑Jing‑Zhu operators"
@@ -35921,7 +35921,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Peluse and Soundararajan's work on Miller's conjecture",
         "Miller's original conjecture for symmetric groups",
@@ -35943,7 +35943,7 @@
         "Pythagorean"
       ],
       "id": "fd_2832",
-      "last_attempt_time": "2026-06-29T09:08:57.661011+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (q : ℕ) (ℓ : prime) (q odd prime power) → N_ℓ(q) = q⁴/2 + O(q³)",
       "lineage_refs": [],
@@ -36244,6 +36244,49 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Neumaier's classification of strongly regular graphs",
+        "The Petersen graph",
+        "Clement's algebraic topology textbook"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The conjecture posits that non-trivial first homology groups arise only in specific exceptional cases like the Petersen graph or similar structures under Neumaier's classification, ruling out triviality in other contexts.",
+      "domain_bridges": "Linking to finite field properties and graph theory over specified families",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2839",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Formalizing the exception's mathematical underpinnings within hypothetical theorem frameworks",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalizing consequences of Neumaier's conditions using algebraic constructs in Lean",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27328v1",
+      "source_path": "http://arxiv.org/abs/2606.27328v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T09:33:10.755240+00:00",
+      "title": "Trivial Homology Exceptions"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "grunbaum_yaakobi_conjecture",
         "schilling2021coupon",
         "burchard_finite_geometry",
@@ -36267,7 +36310,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2839",
+      "id": "fd_2840",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_coverage_time_gt_random (q : ℕ) (hq : 2 ≤ q) : \n  expected_coverage_time (line_family (PG(2, q))) > expected_coverage_time (uniform_family (q^2 + q + 1) (q + 1))",
@@ -36313,7 +36356,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2840",
+      "id": "fd_2841",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem count_d_balanced_e_regular_partitions {d e w : ℕ} (hd : d > 1) (he : e > 1) (hdiv : (e - 3) % d = 0) : (Finset.card (setOf (d-balanced e-regular partitions in block of e-weight w))) = Nat.choose (w + (e - 3) / d) w := by sorry",
@@ -36355,7 +36398,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2841",
+      "id": "fd_2842",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃ (L : Fin n → Fin n → Fin n),\n  (∀ r : Fin n, Function.Bijective (fun x => L r x)) ∧\n  (∀ c1 c2 : Fin n, c1 ≠ c2 → (∀ p q : Fin n,\n    (∑ r : Fin n, if L r c1 = p ∧ L r c2 = q then 1 else 0) = (∑ r : Fin n, if L r c1 = q ∧ L r c2 = p then 1 else 0)))",
@@ -36403,7 +36446,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2842",
+      "id": "fd_2843",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem signless_laplacian_tK3_free_extremal_improved_bound {t n : ℕ} (ht : t ≥ 2) (hn : n ≥ 3 * t) :\n  UniqueExtremalGraph (tK3Free t) (signlessLaplacianSpectralRadius) n =\n    KJoin (CompleteGraph (t-1)) (CompleteBipartiteGraph ⌊(n-t+1)/2⌋ ⌈(n-t+1)/2⌉) := by sorry",
@@ -36447,7 +36490,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2843",
+      "id": "fd_2844",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The nerve theorem applies to finite simplicial complexes and preserves finiteness properties",
@@ -36497,7 +36540,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2844",
+      "id": "fd_2845",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regular_maniplex_automorphism_equivalence (n : ℕ) (M : Maniplex n) (h : Regular M) : Isomorphism (AutomorphismGroup M) (AutomorphismGroup (FlagGraph M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneSkeleton M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneCoskeleton M))",
@@ -36543,7 +36586,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2845",
+      "id": "fd_2846",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def r (n : ℕ) : ℤ := -- coefficient of q^n in ρ(q) as defined in the paper\n  sorry\n\ntheorem sign_law_rho : ∀ n : ℕ, r (3 * n) > 0 ∧ r (3 * n + 1) ≤ 0 ∧ r (3 * n + 2) ≤ 0 ∧ (r (3 * n + 1) = 0 → n = 1) ∧ (r (3 * n + 2) = 0 → n = 0 ∨ n = 2 ∨ n = 3 ∨ n = 6) := by sorry",
@@ -36589,7 +36632,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2846",
+      "id": "fd_2847",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem franke_weight_k (k : ℤ) : ∀ (F : AutomorphicForm k), ∃ (F_cusp : CuspForm k) (c : Finsupp ℕ (LaurentCoeff (EisensteinSeries k))), F = F_cusp + ∑ i, c i • i := by sorry",
@@ -36640,7 +36683,7 @@
         "Geometry",
         "Algebra"
       ],
-      "id": "fd_2847",
+      "id": "fd_2848",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem unramified_equals_descent_rc {K : Type*} [Field K] [IsPAdicFunctionField K] {X : Scheme K} [IsSmooth X] [IsProper X] [IsGeometricallyIntegral X] [IsRationallyConnected X] : adelicPointsUnramifiedObstruction X = adelicPointsDescentObstruction X := by sorry",
@@ -36686,7 +36729,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2848",
+      "id": "fd_2849",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mcdqls_exists (n : ℕ) (h : n ≥ 4) : ∃ (L : Fin n → Fin n → Vector ℂ n), IsMaxCardDiagQuantumLatinSquare L ∧ ∀ i j k l, (i ≠ k ∨ j ≠ l) → ¬IsGlobalPhaseEquiv (L i j) (L k l) := by\n  sorry",
@@ -36737,7 +36780,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2849",
+      "id": "fd_2850",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem curd_partition_m1_2k_exists_iff {m n : ℕ} (hm : m ≥ 3) (hn : n ≥ m) :\n    (∃ (X : Type) (F : Finset X) (_ : F.card = n)\n       (blocks : Finset (Finset X))\n       (classes : Finset (Finset (Finset X))),\n     -- each class partitions F\n     (∀ c ∈ classes, ∀ x ∈ F, ∃! b ∈ c, x ∈ b) ∧\n     -- each class has block structure m^1 2^{(n-m)/2}\n     (∀ c ∈ classes, ∃! b ∈ c, b.card = m) ∧\n     (∀ c ∈ classes, ∀ b ∈ c, b ≠ (⟨_, by aesop⟩ : Finset X) → b.card = 2) ∧\n     -- each pair in exactly one block\n     (∀ x ∈ F, ∀ y ∈ F, x ≠ y →\n       (∃! b ∈ blocks, x ∈ b ∧ y ∈ b)) ∧\n     -- blocks = union of classes\n     blocks = classes.biUnion id)\n    ↔ (n % 2 = m % 2 ∧ (m * m - 2 * m + n) ∣ n * (n - 1)) :=\n  sorry",
@@ -36756,6 +36799,51 @@
       "thread_id": "",
       "timestamp": "2026-06-29T09:08:52.620285+00:00",
       "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
+        "Riemann_zeta_moments",
+        "Keating-Snaith_conjecture"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every ε > 0, there exists T₀(ε) > 0 such that for all T ≥ T₀(ε), ∫₀ᵀ |ζ(1/2 + it)|⁶ dt ≥ (42 - ε) · c₃ · T · (log T)⁹, where c₃ = a₃/9! and a₃ is the Keating–Snaith arithmetic factor defined by the Euler product ∏_p (1 - 1/p)⁹ Σ_{m≥0} (Γ(m+3)/(Γ(m+1)·Γ(3)))² · p⁻ᵐ. This asserts that the lim inf of M₃(T)/(c₃·T·(log T)⁹) equals 42, matching the Keating–Snaith conjecture from the lower bound side, and would improve the current unconditional constant of 34.1 established in the paper.",
+      "domain_bridges": [
+        "probability_theory_random_matrices",
+        "multiplicative_number_theory_Euler_products"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2851",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sixth_moment_sharp_lower_bound (ε : ℝ) (hε : ε > 0) :\n    ∃ T₀ : ℝ, ∀ T : ℝ, T ≥ T₀ →\n      (∫ t in (0)..T, ‖riemannZeta (1/2 + Complex.I * t)‖₊ ^ 6) ≥\n        (42 - ε) * c₃ * T * (Real.log T) ^ 9 :=\n  by\n    sorry\n-- where c₃ : ℝ is defined via the Euler product for a₃\n-- a₃ = ∏_p (1 - 1/p)^9 * ∑_m (Γ(m+3)/(Γ(m+1)*Γ(3)))^2 * p^(-m)\n-- and c₃ = a₃ / 9!",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the two-piece amplification method of the paper by optimizing the amplifier weights over a wider class of Dirichlet polynomials, potentially incorporating shifted-convolution estimates and spectral theory of automorphic forms. The current method achieves 34.1 out of the conjectured 42; closing the gap requires either stronger amplification or a hybrid approach combining amplification with the resonator method of Radziwiłł–Soundararajan, plus refined estimates for the off-diagonal main terms that currently are only captured partially.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27323v1",
+      "source_path": "http://arxiv.org/abs/2606.27323v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T09:33:31.386723+00:00",
+      "title": "Sharp lower bound for the sixth moment of the Riemann zeta function"
     },
     {
       "ambition_level": "extension",
@@ -42764,11 +42852,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "fbe92f0e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42780,7 +42868,7 @@
         "Analysis"
       ],
       "id": "seed_362",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T09:33:36.753335+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42794,7 +42882,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432770+00:00",
       "title": "Quantum Mechanics: Spectral Theory of Hydrogen"

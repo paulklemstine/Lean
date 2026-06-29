@@ -456,7 +456,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fbe92f0e",
     "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n² : n ∈ ℕ+} ∪ [0,∞). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
     "domain_bridges": [],
     "domains": [
@@ -469,7 +469,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432770+00:00",
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
@@ -2251,7 +2251,7 @@
       "Jing, N., Zhu, J., \"A new approach to the spin character theory\", J. Algebra 2000",
       "Stembridge, J. R., \"Skew Schur functions and the chromatic polynomial\", 1996"
     ],
-    "consumed_by_exp_id": "03cc3887",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves‑Jing‑Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q‑Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (‑u;s)_\\u221e / ((‑u;t)_\\u221e (u;s)_\\u221e). Moreover, the q‑expansion of F(t,s;u) has palindromic coefficients and satisfies a finite‑order linear recurrence; after removing the alternating signs the coefficients are non‑negative integers.",
     "domain_bridges": [
       "q-series",
@@ -2268,7 +2268,7 @@
     "proof_strategy": "The conjecture can be approached by first expressing the mixed product via the diagonal conjugation that relates the modified operator to the classical neutral operator. Using known product formulas for neutral operators and Bailey‑pair theory, one can reduce the mixed product to a ratio of infinite q‑Pochhammer symbols as stated. The resulting rational function is then analyzed via standard q‑series techniques (e.g., the pentagonal number theorem) to extract its q‑expansion, prove palindromicity and derive a finite‑order recurrence. The non‑negativity of the sign‑adjusted coefficients follows from known positivity results for principal specializations of one‑row Schur Q‑functions and can be formalized using Lean’s algebraic number theory libraries.",
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T06:24:54.047368+00:00",
     "title": "Generalized scalar factor for mixed modified Greaves‑Jing‑Zhu operators"
   },
@@ -2490,6 +2490,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Neumaier's classification of strongly regular graphs",
+      "The Petersen graph",
+      "Clement's algebraic topology textbook"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The conjecture posits that non-trivial first homology groups arise only in specific exceptional cases like the Petersen graph or similar structures under Neumaier's classification, ruling out triviality in other contexts.",
+    "domain_bridges": "Linking to finite field properties and graph theory over specified families",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2839",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalizing consequences of Neumaier's conditions using algebraic constructs in Lean",
+    "research_mode": "team",
+    "source_exp_id": "2606.27328v1",
+    "status": "available",
+    "timestamp": "2026-06-29T09:33:10.755240+00:00",
+    "title": "Trivial Homology Exceptions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "grunbaum_yaakobi_conjecture",
       "schilling2021coupon",
       "burchard_finite_geometry",
@@ -2507,7 +2531,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2839",
+    "id": "fd_2840",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2534,7 +2558,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2840",
+    "id": "fd_2841",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
@@ -2557,7 +2581,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2841",
+    "id": "fd_2842",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit pairwise reflection‑symmetric Latin squares for n = 2^k using affine permutations of the vector space (GF(2))^k, and prove non‑existence for other n by parity or orbit‑counting arguments.",
@@ -2586,7 +2610,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2842",
+    "id": "fd_2843",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the stability method used in the paper by analyzing the structure of near-extremal graphs for smaller $n$. Leverage the known exact result for $t=2$ ($n \\geq 6$) as a base case. Use spectral perturbation arguments to show that any deviation from the conjectured extremal graph reduces the spectral radius when $n \\geq 3t$. The key is to tighten the eigenvalue interlacing bounds and degree sequence estimates that currently require $n \\geq 28t-17$.",
@@ -2611,7 +2635,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2843",
+    "id": "fd_2844",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence argument via combinatorial dimension tracking",
@@ -2642,7 +2666,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2844",
+    "id": "fd_2845",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that the natural projection maps from the flag graph to both the 1-skeleton and 1-coskeleton graphs are covering maps that induce isomorphisms on automorphism groups for regular maniplexes, leveraging the fixed-point-free involution structure and vertex-transitivity properties established in the paper.",
@@ -2669,7 +2693,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2845",
+    "id": "fd_2846",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Watson's identity 2ρ(q) + ω(q) = T(q) to relate ρ(q) to the mock theta function ω(q) and a theta-eta product T(q). Obtain explicit Rademacher-type expansions with rigorous error bounds for the coefficients of ω(q) and T(q). Combine these to derive explicit inequalities for r(n) for all sufficiently large n, and verify the remaining small n by direct computation.",
@@ -2696,7 +2720,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2846",
+    "id": "fd_2847",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the automorphic Green's identity to weight k Eisenstein series and automorphic forms. Use the meromorphic continuation and functional equation of the weight k Eisenstein series. Show that the boundary terms in the Green's identity for the truncated weight k Eisenstein series yield the projection onto the cuspidal subspace and the Laurent coefficients at the poles.",
@@ -2728,7 +2752,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2847",
+    "id": "fd_2848",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow the strategy of the number field case: (1) establish that the unramified obstruction is contained in the descent obstruction (already shown in the paper for general smooth integral varieties), (2) prove the reverse inclusion by showing that any descent obstruction arising from a torsor under a commutative linear algebraic group can be detected by H^3_nr(X, Q/Z(2)), using the arithmetic dualities and Poitou-Tate-style exact sequences developed for p-adic function fields, (3) for rationally connected varieties, leverage the vanishing of higher unramified cohomology beyond degree 3 to show the descent obstruction cannot be strictly finer.",
@@ -2755,7 +2779,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2848",
+    "id": "fd_2849",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish base cases n = 4, 5, 6, 7, 8 via direct constructions using row-quantum Latin rectangles and special complete mappings of finite groups, then apply the singular direct product construction recursively to extend existence to all n ≥ 4, leveraging the algebraic properties of complete mappings in groups of odd order and direct products for even orders.",
@@ -2787,7 +2811,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2849",
+    "id": "fd_2850",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow Wilson's fundamental construction approach for PBDs: (1) formalize the necessary conditions (parity, divisibility), (2) establish a set of 'starter' CURDs via the paper's prime power and cyclic constructions, (3) develop a recursive construction showing that if CURDs exist for parameters (m₁, n₁) and (m₂, n₂), then a CURD exists for suitably combined parameters, (4) prove that the necessary conditions are closed under the recursive operations, (5) show every parameter pair satisfying the necessary conditions decomposes into starter instances.",
@@ -2796,6 +2820,32 @@
     "status": "available",
     "timestamp": "2026-06-29T09:08:52.620285+00:00",
     "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "Riemann_zeta_moments",
+      "Keating-Snaith_conjecture"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every ε > 0, there exists T₀(ε) > 0 such that for all T ≥ T₀(ε), ∫₀ᵀ |ζ(1/2 + it)|⁶ dt ≥ (42 - ε) · c₃ · T · (log T)⁹, where c₃ = a₃/9! and a₃ is the Keating–Snaith arithmetic factor defined by the Euler product ∏_p (1 - 1/p)⁹ Σ_{m≥0} (Γ(m+3)/(Γ(m+1)·Γ(3)))² · p⁻ᵐ. This asserts that the lim inf of M₃(T)/(c₃·T·(log T)⁹) equals 42, matching the Keating–Snaith conjecture from the lower bound side, and would improve the current unconditional constant of 34.1 established in the paper.",
+    "domain_bridges": [
+      "probability_theory_random_matrices",
+      "multiplicative_number_theory_Euler_products"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2851",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the two-piece amplification method of the paper by optimizing the amplifier weights over a wider class of Dirichlet polynomials, potentially incorporating shifted-convolution estimates and spectral theory of automorphic forms. The current method achieves 34.1 out of the conjectured 42; closing the gap requires either stronger amplification or a hybrid approach combining amplification with the resonator method of Radziwiłł–Soundararajan, plus refined estimates for the off-diagonal main terms that currently are only captured partially.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27323v1",
+    "status": "available",
+    "timestamp": "2026-06-29T09:33:31.386723+00:00",
+    "title": "Sharp lower bound for the sixth moment of the Riemann zeta function"
   },
   {
     "ambition_level": "extension",
@@ -3866,7 +3916,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ed30f379",
+    "consumed_by_exp_id": "",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domain_bridges": [],
     "domains": [
@@ -3879,7 +3929,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
