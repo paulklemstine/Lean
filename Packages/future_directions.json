@@ -38779,8 +38779,12 @@
       "attempt_count": 0,
       "catalog_references": [
         "math.CO",
+<<<<<<< Updated upstream
         "poset_automorphism_groups",
         "minimum_realization_number"
+=======
+        "math.GR"
+>>>>>>> Stashed changes
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
@@ -38788,6 +38792,7 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+<<<<<<< Updated upstream
       "description": "For every positive integer n ≥ 1, the minimum number of elements in a poset whose automorphism group is isomorphic to Z₂ × Z_{2^n} equals 2^{n+1} + 2. This extends the paper's main theorem from n ≥ 3 to all n ≥ 1, covering the previously unresolved cases n = 1 (Klein four-group) and n = 2.",
       "domain_bridges": [
         "finite_group_theory",
@@ -38795,17 +38800,35 @@
       ],
       "domain_quality_penalty": 0.0,
       "domains": [
+=======
+      "description": "Conjecture that for any integers $1 \\le k \\le n$, the minimal number of elements in a poset realizing $\\mathbb{Z}_{2^k} \\times \\mathbb{Z}_{2^n}$ as its automorphism group is exactly $2^{k+1} + 2^{n+1}$. This generalizes the paper's main theorem (which corresponds to $k=1$) and reflects the hypothesis that the general upper bound $\\beta(G \\times H) \\le \\beta(G) + \\beta(H)$, obtained by placing a minimal $H$-poset strictly below a minimal $G$-poset, is always tight for finite abelian 2-groups.",
+      "domain_bridges": [
+        "Finite Group Theory",
+        "Order Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+>>>>>>> Stashed changes
         "Algebra"
       ],
       "id": "fd_2894",
       "last_attempt_time": "",
       "last_reviewed_at": "",
+<<<<<<< Updated upstream
       "lean_theorem_stub": "theorem beta_Z2_cross_Z2pow_n (n : ℕ) (hn : 1 ≤ n) : beta (Z₂ × Z_(2^n)) = 2^(n+1) + 2 := by\n  sorry",
+=======
+      "lean_theorem_stub": "theorem beta_additivity_cyclic_two_groups (k n : ℕ) (hk : 0 < k) (hn : k ≤ n) :\n    beta (ZMod (2^k) × ZMod (2^n)) = 2^(k+1) + 2^(n+1) := by\n  sorry",
+>>>>>>> Stashed changes
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
+<<<<<<< Updated upstream
       "proof_strategy": "The upper bound β(Z₂ × Z_{2^n}) ≤ 2^{n+1} + 2 follows from Proposition 1 of the paper combined with the known result β(Z_{2^n}) = 2^{n+1}. The lower bound for n = 1 and n = 2 can be established by exhaustive computational verification: check that no poset on 2^{n+1} + 1 elements (5 elements for n=1, 9 elements for n=2) has automorphism group isomorphic to Z₂ × Z_{2^n}. The n=1 case (β(V₄) = 6) is particularly tractable via brute-force enumeration of all posets on 5 elements.",
+=======
+      "proof_strategy": "Establish the lower bound by analyzing the structure of minimal posets realizing $\\mathbb{Z}_{2^k} \\times \\mathbb{Z}_{2^n}$, showing that any such poset must decompose into a disjoint sum of layers that respectively realize $\\mathbb{Z}_{2^k}$ and $\\mathbb{Z}_{2^n}$, thereby generalizing the lower-bound arguments for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ from the paper.",
+>>>>>>> Stashed changes
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
@@ -38814,8 +38837,13 @@
       "source_path": "http://arxiv.org/abs/2606.28231v1",
       "status": "available",
       "thread_id": "",
+<<<<<<< Updated upstream
       "timestamp": "2026-06-29T20:19:27.243667+00:00",
       "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
+=======
+      "timestamp": "2026-06-29T20:25:49.328300+00:00",
+      "title": "Additivity of β for Cyclic 2-Primary Abelian Groups"
+>>>>>>> Stashed changes
     },
     {
       "ambition_level": "extension",
@@ -38823,9 +38851,15 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+<<<<<<< Updated upstream
         "MRVZ_27_vertex_graph",
         "geometric_fractional_chromatic_number",
         "extremal_coloring_polytope"
+=======
+        "math.CO",
+        "Erdos_unit_distance",
+        "fractional_chromatic_number_plane"
+>>>>>>> Stashed changes
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
@@ -38833,6 +38867,7 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+<<<<<<< Updated upstream
       "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G₂₇ constructed by Matolcsi, Ruzsa, Varga, and Zsámboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes χ_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
       "domain_bridges": [
         "linear_programming",
@@ -38842,17 +38877,36 @@
       "domain_quality_penalty": 0.0,
       "domains": [
         "Geometry",
+=======
+      "description": "The paper proves that the fractional chromatic number of the plane χ_f(ℝ²) is strictly greater than 4, but does not establish a specific quantitative gap. This conjecture asserts an explicit lower bound: χ_f(ℝ²) ≥ 4 + 1/1024. Equivalently, there exists a rational ε > 0 (specifically ε = 1/1024) such that every fractional coloring of the plane requires at least 4 + ε colors. Such a bound should be extractable from the two-vertex augmentation of G₂₇ that pushes its geometric fractional chromatic number above 4, combined with the blow-up analysis.",
+      "domain_bridges": [
+        "measure_theory",
+        "linear_programming",
+        "euclidean_geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+>>>>>>> Stashed changes
         "Algebra"
       ],
       "id": "fd_2895",
       "last_attempt_time": "",
       "last_reviewed_at": "",
+<<<<<<< Updated upstream
       "lean_theorem_stub": "theorem extremal_colorings_of_G27 (G : UnitDistanceGraph) (hG : G = G27) : let P := geometricFractionalColoringPolytope G; P.dim = 11 ∧ (P.extremePoints).ncard = 23 ∧ ∀ c ∈ P.extremePoints, c.totalWeight = 4",
+=======
+      "lean_theorem_stub": "theorem fractional_chromatic_number_plane_lower_bound : χ_f_plane ≥ 4 + (1 : ℝ) / 1024 := by\n  sorry\n\n-- where χ_f_plane : ℝ denotes the fractional chromatic number of the Euclidean plane,\n-- defined as the infimum of r : ℝ such that there exists a measurable\n-- r-coloring of ℝ² with no monochromatic unit-distance pair.\n-- Equivalently, χ_f_plane = ⨆ (infi fun r => ...)",
+>>>>>>> Stashed changes
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
+<<<<<<< Updated upstream
       "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph with its coordinates. Encode the geometric fractional chromatic number as a linear program over measurable functions. Use the finite-dimensional reduction (the LP with 182304 variables capturing the constraints on finite sub-configurations) to extract the extreme points computationally. Verify each of the 23 extremal colorings satisfies all unit-distance constraints and achieves total weight exactly 4, and confirm no other extreme points exist via vertex enumeration on the LP's feasible polytope.",
+=======
+      "proof_strategy": "The paper constructs a 29-vertex augmented graph G₂₉ from G₂₇ by adding two vertices, and proves χ_gf(G₂₉) > 4 by analyzing the 23 extremal geometric fractional colorings of G₂₇. To obtain an explicit bound, one must: (1) compute the exact value of χ_gf(G₂₉) by solving the corresponding linear program over the 11-dimensional polytope of optimal colorings, (2) track how the two blow-up procedures (amenability-based and lattice-based) transmit this gap to produce a finite unit-distance graph G with α(G)/|V(G)| ≤ 1/χ_gf(G₂₉) - δ for explicit δ, and (3) verify the resulting bound χ_f(ℝ²) ≥ |V(G)|/α(G) ≥ 4 + 1/1024. The key computational step is bounding the minimum excess over 4 in the LP for G₂₉.",
+>>>>>>> Stashed changes
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
@@ -38861,8 +38915,13 @@
       "source_path": "http://arxiv.org/abs/2606.28157v1",
       "status": "available",
       "thread_id": "",
+<<<<<<< Updated upstream
       "timestamp": "2026-06-29T20:19:39.963436+00:00",
       "title": "Extremal Geometric Fractional Colorings of G₂₇ Have Exactly 23 Vertices"
+=======
+      "timestamp": "2026-06-29T20:26:32.189404+00:00",
+      "title": "Explicit quantitative lower bound on the fractional chromatic number of the plane"
+>>>>>>> Stashed changes
     },
     {
       "ambition_level": "extension",
@@ -41005,11 +41064,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c2334654",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41020,7 +41079,7 @@
         "Algebra"
       ],
       "id": "seed_020",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T20:26:36.737026+00:00",
       "last_reviewed_at": "2026-06-16T10:48:52.128685+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -41034,7 +41093,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-08T19:24:59.906325+00:00",
       "title": "Hilbert 12: Kronecker-Weber Generalization"
