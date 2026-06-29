@@ -2976,7 +2976,7 @@
       "math.CO",
       "math.PR"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d932478",
     "description": "The expected time to collect all 7 coupons when drawing uniformly from the 7 lines of the Fano plane (a fair mechanism with n=7, ℓ=3) is strictly greater than the expected time when drawing uniformly from all 35 possible 3-element subsets.",
     "domain_bridges": [
       "Finite Geometry",
@@ -2991,7 +2991,7 @@
     "proof_strategy": "Compute the exact expected coverage times for both mechanisms. For the full model, use the standard formula. For the Fano plane, reduce the Markov chain state space using the symmetries of the Fano plane (tracking only the number of collected coupons and the intersection size with the last drawn line), compute the transition probabilities, and solve for the expected hitting time. Finally, verify the strict inequality between the two resulting rational numbers.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T10:22:44.428708+00:00",
     "title": "Fano Plane Coupon Collector Inequality"
   },
@@ -3046,6 +3046,62 @@
     "status": "available",
     "timestamp": "2026-06-29T11:04:31.405897+00:00",
     "title": "Elementary Abelian 2-Group Uniqueness for Pairwise Reflection-Symmetric Latin Squares"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "order_theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer $n \\ge 3$, the minimum number of elements in a poset $P$ such that its automorphism group $\\text{Aut}(P)$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is exactly $2^{n+1} + 2$. This conjecture formalizes the main theorem of the paper.",
+    "domain_bridges": [
+      "group_theory",
+      "combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2861",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the function $\\beta(G)$ as the infimum of the cardinalities of posets $P$ with $\\text{Aut}(P) \\cong G$. The upper bound is established by constructing a poset of size $2^{n+1}+2$ realizing the group, which can be done via a recursive construction adding two minimal elements (as in Proposition 2.2). The lower bound requires showing that any poset realizing this group must have at least $2^{n+1}+2$ elements, utilizing the structural constraints of the group action on the poset.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:24:35.150210+00:00",
+    "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MRVZ_geometric_fractional_chromatic_number",
+      "de_Grey_chromatic_number_plane_5",
+      "Erdos_independence_ratio_question_1987",
+      "Hadwiger_Nelson_problem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that augmenting the 27-vertex configuration G₂₇ with two carefully chosen vertices yields a 29-vertex configuration G₂₉ whose geometric fractional chromatic number χ_gf(G₂₉) is strictly greater than 4. This conjecture asserts an explicit quantitative bound: χ_gf(G₂₉) ≥ 4 + 1/1000. Since the proof characterizes all 23 extremal colorings of G₂₇ and shows the two augmentation vertices simultaneously violate all of them, an explicit gap above 4 should be computable from the finite-dimensional linear program with 182304 variables. Proving this would yield the first explicit rational lower bound on χ_f(ℝ²) above 4.",
+    "domain_bridges": [
+      "linear_programming_finite_verification",
+      "Euclidean_distance_graphs_R2",
+      "fractional_chromatic_number_graph_theory",
+      "measurable_chromatic_number_density"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2862",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the 27 explicit vertex coordinates of G₂₇ and the 2 augmentation vertices in ℝ². Define geometric fractional chromatic number as the optimal value of a linear program over measurable colorings. Verify the 23 extremal colorings of G₂₇ as explicit vectors. For each extremal coloring, compute a rational lower bound on the constraint violation caused by the two augmentation vertices. Take the minimum violation as the explicit gap ε, yielding χ_gf(G₂₉) ≥ 4 + ε ≥ 4 + 1/1000.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:25:09.618081+00:00",
+    "title": "Explicit quantitative lower bound on the geometric fractional chromatic number of the augmented 29-vertex configuration"
   },
   {
     "ambition_level": "extension",
@@ -3223,7 +3279,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "29c1c9b2",
+    "consumed_by_exp_id": "",
     "description": "Resolve whether the general 7th-degree equation can be solved using functions of only 2 variables. Formalize Kolmogorov's superposition theorem and explore its implications for approximation theory.",
     "domain_bridges": [],
     "domains": [
@@ -3235,7 +3291,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:00.118535+00:00",
     "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
   },

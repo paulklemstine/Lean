@@ -1923,7 +1923,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Palindromicity and Non-Negativity of Principal Specializations of One-Row Schur Q-Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d932478",
     "description": "The expected time to collect all 7 coupons when drawing uniformly from the 7 lines of the Fano plane (a fair mechanism with n=7, \u2113=3) is strictly greater than the expected time when drawing uniformly from all 35 possible 3-element subsets.",
     "domains": [
       "Bridges"
@@ -1932,7 +1932,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T10:22:44.428708+00:00",
     "title": "Fano Plane Coupon Collector Inequality"
   },
@@ -1965,6 +1965,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T11:04:31.405897+00:00",
     "title": "Elementary Abelian 2-Group Uniqueness for Pairwise Reflection-Symmetric Latin Squares"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer $n \\ge 3$, the minimum number of elements in a poset $P$ such that its automorphism group $\\text{Aut}(P)$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is exactly $2^{n+1} + 2$. This conjecture formalizes the main theorem of the paper.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2861",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:24:35.150210+00:00",
+    "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that augmenting the 27-vertex configuration G\u2082\u2087 with two carefully chosen vertices yields a 29-vertex configuration G\u2082\u2089 whose geometric fractional chromatic number \u03c7_gf(G\u2082\u2089) is strictly greater than 4. This conjecture asserts an explicit quantitative bound: \u03c7_gf(G\u2082\u2089) \u2265 4 + 1/1000. Since the proof characterizes all 23 extremal colorings of G\u2082\u2087 and shows the two augmentation vertices simultaneously violate all of them, an explicit gap above 4 should be computable from the finite-dimensional linear program with 182304 variables. Proving this would yield the first explicit rational lower bound on \u03c7_f(\u211d\u00b2) above 4.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2862",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:25:09.618081+00:00",
+    "title": "Explicit quantitative lower bound on the geometric fractional chromatic number of the augmented 29-vertex configuration"
   },
   {
     "consumed_by_exp_id": "",
@@ -2095,7 +2125,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetric Group Generation Probability"
   },
   {
-    "consumed_by_exp_id": "29c1c9b2",
+    "consumed_by_exp_id": "",
     "description": "Resolve whether the general 7th-degree equation can be solved using functions of only 2 variables. Formalize Kolmogorov's superposition theorem and explore its implications for approximation theory.",
     "domains": [
       "Algebra"
@@ -2104,7 +2134,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:00.118535+00:00",
     "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
   },
