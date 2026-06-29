@@ -2214,12 +2214,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every $\\tau_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges, for integers $k \\ge 1$ and $n \\ge 2k+2$. A graph $G$ is $\\tau_k$-maximal if it contains no subgraph admitting $k+1$ edge-disjoint spanning trees (i.e., its spanning tree packing number $\\tau(G) \\le k$), but adding any edge from its complement creates a graph that does admit $k+1$ edge-disjoint spanning trees (i.e., $\\tau(G+e) \\ge k+1$ for all $e \\notin E(G)$).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2896",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:55:49.745314+00:00",
+    "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2896",
+    "id": "fd_2897",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2234,13 +2248,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2897",
+    "id": "fd_2898",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
     "status": "available",
     "timestamp": "2026-06-29T20:37:17.471296+00:00",
     "title": "Projective Plane Mechanisms Dominate the Full Model in Expected Coverage Time"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For integers d, e > 1 with d | (e-1), and for any non-negative integer w and any e-core \u03ba, the number of d-balanced e-regular partitions with e-core \u03ba and e-weight w equals C(w + (e-1)/d - 1, w), independently of \u03ba. Here a partition \u03bb is d-balanced e-regular if it is e-regular (no part repeated e or more times) and every hook of \u03bb whose length is divisible by e has arm length divisible by d. The special case d=2, e=p (odd prime) yields C(w + (p-3)/2, w) partitions per block of p-weight w, which controls complete columns of symmetric-group decomposition matrices.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2899",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:56:20.535355+00:00",
+    "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
   },
   {
     "consumed_by_exp_id": "",

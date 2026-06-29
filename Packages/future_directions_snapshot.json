@@ -3604,6 +3604,32 @@
     "title": "No non-trivial prime-power solutions in specific polygonal number sequences"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every $\\tau_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges, for integers $k \\ge 1$ and $n \\ge 2k+2$. A graph $G$ is $\\tau_k$-maximal if it contains no subgraph admitting $k+1$ edge-disjoint spanning trees (i.e., its spanning tree packing number $\\tau(G) \\le k$), but adding any edge from its complement creates a graph that does admit $k+1$ edge-disjoint spanning trees (i.e., $\\tau(G+e) \\ge k+1$ for all $e \\notin E(G)$).",
+    "domain_bridges": [
+      "extremal graph theory",
+      "spanning tree packing",
+      "matroid packing",
+      "edge-connectivity"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2896",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The authors have already established the upper bound $|E(G)| \\le (k+1)(n-1)-1$. To prove the conjecture, one must establish the matching lower bound $|E(G)| \\ge (k+1)(n-1)-1$. This likely involves induction on $k$ and $n$, leveraging the Nash-Williams/Tutte theorem to relate edge counts across partitions, and analyzing the structural properties and edge-connectivity bounds of $\\tau_k$-maximal graphs to show that fewer edges would contradict the maximality condition.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:55:49.745314+00:00",
+    "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "MRVZ_27_vertex_graph",
@@ -3621,7 +3647,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2896",
+    "id": "fd_2897",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph with its coordinates. Encode the geometric fractional chromatic number as a linear program over measurable functions. Use the finite-dimensional reduction (the LP with 182304 variables capturing the constraints on finite sub-configurations) to extract the extreme points computationally. Verify each of the 23 extremal colorings satisfies all unit-distance constraints and achieves total weight exactly 4, and confirm no other extreme points exist via vertex enumeration on the LP's feasible polytope.",
@@ -3651,7 +3677,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2897",
+    "id": "fd_2898",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the inequality E_PG(q) > E_full(q) by computing or bounding the expected coverage times via inclusion-exclusion. The expected coverage time for a fair mechanism F on [n] with block size ℓ is E[F] = ∫₀^∞ (1 - ∏_{S∈F}(1 - e^{-|S∩T|t}/|F|)) dt for the set T of already-collected coupons, which can be reformulated as E[F] = ∑_{k=1}^{n} (-1)^{k+1} ∑_{A∈([n] choose k)} 1/(1 - P_F(A)) where P_F(A) is the probability a random block from F contains A. The key comparison reduces to showing that the projective plane mechanism has a larger sum over k-subset intersection statistics than the full model. Use the fact that in PG(2,q), every pair of distinct points lies on exactly one line, and every line has exactly q+1 points, to compute the k-wise intersection probabilities exactly and compare term by term with the full model.",
@@ -3660,6 +3686,37 @@
     "status": "available",
     "timestamp": "2026-06-29T20:37:17.471296+00:00",
     "title": "Projective Plane Mechanisms Dominate the Full Model in Expected Coverage Time"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.RT",
+      "representations_of_symmetric_groups",
+      "crystal_bases",
+      "decomposition_matrices"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For integers d, e > 1 with d | (e-1), and for any non-negative integer w and any e-core κ, the number of d-balanced e-regular partitions with e-core κ and e-weight w equals C(w + (e-1)/d - 1, w), independently of κ. Here a partition λ is d-balanced e-regular if it is e-regular (no part repeated e or more times) and every hook of λ whose length is divisible by e has arm length divisible by d. The special case d=2, e=p (odd prime) yields C(w + (p-3)/2, w) partitions per block of p-weight w, which controls complete columns of symmetric-group decomposition matrices.",
+    "domain_bridges": [
+      "partition_theory",
+      "representation_theory_of_finite_groups",
+      "combinatorial_enumeration",
+      "affine_crystal_graphs"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2899",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof proceeds in two stages, both formalizable. First, show that the crystal (affine) reflection operators preserve the d-balanced property, which implies the count is independent of the e-core (since all e-cores in the same weight are connected by crystal reflections). Second, compute the count in a RoCK block—a distinguished e-core where the enumeration reduces to counting d-balanced e-regular e-quotients of weight w, which are in bijection with certain restricted integer compositions counted by the binomial coefficient. Formalizing this requires: (1) defining hook lengths, arm/leg lengths, e-regularity, and d-balanced property for partitions in Mathlib; (2) constructing the e-core and e-quotient bijection; (3) defining the affine crystal reflection operators on e-regular partitions and proving they preserve d-balancedness; (4) the RoCK block reduction and final binomial enumeration.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:56:20.535355+00:00",
+    "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
   },
   {
     "ambition_level": "extension",

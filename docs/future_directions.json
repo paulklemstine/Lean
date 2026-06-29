@@ -38868,6 +38868,51 @@
       "title": "No non-trivial prime-power solutions in specific polygonal number sequences"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every $\\tau_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges, for integers $k \\ge 1$ and $n \\ge 2k+2$. A graph $G$ is $\\tau_k$-maximal if it contains no subgraph admitting $k+1$ edge-disjoint spanning trees (i.e., its spanning tree packing number $\\tau(G) \\le k$), but adding any edge from its complement creates a graph that does admit $k+1$ edge-disjoint spanning trees (i.e., $\\tau(G+e) \\ge k+1$ for all $e \\notin E(G)$).",
+      "domain_bridges": [
+        "extremal graph theory",
+        "spanning tree packing",
+        "matroid packing",
+        "edge-connectivity"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2896",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem tau_k_maximal_exact_edge_count\n  {V : Type*} [Fintype V] [DecidableEq V]\n  (k : ℕ) (hk : k ≥ 1) (G : SimpleGraph V)\n  (h_order : Fintype.card V ≥ 2 * k + 2)\n  (h_tau_le : G.tau ≤ k)\n  (h_tau_max : ∀ e : Sym2 V, e ∉ G.edge_set → (G.add_edge e).tau ≥ k + 1) :\n  G.edgeFinset.card = (k + 1) * (Fintype.card V - 1) - 1 :=\nby sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The authors have already established the upper bound $|E(G)| \\le (k+1)(n-1)-1$. To prove the conjecture, one must establish the matching lower bound $|E(G)| \\ge (k+1)(n-1)-1$. This likely involves induction on $k$ and $n$, leveraging the Nash-Williams/Tutte theorem to relate edge counts across partitions, and analyzing the structural properties and edge-connectivity bounds of $\\tau_k$-maximal graphs to show that fewer edges would contradict the maximality condition.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28198v1",
+      "source_path": "http://arxiv.org/abs/2606.28198v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T20:55:49.745314+00:00",
+      "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -38894,7 +38939,7 @@
         "Geometry",
         "Algebra"
       ],
-      "id": "fd_2896",
+      "id": "fd_2897",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_colorings_of_G27 (G : UnitDistanceGraph) (hG : G = G27) : let P := geometricFractionalColoringPolytope G; P.dim = 11 ∧ (P.extremePoints).ncard = 23 ∧ ∀ c ∈ P.extremePoints, c.totalWeight = 4",
@@ -38943,7 +38988,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2897",
+      "id": "fd_2898",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_slower_than_full {q : ℕ} (hq : Fact (Nat.Prime q)) : let n := q^2 + q + 1; let ℓ := q + 1; let E_PG : ℝ := expected_coverage_time (projective_plane_mechanism q); let E_full : ℝ := expected_coverage_time (full_mechanism n ℓ); E_PG > E_full := by sorry",
@@ -38962,6 +39007,56 @@
       "thread_id": "",
       "timestamp": "2026-06-29T20:37:17.471296+00:00",
       "title": "Projective Plane Mechanisms Dominate the Full Model in Expected Coverage Time"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.RT",
+        "representations_of_symmetric_groups",
+        "crystal_bases",
+        "decomposition_matrices"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For integers d, e > 1 with d | (e-1), and for any non-negative integer w and any e-core κ, the number of d-balanced e-regular partitions with e-core κ and e-weight w equals C(w + (e-1)/d - 1, w), independently of κ. Here a partition λ is d-balanced e-regular if it is e-regular (no part repeated e or more times) and every hook of λ whose length is divisible by e has arm length divisible by d. The special case d=2, e=p (odd prime) yields C(w + (p-3)/2, w) partitions per block of p-weight w, which controls complete columns of symmetric-group decomposition matrices.",
+      "domain_bridges": [
+        "partition_theory",
+        "representation_theory_of_finite_groups",
+        "combinatorial_enumeration",
+        "affine_crystal_graphs"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2899",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem d_balanced_e_regular_partitions_in_block_count (d e : ℕ) (hd : d > 1) (he : e > 1) (hdiv : (e - 1) % d = 0) (w : ℕ) (κ : Partition) (hκ : IsECore e κ) : Finset.card (Finset.filter (fun λ : Partition => IsDBalanced d e λ ∧ IsERegular e λ ∧ eWeight e λ = w ∧ eCore e λ = κ) (Finset.univ)) = Nat.choose (w + (e - 1) / d - 1) w := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The proof proceeds in two stages, both formalizable. First, show that the crystal (affine) reflection operators preserve the d-balanced property, which implies the count is independent of the e-core (since all e-cores in the same weight are connected by crystal reflections). Second, compute the count in a RoCK block—a distinguished e-core where the enumeration reduces to counting d-balanced e-regular e-quotients of weight w, which are in bijection with certain restricted integer compositions counted by the binomial coefficient. Formalizing this requires: (1) defining hook lengths, arm/leg lengths, e-regularity, and d-balanced property for partitions in Mathlib; (2) constructing the e-core and e-quotient bijection; (3) defining the affine crystal reflection operators on e-regular partitions and proving they preserve d-balancedness; (4) the RoCK block reduction and final binomial enumeration.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28305v1",
+      "source_path": "http://arxiv.org/abs/2606.28305v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T20:56:20.535355+00:00",
+      "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
     },
     {
       "ambition_level": "extension",
