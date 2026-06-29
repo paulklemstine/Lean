@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe28c0d9",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -1391,21 +1391,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coefficientwise Positivity of Normalized Jacobi Triple Product Tails"
   },
   {
-    "consumed_by_exp_id": "ee65478f",
-    "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2841",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T05:46:31.738498+00:00",
-    "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for any integers d>1, e>1 with (e-3) divisible by d, the number of d-balanced e-regular partitions in a block of e-weight w equals the binomial coefficient \\(\\binom{w + (e-3)/d}{w}\\).",
     "domains": [
@@ -1640,7 +1625,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Palindromicity and Non-Negativity of Principal Specializations of One-Row Schur Q-Functions"
   },
   {
-    "consumed_by_exp_id": "43fcf247",
+    "consumed_by_exp_id": "",
     "description": "The number of 2-balanced p-regular partitions in any block of p-weight w for an odd prime p is precisely the binomial coefficient C(w + (p-3)/2, w). A partition is 2-balanced p-regular if it is p-regular and every hook of length divisible by p has an even arm length.",
     "domains": [
       "Pythagorean",
@@ -1650,7 +1635,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T10:45:11.578131+00:00",
     "title": "Enumeration of 2-balanced p-regular partitions in blocks"
   },
@@ -2050,7 +2035,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "99e4c1c9",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
@@ -2060,7 +2045,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
@@ -2138,7 +2123,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No non-trivial prime-power solutions in specific polygonal number sequences"
   },
   {
-    "consumed_by_exp_id": "feb44fa2",
+    "consumed_by_exp_id": "",
     "description": "Every $\\tau_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges, for integers $k \\ge 1$ and $n \\ge 2k+2$. A graph $G$ is $\\tau_k$-maximal if it contains no subgraph admitting $k+1$ edge-disjoint spanning trees (i.e., its spanning tree packing number $\\tau(G) \\le k$), but adding any edge from its complement creates a graph that does admit $k+1$ edge-disjoint spanning trees (i.e., $\\tau(G+e) \\ge k+1$ for all $e \\notin E(G)$).",
     "domains": [
       "Bridges"
@@ -2147,7 +2132,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T20:55:49.745314+00:00",
     "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
   },
@@ -2300,11 +2285,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For all integers $t \\ge 2$ and $r \\ge 2$, there exists an integer $n_0(t, r)$ such that for all $n \\ge n_0(t, r)$, the unique graph of order $n$ achieving the maximum signless Laplacian spectral radius among all $tK_{r+1}$-free graphs is $K_{t-1} \\vee T_r(n-t+1)$, where $T_r(m)$ is the Tur\u00e1n graph on $m$ vertices with $r$ parts. This extends the paper's Theorem 1.1 from $tK_3$-free graphs to general $tK_{r+1}$-free graphs, mirroring the known results for the adjacency spectral radius.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2908",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28121v1",
+    "status": "available",
+    "timestamp": "2026-06-29T23:32:23.303887+00:00",
+    "title": "Signless Laplacian Spectral Tur\u00e1n Conjecture for $tK_{r+1}$-Free Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2908",
+    "id": "fd_2909",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2318,13 +2318,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2909",
+    "id": "fd_2910",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
     "status": "available",
     "timestamp": "2026-06-29T23:08:33.027778+00:00",
     "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime p, let G = (Z/p^2 Z)^2 and H = pG. Then the transversal difference number \u03b4(G,H) = (2p-1)^2. This conjecture identifies the first genuinely new residual obstruction beyond cyclic quotients and product families with one nonsplit cyclic coordinate.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2911",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27961v1",
+    "status": "available",
+    "timestamp": "2026-06-29T23:32:39.265092+00:00",
+    "title": "Transversal Difference Number for the Same-Prime Square Plane"
   },
   {
     "consumed_by_exp_id": "",
@@ -2470,21 +2484,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 fourth powers among polygonal numbers\n\nThis cycle studied which 14-gonal numbers `P\u2081\u2084(n) = 6n\u00b2 \u2212 5n` are perfect fourth\npowers. The product structure `n\u00b7(6n \u2212 5)`, the coprimality dichotomy at the\nprime `5`, and the resulting reduction to quartic Thue equations suggest the\nfollowing bold, testable conjectures.\n\n## Conjecture 1 \u2014 The complete fourth-power list is `{0, 1, \u22122000}`\n\nThe integers `n` for which `6n\u00b2 \u2212 5n` is a perfect fourth power are exactly\n`n \u2208 {0, 1, \u22122000}`, giving the fourth powers `0, 1, 24 010 000`.\n\n*The key insight is* that the equation splits cleanly at the prime `5`: when `5 \u2224 n`\nthe two factors `n` and `6n \u2212 5` are coprime and must individually be (signed)\nfourth powers, while when `5 \u2223 n` the same coprimality reappears one level down\nbetween `m` and `6m \u2212 1`, and both descents terminate in a *finite* list of\nquartic Thue equations (`6a\u2074 \u2212 b\u2074 = 5` and `e\u2074 \u2212 150c\u2074 = 1`) whose only\nnonnegative solutions are tiny.  Strikingly, the two coprime sub-equations behave\nasymmetrically: the negative branch reduces to `b\u2074 \u2212 6a\u2074 = 5`, which is outright\nimpossible modulo `16` (fourth powers are `0` or `1` there, so the left side lands\nin `{0,1,10,11}`, never `5`) \u2014 eliminating every solution with `n < 0` not\ndivisible by `5` \u2014 whereas the positive branch `6a\u2074 \u2212 b\u2074 = 5` survives every such\ncongruence because `5 = 6 \u2212 1` is attainable, isolating the genuine analytic core.\n\n*Why now?* The descent has been carried out completely and rigorously up to those\ntwo Thue equations; effective lower bounds for linear forms in logarithms now make\nthe complete resolution of each individual quartic Thue equation routine, so the\nlast analytic gap is finally closable rather than merely plausible.\n\n## Conjecture 2 \u2014 The largest solution is always divisible by the \"linear prime\"\n\nFor every order `k` such that `P_k(n) = t\u2074` has a solution with `|n| > 1`, the\nsolution of largest absolute value satisfies `p \u2223 n`, where `p` is the prime\nappearing in the linear coefficient of `P_k` (here `p = 5`, the coefficient of the\nlinear term in `6n\u00b2 \u2212 5n`).\n\n*The key insight is* that the \"large\" branch of the descent is precisely the branch\nin which the linear prime divides `n`: extracting that prime from both `n` and `t`\nlowers the height of the surviving Thue equation, and large solutions can only\nemerge from this height-lowering step, never from the coprime branch.\n\n*Why now?* The 14-gonal case exhibits this exactly \u2014 `n = \u22122000` is divisible by\n`5` while the small solutions `n = 0, 1` are the degenerate and coprime cases \u2014 so\na single clean structural mechanism, rather than numerical coincidence, can be\ntested immediately across the polygonal families.\n\n## Conjecture 3 \u2014 A uniform finiteness theorem for `P_k(n) = t^d`\n\nFor every fixed polygonal order `k \u2265 5` and every fixed exponent `d \u2265 3`, the\nequation `P_k(n) = t^d` has only finitely many integer solutions `(n, t)`, and the\nnumber of solutions is bounded by an absolute constant independent of `k` and `d`.\n\n*The key insight is* that completing the square turns each such equation into a\nsuper-elliptic curve `x\u00b2 = (constant)\u00b7t^d + (constant)` of fixed genus `\u2265 1`, on\nwhich the integral points are governed by a single uniform height bound once `d \u2265 3`.\n\n*Why now?* The 14-gonal/\u200bfourth-power case produces the explicit model\n`x\u00b2 \u2212 24t\u2074 = 25`; the same completion of the square works verbatim for all `k` and\n`d`, so the family is finally presented in a single normalised shape where a\nuniform bound is a concrete, falsifiable target.\n\n## Conjecture 4 \u2014 Coprime-branch solutions are exactly the near-trivial ones\n\nWhenever `P_k(n) = t\u2074` with `gcd(n, (k-4)/2)` trivial (the coprime branch), the\nonly solutions are the \"near-trivial\" `n \u2208 {0, 1}`.\n\n*The key insight is* that in the coprime branch both factors are genuine fourth\npowers, forcing `(k-2)\u00b7a\u2074 \u2212 (k-4) = b\u2074`; for `a \u2265 2` the gap between consecutive\nfourth powers grows faster than the left-hand side can jump, leaving no room for a\nsolution beyond `a = 1`.\n\n*Why now?* The descent isolating the coprime branch is fully explicit, so the\nremaining claim is a self-contained statement about a one-parameter family of\nquartic equations \u2014 exactly the regime where gap/spacing arguments and Thue bounds\nare sharpest.\n\n## Conjecture 5 \u2014 Density zero with an explicit rate\n\nThe count of `n` with `|n| \u2264 X` for which `6n\u00b2 \u2212 5n` is a perfect fourth power is\n`O(1)` (in fact eventually constant), and more generally the count of `n \u2264 X` for\nwhich `P_k(n)` is a perfect `d`-th power is `O((log X)^{c})` for an absolute\nconstant `c`, uniformly in `k` and `d \u2265 3`.\n\n*The key insight is* that solutions correspond to integral points on a fixed-genus\ncurve, and the conjectural uniform bounds on integral points on such curves convert\ndirectly into a poly-logarithmic counting estimate.\n\n*Why now?* With the explicit curve models in hand for the whole polygonal family,\nthe counting function becomes a concrete object that can be tabulated and stress-\ntested against the predicted growth rate over large ranges.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2910",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "60fa5375",
-    "status": "available",
-    "timestamp": "2026-06-29T23:28:03.323629+00:00",
-    "title": "This cycle studied which 14-gonal numbers `P\u2081\u2084(n) = 6n\u00b2 \u2212 5n` are perfect fourth"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2599,20 +2598,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 60fa5375 (Q=0.519) proved 18 theorems in Combinatorics but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Diophantine equation P_{14}(n) = t^4, which simplifies to 6n^2 - 5n = t^4, has exactly five integer solutions: (n,t) \u2208 {(0,0), (1,1), (1,-1), (-2000, 70), (-2000, -70)}. This corresponds to Theore",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "sorry_fill_60fa5375_4df640a2",
-    "priority_score": 0.5686266666666667,
-    "research_mode": "team",
-    "source_exp_id": "60fa5375",
-    "status": "available",
-    "timestamp": "2026-06-29T23:28:11.082472+00:00",
-    "title": "Close Proofs: Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
   },
   {
     "consumed_by_exp_id": "",
@@ -3168,7 +3153,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "5f4fe8b8",
+    "consumed_by_exp_id": "",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domains": [
       "Bridges",
@@ -3178,7 +3163,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },

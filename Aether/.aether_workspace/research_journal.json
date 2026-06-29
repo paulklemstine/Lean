@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "72d240c8",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Hochschild homology of group algebras\n\nDerived from the cycle that produced\n`Catalog/Novelty/HochschildH0GroupAlgebra.lean`, where we proved the `R`-linear\nequivalence `HH₀(R[G])",
-      "quality_score": 0.7694400000000001,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-26T12:45:03",
-      "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
-    },
-    {
       "cycle_id": "d4e980c4",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's formalization (`WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`). Each conjecture is bold, fals",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-06-29T23:28:10",
       "title": "Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
+    },
+    {
+      "cycle_id": "ee65478f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Extremality of projective-plane designs in coupon collection\n\nThis cycle established two anchors. First, the inclusion–exclusion form of the\nexpected covering time is a faithful",
+      "quality_score": 0.44923399999999997,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-29T23:31:43",
+      "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73856
     }
   ],
-  "last_updated": "2026-06-29T23:28:10",
+  "last_updated": "2026-06-29T23:31:43",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "42f0bfda",
-        "quality": 0.5537937826789618,
-        "theorems": 96,
-        "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
-      },
-      {
         "cycle_id": "6c747cdd",
         "quality": 0.4689979318754185,
         "theorems": 127,
@@ -3265,6 +3259,12 @@
         "quality": 0.5186266666666667,
         "theorems": 18,
         "title": "Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
+      },
+      {
+        "cycle_id": "ee65478f",
+        "quality": 0.44923399999999997,
+        "theorems": 13,
+        "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
       }
     ],
     "Computation": [
