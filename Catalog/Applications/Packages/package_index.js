@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e0366114",
     "filename": "excluded_minors_for_z_n_gainable_biased_graphs.json",
     "pkg_num": 201,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4133402545454546,
     "title": "Excluded Minors for Z/n-Gainable Biased Graphs: The Parallel-Class Slice and a Divisibility Law"
   },
   {
@@ -5865,8 +5865,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "excluded_minors_for_z_n_gainable_biased_graphs",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4133402545454546,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Excluded Minors for Z/n-Gainable Biased Graphs: The Parallel-Class Slice and a Divisibility Law"
     }

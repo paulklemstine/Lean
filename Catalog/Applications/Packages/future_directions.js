@@ -1849,21 +1849,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "fdb1bb82",
-    "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
-    "domains": [
-      "Analysis",
-      "NumberTheory"
-    ],
-    "id": "seed_335",
-    "priority_score": 0.8,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432611+00:00",
-    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize Frankl's conjecture and prove it for families of size \u2264 50 (Bo\u0161njak-Markovi\u0107). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domains": [
@@ -1962,6 +1947,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T08:19:37.358950+00:00",
     "title": "Bold, falsifiable conjectures derived from this cycle's findings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Bounded Prime Gaps (Zhang\u2013Maynard formalization)\n\nThis cycle formalized the *elementary scaffolding* around `liminf (p_{n+1} - p_n) \u2264 246`:\nadmissible tuples (with a finite-check reduction, translation invariance, and the\nnecessity direction of Hardy\u2013Littlewood), and the equivalence of the bounded-gaps\n`liminf` statement with an \"infinitely often\" combinatorial statement, plus parity\nof prime gaps. The deep analytic core (the Maynard\u2013Tao sieve producing the\ninfinitude) remains open in this development. The conjectures below are the natural\nnext falsifiable targets.\n\n## Conjecture 1 \u2014 Diameter-246 admissible 50-tuple is verifiable purely by `decide`\nThere is an explicit admissible 50-tuple `H \u2286 {0, \u2026, 246}` with `|H| = 50` whose\nadmissibility is provable **without** `native_decide`, by routing every prime\n`p \u2264 50` through `admissible_iff_small_primes` and discharging each with `decide`.\n- **The key insight is** that `admissible_iff_small_primes` collapses the infinite\n  prime quantifier to the 15 primes `\u2264 50`, turning admissibility into a bounded,\n  kernel-checkable computation rather than an analytic claim.\n- **Why now?** We already proved the reduction lemma and used it for `{0,2,6}`;\n  scaling the same kernel-`decide` pattern to the literature's 50-tuple is a direct,\n  mechanical extension that would give a soundness-clean witness for the `H = 246`\n  combinatorial input.\n\n## Conjecture 2 \u2014 Admissibility is preserved by removing the largest element\nIf `H` is admissible and `|H| \u2265 2`, then `H.erase (H.max' \u2026)` is admissible.\n- **The key insight is** that deleting elements only shrinks the set of covered\n  residues mod each `p`, so a previously-free class stays free \u2014 admissibility is a\n  *downward-closed* property on subsets.\n- **Why now?** `admissible_iff_small_primes` already isolates the per-prime\n  covering condition; monotonicity under `\u2286` is the missing structural lemma that\n  would let one search for *minimal* diameter admissible `k`-tuples by pruning.\n\n## Conjecture 3 \u2014 The Maynard reduction: DHL[k,2] with an admissible k-tuple implies bounded gaps\nFormalize the logical reduction `(\u2203 admissible H, |H| = k \u2227 DHL[k,2] for H) \u2192\nBoundedPrimeGaps (diam H)`, where `DHL[k,2]` is \"infinitely many `n` with \u2265 2 of\nthe `n + h` prime\", as an implication with `DHL` as an explicit hypothesis.\n- **The key insight is** that the entire sieve-theoretic difficulty is quarantined\n  inside `DHL`; the passage from `DHL` to a concrete gap bound is pure logic over the\n  `BoundedPrimeGaps`/`Set.Infinite` API already built here.\n- **Why now?** `boundedPrimeGaps_iff_liminf` and `finite_constellation_of_not_admissible`\n  give both halves of the interface; stating `DHL` as a hypothesis makes the\n  headline theorem `liminf \u2264 246` a corollary modulo one named open input.\n\n## Conjecture 4 \u2014 Prime gaps are unbounded above (companion to bounded below)\n`\u2200 H, {n | primeGap n \u2265 H}.Infinite`, equivalently `limsup primeGap = \u22a4` in `\u2115\u221e`.\n- **The key insight is** that the consecutive composites `N! + 2, \u2026, N! + N` force a\n  gap `\u2265 N`, so large gaps recur infinitely often \u2014 the exact mirror of the bounded\n  case, provable with no sieve.\n- **Why now?** We already have the `\u2115\u221e`-valued `liminf`/`limsup` interface via\n  `liminf_le_iff_infinite`; the dual `limsup` statement reuses the same\n  `Nat.frequently_atTop_iff_infinite` bridge and would frame Maynard's `liminf`\n  result against a fully-proven `limsup = \u221e`.\n\n## Conjecture 5 \u2014 Every admissible tuple has even diameter once `|H| \u2265 2` and `0 \u2208 H`\nFor an admissible `H` with `0 \u2208 H` and `|H| \u2265 2`, the diameter `max H` is even.\n- **The key insight is** that admissibility at `p = 2` forces all elements into a\n  single residue class mod 2 (else both classes are covered), so all pairwise\n  differences \u2014 including the diameter \u2014 are even.\n- **Why now?** The `p = 2` case is exactly the parity argument already used in\n  `primeGap_even` and in the `{0,2,6}` witness; promoting it to a general structural\n  constraint on admissible tuples is immediate and explains why all tabulated\n  bounded-gap diameters (246, 1402, \u2026) are even.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2845",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e0366114",
+    "status": "available",
+    "timestamp": "2026-06-29T08:21:12.436789+00:00",
+    "title": "This cycle formalized the *elementary scaffolding* around `liminf (p_{n+1} - p_n"
   },
   {
     "consumed_by_exp_id": "",

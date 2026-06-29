@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5c41b780",
-      "domain": "Bridges",
-      "key_insight": "# FUTURE DIRECTIONS — Tightness of the unit-shift bound for Euler's totient\n\nDerived from the v19 scientific-method cycle formalized in\n`Bridges/TotientShiftWitnesses.lean` and `Bridges/TotientUnitShi",
-      "quality_score": 0.44476594336283193,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-26T08:26:45",
-      "title": "Tightness of the unit-shift bound for Euler's totient function"
-    },
-    {
       "cycle_id": "ad454ca1",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Rademacher Complexity of Neural Networks\n\nDerived from this cycle's findings in `Basic.lean` and `NeuralNet.lean`. Each\nconjecture is bold and falsifiable.\n\n## C1. Talagrand cont",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-29T08:19:46",
       "title": "Extremal Graph Theory: Turán and Szemerédi"
+    },
+    {
+      "cycle_id": "e0366114",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Bounded Prime Gaps (Zhang–Maynard formalization)\n\nThis cycle formalized the *elementary scaffolding* around `liminf (p_{n+1} - p_n) ≤ 246`:\nadmissible tuples (with a finite-check",
+      "quality_score": 0.4133402545454546,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-29T08:21:20",
+      "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79664
     }
   ],
-  "last_updated": "2026-06-29T08:19:46",
+  "last_updated": "2026-06-29T08:21:20",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "863d07b7",
-        "quality": 0.50324,
-        "theorems": 13,
-        "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-      },
-      {
         "cycle_id": "37109497",
         "quality": 0.6924620000000001,
         "theorems": 57,
@@ -3079,6 +3073,12 @@
         "quality": 0.65696,
         "theorems": 18,
         "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+      },
+      {
+        "cycle_id": "e0366114",
+        "quality": 0.4133402545454546,
+        "theorems": 0,
+        "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
       }
     ],
     "Applications": [
