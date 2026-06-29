@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3c64518a",
     "filename": "complete_characterization_of_minimal_forbidden_par.json",
     "pkg_num": 201,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.79664,
     "title": "Complete Characterization of Minimal Forbidden Partial-Cube Minors for Daisy Cubes"
   },
   {
@@ -5864,8 +5864,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "complete_characterization_of_minimal_forbidden_par",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.79664,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Complete Characterization of Minimal Forbidden Partial-Cube Minors for Daisy Cubes"
     }

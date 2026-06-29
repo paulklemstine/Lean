@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T23:55:30.028732+00:00",
+  "last_updated": "2026-06-29T00:21:33.055371+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -16813,6 +16813,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-28T23:55:29.696351+00:00",
       "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6561,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 255,
+      "domain": "Novelty",
+      "duration_seconds": 1814.3216836452484,
+      "end_time": 1782692043.2861497,
+      "files_integrated": 8,
+      "job_id": "3c64518a",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.8711,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.9158,
+        "novelty": 0.95,
+        "proof_depth": 0.9012,
+        "usefulness": 0.9006
+      },
+      "quality_score": 0.79664,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782690228.964466,
+      "strategy_count": 0,
+      "theorem_count": 24,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 24,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-29T00:21:32.530681+00:00",
+      "title": "Complete Characterization of Minimal Forbidden Partial\u2011Cube Minors for Daisy Cubes"
     }
   ]
 }
