@@ -387,7 +387,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Legendre's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f47f33b0",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -396,7 +396,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -1647,12 +1647,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the parametric harmonic zeta function \u03b6_H(s,a,b) = \u03a3_{n\u22650} H_n(a)/(n+b)^s where H_n(a) = \u03a3_{k=1}^n 1/(k+a) is the generalized harmonic number and \u03c8 denotes the digamma function, the Laurent expansion at the double pole s=1 satisfies: (1) the leading coefficient of (s-1)^{-2} equals 1, independent of both a and b; (2) the coefficient of (s-1)^{-1} equals -\u03c8(a+1), independent of b. This generalizes the known pole structure of the classical harmonic zeta function \u03b6_H(s) = \u03b6_H(s,0,1) and formalizes the residue computation announced in the paper for the parametric case.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2837",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27827v1",
+    "status": "available",
+    "timestamp": "2026-06-29T08:49:03.695794+00:00",
+    "title": "Laurent expansion coefficients of the parametric harmonic zeta function at its double pole s=1"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2837",
+    "id": "fd_2838",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -1667,7 +1681,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2838",
+    "id": "fd_2839",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
@@ -1681,7 +1695,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2839",
+    "id": "fd_2840",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
@@ -1696,7 +1710,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2840",
+    "id": "fd_2841",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
@@ -1711,7 +1725,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2841",
+    "id": "fd_2842",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
@@ -1726,7 +1740,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2842",
+    "id": "fd_2843",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
@@ -1740,7 +1754,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2843",
+    "id": "fd_2844",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
@@ -1755,7 +1769,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2844",
+    "id": "fd_2845",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -1770,13 +1784,28 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2845",
+    "id": "fd_2846",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27699v1",
     "status": "available",
     "timestamp": "2026-06-29T08:26:12.505105+00:00",
     "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer n \u2265 4, there exists a diagonal quantum Latin square of order n (DQLS(n)) with maximum cardinality n\u00b2, meaning all n\u00b2 entries are pairwise distinct up to a global phase, and both the main diagonal and anti-diagonal each form an orthonormal basis of the n-dimensional Hilbert space.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2847",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27758v1",
+    "status": "available",
+    "timestamp": "2026-06-29T08:49:17.434420+00:00",
+    "title": "Existence of Maximum Cardinality Diagonal Quantum Latin Squares for All Orders n \u2265 4"
   },
   {
     "consumed_by_exp_id": "",

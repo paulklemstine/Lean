@@ -516,7 +516,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f47f33b0",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -528,7 +528,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -2440,6 +2440,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT",
+      "math.CV"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the parametric harmonic zeta function ζ_H(s,a,b) = Σ_{n≥0} H_n(a)/(n+b)^s where H_n(a) = Σ_{k=1}^n 1/(k+a) is the generalized harmonic number and ψ denotes the digamma function, the Laurent expansion at the double pole s=1 satisfies: (1) the leading coefficient of (s-1)^{-2} equals 1, independent of both a and b; (2) the coefficient of (s-1)^{-1} equals -ψ(a+1), independent of b. This generalizes the known pole structure of the classical harmonic zeta function ζ_H(s) = ζ_H(s,0,1) and formalizes the residue computation announced in the paper for the parametric case.",
+    "domain_bridges": [
+      "Special functions (digamma, Hurwitz zeta)",
+      "Dirichlet series asymptotics",
+      "Laurent series of meromorphic functions"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2837",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Decompose H_n(a) = ψ(n+a+1) - ψ(a+1) via the digamma function to write ζ_H(s,a,b) = Σ_{n≥0} ψ(n+a+1)/(n+b)^s - ψ(a+1)·ζ(s,b). The first sum inherits its leading singularity from the asymptotic ψ(n+a+1) ~ log(n) as n→∞, contributing (s-1)^{-2} to the pole at s=1 (analogous to how -ζ'(s) contributes (s-1)^{-2}). The second term -ψ(a+1)·ζ(s,b) contributes -ψ(a+1)·(s-1)^{-1} from the simple pole of the Hurwitz zeta. Careful estimation of the digamma-weighted Dirichlet series using Mellin transform techniques confirms that subleading corrections from b and from the 1/(2n) term in the digamma asymptotic do not alter these leading two Laurent coefficients.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27827v1",
+    "status": "available",
+    "timestamp": "2026-06-29T08:49:03.695794+00:00",
+    "title": "Laurent expansion coefficients of the parametric harmonic zeta function at its double pole s=1"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "grunbaum_yaakobi_conjecture",
       "schilling2021coupon",
       "burchard_finite_geometry",
@@ -2457,7 +2483,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2837",
+    "id": "fd_2838",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2484,7 +2510,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2838",
+    "id": "fd_2839",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
@@ -2507,7 +2533,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2839",
+    "id": "fd_2840",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit pairwise reflection‑symmetric Latin squares for n = 2^k using affine permutations of the vector space (GF(2))^k, and prove non‑existence for other n by parity or orbit‑counting arguments.",
@@ -2536,7 +2562,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2840",
+    "id": "fd_2841",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the stability method used in the paper by analyzing the structure of near-extremal graphs for smaller $n$. Leverage the known exact result for $t=2$ ($n \\geq 6$) as a base case. Use spectral perturbation arguments to show that any deviation from the conjectured extremal graph reduces the spectral radius when $n \\geq 3t$. The key is to tighten the eigenvalue interlacing bounds and degree sequence estimates that currently require $n \\geq 28t-17$.",
@@ -2561,7 +2587,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2841",
+    "id": "fd_2842",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence argument via combinatorial dimension tracking",
@@ -2592,7 +2618,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2842",
+    "id": "fd_2843",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that the natural projection maps from the flag graph to both the 1-skeleton and 1-coskeleton graphs are covering maps that induce isomorphisms on automorphism groups for regular maniplexes, leveraging the fixed-point-free involution structure and vertex-transitivity properties established in the paper.",
@@ -2619,7 +2645,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2843",
+    "id": "fd_2844",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Watson's identity 2ρ(q) + ω(q) = T(q) to relate ρ(q) to the mock theta function ω(q) and a theta-eta product T(q). Obtain explicit Rademacher-type expansions with rigorous error bounds for the coefficients of ω(q) and T(q). Combine these to derive explicit inequalities for r(n) for all sufficiently large n, and verify the remaining small n by direct computation.",
@@ -2646,7 +2672,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2844",
+    "id": "fd_2845",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the automorphic Green's identity to weight k Eisenstein series and automorphic forms. Use the meromorphic continuation and functional equation of the weight k Eisenstein series. Show that the boundary terms in the Green's identity for the truncated weight k Eisenstein series yield the projection onto the cuspidal subspace and the Laurent coefficients at the poles.",
@@ -2678,7 +2704,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2845",
+    "id": "fd_2846",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow the strategy of the number field case: (1) establish that the unramified obstruction is contained in the descent obstruction (already shown in the paper for general smooth integral varieties), (2) prove the reverse inclusion by showing that any descent obstruction arising from a torsor under a commutative linear algebraic group can be detected by H^3_nr(X, Q/Z(2)), using the arithmetic dualities and Poitou-Tate-style exact sequences developed for p-adic function fields, (3) for rationally connected varieties, leverage the vanishing of higher unramified cohomology beyond degree 3 to show the descent obstruction cannot be strictly finer.",
@@ -2687,6 +2713,33 @@
     "status": "available",
     "timestamp": "2026-06-29T08:26:12.505105+00:00",
     "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "quant-ph"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer n ≥ 4, there exists a diagonal quantum Latin square of order n (DQLS(n)) with maximum cardinality n², meaning all n² entries are pairwise distinct up to a global phase, and both the main diagonal and anti-diagonal each form an orthonormal basis of the n-dimensional Hilbert space.",
+    "domain_bridges": [
+      "Linear Algebra",
+      "Finite Group Theory",
+      "Quantum Computing"
+    ],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2847",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish base cases n = 4, 5, 6, 7, 8 via direct constructions using row-quantum Latin rectangles and special complete mappings of finite groups, then apply the singular direct product construction recursively to extend existence to all n ≥ 4, leveraging the algebraic properties of complete mappings in groups of odd order and direct products for even orders.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27758v1",
+    "status": "available",
+    "timestamp": "2026-06-29T08:49:17.434420+00:00",
+    "title": "Existence of Maximum Cardinality Diagonal Quantum Latin Squares for All Orders n ≥ 4"
   },
   {
     "ambition_level": "extension",

@@ -16733,7 +16733,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -16749,7 +16749,7 @@
         "Computation"
       ],
       "id": "fd_0551",
-      "last_attempt_time": "2026-06-29T08:26:28.546226+00:00",
+      "last_attempt_time": "2026-06-07T22:40:19.256795+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -34923,7 +34923,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "unit_distance_graphs",
@@ -34947,7 +34947,7 @@
         "Geometry"
       ],
       "id": "fd_2810",
-      "last_attempt_time": "2026-06-29T08:26:17.624197+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture unique_critical_augmentation :\n  ∀ (v w : EuclideanSpace Fin 2 ℝ),\n    χ_gf (augment G27 v w) > 4 →\n    IsCongruent (augment G27 v w) G29",
       "lineage_refs": [],
@@ -35827,7 +35827,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Greaves, A., Jing, N., Zhu, J., \"Mixed Products of Modified Greaves‑Jing‑Zhu Operators\", arXiv:2309.12345",
         "Macdonald, I. G., Symmetric Functions and Hall Polynomials, 2nd ed., Oxford University Press, 1995",
@@ -35852,7 +35852,7 @@
         "Pythagorean"
       ],
       "id": "fd_2830",
-      "last_attempt_time": "2026-06-29T08:26:33.505729+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mixed_product_scalar_factor\\n  (t s u : ℚ[t, s, u])\\n  (ht : IsUnit t)\\n  (hs : IsUnit s)\\n  (hu : IsUnit u) :\\n  scalar_factor t s u =\\n    (qPochhammer u t) * (qPochhammer (-u) s) /\\n    ((qPochhammer (-u) t) * (qPochhammer u s)) :=\\n  by\\n    -- proof outline:\\n    -- 1. Use diagonal conjugation to relate the modified operators to the classical neutral operator.\\n    -- 2. Apply the known product formula for neutral operators (see [Greaves‑Jing‑Zhu]).\\n    -- 3. Simplify the resulting expression to the ratio of infinite q‑Pochhammer symbols.\\n    -- 4. Invoke Bailey‑pair identities to obtain the q‑expansion and its recurrence.\\n    -- 5. Verify palindromicity and non‑negativity after sign removal.\\n    sorry\\n",
       "lineage_refs": [],
@@ -36156,6 +36156,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.NT",
+        "math.CV"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For the parametric harmonic zeta function ζ_H(s,a,b) = Σ_{n≥0} H_n(a)/(n+b)^s where H_n(a) = Σ_{k=1}^n 1/(k+a) is the generalized harmonic number and ψ denotes the digamma function, the Laurent expansion at the double pole s=1 satisfies: (1) the leading coefficient of (s-1)^{-2} equals 1, independent of both a and b; (2) the coefficient of (s-1)^{-1} equals -ψ(a+1), independent of b. This generalizes the known pole structure of the classical harmonic zeta function ζ_H(s) = ζ_H(s,0,1) and formalizes the residue computation announced in the paper for the parametric case.",
+      "domain_bridges": [
+        "Special functions (digamma, Hurwitz zeta)",
+        "Dirichlet series asymptotics",
+        "Laurent series of meromorphic functions"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2837",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Analysis.SpecialFunctions.Gamma.Beta\nimport Mathlib.Analysis.Complex.Bounds\n\nnoncomputable section\n\n/-- Generalized harmonic number H_n(a) = Σ_{k=1}^n 1/(k+a) -/\ndef harmonicNumberGen (n : ℕ) (a : ℂ) : ℂ := ∑ k in Finset.range (n + 1), 1 / (k + 1 + a)\n\n/-- Parametric harmonic zeta function ζ_H(s,a,b) = Σ_{n≥0} H_n(a)/(n+b)^s -/\nnoncomputable def harmonicZetaParam (s a b : ℂ) : ℂ :=\n  ∑' n, harmonicNumberGen n a / (n + b) ^ s\n\n/-- The leading Laurent coefficient of ζ_H(s,a,b) at s=1 is 1, independent of a and b. -/\ntheorem harmonic_zeta_leading_coeff (a b : ℂ) (ha : -1 < Re a) (hb : 0 < Re b) :\n    Tendsto (fun s => (s - 1) ^ 2 * harmonicZetaParam s a b)\n    (𝓝 1) (𝓝 1) := by\n  sorry\n\n/-- The subleading Laurent coefficient of ζ_H(s,a,b) at s=1 is -ψ(a+1), independent of b. -/\ntheorem harmonic_zeta_subleading_coeff (a b : ℂ) (ha : -1 < Re a) (hb : 0 < Re b) :\n    Tendsto (fun s => ((s - 1) ^ 2 * harmonicZetaParam s a b - 1) * (s - 1))\n    (𝓝 1) (𝓝 (-digamma (a + 1))) := by",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Decompose H_n(a) = ψ(n+a+1) - ψ(a+1) via the digamma function to write ζ_H(s,a,b) = Σ_{n≥0} ψ(n+a+1)/(n+b)^s - ψ(a+1)·ζ(s,b). The first sum inherits its leading singularity from the asymptotic ψ(n+a+1) ~ log(n) as n→∞, contributing (s-1)^{-2} to the pole at s=1 (analogous to how -ζ'(s) contributes (s-1)^{-2}). The second term -ψ(a+1)·ζ(s,b) contributes -ψ(a+1)·(s-1)^{-1} from the simple pole of the Hurwitz zeta. Careful estimation of the digamma-weighted Dirichlet series using Mellin transform techniques confirms that subleading corrections from b and from the 1/(2n) term in the digamma asymptotic do not alter these leading two Laurent coefficients.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27827v1",
+      "source_path": "http://arxiv.org/abs/2606.27827v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T08:49:03.695794+00:00",
+      "title": "Laurent expansion coefficients of the parametric harmonic zeta function at its double pole s=1"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "grunbaum_yaakobi_conjecture",
         "schilling2021coupon",
         "burchard_finite_geometry",
@@ -36179,7 +36224,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2837",
+      "id": "fd_2838",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_coverage_time_gt_random (q : ℕ) (hq : 2 ≤ q) : \n  expected_coverage_time (line_family (PG(2, q))) > expected_coverage_time (uniform_family (q^2 + q + 1) (q + 1))",
@@ -36225,7 +36270,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2838",
+      "id": "fd_2839",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem count_d_balanced_e_regular_partitions {d e w : ℕ} (hd : d > 1) (he : e > 1) (hdiv : (e - 3) % d = 0) : (Finset.card (setOf (d-balanced e-regular partitions in block of e-weight w))) = Nat.choose (w + (e - 3) / d) w := by sorry",
@@ -36267,7 +36312,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2839",
+      "id": "fd_2840",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃ (L : Fin n → Fin n → Fin n),\n  (∀ r : Fin n, Function.Bijective (fun x => L r x)) ∧\n  (∀ c1 c2 : Fin n, c1 ≠ c2 → (∀ p q : Fin n,\n    (∑ r : Fin n, if L r c1 = p ∧ L r c2 = q then 1 else 0) = (∑ r : Fin n, if L r c1 = q ∧ L r c2 = p then 1 else 0)))",
@@ -36315,7 +36360,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2840",
+      "id": "fd_2841",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem signless_laplacian_tK3_free_extremal_improved_bound {t n : ℕ} (ht : t ≥ 2) (hn : n ≥ 3 * t) :\n  UniqueExtremalGraph (tK3Free t) (signlessLaplacianSpectralRadius) n =\n    KJoin (CompleteGraph (t-1)) (CompleteBipartiteGraph ⌊(n-t+1)/2⌋ ⌈(n-t+1)/2⌉) := by sorry",
@@ -36359,7 +36404,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2841",
+      "id": "fd_2842",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The nerve theorem applies to finite simplicial complexes and preserves finiteness properties",
@@ -36409,7 +36454,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2842",
+      "id": "fd_2843",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regular_maniplex_automorphism_equivalence (n : ℕ) (M : Maniplex n) (h : Regular M) : Isomorphism (AutomorphismGroup M) (AutomorphismGroup (FlagGraph M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneSkeleton M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneCoskeleton M))",
@@ -36455,7 +36500,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2843",
+      "id": "fd_2844",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def r (n : ℕ) : ℤ := -- coefficient of q^n in ρ(q) as defined in the paper\n  sorry\n\ntheorem sign_law_rho : ∀ n : ℕ, r (3 * n) > 0 ∧ r (3 * n + 1) ≤ 0 ∧ r (3 * n + 2) ≤ 0 ∧ (r (3 * n + 1) = 0 → n = 1) ∧ (r (3 * n + 2) = 0 → n = 0 ∨ n = 2 ∨ n = 3 ∨ n = 6) := by sorry",
@@ -36501,7 +36546,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2844",
+      "id": "fd_2845",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem franke_weight_k (k : ℤ) : ∀ (F : AutomorphicForm k), ∃ (F_cusp : CuspForm k) (c : Finsupp ℕ (LaurentCoeff (EisensteinSeries k))), F = F_cusp + ∑ i, c i • i := by sorry",
@@ -36552,7 +36597,7 @@
         "Geometry",
         "Algebra"
       ],
-      "id": "fd_2845",
+      "id": "fd_2846",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem unramified_equals_descent_rc {K : Type*} [Field K] [IsPAdicFunctionField K] {X : Scheme K} [IsSmooth X] [IsProper X] [IsGeometricallyIntegral X] [IsRationallyConnected X] : adelicPointsUnramifiedObstruction X = adelicPointsDescentObstruction X := by sorry",
@@ -36571,6 +36616,52 @@
       "thread_id": "",
       "timestamp": "2026-06-29T08:26:12.505105+00:00",
       "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "quant-ph"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer n ≥ 4, there exists a diagonal quantum Latin square of order n (DQLS(n)) with maximum cardinality n², meaning all n² entries are pairwise distinct up to a global phase, and both the main diagonal and anti-diagonal each form an orthonormal basis of the n-dimensional Hilbert space.",
+      "domain_bridges": [
+        "Linear Algebra",
+        "Finite Group Theory",
+        "Quantum Computing"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Physics"
+      ],
+      "id": "fd_2847",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem mcdqls_exists (n : ℕ) (h : n ≥ 4) : ∃ (L : Fin n → Fin n → Vector ℂ n), IsMaxCardDiagQuantumLatinSquare L ∧ ∀ i j k l, (i ≠ k ∨ j ≠ l) → ¬IsGlobalPhaseEquiv (L i j) (L k l) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish base cases n = 4, 5, 6, 7, 8 via direct constructions using row-quantum Latin rectangles and special complete mappings of finite groups, then apply the singular direct product construction recursively to extend existence to all n ≥ 4, leveraging the algebraic properties of complete mappings in groups of odd order and direct products for even orders.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27758v1",
+      "source_path": "http://arxiv.org/abs/2606.27758v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T08:49:17.434420+00:00",
+      "title": "Existence of Maximum Cardinality Diagonal Quantum Latin Squares for All Orders n ≥ 4"
     },
     {
       "ambition_level": "extension",
@@ -41372,11 +41463,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f47f33b0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41387,7 +41478,7 @@
         "NumberTheory"
       ],
       "id": "seed_331",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T08:49:20.451207+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -41401,7 +41492,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432603+00:00",
       "title": "Perfect Numbers: Structure of Even Perfects"
@@ -42267,7 +42358,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -42283,7 +42374,7 @@
         "Algebra"
       ],
       "id": "seed_354",
-      "last_attempt_time": "2026-06-29T08:26:22.918136+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:28:04.161589+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
