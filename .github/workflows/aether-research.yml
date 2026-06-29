@@ -102,4 +102,4 @@ jobs:
           git push --force origin catalog-lean || true
 
       - name: Update website index
-        run: cd Catalog/Applications/Packages && python3 update_index.py
+        run: cd Packages && python3 update_index.py
