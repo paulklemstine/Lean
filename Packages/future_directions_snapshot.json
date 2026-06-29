@@ -3865,6 +3865,34 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "projective_planes",
+      "coupon_collector_problem",
+      "balanced_incomplete_block_designs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every prime power q ≥ 2, consider the fair mechanism given by uniformly sampling lines of the projective plane PG(2,q), where n = q² + q + 1 is the number of points and ℓ = q + 1 is the line size. The expected coverage time of this projective plane mechanism strictly exceeds that of the full model (uniform sampling of all ℓ-subsets of an n-element set). This generalizes the paper's Fano plane (q=2) counterexample to the Grunbaum–Yaakobi conjecture and posits that projective plane line sets systematically yield slower fair mechanisms than the full model across all orders.",
+    "domain_bridges": [
+      "probability_theory",
+      "finite_geometry",
+      "combinatorial_designs"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2905",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Express the expected coverage time as E[T] = Σ_{k≥0} (1 - P_k), where P_k is the probability that k independent draws cover all n coupons. For the full model, P_k is computed via inclusion-exclusion over all ℓ-subsets. For PG(2,q), exploit the fact that any two lines meet in exactly one point, which increases overlap between draws relative to the full model where pairwise overlaps are smaller and more variable. Specifically, the probability two random lines share a specific point is 1/(q²+q+1)·1/q in PG(2,q), versus the uniform pairwise overlap in the full model. Use generating functions or the inclusion-exclusion structure to show the projective plane's higher-order intersection pattern yields uniformly lower coverage probabilities P_k at each k, hence a larger sum and strictly greater E[T]. An inductive argument on q, combined with the known closed-form for E[T] under BIBD-type mechanisms, may reduce the inequality to an algebraic statement about the parameters.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28216v1",
+    "status": "available",
+    "timestamp": "2026-06-29T22:13:18.479634+00:00",
+    "title": "Projective Plane Coupon Mechanisms Dominate the Full Model"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
