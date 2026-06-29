@@ -10,7 +10,7 @@ window.PACKAGE_INDEX = [
     "filename": "unramified_obstruction_equals_descent_obstruction_.json",
     "pkg_num": 204,
     "quality": "partial",
-    "quality_score": 0.5394642553191489,
+    "quality_score": 0.6155999999999999,
     "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
   },
   {
