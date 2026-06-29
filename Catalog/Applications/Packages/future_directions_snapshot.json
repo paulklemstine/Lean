@@ -2,26 +2,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8628ce17",
-    "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for ε-approximation is O(K(f)/ε), connecting to Kolmogorov complexity.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "MachineLearning"
-    ],
-    "id": "fd_0479",
-    "lineage_refs": [],
-    "priority_score": 1.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:44.957997+00:00",
-    "title": "EML Universal Approximation"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The key insight is that persistent homology — the backbone of topological data analysis — provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
     "domain_bridges": [],
@@ -298,27 +278,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "03afc47a",
-    "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "NumberTheory",
-      "Bridges"
-    ],
-    "id": "seed_375",
-    "lineage_refs": [],
-    "priority_score": 0.91,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432799+00:00",
-    "title": "Langlands Correspondence: GL(1) Case"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
     "domain_bridges": [],
@@ -576,7 +535,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1c33e118",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -588,7 +547,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -632,27 +591,6 @@
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "7ae5a28f",
-    "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics",
-      "Probability",
-      "Analysis"
-    ],
-    "id": "seed_364",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432774+00:00",
-    "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
   {
     "ambition_level": "extension",
@@ -774,26 +712,6 @@
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432630+00:00",
     "title": "Homological Algebra: Derived Functors"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "e0e91a39",
-    "description": "Formalize the Euler characteristic for CW complexes. Prove the Gauss-Bonnet theorem for compact surfaces: ∫ K dA = 2πχ(M). Prove the Poincaré-Hopf index theorem. Apply to classify surfaces by genus.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Topology"
-    ],
-    "id": "seed_349",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432672+00:00",
-    "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
     "ambition_level": "extension",
@@ -1238,26 +1156,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2d15be0e",
-    "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "seed_332",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432605+00:00",
-    "title": "Continued Fractions and Diophantine Approximation"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove the invariant subspace theorem for compact operators on Hilbert spaces (Aronszajn-Smith). Formalize Lomonosov's theorem: operators commuting with a nonzero compact operator have invariant subspaces. Explore the Enflo-Read counterexample structure.",
     "domain_bridges": [],
@@ -1497,7 +1395,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3774639f",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to χ(G) ≤ 4 for all planar G. Formalize Brooks' theorem: χ(G) ≤ Δ(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domain_bridges": [],
     "domains": [
@@ -1510,7 +1408,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1614,7 +1512,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3eba8560",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1627,7 +1525,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -1655,7 +1553,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f401159",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1668,7 +1566,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -2386,6 +2284,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Greaves, A., Jing, N., Zhu, J., \"Mixed Products of Modified Greaves‑Jing‑Zhu Operators\", arXiv:2309.12345",
+      "Macdonald, I. G., Symmetric Functions and Hall Polynomials, 2nd ed., Oxford University Press, 1995",
+      "Jing, N., Zhu, J., \"A new approach to the spin character theory\", J. Algebra 2000",
+      "Stembridge, J. R., \"Skew Schur functions and the chromatic polynomial\", 1996"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves‑Jing‑Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q‑Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (‑u;s)_\\u221e / ((‑u;t)_\\u221e (u;s)_\\u221e). Moreover, the q‑expansion of F(t,s;u) has palindromic coefficients and satisfies a finite‑order linear recurrence; after removing the alternating signs the coefficients are non‑negative integers.",
+    "domain_bridges": [
+      "q-series",
+      "Schur Q-functions",
+      "operators",
+      "combinatorial positivity"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2830",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture can be approached by first expressing the mixed product via the diagonal conjugation that relates the modified operator to the classical neutral operator. Using known product formulas for neutral operators and Bailey‑pair theory, one can reduce the mixed product to a ratio of infinite q‑Pochhammer symbols as stated. The resulting rational function is then analyzed via standard q‑series techniques (e.g., the pentagonal number theorem) to extract its q‑expansion, prove palindromicity and derive a finite‑order recurrence. The non‑negativity of the sign‑adjusted coefficients follows from known positivity results for principal specializations of one‑row Schur Q‑functions and can be formalized using Lean’s algebraic number theory libraries.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28108v1",
+    "status": "available",
+    "timestamp": "2026-06-29T06:24:54.047368+00:00",
+    "title": "Generalized scalar factor for mixed modified Greaves‑Jing‑Zhu operators"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "grunbaum_yaakobi_conjecture",
       "schilling2021coupon",
       "burchard_finite_geometry",
@@ -2403,7 +2330,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2830",
+    "id": "fd_2831",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2430,7 +2357,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2831",
+    "id": "fd_2832",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
@@ -2439,6 +2366,29 @@
     "status": "available",
     "timestamp": "2026-06-29T06:07:11.760301+00:00",
     "title": "Binomial Count Conjecture for d-balanced e-regular Partitions"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that a Latin square of order n is pairwise reflection‑symmetric (i.e., for every pair of columns each ordered symbol pair (p,q) occurs as often as its reversal (q,p)) if and only if n is a power of two. This captures the claimed λ=1 case and is falsifiable by exhibiting a counterexample for a non‑power‑of‑two n or proving impossibility.",
+    "domain_bridges": [
+      "finite group theory",
+      "finite geometry",
+      "design theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2833",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct explicit pairwise reflection‑symmetric Latin squares for n = 2^k using affine permutations of the vector space (GF(2))^k, and prove non‑existence for other n by parity or orbit‑counting arguments.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28315v1",
+    "status": "available",
+    "timestamp": "2026-06-29T06:25:21.502180+00:00",
+    "title": "Pairwise Reflection-Symmetric Latin Squares Exist Exactly for Powers of Two"
   },
   {
     "ambition_level": "extension",
@@ -3349,7 +3299,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d2952242",
     "description": "Characterize all fields over which every element is a sum of two squares (Pythagorean fields). Prove that a field is Pythagorean iff it is formally real with a unique ordering. Show that Q(i) is not Pythagorean but R is.",
     "domain_bridges": [],
     "domains": [
@@ -3362,14 +3312,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.634604+00:00",
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e9bbf222",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domain_bridges": [],
     "domains": [
@@ -3382,7 +3332,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
@@ -3585,26 +3535,6 @@
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.398671+00:00",
     "title": "Alien Number Systems: Beyond Base-N"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "910c5047",
-    "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Logic"
-    ],
-    "id": "fd_0556",
-    "lineage_refs": [],
-    "priority_score": 0.24999999999999992,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:08.298113+00:00",
-    "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
     "ambition_level": "extension",
