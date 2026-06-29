@@ -831,7 +831,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:07.786215+00:00",
     "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
   },
@@ -1036,7 +1036,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d63f7dca",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -1050,7 +1050,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1395,7 +1395,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3774639f",
+    "consumed_by_exp_id": "",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to χ(G) ≤ 4 for all planar G. Formalize Brooks' theorem: χ(G) ≤ Δ(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domain_bridges": [],
     "domains": [
@@ -1408,7 +1408,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1512,7 +1512,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3eba8560",
+    "consumed_by_exp_id": "",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1525,7 +1525,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -1553,7 +1553,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2f401159",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1566,7 +1566,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -2420,6 +2420,35 @@
     "title": "Symmetry of the Natural Extension of the Triangle Map via Young Conjugation"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Bollobas-Janson-Riordan inhomogeneous random graphs",
+      "Norros-Reittu graph",
+      "Dereich-Mörters preferential attachment",
+      "Bhamidi-van der Hofstad-Hooghiemstra scale-free percolation"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any sequence of growing preferential attachment graphs with degree exponent τ ∈ (2,3) whose local weak limit is a continuous-time branching process with power-law offspring distribution of exponent τ, the bond percolation critical window and component size scalings are identical to those of the inhomogeneous random graph with preferential attachment kernel. Specifically, the critical retention probability satisfies p_c(n) = Θ(n^((τ-3)/(2τ-2))), and the largest component size L₁(p_n) exhibits three regimes: (1) p_n ≫ p_c(n) ⇒ L₁(p_n) = Θ_P(n p_n^((τ-1)/(3-τ))) with uniqueness; (2) n^(1/(1-τ)) ≪ p_n ≪ p_c(n) ⇒ L₁(p_n) = Θ_P(n^(1/(τ-1)) p_n) with non-uniqueness; (3) p_n = Θ(p_c(n)) ⇒ L₁(p_n)/√n converges in distribution to a non-degenerate limit characterized by a subcritical Norros-Reittu graph.",
+    "domain_bridges": [
+      "statistical physics (percolation theory)",
+      "network science (scale-free networks)",
+      "branching processes (continuous-time)"
+    ],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_2835",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish local weak convergence of the preferential attachment graph sequence to a continuous-time branching process with power-law offspring. Develop a coupling between bond percolation on the finite graphs and a percolated branching process. Use the objective method to transfer the critical window analysis from the solvable inhomogeneous random graph model to the general class, leveraging the universality of the scaling limits of the associated exploration processes.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27844v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:54:37.496843+00:00",
+    "title": "Universality of critical percolation scaling for preferential attachment graphs with infinite variance"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "grunbaum_yaakobi_conjecture",
@@ -2439,7 +2468,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2835",
+    "id": "fd_2836",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2466,7 +2495,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2836",
+    "id": "fd_2837",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
@@ -2489,7 +2518,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2837",
+    "id": "fd_2838",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit pairwise reflection‑symmetric Latin squares for n = 2^k using affine permutations of the vector space (GF(2))^k, and prove non‑existence for other n by parity or orbit‑counting arguments.",
@@ -2518,7 +2547,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2838",
+    "id": "fd_2839",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the stability method used in the paper by analyzing the structure of near-extremal graphs for smaller $n$. Leverage the known exact result for $t=2$ ($n \\geq 6$) as a base case. Use spectral perturbation arguments to show that any deviation from the conjectured extremal graph reduces the spectral radius when $n \\geq 3t$. The key is to tighten the eigenvalue interlacing bounds and degree sequence estimates that currently require $n \\geq 28t-17$.",
@@ -2543,7 +2572,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2839",
+    "id": "fd_2840",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence argument via combinatorial dimension tracking",
@@ -2574,7 +2603,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2840",
+    "id": "fd_2841",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that the natural projection maps from the flag graph to both the 1-skeleton and 1-coskeleton graphs are covering maps that induce isomorphisms on automorphism groups for regular maniplexes, leveraging the fixed-point-free involution structure and vertex-transitivity properties established in the paper.",
@@ -2601,7 +2630,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2841",
+    "id": "fd_2842",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Watson's identity 2ρ(q) + ω(q) = T(q) to relate ρ(q) to the mock theta function ω(q) and a theta-eta product T(q). Obtain explicit Rademacher-type expansions with rigorous error bounds for the coefficients of ω(q) and T(q). Combine these to derive explicit inequalities for r(n) for all sufficiently large n, and verify the remaining small n by direct computation.",
@@ -2610,6 +2639,33 @@
     "status": "available",
     "timestamp": "2026-06-29T07:38:26.099950+00:00",
     "title": "Finite sign conjecture for Ramanujan's third order mock theta function ρ(q)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Franke_firstPaper",
+      "Langlands-Spectral",
+      "Waldspurger1997Franke"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that every spherical (weight 0) automorphic form on SL(2,Z)\\H decomposes into a cusp form and a linear combination of Laurent coefficients of the standard Eisenstein series, using only Green's identity and basic analysis. We conjecture that the same direct proof strategy extends to automorphic forms of any integer weight k, yielding a decomposition of the space A_k(X) into cusp forms of weight k and the span of Laurent coefficients of the weight k Eisenstein series.",
+    "domain_bridges": [
+      "math.RT",
+      "math.SP"
+    ],
+    "domains": [
+      "Pythagorean",
+      "MachineLearning"
+    ],
+    "id": "fd_2843",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the automorphic Green's identity to weight k Eisenstein series and automorphic forms. Use the meromorphic continuation and functional equation of the weight k Eisenstein series. Show that the boundary terms in the Green's identity for the truncated weight k Eisenstein series yield the projection onto the cuspidal subspace and the Laurent coefficients at the poles.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27749v1",
+    "status": "available",
+    "timestamp": "2026-06-29T08:01:14.506352+00:00",
+    "title": "Generalization of Franke's theorem to higher weight automorphic forms via Green's identity"
   },
   {
     "ambition_level": "extension",
@@ -2710,7 +2766,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fdb1bb82",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -2723,7 +2779,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -3520,7 +3576,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d2952242",
+    "consumed_by_exp_id": "",
     "description": "Characterize all fields over which every element is a sum of two squares (Pythagorean fields). Prove that a field is Pythagorean iff it is formally real with a unique ordering. Show that Q(i) is not Pythagorean but R is.",
     "domain_bridges": [],
     "domains": [
@@ -3533,14 +3589,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.634604+00:00",
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e9bbf222",
+    "consumed_by_exp_id": "",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domain_bridges": [],
     "domains": [
@@ -3553,7 +3609,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
@@ -3680,7 +3736,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed30f379",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domain_bridges": [],
     "domains": [
@@ -3693,7 +3749,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
