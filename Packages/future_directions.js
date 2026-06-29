@@ -2079,7 +2079,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "99e4c1c9",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
@@ -2089,7 +2089,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
