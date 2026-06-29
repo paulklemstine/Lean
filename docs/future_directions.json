@@ -35322,6 +35322,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "math.RT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any odd prime p and any non-negative integer w, the number of 2-balanced p-regular partitions with p-core κ and p-weight w is independent of the p-core κ and equals C(w + (p-3)/2, w). A partition λ is 2-balanced and p-regular if it is p-regular (no part repeated p or more times) and every hook of λ whose hook length is divisible by p has even arm length.",
+      "domain_bridges": [
+        "partition_theory",
+        "representation_theory_of_symmetric_groups",
+        "crystal_bases"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2819",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem count_two_balanced_p_regular_in_block (p : ℕ) (hp : Odd p ∧ Prime p) (w : ℕ) (κ : Partition) (hκ : IsPCore p κ) : Fintype.card {λ : Partition | IsTwoBalanced p λ ∧ IsPRegular p λ ∧ HasPCore p λ κ ∧ HasPWeight p λ w} = Nat.choose (w + (p - 3) / 2) w := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First formalize partitions, hook lengths, arm lengths, p-regular partitions, p-cores, p-weight, and 2-balanced partitions. Prove the key structural lemma that crystal (affine) reflection operators preserve 2-balancedness, which implies the count depends only on p-weight w and not on the p-core. Then establish the bijection with RoCK blocks and compute the count via the explicit binomial formula, verifying it matches C(w + (p-3)/2, w).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28305v1",
+      "source_path": "http://arxiv.org/abs/2606.28305v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T04:45:41.044531+00:00",
+      "title": "Count of 2-balanced p-regular partitions in a block of p-weight w"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "MRVZ",
         "deGrey",
         "Er87"
@@ -35342,7 +35388,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2819",
+      "id": "fd_2820",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gfch_augmented_G27_gt_four : χ_gf (augment G_27 v_a v_b) > 4 := by\n  sorry",
@@ -35389,7 +35435,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2820",
+      "id": "fd_2821",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pg2_mechanism_slower_than_full {q : ℕ} (hq : q ≥ 2) (hq_prime_pow : IsPrimePow q) : expectedCoverageTime (lineSetPG2 q) > expectedCoverageTime (fullModel (q*q + q + 1) (q + 1)) := by sorry",

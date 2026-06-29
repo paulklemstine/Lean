@@ -2108,6 +2108,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "math.RT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime p and any non-negative integer w, the number of 2-balanced p-regular partitions with p-core κ and p-weight w is independent of the p-core κ and equals C(w + (p-3)/2, w). A partition λ is 2-balanced and p-regular if it is p-regular (no part repeated p or more times) and every hook of λ whose hook length is divisible by p has even arm length.",
+    "domain_bridges": [
+      "partition_theory",
+      "representation_theory_of_symmetric_groups",
+      "crystal_bases"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2819",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize partitions, hook lengths, arm lengths, p-regular partitions, p-cores, p-weight, and 2-balanced partitions. Prove the key structural lemma that crystal (affine) reflection operators preserve 2-balancedness, which implies the count depends only on p-weight w and not on the p-core. Then establish the bijection with RoCK blocks and compute the count via the explicit binomial formula, verifying it matches C(w + (p-3)/2, w).",
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:45:41.044531+00:00",
+    "title": "Count of 2-balanced p-regular partitions in a block of p-weight w"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MRVZ",
       "deGrey",
       "Er87"
@@ -2122,7 +2149,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2819",
+    "id": "fd_2820",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the geometric fractional chromatic number for finite point configurations in the plane. Then characterize all 23 extremal optimal geometric fractional colorings of G_27 (which form a polytope of affine dimension 11). Finally, verify that for every convex combination of these 23 extremal colorings, the two augmentation vertices cannot both be properly colored, forcing the geometric fractional chromatic number above 4. The verification reduces to checking finitely many linear constraints over the extremal colorings.",
@@ -2150,7 +2177,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2820",
+    "id": "fd_2821",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compare the two expected coverage times via their inclusion-exclusion representations. The key structural difference is that any two lines of PG(2,q) intersect in exactly one point, creating negative correlations that slow coverage, whereas random (q+1)-subsets have binomially-distributed intersection sizes. One might attempt to show that the Fano/Fano-like intersection structure maximizes the second-order inclusion-exclusion terms, or develop a coupling argument showing the projective plane mechanism is stochastically dominated in coverage by the full model.",
