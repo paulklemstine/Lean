@@ -12990,7 +12990,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -13006,7 +13006,7 @@
         "Logic"
       ],
       "id": "fd_0446",
-      "last_attempt_time": "2026-06-11T21:13:20.937034+00:00",
+      "last_attempt_time": "2026-06-29T05:16:29.067538+00:00",
       "last_reviewed_at": "2026-06-09T15:03:10.049285+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13020,7 +13020,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.050227+00:00",
       "title": "Homotopy Type Theory as Foundations"
@@ -13176,7 +13176,11 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
+<<<<<<< Updated upstream
       "status": "available",
+=======
+      "status": "completed",
+>>>>>>> Stashed changes
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.353451+00:00",
       "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
@@ -13731,7 +13735,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -13747,7 +13751,7 @@
         "Computation"
       ],
       "id": "fd_0465",
-      "last_attempt_time": "2026-06-10T09:34:39.571619+00:00",
+      "last_attempt_time": "2026-06-29T05:16:06.655186+00:00",
       "last_reviewed_at": "2026-06-09T14:59:44.907609+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13761,7 +13765,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:30.568365+00:00",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
@@ -35504,6 +35508,101 @@
       "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "Order Theory",
+        "Finite Group Theory"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any integer n ≥ 3, the smallest number of elements in a poset P whose automorphism group is isomorphic to the direct product of cyclic groups Z_2 × Z_{2^n} is exactly 2^{n+1} + 2. This formalizes the paper's main theorem.",
+      "domain_bridges": [
+        "Poset Automorphisms",
+        "Finite Group Actions",
+        "Extremal Combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2822",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem beta_Z2_times_Z2n (n : Nat) (hn : 3 ≤ n) :\n    beta (CyclicGroup 2 × CyclicGroup (2^n)) = 2^(n+1) + 2 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First, formalize the function β(G) as the minimum cardinality of a poset realizing a finite group G. Then, establish the upper bound by explicitly constructing the poset from a minimal Z_{2^n}-poset plus two incomparable minimal elements, proving its automorphism group is Z_2 × Z_{2^n}. Finally, prove the matching lower bound by showing that any poset realizing Z_2 × Z_{2^n} must contain an orbit of size 2^n and cannot have fewer than 2^{n+1} + 2 elements, utilizing orbit-stabilizer theorem and poset structural constraints.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28231v1",
+      "source_path": "http://arxiv.org/abs/2606.28231v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T05:15:16.665537+00:00",
+      "title": "Minimum Poset Size Realizing Z2 × Z_{2^n} as Automorphism Group"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "fractional_chromatic_number",
+        "unit_distance_graphs",
+        "Hadwiger-Nelson_problem",
+        "geometric_fractional_chromatic_number"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The 29-vertex unit-distance graph G₂₉, obtained by augmenting the 27-vertex Matolcsi–Ruzsa–Varga–Zsámboki configuration with two specific vertices as described by Davies, has geometric fractional chromatic number strictly greater than 4. We conjecture that this gap is explicitly quantifiable: χ_{gf}(G₂₉) ≥ 4 + 1/10⁶. Since the proof that χ_{gf}(G₂₉) > 4 proceeds by showing that none of the 23 extremal colorings of G₂₇ extend to G₂₉, and these colorings form a bounded polytope of affine dimension 11, a quantitative violation measure can in principle be extracted from the linear program. Such a bound would yield the first explicit numerical lower bound on χ_f(ℝ²) strictly above 4.",
+      "domain_bridges": [
+        "linear_programming",
+        "polyhedral_combinatorics",
+        "computational_optimization"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2823",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_ge_four_plus_eps :\n    ∃ ε > (0 : ℝ), ε ≥ 1 / 10^6 ∧ χ_gf augmented_G29 ≥ (4 : ℝ) + ε := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the 29-vertex augmented graph G₂₉ and the linear program for geometric fractional chromatic number. The key observation is that the 23 extremal colorings of G₂₇ form a compact polytope, and the two augmentation vertices impose constraints that no point in this polytope satisfies. By computing the minimum violation (maximum slack) over the polytope with respect to the augmentation constraints—either analytically via vertex enumeration or computationally via LP duality—one obtains an explicit ε > 0 such that χ_{gf}(G₂₉) ≥ 4 + ε.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28157v1",
+      "source_path": "http://arxiv.org/abs/2606.28157v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T05:16:01.938677+00:00",
+      "title": "Explicit quantitative lower bound on the geometric fractional chromatic number of the augmented G27 configuration"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -42104,7 +42203,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432799+00:00",
       "title": "Langlands Correspondence: GL(1) Case"
