@@ -2033,13 +2033,42 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2870",
+    "id": "fd_2871",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
     "status": "available",
     "timestamp": "2026-06-29T15:51:56.356300+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented unit-distance graph exceeds 4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integers $k \\ge 0$ and $n \\ge 3$, the minimum size of a poset realizing the non-cyclic abelian group $\\mathbb{Z}_2^k \\times \\mathbb{Z}_{2^n}$ as its automorphism group is $\\beta(\\mathbb{Z}_2^k \\times \\mathbb{Z}_{2^n}) = 2^{n+1} + 2k$. The upper bound follows from iteratively applying the paper's Proposition on $\\beta(A \\times \\mathbb{Z}_2)$, and the conjecture asserts that this iterative construction is strictly optimal.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2872",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T16:15:09.386788+00:00",
+    "title": "Minimum Size of Posets Realizing $\\mathbb{Z}_2^k \\times \\mathbb{Z}_{2^n}$ as Automorphism Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There exists a finite set of points in the Euclidean plane such that the unit-distance graph induced by these points has independence ratio strictly less than 1/4. This answers Erd\u0151s's 1987 question negatively, disproves Conjecture 1 of Matolcsi-Ruzsa-Varga-Zs\u00e1mboki, and implies that the fractional chromatic number of the plane \u03c7_f(\u211d\u00b2) > 4.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2873",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T16:16:05.000362+00:00",
+    "title": "Existence of a finite unit-distance graph in R\u00b2 with independence ratio below 1/4"
   },
   {
     "consumed_by_exp_id": "",
@@ -2509,7 +2538,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
-    "consumed_by_exp_id": "e94880cd",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
@@ -2519,7 +2548,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
