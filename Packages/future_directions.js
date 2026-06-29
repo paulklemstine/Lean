@@ -179,7 +179,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ABC Conjecture Formalization"
   },
   {
-    "consumed_by_exp_id": "98700ccf",
+    "consumed_by_exp_id": "",
     "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
     "domains": [
       "Algebra",
@@ -189,7 +189,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:12.343420+00:00",
     "title": "Baum-Connes Conjecture"
   },
@@ -328,7 +328,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "88d0b365",
+    "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
     "domains": [
       "Algebra"
@@ -337,7 +337,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:00.735432+00:00",
     "title": "Legendre's Conjecture"
   },
@@ -1703,7 +1703,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Maximum Cardinality Diagonal Quantum Latin Squares for All Orders n \u2265 4"
   },
   {
-    "consumed_by_exp_id": "1eb7e7f0",
+    "consumed_by_exp_id": "",
     "description": "For all integers m \u2265 3 and n \u2265 m with n \u2261 m (mod 2) and (m\u00b2 \u2212 2m + n) \u2223 n(n\u22121), there exists a Class-Uniformly Resolvable Design on n varieties with partition m^1 2^{(n\u2212m)/2} and \u03bb = 1. The paper establishes these as necessary conditions and proves existence when m is a power of an odd prime (via affine plane-derived construction) and when m = 2k for certain cyclic designs. The conjecture asserts these divisibility and parity conditions are also sufficient, making the existence problem completely solved.",
     "domains": [
       "Pythagorean",
@@ -1713,7 +1713,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27519v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T09:08:52.620285+00:00",
     "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
   },
@@ -1747,7 +1747,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
   {
-    "consumed_by_exp_id": "170495dc",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite unit-distance graph G in the Euclidean plane whose independence ratio \u03b1(G)/|V(G)| is strictly less than 1/4. This answers Erd\u0151s's 1987 question in the negative and implies that the fractional chromatic number of the plane \u03c7_f(\u211d\u00b2) > 4. The proof relies on showing that a two-vertex augmentation of the 27-vertex configuration G\u2082\u2087 from Matolcsi et al. yields a point configuration with geometric fractional chromatic number strictly greater than 4.",
     "domains": [
       "Geometry",
@@ -1757,7 +1757,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T10:03:39.505176+00:00",
     "title": "Existence of a finite unit-distance graph in the plane with independence ratio strictly less than 1/4"
   },
@@ -2068,7 +2068,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur Q-Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d0f1168d",
     "description": "Conjecture that all limit points \u03b3 < \u03c4^(1/2)+\u03c4^(-1/2) of \u03bc(G) for graphs G lie in the field extension Q(\u221a5).",
     "domains": [
       "Pythagorean",
@@ -2078,9 +2078,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T17:35:45.434135+00:00",
     "title": "All limit points of the largest matching roots below \u03c4^(1/2)+\u03c4^(-1/2) are in Q(\u221a5)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime p, the transversal difference number of the pair (G, H) where G = (Z/p\u00b2Z)\u00b2 and H = pG equals (2p-1)\u00b2. That is, the minimum cardinality of the difference support T - T over all transversals T of G/H is exactly (2p-1)\u00b2. The authors prove the unconditional lower bound \u03b4(G,H) \u2265 3p\u00b2 - p - 1 and provide computational, probabilistic, and fixed-polynomial evidence, but the exact value remains open.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2878",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27961v1",
+    "status": "available",
+    "timestamp": "2026-06-29T18:00:37.022156+00:00",
+    "title": "Same-Prime Square Plane Transversal Difference Number Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -2089,7 +2103,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2878",
+    "id": "fd_2879",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2103,7 +2117,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2879",
+    "id": "fd_2880",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
@@ -2117,7 +2131,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2880",
+    "id": "fd_2881",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
@@ -2132,13 +2146,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2881",
+    "id": "fd_2882",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
     "status": "available",
     "timestamp": "2026-06-29T17:36:05.830859+00:00",
     "title": "Extension of the extremal graph for tK3-free graphs to linear order"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalizing from the n=2 case proved in this paper, we conjecture that for every integer n \u2265 2 and every prime \u2113, the proportion of nonzero entries in the character table of GL_n(F_q) that are divisible by \u2113 (in the ring of algebraic integers) tends to 0 as q \u2192 \u221e over prime powers coprime to \u2113. Equivalently, the proportion of nonzero entries not divisible by \u2113 tends to 1. This contrasts sharply with the symmetric group case (Miller's conjecture, proved by Peluse\u2013Soundararajan) where almost every character table entry is divisible by any fixed prime.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2883",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28085v1",
+    "status": "available",
+    "timestamp": "2026-06-29T18:02:42.589051+00:00",
+    "title": "Asymptotic Indivisibility of Nonzero Character Values in GL_n(F_q)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2355,21 +2384,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
-  },
-  {
-    "consumed_by_exp_id": "3ec587ed",
-    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "id": "fd_0551",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.873771+00:00",
-    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
     "consumed_by_exp_id": "",

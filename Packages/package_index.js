@@ -4,11 +4,21 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-29T17:59:42Z",
+    "domain": "Applications",
+    "exp_id": "3ec587ed",
+    "filename": "eml_differential_equations_odes_with_exponential_l.json",
+    "pkg_num": 202,
+    "quality": "partial",
+    "quality_score": 0.624552,
+    "title": "Why Airy's Equation Has No Polynomial Solutions: A Degree-Counting Proof"
+  },
+  {
     "date": "2026-06-29T16:48:49Z",
     "domain": "Cryptography",
     "exp_id": "e94880cd",
     "filename": "elliptic_curve_cryptography_weil_pairing_and_bls_s.json",
-    "pkg_num": 202,
+    "pkg_num": 201,
     "quality": "partial",
     "quality_score": 0.65224,
     "title": "Bilinear Pairings and BLS Signatures: Short Aggregation, CDH-Tight Security, and the Rogue-Key Boundary"
@@ -18,7 +28,7 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra",
     "exp_id": null,
     "filename": "existential_theorem.json",
-    "pkg_num": 201,
+    "pkg_num": 200,
     "quality": "unrated",
     "quality_score": null,
     "title": "Close Proofs for Existential Theorem"
@@ -28,7 +38,7 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "fdb1bb82",
     "filename": "euler_mascheroni_constant_irrationality_approaches.json",
-    "pkg_num": 200,
+    "pkg_num": 199,
     "quality": "partial",
     "quality_score": 0.452,
     "title": "The Euler-Mascheroni Constant: Series, Integral, and Irrationality Approaches"
@@ -38,7 +48,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "e0366114",
     "filename": "excluded_minors_for_z_n_gainable_biased_graphs.json",
-    "pkg_num": 199,
+    "pkg_num": 198,
     "quality": "partial",
     "quality_score": 0.4133402545454546,
     "title": "Excluded Minors for Z/n-Gainable Biased Graphs: The Parallel-Class Slice and a Divisibility Law"
@@ -48,7 +58,7 @@ window.PACKAGE_INDEX = [
     "domain": "Shared",
     "exp_id": "c78b961d",
     "filename": "extremal_graph_theory_turn_and_szemerdi.json",
-    "pkg_num": 198,
+    "pkg_num": 197,
     "quality": "partial",
     "quality_score": 0.4367097362637363,
     "title": "Density Forces Structure: Turan, Kruskal-Katona, and Roth in Extremal Combinatorics"
@@ -58,7 +68,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "3c64518a",
     "filename": "complete_characterization_of_minimal_forbidden_par.json",
-    "pkg_num": 197,
+    "pkg_num": 196,
     "quality": "substantial",
     "quality_score": 0.79664,
     "title": "Complete Characterization of Minimal Forbidden Partial-Cube Minors for Daisy Cubes"
@@ -68,7 +78,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "12b5f4b2",
     "filename": "fano_plane_threshold_for_additive_strong_blocking_.json",
-    "pkg_num": 196,
+    "pkg_num": 195,
     "quality": "partial",
     "quality_score": 0.6807300000000001,
     "title": "Six of Seven: The Fano-Plane Threshold for Strong Blocking Sets (h = 1)"
@@ -78,7 +88,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "4f7ad584",
     "filename": "eml_universal_approximation.json",
-    "pkg_num": 195,
+    "pkg_num": 194,
     "quality": "partial",
     "quality_score": 0.6244,
     "title": "EML Universal Approximation: Density Meets Kolmogorov Incompressibility"
@@ -88,7 +98,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "60145036",
     "filename": "tightness_of_the_density_threshold_for_configurati.json",
-    "pkg_num": 194,
+    "pkg_num": 193,
     "quality": "partial",
     "quality_score": 0.3726553552511416,
     "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
@@ -98,7 +108,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "f589dfb5",
     "filename": "zero_knowledge_proofs_schnorr_protocol.json",
-    "pkg_num": 193,
+    "pkg_num": 192,
     "quality": "partial",
     "quality_score": 0.55062,
     "title": "Zero-Knowledge Proofs: The Schnorr Sigma-Protocol, Verified"
@@ -108,7 +118,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "cfea11f0",
     "filename": "optimal_transport_and_wasserstein_distances.json",
-    "pkg_num": 192,
+    "pkg_num": 191,
     "quality": "partial",
     "quality_score": 0.65976,
     "title": "Finite Optimal Transport and Wasserstein Distances"
@@ -118,7 +128,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "0a1f99db",
     "filename": "ramsey_theory_bounds_and_constructions.json",
-    "pkg_num": 191,
+    "pkg_num": 190,
     "quality": "partial",
     "quality_score": 0.57392,
     "title": "Ramsey Theory: The Ramsey Number as a Computable Function with Exact Values and Bounds"
@@ -128,7 +138,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "bfc7b99e",
     "filename": "the_non_existence_of_new_factorial_square_solution.json",
-    "pkg_num": 190,
+    "pkg_num": 189,
     "quality": "partial",
     "quality_score": 0.44995,
     "title": "The Non-Existence of New Factorial Square Solutions: Brocard's Problem"
@@ -138,7 +148,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "9ecd5b8c",
     "filename": "eml_interpolation_theory_stone_weierstrass_for_exp.json",
-    "pkg_num": 189,
+    "pkg_num": 188,
     "quality": "substantial",
     "quality_score": 0.7327899999999999,
     "title": "EML Interpolation Theory: Stone\u2013Weierstrass Density and Jackson-Type Rates for Exponential\u2013Logarithmic Networks"
@@ -148,7 +158,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "2b7b775f",
     "filename": "sufficient_condition_for_non_periodicity_of_awaite.json",
-    "pkg_num": 188,
+    "pkg_num": 187,
     "quality": "partial",
     "quality_score": 0.69949,
     "title": "A Diophantine Sufficient Condition for Wang-Stripe Aperiodicity"
@@ -158,7 +168,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "dfab202e",
     "filename": "contragredient_period_sign_formula_for_betti_whitt.json",
-    "pkg_num": 187,
+    "pkg_num": 186,
     "quality": "substantial",
     "quality_score": 0.8119999999999999,
     "title": "Contragredient Period Sign Formula for Betti\u2013Whittaker Periods of GL(n)"
@@ -168,7 +178,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "52a20f8b",
     "filename": "eml_kolmogorov_arnold_representation.json",
-    "pkg_num": 186,
+    "pkg_num": 185,
     "quality": "partial",
     "quality_score": 0.59432,
     "title": "EML Kolmogorov\u2013Arnold Separable Rank: Counting Outer exp Terms by Matrix Sampling"
@@ -178,7 +188,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "333b621d",
     "filename": "consciousness_as_integrated_information_mathematic.json",
-    "pkg_num": 185,
+    "pkg_num": 184,
     "quality": "substantial",
     "quality_score": 0.72324,
     "title": "Consciousness as Integrated Information: A Maximum Co-Active Coalition Model and Its NP-Hardness"
@@ -188,7 +198,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "3f78044a",
     "filename": "formal_verification_of_algorithms.json",
-    "pkg_num": 184,
+    "pkg_num": 183,
     "quality": "partial",
     "quality_score": 0.5920639999999999,
     "title": "Verified Binary Search as Threshold Finding, with a Bridge to the Factorial Number System"
@@ -198,7 +208,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "5773b0b9",
     "filename": "logic_physics_bridge_consistency_of_physical_theor.json",
-    "pkg_num": 183,
+    "pkg_num": 182,
     "quality": "partial",
     "quality_score": 0.5333106912442396,
     "title": "Logic\u2013Physics Bridge: The Proof-Theoretic Consistency of Physical Theories"
@@ -208,7 +218,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "23de9107",
     "filename": "continued_fractions_and_diophantine_approximation.json",
-    "pkg_num": 182,
+    "pkg_num": 181,
     "quality": "partial",
     "quality_score": 0.5948,
     "title": "Continued Fractions and Diophantine Approximation: The Lagrange Constant"
@@ -218,7 +228,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "8f5c44bc",
     "filename": "ml_universal_approximation_width_vs_depth_trade_of.json",
-    "pkg_num": 181,
+    "pkg_num": 180,
     "quality": "partial",
     "quality_score": 0.65133,
     "title": "ML Universal Approximation: A Two-Sided Depth-Width Separation via the Tent Map"
@@ -228,7 +238,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "203b440f",
     "filename": "frankls_union_closed_conjecture_partial_results.json",
-    "pkg_num": 180,
+    "pkg_num": 179,
     "quality": "partial",
     "quality_score": 0.68208,
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
@@ -238,7 +248,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "0ffedaae",
     "filename": "random_graphs_erds_rnyi_threshold_phenomena.json",
-    "pkg_num": 179,
+    "pkg_num": 178,
     "quality": "partial",
     "quality_score": 0.69956,
     "title": "Random Graphs: Erd\u0151s\u2013R\u00e9nyi Threshold Phenomena via the First and Second Moment Methods"
@@ -248,7 +258,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "37c46c25",
     "filename": "eml_fixed_point_theorem_exp_log_iteration_converge.json",
-    "pkg_num": 178,
+    "pkg_num": 177,
     "quality": "partial",
     "quality_score": 0.650914,
     "title": "The EML Fixed-Point Operator as a Certified ResNet Residual Layer"
@@ -258,7 +268,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "e44edf9a",
     "filename": "existence_of_non_trivial_boolean_degree_one_functi.json",
-    "pkg_num": 177,
+    "pkg_num": 176,
     "quality": "partial",
     "quality_score": 0.39200000000000007,
     "title": "Existence of Non-Trivial Boolean Degree-One Functions on the Grassmann Scheme J_q(n,2)"
@@ -268,7 +278,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "07ec4039",
     "filename": "eml_universal_approximation_density_of_eml_functio.json",
-    "pkg_num": 176,
+    "pkg_num": 175,
     "quality": "substantial",
     "quality_score": 0.77992,
     "title": "EML Universal Approximation on the Unit Cube: Coordinate-Exponential Density and Depth Compression of Monomials"
@@ -278,7 +288,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "8999eb20",
     "filename": "girth_bounds_minimum_distance_of_bipartite_graph_c.json",
-    "pkg_num": 175,
+    "pkg_num": 174,
     "quality": "substantial",
     "quality_score": 0.7782,
     "title": "Girth Bounds the Minimum Distance of a Bipartite Graph Code"
@@ -288,7 +298,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "ce5b4268",
     "filename": "complete_characterization_of_permutation_polynomia.json",
-    "pkg_num": 174,
+    "pkg_num": 173,
     "quality": "substantial",
     "quality_score": 0.71224,
     "title": "A Norm Criterion for Linearized Frobenius Permutation Polynomials over F_{p^2}"
@@ -298,7 +308,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "28bd8499",
     "filename": "extremal_l1_mass_of_normalized_1_lipschitz_grid_he.json",
-    "pkg_num": 173,
+    "pkg_num": 172,
     "quality": "partial",
     "quality_score": 0.643006,
     "title": "The Tallest Staircase: Extremal L1 Mass of Normalized 1-Lipschitz Grid Height Functions"
@@ -308,7 +318,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "461fdf74",
     "filename": "quantum_thermodynamics_landauers_principle_at_the_.json",
-    "pkg_num": 172,
+    "pkg_num": 171,
     "quality": "partial",
     "quality_score": 0.37835341176470594,
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
@@ -318,7 +328,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "872fa119",
     "filename": "non_finite_axiomatization_of_measurable_majorities.json",
-    "pkg_num": 171,
+    "pkg_num": 170,
     "quality": "substantial",
     "quality_score": 0.7050400000000001,
     "title": "The Incoherence Index as an Arithmetic Invariant: Order Formula and Realizable Spectrum"
@@ -328,7 +338,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "d1a8353e",
     "filename": "recurrence_relation_for_extended_eulerian_numbers.json",
-    "pkg_num": 170,
+    "pkg_num": 169,
     "quality": "partial",
     "quality_score": 0.56128,
     "title": "A One-Parameter Deformation of the Eulerian Numbers and Its Recurrence"
@@ -338,7 +348,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "72418ed5",
     "filename": "equality_cases_for_spectral_radius_bound_in_signed.json",
-    "pkg_num": 169,
+    "pkg_num": 168,
     "quality": "partial",
     "quality_score": 0.43096,
     "title": "Equality Cases for the Maximum-Degree Spectral Bound of Signed Graphs"
@@ -348,7 +358,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "0eb9ce9e",
     "filename": "degree_one_triviality_threshold_for_grassmann_sche.json",
-    "pkg_num": 168,
+    "pkg_num": 167,
     "quality": "partial",
     "quality_score": 0.63032,
     "title": "Degree-One Triviality Threshold for Grassmann Schemes: A Verified Gaussian-Binomial Backbone"
@@ -358,7 +368,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "3f134ce6",
     "filename": "existence_of_inverse_sprugnoli_arrays_with_closed_.json",
-    "pkg_num": 167,
+    "pkg_num": 166,
     "quality": "partial",
     "quality_score": 0.5751195652173913,
     "title": "Inverse Sprugnoli Arrays with Closed-Form Coefficients and Odd-Indexed Fibonacci Row Sums"
@@ -368,7 +378,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "6dda8a29",
     "filename": "close_proofs_these_conjectures_continue_the_resear.json",
-    "pkg_num": 166,
+    "pkg_num": 165,
     "quality": "partial",
     "quality_score": 0.6926119999999999,
     "title": "Primitive Prime Divisors of Fibonacci Numbers: A Hybrid Proof of Carmichael's Theorem"
@@ -378,7 +388,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "42ce6f47",
     "filename": "jacobian_conjecture_degree_2_and_3_cases.json",
-    "pkg_num": 165,
+    "pkg_num": 164,
     "quality": "partial",
     "quality_score": 0.518,
     "title": "The Jacobian Conjecture: A Verified Bridge Theorem with Degree-2 and Cubic-Linear Cases"
@@ -388,7 +398,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "ef629b7b",
     "filename": "row_sum_fibonacci_property_of_pascal_like_riordan_.json",
-    "pkg_num": 164,
+    "pkg_num": 163,
     "quality": "substantial",
     "quality_score": 0.722996,
     "title": "Row Sum Fibonacci Property of the Pascal-like Riordan Array"
@@ -398,7 +408,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "7e2e6a70",
     "filename": "a_sharp_upper_bound_for_uniform_vcdimension_famili.json",
-    "pkg_num": 163,
+    "pkg_num": 162,
     "quality": "partial",
     "quality_score": 0.36300923636363636,
     "title": "A Sharp Upper Bound for Uniform VC-Dimension Families via Layered Stars"
@@ -408,7 +418,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "4bc14309",
     "filename": "prismatic_purity_for_f_crystals_on_regular_schemes.json",
-    "pkg_num": 162,
+    "pkg_num": 161,
     "quality": "partial",
     "quality_score": 0.49242371929824563,
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
@@ -418,7 +428,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "fdadfe48",
     "filename": "the_most_natural_next_step_is_to_attack_the_residu.json",
-    "pkg_num": 161,
+    "pkg_num": 160,
     "quality": "partial",
     "quality_score": 0.5959,
     "title": "One Known Solution Linearizes the Riccati Equation"
@@ -428,7 +438,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "6ac1dc4e",
     "filename": "rainbow_triangle_density_lower_bound_conjecture.json",
-    "pkg_num": 160,
+    "pkg_num": 159,
     "quality": "partial",
     "quality_score": 0.34884000000000004,
     "title": "Rainbow Triangle Density: The Extremal Bound \u2308(n-1)(n-3)/8\u2309"
@@ -438,7 +448,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "00e5c711",
     "filename": "wall_menger_separator_optimality_conjecture.json",
-    "pkg_num": 159,
+    "pkg_num": 158,
     "quality": "partial",
     "quality_score": 0.61002,
     "title": "Wall-Menger Separator Optimality: Tight Min-Cut / Max-Disjoint-Paths for Grid Graphs"
@@ -448,7 +458,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "bac3bfcc",
     "filename": "statistical_mechanics_ising_model_phase_transition.json",
-    "pkg_num": 158,
+    "pkg_num": 157,
     "quality": "partial",
     "quality_score": 0.562048,
     "title": "Statistical Mechanics: The Exact Two-Point Correlation of the 1D Ising Chain"
@@ -458,20 +468,10 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "ce8c041d",
     "filename": "eml_transseries_asymptotic_expansions_beyond_power.json",
-    "pkg_num": 157,
+    "pkg_num": 156,
     "quality": "partial",
     "quality_score": 0.5816,
     "title": "EML Transseries: A Real-Exponent Hahn-Series Model with Dominance, Asymptotic Comparison, and Ingredients of Real Closure"
-  },
-  {
-    "date": "2026-06-28T09:38:06Z",
-    "domain": "Applications",
-    "exp_id": "c8e22e5a",
-    "filename": "eml_differential_equations_odes_with_exponential_l.json",
-    "pkg_num": 156,
-    "quality": "substantial",
-    "quality_score": 0.820584,
-    "title": "The Projective Galois Structure of the Riccati Equation for EML ODEs"
   },
   {
     "date": "2026-06-28T09:13:22Z",
@@ -2485,11 +2485,11 @@ window.PACKAGE_DB_INDEX = {
   },
   "eml_differential_equations_odes_with_exponential_l.json": {
     "domain": "Applications",
-    "exp_id": "c8e22e5a",
+    "exp_id": "3ec587ed",
     "source_exp_ids": [
       "seed"
     ],
-    "title": "The Projective Galois Structure of the Riccati Equation for EML ODEs"
+    "title": "Why Airy's Equation Has No Polynomial Solutions: A Degree-Counting Proof"
   },
   "eml_fixed_point_theorem_exp_log_iteration_converge.json": {
     "domain": "Applications",
@@ -5397,8 +5397,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "eml_differential_equations_odes_with_exponential_l",
       "primary_domain": "Bridges",
-      "priority_score": 0.820584,
-      "quality": "substantial",
+      "priority_score": 0.624552,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Projective Galois Structure of the Riccati Equation for EML ODEs"
     },

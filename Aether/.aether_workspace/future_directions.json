@@ -13150,7 +13150,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d7a2dfdf",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13176,7 +13176,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.353451+00:00",
       "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
@@ -13579,7 +13579,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7f917f25",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13605,7 +13605,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:30.236800+00:00",
       "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
@@ -16737,7 +16737,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3ec587ed",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16763,7 +16763,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.873771+00:00",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
@@ -38003,14 +38003,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "graph polynomials",
         "algebraic numbers in combinatorics"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d0f1168d",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38025,7 +38025,7 @@
         "Algebra"
       ],
       "id": "fd_2877",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T18:02:46.701125+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀γ ∈ ℝ, γ < τ^(1/2)+τ^(-1/2), ∃G_i | μ(G_i) → γ ⟹ γ ∈ ℚ(√5)",
       "lineage_refs": [],
@@ -38039,10 +38039,55 @@
       "research_mode": "team",
       "source_exp_id": "2606.28162v1",
       "source_path": "http://arxiv.org/abs/2606.28162v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T17:35:45.434135+00:00",
       "title": "All limit points of the largest matching roots below τ^(1/2)+τ^(-1/2) are in Q(√5)"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every odd prime p, the transversal difference number of the pair (G, H) where G = (Z/p²Z)² and H = pG equals (2p-1)². That is, the minimum cardinality of the difference support T - T over all transversals T of G/H is exactly (2p-1)². The authors prove the unconditional lower bound δ(G,H) ≥ 3p² - p - 1 and provide computational, probabilistic, and fixed-polynomial evidence, but the exact value remains open.",
+      "domain_bridges": [
+        "finite_abelian_groups",
+        "additive_combinatorics",
+        "number_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2878",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem same_prime_square_plane_transversal_difference_number (p : ℕ) (hp : Nat.Prime p) (hp_odd : Odd p) : δ (ZMod (p^2) × ZMod (p^2)) (p • ⊤ : AddSubgroup (ZMod (p^2) × ZMod (p^2))) = (2*p - 1)^2 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The conjecture requires matching lower and upper bounds. The upper bound direction likely involves constructing explicit transversals (graphs of F_p-linear maps Z/p²Z → Z/p²Z) whose difference support achieves cardinality (2p-1)². The lower bound requires improving the proven bound of 3p² - p - 1 up to (2p-1)² = 4p² - 4p + 1. Key tools would include: (1) the carry-corrected finite-field derivative decomposition of D(T) into fibres D_a(T) over the quotient Q ≅ F_p², (2) Kneser's theorem applied to cross-transversal sumset estimates, and (3) characterisation of when difference fibres achieve minimal cardinality, leveraging the structure of transversals as graphs of functions F_p² → F_p².",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27961v1",
+      "source_path": "http://arxiv.org/abs/2606.27961v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T18:00:37.022156+00:00",
+      "title": "Same-Prime Square Plane Transversal Difference Number Conjecture"
     },
     {
       "ambition_level": "extension",
@@ -38070,7 +38115,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2878",
+      "id": "fd_2879",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem G27_optimal_geometric_fractional_coloring_polytope :\n  let G27 := MRVZ_G27 -- the specific 27-vertex unit-distance graph\n  let P := optimal_geometric_fractional_coloring_polytope G27\n  P.extremePoints.card = 23 ∧ P.affineDimension = 11 :=\n  by sorry",
@@ -38116,7 +38161,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2879",
+      "id": "fd_2880",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_maximal_edge_count {k n : ℕ} (hk : 1 ≤ k) (hn : 2 * k + 2 ≤ n) {G : Graph ℕ} (hG : IsTauKMaximal k G) (hmin : ∀ v, 0 < G.degree v) (hdeg : ∀ v, G.degree v ≥ k + 1) : G.edgeCount = (k + 1) * (n - 1) - 1 := by sorry",
@@ -38161,7 +38206,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2880",
+      "id": "fd_2881",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pairwise_reflection_symmetryImplies_elementary_abelian {n : ℕ} (h_power : ∃ k, n = 2^k) (L : Matrix (Fin n) (Fin n) (Fin n)) [LatinSquare L] [PairwiseReflectionSymmetric L] : ∃ (G : Type*) [group G] [fintype G] [∀ g : G, g + g = 0] [hG : card G = n], L = matrix_of_group_multiplication G",
@@ -38206,7 +38251,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2881",
+      "id": "fd_2882",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_tK3_free_extremal_signless_laplacian (t : ℕ) (ht : t ≥ 2) (n : ℕ) (hn : n ≥ 2 * t) (G : SimpleGraph ℕ) (hG : Is_tK3_free t G) (hmax : ∀ (H : SimpleGraph ℕ), Is_tK3_free t H → signless_laplacian_spectral_radius H ≤ signless_laplacian_spectral_radius G) : G = (complete_graph (t-1)).join (complete_bipartite_graph (Nat.floor ((n - t + 1) / 2)) (Nat.ceil ((n - t + 1) / 2))) := by sorry",
@@ -38227,43 +38272,51 @@
       "title": "Extension of the extremal graph for tK3-free graphs to linear order"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "math.RT",
+        "math.NT",
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions\n\n## Completed work\n\n`Catalog/Physics/AiryPolynomial.lean` formalizes and fully proves two statements\nabout Airy's equation, working entirely inside the polynomial ring `ℝ[X]` using\nthe formal derivative `Polynomial.derivative` (no analysis, no real-valued\nfunctions, no EML term algebra). Both proofs are complete tactic proofs with no\n`sorry`, and each depends only on the standard axioms `propext`,\n`Classical.choice`, and `Quot.sound`.\n\n* **`airy_no_polynomial_solution`** — If `p : ℝ[X]` satisfies\n  `derivative (derivative p) = X * p`, then `p = 0`. The argument compares\n  natural degrees: when `p ≠ 0`, `X * p` has degree `natDegree p + 1`\n  (`natDegree_mul_X`), while `p''` has degree at most `natDegree p - 2`\n  (iterating `natDegree_derivative_le`). These bounds are incompatible.\n\n* **`airy_riccati_no_polynomial_solution`** — There is no `p : ℝ[X]` satisfying\n  the Riccati form `derivative (derivative p) + (derivative p) ^ 2 = X`. The\n  proof splits on `d = natDegree (derivative p)`. For `d = 0` the left-hand side\n  has degree `≤ 0`; for `d ≥ 1` the `(p')²` term strictly dominates\n  (`natDegree_add_eq_right_of_natDegree_lt`), giving degree `2 d ≥ 2`. Both\n  contradict `natDegree X = 1`.\n\n## Possible extensions\n\nThese are natural follow-ups, none of which are currently formalized:\n\n* **General second-order linear ODEs with polynomial coefficients.** Generalize\n  `airy_no_polynomial_solution` to equations of the form\n  `derivative (derivative p) = q * p` for a fixed nonzero `q : ℝ[X]` with\n  `1 ≤ natDegree q`, where the same degree-counting argument forces `p = 0`.\n\n* **Arbitrary base rings.** The proofs only use that the coefficient ring is a\n  nontrivial commutative ring without zero divisors (an integral domain) so that\n  the degree of a product is additive. Restating the results over a general\n  `[CommRing R] [IsDomain R]` (or `[Nontrivial R] [NoZeroDivisors R]`) would make\n  them more reusable.\n\n* **Higher-order analogues.** Investigate `p⁽ᵏ⁾ = X * p` and related Riccati-type\n  identities, where the same degree comparison (LHS degree `≤ n - k`, RHS degree\n  `n + 1`) again rules out nonzero polynomial solutions.\n\n* **Connection to power-series / formal solutions.** The Airy equation does admit\n  formal power series solutions; contrasting the polynomial non-existence results\n  here with the formal power series setting (`PowerSeries ℝ`) would be a\n  worthwhile companion development.\n",
-      "domain_bridges": [],
+      "description": "Generalizing from the n=2 case proved in this paper, we conjecture that for every integer n ≥ 2 and every prime ℓ, the proportion of nonzero entries in the character table of GL_n(F_q) that are divisible by ℓ (in the ring of algebraic integers) tends to 0 as q → ∞ over prime powers coprime to ℓ. Equivalently, the proportion of nonzero entries not divisible by ℓ tends to 1. This contrasts sharply with the symmetric group case (Miller's conjecture, proved by Peluse–Soundararajan) where almost every character table entry is divisible by any fixed prime.",
+      "domain_bridges": [
+        "representation_theory_of_finite_groups",
+        "algebraic_number_theory",
+        "asymptotic_statistics"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
-        "Logic"
+        "Pythagorean"
       ],
-      "id": "fd_2882",
+      "id": "fd_2883",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem nonzero_char_table_divisibility_GLn (n : ℕ) (hn : 2 ≤ n) (ℓ : ℕ) (hℓ : Nat.Prime ℓ) :\n    Filter.Tendsto\n      (fun q : ℕ ↦\n        let G := GL n (FintypeOf q)\n        let entries := charTablePairs G\n        let nonzero := entries.filter (fun ⟨χ, C⟩ ↦ χ C ≠ 0)\n        let divByℓ := nonzero.filter (fun ⟨χ, C⟩ ↦ ℓ ∣ algebraicIntNorm (χ C))\n        (divByℓ.card : ℝ) / nonzero.card)\n      Filter.atTop (𝓝 0) := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the n=2 analysis using Deligne-Lusztig theory for GL_n. The key insight from the n=2 case is that zero entries arise from representation-theoretic constraints (accounting for asymptotically half the table), while nonzero values are algebraic integers whose norms grow with q, making divisibility by a fixed prime ℓ asymptotically rare. For general n, one must show that the character values arising from generic Deligne-Lusztig characters evaluated on generic (regular semisimple) conjugacy classes are algebraic integers with sufficiently large norms that ℓ-divisibility becomes negligible. The angular equidistribution result for n=2 suggests that the arguments of nonzero character values become uniformly distributed, which should similarly force ℓ-divisibility proportions to vanish for all n.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "3ec587ed",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3ec587ed_retry1",
+      "source_exp_id": "2606.28085v1",
+      "source_path": "http://arxiv.org/abs/2606.28085v1",
       "status": "available",
-      "thread_id": "th_f8238f9a",
-      "timestamp": "2026-06-29T17:59:47.459361+00:00",
-      "title": "`Catalog/Physics/AiryPolynomial.lean` formalizes and fully proves two statements"
+      "thread_id": "",
+      "timestamp": "2026-06-29T18:02:42.589051+00:00",
+      "title": "Asymptotic Indivisibility of Nonzero Character Values in GL_n(F_q)"
     },
     {
       "ambition_level": "extension",
@@ -43692,7 +43745,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "032698b5",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43718,7 +43771,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432660+00:00",
       "title": "Kakeya Conjecture: Known Cases and Bounds"

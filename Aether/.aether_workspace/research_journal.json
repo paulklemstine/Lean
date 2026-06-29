@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "49f14a50",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Chromatic Polynomial Theory (Tropical domain)\n\nDerived from this cycle's findings (`Counting.lean`, `Brooks.lean`, `FourColor.lean`,\n`TropicalBridge.lean`).  Each conjecture is b",
-      "quality_score": 0.51904,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-06-26T11:12:48",
-      "title": "Graph Coloring: Chromatic Polynomial Theory"
-    },
-    {
       "cycle_id": "18edb6fb",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Secret Sharing: Shamir's Scheme and Verifiable Variants\n\nThis cycle added two files extending the catalog's `ShamirSecretSharing` and `FeldmanVSS`:\n\n- `ShamirLagrangeReconstructi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-29T16:49:02",
       "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+    },
+    {
+      "cycle_id": "3ec587ed",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Completed work\n\n`Catalog/Physics/AiryPolynomial.lean` formalizes and fully proves two statements\nabout Airy's equation, working entirely inside the polynomial ring `ℝ[X]` using",
+      "quality_score": 0.624552,
+      "sorry_count": 0,
+      "theorem_count": 2,
+      "timestamp": "2026-06-29T17:59:54",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79664
     }
   ],
-  "last_updated": "2026-06-29T16:49:02",
+  "last_updated": "2026-06-29T17:59:54",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "37c46c25",
-        "quality": 0.650914,
-        "theorems": 10,
-        "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-      },
-      {
         "cycle_id": "8f5c44bc",
         "quality": 0.65133,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.6244,
         "theorems": 24,
         "title": "EML Universal Approximation"
+      },
+      {
+        "cycle_id": "3ec587ed",
+        "quality": 0.624552,
+        "theorems": 2,
+        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
       }
     ],
     "Bridges": [

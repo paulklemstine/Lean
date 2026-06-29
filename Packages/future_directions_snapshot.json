@@ -238,7 +238,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "98700ccf",
+    "consumed_by_exp_id": "",
     "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
     "domain_bridges": [],
     "domains": [
@@ -251,7 +251,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:12.343420+00:00",
     "title": "Baum-Connes Conjecture"
   },
@@ -437,7 +437,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "88d0b365",
+    "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n² and (n+1)². Formalize known partial results on prime gaps and connect to the Cramér model of primes.",
     "domain_bridges": [],
     "domains": [
@@ -449,7 +449,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:00.735432+00:00",
     "title": "Legendre's Conjecture"
   },
@@ -2617,7 +2617,7 @@
       "parallel_class",
       "affine_plane"
     ],
-    "consumed_by_exp_id": "1eb7e7f0",
+    "consumed_by_exp_id": "",
     "description": "For all integers m ≥ 3 and n ≥ m with n ≡ m (mod 2) and (m² − 2m + n) ∣ n(n−1), there exists a Class-Uniformly Resolvable Design on n varieties with partition m^1 2^{(n−m)/2} and λ = 1. The paper establishes these as necessary conditions and proves existence when m is a power of an odd prime (via affine plane-derived construction) and when m = 2k for certain cyclic designs. The conjecture asserts these divisibility and parity conditions are also sufficient, making the existence problem completely solved.",
     "domain_bridges": [
       "finite_field_theory",
@@ -2635,7 +2635,7 @@
     "proof_strategy": "Follow Wilson's fundamental construction approach for PBDs: (1) formalize the necessary conditions (parity, divisibility), (2) establish a set of 'starter' CURDs via the paper's prime power and cyclic constructions, (3) develop a recursive construction showing that if CURDs exist for parameters (m₁, n₁) and (m₂, n₂), then a CURD exists for suitably combined parameters, (4) prove that the necessary conditions are closed under the recursive operations, (5) show every parameter pair satisfying the necessary conditions decomposes into starter instances.",
     "research_mode": "team",
     "source_exp_id": "2606.27519v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T09:08:52.620285+00:00",
     "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
   },
@@ -2700,7 +2700,7 @@
       "Golomb",
       "Hadwiger-Nelson"
     ],
-    "consumed_by_exp_id": "170495dc",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite unit-distance graph G in the Euclidean plane whose independence ratio α(G)/|V(G)| is strictly less than 1/4. This answers Erdős's 1987 question in the negative and implies that the fractional chromatic number of the plane χ_f(ℝ²) > 4. The proof relies on showing that a two-vertex augmentation of the 27-vertex configuration G₂₇ from Matolcsi et al. yields a point configuration with geometric fractional chromatic number strictly greater than 4.",
     "domain_bridges": [
       "Euclidean geometry",
@@ -2717,7 +2717,7 @@
     "proof_strategy": "Formalize the 27-vertex graph G₂₇ as an explicit point configuration in ℝ², characterize its 23 extremal geometric fractional colorings as a polytope of affine dimension 11, then show that adding two suitably chosen vertices yields a configuration where every fractional coloring assigning weight ≤ 1/4 per color class fails to cover all vertices, establishing χ_gf > 4. The blow-up steps from Matolcsi et al. then translate this into a finite unit-distance graph with α(G)/|V(G)| < 1/4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T10:03:39.505176+00:00",
     "title": "Existence of a finite unit-distance graph in the plane with independence ratio strictly less than 1/4"
   },
@@ -3299,7 +3299,7 @@
       "graph polynomials",
       "algebraic numbers in combinatorics"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d0f1168d",
     "description": "Conjecture that all limit points γ < τ^(1/2)+τ^(-1/2) of μ(G) for graphs G lie in the field extension Q(√5).",
     "domain_bridges": [
       "graph theory",
@@ -3315,9 +3315,35 @@
     "proof_strategy": "Show that μ(G) for graphs achieving γ < τ^(1/2)+τ^(-1/2) must satisfy algebraic constraints derived from the matching polynomial's coefficients, implying γ ∈ Q(√5).",
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T17:35:45.434135+00:00",
     "title": "All limit points of the largest matching roots below τ^(1/2)+τ^(-1/2) are in Q(√5)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime p, the transversal difference number of the pair (G, H) where G = (Z/p²Z)² and H = pG equals (2p-1)². That is, the minimum cardinality of the difference support T - T over all transversals T of G/H is exactly (2p-1)². The authors prove the unconditional lower bound δ(G,H) ≥ 3p² - p - 1 and provide computational, probabilistic, and fixed-polynomial evidence, but the exact value remains open.",
+    "domain_bridges": [
+      "finite_abelian_groups",
+      "additive_combinatorics",
+      "number_theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2878",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture requires matching lower and upper bounds. The upper bound direction likely involves constructing explicit transversals (graphs of F_p-linear maps Z/p²Z → Z/p²Z) whose difference support achieves cardinality (2p-1)². The lower bound requires improving the proven bound of 3p² - p - 1 up to (2p-1)² = 4p² - 4p + 1. Key tools would include: (1) the carry-corrected finite-field derivative decomposition of D(T) into fibres D_a(T) over the quotient Q ≅ F_p², (2) Kneser's theorem applied to cross-transversal sumset estimates, and (3) characterisation of when difference fibres achieve minimal cardinality, leveraging the structure of transversals as graphs of functions F_p² → F_p².",
+    "research_mode": "team",
+    "source_exp_id": "2606.27961v1",
+    "status": "available",
+    "timestamp": "2026-06-29T18:00:37.022156+00:00",
+    "title": "Same-Prime Square Plane Transversal Difference Number Conjecture"
   },
   {
     "ambition_level": "extension",
@@ -3336,7 +3362,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2878",
+    "id": "fd_2879",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate the geometric fractional chromatic number of G27 as a linear program over the restricted set of independent sets in the plane. Compute the polytope of optimal solutions by finding the convex hull of all feasible fractional colorings with total weight 4, and verify that this polytope has exactly 23 vertices and an affine dimension of 11.",
@@ -3363,7 +3389,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2879",
+    "id": "fd_2880",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction_on_n_and_case_analysis_on_min_degree",
@@ -3389,7 +3415,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2880",
+    "id": "fd_2881",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that the reflection symmetry conditions enforce the group operation to be commutative and every element to be self-inverse, thus requiring the group to be elementary abelian.",
@@ -3415,7 +3441,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2881",
+    "id": "fd_2882",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the proof of the main theorem by decreasing the threshold via a stability argument: show that any tK3-free graph with signless Laplacian spectral radius close to the extremal value must be structurally similar to the conjectured extremal graph, and then use induction on n together with eigenvalue interlacing to handle the smaller cases.",
@@ -3424,6 +3450,34 @@
     "status": "available",
     "timestamp": "2026-06-29T17:36:05.830859+00:00",
     "title": "Extension of the extremal graph for tK3-free graphs to linear order"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.RT",
+      "math.NT",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Generalizing from the n=2 case proved in this paper, we conjecture that for every integer n ≥ 2 and every prime ℓ, the proportion of nonzero entries in the character table of GL_n(F_q) that are divisible by ℓ (in the ring of algebraic integers) tends to 0 as q → ∞ over prime powers coprime to ℓ. Equivalently, the proportion of nonzero entries not divisible by ℓ tends to 1. This contrasts sharply with the symmetric group case (Miller's conjecture, proved by Peluse–Soundararajan) where almost every character table entry is divisible by any fixed prime.",
+    "domain_bridges": [
+      "representation_theory_of_finite_groups",
+      "algebraic_number_theory",
+      "asymptotic_statistics"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2883",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the n=2 analysis using Deligne-Lusztig theory for GL_n. The key insight from the n=2 case is that zero entries arise from representation-theoretic constraints (accounting for asymptotically half the table), while nonzero values are algebraic integers whose norms grow with q, making divisibility by a fixed prime ℓ asymptotically rare. For general n, one must show that the character values arising from generic Deligne-Lusztig characters evaluated on generic (regular semisimple) conjugacy classes are algebraic integers with sufficiently large norms that ℓ-divisibility becomes negligible. The angular equidistribution result for n=2 suggests that the arguments of nonzero character values become uniformly distributed, which should similarly force ℓ-divisibility proportions to vanish for all n.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28085v1",
+    "status": "available",
+    "timestamp": "2026-06-29T18:02:42.589051+00:00",
+    "title": "Asymptotic Indivisibility of Nonzero Character Values in GL_n(F_q)"
   },
   {
     "ambition_level": "extension",
@@ -3715,26 +3769,6 @@
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "3ec587ed",
-    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "id": "fd_0551",
-    "lineage_refs": [],
-    "priority_score": 0.7,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.873771+00:00",
-    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
     "ambition_level": "extension",
