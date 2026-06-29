@@ -35963,6 +35963,54 @@
       "title": "Refined Asymptotic for Non-Divisible Entries in GL₂(𝔽_q) Character Tables"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "ABC",
+        "Baker93",
+        "BS",
+        "T",
+        "FunctionFieldTheory",
+        "GaloisTheory"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any generalized Ankeny-Brauer-Chowla polynomial π_U(X) as defined in the paper, the associated linear recurrence sequences have exactly two sufficiently large common values, making the upper bound of two tight.",
+      "domain_bridges": [
+        "arithmetic_dynamics",
+        "diophantine_geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2833",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "∀ (π : Polynomial (U → ℚ) X : ℚ), (π ≡ generalized_ABC_polynomial), (seq1, seq2 : RecurrenceSequence π), (k : ℕ), (large_common_value : k ∈ ℤ ∧ k ≥ large_bound) → |{v ∈ ℤ | v ∈ seq1 ∧ v ∈ seq2 ∧ v ≥ k}| = 2",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend Baker's linear forms in logarithms to construct explicit examples achieving two large common values, while leveraging function field methods to rule out additional solutions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27885v1",
+      "source_path": "http://arxiv.org/abs/2606.27885v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T07:18:02.548627+00:00",
+      "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -35991,7 +36039,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2833",
+      "id": "fd_2834",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_coverage_time_gt_random (q : ℕ) (hq : 2 ≤ q) : \n  expected_coverage_time (line_family (PG(2, q))) > expected_coverage_time (uniform_family (q^2 + q + 1) (q + 1))",
@@ -36037,7 +36085,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2834",
+      "id": "fd_2835",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem count_d_balanced_e_regular_partitions {d e w : ℕ} (hd : d > 1) (he : e > 1) (hdiv : (e - 3) % d = 0) : (Finset.card (setOf (d-balanced e-regular partitions in block of e-weight w))) = Nat.choose (w + (e - 3) / d) w := by sorry",
@@ -36079,7 +36127,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2835",
+      "id": "fd_2836",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃ (L : Fin n → Fin n → Fin n),\n  (∀ r : Fin n, Function.Bijective (fun x => L r x)) ∧\n  (∀ c1 c2 : Fin n, c1 ≠ c2 → (∀ p q : Fin n,\n    (∑ r : Fin n, if L r c1 = p ∧ L r c2 = q then 1 else 0) = (∑ r : Fin n, if L r c1 = q ∧ L r c2 = p then 1 else 0)))",
@@ -36127,7 +36175,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2836",
+      "id": "fd_2837",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem signless_laplacian_tK3_free_extremal_improved_bound {t n : ℕ} (ht : t ≥ 2) (hn : n ≥ 3 * t) :\n  UniqueExtremalGraph (tK3Free t) (signlessLaplacianSpectralRadius) n =\n    KJoin (CompleteGraph (t-1)) (CompleteBipartiteGraph ⌊(n-t+1)/2⌋ ⌈(n-t+1)/2⌉) := by sorry",
@@ -36171,7 +36219,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2837",
+      "id": "fd_2838",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The nerve theorem applies to finite simplicial complexes and preserves finiteness properties",
@@ -36190,6 +36238,56 @@
       "thread_id": "",
       "timestamp": "2026-06-29T07:01:46.131020+00:00",
       "title": "A combinatorial approach to the effective nerve theorem"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "maniplex",
+        "graph automorphism group",
+        "flag graph",
+        "1-skeleton",
+        "1-coskeleton",
+        "regular symmetric object"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any regular n-maniplex M, the automorphism group of its flag graph, the automorphism group of its 1-skeleton graph, and the automorphism group of its 1-coskeleton graph are all isomorphic to each other and to the automorphism group of M itself. This conjecture formalizes the claim that different canonical graph representations of regular maniplexes preserve their symmetry structure.",
+      "domain_bridges": [
+        "abstract polytopes",
+        "maps on surfaces",
+        "Cayley graph theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2839",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem regular_maniplex_automorphism_equivalence (n : ℕ) (M : Maniplex n) (h : Regular M) : Isomorphism (AutomorphismGroup M) (AutomorphismGroup (FlagGraph M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneSkeleton M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneCoskeleton M))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Show that the natural projection maps from the flag graph to both the 1-skeleton and 1-coskeleton graphs are covering maps that induce isomorphisms on automorphism groups for regular maniplexes, leveraging the fixed-point-free involution structure and vertex-transitivity properties established in the paper.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27987v1",
+      "source_path": "http://arxiv.org/abs/2606.27987v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T07:19:40.613416+00:00",
+      "title": "Automorphism Group Equivalence for Regular Maniplex Graph Representations"
     },
     {
       "ambition_level": "extension",

@@ -1617,12 +1617,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any generalized Ankeny-Brauer-Chowla polynomial \u03c0_U(X) as defined in the paper, the associated linear recurrence sequences have exactly two sufficiently large common values, making the upper bound of two tight.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2833",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27885v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:18:02.548627+00:00",
+    "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2833",
+    "id": "fd_2834",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -1637,7 +1651,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2834",
+    "id": "fd_2835",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
@@ -1651,7 +1665,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2835",
+    "id": "fd_2836",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
@@ -1666,7 +1680,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2836",
+    "id": "fd_2837",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
@@ -1681,13 +1695,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2837",
+    "id": "fd_2838",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
     "status": "available",
     "timestamp": "2026-06-29T07:01:46.131020+00:00",
     "title": "A combinatorial approach to the effective nerve theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any regular n-maniplex M, the automorphism group of its flag graph, the automorphism group of its 1-skeleton graph, and the automorphism group of its 1-coskeleton graph are all isomorphic to each other and to the automorphism group of M itself. This conjecture formalizes the claim that different canonical graph representations of regular maniplexes preserve their symmetry structure.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2839",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27987v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:19:40.613416+00:00",
+    "title": "Automorphism Group Equivalence for Regular Maniplex Graph Representations"
   },
   {
     "consumed_by_exp_id": "",

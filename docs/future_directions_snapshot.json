@@ -2364,6 +2364,35 @@
     "title": "Refined Asymptotic for Non-Divisible Entries in GL₂(𝔽_q) Character Tables"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "ABC",
+      "Baker93",
+      "BS",
+      "T",
+      "FunctionFieldTheory",
+      "GaloisTheory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any generalized Ankeny-Brauer-Chowla polynomial π_U(X) as defined in the paper, the associated linear recurrence sequences have exactly two sufficiently large common values, making the upper bound of two tight.",
+    "domain_bridges": [
+      "arithmetic_dynamics",
+      "diophantine_geometry"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2833",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend Baker's linear forms in logarithms to construct explicit examples achieving two large common values, while leveraging function field methods to rule out additional solutions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27885v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:18:02.548627+00:00",
+    "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "grunbaum_yaakobi_conjecture",
@@ -2383,7 +2412,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2833",
+    "id": "fd_2834",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2410,7 +2439,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2834",
+    "id": "fd_2835",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
@@ -2433,7 +2462,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2835",
+    "id": "fd_2836",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit pairwise reflection‑symmetric Latin squares for n = 2^k using affine permutations of the vector space (GF(2))^k, and prove non‑existence for other n by parity or orbit‑counting arguments.",
@@ -2462,7 +2491,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2836",
+    "id": "fd_2837",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the stability method used in the paper by analyzing the structure of near-extremal graphs for smaller $n$. Leverage the known exact result for $t=2$ ($n \\geq 6$) as a base case. Use spectral perturbation arguments to show that any deviation from the conjectured extremal graph reduces the spectral radius when $n \\geq 3t$. The key is to tighten the eigenvalue interlacing bounds and degree sequence estimates that currently require $n \\geq 28t-17$.",
@@ -2487,7 +2516,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2837",
+    "id": "fd_2838",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence argument via combinatorial dimension tracking",
@@ -2496,6 +2525,37 @@
     "status": "available",
     "timestamp": "2026-06-29T07:01:46.131020+00:00",
     "title": "A combinatorial approach to the effective nerve theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "maniplex",
+      "graph automorphism group",
+      "flag graph",
+      "1-skeleton",
+      "1-coskeleton",
+      "regular symmetric object"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any regular n-maniplex M, the automorphism group of its flag graph, the automorphism group of its 1-skeleton graph, and the automorphism group of its 1-coskeleton graph are all isomorphic to each other and to the automorphism group of M itself. This conjecture formalizes the claim that different canonical graph representations of regular maniplexes preserve their symmetry structure.",
+    "domain_bridges": [
+      "abstract polytopes",
+      "maps on surfaces",
+      "Cayley graph theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2839",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that the natural projection maps from the flag graph to both the 1-skeleton and 1-coskeleton graphs are covering maps that induce isomorphisms on automorphism groups for regular maniplexes, leveraging the fixed-point-free involution structure and vertex-transitivity properties established in the paper.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27987v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:19:40.613416+00:00",
+    "title": "Automorphism Group Equivalence for Regular Maniplex Graph Representations"
   },
   {
     "ambition_level": "extension",
