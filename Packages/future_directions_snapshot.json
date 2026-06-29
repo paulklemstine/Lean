@@ -3110,6 +3110,60 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Perfect powers in sequences of polygonal numbers",
+      "Diophantine equations",
+      "Polygonal numbers"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The Diophantine equation P_30(n) = t^3, which expands to 14n^2 - 13n = t^3, has exactly five integer solutions (n, t): (0,0), (1,1), (13,13), (-1,3), and (-8,10). This corresponds to the k=13 case of Theorem 1(ii) in the paper, where s=2k+4=30.",
+    "domain_bridges": [
+      "Computational number theory",
+      "Algebraic number theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2868",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Reduce the problem to finding integer points on an elliptic curve, apply linear forms in logarithms to bound the solutions, and then perform exhaustive computational verification of the remaining finite range.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T15:39:46.199817+00:00",
+    "title": "Complete Integer Solutions to P_30(n) = t^3"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Fano plane",
+      "coupon collector problem",
+      "projective plane PG(2,2)",
+      "balanced incomplete block design",
+      "coverage process"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "In the coupon collector's problem with n=7 coupons and draws of size ℓ=3, the expected time to collect all coupons under the Fano plane mechanism (uniformly sampling from the 7 lines of PG(2,2)) strictly exceeds the expected time under the full model (uniformly sampling from all C(7,3)=35 three-element subsets). Both are fair mechanisms: each coupon appears in exactly 3 of the 7 Fano lines and in exactly 15 of the 35 triples. This disproves the Grunbaum-Yaakobi conjecture that the full model maximizes expected coverage time among fair mechanisms.",
+    "domain_bridges": [
+      "Finite geometry → Probability theory",
+      "Design theory → Markov chains and stopping times"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2869",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the Fano plane with its 7 points and 7 lines, each line a 3-element subset. Compute both expected coverage times via inclusion-exclusion: E[T] = Σ_{∅≠A⊆[7]} (-1)^{|A|+1}/(1 - p_A), where p_A = P(random draw avoids all elements of A). For the full model, p_A = C(7-|A|,3)/C(7,3). For the Fano mechanism, p_A = |{L ∈ FanoLines : L ∩ A = ∅}|/7. Both are fair so p_A agrees for |A|∈{1,2}. The inequality E[T_Fano] > E[T_full] reduces to verifying a strict rational number inequality after computing both finite sums. Key computational observation: for |A|=3, Fano avoidance probabilities split into 0 (7 collinear triples) and 1/7 (28 non-collinear triples), versus the uniform 4/35 in the full model, creating the asymmetry that makes Fano slower.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28216v1",
+    "status": "available",
+    "timestamp": "2026-06-29T15:41:31.789327+00:00",
+    "title": "Fano Plane Mechanism Strictly Dominates Full Model in Expected Coverage Time"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
