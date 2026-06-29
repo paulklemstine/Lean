@@ -36798,7 +36798,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "pairwise_balanced_design",
         "resolvable_design",
@@ -36809,7 +36809,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "1eb7e7f0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36826,7 +36826,7 @@
         "Algebra"
       ],
       "id": "fd_2851",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T16:29:29.258769+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem curd_partition_m1_2k_exists_iff {m n : ℕ} (hm : m ≥ 3) (hn : n ≥ m) :\n    (∃ (X : Type) (F : Finset X) (_ : F.card = n)\n       (blocks : Finset (Finset X))\n       (classes : Finset (Finset (Finset X))),\n     -- each class partitions F\n     (∀ c ∈ classes, ∀ x ∈ F, ∃! b ∈ c, x ∈ b) ∧\n     -- each class has block structure m^1 2^{(n-m)/2}\n     (∀ c ∈ classes, ∃! b ∈ c, b.card = m) ∧\n     (∀ c ∈ classes, ∀ b ∈ c, b ≠ (⟨_, by aesop⟩ : Finset X) → b.card = 2) ∧\n     -- each pair in exactly one block\n     (∀ x ∈ F, ∀ y ∈ F, x ≠ y →\n       (∃! b ∈ blocks, x ∈ b ∧ y ∈ b)) ∧\n     -- blocks = union of classes\n     blocks = classes.biUnion id)\n    ↔ (n % 2 = m % 2 ∧ (m * m - 2 * m + n) ∣ n * (n - 1)) :=\n  sorry",
       "lineage_refs": [],
@@ -36840,7 +36840,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27519v1",
       "source_path": "http://arxiv.org/abs/2606.27519v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T09:08:52.620285+00:00",
       "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
@@ -36941,7 +36941,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "Golomb",
@@ -36949,7 +36949,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "170495dc",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36965,7 +36965,7 @@
         "Logic"
       ],
       "id": "fd_2854",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T16:29:34.777750+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_unit_distance_graph_indep_ratio_lt_quarter :\n    ∃ (G : Finset (EuclideanSpace ℝ Fin 2)) (r : ℝ),\n    is_unit_distance_graph G ∧ r = (independence_number (unit_dist_graph G)) / G.card ∧ r < 1/4 :=\n  by sorry",
       "lineage_refs": [],
@@ -36979,7 +36979,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28157v1",
       "source_path": "http://arxiv.org/abs/2606.28157v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T10:03:39.505176+00:00",
       "title": "Existence of a finite unit-distance graph in the plane with independence ratio strictly less than 1/4"
@@ -37862,6 +37862,97 @@
       "thread_id": "",
       "timestamp": "2026-06-29T16:16:05.000362+00:00",
       "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/4"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "Order theory",
+        "Poset automorphisms"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Generalizing the paper's main theorem from Z_2 x Z_{2^n} to Z_2^k x Z_{2^n}, we conjecture that the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} is 2^{n+1} + 2k for any k >= 1 and n >= 3. This matches the upper bound obtained by iteratively applying Proposition 1.1 to a minimal poset for Z_{2^n}.",
+      "domain_bridges": [
+        "Group theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2874",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Algebra.Group.Basic\nimport Mathlib.Data.ZMod.Basic\n\n/-- The minimum size of a poset whose automorphism group is isomorphic to G -/\ndef beta (G : Type*) [Group G] : ℕ := sorry\n\ntheorem beta_Z2_pow_k_times_Z2_pow_n (k n : ℕ) (hk : 0 < k) (hn : 3 ≤ n) :\n  beta (ZMod (2^n) × (Fin k → ZMod 2)) = 2^(n+1) + 2 * k := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Proceed by induction on k. The base case k=1 is the main theorem of the paper. For the inductive step, use the structural lemmas to show that any minimal poset realizing Z_2^k x Z_{2^n} must contain a subposet realizing Z_2^{k-1} x Z_{2^n}, and then apply the additive property of the two new elements analogous to Proposition 1.1 to establish the lower bound.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28231v1",
+      "source_path": "http://arxiv.org/abs/2606.28231v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T16:28:32.494303+00:00",
+      "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "MRVZ",
+        "Erdos_1987"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The polytope of optimal geometric fractional colorings of the 27-vertex unit-distance graph G27, defined by Matolcsi et al., has exactly 23 vertices (extremal colorings) and affine dimension 11.",
+      "domain_bridges": [
+        "Linear Programming",
+        "Polytope Theory",
+        "Geometric Graph Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2875",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem G27_optimal_geometric_fractional_coloring_polytope :\n  let G27 := MRVZ_G27 -- the specific 27-vertex unit-distance graph\n  let P := optimal_geometric_fractional_coloring_polytope G27\n  P.extremePoints.card = 23 ∧ P.affineDimension = 11 :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formulate the geometric fractional chromatic number of G27 as a linear program over the restricted set of independent sets in the plane. Compute the polytope of optimal solutions by finding the convex hull of all feasible fractional colorings with total weight 4, and verify that this polytope has exactly 23 vertices and an affine dimension of 11.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28157v1",
+      "source_path": "http://arxiv.org/abs/2606.28157v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T16:29:26.666347+00:00",
+      "title": "Dimension and Vertex Count of the Optimal Geometric Fractional Coloring Polytope for G27"
     },
     {
       "ambition_level": "extension",
@@ -43588,7 +43679,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432739+00:00",
       "title": "Graph Coloring: Chromatic Polynomial Theory"

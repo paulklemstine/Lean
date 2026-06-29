@@ -945,21 +945,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fourier Analysis on Finite Groups"
   },
   {
-    "consumed_by_exp_id": "d379c591",
-    "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to \u03c7(G) \u2264 4 for all planar G. Formalize Brooks' theorem: \u03c7(G) \u2264 \u0394(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
-    "domains": [
-      "Combinatorics",
-      "Algebra"
-    ],
-    "id": "seed_354",
-    "priority_score": 0.83,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432739+00:00",
-    "title": "Graph Coloring: Chromatic Polynomial Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erd\u0151s\u2013Szekeres theorem and improve known bounds.",
     "domains": [
@@ -1749,7 +1734,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Maximum Cardinality Diagonal Quantum Latin Squares for All Orders n \u2265 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1eb7e7f0",
     "description": "For all integers m \u2265 3 and n \u2265 m with n \u2261 m (mod 2) and (m\u00b2 \u2212 2m + n) \u2223 n(n\u22121), there exists a Class-Uniformly Resolvable Design on n varieties with partition m^1 2^{(n\u2212m)/2} and \u03bb = 1. The paper establishes these as necessary conditions and proves existence when m is a power of an odd prime (via affine plane-derived construction) and when m = 2k for certain cyclic designs. The conjecture asserts these divisibility and parity conditions are also sufficient, making the existence problem completely solved.",
     "domains": [
       "Pythagorean",
@@ -1759,7 +1744,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27519v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T09:08:52.620285+00:00",
     "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
   },
@@ -1793,7 +1778,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "170495dc",
     "description": "There exists a finite unit-distance graph G in the Euclidean plane whose independence ratio \u03b1(G)/|V(G)| is strictly less than 1/4. This answers Erd\u0151s's 1987 question in the negative and implies that the fractional chromatic number of the plane \u03c7_f(\u211d\u00b2) > 4. The proof relies on showing that a two-vertex augmentation of the 27-vertex configuration G\u2082\u2087 from Matolcsi et al. yields a point configuration with geometric fractional chromatic number strictly greater than 4.",
     "domains": [
       "Geometry",
@@ -1803,7 +1788,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T10:03:39.505176+00:00",
     "title": "Existence of a finite unit-distance graph in the plane with independence ratio strictly less than 1/4"
   },
@@ -2069,6 +2054,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T16:16:05.000362+00:00",
     "title": "Existence of a finite unit-distance graph in R\u00b2 with independence ratio below 1/4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalizing the paper's main theorem from Z_2 x Z_{2^n} to Z_2^k x Z_{2^n}, we conjecture that the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} is 2^{n+1} + 2k for any k >= 1 and n >= 3. This matches the upper bound obtained by iteratively applying Proposition 1.1 to a minimal poset for Z_{2^n}.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2874",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T16:28:32.494303+00:00",
+    "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The polytope of optimal geometric fractional colorings of the 27-vertex unit-distance graph G27, defined by Matolcsi et al., has exactly 23 vertices (extremal colorings) and affine dimension 11.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2875",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T16:29:26.666347+00:00",
+    "title": "Dimension and Vertex Count of the Optimal Geometric Fractional Coloring Polytope for G27"
   },
   {
     "consumed_by_exp_id": "",
