@@ -35209,7 +35209,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2815",
+      "id": "fd_2816",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem only_trivial_solutions_18_gonal_prime_power (n t p : ℤ) (hp : p ≥ 11) (hprime : Prime p) (h : 8 * n^2 - 7 * n = t^p) : (n = 0 ∧ t = 0) ∨ (n = 1 ∧ t = 1) := by\n  sorry",
@@ -35228,6 +35228,96 @@
       "thread_id": "",
       "timestamp": "2026-06-29T04:02:38.413060+00:00",
       "title": "No Non-Trivial Higher Prime Powers in 18-gonal Numbers"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.GR"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any integer n ≥ 3, the minimum number of elements in a poset whose automorphism group is isomorphic to Z_2 × Z_{2^n} is 2^{n+1} + 2.",
+      "domain_bridges": [
+        "Group Theory",
+        "Order Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2817",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem beta_Z2_cross_Z2_pow_n (n : ℕ) (hn : 3 ≤ n) :\n    β (Multiplicative (ZMod 2) × Multiplicative (ZMod (2^n))) = 2^(n+1) + 2 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the definition of β(G) as the infimum (or minimum) cardinality of a poset P such that Aut(P) ≅ G. Establish the upper bound by constructing a specific poset of size 2^{n+1} + 2 with the required automorphism group. Establish the lower bound by analyzing the orbit structure, minimal elements, and automorphism constraints of any poset realizing Z_2 × Z_{2^n}, demonstrating it must contain at least 2^{n+1} + 2 elements.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28231v1",
+      "source_path": "http://arxiv.org/abs/2606.28231v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T04:06:56.926864+00:00",
+      "title": "Minimum Size of a Poset Realizing Z_2 x Z_{2^n}"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "MRVZ",
+        "deGrey",
+        "Er87"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The 27-vertex unit-distance graph G_27 constructed by Matolcsi, Ruzsa, Varga, and Zsámboki has geometric fractional chromatic number exactly 4. Adding two suitably chosen augmentation vertices (at specific positions in the plane) yields a 29-vertex unit-distance graph whose geometric fractional chromatic number is strictly greater than 4. This is the key technical step that, combined with the blow-up framework of Matolcsi et al., implies the existence of a finite unit-distance graph with independence ratio below 1/4 and that the fractional chromatic number of the plane exceeds 4.",
+      "domain_bridges": [
+        "fractional_chromatic_number_theory",
+        "measurable_set_theory",
+        "linear_programming"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "id": "fd_2818",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem gfch_augmented_G27_gt_four : χ_gf (augment G_27 v_a v_b) > 4 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First formalize the geometric fractional chromatic number for finite point configurations in the plane. Then characterize all 23 extremal optimal geometric fractional colorings of G_27 (which form a polytope of affine dimension 11). Finally, verify that for every convex combination of these 23 extremal colorings, the two augmentation vertices cannot both be properly colored, forcing the geometric fractional chromatic number above 4. The verification reduces to checking finitely many linear constraints over the extremal colorings.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28157v1",
+      "source_path": "http://arxiv.org/abs/2606.28157v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T04:07:09.204966+00:00",
+      "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
     },
     {
       "ambition_level": "extension",

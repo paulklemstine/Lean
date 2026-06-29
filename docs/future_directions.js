@@ -1469,13 +1469,41 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2815",
+    "id": "fd_2816",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
     "status": "available",
     "timestamp": "2026-06-29T04:02:38.413060+00:00",
     "title": "No Non-Trivial Higher Prime Powers in 18-gonal Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer n \u2265 3, the minimum number of elements in a poset whose automorphism group is isomorphic to Z_2 \u00d7 Z_{2^n} is 2^{n+1} + 2.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2817",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:06:56.926864+00:00",
+    "title": "Minimum Size of a Poset Realizing Z_2 x Z_{2^n}"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 27-vertex unit-distance graph G_27 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. Adding two suitably chosen augmentation vertices (at specific positions in the plane) yields a 29-vertex unit-distance graph whose geometric fractional chromatic number is strictly greater than 4. This is the key technical step that, combined with the blow-up framework of Matolcsi et al., implies the existence of a finite unit-distance graph with independence ratio below 1/4 and that the fractional chromatic number of the plane exceeds 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2818",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:07:09.204966+00:00",
+    "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
   },
   {
     "consumed_by_exp_id": "",
