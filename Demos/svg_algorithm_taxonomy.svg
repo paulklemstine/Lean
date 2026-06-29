@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1a2640;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="750" fill="url(#bg4)"/>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">
+    50 Novel Algorithm Applications — Taxonomy
+  </text>
+  <text x="500" y="55" text-anchor="middle" fill="#78909c" font-size="12">
+    Grouped by domain, colored by Technology Readiness Level (TRL)
+  </text>
+
+  <!-- Legend -->
+  <g transform="translate(700, 70)">
+    <text x="0" y="0" fill="#b0bec5" font-size="11" font-weight="bold">TRL Legend:</text>
+    <rect x="0" y="10" width="12" height="12" rx="2" fill="#e53935"/>
+    <text x="18" y="20" fill="#b0bec5" font-size="10">TRL 2-3 (Research)</text>
+    <rect x="0" y="28" width="12" height="12" rx="2" fill="#ff9800"/>
+    <text x="18" y="38" fill="#b0bec5" font-size="10">TRL 4-5 (Prototype)</text>
+    <rect x="0" y="46" width="12" height="12" rx="2" fill="#4caf50"/>
+    <text x="18" y="56" fill="#b0bec5" font-size="10">TRL 6-7 (Deployable)</text>
+  </g>
+
+  <!-- Column 1: Number Theory & Factoring -->
+  <g transform="translate(30, 85)">
+    <rect x="0" y="0" width="180" height="30" rx="5" fill="#1b5e20" stroke="#4caf50" stroke-width="1.5"/>
+    <text x="90" y="20" text-anchor="middle" fill="#c8e6c9" font-size="12" font-weight="bold">Number Theory</text>
+
+    <rect x="5" y="38" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="53" fill="#fff" font-size="9">1. Berggren Tree Factoring</text>
+
+    <rect x="5" y="64" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="79" fill="#fff" font-size="9">2. Fibonacci Sieve</text>
+
+    <rect x="5" y="90" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="105" fill="#fff" font-size="9">3. SPB Diophantine Solver</text>
+
+    <rect x="5" y="116" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="131" fill="#fff" font-size="9">4. Tropical Auction</text>
+
+    <rect x="5" y="142" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="157" fill="#fff" font-size="9">5. Pisano Cryptanalysis</text>
+
+    <rect x="5" y="168" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="183" fill="#fff" font-size="9">6. GCD-Chain Factoring</text>
+
+    <rect x="5" y="194" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="209" fill="#fff" font-size="9">7. Quaternion Factoring</text>
+
+    <rect x="5" y="220" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="235" fill="#fff" font-size="9">8. Arithmetic Derivative</text>
+
+    <rect x="5" y="246" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="261" fill="#fff" font-size="9">9. Modular Forms Oracle</text>
+
+    <rect x="5" y="272" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="287" fill="#fff" font-size="9">10. Congruent Number Alg</text>
+  </g>
+
+  <!-- Column 2: Machine Learning -->
+  <g transform="translate(220, 85)">
+    <rect x="0" y="0" width="180" height="30" rx="5" fill="#0d47a1" stroke="#42a5f5" stroke-width="1.5"/>
+    <text x="90" y="20" text-anchor="middle" fill="#bbdefb" font-size="12" font-weight="bold">Machine Learning</text>
+
+    <rect x="5" y="38" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="53" fill="#fff" font-size="9">11. Tropical NAS</text>
+
+    <rect x="5" y="64" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="79" fill="#fff" font-size="9">12. EML Approximation</text>
+
+    <rect x="5" y="90" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="105" fill="#fff" font-size="9">13. Lipschitz Classifier</text>
+
+    <rect x="5" y="116" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="131" fill="#fff" font-size="9">14. Tropical Gradient</text>
+
+    <rect x="5" y="142" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="157" fill="#fff" font-size="9">15. SPB Activation</text>
+
+    <rect x="5" y="168" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="183" fill="#fff" font-size="9">16. Bayesian Convergence</text>
+
+    <rect x="5" y="194" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="209" fill="#fff" font-size="9">17. EML Symbolic Regress</text>
+
+    <rect x="5" y="220" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="235" fill="#fff" font-size="9">18. LSE Attention</text>
+
+    <rect x="5" y="246" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="261" fill="#fff" font-size="9">19. PAC-EML Learning</text>
+
+    <rect x="5" y="272" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="287" fill="#fff" font-size="9">20. Koopman Dimension</text>
+  </g>
+
+  <!-- Column 3: Cryptography -->
+  <g transform="translate(410, 85)">
+    <rect x="0" y="0" width="180" height="30" rx="5" fill="#b71c1c" stroke="#ef5350" stroke-width="1.5"/>
+    <text x="90" y="20" text-anchor="middle" fill="#ffcdd2" font-size="12" font-weight="bold">Cryptography</text>
+
+    <rect x="5" y="38" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="53" fill="#fff" font-size="9">21. Post-Quantum Fib Sig</text>
+
+    <rect x="5" y="64" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="79" fill="#fff" font-size="9">22. Quantum-Resistant HTLC</text>
+
+    <rect x="5" y="90" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="105" fill="#fff" font-size="9">23. ZK Pythagorean Proof</text>
+
+    <rect x="5" y="116" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="131" fill="#fff" font-size="9">24. SPB Key Exchange</text>
+
+    <rect x="5" y="142" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="157" fill="#fff" font-size="9">25. Tropical Homo Encrypt</text>
+
+    <rect x="5" y="168" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="183" fill="#fff" font-size="9">26. Nonce-Reuse Detector</text>
+
+    <rect x="5" y="194" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="209" fill="#fff" font-size="9">27. Smart Contract Audit</text>
+
+    <rect x="5" y="220" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="235" fill="#fff" font-size="9">28. PQ Factoring Guard</text>
+
+    <rect x="5" y="246" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="261" fill="#fff" font-size="9">29. Info-Theoretic KDF</text>
+
+    <rect x="5" y="272" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="287" fill="#fff" font-size="9">30. Verifiable Computation</text>
+  </g>
+
+  <!-- Column 4: Physics -->
+  <g transform="translate(600, 85)">
+    <rect x="0" y="0" width="180" height="30" rx="5" fill="#e65100" stroke="#ff9800" stroke-width="1.5"/>
+    <text x="90" y="20" text-anchor="middle" fill="#ffe0b2" font-size="12" font-weight="bold">Physics</text>
+
+    <rect x="5" y="38" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="53" fill="#fff" font-size="9">31. Lorentz Integrator</text>
+
+    <rect x="5" y="64" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="79" fill="#fff" font-size="9">32. Bloch Sphere Optim</text>
+
+    <rect x="5" y="90" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="105" fill="#fff" font-size="9">33. Cayley-Dickson Gates</text>
+
+    <rect x="5" y="116" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="131" fill="#fff" font-size="9">34. E8 Lattice Code</text>
+
+    <rect x="5" y="142" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="157" fill="#fff" font-size="9">35. Relativistic Velocity</text>
+
+    <rect x="5" y="168" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="183" fill="#fff" font-size="9">36. Spacetime Mesh Gen</text>
+
+    <rect x="5" y="194" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="209" fill="#fff" font-size="9">37. Magic Square Sim</text>
+
+    <rect x="5" y="220" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="235" fill="#fff" font-size="9">38. Oracle Complexity</text>
+
+    <rect x="5" y="246" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="261" fill="#fff" font-size="9">39. Hyperbolic NN Search</text>
+
+    <rect x="5" y="272" width="170" height="22" rx="3" fill="#e53935" opacity="0.7"/>
+    <text x="12" y="287" fill="#fff" font-size="9">40. CFT Correlators</text>
+  </g>
+
+  <!-- Column 5: Systems -->
+  <g transform="translate(790, 85)">
+    <rect x="0" y="0" width="180" height="30" rx="5" fill="#37474f" stroke="#78909c" stroke-width="1.5"/>
+    <text x="90" y="20" text-anchor="middle" fill="#cfd8dc" font-size="12" font-weight="bold">Systems</text>
+
+    <rect x="5" y="38" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="53" fill="#fff" font-size="9">41. CORDIC-SPB Hardware</text>
+
+    <rect x="5" y="64" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="79" fill="#fff" font-size="9">42. Verified Compression</text>
+
+    <rect x="5" y="90" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="105" fill="#fff" font-size="9">43. Tropical Circuit Opt</text>
+
+    <rect x="5" y="116" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="131" fill="#fff" font-size="9">44. Proof-Carrying Code</text>
+
+    <rect x="5" y="142" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="157" fill="#fff" font-size="9">45. Idempotent DB Index</text>
+
+    <rect x="5" y="168" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="183" fill="#fff" font-size="9">46. Chip-Firing Load Bal</text>
+
+    <rect x="5" y="194" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="209" fill="#fff" font-size="9">47. Entropy Pipeline</text>
+
+    <rect x="5" y="220" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="235" fill="#fff" font-size="9">48. Sauer-Shelah Estim</text>
+
+    <rect x="5" y="246" width="170" height="22" rx="3" fill="#4caf50" opacity="0.7"/>
+    <text x="12" y="261" fill="#fff" font-size="9">49. Scientific Method</text>
+
+    <rect x="5" y="272" width="170" height="22" rx="3" fill="#ff9800" opacity="0.7"/>
+    <text x="12" y="287" fill="#fff" font-size="9">50. Verified PRNG</text>
+  </g>
+
+  <!-- Statistics bar at bottom -->
+  <rect x="30" y="430" width="940" height="310" rx="10" fill="#0d1b2a" fill-opacity="0.5" stroke="#37474f" stroke-width="1"/>
+
+  <text x="500" y="460" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">
+    Impact Distribution
+  </text>
+
+  <!-- TRL bar chart -->
+  <g transform="translate(80, 480)">
+    <text x="0" y="15" fill="#b0bec5" font-size="11">Research (TRL 2-3):</text>
+    <rect x="170" y="3" width="280" height="18" rx="3" fill="#e53935" opacity="0.8"/>
+    <text x="460" y="17" fill="#ef9a9a" font-size="11">14 algorithms</text>
+
+    <text x="0" y="45" fill="#b0bec5" font-size="11">Prototype (TRL 4-5):</text>
+    <rect x="170" y="33" width="380" height="18" rx="3" fill="#ff9800" opacity="0.8"/>
+    <text x="560" y="47" fill="#ffcc80" font-size="11">19 algorithms</text>
+
+    <text x="0" y="75" fill="#b0bec5" font-size="11">Deployable (TRL 6-7):</text>
+    <rect x="170" y="63" width="340" height="18" rx="3" fill="#4caf50" opacity="0.8"/>
+    <text x="520" y="77" fill="#a5d6a7" font-size="11">17 algorithms</text>
+  </g>
+
+  <!-- Cross-cutting themes -->
+  <g transform="translate(80, 590)">
+    <text x="0" y="0" fill="#ffcc80" font-size="13" font-weight="bold">Cross-Cutting Themes:</text>
+
+    <circle cx="15" cy="22" r="5" fill="#4caf50"/>
+    <text x="28" y="27" fill="#c8e6c9" font-size="11">Formal verification as a feature (all 50)</text>
+
+    <circle cx="15" cy="44" r="5" fill="#ce93d8"/>
+    <text x="28" y="49" fill="#e1bee7" font-size="11">Tropical-classical duality (15 algorithms)</text>
+
+    <circle cx="15" cy="66" r="5" fill="#ff9800"/>
+    <text x="28" y="71" fill="#ffe0b2" font-size="11">SPB as universal connector (20 algorithms)</text>
+
+    <circle cx="420" cy="22" r="5" fill="#42a5f5"/>
+    <text x="433" y="27" fill="#bbdefb" font-size="11">EML universal approximation (12 algorithms)</text>
+
+    <circle cx="420" cy="44" r="5" fill="#ef5350"/>
+    <text x="433" y="49" fill="#ffcdd2" font-size="11">Quantum readiness (10 algorithms)</text>
+
+    <circle cx="420" cy="66" r="5" fill="#78909c"/>
+    <text x="433" y="71" fill="#cfd8dc" font-size="11">All backed by 28,797 verified Lean declarations</text>
+  </g>
+</svg>

@@ -421,7 +421,7 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     packages_dir = os.path.join(
         os.path.dirname(script_dir),
-        "Catalog", "Applications", "Packages"
+        "Packages"
     )
 
     lineage = build_lineage(packages_dir)

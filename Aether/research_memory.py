@@ -536,7 +536,7 @@ class FutureDirectionsManager:
         repo_root = self.workspace.parent
         if not (repo_root / "Catalog").exists() and (repo_root.parent / "Catalog").exists():
             repo_root = repo_root.parent
-        snapshot_path = repo_root / "Catalog" / "Applications" / "Packages" / "future_directions_snapshot.json"
+        snapshot_path = repo_root / "Packages" / "future_directions_snapshot.json"
         if not snapshot_path.parent.exists():
             return
         active = [d for d in self._directions if d.status not in ("completed", "pruned")]
@@ -1893,7 +1893,7 @@ if __name__ == "__main__":
         print(f"Reset complete: {result}")
         # Sync to Catalog for GitHub Pages
         import shutil
-        catalog_fd = Path("../Catalog/Applications/Packages/future_directions.json")
+        catalog_fd = Path("../Packages/future_directions.json")
         workspace_fd = workspace / "future_directions.json"
         if workspace_fd.exists() and catalog_fd.parent.exists():
             shutil.copy2(workspace_fd, catalog_fd)

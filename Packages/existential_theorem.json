@@ -1,0 +1,23 @@
+{
+  "title": "Close Proofs for Existential Theorem",
+  "domain": "Algebra",
+  "lean_files": [
+    "Catalog/Algebra/Parent.lean"
+  ],
+  "lean_proofs": [
+    {
+      "file": "Catalog/Algebra/Parent.lean",
+      "code": "def old := 1\ndef new := 2\ntheorem new_thm : true := by trivial",
+      "theorems": 2,
+      "description": "Lean 4 proof file (repaired and sorry-free)"
+    }
+  ],
+  "key_results": [
+    "New result"
+  ],
+  "keywords": [
+    "new"
+  ],
+  "date": null,
+  "exp_id": null
+}

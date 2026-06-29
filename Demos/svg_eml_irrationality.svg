@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg5" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0020;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0a0030;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="500" fill="url(#bg5)"/>
+
+  <text x="450" y="35" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">
+    The Irrationality of e — Formally Verified Proof Structure
+  </text>
+  <text x="450" y="55" text-anchor="middle" fill="#b39ddb" font-size="12">
+    Complete machine-verified proof in Lean 4 (e_irrational in Computation/DensityTheory.lean)
+  </text>
+
+  <!-- Step 1 -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="380" height="70" rx="8" fill="#4a148c" fill-opacity="0.5" stroke="#7c4dff" stroke-width="1.5"/>
+    <text x="190" y="20" text-anchor="middle" fill="#b388ff" font-size="13" font-weight="bold">Step 1: Assume e = p/q</text>
+    <text x="190" y="38" text-anchor="middle" fill="#d1c4e9" font-size="11">Suppose for contradiction that e is rational.</text>
+    <text x="190" y="53" text-anchor="middle" fill="#d1c4e9" font-size="11">Then ∃ p, q ∈ ℕ⁺ such that e = p/q.</text>
+  </g>
+
+  <!-- Arrow -->
+  <line x1="240" y1="150" x2="240" y2="170" stroke="#7c4dff" stroke-width="2"/>
+  <polygon points="235,170 245,170 240,180" fill="#7c4dff"/>
+
+  <!-- Step 2 -->
+  <g transform="translate(50, 180)">
+    <rect x="0" y="0" width="380" height="70" rx="8" fill="#1a237e" fill-opacity="0.5" stroke="#5c6bc0" stroke-width="1.5"/>
+    <text x="190" y="20" text-anchor="middle" fill="#9fa8da" font-size="13" font-weight="bold">Step 2: Multiply by q!</text>
+    <text x="190" y="38" text-anchor="middle" fill="#c5cae9" font-size="11" font-family="'Courier New', monospace">q!·e = Σₖ₌₀ᵍ q!/k! + Σₖ₌ᵧ₊₁^∞ q!/k!</text>
+    <text x="190" y="55" text-anchor="middle" fill="#c5cae9" font-size="11">     = (integer)  + (tail)</text>
+  </g>
+
+  <!-- Arrow -->
+  <line x1="240" y1="250" x2="240" y2="270" stroke="#5c6bc0" stroke-width="2"/>
+  <polygon points="235,270 245,270 240,280" fill="#5c6bc0"/>
+
+  <!-- Step 3 -->
+  <g transform="translate(50, 280)">
+    <rect x="0" y="0" width="380" height="70" rx="8" fill="#004d40" fill-opacity="0.5" stroke="#26a69a" stroke-width="1.5"/>
+    <text x="190" y="20" text-anchor="middle" fill="#80cbc4" font-size="13" font-weight="bold">Step 3: Bound the tail</text>
+    <text x="190" y="38" text-anchor="middle" fill="#b2dfdb" font-size="11">The tail is bounded by a geometric series:</text>
+    <text x="190" y="55" text-anchor="middle" fill="#b2dfdb" font-size="11" font-family="'Courier New', monospace">0 &lt; tail ≤ 1/(q+1) · 1/(1 − 1/(q+2)) &lt; 1</text>
+  </g>
+
+  <!-- Arrow -->
+  <line x1="240" y1="350" x2="240" y2="370" stroke="#26a69a" stroke-width="2"/>
+  <polygon points="235,370 245,370 240,380" fill="#26a69a"/>
+
+  <!-- Step 4 -->
+  <g transform="translate(50, 380)">
+    <rect x="0" y="0" width="380" height="70" rx="8" fill="#b71c1c" fill-opacity="0.4" stroke="#ef5350" stroke-width="1.5"/>
+    <text x="190" y="20" text-anchor="middle" fill="#ef9a9a" font-size="13" font-weight="bold">Step 4: Contradiction!</text>
+    <text x="190" y="38" text-anchor="middle" fill="#ffcdd2" font-size="11">tail = q!·e − Σq!/k! must be an integer</text>
+    <text x="190" y="55" text-anchor="middle" fill="#ffcdd2" font-size="11">But 0 &lt; tail &lt; 1 — no such integer exists! □</text>
+  </g>
+
+  <!-- Right side: Key Lean snippets -->
+  <g transform="translate(470, 80)">
+    <rect x="0" y="0" width="400" height="370" rx="8" fill="#0a0a1e" fill-opacity="0.8" stroke="#3f51b5" stroke-width="1"/>
+
+    <text x="200" y="25" text-anchor="middle" fill="#ffcc80" font-size="14" font-weight="bold">
+      Lean 4 Proof Highlights
+    </text>
+
+    <g fill="#e8eaf6" font-size="10" font-family="'Courier New', monospace">
+      <text x="15" y="50" fill="#81c784">-- Fourier's argument</text>
+      <text x="15" y="68" fill="#64b5f6">theorem</text>
+      <text x="65" y="68"> e_irrational :</text>
+      <text x="15" y="83">  Irrational (Real.exp 1) :=</text>
+      <text x="15" y="98" fill="#64b5f6">by</text>
+      <text x="15" y="113">  by_contra h</text>
+
+      <text x="15" y="140" fill="#81c784">-- Extract p/q representation</text>
+      <text x="15" y="155">  obtain ⟨p, q, hpq⟩ ...</text>
+
+      <text x="15" y="180" fill="#81c784">-- Split series into finite + tail</text>
+      <text x="15" y="195" fill="#64b5f6">  have</text>
+      <text x="48" y="195"> h_mul_factorial :</text>
+      <text x="15" y="210">    q! * e = Σ(q!/k!) + tail</text>
+
+      <text x="15" y="235" fill="#81c784">-- Bound the tail strictly</text>
+      <text x="15" y="250" fill="#64b5f6">  have</text>
+      <text x="48" y="250"> h_series_lt_one :</text>
+      <text x="15" y="265">    tail &lt; 1</text>
+
+      <text x="15" y="290" fill="#81c784">-- tail must be integer ...</text>
+      <text x="15" y="305" fill="#64b5f6">  have</text>
+      <text x="48" y="305"> h_second_sum_int :</text>
+      <text x="15" y="320">    ∃ m : ℤ, tail = ↑m</text>
+
+      <text x="15" y="345" fill="#81c784">-- ... but 0 &lt; m &lt; 1 ⟹ ⊥</text>
+      <text x="15" y="360" fill="#ef5350">  contradiction</text>
+    </g>
+  </g>
+
+  <!-- Verification badge -->
+  <g transform="translate(820, 420)">
+    <circle cx="0" cy="0" r="30" fill="none" stroke="#4caf50" stroke-width="2.5"/>
+    <text x="0" y="-8" text-anchor="middle" fill="#4caf50" font-size="9" font-weight="bold">LEAN 4</text>
+    <text x="0" y="5" text-anchor="middle" fill="#81c784" font-size="8">VERIFIED</text>
+    <text x="0" y="18" text-anchor="middle" fill="#a5d6a7" font-size="14">✓</text>
+  </g>
+
+  <!-- Bottom note -->
+  <text x="450" y="480" text-anchor="middle" fill="#78909c" font-size="11">
+    ~100 lines of Lean 4 tactics • Uses only standard axioms (propext, Classical.choice, Quot.sound)
+  </text>
+</svg>

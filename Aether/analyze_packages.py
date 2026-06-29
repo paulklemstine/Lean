@@ -4,7 +4,7 @@ import os
 from collections import Counter
 
 def main():
-    packages_dir = "Catalog/Applications/Packages"
+    packages_dir = "Packages"
     json_files = glob.glob(os.path.join(packages_dir, "*.json"))
     excluded = {"index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json"}
     json_files = [f for f in json_files if os.path.basename(f) not in excluded]

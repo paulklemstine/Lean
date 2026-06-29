@@ -1,0 +1,425 @@
+#!/usr/bin/env python3
+"""
+Compact Congruence Nuclei and Prime Congruence Spectra — Interactive Demo
+
+This script demonstrates the main theorem with concrete examples from
+tropical/idempotent algebra, showing how compact congruences form a basis
+for the prime spectrum topology.
+"""
+
+import itertools
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
+from typing import Set, Tuple, FrozenSet, List, Dict
+
+# ============================================================
+# Part 1: Boolean semiring (simplest coherent idempotent semiring)
+# ============================================================
+
+class BoolSemiring:
+    """The two-element Boolean semiring {0,1} with a+a=a, a*b=min(a,b), a+b=max(a,b)."""
+    def __init__(self, val: int):
+        assert val in (0, 1)
+        self.val = val
+
+    def __add__(self, other):
+        return BoolSemiring(max(self.val, other.val))
+
+    def __mul__(self, other):
+        return BoolSemiring(min(self.val, other.val))
+
+    def __eq__(self, other):
+        return self.val == other.val
+
+    def __hash__(self):
+        return hash(self.val)
+
+    def __repr__(self):
+        return str(self.val)
+
+ZERO = BoolSemiring(0)
+ONE = BoolSemiring(1)
+BOOL_ELEMS = [ZERO, ONE]
+
+
+def is_congruence_bool(pairs: Set[Tuple[int, int]]) -> bool:
+    """Check if a set of pairs forms a ring congruence on {0,1}."""
+    elems = [0, 1]
+    # Reflexive
+    for a in elems:
+        if (a, a) not in pairs:
+            return False
+    # Symmetric
+    for a, b in list(pairs):
+        if (b, a) not in pairs:
+            return False
+    # Transitive
+    for a, b in list(pairs):
+        for c, d in list(pairs):
+            if b == c and (a, d) not in pairs:
+                return False
+    # Compatible with +
+    for a1, b1 in list(pairs):
+        for a2, b2 in list(pairs):
+            s1 = max(a1, a2)
+            s2 = max(b1, b2)
+            if (s1, s2) not in pairs:
+                return False
+    # Compatible with *
+    for a1, b1 in list(pairs):
+        for a2, b2 in list(pairs):
+            p1 = min(a1, a2)
+            p2 = min(b1, b2)
+            if (p1, p2) not in pairs:
+                return False
+    return True
+
+
+def enumerate_congruences_bool():
+    """Enumerate all ring congruences on the Boolean semiring."""
+    elems = [0, 1]
+    all_pairs = [(a, b) for a in elems for b in elems]
+    congruences = []
+    for r in range(len(all_pairs) + 1):
+        for subset in itertools.combinations(all_pairs, r):
+            pairs = set(subset)
+            if is_congruence_bool(pairs):
+                congruences.append(frozenset(pairs))
+    return list(set(congruences))
+
+
+print("=" * 60)
+print("PART 1: Congruence Lattice of the Boolean Semiring {0,1}")
+print("=" * 60)
+
+congruences = enumerate_congruences_bool()
+print(f"\nFound {len(congruences)} ring congruences on {{0,1}}:")
+
+# Sort and display
+bot = frozenset({(0, 0), (1, 1)})  # diagonal = ⊥
+top = frozenset({(0, 0), (0, 1), (1, 0), (1, 1)})  # everything = ⊤
+
+for c in congruences:
+    if c == bot:
+        label = "⊥ (diagonal)"
+    elif c == top:
+        label = "⊤ (everything)"
+    else:
+        label = "intermediate"
+    print(f"  {sorted(c)} — {label}")
+
+print(f"\n⊤ is compact: True (trivially, only 2 congruences)")
+print(f"⊥ is compact: True (trivially)")
+print(f"All congruences are compact (finite lattice).")
+
+# Prime congruences
+print("\nPrime congruences (P ≠ ⊤, and R∧T ≤ P ⟹ R ≤ P or T ≤ P):")
+for c in congruences:
+    if c == top:
+        continue
+    is_prime = True
+    for r in congruences:
+        for t in congruences:
+            meet = r & t
+            if meet <= c and not (r <= c or t <= c):
+                is_prime = False
+                break
+        if not is_prime:
+            break
+    if is_prime:
+        print(f"  {sorted(c)} is prime")
+
+print("\nThe nucleus (compact saturation) is the identity on this finite lattice.")
+print("Every congruence = sSup of compact congruences below it.")
+print("⟹ Prime congruence points = prime congruences (bijection is trivial).")
+
+# ============================================================
+# Part 2: Tropical semiring ℕ_∞ = (ℕ ∪ {∞}, min, +)
+# ============================================================
+
+print("\n" + "=" * 60)
+print("PART 2: Tropical Semiring T = (ℕ ∪ {∞}, min, +)")
+print("=" * 60)
+
+INF = float('inf')
+
+def trop_add(a, b):
+    """Tropical addition = min."""
+    return min(a, b)
+
+def trop_mul(a, b):
+    """Tropical multiplication = ordinary addition."""
+    if a == INF or b == INF:
+        return INF
+    return a + b
+
+print("\nTropical semiring operations:")
+print("  a ⊕ b = min(a,b)  [idempotent: a ⊕ a = a]")
+print("  a ⊙ b = a + b     [with ∞ as zero: a ⊙ ∞ = ∞]")
+print("  Additive identity (zero) = ∞")
+print("  Multiplicative identity (one) = 0")
+
+# Example congruences on a finite tropical set
+print("\nExample: Consider the finite tropical semiring T₃ = {0, 1, 2, ∞}")
+T3 = [0, 1, 2, INF]
+
+# The principal congruence generated by (0, 1)
+print("\nPrincipal congruence θ(0,1): identifies 0 and 1")
+print("  Since 0 ⊕ 2 = min(0,2) = 0 and 1 ⊕ 2 = min(1,2) = 1,")
+print("  and 0 ~ 1, we need 0 ~ 1 in the congruence.")
+print("  Since 0 ⊙ k = k and 1 ⊙ k = 1+k, we need k ~ 1+k for all k.")
+print("  This generates: 0~1~2~3~... (collapses all finite values)")
+
+# Congruence classes
+print("\n  Congruence classes of θ(0,1): {0,1,2} and {∞}")
+print("  This is compact (finitely generated by one pair)")
+
+print("\n  The trivial congruence ⊥ (diagonal) is compact (generated by ∅)")
+print("  The total congruence ⊤ is compact (generated by (0,∞))")
+
+# ============================================================
+# Part 3: Visualization of the spectrum
+# ============================================================
+
+print("\n" + "=" * 60)
+print("PART 3: Visualizing the Prime Congruence Spectrum")
+print("=" * 60)
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+# --- Panel 1: Hasse diagram of Boolean semiring congruences ---
+ax1 = axes[0]
+ax1.set_title("Congruence Lattice\nof Boolean Semiring", fontsize=12, fontweight='bold')
+ax1.set_xlim(-1, 1)
+ax1.set_ylim(-0.5, 1.5)
+
+# Draw nodes
+ax1.plot(0, 0, 'o', color='#2196F3', markersize=20, zorder=5)
+ax1.plot(0, 1, 'o', color='#FF9800', markersize=20, zorder=5)
+ax1.text(0, 0, '⊥', ha='center', va='center', fontsize=14, fontweight='bold', color='white')
+ax1.text(0, 1, '⊤', ha='center', va='center', fontsize=14, fontweight='bold', color='white')
+
+# Draw edge
+ax1.plot([0, 0], [0, 1], 'k-', linewidth=2, zorder=1)
+
+# Annotations
+ax1.annotate('Prime\n(compact)', xy=(0, 0), xytext=(0.5, 0),
+            fontsize=9, ha='left', va='center',
+            arrowprops=dict(arrowstyle='->', color='green'),
+            color='green')
+ax1.annotate('Not prime\n(compact)', xy=(0, 1), xytext=(0.5, 1),
+            fontsize=9, ha='left', va='center',
+            arrowprops=dict(arrowstyle='->', color='red'),
+            color='red')
+
+ax1.set_axis_off()
+
+# --- Panel 2: Nucleus = Identity diagram ---
+ax2 = axes[1]
+ax2.set_title("Nucleus = Identity\n(Compactly Generated)", fontsize=12, fontweight='bold')
+ax2.set_xlim(-1.5, 1.5)
+ax2.set_ylim(-0.5, 2.5)
+
+# Draw a generic lattice
+positions = {
+    '⊥': (0, 0),
+    'K₁': (-0.7, 0.8),
+    'K₂': (0.7, 0.8),
+    'P': (0, 1.6),
+    '⊤': (0, 2.2),
+}
+edges = [('⊥', 'K₁'), ('⊥', 'K₂'), ('K₁', 'P'), ('K₂', 'P'), ('P', '⊤')]
+
+for n, (x, y) in positions.items():
+    color = '#4CAF50' if n in ('K₁', 'K₂', '⊥') else '#2196F3' if n == 'P' else '#FF9800'
+    ax2.plot(x, y, 'o', color=color, markersize=18, zorder=5)
+    ax2.text(x, y, n, ha='center', va='center', fontsize=10, fontweight='bold',
+             color='white' if n != '⊤' else 'white')
+
+for a, b in edges:
+    x1, y1 = positions[a]
+    x2, y2 = positions[b]
+    ax2.plot([x1, x2], [y1, y2], 'k-', linewidth=1.5, zorder=1)
+
+# Arrow showing nucleus
+ax2.annotate('', xy=(-0.3, 1.6), xytext=(-1.2, 1.6),
+            arrowprops=dict(arrowstyle='->', color='purple', lw=2))
+ax2.text(-1.3, 1.75, 'ν(P) = sSup{K compact | K ≤ P}', fontsize=8,
+         color='purple', ha='left')
+ax2.text(-1.3, 1.5, '= K₁ ∨ K₂ ∨ ⊥ = P', fontsize=8, color='purple', ha='left')
+
+# Legend
+compact_patch = mpatches.Patch(color='#4CAF50', label='Compact')
+prime_patch = mpatches.Patch(color='#2196F3', label='Prime')
+top_patch = mpatches.Patch(color='#FF9800', label='⊤ (not prime)')
+ax2.legend(handles=[compact_patch, prime_patch, top_patch], loc='lower right', fontsize=8)
+ax2.set_axis_off()
+
+# --- Panel 3: The homeomorphism ---
+ax3 = axes[2]
+ax3.set_title("Homeomorphism Theorem", fontsize=12, fontweight='bold')
+ax3.set_xlim(-2, 2)
+ax3.set_ylim(-1, 3)
+
+# Left: Prime spectrum
+ax3.text(-1, 2.5, "Prime Congruence\nSpectrum", ha='center', fontsize=10,
+         fontweight='bold', color='#2196F3')
+circle1 = plt.Circle((-1, 1.2), 0.8, fill=False, edgecolor='#2196F3', linewidth=2)
+ax3.add_patch(circle1)
+ax3.text(-1, 1.5, '{P : RingCon S', ha='center', fontsize=7)
+ax3.text(-1, 1.2, '| IsPrime P}', ha='center', fontsize=7)
+ax3.text(-1, 0.8, 'Zariski topology', ha='center', fontsize=7, style='italic', color='gray')
+
+# Right: Nucleus spectrum
+ax3.text(1, 2.5, "Nucleus Spectrum\n(Prime Points)", ha='center', fontsize=10,
+         fontweight='bold', color='#4CAF50')
+circle2 = plt.Circle((1, 1.2), 0.8, fill=False, edgecolor='#4CAF50', linewidth=2)
+ax3.add_patch(circle2)
+ax3.text(1, 1.5, '{x : Point S', ha='center', fontsize=7)
+ax3.text(1, 1.2, '| ν(x) = x,', ha='center', fontsize=7)
+ax3.text(1, 0.9, 'IsPrime x}', ha='center', fontsize=7)
+
+# Arrows (bijection)
+ax3.annotate('', xy=(0.15, 1.5), xytext=(-0.15, 1.5),
+            arrowprops=dict(arrowstyle='->', color='red', lw=2))
+ax3.annotate('', xy=(-0.15, 0.9), xytext=(0.15, 0.9),
+            arrowprops=dict(arrowstyle='->', color='red', lw=2))
+
+ax3.text(0, 1.7, '≃ₜ', ha='center', fontsize=14, fontweight='bold', color='red')
+
+# Bottom text
+ax3.text(0, -0.3, "Key: ν(R) = sSup{K compact | K ≤ R} = R",
+         ha='center', fontsize=9, style='italic', color='gray')
+ax3.text(0, -0.7, "(compactly generated ⟹ nucleus = identity)",
+         ha='center', fontsize=9, style='italic', color='gray')
+
+ax3.set_axis_off()
+
+plt.tight_layout()
+plt.savefig('spectrum_comparison.png', dpi=150, bbox_inches='tight')
+plt.close()
+print("\nSaved visualization: spectrum_comparison.png")
+
+# ============================================================
+# Part 4: Basic Opens and Topology
+# ============================================================
+
+print("\n" + "=" * 60)
+print("PART 4: Basic Opens and the Zariski-like Topology")
+print("=" * 60)
+
+print("""
+For a coherent idempotent semiring S, the prime congruence spectrum
+Spec(S) = {P ∈ RingCon(S) | P is prime}
+carries the topology generated by basic opens:
+
+  D(R) = {P ∈ Spec(S) | R ≰ P}
+
+for each congruence R. The compact congruences give quasi-compact
+basic opens, forming a basis.
+
+The nucleus spectrum has the "same" topology: for each congruence R,
+  D'(R) = {x ∈ Points(S) | R ≰ x.asCongruence}
+
+The homeomorphism sends D(R) to D'(R) bijectively for every R.
+
+This is exactly the content of:
+  primeCongruence_to_point_preimage_basicOpen
+  point_to_primeCongruence_preimage_basicOpen
+""")
+
+# ============================================================
+# Part 5: Application — Tropical varieties
+# ============================================================
+
+print("=" * 60)
+print("PART 5: Application — Tropical Geometry")
+print("=" * 60)
+
+print("""
+In tropical geometry, the "variety" of a polynomial system is defined
+via congruences rather than ideals. Given tropical polynomials f, g,
+the congruence generated by (f(x), g(x)) for all x defines a
+"tropical hypersurface."
+
+The comparison theorem says:
+
+  The spectral locale of the compact congruence nucleus
+  = the prime congruence spectrum (as a topological space)
+
+This means:
+1. Every locale-theoretic construction (sheaves, stalks, cohomology)
+   has an algebraic counterpart via prime congruences.
+2. Every algebraic construction (localization, support, radicals)
+   can be transported to locale-theoretic machinery.
+3. Compact congruences give finite certificates for point detection,
+   enabling algorithmic tropical geometry.
+
+Example: For the tropical semiring T = (ℝ ∪ {∞}, min, +),
+the prime congruences correspond to "tropical prime ideals,"
+and the spectrum recovers the Berkovich-type analytification.
+""")
+
+# ============================================================
+# Part 6: Computational example — prime detection
+# ============================================================
+
+print("=" * 60)
+print("PART 6: Computational Example — Finite Idempotent Semiring")
+print("=" * 60)
+
+# Power set semiring on {a}
+# Elements: ∅, {a}
+# Addition = union (idempotent), Multiplication = intersection
+
+print("""
+Consider the power set semiring P({a}) = {∅, {a}}:
+  Addition = union (∅ ∪ ∅ = ∅, ∅ ∪ {a} = {a}, {a} ∪ {a} = {a})
+  Multiplication = intersection
+  Zero = ∅, One = {a}
+
+This is an idempotent commutative semiring!
+
+Ring congruences:
+  ⊥ = diagonal = {(∅,∅), ({a},{a})}
+  ⊤ = everything = {(∅,∅), (∅,{a}), ({a},∅), ({a},{a})}
+
+Lattice: ⊥ ≤ ⊤ (just two elements)
+
+Prime congruences: ⊥ is the unique prime
+  (since ⊤ is not prime, and ⊥ satisfies the prime condition vacuously
+   because R ⊓ T = ⊥ for any R,T with R ⊓ T ≤ ⊥)
+
+Nucleus: ν(⊥) = sSup{K compact | K ≤ ⊥} = ⊥ ✓
+         ν(⊤) = sSup{K compact | K ≤ ⊤} = ⊤ ✓
+
+The comparison: Spec = {⊥} ≅ Points = {⊥} (trivial homeomorphism)
+""")
+
+# ============================================================
+# Summary
+# ============================================================
+
+print("=" * 60)
+print("SUMMARY")
+print("=" * 60)
+print("""
+The main theorem (nucleusSpectrum_homeomorphic_primeSpectrum) establishes:
+
+  PrimeCongruencePoint S ≃ₜ {P : RingCon S // IsPrimeCongruence P}
+
+for any coherent idempotent semiring S. The proof strategy:
+
+1. The compact saturation nucleus ν(R) = sSup{K compact | K ≤ R}
+   equals R for every congruence (by the compactly generated axiom).
+
+2. Therefore every congruence is nucleus-fixed, and the set of
+   prime nucleus-fixed points = set of prime congruences.
+
+3. The basic open sets D(R) = {P | R ≰ P} transport bijectively
+   between the two spectra, giving the homeomorphism.
+
+This is the bridge needed for idempotent algebraic geometry:
+it connects spectral locale theory with concrete prime congruences.
+""")

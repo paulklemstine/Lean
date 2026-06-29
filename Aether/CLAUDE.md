@@ -167,7 +167,7 @@ ARM Ampere A1 instance with 1 OCPU, 6 GB RAM, Ubuntu 22.04:
 
 ### GitHub Pages
 
-The website is served from the `docs/` directory on the `master` branch (branch-based deployment, no Actions minutes). After each tick, `docs/` is synced from `Catalog/Applications/Packages/`. Ensure GitHub Pages settings are configured: **Source → Deploy from a branch → master → /docs**.
+The website is served from the `docs/` directory on the `master` branch (branch-based deployment, no Actions minutes). After each tick, `docs/` is synced from `Packages/`. Ensure GitHub Pages settings are configured: **Source → Deploy from a branch → master → /docs**.
 
 ## Code Conventions
 

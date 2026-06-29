@@ -33,24 +33,23 @@ __pycache__/
 *.tar.gz
 *.output
 
-# Auto-generated visualizations (duplicated in Catalog + docs)
-/Catalog/Applications/Packages/visualizations/
+# Auto-generated visualizations (duplicated in Packages + docs)
+/Packages/visualizations/
 /docs/visualizations/
 
-# Auto-generated demos
-/Catalog/Applications/Demos/
+# Auto-generated demos (now tracked at top-level Demos/, no ignore needed)
 
 # Aristotle archive — large, local-only, regenerated from API or local projects
 /Archive/
 
 # Stale/old generated content
-/Catalog/Applications/Packages/old/
-/Catalog/Applications/Packages/packages_db.js
+/Packages/old/
+/Packages/packages_db.js
 /docs/old/
 /docs/packages_db.js
 
 # Keep future_directions.json even though we ignore its parent dirs
-!/Catalog/Applications/Packages/future_directions.json
+!/Packages/future_directions.json
 
 # Serena
 .serena/

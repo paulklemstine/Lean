@@ -2215,12 +2215,12 @@ Research mode: {concept.research_mode}
 
         Handles all artifact types:
         - Lean files → domain directories or Speculative/AutoResearch/
-        - Python demos → Applications/Demos/
-        - Papers → Applications/Papers/
-        - Articles → Applications/Articles/
-        - Research papers → Applications/Papers/
-        - HTML packages → Applications/Packages/
-        - Discussion → Applications/Articles/
+        - Python demos → Demos/
+        - Papers → Papers/
+        - Articles → Articles/
+        - Research papers → Papers/
+        - HTML packages → Packages/
+        - Discussion → Articles/
         """
         if job.quality_score < 0.15:
             print(f"[Integrate] REJECTED: score too low ({job.quality_score:.3f})")
@@ -2277,17 +2277,17 @@ Research mode: {concept.research_mode}
                     parts.append({"type": "new", "path": header.replace("-- NEW_FILE: ", "").strip(), "content": content})
                     
         if job.result_demo:
-            parts.append({"type": "new", "path": f"Applications/Demos/{self._derive_artifact_name(job.concept, 'py')}", "content": job.result_demo})
+            parts.append({"type": "new", "path": f"Demos/{self._derive_artifact_name(job.concept, 'py')}", "content": job.result_demo})
         if job.result_algorithms:
-            parts.append({"type": "new", "path": f"Applications/Demos/algorithms_{self._derive_artifact_name(job.concept, 'py')}", "content": job.result_algorithms})
+            parts.append({"type": "new", "path": f"Demos/algorithms_{self._derive_artifact_name(job.concept, 'py')}", "content": job.result_algorithms})
         if job.result_paper:
-            parts.append({"type": "new", "path": f"Applications/Papers/{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_paper})
+            parts.append({"type": "new", "path": f"Papers/{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_paper})
 
         # NEW artifact types — integrate into correct Catalog locations
         if job.result_article:
-            parts.append({"type": "new", "path": f"Applications/Articles/{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_article})
+            parts.append({"type": "new", "path": f"Articles/{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_article})
         if job.result_research_paper:
-            parts.append({"type": "new", "path": f"Applications/Papers/research_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_research_paper})
+            parts.append({"type": "new", "path": f"Papers/research_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_research_paper})
         if job.result_json_package:
             # Enrich JSON package with executable module code for Pyodide
             enriched_pkg = job.result_json_package
@@ -2295,7 +2295,7 @@ Research mode: {concept.research_mode}
                 enriched_pkg = self._enrich_json_package(job.result_json_package, job)
 
             # If sorry_fill research mode, check if there is an existing package JSON that tracks these Lean files
-            target_pkg_path = f"Applications/Packages/{self._derive_artifact_name(job.concept, 'json')}"
+            target_pkg_path = f"Packages/{self._derive_artifact_name(job.concept, 'json')}"
             if job.concept.research_mode == "sorry_fill":
                 updated_lean_files = []
                 for p in parts:
@@ -2306,7 +2306,7 @@ Research mode: {concept.research_mode}
                         updated_lean_files.append(fname.split("/")[-1]) # also add basename
                 
                 # Search Packages directory for a matching package
-                pkg_dir = self.catalog_root / "Applications" / "Packages"
+                pkg_dir = self.catalog_root.parent / "Packages"
                 matched_pkg_file = None
                 if pkg_dir.exists():
                     for f in pkg_dir.glob("*.json"):
@@ -2337,7 +2337,7 @@ Research mode: {concept.research_mode}
                             
                 if matched_pkg_file:
                     print(f"[Integrate] sorry_fill cycle: found existing parent package {matched_pkg_file.name}")
-                    target_pkg_path = f"Applications/Packages/{matched_pkg_file.name}"
+                    target_pkg_path = f"Packages/{matched_pkg_file.name}"
                     try:
                         old_pkg = json.loads(matched_pkg_file.read_text(encoding="utf-8"))
                         new_pkg = json.loads(enriched_pkg)
@@ -2384,15 +2384,15 @@ Research mode: {concept.research_mode}
             parts.append({"type": "new", "path": target_pkg_path, "content": enriched_pkg})
 
         if job.result_discussion:
-            parts.append({"type": "new", "path": f"Applications/Articles/discussion_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_discussion})
+            parts.append({"type": "new", "path": f"Articles/discussion_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_discussion})
 
         # 2. Separate auto-accept files from review-needed files
         # Speculative/AutoResearch/ files are speculative by definition — auto-accept them.
         # Applications/ files (Demos, Papers, Articles, Packages) are also auto-accepted.
         # Only domain-directory Lean files and FINAL/ placements need Pi-Agent review.
-        SPECULATIVE_PREFIXES = ("Speculative/AutoResearch/", "Applications/Demos/",
-                                "Applications/Papers/", "Applications/Articles/",
-                                "Applications/Packages/")
+        SPECULATIVE_PREFIXES = ("Speculative/AutoResearch/", "Demos/",
+                                "Papers/", "Articles/",
+                                "Packages/")
         auto_accept_parts = []
         review_parts = []
         for p in parts:
@@ -2452,7 +2452,7 @@ Research mode: {concept.research_mode}
                 continue
             written_paths.add(target_path)
                 
-            abs_target = self.catalog_root / target_path
+            abs_target = self._resolve_target(target_path)
             
             # Safety check: don't overwrite an existing catalog file with identical content
             if abs_target.exists() and p["type"] == "new":
@@ -2530,7 +2530,7 @@ Research mode: {concept.research_mode}
         # Update package_index.js and lineage if we saved a JSON package
         if job.result_json_package:
             try:
-                packages_dir = self.catalog_root / "Applications" / "Packages"
+                packages_dir = self.catalog_root.parent / "Packages"
                 packages_dir.mkdir(parents=True, exist_ok=True)
 
                 # Run update_index.py to regenerate package_index.js (lightweight index)
@@ -3273,7 +3273,7 @@ Research mode: {concept.research_mode}
         import json as _json
         from research_memory import FutureDirection, FutureDirectionsManager
 
-        lineage_path = self.catalog_root.parent / "Applications" / "Packages" / "lineage.json"
+        lineage_path = self.catalog_root.parent / "Packages" / "lineage.json"
         if not lineage_path.exists():
             return
 
@@ -3597,17 +3597,30 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[BridgeDirs] LLM bridge generation failed: {e}")
 
+    _TOP_LEVEL_OUTPUT_DIRS = ("Papers", "Demos", "Visuals", "Articles", "Packages")
+
+    def _resolve_target(self, target_path: str) -> Path:
+        """Resolve a part/integrated path to an absolute filesystem path.
+
+        Papers/Demos/Visuals/Articles/Packages moved to top-level (siblings of
+        Catalog, i.e. under catalog_root.parent). Everything else (e.g.
+        Algebra/foo.lean, Speculative/...) stays under catalog_root.
+        """
+        first = target_path.split("/", 1)[0]
+        base = self.catalog_root.parent if first in self._TOP_LEVEL_OUTPUT_DIRS else self.catalog_root
+        return base / target_path
+
     def _verify_catalog_sync(self, job: ResearchJob) -> dict:
         """Verify all output files are properly placed in the Catalog."""
         report = {"missing_files": [], "verified_files": []}
         # Check that key artifacts exist at expected paths
         catalog_root = self.catalog_root
 
-        # Check Applications directories exist
+        # Check top-level output directories exist (moved out of Catalog/Applications/)
         for subdir in ["Papers", "Demos", "Visuals", "Articles", "Packages"]:
-            d = catalog_root / "Applications" / subdir
+            d = self.catalog_root.parent / subdir
             if d.exists():
-                report["verified_files"].append(f"Applications/{subdir}/ exists")
+                report["verified_files"].append(f"{subdir}/ exists")
         
         # Check master FUTURE_DIRECTIONS exists if we merged content
         master_fd = catalog_root / "Aether" / ".aether_workspace" / "MASTER_FUTURE_DIRECTIONS.md"
@@ -3891,7 +3904,7 @@ Research mode: {concept.research_mode}
         # Filter out string entries — LLM sometimes returns visualizations as strings
         visualizations = [v for v in pkg.get("visualizations", []) if isinstance(v, dict)]
         if visualizations:
-            viz_dir = self.catalog_root / "Applications" / "Packages" / "visualizations"
+            viz_dir = self.catalog_root.parent / "Packages" / "visualizations"
             viz_dir.mkdir(parents=True, exist_ok=True)
             pkg_slug = re.sub(r'[^a-z0-9]', '_', pkg.get("title", "pkg").lower())[:40]
             for viz in visualizations:
@@ -4101,7 +4114,7 @@ Research mode: {concept.research_mode}
             paths_to_add = []
             if job.integrated_paths:
                 for p in job.integrated_paths:
-                    abs_path = self.catalog_root / p
+                    abs_path = self._resolve_target(p)
                     if abs_path.exists():
                         # git add relative to repo root
                         rel = abs_path.relative_to(self.catalog_root.parent)
@@ -4126,12 +4139,12 @@ Research mode: {concept.research_mode}
                 if abs_sf.exists():
                     paths_to_add.append(sf)
             # Add packages index if it was regenerated
-            pkg_index = self.catalog_root / "Applications" / "Packages" / "package_index.js"
+            pkg_index = self.catalog_root.parent / "Packages" / "package_index.js"
             if pkg_index.exists():
-                paths_to_add.append("Catalog/Applications/Packages/package_index.js")
-            lineage = self.catalog_root / "Applications" / "Packages" / "lineage.json"
+                paths_to_add.append("Catalog/Packages/package_index.js")
+            lineage = self.catalog_root.parent / "Packages" / "lineage.json"
             if lineage.exists():
-                paths_to_add.append("Catalog/Applications/Packages/lineage.json")
+                paths_to_add.append("Catalog/Packages/lineage.json")
 
             if paths_to_add:
                 for p in paths_to_add:

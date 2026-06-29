@@ -9,9 +9,9 @@ def main():
     aether_dir = Path(__file__).parent.resolve()
     repo_root = aether_dir.parent
     
-    packages_dir = repo_root / "Catalog" / "Applications" / "Packages"
+    packages_dir = repo_root / "Packages"
     docs_dir = repo_root / "docs"
-    archive_dir = repo_root / "Catalog" / "Applications" / "Packages_Archive"
+    archive_dir = repo_root / "Packages_Archive"
     
     print(f"Repo root: {repo_root}")
     print(f"Packages dir: {packages_dir}")
@@ -31,7 +31,7 @@ def main():
     
     excluded_files = {"index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json", "catalog_tree.json"}
     
-    # 1. Archive from Catalog/Applications/Packages/
+    # 1. Archive from Packages/
     json_files = glob.glob(str(packages_dir / "*.json"))
     for fpath in json_files:
         fname = os.path.basename(fpath)

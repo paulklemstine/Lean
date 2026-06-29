@@ -59,7 +59,7 @@ AETHER/
 └── CLAUDE.md              # Full developer documentation
 ```
 
-Aether expects a sibling Catalog layout (`../Catalog/Applications/Packages/`) for integration and website rebuild.
+Aether expects a sibling Catalog layout (`../Packages/`) for integration and website rebuild.
 
 ---
 

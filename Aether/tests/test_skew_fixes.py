@@ -52,7 +52,7 @@ def test_ucb_penalties():
 def test_domain_auto_alignment(tmp_path):
     # Mocking knowledge extractor and job
     config = {
-        "catalog": {"root_dir": str(tmp_path)},
+        "catalog": {"root_dir": str(tmp_path / "Catalog")},
         "workspace": str(tmp_path / "workspace")
     }
     extractor = KnowledgeExtractor(config=config)
@@ -91,8 +91,10 @@ def test_domain_auto_alignment(tmp_path):
 
 def test_in_place_package_merging(tmp_path):
     # Set up Package directories
-    pkg_dir = tmp_path / "Applications" / "Packages"
+    pkg_dir = tmp_path / "Packages"
     pkg_dir.mkdir(parents=True)
+    # catalog_root must exist so KnowledgeExtractor does not fall back to the real Catalog
+    (tmp_path / "Catalog").mkdir(parents=True, exist_ok=True)
     
     # Pre-existing parent package
     parent_pkg = {
@@ -110,7 +112,7 @@ def test_in_place_package_merging(tmp_path):
     
     # Create KnowledgeExtractor and job
     config = {
-        "catalog": {"root_dir": str(tmp_path)},
+        "catalog": {"root_dir": str(tmp_path / "Catalog")},
         "workspace": str(tmp_path / "workspace")
     }
     extractor = KnowledgeExtractor(config=config)

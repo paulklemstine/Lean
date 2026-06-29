@@ -132,7 +132,7 @@ from pi_agent_client import ResearchConcept
 
 
 REPO_ROOT = Path(__file__).parent.parent
-PACKAGES_DIR = REPO_ROOT / "Catalog" / "Applications" / "Packages"
+PACKAGES_DIR = REPO_ROOT / "Packages"
 
 
 def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
@@ -655,7 +655,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         # the Lean files directly (no article/paper/widgets).
         #
         # Phase B packages that ARE created are always displayed on the website:
-        # the index builder (Catalog/Applications/Packages/update_index.py) and
+        # the index builder (Packages/update_index.py) and
         # the frontend sidebar do NOT filter by quality_score.
         #
         # CRITICAL: If this is a Phase B completion, skip Phase B dispatch entirely.
@@ -1689,6 +1689,11 @@ def rebuild_commit_push() -> bool:
         subprocess.run(["git", "add", "docs/"], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
         subprocess.run(["git", "add", "Catalog/"], cwd=str(REPO_ROOT), capture_output=True, timeout=180)
         subprocess.run(["git", "add", "Aether/"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
+        # Top-level output dirs (moved out of Catalog/Applications/).
+        for _d, _t in (("Packages/", 180), ("Packages_Archive/", 180),
+                       ("Papers/", 120), ("Articles/", 120),
+                       ("Demos/", 120), ("Visuals/", 60)):
+            subprocess.run(["git", "add", _d], cwd=str(REPO_ROOT), capture_output=True, timeout=_t)
 
         # Force add core state files to ensure they are tracked and pushed
         state_files = [

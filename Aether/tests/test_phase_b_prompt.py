@@ -62,7 +62,7 @@ def test_phase_b_version_selection_respects_weights():
 
 def test_package_index_does_not_filter_by_quality():
     """update_index.py must include all packages regardless of quality_score."""
-    script = Path(__file__).parent.parent.parent / "Catalog" / "Applications" / "Packages" / "update_index.py"
+    script = Path(__file__).parent.parent.parent / "Packages" / "update_index.py"
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp = Path(tmpdir)
         # Write two dummy packages: one high quality, one low quality

@@ -6,10 +6,10 @@ Replaces SmartIntegrator with domain-aware, Pi-Agent-guided placement.
 Placement rules:
 - .lean theorems (no sorries) → Catalog/{Domain}/{Subdir}/
 - .lean theorems (with sorries) → Catalog/Speculative/AutoResearch/
-- Research papers (.md) → Catalog/Applications/Papers/
-- Python demos (.py) → Catalog/Applications/Demos/
-- SVG diagrams (.svg) → Catalog/Applications/Visuals/ (deprecated)
-- SciAm articles (.md discussion) → Catalog/Applications/Articles/
+- Research papers (.md) → Papers/
+- Python demos (.py) → Demos/
+- SVG diagrams (.svg) → Visuals/ (deprecated)
+- SciAm articles (.md discussion) → Articles/
 - Raw experiment data → Catalog/ResearchOutput/{exp_id}/
 """
 
@@ -347,10 +347,10 @@ class OutputOrganizer:
     def _ensure_directories(self) -> None:
         """Create artifact directories if they don't exist."""
         dirs = [
-            self.catalog_root / "Applications" / "Papers",
-            self.catalog_root / "Applications" / "Demos",
-            self.catalog_root / "Applications" / "Visuals",
-            self.catalog_root / "Applications" / "Articles",
+            self.catalog_root.parent / "Papers",
+            self.catalog_root.parent / "Demos",
+            self.catalog_root.parent / "Visuals",
+            self.catalog_root.parent / "Articles",
             self.catalog_root / "ResearchOutput",
         ]
         for d in dirs:
@@ -371,10 +371,10 @@ class OutputOrganizer:
         Returns a tuple of:
         - decisions dict with keys:
           - "theorems": .lean files placed in domain directories
-          - "papers": research reports placed in Applications/Papers/
-          - "demos": Python demos placed in Applications/Demos/
-          - "visuals": SVG diagrams placed in Applications/Visuals/
-          - "articles": SciAm-style articles placed in Applications/Articles/
+          - "papers": research reports placed in Papers/
+          - "demos": Python demos placed in Demos/
+          - "visuals": SVG diagrams placed in Visuals/
+          - "articles": SciAm-style articles placed in Articles/
           - "raw": everything else in ResearchOutput/{exp_id}/
           - "rejected": files that failed validation
         - parsed ARISTOTLE_SUMMARY dict (or None), for feeding back into
@@ -416,28 +416,28 @@ class OutputOrganizer:
 
             elif file_type == "paper":
                 decision = self._place_artifact(
-                    result_file, "Applications/Papers", exp_id, concept, dry_run
+                    result_file, "Papers", exp_id, concept, dry_run
                 )
                 decisions["papers"].append(decision)
                 print(f"[Organizer] {result_file.name} -> {decision.target_path} (paper)")
 
             elif file_type == "demo":
                 decision = self._place_artifact(
-                    result_file, "Applications/Demos", exp_id, concept, dry_run
+                    result_file, "Demos", exp_id, concept, dry_run
                 )
                 decisions["demos"].append(decision)
                 print(f"[Organizer] {result_file.name} -> {decision.target_path} (demo)")
 
             elif file_type == "visual":
                 decision = self._place_artifact(
-                    result_file, "Applications/Visuals", exp_id, concept, dry_run
+                    result_file, "Visuals", exp_id, concept, dry_run
                 )
                 decisions["visuals"].append(decision)
                 print(f"[Organizer] {result_file.name} -> {decision.target_path} (visual)")
 
             elif file_type == "article":
                 decision = self._place_artifact(
-                    result_file, "Applications/Articles", exp_id, concept, dry_run
+                    result_file, "Articles", exp_id, concept, dry_run
                 )
                 decisions["articles"].append(decision)
                 print(f"[Organizer] {result_file.name} -> {decision.target_path} (article)")
@@ -712,16 +712,20 @@ class OutputOrganizer:
         safe_title = re.sub(r'[^a-zA-Z0-9_]', '_', concept_title)[:50]
 
         suffix = source.suffix
-        if suffix == ".md" and target_dir_name == "Applications/Papers":
+        if suffix == ".md" and target_dir_name == "Papers":
             new_name = f"{safe_title}_paper.md"
-        elif suffix == ".md" and target_dir_name == "Applications/Articles":
+        elif suffix == ".md" and target_dir_name == "Articles":
             new_name = f"{safe_title}_article.md"
         elif suffix == ".py":
             new_name = f"{safe_title}_demo.py"
         else:
             new_name = source.name
 
-        target_dir = self.catalog_root / target_dir_name
+        # Papers/Demos/Visuals/Articles moved to top-level (sibling of Catalog);
+        # other targets stay under Catalog.
+        _top_level = {"Papers", "Demos", "Visuals", "Articles"}
+        base = self.catalog_root.parent if target_dir_name in _top_level else self.catalog_root
+        target_dir = base / target_dir_name
         target_path = target_dir / new_name
 
         if not dry_run:
