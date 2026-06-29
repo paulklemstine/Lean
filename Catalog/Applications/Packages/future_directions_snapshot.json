@@ -120,7 +120,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e0366114",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domain_bridges": [],
     "domains": [
@@ -132,7 +132,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -298,7 +298,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03afc47a",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domain_bridges": [],
     "domains": [
@@ -312,7 +312,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -557,26 +557,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3c76315a",
-    "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_380",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432811+00:00",
-    "title": "Formal Verification of Algorithms"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n² and (n+1)². Formalize known partial results on prime gaps and connect to the Cramér model of primes.",
     "domain_bridges": [],
@@ -596,26 +576,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "bfffb49f",
-    "description": "Prove that higher signatures are homotopy invariants for all finitely presented groups. Formalize the assembly map in topological K-theory and connections to Baum-Connes.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "seed_223",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:12.120491+00:00",
-    "title": "Novikov Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6be11e92",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -627,7 +588,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -777,7 +738,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "42386f68",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domain_bridges": [],
     "domains": [
@@ -790,7 +751,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -1117,7 +1078,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "92bb7dbb",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1129,7 +1090,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1576,26 +1537,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "badcb5d8",
-    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics",
-      "Logic"
-    ],
-    "id": "fd_0396",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:25.003856+00:00",
-    "title": "Hilbert 6: Axiomatization of Physics"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erdős–Szekeres theorem and improve known bounds.",
     "domain_bridges": [],
@@ -1693,7 +1634,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1a00cc4",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1706,7 +1647,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -1734,7 +1675,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2131c6b1",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1747,7 +1688,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -1958,31 +1899,56 @@
     "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
   },
   {
-    "ambition_level": "grand_challenge",
+    "ambition_level": "extension",
     "catalog_references": [
-      "math.PR",
-      "math.NT"
+      "math.CO",
+      "unit_distance_graphs",
+      "geometric_fractional_chromatic_number"
     ],
-    "consumed_by_exp_id": "a0ff9b84",
-    "description": "Formalize the lower bound on the expected value of the orbit-contact functional $K_t$ for a stochastic ellipsoid evolution process restricted to lattices with cyclotomic symmetry. Specifically, prove that the expected number of contact points (the orbit-contact functional) remains bounded such that the density improvement $\\Omega(N^2 \\log \\log N \\, 2^{-N})$ is achievable via the existence of a lattice with high packing density.",
+    "consumed_by_exp_id": "",
+    "description": "The paper demonstrates that augmenting the 27-vertex unit-distance graph G27 with a specific pair of vertices results in a 29-vertex graph with geometric fractional chromatic number strictly greater than 4. The authors note that such augmentations are exceedingly rare. This conjecture posits that, up to Euclidean isometry, this specific 2-vertex augmentation is the unique way to add two vertices to G27 such that the resulting unit-distance graph has a geometric fractional chromatic number strictly greater than 4.",
     "domain_bridges": [
-      "Stochastic Processes",
-      "Lattice Theory",
-      "Harmonic Analysis on Lie Groups"
+      "Linear Programming",
+      "Polytope Theory",
+      "Euclidean Geometry"
     ],
     "domains": [
-      "Computation",
-      "Cryptography"
+      "Pythagorean",
+      "Geometry"
     ],
-    "id": "fd_2807",
+    "id": "fd_2810",
     "lineage_refs": [],
     "priority_score": 0.8,
-    "proof_strategy": "The strategy involves formalizing the stochastic differential equation (SDE) describing the evolution of the ellipsoid's shape matrix. One must define the Haar measure on the space of lattices with cyclotomic symmetry (Venkatesh's construction) and use a concentration inequality for the orbit-contact functional $K_t$. The core technical hurdle is formalizing the'shell-integral' calculation (Lemma 4.1 in the excerpt) as a bound on the expectation of a Gaussian-weighted integral over the sphere $S^{N-1}$ under the symmetry group action.",
+    "proof_strategy": "Formalize the 27-vertex graph G27 and the convex polytope of its 23 extremal geometric fractional colorings. Then, perform a verified exhaustive search or algebraic classification over all possible 2-vertex additions, verifying that only the specific pair identified in the paper yields a unit-distance graph where the geometric fractional chromatic number exceeds 4.",
     "research_mode": "team",
-    "source_exp_id": "2606.05105v2",
-    "status": "in_progress",
-    "timestamp": "2026-06-28T23:23:59.850294+00:00",
-    "title": "Lower bound for the expected orbit-contact functional of cyclotomic lattice ensembles"
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T03:31:25.863443+00:00",
+    "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The only non-negative integer solutions (n, t) to the Diophantine equation P_14(n) = t^3 are (0,0), (1,1), and (5,5), where P_s(n) = ((s-2)n^2 - (s-4)n)/2 denotes the n-th s-gonal number. This corresponds to the k=5 case of Theorem 1(ii) in the paper.",
+    "domain_bridges": [
+      "Diophantine equations",
+      "Elliptic curves"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2812",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Translate the Diophantine equation 6n^2 - 5n = t^3 into an elliptic curve problem, compute the Mordell-Weil group of the corresponding curve, and use linear forms in logarithms along with modular methods to bound and verify the finite set of integer points.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T03:32:01.660417+00:00",
+    "title": "Classification of Perfect Cubes in 14-gonal Numbers"
   },
   {
     "ambition_level": "extension",
@@ -2358,6 +2324,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2811",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "oeis:80035",
+    "status": "available",
+    "timestamp": "2026-06-29T03:32:05.123415+00:00",
+    "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that 10 is a solitary number — no other integer shares its abundancy index σ(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
     "domain_bridges": [],
     "domains": [
@@ -2372,25 +2357,6 @@
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "861a2b8d",
-    "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "sorry_fill_a0dd96a5_00b573d8",
-    "lineage_refs": [],
-    "priority_score": 0.5771458702064898,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
-    "timestamp": "2026-06-16T12:52:43.615426+00:00",
-    "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
   {
     "ambition_level": "extension",
@@ -2454,26 +2420,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1c4cc4f0",
-    "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0416",
-    "lineage_refs": [],
-    "priority_score": 0.5499999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:26.588561+00:00",
-    "title": "EML Kolmogorov-Arnold Representation"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domain_bridges": [],
@@ -2514,7 +2460,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d3b45b7",
     "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
     "domain_bridges": [],
     "domains": [
@@ -2527,7 +2473,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.353451+00:00",
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
   },
@@ -2753,7 +2699,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "798448a1",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -2766,7 +2712,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
