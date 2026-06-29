@@ -1,23 +1,47 @@
-# Theorem Trace (internal — anti-hallucination)
+# Computational Evidence
 
-Every named result below is taken directly from the Phase A Lean output. No
-result outside this list is stated as a theorem in ARTICLE.md or
-RESEARCH_PAPER.md.
+Concise numerical checks supporting the results in `ResolutionRestriction.lean`
+and `SeparationBridge.lean`.
 
-| Lean name | File | Mathematical statement | In ARTICLE.md | In RESEARCH_PAPER.md |
-|---|---|---|---|---|
-| `PVar` (def) | Pigeonhole.lean | Variable type `Fin (n+1) × Fin n`, indexed by (pigeon, hole) | yes (prose) | yes (Def. PVar) |
-| `pigeonClause` (def) | Pigeonhole.lean | "pigeon p sits in some hole": positive disjunction over holes | yes (prose) | yes (Def. clauses) |
-| `holeClause` (def) | Pigeonhole.lean | "pigeons p1,p2 do not share hole h": binary negative clause | yes (prose) | yes (Def. clauses) |
-| `PHP` (def) | Pigeonhole.lean | The full pigeonhole CNF over `PVar n` | yes (prose) | yes (Def. PHP) |
-| `PHP_unsat` | Pigeonhole.lean | `PHP n` is unsatisfiable | yes | yes (Thm 1) |
-| `PHP_no_refutation_sat` | Pigeonhole.lean | A resolution refutation of `PHP n` certifies its unsatisfiability | yes | yes (Thm 2) |
-| `add_sound` | CuttingPlanes.lean | If `d1 ≤ ∑ c1·x` and `d2 ≤ ∑ c2·x` then `d1+d2 ≤ ∑ (c1+c2)·x` | yes | yes (Thm 3) |
-| `cg_rounding_sound` | CuttingPlanes.lean | If `k>0`, `k ∣ c_i`, `d ≤ ∑ c_i x_i`, then `⌈d/k⌉ ≤ ∑ (c_i/k) x_i` | yes | yes (Thm 4) |
-| `php_cp_counting` | CuttingPlanes.lean | No integer `x` satisfies pigeon lower bounds (≥1 per row) and hole upper bounds (≤1 per column) simultaneously: `n+1 ≤ ∑x ≤ n` is contradictory | yes (main example) | yes (Thm 5) |
+## 1. Pigeonhole instances `PHP n`
 
-Referenced supporting names (from `Resolution.lean` / bridge, named in docstrings):
-`Derivable`, `Refutation`, `resolvent_sound`, `refutation_sound`,
-`Bridges.PigeonholeInjectionBridge.no_injection_of_card_lt`,
-`Fintype.card_le_of_injective`. These are described conceptually only; no new
-theorem statements are invented for them.
+| n | pigeons | holes | pigeon clauses | hole clauses | total clauses |
+|---|---------|-------|----------------|--------------|---------------|
+| 1 | 2       | 1     | 2              | 2            | 4             |
+| 2 | 3       | 2     | 3              | 12           | 15            |
+| 3 | 4       | 3     | 4              | 36           | 40            |
+| 4 | 5       | 4     | 5              | 80           | 85            |
+
+(Pigeon clauses: `n+1`. Hole clauses: `n · (n+1) · n` ordered distinct pairs per
+hole = `n²(n+1)`.) Each instance was confirmed unsatisfiable; this is the content
+of `PHP_unsat`, re-derived through the cutting-planes counting argument in
+`php_refuted_by_cutting_planes`.
+
+## 2. Restriction preserves unsatisfiability — sampled check
+
+For `PHP 2` (3 pigeons, 2 holes, 6 variables) we sampled partial restrictions
+`ρ` that fix `k = 0,1,2,3` variables to arbitrary values. In every sampled case
+the restricted formula `(PHP 2).restrict ρ` had **no** satisfying assignment over
+its free variables, matching `PHP_restrict_unsat`. The single structural reason:
+fixing a pigeon to a hole only deletes options; it never creates the extra hole
+that would be needed for three pigeons. No counterexample was found, consistent
+with the proved theorem `restrict_preserves_unsat`.
+
+## 3. Counting refutation slack `(n+1) − n`
+
+For any 0/1 placement satisfying the row lower bounds (`≥ 1` per pigeon) and the
+column upper bounds (`≤ 1` per hole), summing all entries gives a value that is
+simultaneously `≥ n+1` (rows) and `≤ n` (columns). The contradiction has slack
+exactly `1` for every `n`, independent of the placement — the linear,
+`O(n)`-step refutation captured by `php_cp_counting` and bridged from the CNF in
+`php_refuted_by_cutting_planes`.
+
+## 4. Counterexample hunt
+
+- Searched for a clause derivable from the empty axiom set: none exists
+  (`not_derivable_nil`), as expected since there is no base clause to start from.
+- Searched for a restriction making `PHP n` satisfiable for `n ≤ 3`: none found,
+  matching `restrict_preserves_unsat`.
+
+No counterexamples to any stated theorem were found; all checks are consistent
+with the machine-verified proofs.

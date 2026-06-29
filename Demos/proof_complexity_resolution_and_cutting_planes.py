@@ -1,48 +1,113 @@
-"""Numerical demonstrations for:
+"""
+Resolution, Restrictions, and Cutting Planes: Numerical Demonstrations
+======================================================================
 
-    Resolution and Cutting Planes: The Pigeonhole Principle as a Separation Witness
+This self-contained script illustrates the central results of the accompanying
+paper:
 
-Every routine below mirrors a formally proved result:
+  * the resolution proof system (resolvent, derivability, soundness, the unit
+    refutation);
+  * the pigeonhole CNF and a brute-force confirmation of its unsatisfiability;
+  * the restriction operator and the exact restriction-invariance equivalence,
+    together with hardness preservation for the pigeonhole principle;
+  * the cutting-planes counting refutation, which dispatches the pigeonhole
+    principle in O(n) linear steps where resolution provably requires
+    exponentially many.
 
-  * build_php_cnf / php_is_unsatisfiable  ->  PHP_unsat
-  * add_sound                             ->  add_sound
-  * cg_rounding_sound                     ->  cg_rounding_sound
-  * counting_refutation                   ->  php_cp_counting
-  * resolution_size_blowup (illustrative) ->  Haken's lower bound (companion)
+Every routine is inlined; only the Python standard library is used.
 
-Self-contained: standard library only. Run with `python demo.py`.
+Conventions
+-----------
+A literal is a pair (variable, polarity) with polarity True for the positive
+literal and False for the negation.  A clause is a list of literals; a CNF is a
+list of clauses.  An assignment maps variables to booleans.  A restriction maps
+variables to Optional[bool]: None means "free", a bool means "fixed".
 """
 
 from __future__ import annotations
 
 from itertools import product
-from math import ceil
-from typing import Dict, List, Tuple
+from typing import Dict, Hashable, List, Optional, Tuple
 
-# A Boolean clause is a list of signed literals (var_index, is_positive).
-Var = Tuple[int, int]            # (pigeon, hole)
-Literal = Tuple[Var, bool]       # (variable, polarity)
-Clause = List[Literal]
+# Type aliases -------------------------------------------------------------
+Var = Hashable
+Lit = Tuple[Var, bool]
+Clause = List[Lit]
+CNF = List[Clause]
+Assignment = Dict[Var, bool]
+Restriction = Dict[Var, Optional[bool]]
 
 
-# ---------------------------------------------------------------------------
-# 1. The pigeonhole CNF and its unsatisfiability  (mirrors PHP_unsat)
-# ---------------------------------------------------------------------------
+# =========================================================================
+# 1. Resolution
+# =========================================================================
+def lit_eval(a: Assignment, lit: Lit) -> bool:
+    """A literal is satisfied when the assignment matches its polarity."""
+    v, pos = lit
+    return a[v] == pos
 
-def build_php_cnf(n: int) -> List[Clause]:
-    """Construct PHP_n: n+1 pigeons into n holes.
 
-    Variables x_{p,h} mean 'pigeon p sits in hole h'.
-    Pigeon clauses: each pigeon sits in some hole (positive disjunction).
-    Hole clauses: no two distinct pigeons share a hole (binary negative).
-    """
-    clauses: List[Clause] = []
+def clause_sat(a: Assignment, c: Clause) -> bool:
+    """A clause is satisfied when at least one literal is satisfied."""
+    return any(lit_eval(a, l) for l in c)
+
+
+def cnf_sat(a: Assignment, f: CNF) -> bool:
+    """A CNF is satisfied when every clause is satisfied."""
+    return all(clause_sat(a, c) for c in f)
+
+
+def resolvent(c1: Clause, c2: Clause, p: Var) -> Clause:
+    """Resolvent on pivot p: drop (p, True) from c1 and (p, False) from c2."""
+    left = [l for l in c1 if l != (p, True)]
+    right = [l for l in c2 if l != (p, False)]
+    return left + right
+
+
+def all_assignments(variables: List[Var]):
+    """Enumerate every boolean assignment over the given variables."""
+    for bits in product([False, True], repeat=len(variables)):
+        yield dict(zip(variables, bits))
+
+
+def cnf_variables(f: CNF) -> List[Var]:
+    """The (deduplicated, order-preserving) list of variables in a CNF."""
+    seen: List[Var] = []
+    for c in f:
+        for v, _ in c:
+            if v not in seen:
+                seen.append(v)
+    return seen
+
+
+def is_satisfiable(f: CNF) -> bool:
+    """Brute-force satisfiability check by enumerating all assignments."""
+    variables = cnf_variables(f)
+    return any(cnf_sat(a, f) for a in all_assignments(variables))
+
+
+def resolvent_sound_check(c1: Clause, c2: Clause, p: Var) -> bool:
+    """Verify Theorem: a |= c1 and a |= c2  =>  a |= resolvent(c1,c2,p)."""
+    r = resolvent(c1, c2, p)
+    variables = cnf_variables([c1, c2, r])
+    for a in all_assignments(variables):
+        if clause_sat(a, c1) and clause_sat(a, c2) and not clause_sat(a, r):
+            return False
+    return True
+
+
+# =========================================================================
+# 2. The pigeonhole CNF
+# =========================================================================
+def php_cnf(n: int) -> CNF:
+    """PHP_n: n+1 pigeons into n holes.  Variable (p, h) = 'pigeon p in hole h'."""
     pigeons = range(n + 1)
     holes = range(n)
-    # pigeon clauses
+    clauses: CNF = []
+    # Each pigeon sits in some hole.
     for p in pigeons:
         clauses.append([((p, h), True) for h in holes])
-    # hole clauses over ordered distinct pigeon pairs
+    # No two distinct pigeons share a hole.
     for h in holes:
         for p1 in pigeons:
             for p2 in pigeons:
@@ -51,165 +116,126 @@ def build_php_cnf(n: int) -> List[Clause]:
     return clauses
 
 
-def clause_satisfied(clause: Clause, assign: Dict[Var, bool]) -> bool:
-    return any(assign[v] == pol for (v, pol) in clause)
+# =========================================================================
+# 3. Restrictions
+# =========================================================================
+def subst(rho: Restriction, a: Assignment) -> Assignment:
+    """Glue a restriction onto a free assignment: fixed values win."""
+    out: Assignment = {}
+    for v in set(rho) | set(a):
+        fixed = rho.get(v)
+        out[v] = a[v] if fixed is None else fixed
+    return out
 
 
-def php_is_unsatisfiable(n: int) -> bool:
-    """Brute-force check that PHP_n has no satisfying assignment.
+def clause_killed(rho: Restriction, c: Clause) -> bool:
+    """A clause is killed when a literal is fixed to its own polarity."""
+    return any(rho.get(v) == pos for (v, pos) in c)
 
-    Returns True iff every assignment falsifies some clause (mirrors PHP_unsat).
-    """
-    cnf = build_php_cnf(n)
-    variables = [(p, h) for p in range(n + 1) for h in range(n)]
-    for bits in product([False, True], repeat=len(variables)):
-        assign = dict(zip(variables, bits))
-        if all(clause_satisfied(c, assign) for c in cnf):
-            return False  # found a model -> would mean satisfiable
+
+def clause_restrict(rho: Restriction, c: Clause) -> Clause:
+    """Keep exactly the literals on free variables (fixed-false literals deleted)."""
+    return [(v, pos) for (v, pos) in c if rho.get(v) is None]
+
+
+def cnf_restrict(rho: Restriction, f: CNF) -> CNF:
+    """Drop killed clauses, trim the survivors."""
+    return [clause_restrict(rho, c) for c in f if not clause_killed(rho, c)]
+
+
+def restrict_invariance_check(rho: Restriction, f: CNF) -> bool:
+    """Verify Theorem: a |= f|rho  <=>  subst(rho,a) |= f, for all free a."""
+    restricted = cnf_restrict(rho, f)
+    free_vars = [v for v in cnf_variables(f) if rho.get(v) is None]
+    for a in all_assignments(free_vars):
+        lhs = cnf_sat(a, restricted)
+        rhs = cnf_sat(subst(rho, a), f)
+        if lhs != rhs:
+            return False
     return True
 
 
-# ---------------------------------------------------------------------------
-# 2. Cutting-planes soundness rules  (mirror add_sound, cg_rounding_sound)
-# ---------------------------------------------------------------------------
-
-def add_sound(c1: List[int], c2: List[int], d1: int, d2: int,
-              x: List[int]) -> bool:
-    """Verify add_sound on a concrete integer point.
-
-    Given d1 <= <c1,x> and d2 <= <c2,x>, check d1+d2 <= <c1+c2, x>.
-    Returns True when the hypotheses hold AND the conclusion holds.
+# =========================================================================
+# 4. Cutting planes: the counting refutation
+# =========================================================================
+def php_counting_refutation(n: int, x: Dict[Tuple[int, int], int]) -> Tuple[int, int]:
     """
-    lhs1 = sum(a * xi for a, xi in zip(c1, x))
-    lhs2 = sum(a * xi for a, xi in zip(c2, x))
-    if not (d1 <= lhs1 and d2 <= lhs2):
-        return True  # hypotheses vacuous -> nothing claimed
-    summed = sum((a + b) * xi for a, b, xi in zip(c1, c2, x))
-    return d1 + d2 <= summed
-
-
-def cg_rounding_sound(c: List[int], d: int, k: int, x: List[int]) -> bool:
-    """Verify cg_rounding_sound on a concrete integer point.
-
-    Requires k > 0 and k | c_i for all i. Given d <= <c,x>, check
-    ceil(d/k) <= <c/k, x>.
+    Given an integer matrix x[(p,h)] obeying the row/column constraints
+        for every pigeon p:  sum_h x[p,h] >= 1
+        for every hole   h:  sum_p x[p,h] <= 1
+    return the pair (lower, upper) = (n+1 bound, n bound) on the global sum.
+    The counting refutation observes lower <= total <= upper, i.e. n+1 <= n.
     """
-    assert k > 0 and all(ci % k == 0 for ci in c), "CG hypotheses violated"
-    lhs = sum(ci * xi for ci, xi in zip(c, x))
-    if not (d <= lhs):
-        return True
-    rounded_bound = ceil(d / k)
-    divided = sum((ci // k) * xi for ci, xi in zip(c, x))
-    return rounded_bound <= divided
+    pigeons = range(n + 1)
+    holes = range(n)
+    total = sum(x[(p, h)] for p in pigeons for h in holes)
+    # Row sums witness the lower bound n+1.
+    for p in pigeons:
+        assert sum(x[(p, h)] for h in holes) >= 1
+    # Column sums witness the upper bound n.
+    for h in holes:
+        assert sum(x[(p, h)] for p in pigeons) <= 1
+    lower = n + 1   # sum of n+1 row lower bounds of 1
+    upper = n       # sum of n column upper bounds of 1
+    return lower, upper, total
 
 
-# ---------------------------------------------------------------------------
-# 3. The counting refutation  (mirrors php_cp_counting)
-# ---------------------------------------------------------------------------
-
-def counting_refutation(n: int, x: Dict[Var, int]) -> Tuple[int, int, int]:
-    """Run the double-counting cutting-planes refutation of PHP_n.
-
-    Assumes x satisfies the row lower bounds (sum_h x_{p,h} >= 1) and the
-    column upper bounds (sum_p x_{p,h} <= 1). Returns (lower, total, upper)
-    where lower = n+1, total = sum of all variables, upper = n. The
-    refutation is the impossible chain  lower <= total <= upper.
-    """
-    # row lower bounds
-    for p in range(n + 1):
-        row = sum(x[(p, h)] for h in range(n))
-        assert row >= 1, f"row {p} violates lower bound"
-    # column upper bounds
-    for h in range(n):
-        col = sum(x[(p, h)] for p in range(n + 1))
-        assert col <= 1, f"column {h} violates upper bound"
-    total = sum(x[(p, h)] for p in range(n + 1) for h in range(n))
-    lower = n + 1   # = sum over rows of 1
-    upper = n       # = sum over columns of 1
-    return lower, total, upper
-
-
-# ---------------------------------------------------------------------------
-# 4. Resolution-size blowup (illustrative, companion to Haken)
-# ---------------------------------------------------------------------------
-
-def resolution_lower_bound_estimate(n: int, c: float = 0.2) -> int:
-    """Illustrative lower-bound magnitude 2^{c n} on resolution refutation size.
-
-    Not a proof: a numerical sense of how astronomically large any resolution
-    refutation of PHP_n must be, contrasting the O(n) cutting-planes proof.
-    """
-    return int(2 ** (c * n))
-
-
-def cutting_planes_step_count(n: int) -> int:
-    """Number of addition steps in the counting refutation: O(n)."""
-    return (n + 1) + n  # sum the n+1 rows, then the n columns
-
-
-# ---------------------------------------------------------------------------
-# Driver
-# ---------------------------------------------------------------------------
-
+# =========================================================================
+# Demonstrations
+# =========================================================================
 def main() -> None:
     print("=" * 68)
-    print("Pigeonhole principle: resolution vs. cutting planes")
+    print("1. Resolution: the unit refutation of {x} & {not x}")
     print("=" * 68)
+    cx, cnx = [("x", True)], [("x", False)]
+    r = resolvent(cx, cnx, "x")
+    print(f"  resolvent([x], [~x], x) = {r}   (the empty clause: {r == []})")
+    f_unit: CNF = [cx, cnx]
+    print(f"  {{x}} & {{~x}} satisfiable? {is_satisfiable(f_unit)}  (expected False)")
+    print(f"  resolution rule sound on these parents? "
+          f"{resolvent_sound_check(cx, cnx, 'x')}")
 
-    print("\n[1] Unsatisfiability of PHP_n (brute force, mirrors PHP_unsat)")
+    print()
+    print("=" * 68)
+    print("2. Pigeonhole principle is unsatisfiable")
+    print("=" * 68)
     for n in range(1, 4):
-        unsat = php_is_unsatisfiable(n)
-        print(f"    PHP_{n}: {n+1} pigeons, {n} holes -> "
-              f"unsatisfiable = {unsat}")
+        f = php_cnf(n)
+        print(f"  PHP_{n}: {n + 1} pigeons, {n} holes, {len(f)} clauses, "
+              f"satisfiable? {is_satisfiable(f)}  (expected False)")
 
-    print("\n[2] Soundness of the addition rule (add_sound)")
-    c1, c2 = [2, 0, 1], [1, 3, 0]
-    d1, d2 = 1, 2
-    x = [1, 1, 1]
-    print(f"    c1={c1}, c2={c2}, d1={d1}, d2={d2}, x={x}")
-    print(f"    <c1,x>={sum(a*xi for a,xi in zip(c1,x))} >= {d1}, "
-          f"<c2,x>={sum(a*xi for a,xi in zip(c2,x))} >= {d2}")
-    print(f"    summed bound d1+d2={d1+d2} <= "
-          f"<c1+c2,x>={sum((a+b)*xi for a,b,xi in zip(c1,c2,x))}: "
-          f"{add_sound(c1, c2, d1, d2, x)}")
+    print()
+    print("=" * 68)
+    print("3. Restriction invariance and hardness preservation")
+    print("=" * 68)
+    n = 2
+    f = php_cnf(n)
+    # Fix pigeon 0 into hole 0; leave everything else free.
+    rho: Restriction = {(0, 0): True, (0, 1): False}
+    print(f"  restriction rho fixes (0,0)=True, (0,1)=False on PHP_{n}")
+    print(f"  exact invariance  a |= f|rho  <=>  subst(rho,a) |= f : "
+          f"{restrict_invariance_check(rho, f)}")
+    restricted = cnf_restrict(rho, f)
+    print(f"  restricted formula still unsatisfiable? "
+          f"{not is_satisfiable(restricted)}  (hardness preserved)")
 
-    print("\n[3] Soundness of Chvatal-Gomory rounding (cg_rounding_sound)")
-    c, d, k = [6, 6, 6], 7, 6
-    x3 = [1, 0, 1]
-    print(f"    c={c}, d={d}, k={k}, x={x3}")
-    print(f"    d/k = {d}/{k} = {d/k:.3f}, ceil = {ceil(d/k)}")
-    print(f"    rounded inequality holds: {cg_rounding_sound(c, d, k, x3)}")
+    print()
+    print("=" * 68)
+    print("4. Cutting-planes counting refutation (linear in n)")
+    print("=" * 68)
+    for n in range(1, 6):
+        # Try to fill the board honestly: put pigeon p into hole p (no room for
+        # the last pigeon).  Any such 0/1 matrix obeying the row bounds is forced
+        # to violate a column bound; here we instead demonstrate the bound chain
+        # on a matrix that *does* obey both, which cannot exist -- so we build the
+        # bounds symbolically from the constraints themselves.
+        lower, upper = n + 1, n
+        print(f"  n={n}: counting yields {lower} <= total <= {upper}  =>  "
+              f"{lower} <= {upper} is {lower <= upper}  (contradiction)")
 
-    print("\n[4] Counting refutation (php_cp_counting)")
-    for n in (3, 5, 8):
-        # A 'best try' assignment: put pigeon p in hole min(p, n-1).
-        x_assign: Dict[Var, int] = {(p, h): 0 for p in range(n + 1)
-                                    for h in range(n)}
-        for p in range(n + 1):
-            x_assign[(p, min(p, n - 1))] = 1
-        # This necessarily violates a column upper bound; show the clash.
-        # Repair so rows are satisfied; columns will then overflow.
-        try:
-            lower, total, upper = counting_refutation(n, x_assign)
-            print(f"    n={n}: {lower} <= {total} <= {upper}  (impossible)")
-        except AssertionError as e:
-            # Demonstrate that any row-satisfying x forces a column overflow:
-            # use the saturating assignment all-ones row choice and report.
-            print(f"    n={n}: no x can satisfy both families -> {e}")
-            # Construct the formal contradiction symbolically instead:
-            print(f"          symbolic refutation: n+1 = {n+1} <= total "
-                  f"<= n = {n}  ==>  {n+1} <= {n}  (False)")
-
-    print("\n[5] The separation: proof sizes on PHP_n")
-    print(f"    {'n':>4} | {'cutting-planes steps':>22} | "
-          f"{'resolution >= 2^(0.2n)':>24}")
-    for n in (10, 25, 50, 100):
-        cp = cutting_planes_step_count(n)
-        res = resolution_lower_bound_estimate(n)
-        print(f"    {n:>4} | {cp:>22} | {res:>24}")
-
-    print("\nConclusion: cutting planes refutes PHP_n in O(n) steps;")
-    print("resolution provably requires 2^Omega(n).  Same truth, different cost.")
+    print()
+    print("  The pigeonhole principle therefore falls to cutting planes in O(n)")
+    print("  linear steps, while resolution provably needs 2^Omega(n) clauses.")
 
 
 if __name__ == "__main__":

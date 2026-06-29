@@ -730,5 +730,6 @@
   "e94880cd": "elliptic_curve_cryptography_weil_pairing_and_bls_s.json",
   "3ec587ed": "eml_differential_equations_odes_with_exponential_l.json",
   "c9fb85eb": "classification_of_perfect_cubes_in_14_gonal_number.json",
-  "47d1dc51": "unramified_obstruction_equals_descent_obstruction_.json"
+  "47d1dc51": "unramified_obstruction_equals_descent_obstruction_.json",
+  "0a73d6d7": "proof_complexity_resolution_and_cutting_planes.json"
 }

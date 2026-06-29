@@ -1,263 +1,109 @@
-# Why Some Proofs Must Be Enormous: The Hidden Cost of Reasoning
+# The Stubbornness of Pigeons: Why Some Truths Are Hard to Prove
 
-Imagine you are a detective with an airtight case. The suspect *cannot* have
-committed the crime — the math is simply impossible. You are certain. But now a
-judge asks you to *write down* the argument, step by step, in a fixed format,
-with no shortcuts allowed. To your horror, you discover that the shortest valid
-write-up runs to billions of pages. The conclusion was easy. The *proof* was
-monstrous.
+## A puzzle a child can solve
 
-This is not a fable. It is one of the deepest discoveries in theoretical
-computer science, and it sits at the heart of a field called **proof
-complexity**. Proof complexity asks a question that sounds almost philosophical
-but turns out to be brutally concrete: *how long must a proof be?* Not whether a
-statement is true — we may already know that — but how much paper, how many
-steps, how much raw symbolic labor it takes to *certify* the truth in a given
-system of reasoning.
+Put eleven pigeons into ten holes. At least two pigeons must share a hole. There is no way around it. This is the **pigeonhole principle**, and in its everyday form it is so obvious that we use it without a second thought: in any group of thirteen people, two share a birth month; in any city of a million residents, two have the same number of hairs on their heads.
 
-The answer, it turns out, depends enormously on *which rules you are allowed to
-use*. Change the rulebook, and a proof that needed a galaxy's worth of pages can
-collapse to a single tidy paragraph. This article is about that phenomenon,
-told through the most famous example in the subject: the **pigeonhole
-principle**, and two reasoning systems called **resolution** and **cutting
-planes**.
+The statement is trivial. The *proof* that a machine — or a rigid, mechanical reasoning system — can find is anything but. In fact, the pigeonhole principle sits at the heart of one of the deepest stories in modern logic and computer science: the story of how hard it can be to *certify* that something is impossible. This article is about that story, and about a clean set of mathematical results that explain why pigeons are so stubborn, and how a cleverer kind of reasoning tames them.
 
-## The principle a child understands
+## Saying "no" with a certificate
 
-The pigeonhole principle is the most obvious true statement in mathematics. If
-you have $n+1$ pigeons and only $n$ holes, and every pigeon must go into a hole,
-then *some* hole holds at least two pigeons. Eleven pigeons, ten holes: a
-collision is guaranteed. You do not need a theorem; you need eyes.
+Computers are extraordinarily good at searching. Ask a program whether a giant logical puzzle has a solution — whether a circuit can be made to misbehave, whether a schedule can satisfy every constraint, whether a configuration of millions of switches can be set just so — and modern *satisfiability solvers* will often answer in seconds, even for problems with millions of variables. These solvers run the world's hardware verification, software analysis, and logistics planning.
 
-And yet, when we feed this trivial fact to an automated reasoning engine — the
-kind of software that powers chip verification, scheduling systems, and the
-"SAT solvers" used across modern engineering — something astonishing happens.
-For certain styles of reasoning, the machine is *forced* to produce a proof of
-astronomical size. The statement is obvious; the certificate is gigantic.
+When such a solver says **"yes, a solution exists,"** it can hand you the solution and you can check it instantly. But what happens when the answer is **"no, this is impossible"**? How do you trust a machine that claims to have searched an astronomically large space and found nothing? The answer is that the solver produces a **certificate of impossibility** — a step-by-step argument that anyone (or any second program) can replay and verify. The proof system underlying virtually every such certificate is called **resolution**.
 
-To study this precisely, we first translate "pigeons into holes" into the raw
-language that solvers speak: Boolean logic, in a form called **conjunctive
-normal form**, or CNF.
+## Resolution: reasoning by elimination
 
-## Encoding pigeons as logic
+Resolution is reasoning stripped to its bones. We work with logical formulas in a standard shape called **conjunctive normal form**, or CNF. The pieces are:
 
-We introduce a yes/no variable for every possible *placement*. For each pigeon
-$p$ (there are $n+1$ of them) and each hole $h$ (there are $n$ of them), the
-variable $x_{p,h}$ means "pigeon $p$ is in hole $h$." Formally, the variables
-live on the set of pairs $(p, h)$ with $p$ ranging over $n+1$ values and $h$
-over $n$ values.
+- A **literal** is a variable with a sign: either $x$ ("$x$ is true") or $\neg x$ ("$x$ is false").
+- A **clause** is a list of literals joined by "or," such as $x \lor \neg y \lor z$. A clause is satisfied if *at least one* of its literals is true.
+- A **CNF formula** is a list of clauses joined by "and." It is satisfied only if *every* clause is satisfied at once.
 
-The claim "every pigeon fits, no collisions" becomes a list of clauses — each
-clause an OR of conditions, all of which must hold simultaneously:
+Resolution has exactly one rule. If you have a clause containing the literal $x$ and another containing $\neg x$, you may combine them, cancelling the conflicting pair:
 
-- **Pigeon clauses.** Every pigeon goes *somewhere*. For each pigeon $p$, the
-  clause $x_{p,0} \lor x_{p,1} \lor \cdots \lor x_{p,n-1}$ says "pigeon $p$ sits
-  in some hole." There are $n+1$ of these.
-- **Hole clauses.** No hole is shared. For each hole $h$ and each pair of
-  distinct pigeons $p_1 \neq p_2$, the clause $\lnot x_{p_1,h} \lor \lnot
-  x_{p_2,h}$ says "pigeons $p_1$ and $p_2$ do not *both* sit in hole $h$."
+$$\frac{(x \lor A) \qquad (\neg x \lor B)}{A \lor B}.$$
 
-The conjunction of all these clauses is the pigeonhole CNF, which we call $\text{PHP}_n$.
+The intuition is airtight: $x$ is either true or false. If $x$ is false, then the first clause forces $A$; if $x$ is true, the second forces $B$. Either way, $A \lor B$ holds. We call $A \lor B$ the **resolvent**, and the pivotal fact — the semantic heart of the whole system — is that *whenever an assignment satisfies both parent clauses, it satisfies the resolvent*. There are no side conditions: the rule is sound even if the pivot variable does not actually appear, a small but clean strengthening of the textbook version.
 
-Now comes the first formal result, the one that makes the whole game
-meaningful: **$\text{PHP}_n$ is unsatisfiable.** No assignment of true/false to
-the placement variables can satisfy every clause at once. This is exactly the
-pigeonhole principle in disguise: a satisfying assignment would tell each pigeon
-which hole to enter (the pigeon clauses guarantee a choice exists), and the hole
-clauses would force that choice to be *injective* — no two pigeons to the same
-hole. But an injection from $n+1$ pigeons into $n$ holes is impossible. The
-formal proof reads a hypothetical satisfying assignment as a function from
-pigeons to holes, shows the hole clauses make it injective, and then invokes the
-hard fact that there is no injection from a larger finite set into a smaller
-one. Contradiction. The formula has no solution.
+Now play this game over and over. Start from the clauses of your formula and keep deriving resolvents. The grand prize is the **empty clause** — a clause with no literals at all, which no assignment can ever satisfy. It is the logical symbol of contradiction, the $\bot$ of the system. Deriving it is called a **refutation**, and it constitutes a proof that the original formula has no solution whatsoever.
 
-So $\text{PHP}_n$ is false-as-a-system: a contradiction in CNF clothing. The
-question proof complexity asks is not "is it contradictory?" — we just settled
-that — but **how hard is it to *demonstrate* the contradiction?**
+This is more than a story; it is a theorem with a guarantee. Build up the property step by step — the single-rule soundness, then *every derived clause is a genuine consequence of the formula*, and finally:
 
-## Resolution: reasoning one clause at a time
+> **Soundness of Resolution.** If a CNF formula admits a resolution refutation, then it is unsatisfiable.
 
-The first and most important reasoning system is **resolution**. It has exactly
-one rule, and it is beautifully simple. If you have already derived two clauses,
-one containing a variable $v$ and the other containing its negation $\lnot v$,
-you may cancel them and merge what remains:
+That guarantee is exactly what makes a solver's "no" trustworthy. And the system is not vacuous: the tiny contradiction $\{x\} \land \{\neg x\}$ — "$x$ is true" and "$x$ is false" — resolves to the empty clause in a single step, the smallest refutation there is.
 
-$$(A \lor v) \quad\text{and}\quad (B \lor \lnot v) \quad\Longrightarrow\quad (A \lor B).$$
+## Encoding the pigeons
 
-The new clause $A \lor B$ is called the **resolvent**. It is sound: any
-assignment satisfying both parents must satisfy the resolvent, because whatever
-truth value $v$ takes, one of the two original clauses leans on the rest.
-Starting from the clauses of a CNF and applying this rule over and over, if you
-can eventually derive the **empty clause** — a clause with nothing left in it,
-which no assignment can satisfy — you have produced a **refutation**: an
-airtight certificate that the original formula has no solution. Crucially,
-resolution is *sound*, so a refutation of $\text{PHP}_n$ genuinely certifies its
-unsatisfiability; the existence of any such refutation is a correct proof of the
-pigeonhole principle.
+To study resolution's limits, we turn it loose on the pigeonhole principle. For $n+1$ pigeons and $n$ holes, introduce one variable $x_{p,h}$ for each pigeon $p$ and hole $h$, meaning "pigeon $p$ sits in hole $h$." Two families of clauses capture the rules:
 
-Resolution is not an academic curiosity. It is, essentially, the engine inside
-modern SAT solvers — the conflict-driven clause-learning algorithms that verify
-microprocessors, check safety properties of software, untangle scheduling
-constraints, and crack combinatorial puzzles. When a SAT solver reports
-"unsatisfiable," the proof trace it emits *is* a resolution refutation. So the
-size of resolution proofs is not a theoretical abstraction; it is, quite
-literally, a bound on how long these industrial tools can take.
+- **Pigeon clauses.** Each pigeon sits *somewhere*: for pigeon $p$, the clause $x_{p,1} \lor x_{p,2} \lor \cdots \lor x_{p,n}$.
+- **Hole clauses.** No hole is *shared*: for every hole $h$ and every pair of distinct pigeons $p_1, p_2$, the clause $\neg x_{p_1,h} \lor \neg x_{p_2,h}$, saying they are not both in $h$.
 
-## Haken's bombshell
+Call this formula $\mathrm{PHP}_n$. It encodes a demand that is impossible to meet, and we can prove that cleanly: a satisfying assignment would let each pigeon *choose* a hole, and the hole clauses would force that choice to be **injective** — no two pigeons land in the same hole. But an injection from $n+1$ things into $n$ things cannot exist, because $n < n+1$. Hence:
 
-Here is the punchline that launched modern proof complexity. In 1985, Armin
-Haken proved that **every resolution refutation of $\text{PHP}_n$ has size
-exponential in $n$.** There is no clever ordering of resolution steps, no
-shortcut, no stroke of genius that brings it down to a reasonable length. The
-number of clauses you must write is at least $2^{cn}$ for some positive constant
-$c$. For modest $n$, this already exceeds the number of atoms in the observable
-universe.
+> **The pigeonhole formula is unsatisfiable.** No assignment of the variables $x_{p,h}$ can place $n+1$ pigeons into $n$ holes without a collision.
 
-Let that sink in. The pigeonhole principle — the statement a child grasps
-instantly — has *only enormous proofs* in the very system that powers our most
-important automated reasoning tools. The obviousness of a fact and the length of
-its proof have nothing to do with each other.
+This is the precondition that makes everything interesting. Because $\mathrm{PHP}_n$ truly has no solution, *some* resolution refutation of it must exist. The trillion-dollar question is: **how big must that refutation be?**
 
-Why is resolution helpless here? The intuitive reason is profound. Resolution
-clauses are *local*. Each one is a disjunction over a handful of placement
-variables; each one talks about a small, parochial corner of the configuration.
-But the reason $\text{PHP}_n$ is contradictory is *global* — it is a statement
-about *counting*, about the total number of pigeons versus the total number of
-holes. Resolution can never write down "there are $n+1$ pigeons but only $n$
-holes" in a single clause. It is condemned to discover the contradiction
-piecemeal, exploring an exponential thicket of local possibilities, never able
-to take the bird's-eye view that makes the truth obvious. Counting is exactly
-what a system of Boolean disjunctions cannot express compactly.
+## Haken's wall
 
-## Cutting planes: letting proofs do arithmetic
+Here the story takes its dramatic turn. In 1985, Armin Haken proved that resolution refutations of the pigeonhole principle are **exponentially large** — the number of clauses you must write down grows like $2^{cn}$ for some constant $c > 0$. There is no clever shortcut, no compact certificate. A resolution-based solver confronted with the pigeonhole principle on a few hundred holes would need to manipulate more clauses than there are atoms in the observable universe.
 
-If the problem is that resolution can't count, the fix is to give our reasoning
-system *arithmetic*. This is the idea behind **cutting planes**, a proof system
-that reasons not about Boolean clauses but about **integer linear
-inequalities**.
+This was a landmark: one of the first proofs that a natural, useful reasoning system has an *unavoidable* exponential blow-up on a specific, simple-looking family of problems. It explains a phenomenon practitioners had long observed — that SAT solvers, magnificent as they are, choke on pigeonhole-style counting problems.
 
-The translation is natural. Treat each variable $x_{p,h}$ as an integer
-(intended to be $0$ or $1$). The clause "pigeon $p$ sits in some hole" becomes
-the inequality
-$$x_{p,0} + x_{p,1} + \cdots + x_{p,n-1} \ge 1,$$
-a literal demand that the row for pigeon $p$ sums to at least one. The
-no-collision condition for hole $h$ becomes
-$$x_{0,h} + x_{1,h} + \cdots + x_{n,h} \le 1,$$
-the column for hole $h$ sums to at most one.
+Why is resolution so helpless here? The reason is profound and a little poetic: **resolution cannot count.** The pigeonhole principle is false for a global, arithmetic reason — eleven is more than ten — but resolution only ever reasons locally, one variable elimination at a time. It can never write down the single statement "the total number of occupied (pigeon, hole) slots is at least $n+1$ and at most $n$." Forced to rediscover that global fact through purely local moves, it must in effect enumerate an exponential thicket of cases.
 
-Cutting planes reasons with two rules, and the marvelous thing is that both are
-*sound* — they never produce a false inequality from true ones, at every integer
-point:
+## The engine room of lower bounds: restrictions
 
-1. **Addition.** If $x$ satisfies $d_1 \le \sum_i c^1_i x_i$ and $d_2 \le \sum_i
-   c^2_i x_i$, then it satisfies the summed inequality $d_1 + d_2 \le \sum_i
-   (c^1_i + c^2_i) x_i$. You may add inequalities coefficient by coefficient and
-   add their bounds. (Nonnegative scaling is the obvious companion.)
-2. **Chvátal–Gomory rounding.** This is the rule that makes cutting planes
-   *cut*. Suppose every coefficient in $d \le \sum_i c_i x_i$ is divisible by a
-   positive integer $k$. Divide through by $k$. Since the left side $\sum_i
-   (c_i/k) x_i$ is an *integer* at integer points, the bound $d/k$ — which may
-   be fractional — can be **rounded up** to the nearest integer:
-   $$\left\lceil \tfrac{d}{k} \right\rceil \le \sum_i \tfrac{c_i}{k}\, x_i.$$
-   This rounding step is where integrality is exploited; it is sound precisely
-   because the right-hand side can only take whole-number values.
+How does one *prove* a wall like Haken's? The master tool is the **restriction** — and a clean account of its algebra is one of the central contributions explained here.
 
-These two rules, repeated, let cutting planes *carve away* the non-integer
-corners of a polytope until a contradiction surfaces. And here is the reward.
+A restriction is a partial decision. Imagine you walk up to the formula and permanently fix some of the variables — "pigeon 3 is definitely in hole 5, pigeon 7 is definitely not in hole 2" — while leaving the rest free to be decided later. Formally, a restriction assigns to each variable either a fixed value (true or false) or the marker "still free."
 
-## The contradiction in one linear sweep
+Applying a restriction simplifies the formula. A clause that the restriction already makes true is **killed** — discarded, because it is satisfied no matter what. In a surviving clause, any literal pinned to *false* is **deleted** (it can no longer help), while the literals on still-free variables are kept. What remains is a smaller formula on fewer variables.
 
-For the pigeonhole principle, cutting planes does not need to explore anything.
-It simply counts. Take all $n+1$ pigeon inequalities — each saying its row sums
-to at least $1$ — and add them together. The left side is the *grand total* of
-all placement variables; the right side is $n+1$:
-$$\sum_{p}\sum_{h} x_{p,h} \;\ge\; n+1.$$
-Now take all $n$ hole inequalities — each saying its column sums to at most $1$ —
-and add *them*. The left side is the *same* grand total of all variables (you are
-just summing in the other order), and the right side is $n$:
-$$\sum_{p}\sum_{h} x_{p,h} \;\le\; n.$$
-Put the two together: the total number of occupied placements is at least $n+1$
-*and* at most $n$. That is $n+1 \le n$. A flat contradiction, reached in linearly
-many addition steps. This is exactly the formal result at the center of this
-work: there is no integer assignment satisfying all the pigeon lower bounds and
-all the hole upper bounds, because summing them yields the impossible chain $n+1
-\le \sum x \le n$.
+The reason restrictions are the right tool is captured by an exact bridge between syntax and semantics. Write $F{\restriction}\rho$ for the formula $F$ after applying the restriction $\rho$, and let $\mathrm{subst}(\rho, a)$ be the full assignment that uses $\rho$'s fixed values where it has them and falls back on a free assignment $a$ elsewhere. Then:
 
-That is the whole proof. No exponential blowup. No thicket. Just the
-double-counting argument any combinatorialist would reach for — sum the rows,
-sum the columns, observe they must agree but can't.
+> **The Restriction Invariance Theorem.** A free assignment $a$ satisfies the restricted formula $F{\restriction}\rho$ **if and only if** the glued assignment $\mathrm{subst}(\rho, a)$ satisfies the original formula $F$.
 
-## The separation, in plain sight
+This is an *exact* equivalence — no approximation, no error term. Restricting a formula and then satisfying it is precisely the same as satisfying the original along the chosen partial assignment. The subtle point, the one that makes the proof delicate, is the asymmetry between killing and deleting: a literal pinned to *false* is deleted but does not kill its clause, and one has to verify that such a literal could never have been the one that rescued the clause in the first place — because the glued assignment agrees with the fixed value exactly there.
 
-Now stand back and compare. The *same* formula, $\text{PHP}_n$:
+From this single equivalence, an immediately useful consequence drops out for free:
 
-- In **resolution**, requires a proof of size $2^{\Omega(n)}$ — astronomically
-  large, by Haken's theorem.
-- In **cutting planes**, requires a proof of size $O(n)$ — a handful of
-  additions and a final contradiction.
+> **Hardness Preservation.** If a formula is unsatisfiable, then *every* restriction of it is unsatisfiable too.
 
-This gap is what proof complexity calls a **separation**: a concrete witness
-that one proof system is *strictly more powerful* than another. Cutting planes
-can refute the pigeonhole principle exponentially faster than resolution can,
-and the reason is precisely the one we have been circling. Cutting planes has
-arithmetic; it can say "the total is $n+1$" and "the total is $n$" and notice the
-clash in a single sweep. Resolution has only local Boolean disjunctions; it can
-never express the global count, so it is doomed to exponential labor.
+Apply this to the pigeons and you learn something striking: **the pigeonhole principle is hard robustly.** No matter how many pigeon-hole decisions you fix in advance — no matter which partial board you start from — what remains is *still* an unsatisfiable pigeonhole-type instance. You cannot rescue the formula, and you cannot localize its difficulty to a small corner. This robustness is precisely why a random restriction is a sound weapon against short refutations: hit a hypothetical small refutation with a random partial assignment, and you are guaranteed to be left refuting something that is still genuinely hard.
 
-The asymmetry is the entire moral. Easy here, impossible there — driven not by
-the difficulty of the *truth* but by the *expressiveness of the rulebook*.
+Two further closure properties round out the picture and make resolution a well-behaved system. **Weakening:** a refutation keeps working when you toss extra, irrelevant clauses into the formula — adding hypotheses never invalidates a proof. And a sanity check at the opposite extreme: **the empty formula proves nothing** — with no clauses to start from, you can derive no clause at all, not even by the resolution rule. Together these say that resolution behaves exactly as a sound, monotone proof system should.
 
-## Why this matters beyond pigeons
+## A smarter reasoner: cutting planes
 
-This is not a story about birds. It is a story about the limits and leverage of
-*automated reasoning itself*.
+If resolution's blindness is that it cannot count, the natural fix is to give a proof system the power of *arithmetic*. This is the idea behind **cutting planes**, a system that reasons not about clauses but about **linear inequalities** over the integers.
 
-Every SAT solver verifying a chip, every scheduler proving no two flights
-collide, every model checker certifying that an autonomous system can't enter a
-forbidden state, ultimately rests on a proof system. When that system is
-resolution — as it overwhelmingly is in today's industrial solvers — then
-problems with a "counting" character, like pigeonhole-style constraints, are
-intrinsic bottlenecks. No amount of engineering cleverness can rescue a
-fundamentally exponential proof. The lower bound is a law of nature for that
-rulebook.
+Translate each Boolean variable into a $0/1$ integer. A clause like $x \lor y \lor z$ becomes the inequality $x + y + z \ge 1$ ("at least one is on"). Cutting planes then manipulates such inequalities with two rules, each of them transparently sound:
 
-This is why researchers and toolmakers pursue *stronger* proof systems.
-"Pseudo-Boolean" solvers, which reason with linear inequalities in the spirit of
-cutting planes, can blow through pigeonhole-style constraints that choke
-resolution-based solvers. The separation we have walked through is the
-theoretical license for that entire engineering direction: it proves, rather
-than merely suggests, that giving solvers arithmetic is not a convenience but a
-genuine leap in power.
+- **Addition.** If $x$ satisfies $d_1 \le \sum c_i x_i$ and $d_2 \le \sum c'_i x_i$, then it satisfies the sum $d_1 + d_2 \le \sum (c_i + c'_i)\, x_i$. You may add inequalities you already trust.
+- **Chvátal–Gomory rounding.** If every coefficient on the left is divisible by a positive integer $k$ and $d \le \sum c_i x_i$, then dividing through by $k$ lets you *round the right-hand bound up*: $\lceil d/k \rceil \le \sum (c_i/k)\, x_i$. This is the genuinely powerful move — it exploits the fact that the variables are *integers*, so a fractional bound can be tightened to the next whole number.
 
-It also reframes what a "proof" is. We tend to imagine that easy truths have
-easy proofs and hard truths have hard ones. Proof complexity demolishes that
-intuition. A truth a child can see may be provable only at colossal length — *in
-the wrong system*. Switch systems, and the colossus shrinks to a sentence. The
-length of a proof is not a property of the truth; it is a property of the
-*language you reason in*.
+Now watch cutting planes dismantle the pigeons in a single sweep of arithmetic. Encode "each pigeon sits somewhere" as the row sums $\sum_h x_{p,h} \ge 1$, one per pigeon, and "each hole holds at most one pigeon" as the column sums $\sum_p x_{p,h} \le 1$, one per hole. Add up all the row inequalities: the total over all $(p,h)$ slots is at least $n+1$, one for each of the $n+1$ pigeons. Add up all the column inequalities: the very same total is at most $n$, one for each of the $n$ holes. Putting them side by side:
 
-## The shape of what's known, and what's next
+$$n + 1 \;\le\; \sum_{p}\sum_{h} x_{p,h} \;=\; \sum_{h}\sum_{p} x_{p,h} \;\le\; n.$$
 
-The picture we can presently certify with full rigor is this: the pigeonhole
-formula $\text{PHP}_n$ is genuinely contradictory; resolution is a sound system,
-so any refutation of it is a valid certificate; both cutting-planes rules —
-addition and Chvátal–Gomory rounding — are sound; and the pigeonhole
-contradiction falls out of those rules in linearly many steps by double
-counting. Haken's matching exponential *lower bound* for resolution is the deep
-companion theorem that completes the separation; capturing it formally — via a
-width measure on resolution derivations and the random-restriction method — is
-the natural next summit.
+That is $n+1 \le n$ — a flat contradiction, reached in a number of steps that grows only *linearly* with $n$.
 
-Beyond that lie tantalizing questions. Can we formalize the full separation
-theorem as a single statement, a family of formulas provably easy for cutting
-planes and provably hard for resolution? Can we build the explicit syntactic
-cutting-planes derivation, step by step, from the counting argument? And what of
-the systems *beyond* cutting planes — the ones that reason with polynomials,
-with sums of squares, with algebra richer still? Each new rulebook redraws the
-map of what is cheap and what is dear.
+> **The Counting Refutation.** For any integer assignment in which every pigeon's row sums to at least $1$ and every hole's column sums to at most $1$, summing the inequalities yields $n+1 \le n$, an impossibility. Cutting planes refutes the pigeonhole principle in $O(n)$ steps.
 
-The pigeons, in the end, were never the point. They are a lens. Through them we
-glimpse a fundamental truth about reasoning itself: that *how* you are allowed to
-think can matter as much as *what* is true. Some proofs must be enormous — but
-only because we tied one hand behind our back. Untie it, give reasoning the
-power to count, and the impossible becomes a single, elegant line.
+## The separation, and what it means
+
+Stand back and compare. The *same* formula — the pigeonhole principle — costs resolution an exponential mountain of clauses and costs cutting planes a gentle linear stroll. This gap is a **separation** between proof systems: a demonstration that one mode of reasoning is fundamentally, exponentially more powerful than another on a natural problem.
+
+The mathematical content of that separation is exactly the asymmetry made precise above. On the cutting-planes side, the contradiction is *easy* because the argument is global and arithmetic: a single chain of additions expresses the count. On the resolution side, the contradiction is *exponential* because the system is local and combinatorial: it cannot name the count, so Haken's theorem forces it to enumerate. The counting refutation we exhibit is the constructive witness for the easy side; Haken's exponential lower bound governs the hard side.
+
+This is not an academic curiosity. It is the theoretical shadow of a practical reality. The dominant SAT solvers of today are, at heart, resolution engines — which is why they stumble on counting problems. Solvers that incorporate arithmetic or "pseudo-Boolean" reasoning, in the spirit of cutting planes, can sail through exactly those instances. The separation tells engineers *which* tool to reach for and *why*, and it tells theorists where the next frontiers lie.
+
+## The view from here
+
+The pigeonhole principle is a humble fact about pigeons and holes. Examined through the lens of proof complexity, it becomes a measuring instrument — a benchmark that exposes the true power and the true limits of mechanical reasoning. We have seen that resolution is sound, robust, and well-behaved; that it certifies impossibility in a way machines can trust; and yet that it hits an exponential wall on a problem a child can solve, for the deep reason that it cannot count. We have seen that restrictions — exact, lossless, hardness-preserving — are the engine that drives such lower bounds, and that the pigeonhole principle stays hard under every partial decision. And we have seen a smarter system, cutting planes, leap the wall with pure arithmetic, separating itself exponentially from resolution.
+
+There remains the great prize, the quantitative core of Haken's theorem: turning the *qualitative* robustness of the pigeonhole principle under restriction into a sharp lower bound on how *wide* — and therefore how *long* — any resolution refutation must be. The exact, error-free invariance of restrictions is precisely the lever that argument needs. The pigeons, it turns out, have a great deal still to teach us.
