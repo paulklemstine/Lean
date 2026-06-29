@@ -352,11 +352,11 @@ class AristotleSDKClient:
         def ignore_patterns(src: str, names: list) -> set:
             return {
                 n for n in names
-                if (n.startswith(".") and n != ".lake") or n in {
+                if n.startswith(".") or n in {
                     "aristotle_results", "__pycache__", "*.pyc", "*.tar.gz",
                     "result.tar.gz", "result_extracted", "logs", "output",
                     "jobs", "*.output", "node_modules", "build", "lake-packages",
-                    "lakefile.olean", "Manifesto",
+                    ".lake", "lakefile.olean", "Manifesto",
                 } or n.endswith(".output")
             }
 

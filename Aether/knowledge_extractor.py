@@ -1253,6 +1253,16 @@ Research mode: {concept.research_mode}
         original_timeout = api_mod.DEFAULT_TIMEOUT_SECONDS
         api_mod.DEFAULT_TIMEOUT_SECONDS = 300  # 5 minutes
 
+        # Strip .lake build-cache dirs from the project before upload — they are
+        # not source and must not be sent to Aristotle (the Catalog .lake alone
+        # is ~600 MB; even per-project .lake dirs add dead weight to the tarball).
+        try:
+            for lake_dir in Path(job.project_dir).rglob(".lake"):
+                if lake_dir.is_dir():
+                    shutil.rmtree(lake_dir, ignore_errors=True)
+        except Exception:
+            pass
+
         last_error = None
         try:
             for attempt in range(max_retries + 1):
