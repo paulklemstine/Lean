@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-29T09:50:54.824254+00:00",
+  "last_updated": "2026-06-29T10:21:52.951202+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -18025,6 +18025,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-29T09:50:54.564469+00:00",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 17,
+      "domain": "Probability",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "f47f33b0",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782722965.6961606,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-29T10:21:52.591158+00:00",
+      "title": "Perfect Numbers: Structure of Even Perfects"
     }
   ]
 }

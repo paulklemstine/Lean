@@ -387,20 +387,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Legendre's Conjecture"
   },
   {
-    "consumed_by_exp_id": "f47f33b0",
-    "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_331",
-    "priority_score": 0.87,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432603+00:00",
-    "title": "Perfect Numbers: Structure of Even Perfects"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
     "domains": [
@@ -1517,7 +1503,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of Exterior Cube \u03b3-Factors under Central Character Equality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c9c613b",
     "description": "This conjecture examines the existence of finite unit-distance graphs in the plane with independence ratio below 1/4, offering a falsifiable direction for constructive geometric graph theory.",
     "domains": [
       "Pythagorean",
@@ -1527,7 +1513,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T05:45:25.558013+00:00",
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
@@ -1574,7 +1560,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit points of largest matching roots below the golden\u2011ratio threshold"
   },
   {
-    "consumed_by_exp_id": "338831a0",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the error term in the asymptotic count of entries not divisible by \u2113 in the character table of GL\u2082(\ud835\udd3d_q) is O(q\u00b3) rather than O(q\u00b3+\u03b5).",
     "domains": [
       "Pythagorean"
@@ -1583,12 +1569,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28085v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T07:01:40.248934+00:00",
     "title": "Refined Asymptotic for Non-Divisible Entries in GL\u2082(\ud835\udd3d_q) Character Tables"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3c7d4c4",
     "description": "For any generalized Ankeny-Brauer-Chowla polynomial \u03c0_U(X) as defined in the paper, the associated linear recurrence sequences have exactly two sufficiently large common values, making the upper bound of two tight.",
     "domains": [
       "Bridges"
@@ -1597,7 +1583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T07:18:02.548627+00:00",
     "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
   },
@@ -1908,6 +1894,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T10:03:39.505176+00:00",
     "title": "Existence of a finite unit-distance graph in the plane with independence ratio strictly less than 1/4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Diophantine equation $P_{14}(n) = t^4$ has exactly five solutions in integers $(n,t)$: $(0,0)$, $(1,1)$, $(1,-1)$, $(-2000, 70)$, and $(-2000, -70)$. This corresponds to the specific case $k=5$ (where $s=2k+4=14$) in Theorem 1(i) of the paper, which fully lists the solutions for this sub-family.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2855",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T10:22:21.182498+00:00",
+    "title": "Complete classification of 4th powers in the 14-gonal numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The expected time to collect all 7 coupons when drawing uniformly from the 7 lines of the Fano plane (a fair mechanism with n=7, \u2113=3) is strictly greater than the expected time when drawing uniformly from all 35 possible 3-element subsets.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2856",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28216v1",
+    "status": "available",
+    "timestamp": "2026-06-29T10:22:44.428708+00:00",
+    "title": "Fano Plane Coupon Collector Inequality"
   },
   {
     "consumed_by_exp_id": "",

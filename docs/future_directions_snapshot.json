@@ -516,25 +516,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f47f33b0",
-    "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_331",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432603+00:00",
-    "title": "Perfect Numbers: Structure of Even Perfects"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
     "domain_bridges": [],
@@ -2197,7 +2178,7 @@
     "catalog_references": [
       "MRVZ"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c9c613b",
     "description": "This conjecture examines the existence of finite unit-distance graphs in the plane with independence ratio below 1/4, offering a falsifiable direction for constructive geometric graph theory.",
     "domain_bridges": [
       "mathematical logic",
@@ -2213,7 +2194,7 @@
     "proof_strategy": "Constructive refinement of the geometric fractional chromatic number sequence",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T05:45:25.558013+00:00",
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
@@ -2306,7 +2287,7 @@
       "Miller's original conjecture for symmetric groups",
       "Character theory of GL₂(𝔽_q)"
     ],
-    "consumed_by_exp_id": "338831a0",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the error term in the asymptotic count of entries not divisible by ℓ in the character table of GL₂(𝔽_q) is O(q³) rather than O(q³+ε).",
     "domain_bridges": [
       "connections between character divisibility and equidistribution",
@@ -2321,7 +2302,7 @@
     "proof_strategy": "Refine existing equidistribution arguments to extract sharper bounds on character vanishing behavior",
     "research_mode": "team",
     "source_exp_id": "2606.28085v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T07:01:40.248934+00:00",
     "title": "Refined Asymptotic for Non-Divisible Entries in GL₂(𝔽_q) Character Tables"
   },
@@ -2335,7 +2316,7 @@
       "FunctionFieldTheory",
       "GaloisTheory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3c7d4c4",
     "description": "For any generalized Ankeny-Brauer-Chowla polynomial π_U(X) as defined in the paper, the associated linear recurrence sequences have exactly two sufficiently large common values, making the upper bound of two tight.",
     "domain_bridges": [
       "arithmetic_dynamics",
@@ -2350,7 +2331,7 @@
     "proof_strategy": "Extend Baker's linear forms in logarithms to construct explicit examples achieving two large common values, while leveraging function field methods to rule out additional solutions.",
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T07:18:02.548627+00:00",
     "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
   },
@@ -2928,6 +2909,57 @@
     "status": "available",
     "timestamp": "2026-06-29T10:03:39.505176+00:00",
     "title": "Existence of a finite unit-distance graph in the plane with independence ratio strictly less than 1/4"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "Diophantine equations",
+      "Polygonal numbers"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The Diophantine equation $P_{14}(n) = t^4$ has exactly five solutions in integers $(n,t)$: $(0,0)$, $(1,1)$, $(1,-1)$, $(-2000, 70)$, and $(-2000, -70)$. This corresponds to the specific case $k=5$ (where $s=2k+4=14$) in Theorem 1(i) of the paper, which fully lists the solutions for this sub-family.",
+    "domain_bridges": [
+      "Computational number theory",
+      "Algebraic curves"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2855",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Reduce the equation $6n^2 - 5n = t^4$ to finding integer points on an elliptic curve via appropriate variable substitutions. Then, apply the Mordell-Weil sieve and/or Chabauty's method to rigorously bound and determine all rational points, finally filtering for the integer solutions and verifying them in Lean.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T10:22:21.182498+00:00",
+    "title": "Complete classification of 4th powers in the 14-gonal numbers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.PR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The expected time to collect all 7 coupons when drawing uniformly from the 7 lines of the Fano plane (a fair mechanism with n=7, ℓ=3) is strictly greater than the expected time when drawing uniformly from all 35 possible 3-element subsets.",
+    "domain_bridges": [
+      "Finite Geometry",
+      "Markov Chains"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2856",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Compute the exact expected coverage times for both mechanisms. For the full model, use the standard formula. For the Fano plane, reduce the Markov chain state space using the symmetries of the Fano plane (tracking only the number of collected coupons and the intersection size with the last drawn line), compute the transition probabilities, and solve for the expected hitting time. Finally, verify the strict inequality between the two resulting rational numbers.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28216v1",
+    "status": "available",
+    "timestamp": "2026-06-29T10:22:44.428708+00:00",
+    "title": "Fano Plane Coupon Collector Inequality"
   },
   {
     "ambition_level": "extension",

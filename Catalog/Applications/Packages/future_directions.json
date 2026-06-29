@@ -35738,13 +35738,13 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "MRVZ"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "8c9c613b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35759,7 +35759,7 @@
         "Algebra"
       ],
       "id": "fd_2828",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T10:22:49.669023+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Using an explicit recursive construction in Lean 4 with geometric constraints",
       "lineage_refs": [],
@@ -35773,7 +35773,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28157v1",
       "source_path": "http://arxiv.org/abs/2606.28157v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T05:45:25.558013+00:00",
       "title": "Proving that unit-distance graphs with low independence ratios exist"
@@ -35929,7 +35929,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "338831a0",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35957,7 +35957,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28085v1",
       "source_path": "http://arxiv.org/abs/2606.28085v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T07:01:40.248934+00:00",
       "title": "Refined Asymptotic for Non-Divisible Entries in GL₂(𝔽_q) Character Tables"
@@ -35966,7 +35966,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "ABC",
         "Baker93",
@@ -35977,7 +35977,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f3c7d4c4",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35991,7 +35991,7 @@
         "Bridges"
       ],
       "id": "fd_2833",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T10:22:55.048689+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (π : Polynomial (U → ℚ) X : ℚ), (π ≡ generalized_ABC_polynomial), (seq1, seq2 : RecurrenceSequence π), (k : ℕ), (large_common_value : k ∈ ℤ ∧ k ≥ large_bound) → |{v ∈ ℤ | v ∈ seq1 ∧ v ∈ seq2 ∧ v ≥ k}| = 2",
       "lineage_refs": [],
@@ -36005,7 +36005,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27885v1",
       "source_path": "http://arxiv.org/abs/2606.27885v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T07:18:02.548627+00:00",
       "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
@@ -36108,7 +36108,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "math.RA",
@@ -36131,7 +36131,7 @@
         "Geometry"
       ],
       "id": "fd_2836",
-      "last_attempt_time": "2026-06-29T10:03:41.425984+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem source_sink_unique_non_filling {n : ℕ} {Q : Quiver (Fin n)}\n    (h_acyclic : IsAcyclic Q) (h_type : IsAffineTypeATilde n Q)\n    (v w : Fin n) (h_banded : nullRoot Q v = nullRoot Q w) :\n    ¬FillsBand (coordinateProjection v w) (cVectors Q) ↔ IsSourceSinkPair Q v w := by\n  sorry",
       "lineage_refs": [],
@@ -36983,6 +36983,95 @@
       "thread_id": "",
       "timestamp": "2026-06-29T10:03:39.505176+00:00",
       "title": "Existence of a finite unit-distance graph in the plane with independence ratio strictly less than 1/4"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
+        "Diophantine equations",
+        "Polygonal numbers"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The Diophantine equation $P_{14}(n) = t^4$ has exactly five solutions in integers $(n,t)$: $(0,0)$, $(1,1)$, $(1,-1)$, $(-2000, 70)$, and $(-2000, -70)$. This corresponds to the specific case $k=5$ (where $s=2k+4=14$) in Theorem 1(i) of the paper, which fully lists the solutions for this sub-family.",
+      "domain_bridges": [
+        "Computational number theory",
+        "Algebraic curves"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2855",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem polygonal_14_fourth_power (n t : ℤ) :\n  6 * n ^ 2 - 5 * n = t ^ 4 ↔\n  (n = 0 ∧ t = 0) ∨ (n = 1 ∧ t = 1) ∨ (n = 1 ∧ t = -1) ∨ (n = -2000 ∧ t = 70) ∨ (n = -2000 ∧ t = -70) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Reduce the equation $6n^2 - 5n = t^4$ to finding integer points on an elliptic curve via appropriate variable substitutions. Then, apply the Mordell-Weil sieve and/or Chabauty's method to rigorously bound and determine all rational points, finally filtering for the integer solutions and verifying them in Lean.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28227v1",
+      "source_path": "http://arxiv.org/abs/2606.28227v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T10:22:21.182498+00:00",
+      "title": "Complete classification of 4th powers in the 14-gonal numbers"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.PR"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The expected time to collect all 7 coupons when drawing uniformly from the 7 lines of the Fano plane (a fair mechanism with n=7, ℓ=3) is strictly greater than the expected time when drawing uniformly from all 35 possible 3-element subsets.",
+      "domain_bridges": [
+        "Finite Geometry",
+        "Markov Chains"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2856",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem fano_plane_mechanism_slower :\n  expected_coverage_time fano_plane_mechanism > expected_coverage_time (full_mechanism 7 3) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Compute the exact expected coverage times for both mechanisms. For the full model, use the standard formula. For the Fano plane, reduce the Markov chain state space using the symmetries of the Fano plane (tracking only the number of collected coupons and the intersection size with the last drawn line), compute the transition probabilities, and solve for the expected hitting time. Finally, verify the strict inequality between the two resulting rational numbers.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28216v1",
+      "source_path": "http://arxiv.org/abs/2606.28216v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T10:22:44.428708+00:00",
+      "title": "Fano Plane Coupon Collector Inequality"
     },
     {
       "ambition_level": "extension",
@@ -41813,7 +41902,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432603+00:00",
       "title": "Perfect Numbers: Structure of Even Perfects"
