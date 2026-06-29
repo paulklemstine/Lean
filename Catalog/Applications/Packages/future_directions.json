@@ -35414,7 +35414,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO"
       ],
@@ -35435,7 +35435,7 @@
         "Bridges"
       ],
       "id": "fd_2821",
-      "last_attempt_time": "2026-06-29T11:32:28.869085+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points : \n  let limit_points := { γ : ℝ | ∃ (G : ℕ → Graph), (∀ i, i < j → μ(G i) ≠ μ(G j)) ∧ (lim (λ ↦ μ(G λ)) = γ) }\n  limit_points ⊇ { γ : ℝ | γ ≥ (sqrt 5 + 1) / 2 ^ 0.5 + ((sqrt 5 + 1) / 2) ^ (-0.5) }",
       "lineage_refs": [],
@@ -35449,7 +35449,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28162v1",
       "source_path": "http://arxiv.org/abs/2606.28162v1",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T05:26:29.809366+00:00",
       "title": "Limit Points of Largest Matching Roots of Graphs"
@@ -35744,7 +35744,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "8c9c613b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35773,7 +35773,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28157v1",
       "source_path": "http://arxiv.org/abs/2606.28157v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T05:45:25.558013+00:00",
       "title": "Proving that unit-distance graphs with low independence ratios exist"
@@ -37355,9 +37355,9 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
-        "poset_automorphism_group",
-        "abelian_group_realization",
-        "minimum_poset_size"
+        "math.CO",
+        "Order theory",
+        "Finite groups"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
@@ -37365,24 +37365,25 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "For all integers k >= 1 and n >= 3, the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} as its automorphism group is exactly 2^{n+1} + 2k, generalizing the paper's result for k=1 via iterated application of Proposition 2.3.",
+      "description": "For any prime p and integer n ≥ 3, the minimum size of a poset P whose automorphism group is isomorphic to Z_p × Z_{p^n} is p^{n+1} + p. This generalizes the paper's exact result for p=2 to all prime cyclic factors.",
       "domain_bridges": [
-        "finite_group_theory",
-        "order_theory"
+        "Group theory",
+        "Group actions on posets"
       ],
       "domain_quality_penalty": 0.0,
       "domains": [
+        "Pythagorean",
         "Algebra"
       ],
       "id": "fd_2863",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem beta_Z2k_times_Z2n (k n : ℕ) (hn : 3 ≤ n) (hk : 1 ≤ k) :\n  beta (DirectProd (Fin k) (fun _ => ZMod 2) × ZMod (2 ^ n)) = 2 ^ (n + 1) + 2 * k := by\n  sorry",
+      "lean_theorem_stub": "theorem beta_Zp_cross_Zpn (p n : ℕ) (hp : Nat.Prime p) (hn : 3 ≤ n) :\n    beta (ZMod p × ZMod (p ^ n)) = p ^ (n + 1) + p := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
-      "proof_strategy": "Establish the upper bound by iteratively applying Proposition 2.3 to adjoin k pairs of mutually incomparable elements below a minimal poset for Z_{2^n}. For the lower bound, extend the orbit and structural analysis from the paper to track the fixed points and orbits under the Z_2^k action.",
+      "proof_strategy": "Generalize the upper bound construction by adding an antichain of p minimal elements below the poset for Z_{p^n} to realize the Z_p factor, and adapt the lower bound structural analysis to show that any minimal poset must have this specific form.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
@@ -37391,55 +37392,8 @@
       "source_path": "http://arxiv.org/abs/2606.28231v1",
       "status": "available",
       "thread_id": "",
-      "timestamp": "2026-06-29T11:32:03.368083+00:00",
-      "title": "Minimum Poset Size for Z_2^k x Z_{2^n} Automorphism Groups"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "math.CO",
-        "Erdős unit-distance problem",
-        "fractional chromatic number of the plane",
-        "independence ratio"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "There exists a finite unit-distance graph G embeddable in the Euclidean plane ℝ² such that the ratio of its independence number α(G) to its number of vertices |V(G)| is strictly less than 1/4. This answers Erdős's 1987 question in the negative and implies that the fractional chromatic number of the plane χ_f(ℝ²) > 4, strengthening de Grey's result that χ(ℝ²) ≥ 5.",
-      "domain_bridges": [
-        "Graph theory (independence number, fractional chromatic number)",
-        "Metric geometry (unit-distance embeddings in ℝ²)",
-        "Linear programming (geometric fractional colorings as LP solutions)"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Bridges"
-      ],
-      "id": "fd_2864",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem exists_unit_distance_graph_indep_ratio_lt_quarter :\n    ∃ (n : ℕ) (G : SimpleGraph (Fin n)) (f : Fin n → EuclideanSpace ℝ (Fin 2)),\n      (∀ u v, G.Adj u v → dist (f u) (f v) = 1) ∧\n      (G.independenceNumber : ℝ) / n < 1/4 :=\n  by sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Follow the paper's three-step framework: (1) Start with the 27-vertex configuration G₂₇ of Matolcsi-Ruzsa-Varga-Zsámboki, which has geometric fractional chromatic number exactly 4. (2) Characterize all 23 extremal geometric fractional colorings of G₂₇ (forming an 11-dimensional convex polytope) and show that adding two carefully chosen augmentation vertices forces the geometric fractional chromatic number strictly above 4. (3) Apply the two blow-up procedures (using amenability of the Euclidean motion group, then large discrete cubes in the additive lattice) to construct a finite unit-distance graph with independence ratio < 1/4. The formalization would require defining geometric fractional chromatic number, verifying the LP characterization of extremal colorings, and constructing the augmentation.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.28157v1",
-      "source_path": "http://arxiv.org/abs/2606.28157v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-29T11:32:26.849906+00:00",
-      "title": "Existence of a finite unit-distance graph with independence ratio below 1/4"
+      "timestamp": "2026-06-29T11:43:51.082315+00:00",
+      "title": "Minimum Poset Size for Realizing Z_p x Z_{p^n}"
     },
     {
       "ambition_level": "extension",
@@ -43059,11 +43013,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d1f0228a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43074,7 +43028,7 @@
         "Combinatorics"
       ],
       "id": "seed_352",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T11:44:08.160645+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43088,7 +43042,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432688+00:00",
       "title": "Ramsey Theory: Bounds and Constructions"

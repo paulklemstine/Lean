@@ -675,7 +675,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1f0228a",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -684,7 +684,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1395,7 +1395,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-29T05:26:29.809366+00:00",
     "title": "Limit Points of Largest Matching Roots of Graphs"
   },
@@ -1488,7 +1488,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of Exterior Cube \u03b3-Factors under Central Character Equality"
   },
   {
-    "consumed_by_exp_id": "8c9c613b",
+    "consumed_by_exp_id": "",
     "description": "This conjecture examines the existence of finite unit-distance graphs in the plane with independence ratio below 1/4, offering a falsifiable direction for constructive geometric graph theory.",
     "domains": [
       "Pythagorean",
@@ -1498,7 +1498,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T05:45:25.558013+00:00",
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
@@ -1998,8 +1998,9 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For all integers k >= 1 and n >= 3, the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} as its automorphism group is exactly 2^{n+1} + 2k, generalizing the paper's result for k=1 via iterated application of Proposition 2.3.",
+    "description": "For any prime p and integer n \u2265 3, the minimum size of a poset P whose automorphism group is isomorphic to Z_p \u00d7 Z_{p^n} is p^{n+1} + p. This generalizes the paper's exact result for p=2 to all prime cyclic factors.",
     "domains": [
+      "Pythagorean",
       "Algebra"
     ],
     "id": "fd_2863",
@@ -2007,22 +2008,8 @@ window.FUTURE_DIRECTIONS = [
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
     "status": "available",
-    "timestamp": "2026-06-29T11:32:03.368083+00:00",
-    "title": "Minimum Poset Size for Z_2^k x Z_{2^n} Automorphism Groups"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "There exists a finite unit-distance graph G embeddable in the Euclidean plane \u211d\u00b2 such that the ratio of its independence number \u03b1(G) to its number of vertices |V(G)| is strictly less than 1/4. This answers Erd\u0151s's 1987 question in the negative and implies that the fractional chromatic number of the plane \u03c7_f(\u211d\u00b2) > 4, strengthening de Grey's result that \u03c7(\u211d\u00b2) \u2265 5.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2864",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28157v1",
-    "status": "available",
-    "timestamp": "2026-06-29T11:32:26.849906+00:00",
-    "title": "Existence of a finite unit-distance graph with independence ratio below 1/4"
+    "timestamp": "2026-06-29T11:43:51.082315+00:00",
+    "title": "Minimum Poset Size for Realizing Z_p x Z_{p^n}"
   },
   {
     "consumed_by_exp_id": "",

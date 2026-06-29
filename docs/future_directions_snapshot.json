@@ -899,7 +899,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1f0228a",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -911,7 +911,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1983,7 +1983,7 @@
     "proof_strategy": "The strategy involves formalizing the matching polynomial as a coefficient-based polynomial and using the property that for trees, the matching root coincides with the spectral radius. One would use the theory of Perron-Frobenius eigenvalues for graph adjacency matrices and extend it to the matching polynomial using the fact that the matching polynomial of any graph $G$ divides the characteristic polynomial of its path-tree (Godsil's theorem). The proof would require constructing graph sequences via graph operations (like adding vertices or edges) that converge to specific real numbers, utilizing the continuity of the largest root with respect to graph limits.",
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-29T05:26:29.809366+00:00",
     "title": "Limit Points of Largest Matching Roots of Graphs"
   },
@@ -2158,7 +2158,7 @@
     "catalog_references": [
       "MRVZ"
     ],
-    "consumed_by_exp_id": "8c9c613b",
+    "consumed_by_exp_id": "",
     "description": "This conjecture examines the existence of finite unit-distance graphs in the plane with independence ratio below 1/4, offering a falsifiable direction for constructive geometric graph theory.",
     "domain_bridges": [
       "mathematical logic",
@@ -2174,7 +2174,7 @@
     "proof_strategy": "Constructive refinement of the geometric fractional chromatic number sequence",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T05:45:25.558013+00:00",
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
@@ -3106,56 +3106,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "poset_automorphism_group",
-      "abelian_group_realization",
-      "minimum_poset_size"
+      "math.CO",
+      "Order theory",
+      "Finite groups"
     ],
     "consumed_by_exp_id": "",
-    "description": "For all integers k >= 1 and n >= 3, the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} as its automorphism group is exactly 2^{n+1} + 2k, generalizing the paper's result for k=1 via iterated application of Proposition 2.3.",
+    "description": "For any prime p and integer n ≥ 3, the minimum size of a poset P whose automorphism group is isomorphic to Z_p × Z_{p^n} is p^{n+1} + p. This generalizes the paper's exact result for p=2 to all prime cyclic factors.",
     "domain_bridges": [
-      "finite_group_theory",
-      "order_theory"
+      "Group theory",
+      "Group actions on posets"
     ],
     "domains": [
+      "Pythagorean",
       "Algebra"
     ],
     "id": "fd_2863",
     "lineage_refs": [],
     "priority_score": 0.8,
-    "proof_strategy": "Establish the upper bound by iteratively applying Proposition 2.3 to adjoin k pairs of mutually incomparable elements below a minimal poset for Z_{2^n}. For the lower bound, extend the orbit and structural analysis from the paper to track the fixed points and orbits under the Z_2^k action.",
+    "proof_strategy": "Generalize the upper bound construction by adding an antichain of p minimal elements below the poset for Z_{p^n} to realize the Z_p factor, and adapt the lower bound structural analysis to show that any minimal poset must have this specific form.",
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
     "status": "available",
-    "timestamp": "2026-06-29T11:32:03.368083+00:00",
-    "title": "Minimum Poset Size for Z_2^k x Z_{2^n} Automorphism Groups"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.CO",
-      "Erdős unit-distance problem",
-      "fractional chromatic number of the plane",
-      "independence ratio"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "There exists a finite unit-distance graph G embeddable in the Euclidean plane ℝ² such that the ratio of its independence number α(G) to its number of vertices |V(G)| is strictly less than 1/4. This answers Erdős's 1987 question in the negative and implies that the fractional chromatic number of the plane χ_f(ℝ²) > 4, strengthening de Grey's result that χ(ℝ²) ≥ 5.",
-    "domain_bridges": [
-      "Graph theory (independence number, fractional chromatic number)",
-      "Metric geometry (unit-distance embeddings in ℝ²)",
-      "Linear programming (geometric fractional colorings as LP solutions)"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2864",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Follow the paper's three-step framework: (1) Start with the 27-vertex configuration G₂₇ of Matolcsi-Ruzsa-Varga-Zsámboki, which has geometric fractional chromatic number exactly 4. (2) Characterize all 23 extremal geometric fractional colorings of G₂₇ (forming an 11-dimensional convex polytope) and show that adding two carefully chosen augmentation vertices forces the geometric fractional chromatic number strictly above 4. (3) Apply the two blow-up procedures (using amenability of the Euclidean motion group, then large discrete cubes in the additive lattice) to construct a finite unit-distance graph with independence ratio < 1/4. The formalization would require defining geometric fractional chromatic number, verifying the LP characterization of extremal colorings, and constructing the augmentation.",
-    "research_mode": "team",
-    "source_exp_id": "2606.28157v1",
-    "status": "available",
-    "timestamp": "2026-06-29T11:32:26.849906+00:00",
-    "title": "Existence of a finite unit-distance graph with independence ratio below 1/4"
+    "timestamp": "2026-06-29T11:43:51.082315+00:00",
+    "title": "Minimum Poset Size for Realizing Z_p x Z_{p^n}"
   },
   {
     "ambition_level": "extension",
