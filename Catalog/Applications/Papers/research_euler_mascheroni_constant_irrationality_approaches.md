@@ -1,260 +1,213 @@
-# An Integer-Linear-Form Characterization of Irrationality, with Application to the Euler–Mascheroni Constant
-
-**Author:** Aristotle
-**Date:** 2026-06-28
-**Domain:** Applications (Number Theory / Diophantine Approximation)
+# A Positive-Term Series, an Integral Representation, and the Irrationality Engine for the Euler–Mascheroni Constant
 
 ## Abstract
 
-We isolate, as a single reusable theorem, the structural mechanism underlying
-essentially every known irrationality proof: a real number $x$ is irrational
-whenever there exist integer sequences $(a_n), (b_n)$ such that the linear forms
-$a_n + b_n x$ are never zero yet tend to $0$. We then prove that this sufficient
-condition is in fact a **characterization** — its converse holds for every
-irrational number, via Dirichlet's theorem on the infinitude of good rational
-approximations. Specializing to the Euler–Mascheroni constant $\gamma = \lim_{n}
-(H_n - \ln n)$, we obtain an exact equivalence: $\gamma$ is irrational if and only
-if explicit nonzero integer linear forms $a_n + b_n\gamma \to 0$ exist. This
-reframes the centuries-old open problem of the irrationality of $\gamma$ as a
-concrete Diophantine construction problem, identifying the precise target of any
-future Apéry-style attack. All results are formalized with no axioms beyond the
-standard foundations. We supplement the theory with numerical demonstrations on
-constants of known irrationality status ($\sqrt 2$, $e$, rationals) and discuss
-extensions to the Stieltjes constants.
+The Euler–Mascheroni constant $\gamma = \lim_{n\to\infty}(H_n - \ln n)$, where $H_n = \sum_{k=1}^n 1/k$ is the $n$-th harmonic number, is among the most studied constants in mathematics, yet whether it is rational remains a celebrated open problem. We present a unified, elementary development of $\gamma$ organized around a single positive term,
+$$g(k) = \frac{1}{k} - \ln\!\Big(1 + \frac{1}{k}\Big), \qquad k \ge 1.$$
+We prove that $g(k) > 0$ for all $k$, that the partial sums telescope exactly to the classical lower approximants $H_n - \ln(n+1)$, and hence that $\sum_{k\ge 1} g(k) = \gamma$ as a convergent series of strictly positive terms. We exhibit each term as a unit-interval integral $g(k) = \int_k^{k+1}(1/k - 1/y)\,dy$ and assemble these into the staircase integral representation $\gamma = \int_1^\infty (1/\lfloor x\rfloor - 1/x)\,dx$. We establish the sharp per-term bound $g(k) < 1/(2k^2)$ and deduce the explicit convergence rate $0 < \gamma - \sum_{k=1}^n g(k) < 1/(2n)$. We locate $\gamma$ as the zeroth member $\gamma_0$ of the Stieltjes family, whose constants are the Laurent coefficients of the Riemann zeta function at $s=1$. Finally we isolate the abstract irrationality engine common to all known proofs of this type: a real number $x$ is irrational if and only if there exist integer sequences $(a_n), (b_n)$ with $a_n + b_n x \neq 0$ for all $n$ and $a_n + b_n x \to 0$. This reduces the irrationality of $\gamma$ to an explicit Diophantine construction and clarifies that the structural obstruction is the additive logarithmic correction, not the harmonic part.
+
+**Keywords.** Euler–Mascheroni constant; harmonic numbers; integral representation; series acceleration; Stieltjes constants; irrationality criterion; Diophantine approximation; Riemann zeta function.
+
+---
 
 ## 1. Introduction
 
-The Euler–Mascheroni constant,
-$$\gamma = \lim_{n\to\infty}\left(\sum_{k=1}^{n}\frac1k - \ln n\right) = 0.57721566490153\ldots,$$
-is a fundamental mathematical constant appearing across number theory, complex
-analysis, probability, and the analysis of algorithms. Despite its ubiquity and
-the fact that it has been computed to well over $10^{12}$ decimal digits, a basic
-question remains open: **is $\gamma$ irrational?** No proof of irrationality (let
-alone transcendence) is known, and this has been so since Euler's investigations in
-the 1730s.
+The Euler–Mascheroni constant
+$$\gamma = \lim_{n\to\infty}\Big(\sum_{k=1}^n \frac{1}{k} - \ln n\Big) = 0.57721566490153286\ldots$$
+measures the persistent gap between the harmonic numbers and the natural logarithm. It surfaces throughout analysis and number theory: in the asymptotics of the divisor and totient functions, in the reflection and digamma identities for the Gamma function, in the Laurent expansion of the Riemann zeta function at its pole, and in countless integral and product formulas. Despite this ubiquity, two of the most basic questions about $\gamma$ — is it rational? is it transcendental? — remain unanswered. By contrast, $\pi$ and $e$ were proved transcendental in the nineteenth century.
 
-Every successful irrationality proof in the classical canon — for $e$, for $\pi$,
-for $\zeta(2)$ and $\zeta(3)$ (Apéry, 1978) — ultimately proceeds by exhibiting a
-sequence of *integer linear forms* in the target constant that are provably nonzero
-yet converge to $0$. The arithmetic obstruction "there is no integer in the open
-interval $(0,1)$" then forces irrationality. The analytic difficulty in each case
-lies entirely in *constructing* the forms with adequate control of their size and
-of the denominators involved.
+This paper gives a self-contained treatment of $\gamma$ built from a single elementary building block and arranged to expose precisely where the irrationality question becomes hard. Our contributions are:
 
-This paper makes three contributions, all formally verified.
+1. **A positive-term series** (Section 3). With $g(k) = 1/k - \ln(1+1/k)$ we show $g(k) > 0$, prove the telescoping identity $\sum_{k=1}^n g(k) = H_n - \ln(n+1)$, and conclude $\sum_{k\ge1} g(k) = \gamma$. Strict positivity makes the partial sums a monotone increasing sequence of certified lower bounds.
+2. **An integral representation** (Section 4). Each term is the area $g(k) = \int_k^{k+1}(1/k - 1/y)\,dy$ between a step and the hyperbola, yielding the staircase formula $\gamma = \int_1^\infty (1/\lfloor x\rfloor - 1/x)\,dx$.
+3. **A sharp convergence rate** (Section 5). We prove $g(k) < 1/(2k^2)$ and hence $0 < \gamma - \sum_{k=1}^n g(k) < 1/(2n)$.
+4. **The Stieltjes anchor** (Section 6). We define the Stieltjes sequence and prove $\gamma_0 = \gamma$, situating the constant at the head of the family appearing in $\zeta$'s Laurent expansion.
+5. **The irrationality engine** (Section 7). We prove the integer-linear-form criterion and its converse, characterizing irrationality, and apply it to reduce the open problem for $\gamma$ to an explicit construction.
 
-1. **(Sufficiency, Theorem 1.)** We state and prove the integer-linear-form
-   criterion as a standalone theorem.
-2. **(Characterization, Theorem 3.)** We prove the converse: every irrational
-   number admits such forms. Hence the criterion is lossless.
-3. **(Reduction, Theorem 4.)** Specializing to $\gamma$, we obtain that the
-   irrationality of $\gamma$ is equivalent to a concrete construction of integer
-   linear forms — turning an analytic open problem into a Diophantine one.
+All arguments are elementary, relying only on the inequality $\ln(1+x) < x$, telescoping, comparison of series, basic interval integration, and the impossibility of an integer strictly between $0$ and $1$.
 
-We emphasize at the outset that we do **not** resolve the irrationality of
-$\gamma$; we provide an exact, verified reformulation of it.
+---
 
-## 2. Definitions and conventions
+## 2. Preliminaries and notation
 
-Throughout, $x \in \mathbb{R}$. We use the following standard notions.
+Throughout, $\ln$ denotes the natural logarithm and $\lfloor x \rfloor$ the floor function. We write $H_n = \sum_{k=1}^n 1/k$ for the harmonic number ($H_0 = 0$). We use two standard monotone approximants to $\gamma$:
+$$L_n = H_n - \ln(n+1) \quad (\text{lower}), \qquad U_n = H_n - \ln n \quad (\text{upper, } n \ge 1).$$
+It is classical that $L_n \uparrow \gamma$ strictly from below and $U_n \downarrow \gamma$ strictly from above, so that $L_n < \gamma < U_n$ for all $n \ge 1$. These facts are recovered below from the positivity of $g$.
 
-**Definition 2.1 (Rational, irrational).** A real number $x$ is *rational* if
-$x = p/q$ for some $p \in \mathbb{Z}$, $q \in \mathbb{Z}_{>0}$; equivalently if
-$x \in \mathbb{Q}$ under the canonical embedding $\mathbb{Q}\hookrightarrow
-\mathbb{R}$. It is *irrational* if it is not rational. We write `Irrational x` for
-this predicate.
+We repeatedly use the **fundamental logarithmic inequality**: for every real $x > 0$,
+$$\ln(1+x) < x. \tag{$\star$}$$
+Equivalently, $\ln t < t - 1$ for $t > 1$, with equality only at $t = 1$.
 
-**Definition 2.2 (Integer linear form).** Given integer sequences $a, b : \mathbb{N}
-\to \mathbb{Z}$, the associated *integer linear forms in $x$* are the real numbers
-$$L_n(x) := a_n + b_n\,x, \qquad n \in \mathbb{N}.$$
+---
 
-**Definition 2.3 (Reduced fraction data).** For $q \in \mathbb{Q}$ we write
-$\mathrm{num}(q) \in \mathbb{Z}$ and $\mathrm{den}(q) \in \mathbb{Z}_{>0}$ for its
-numerator and (positive, coprime) denominator, so $q = \mathrm{num}(q)/\mathrm{den}(q)$.
+## 3. A positive-term series for $\gamma$
 
-**Definition 2.4 (Euler–Mascheroni constant).** With $H_n = \sum_{k=1}^n 1/k$ the
-$n$-th harmonic number,
-$$\gamma := \lim_{n\to\infty}\bigl(H_n - \ln n\bigr).$$
-Equivalently $\gamma = \lim_n (H_n - \ln(n+1))$, the lower Mathlib approximant
-`eulerMascheroniSeq`.
+**Definition 3.1 (series term).** For $k \in \mathbb{N}$, $k \ge 1$, define
+$$g(k) = \frac{1}{k} - \ln\!\Big(1 + \frac{1}{k}\Big) = \frac{1}{k} - \big(\ln(k+1) - \ln k\big).$$
+(For bookkeeping it is convenient to set $g(0) = 0$, consistent with the convention $1/0 = 0$.)
 
-Convergence of a real sequence $s_n$ to a limit $L$ is denoted $s_n \to L$ (the
-filter statement `Tendsto s atTop (𝓝 L)`).
+**Theorem 3.2 (positivity).** For every integer $k \ge 1$, $g(k) > 0$.
 
-## 3. Main results
+*Proof.* Apply $(\star)$ with $x = 1/k > 0$: $\ln(1 + 1/k) < 1/k$. Subtracting gives $g(k) = 1/k - \ln(1+1/k) > 0$. Equivalently, writing $t = (k+1)/k > 1$, the inequality $\ln t < t-1 = 1/k$ is exactly the claim. $\qquad\blacksquare$
 
-### 3.1 Sufficiency
+**Theorem 3.3 (telescoping partial sum).** For every $n \ge 0$,
+$$\sum_{k=1}^{n} g(k) = \Big(\sum_{k=1}^{n}\frac{1}{k}\Big) - \ln(n+1) = H_n - \ln(n+1) = L_n.$$
 
-**Theorem 1 (Integer-linear-form irrationality criterion; `EMR.irrational_of_int_linear_combo_tendsto_zero`).**
-Let $x \in \mathbb{R}$. Suppose there exist $a, b : \mathbb{N}\to\mathbb{Z}$ with
-$$\text{(i) } a_n + b_n x \neq 0 \text{ for all } n, \qquad \text{(ii) } a_n + b_n x \to 0.$$
+*Proof.* Split the term: $g(k) = 1/k - (\ln(k+1) - \ln k)$. Summing the first part gives $H_n$. The second part telescopes:
+$$\sum_{k=1}^n \big(\ln(k+1) - \ln k\big) = \ln(n+1) - \ln 1 = \ln(n+1).$$
+Hence $\sum_{k=1}^n g(k) = H_n - \ln(n+1)$. (By induction: the base case $n=0$ gives $0 = H_0 - \ln 1 = 0$; the step uses $H_{n+1} = H_n + 1/(n+1)$ and $\ln(n+2) - \ln(n+1)$.) $\qquad\blacksquare$
+
+**Theorem 3.4 (series representation).** The series $\sum_{k\ge1} g(k)$ converges and
+$$\sum_{k=1}^{\infty} g(k) = \gamma.$$
+
+*Proof.* By Theorem 3.2 all terms are nonnegative, and by Theorem 3.3 the partial sums equal $L_n = H_n - \ln(n+1)$, which are bounded above by $\gamma$ (indeed $L_n < \gamma$). A nonnegative series with partial sums bounded above converges; thus $\sum_k g(k)$ exists. Its value is $\lim_n L_n$. Since $L_n \to \gamma$ (this is the defining limit, after noting $H_n - \ln(n+1) = (H_n - \ln n) - \ln(1+1/n)$ and $\ln(1+1/n) \to 0$), uniqueness of limits gives $\sum_k g(k) = \gamma$. $\qquad\blacksquare$
+
+**Corollary 3.5 (strict monotonicity and increments).** The lower approximants satisfy $L_{n+1} - L_n = g(n+1) > 0$, so $(L_n)$ is strictly increasing and converges to $\gamma$ from below. In particular $L_n < \gamma$ for all $n$.
+
+*Proof.* Immediate from Theorem 3.3, since $L_{n+1} - L_n = \sum_{k=1}^{n+1} g(k) - \sum_{k=1}^{n} g(k) = g(n+1)$, which is positive by Theorem 3.2. $\qquad\blacksquare$
+
+This is the "Apéry-like" structure of the representation: the rational engine is the harmonic number $H_n$, and the increments are the explicit positive quantities $g(n+1)$.
+
+---
+
+## 4. An integral representation
+
+We now realize each term as area between a step and the hyperbola $y \mapsto 1/y$.
+
+**Lemma 4.1 (integrand nonnegativity).** For $k \ge 1$ and $x \ge k$, we have $1/k - 1/x \ge 0$.
+
+*Proof.* Since $0 < k \le x$, $1/x \le 1/k$. $\qquad\blacksquare$
+
+**Theorem 4.2 (integral form of a term).** For every $k \ge 1$,
+$$g(k) = \int_{k}^{k+1}\Big(\frac{1}{k} - \frac{1}{y}\Big)\,dy.$$
+
+*Proof.* On $[k, k+1]$ the constant $1/k$ integrates to $1/k$, and $1/y$ is integrable (the interval avoids $0$) with $\int_k^{k+1} dy/y = \ln(k+1) - \ln k = \ln(1 + 1/k)$. Subtracting,
+$$\int_k^{k+1}\Big(\frac1k - \frac1y\Big)\,dy = \frac1k - \ln\!\Big(1+\frac1k\Big) = g(k). \qquad\blacksquare$$
+
+**Theorem 4.3 (staircase integral representation).** Let $\lfloor x \rfloor$ denote the floor. Then
+$$\gamma = \int_{1}^{\infty}\Big(\frac{1}{\lfloor x\rfloor} - \frac{1}{x}\Big)\,dx := \lim_{N\to\infty}\int_1^N\Big(\frac{1}{\lfloor x\rfloor} - \frac{1}{x}\Big)\,dx.$$
+
+*Proof.* On each interval $[k, k+1)$ with $k\ge 1$ we have $\lfloor x\rfloor = k$, so $1/\lfloor x\rfloor - 1/x = 1/k - 1/x$, which by Theorem 4.2 integrates over that interval to $g(k)$. Summing over $1 \le k \le N-1$, additivity of the integral over adjacent intervals gives
+$$\int_1^N\Big(\frac{1}{\lfloor x\rfloor} - \frac{1}{x}\Big)\,dx = \sum_{k=1}^{N-1} g(k) = L_{N-1}.$$
+Letting $N \to \infty$ and applying Theorem 3.4 yields $\gamma$. By Lemma 4.1 the integrand is nonnegative, so the truncated integrals increase monotonically to $\gamma$. $\qquad\blacksquare$
+
+Geometrically: $1/\lfloor x\rfloor$ is the harmonic staircase descending over the hyperbola $1/x$, and $\gamma$ is the total area trapped between them on $[1,\infty)$ — the accumulated overshoot of discrete counting over continuous growth.
+
+---
+
+## 5. A sharp convergence rate
+
+**Theorem 5.1 (per-term bound).** For every $k \ge 1$,
+$$0 < g(k) < \frac{1}{2k^2}.$$
+
+*Proof.* Lower bound is Theorem 3.2. For the upper bound, use the second-order refinement of $(\star)$: for $u > 0$,
+$$\ln(1+u) > u - \frac{u^2}{2},$$
+which follows from $\frac{d}{du}\big[\ln(1+u) - u + u^2/2\big] = \frac{u^2}{1+u} > 0$ and equality at $u=0$. With $u = 1/k$,
+$$g(k) = \frac{1}{k} - \ln\!\Big(1+\frac1k\Big) < \frac1k - \Big(\frac1k - \frac{1}{2k^2}\Big) = \frac{1}{2k^2}. \qquad\blacksquare$$
+
+**Theorem 5.2 (explicit convergence rate).** For every $n \ge 1$,
+$$0 < \gamma - L_n = \gamma - \sum_{k=1}^{n} g(k) < \frac{1}{2n}.$$
+
+*Proof.* The lower bound is Corollary 3.5. For the upper bound, by Theorem 3.4 the remainder is $\gamma - L_n = \sum_{k=n+1}^\infty g(k)$. By Theorem 5.1 and the standard tail comparison $\sum_{k=n+1}^\infty 1/k^2 < \int_n^\infty dx/x^2 = 1/n$,
+$$\gamma - L_n = \sum_{k=n+1}^{\infty} g(k) < \sum_{k=n+1}^{\infty}\frac{1}{2k^2} < \frac{1}{2}\cdot\frac{1}{n} = \frac{1}{2n}. \qquad\blacksquare$$
+
+Thus $L_n = H_n - \ln(n+1)$ approximates $\gamma$ from below with error below $1/(2n)$. The convergence is polynomial (order $1/n$); high-precision computation uses faster accelerations, but the transparent $1/(2n)$ envelope is exactly the certified bound suited to analysis.
+
+---
+
+## 6. The Stieltjes anchor
+
+**Definition 6.1 (Stieltjes sequence).** For $m \ge 0$ and $n \ge 1$,
+$$S_m(n) = \sum_{k=1}^{n}\frac{(\ln k)^m}{k} - \frac{(\ln n)^{m+1}}{m+1}.$$
+The $m$-th **Stieltjes constant** is $\gamma_m = \lim_{n\to\infty} S_m(n)$.
+
+The Stieltjes constants are the Laurent coefficients of the Riemann zeta function at its simple pole $s=1$:
+$$\zeta(s) = \frac{1}{s-1} + \sum_{m=0}^{\infty}\frac{(-1)^m}{m!}\,\gamma_m\,(s-1)^m.$$
+
+**Theorem 6.2 ($\gamma_0 = \gamma$).** The zeroth Stieltjes constant equals the Euler–Mascheroni constant: $\lim_{n\to\infty} S_0(n) = \gamma$.
+
+*Proof.* For $m=0$, $(\ln k)^0 = 1$ and the correction term is $(\ln n)^1/1 = \ln n$, so
+$$S_0(n) = \sum_{k=1}^n \frac{1}{k} - \ln n = H_n - \ln n = U_n \qquad (n \ge 1).$$
+This is exactly the upper approximant, and $U_n \to \gamma$. Hence $\lim_n S_0(n) = \gamma$. $\qquad\blacksquare$
+
+**Corollary 6.3 (two-sided trapping).** For all $n \ge 1$, $L_n < \gamma < U_n = S_0(n)$, with $U_n - L_n = \ln(1+1/n) \to 0$. The Stieltjes sequence at $m=0$ provides the upper trap, the positive series the lower one.
+
+This anchors the entire Stieltjes hierarchy at $\gamma$ and embeds the present development in the local theory of $\zeta$ at $s=1$.
+
+---
+
+## 7. The irrationality engine
+
+We now isolate the abstract mechanism behind irrationality proofs of Apéry type and reduce the open problem for $\gamma$ to a precise construction.
+
+**Theorem 7.1 (integer-linear-form criterion; sufficiency).** Let $x \in \mathbb{R}$. Suppose there exist integer sequences $(a_n), (b_n)$ such that
+$$a_n + b_n x \neq 0 \quad \text{for all } n, \qquad \text{and} \qquad a_n + b_n x \to 0.$$
 Then $x$ is irrational.
 
-*Proof sketch.* Suppose for contradiction $x = p/q$ with $p = \mathrm{num}(x)$,
-$q = \mathrm{den}(x) > 0$. For each $n$,
-$$L_n(x) = a_n + b_n\frac{p}{q} = \frac{a_n q + b_n p}{q},$$
-where the numerator $m_n := a_n q + b_n p \in \mathbb{Z}$. By hypothesis (i),
-$L_n(x) \neq 0$, hence $m_n \neq 0$; since $m_n$ is a nonzero integer,
-$|m_n| \ge 1$ (the key arithmetic fact `Int.one_le_abs`). Therefore
-$$|L_n(x)| = \frac{|m_n|}{q} \ge \frac{1}{q} > 0 \qquad \text{for all } n.$$
-But hypothesis (ii) gives $|L_n(x)| \to 0$, so eventually $|L_n(x)| < 1/q$, a
-contradiction. Hence $x \notin \mathbb{Q}$. $\qquad\blacksquare$
+*Proof.* Suppose for contradiction $x = p/q$ with $q \ge 1$ integer. Then
+$$a_n + b_n x = \frac{a_n q + b_n p}{q},$$
+whose numerator $a_n q + b_n p$ is an integer; it is nonzero because $a_n + b_n x \neq 0$. A nonzero integer has absolute value at least $1$, so
+$$|a_n + b_n x| = \frac{|a_n q + b_n p|}{q} \ge \frac{1}{q} > 0 \quad \text{for all } n.$$
+This contradicts $a_n + b_n x \to 0$. Hence $x$ is irrational. $\qquad\blacksquare$
 
-The single load-bearing arithmetic input is the rigidity of the integers: a
-nonzero integer has absolute value at least $1$, so the rescaled forms cannot
-approach $0$ unless they are eventually $0$, which (i) forbids.
+The crux is the rigidity principle: *a nonzero integer cannot lie strictly between $0$ and $1$*. A rational of denominator $q$ keeps every nonzero linear form $a_n + b_n x$ at distance at least $1/q$ from $0$.
 
-### 3.2 Unbounded denominators from Dirichlet
+**Theorem 7.2 (characterization).** A real number $x$ is irrational **if and only if** there exist integer sequences $(a_n), (b_n)$ with $a_n + b_n x \neq 0$ for all $n$ and $a_n + b_n x \to 0$.
 
-The converse requires not just *some* good rational approximations but a supply of
-them with arbitrarily large denominators. This is where the irrationality of $x$ is
-used.
+*Proof.* ($\Leftarrow$) is Theorem 7.1. For ($\Rightarrow$), let $x$ be irrational. By Dirichlet's theorem on Diophantine approximation, there are infinitely many rationals $p/q$ (in lowest terms) with
+$$\Big|x - \frac{p}{q}\Big| < \frac{1}{q^2}.$$
+Since these approximations have unbounded denominators (for each $N$ one can choose such a $p/q$ with $q \ge N$), select a sequence $p_n/q_n$ with $q_n \ge n+1$. Put $a_n = -p_n$, $b_n = q_n$. Then
+$$|a_n + b_n x| = q_n\Big|x - \frac{p_n}{q_n}\Big| < q_n \cdot \frac{1}{q_n^2} = \frac{1}{q_n} \le \frac{1}{n+1} \to 0,$$
+and $a_n + b_n x \neq 0$ because $x$ is irrational (so $x \neq p_n/q_n$). $\qquad\blacksquare$
 
-**Lemma 2 (Unbounded denominators of good approximations; `EMR.exists_rat_mem_den_ge`).**
-If $x$ is irrational, then for every $N \in \mathbb{N}$ there exists $q \in
-\mathbb{Q}$ with
-$$\left|x - q\right| < \frac{1}{\mathrm{den}(q)^2} \qquad\text{and}\qquad \mathrm{den}(q) \ge N.$$
+**Corollary 7.3 (reduction of the open problem).** The Euler–Mascheroni constant $\gamma$ is irrational if and only if there exist integer sequences $(a_n), (b_n)$ with $a_n + b_n\gamma \neq 0$ for all $n$ and $a_n + b_n\gamma \to 0$.
 
-*Proof sketch.* By a classical theorem (Dirichlet/Hurwitz; in Mathlib,
-`Real.infinite_rat_abs_sub_lt_one_div_den_sq_of_irrational`), the set
-$$S = \Bigl\{q \in \mathbb{Q} : |x - q| < 1/\mathrm{den}(q)^2\Bigr\}$$
-is *infinite* whenever $x$ is irrational. Suppose, for contradiction, that every
-$q \in S$ had $\mathrm{den}(q) < N$. Then for each admissible denominator
-$d \in \{1, \dots, N-1\}$, the numerators $c$ with $|x - c/d| < 1/d^2$ lie in a
-bounded interval of length $2/d^2$, hence are finite in number (they are integers
-in $[\lfloor xd - 1/d\rfloor, \lceil xd + 1/d\rceil]$). A finite union of finite
-sets is finite, so $S$ would be finite — contradicting its infinitude. Therefore
-denominators are unbounded: some $q \in S$ has $\mathrm{den}(q) \ge N$.
-$\qquad\blacksquare$
+*Proof.* Apply Theorem 7.2 with $x = \gamma$. $\qquad\blacksquare$
 
-### 3.3 Characterization
+This is an honest reduction, not a resolution: the existence of such forms for $\gamma$ is unknown.
 
-**Theorem 3 (Characterization of irrationality; `EMR.irrational_iff_exists_int_linear_combo_tendsto_zero`).**
-For $x \in \mathbb{R}$,
-$$x \text{ is irrational} \iff \exists\, a, b : \mathbb{N}\to\mathbb{Z},\ \bigl(\forall n,\ a_n + b_n x \neq 0\bigr)\ \wedge\ \bigl(a_n + b_n x \to 0\bigr).$$
+**Where the difficulty lives.** The representation of Sections 3–4 shows that
+$$\gamma = H_n - \ln(n+1) + \big(\gamma - L_n\big), \qquad 0 < \gamma - L_n < \tfrac{1}{2n}.$$
+The harmonic part $H_n$ is denominator-friendly: multiplying by $D_n = \mathrm{lcm}(1,2,\ldots,n)$ clears all denominators, and the Prime Number Theorem gives $\ln D_n = n(1+o(1))$, i.e. $D_n = e^{n(1+o(1))}$. So $D_n H_n \in \mathbb{Z}$ with $D_n$ of controlled exponential size. The obstruction is the additive correction $\ln(n+1)$: the logarithm of an integer is itself transcendental and is *not* cleared by any common denominator. Constructing the linear forms of Corollary 7.3 therefore requires integer combinations that simultaneously clear $H_n$ *and* approximate $\ln(n+1)$ to within an error that the exponential denominator $D_n$ can absorb. This is precisely the balance between the size of $\mathrm{lcm}(1,\ldots,n)$ and rational approximations to logarithms.
 
-*Proof sketch.* ($\Leftarrow$) is Theorem 1.
+---
 
-($\Rightarrow$) Assume $x$ irrational. Apply Lemma 2 at each threshold $N = n+1$ to
-choose a rational $q_{n} \in \mathbb{Q}$ with
-$$\left|x - q_{n}\right| < \frac{1}{\mathrm{den}(q_{n})^2}, \qquad \mathrm{den}(q_{n}) \ge n+1.$$
-Define
-$$a_n := -\,\mathrm{num}(q_{n}), \qquad b_n := \mathrm{den}(q_{n}).$$
-Then with $d_n := \mathrm{den}(q_n) > 0$ and $q_n = \mathrm{num}(q_n)/d_n$,
-$$a_n + b_n x = -\mathrm{num}(q_n) + d_n x = d_n\Bigl(x - q_n\Bigr),$$
-so
-$$|a_n + b_n x| = d_n\,|x - q_n| < d_n \cdot \frac{1}{d_n^2} = \frac{1}{d_n} \le \frac{1}{n+1}.$$
-The right-hand side $\to 0$, so by squeezing (with the nonnegativity lower bound)
-$a_n + b_n x \to 0$. Moreover $a_n + b_n x \neq 0$: if it vanished, then
-$d_n x = \mathrm{num}(q_n)$, i.e. $x = q_n \in \mathbb{Q}$, contradicting the
-irrationality of $x$. This produces the required forms. $\qquad\blacksquare$
+## 8. Algorithms
 
-The characterization shows the criterion of Theorem 1 is *complete*: it is not a
-restricted tool that succeeds only on special irrationals; it certifies all of
-them and is refuted by none.
+We summarize the computational content (full implementations accompany this paper).
 
-### 3.4 Reduction of the open problem for $\gamma$
+**Algorithm A (certified lower approximant).** Compute $L_n = H_n - \ln(n+1)$ by accumulating $g(k) = 1/k - \ln(1+1/k)$ for $k = 1,\ldots,n$. Return $L_n$ together with the certified two-sided bracket $L_n < \gamma < L_n + 1/(2n)$ (Theorem 5.2). Cost: $O(n)$ arithmetic/transcendental operations.
 
-**Theorem 4 (Reduction of the irrationality of $\gamma$; `EMR.eulerMascheroniConstant_irrational_iff`).**
-$$\gamma \text{ is irrational} \iff \exists\, a, b : \mathbb{N}\to\mathbb{Z},\ \bigl(\forall n,\ a_n + b_n\gamma \neq 0\bigr)\ \wedge\ \bigl(a_n + b_n\gamma \to 0\bigr).$$
+**Algorithm B (staircase quadrature).** Approximate $\int_1^N (1/\lfloor x\rfloor - 1/x)\,dx$ exactly term-by-term as $\sum_{k=1}^{N-1} g(k)$, confirming numerically that the staircase-minus-hyperbola area equals $L_{N-1}$ (Theorem 4.3).
 
-*Proof.* Immediate specialization of Theorem 3 to $x = \gamma$. $\qquad\blacksquare$
+**Algorithm C (irrationality-form tester).** Given candidate integer sequences $(a_n),(b_n)$, evaluate $a_n + b_n\,\hat\gamma$ at high precision $\hat\gamma \approx \gamma$ and check the two conditions of Corollary 7.3: nonvanishing and decay to $0$. Useful for empirically probing constructions.
 
-This is the central application. It does not assert the irrationality of $\gamma$.
-It asserts that the analytic open problem and a *purely Diophantine construction
-problem* are one and the same: produce explicit integer sequences $a_n, b_n$ whose
-linear combinations with $\gamma$ are nonzero and shrink to $0$. The existence of
-such forms is necessary and sufficient.
+**Algorithm D (Stieltjes evaluation).** Compute $S_m(n) = \sum_{k=1}^n (\ln k)^m/k - (\ln n)^{m+1}/(m+1)$ and verify $S_0(n) = H_n - \ln n \to \gamma$ (Theorem 6.2).
 
-## 4. Discussion
+---
 
-### 4.1 The arithmetic engine
+## 9. Applications and discussion
 
-The asymmetry between Theorem 1 and its converse is instructive. The sufficiency
-direction uses only the *integrality* of the cross term $a_n q + b_n p$. It is
-entirely constant-agnostic: nothing about $\gamma$, $e$, or $\zeta(3)$ enters. This
-is exactly why the same theorem powers every classical irrationality argument — the
-analytic labor is hidden in producing the forms, never in the rigidity step. The
-converse, by contrast, is where the structure of irrational numbers is genuinely
-invoked, through Dirichlet's infinitude of good approximations.
+The positive-series and integral pictures give a transparent, fully certified handle on $\gamma$ suited to analysis and teaching: monotone lower bounds $L_n$ with a guaranteed $1/(2n)$ error, an evocative area interpretation, and a clean derivation of the standard $L_n < \gamma < U_n$ trapping. The Stieltjes anchor connects the constant to the analytic theory of $\zeta(s)$ near $s=1$, where $\gamma$ is the leading finite coefficient. The irrationality engine reframes the central open problem as a concrete Diophantine construction and pinpoints the logarithmic correction as the sole obstruction, indicating exactly where future work must concentrate.
 
-### 4.2 Quantitative refinement and irrationality measure
+The chief limitation is the rate: $O(1/n)$ convergence makes the bare series unsuited to extreme-precision digit hunting, for which Bessel-function and Euler–Maclaurin accelerations are vastly superior. Our emphasis is structural transparency and certified bounds rather than raw speed.
 
-Theorem 1 is purely qualitative. A quantitative sharpening connects the *rate* of
-decay to the irrationality measure. If forms can be built with
-$$|a_n + b_n\gamma| \le C\,b_n^{-(1+\delta)} \quad (\delta > 0),$$
-then $\gamma$ would have finite irrationality measure $\le 1 + 1/\delta$. The proof
-of Lemma 2 already extracts denominator-unbounded approximations with the $1/d$
-bound; the quantitative program is precisely to upgrade $1/d$ to $d^{-(1+\delta)}$,
-the analytic step separating "irrational" from "Diophantine of bounded measure."
+---
 
-### 4.3 A positive series as raw material
+## 10. Future directions
 
-The companion development records that $\gamma$ is the sum of an explicitly
-*positive* telescoping series. With
-$$g(k) := \frac{1}{k+1} - \bigl(\ln(k+2) - \ln(k+1)\bigr) > 0,$$
-one has the partial-sum identity $\sum_{k<n} g(k) = H_n - \ln(n+1)$ and hence
-$$\gamma = \sum_{k=0}^{\infty} g(k),$$
-with truncation error below $1/n$. Each term is positive because
-$\ln\!\bigl(1 + \tfrac{1}{k+1}\bigr) < \tfrac{1}{k+1}$. Such partial-fraction-plus-
-logarithm series are the natural candidates to pair with integral representations
-in a Beukers-style attack: in the $\zeta(3)$ case, an analogous structure feeds the
-double-integral machinery that manufactures the integer recurrences. Adapting that
-machinery to the $g(k)$ series — making the integer forms of Theorem 4 explicit —
-is the principal open avenue.
+This cycle isolated the abstract engine of every "good rational approximation implies irrationality" argument — a nonzero integer linear form $b_n x - a_n$ that shrinks to zero cannot survive if $x$ is rational, because a rational of denominator $q$ keeps all nonzero such forms at distance at least $1/q$. Applying this to the harmonic numbers exposed a sharp tension: their denominators are cleanly cleared by $n!$ (indeed by $\mathrm{lcm}(1,\ldots,n)$), yet the analytic correction $\ln$ that turns $H_n$ into $\gamma$ destroys integrality. The conjectures below grow directly out of that tension.
 
-### 4.4 Soundness and scope
+**Conjecture 1 (a logarithmic common denominator exists).** There is a sequence of positive integers $b_n$, growing no faster than exponentially, and integers $a_n$, such that $b_n\gamma - a_n$ is never zero yet tends to zero; consequently $\gamma$ is irrational. The key insight is that the obstruction is not the harmonic part — whose denominators are already tamed by $\mathrm{lcm}(1,\ldots,n)$ — but the logarithm, so the search should target integer combinations that simultaneously clear $H_n$ and approximate $\ln(n+1)$ to within a factor that the exponential denominator can absorb. Sharp effective bounds on $\mathrm{lcm}(1,\ldots,n)$ and on rational approximations to logarithms have matured to the point where the two error budgets can, for the first time, be compared on the same scale.
 
-The corollary is an honest reduction, not a disguised resolution. Both directions
-of Theorem 4 are genuinely non-trivial (neither is a decision procedure or a
-definitional unfolding), and the existence of the forms for $\gamma$ remains
-unknown. The contribution is to pin down, with certified precision, *what must be
-constructed*.
+**Conjecture 2 (denominator growth controls the irrationality measure).** If such linear forms exist with $b_n$ of exponential size $e^{cn}$ and error $|b_n\gamma - a_n|$ of size $e^{-c'n}$, then $\gamma$ has finite irrationality measure bounded explicitly by $1 + c/c'$. The universal gap $1/q$ for rationals upgrades, for a fixed construction, into a two-sided squeeze whose exponents $c$ and $c'$ are read straight off the growth of $\mathrm{lcm}(1,\ldots,n)$ and the convergence rate of the bracket. The Prime Number Theorem pins $\mathrm{lcm}(1,\ldots,n)$ to $e^{n(1+o(1))}$, fixing the numerator side precisely, so the only free parameter left to estimate is the analytic decay.
 
-## 5. Applications and worked numerics
+**Conjecture 3 (the Stieltjes family is generically irrational).** Among the Stieltjes constants $\gamma_0 = \gamma, \gamma_1, \gamma_2, \ldots$ (the Laurent coefficients of the Riemann zeta function at its pole), all but finitely many are irrational; in fact no two satisfy a nontrivial linear relation with rational coefficients. Each $\gamma_m$ arises from the same harmonic-type clearing mechanism but weighted by $(\ln k)^m$, so the denominators interleave in a way that makes simultaneous rationality a far more rigid — and thus far less plausible — coincidence than rationality of a single constant. High-precision values reveal no algebraic relations to thousands of digits, and the structural link to $\zeta$'s Laurent expansion provides a uniform framework in which a joint statement can finally be attacked.
 
-Although the construction for $\gamma$ is open, the criterion is fully operational
-on constants of known status, which is how we validate the theory numerically
-(see the accompanying demonstrations).
+**Conjecture 4 (no elementary integral certificate).** No elementary integral representation of $\gamma$ — of the schematic shape used above — can simultaneously be reduced to integer linear forms of subexponential denominator and decay, suggesting that any irrationality proof must import genuinely transcendental input beyond the harmonic/logarithmic dichotomy.
 
-- **$\sqrt 2$.** The recursion $(a_{n+1}, b_{n+1}) = (a_n + 2b_n,\ a_n + b_n)$ with
-  alternating signs produces $(1,-1), (-3,2), (7,-5), (-17,12), \dots$, and the
-  forms $a_n + b_n\sqrt 2$ are nonzero and decay geometrically like
-  $(\sqrt 2 - 1)^n$. Theorem 1 certifies irrationality.
-- **$e$.** Continued-fraction convergents $p_n/q_n$ of $e$ give
-  $a_n = -p_n$, $b_n = q_n$ with $|{-p_n} + q_n e| \to 0$, again nonzero;
-  Theorem 1 applies.
-- **Rationals (negative control).** For $x = p/q$, *no* shrinking nonzero integer
-  forms exist: every nonzero form has $|a_n + b_n x| \ge 1/q$, the exact lower
-  bound from the proof of Theorem 1. This is the content of the contrapositive and
-  a useful sanity check.
+---
 
-These examples exercise the *main theorem* itself — the rigidity lower bound
-$1/q$ and the squeeze to $0$ — rather than any trivial special case.
+## 11. Conclusion
 
-## 6. Future work
-
-The directions below follow directly from the formalized results.
-
-1. **Apéry-type forms for $\gamma$.** Construct explicit computable $(a_n, b_n)$
-   with $a_n + b_n\gamma \to 0$ (nonzero), witnessing irrationality through Theorem
-   4. Continued-fraction convergents of $\gamma$ are the first candidate input.
-2. **Beukers-style integral form for the positive series.** Express each $g(k)$ as
-   $\int_0^1 t^k\,(\cdots)\,dt$ so that $\sum_k g(k)$ becomes a known integral for
-   $\gamma$, exposing the partial-fraction/log structure to the double-integral
-   machinery used for $\zeta(3)$.
-3. **Denominator growth and irrationality measure.** Sharpen Lemma 2's $1/d$ bound
-   to $d^{-(1+\delta)}$, yielding a finite irrationality measure $\le 1 + 1/\delta$.
-4. **Stieltjes-constant generalization.** Theorem 1 applies verbatim to every
-   Stieltjes constant $\gamma_n$ (with $\gamma_0 = \gamma$), simultaneously reducing
-   each open problem "is $\gamma_n$ irrational?" to a Diophantine construction.
-
-## 7. Conclusion
-
-We have given a verified, lossless reformulation of irrationality in terms of
-shrinking nonzero integer linear forms, and specialized it to recast the open
-problem of the irrationality of the Euler–Mascheroni constant $\gamma$ as an
-explicit Diophantine construction. The rigidity engine (Theorem 1), its
-completeness (Theorem 3), and the reduction for $\gamma$ (Theorem 4) together
-mark out exactly where a future proof must strike: not in the analysis of $\gamma$,
-but in the manufacture of the integers.
+Built entirely from the single positive term $g(k) = 1/k - \ln(1+1/k)$, the Euler–Mascheroni constant admits a convergent positive-term series $\gamma = \sum_{k\ge1} g(k)$ with monotone lower approximants $L_n = H_n - \ln(n+1)$, a staircase integral representation $\gamma = \int_1^\infty(1/\lfloor x\rfloor - 1/x)\,dx$, and a certified convergence rate $\gamma - L_n < 1/(2n)$ stemming from the sharp bound $g(k) < 1/(2k^2)$. The constant heads the Stieltjes family with $\gamma_0 = \gamma$, tying it to the Laurent expansion of $\zeta$. The irrationality criterion — a real number is irrational exactly when nonzero integer linear forms in it tend to zero — reduces the open problem to an explicit construction and locates the difficulty in the transcendental logarithmic correction rather than the integer-friendly harmonic part. The path forward is to balance the exponential growth of $\mathrm{lcm}(1,\ldots,n)$ against rational approximations to logarithms.
