@@ -1405,11 +1405,13 @@ Research mode: {concept.research_mode}
                     pass  # Don't break polling on log errors
 
                 if is_complete or (status == "IDLE" and has_files):
-                    out_of_budget = bool(result.get("out_of_budget", False))
-                    # Resume truncated (OUT_OF_BUDGET) Phase A jobs by asking
-                    # Aristotle to continue, instead of integrating a partial
-                    # result. The project re-enters RUNNING; we re-poll next tick.
-                    if (out_of_budget and job.phase == "A"
+                    needs_resume = bool(result.get("needs_resume", False))
+                    # Resume incomplete Phase A jobs (OUT_OF_BUDGET or
+                    # COMPLETE_WITH_ERRORS — truncated/non-compiling Lean) by
+                    # asking Aristotle to continue, instead of integrating a
+                    # partial result. The project re-enters RUNNING; re-poll
+                    # next tick.
+                    if (needs_resume and job.phase == "A"
                             and getattr(job, "resume_count", 0) < MAX_RESUME_BUDGET):
                         try:
                             _resume_prompt = (
@@ -1423,16 +1425,17 @@ Research mode: {concept.research_mode}
                             job.resume_count = getattr(job, "resume_count", 0) + 1
                             job.status = "dispatched"  # re-poll for the new task
                             job.dispatch_time = time.time()  # reset wall-clock caps
-                            print(f"[Poll] {pid[:8]} OUT_OF_BUDGET — resuming via ask() "
+                            print(f"[Poll] {pid[:8]} INCOMPLETE ({result.get('task_status','?')}) "
+                                  f"— resuming via ask() "
                                   f"(attempt {job.resume_count}/{MAX_RESUME_BUDGET}), "
                                   f"new task {_tid[:8]}; deferring integration")
                             continue  # do NOT append to completed; re-poll next tick
                         except Exception as _re:
-                            print(f"[Poll] {pid[:8]} OUT_OF_BUDGET resume failed: {_re}; "
-                                  f"integrating truncated result")
+                            print(f"[Poll] {pid[:8]} resume failed: {_re}; "
+                                  f"integrating partial result")
                             # fall through to complete with the partial result
                     print(f"[Poll] {pid[:8]} COMPLETED (status={status}, has_files={has_files})"
-                          f"{(' [OUT_OF_BUDGET]' if out_of_budget else '')}")
+                          f"{(' [INCOMPLETE]' if needs_resume else '')}")
                     job.status = "completed"
                     job.complete_time = time.time()
                     # Final reasoning log entry

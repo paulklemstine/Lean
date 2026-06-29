@@ -83,16 +83,19 @@ class AristotleSDKClient:
                     project.status == ProjectStatus.IDLE and project.has_files
                 )
 
-                # On completion, check whether any task ran OUT_OF_BUDGET (truncated).
-                # The caller can resume such a project via resume_project() (project.ask).
-                out_of_budget = False
+                # On completion, check whether any task ended incomplete
+                # (OUT_OF_BUDGET = ran out of compute; COMPLETE_WITH_ERRORS =
+                # finished but with errors, e.g. truncated/non-compiling Lean).
+                # The caller can resume such a project via resume_project()
+                # (project.ask — "Tell Aristotle what to do next" -> Instruct).
+                needs_resume = False
                 if is_complete:
                     pct = 100
                     try:
                         _tasks, _ = await project.get_tasks(limit=10)
-                        out_of_budget = any(
+                        needs_resume = any(
                             getattr(t, "status", None) is not None
-                            and t.status.name == "OUT_OF_BUDGET"
+                            and t.status.name in ("OUT_OF_BUDGET", "COMPLETE_WITH_ERRORS")
                             for t in _tasks
                         )
                     except Exception:
@@ -129,7 +132,7 @@ class AristotleSDKClient:
                     "complete": is_complete,
                     "has_files": project.has_files,
                     "has_input": project.has_input,
-                    "out_of_budget": out_of_budget,
+                    "needs_resume": needs_resume,
                     "error": None,
                 }
             except ssl.SSLError as e:
