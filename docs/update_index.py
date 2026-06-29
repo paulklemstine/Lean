@@ -343,7 +343,7 @@ window.PACKAGE_DB_INDEX = {json.dumps(package_db_index, indent=2, sort_keys=True
     generate_graph_data(script_dir, package_index)
 
     # Write future research directions to separate file (lazy-loaded)
-    append_future_directions(script_dir, os.path.join(script_dir, "future_directions.js"))
+    append_future_directions(script_dir, os.path.join(script_dir, "future_directions.js"), catalog_root)
 
     # Ensure .nojekyll exists for GitHub Pages
     nojekyll_path = os.path.join(script_dir, ".nojekyll")
@@ -502,12 +502,16 @@ window.PACKAGE_GRAPH = {json.dumps(graph_data, indent=2, sort_keys=True)};
     print(f"Appended PACKAGE_GRAPH to package_index.js ({len(graph_data.get('nodes', []))} nodes, {len(graph_data.get('edges', []))} edges, {len(graph_data.get('domain_bridges', []))} bridges)")
 
 
-def append_future_directions(script_dir, fd_js_path):
+def append_future_directions(script_dir, fd_js_path, catalog_root=None):
     """Read future_directions.json and write window.FUTURE_DIRECTIONS to a separate
     future_directions.js file (lazy-loaded on demand, not in the initial page load).
     """
     # Try Aether workspace (local dev)
-    fd_path = os.path.abspath(os.path.join(script_dir, "..", "..", "..", "Aether", ".aether_workspace", "future_directions.json"))
+    repo_root = catalog_root if catalog_root else os.path.abspath(os.path.join(script_dir, ".."))
+    fd_path = os.path.join(repo_root, "Aether", ".aether_workspace", "future_directions.json")
+    if not os.path.exists(fd_path):
+        # fallback: older relative depth (Catalog/Applications/Packages/) — keep for safety
+        fd_path = os.path.abspath(os.path.join(script_dir, "..", "..", "..", "Aether", ".aether_workspace", "future_directions.json"))
     # Fallback: committed copy in Packages directory (CI/GitHub Pages)
     local_copy_path = os.path.join(script_dir, "future_directions.json")
 

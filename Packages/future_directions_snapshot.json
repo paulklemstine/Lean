@@ -3164,6 +3164,61 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Order Theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all integers $n \\ge 1$, the minimum size of a finite poset $P$ such that the automorphism group of $P$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is $2^{n+1} + 2$. This unifies the paper's main theorem (which covers $n \\ge 3$) with the known small cases for $n=1, 2$.",
+    "domain_bridges": [
+      "Finite Group Theory",
+      "Poset Automorphisms"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2870",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the function $\\beta(G)$ as the minimum cardinality of a poset $P$ with $\\operatorname{Aut}(P) \\cong G$. Construct the specific poset from the paper (iterating the $\\times \\mathbb{Z}_2$ construction) to establish the upper bound $\\beta \\le 2^{n+1}+2$. For the lower bound, formalize the structural lemmas regarding the orbit structure of the group action on minimal elements and antichains, adapting the $n \\ge 3$ arguments to also cover the $n=1,2$ base cases.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T15:51:19.597804+00:00",
+    "title": "Minimum Size of a Poset Realizing $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Hadwiger-Nelson problem",
+      "fractional chromatic number of the plane",
+      "unit-distance graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The 27-vertex unit-distance graph configuration G₂₇ of Matolcsi, Ruzsa, Varga, and Zsámboki has geometric fractional chromatic number exactly 4. Augmenting this configuration with two specifically chosen additional vertices (as explicitly constructed in the paper) yields a 29-vertex unit-distance graph G₂₉ whose geometric fractional chromatic number is strictly greater than 4. This is the key lemma that, via the blow-up framework, implies χ_f(ℝ²) > 4 and answers Erdős's question in the negative. The proof proceeds by characterizing all 23 extremal geometric fractional colorings of G₂₇ (forming a convex polytope of affine dimension 11) and showing by linear programming that none of these can be extended to color the augmented graph with fractional chromatic number exactly 4.",
+    "domain_bridges": [
+      "Euclidean geometry",
+      "linear programming",
+      "measure theory",
+      "convex optimization"
+    ],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2870",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the 29-vertex configuration G₂₉ explicitly with computable coordinates. Formalize the geometric fractional chromatic number for finite point configurations. Characterize the polytope of optimal geometric fractional colorings of G₂₇ as the convex hull of 23 explicitly given extremal colorings. Then verify by certified linear programming (e.g., via LP duality certificates) that every extension of these extremal colorings to the two new vertices forces the fractional chromatic number strictly above 4. The core computational step is checking that a specific linear program over the 23 extremal colorings has optimal value exceeding 4.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T15:51:56.356300+00:00",
+    "title": "Geometric fractional chromatic number of the 29-vertex augmented unit-distance graph exceeds 4"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
