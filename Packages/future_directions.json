@@ -35640,7 +35640,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "discrete Morse theory",
         "nerve theorem",
@@ -35666,7 +35666,7 @@
         "Geometry"
       ],
       "id": "fd_2826",
-      "last_attempt_time": "2026-06-29T19:25:08.950744+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.AlgebraicTopology.ChainComplex\nimport Mathlib.AlgebraicTopology.MorseTheory\n\n-- Conjecture: The combinatorial nerve chain complex is chain homotopy equivalent to the simplicial chain complex of X.\ntheorem combinatorial_nerve_homotopy_equivalence\n    {k : ℕ} (X : SimplicialComplex) (A : Fin k → SimplicialComplex)\n    (h_cover : ∀ x : X, ∃ i, x ∈ A i)\n    (V : ∀ (S : Finset (Fin k)) (hS : S.Nonempty), GradientVectorField (⋂ i ∈ S, A i))\n    (C : ChainComplex) (h_C : C = CombinatorialNerveChainComplex X A V) :\n    Nonempty (ChainHomotopyEquiv C (SimplicialChainComplex X))",
       "lineage_refs": [],
@@ -36467,7 +36467,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Zhang2024_2K3",
         "ZhangLei2024_2K3",
@@ -36492,7 +36492,7 @@
         "Physics"
       ],
       "id": "fd_2844",
-      "last_attempt_time": "2026-06-29T19:25:02.299957+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem signless_laplacian_tK3_free_extremal_improved_bound {t n : ℕ} (ht : t ≥ 2) (hn : n ≥ 3 * t) :\n  UniqueExtremalGraph (tK3Free t) (signlessLaplacianSpectralRadius) n =\n    KJoin (CompleteGraph (t-1)) (CompleteBipartiteGraph ⌊(n-t+1)/2⌋ ⌈(n-t+1)/2⌉) := by sorry",
       "lineage_refs": [],
@@ -38499,6 +38499,50 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any integer t ≥ 2 and any tK3-free graph G of order n ≥ 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}, with equality if and only if G is isomorphic to this extremal graph.",
+      "domain_bridges": [
+        "Linear Algebra",
+        "Graph Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Physics"
+      ],
+      "id": "fd_2888",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "def extremal_tK3_free_graph (t n : ℕ) : SimpleGraph (Fin n) := \n  sorry -- K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}\n\ntheorem signless_laplacian_spectral_radius_le_extremal (t n : ℕ) (ht : t ≥ 2) (hn : n ≥ 28 * t - 17) \n    {G : SimpleGraph (Fin n)} (hG : NoTDisjointTriangles G t) :\n    signlessLaplacianSpectralRadius G ≤ signlessLaplacianSpectralRadius (extremal_tK3_free_graph t n) :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Apply the stability method in extremal graph theory combined with spectral techniques. Specifically, analyze the eigenvector corresponding to the largest eigenvalue of the signless Laplacian, bound the maximum degree, and iteratively remove vertex-disjoint triangles to reduce the problem to smaller subgraphs, ultimately characterizing the extremal structure as the join of a clique and a balanced complete bipartite graph.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28121v1",
+      "source_path": "http://arxiv.org/abs/2606.28121v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T19:42:40.348725+00:00",
+      "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "math.PR",
         "finite_geometry",
@@ -38521,7 +38565,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2888",
+      "id": "fd_2889",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_slower_than_full (q : ℕ) (hq : q ≥ 2) (hq_prime_power : IsPrimePower q) :\n    expectedCoverageTime (projectivePlaneMechanism q) > expectedCoverageTime (fullMechanism (q^2 + q + 1) (q + 1)) := by\n  sorry",
@@ -38570,7 +38614,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2889",
+      "id": "fd_2890",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pairwise_reflection_symmetric_latin_square_iff_power_of_two :\n    ∀ n : ℕ, n ≥ 1 →\n    (∃ A : Fin n → Fin n → Fin n,\n      (∀ i : Fin n, Function.Bijective (A i)) ∧\n      (∀ j : Fin n, Function.Bijective (fun i => A i j)) ∧\n      (∀ j₁ j₂ : Fin n, j₁ ≠ j₂ → ∀ p q : Fin n,\n        (∃ i : Fin n, A i j₁ = p ∧ A i j₂ = q) ↔\n        (∃ i : Fin n, A i j₁ = q ∧ A i j₂ = p)))\n    ↔ ∃ k : ℕ, n = 2^k := by\n  sorry",
@@ -38589,6 +38633,50 @@
       "thread_id": "",
       "timestamp": "2026-06-29T19:24:51.081014+00:00",
       "title": "Existence of Pairwise Reflection-Symmetric Latin Squares iff Power of Two"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Transversal Difference Numbers in Finite Abelian Quotients"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
+      "domain_bridges": [
+        "Additive Combinatorics",
+        "Finite Group Theory",
+        "Number Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2891",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.ZMod.Basic\nimport Mathlib.Algebra.Group.Subgroup.Basic\n\n-- Placeholder for the formal definition of transversal difference number\n-- def delta (G : Type*) [AddCommGroup G] [Fintype G] (H : AddSubgroup G) : ℕ := ...\n\ntheorem same_prime_square_plane_conjecture (p : ℕ) (hp : p.Prime) (hodd : Odd p) :\n    let G := ZMod (p * p) × ZMod (p * p)\n    let H := (p : ℕ) • (⊤ : AddSubgroup G)\n    delta G H = (2 * p - 1) * (2 * p - 1) :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Translate the transversal difference problem into an optimization over functions $\\mathbb{F}_p^2 \\to \\mathbb{F}_p^2$ representing transversals, where the difference support decomposes into carry-corrected finite-field derivative images. Apply Kneser's theorem for cross-transversal estimates and analyze polynomial sections to establish that the minimal difference support is achieved by linear sections, yielding the exact $(2p-1)^2$ bound.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27961v1",
+      "source_path": "http://arxiv.org/abs/2606.27961v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T19:43:09.952578+00:00",
+      "title": "Same-Prime Square Plane Transversal Difference Conjecture"
     },
     {
       "ambition_level": "extension",
@@ -43584,7 +43672,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -43600,7 +43688,7 @@
         "Algebra"
       ],
       "id": "seed_336",
-      "last_attempt_time": "2026-06-29T19:24:56.822908+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:28:04.161589+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],

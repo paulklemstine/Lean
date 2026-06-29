@@ -3452,6 +3452,31 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer t ≥ 2 and any tK3-free graph G of order n ≥ 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}, with equality if and only if G is isomorphic to this extremal graph.",
+    "domain_bridges": [
+      "Linear Algebra",
+      "Graph Theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2888",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply the stability method in extremal graph theory combined with spectral techniques. Specifically, analyze the eigenvector corresponding to the largest eigenvalue of the signless Laplacian, bound the maximum degree, and iteratively remove vertex-disjoint triangles to reduce the problem to smaller subgraphs, ultimately characterizing the extremal structure as the join of a clique and a balanced complete bipartite graph.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28121v1",
+    "status": "available",
+    "timestamp": "2026-06-29T19:42:40.348725+00:00",
+    "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.CO",
       "math.PR",
       "finite_geometry",
@@ -3468,7 +3493,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2888",
+    "id": "fd_2889",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the 2-(q²+q+1, q+1, 1) design properties of projective planes to derive exact inclusion-exclusion formulas for the expected coverage time. The key structural insight is that in a projective plane, any two points lie on exactly one common line, creating systematic 'clustering' that delays coverage. Compare the resulting expression term-by-term against the full model's expected time using the fact that the full model minimizes certain overlap statistics while the projective plane maximizes them. A potential approach leverages the eigenvalue structure of the incidence matrix to bound the probability that k specific coupons remain uncollected after t draws.",
@@ -3498,7 +3523,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2889",
+    "id": "fd_2890",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Sufficiency: Construct the Latin square from the Cayley table of (Z/2Z)^k; since every element is self-inverse, the pairwise column condition (p,q)↔(q,p) holds because p+j₁=q+j₂ iff q+j₁=p+j₂ (as j₁=j₁⁻¹ in exponent-2 groups). Necessity: Show that if n has an odd prime factor, the pairwise reflection-symmetry condition forces a contradiction via parity arguments on the permutation structure relating column pairs—specifically, the column-relabeling permutation between any two columns must be an involutory derangement, and counting constraints from the Latin square structure become incompatible when n is not a power of 2.",
@@ -3507,6 +3532,31 @@
     "status": "available",
     "timestamp": "2026-06-29T19:24:51.081014+00:00",
     "title": "Existence of Pairwise Reflection-Symmetric Latin Squares iff Power of Two"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Transversal Difference Numbers in Finite Abelian Quotients"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
+    "domain_bridges": [
+      "Additive Combinatorics",
+      "Finite Group Theory",
+      "Number Theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2891",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Translate the transversal difference problem into an optimization over functions $\\mathbb{F}_p^2 \\to \\mathbb{F}_p^2$ representing transversals, where the difference support decomposes into carry-corrected finite-field derivative images. Apply Kneser's theorem for cross-transversal estimates and analyze polynomial sections to establish that the minimal difference support is achieved by linear sections, yielding the exact $(2p-1)^2$ bound.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27961v1",
+    "status": "available",
+    "timestamp": "2026-06-29T19:43:09.952578+00:00",
+    "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
   {
     "ambition_level": "extension",

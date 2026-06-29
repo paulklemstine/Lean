@@ -2140,12 +2140,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2888",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28121v1",
+    "status": "available",
+    "timestamp": "2026-06-29T19:42:40.348725+00:00",
+    "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2888",
+    "id": "fd_2889",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -2160,13 +2175,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2889",
+    "id": "fd_2890",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
     "status": "available",
     "timestamp": "2026-06-29T19:24:51.081014+00:00",
     "title": "Existence of Pairwise Reflection-Symmetric Latin Squares iff Power of Two"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2891",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27961v1",
+    "status": "available",
+    "timestamp": "2026-06-29T19:43:09.952578+00:00",
+    "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
   {
     "consumed_by_exp_id": "",
