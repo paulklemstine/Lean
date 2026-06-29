@@ -3100,45 +3100,44 @@ Be precise, be deep, be world-class.
         lean_excerpt = lean_content[:8000] if lean_content else "(no Lean content provided)"
         domain_brief = f"Research domain: {concept.domain}\nResearch mode: {concept.research_mode}\n"
 
-        # Build @references section from Phase A's integrated Lean file paths
+        # Phase B produces a standalone publication. We deliberately do NOT pass
+        # Catalog file paths or instruct Aristotle to reference source files or
+        # formal-proof identifiers — the article and paper must stand alone.
         references_section = ""
-        if phase_a_lean_files:
-            ref_lines = []
-            for fpath in phase_a_lean_files:
-                # Extract the Catalog-relative path (the part that matters for referencing)
-                # e.g. "Catalog/Bridges/MyTherem/file.lean"
-                rel = fpath
-                if "Catalog/" in fpath:
-                    rel = fpath[fpath.index("Catalog/"):]
-                ref_lines.append(f"- `@{rel}`")
-            references_section = f"\n## Phase A Lean 4 File References\n\nThese are the Lean 4 files produced in Phase A. Reference them by path when discussing specific theorems:\n\n" + "\n".join(ref_lines) + "\n"
 
         phase_b_header = textwrap.dedent("""
             ## PHASE B: PACKAGING ONLY — COMMUNICATING THE MATH
 
-            Phase A of this cycle has already done the math. Lean 4 files have
-            been produced with 3-5 world-class theorems. Your ONLY job in
-            Phase B is to **package this work for human readers**.
+            Phase A of this cycle has already done the math. A formal
+            development produced several significant results. Your ONLY job in
+            Phase B is to **package this work for human readers** as a
+            standalone, publication-ready article and paper.
 
             ### DELIVERABLES (strict — only this):
             1. **ARTICLE.md** — Standalone popular-science article (1500-3000 words).
-               Write about IDEAS, not formal verification. No mentions of Lean or
-               proof assistants. Vivid prose, narrative arc, real-world connections.
-               **Must be fully self-contained and publishable without any external
-               references.** State every theorem, result, and definition inline —
-               do NOT use @file references or point to other files. A reader with
-               only this article must understand every result without looking elsewhere.
+               Write about IDEAS, not formal verification. Vivid prose, narrative
+               arc, real-world connections. **Publication-ready and fully
+               self-contained: a reader with only this article must understand
+               every result without looking elsewhere.**
+               **NEVER mention Lean, proof assistants, the Catalog, source file
+               paths, or formal-proof identifier names** (e.g., do NOT write
+               `pl_hodge_decomposition` — write "the Hodge Decomposition Theorem").
+               State every theorem, result, and definition inline in natural
+               mathematical prose. Do NOT use @file references or point to any
+               file. The article must support itself end-to-end.
                **CRITICAL MATH FORMATTING:** You MUST wrap all inline math in single `$`
                delimiters (e.g., `$x^2+y^2=z^2$`) and block math in double `$$`. Never
                leave math expressions un-delimited in Markdown, or it will break rendering.
             2. **RESEARCH_PAPER.md** — In-depth research paper (3000-8000 words).
                Abstract, definitions, main results (with proof sketches — NOT
-               full Lean), algorithms, applications, discussion, future work.
-               **Must be fully self-contained and publishable quality without any
-               external references.** State every theorem, lemma, and definition
-               inline with its full mathematical statement and proof sketch. Do NOT
-               use @file references or reference other files. A reader with only this
-               paper must be able to follow every result from start to finish.
+               full formal code), algorithms, applications, discussion, future work.
+               **Publication-ready and fully self-contained: a reader with only this
+               paper must be able to follow every result from start to finish.**
+               **NEVER mention Lean, proof assistants, the Catalog, source file
+               paths, or formal-proof identifier names.** State every theorem,
+               lemma, and definition inline in natural mathematical prose with its
+               full statement and proof sketch. Do NOT use @file references or
+               reference any file. The paper must support itself end-to-end.
                **CRITICAL MATH FORMATTING:** You MUST wrap all inline math in single `$`
                delimiters (e.g., `$x^2+y^2=z^2$`) and block math in double `$$`. Never
                leave math expressions un-delimited in Markdown, or it will break rendering.
@@ -3194,21 +3193,21 @@ Be precise, be deep, be world-class.
             "MISSING" — either include real content or omit the field entirely.
 
             ### PACKAGE.json Metadata Extraction (v1.1)
-            Derive the following fields directly from the Phase A Lean output above.
+            Derive the following fields from the mathematical work above.
             Do NOT invent values; every field must be traceable to the math.
 
-            - `title`: A clear, human-readable title based on the concept and main theorem.
+            - `title`: A clear, human-readable title based on the concept and main result.
             - `domain`: Must be exactly one of:
               Algebra|Applications|Bridges|Computation|Cryptography|EML|Geometry|Logic|MachineLearning|Novelty|Physics|Pythagorean|Shared|Tropical.
               Use the concept domain above unless the math clearly belongs elsewhere.
             - `description`: 1–2 sentences summarizing the main result and its significance.
             - `authors`: `["Aristotle"]` unless the sources explicitly name other authors.
             - `date`: Today's date in `YYYY-MM-DD` format.
-            - `key_results`: A list of 2–5 concrete results. Each entry MUST mirror an
-              actual theorem or lemma name from the Lean output (e.g.,
-              `pl_hodge_decomposition`, `regionBound_eq_two_pow`). Do NOT use
-              generic phrases like "Main theorem" or "Important lemma".
-            - `keywords`: 3–8 technical keywords actually appearing in the Lean output
+            - `key_results`: A list of 2–5 concrete results. Each entry must state a
+              result in clear mathematical prose (e.g., "Hodge Decomposition Theorem",
+              "Region bound equality"). Do NOT use code identifiers, file paths, or
+              formal-proof names, and do NOT use generic phrases like "Main theorem".
+            - `keywords`: 3–8 mathematical keywords describing the work
               (e.g., `ReLU`, `Hodge decomposition`, `piecewise linear`).
 
             ### PACKAGE.json Schema Checklist (verify before output)
@@ -3218,8 +3217,8 @@ Be precise, be deep, be world-class.
             - [ ] `description` is 1–2 sentences and non-generic.
             - [ ] `authors` is a non-empty array of strings.
             - [ ] `date` is `YYYY-MM-DD`.
-            - [ ] `key_results` is a non-empty array of strings; each string maps to a
-                  theorem/lemma name in the Lean output.
+            - [ ] `key_results` is a non-empty array of strings; each string states a
+                  concrete result in mathematical prose (no code identifiers).
             - [ ] `keywords` is a non-empty array of strings.
             - [ ] `article`, `research_paper`, `research_paper_tex`, and `demo` are
                   populated with actual content (not filenames or placeholders).
@@ -3231,16 +3230,17 @@ Be precise, be deep, be world-class.
                   below, verbatim or lightly edited.
 
             ### DO NOT OUTPUT:
-            - NO new `.lean` files
-            - NO new theorem proofs
-            - NO changes to the existing Lean 4 source
+            - NO formal-proof source code (no `.lean` files, no theorem proofs)
             - NO `FUTURE_DIRECTIONS.md` as a separate file (Phase A already produced
               future directions — they are provided below for inclusion in PACKAGE.json)
 
-            The math is already proved. Treat the Lean files below as the
-            ground truth — your prose should explain and contextualize them.
-            State theorems inline in your article and paper — they must be
-            self-contained and publishable without external references.
+            The math is already done. The mathematical work below is the ground
+            truth — your prose should explain and contextualize it. State
+            theorems inline in your article and paper in natural mathematical
+            language — they must be self-contained and publishable without
+            external references. **Do NOT mention Lean, proof assistants, the
+            Catalog, file paths, or formal-proof identifier names anywhere in the
+            article or paper.** The publication must stand entirely on its own.
             """)
 
         # Build future directions section if Phase A produced them
@@ -3268,7 +3268,7 @@ PACKAGE.json so they appear in the "Future Directions" tab on the website.
 **Mathematical framing**: {concept.mathematical_framing}
 {domain_brief}
 {references_section}
-## Phase A Lean 4 Output (the math — read this carefully)
+## Mathematical Work Produced This Cycle
 
 ```
 {lean_excerpt}
@@ -3276,19 +3276,23 @@ PACKAGE.json so they appear in the "Future Directions" tab on the website.
 {future_directions_section}
 ## Your task
 
-Produce the deliverables listed above. The Lean file is the source of truth —
-your prose must accurately explain it. Both ARTICLE.md and RESEARCH_PAPER.md
-MUST be self-contained and publishable without referencing any external files.
-State every theorem, definition, and result inline so a reader can follow the
-entire argument from the document alone.
+Produce the deliverables listed above. The mathematical work above is the source
+of truth — your prose must faithfully communicate it. Both ARTICLE.md and
+RESEARCH_PAPER.md MUST be publication-ready, fully self-contained, and
+publishable without referencing any external files. State every theorem,
+definition, and result inline in natural mathematical prose so a reader can
+follow the entire argument from the document alone. **Do NOT mention Lean,
+proof assistants, the Catalog, file paths, or formal-proof identifier names —
+the article and paper must stand entirely on their own.**
 
 ARTICLE.md: write a popular-science narrative that makes the key idea accessible.
 RESEARCH_PAPER.md: write the formal paper with abstract, definitions, results.
 demo.py: write numerical examples that demonstrate the results.
 PACKAGE.json: bundle everything into a single JSON with ALL fields populated.
 - Extract `title`, `domain`, `description`, `authors`, `date`, `key_results`, and
-  `keywords` directly from the Lean output and concept domain above.
-- Each `key_results` entry must correspond to an actual theorem/lemma name.
+  `keywords` from the mathematical work above and the concept domain.
+- Each `key_results` entry must state a concrete result in mathematical prose
+  (no code identifiers or file paths).
 - `domain` must be one of the allowed values exactly as listed.
 Make sure demos, algorithms, visualizations, and interactive_demos are arrays
 of objects (not placeholder strings). For each algorithm in the algorithms array, provide a clear, professional mathematical title in 'name' (do not use generic placeholders; this will be displayed as the header on the interactive site), a detailed explanation of its logic and complexity in 'description', formal step-by-step pseudocode in 'pseudocode', and clean type-hinted Python code in 'code'. For each Python demo in the demos array, provide a highly descriptive title in 'name', a comprehensive functional description in 'description', and the implementation code in 'code'. For each interactive HTML demo in interactive_demos, provide a beautiful title in 'title' and a detailed description in 'description'. Include future directions from Phase A in the future_directions field.

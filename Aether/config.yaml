@@ -34,13 +34,25 @@ pi_agent:
   temperature: 0.85
   top_p: 0.92
   num_predict: 4096
+  # A/B finalized 2026-06-28: settle on the single best arm for a while.
+  # Phase A -> v19d (cumulative avg_Q 0.564, world-class 52%, n=25 — best of 11
+  # arms). All other arms zeroed so _select_version_from_weights always picks v19d.
   phase_a_prompt_weights:
-    v15: 0.5
-    v16: 0.2
-    v16a: 0.1
-    v16b: 0.1
-    v17: 0.05
-    v18: 0.05
+    v19d: 1.0
+    v19: 0.0
+    v19a: 0.0
+    v19b: 0.0
+    v19c: 0.0
+    v15: 0.0
+    v16: 0.0
+    v16a: 0.0
+    v16b: 0.0
+    v17: 0.0
+    v18: 0.0
+  # Phase B -> v1.1 (avg_Q 0.628 vs v2 0.606, n=220). v2 zeroed.
+  phase_b_prompt_weights:
+    v1.1: 1.0
+    v2: 0.0
   research_modes:
   - prove
   - formalize

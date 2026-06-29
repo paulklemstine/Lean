@@ -791,11 +791,18 @@ class PiAgentOrchestrator:
                 shutil.copy2(catalog_toolchain, phase_b_dir / "lean-toolchain")
                 
             prompt = (
-                "Phase A research is complete. I have produced self-contained, publishable Lean 4 deliverables "
+                "Phase A research is complete. The formal development produced significant mathematical results, "
                 "which are provided in this project. Please perform Phase B: write the ARTICLE.md and "
-                "RESEARCH_PAPER.md explaining the verified mathematics in these files, and bundle everything "
-                "into a valid PACKAGE.json research package (with all schema fields populated: demos, algorithms, "
-                "visualizations, interactive_demos, lean_proofs, future_directions, etc.). "
+                "RESEARCH_PAPER.md as standalone, publication-ready documents that communicate the mathematics "
+                "to human readers, and bundle everything into a valid PACKAGE.json research package (with all "
+                "schema fields populated: demos, algorithms, visualizations, interactive_demos, lean_proofs, "
+                "future_directions, etc.). "
+                "CRITICAL — STANDALONE PUBLICATION: The ARTICLE.md and RESEARCH_PAPER.md must be fully "
+                "self-contained and publication-ready. NEVER mention Lean, proof assistants, the Catalog, "
+                "source file paths, or formal-proof identifier names. State every theorem and result inline "
+                "in natural mathematical prose with full statements and proof sketches; do NOT reference any "
+                "file or use code identifiers like `pl_hodge_decomposition`. A reader must understand the work "
+                "from the document alone. "
                 "CRITICAL: You must create AT LEAST 3 (but more is allowed) of every category: interactive_demos (Interactive html), visualizations, algorithms, and python demos (demos)."
             )
             
