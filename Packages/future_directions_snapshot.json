@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1b8f68d",
     "description": "The key insight is that persistent homology — the backbone of topological data analysis — provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "Define the barcode code B(K) for a simplicial complex K: qubits = vertices, stabilizers = boundary maps of 1-simplices, logical operators = persistent 1-cycles. Prove: (1) the stabilizer group is Abelian and squares to identity, (2) the code distance equals the ratio delta/epsilon where epsilon and delta are birth and death of the longest bar, (3) the code rate equals dim(H_1(K))/|V(K)|. Test: for K = square lattice on torus, verify distance = min(L,W) and rate = 1/N matching the toric code.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.392825+00:00",
     "title": "Topological Quantum Error Correction from Homological Persistence"
   },
