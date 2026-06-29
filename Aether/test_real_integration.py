@@ -35,4 +35,5 @@ async def main():
     job = await ke.integrate_async(job)
     print(f"Job status: {job.status}")
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())

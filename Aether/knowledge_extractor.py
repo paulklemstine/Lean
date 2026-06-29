@@ -180,7 +180,6 @@ class KnowledgeExtractor:
             catalog_root=self.catalog_root,
             timeout=pi_cfg.get("timeout", 300),
             compact="cloud" in pi_cfg.get("model", "kimi-k2.6:cloud").lower(),
-            pollinations=pi_cfg.get("pollinations", {}),
             use_ollama=pi_cfg.get("use_ollama", False),
             ollama_base_url=pi_cfg.get("ollama_base_url"),
             ollama_model=pi_cfg.get("ollama_model"),
@@ -1288,51 +1287,10 @@ Research mode: {concept.research_mode}
                     completed.append(job)
                     continue
 
-            # No-progress zombie cap: a dispatched job whose last Aristotle
-            # reasoning checkpoint is older than `no_progress_seconds` has hung
-            # server-side. Aristotle exposes no project-cancel API (POST
-            # /project/{id}/cancel -> 404, DELETE /project/{id} -> 405), so the
-            # dead project lingers remotely — but we free the local slot and
-            # return the direction to available so a fresh dispatch can retry
-            # it, instead of pinning max_inflight on a dead project forever.
-            # (Distinct from the 24h hard cap, which quarantines; a no-progress
-            # hang is presumed a server glitch, not a bad concept.)
-            if job.status == "dispatched" and job.dispatch_time:
-                _last_progress = job.dispatch_time  # baseline when no checkpoints yet
-                try:
-                    _rlog = ReasoningLog(self.workspace, pid, job.job_id)
-                    _cps = _rlog._data.get("checkpoints", [])
-                    if _cps:
-                        _ts = _cps[-1].get("timestamp")
-                        if _ts:
-                            _dt = datetime.fromisoformat(_ts)
-                            if _dt.tzinfo is None:
-                                _dt = _dt.replace(tzinfo=timezone.utc)
-                            _last_progress = _dt.timestamp()
-                except Exception:
-                    pass
-                if _last_progress and (now - _last_progress) > no_progress_seconds:
-                    _idle_min = (now - _last_progress) / 60
-                    print(f"[Poll] {pid[:8]} NO-PROGRESS ZOMBIE: idle {_idle_min:.0f}min, "
-                          f"releasing direction to available")
-                    job.status = "failed"
-                    job.error_message = (f"No Aristotle progress for {_idle_min:.0f}min "
-                                         f"(no_progress cap)")
-                    self.failed_count += 1
-                    self._release_direction_back_to_available(job)
-                    try:
-                        ReasoningLog(self.workspace, pid, job.job_id).record_completion(
-                            status="ZOMBIE", percent=0, has_files=False,
-                            error=job.error_message,
-                        )
-                    except Exception:
-                        pass
-                    completed.append(job)
-                    continue
-
-            # Wall-clock stall cap — the authoritative kill signal. Covers jobs
-            # with no reasoning checkpoints (the checkpoint branch below can't
-            # see those, which is why they used to slip and run forever).
+            # Wall-clock hard cap — the authoritative kill signal. Runs FIRST so
+            # a job over the hard cap is quarantined (presumed a bad concept)
+            # rather than soft-released by the no-progress cap below. Covers jobs
+            # with no reasoning checkpoints (the checkpoint branch can't see those).
             if job.dispatch_time and (now - job.dispatch_time) > max_cycle_seconds:
                 age_min = (now - job.dispatch_time) / 60
                 print(f"[Poll] {pid[:8]} HARD CAP: {age_min:.0f}min wall-clock, "
@@ -1352,6 +1310,50 @@ Research mode: {concept.research_mode}
                     pass
                 completed.append(job)
                 continue
+
+            # No-progress zombie cap: a dispatched job that HAD reasoning
+            # checkpoints then went silent for > `no_progress_seconds` has hung
+            # server-side. Aristotle exposes no project-cancel API (POST
+            # /project/{id}/cancel -> 404, DELETE /project/{id} -> 405), so the
+            # dead project lingers remotely — but we free the local slot and
+            # return the direction to available so a fresh dispatch can retry
+            # it, instead of pinning max_inflight on a dead project forever.
+            # Only fires when checkpoints exist (a never-checkpointed job is
+            # left to the hard cap / preparing timeout — it may just be slow to
+            # emit its first checkpoint). Distinct from the hard cap: a
+            # no-progress hang is presumed a server glitch, not a bad concept.
+            if job.status == "dispatched" and job.dispatch_time:
+                _last_progress = None
+                try:
+                    _rlog = ReasoningLog(self.workspace, pid, job.job_id)
+                    _cps = _rlog._data.get("checkpoints", [])
+                    if _cps:
+                        _ts = _cps[-1].get("timestamp")
+                        if _ts:
+                            _dt = datetime.fromisoformat(_ts)
+                            if _dt.tzinfo is None:
+                                _dt = _dt.replace(tzinfo=timezone.utc)
+                            _last_progress = _dt.timestamp()
+                except Exception:
+                    pass
+                if _last_progress is not None and (now - _last_progress) > no_progress_seconds:
+                    _idle_min = (now - _last_progress) / 60
+                    print(f"[Poll] {pid[:8]} NO-PROGRESS ZOMBIE: idle {_idle_min:.0f}min, "
+                          f"releasing direction to available")
+                    job.status = "failed"
+                    job.error_message = (f"No Aristotle progress for {_idle_min:.0f}min "
+                                         f"(no_progress cap)")
+                    self.failed_count += 1
+                    self._release_direction_back_to_available(job)
+                    try:
+                        ReasoningLog(self.workspace, pid, job.job_id).record_completion(
+                            status="ZOMBIE", percent=0, has_files=False,
+                            error=job.error_message,
+                        )
+                    except Exception:
+                        pass
+                    completed.append(job)
+                    continue
 
             # Wall-clock stall warning (independent of checkpoints).
             if job.status == "dispatched" and job.dispatch_time \
@@ -1860,53 +1862,6 @@ Research mode: {concept.research_mode}
             + result_lean[-tail:]
         )
 
-    def _static_quality_gate(self, job: ResearchJob) -> Optional[Dict[str, Any]]:
-        """Phase 1 (Lever A): return a quality_assessment dict when static
-        signals on the job are decisive enough to skip the LLM eval, else None
-        (borderline -> the caller invokes the LLM).
-
-        Clear-fail (safe): no theorems produced -> trivial. This matches the
-        LLM's own fallback heuristic (0 theorems => nothing proved).
-
-        NOTE: a clear-PASS branch (0 sorries, >=5 theorems, >=2 novel -> substantial)
-        was REMOVED after shadow-mode validation showed 94% disagreement (16/17
-        cycles the gate called "substantial" the LLM graded "partial"): static
-        counts cannot assess mathematical substance/interest, which is the
-        LLM's job. To skip re-eval of repeated content, use the content-hash
-        eval cache (Lever B), not a clear-pass gate.
-
-        DISABLED 2026-06-23 (config: static_gate=off). A 461-cycle data audit
-        of `[Evaluate] quality=... sorries=N theorems=M` lines proved the
-        count-based signals cannot predict this LLM's grade rubric:
-          - sorry_count is `\\bsorry\\b` occurrences; it was 0 in EVERY sampled
-            cycle (truncated stubs are not "sorry"), so it carries no signal.
-          - theorem_count counts declarations (stub signatures count), so the
-            LLM's "trivial" grade lands at HIGH counts (median 97 theorems —
-            stubs/wrappers), while "substantial" spans 0..469. The grades
-            overlap on every count axis.
-          - The clear-fail branch (tc==0 -> trivial) fired on 1/461 cycles and
-            DISAGREED 100% (the LLM graded that tc==0 cycle "substantial").
-        No count-based clear-fail or clear-pass can reach the >95% shadow
-        agreement bar. eval_cache (Lever B) remains the reliable eval-reduction
-        path. This method is retained for reference; re-enabling requires a
-        NEW pre-eval signal (e.g. completed-proof ratio, not raw counts) plus
-        fresh shadow validation.
-
-        Built on signals already computed in extract() before evaluate():
-        job.theorem_count, job.sorry_count, job.theorem_novelty. (compiles via
-        `lake build` is NOT on the main tick path, so it's not used here.)
-        """
-        tc = getattr(job, "theorem_count", 0) or 0
-
-        # Clear-fail: nothing proved.
-        if tc == 0:
-            return {
-                "quality": "trivial", "should_retry": True,
-                "retry_strategy": "Static gate: no theorems produced.",
-                "confidence": 0.85, "analysis": "Static gate: theorem_count == 0.",
-            }
-        return None
-
     def evaluate(self, job: ResearchJob) -> ResearchJob:
         """Pi-Agent evaluates the quality of Aristotle's result."""
         if not job.result_lean:
@@ -1954,31 +1909,14 @@ Research mode: {concept.research_mode}
         # Compact oversized result_lean before passing to evaluation
         compact_lean = self._compact_result_lean(job.result_lean)
 
-        # Phase 1 (Lever A): static quality gate. Modes:
-        #   "shadow"  -> compute gate, still call LLM, log agreement (default; safe)
-        #   "enabled" -> skip LLM when the gate is decisive
-        #   "off"     -> no gate
-        _gate_mode = _red_cfg.get("static_gate", "shadow")
-        _gate_qa = None
-        if _gate_mode in ("shadow", "enabled"):
-            _gate_qa = self._static_quality_gate(job)
-
-        if _gate_mode == "enabled" and _gate_qa is not None:
-            qa = _gate_qa
-            if self.pi_agent is not None:
-                self.pi_agent.record_llm_skip("eval")
-            print(f"[Gate] eval skipped (static: {qa['quality']}) for {job.job_id[:8]}")
-        else:
-            # Pi-Agent: THE BRAINS — evaluates quality
-            qa = self.pi_agent.evaluate_result_quality(
-                result_lean=compact_lean,
-                concept=job.concept,
-                prompt=job.prompt,
-            )
-            if _gate_mode == "shadow" and _gate_qa is not None:
-                _agree = _gate_qa.get("quality") == qa.get("quality")
-                print(f"[Gate] shadow: gate={_gate_qa.get('quality')} "
-                      f"llm={qa.get('quality')} agree={_agree} for {job.job_id[:8]}")
+        # Pi-Agent: THE BRAINS — evaluates quality.
+        # (The count-based static quality gate was removed for v1.0 — it was
+        # proven non-viable; see Aether/CLAUDE.md "LLM Usage Reduction".)
+        qa = self.pi_agent.evaluate_result_quality(
+            result_lean=compact_lean,
+            concept=job.concept,
+            prompt=job.prompt,
+        )
         job.quality_assessment = qa
 
         # Compute the heuristic composite score
@@ -4133,7 +4071,6 @@ Research mode: {concept.research_mode}
                 "Aether/.aether_workspace/exp_id_map.json",
                 "Aether/.aether_workspace/prune_state.json",
                 "Aether/.aether_workspace/phase_b_threshold_cache.json",
-                "Aether/.aether_workspace/pollinations_pollen_state.json",
                 "Aether/.aether_workspace/research_memory.jsonl",
                 "Aether/.aether_workspace/autoresearch/autoresearch.jsonl",
             ]

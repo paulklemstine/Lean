@@ -2,7 +2,7 @@
 
 ## Current State
 
-AETHER v0.3.0 is fully operational with:
+AETHER v1.0 is fully operational with:
 - **55 verified Lean 4 files**, **~466 theorems**, **0 sorries**
 - Pi-Agent (Ollama `kimi-k2.6:cloud`) for concept generation
 - Aristotle API integration for formal proof

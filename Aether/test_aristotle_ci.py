@@ -7,11 +7,22 @@ Exits 0 on success, 1 on failure.
 """
 
 import asyncio
+import os
 import shutil
 import sys
 import tempfile
 import time
 from pathlib import Path
+
+import pytest
+
+# This module is a script (run via __main__); under pytest, skip it unless a
+# live key is present (the test_aristotle() signature takes api_key as a param,
+# which pytest would otherwise misread as a missing fixture).
+pytestmark = pytest.mark.skipif(
+    not os.getenv("ARISTOTLE_API_KEY"),
+    reason="integration script: needs live ARISTOTLE_API_KEY",
+)
 
 sys.path.insert(0, str(Path(__file__).parent))
 
@@ -24,7 +35,7 @@ theorem test_one_eq_one : 1 = 1 := rfl
 """
 
 
-async def test_aristotle(api_key: str, timeout: int = 600) -> bool:
+async def run_aristotle_ci_check(api_key: str, timeout: int = 600) -> bool:
     """Submit a minimal project to Aristotle and try to download the result."""
     config = {
         "api_key": api_key,
@@ -144,7 +155,7 @@ def main():
         print("[Test] FAIL: ARISTOTLE_API_KEY not set")
         sys.exit(1)
 
-    success = asyncio.run(test_aristotle(api_key))
+    success = asyncio.run(run_aristotle_ci_check(api_key))
     sys.exit(0 if success else 1)
 
 

@@ -24,7 +24,6 @@ from typing import Dict, List, Optional, Any
 import httpx
 
 from catalog_analyzer import CatalogAnalyzer, CatalogFileSummary
-from pollinations_pollen import PollinationsPollenConfig, PollinationsPollenGate
 from research_memory import ResearchMemory
 
 
@@ -39,8 +38,7 @@ DEFAULT_PHASE_A_PROMPT_WEIGHTS: Dict[str, float] = {
 }
 
 DEFAULT_PHASE_B_PROMPT_WEIGHTS: Dict[str, float] = {
-    "v1.1": 0.70,  # stable packaging prompt with metadata extraction checklist
-    "v2": 0.30,    # stricter packaging: LaTeX-first, theorem trace, narrative integrity
+    "v1.1": 1.0,  # v1.1 only — v2 retired for v1.0 (A/B finalized 2026-06-28)
 }
 
 
@@ -340,8 +338,7 @@ class PiAgentClient:
     - File classification and placement
 
     Set use_ollama=True to route all LLM calls through a local Ollama
-    instance instead of the Pollinations cloud API. When using Ollama,
-    the pollen gate (rate/budget tracking) is skipped.
+    instance instead of the cloud API.
     """
 
     OLLAMA_BASE_URL = "http://127.0.0.1:11434"
@@ -353,7 +350,6 @@ class PiAgentClient:
         catalog_root: Optional[Path] = None,
         timeout: int = 300,
         compact: bool = False,
-        pollinations: Optional[Dict[str, Any]] = None,
         use_ollama: bool = False,
         ollama_base_url: Optional[str] = None,
         ollama_model: Optional[str] = None,
@@ -441,45 +437,11 @@ class PiAgentClient:
 
         # Use max timeout for client connection, use per-request timeouts for operations
         self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=172800.0, write=30.0, pool=30.0))
-        default_state_path = Path(__file__).parent / ".aether_workspace" / "pollinations_pollen_state.json"
-        if self.catalog_root:
-            default_state_path = self.catalog_root.parent / "Aether" / ".aether_workspace" / "pollinations_pollen_state.json"
-        pollen_config = PollinationsPollenConfig.from_dict(
-            pollinations,
-            default_state_path=default_state_path,
-        )
-        if not pollen_config.api_key:
-            pollen_config.api_key = os.getenv("POLLINATIONS_API_KEY") or os.getenv("OPENAI_API_KEY") or "pk_nxM10AP0L7y8AX1I"
-        self.pollen_gate = PollinationsPollenGate(pollen_config, client=self.client)
 
         # CatalogAnalyzer for reference selection
         self.catalog_analyzer: Optional[CatalogAnalyzer] = None
         if self.catalog_root and self.catalog_root.exists():
             self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)
-
-    def _load_cb_state(self):
-        state_path = self.pollen_gate.config.state_path
-        if state_path and state_path.exists():
-            try:
-                import json
-                with open(state_path, "r", encoding="utf-8") as f:
-                    return json.load(f)
-            except Exception:
-                pass
-        return {}
-
-    def _save_cb_state(self, updates):
-        state_path = self.pollen_gate.config.state_path
-        if not state_path:
-            return
-        state = self._load_cb_state()
-        state.update(updates)
-        try:
-            import json
-            with open(state_path, "w", encoding="utf-8") as f:
-                json.dump(state, f)
-        except Exception:
-            pass
 
     def record_llm_skip(self, category: str) -> None:
         """Record an LLM call avoided by a static gate or cache (Phase 0).
@@ -503,15 +465,10 @@ class PiAgentClient:
 
     def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None,
                      category: str = "other") -> str:
-        """Dispatch LLM call through 3-tier fallback chain with pollen-reset retry.
+        """Dispatch LLM call through 2-tier fallback: Ollama Cloud → OpenRouter.
 
-        Tier 1: Pollinations (cloud, free, pollen-limited, resets hourly)
-        Tier 2: Ollama Cloud (paid, requires OLLAMA_API_KEY)
-        Tier 3: OpenRouter (paid, requires OPENROUTER_API_KEY)
-
-        If all tiers fail (Pollinations out of pollen, Ollama Cloud out of usage limit,
-        and OpenRouter fails/disabled), waits for Pollinations pollen reset (top of hour)
-        and retries Tier 1.
+        Tier 1: Ollama Cloud (paid, requires OLLAMA_API_KEY)
+        Tier 2: OpenRouter (paid, requires OPENROUTER_API_KEY)
 
         When use_ollama=True, skip directly to local Ollama (for dev/testing).
 
@@ -529,70 +486,21 @@ class PiAgentClient:
         if self.use_ollama:
             return self._call_ollama_local(system, user, timeout=timeout)
 
-        # Circuit Breaker Logic
-        import time
-        cb_state = self._load_cb_state()
-        state = cb_state.get("state", "CLOSED")
-        consecutive_402 = cb_state.get("consecutive_402", 0)
-        opened_at = cb_state.get("opened_at", 0)
-
-        skip_tier1 = not getattr(self.pollen_gate.config, 'enabled', True)
-        if not skip_tier1 and state == "OPEN":
-            if time.time() - opened_at > 20 * 60:
-                print("[Pi-Agent] Circuit HALF-OPEN — probing Pollinations")
-                self._save_cb_state({"state": "HALF-OPEN"})
-                state = "HALF-OPEN"
-            else:
-                remaining = (20 * 60 - (time.time() - opened_at)) / 60
-                print(f"[Pi-Agent] Circuit OPEN (consecutive 402s={consecutive_402}) — skipping Pollinations for {remaining:.1f}min, going to Ollama Cloud")
-                skip_tier1 = True
-
-        result = "[API_ERROR] Circuit OPEN"
-        if not skip_tier1:
-            # Tier 1: Pollinations — skip wait on depletion so we can try fallbacks first
-            result = self._call_pollinations(system, user, timeout=timeout,
-                                             skip_wait_on_depletion=True)
-
-            is_402 = result.startswith(("[API_ERROR", "[API_TIMEOUT")) and ("402" in result or "Pollen depleted" in result)
-            if is_402:
-                consecutive_402 += 1
-                if state == "HALF-OPEN" or consecutive_402 >= 5:
-                    print(f"[Pi-Agent] Circuit OPEN (consecutive 402s={consecutive_402}) — skipping Pollinations for 20.0min, going to Ollama Cloud")
-                    self._save_cb_state({
-                        "state": "OPEN",
-                        "consecutive_402": consecutive_402,
-                        "opened_at": time.time()
-                    })
-                else:
-                    self._save_cb_state({"consecutive_402": consecutive_402})
-            else:
-                if state == "HALF-OPEN" or consecutive_402 > 0:
-                    print("[Pi-Agent] Circuit CLOSED — Pollinations recovered")
-                    self._save_cb_state({
-                        "state": "CLOSED",
-                        "consecutive_402": 0,
-                        "opened_at": 0
-                    })
-
-            # If Pollinations succeeded, return immediately
-            if not result.startswith(("[API_ERROR", "[API_TIMEOUT")):
-                return result
-
-        # Tier 2: Ollama Cloud (only if enabled and configured)
+        # Tier 1: Ollama Cloud (only if enabled and configured)
         if self.ollama_cloud_enabled and self.ollama_cloud_api_key:
-            print(f"[Pi-Agent] Pollinations failed ({result[:80]}), falling back to Ollama Cloud")
+            print("[Pi-Agent] → calling Ollama Cloud")
             cloud_result = self._call_ollama_cloud(system, user, timeout=timeout)
             if not cloud_result.startswith(("[OLLAMA_CLOUD_ERROR", "[OLLAMA_CLOUD_TIMEOUT")):
                 return cloud_result
-            print(f"[Pi-Agent] Ollama Cloud also failed ({cloud_result[:80]})")
+            print(f"[Pi-Agent] Ollama Cloud failed ({cloud_result[:80]}), falling back to OpenRouter")
         elif self.ollama_cloud_enabled and not self.ollama_cloud_api_key:
             print("[Pi-Agent] Ollama Cloud enabled but no API key set")
         else:
             print("[Pi-Agent] Ollama Cloud not enabled")
 
-        # Tier 3: OpenRouter (only if enabled and configured)
+        # Tier 2: OpenRouter (only if enabled and configured)
         if self.openrouter_enabled and self.openrouter_api_key:
-            print(f"[Pi-Agent] Ollama Cloud/Pollinations failed, falling back to OpenRouter")
+            print("[Pi-Agent] → calling OpenRouter")
             or_result = self._call_openrouter(system, user, timeout=timeout)
             if not or_result.startswith(("[OPENROUTER_ERROR", "[OPENROUTER_TIMEOUT")):
                 return or_result
@@ -602,204 +510,7 @@ class PiAgentClient:
         else:
             print("[Pi-Agent] OpenRouter not enabled")
 
-        if not getattr(self.pollen_gate.config, 'enabled', True):
-            print("[Pi-Agent] All enabled API tiers failed and Pollinations is disabled. Returning error.")
-            return "[API_ERROR] All API tiers failed (Pollinations disabled)."
-
-        # All tiers failed — wait for Pollinations pollen reset and retry
-        print("[Pi-Agent] All API tiers failed. Waiting for Pollinations pollen reset...")
-
-        wait_until = self.pollen_gate._next_hour_reset(time.time())
-        reset_at = time.strftime("%H:%M:%S", time.localtime(wait_until))
-        wait_minutes = (wait_until - time.time()) / 60
-        print(f"[Pi-Agent] Pollen reset at ~{reset_at} ({wait_minutes:.1f}min from now), polling every 5min")
-
-        while time.time() < wait_until:
-            sleep_until = min(wait_until, time.time() + 300)
-            time.sleep(max(60, sleep_until - time.time()))
-            # Try a quick check — if pollen is back, break early
-            try:
-                bal = self.pollen_gate._get_remote_balance(force=True)
-                if bal is not None and bal > self.pollen_gate.config.min_balance:
-                    print("[Pi-Agent] Pollen restored early!")
-                    break
-            except Exception:
-                pass
-
-        # Retry Pollinations after waiting for reset
-        print("[Pi-Agent] Retrying Pollinations after pollen reset...")
-        result = self._call_pollinations(system, user, timeout=timeout,
-                                         skip_wait_on_depletion=False)
-        return result
-
-    def _call_pollinations(self, system: str, user: str, timeout: Optional[int] = None, skip_wait_on_depletion: bool = False) -> str:
-        """Call the Pollinations cloud API.
-
-        On 402 (payment required / pollen depleted), waits until the next
-        hourly reset then retries. Retries up to 3 times with increasing
-        backoff for transient errors.
-        """
-        request_timeout = timeout or self.timeout
-        print(f"[Pi-Agent] → calling Pollinations API (model={self.model}, timeout={request_timeout}s)")
-
-        headers = {
-            "Authorization": f"Bearer {self.pollen_gate.api_key}",
-            "Content-Type": "application/json"
-        }
-
-        payload = {
-            "model": self.model,
-            "messages": [
-                {"role": "system", "content": system},
-                {"role": "user", "content": user}
-            ],
-            "temperature": 0.85
-        }
-        input_chars = len(system) + len(user)
-
-        # Truncate oversized prompts to avoid 400 Bad Request from Pollinations
-        # This is a last-resort safety net — upstream budgeting should keep prompts well under this
-        MAX_PROMPT_CHARS = 200000
-        if input_chars > MAX_PROMPT_CHARS:
-            print(f"[Pi-Agent] Prompt too large ({input_chars} chars), truncating to {MAX_PROMPT_CHARS}")
-            user = user[:MAX_PROMPT_CHARS - len(system)] + "\n\n[... truncated for API limit ...]"
-            payload["messages"] = [
-                {"role": "system", "content": system},
-                {"role": "user", "content": user}
-            ]
-            input_chars = MAX_PROMPT_CHARS
-        max_retries = 3
-
-        for attempt in range(max_retries):
-            try:
-                reservation = self.wait_for_pollinations_pollen(
-                    "Pi-Agent LLM request",
-                    kind="chat",
-                    input_chars=input_chars,
-                )
-                response = self.client.post(
-                    "https://gen.pollinations.ai/v1/chat/completions",
-                    headers=headers,
-                    json=payload,
-                    timeout=request_timeout
-                )
-                response_json = None
-                try:
-                    response_json = response.json()
-                except Exception:
-                    response_json = None
-                self.pollen_gate.record_response(
-                    response,
-                    kind="chat",
-                    input_chars=input_chars,
-                    reservation=reservation,
-                    response_json=response_json,
-                )
-
-                if response.status_code in (402, 429):
-                    # Pollen depleted — poll every 5 min until it's back
-                    # Pollen resets at the top of the hour, we wait until :10
-                    self.pollen_gate.mark_depleted_from_response(response)
-                    if skip_wait_on_depletion:
-                        print("[Pi-Agent] Pollen depleted (402) — skipping wait, falling through to fallback")
-                        return "[API_ERROR: Pollen depleted (402) — fallback requested]"
-                    wait_until = self.pollen_gate._next_hour_reset(time.time())
-                    reset_at = time.strftime("%H:%M:%S", time.localtime(wait_until))
-                    wait_minutes = (wait_until - time.time()) / 60
-                    print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_minutes:.1f}min until reset ~{reset_at}, polling every 5min (attempt {attempt+1}/{max_retries})")
-                    while time.time() < wait_until:
-                        sleep_until = min(wait_until, time.time() + 300)
-                        time.sleep(max(60, sleep_until - time.time()))
-                        # Try a quick check — if pollen is back, break early
-                        try:
-                            bal = self.pollen_gate._get_remote_balance(force=True)
-                            if bal is not None and bal > self.pollen_gate.config.min_balance:
-                                print(f"[Pi-Agent] Pollen restored early!")
-                                break
-                        except Exception:
-                            pass
-                    continue  # Retry after waiting
-
-                response.raise_for_status()
-                data = response_json if response_json is not None else response.json()
-                content = data["choices"][0]["message"]["content"]
-
-                response_preview = content[:500].replace('\n', ' ')
-                print(f"[Pi-Agent] ← response ({len(content)} chars)")
-                print(f"[Pi-Agent]   {response_preview}...")
-
-                return content
-
-            except httpx.TimeoutException:
-                print(f"[Pi-Agent] ← API TIMEOUT after {request_timeout}s (attempt {attempt+1}/{max_retries})")
-                if attempt < max_retries - 1:
-                    time.sleep(5 * (attempt + 1))
-                    continue
-                return f"[API_TIMEOUT: Request timed out after {request_timeout}s]"
-
-            except httpx.HTTPStatusError as e:
-                if e.response.status_code in (402, 429):
-                    # Already handled above, but catch if raise_for_status hits first
-                    self.pollen_gate.mark_depleted_from_response(e.response)
-                    if skip_wait_on_depletion:
-                        print("[Pi-Agent] Pollen depleted (402) — skipping wait, falling through to fallback")
-                        return "[API_ERROR: Pollen depleted (402) — fallback requested]"
-                    wait_until = self.pollen_gate._next_hour_reset(time.time())
-                    reset_at = time.strftime("%H:%M:%S", time.localtime(wait_until))
-                    wait_minutes = (wait_until - time.time()) / 60
-                    print(f"[Pi-Agent] Pollen depleted (402). Waiting {wait_minutes:.1f}min until reset ~{reset_at}, polling every 5min (attempt {attempt+1}/{max_retries})")
-                    while time.time() < wait_until:
-                        sleep_until = min(wait_until, time.time() + 300)
-                        time.sleep(max(60, sleep_until - time.time()))
-                        try:
-                            check = self.client.get("https://pollinations.ai/api/v1/pollen_status",
-                                                    headers={"Authorization": f"Bearer {self.pollen_gate.api_key}"},
-                                                    timeout=10)
-                            if check.status_code == 200:
-                                print(f"[Pi-Agent] Pollen restored early!")
-                                break
-                        except Exception:
-                            pass
-                    continue
-                if e.response.status_code == 400:
-                    # 400 Bad Request — log response body and retry with truncated prompt
-                    resp_body = ""
-                    try:
-                        resp_body = e.response.text[:500]
-                    except Exception:
-                        pass
-                    print(f"[Pi-Agent] ← 400 Bad Request: {resp_body}")
-                    # If prompt is very large, truncate and retry
-                    input_size = len(system) + len(user)
-                    if input_size > 80000 and attempt < max_retries - 1:
-                        truncation = max(40000, 80000 - attempt * 20000)
-                        print(f"[Pi-Agent] Prompt too large ({input_size} chars), truncating to {truncation} and retrying")
-                        user = user[:truncation] + "\n\n[... truncated for API limit ...]"
-                        payload["messages"] = [
-                            {"role": "system", "content": system},
-                            {"role": "user", "content": user}
-                        ]
-                        time.sleep(2 * (attempt + 1))
-                        continue
-                    err_msg = f"400 Bad Request: {resp_body}"
-                    print(f"[Pi-Agent] ← API exception: {err_msg}")
-                    return f"[API_ERROR: {err_msg}]"
-                if e.response.status_code >= 500 and attempt < max_retries - 1:
-                    print(f"[Pi-Agent] ← Server error {e.response.status_code}, retrying ({attempt+1}/{max_retries})")
-                    time.sleep(5 * (attempt + 1))
-                    continue
-                err_msg = str(e)
-                print(f"[Pi-Agent] ← API exception: {err_msg}")
-                return f"[API_ERROR: {err_msg}]"
-
-            except Exception as e:
-                err_msg = str(e)
-                if hasattr(e, 'response') and e.response:
-                    err_msg += f" - {e.response.text}"
-                print(f"[Pi-Agent] ← API exception: {type(e).__name__}: {err_msg}")
-                return f"[API_ERROR: {err_msg}]"
-
-        return f"[API_ERROR: Max retries ({max_retries}) exhausted]"
+        return "[API_ERROR] All API tiers failed (Ollama Cloud and OpenRouter exhausted/disabled)."
 
     def _call_ollama_local(self, system: str, user: str, timeout: Optional[int] = None) -> str:
         """Call a local Ollama instance via its OpenAI-compatible API.
@@ -1065,22 +776,6 @@ class PiAgentClient:
                     break
 
         return last_error
-
-    def wait_for_pollinations_pollen(
-        self,
-        label: str = "Pi-Agent execution",
-        cost: Optional[float] = None,
-        *,
-        kind: str = "chat",
-        input_chars: int = 0,
-    ):
-        """Defer Pollinations-backed Pi-Agent work until hourly pollen resets."""
-        return self.pollen_gate.wait_and_reserve(
-            label=label,
-            cost=cost,
-            kind=kind,
-            input_chars=input_chars,
-        )
 
     def _parse_json_response(self, raw: str) -> Optional[Dict[str, Any]]:
         """Try to extract JSON from an LLM response.
@@ -3300,49 +2995,6 @@ of objects (not placeholder strings). For each algorithm in the algorithms array
 Be vivid, be precise, be world-class. The math has already been done — now
 make it beautiful to read.
 """
-        # v2 stricter packaging mandate: LaTeX-first, theorem trace, narrative integrity,
-        # and demo quality.
-        v2_extra = ""
-        if prompt_version == "v2":
-            v2_extra = textwrap.dedent(r"""\
-
-            ### v2 Stricter Packaging Mandate
-            This package is being produced under the v2 prompt. Apply the following
-            additional requirements:
-
-            1. **LaTeX-first / arXiv-ready**: Treat `RESEARCH_PAPER.tex` as the
-               primary publishable artifact, not a mirror of the markdown. Use
-               `\documentclass{amsart}` or `\documentclass{article}` with `amsmath`,
-               `amsthm`, and `amssymb`. Define theorem environments inline (`\begin{theorem}`
-               ... `\end{theorem}`). A reader should be able to run `pdflatex` on the
-               file without manual fixes. Include a bibliography section if any external
-               references are mentioned (even though prose must be self-contained).
-
-            2. **Theorem trace / anti-hallucination**: Before writing any prose,
-               extract every theorem, lemma, and definition name from the Lean output
-               above. Produce a `THEOREM_TRACE.md` (internal) listing: the Lean name,
-               the mathematical statement, and where it appears in `ARTICLE.md` and
-               `RESEARCH_PAPER.md`. Do NOT invent theorems, do NOT paraphrase theorem
-               names into grander-sounding claims, and do NOT state results that are
-               not in the Lean output.
-
-            3. **Narrative integrity**: `ARTICLE.md` and `RESEARCH_PAPER.md` must tell
-               the same mathematical story. The article must state the main theorem in
-               plain language with a concrete example. The paper must give the full
-               formal statement. A mathematician reading only the paper should be able
-               to reconstruct the proof sketch from the inline statements.
-
-            4. **Demo quality**: Every `demos[]` entry must exercise the *main theorem*
-               numerically, not a trivial special case. Algorithm and demo names must
-               be descriptive (≥4 words, no generic placeholders like "Demo 1" or
-               "Algorithm"). If a demo cannot be built for the theorem, omit the array
-               rather than include a placeholder.
-            """)
-
-        prompt = prompt.replace(
-            "Be vivid, be precise, be world-class. The math has already been done — now\nmake it beautiful to read.",
-            f"{v2_extra}\n\nBe vivid, be precise, be world-class. The math has already been done — now\nmake it beautiful to read.",
-        )
         return prompt
 
     @staticmethod

@@ -44,7 +44,6 @@ async def main():
     pi_cfg = config.get("pi_agent", {})
     pi = PiAgentClient(
         model=pi_cfg.get("model", "fingpt-7b:latest"),
-        pollinations=pi_cfg.get("pollinations", {}),
     )
     concept = pi.generate_breakthrough_concept("compression", ["Tropical geometry", "Kolmogorov complexity"], "theorem")
     print(f"Concept: {concept.title}")

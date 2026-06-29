@@ -40,29 +40,8 @@ def test_default_phase_b_prompt_is_v1_1(pi_client, research_concept):
     assert "PACKAGE.json Metadata Extraction" in prompt
 
 
-def test_phase_b_v2_prompt_has_latex_first_mandate(pi_client, research_concept):
-    prompt = pi_client._build_phase_b_package_prompt(
-        concept=research_concept,
-        phase_a_lean_content="theorem foo : True := trivial",
-        prompt_version="v2",
-    )
-    assert "PHASE B: PACKAGING ONLY" in prompt
-    assert "v2 Stricter Packaging Mandate" in prompt
-    assert "LaTeX-first" in prompt
-    assert "Theorem trace" in prompt or "anti-hallucination" in prompt
-    assert "Narrative integrity" in prompt
-    assert "Demo quality" in prompt
-
-
-def test_phase_b_v2_prompt_includes_pdflatex_requirement(pi_client, research_concept):
-    prompt = pi_client._build_phase_b_package_prompt(
-        concept=research_concept,
-        phase_a_lean_content="theorem foo : True := trivial",
-        prompt_version="v2",
-    )
-    assert "pdflatex" in prompt
-    assert "\\documentclass" in prompt
-    assert "\\begin{theorem}" in prompt
+# v2 Phase B prompt retired for v1.0 (A/B finalized to v1.1); the two
+# v2-specific prompt tests were removed here.
 
 
 def test_phase_b_default_fallback_is_v1_1():
@@ -73,11 +52,11 @@ def test_phase_b_default_fallback_is_v1_1():
 
 def test_phase_b_version_selection_respects_weights():
     from pi_agent_client import select_phase_b_prompt_version, DEFAULT_PHASE_B_PROMPT_WEIGHTS
+    # v1.0: A/B finalized — v1.1 is the only arm, so selection is always v1.1.
     for _ in range(50):
-        version = select_phase_b_prompt_version()
-        assert version in ("v1.1", "v2"), f"unexpected version {version}"
+        assert select_phase_b_prompt_version() == "v1.1"
     assert "v1.1" in DEFAULT_PHASE_B_PROMPT_WEIGHTS
-    assert "v2" in DEFAULT_PHASE_B_PROMPT_WEIGHTS
+    assert "v2" not in DEFAULT_PHASE_B_PROMPT_WEIGHTS
     assert abs(sum(DEFAULT_PHASE_B_PROMPT_WEIGHTS.values()) - 1.0) < 1e-9
 
 

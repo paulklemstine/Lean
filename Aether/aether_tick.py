@@ -1675,7 +1675,6 @@ def rebuild_commit_push() -> bool:
             "Aether/.aether_workspace/exp_id_map.json",
             "Aether/.aether_workspace/prune_state.json",
             "Aether/.aether_workspace/phase_b_threshold_cache.json",
-            "Aether/.aether_workspace/pollinations_pollen_state.json",
             "Aether/.aether_workspace/research_memory.jsonl",
             "Aether/.aether_workspace/autoresearch/autoresearch.jsonl",
         ]

@@ -288,7 +288,6 @@ class CycleMaster:
         self.pi_agent = PiAgentClient(
             memory=self.memory,
             model=_pi_cfg.get("model", "kimi-k2.6:cloud"),
-            pollinations=_pi_cfg.get("pollinations", {}),
             use_ollama=_pi_cfg.get("use_ollama", False),
             ollama_base_url=_pi_cfg.get("ollama_base_url"),
             ollama_model=_pi_cfg.get("ollama_model"),

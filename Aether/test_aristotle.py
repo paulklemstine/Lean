@@ -4,8 +4,13 @@
 import asyncio
 import os
 from pathlib import Path
+
+import pytest
+
 from aristotle_sdk_client import AristotleSDKClient, AristotleResult
 
+@pytest.mark.skipif(not os.getenv("RUN_INTEGRATION_TESTS"),
+                    reason="integration test: set RUN_INTEGRATION_TESTS=1 to run")
 async def test_tropical_firewall():
     """Submit the Tropical Firewall theorem to Aristotle."""
     client = AristotleSDKClient({"api_key": os.environ.get("ARISTOTLE_API_KEY", "")})

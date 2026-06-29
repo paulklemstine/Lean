@@ -64,7 +64,6 @@ class AetherEngine:
         pi_cfg = self.config.get("pi_agent", {})
         self.pi_agent = PiAgentClient(
             model=pi_cfg.get("model", "fingpt-7b:latest"),
-            pollinations=pi_cfg.get("pollinations", {}),
             use_ollama=pi_cfg.get("use_ollama", False),
             ollama_base_url=pi_cfg.get("ollama_base_url"),
             ollama_model=pi_cfg.get("ollama_model"),

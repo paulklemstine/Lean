@@ -30,7 +30,7 @@ AETHER treats the Catalog not as a static archive but as a **living mathematical
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              AETHER ENGINE v0.3                              │
+│                              AETHER ENGINE v1.0                              │
 │                                                                              │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
 │  │  CONCEPT     │  │ HYPOTHESIS   │  │ ARISTOTLE    │  │ INTEGRATION  │      │
@@ -233,5 +233,5 @@ See `config.yaml` for:
 
 ---
 
-*AETHER v0.3.0 — Autonomous Mathematical Knowledge Discovery Engine.*  
+*AETHER v1.0 — Autonomous Mathematical Knowledge Discovery Engine.*  
 *55 verified files. 466 theorems. 0 sorries. 8 theorem chains.*

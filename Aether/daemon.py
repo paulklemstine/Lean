@@ -92,7 +92,6 @@ class AetherDaemon:
         _pi_cfg = config.get("pi_agent", {})
         self.pi_agent = PiAgentClient(
             model=_pi_cfg.get("model", "fingpt-7b:latest"),
-            pollinations=_pi_cfg.get("pollinations", {}),
             use_ollama=_pi_cfg.get("use_ollama", False),
             ollama_base_url=_pi_cfg.get("ollama_base_url"),
             ollama_model=_pi_cfg.get("ollama_model"),

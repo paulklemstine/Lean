@@ -2,23 +2,6 @@ pi_agent:
   model: openai-large
   ollama_base_url: http://127.0.0.1:11434
   timeout: 600
-  pollinations:
-    enabled: false
-    api_key_file: /home/raver1975/lean/Aether/.aether_workspace/pollinations_api_key
-    api_key_env: POLLINATIONS_API_KEY
-    hourly_allowance: 0.4
-    estimated_pollen_per_call: 0.008
-    estimated_pollen_per_pi_execution: 0.05
-    min_balance: 0.0
-    defer_when_low: true
-    balance_cache_seconds: 60
-    reset_buffer_seconds: 600
-    max_sleep_seconds: 30
-    forecast_safety_multiplier: 1.35
-    forecast_alpha: 0.25
-    chat_input_chars_per_pollen: 250000
-    pi_execution_input_chars_per_pollen: 50000
-    output_chars_per_pollen: 125000
   ollama_cloud:
     enabled: false
     api_key_env: OLLAMA_API_KEY
@@ -409,7 +392,7 @@ arxiv:
   max_paper_chars: 40000
 git:
   auto_push: true
-  commit_template: 'AETHER v3 cycle #{cycle}: {concept_title}'
+  commit_template: 'AETHER v1.0 cycle #{cycle}: {concept_title}'
 features:
   enable_threads: true
   enable_specialized_critics: true
@@ -418,14 +401,11 @@ features:
   enable_external_signal: true
   enable_computational_stage: true
 
-# LLM usage reduction levers. Defaults are shadow (compute decision, still
-# call LLM, log agreement). Flip to "enabled" once shadow logs show high
-# agreement; "off" disables. See Aether/CLAUDE.md "LLM Usage Reduction".
+# LLM usage reduction levers. Modes: on/off (eval_cache, pruning_rules);
+# enabled/off for the skip-gates (lint_gate). See Aether/CLAUDE.md.
 llm_reduction:
-  static_gate: off         # Phase 1: DISABLED 2026-06-23 — count-based gate is
-                           #   non-viable for this LLM rubric (see
-                           #   _static_quality_gate docstring for the data).
-  critic_gate: shadow       # Phase 2: skip adversarial critic when decisive
+  # static_gate removed for v1.0 (count-based gating proven non-viable).
+  critic_gate: off         # Phase 2: adversarial critic always runs (v1.0)
   lint_gate: enabled         # Phase 2: auto-accept all-good-.lean batch (low risk)
   eval_cache: on            # Phase 3: content-hash eval cache
   pruning_rules: on         # Phase 4: rules-first pruning pre-filter
@@ -435,7 +415,7 @@ llm_reduction:
 # these caps free the local slot + return the direction to available instead
 # of pinning max_inflight forever. Times in seconds.
 stall:
-  no_progress_seconds: 86400   # fail a dispatched job whose last reasoning
+  no_progress_seconds: 3600     # fail a dispatched job whose last reasoning
                                 #   checkpoint is older than this (server-side
                                 #   hang). > the ~44min healthy checkpoint gap.
   preparing_timeout_seconds: 1800  # fail a job stuck in 'preparing' (never submitted)

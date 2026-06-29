@@ -54,7 +54,6 @@ class FullCatalogDispatcher:
 
         self.pi_agent = PiAgentClient(
             model=config.get("pi_agent", {}).get("model", "fingpt-7b:latest"),
-            pollinations=config.get("pi_agent", {}).get("pollinations", {}),
         ) if self.global_settings.get("pi_agent_enabled", True) else None
 
         self.prompt_engine = PromptEngine(config.get("prompts", {}))

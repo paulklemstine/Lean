@@ -47,4 +47,5 @@ def duplicate_test := 1
     else:
         print("Failed! File was not created.")
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())

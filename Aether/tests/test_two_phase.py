@@ -99,9 +99,9 @@ def test_phase_b_prompt_includes_phase_a_lean(research_concept):
     )
     # Header
     assert "PHASE B: PACKAGING ONLY" in prompt
-    # DO NOT list — must forbid new Lean
-    assert "NO new `.lean` files" in prompt
-    assert "NO new theorem proofs" in prompt
+    # DO NOT list — must forbid new formal-proof source code
+    assert "no `.lean` files" in prompt
+    assert "no theorem proofs" in prompt
     # The Lean content should be embedded
     assert "novel_structure_invariant" in prompt
     assert "main_result" in prompt

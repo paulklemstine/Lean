@@ -182,9 +182,7 @@ The website is served from the `docs/` directory on the `master` branch (branch-
 ## LLM Usage Reduction
 
 A set of levers cut LLM call volume (cost + rate-limit pressure) while keeping
-research throughput/quality. All are config-gated under `llm_reduction` and
-default to **shadow mode** (compute the decision, still call the LLM, log
-agreement) so they can be validated before being enabled.
+research throughput/quality. Config-gated under `llm_reduction`.
 
 ### Per-tick accounting (Phase 0)
 `pi_agent.llm_stats` counts every `_call_ollama` dispatch by category
@@ -194,37 +192,32 @@ as a `[LLM] calls=... | skipped=...` line next to `[State]`. Use it to verify
 call reduction against quality drift (quality_score distribution is in the
 existing `[Quality]` rolling metrics).
 
-### Levers
-- **Static quality gate (Phase 1, `llm_reduction.static_gate`)** —
-  `KnowledgeExtractor._static_quality_gate` returns a `quality_assessment` from
-  `job.sorry_count`/`theorem_count`/`theorem_novelty` (already computed in
-  `extract()` before eval) when the signals are decisive: clear-fail
-  (theorem_count == 0 → trivial) or clear-pass (0 sorries, ≥5 theorems, ≥2
-  novel → substantial). Borderline cycles still call the LLM. Modes:
-  `shadow` (default) / `enabled` / `off`. Note: `compiles` via `lake build` is
-  NOT on the main tick path (only in `pi_orchestrator`), so the gate uses the
-  regex/static signals instead.
-- **Critic skip-gate (Phase 2, `llm_reduction.critic_gate`)** — skips
-  `QualityEvaluator.adversarial_evaluate` (1–2 LLM calls/cycle) when the
-  structural composite is decisive (>0.85 or <0.15). Modes: `shadow`/`enabled`/`off`.
-- **Lint batch gate (Phase 2, `llm_reduction.lint_gate`)** — skips the
-  `_review_file_batch` LLM review when every file in the batch is a non-empty
-  `.lean` with a `theorem`/`lemma` declaration (auto-accept with suggested
-  paths). Modes: `shadow`/`enabled`/`off`.
-- **Content-hash eval cache (Phase 3, `llm_reduction.eval_cache`)** —
+### Levers (v1.0 final state)
+- **Static quality gate (Phase 1)** — **REMOVED for v1.0.** The count-based
+  gate (`_static_quality_gate`) was proven non-viable: a 461-cycle audit showed
+  `sorry_count` was 0 in every sampled cycle (truncated stubs aren't "sorry")
+  and `theorem_count` (declaration count) spans all LLM grades, so no
+  count-based clear-fail/clear-pass can predict the LLM's rubric. Re-enabling
+  would require a new pre-eval signal (e.g. completed-proof ratio) plus fresh
+  shadow validation. Use the eval cache (Phase 3) for eval-skip on repeated
+  content.
+- **Critic skip-gate (Phase 2, `llm_reduction.critic_gate`)** — `off` for v1.0:
+  the adversarial critic always runs. (The skip-gate code remains; set
+  `enabled` to skip the critic when the structural composite is decisive
+  >0.85 or <0.15.)
+- **Lint batch gate (Phase 2, `llm_reduction.lint_gate`)** — `enabled`: skips
+  the `_review_file_batch` LLM review when every file in the batch is a
+  non-empty `.lean` with a `theorem`/`lemma` declaration (auto-accept).
+- **Content-hash eval cache (Phase 3, `llm_reduction.eval_cache`)** — `on`:
   `eval_cache.EvalCache` (`eval_cache.json`) keyed by
   `sha256(result_lean + concept identity + prompt_version)`. On a hit (TTL 7
   days, cap 5000 entries) the full eval (LLM + critic) is restored and skipped.
-  Retries/re-dispatches/duplicate-theorem cycles with identical content skip
-  re-eval. Safe because eval is deterministic given those inputs (novelty is
-  computed in `extract()`). Modes: `on` (default) / `off`.
-- **Pruning rules-first (Phase 4, `llm_reduction.pruning_rules`)** —
-  `KnowledgeExtractor._rule_prunable` auto-prunes directions that are very low
-  quality (<0.20) + empty/junk description + unprotected (priority <0.80, not
-  Novelty, not seed), shrinking the LLM review batch in
-  `_cleanup_future_directions`. Modes: `on` (default) / `off`.
+- **Pruning rules-first (Phase 4, `llm_reduction.pruning_rules`)** — `on`:
+  `KnowledgeExtractor._rule_prunable` auto-prunes very-low-quality directions
+  (<0.20 + empty/junk description + unprotected), shrinking the LLM review
+  batch in `_cleanup_future_directions`.
 
-### Quality safeguard
-Each lever lands in shadow mode first; enable it only once shadow logs show
-high agreement (e.g. >95%) and the `[Quality]` rolling avg_Q hasn't shifted.
+### Note
+The standalone `shadow_watch.py` monitor and its session cron were removed for
+v1.0 (the only remaining shadow candidate, `critic_gate`, was set to `off`).
 The `[LLM]` line proves call reduction; `[Quality]` proves performance held.

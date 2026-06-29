@@ -33,6 +33,12 @@ class FakePiAgent:
     def _call_ollama(self, system: str, user: str, timeout=None) -> str:
         return self.response
 
+    def _parse_json_response(self, raw):
+        try:
+            return json.loads(raw)
+        except Exception:
+            return None
+
 
 class TestArxivSignal:
     def test_fetch_arxiv_direction(self, tmp_path):
