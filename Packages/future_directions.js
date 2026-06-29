@@ -149,21 +149,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ABC Conjecture Formalization"
   },
   {
-    "consumed_by_exp_id": "8a176ab9",
-    "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_336",
-    "priority_score": 0.9,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432613+00:00",
-    "title": "ABC Conjecture: Consequences and Partial Results"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that any integer a \u2260 -1,\u25a1 that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
     "domains": [
@@ -1655,7 +1640,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Palindromicity and Non-Negativity of Principal Specializations of One-Row Schur Q-Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43fcf247",
     "description": "The number of 2-balanced p-regular partitions in any block of p-weight w for an odd prime p is precisely the binomial coefficient C(w + (p-3)/2, w). A partition is 2-balanced p-regular if it is p-regular and every hook of length divisible by p has an even arm length.",
     "domains": [
       "Pythagorean",
@@ -1665,7 +1650,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T10:45:11.578131+00:00",
     "title": "Enumeration of 2-balanced p-regular partitions in blocks"
   },
@@ -2239,21 +2224,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Projective Plane Mechanisms Dominate the Full Model in Expected Coverage Time"
   },
   {
-    "consumed_by_exp_id": "a8ad2491",
-    "description": "For integers d, e > 1 with d | (e-1), and for any non-negative integer w and any e-core \u03ba, the number of d-balanced e-regular partitions with e-core \u03ba and e-weight w equals C(w + (e-1)/d - 1, w), independently of \u03ba. Here a partition \u03bb is d-balanced e-regular if it is e-regular (no part repeated e or more times) and every hook of \u03bb whose length is divisible by e has arm length divisible by d. The special case d=2, e=p (odd prime) yields C(w + (p-3)/2, w) partitions per block of p-weight w, which controls complete columns of symmetric-group decomposition matrices.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2901",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28305v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T20:56:20.535355+00:00",
-    "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For \u03bb = 1, a pairwise reflection-symmetric generalized Latin rectangle is precisely a pairwise reflection-symmetric Latin square of order n, which exists if and only if n is a power of two. This conjecture states that every such Latin square is isotopic to the Cayley table of the elementary abelian 2-group (Z/2Z)^k where n = 2^k, formalizing the paper's hypothesis that an underlying group-theoretic structure is unavoidable in this setting.",
     "domains": [
@@ -2329,17 +2299,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every pairwise reflection-symmetric Latin square of order n = 2^k (equivalently, every PRGLR(2^k, 1)) is isotopic to the Cayley table of the elementary abelian 2-group (\u2124/2\u2124)^k. This formalizes the paper's conjecture that 'group-theoretic structure may even be unavoidable' for these objects, specialized to the minimal \u03bb = 1 regime where existence is exactly characterized by n being a power of two.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2907",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28315v1",
+    "status": "available",
+    "timestamp": "2026-06-29T23:08:08.706279+00:00",
+    "title": "Elementary Abelian 2-Group Structure is Unavoidable in Pairwise Reflection-Symmetric Latin Squares"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2907",
+    "id": "fd_2908",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
     "status": "available",
     "timestamp": "2026-06-29T21:48:36.541820+00:00",
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every real number greater than or equal to \u221a(\u221a5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number \u03b3 \u2265 \u221a(\u221a5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to \u03b3.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2909",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28162v1",
+    "status": "available",
+    "timestamp": "2026-06-29T23:08:33.027778+00:00",
+    "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -3154,7 +3153,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f4fe8b8",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domains": [
       "Bridges",
@@ -3164,7 +3163,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },

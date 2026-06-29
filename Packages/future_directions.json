@@ -13224,11 +13224,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5f4fe8b8",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13240,7 +13240,7 @@
         "Logic"
       ],
       "id": "fd_0452",
-      "last_attempt_time": "2026-06-10T05:58:37.554772+00:00",
+      "last_attempt_time": "2026-06-29T23:08:39.992888+00:00",
       "last_reviewed_at": "2026-06-09T15:03:10.049285+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13254,7 +13254,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.504025+00:00",
       "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
@@ -37169,14 +37169,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.RT"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "43fcf247",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37190,7 +37190,7 @@
         "Algebra"
       ],
       "id": "fd_2859",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T23:08:46.166299+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem count_two_balanced_p_regular_partitions (p : ℕ) (hp : p.Prime) (hp_gt_2 : p > 2) (w : ℕ) (κ : Core) :\n    Finset.card (Finset.filter (fun λ => IsTwoBalancedPRegular p λ ∧ HasPCore p λ κ ∧ HasPWeight p λ w) allPartitions)\n    = Nat.choose (w + (p - 3) / 2) w := by\n  sorry",
       "lineage_refs": [],
@@ -37204,7 +37204,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28305v1",
       "source_path": "http://arxiv.org/abs/2606.28305v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T10:45:11.578131+00:00",
       "title": "Enumeration of 2-balanced p-regular partitions in blocks"
@@ -38871,7 +38871,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO"
       ],
@@ -38893,7 +38893,7 @@
         "Bridges"
       ],
       "id": "fd_2896",
-      "last_attempt_time": "2026-06-29T22:41:18.473673+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tau_k_maximal_exact_edge_count\n  {V : Type*} [Fintype V] [DecidableEq V]\n  (k : ℕ) (hk : k ≥ 1) (G : SimpleGraph V)\n  (h_order : Fintype.card V ≥ 2 * k + 2)\n  (h_tau_le : G.tau ≤ k)\n  (h_tau_max : ∀ e : Sym2 V, e ∉ G.edge_set → (G.add_edge e).tau ≥ k + 1) :\n  G.edgeFinset.card = (k + 1) * (Fintype.card V - 1) - 1 :=\nby sorry",
       "lineage_refs": [],
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28305v1",
       "source_path": "http://arxiv.org/abs/2606.28305v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-29T20:56:20.535355+00:00",
       "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
@@ -39390,6 +39390,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "cs.DM",
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every pairwise reflection-symmetric Latin square of order n = 2^k (equivalently, every PRGLR(2^k, 1)) is isotopic to the Cayley table of the elementary abelian 2-group (ℤ/2ℤ)^k. This formalizes the paper's conjecture that 'group-theoretic structure may even be unavoidable' for these objects, specialized to the minimal λ = 1 regime where existence is exactly characterized by n being a power of two.",
+      "domain_bridges": [
+        "Group Theory",
+        "Latin Squares and Quasigroups",
+        "Combinatorial Matrix Theory",
+        "Isotopy Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2907",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem elem_abelian_2_unavoidable {k : ℕ} {n : ℕ} (hn : n = 2^k)\n    (A : Matrix (Fin n) (Fin n) (Fin n))\n    (h_latin : LatinSquare A)\n    (h_prs : PairwiseReflectionSymmetric A) :\n    IsIsotopic A (CayleyTable (ElemAbelian 2 k)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Step 1: Show that pairwise reflection symmetry at λ = 1 forces the Latin square to satisfy the quadrangle condition (Belousov's criterion), which implies isotopy to a group Cayley table. Step 2: Exploit the reflection-symmetry constraint to show the group must be abelian: for any columns c₁, c₂, the equal-frequency condition on ordered pairs (p,q) and (q,p) forces commutativity of the underlying operation. Step 3: Show every element must be an involution (g ∘ g = e) since reflection symmetry with identical column pairs forces g = g⁻¹, yielding exponent 2. Step 4: Conclude the group is (ℤ/2ℤ)^k by the classification of finite abelian groups.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28315v1",
+      "source_path": "http://arxiv.org/abs/2606.28315v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T23:08:08.706279+00:00",
+      "title": "Elementary Abelian 2-Group Structure is Unavoidable in Pairwise Reflection-Symmetric Latin Squares"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2501.12018",
         "MRVZ_geometric_fractional",
         "deGrey_chromatic_plane"
@@ -39410,7 +39457,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2907",
+      "id": "fd_2908",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -39429,6 +39476,52 @@
       "thread_id": "",
       "timestamp": "2026-06-29T21:48:36.541820+00:00",
       "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi–Ruzsa–Varga–Zsámboki graph"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "05C31",
+        "05C70"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every real number greater than or equal to √(√5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number γ ≥ √(√5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to γ.",
+      "domain_bridges": [
+        "Real analysis",
+        "Linear algebra",
+        "Algebraic graph theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2909",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28162v1",
+      "source_path": "http://arxiv.org/abs/2606.28162v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T23:08:33.027778+00:00",
+      "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
     },
     {
       "ambition_level": "extension",
@@ -44454,7 +44547,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432613+00:00",
       "title": "ABC Conjecture: Consequences and Partial Results"
