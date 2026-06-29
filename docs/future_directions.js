@@ -2156,12 +2156,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any odd prime p and non-negative integer w, the number of 2-balanced p-regular partitions in a block of p-weight w is exactly the binomial coefficient (w + (p-3)/2) choose w. A partition is p-regular if no part is repeated p or more times, and it is 2-balanced if every hook of length divisible by p has an even arm length.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2886",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T19:06:30.063310+00:00",
+    "title": "Enumeration of 2-balanced p-regular partitions of fixed p-weight"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2886",
+    "id": "fd_2887",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",

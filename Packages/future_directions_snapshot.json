@@ -3462,6 +3462,32 @@
     "title": "Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.RT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime p and non-negative integer w, the number of 2-balanced p-regular partitions in a block of p-weight w is exactly the binomial coefficient (w + (p-3)/2) choose w. A partition is p-regular if no part is repeated p or more times, and it is 2-balanced if every hook of length divisible by p has an even arm length.",
+    "domain_bridges": [
+      "Algebra",
+      "Number Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2886",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define 2-balanced p-regular partitions and p-weight using Young diagrams and hook lengths. Prove that the count of such partitions is independent of the p-core by showing the 2-balanced property is preserved under affine crystal reflections. Finally, compute the explicit count in a RoCK block to establish the binomial formula.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T19:06:30.063310+00:00",
+    "title": "Enumeration of 2-balanced p-regular partitions of fixed p-weight"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO",
@@ -3480,7 +3506,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2886",
+    "id": "fd_2887",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the 2-(q²+q+1, q+1, 1) design properties of projective planes to derive exact inclusion-exclusion formulas for the expected coverage time. The key structural insight is that in a projective plane, any two points lie on exactly one common line, creating systematic 'clustering' that delays coverage. Compare the resulting expression term-by-term against the full model's expected time using the fact that the full model minimizes certain overlap statistics while the projective plane maximizes them. A potential approach leverages the eigenvalue structure of the incidence matrix to bound the probability that k specific coupons remain uncollected after t draws.",
