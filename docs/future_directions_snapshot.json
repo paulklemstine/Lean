@@ -61,26 +61,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "970a7f7b",
-    "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_231",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:16.980012+00:00",
-    "title": "Natural Proofs Barrier: Formalization"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
     "domain_bridges": [],
@@ -116,26 +96,6 @@
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2dcf8222",
-    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "id": "fd_0408",
-    "lineage_refs": [],
-    "priority_score": 0.92,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:25.938639+00:00",
-    "title": "Certified Novelty Detection for Theorem Provers"
   },
   {
     "ambition_level": "extension",
@@ -558,7 +518,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87caa6a1",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
     "domain_bridges": [],
     "domains": [
@@ -571,7 +531,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.880463+00:00",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
@@ -720,7 +680,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21b9e424",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -734,7 +694,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -895,25 +855,6 @@
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432668+00:00",
     "title": "Knot Invariants: Jones Polynomial Formalization"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d1f0228a",
-    "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "seed_352",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432688+00:00",
-    "title": "Ramsey Theory: Bounds and Constructions"
   },
   {
     "ambition_level": "extension",
@@ -1099,7 +1040,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "032698b5",
     "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension ≥ 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
     "domain_bridges": [],
     "domains": [
@@ -1112,7 +1053,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432660+00:00",
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
@@ -1318,7 +1259,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d379c591",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to χ(G) ≤ 4 for all planar G. Formalize Brooks' theorem: χ(G) ≤ Δ(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domain_bridges": [],
     "domains": [
@@ -1331,7 +1272,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1738,7 +1679,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9fb85eb",
     "description": "The only non-negative integer solutions (n, t) to the Diophantine equation P_14(n) = t^3 are (0,0), (1,1), and (5,5), where P_s(n) = ((s-2)n^2 - (s-4)n)/2 denotes the n-th s-gonal number. This corresponds to the k=5 case of Theorem 1(ii) in the paper.",
     "domain_bridges": [
       "Diophantine equations",
@@ -1753,7 +1694,7 @@
     "proof_strategy": "Translate the Diophantine equation 6n^2 - 5n = t^3 into an elliptic curve problem, compute the Mordell-Weil group of the corresponding curve, and use linear forms in logarithms along with modular methods to bound and verify the finite set of integer points.",
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T03:32:01.660417+00:00",
     "title": "Classification of Perfect Cubes in 14-gonal Numbers"
   },
@@ -2925,31 +2866,6 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
-      "math.PR"
-    ],
-    "consumed_by_exp_id": "4d932478",
-    "description": "The expected time to collect all 7 coupons when drawing uniformly from the 7 lines of the Fano plane (a fair mechanism with n=7, ℓ=3) is strictly greater than the expected time when drawing uniformly from all 35 possible 3-element subsets.",
-    "domain_bridges": [
-      "Finite Geometry",
-      "Markov Chains"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2858",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Compute the exact expected coverage times for both mechanisms. For the full model, use the standard formula. For the Fano plane, reduce the Markov chain state space using the symmetries of the Fano plane (tracking only the number of collected coupons and the intersection size with the last drawn line), compute the transition probabilities, and solve for the expected hitting time. Finally, verify the strict inequality between the two resulting rational numbers.",
-    "research_mode": "team",
-    "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T10:22:44.428708+00:00",
-    "title": "Fano Plane Coupon Collector Inequality"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.CO",
       "math.RT"
     ],
     "consumed_by_exp_id": "",
@@ -3061,7 +2977,7 @@
       "Order theory",
       "Finite groups"
     ],
-    "consumed_by_exp_id": "fcddc1a4",
+    "consumed_by_exp_id": "",
     "description": "For any prime p and integer n ≥ 3, the minimum size of a poset P whose automorphism group is isomorphic to Z_p × Z_{p^n} is p^{n+1} + p. This generalizes the paper's exact result for p=2 to all prime cyclic factors.",
     "domain_bridges": [
       "Group theory",
@@ -3077,7 +2993,7 @@
     "proof_strategy": "Generalize the upper bound construction by adding an antichain of p minimal elements below the poset for Z_{p^n} to realize the Z_p factor, and adapt the lower bound structural analysis to show that any minimal poset must have this specific form.",
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T11:43:51.082315+00:00",
     "title": "Minimum Poset Size for Realizing Z_p x Z_{p^n}"
   },
@@ -3167,6 +3083,33 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "MRVZ",
+      "deGrey"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let G_27 be the 27-vertex unit-distance graph defined by Matolcsi, Ruzsa, Varga, and Zsámboki, and let G_29 be the 29-vertex unit-distance graph obtained by augmenting G_27 with the two specific vertices identified in the present paper. The conjecture states that the geometric fractional chromatic number of G_29 is strictly greater than 4, which forms the core computational step demonstrating that the fractional chromatic number of the plane exceeds 4.",
+    "domain_bridges": [
+      "geometric_graph_theory",
+      "linear_programming",
+      "fractional_chromatic_number"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2867",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the definition of geometric fractional chromatic number for finite point configurations in the plane, define the coordinates of the 27 vertices of G_27 and the 2 augmenting vertices, construct the corresponding unit-distance graph, and verify the linear programming bounds to show no valid geometric fractional coloring of weight 4 exists for G_29.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T15:22:21.921604+00:00",
+    "title": "Strictly Greater Geometric Fractional Chromatic Number of the Augmented 29-Vertex Graph"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -3241,25 +3184,6 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:09.281210+00:00",
     "title": "Legendre's Three-Square Theorem Extension"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d2fb507a",
-    "description": "Prove that for every polynomial with all roots in the closed unit disk, every root has a critical point within distance 1 of it. Formalize known partial results and the connection to Gauss-Lucas.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_220",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:11.463002+00:00",
-    "title": "Sendov's Conjecture"
   },
   {
     "ambition_level": "extension",
@@ -3478,7 +3402,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3ec587ed",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -3491,7 +3415,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -3655,7 +3579,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7a2dfdf",
     "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
     "domain_bridges": [],
     "domains": [
@@ -3668,14 +3592,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.353451+00:00",
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7f917f25",
     "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
     "domain_bridges": [],
     "domains": [
@@ -3688,7 +3612,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.236800+00:00",
     "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
@@ -3754,7 +3678,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "acc7fc2f",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domain_bridges": [],
     "domains": [
@@ -3767,7 +3691,7 @@
     "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -3814,7 +3738,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e94880cd",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domain_bridges": [],
     "domains": [
@@ -3827,7 +3751,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
@@ -3990,26 +3914,6 @@
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.128786+00:00",
     "title": "p-adic Langlands for GL₂(Q_p)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "0cf0e6d6",
-    "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "id": "fd_0470",
-    "lineage_refs": [],
-    "priority_score": 0.3999999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:30.975644+00:00",
-    "title": "Tropical Compactification of Moduli Spaces"
   },
   {
     "ambition_level": "extension",
