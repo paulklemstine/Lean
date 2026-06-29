@@ -3110,7 +3110,7 @@
       "Order theory",
       "Finite groups"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fcddc1a4",
     "description": "For any prime p and integer n ≥ 3, the minimum size of a poset P whose automorphism group is isomorphic to Z_p × Z_{p^n} is p^{n+1} + p. This generalizes the paper's exact result for p=2 to all prime cyclic factors.",
     "domain_bridges": [
       "Group theory",
@@ -3126,9 +3126,40 @@
     "proof_strategy": "Generalize the upper bound construction by adding an antichain of p minimal elements below the poset for Z_{p^n} to realize the Z_p factor, and adapt the lower bound structural analysis to show that any minimal poset must have this specific form.",
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T11:43:51.082315+00:00",
     "title": "Minimum Poset Size for Realizing Z_p x Z_{p^n}"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "independence_number",
+      "unit_distance_graph",
+      "fractional_chromatic_number",
+      "hadwiger_nelson_problem",
+      "geometric_fractional_chromatic_number"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "There exists a finite unit-distance graph G in the Euclidean plane such that the independence number α(G) is strictly less than |V(G)|/4. This formalizes the main theorem answering Erdős's 1987 question, and implies that the fractional chromatic number of the plane exceeds 4. The proof strategy involves augmenting the 27-vertex configuration G₂₇ of Matolcsi et al. (which has geometric fractional chromatic number exactly 4) with two carefully chosen vertices to obtain a configuration whose geometric fractional chromatic number strictly exceeds 4, followed by two blow-up procedures.",
+    "domain_bridges": [
+      "euclidean_geometry",
+      "linear_programming",
+      "measure_theory",
+      "additive_combinatorics"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2864",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct the 27-vertex graph G₂₇ as a specific point configuration in ℝ², verify its geometric fractional chromatic number equals 4, characterize its 23 extremal geometric fractional colorings (forming an 11-dimensional polytope), then exhibit a two-vertex augmentation yielding a 29-vertex configuration with geometric fractional chromatic number strictly greater than 4. Apply two successive blow-up procedures: (1) an amenability-based blow-up using congruent copies to approximate the geometric fractional chromatic number via the ordinary fractional chromatic number, and (2) a lattice-based blow-up to reduce the independence ratio below 1/4. The key computational step is verifying the augmentation inequality over the finite set of extremal colorings.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:55:09.405767+00:00",
+    "title": "Existence of a finite unit-distance graph with independence ratio below 1/4"
   },
   {
     "ambition_level": "extension",

@@ -1997,7 +1997,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit quantitative lower bound on the geometric fractional chromatic number of the augmented 29-vertex configuration"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fcddc1a4",
     "description": "For any prime p and integer n \u2265 3, the minimum size of a poset P whose automorphism group is isomorphic to Z_p \u00d7 Z_{p^n} is p^{n+1} + p. This generalizes the paper's exact result for p=2 to all prime cyclic factors.",
     "domains": [
       "Pythagorean",
@@ -2007,9 +2007,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T11:43:51.082315+00:00",
     "title": "Minimum Poset Size for Realizing Z_p x Z_{p^n}"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There exists a finite unit-distance graph G in the Euclidean plane such that the independence number \u03b1(G) is strictly less than |V(G)|/4. This formalizes the main theorem answering Erd\u0151s's 1987 question, and implies that the fractional chromatic number of the plane exceeds 4. The proof strategy involves augmenting the 27-vertex configuration G\u2082\u2087 of Matolcsi et al. (which has geometric fractional chromatic number exactly 4) with two carefully chosen vertices to obtain a configuration whose geometric fractional chromatic number strictly exceeds 4, followed by two blow-up procedures.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2864",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:55:09.405767+00:00",
+    "title": "Existence of a finite unit-distance graph with independence ratio below 1/4"
   },
   {
     "consumed_by_exp_id": "",
