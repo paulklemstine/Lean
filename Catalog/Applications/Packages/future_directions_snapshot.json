@@ -61,7 +61,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "970a7f7b",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
     "domain_bridges": [],
     "domains": [
@@ -74,7 +74,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:16.980012+00:00",
     "title": "Natural Proofs Barrier: Formalization"
   },
@@ -2158,7 +2158,7 @@
     "catalog_references": [
       "MRVZ"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c9c613b",
     "description": "This conjecture examines the existence of finite unit-distance graphs in the plane with independence ratio below 1/4, offering a falsifiable direction for constructive geometric graph theory.",
     "domain_bridges": [
       "mathematical logic",
@@ -2174,7 +2174,7 @@
     "proof_strategy": "Constructive refinement of the geometric fractional chromatic number sequence",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T05:45:25.558013+00:00",
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
@@ -2296,7 +2296,7 @@
       "FunctionFieldTheory",
       "GaloisTheory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3c7d4c4",
     "description": "For any generalized Ankeny-Brauer-Chowla polynomial π_U(X) as defined in the paper, the associated linear recurrence sequences have exactly two sufficiently large common values, making the upper bound of two tight.",
     "domain_bridges": [
       "arithmetic_dynamics",
@@ -2311,7 +2311,7 @@
     "proof_strategy": "Extend Baker's linear forms in logarithms to construct explicit examples achieving two large common values, while leveraging function field methods to rule out additional solutions.",
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T07:18:02.548627+00:00",
     "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
   },

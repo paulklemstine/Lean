@@ -47,7 +47,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "970a7f7b",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
     "domains": [
       "Computation",
@@ -57,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:16.980012+00:00",
     "title": "Natural Proofs Barrier: Formalization"
   },
@@ -340,21 +340,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432680+00:00",
     "title": "Homotopy Groups of Spheres: Low-Dimensional"
-  },
-  {
-    "consumed_by_exp_id": "fbe92f0e",
-    "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
-    "domains": [
-      "Physics",
-      "Analysis"
-    ],
-    "id": "seed_362",
-    "priority_score": 0.88,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432770+00:00",
-    "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
   {
     "consumed_by_exp_id": "",
@@ -1503,7 +1488,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of Exterior Cube \u03b3-Factors under Central Character Equality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c9c613b",
     "description": "This conjecture examines the existence of finite unit-distance graphs in the plane with independence ratio below 1/4, offering a falsifiable direction for constructive geometric graph theory.",
     "domains": [
       "Pythagorean",
@@ -1513,7 +1498,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T05:45:25.558013+00:00",
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
@@ -1574,7 +1559,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Refined Asymptotic for Non-Divisible Entries in GL\u2082(\ud835\udd3d_q) Character Tables"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3c7d4c4",
     "description": "For any generalized Ankeny-Brauer-Chowla polynomial \u03c0_U(X) as defined in the paper, the associated linear recurrence sequences have exactly two sufficiently large common values, making the upper bound of two tight.",
     "domains": [
       "Bridges"
@@ -1583,7 +1568,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T07:18:02.548627+00:00",
     "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
   },
@@ -2039,7 +2024,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Legendre's Three-Square Theorem Extension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d2fb507a",
     "description": "Prove that for every polynomial with all roots in the closed unit disk, every root has a critical point within distance 1 of it. Formalize known partial results and the connection to Gauss-Lucas.",
     "domains": [
       "Algebra"
@@ -2048,7 +2033,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:11.463002+00:00",
     "title": "Sendov's Conjecture"
   },
