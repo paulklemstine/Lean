@@ -110,6 +110,7 @@ class ResearchJob:
     phase_b_skipped_reason: Optional[str] = None  # "low_quality" | "threshold_not_met" | "phase_a_failed"
     retry_count: int = 0
     retry_of: Optional[str] = None
+    resume_count: int = 0  # times an OUT_OF_BUDGET task was resumed via project.ask()
     retry_queued_time: float = 0.0
     # Reliable job↔direction link. Set when the direction is consumed (discover
     # path, line ~693). Retries mutate the same job, so they retain this. The
@@ -125,6 +126,11 @@ class ResearchJob:
     thread_id: Optional[str] = None
     cycle_index: int = 0
 
+
+
+# Max times to resume an OUT_OF_BUDGET (truncated) Phase A task via project.ask()
+# before falling back to integrating the partial result.
+MAX_RESUME_BUDGET = 2
 
 
 class KnowledgeExtractor:
@@ -1399,7 +1405,34 @@ Research mode: {concept.research_mode}
                     pass  # Don't break polling on log errors
 
                 if is_complete or (status == "IDLE" and has_files):
-                    print(f"[Poll] {pid[:8]} COMPLETED (status={status}, has_files={has_files})")
+                    out_of_budget = bool(result.get("out_of_budget", False))
+                    # Resume truncated (OUT_OF_BUDGET) Phase A jobs by asking
+                    # Aristotle to continue, instead of integrating a partial
+                    # result. The project re-enters RUNNING; we re-poll next tick.
+                    if (out_of_budget and job.phase == "A"
+                            and getattr(job, "resume_count", 0) < MAX_RESUME_BUDGET):
+                        try:
+                            _resume_prompt = (
+                                "Continue and complete the truncated/incomplete work. "
+                                "Finish every theorem with a full proof — no `sorry`, "
+                                "no stubbed signatures, no mid-proof cutoffs. Complete "
+                                "all Lean 4 files so they compile end-to-end, then "
+                                "finalize FUTURE_DIRECTIONS.md."
+                            )
+                            _tid = await self.aristotle.resume_project(pid, _resume_prompt)
+                            job.resume_count = getattr(job, "resume_count", 0) + 1
+                            job.status = "dispatched"  # re-poll for the new task
+                            job.dispatch_time = time.time()  # reset wall-clock caps
+                            print(f"[Poll] {pid[:8]} OUT_OF_BUDGET — resuming via ask() "
+                                  f"(attempt {job.resume_count}/{MAX_RESUME_BUDGET}), "
+                                  f"new task {_tid[:8]}; deferring integration")
+                            continue  # do NOT append to completed; re-poll next tick
+                        except Exception as _re:
+                            print(f"[Poll] {pid[:8]} OUT_OF_BUDGET resume failed: {_re}; "
+                                  f"integrating truncated result")
+                            # fall through to complete with the partial result
+                    print(f"[Poll] {pid[:8]} COMPLETED (status={status}, has_files={has_files})"
+                          f"{(' [OUT_OF_BUDGET]' if out_of_budget else '')}")
                     job.status = "completed"
                     job.complete_time = time.time()
                     # Final reasoning log entry

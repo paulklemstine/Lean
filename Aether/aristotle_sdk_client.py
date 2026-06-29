@@ -83,8 +83,20 @@ class AristotleSDKClient:
                     project.status == ProjectStatus.IDLE and project.has_files
                 )
 
+                # On completion, check whether any task ran OUT_OF_BUDGET (truncated).
+                # The caller can resume such a project via resume_project() (project.ask).
+                out_of_budget = False
                 if is_complete:
                     pct = 100
+                    try:
+                        _tasks, _ = await project.get_tasks(limit=10)
+                        out_of_budget = any(
+                            getattr(t, "status", None) is not None
+                            and t.status.name == "OUT_OF_BUDGET"
+                            for t in _tasks
+                        )
+                    except Exception:
+                        pass
                 elif pct == 0 and project.status != ProjectStatus.IDLE:
                     # Try to estimate from sub-events if API returns 0%
                     try:
@@ -117,6 +129,7 @@ class AristotleSDKClient:
                     "complete": is_complete,
                     "has_files": project.has_files,
                     "has_input": project.has_input,
+                    "out_of_budget": out_of_budget,
                     "error": None,
                 }
             except ssl.SSLError as e:
@@ -152,6 +165,20 @@ class AristotleSDKClient:
                     "has_input": False,
                     "error": error_str,
                 }
+
+    async def resume_project(self, project_id: str, prompt: str) -> str:
+        """Resume a (typically OUT_OF_BUDGET / truncated) project by telling
+        Aristotle what to do next — the same mechanism as the web UI's
+        "Tell Aristotle what to do next" → Instruct button.
+
+        POSTs /project/{id}/ask with the prompt and returns the new
+        AgentTask's id. The project re-enters RUNNING; poll_project() will
+        report completion when the new task finishes.
+        """
+        project = await Project.from_id(project_id)
+        task = await project.ask(prompt)
+        print(f"[Aristotle] Resumed project {project_id} via ask() -> task {task.agent_task_id}")
+        return task.agent_task_id
 
     async def download_result(
         self,
