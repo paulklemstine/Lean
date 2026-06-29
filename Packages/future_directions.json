@@ -16776,7 +16776,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "416f69d9",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16802,7 +16802,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.956863+00:00",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
@@ -36712,7 +36712,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "47d1dc51",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36743,7 +36743,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27699v1",
       "source_path": "http://arxiv.org/abs/2606.27699v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T08:26:12.505105+00:00",
       "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
@@ -36798,7 +36798,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "pairwise_balanced_design",
         "resolvable_design",
@@ -36809,7 +36809,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "bb18a218",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36826,7 +36826,7 @@
         "Algebra"
       ],
       "id": "fd_2851",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T20:02:51.693546+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem curd_partition_m1_2k_exists_iff {m n : ℕ} (hm : m ≥ 3) (hn : n ≥ m) :\n    (∃ (X : Type) (F : Finset X) (_ : F.card = n)\n       (blocks : Finset (Finset X))\n       (classes : Finset (Finset (Finset X))),\n     -- each class partitions F\n     (∀ c ∈ classes, ∀ x ∈ F, ∃! b ∈ c, x ∈ b) ∧\n     -- each class has block structure m^1 2^{(n-m)/2}\n     (∀ c ∈ classes, ∃! b ∈ c, b.card = m) ∧\n     (∀ c ∈ classes, ∀ b ∈ c, b ≠ (⟨_, by aesop⟩ : Finset X) → b.card = 2) ∧\n     -- each pair in exactly one block\n     (∀ x ∈ F, ∀ y ∈ F, x ≠ y →\n       (∃! b ∈ blocks, x ∈ b ∧ y ∈ b)) ∧\n     -- blocks = union of classes\n     blocks = classes.biUnion id)\n    ↔ (n % 2 = m % 2 ∧ (m * m - 2 * m + n) ∣ n * (n - 1)) :=\n  sorry",
       "lineage_refs": [],
@@ -36840,7 +36840,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27519v1",
       "source_path": "http://arxiv.org/abs/2606.27519v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T09:08:52.620285+00:00",
       "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
@@ -38538,6 +38538,54 @@
       "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.RT",
+        "math.NT",
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer n ≥ 2 and every prime ℓ, the proportion of entries in the character table of GL_n(F_q) not divisible by ℓ (in the ring of algebraic integers) converges to 1/2 as q → ∞ over prime powers coprime to ℓ. Formally: lim_{q→∞} N_ℓ^{(n)}(q) / k_n(q)^2 = 1/2, where N_ℓ^{(n)}(q) = |{(χ, C) ∈ Irr(GL_n(F_q)) × Cl(GL_n(F_q)) : ℓ ∤ χ(C)}| counts character table entries not divisible by ℓ, and k_n(q) is the number of conjugacy classes of GL_n(F_q). This generalizes the paper's Theorem 1.1, which establishes the n = 2 case with the asymptotic N_ℓ(q) = q^4/2 + O_ε(q^{3+ε}).",
+      "domain_bridges": [
+        "finite groups of Lie type",
+        "algebraic integers and cyclotomic fields",
+        "Deligne-Lusztig theory",
+        "analytic number theory over function fields"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2889",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem avg_divisibility_GLn (n : ℕ) (ℓ : ℕ) (hn : n ≥ 2) (hℓ : Nat.Prime ℓ) :\n    Tendsto (fun q : ℕ ↦\n      (N_ℓ_n q n ℓ : ℝ) / (k_n q n : ℝ) ^ 2)\n      atTop (nhds (1 / 2)) :=\n  sorry\n\n-- N_ℓ_n q n ℓ : number of entries in the character table of\n-- GL_n(F_q) not divisible by ℓ in the ring of algebraic integers\n-- k_n q n : number of conjugacy classes of GL_n(F_q)\n-- q ranges over prime powers coprime to ℓ",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Generalize the GL_2 argument to GL_n using Green's character formula and Deligne-Lusztig theory. The key steps mirror the n=2 proof: (1) Show that approximately half the character table entries are zero by analyzing the vanishing behavior of Deligne-Lusztig characters—specifically, that the regular semisimple and unipotent contributions produce a systematic pattern of zeros affecting roughly half the table. (2) Show that nonzero character values are typically not divisible by ℓ, using that they are sums of roots of unity whose orders are coprime to ℓ (since character values of GL_n(F_q) lie in cyclotomic fields with conductors dividing (q-1)^n or similar). (3) Combine to show N_ℓ^{(n)}(q) / k_n(q)^2 → 1/2. The main difficulty for n ≥ 3 is handling the richer representation theory: cuspidal representations of GL_n, the combinatorics of parabolic induction, and the interaction between unipotent and semisimple characters.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28085v1",
+      "source_path": "http://arxiv.org/abs/2606.28085v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T20:02:03.579210+00:00",
+      "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -38565,7 +38613,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2889",
+      "id": "fd_2890",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_slower_than_full (q : ℕ) (hq : q ≥ 2) (hq_prime_power : IsPrimePower q) :\n    expectedCoverageTime (projectivePlaneMechanism q) > expectedCoverageTime (fullMechanism (q^2 + q + 1) (q + 1)) := by\n  sorry",
@@ -38614,7 +38662,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2890",
+      "id": "fd_2891",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pairwise_reflection_symmetric_latin_square_iff_power_of_two :\n    ∀ n : ℕ, n ≥ 1 →\n    (∃ A : Fin n → Fin n → Fin n,\n      (∀ i : Fin n, Function.Bijective (A i)) ∧\n      (∀ j : Fin n, Function.Bijective (fun i => A i j)) ∧\n      (∀ j₁ j₂ : Fin n, j₁ ≠ j₂ → ∀ p q : Fin n,\n        (∃ i : Fin n, A i j₁ = p ∧ A i j₂ = q) ↔\n        (∃ i : Fin n, A i j₁ = q ∧ A i j₂ = p)))\n    ↔ ∃ k : ℕ, n = 2^k := by\n  sorry",
@@ -38658,7 +38706,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2891",
+      "id": "fd_2892",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.ZMod.Basic\nimport Mathlib.Algebra.Group.Subgroup.Basic\n\n-- Placeholder for the formal definition of transversal difference number\n-- def delta (G : Type*) [AddCommGroup G] [Fintype G] (H : AddSubgroup G) : ℕ := ...\n\ntheorem same_prime_square_plane_conjecture (p : ℕ) (hp : p.Prime) (hodd : Odd p) :\n    let G := ZMod (p * p) × ZMod (p * p)\n    let H := (p : ℕ) • (⊤ : AddSubgroup G)\n    delta G H = (2 * p - 1) * (2 * p - 1) :=\n  sorry",
@@ -38677,6 +38725,52 @@
       "thread_id": "",
       "timestamp": "2026-06-29T19:43:09.952578+00:00",
       "title": "Same-Prime Square Plane Transversal Difference Conjecture"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.AT",
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let X be a simplicial complex covered by a finite collection of subcomplexes A_1, ..., A_k. For each non-empty subset S of {1, ..., k}, let A_S denote the intersection of the subcomplexes indexed by S, equipped with a gradient vector field V_S. There exists a chain complex (the combinatorial nerve complex) whose chain groups are direct sums of the Morse chain groups of (A_S, V_S), and which is quasi-isomorphic to the simplicial chain complex of X. Consequently, the homology of X can be computed explicitly from the combinatorial data of the gradient vector fields on the subcomplexes and their intersections.",
+      "domain_bridges": [
+        "Simplicial Complexes",
+        "Discrete Morse Theory",
+        "Homological Algebra"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2893",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.AlgebraicTopology.SimplicialChainComplex\nimport Mathlib.Combinatorics.Simplex.DiscreteMorse\n\ntheorem effective_combinatorial_nerve_theorem\n    {k : ℕ} {X : SimplicialComplex}\n    {A : Fin k → X.Subcomplex}\n    (h_cover : ∀ σ ∈ X.faces, ∃ i, σ ∈ (A i).faces)\n    (V : ∀ (S : Finset (Fin k)) (_ : S.Nonempty), GradientVectorField (A.intersection S))\n    (h_grad : ∀ S hS, (V S hS).IsAcyclic) :\n    ∃ (C : ChainComplex ℤ ℤ) (f : C ⟶ SimplicialChainComplex X),\n      (∀ n, Nonempty (C.X n ≅ ⨁ (S : Finset (Fin k)) (_ : S.Nonempty), (MorseComplex (A.intersection S) (V S ‹_›)).X n)) ∧\n      QuasiIso f :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define simplicial complexes, covers, and discrete gradient vector fields. Construct the Morse chain complex for each intersection A_S. Define the combinatorial nerve complex as a total complex of a bicomplex or filtered complex whose terms are direct sums of the Morse complexes of the intersections. Prove the quasi-isomorphism by constructing explicit chain maps and homotopies using the gradient flows between the combinatorial nerve complex and the simplicial chain complex of X, ensuring the approach remains purely combinatorial without geometric realization.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28047v1",
+      "source_path": "http://arxiv.org/abs/2606.28047v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T20:02:46.148570+00:00",
+      "title": "Effective Combinatorial Nerve Theorem"
     },
     {
       "ambition_level": "extension",

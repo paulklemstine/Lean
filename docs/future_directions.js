@@ -1600,7 +1600,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalization of Franke's theorem to higher weight automorphic forms via Green's identity"
   },
   {
-    "consumed_by_exp_id": "47d1dc51",
+    "consumed_by_exp_id": "",
     "description": "Let K be the function field of a smooth projective geometrically integral curve over a p-adic field. For any smooth, proper, geometrically integral, rationally connected K-variety X, the unramified cohomological obstruction with respect to H^3_nr(X, Q/Z(2)) coincides with the descent obstruction: X(A_K)^{H^3_nr} = X(A_K)^{descent}. This is the analogue over p-adic function fields of Colliot-Th\u00e9l\u00e8ne's conjecture that the Brauer-Manin obstruction is the only obstruction for rationally connected varieties over number fields, replacing the Brauer-Manin obstruction with the unramified obstruction as justified by cohomological dimension constraints.",
     "domains": [
       "Geometry",
@@ -1610,7 +1610,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27699v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T08:26:12.505105+00:00",
     "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
   },
@@ -1630,7 +1630,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Maximum Cardinality Diagonal Quantum Latin Squares for All Orders n \u2265 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb18a218",
     "description": "For all integers m \u2265 3 and n \u2265 m with n \u2261 m (mod 2) and (m\u00b2 \u2212 2m + n) \u2223 n(n\u22121), there exists a Class-Uniformly Resolvable Design on n varieties with partition m^1 2^{(n\u2212m)/2} and \u03bb = 1. The paper establishes these as necessary conditions and proves existence when m is a power of an odd prime (via affine plane-derived construction) and when m = 2k for certain cyclic designs. The conjecture asserts these divisibility and parity conditions are also sufficient, making the existence problem completely solved.",
     "domains": [
       "Pythagorean",
@@ -1640,7 +1640,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27519v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T09:08:52.620285+00:00",
     "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
   },
@@ -2155,12 +2155,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer n \u2265 2 and every prime \u2113, the proportion of entries in the character table of GL_n(F_q) not divisible by \u2113 (in the ring of algebraic integers) converges to 1/2 as q \u2192 \u221e over prime powers coprime to \u2113. Formally: lim_{q\u2192\u221e} N_\u2113^{(n)}(q) / k_n(q)^2 = 1/2, where N_\u2113^{(n)}(q) = |{(\u03c7, C) \u2208 Irr(GL_n(F_q)) \u00d7 Cl(GL_n(F_q)) : \u2113 \u2224 \u03c7(C)}| counts character table entries not divisible by \u2113, and k_n(q) is the number of conjugacy classes of GL_n(F_q). This generalizes the paper's Theorem 1.1, which establishes the n = 2 case with the asymptotic N_\u2113(q) = q^4/2 + O_\u03b5(q^{3+\u03b5}).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2889",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28085v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:02:03.579210+00:00",
+    "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2889",
+    "id": "fd_2890",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -2175,7 +2190,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2890",
+    "id": "fd_2891",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
@@ -2189,13 +2204,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2891",
+    "id": "fd_2892",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
     "status": "available",
     "timestamp": "2026-06-29T19:43:09.952578+00:00",
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let X be a simplicial complex covered by a finite collection of subcomplexes A_1, ..., A_k. For each non-empty subset S of {1, ..., k}, let A_S denote the intersection of the subcomplexes indexed by S, equipped with a gradient vector field V_S. There exists a chain complex (the combinatorial nerve complex) whose chain groups are direct sums of the Morse chain groups of (A_S, V_S), and which is quasi-isomorphic to the simplicial chain complex of X. Consequently, the homology of X can be computed explicitly from the combinatorial data of the gradient vector fields on the subcomplexes and their intersections.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2893",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28047v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:02:46.148570+00:00",
+    "title": "Effective Combinatorial Nerve Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -2680,7 +2710,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "416f69d9",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -2690,7 +2720,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
