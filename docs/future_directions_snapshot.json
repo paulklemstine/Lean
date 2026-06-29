@@ -2393,6 +2393,33 @@
     "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.DS",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The triangle map, a multi-dimensional continued fraction algorithm, possesses a natural extension that can be partitioned into four subdomains. This conjecture posits that the transformation representing the natural extension is equivariant under a discrete symmetry group acting on these subdomains, which is a dynamical analogue of the Young conjugation symmetry found in integer partitions.",
+    "domain_bridges": [
+      "Ergodic Theory",
+      "Combinatorial Partition Theory",
+      "Continued Fractions"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2834",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof would require constructing the explicit invariant measure for the natural extension of the triangle map in $d$ dimensions. One must then define a transformation $S$ on the domain of the natural extension (the space of $d$-dimensional vectors) and show that $S$ commutes with the map $T$ (the triangle map) and corresponds to the combinatorial operation of Young conjugation when applied to the partition-theoretic interpretation of the map's-digits.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28014v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:36:21.124370+00:00",
+    "title": "Symmetry of the Natural Extension of the Triangle Map via Young Conjugation"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "grunbaum_yaakobi_conjecture",
@@ -2412,7 +2439,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2834",
+    "id": "fd_2835",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2439,7 +2466,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2835",
+    "id": "fd_2836",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
@@ -2462,7 +2489,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2836",
+    "id": "fd_2837",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit pairwise reflection‑symmetric Latin squares for n = 2^k using affine permutations of the vector space (GF(2))^k, and prove non‑existence for other n by parity or orbit‑counting arguments.",
@@ -2491,7 +2518,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2837",
+    "id": "fd_2838",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the stability method used in the paper by analyzing the structure of near-extremal graphs for smaller $n$. Leverage the known exact result for $t=2$ ($n \\geq 6$) as a base case. Use spectral perturbation arguments to show that any deviation from the conjectured extremal graph reduces the spectral radius when $n \\geq 3t$. The key is to tighten the eigenvalue interlacing bounds and degree sequence estimates that currently require $n \\geq 28t-17$.",
@@ -2516,7 +2543,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2838",
+    "id": "fd_2839",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence argument via combinatorial dimension tracking",
@@ -2547,7 +2574,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2839",
+    "id": "fd_2840",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that the natural projection maps from the flag graph to both the 1-skeleton and 1-coskeleton graphs are covering maps that induce isomorphisms on automorphism groups for regular maniplexes, leveraging the fixed-point-free involution structure and vertex-transitivity properties established in the paper.",
@@ -2556,6 +2583,33 @@
     "status": "available",
     "timestamp": "2026-06-29T07:19:40.613416+00:00",
     "title": "Automorphism Group Equivalence for Regular Maniplex Graph Representations"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Sign law for Ramanujan's third order mock theta function ρ(q)",
+      "Watson (1936)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let ρ(q) = ∑_{n≥0} r(n) q^n be Ramanujan's third order mock theta function defined by ρ(q) = ∑_{m≥0} q^{2m(m+1)} / ∏_{k=1}^{m} (1 + q^{2k-1} + q^{4k-2}). Then r(3n) > 0 for all n ≥ 0; r(3n+1) ≤ 0 and r(3n+2) ≤ 0 for all n ≥ 0, with the only zeros being r(2) = r(4) = r(8) = r(11) = r(20) = 0.",
+    "domain_bridges": [
+      "Mock theta functions",
+      "Harmonic Maass forms",
+      "Rademacher expansions",
+      "Partition theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2841",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use Watson's identity 2ρ(q) + ω(q) = T(q) to relate ρ(q) to the mock theta function ω(q) and a theta-eta product T(q). Obtain explicit Rademacher-type expansions with rigorous error bounds for the coefficients of ω(q) and T(q). Combine these to derive explicit inequalities for r(n) for all sufficiently large n, and verify the remaining small n by direct computation.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27902v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:38:26.099950+00:00",
+    "title": "Finite sign conjecture for Ramanujan's third order mock theta function ρ(q)"
   },
   {
     "ambition_level": "extension",
@@ -2930,7 +2984,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5c8c7501",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -2942,7 +2996,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T03:32:05.123415+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
@@ -3406,7 +3460,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0cf0e6d6",
     "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
     "domain_bridges": [],
     "domains": [
@@ -3419,7 +3473,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.975644+00:00",
     "title": "Tropical Compactification of Moduli Spaces"
   },

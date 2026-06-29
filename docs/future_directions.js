@@ -1631,12 +1631,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The triangle map, a multi-dimensional continued fraction algorithm, possesses a natural extension that can be partitioned into four subdomains. This conjecture posits that the transformation representing the natural extension is equivariant under a discrete symmetry group acting on these subdomains, which is a dynamical analogue of the Young conjugation symmetry found in integer partitions.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2834",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28014v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:36:21.124370+00:00",
+    "title": "Symmetry of the Natural Extension of the Triangle Map via Young Conjugation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2834",
+    "id": "fd_2835",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -1651,7 +1666,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2835",
+    "id": "fd_2836",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
@@ -1665,7 +1680,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2836",
+    "id": "fd_2837",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
@@ -1680,7 +1695,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2837",
+    "id": "fd_2838",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
@@ -1695,7 +1710,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2838",
+    "id": "fd_2839",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
@@ -1710,13 +1725,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2839",
+    "id": "fd_2840",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
     "status": "available",
     "timestamp": "2026-06-29T07:19:40.613416+00:00",
     "title": "Automorphism Group Equivalence for Regular Maniplex Graph Representations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let \u03c1(q) = \u2211_{n\u22650} r(n) q^n be Ramanujan's third order mock theta function defined by \u03c1(q) = \u2211_{m\u22650} q^{2m(m+1)} / \u220f_{k=1}^{m} (1 + q^{2k-1} + q^{4k-2}). Then r(3n) > 0 for all n \u2265 0; r(3n+1) \u2264 0 and r(3n+2) \u2264 0 for all n \u2265 0, with the only zeros being r(2) = r(4) = r(8) = r(11) = r(20) = 0.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2841",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27902v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:38:26.099950+00:00",
+    "title": "Finite sign conjecture for Ramanujan's third order mock theta function \u03c1(q)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1994,7 +2023,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
-    "consumed_by_exp_id": "5c8c7501",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -2003,7 +2032,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T03:32:05.123415+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
@@ -2350,7 +2379,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "p-adic Langlands for GL\u2082(Q_p)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0cf0e6d6",
     "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
     "domains": [
       "Tropical",
@@ -2360,7 +2389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.975644+00:00",
     "title": "Tropical Compactification of Moduli Spaces"
   },

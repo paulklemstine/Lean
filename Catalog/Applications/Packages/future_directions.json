@@ -13926,11 +13926,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0cf0e6d6",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13942,7 +13942,7 @@
         "Geometry"
       ],
       "id": "fd_0470",
-      "last_attempt_time": "2026-06-10T08:57:15.171405+00:00",
+      "last_attempt_time": "2026-06-29T07:38:31.729690+00:00",
       "last_reviewed_at": "2026-06-09T13:04:08.213164+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13956,7 +13956,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:30.975644+00:00",
       "title": "Tropical Compactification of Moduli Spaces"
@@ -34974,7 +34974,7 @@
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "5c8c7501",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 2,
@@ -34999,7 +34999,7 @@
       "research_mode": "team",
       "source_exp_id": "oeis:80035",
       "source_path": "https://oeis.org/",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T03:32:05.123415+00:00",
       "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
@@ -36011,6 +36011,52 @@
       "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.DS",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The triangle map, a multi-dimensional continued fraction algorithm, possesses a natural extension that can be partitioned into four subdomains. This conjecture posits that the transformation representing the natural extension is equivariant under a discrete symmetry group acting on these subdomains, which is a dynamical analogue of the Young conjugation symmetry found in integer partitions.",
+      "domain_bridges": [
+        "Ergodic Theory",
+        "Combinatorial Partition Theory",
+        "Continued Fractions"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2834",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem triangle_map_conjugation_symmetry (d : ℕ) (T : ℝ^d → ℝ^d) (X : Set (ℝ^d)) (S : ℝ^d → ℝ^d) : \n  is_natural_extension T X ∧ \n  ∀ x ∈ X, T (S x) = S (T x) ∧ \n  is_conjugation_isomorphism S",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The proof would require constructing the explicit invariant measure for the natural extension of the triangle map in $d$ dimensions. One must then define a transformation $S$ on the domain of the natural extension (the space of $d$-dimensional vectors) and show that $S$ commutes with the map $T$ (the triangle map) and corresponds to the combinatorial operation of Young conjugation when applied to the partition-theoretic interpretation of the map's-digits.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28014v1",
+      "source_path": "http://arxiv.org/abs/2606.28014v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T07:36:21.124370+00:00",
+      "title": "Symmetry of the Natural Extension of the Triangle Map via Young Conjugation"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -36039,7 +36085,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2834",
+      "id": "fd_2835",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_coverage_time_gt_random (q : ℕ) (hq : 2 ≤ q) : \n  expected_coverage_time (line_family (PG(2, q))) > expected_coverage_time (uniform_family (q^2 + q + 1) (q + 1))",
@@ -36085,7 +36131,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2835",
+      "id": "fd_2836",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem count_d_balanced_e_regular_partitions {d e w : ℕ} (hd : d > 1) (he : e > 1) (hdiv : (e - 3) % d = 0) : (Finset.card (setOf (d-balanced e-regular partitions in block of e-weight w))) = Nat.choose (w + (e - 3) / d) w := by sorry",
@@ -36127,7 +36173,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2836",
+      "id": "fd_2837",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃ (L : Fin n → Fin n → Fin n),\n  (∀ r : Fin n, Function.Bijective (fun x => L r x)) ∧\n  (∀ c1 c2 : Fin n, c1 ≠ c2 → (∀ p q : Fin n,\n    (∑ r : Fin n, if L r c1 = p ∧ L r c2 = q then 1 else 0) = (∑ r : Fin n, if L r c1 = q ∧ L r c2 = p then 1 else 0)))",
@@ -36175,7 +36221,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2837",
+      "id": "fd_2838",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem signless_laplacian_tK3_free_extremal_improved_bound {t n : ℕ} (ht : t ≥ 2) (hn : n ≥ 3 * t) :\n  UniqueExtremalGraph (tK3Free t) (signlessLaplacianSpectralRadius) n =\n    KJoin (CompleteGraph (t-1)) (CompleteBipartiteGraph ⌊(n-t+1)/2⌋ ⌈(n-t+1)/2⌉) := by sorry",
@@ -36219,7 +36265,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2838",
+      "id": "fd_2839",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The nerve theorem applies to finite simplicial complexes and preserves finiteness properties",
@@ -36269,7 +36315,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2839",
+      "id": "fd_2840",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regular_maniplex_automorphism_equivalence (n : ℕ) (M : Maniplex n) (h : Regular M) : Isomorphism (AutomorphismGroup M) (AutomorphismGroup (FlagGraph M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneSkeleton M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneCoskeleton M))",
@@ -36288,6 +36334,52 @@
       "thread_id": "",
       "timestamp": "2026-06-29T07:19:40.613416+00:00",
       "title": "Automorphism Group Equivalence for Regular Maniplex Graph Representations"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Sign law for Ramanujan's third order mock theta function ρ(q)",
+        "Watson (1936)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let ρ(q) = ∑_{n≥0} r(n) q^n be Ramanujan's third order mock theta function defined by ρ(q) = ∑_{m≥0} q^{2m(m+1)} / ∏_{k=1}^{m} (1 + q^{2k-1} + q^{4k-2}). Then r(3n) > 0 for all n ≥ 0; r(3n+1) ≤ 0 and r(3n+2) ≤ 0 for all n ≥ 0, with the only zeros being r(2) = r(4) = r(8) = r(11) = r(20) = 0.",
+      "domain_bridges": [
+        "Mock theta functions",
+        "Harmonic Maass forms",
+        "Rademacher expansions",
+        "Partition theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2841",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "def r (n : ℕ) : ℤ := -- coefficient of q^n in ρ(q) as defined in the paper\n  sorry\n\ntheorem sign_law_rho : ∀ n : ℕ, r (3 * n) > 0 ∧ r (3 * n + 1) ≤ 0 ∧ r (3 * n + 2) ≤ 0 ∧ (r (3 * n + 1) = 0 → n = 1) ∧ (r (3 * n + 2) = 0 → n = 0 ∨ n = 2 ∨ n = 3 ∨ n = 6) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use Watson's identity 2ρ(q) + ω(q) = T(q) to relate ρ(q) to the mock theta function ω(q) and a theta-eta product T(q). Obtain explicit Rademacher-type expansions with rigorous error bounds for the coefficients of ω(q) and T(q). Combine these to derive explicit inequalities for r(n) for all sufficiently large n, and verify the remaining small n by direct computation.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27902v1",
+      "source_path": "http://arxiv.org/abs/2606.27902v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T07:38:26.099950+00:00",
+      "title": "Finite sign conjecture for Ramanujan's third order mock theta function ρ(q)"
     },
     {
       "ambition_level": "extension",
