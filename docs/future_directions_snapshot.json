@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8628ce17",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for ε-approximation is O(K(f)/ε), connecting to Kolmogorov complexity.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -576,7 +576,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6be11e92",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -588,7 +588,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -636,7 +636,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7ae5a28f",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domain_bridges": [],
     "domains": [
@@ -650,7 +650,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -738,7 +738,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "42386f68",
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domain_bridges": [],
     "domains": [
@@ -751,7 +751,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -778,7 +778,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e0e91a39",
     "description": "Formalize the Euler characteristic for CW complexes. Prove the Gauss-Bonnet theorem for compact surfaces: ∫ K dA = 2πχ(M). Prove the Poincaré-Hopf index theorem. Apply to classify surfaces by genus.",
     "domain_bridges": [],
     "domains": [
@@ -791,14 +791,14 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432672+00:00",
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c78b961d",
     "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domain_bridges": [],
     "domains": [
@@ -810,7 +810,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Turán and Szemerédi"
   },
@@ -1258,7 +1258,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d15be0e",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domain_bridges": [],
     "domains": [
@@ -1271,7 +1271,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1634,7 +1634,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d1a00cc4",
+    "consumed_by_exp_id": "",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1647,7 +1647,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -1675,7 +1675,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2131c6b1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1688,7 +1688,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -2135,6 +2135,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Schur_Q_functions",
+      "q_Pochhammer_symbol",
+      "unimodal_polynomials",
+      "Gaussian_binomial_coefficients",
+      "principal_specializations"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For positive integers M and non-negative integers n, define f_{M,n}(t) as (-1)^n times the coefficient of u^n in the formal power series expansion of (u;t)_M / (-u;t)_M, where (u;t)_M = ∏_{i=0}^{M-1}(1 - u*t^i). The paper establishes that f_{M,n}(t) is a polynomial in t with non-negative integer coefficients and a palindromic coefficient sequence. We conjecture that f_{M,n}(t) is unimodal for all M ≥ 1 and n ≥ 0, meaning its coefficient sequence weakly increases then weakly decreases.",
+    "domain_bridges": [
+      "symmetric_functions",
+      "spin_characters",
+      "q_series"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2820",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Express f_{M,n}(t) using the paper's Gaussian-binomial formula as a sum of products of Gaussian binomial coefficients with t-power weights. Then apply O'Hara's theorem on unimodality of Gaussian binomial coefficients, combined with closure properties of unimodal sequences under convolution and products, to establish unimodality of f_{M,n}(t).",
+    "research_mode": "team",
+    "source_exp_id": "2606.28108v1",
+    "status": "available",
+    "timestamp": "2026-06-29T05:04:46.670585+00:00",
+    "title": "Unimodality of Modified GJZ Mixed Scalar Factor Coefficients"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MRVZ",
       "deGrey",
       "Er87"
@@ -2149,7 +2178,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2820",
+    "id": "fd_2821",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the geometric fractional chromatic number for finite point configurations in the plane. Then characterize all 23 extremal optimal geometric fractional colorings of G_27 (which form a polytope of affine dimension 11). Finally, verify that for every convex combination of these 23 extremal colorings, the two augmentation vertices cannot both be properly colored, forcing the geometric fractional chromatic number above 4. The verification reduces to checking finitely many linear constraints over the extremal colorings.",
@@ -2177,7 +2206,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2821",
+    "id": "fd_2822",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compare the two expected coverage times via their inclusion-exclusion representations. The key structural difference is that any two lines of PG(2,q) intersect in exactly one point, creating negative correlations that slow coverage, whereas random (q+1)-subsets have binomially-distributed intersection sizes. One might attempt to show that the Fano/Fano-like intersection structure maximizes the second-order inclusion-exclusion terms, or develop a coupling argument showing the projective plane mechanism is stochastically dominated in coverage by the full model.",
@@ -2186,6 +2215,32 @@
     "status": "available",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "cs.DM",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every pairwise reflection-symmetric Latin square (a generalized Latin rectangle with λ=1) of order n is isotopic to the Cayley table of an elementary abelian 2-group. This formalizes the authors' conjecture that the group-theoretic structure observed in computational searches is unavoidable for the base case of λ=1, explaining why existence requires n to be a power of two.",
+    "domain_bridges": [
+      "Combinatorics",
+      "Finite Group Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2823",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Normalize the PRS Latin square such that the first row and column are in natural order. Show that the pairwise reflection-symmetry condition implies that the binary operation defined by the normalized Latin square is both commutative and satisfies the exponent-2 property (x ∘ x = e), thus defining an elementary abelian 2-group.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28315v1",
+    "status": "available",
+    "timestamp": "2026-06-29T05:06:25.296717+00:00",
+    "title": "Pairwise Reflection-Symmetric Latin Squares are Elementary Abelian 2-Groups"
   },
   {
     "ambition_level": "extension",
@@ -2697,7 +2752,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0d3b45b7",
+    "consumed_by_exp_id": "",
     "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
     "domain_bridges": [],
     "domains": [
@@ -2710,7 +2765,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.353451+00:00",
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
   },
@@ -2936,7 +2991,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "798448a1",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -2949,7 +3004,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -3336,7 +3391,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "910c5047",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domain_bridges": [],
     "domains": [
@@ -3349,7 +3404,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
