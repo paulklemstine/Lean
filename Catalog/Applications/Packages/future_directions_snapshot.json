@@ -101,25 +101,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_328",
-    "lineage_refs": [],
-    "priority_score": 0.93,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-18T03:56:25.432595+00:00",
-    "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domain_bridges": [],
     "domains": [
@@ -717,25 +698,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "seed_356",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-18T03:56:25.432745+00:00",
-    "title": "Extremal Graph Theory: Turán and Szemerédi"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalize cubical type theory primitives in Lean 4. Construct the interval type and path types. Prove function extensionality and the univalence axiom. Implement higher inductive types: circles, torus, suspension.",
     "domain_bridges": [],
     "domains": [
@@ -831,7 +793,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.786215+00:00",
     "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
   },
@@ -1395,7 +1357,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29da1479",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to χ(G) ≤ 4 for all planar G. Formalize Brooks' theorem: χ(G) ≤ Δ(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domain_bridges": [],
     "domains": [
@@ -1408,7 +1370,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1783,7 +1745,7 @@
       "unit_distance_graphs",
       "geometric_fractional_chromatic_number"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5bc59f51",
     "description": "The paper demonstrates that augmenting the 27-vertex unit-distance graph G27 with a specific pair of vertices results in a 29-vertex graph with geometric fractional chromatic number strictly greater than 4. The authors note that such augmentations are exceedingly rare. This conjecture posits that, up to Euclidean isometry, this specific 2-vertex augmentation is the unique way to add two vertices to G27 such that the resulting unit-distance graph has a geometric fractional chromatic number strictly greater than 4.",
     "domain_bridges": [
       "Linear Programming",
@@ -1800,7 +1762,7 @@
     "proof_strategy": "Formalize the 27-vertex graph G27 and the convex polytope of its 23 extremal geometric fractional colorings. Then, perform a verified exhaustive search or algebraic classification over all possible 2-vertex additions, verifying that only the specific pair identified in the paper yields a unit-distance graph where the geometric fractional chromatic number exceeds 4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T03:31:25.863443+00:00",
     "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
   },
@@ -2289,7 +2251,7 @@
       "Jing, N., Zhu, J., \"A new approach to the spin character theory\", J. Algebra 2000",
       "Stembridge, J. R., \"Skew Schur functions and the chromatic polynomial\", 1996"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03cc3887",
     "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves‑Jing‑Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q‑Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (‑u;s)_\\u221e / ((‑u;t)_\\u221e (u;s)_\\u221e). Moreover, the q‑expansion of F(t,s;u) has palindromic coefficients and satisfies a finite‑order linear recurrence; after removing the alternating signs the coefficients are non‑negative integers.",
     "domain_bridges": [
       "q-series",
@@ -2306,7 +2268,7 @@
     "proof_strategy": "The conjecture can be approached by first expressing the mixed product via the diagonal conjugation that relates the modified operator to the classical neutral operator. Using known product formulas for neutral operators and Bailey‑pair theory, one can reduce the mixed product to a ratio of infinite q‑Pochhammer symbols as stated. The resulting rational function is then analyzed via standard q‑series techniques (e.g., the pentagonal number theorem) to extract its q‑expansion, prove palindromicity and derive a finite‑order recurrence. The non‑negativity of the sign‑adjusted coefficients follows from known positivity results for principal specializations of one‑row Schur Q‑functions and can be formalized using Lean’s algebraic number theory libraries.",
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:24:54.047368+00:00",
     "title": "Generalized scalar factor for mixed modified Greaves‑Jing‑Zhu operators"
   },
@@ -2451,6 +2413,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "math.RA",
+      "math.RT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the affine quiver of type Ã_n with any acyclic orientation, the source-sink pair is the unique banded pair whose coordinate projection fails to fill its band. Specifically, for any pair of vertices (v, w) with δ_v = δ_w (which holds for all pairs in Ã_n since all null-root coefficients equal 1), the projection π_{vw}(C(Q)) fills its band if and only if {v, w} is not the source-sink pair of the given orientation. This extends the paper's complete resolution for the source-sink orientation to all acyclic orientations.",
+    "domain_bridges": [
+      "cluster_algebras",
+      "quiver_representations",
+      "auslander_reiten_theory"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2836",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the AR defect obstruction from the source-sink orientation to arbitrary acyclic orientations. The paper identifies the Auslander-Reiten defect as the sole obstruction to band-filling, and shows it is detected as a coordinate difference c_v - c_w exactly for the source-sink pair in the source-sink orientation. For a general acyclic orientation, the source and sink vertices of the resulting directed path still form a distinguished pair. One must show: (1) the AR defect of the regular component is always detected as the coordinate difference for the source-sink pair regardless of orientation, (2) it is never detected for any other banded pair, and (3) the filling characterization via AR defect applies uniformly across all orientations. The topological interpretation via signed crossing number against the core curve of the annulus may provide an orientation-independent argument.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27523v1",
+    "status": "available",
+    "timestamp": "2026-06-29T08:22:15.779388+00:00",
+    "title": "Source-sink uniqueness of non-filling banded pairs in affine type Ã"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "grunbaum_yaakobi_conjecture",
       "schilling2021coupon",
       "burchard_finite_geometry",
@@ -2468,7 +2457,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2836",
+    "id": "fd_2837",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2495,7 +2484,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2837",
+    "id": "fd_2838",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
@@ -2518,7 +2507,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2838",
+    "id": "fd_2839",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit pairwise reflection‑symmetric Latin squares for n = 2^k using affine permutations of the vector space (GF(2))^k, and prove non‑existence for other n by parity or orbit‑counting arguments.",
@@ -2547,7 +2536,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2839",
+    "id": "fd_2840",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the stability method used in the paper by analyzing the structure of near-extremal graphs for smaller $n$. Leverage the known exact result for $t=2$ ($n \\geq 6$) as a base case. Use spectral perturbation arguments to show that any deviation from the conjectured extremal graph reduces the spectral radius when $n \\geq 3t$. The key is to tighten the eigenvalue interlacing bounds and degree sequence estimates that currently require $n \\geq 28t-17$.",
@@ -2572,7 +2561,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2840",
+    "id": "fd_2841",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence argument via combinatorial dimension tracking",
@@ -2603,7 +2592,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2841",
+    "id": "fd_2842",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that the natural projection maps from the flag graph to both the 1-skeleton and 1-coskeleton graphs are covering maps that induce isomorphisms on automorphism groups for regular maniplexes, leveraging the fixed-point-free involution structure and vertex-transitivity properties established in the paper.",
@@ -2630,7 +2619,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2842",
+    "id": "fd_2843",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Watson's identity 2ρ(q) + ω(q) = T(q) to relate ρ(q) to the mock theta function ω(q) and a theta-eta product T(q). Obtain explicit Rademacher-type expansions with rigorous error bounds for the coefficients of ω(q) and T(q). Combine these to derive explicit inequalities for r(n) for all sufficiently large n, and verify the remaining small n by direct computation.",
@@ -2657,7 +2646,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2843",
+    "id": "fd_2844",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the automorphic Green's identity to weight k Eisenstein series and automorphic forms. Use the meromorphic continuation and functional equation of the weight k Eisenstein series. Show that the boundary terms in the Green's identity for the truncated weight k Eisenstein series yield the projection onto the cuspidal subspace and the Laurent coefficients at the poles.",
@@ -2666,6 +2655,38 @@
     "status": "available",
     "timestamp": "2026-06-29T08:01:14.506352+00:00",
     "title": "Generalization of Franke's theorem to higher weight automorphic forms via Green's identity"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2412.17486",
+      "CT03",
+      "Har02",
+      "Sto07",
+      "Sko09",
+      "HSS15"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let K be the function field of a smooth projective geometrically integral curve over a p-adic field. For any smooth, proper, geometrically integral, rationally connected K-variety X, the unramified cohomological obstruction with respect to H^3_nr(X, Q/Z(2)) coincides with the descent obstruction: X(A_K)^{H^3_nr} = X(A_K)^{descent}. This is the analogue over p-adic function fields of Colliot-Thélène's conjecture that the Brauer-Manin obstruction is the only obstruction for rationally connected varieties over number fields, replacing the Brauer-Manin obstruction with the unramified obstruction as justified by cohomological dimension constraints.",
+    "domain_bridges": [
+      "algebraic_number_theory",
+      "algebraic_geometry",
+      "homological_algebra",
+      "local_class_field_theory"
+    ],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2845",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Follow the strategy of the number field case: (1) establish that the unramified obstruction is contained in the descent obstruction (already shown in the paper for general smooth integral varieties), (2) prove the reverse inclusion by showing that any descent obstruction arising from a torsor under a commutative linear algebraic group can be detected by H^3_nr(X, Q/Z(2)), using the arithmetic dualities and Poitou-Tate-style exact sequences developed for p-adic function fields, (3) for rationally connected varieties, leverage the vanishing of higher unramified cohomology beyond degree 3 to show the descent obstruction cannot be strictly finer.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27699v1",
+    "status": "available",
+    "timestamp": "2026-06-29T08:26:12.505105+00:00",
+    "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
   },
   {
     "ambition_level": "extension",
@@ -2762,6 +2783,26 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:11.463002+00:00",
     "title": "Sendov's Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "fdb1bb82",
+    "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
+    "domain_bridges": [],
+    "domains": [
+      "Analysis",
+      "NumberTheory"
+    ],
+    "id": "seed_335",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-18T03:56:25.432611+00:00",
+    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
     "ambition_level": "extension",
@@ -2882,46 +2923,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Extremal Graph Theory (Turán / Kruskal–Katona / Roth)\n\nBold, falsifiable conjectures derived from this cycle's findings\n(`Shared/TuranMantel.lean`, `Shared/RothThreeAP.lean`,\n`Shared/KruskalKatonaShadow.lean`).\n\n## 1. Stability form of Mantel/Turán\n**Conjecture.** If a triangle-free graph on `n` vertices has `4·e ≥ n² - c·n`\nedges (within `O(n)` of the Mantel bound), then it is \"close\" to balanced\ncomplete bipartite: it can be made bipartite by deleting at most `O(c)` edges.\n**The key insight is** that the equality case `mantel_sharp` (uniquely\n`K_{k,k}`) should be robust — near-extremal graphs inherit near-extremal\nstructure.\n**Why now?** We have the clean integer bound `turan_edge_bound` and the exact\nextremal witness `mantel_sharp` in Lean; stability is the natural next layer and\nMathlib already carries the Turán uniqueness theorem to anchor it.\n\n## 2. Quantitative density threshold for 3-APs in `ZMod N`\n**Conjecture.** There is an explicit `f(N) → 0` such that every `A ⊆ ZMod N`\nwith `|A| ≥ f(N)·N` contains a non-degenerate 3-AP, and `f` can be taken\nsub-constant (not just a fixed `ε`).\n**The key insight is** that `exists_nontrivial_threeAP_zmod` currently needs a\nfixed density `ε` with `cornersTheoremBound ε ≤ N`; pushing `ε = ε(N) → 0`\nturns Roth from \"positive density\" into the quantitative regime.\n**Why now?** The positive existence wrapper is in place; coupling it with the\nexplicit `cornersTheoremBound` lets us track how small `ε` may shrink with `N`.\n\n## 3. Iterated-shadow growth dichotomy\n**Conjecture.** For an `r`-uniform family with `|𝒜| = C(k,r)` exactly, every\nintermediate shadow is forced: `|∂^[i] 𝒜| ≥ C(k, r-i)` with equality iff `𝒜`\nis (colex-)isomorphic to the full `k`-set system.\n**The key insight is** that `shadow_card_ge` (the `i=1` slice) is the first step\nof a rigid staircase; the Lovász form already gives all `i`, so the open part is\nthe *equality characterization*, not the bound.\n**Why now?** Mathlib's `kruskal_katona_lovasz_form` supplies every iterate; the\nrigidity statement is the missing combinatorial refinement.\n\n## 4. Hypergraph removal ⇒ multidimensional Roth via the catalog bridge\n**Conjecture.** The contrast captured by `mantel_extremal_kills_triangles`\n(extremal graphs realize 0 of the `C(n,3)` first-moment triangles) generalizes:\nthe triangle removal lemma plus the Erdős–Rényi first-moment count yields a\npurely combinatorial proof of corner-free set sparsity matching\n`corners_theorem`.\n**The key insight is** that the deterministic extremal count and the random\nexpected count `expected_cliques` bound the same object from two sides, pinching\nthe corner density.\n**Why now?** Both `SimpleGraph.triangle_removal` and the catalog's\n`ErdosRenyiClique.expected_cliques` are formalized; the bridge file shows they\ncan be linked in one statement.\n\n## 5. Spectral Mantel\n**Conjecture.** A triangle-free graph satisfies `λ₁(G) ≤ √(e)` with the same\nextremal graphs `K_{k,k}` as `mantel`, giving a spectral strengthening of the\nedge bound.\n**The key insight is** that `4 e ≤ n²` is the combinatorial shadow of the\nspectral inequality `λ₁² ≤ e` for triangle-free graphs (Nosal), and the\nextremal cases coincide.\n**Why now?** With the edge-count Mantel proved and Mathlib's growing spectral\ngraph theory, the eigenvalue version is a concrete, testable next target.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2844",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c78b961d",
-    "status": "available",
-    "timestamp": "2026-06-29T08:19:37.358950+00:00",
-    "title": "Bold, falsifiable conjectures derived from this cycle's findings"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Bounded Prime Gaps (Zhang–Maynard formalization)\n\nThis cycle formalized the *elementary scaffolding* around `liminf (p_{n+1} - p_n) ≤ 246`:\nadmissible tuples (with a finite-check reduction, translation invariance, and the\nnecessity direction of Hardy–Littlewood), and the equivalence of the bounded-gaps\n`liminf` statement with an \"infinitely often\" combinatorial statement, plus parity\nof prime gaps. The deep analytic core (the Maynard–Tao sieve producing the\ninfinitude) remains open in this development. The conjectures below are the natural\nnext falsifiable targets.\n\n## Conjecture 1 — Diameter-246 admissible 50-tuple is verifiable purely by `decide`\nThere is an explicit admissible 50-tuple `H ⊆ {0, …, 246}` with `|H| = 50` whose\nadmissibility is provable **without** `native_decide`, by routing every prime\n`p ≤ 50` through `admissible_iff_small_primes` and discharging each with `decide`.\n- **The key insight is** that `admissible_iff_small_primes` collapses the infinite\n  prime quantifier to the 15 primes `≤ 50`, turning admissibility into a bounded,\n  kernel-checkable computation rather than an analytic claim.\n- **Why now?** We already proved the reduction lemma and used it for `{0,2,6}`;\n  scaling the same kernel-`decide` pattern to the literature's 50-tuple is a direct,\n  mechanical extension that would give a soundness-clean witness for the `H = 246`\n  combinatorial input.\n\n## Conjecture 2 — Admissibility is preserved by removing the largest element\nIf `H` is admissible and `|H| ≥ 2`, then `H.erase (H.max' …)` is admissible.\n- **The key insight is** that deleting elements only shrinks the set of covered\n  residues mod each `p`, so a previously-free class stays free — admissibility is a\n  *downward-closed* property on subsets.\n- **Why now?** `admissible_iff_small_primes` already isolates the per-prime\n  covering condition; monotonicity under `⊆` is the missing structural lemma that\n  would let one search for *minimal* diameter admissible `k`-tuples by pruning.\n\n## Conjecture 3 — The Maynard reduction: DHL[k,2] with an admissible k-tuple implies bounded gaps\nFormalize the logical reduction `(∃ admissible H, |H| = k ∧ DHL[k,2] for H) →\nBoundedPrimeGaps (diam H)`, where `DHL[k,2]` is \"infinitely many `n` with ≥ 2 of\nthe `n + h` prime\", as an implication with `DHL` as an explicit hypothesis.\n- **The key insight is** that the entire sieve-theoretic difficulty is quarantined\n  inside `DHL`; the passage from `DHL` to a concrete gap bound is pure logic over the\n  `BoundedPrimeGaps`/`Set.Infinite` API already built here.\n- **Why now?** `boundedPrimeGaps_iff_liminf` and `finite_constellation_of_not_admissible`\n  give both halves of the interface; stating `DHL` as a hypothesis makes the\n  headline theorem `liminf ≤ 246` a corollary modulo one named open input.\n\n## Conjecture 4 — Prime gaps are unbounded above (companion to bounded below)\n`∀ H, {n | primeGap n ≥ H}.Infinite`, equivalently `limsup primeGap = ⊤` in `ℕ∞`.\n- **The key insight is** that the consecutive composites `N! + 2, …, N! + N` force a\n  gap `≥ N`, so large gaps recur infinitely often — the exact mirror of the bounded\n  case, provable with no sieve.\n- **Why now?** We already have the `ℕ∞`-valued `liminf`/`limsup` interface via\n  `liminf_le_iff_infinite`; the dual `limsup` statement reuses the same\n  `Nat.frequently_atTop_iff_infinite` bridge and would frame Maynard's `liminf`\n  result against a fully-proven `limsup = ∞`.\n\n## Conjecture 5 — Every admissible tuple has even diameter once `|H| ≥ 2` and `0 ∈ H`\nFor an admissible `H` with `0 ∈ H` and `|H| ≥ 2`, the diameter `max H` is even.\n- **The key insight is** that admissibility at `p = 2` forces all elements into a\n  single residue class mod 2 (else both classes are covered), so all pairwise\n  differences — including the diameter — are even.\n- **Why now?** The `p = 2` case is exactly the parity argument already used in\n  `primeGap_even` and in the `{0,2,6}` witness; promoting it to a general structural\n  constraint on admissible tuples is immediate and explains why all tabulated\n  bounded-gap diameters (246, 1402, …) are even.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2845",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e0366114",
-    "status": "available",
-    "timestamp": "2026-06-29T08:21:12.436789+00:00",
-    "title": "This cycle formalized the *elementary scaffolding* around `liminf (p_{n+1} - p_n"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3020,7 +3021,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d3811cb",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -3033,7 +3034,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -3536,7 +3537,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0cf0e6d6",
     "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
     "domain_bridges": [],
     "domains": [
@@ -3549,7 +3550,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.975644+00:00",
     "title": "Tropical Compactification of Moduli Spaces"
   },
@@ -3752,6 +3753,26 @@
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "ed30f379",
+    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0465",
+    "lineage_refs": [],
+    "priority_score": 0.24999999999999992,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:30.568365+00:00",
+    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
   {
     "ambition_level": "extension",

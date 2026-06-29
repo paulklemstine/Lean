@@ -77,20 +77,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_328",
-    "priority_score": 0.93,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-18T03:56:25.432595+00:00",
-    "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -538,20 +524,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "seed_356",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-18T03:56:25.432745+00:00",
-    "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize cubical type theory primitives in Lean 4. Construct the interval type and path types. Prove function extensionality and the univalence axiom. Implement higher inductive types: circles, torus, suspension.",
     "domains": [
       "Logic",
@@ -624,7 +596,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.786215+00:00",
     "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
   },
@@ -1046,7 +1018,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fourier Analysis on Finite Groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29da1479",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to \u03c7(G) \u2264 4 for all planar G. Formalize Brooks' theorem: \u03c7(G) \u2264 \u0394(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domains": [
       "Combinatorics",
@@ -1056,7 +1028,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1300,7 +1272,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5bc59f51",
     "description": "The paper demonstrates that augmenting the 27-vertex unit-distance graph G27 with a specific pair of vertices results in a 29-vertex graph with geometric fractional chromatic number strictly greater than 4. The authors note that such augmentations are exceedingly rare. This conjecture posits that, up to Euclidean isometry, this specific 2-vertex augmentation is the unique way to add two vertices to G27 such that the resulting unit-distance graph has a geometric fractional chromatic number strictly greater than 4.",
     "domains": [
       "Pythagorean",
@@ -1310,7 +1282,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T03:31:25.863443+00:00",
     "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
   },
@@ -1574,7 +1546,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03cc3887",
     "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves\u2011Jing\u2011Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q\u2011Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (\u2011u;s)_\\u221e / ((\u2011u;t)_\\u221e (u;s)_\\u221e). Moreover, the q\u2011expansion of F(t,s;u) has palindromic coefficients and satisfies a finite\u2011order linear recurrence; after removing the alternating signs the coefficients are non\u2011negative integers.",
     "domains": [
       "Pythagorean"
@@ -1583,7 +1555,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:24:54.047368+00:00",
     "title": "Generalized scalar factor for mixed modified Greaves\u2011Jing\u2011Zhu operators"
   },
@@ -1661,12 +1633,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the affine quiver of type \u00c3_n with any acyclic orientation, the source-sink pair is the unique banded pair whose coordinate projection fails to fill its band. Specifically, for any pair of vertices (v, w) with \u03b4_v = \u03b4_w (which holds for all pairs in \u00c3_n since all null-root coefficients equal 1), the projection \u03c0_{vw}(C(Q)) fills its band if and only if {v, w} is not the source-sink pair of the given orientation. This extends the paper's complete resolution for the source-sink orientation to all acyclic orientations.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2836",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27523v1",
+    "status": "available",
+    "timestamp": "2026-06-29T08:22:15.779388+00:00",
+    "title": "Source-sink uniqueness of non-filling banded pairs in affine type \u00c3"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2836",
+    "id": "fd_2837",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -1681,7 +1667,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2837",
+    "id": "fd_2838",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
@@ -1695,7 +1681,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2838",
+    "id": "fd_2839",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
@@ -1710,7 +1696,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2839",
+    "id": "fd_2840",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
@@ -1725,7 +1711,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2840",
+    "id": "fd_2841",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
@@ -1740,7 +1726,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2841",
+    "id": "fd_2842",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
@@ -1754,7 +1740,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2842",
+    "id": "fd_2843",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
@@ -1769,13 +1755,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2843",
+    "id": "fd_2844",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
     "status": "available",
     "timestamp": "2026-06-29T08:01:14.506352+00:00",
     "title": "Generalization of Franke's theorem to higher weight automorphic forms via Green's identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let K be the function field of a smooth projective geometrically integral curve over a p-adic field. For any smooth, proper, geometrically integral, rationally connected K-variety X, the unramified cohomological obstruction with respect to H^3_nr(X, Q/Z(2)) coincides with the descent obstruction: X(A_K)^{H^3_nr} = X(A_K)^{descent}. This is the analogue over p-adic function fields of Colliot-Th\u00e9l\u00e8ne's conjecture that the Brauer-Manin obstruction is the only obstruction for rationally connected varieties over number fields, replacing the Brauer-Manin obstruction with the unramified obstruction as justified by cohomological dimension constraints.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2845",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27699v1",
+    "status": "available",
+    "timestamp": "2026-06-29T08:26:12.505105+00:00",
+    "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
   },
   {
     "consumed_by_exp_id": "",
@@ -1847,6 +1848,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:11.463002+00:00",
     "title": "Sendov's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "fdb1bb82",
+    "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
+    "domains": [
+      "Analysis",
+      "NumberTheory"
+    ],
+    "id": "seed_335",
+    "priority_score": 0.8,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-18T03:56:25.432611+00:00",
+    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
     "consumed_by_exp_id": "",
@@ -1935,36 +1951,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Extremal Graph Theory (Tur\u00e1n / Kruskal\u2013Katona / Roth)\n\nBold, falsifiable conjectures derived from this cycle's findings\n(`Shared/TuranMantel.lean`, `Shared/RothThreeAP.lean`,\n`Shared/KruskalKatonaShadow.lean`).\n\n## 1. Stability form of Mantel/Tur\u00e1n\n**Conjecture.** If a triangle-free graph on `n` vertices has `4\u00b7e \u2265 n\u00b2 - c\u00b7n`\nedges (within `O(n)` of the Mantel bound), then it is \"close\" to balanced\ncomplete bipartite: it can be made bipartite by deleting at most `O(c)` edges.\n**The key insight is** that the equality case `mantel_sharp` (uniquely\n`K_{k,k}`) should be robust \u2014 near-extremal graphs inherit near-extremal\nstructure.\n**Why now?** We have the clean integer bound `turan_edge_bound` and the exact\nextremal witness `mantel_sharp` in Lean; stability is the natural next layer and\nMathlib already carries the Tur\u00e1n uniqueness theorem to anchor it.\n\n## 2. Quantitative density threshold for 3-APs in `ZMod N`\n**Conjecture.** There is an explicit `f(N) \u2192 0` such that every `A \u2286 ZMod N`\nwith `|A| \u2265 f(N)\u00b7N` contains a non-degenerate 3-AP, and `f` can be taken\nsub-constant (not just a fixed `\u03b5`).\n**The key insight is** that `exists_nontrivial_threeAP_zmod` currently needs a\nfixed density `\u03b5` with `cornersTheoremBound \u03b5 \u2264 N`; pushing `\u03b5 = \u03b5(N) \u2192 0`\nturns Roth from \"positive density\" into the quantitative regime.\n**Why now?** The positive existence wrapper is in place; coupling it with the\nexplicit `cornersTheoremBound` lets us track how small `\u03b5` may shrink with `N`.\n\n## 3. Iterated-shadow growth dichotomy\n**Conjecture.** For an `r`-uniform family with `|\ud835\udc9c| = C(k,r)` exactly, every\nintermediate shadow is forced: `|\u2202^[i] \ud835\udc9c| \u2265 C(k, r-i)` with equality iff `\ud835\udc9c`\nis (colex-)isomorphic to the full `k`-set system.\n**The key insight is** that `shadow_card_ge` (the `i=1` slice) is the first step\nof a rigid staircase; the Lov\u00e1sz form already gives all `i`, so the open part is\nthe *equality characterization*, not the bound.\n**Why now?** Mathlib's `kruskal_katona_lovasz_form` supplies every iterate; the\nrigidity statement is the missing combinatorial refinement.\n\n## 4. Hypergraph removal \u21d2 multidimensional Roth via the catalog bridge\n**Conjecture.** The contrast captured by `mantel_extremal_kills_triangles`\n(extremal graphs realize 0 of the `C(n,3)` first-moment triangles) generalizes:\nthe triangle removal lemma plus the Erd\u0151s\u2013R\u00e9nyi first-moment count yields a\npurely combinatorial proof of corner-free set sparsity matching\n`corners_theorem`.\n**The key insight is** that the deterministic extremal count and the random\nexpected count `expected_cliques` bound the same object from two sides, pinching\nthe corner density.\n**Why now?** Both `SimpleGraph.triangle_removal` and the catalog's\n`ErdosRenyiClique.expected_cliques` are formalized; the bridge file shows they\ncan be linked in one statement.\n\n## 5. Spectral Mantel\n**Conjecture.** A triangle-free graph satisfies `\u03bb\u2081(G) \u2264 \u221a(e)` with the same\nextremal graphs `K_{k,k}` as `mantel`, giving a spectral strengthening of the\nedge bound.\n**The key insight is** that `4 e \u2264 n\u00b2` is the combinatorial shadow of the\nspectral inequality `\u03bb\u2081\u00b2 \u2264 e` for triangle-free graphs (Nosal), and the\nextremal cases coincide.\n**Why now?** With the edge-count Mantel proved and Mathlib's growing spectral\ngraph theory, the eigenvalue version is a concrete, testable next target.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2844",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c78b961d",
-    "status": "available",
-    "timestamp": "2026-06-29T08:19:37.358950+00:00",
-    "title": "Bold, falsifiable conjectures derived from this cycle's findings"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Bounded Prime Gaps (Zhang\u2013Maynard formalization)\n\nThis cycle formalized the *elementary scaffolding* around `liminf (p_{n+1} - p_n) \u2264 246`:\nadmissible tuples (with a finite-check reduction, translation invariance, and the\nnecessity direction of Hardy\u2013Littlewood), and the equivalence of the bounded-gaps\n`liminf` statement with an \"infinitely often\" combinatorial statement, plus parity\nof prime gaps. The deep analytic core (the Maynard\u2013Tao sieve producing the\ninfinitude) remains open in this development. The conjectures below are the natural\nnext falsifiable targets.\n\n## Conjecture 1 \u2014 Diameter-246 admissible 50-tuple is verifiable purely by `decide`\nThere is an explicit admissible 50-tuple `H \u2286 {0, \u2026, 246}` with `|H| = 50` whose\nadmissibility is provable **without** `native_decide`, by routing every prime\n`p \u2264 50` through `admissible_iff_small_primes` and discharging each with `decide`.\n- **The key insight is** that `admissible_iff_small_primes` collapses the infinite\n  prime quantifier to the 15 primes `\u2264 50`, turning admissibility into a bounded,\n  kernel-checkable computation rather than an analytic claim.\n- **Why now?** We already proved the reduction lemma and used it for `{0,2,6}`;\n  scaling the same kernel-`decide` pattern to the literature's 50-tuple is a direct,\n  mechanical extension that would give a soundness-clean witness for the `H = 246`\n  combinatorial input.\n\n## Conjecture 2 \u2014 Admissibility is preserved by removing the largest element\nIf `H` is admissible and `|H| \u2265 2`, then `H.erase (H.max' \u2026)` is admissible.\n- **The key insight is** that deleting elements only shrinks the set of covered\n  residues mod each `p`, so a previously-free class stays free \u2014 admissibility is a\n  *downward-closed* property on subsets.\n- **Why now?** `admissible_iff_small_primes` already isolates the per-prime\n  covering condition; monotonicity under `\u2286` is the missing structural lemma that\n  would let one search for *minimal* diameter admissible `k`-tuples by pruning.\n\n## Conjecture 3 \u2014 The Maynard reduction: DHL[k,2] with an admissible k-tuple implies bounded gaps\nFormalize the logical reduction `(\u2203 admissible H, |H| = k \u2227 DHL[k,2] for H) \u2192\nBoundedPrimeGaps (diam H)`, where `DHL[k,2]` is \"infinitely many `n` with \u2265 2 of\nthe `n + h` prime\", as an implication with `DHL` as an explicit hypothesis.\n- **The key insight is** that the entire sieve-theoretic difficulty is quarantined\n  inside `DHL`; the passage from `DHL` to a concrete gap bound is pure logic over the\n  `BoundedPrimeGaps`/`Set.Infinite` API already built here.\n- **Why now?** `boundedPrimeGaps_iff_liminf` and `finite_constellation_of_not_admissible`\n  give both halves of the interface; stating `DHL` as a hypothesis makes the\n  headline theorem `liminf \u2264 246` a corollary modulo one named open input.\n\n## Conjecture 4 \u2014 Prime gaps are unbounded above (companion to bounded below)\n`\u2200 H, {n | primeGap n \u2265 H}.Infinite`, equivalently `limsup primeGap = \u22a4` in `\u2115\u221e`.\n- **The key insight is** that the consecutive composites `N! + 2, \u2026, N! + N` force a\n  gap `\u2265 N`, so large gaps recur infinitely often \u2014 the exact mirror of the bounded\n  case, provable with no sieve.\n- **Why now?** We already have the `\u2115\u221e`-valued `liminf`/`limsup` interface via\n  `liminf_le_iff_infinite`; the dual `limsup` statement reuses the same\n  `Nat.frequently_atTop_iff_infinite` bridge and would frame Maynard's `liminf`\n  result against a fully-proven `limsup = \u221e`.\n\n## Conjecture 5 \u2014 Every admissible tuple has even diameter once `|H| \u2265 2` and `0 \u2208 H`\nFor an admissible `H` with `0 \u2208 H` and `|H| \u2265 2`, the diameter `max H` is even.\n- **The key insight is** that admissibility at `p = 2` forces all elements into a\n  single residue class mod 2 (else both classes are covered), so all pairwise\n  differences \u2014 including the diameter \u2014 are even.\n- **Why now?** The `p = 2` case is exactly the parity argument already used in\n  `primeGap_even` and in the `{0,2,6}` witness; promoting it to a general structural\n  constraint on admissible tuples is immediate and explains why all tabulated\n  bounded-gap diameters (246, 1402, \u2026) are even.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2845",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e0366114",
-    "status": "available",
-    "timestamp": "2026-06-29T08:21:12.436789+00:00",
-    "title": "This cycle formalized the *elementary scaffolding* around `liminf (p_{n+1} - p_n"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2038,7 +2024,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d3811cb",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -2048,7 +2034,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -2424,7 +2410,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "p-adic Langlands for GL\u2082(Q_p)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0cf0e6d6",
     "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
     "domains": [
       "Tropical",
@@ -2434,7 +2420,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.975644+00:00",
     "title": "Tropical Compactification of Moduli Spaces"
   },
@@ -2587,6 +2573,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+  },
+  {
+    "consumed_by_exp_id": "ed30f379",
+    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0465",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:30.568365+00:00",
+    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
   {
     "consumed_by_exp_id": "",
