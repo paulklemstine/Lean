@@ -2306,7 +2306,7 @@
       "Miller's original conjecture for symmetric groups",
       "Character theory of GL₂(𝔽_q)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "338831a0",
     "description": "Conjecture that the error term in the asymptotic count of entries not divisible by ℓ in the character table of GL₂(𝔽_q) is O(q³) rather than O(q³+ε).",
     "domain_bridges": [
       "connections between character divisibility and equidistribution",
@@ -2321,7 +2321,7 @@
     "proof_strategy": "Refine existing equidistribution arguments to extract sharper bounds on character vanishing behavior",
     "research_mode": "team",
     "source_exp_id": "2606.28085v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T07:01:40.248934+00:00",
     "title": "Refined Asymptotic for Non-Divisible Entries in GL₂(𝔽_q) Character Tables"
   },
@@ -2466,6 +2466,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every optimal 1-planar graph with connectivity 6 is (5,5)-linked. Formally, for any 6-connected optimal 1-planar graph G and any two disjoint vertex subsets S1, S2 of size 5, there exist vertex-disjoint connected subgraphs G1, G2 of G such that S1 is contained in the vertex set of G1 and S2 is contained in the vertex set of G2.",
+    "domain_bridges": [
+      "Combinatorics",
+      "Topology"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2838",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize optimal 1-planar graphs (1-planar graphs with exactly 4|V| - 8 edges) and graph connectivity. Then establish structural properties of 6-connected optimal 1-planar graphs, likely leveraging their tight connection to triangulations. Use these structural properties and high edge density to show that any two disjoint 5-element vertex subsets can be covered by disjoint connected subgraphs, proving the (5,5)-linked property.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27682v1",
+    "status": "available",
+    "timestamp": "2026-06-29T09:07:48.439935+00:00",
+    "title": "6-Connected Optimal 1-Planar Graphs are (5,5)-Linked"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "grunbaum_yaakobi_conjecture",
       "schilling2021coupon",
       "burchard_finite_geometry",
@@ -2483,7 +2507,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2838",
+    "id": "fd_2839",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
@@ -2510,7 +2534,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2839",
+    "id": "fd_2840",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that crystal (affine) reflections preserve the d-balanced property, then use RoCK block structure to establish a recurrence on w whose unique solution is the binomial coefficient, and formalize this induction in Lean.",
@@ -2533,7 +2557,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2840",
+    "id": "fd_2841",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit pairwise reflection‑symmetric Latin squares for n = 2^k using affine permutations of the vector space (GF(2))^k, and prove non‑existence for other n by parity or orbit‑counting arguments.",
@@ -2562,7 +2586,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2841",
+    "id": "fd_2842",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the stability method used in the paper by analyzing the structure of near-extremal graphs for smaller $n$. Leverage the known exact result for $t=2$ ($n \\geq 6$) as a base case. Use spectral perturbation arguments to show that any deviation from the conjectured extremal graph reduces the spectral radius when $n \\geq 3t$. The key is to tighten the eigenvalue interlacing bounds and degree sequence estimates that currently require $n \\geq 28t-17$.",
@@ -2587,7 +2611,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2842",
+    "id": "fd_2843",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence argument via combinatorial dimension tracking",
@@ -2618,7 +2642,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2843",
+    "id": "fd_2844",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that the natural projection maps from the flag graph to both the 1-skeleton and 1-coskeleton graphs are covering maps that induce isomorphisms on automorphism groups for regular maniplexes, leveraging the fixed-point-free involution structure and vertex-transitivity properties established in the paper.",
@@ -2645,7 +2669,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2844",
+    "id": "fd_2845",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Watson's identity 2ρ(q) + ω(q) = T(q) to relate ρ(q) to the mock theta function ω(q) and a theta-eta product T(q). Obtain explicit Rademacher-type expansions with rigorous error bounds for the coefficients of ω(q) and T(q). Combine these to derive explicit inequalities for r(n) for all sufficiently large n, and verify the remaining small n by direct computation.",
@@ -2672,7 +2696,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2845",
+    "id": "fd_2846",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the automorphic Green's identity to weight k Eisenstein series and automorphic forms. Use the meromorphic continuation and functional equation of the weight k Eisenstein series. Show that the boundary terms in the Green's identity for the truncated weight k Eisenstein series yield the projection onto the cuspidal subspace and the Laurent coefficients at the poles.",
@@ -2704,7 +2728,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2846",
+    "id": "fd_2847",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow the strategy of the number field case: (1) establish that the unramified obstruction is contained in the descent obstruction (already shown in the paper for general smooth integral varieties), (2) prove the reverse inclusion by showing that any descent obstruction arising from a torsor under a commutative linear algebraic group can be detected by H^3_nr(X, Q/Z(2)), using the arithmetic dualities and Poitou-Tate-style exact sequences developed for p-adic function fields, (3) for rationally connected varieties, leverage the vanishing of higher unramified cohomology beyond degree 3 to show the descent obstruction cannot be strictly finer.",
@@ -2731,7 +2755,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2847",
+    "id": "fd_2848",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish base cases n = 4, 5, 6, 7, 8 via direct constructions using row-quantum Latin rectangles and special complete mappings of finite groups, then apply the singular direct product construction recursively to extend existence to all n ≥ 4, leveraging the algebraic properties of complete mappings in groups of odd order and direct products for even orders.",
@@ -2740,6 +2764,38 @@
     "status": "available",
     "timestamp": "2026-06-29T08:49:17.434420+00:00",
     "title": "Existence of Maximum Cardinality Diagonal Quantum Latin Squares for All Orders n ≥ 4"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "pairwise_balanced_design",
+      "resolvable_design",
+      "CURD",
+      "block_design",
+      "parallel_class",
+      "affine_plane"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all integers m ≥ 3 and n ≥ m with n ≡ m (mod 2) and (m² − 2m + n) ∣ n(n−1), there exists a Class-Uniformly Resolvable Design on n varieties with partition m^1 2^{(n−m)/2} and λ = 1. The paper establishes these as necessary conditions and proves existence when m is a power of an odd prime (via affine plane-derived construction) and when m = 2k for certain cyclic designs. The conjecture asserts these divisibility and parity conditions are also sufficient, making the existence problem completely solved.",
+    "domain_bridges": [
+      "finite_field_theory",
+      "cyclic_designs",
+      "number_theory_divisibility",
+      "combinatorial_constructions"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2849",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Follow Wilson's fundamental construction approach for PBDs: (1) formalize the necessary conditions (parity, divisibility), (2) establish a set of 'starter' CURDs via the paper's prime power and cyclic constructions, (3) develop a recursive construction showing that if CURDs exist for parameters (m₁, n₁) and (m₂, n₂), then a CURD exists for suitably combined parameters, (4) prove that the necessary conditions are closed under the recursive operations, (5) show every parameter pair satisfying the necessary conditions decomposes into starter instances.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27519v1",
+    "status": "available",
+    "timestamp": "2026-06-29T09:08:52.620285+00:00",
+    "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
   },
   {
     "ambition_level": "extension",

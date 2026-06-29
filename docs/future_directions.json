@@ -35921,7 +35921,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Peluse and Soundararajan's work on Miller's conjecture",
         "Miller's original conjecture for symmetric groups",
@@ -35929,7 +35929,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "338831a0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35943,7 +35943,7 @@
         "Pythagorean"
       ],
       "id": "fd_2832",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T09:08:57.661011+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (q : ℕ) (ℓ : prime) (q odd prime power) → N_ℓ(q) = q⁴/2 + O(q³)",
       "lineage_refs": [],
@@ -35957,7 +35957,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28085v1",
       "source_path": "http://arxiv.org/abs/2606.28085v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T07:01:40.248934+00:00",
       "title": "Refined Asymptotic for Non-Divisible Entries in GL₂(𝔽_q) Character Tables"
@@ -36201,6 +36201,49 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every optimal 1-planar graph with connectivity 6 is (5,5)-linked. Formally, for any 6-connected optimal 1-planar graph G and any two disjoint vertex subsets S1, S2 of size 5, there exist vertex-disjoint connected subgraphs G1, G2 of G such that S1 is contained in the vertex set of G1 and S2 is contained in the vertex set of G2.",
+      "domain_bridges": [
+        "Combinatorics",
+        "Topology"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2838",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem six_connected_optimal_one_planar_is_five_five_linked\n    {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)\n    (h_opt : G.IsOptimal1Planar)\n    (h_conn : G.Connectivity = 6)\n    (S₁ S₂ : Finset V)\n    (h_dis : Disjoint S₁ S₂)\n    (h_card₁ : S₁.card = 5)\n    (h_card₂ : S₂.card = 5) :\n    ∃ G₁ G₂ : SimpleGraph V,\n      G₁ ≤ G ∧ G₂ ≤ G ∧\n      SimpleGraph.Connected G₁ ∧ SimpleGraph.Connected G₂ ∧\n      (S₁ : Set V) ⊆ G₁.vertexSet ∧ (S₂ : Set V) ⊆ G₂.vertexSet ∧\n      Disjoint (G₁.vertexSet : Set V) (G₂.vertexSet : Set V) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First formalize optimal 1-planar graphs (1-planar graphs with exactly 4|V| - 8 edges) and graph connectivity. Then establish structural properties of 6-connected optimal 1-planar graphs, likely leveraging their tight connection to triangulations. Use these structural properties and high edge density to show that any two disjoint 5-element vertex subsets can be covered by disjoint connected subgraphs, proving the (5,5)-linked property.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27682v1",
+      "source_path": "http://arxiv.org/abs/2606.27682v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T09:07:48.439935+00:00",
+      "title": "6-Connected Optimal 1-Planar Graphs are (5,5)-Linked"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "grunbaum_yaakobi_conjecture",
         "schilling2021coupon",
         "burchard_finite_geometry",
@@ -36224,7 +36267,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2838",
+      "id": "fd_2839",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_coverage_time_gt_random (q : ℕ) (hq : 2 ≤ q) : \n  expected_coverage_time (line_family (PG(2, q))) > expected_coverage_time (uniform_family (q^2 + q + 1) (q + 1))",
@@ -36270,7 +36313,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2839",
+      "id": "fd_2840",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem count_d_balanced_e_regular_partitions {d e w : ℕ} (hd : d > 1) (he : e > 1) (hdiv : (e - 3) % d = 0) : (Finset.card (setOf (d-balanced e-regular partitions in block of e-weight w))) = Nat.choose (w + (e - 3) / d) w := by sorry",
@@ -36312,7 +36355,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2840",
+      "id": "fd_2841",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃ (L : Fin n → Fin n → Fin n),\n  (∀ r : Fin n, Function.Bijective (fun x => L r x)) ∧\n  (∀ c1 c2 : Fin n, c1 ≠ c2 → (∀ p q : Fin n,\n    (∑ r : Fin n, if L r c1 = p ∧ L r c2 = q then 1 else 0) = (∑ r : Fin n, if L r c1 = q ∧ L r c2 = p then 1 else 0)))",
@@ -36360,7 +36403,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2841",
+      "id": "fd_2842",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem signless_laplacian_tK3_free_extremal_improved_bound {t n : ℕ} (ht : t ≥ 2) (hn : n ≥ 3 * t) :\n  UniqueExtremalGraph (tK3Free t) (signlessLaplacianSpectralRadius) n =\n    KJoin (CompleteGraph (t-1)) (CompleteBipartiteGraph ⌊(n-t+1)/2⌋ ⌈(n-t+1)/2⌉) := by sorry",
@@ -36404,7 +36447,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2842",
+      "id": "fd_2843",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The nerve theorem applies to finite simplicial complexes and preserves finiteness properties",
@@ -36454,7 +36497,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2843",
+      "id": "fd_2844",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regular_maniplex_automorphism_equivalence (n : ℕ) (M : Maniplex n) (h : Regular M) : Isomorphism (AutomorphismGroup M) (AutomorphismGroup (FlagGraph M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneSkeleton M)) ∧ Isomorphism (AutomorphismGroup M) (AutomorphismGroup (OneCoskeleton M))",
@@ -36500,7 +36543,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2844",
+      "id": "fd_2845",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def r (n : ℕ) : ℤ := -- coefficient of q^n in ρ(q) as defined in the paper\n  sorry\n\ntheorem sign_law_rho : ∀ n : ℕ, r (3 * n) > 0 ∧ r (3 * n + 1) ≤ 0 ∧ r (3 * n + 2) ≤ 0 ∧ (r (3 * n + 1) = 0 → n = 1) ∧ (r (3 * n + 2) = 0 → n = 0 ∨ n = 2 ∨ n = 3 ∨ n = 6) := by sorry",
@@ -36546,7 +36589,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2845",
+      "id": "fd_2846",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem franke_weight_k (k : ℤ) : ∀ (F : AutomorphicForm k), ∃ (F_cusp : CuspForm k) (c : Finsupp ℕ (LaurentCoeff (EisensteinSeries k))), F = F_cusp + ∑ i, c i • i := by sorry",
@@ -36597,7 +36640,7 @@
         "Geometry",
         "Algebra"
       ],
-      "id": "fd_2846",
+      "id": "fd_2847",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem unramified_equals_descent_rc {K : Type*} [Field K] [IsPAdicFunctionField K] {X : Scheme K} [IsSmooth X] [IsProper X] [IsGeometricallyIntegral X] [IsRationallyConnected X] : adelicPointsUnramifiedObstruction X = adelicPointsDescentObstruction X := by sorry",
@@ -36643,7 +36686,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2847",
+      "id": "fd_2848",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mcdqls_exists (n : ℕ) (h : n ≥ 4) : ∃ (L : Fin n → Fin n → Vector ℂ n), IsMaxCardDiagQuantumLatinSquare L ∧ ∀ i j k l, (i ≠ k ∨ j ≠ l) → ¬IsGlobalPhaseEquiv (L i j) (L k l) := by\n  sorry",
@@ -36662,6 +36705,57 @@
       "thread_id": "",
       "timestamp": "2026-06-29T08:49:17.434420+00:00",
       "title": "Existence of Maximum Cardinality Diagonal Quantum Latin Squares for All Orders n ≥ 4"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "pairwise_balanced_design",
+        "resolvable_design",
+        "CURD",
+        "block_design",
+        "parallel_class",
+        "affine_plane"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For all integers m ≥ 3 and n ≥ m with n ≡ m (mod 2) and (m² − 2m + n) ∣ n(n−1), there exists a Class-Uniformly Resolvable Design on n varieties with partition m^1 2^{(n−m)/2} and λ = 1. The paper establishes these as necessary conditions and proves existence when m is a power of an odd prime (via affine plane-derived construction) and when m = 2k for certain cyclic designs. The conjecture asserts these divisibility and parity conditions are also sufficient, making the existence problem completely solved.",
+      "domain_bridges": [
+        "finite_field_theory",
+        "cyclic_designs",
+        "number_theory_divisibility",
+        "combinatorial_constructions"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2849",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem curd_partition_m1_2k_exists_iff {m n : ℕ} (hm : m ≥ 3) (hn : n ≥ m) :\n    (∃ (X : Type) (F : Finset X) (_ : F.card = n)\n       (blocks : Finset (Finset X))\n       (classes : Finset (Finset (Finset X))),\n     -- each class partitions F\n     (∀ c ∈ classes, ∀ x ∈ F, ∃! b ∈ c, x ∈ b) ∧\n     -- each class has block structure m^1 2^{(n-m)/2}\n     (∀ c ∈ classes, ∃! b ∈ c, b.card = m) ∧\n     (∀ c ∈ classes, ∀ b ∈ c, b ≠ (⟨_, by aesop⟩ : Finset X) → b.card = 2) ∧\n     -- each pair in exactly one block\n     (∀ x ∈ F, ∀ y ∈ F, x ≠ y →\n       (∃! b ∈ blocks, x ∈ b ∧ y ∈ b)) ∧\n     -- blocks = union of classes\n     blocks = classes.biUnion id)\n    ↔ (n % 2 = m % 2 ∧ (m * m - 2 * m + n) ∣ n * (n - 1)) :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Follow Wilson's fundamental construction approach for PBDs: (1) formalize the necessary conditions (parity, divisibility), (2) establish a set of 'starter' CURDs via the paper's prime power and cyclic constructions, (3) develop a recursive construction showing that if CURDs exist for parameters (m₁, n₁) and (m₂, n₂), then a CURD exists for suitably combined parameters, (4) prove that the necessary conditions are closed under the recursive operations, (5) show every parameter pair satisfying the necessary conditions decomposes into starter instances.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27519v1",
+      "source_path": "http://arxiv.org/abs/2606.27519v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T09:08:52.620285+00:00",
+      "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
     },
     {
       "ambition_level": "extension",
@@ -41463,7 +41557,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -41478,7 +41572,7 @@
         "NumberTheory"
       ],
       "id": "seed_331",
-      "last_attempt_time": "2026-06-29T08:49:20.451207+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],

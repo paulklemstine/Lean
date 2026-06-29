@@ -1574,7 +1574,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit points of largest matching roots below the golden\u2011ratio threshold"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "338831a0",
     "description": "Conjecture that the error term in the asymptotic count of entries not divisible by \u2113 in the character table of GL\u2082(\ud835\udd3d_q) is O(q\u00b3) rather than O(q\u00b3+\u03b5).",
     "domains": [
       "Pythagorean"
@@ -1583,7 +1583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28085v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T07:01:40.248934+00:00",
     "title": "Refined Asymptotic for Non-Divisible Entries in GL\u2082(\ud835\udd3d_q) Character Tables"
   },
@@ -1661,12 +1661,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every optimal 1-planar graph with connectivity 6 is (5,5)-linked. Formally, for any 6-connected optimal 1-planar graph G and any two disjoint vertex subsets S1, S2 of size 5, there exist vertex-disjoint connected subgraphs G1, G2 of G such that S1 is contained in the vertex set of G1 and S2 is contained in the vertex set of G2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2838",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27682v1",
+    "status": "available",
+    "timestamp": "2026-06-29T09:07:48.439935+00:00",
+    "title": "6-Connected Optimal 1-Planar Graphs are (5,5)-Linked"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2838",
+    "id": "fd_2839",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -1681,7 +1695,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2839",
+    "id": "fd_2840",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
@@ -1695,7 +1709,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2840",
+    "id": "fd_2841",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
@@ -1710,7 +1724,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2841",
+    "id": "fd_2842",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
@@ -1725,7 +1739,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2842",
+    "id": "fd_2843",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
@@ -1740,7 +1754,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2843",
+    "id": "fd_2844",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27987v1",
@@ -1754,7 +1768,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2844",
+    "id": "fd_2845",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
@@ -1769,7 +1783,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2845",
+    "id": "fd_2846",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -1784,7 +1798,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2846",
+    "id": "fd_2847",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27699v1",
@@ -1799,13 +1813,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2847",
+    "id": "fd_2848",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27758v1",
     "status": "available",
     "timestamp": "2026-06-29T08:49:17.434420+00:00",
     "title": "Existence of Maximum Cardinality Diagonal Quantum Latin Squares for All Orders n \u2265 4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all integers m \u2265 3 and n \u2265 m with n \u2261 m (mod 2) and (m\u00b2 \u2212 2m + n) \u2223 n(n\u22121), there exists a Class-Uniformly Resolvable Design on n varieties with partition m^1 2^{(n\u2212m)/2} and \u03bb = 1. The paper establishes these as necessary conditions and proves existence when m is a power of an odd prime (via affine plane-derived construction) and when m = 2k for certain cyclic designs. The conjecture asserts these divisibility and parity conditions are also sufficient, making the existence problem completely solved.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2849",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27519v1",
+    "status": "available",
+    "timestamp": "2026-06-29T09:08:52.620285+00:00",
+    "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
   },
   {
     "consumed_by_exp_id": "",
