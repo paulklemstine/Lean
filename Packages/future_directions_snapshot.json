@@ -316,7 +316,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b86be6e3",
     "description": "Formalize the Yau-Tian-Donaldson conjecture: a Fano manifold admits a Kähler-Einstein metric iff it is K-stable. Prove stability criteria for specific Fano varieties.",
     "domain_bridges": [],
     "domains": [
@@ -329,7 +329,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.648941+00:00",
     "title": "Kähler-Einstein Metrics and K-Stability"
   },
@@ -2195,7 +2195,7 @@
       "fano_plane",
       "projective_plane_PG2q"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee65478f",
     "description": "We conjecture that for every projective plane of order q (q ≥ 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair ℓ‑regular mechanism whose expected coupon‑collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform ℓ‑regular families on the underlying n‑set.",
     "domain_bridges": [
       "finite geometry ↔ combinatorial designs",
@@ -2212,7 +2212,7 @@
     "proof_strategy": "Formalize the expected collection time as a function of a family ℱ using the standard Markov chain model. Compute the exact expected time for the uniform random model (n H_n). For the projective plane family, use the known intersection numbers (any two distinct lines intersect in exactly one point) to derive the transition matrix, which can be expressed in terms of the design parameters. Show that the spectral gap is smaller than that of the random model, implying a larger mean hitting time. Verify the inequality for small q by explicit computation, and outline an inductive argument for the general q based on the eigenvalues of the associated association scheme.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T05:46:31.738498+00:00",
     "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
   },

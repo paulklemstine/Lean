@@ -149,21 +149,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ABC Conjecture Formalization"
   },
   {
-    "consumed_by_exp_id": "98700ccf",
-    "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_224",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:12.343420+00:00",
-    "title": "Baum-Connes Conjecture"
-  },
-  {
     "consumed_by_exp_id": "8a176ab9",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domains": [
@@ -252,7 +237,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Catalan's Conjecture Generalizations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b86be6e3",
     "description": "Formalize the Yau-Tian-Donaldson conjecture: a Fano manifold admits a K\u00e4hler-Einstein metric iff it is K-stable. Prove stability criteria for specific Fano varieties.",
     "domains": [
       "Geometry",
@@ -262,7 +247,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.648941+00:00",
     "title": "K\u00e4hler-Einstein Metrics and K-Stability"
   },
@@ -388,21 +373,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
-  },
-  {
-    "consumed_by_exp_id": "690c1add",
-    "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
-    "domains": [
-      "Algebra",
-      "Topology"
-    ],
-    "id": "seed_339",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432630+00:00",
-    "title": "Homological Algebra: Derived Functors"
   },
   {
     "consumed_by_exp_id": "",
@@ -570,7 +540,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a73d6d7",
     "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
     "domains": [
       "Computation",
@@ -580,7 +550,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432755+00:00",
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
@@ -1482,7 +1452,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coefficientwise Positivity of Normalized Jacobi Triple Product Tails"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee65478f",
     "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
     "domains": [
       "Pythagorean",
@@ -1492,7 +1462,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T05:46:31.738498+00:00",
     "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
   },
@@ -1878,20 +1848,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T15:39:46.199817+00:00",
     "title": "Complete Integer Solutions to P_30(n) = t^3"
-  },
-  {
-    "consumed_by_exp_id": "04928e2c",
-    "description": "In the coupon collector's problem with n=7 coupons and draws of size \u2113=3, the expected time to collect all coupons under the Fano plane mechanism (uniformly sampling from the 7 lines of PG(2,2)) strictly exceeds the expected time under the full model (uniformly sampling from all C(7,3)=35 three-element subsets). Both are fair mechanisms: each coupon appears in exactly 3 of the 7 Fano lines and in exactly 15 of the 35 triples. This disproves the Grunbaum-Yaakobi conjecture that the full model maximizes expected coverage time among fair mechanisms.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2869",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T15:41:31.789327+00:00",
-    "title": "Fano Plane Mechanism Strictly Dominates Full Model in Expected Coverage Time"
   },
   {
     "consumed_by_exp_id": "",
