@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (copyBtn) copyBtn.style.display = 'none';
 
         try {
-            const resp = await fetch(filename);
+            const resp = await fetch(filename + '?v=' + Date.now());
             if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             const data = await resp.json();
             window.Aether.packageCache[filename] = data;
