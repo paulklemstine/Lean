@@ -2300,11 +2300,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For all sufficiently large positive integers u, the only integer solutions (x, y) to the parametric Thue equation x(x - uy)(x - u\u00b2y)(x - u\u00b3y) + y\u2074 = 1 are the five trivial solutions (1, 0), (0, 1), (u, 1), (u\u00b2, 1), and (u\u00b3, 1). This extends the proved degree-3 case of Thomas's conjecture (where P\u2081(u) = u\u1d4f, P\u2082(u) = u\u02e1) to degree 4 with P\u2c7c(u) = u\u02b2 for j = 1, 2, 3, and connects to the generalized ABC polynomial framework via the associated Thue equation Y\u146b \u03c0_U(X/Y) = 1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2909",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27885v1",
+    "status": "available",
+    "timestamp": "2026-06-29T23:53:55.761619+00:00",
+    "title": "Thomas Conjecture for Degree-4 Parametric Thue Equations with Monomial Substitutions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2909",
+    "id": "fd_2910",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2318,7 +2332,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2910",
+    "id": "fd_2911",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2332,7 +2346,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2911",
+    "id": "fd_2912",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
