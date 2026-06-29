@@ -36108,7 +36108,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.RA",
@@ -36116,7 +36116,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3b415737",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36131,7 +36131,7 @@
         "Geometry"
       ],
       "id": "fd_2836",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T10:03:41.425984+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem source_sink_unique_non_filling {n : ℕ} {Q : Quiver (Fin n)}\n    (h_acyclic : IsAcyclic Q) (h_type : IsAffineTypeATilde n Q)\n    (v w : Fin n) (h_banded : nullRoot Q v = nullRoot Q w) :\n    ¬FillsBand (coordinateProjection v w) (cVectors Q) ↔ IsSourceSinkPair Q v w := by\n  sorry",
       "lineage_refs": [],
@@ -36145,7 +36145,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27523v1",
       "source_path": "http://arxiv.org/abs/2606.27523v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T08:22:15.779388+00:00",
       "title": "Source-sink uniqueness of non-filling banded pairs in affine type Ã"
@@ -36936,6 +36936,53 @@
       "thread_id": "",
       "timestamp": "2026-06-29T09:52:47.763963+00:00",
       "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "Golomb",
+        "Hadwiger-Nelson"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "There exists a finite unit-distance graph G in the Euclidean plane whose independence ratio α(G)/|V(G)| is strictly less than 1/4. This answers Erdős's 1987 question in the negative and implies that the fractional chromatic number of the plane χ_f(ℝ²) > 4. The proof relies on showing that a two-vertex augmentation of the 27-vertex configuration G₂₇ from Matolcsi et al. yields a point configuration with geometric fractional chromatic number strictly greater than 4.",
+      "domain_bridges": [
+        "Euclidean geometry",
+        "Linear programming",
+        "Graph theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Logic"
+      ],
+      "id": "fd_2854",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem exists_unit_distance_graph_indep_ratio_lt_quarter :\n    ∃ (G : Finset (EuclideanSpace ℝ Fin 2)) (r : ℝ),\n    is_unit_distance_graph G ∧ r = (independence_number (unit_dist_graph G)) / G.card ∧ r < 1/4 :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the 27-vertex graph G₂₇ as an explicit point configuration in ℝ², characterize its 23 extremal geometric fractional colorings as a polytope of affine dimension 11, then show that adding two suitably chosen vertices yields a configuration where every fractional coloring assigning weight ≤ 1/4 per color class fails to cover all vertices, establishing χ_gf > 4. The blow-up steps from Matolcsi et al. then translate this into a finite unit-distance graph with α(G)/|V(G)| < 1/4.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28157v1",
+      "source_path": "http://arxiv.org/abs/2606.28157v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T10:03:39.505176+00:00",
+      "title": "Existence of a finite unit-distance graph in the plane with independence ratio strictly less than 1/4"
     },
     {
       "ambition_level": "extension",

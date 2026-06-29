@@ -2417,7 +2417,7 @@
       "math.RA",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b415737",
     "description": "For the affine quiver of type Ã_n with any acyclic orientation, the source-sink pair is the unique banded pair whose coordinate projection fails to fill its band. Specifically, for any pair of vertices (v, w) with δ_v = δ_w (which holds for all pairs in Ã_n since all null-root coefficients equal 1), the projection π_{vw}(C(Q)) fills its band if and only if {v, w} is not the source-sink pair of the given orientation. This extends the paper's complete resolution for the source-sink orientation to all acyclic orientations.",
     "domain_bridges": [
       "cluster_algebras",
@@ -2433,7 +2433,7 @@
     "proof_strategy": "Extend the AR defect obstruction from the source-sink orientation to arbitrary acyclic orientations. The paper identifies the Auslander-Reiten defect as the sole obstruction to band-filling, and shows it is detected as a coordinate difference c_v - c_w exactly for the source-sink pair in the source-sink orientation. For a general acyclic orientation, the source and sink vertices of the resulting directed path still form a distinguished pair. One must show: (1) the AR defect of the regular component is always detected as the coordinate difference for the source-sink pair regardless of orientation, (2) it is never detected for any other banded pair, and (3) the filling characterization via AR defect applies uniformly across all orientations. The topological interpretation via signed crossing number against the core curve of the annulus may provide an orientation-independent argument.",
     "research_mode": "team",
     "source_exp_id": "2606.27523v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T08:22:15.779388+00:00",
     "title": "Source-sink uniqueness of non-filling banded pairs in affine type Ã"
   },
@@ -2900,6 +2900,34 @@
     "status": "available",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Golomb",
+      "Hadwiger-Nelson"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "There exists a finite unit-distance graph G in the Euclidean plane whose independence ratio α(G)/|V(G)| is strictly less than 1/4. This answers Erdős's 1987 question in the negative and implies that the fractional chromatic number of the plane χ_f(ℝ²) > 4. The proof relies on showing that a two-vertex augmentation of the 27-vertex configuration G₂₇ from Matolcsi et al. yields a point configuration with geometric fractional chromatic number strictly greater than 4.",
+    "domain_bridges": [
+      "Euclidean geometry",
+      "Linear programming",
+      "Graph theory"
+    ],
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_2854",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the 27-vertex graph G₂₇ as an explicit point configuration in ℝ², characterize its 23 extremal geometric fractional colorings as a polytope of affine dimension 11, then show that adding two suitably chosen vertices yields a configuration where every fractional coloring assigning weight ≤ 1/4 per color class fails to cover all vertices, establishing χ_gf > 4. The blow-up steps from Matolcsi et al. then translate this into a finite unit-distance graph with α(G)/|V(G)| < 1/4.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T10:03:39.505176+00:00",
+    "title": "Existence of a finite unit-distance graph in the plane with independence ratio strictly less than 1/4"
   },
   {
     "ambition_level": "extension",

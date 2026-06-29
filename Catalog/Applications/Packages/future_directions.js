@@ -1632,7 +1632,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Universality of critical percolation scaling for preferential attachment graphs with infinite variance"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b415737",
     "description": "For the affine quiver of type \u00c3_n with any acyclic orientation, the source-sink pair is the unique banded pair whose coordinate projection fails to fill its band. Specifically, for any pair of vertices (v, w) with \u03b4_v = \u03b4_w (which holds for all pairs in \u00c3_n since all null-root coefficients equal 1), the projection \u03c0_{vw}(C(Q)) fills its band if and only if {v, w} is not the source-sink pair of the given orientation. This extends the paper's complete resolution for the source-sink orientation to all acyclic orientations.",
     "domains": [
       "Geometry"
@@ -1641,7 +1641,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27523v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T08:22:15.779388+00:00",
     "title": "Source-sink uniqueness of non-filling banded pairs in affine type \u00c3"
   },
@@ -1893,6 +1893,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There exists a finite unit-distance graph G in the Euclidean plane whose independence ratio \u03b1(G)/|V(G)| is strictly less than 1/4. This answers Erd\u0151s's 1987 question in the negative and implies that the fractional chromatic number of the plane \u03c7_f(\u211d\u00b2) > 4. The proof relies on showing that a two-vertex augmentation of the 27-vertex configuration G\u2082\u2087 from Matolcsi et al. yields a point configuration with geometric fractional chromatic number strictly greater than 4.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_2854",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T10:03:39.505176+00:00",
+    "title": "Existence of a finite unit-distance graph in the plane with independence ratio strictly less than 1/4"
   },
   {
     "consumed_by_exp_id": "",
