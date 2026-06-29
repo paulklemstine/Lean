@@ -266,7 +266,7 @@ def build_lineage(packages_dir):
     # Sort packages by date for temporal ordering
     sorted_slugs = sorted(
         packages.keys(),
-        key=lambda s: packages[s].get("date", "9999")
+        key=lambda s: packages[s].get("date") or "9999"
     )
 
     # Compute domain frequency counts for primary_domain variety
