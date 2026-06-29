@@ -2006,6 +2006,57 @@
     "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "MRVZ_27_vertex_config",
+      "de_Grey_chromatic_number",
+      "Erdos_independence_ratio_problem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
+    "domain_bridges": [
+      "linear_programming",
+      "polytope_extremal_structure",
+      "measurable_chromatic_number"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2815",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the 27-vertex configuration G_27 as an explicit point set in R^2 with its unit-distance graph structure. Define geometric fractional chromatic number as the optimum of a linear program over Borel measurable vertex-weighting functions. Characterize the 23 extremal geometric fractional colorings of G_27 as vertices of an 11-dimensional polytope (the key computational step). Show that for the specific two-vertex augmentation, every optimal coloring of G_27 forces a constraint violation on the new vertices, implying the LP optimum must strictly exceed 4. The polytope characterization reduces the verification to checking constraints at finitely many extremal points.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:01:41.266053+00:00",
+    "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the prime $k=7$ (which corresponds to $s=2k+4=18$), the only integer solutions to the Diophantine equation $P_{18}(n) = t^p$ for any prime $p \\ge 11$ are the trivial ones $(n,t) = (0,0)$ and $(1,1)$. This formalizes the authors' expectation that there are no additional solutions beyond those explicitly found for smaller primes, an assertion they state is implied by GRH and the weak effective abc conjecture.",
+    "domain_bridges": [
+      "diophantine_equations",
+      "polygonal_numbers"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2815",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adopt the authors' proposed conditional approach by assuming the Generalized Riemann Hypothesis (to rule out solutions for $11 \\le p \\le 31$) and the weak effective abc conjecture with $r=1.63$ (to rule out solutions for $p > 31$), or unconditionally extend the linear forms in logarithms and modular methods to computationally verify the remaining prime exponents.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:02:38.413060+00:00",
+    "title": "No Non-Trivial Higher Prime Powers in 18-gonal Numbers"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",

@@ -1451,6 +1451,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2815",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:01:41.266053+00:00",
+    "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the prime $k=7$ (which corresponds to $s=2k+4=18$), the only integer solutions to the Diophantine equation $P_{18}(n) = t^p$ for any prime $p \\ge 11$ are the trivial ones $(n,t) = (0,0)$ and $(1,1)$. This formalizes the authors' expectation that there are no additional solutions beyond those explicitly found for smaller primes, an assertion they state is implied by GRH and the weak effective abc conjecture.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2815",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:02:38.413060+00:00",
+    "title": "No Non-Trivial Higher Prime Powers in 18-gonal Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",

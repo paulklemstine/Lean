@@ -2808,6 +2808,18 @@ Be precise, be deep, be world-class.
             Phase B is to **package this work for human readers** as a
             standalone, publication-ready article and paper.
 
+            ### STANDALONE PUBLICATION — HARD REQUIREMENT
+            This applies to ARTICLE.md, RESEARCH_PAPER.md, AND RESEARCH_PAPER.tex.
+            Every prose output must be a publication-ready, fully self-contained
+            document that supports itself end-to-end. A reader with only that
+            document must understand the entire argument without looking elsewhere.
+            **NEVER mention Lean, proof assistants, the Catalog, source file
+            paths, or formal-proof identifier names** anywhere in the prose
+            (e.g., do NOT write `pl_hodge_decomposition` — write "the Hodge
+            Decomposition Theorem"). State every theorem, lemma, and definition
+            inline in natural mathematical prose with its full statement and
+            proof sketch. Do NOT use @file references or point to any file.
+
             ### DELIVERABLES (strict — only this):
             1. **ARTICLE.md** — Standalone popular-science article (1500-3000 words).
                Write about IDEAS, not formal verification. Vivid prose, narrative
@@ -2837,10 +2849,14 @@ Be precise, be deep, be world-class.
                delimiters (e.g., `$x^2+y^2=z^2$`) and block math in double `$$`. Never
                leave math expressions un-delimited in Markdown, or it will break rendering.
             3. **RESEARCH_PAPER.tex** — A clean, compilable LaTeX version of
-               the paper that mirrors the content of RESEARCH_PAPER.md. Use standard
-               amsmath/amsart or article class, define all theorems inline, and make
-               it suitable for direct PDF compilation with `pdflatex`. This is the
-               publishable artifact.
+               the paper that mirrors RESEARCH_PAPER.md. Use standard
+               amsmath/amsart or article class, define all theorems inline
+               (e.g. `\\begin{theorem} ... \\end{theorem}`), and make it suitable for
+               direct PDF compilation with `pdflatex`. This is the publishable
+               artifact. It MUST be publication-ready and fully self-contained:
+               NEVER mention Lean, proof assistants, the Catalog, source file
+               paths, or formal-proof identifier names; state every theorem in
+               natural mathematical prose. It must support itself end-to-end.
             4. **demo.py** — Numerical examples demonstrating the key results.
                Self-contained Python, type hints, all functions inlined.
             5. **PACKAGE.json** — Single JSON bundling all of the above, with this schema:
