@@ -35087,7 +35087,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28227v1",
       "source_path": "http://arxiv.org/abs/2606.28227v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-29T03:32:01.660417+00:00",
       "title": "Classification of Perfect Cubes in 14-gonal Numbers"
@@ -37078,7 +37078,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "Schur_Q-functions",
@@ -37102,7 +37102,7 @@
         "Bridges"
       ],
       "id": "fd_2857",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-29T16:25:52.829230+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem one_row_schur_Q_principal_spec_palindromic (M k : ℕ) (hM : 0 < M) (P : Polynomial ℤ) (hP : P = coeff ℤ[t] k (∏ i in Finset.range M, (1 + PowerSeries.X * (PowerSeries.C _ (Polynomial.X^i))) / (1 - PowerSeries.X * (PowerSeries.C _ (Polynomial.X^i))))) : P.natDegree = k * (M - 1) ∧ (∀ n ≤ k * (M - 1), P.coeff n ≥ 0) ∧ (∀ n ≤ k * (M - 1), P.coeff n = P.coeff (k * (M - 1) - n)) := by sorry",
       "lineage_refs": [],
@@ -37116,7 +37116,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28108v1",
       "source_path": "http://arxiv.org/abs/2606.28108v1",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-29T11:03:33.515587+00:00",
       "title": "Palindromicity and Non-Negativity of Principal Specializations of One-Row Schur Q-Functions"
@@ -37774,8 +37774,13 @@
       "attempt_count": 0,
       "catalog_references": [
         "math.CO",
+<<<<<<< Updated upstream
         "Poset automorphisms",
         "Finite abelian groups"
+=======
+        "Order Theory",
+        "Finite Group Theory"
+>>>>>>> Stashed changes
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
@@ -37783,6 +37788,7 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+<<<<<<< Updated upstream
       "description": "For any integers $k \\ge 0$ and $n \\ge 3$, the minimum size of a poset realizing the non-cyclic abelian group $\\mathbb{Z}_2^k \\times \\mathbb{Z}_{2^n}$ as its automorphism group is $\\beta(\\mathbb{Z}_2^k \\times \\mathbb{Z}_{2^n}) = 2^{n+1} + 2k$. The upper bound follows from iteratively applying the paper's Proposition on $\\beta(A \\times \\mathbb{Z}_2)$, and the conjecture asserts that this iterative construction is strictly optimal.",
       "domain_bridges": [
         "Finite group theory",
@@ -37791,17 +37797,35 @@
       "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
+=======
+      "description": "For any integer n ≥ 3, the minimum number of elements in a partially ordered set P such that the automorphism group of P is isomorphic to Z_2 × Z_{2^n} is exactly 2^{n+1} + 2.",
+      "domain_bridges": [
+        "Group Actions on Posets",
+        "Automorphism Groups",
+        "Finite Set Cardinality"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+>>>>>>> Stashed changes
         "Algebra"
       ],
       "id": "fd_2872",
       "last_attempt_time": "",
       "last_reviewed_at": "",
+<<<<<<< Updated upstream
       "lean_theorem_stub": "theorem beta_Z2_pow_k_times_Z2_pow_n (k n : ℕ) (hn : 3 ≤ n) : beta ((ZMod 2)^k × ZMod (2^n)) = 2^(n+1) + 2*k :=",
+=======
+      "lean_theorem_stub": "theorem beta_Z2_times_Z2_pow (n : ℕ) (hn : 3 ≤ n) : beta (ZMod 2 × ZMod (2^n)) = 2^(n+1) + 2 := by sorry",
+>>>>>>> Stashed changes
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
+<<<<<<< Updated upstream
       "proof_strategy": "Induction on $k$ for the upper bound, using the paper's construction which adds two minimal elements for each $\\mathbb{Z}_2$ factor. The lower bound requires a detailed structural analysis of minimal posets, extending the paper's argument that any such poset must contain pairs of minimal elements realizing the $\\mathbb{Z}_2$ factors, allowing the poset to be decomposed.",
+=======
+      "proof_strategy": "Define the function beta(G) as the minimum cardinality of a poset P with Aut(P) ≅ G. Establish the upper bound β(Z_2 × Z_{2^n}) ≤ 2^{n+1} + 2 by constructing an explicit poset using the direct product bound β(A × Z_2) ≤ β(A) + 2 alongside known values for cyclic groups. Establish the lower bound by assuming a minimal poset of smaller size and deriving a contradiction through a detailed structural analysis of its orbits, antichains, and fixed points under the group action.",
+>>>>>>> Stashed changes
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
@@ -37810,11 +37834,19 @@
       "source_path": "http://arxiv.org/abs/2606.28231v1",
       "status": "available",
       "thread_id": "",
+<<<<<<< Updated upstream
       "timestamp": "2026-06-29T16:15:09.386788+00:00",
       "title": "Minimum Size of Posets Realizing $\\mathbb{Z}_2^k \\times \\mathbb{Z}_{2^n}$ as Automorphism Groups"
     },
     {
       "ambition_level": "grand_challenge",
+=======
+      "timestamp": "2026-06-29T16:25:33.078278+00:00",
+      "title": "Minimum Size of a Poset Realizing Z_2 × Z_{2^n} as its Automorphism Group"
+    },
+    {
+      "ambition_level": "extension",
+>>>>>>> Stashed changes
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -37822,8 +37854,12 @@
         "math.CO",
         "unit_distance_graphs",
         "fractional_chromatic_number",
+<<<<<<< Updated upstream
         "Hadwiger-Nelson_problem",
         "Erdos_independence_ratio"
+=======
+        "Erdős_problems"
+>>>>>>> Stashed changes
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
@@ -37831,6 +37867,7 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+<<<<<<< Updated upstream
       "description": "There exists a finite set of points in the Euclidean plane such that the unit-distance graph induced by these points has independence ratio strictly less than 1/4. This answers Erdős's 1987 question negatively, disproves Conjecture 1 of Matolcsi-Ruzsa-Varga-Zsámboki, and implies that the fractional chromatic number of the plane χ_f(ℝ²) > 4.",
       "domain_bridges": [
         "measure_theory",
@@ -37842,16 +37879,37 @@
       "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean"
+=======
+      "description": "The 27-vertex unit-distance graph G₂₇ of Matolcsi et al. has geometric fractional chromatic number exactly 4, with its optimal geometric fractional colorings forming the convex hull of 23 extremal colorings (affine dimension 11). Augmenting G₂₇ with two suitably chosen vertices yields a 29-vertex unit-distance graph G₂₉ whose geometric fractional chromatic number is strictly greater than 4. This is the core technical result implying χ_f(ℝ²) > 4, disproving Conjecture 1 of Matolcsi et al., and answering Erdős's question in the negative.",
+      "domain_bridges": [
+        "linear_programming",
+        "convex_geometry",
+        "graph_theory",
+        "Euclidean_geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Algebra"
+>>>>>>> Stashed changes
       ],
       "id": "fd_2873",
       "last_attempt_time": "",
       "last_reviewed_at": "",
+<<<<<<< Updated upstream
       "lean_theorem_stub": "theorem exists_unit_distance_graph_indep_ratio_lt_quarter :\n    ∃ (n : ℕ) (pts : Fin n → (Fin 2 → ℝ)),\n      (independenceNumber (unitDistanceGraph pts) : ℝ) / n < 1 / 4 := by\n  sorry",
+=======
+      "lean_theorem_stub": "theorem gfchromatic_number_augmented_exceeds_four : χgf (augmented_29_vertex_graph) > 4 := by\n sorry",
+>>>>>>> Stashed changes
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
+<<<<<<< Updated upstream
       "proof_strategy": "Three-step framework: (1) Prove the 29-vertex augmented unit-distance graph (G₂₇ plus two carefully chosen vertices) has geometric fractional chromatic number > 4 by characterizing all 23 extremal geometric fractional colorings of G₂₇ in an 11-dimensional affine space and showing none extend validly to the augmented vertices; (2) Use amenability of the Euclidean motion group to blow up the construction, obtaining unit-distance graphs with fractional chromatic number arbitrarily close to the geometric fractional chromatic number; (3) Apply a second blow-up via large discrete cubes in the additive lattice to push the independence ratio strictly below 1/4.",
+=======
+      "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph (point configuration in ℝ²), compute its geometric fractional chromatic number via the associated linear program with 182304 variables reduced to the 23 extremal colorings spanning an 11-dimensional affine space. Then exhibit the two augmentation vertices, show the augmented 29-vertex graph remains unit-distance realizable, and verify that no feasible geometric fractional coloring of G₂₉ achieves weight 1/4 per vertex—i.e., the LP optimum exceeds 4. The key computational step is checking that none of the 23 extremal colorings of G₂₇ extend to valid fractional colorings of G₂₉, which can be reduced to finite linear arithmetic.",
+>>>>>>> Stashed changes
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
@@ -37860,8 +37918,13 @@
       "source_path": "http://arxiv.org/abs/2606.28157v1",
       "status": "available",
       "thread_id": "",
+<<<<<<< Updated upstream
       "timestamp": "2026-06-29T16:16:05.000362+00:00",
       "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/4"
+=======
+      "timestamp": "2026-06-29T16:25:48.401988+00:00",
+      "title": "Geometric fractional chromatic number of the augmented 29-vertex unit-distance graph exceeds 4"
+>>>>>>> Stashed changes
     },
     {
       "ambition_level": "extension",
