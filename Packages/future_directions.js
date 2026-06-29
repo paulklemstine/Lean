@@ -2315,6 +2315,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer $n \\ge 3$, the minimum size of a finite poset realizing $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ as its automorphism group is $2^{n+1} + 2$.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2904",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:48:16.342337+00:00",
+    "title": "Minimum Poset Size for Automorphism Group Z2 x Z2^n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2904",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:48:36.541820+00:00",
+    "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
