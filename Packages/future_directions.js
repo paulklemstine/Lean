@@ -179,7 +179,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ABC Conjecture Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98700ccf",
     "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
     "domains": [
       "Algebra",
@@ -189,7 +189,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:12.343420+00:00",
     "title": "Baum-Connes Conjecture"
   },
@@ -328,7 +328,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "88d0b365",
     "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
     "domains": [
       "Algebra"
@@ -337,7 +337,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:00.735432+00:00",
     "title": "Legendre's Conjecture"
   },
@@ -387,21 +387,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432801+00:00",
     "title": "Categorical Foundations: Yoneda and Adjunctions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "fd_0539",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:06.880463+00:00",
-    "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
   {
     "consumed_by_exp_id": "",
@@ -509,22 +494,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432777+00:00",
     "title": "Universal Approximation: Quantitative Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Combinatorics"
-    ],
-    "id": "seed_373",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-18T03:56:25.432796+00:00",
-    "title": "Tropical Curves and Chip-Firing Games"
   },
   {
     "consumed_by_exp_id": "",
@@ -781,7 +750,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Invariant Subspace Problem: Special Cases"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "032698b5",
     "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension \u2265 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
     "domains": [
       "Geometry",
@@ -791,7 +760,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432660+00:00",
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
@@ -1734,6 +1703,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Maximum Cardinality Diagonal Quantum Latin Squares for All Orders n \u2265 4"
   },
   {
+    "consumed_by_exp_id": "1eb7e7f0",
+    "description": "For all integers m \u2265 3 and n \u2265 m with n \u2261 m (mod 2) and (m\u00b2 \u2212 2m + n) \u2223 n(n\u22121), there exists a Class-Uniformly Resolvable Design on n varieties with partition m^1 2^{(n\u2212m)/2} and \u03bb = 1. The paper establishes these as necessary conditions and proves existence when m is a power of an odd prime (via affine plane-derived construction) and when m = 2k for certain cyclic designs. The conjecture asserts these divisibility and parity conditions are also sufficient, making the existence problem completely solved.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2851",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27519v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-29T09:08:52.620285+00:00",
+    "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "For every \u03b5 > 0, there exists T\u2080(\u03b5) > 0 such that for all T \u2265 T\u2080(\u03b5), \u222b\u2080\u1d40 |\u03b6(1/2 + it)|\u2076 dt \u2265 (42 - \u03b5) \u00b7 c\u2083 \u00b7 T \u00b7 (log T)\u2079, where c\u2083 = a\u2083/9! and a\u2083 is the Keating\u2013Snaith arithmetic factor defined by the Euler product \u220f_p (1 - 1/p)\u2079 \u03a3_{m\u22650} (\u0393(m+3)/(\u0393(m+1)\u00b7\u0393(3)))\u00b2 \u00b7 p\u207b\u1d50. This asserts that the lim inf of M\u2083(T)/(c\u2083\u00b7T\u00b7(log T)\u2079) equals 42, matching the Keating\u2013Snaith conjecture from the lower bound side, and would improve the current unconditional constant of 34.1 established in the paper.",
     "domains": [
@@ -2057,18 +2041,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For each prime k with 5 \u2264 k \u2264 97, let s = 2k+4. For every prime p \u2265 11, the Diophantine equation P_s(n) = t^p has no integer solutions with n \u2209 {0,1}. This conjecture covers the remaining open cases from Theorem 1(iv) of the paper, where it is shown that there is at most one such solution for each p and any such solution must have n \u2265 10^{100,000p}. The paper expects no such solutions exist based on GRH and the weak effective abc conjecture.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2875",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T16:56:12.518505+00:00",
+    "title": "No nontrivial perfect powers in even-indexed polygonal numbers for exponents p \u2265 11"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The polytope of optimal geometric fractional colorings of the 27-vertex unit-distance graph G27, defined by Matolcsi et al., has exactly 23 vertices (extremal colorings) and affine dimension 11.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2875",
+    "id": "fd_2876",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
     "status": "available",
     "timestamp": "2026-06-29T16:29:26.666347+00:00",
     "title": "Dimension and Vertex Count of the Optimal Geometric Fractional Coloring Polytope for G27"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every \u03c4_k-maximal graph on n \u2265 2k+2 vertices with minimum degree at least k+1 must have exactly (k+1)(n-1)-1 edges.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2877",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "available",
+    "timestamp": "2026-06-29T16:56:43.577232+00:00",
+    "title": "Conjecture on edge count of \u03c4_k-maximal graphs with minimum degree at least k+1"
   },
   {
     "consumed_by_exp_id": "",
@@ -2214,21 +2226,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Pairings, BLS Signatures, and Aggregation\n\nThis cycle established the algebraic security spine of pairing-based signatures:\nbilinearity and completeness (the BLS verification equation), the alternating /\nantisymmetry property of the Weil pairing, the MOV transport of the elliptic-curve\ndiscrete log into a finite field, a tight reduction showing that forging a BLS\nsignature *is* computing a Diffie\u2013Hellman value, and a proof that naive\nsame-message aggregation is broken by a rogue-key telescoping attack while\ndistinct-message aggregation binds every signer. The following conjectures push\nbeyond what was settled here.\n\n## 1. Tightness is an exact equality, not just a reduction\n\n**Conjecture.** For a nondegenerate bilinear pairing, the set of values that pass\nthe verification equation against a fixed public key and a fixed hash is a\n*singleton*, and that singleton coincides exactly with the Diffie\u2013Hellman value of\nthe key/hash pair. Consequently the forgery advantage and the Diffie\u2013Hellman\nadvantage are equal \u2014 not merely related by a loss factor \u2014 for every adversary.\n\nThe key insight is that nondegeneracy turns the completeness equation from a\none-way certificate into a two-way characterization: a passing signature is forced\nto equal the unique Diffie\u2013Hellman combination, so there is no slack in the\nreduction to absorb.\n\nWhy now? The community has invested heavily in *tight* security proofs to allow\nsmaller parameters; an equality-level reduction, rather than an inequality, would\nlet implementers calibrate group sizes against the underlying hard problem with no\nsafety margin lost to the proof.\n\n## 2. The aggregation identity is a homomorphism whose kernel is the attack surface\n\n**Conjecture.** The map sending a family of signatures to their aggregate is a\ngroup homomorphism from the product of per-signer signature spaces into the single\nsignature space, and every successful rogue-key forgery corresponds to a nontrivial\nelement of its kernel. Forcing distinct messages collapses that kernel to the\nidentity.\n\nThe key insight is that the same summation law that compresses many signatures\ninto one is linear, so forgeries are exactly the linear relations among public\nkeys that a verifier fails to separate \u2014 and \"distinctness of messages\" is the\nprecise condition that removes those relations.\n\nWhy now? Aggregate and threshold signatures are being deployed at scale in\nconsensus protocols, where rogue-key defenses (proof-of-possession, message\nprefixing) are bolted on heuristically; a kernel-level characterization would tell\ndesigners exactly which defenses are necessary and which are redundant.\n\n## 3. Embedding degree controls a sharp security cliff\n\n**Conjecture.** There is a threshold phenomenon governed solely by the order of the\nself-pairing value: when that order is at least the order of the base point, the\ndiscrete log is recovered exactly, and below the threshold the recoverable\ninformation degrades by an explicitly computable congruence modulus. The security\nof a curve is therefore a step function of its embedding degree, not a smooth\ntrade-off.\n\nThe key insight is that the pairing reduces the discrete log to a single\ncongruence modulo the order of the self-pairing value, so all of the curve's\nsecret-hiding capacity is concentrated in that one number.\n\nWhy now? Pairing-friendly curves are deliberately engineered with small embedding\ndegree for efficiency, sitting exactly where this cliff lives; a precise threshold\nstatement would convert a folklore \"small embedding degree is dangerous\" warning\ninto a quantitative design constraint.\n\n## 4. Alternation is the unique obstruction to self-pairing discrete-log attacks\n\n**Conjecture.** Among all bilinear pairings on a fixed group, the alternating ones\nare precisely those for which pairing a point with itself reveals nothing about its\ndiscrete log. Equivalently, any non-alternating bilinear pairing leaks discrete-log\ninformation through self-pairing, and the alternating Weil pairing is the canonical\nleak-free choice.\n\nThe key insight is that the antisymmetry forced by alternation makes the\nself-pairing trivial, so the diagonal of the pairing \u2014 the one input an adversary\nalways has access to \u2014 carries no exploitable structure.\n\nWhy now? New pairing constructions and \"self-pairings\" are being proposed for\nadvanced protocols; a clean statement of when the diagonal is safe would screen\nthese constructions before they are trusted with secret material.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2876",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e94880cd",
-    "status": "available",
-    "timestamp": "2026-06-29T16:48:55.056581+00:00",
-    "title": "Algebraic security spine of pairing-based signatures:"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2302,7 +2299,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3ec587ed",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -2312,7 +2309,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -2434,7 +2431,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Idempotent Probability: Large Deviations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7a2dfdf",
     "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
     "domains": [
       "Bridges",
@@ -2444,12 +2441,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.353451+00:00",
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7f917f25",
     "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
     "domains": [
       "Cryptography",
@@ -2459,7 +2456,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.236800+00:00",
     "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
