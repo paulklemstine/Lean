@@ -2096,7 +2096,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Independence Ratio Constraint"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60fa5375",
     "description": "The Diophantine equation P_{14}(n) = t^4, which simplifies to 6n^2 - 5n = t^4, has exactly five integer solutions: (n,t) \u2208 {(0,0), (1,1), (1,-1), (-2000, 70), (-2000, -70)}. This corresponds to Theorem 1(i) for k=5 in the paper, establishing the full solution set for the 14-gonal numbers that are perfect fourth powers.",
     "domains": [
       "Pythagorean"
@@ -2105,7 +2105,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:48:46.554593+00:00",
     "title": "Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
   },
@@ -2226,6 +2226,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T20:02:46.148570+00:00",
     "title": "Effective Combinatorial Nerve Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n \u2265 1, the minimum number of elements in a poset whose automorphism group is isomorphic to Z\u2082 \u00d7 Z_{2^n} equals 2^{n+1} + 2. This extends the paper's main theorem from n \u2265 3 to all n \u2265 1, covering the previously unresolved cases n = 1 (Klein four-group) and n = 2.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2894",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:19:27.243667+00:00",
+    "title": "\u03b2(Z\u2082 \u00d7 Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2895",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:19:39.963436+00:00",
+    "title": "Extremal Geometric Fractional Colorings of G\u2082\u2087 Have Exactly 23 Vertices"
   },
   {
     "consumed_by_exp_id": "",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3847ce48",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions: self-dual string C-groups\n\nDerived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,\n`simplex_selfDual`, and `symmetricGroup_selfDual_rank`.\n\n## Conjecture 1",
-      "quality_score": 0.75084,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-26T11:34:11",
-      "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
-    },
-    {
       "cycle_id": "0e9a5064",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Sun's truncated Legendre-symbol determinant\n\nThis cycle formalised the *structural* half of Sun's identity in full generality\n(`det A = det(C+J) · X` for all primes `p ≥ 7`, `p ≡",
@@ -2501,6 +2491,16 @@
       "theorem_count": 4,
       "timestamp": "2026-06-29T18:23:07",
       "title": "Classification of Perfect Cubes in 14-gonal Numbers"
+    },
+    {
+      "cycle_id": "47d1dc51",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Obstruction Comparisons over p-adic Function Fields\n\nThis cycle isolated the structural skeleton behind the claim that, for a smooth\nproper rationally connected variety over the f",
+      "quality_score": 0.5394642553191489,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-29T20:18:35",
+      "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Fun"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79664
     }
   ],
-  "last_updated": "2026-06-29T18:23:07",
+  "last_updated": "2026-06-29T20:18:35",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3f78044a",
-        "quality": 0.5920639999999999,
-        "theorems": 0,
-        "title": "Formal Verification of Algorithms"
-      },
-      {
         "cycle_id": "333b621d",
         "quality": 0.72324,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.4432100000000001,
         "theorems": 4,
         "title": "Classification of Perfect Cubes in 14-gonal Numbers"
+      },
+      {
+        "cycle_id": "47d1dc51",
+        "quality": 0.5394642553191489,
+        "theorems": 15,
+        "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varie"
       }
     ],
     "NumberTheory": [

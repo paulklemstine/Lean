@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-29T20:16:05Z",
+    "domain": "Novelty",
+    "exp_id": "47d1dc51",
+    "filename": "unramified_obstruction_equals_descent_obstruction_.json",
+    "pkg_num": 204,
+    "quality": "partial",
+    "quality_score": 0.5394642553191489,
+    "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
+  },
+  {
     "date": "2026-06-29T18:20:35Z",
     "domain": "Novelty",
     "exp_id": "c9fb85eb",
@@ -3630,6 +3640,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Universal Approximation: Quantitative Linear and Quadratic Rates for ReLU Networks"
+  },
+  "unramified_obstruction_equals_descent_obstruction_.json": {
+    "domain": "Novelty",
+    "exp_id": "47d1dc51",
+    "source_exp_ids": [
+      "2606.27699v1"
+    ],
+    "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Function Fields"
   },
   "wall_menger_separator_optimality_conjecture.json": {
     "domain": "Applications",

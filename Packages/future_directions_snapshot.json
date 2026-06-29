@@ -3376,7 +3376,7 @@
       "Diophantine_equations",
       "Polygonal_numbers"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60fa5375",
     "description": "The Diophantine equation P_{14}(n) = t^4, which simplifies to 6n^2 - 5n = t^4, has exactly five integer solutions: (n,t) ∈ {(0,0), (1,1), (1,-1), (-2000, 70), (-2000, -70)}. This corresponds to Theorem 1(i) for k=5 in the paper, establishing the full solution set for the 14-gonal numbers that are perfect fourth powers.",
     "domain_bridges": [
       "Algebraic_geometry",
@@ -3391,7 +3391,7 @@
     "proof_strategy": "Transform the equation 6n^2 - 5n = t^4 into a Thue equation via appropriate algebraic substitution, compute linear forms in logarithms to establish an explicit upper bound on n and t, and verify the remaining finite cases computationally within Lean.",
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:48:46.554593+00:00",
     "title": "Complete Solutions to the 14-gonal Fourth Power Diophantine Equation"
   },
@@ -3613,6 +3613,60 @@
     "status": "available",
     "timestamp": "2026-06-29T20:02:46.148570+00:00",
     "title": "Effective Combinatorial Nerve Theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "poset_automorphism_groups",
+      "minimum_realization_number"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n ≥ 1, the minimum number of elements in a poset whose automorphism group is isomorphic to Z₂ × Z_{2^n} equals 2^{n+1} + 2. This extends the paper's main theorem from n ≥ 3 to all n ≥ 1, covering the previously unresolved cases n = 1 (Klein four-group) and n = 2.",
+    "domain_bridges": [
+      "finite_group_theory",
+      "computational_enumeration"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2894",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The upper bound β(Z₂ × Z_{2^n}) ≤ 2^{n+1} + 2 follows from Proposition 1 of the paper combined with the known result β(Z_{2^n}) = 2^{n+1}. The lower bound for n = 1 and n = 2 can be established by exhaustive computational verification: check that no poset on 2^{n+1} + 1 elements (5 elements for n=1, 9 elements for n=2) has automorphism group isomorphic to Z₂ × Z_{2^n}. The n=1 case (β(V₄) = 6) is particularly tractable via brute-force enumeration of all posets on 5 elements.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28231v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:19:27.243667+00:00",
+    "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MRVZ_27_vertex_graph",
+      "geometric_fractional_chromatic_number",
+      "extremal_coloring_polytope"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G₂₇ constructed by Matolcsi, Ruzsa, Varga, and Zsámboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes χ_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
+    "domain_bridges": [
+      "linear_programming",
+      "computational_geometry",
+      "measurable_graph_coloring"
+    ],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2895",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph with its coordinates. Encode the geometric fractional chromatic number as a linear program over measurable functions. Use the finite-dimensional reduction (the LP with 182304 variables capturing the constraints on finite sub-configurations) to extract the extreme points computationally. Verify each of the 23 extremal colorings satisfies all unit-distance constraints and achieves total weight exactly 4, and confirm no other extreme points exist via vertex enumeration on the LP's feasible polytope.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:19:39.963436+00:00",
+    "title": "Extremal Geometric Fractional Colorings of G₂₇ Have Exactly 23 Vertices"
   },
   {
     "ambition_level": "extension",
