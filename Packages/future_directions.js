@@ -2069,12 +2069,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that all limit points \u03b3 < \u03c4^(1/2)+\u03c4^(-1/2) of \u03bc(G) for graphs G lie in the field extension Q(\u221a5).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2877",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28162v1",
+    "status": "available",
+    "timestamp": "2026-06-29T17:35:45.434135+00:00",
+    "title": "All limit points of the largest matching roots below \u03c4^(1/2)+\u03c4^(-1/2) are in Q(\u221a5)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The polytope of optimal geometric fractional colorings of the 27-vertex unit-distance graph G27, defined by Matolcsi et al., has exactly 23 vertices (extremal colorings) and affine dimension 11.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2877",
+    "id": "fd_2878",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2088,7 +2103,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2878",
+    "id": "fd_2879",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
@@ -2102,13 +2117,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2879",
+    "id": "fd_2880",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
     "status": "available",
     "timestamp": "2026-06-29T17:14:17.022638+00:00",
     "title": "Elementary Abelian 2-Groups Characterize Pairwise Reflection-Symmetric Latin Squares of Order 2^k"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every integer t \u2265 2 and all n \u2265 2t, the unique tK3-free graph of order n with maximum signless Laplacian spectral radius is the join K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2881",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28121v1",
+    "status": "available",
+    "timestamp": "2026-06-29T17:36:05.830859+00:00",
+    "title": "Extension of the extremal graph for tK3-free graphs to linear order"
   },
   {
     "consumed_by_exp_id": "",

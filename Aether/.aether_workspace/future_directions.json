@@ -38005,6 +38005,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "graph polynomials",
+        "algebraic numbers in combinatorics"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that all limit points γ < τ^(1/2)+τ^(-1/2) of μ(G) for graphs G lie in the field extension Q(√5).",
+      "domain_bridges": [
+        "graph theory",
+        "number theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2877",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "∀γ ∈ ℝ, γ < τ^(1/2)+τ^(-1/2), ∃G_i | μ(G_i) → γ ⟹ γ ∈ ℚ(√5)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Show that μ(G) for graphs achieving γ < τ^(1/2)+τ^(-1/2) must satisfy algebraic constraints derived from the matching polynomial's coefficients, implying γ ∈ Q(√5).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28162v1",
+      "source_path": "http://arxiv.org/abs/2606.28162v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T17:35:45.434135+00:00",
+      "title": "All limit points of the largest matching roots below τ^(1/2)+τ^(-1/2) are in Q(√5)"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "MRVZ",
         "Erdos_1987"
       ],
@@ -38025,7 +38070,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2877",
+      "id": "fd_2878",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem G27_optimal_geometric_fractional_coloring_polytope :\n  let G27 := MRVZ_G27 -- the specific 27-vertex unit-distance graph\n  let P := optimal_geometric_fractional_coloring_polytope G27\n  P.extremePoints.card = 23 ∧ P.affineDimension = 11 :=\n  by sorry",
@@ -38071,7 +38116,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2878",
+      "id": "fd_2879",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_maximal_edge_count {k n : ℕ} (hk : 1 ≤ k) (hn : 2 * k + 2 ≤ n) {G : Graph ℕ} (hG : IsTauKMaximal k G) (hmin : ∀ v, 0 < G.degree v) (hdeg : ∀ v, G.degree v ≥ k + 1) : G.edgeCount = (k + 1) * (n - 1) - 1 := by sorry",
@@ -38116,7 +38161,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2879",
+      "id": "fd_2880",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pairwise_reflection_symmetryImplies_elementary_abelian {n : ℕ} (h_power : ∃ k, n = 2^k) (L : Matrix (Fin n) (Fin n) (Fin n)) [LatinSquare L] [PairwiseReflectionSymmetric L] : ∃ (G : Type*) [group G] [fintype G] [∀ g : G, g + g = 0] [hG : card G = n], L = matrix_of_group_multiplication G",
@@ -38135,6 +38180,51 @@
       "thread_id": "",
       "timestamp": "2026-06-29T17:14:17.022638+00:00",
       "title": "Elementary Abelian 2-Groups Characterize Pairwise Reflection-Symmetric Latin Squares of Order 2^k"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO:05C50",
+        "math.CO:05C35"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: For every integer t ≥ 2 and all n ≥ 2t, the unique tK3-free graph of order n with maximum signless Laplacian spectral radius is the join K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}.",
+      "domain_bridges": [
+        "Spectral graph theory",
+        "Extremal combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2881",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem conjecture_tK3_free_extremal_signless_laplacian (t : ℕ) (ht : t ≥ 2) (n : ℕ) (hn : n ≥ 2 * t) (G : SimpleGraph ℕ) (hG : Is_tK3_free t G) (hmax : ∀ (H : SimpleGraph ℕ), Is_tK3_free t H → signless_laplacian_spectral_radius H ≤ signless_laplacian_spectral_radius G) : G = (complete_graph (t-1)).join (complete_bipartite_graph (Nat.floor ((n - t + 1) / 2)) (Nat.ceil ((n - t + 1) / 2))) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the proof of the main theorem by decreasing the threshold via a stability argument: show that any tK3-free graph with signless Laplacian spectral radius close to the extremal value must be structurally similar to the conjectured extremal graph, and then use induction on n together with eigenvalue interlacing to handle the smaller cases.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28121v1",
+      "source_path": "http://arxiv.org/abs/2606.28121v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T17:36:05.830859+00:00",
+      "title": "Extension of the extremal graph for tK3-free graphs to linear order"
     },
     {
       "ambition_level": "extension",

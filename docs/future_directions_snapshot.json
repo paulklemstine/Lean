@@ -3296,6 +3296,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "graph polynomials",
+      "algebraic numbers in combinatorics"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that all limit points γ < τ^(1/2)+τ^(-1/2) of μ(G) for graphs G lie in the field extension Q(√5).",
+    "domain_bridges": [
+      "graph theory",
+      "number theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2877",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that μ(G) for graphs achieving γ < τ^(1/2)+τ^(-1/2) must satisfy algebraic constraints derived from the matching polynomial's coefficients, implying γ ∈ Q(√5).",
+    "research_mode": "team",
+    "source_exp_id": "2606.28162v1",
+    "status": "available",
+    "timestamp": "2026-06-29T17:35:45.434135+00:00",
+    "title": "All limit points of the largest matching roots below τ^(1/2)+τ^(-1/2) are in Q(√5)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MRVZ",
       "Erdos_1987"
     ],
@@ -3310,7 +3336,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2877",
+    "id": "fd_2878",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate the geometric fractional chromatic number of G27 as a linear program over the restricted set of independent sets in the plane. Compute the polytope of optimal solutions by finding the convex hull of all feasible fractional colorings with total weight 4, and verify that this polytope has exactly 23 vertices and an affine dimension of 11.",
@@ -3337,7 +3363,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2878",
+    "id": "fd_2879",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction_on_n_and_case_analysis_on_min_degree",
@@ -3363,7 +3389,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2879",
+    "id": "fd_2880",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that the reflection symmetry conditions enforce the group operation to be commutative and every element to be self-inverse, thus requiring the group to be elementary abelian.",
@@ -3372,6 +3398,32 @@
     "status": "available",
     "timestamp": "2026-06-29T17:14:17.022638+00:00",
     "title": "Elementary Abelian 2-Groups Characterize Pairwise Reflection-Symmetric Latin Squares of Order 2^k"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO:05C50",
+      "math.CO:05C35"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every integer t ≥ 2 and all n ≥ 2t, the unique tK3-free graph of order n with maximum signless Laplacian spectral radius is the join K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}.",
+    "domain_bridges": [
+      "Spectral graph theory",
+      "Extremal combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2881",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the proof of the main theorem by decreasing the threshold via a stability argument: show that any tK3-free graph with signless Laplacian spectral radius close to the extremal value must be structurally similar to the conjectured extremal graph, and then use induction on n together with eigenvalue interlacing to handle the smaller cases.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28121v1",
+    "status": "available",
+    "timestamp": "2026-06-29T17:36:05.830859+00:00",
+    "title": "Extension of the extremal graph for tK3-free graphs to linear order"
   },
   {
     "ambition_level": "extension",
