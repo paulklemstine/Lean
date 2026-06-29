@@ -1625,7 +1625,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Palindromicity and Non-Negativity of Principal Specializations of One-Row Schur Q-Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43fcf247",
     "description": "The number of 2-balanced p-regular partitions in any block of p-weight w for an odd prime p is precisely the binomial coefficient C(w + (p-3)/2, w). A partition is 2-balanced p-regular if it is p-regular and every hook of length divisible by p has an even arm length.",
     "domains": [
       "Pythagorean",
@@ -1635,7 +1635,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T10:45:11.578131+00:00",
     "title": "Enumeration of 2-balanced p-regular partitions in blocks"
   },
@@ -2035,7 +2035,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "99e4c1c9",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
@@ -2045,7 +2045,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
@@ -2123,7 +2123,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No non-trivial prime-power solutions in specific polygonal number sequences"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "feb44fa2",
     "description": "Every $\\tau_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges, for integers $k \\ge 1$ and $n \\ge 2k+2$. A graph $G$ is $\\tau_k$-maximal if it contains no subgraph admitting $k+1$ edge-disjoint spanning trees (i.e., its spanning tree packing number $\\tau(G) \\le k$), but adding any edge from its complement creates a graph that does admit $k+1$ edge-disjoint spanning trees (i.e., $\\tau(G+e) \\ge k+1$ for all $e \\notin E(G)$).",
     "domains": [
       "Bridges"
@@ -2132,7 +2132,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:55:49.745314+00:00",
     "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
   },
@@ -2165,7 +2165,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Point Continuum of Largest Matching Roots"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9b3d24f",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domains": [
       "Geometry",
@@ -2175,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G\u2082\u2087 Have Exactly 23 Vertices"
   },
@@ -3153,7 +3153,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f4fe8b8",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domains": [
       "Bridges",
@@ -3163,7 +3163,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
