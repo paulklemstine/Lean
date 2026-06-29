@@ -328,6 +328,27 @@ window.PACKAGE_DB_INDEX = {json.dumps(package_db_index, indent=2, sort_keys=True
     with open("package_index.js", "w", encoding="utf-8") as out:
         out.write(js_content)
 
+    # Cache-bust the package_index.js <script> tag in index.html so browsers
+    # fetch the fresh index (with newly-added packages) instead of a stale
+    # cached copy. Version on package count + a timestamp so any rebuild busts.
+    import time as _t
+    _idx_version = f"{len(json_files)}.{int(_t.time())}"
+    _idx_html = os.path.join(script_dir, "index.html")
+    if os.path.exists(_idx_html):
+        try:
+            import re as _re
+            _h = open(_idx_html, "r", encoding="utf-8").read()
+            _h_new = _re.sub(
+                r'<script src="package_index\.js(\?v=[^"]*)?">',
+                f'<script src="package_index.js?v={_idx_version}">',
+                _h,
+            )
+            if _h_new != _h:
+                open(_idx_html, "w", encoding="utf-8").write(_h_new)
+                print(f"Bumped package_index.js cache-bust in index.html -> v={_idx_version}")
+        except Exception as _e:
+            print(f"Warning: failed to bump index.html cache-bust: {_e}")
+
     # Calculate sizes
     idx_size = os.path.getsize("package_index.js")
     viz_size = sum(

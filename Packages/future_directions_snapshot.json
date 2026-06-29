@@ -1614,30 +1614,6 @@
     "title": "Exact Edge Count of τ_k-maximal Graphs"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.NT"
-    ],
-    "consumed_by_exp_id": "c9fb85eb",
-    "description": "The only non-negative integer solutions (n, t) to the Diophantine equation P_14(n) = t^3 are (0,0), (1,1), and (5,5), where P_s(n) = ((s-2)n^2 - (s-4)n)/2 denotes the n-th s-gonal number. This corresponds to the k=5 case of Theorem 1(ii) in the paper.",
-    "domain_bridges": [
-      "Diophantine equations",
-      "Elliptic curves"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2813",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Translate the Diophantine equation 6n^2 - 5n = t^3 into an elliptic curve problem, compute the Mordell-Weil group of the corresponding curve, and use linear forms in logarithms along with modular methods to bound and verify the finite set of integer points.",
-    "research_mode": "team",
-    "source_exp_id": "2606.28227v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T03:32:01.660417+00:00",
-    "title": "Classification of Perfect Cubes in 14-gonal Numbers"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "partition_theory",
@@ -3481,6 +3457,25 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": "Matolcsi, Ruzsa, Varga, Zsámboki",
+    "consumed_by_exp_id": "",
+    "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2884",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive existence proof",
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T18:26:42.958632+00:00",
+    "title": "Minimum Independence Ratio Constraint"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -4169,7 +4164,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "416f69d9",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -4182,7 +4177,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

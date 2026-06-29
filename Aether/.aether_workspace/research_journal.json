@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "18edb6fb",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Secret Sharing: Shamir's Scheme and Verifiable Variants\n\nThis cycle added two files extending the catalog's `ShamirSecretSharing` and `FeldmanVSS`:\n\n- `ShamirLagrangeReconstructi",
-      "quality_score": 0.6521899999999999,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-26T11:13:49",
-      "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
-    },
-    {
       "cycle_id": "3847ce48",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions: self-dual string C-groups\n\nDerived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,\n`simplex_selfDual`, and `symmetricGroup_selfDual_rank`.\n\n## Conjecture 1",
@@ -2501,6 +2491,16 @@
       "theorem_count": 2,
       "timestamp": "2026-06-29T17:59:54",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "c9fb85eb",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Tetradecagonal Numbers that are Perfect Cubes\n\nThe 14-gonal (tetradecagonal) number is\n\n    P₁₄(n) = 6n² − 5n = n(6n − 5).\n\nThe file `Catalog/Algebra/TetradecagonalCubes.lean` for",
+      "quality_score": 0.4432100000000001,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-29T18:23:07",
+      "title": "Classification of Perfect Cubes in 14-gonal Numbers"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79664
     }
   ],
-  "last_updated": "2026-06-29T17:59:54",
+  "last_updated": "2026-06-29T18:23:07",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "203b440f",
-        "quality": 0.68208,
-        "theorems": 0,
-        "title": "Frankl's Union-Closed Conjecture: Partial Results"
-      },
-      {
         "cycle_id": "3f78044a",
         "quality": 0.5920639999999999,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.6182000000000001,
         "theorems": 6,
         "title": "Langlands Correspondence: GL(1) Case"
+      },
+      {
+        "cycle_id": "c9fb85eb",
+        "quality": 0.4432100000000001,
+        "theorems": 4,
+        "title": "Classification of Perfect Cubes in 14-gonal Numbers"
       }
     ],
     "NumberTheory": [

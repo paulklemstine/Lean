@@ -1167,20 +1167,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Edge Count of \u03c4_k-maximal Graphs"
   },
   {
-    "consumed_by_exp_id": "c9fb85eb",
-    "description": "The only non-negative integer solutions (n, t) to the Diophantine equation P_14(n) = t^3 are (0,0), (1,1), and (5,5), where P_s(n) = ((s-2)n^2 - (s-4)n)/2 denotes the n-th s-gonal number. This corresponds to the k=5 case of Theorem 1(ii) in the paper.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2813",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28227v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T03:32:01.660417+00:00",
-    "title": "Classification of Perfect Cubes in 14-gonal Numbers"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any odd prime p and non-negative integer w, the number of 2-balanced p-regular partitions with p-core \u03ba and p-weight w is independent of \u03ba and equals C(w + (p\u22123)/2, w), where a partition \u03bb is 2-balanced p-regular if it is p-regular and every hook of \u03bb whose length is divisible by p has even arm length. This is the key enumeration result from the paper, connecting the crystal-reflection invariance of d-balanced partitions to an explicit binomial counting formula via RoCK blocks.",
     "domains": [
@@ -2171,6 +2157,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2884",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T18:26:42.958632+00:00",
+    "title": "Minimum Independence Ratio Constraint"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -2682,7 +2682,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "416f69d9",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -2692,7 +2692,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

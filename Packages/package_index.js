@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-29T18:20:35Z",
+    "domain": "Novelty",
+    "exp_id": "c9fb85eb",
+    "filename": "classification_of_perfect_cubes_in_14_gonal_number.json",
+    "pkg_num": 203,
+    "quality": "partial",
+    "quality_score": 0.4432100000000001,
+    "title": "Classification of Perfect Cubes in 14-gonal Numbers"
+  },
+  {
     "date": "2026-06-29T17:59:42Z",
     "domain": "Applications",
     "exp_id": "3ec587ed",
@@ -2218,6 +2228,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Circuit Complexity: Monotone Lower Bounds"
+  },
+  "classification_of_perfect_cubes_in_14_gonal_number.json": {
+    "domain": "Novelty",
+    "exp_id": "c9fb85eb",
+    "source_exp_ids": [
+      "2606.28227v1"
+    ],
+    "title": "Classification of Perfect Cubes in 14-gonal Numbers"
   },
   "close_proofs_alien_number_systems_beyond_base_n.json": {
     "domain": "Novelty",
