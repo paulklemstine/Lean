@@ -2228,12 +2228,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every positive integer M and integer k with 0 \u2264 k \u2264 M, define a_{M,k}(t) as the absolute value of the coefficient of u^k in the expansion (u;t)_M / (-u;t)_M = \u03a3_{k=0}^{M} (-1)^k a_{M,k}(t) u^k, where (u;t)_M = \u03a0_{j=0}^{M-1}(1 - u t^j) and (-u;t)_M = \u03a0_{j=0}^{M-1}(1 + u t^j). The paper establishes that each a_{M,k}(t) is a palindromic polynomial in t with nonnegative integer coefficients (being signed principal specializations of one-row Schur Q-functions). The conjecture is that each a_{M,k}(t) is also unimodal as a polynomial in t: if a_{M,k}(t) = \u03a3_{i=0}^{d} c_i t^i, then there exists j such that c_0 \u2264 c_1 \u2264 \u00b7\u00b7\u00b7 \u2264 c_j \u2265 c_{j+1} \u2265 \u00b7\u00b7\u00b7 \u2265 c_d. Since a_{M,k}(t) is palindromic, this is equivalent to the first half of the coefficient sequence being weakly increasing.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2897",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28108v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:16:08.826100+00:00",
+    "title": "Unimodality of the Mixed Scalar Factor Coefficients"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2897",
+    "id": "fd_2898",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2248,7 +2262,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2898",
+    "id": "fd_2899",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -2263,13 +2277,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2899",
+    "id": "fd_2900",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
     "status": "available",
     "timestamp": "2026-06-29T20:56:20.535355+00:00",
     "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For \u03bb = 1, a pairwise reflection-symmetric generalized Latin rectangle is precisely a pairwise reflection-symmetric Latin square of order n, which exists if and only if n is a power of two. This conjecture states that every such Latin square is isotopic to the Cayley table of the elementary abelian 2-group (Z/2Z)^k where n = 2^k, formalizing the paper's hypothesis that an underlying group-theoretic structure is unavoidable in this setting.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2901",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28315v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:16:44.577326+00:00",
+    "title": "Unavoidable Group-Theoretic Structure in Pairwise Reflection-Symmetric Latin Squares"
   },
   {
     "consumed_by_exp_id": "",

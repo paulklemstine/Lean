@@ -38918,6 +38918,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "Schur_Q_functions",
+        "Pochhammer_products",
+        "unimodal_polynomials",
+        "Gaussian_binomial_coefficients"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every positive integer M and integer k with 0 ≤ k ≤ M, define a_{M,k}(t) as the absolute value of the coefficient of u^k in the expansion (u;t)_M / (-u;t)_M = Σ_{k=0}^{M} (-1)^k a_{M,k}(t) u^k, where (u;t)_M = Π_{j=0}^{M-1}(1 - u t^j) and (-u;t)_M = Π_{j=0}^{M-1}(1 + u t^j). The paper establishes that each a_{M,k}(t) is a palindromic polynomial in t with nonnegative integer coefficients (being signed principal specializations of one-row Schur Q-functions). The conjecture is that each a_{M,k}(t) is also unimodal as a polynomial in t: if a_{M,k}(t) = Σ_{i=0}^{d} c_i t^i, then there exists j such that c_0 ≤ c_1 ≤ ··· ≤ c_j ≥ c_{j+1} ≥ ··· ≥ c_d. Since a_{M,k}(t) is palindromic, this is equivalent to the first half of the coefficient sequence being weakly increasing.",
+      "domain_bridges": [
+        "Symmetric_functions",
+        "Projective_representations_of_symmetric_groups",
+        "q_analogues",
+        "Combinatorial_Hodge_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2897",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem mixed_scalar_coeff_unimodal (M : ℕ) (k : ℕ) (hk : k ≤ M) :\n    IsUnimodal (mixedScalarCoeff M k) :=\n  sorry\n\n/-- where mixedScalarCoeff M k returns the polynomial a_{M,k}(t)\n    defined as the absolute value of the coefficient of u^k in\n    (u;t)_M / (-u;t)_M, and IsUnimodal P asserts that the\n    coefficient sequence of polynomial P is weakly increasing\n    then weakly decreasing. -/\n\n-- Auxiliary: nonnegativity and palindromicity (proven in paper)\ntheorem mixed_scalar_coeff_nonneg (M : ℕ) (k : ℕ) (hk : k ≤ M) :\n    ∀ c ∈ (mixedScalarCoeff M k).coeffs, (c : ℤ) ≥ 0 := sorry\n\ntheorem mixed_scalar_coeff_palindromic (M : ℕ) (k : ℕ) (hk : k ≤ M) :\n    IsPalindromic (mixedScalarCoeff M k) := sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Exploit the identification of a_{M,k}(t) as a principal specialization of a one-row Schur Q-function q_k(1, t, t^2, ..., t^{M-1}) and apply techniques from the theory of unimodal log-concave sequences. Specifically: (1) show that a_{M,k}(t) can be realized as the rank-generating function of a ranked poset that is rank-symmetric and satisfies the Lefschetz property, implying unimodality via the hard Lefschetz theorem for posets; or (2) establish a combinatorial interpretation via lattice paths with restricted steps and apply the theory of log-concave sequences via injections; or (3) express a_{M,k}(t) as a positive sum of Gaussian binomial coefficients and leverage known unimodality results for such coefficients.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28108v1",
+      "source_path": "http://arxiv.org/abs/2606.28108v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T21:16:08.826100+00:00",
+      "title": "Unimodality of the Mixed Scalar Factor Coefficients"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "MRVZ_27_vertex_graph",
         "geometric_fractional_chromatic_number",
         "extremal_coloring_polytope"
@@ -38939,7 +38988,7 @@
         "Geometry",
         "Algebra"
       ],
-      "id": "fd_2897",
+      "id": "fd_2898",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_colorings_of_G27 (G : UnitDistanceGraph) (hG : G = G27) : let P := geometricFractionalColoringPolytope G; P.dim = 11 ∧ (P.extremePoints).ncard = 23 ∧ ∀ c ∈ P.extremePoints, c.totalWeight = 4",
@@ -38988,7 +39037,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2898",
+      "id": "fd_2899",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_slower_than_full {q : ℕ} (hq : Fact (Nat.Prime q)) : let n := q^2 + q + 1; let ℓ := q + 1; let E_PG : ℝ := expected_coverage_time (projective_plane_mechanism q); let E_full : ℝ := expected_coverage_time (full_mechanism n ℓ); E_PG > E_full := by sorry",
@@ -39038,7 +39087,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2899",
+      "id": "fd_2900",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem d_balanced_e_regular_partitions_in_block_count (d e : ℕ) (hd : d > 1) (he : e > 1) (hdiv : (e - 1) % d = 0) (w : ℕ) (κ : Partition) (hκ : IsECore e κ) : Finset.card (Finset.filter (fun λ : Partition => IsDBalanced d e λ ∧ IsERegular e λ ∧ eWeight e λ = w ∧ eCore e λ = κ) (Finset.univ)) = Nat.choose (w + (e - 1) / d - 1) w := by\n  sorry",
@@ -39057,6 +39106,54 @@
       "thread_id": "",
       "timestamp": "2026-06-29T20:56:20.535355+00:00",
       "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "cs.DM",
+        "math.GR"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For λ = 1, a pairwise reflection-symmetric generalized Latin rectangle is precisely a pairwise reflection-symmetric Latin square of order n, which exists if and only if n is a power of two. This conjecture states that every such Latin square is isotopic to the Cayley table of the elementary abelian 2-group (Z/2Z)^k where n = 2^k, formalizing the paper's hypothesis that an underlying group-theoretic structure is unavoidable in this setting.",
+      "domain_bridges": [
+        "Combinatorial Designs",
+        "Latin Squares",
+        "Finite Groups",
+        "Group Isotopy"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2901",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Combinatorics.LatinSquares.Basic\n\n-- Conjecture: A pairwise reflection symmetric Latin square of order n = 2^k\n-- is isotopic to the Cayley table of an elementary abelian 2-group.\ntheorem pairwise_reflection_symmetric_isotopic_abelian_2_group\n    {n : ℕ} (hn : ∃ k : ℕ, n = 2^k)\n    (A : Matrix (Fin n) (Fin n) (Fin n))\n    (hLS : LatinSquare A)\n    (hPRS : PairwiseReflectionSymmetric A) :\n    ∃ (G : Type) [Fintype G] [CommGroup G] (_ : ∀ g : G, g * g = 1),\n    IsIsotopic A (CayleyTable G) :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Translate the pairwise reflection symmetry condition into the property that the permutation mapping any column to another in the Latin square is an involution. Use the theory of Latin squares and quasigroups to show that this property forces the corresponding quasigroup to be isotopic to an associative quasigroup of exponent 2, which is necessarily an elementary abelian 2-group.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28315v1",
+      "source_path": "http://arxiv.org/abs/2606.28315v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T21:16:44.577326+00:00",
+      "title": "Unavoidable Group-Theoretic Structure in Pairwise Reflection-Symmetric Latin Squares"
     },
     {
       "ambition_level": "extension",

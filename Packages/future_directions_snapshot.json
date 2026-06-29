@@ -3632,6 +3632,36 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "Schur_Q_functions",
+      "Pochhammer_products",
+      "unimodal_polynomials",
+      "Gaussian_binomial_coefficients"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer M and integer k with 0 ≤ k ≤ M, define a_{M,k}(t) as the absolute value of the coefficient of u^k in the expansion (u;t)_M / (-u;t)_M = Σ_{k=0}^{M} (-1)^k a_{M,k}(t) u^k, where (u;t)_M = Π_{j=0}^{M-1}(1 - u t^j) and (-u;t)_M = Π_{j=0}^{M-1}(1 + u t^j). The paper establishes that each a_{M,k}(t) is a palindromic polynomial in t with nonnegative integer coefficients (being signed principal specializations of one-row Schur Q-functions). The conjecture is that each a_{M,k}(t) is also unimodal as a polynomial in t: if a_{M,k}(t) = Σ_{i=0}^{d} c_i t^i, then there exists j such that c_0 ≤ c_1 ≤ ··· ≤ c_j ≥ c_{j+1} ≥ ··· ≥ c_d. Since a_{M,k}(t) is palindromic, this is equivalent to the first half of the coefficient sequence being weakly increasing.",
+    "domain_bridges": [
+      "Symmetric_functions",
+      "Projective_representations_of_symmetric_groups",
+      "q_analogues",
+      "Combinatorial_Hodge_theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2897",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Exploit the identification of a_{M,k}(t) as a principal specialization of a one-row Schur Q-function q_k(1, t, t^2, ..., t^{M-1}) and apply techniques from the theory of unimodal log-concave sequences. Specifically: (1) show that a_{M,k}(t) can be realized as the rank-generating function of a ranked poset that is rank-symmetric and satisfies the Lefschetz property, implying unimodality via the hard Lefschetz theorem for posets; or (2) establish a combinatorial interpretation via lattice paths with restricted steps and apply the theory of log-concave sequences via injections; or (3) express a_{M,k}(t) as a positive sum of Gaussian binomial coefficients and leverage known unimodality results for such coefficients.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28108v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:16:08.826100+00:00",
+    "title": "Unimodality of the Mixed Scalar Factor Coefficients"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MRVZ_27_vertex_graph",
       "geometric_fractional_chromatic_number",
       "extremal_coloring_polytope"
@@ -3647,7 +3677,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2897",
+    "id": "fd_2898",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph with its coordinates. Encode the geometric fractional chromatic number as a linear program over measurable functions. Use the finite-dimensional reduction (the LP with 182304 variables capturing the constraints on finite sub-configurations) to extract the extreme points computationally. Verify each of the 23 extremal colorings satisfies all unit-distance constraints and achieves total weight exactly 4, and confirm no other extreme points exist via vertex enumeration on the LP's feasible polytope.",
@@ -3677,7 +3707,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2898",
+    "id": "fd_2899",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the inequality E_PG(q) > E_full(q) by computing or bounding the expected coverage times via inclusion-exclusion. The expected coverage time for a fair mechanism F on [n] with block size ℓ is E[F] = ∫₀^∞ (1 - ∏_{S∈F}(1 - e^{-|S∩T|t}/|F|)) dt for the set T of already-collected coupons, which can be reformulated as E[F] = ∑_{k=1}^{n} (-1)^{k+1} ∑_{A∈([n] choose k)} 1/(1 - P_F(A)) where P_F(A) is the probability a random block from F contains A. The key comparison reduces to showing that the projective plane mechanism has a larger sum over k-subset intersection statistics than the full model. Use the fact that in PG(2,q), every pair of distinct points lies on exactly one line, and every line has exactly q+1 points, to compute the k-wise intersection probabilities exactly and compare term by term with the full model.",
@@ -3708,7 +3738,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2899",
+    "id": "fd_2900",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two stages, both formalizable. First, show that the crystal (affine) reflection operators preserve the d-balanced property, which implies the count is independent of the e-core (since all e-cores in the same weight are connected by crystal reflections). Second, compute the count in a RoCK block—a distinguished e-core where the enumeration reduces to counting d-balanced e-regular e-quotients of weight w, which are in bijection with certain restricted integer compositions counted by the binomial coefficient. Formalizing this requires: (1) defining hook lengths, arm/leg lengths, e-regularity, and d-balanced property for partitions in Mathlib; (2) constructing the e-core and e-quotient bijection; (3) defining the affine crystal reflection operators on e-regular partitions and proving they preserve d-balancedness; (4) the RoCK block reduction and final binomial enumeration.",
@@ -3717,6 +3747,35 @@
     "status": "available",
     "timestamp": "2026-06-29T20:56:20.535355+00:00",
     "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "cs.DM",
+      "math.GR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For λ = 1, a pairwise reflection-symmetric generalized Latin rectangle is precisely a pairwise reflection-symmetric Latin square of order n, which exists if and only if n is a power of two. This conjecture states that every such Latin square is isotopic to the Cayley table of the elementary abelian 2-group (Z/2Z)^k where n = 2^k, formalizing the paper's hypothesis that an underlying group-theoretic structure is unavoidable in this setting.",
+    "domain_bridges": [
+      "Combinatorial Designs",
+      "Latin Squares",
+      "Finite Groups",
+      "Group Isotopy"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2901",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Translate the pairwise reflection symmetry condition into the property that the permutation mapping any column to another in the Latin square is an involution. Use the theory of Latin squares and quasigroups to show that this property forces the corresponding quasigroup to be isotopic to an associative quasigroup of exponent 2, which is necessarily an elementary abelian 2-group.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28315v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:16:44.577326+00:00",
+    "title": "Unavoidable Group-Theoretic Structure in Pairwise Reflection-Symmetric Latin Squares"
   },
   {
     "ambition_level": "extension",
