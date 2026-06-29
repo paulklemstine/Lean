@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c72330ea",
-      "domain": "Tropical",
-      "key_insight": "# FUTURE DIRECTIONS — Euler–Mascheroni × Tropical bridge\n\nDerived from this cycle's findings (telescoping series certificate\n`hasSum_emTerm`, effective `1/n` error bound `gamma_sub_seq_lt_inv`, and th",
-      "quality_score": 0.5940000000000001,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-26T12:10:45",
-      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-    },
-    {
       "cycle_id": "f2499c75",
       "domain": "Tropical",
       "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nThis cycle extended the catalog's idempotent large-deviation theory\n(`Catalog/Tropical/MeasureTheory/{Basic,LargeDeviations,DualityGap}.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-29T22:36:11",
       "title": "Proof Complexity: Resolution and Cutting Planes"
+    },
+    {
+      "cycle_id": "b86be6e3",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Symmetry, Balance, and the Existence of Canonical Metrics\n\nThe cycle established a clean separation between two ingredients of the\nYau–Tian–Donaldson principle for toric Fano vari",
+      "quality_score": 0.6648000000000001,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-29T22:39:38",
+      "title": "Kähler-Einstein Metrics and K-Stability"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73856
     }
   ],
-  "last_updated": "2026-06-29T22:36:11",
+  "last_updated": "2026-06-29T22:39:38",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "731f1c25",
-        "quality": 0.67588,
-        "theorems": 7,
-        "title": "Learning with Errors: Hardness Reductions"
-      },
-      {
         "cycle_id": "5a2118a3",
         "quality": 0.49160000000000004,
         "theorems": 13,
@@ -3389,6 +3383,12 @@
         "quality": 0.65224,
         "theorems": 8,
         "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+      },
+      {
+        "cycle_id": "b86be6e3",
+        "quality": 0.6648000000000001,
+        "theorems": 16,
+        "title": "Kähler-Einstein Metrics and K-Stability"
       }
     ],
     "Geometry": [
