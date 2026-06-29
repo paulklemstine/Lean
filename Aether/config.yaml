@@ -18,21 +18,20 @@ pi_agent:
   top_p: 0.92
   num_predict: 4096
   # A/B finalized: settle on the single best arm for a while.
-  # Phase A -> v16 (switched 2026-06-29 after v19d regressed: v19d recent-20
-  # avg_Q 0.079, cumulative 0.455; v16 leads recent-20 0.601, cumulative 0.509
-  # n=39, wc 38%). All other arms zeroed.
+  # Phase A -> v19d (re-pinned 2026-06-29: v16 produced 1 theorem/cycle vs
+  # v19d's 17 under Catalog-size-driven truncation; v19d has more substance).
   phase_a_prompt_weights:
-    v16: 1.0
-    v15: 0.0
-    v16a: 0.0
-    v16b: 0.0
-    v17: 0.0
-    v18: 0.0
+    v19d: 1.0
     v19: 0.0
     v19a: 0.0
     v19b: 0.0
     v19c: 0.0
-    v19d: 0.0
+    v15: 0.0
+    v16: 0.0
+    v16a: 0.0
+    v16b: 0.0
+    v17: 0.0
+    v18: 0.0
   # Phase B -> v1.1 (avg_Q 0.628 vs v2 0.606, n=220). v2 zeroed.
   phase_b_prompt_weights:
     v1.1: 1.0

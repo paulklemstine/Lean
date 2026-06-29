@@ -1149,12 +1149,48 @@ Research mode: {concept.research_mode}
                         continue
                     files_to_copy.append(src_file)
         else:
+            # Phase A: copy a BOUNDED subset of the Catalog as context, not the
+            # whole thing. The Catalog has grown to thousands of .lean files;
+            # sending all of them causes Aristotle to truncate its output
+            # (mid-proof cuts), producing ~1 theorem/cycle. Prioritize the
+            # concept's own catalog_references, then same-domain files, then a
+            # bounded sample of the rest.
+            MAX_CONTEXT_FILES = 120
+            all_lean = []
             for src_file in self.catalog_root.rglob("*.lean"):
                 if ".lake" in src_file.parts or "FINAL" in src_file.parts:
                     continue
                 if src_file.is_symlink() and not src_file.resolve().exists():
                     continue
-                files_to_copy.append(src_file)
+                all_lean.append(src_file)
+            if len(all_lean) <= MAX_CONTEXT_FILES:
+                files_to_copy.extend(all_lean)
+            else:
+                refs = set()
+                try:
+                    for r in getattr(job.concept, "catalog_references", []) or []:
+                        refs.add(str(r))
+                        refs.add(str(Path(r)))
+                except Exception:
+                    pass
+                domain = (getattr(job.concept, "domain", "") or "").lower()
+
+                def _ctx_priority(f: Path) -> int:
+                    s = str(f)
+                    score = 0
+                    if s in refs:
+                        score += 1000
+                    if any(r.endswith(s) or s.endswith(r) for r in refs):
+                        score += 500
+                    if domain and domain in s.lower():
+                        score += 10
+                    return score
+
+                all_lean.sort(key=_ctx_priority, reverse=True)
+                files_to_copy.extend(all_lean[:MAX_CONTEXT_FILES])
+                print(f"[Project] Catalog context capped to {MAX_CONTEXT_FILES} of {len(all_lean)} "
+                      f".lean files (catalog_references + {domain or 'all'}-domain first) "
+                      f"to avoid Aristotle output truncation")
 
         catalog_dst = dir_path / "Catalog"
         lean_count = 0
