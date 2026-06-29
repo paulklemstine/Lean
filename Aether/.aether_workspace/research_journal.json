@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ad454ca1",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Rademacher Complexity of Neural Networks\n\nDerived from this cycle's findings in `Basic.lean` and `NeuralNet.lean`. Each\nconjecture is bold and falsifiable.\n\n## C1. Talagrand cont",
-      "quality_score": 0.6776,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-26T09:32:11",
-      "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
-    },
-    {
       "cycle_id": "da5cb31c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Line Transversal Spaces and Sphere Homotopy\n\nThis cycle formalized the order-theoretic and antipodal-symmetry skeleton of the\ntheory of line transversals (`LineTransversalOrder.l",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-29T08:21:20",
       "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
+    },
+    {
+      "cycle_id": "fdb1bb82",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — The Euler–Mascheroni Constant and Apéry-Type Irrationality\n\nThis cycle isolated the abstract engine of every \"good rational approximation implies\nirrationality\" argument — a nonz",
+      "quality_score": 0.452,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-06-29T11:02:37",
+      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79664
     }
   ],
-  "last_updated": "2026-06-29T08:21:20",
+  "last_updated": "2026-06-29T11:02:37",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "11f0f366",
-        "quality": 0.5660000000000001,
-        "theorems": 136,
-        "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
-      },
-      {
         "cycle_id": "aa9dc0d5",
         "quality": 0.46458109090909094,
         "theorems": 67,
@@ -3699,6 +3693,12 @@
         "quality": 0.70551,
         "theorems": 3,
         "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
+      },
+      {
+        "cycle_id": "fdb1bb82",
+        "quality": 0.452,
+        "theorems": 19,
+        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
       }
     ],
     "Physics": [

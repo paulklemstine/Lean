@@ -120,7 +120,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2dcf8222",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domain_bridges": [],
     "domains": [
@@ -133,7 +133,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.938639+00:00",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
@@ -2178,7 +2178,7 @@
     "catalog_references": [
       "MRVZ"
     ],
-    "consumed_by_exp_id": "8c9c613b",
+    "consumed_by_exp_id": "",
     "description": "This conjecture examines the existence of finite unit-distance graphs in the plane with independence ratio below 1/4, offering a falsifiable direction for constructive geometric graph theory.",
     "domain_bridges": [
       "mathematical logic",
@@ -2194,7 +2194,7 @@
     "proof_strategy": "Constructive refinement of the geometric fractional chromatic number sequence",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T05:45:25.558013+00:00",
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
@@ -2316,7 +2316,7 @@
       "FunctionFieldTheory",
       "GaloisTheory"
     ],
-    "consumed_by_exp_id": "f3c7d4c4",
+    "consumed_by_exp_id": "",
     "description": "For any generalized Ankeny-Brauer-Chowla polynomial π_U(X) as defined in the paper, the associated linear recurrence sequences have exactly two sufficiently large common values, making the upper bound of two tight.",
     "domain_bridges": [
       "arithmetic_dynamics",
@@ -2331,7 +2331,7 @@
     "proof_strategy": "Extend Baker's linear forms in logarithms to construct explicit examples achieving two large common values, while leveraging function field methods to rule out additional solutions.",
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T07:18:02.548627+00:00",
     "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
   },
@@ -2398,7 +2398,7 @@
       "math.RA",
       "math.RT"
     ],
-    "consumed_by_exp_id": "3b415737",
+    "consumed_by_exp_id": "",
     "description": "For the affine quiver of type Ã_n with any acyclic orientation, the source-sink pair is the unique banded pair whose coordinate projection fails to fill its band. Specifically, for any pair of vertices (v, w) with δ_v = δ_w (which holds for all pairs in Ã_n since all null-root coefficients equal 1), the projection π_{vw}(C(Q)) fills its band if and only if {v, w} is not the source-sink pair of the given orientation. This extends the paper's complete resolution for the source-sink orientation to all acyclic orientations.",
     "domain_bridges": [
       "cluster_algebras",
@@ -2414,7 +2414,7 @@
     "proof_strategy": "Extend the AR defect obstruction from the source-sink orientation to arbitrary acyclic orientations. The paper identifies the Auslander-Reiten defect as the sole obstruction to band-filling, and shows it is detected as a coordinate difference c_v - c_w exactly for the source-sink pair in the source-sink orientation. For a general acyclic orientation, the source and sink vertices of the resulting directed path still form a distinguished pair. One must show: (1) the AR defect of the regular component is always detected as the coordinate difference for the source-sink pair regardless of orientation, (2) it is never detected for any other banded pair, and (3) the filling characterization via AR defect applies uniformly across all orientations. The topological interpretation via signed crossing number against the core curve of the annulus may provide an orientation-independent argument.",
     "research_mode": "team",
     "source_exp_id": "2606.27523v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T08:22:15.779388+00:00",
     "title": "Source-sink uniqueness of non-filling banded pairs in affine type Ã"
   },
@@ -2966,6 +2966,34 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
+      "Schur_Q-functions",
+      "palindromic_polynomials",
+      "principal_specialization"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer M and non-negative integer k, the principal specialization of the one-row Schur Q-function q_k evaluated at 1, t, ..., t^{M-1} (which equals the coefficient of u^k in the formal power series expansion of ∏_{i=0}^{M-1} (1+ut^i)/(1-ut^i)) is a polynomial in t with non-negative integer coefficients, which is palindromic of degree k(M-1).",
+    "domain_bridges": [
+      "formal_power_series",
+      "polynomials",
+      "q_Pochhammer"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2857",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define P_{M,k}(t) as the coefficient of u^k in the formal power series expansion of the product ∏_{i=0}^{M-1} (1+ut^i)/(1-ut^i) over ℤ[[u]][t]. Prove that the coefficients of P_{M,k}(t) are non-negative integers by induction on k using the recurrence relation for one-row Schur Q-functions. Prove palindromicity by establishing the functional equation t^{k(M-1)} P_{M,k}(1/t) = P_{M,k}(t), which can be derived from the symmetry of the generating function under the substitution u -> u t^{M-1}.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28108v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:03:33.515587+00:00",
+    "title": "Palindromicity and Non-Negativity of Principal Specializations of One-Row Schur Q-Functions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
       "math.PR"
     ],
     "consumed_by_exp_id": "",
@@ -2977,7 +3005,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2857",
+    "id": "fd_2858",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the exact expected coverage times for both mechanisms. For the full model, use the standard formula. For the Fano plane, reduce the Markov chain state space using the symmetries of the Fano plane (tracking only the number of collected coupons and the intersection size with the last drawn line), compute the transition probabilities, and solve for the expected hitting time. Finally, verify the strict inequality between the two resulting rational numbers.",
@@ -3002,7 +3030,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2858",
+    "id": "fd_2859",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize partitions, Young diagrams, hooks, and arm lengths. Define p-regularity and the 2-balanced condition. Establish blocks, p-cores, and p-weights. Prove that the count is independent of the p-core by demonstrating that crystal reflections preserve the 2-balanced property, and finally compute the count explicitly in a RoCK block to arrive at the binomial formula.",
@@ -3011,6 +3039,33 @@
     "status": "available",
     "timestamp": "2026-06-29T10:45:11.578131+00:00",
     "title": "Enumeration of 2-balanced p-regular partitions in blocks"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "latin_squares",
+      "design_theory",
+      "group_theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every pairwise reflection-symmetric Latin square of order 2^k (for k ≥ 1) is isotopic to the Cayley table of the elementary abelian 2-group (Z/2Z)^k. This formalizes the paper's conjecture that group-theoretic structure is unavoidable for pairwise reflection-symmetric designs with column multiplicity λ = 1. The paper proves existence iff n is a power of 2 and computationally observes that all found examples possess group structure, conjecturing this may be necessary.",
+    "domain_bridges": [
+      "finite_group_theory",
+      "combinatorial_designs"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2860",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Characterize the algebraic constraints imposed by pairwise reflection symmetry on the quasigroup underlying the Latin square. Show that the symmetry condition forces the binary operation to satisfy x∘(y∘z) = (x∘y)∘z (associativity) and x∘x = e (every element is an involution), reducing the quasigroup to an elementary abelian 2-group. The key step is proving that pairwise reflection symmetry with λ=1 implies commutativity of the induced operation, then using the power-of-2 order constraint to establish the group is a direct product of copies of Z/2Z. Induction on k with careful analysis of subsquares may suffice.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28315v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:04:31.405897+00:00",
+    "title": "Elementary Abelian 2-Group Uniqueness for Pairwise Reflection-Symmetric Latin Squares"
   },
   {
     "ambition_level": "extension",
@@ -3107,26 +3162,6 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:11.463002+00:00",
     "title": "Sendov's Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "fdb1bb82",
-    "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
-    "domain_bridges": [],
-    "domains": [
-      "Analysis",
-      "NumberTheory"
-    ],
-    "id": "seed_335",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432611+00:00",
-    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
     "ambition_level": "extension",

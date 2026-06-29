@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2dcf8222",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.938639+00:00",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
@@ -1503,7 +1503,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability of Exterior Cube \u03b3-Factors under Central Character Equality"
   },
   {
-    "consumed_by_exp_id": "8c9c613b",
+    "consumed_by_exp_id": "",
     "description": "This conjecture examines the existence of finite unit-distance graphs in the plane with independence ratio below 1/4, offering a falsifiable direction for constructive geometric graph theory.",
     "domains": [
       "Pythagorean",
@@ -1513,7 +1513,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T05:45:25.558013+00:00",
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
@@ -1574,7 +1574,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Refined Asymptotic for Non-Divisible Entries in GL\u2082(\ud835\udd3d_q) Character Tables"
   },
   {
-    "consumed_by_exp_id": "f3c7d4c4",
+    "consumed_by_exp_id": "",
     "description": "For any generalized Ankeny-Brauer-Chowla polynomial \u03c0_U(X) as defined in the paper, the associated linear recurrence sequences have exactly two sufficiently large common values, making the upper bound of two tight.",
     "domains": [
       "Bridges"
@@ -1583,7 +1583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27885v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T07:18:02.548627+00:00",
     "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
   },
@@ -1618,7 +1618,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Universality of critical percolation scaling for preferential attachment graphs with infinite variance"
   },
   {
-    "consumed_by_exp_id": "3b415737",
+    "consumed_by_exp_id": "",
     "description": "For the affine quiver of type \u00c3_n with any acyclic orientation, the source-sink pair is the unique banded pair whose coordinate projection fails to fill its band. Specifically, for any pair of vertices (v, w) with \u03b4_v = \u03b4_w (which holds for all pairs in \u00c3_n since all null-root coefficients equal 1), the projection \u03c0_{vw}(C(Q)) fills its band if and only if {v, w} is not the source-sink pair of the given orientation. This extends the paper's complete resolution for the source-sink orientation to all acyclic orientations.",
     "domains": [
       "Geometry"
@@ -1627,7 +1627,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27523v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T08:22:15.779388+00:00",
     "title": "Source-sink uniqueness of non-filling banded pairs in affine type \u00c3"
   },
@@ -1925,11 +1925,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The expected time to collect all 7 coupons when drawing uniformly from the 7 lines of the Fano plane (a fair mechanism with n=7, \u2113=3) is strictly greater than the expected time when drawing uniformly from all 35 possible 3-element subsets.",
+    "description": "For any positive integer M and non-negative integer k, the principal specialization of the one-row Schur Q-function q_k evaluated at 1, t, ..., t^{M-1} (which equals the coefficient of u^k in the formal power series expansion of \u220f_{i=0}^{M-1} (1+ut^i)/(1-ut^i)) is a polynomial in t with non-negative integer coefficients, which is palindromic of degree k(M-1).",
     "domains": [
       "Bridges"
     ],
     "id": "fd_2857",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28108v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:03:33.515587+00:00",
+    "title": "Palindromicity and Non-Negativity of Principal Specializations of One-Row Schur Q-Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The expected time to collect all 7 coupons when drawing uniformly from the 7 lines of the Fano plane (a fair mechanism with n=7, \u2113=3) is strictly greater than the expected time when drawing uniformly from all 35 possible 3-element subsets.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2858",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -1944,13 +1958,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2858",
+    "id": "fd_2859",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
     "status": "available",
     "timestamp": "2026-06-29T10:45:11.578131+00:00",
     "title": "Enumeration of 2-balanced p-regular partitions in blocks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every pairwise reflection-symmetric Latin square of order 2^k (for k \u2265 1) is isotopic to the Cayley table of the elementary abelian 2-group (Z/2Z)^k. This formalizes the paper's conjecture that group-theoretic structure is unavoidable for pairwise reflection-symmetric designs with column multiplicity \u03bb = 1. The paper proves existence iff n is a power of 2 and computationally observes that all found examples possess group structure, conjecturing this may be necessary.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2860",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28315v1",
+    "status": "available",
+    "timestamp": "2026-06-29T11:04:31.405897+00:00",
+    "title": "Elementary Abelian 2-Group Uniqueness for Pairwise Reflection-Symmetric Latin Squares"
   },
   {
     "consumed_by_exp_id": "",
@@ -2022,21 +2051,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:11.463002+00:00",
     "title": "Sendov's Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "fdb1bb82",
-    "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
-    "domains": [
-      "Analysis",
-      "NumberTheory"
-    ],
-    "id": "seed_335",
-    "priority_score": 0.8,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432611+00:00",
-    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
     "consumed_by_exp_id": "",
