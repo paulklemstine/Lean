@@ -3270,6 +3270,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "https://arxiv.org/abs/math/0507175",
+      "https://arxiv.org/abs/math/0608105"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "When the parameter relationship s = t^M is imposed on the mixed product of modified Greaves-Jing-Zhu operators, the coefficients in the scalar factor (u;t)_M/(-u;t)_M expansion are signed principal specializations of one-row Schur Q-functions. Specifically, if c_k^{(M)} denotes the coefficient of u^k in (u;t)_M/(-u;t)_M, then c_k^{(M)} = (-1)^k Q_k(1+t+...+t^M) where Q_k is the one-row Schur Q-function defined by equation (4).",
+    "domain_bridges": [
+      "Algebraic Combinatorics",
+      "Special Functions",
+      "Representation Theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2876",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish a bijection between the coefficient recurrence for (u;t)_M/(-u;t)_M and the recurrence satisfied by signed principal specializations of one-row Schur Q-functions. Use the Pfaffian Giambelli identity (equation 10) and the generating function (equation 4) to show both sequences satisfy the same recurrence with matching initial conditions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28108v1",
+    "status": "available",
+    "timestamp": "2026-06-29T17:13:36.219637+00:00",
+    "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur Q-Functions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MRVZ",
       "Erdos_1987"
     ],
@@ -3284,7 +3310,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2876",
+    "id": "fd_2877",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate the geometric fractional chromatic number of G27 as a linear program over the restricted set of independent sets in the plane. Compute the polytope of optimal solutions by finding the convex hull of all feasible fractional colorings with total weight 4, and verify that this polytope has exactly 23 vertices and an affine dimension of 11.",
@@ -3311,7 +3337,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2877",
+    "id": "fd_2878",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "induction_on_n_and_case_analysis_on_min_degree",
@@ -3320,6 +3346,32 @@
     "status": "available",
     "timestamp": "2026-06-29T16:56:43.577232+00:00",
     "title": "Conjecture on edge count of τ_k-maximal graphs with minimum degree at least k+1"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.GR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every pairwise reflection-symmetric Latin square of order n=2^k is the Cayley table of an elementary abelian 2-group.",
+    "domain_bridges": [
+      "combinatorial designs",
+      "group theory",
+      "symmetry in matrices"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2879",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that the reflection symmetry conditions enforce the group operation to be commutative and every element to be self-inverse, thus requiring the group to be elementary abelian.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28315v1",
+    "status": "available",
+    "timestamp": "2026-06-29T17:14:17.022638+00:00",
+    "title": "Elementary Abelian 2-Groups Characterize Pairwise Reflection-Symmetric Latin Squares of Order 2^k"
   },
   {
     "ambition_level": "extension",

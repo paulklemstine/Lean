@@ -2055,12 +2055,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "When the parameter relationship s = t^M is imposed on the mixed product of modified Greaves-Jing-Zhu operators, the coefficients in the scalar factor (u;t)_M/(-u;t)_M expansion are signed principal specializations of one-row Schur Q-functions. Specifically, if c_k^{(M)} denotes the coefficient of u^k in (u;t)_M/(-u;t)_M, then c_k^{(M)} = (-1)^k Q_k(1+t+...+t^M) where Q_k is the one-row Schur Q-function defined by equation (4).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2876",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28108v1",
+    "status": "available",
+    "timestamp": "2026-06-29T17:13:36.219637+00:00",
+    "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur Q-Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The polytope of optimal geometric fractional colorings of the 27-vertex unit-distance graph G27, defined by Matolcsi et al., has exactly 23 vertices (extremal colorings) and affine dimension 11.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2876",
+    "id": "fd_2877",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2074,13 +2088,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2877",
+    "id": "fd_2878",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
     "status": "available",
     "timestamp": "2026-06-29T16:56:43.577232+00:00",
     "title": "Conjecture on edge count of \u03c4_k-maximal graphs with minimum degree at least k+1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every pairwise reflection-symmetric Latin square of order n=2^k is the Cayley table of an elementary abelian 2-group.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2879",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28315v1",
+    "status": "available",
+    "timestamp": "2026-06-29T17:14:17.022638+00:00",
+    "title": "Elementary Abelian 2-Groups Characterize Pairwise Reflection-Symmetric Latin Squares of Order 2^k"
   },
   {
     "consumed_by_exp_id": "",
