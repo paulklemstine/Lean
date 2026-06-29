@@ -1493,17 +1493,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Diophantine equation $14n^2 - 13n = t^3$ has exactly five integer solutions: $(0, 0)$, $(1, 1)$, $(13, 13)$, $(-1, 3)$, and $(-8, 10)$. This corresponds to the exceptional case $k=13$ in Theorem 1(ii) of the paper, where $P_{30}(n) = t^3$ has the additional solutions $(-1,3)$ and $(-8,10)$ alongside the trivial ones.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2818",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:27:12.259238+00:00",
+    "title": "Finiteness of Integer Solutions to the Cubic Triacontagonal Number Equation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G_27 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. Adding two suitably chosen augmentation vertices (at specific positions in the plane) yields a 29-vertex unit-distance graph whose geometric fractional chromatic number is strictly greater than 4. This is the key technical step that, combined with the blow-up framework of Matolcsi et al., implies the existence of a finite unit-distance graph with independence ratio below 1/4 and that the fractional chromatic number of the plane exceeds 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2818",
+    "id": "fd_2819",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
     "status": "available",
     "timestamp": "2026-06-29T04:07:09.204966+00:00",
     "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every prime power q \u2265 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q\u00b2+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2820",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28216v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:27:32.789484+00:00",
+    "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
   {
     "consumed_by_exp_id": "",

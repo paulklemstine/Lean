@@ -2084,6 +2084,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The Diophantine equation $14n^2 - 13n = t^3$ has exactly five integer solutions: $(0, 0)$, $(1, 1)$, $(13, 13)$, $(-1, 3)$, and $(-8, 10)$. This corresponds to the exceptional case $k=13$ in Theorem 1(ii) of the paper, where $P_{30}(n) = t^3$ has the additional solutions $(-1,3)$ and $(-8,10)$ alongside the trivial ones.",
+    "domain_bridges": [
+      "Diophantine equations",
+      "Elliptic curves"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2818",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Translate the Diophantine equation $14n^2 - 13n = t^3$ into an elliptic curve by substituting variables to obtain a Weierstrass form. Compute the Mordell-Weil group of this elliptic curve over the rationals, determining its rank and generators. Map the rational points back to integer solutions $(n,t)$ and verify that exactly these five solutions exist.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:27:12.259238+00:00",
+    "title": "Finiteness of Integer Solutions to the Cubic Triacontagonal Number Equation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MRVZ",
       "deGrey",
       "Er87"
@@ -2098,7 +2122,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2818",
+    "id": "fd_2819",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the geometric fractional chromatic number for finite point configurations in the plane. Then characterize all 23 extremal optimal geometric fractional colorings of G_27 (which form a polytope of affine dimension 11). Finally, verify that for every convex combination of these 23 extremal colorings, the two augmentation vertices cannot both be properly colored, forcing the geometric fractional chromatic number above 4. The verification reduces to checking finitely many linear constraints over the extremal colorings.",
@@ -2107,6 +2131,34 @@
     "status": "available",
     "timestamp": "2026-06-29T04:07:09.204966+00:00",
     "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.PR",
+      "math.CO/design_theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every prime power q ≥ 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q²+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
+    "domain_bridges": [
+      "finite_geometry-probability",
+      "design_theory-stochastic_processes",
+      "incidence_structures-coverage_processes"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2820",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Compare the two expected coverage times via their inclusion-exclusion representations. The key structural difference is that any two lines of PG(2,q) intersect in exactly one point, creating negative correlations that slow coverage, whereas random (q+1)-subsets have binomially-distributed intersection sizes. One might attempt to show that the Fano/Fano-like intersection structure maximizes the second-order inclusion-exclusion terms, or develop a coupling argument showing the projective plane mechanism is stochastically dominated in coverage by the full model.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28216v1",
+    "status": "available",
+    "timestamp": "2026-06-29T04:27:32.789484+00:00",
+    "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
   {
     "ambition_level": "extension",
