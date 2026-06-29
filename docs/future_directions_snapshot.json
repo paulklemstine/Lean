@@ -900,7 +900,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52860675",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domain_bridges": [],
     "domains": [
@@ -913,7 +913,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -1078,7 +1078,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "92bb7dbb",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1090,7 +1090,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -2189,6 +2189,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "arXiv:2005.12345"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any two linear recurrence sequences derived from a generalized Ankeny–Brauer–Chowla polynomial and its reciprocal with distinct degree parameters, there are at most two common terms exceeding a computable bound depending on the polynomial coefficients.",
+    "domain_bridges": [
+      "Elliptic curves",
+      "Thue equations",
+      "Linear forms in logarithms"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2822",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply Baker's theory of linear forms in logarithms to bound heights of common terms, then use function field and Galois-theoretic constraints to limit the number of large coincidences.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27885v1",
+    "status": "available",
+    "timestamp": "2026-06-29T05:44:28.240696+00:00",
+    "title": "Large common values of generalized Ankeny-Brauer-Chowla recurrences"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MRVZ",
       "deGrey",
       "Er87"
@@ -2203,7 +2228,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2822",
+    "id": "fd_2823",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the geometric fractional chromatic number for finite point configurations in the plane. Then characterize all 23 extremal optimal geometric fractional colorings of G_27 (which form a polytope of affine dimension 11). Finally, verify that for every convex combination of these 23 extremal colorings, the two augmentation vertices cannot both be properly colored, forcing the geometric fractional chromatic number above 4. The verification reduces to checking finitely many linear constraints over the extremal colorings.",
@@ -2231,7 +2256,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2823",
+    "id": "fd_2824",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compare the two expected coverage times via their inclusion-exclusion representations. The key structural difference is that any two lines of PG(2,q) intersect in exactly one point, creating negative correlations that slow coverage, whereas random (q+1)-subsets have binomially-distributed intersection sizes. One might attempt to show that the Fano/Fano-like intersection structure maximizes the second-order inclusion-exclusion terms, or develop a coupling argument showing the projective plane mechanism is stochastically dominated in coverage by the full model.",
@@ -2257,7 +2282,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2824",
+    "id": "fd_2825",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Normalize the PRS Latin square such that the first row and column are in natural order. Show that the pairwise reflection-symmetry condition implies that the binary operation defined by the normalized Latin square is both commutative and satisfies the exponent-2 property (x ∘ x = e), thus defining an elementary abelian 2-group.",
@@ -2287,7 +2312,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2825",
+    "id": "fd_2826",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the combinatorial nerve chain complex as the total complex of a double complex formed by the Morse complexes of the intersections and the face maps of the nerve (defined via gradient trajectories), then establish a chain homotopy equivalence to the simplicial chain complex of X by verifying that the spectral sequence associated to this double complex converges to the homology of X and is isomorphic to the Leray spectral sequence of the cover.",
@@ -2296,6 +2321,36 @@
     "status": "available",
     "timestamp": "2026-06-29T05:28:37.951608+00:00",
     "title": "Combinatorial Nerve Chain Homotopy Equivalence"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Deligne73",
+      "Jac85",
+      "Sha02",
+      "Cog08",
+      "CST17"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that for irreducible admissible generic representations π₁ and π₂ of GL₆(F) with identical central characters, the local γ-factor of the exterior cube representation twisted by a sufficiently ramified character χ remains stable, leveraging geometric realizations via the E₆ maximal parabolic subgroup and invariants of the quotient U_M\\N'.",
+    "domain_bridges": [
+      "Langlands-Shahidi Method",
+      "Geometric Quotients and Invariant Measures",
+      "Asymptotic Analysis of Bessel Integrals"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2827",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Asymptotic expansion of partial Bessel integrals and vanishing of highly ramified Mellin transforms, combined with structure theory for generic representations.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28091v1",
+    "status": "available",
+    "timestamp": "2026-06-29T05:44:39.351935+00:00",
+    "title": "Stability of Exterior Cube γ-Factors under Central Character Equality"
   },
   {
     "ambition_level": "extension",

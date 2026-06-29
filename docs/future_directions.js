@@ -676,7 +676,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52860675",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -686,7 +686,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -809,7 +809,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "92bb7dbb",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -818,7 +818,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1550,11 +1550,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for any two linear recurrence sequences derived from a generalized Ankeny\u2013Brauer\u2013Chowla polynomial and its reciprocal with distinct degree parameters, there are at most two common terms exceeding a computable bound depending on the polynomial coefficients.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2822",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27885v1",
+    "status": "available",
+    "timestamp": "2026-06-29T05:44:28.240696+00:00",
+    "title": "Large common values of generalized Ankeny-Brauer-Chowla recurrences"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G_27 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. Adding two suitably chosen augmentation vertices (at specific positions in the plane) yields a 29-vertex unit-distance graph whose geometric fractional chromatic number is strictly greater than 4. This is the key technical step that, combined with the blow-up framework of Matolcsi et al., implies the existence of a finite unit-distance graph with independence ratio below 1/4 and that the fractional chromatic number of the plane exceeds 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2822",
+    "id": "fd_2823",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -1569,7 +1583,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2823",
+    "id": "fd_2824",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -1584,7 +1598,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2824",
+    "id": "fd_2825",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
@@ -1599,13 +1613,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2825",
+    "id": "fd_2826",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
     "status": "available",
     "timestamp": "2026-06-29T05:28:37.951608+00:00",
     "title": "Combinatorial Nerve Chain Homotopy Equivalence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that for irreducible admissible generic representations \u03c0\u2081 and \u03c0\u2082 of GL\u2086(F) with identical central characters, the local \u03b3-factor of the exterior cube representation twisted by a sufficiently ramified character \u03c7 remains stable, leveraging geometric realizations via the E\u2086 maximal parabolic subgroup and invariants of the quotient U_M\\N'.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2827",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28091v1",
+    "status": "available",
+    "timestamp": "2026-06-29T05:44:39.351935+00:00",
+    "title": "Stability of Exterior Cube \u03b3-Factors under Central Character Equality"
   },
   {
     "consumed_by_exp_id": "",

@@ -16148,11 +16148,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "52860675",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16164,7 +16164,7 @@
         "Tropical"
       ],
       "id": "fd_0536",
-      "last_attempt_time": "2026-06-11T02:50:37.950338+00:00",
+      "last_attempt_time": "2026-06-29T05:44:43.836952+00:00",
       "last_reviewed_at": "2026-06-10T07:43:01.457761+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16178,7 +16178,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:06.637226+00:00",
       "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
@@ -35460,6 +35460,50 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "arXiv:2005.12345"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that for any two linear recurrence sequences derived from a generalized Ankeny–Brauer–Chowla polynomial and its reciprocal with distinct degree parameters, there are at most two common terms exceeding a computable bound depending on the polynomial coefficients.",
+      "domain_bridges": [
+        "Elliptic curves",
+        "Thue equations",
+        "Linear forms in logarithms"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2822",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem at_most_two_large_common (U : Type) [CommRing U] (P : Fin 4 → U → ℕ) (hP : PairwiseDistinctDegree P) : ∀ (a b : ℕ), (RecurrenceFromP P a) = (ReciprocalRecurrence P b) → a > bound P → b > bound P → a = b ∨ a = b' ∨ false",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Apply Baker's theory of linear forms in logarithms to bound heights of common terms, then use function field and Galois-theoretic constraints to limit the number of large coincidences.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27885v1",
+      "source_path": "http://arxiv.org/abs/2606.27885v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T05:44:28.240696+00:00",
+      "title": "Large common values of generalized Ankeny-Brauer-Chowla recurrences"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "MRVZ",
         "deGrey",
         "Er87"
@@ -35480,7 +35524,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2822",
+      "id": "fd_2823",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gfch_augmented_G27_gt_four : χ_gf (augment G_27 v_a v_b) > 4 := by\n  sorry",
@@ -35527,7 +35571,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2823",
+      "id": "fd_2824",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pg2_mechanism_slower_than_full {q : ℕ} (hq : q ≥ 2) (hq_prime_pow : IsPrimePow q) : expectedCoverageTime (lineSetPG2 q) > expectedCoverageTime (fullModel (q*q + q + 1) (q + 1)) := by sorry",
@@ -35572,7 +35616,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2824",
+      "id": "fd_2825",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem PRS_latin_square_is_abelian_2_group\n    {n : ℕ} (L : LatinSquare n)\n    (h_sym : L.IsPairwiseReflectionSymmetric) :\n    L.IsotopicTo (CayleyTable (ElemAbelian2Group n)) := by\n  sorry",
@@ -35621,7 +35665,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2825",
+      "id": "fd_2826",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.AlgebraicTopology.ChainComplex\nimport Mathlib.AlgebraicTopology.MorseTheory\n\n-- Conjecture: The combinatorial nerve chain complex is chain homotopy equivalent to the simplicial chain complex of X.\ntheorem combinatorial_nerve_homotopy_equivalence\n    {k : ℕ} (X : SimplicialComplex) (A : Fin k → SimplicialComplex)\n    (h_cover : ∀ x : X, ∃ i, x ∈ A i)\n    (V : ∀ (S : Finset (Fin k)) (hS : S.Nonempty), GradientVectorField (⋂ i ∈ S, A i))\n    (C : ChainComplex) (h_C : C = CombinatorialNerveChainComplex X A V) :\n    Nonempty (ChainHomotopyEquiv C (SimplicialChainComplex X))",
@@ -35640,6 +35684,55 @@
       "thread_id": "",
       "timestamp": "2026-06-29T05:28:37.951608+00:00",
       "title": "Combinatorial Nerve Chain Homotopy Equivalence"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Deligne73",
+        "Jac85",
+        "Sha02",
+        "Cog08",
+        "CST17"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The conjecture asserts that for irreducible admissible generic representations π₁ and π₂ of GL₆(F) with identical central characters, the local γ-factor of the exterior cube representation twisted by a sufficiently ramified character χ remains stable, leveraging geometric realizations via the E₆ maximal parabolic subgroup and invariants of the quotient U_M\\N'.",
+      "domain_bridges": [
+        "Langlands-Shahidi Method",
+        "Geometric Quotients and Invariant Measures",
+        "Asymptotic Analysis of Bessel Integrals"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2827",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Asymptotic expansion of partial Bessel integrals and vanishing of highly ramified Mellin transforms, combined with structure theory for generic representations.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28091v1",
+      "source_path": "http://arxiv.org/abs/2606.28091v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T05:44:39.351935+00:00",
+      "title": "Stability of Exterior Cube γ-Factors under Central Character Equality"
     },
     {
       "ambition_level": "extension",
@@ -41263,7 +41356,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "92bb7dbb",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41288,7 +41381,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432688+00:00",
       "title": "Ramsey Theory: Bounds and Constructions"

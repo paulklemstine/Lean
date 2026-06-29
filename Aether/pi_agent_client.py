@@ -2211,7 +2211,10 @@ class PiAgentClient:
                  the team loop: Hypothesis, Experiment, Analysis, Critique, Synthesis.
             2. **FUTURE_DIRECTIONS.md** with 3–5 bold, falsifiable conjectures derived
                from the cycle's findings. Each must have a "The key insight is..."
-               sentence and a "Why now?" justification.
+               sentence and a "Why now?" justification. Write these as
+               self-contained, publishable-quality prose: never mention Lean,
+               proof assistants, machine verification, the Catalog, or other
+               formalism details that would spoil the text.
 
             ### Strictly Forbidden in Phase A
             - `ARTICLE.md`, `RESEARCH_PAPER.md`, `demo.py`, HTML widgets, `PACKAGE.json`.
@@ -2492,7 +2495,10 @@ class PiAgentClient:
                  the team loop: Hypothesis, Experiment, Analysis, Critique, Synthesis.
             2. **FUTURE_DIRECTIONS.md** with 3–5 bold, falsifiable conjectures derived
                from the cycle's findings. Each must have a "The key insight is..."
-               sentence and a "Why now?" justification.
+               sentence and a "Why now?" justification. Write these as
+               self-contained, publishable-quality prose: never mention Lean,
+               proof assistants, machine verification, the Catalog, or other
+               formalism details that would spoil the text.
 
             ### Strictly Forbidden in Phase A
             - `ARTICLE.md`, `RESEARCH_PAPER.md`, `demo.py`, HTML widgets, `PACKAGE.json`.
@@ -2813,12 +2819,16 @@ Be precise, be deep, be world-class.
             Every prose output must be a publication-ready, fully self-contained
             document that supports itself end-to-end. A reader with only that
             document must understand the entire argument without looking elsewhere.
-            **NEVER mention Lean, proof assistants, the Catalog, source file
-            paths, or formal-proof identifier names** anywhere in the prose
-            (e.g., do NOT write `pl_hodge_decomposition` — write "the Hodge
-            Decomposition Theorem"). State every theorem, lemma, and definition
-            inline in natural mathematical prose with its full statement and
-            proof sketch. Do NOT use @file references or point to any file.
+            **NEVER mention Lean, proof assistants, machine verification, the
+            Catalog, source file paths, formal-proof identifier names, or any
+            other implementation/formalism details that would spoil the
+            publication** (e.g., do NOT write `pl_hodge_decomposition` — write
+            "the Hodge Decomposition Theorem"; do NOT mention that results were
+            machine-verified or formalized). The text must read as natural
+            mathematics written for human readers. State every theorem, lemma,
+            and definition inline in natural mathematical prose with its full
+            statement and proof sketch. Do NOT use @file references or point to
+            any file.
 
             ### DELIVERABLES (strict — only this):
             1. **ARTICLE.md** — Standalone popular-science article (1500-3000 words).
@@ -2826,7 +2836,7 @@ Be precise, be deep, be world-class.
                arc, real-world connections. **Publication-ready and fully
                self-contained: a reader with only this article must understand
                every result without looking elsewhere.**
-               **NEVER mention Lean, proof assistants, the Catalog, source file
+               **NEVER mention Lean, proof assistants, machine verification, the Catalog, source file
                paths, or formal-proof identifier names** (e.g., do NOT write
                `pl_hodge_decomposition` — write "the Hodge Decomposition Theorem").
                State every theorem, result, and definition inline in natural
@@ -2840,7 +2850,7 @@ Be precise, be deep, be world-class.
                full formal code), algorithms, applications, discussion, future work.
                **Publication-ready and fully self-contained: a reader with only this
                paper must be able to follow every result from start to finish.**
-               **NEVER mention Lean, proof assistants, the Catalog, source file
+               **NEVER mention Lean, proof assistants, machine verification, the Catalog, source file
                paths, or formal-proof identifier names.** State every theorem,
                lemma, and definition inline in natural mathematical prose with its
                full statement and proof sketch. Do NOT use @file references or
@@ -2854,7 +2864,7 @@ Be precise, be deep, be world-class.
                (e.g. `\\begin{theorem} ... \\end{theorem}`), and make it suitable for
                direct PDF compilation with `pdflatex`. This is the publishable
                artifact. It MUST be publication-ready and fully self-contained:
-               NEVER mention Lean, proof assistants, the Catalog, source file
+               NEVER mention Lean, proof assistants, machine verification, the Catalog, source file
                paths, or formal-proof identifier names; state every theorem in
                natural mathematical prose. It must support itself end-to-end.
             4. **demo.py** — Numerical examples demonstrating the key results.
