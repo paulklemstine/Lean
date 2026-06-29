@@ -1406,6 +1406,19 @@ Research mode: {concept.research_mode}
 
                 if is_complete or (status == "IDLE" and has_files):
                     needs_resume = bool(result.get("needs_resume", False))
+                    # Content-based gate: COMPLETE jobs (no task-status signal)
+                    # can still be truncated (Aristotle finished but the Lean
+                    # cuts off mid-proof). Download + check; resume if truncated.
+                    if (not needs_resume and job.phase == "A"
+                            and getattr(job, "resume_count", 0) < MAX_RESUME_BUDGET
+                            and job.project_id):
+                        try:
+                            if await self._result_looks_truncated(pid):
+                                needs_resume = True
+                                print(f"[Poll] {pid[:8]} COMPLETE but content truncated "
+                                      f"— will resume via ask()")
+                        except Exception:
+                            pass
                     # Resume incomplete Phase A jobs (OUT_OF_BUDGET or
                     # COMPLETE_WITH_ERRORS — truncated/non-compiling Lean) by
                     # asking Aristotle to continue, instead of integrating a
@@ -1589,6 +1602,49 @@ Research mode: {concept.research_mode}
             job.error_message = f"Extraction failed: {e}"
 
         return job
+
+    async def _result_looks_truncated(self, project_id: str) -> bool:
+        """Download a project's result and check whether the Lean content is
+        truncated/incomplete — used to resume COMPLETE-but-truncated Phase A
+        jobs that slip past the task-status gate (OUT_OF_BUDGET /
+        COMPLETE_WITH_ERRORS). Signals: any `sorry`, an unclosed comment
+        block, or a declaration line cut off before its proof body.
+        """
+        import tempfile, tarfile
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                tar_path = await self.aristotle.download_result(project_id, Path(tmp))
+                if (not tar_path or not tar_path.exists()
+                        or tar_path.name in ("__AUTH_ERROR__", "__SERVER_ERROR__", "__NOT_FOUND__")):
+                    return False
+                ed = Path(tmp) / "ex"
+                with tarfile.open(tar_path, "r:gz") as tar:
+                    tar.extractall(ed)
+                leans = []
+                for f in ed.rglob("*.lean"):
+                    if ".lake" in f.parts:
+                        continue
+                    try:
+                        leans.append(f.read_text(encoding="utf-8", errors="ignore"))
+                    except Exception:
+                        pass
+                content = "\n".join(leans)
+                if not content.strip():
+                    return False
+                if re.findall(r'\bsorry\b', content):
+                    return True
+                if content.count("/-") > content.count("-/"):
+                    return True
+                lines = [l for l in content.splitlines() if l.strip()]
+                if lines:
+                    last = lines[-1].strip()
+                    if (re.match(r'^(theorem|lemma|def|structure|instance|abbrev)\b', last)
+                            and ':=' not in last and 'sorry' not in last
+                            and not last.endswith(('.', ':'))):
+                        return True
+                return False
+        except Exception:
+            return False
 
     def _parse_aristotle_result(self, job: ResearchJob, extract_dir: Path) -> ResearchJob:
         """Parse Aristotle's result directory to extract all artifacts.
