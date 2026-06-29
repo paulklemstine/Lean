@@ -2199,18 +2199,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every prime k with 5 \u2264 k \u2264 97 and every prime p \u2265 11, the Diophantine equation (k+1)n\u00b2 - kn = t^p (equivalently, P_{2k+4}(n) = t^p) has no integer solutions beyond the trivial ones (n,t) = (0,0) and (1,1). This conjecture asserts unconditionally what the paper establishes conditionally under GRH (for 11 \u2264 p \u2264 31) and the weak effective abc conjecture with exponent r = 1.63 (for p > 31). The unconditional proof for p = 5, 7 and for p > p_0(2k+4) is already given in the paper; the conjecture closes the remaining gap for intermediate primes p.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_2895",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:37:03.171133+00:00",
+    "title": "No non-trivial prime-power solutions in specific polygonal number sequences"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domains": [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2895",
+    "id": "fd_2896",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
     "status": "available",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G\u2082\u2087 Have Exactly 23 Vertices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every prime power q, the fair mechanism given by the line set of the projective plane PG(2,q) over the finite field F_q has strictly greater expected coverage time than the full model (uniform distribution on all (q+1)-subsets of a (q\u00b2+q+1)-element set). Specifically, if E_PG(q) denotes the expected time to collect all n = q\u00b2+q+1 coupons when each draw uniformly selects a line of PG(2,q), and E_full(q) denotes the expected time under uniform selection from all binom(n, q+1) possible (q+1)-subsets, then E_PG(q) > E_full(q) for all prime powers q.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2897",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28216v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:37:17.471296+00:00",
+    "title": "Projective Plane Mechanisms Dominate the Full Model in Expected Coverage Time"
   },
   {
     "consumed_by_exp_id": "",

@@ -3573,6 +3573,37 @@
     "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "Diophantine_equations",
+      "polygonal_numbers",
+      "perfect_powers",
+      "linear_forms_in_logarithms"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every prime k with 5 ≤ k ≤ 97 and every prime p ≥ 11, the Diophantine equation (k+1)n² - kn = t^p (equivalently, P_{2k+4}(n) = t^p) has no integer solutions beyond the trivial ones (n,t) = (0,0) and (1,1). This conjecture asserts unconditionally what the paper establishes conditionally under GRH (for 11 ≤ p ≤ 31) and the weak effective abc conjecture with exponent r = 1.63 (for p > 31). The unconditional proof for p = 5, 7 and for p > p_0(2k+4) is already given in the paper; the conjecture closes the remaining gap for intermediate primes p.",
+    "domain_bridges": [
+      "computational_number_theory",
+      "algebraic_number_theory",
+      "Diophantine_approximation",
+      "modular_methods"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_2895",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The paper already reduces the problem to ruling out at most one exceptionally large solution per prime exponent p in the range 11 ≤ p ≤ p_0(2k+4), where p_0 is enormous (involving 10^100000). A complete unconditional proof would require either: (1) significantly sharper effective bounds for linear forms in logarithms to eliminate the 'at most one large solution' regime without GRH, or (2) new descent arguments specific to the factored form n((k+1)n - k) = t^p that exploit the structure of the polynomial (k+1)n² - kn for each fixed k. The modular method, already applied in the paper for small p, would need to be extended systematically to all remaining exponents.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:37:03.171133+00:00",
+    "title": "No non-trivial prime-power solutions in specific polygonal number sequences"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "MRVZ_27_vertex_graph",
@@ -3590,7 +3621,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_2895",
+    "id": "fd_2896",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph with its coordinates. Encode the geometric fractional chromatic number as a linear program over measurable functions. Use the finite-dimensional reduction (the LP with 182304 variables capturing the constraints on finite sub-configurations) to extract the extreme points computationally. Verify each of the 23 extremal colorings satisfies all unit-distance constraints and achieves total weight exactly 4, and confirm no other extreme points exist via vertex enumeration on the LP's feasible polytope.",
@@ -3599,6 +3630,36 @@
     "status": "available",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G₂₇ Have Exactly 23 Vertices"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.PR",
+      "51E15",
+      "60C05"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every prime power q, the fair mechanism given by the line set of the projective plane PG(2,q) over the finite field F_q has strictly greater expected coverage time than the full model (uniform distribution on all (q+1)-subsets of a (q²+q+1)-element set). Specifically, if E_PG(q) denotes the expected time to collect all n = q²+q+1 coupons when each draw uniformly selects a line of PG(2,q), and E_full(q) denotes the expected time under uniform selection from all binom(n, q+1) possible (q+1)-subsets, then E_PG(q) > E_full(q) for all prime powers q.",
+    "domain_bridges": [
+      "finite_geometry",
+      "coupon_collector",
+      "markov_chain_hitting_times",
+      "projective_planes"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2897",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the inequality E_PG(q) > E_full(q) by computing or bounding the expected coverage times via inclusion-exclusion. The expected coverage time for a fair mechanism F on [n] with block size ℓ is E[F] = ∫₀^∞ (1 - ∏_{S∈F}(1 - e^{-|S∩T|t}/|F|)) dt for the set T of already-collected coupons, which can be reformulated as E[F] = ∑_{k=1}^{n} (-1)^{k+1} ∑_{A∈([n] choose k)} 1/(1 - P_F(A)) where P_F(A) is the probability a random block from F contains A. The key comparison reduces to showing that the projective plane mechanism has a larger sum over k-subset intersection statistics than the full model. Use the fact that in PG(2,q), every pair of distinct points lies on exactly one line, and every line has exactly q+1 points, to compute the k-wise intersection probabilities exactly and compare term by term with the full model.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28216v1",
+    "status": "available",
+    "timestamp": "2026-06-29T20:37:17.471296+00:00",
+    "title": "Projective Plane Mechanisms Dominate the Full Model in Expected Coverage Time"
   },
   {
     "ambition_level": "extension",
