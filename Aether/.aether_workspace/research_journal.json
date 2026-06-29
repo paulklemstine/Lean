@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "53529d3f",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Flip graphs of the m×n Miura-ori\n\nDerived from this cycle's findings: (a) the crease graph has exactly `(m-1)(n-1)`\ndegree-4 vertices (`card_degreeFour`), and (b) the single-site",
-      "quality_score": 0.78512,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-26T19:26:17",
-      "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
-    },
-    {
       "cycle_id": "580d1f18",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Certified Novelty Detection for Theorem Provers\n\nDerived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,\n`FibonacciNoveltyStream.lean`).  This cycle establishe",
@@ -499,19 +489,19 @@
       "theorem_count": 24,
       "timestamp": "2026-06-29T00:21:28",
       "title": "Complete Characterization of Minimal Forbidden Partial‑Cube Minors for Daisy Cubes"
+    },
+    {
+      "cycle_id": "0a73d6d7",
+      "domain": "Probability",
+      "key_insight": "# Future Directions: Restrictions, Counting, and the Resolution / Cutting-Planes Frontier\n\nThis cycle established three robustness facts about the pigeonhole principle and\nits proof systems: a refutat",
+      "quality_score": 0.73856,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-29T22:36:11",
+      "title": "Proof Complexity: Resolution and Cutting Planes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0e9a5064",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Sun's truncated Legendre-symbol determinant\n\nThis cycle formalised the *structural* half of Sun's identity in full generality\n(`det A = det(C+J) · X` for all primes `p ≥ 7`, `p ≡",
-      "quality_score": 0.7836800000000002,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-26T11:39:02",
-      "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
-    },
     {
       "cycle_id": "c72330ea",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-06-29T20:18:35",
       "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varieties over p-adic Fun"
+    },
+    {
+      "cycle_id": "0a73d6d7",
+      "domain": "Probability",
+      "key_insight": "# Future Directions: Restrictions, Counting, and the Resolution / Cutting-Planes Frontier\n\nThis cycle established three robustness facts about the pigeonhole principle and\nits proof systems: a refutat",
+      "quality_score": 0.73856,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-29T22:36:11",
+      "title": "Proof Complexity: Resolution and Cutting Planes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6fa4f641",
-      "domain": "Novelty",
-      "name": "adj_of_pat",
-      "quality": 0.7798419999999999
-    },
-    {
-      "cycle_id": "6fa4f641",
-      "domain": "Novelty",
-      "name": "shatter_containsCycle",
-      "quality": 0.7798419999999999
-    },
-    {
-      "cycle_id": "ba81674a",
-      "domain": "Novelty",
-      "name": "pascalRiordanA_pos",
-      "quality": 0.79596
-    },
     {
       "cycle_id": "ba81674a",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "isDaisy_top",
       "quality": 0.79664
+    },
+    {
+      "cycle_id": "0a73d6d7",
+      "domain": "Probability",
+      "name": "derivable_mono",
+      "quality": 0.73856
+    },
+    {
+      "cycle_id": "0a73d6d7",
+      "domain": "Probability",
+      "name": "refutation_mono",
+      "quality": 0.73856
+    },
+    {
+      "cycle_id": "0a73d6d7",
+      "domain": "Probability",
+      "name": "not_derivable_nil",
+      "quality": 0.73856
     }
   ],
-  "last_updated": "2026-06-29T20:18:35",
+  "last_updated": "2026-06-29T22:36:11",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "3e812933",
-        "quality": 0.6599999999999999,
-        "theorems": 19,
-        "title": "Packing isolating sets exist in finite block graphs"
-      },
-      {
         "cycle_id": "5bd61b22",
         "quality": 0.5515805555555555,
         "theorems": 227,
@@ -3823,6 +3817,12 @@
         "quality": 0.5960000000000001,
         "theorems": 12,
         "title": "Central Gaussian coefficient maximizes binary 2-binomial class size"
+      },
+      {
+        "cycle_id": "0a73d6d7",
+        "quality": 0.73856,
+        "theorems": 9,
+        "title": "Proof Complexity: Resolution and Cutting Planes"
       }
     ],
     "Pythagorean": [

@@ -12727,7 +12727,7 @@
       "depth_estimate": 3,
       "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.55,
+      "domain_quality_penalty": -0.45000000000000007,
       "domains": [
         "Tropical",
         "Computation"
@@ -41306,7 +41306,7 @@
       "depth_estimate": 3,
       "description": "Find a formula for the probability that two elements chosen uniformly at random generate the symmetric group S_n. Formalize known asymptotic results and connect to the theory of random permutations.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.35,
+      "domain_quality_penalty": -0.24999999999999997,
       "domains": [
         "Algebra"
       ],

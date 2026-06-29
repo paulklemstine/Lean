@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ABC Conjecture Formalization"
   },
   {
-    "consumed_by_exp_id": "8a176ab9",
+    "consumed_by_exp_id": "",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domains": [
       "NumberTheory",
@@ -159,7 +159,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432613+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
@@ -237,7 +237,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Catalan's Conjecture Generalizations"
   },
   {
-    "consumed_by_exp_id": "b86be6e3",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Yau-Tian-Donaldson conjecture: a Fano manifold admits a K\u00e4hler-Einstein metric iff it is K-stable. Prove stability criteria for specific Fano varieties.",
     "domains": [
       "Geometry",
@@ -247,7 +247,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.648941+00:00",
     "title": "K\u00e4hler-Einstein Metrics and K-Stability"
   },
@@ -540,7 +540,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "0a73d6d7",
+    "consumed_by_exp_id": "",
     "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
     "domains": [
       "Computation",
@@ -550,7 +550,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432755+00:00",
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
@@ -2269,21 +2269,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Projective Plane Mechanisms Dominate the Full Model in Expected Coverage Time"
   },
   {
-    "consumed_by_exp_id": "a8ad2491",
-    "description": "For integers d, e > 1 with d | (e-1), and for any non-negative integer w and any e-core \u03ba, the number of d-balanced e-regular partitions with e-core \u03ba and e-weight w equals C(w + (e-1)/d - 1, w), independently of \u03ba. Here a partition \u03bb is d-balanced e-regular if it is e-regular (no part repeated e or more times) and every hook of \u03bb whose length is divisible by e has arm length divisible by d. The special case d=2, e=p (odd prime) yields C(w + (p-3)/2, w) partitions per block of p-weight w, which controls complete columns of symmetric-group decomposition matrices.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2901",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28305v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T20:56:20.535355+00:00",
-    "title": "Enumeration of d-balanced e-regular partitions in a fixed block"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For \u03bb = 1, a pairwise reflection-symmetric generalized Latin rectangle is precisely a pairwise reflection-symmetric Latin square of order n, which exists if and only if n is a power of two. This conjecture states that every such Latin square is isotopic to the Cayley table of the elementary abelian 2-group (Z/2Z)^k where n = 2^k, formalizing the paper's hypothesis that an underlying group-theoretic structure is unavoidable in this setting.",
     "domains": [
@@ -2329,20 +2314,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_2904",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28157v1",
-    "status": "available",
-    "timestamp": "2026-06-29T21:48:36.541820+00:00",
-    "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, consider the fair mechanism given by uniformly sampling lines of the projective plane PG(2,q), where n = q\u00b2 + q + 1 is the number of points and \u2113 = q + 1 is the line size. The expected coverage time of this projective plane mechanism strictly exceeds that of the full model (uniform sampling of all \u2113-subsets of an n-element set). This generalizes the paper's Fano plane (q=2) counterexample to the Grunbaum\u2013Yaakobi conjecture and posits that projective plane line sets systematically yield slower fair mechanisms than the full model across all orders.",
     "domains": [
       "Pythagorean",
@@ -2355,6 +2326,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T22:13:18.479634+00:00",
     "title": "Projective Plane Coupon Mechanisms Dominate the Full Model"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2906",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T21:48:36.541820+00:00",
+    "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
   },
   {
     "consumed_by_exp_id": "",
@@ -2500,6 +2485,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Restrictions, Counting, and the Resolution / Cutting-Planes Frontier\n\nThis cycle established three robustness facts about the pigeonhole principle and\nits proof systems: a refutation survives the addition of irrelevant clauses\n(weakening); the empty axiom set proves nothing; and \u2014 most importantly \u2014 every\npartial assignment of the pigeon\u2013hole variables leaves the principle\nunsatisfiable (hardness is preserved under restriction). In parallel, we showed\nthat any genuine placement of pigeons into holes is, after passing to its\n0/1 indicator, exactly an integer point obeying the row and column counts that the\nlinear double-counting argument annihilates. The following conjectures are the\nnatural next escalations.\n\n## 1. Restriction-robust hardness implies a width explosion\n\n**Conjecture.** For the pigeonhole principle on `n + 1` pigeons and `n` holes,\nevery refutation by clause-resolution must, at some stage, manipulate a clause\nmentioning at least a constant fraction of all `n(n+1)` pigeon\u2013hole variables.\n\nThe key insight is that hardness is preserved under *every* partial assignment:\nbecause no restriction can rescue the formula, a refutation cannot localise its\nreasoning to a small set of variables without leaving behind a still-unsatisfiable\nsub-instance that the same refutation must also handle. Quantifying \"cannot\nlocalise\" as a lower bound on clause width turns the qualitative robustness proved\nthis cycle into the classical width measure that controls refutation length.\n\n**Why now?** We have just isolated restriction-robustness as a clean, standalone\nproperty, separated from the messier size bookkeeping it is usually entangled\nwith; this makes the width consequence a self-contained next target rather than a\ncorollary buried inside a monolithic lower-bound proof.\n\n## 2. A random restriction shrinks every short refutation to nothing\n\n**Conjecture.** If a refutation of the pigeonhole principle uses only\nsub-exponentially many clauses, then a random restriction that fixes most\nvariables collapses all of its wide clauses simultaneously, leaving a refutation\nof a still-hard sub-instance that is provably too narrow to exist.\n\nThe key insight is that the restriction operator and satisfaction commute exactly:\napplying a partial assignment to a formula and then satisfying it is the same as\nsatisfying the original formula along the assignment. This exact commutation \u2014\nwith *no* error term \u2014 means a probabilistic argument over restrictions never\nloses information at the interface between syntax and semantics, so the only place\nrandomness can fail is the counting of surviving wide clauses, isolating the heart\nof the argument.\n\n**Why now?** The exact (not approximate) semantic invariance of restrictions is\nprecisely the lemma that random-restriction proofs invoke implicitly; having it as\na hard fact removes the usual hand-waving and lets the probabilistic counting be\nattacked in isolation.\n\n## 3. Counting capacity, not clause length, is the true separation axis\n\n**Conjecture.** A proof system separates from clause-resolution on the pigeonhole\nprinciple if and only if it can represent, in a single object of polynomial size,\nthe global statement \"the total number of occupied (pigeon, hole) incidences\nequals the number of pigeons.\" Systems that can express this aggregate count\nrefute the principle in a linear number of steps; systems that cannot are forced\nto be exponential.\n\nThe key insight is that the entire difficulty of the pigeonhole principle for\nweak systems is the inability to add up local one-pigeon-per-hole facts into one\nglobal count: the linear refutation we exhibited consumes exactly the row sums and\ncolumn sums and nothing else, so the dividing line between easy and hard is the\npresence or absence of a *summation primitive*.\n\n**Why now?** We have a fully explicit, minimal counting refutation whose only\ningredients are the row lower bounds and column upper bounds; this pins down the\nexact algebraic capability responsible for the collapse, making \"summation power\"\na precise and testable classifier of proof systems.\n\n## 4. The indicator bridge generalises to fractional relaxations\n\n**Conjecture.** Replacing the 0/1 indicator by an arbitrary nonnegative real\nmatrix whose rows sum to at least one and whose columns sum to at most one still\nforces a contradiction whenever there are more rows than columns; moreover the\ncontradiction's \"slack\" grows linearly in the excess of pigeons over holes.\n\nThe key insight is that the counting refutation never used integrality: it only\nused that each row contributes at least one unit and each column absorbs at most\none, so the same double count applies to a continuous transportation-style\nrelaxation, and the gap `(n+1) - n` becomes a quantitative measure of\ninfeasibility rather than a mere yes/no verdict.\n\n**Why now?** Our bridge already factors through real-valued inequalities before\nspecialising to 0/1 vectors; lifting the specialisation is a small, well-posed\nstep that connects the discrete principle to the geometry of transportation\npolytopes, where quantitative infeasibility margins are the object of current\ninterest.\n\n## 5. Weakening-stability characterises proof systems with monotone closure\n\n**Conjecture.** Among natural propositional proof systems, exactly those whose\nderivability relation is closed under adding hypotheses admit a clean\nrestriction calculus; conversely, any system lacking such monotone closure fails\nto preserve hardness under restriction and therefore cannot be lower-bounded by\nthe restriction method.\n\nThe key insight is that weakening (a derivation in a set of axioms remains a\nderivation in any larger set) and restriction-robustness are two faces of the same\nstructural discipline: both say the proof relation respects the lattice of\nconstraint sets, so a single closure property governs whether the standard\nlower-bound toolkit applies at all.\n\n**Why now?** We proved weakening and restriction-preservation side by side and\nsaw they share the same one-line inductive skeleton; recognising this common core\nsuggests a structural taxonomy of proof systems by their closure behaviour, which\nwould organise an otherwise ad-hoc collection of lower-bound techniques.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2907",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0a73d6d7",
+    "status": "available",
+    "timestamp": "2026-06-29T22:35:00.990509+00:00",
+    "title": "Three robustness facts about the pigeonhole principle and"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2511,6 +2511,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For a neural network architecture \u0393, the polynomial system defining critical points of the loss landscape has an associated Galois group G(\u0393); gradient-based optimization converges to global minima (with high probability over initialization) if and only if G(\u0393) is a solvable group\u2014directly paralleling the Abel-Ruffini theorem on solvability by radicals. Test: Compute G(\u0393) for concrete architectures (linear networks, deep ReLU nets, ResNets) using computational Galois theory algorithms on the ideal of critical point equations derived from finite datasets; measure empirical trainability via gradient descent success rates across many random initializations; confirm or refute the solvability-trainability correspondence. Impact: Would establish that the fundamental barrier to training deep networks is algebraic rather than merely geometric, explain why skip connections enable deep training by reducing G(\u0393) to solvable subgroups, and provide an exact algebraic criterion for architecture design\u2014analogous to how Galois theory transformed our understanding of which polynomial equations admit closed-form solutions.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_2908",
+    "priority_score": 0.7158260869565218,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-29T22:36:03.271581+00:00",
+    "title": "Galois Solvability and the Trainability of Neural Architectures"
   },
   {
     "consumed_by_exp_id": "",
