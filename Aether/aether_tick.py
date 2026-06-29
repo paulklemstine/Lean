@@ -279,6 +279,80 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
         print(f"[Quality] Metrics error (non-fatal): {e}")
 
 
+def _print_tick_report(extractor: "KnowledgeExtractor", completed_jobs, remaining: int, queued_remaining: int) -> None:
+    """Consolidated end-of-tick telemetry + diagnostics report.
+
+    Gathers every stat block (state, LLM accounting, A/B version stats, Phase
+    split, rolling quality, package/lineage counts) into ONE section so the
+    tick log ends with a single scannable summary.
+    """
+    import json as _json
+    from collections import Counter
+    print("\n" + "=" * 72)
+    print("AETHER TICK REPORT")
+    print("=" * 72)
+
+    # --- State ---
+    try:
+        from research_memory import FutureDirectionsManager as _FD
+        _if = Counter(j.status for j in extractor.inflight.values())
+        _fd = _FD(extractor.workspace)
+        _dir = Counter(d.status for d in _fd._directions)
+        _active = sum(1 for j in extractor.inflight.values()
+                      if j.status in ("preparing", "dispatched", "retry_queued"))
+        print(f"[State]   inflight={dict(_if)} | directions={dict(_dir)} "
+              f"| active_jobs={_active} in_progress={_dir.get('in_progress', 0)}")
+    except Exception as _e:
+        print(f"[State]   state check failed: {_e}")
+
+    # --- LLM accounting ---
+    try:
+        _s = getattr(getattr(extractor, "pi_agent", None), "llm_stats", None)
+        if _s:
+            _c = _s["calls"]
+            _sk = _s["skipped"]
+            _skt = sum(_sk.values())
+            print(f"[LLM]     calls={_c['total']} "
+                  f"(eval={_c.get('eval', 0)} breakthrough={_c.get('breakthrough', 0)} "
+                  f"critic={_c.get('critic', 0)}+{_c.get('critic_tiebreak', 0)}tie "
+                  f"lint={_c.get('lint', 0)} pruning={_c.get('pruning', 0)} "
+                  f"other={_c.get('other', 0)}) | skipped={_skt} "
+                  f"(eval={_sk.get('eval', 0)} critic={_sk.get('critic', 0)} "
+                  f"lint={_sk.get('lint', 0)} pruning={_sk.get('pruning', 0)})")
+    except Exception as _e:
+        print(f"[LLM]     stats failed: {_e}")
+
+    # --- Integration summary ---
+    print(f"[Done]    {len(completed_jobs)} integrated, {remaining} still inflight, "
+          f"{queued_remaining} retry-queued")
+
+    # --- A/B + Phase split + Rolling quality (existing sub-reports) ---
+    _print_prompt_version_stats(extractor)
+    _print_quality_metrics(extractor)
+
+    # --- Packages + lineage (knowledge graph) ---
+    try:
+        import glob as _g
+        _skip_stems = {"index", "package", "lineage", "future_directions",
+                       "future_directions_snapshot", "catalog_tree", "statement"}
+        _pkgs = [f for f in _g.glob(str(PACKAGES_DIR / "*.json"))
+                 if Path(f).stem not in _skip_stems]
+        _lf = PACKAGES_DIR / "lineage.json"
+        _ln = _le = _lb = 0
+        if _lf.exists():
+            _ld = _json.loads(_lf.read_text())
+            _ln = len(_ld.get("nodes", []))
+            _le = len(_ld.get("edges", []))
+            _lb = len(_ld.get("domain_bridges", []))
+        _mismatch = "" if _ln == len(_pkgs) else f" (⚠ lineage stale: {len(_pkgs) - _ln} unindexed)"
+        print(f"[Packages] index={len(_pkgs)} | lineage={_ln} nodes, {_le} edges, "
+              f"{_lb} bridges{_mismatch}")
+    except Exception as _e:
+        print(f"[Packages] report failed: {_e}")
+
+    print("=" * 72)
+
+
 def _signal_dashboard_update(job_id: str = "", action: str = "update") -> None:
     """Write a lightweight last_update.json so the live dashboard polls refresh."""
     try:
@@ -1313,47 +1387,11 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     except Exception as _e:
         print(f"[Tick] in_progress reconcile failed: {_e}")
 
-    # End-of-tick state check: confirm jobs and directions are consistent.
-    # Every active dispatched job should have an in_progress direction; no
-    # in_progress direction should lack a live job. Printed each tick for health.
-    try:
-        from collections import Counter
-        from research_memory import FutureDirectionsManager as _FD2
-        _if_status = Counter(j.status for j in extractor.inflight.values())
-        _fd = _FD2(extractor.workspace)
-        _dir_status = Counter(d.status for d in _fd._directions)
-        _active = sum(1 for j in extractor.inflight.values()
-                      if j.status in ("preparing", "dispatched", "retry_queued"))
-        print(f"[State] inflight={dict(_if_status)} | directions={dict(_dir_status)} "
-              f"| active_jobs={_active} in_progress={_dir_status.get('in_progress', 0)}")
-    except Exception as _e:
-        print(f"[State] state check failed: {_e}")
-
-    # Phase 0: per-tick LLM call accounting — actual calls by category and
-    # calls avoided by static gates/caches. Lets us verify call reduction
-    # against quality drift (quality_score distribution is in [Quality] below).
-    try:
-        _s = getattr(getattr(extractor, "pi_agent", None), "llm_stats", None)
-        if _s:
-            _c = _s["calls"]
-            _sk = _s["skipped"]
-            _skip_total = sum(_sk.values())
-            print(f"[LLM] calls={_c['total']} "
-                  f"(eval={_c.get('eval',0)} breakthrough={_c.get('breakthrough',0)} "
-                  f"critic={_c.get('critic',0)}+{_c.get('critic_tiebreak',0)}tie "
-                  f"lint={_c.get('lint',0)} pruning={_c.get('pruning',0)} "
-                  f"other={_c.get('other',0)}) | skipped={_skip_total} "
-                  f"(eval={_sk.get('eval',0)} critic={_sk.get('critic',0)} "
-                  f"lint={_sk.get('lint',0)} pruning={_sk.get('pruning',0)})")
-    except Exception as _e:
-        print(f"[LLM] stats failed: {_e}")
-
-    # Summary
+    # Consolidated end-of-tick report (state, LLM, A/B, phase split, quality,
+    # packages/lineage). Replaces the previously-scattered stat blocks.
     remaining = extractor._count_inflight_dispatched()
     queued_remaining = len([j for j in extractor.inflight.values() if j.status == "retry_queued"])
-    print(f"[Tick] Done — {len(completed_jobs)} integrated, {remaining} still inflight, {queued_remaining} retry-queued")
-    _print_prompt_version_stats(extractor)
-    _print_quality_metrics(extractor)
+    _print_tick_report(extractor, completed_jobs, remaining, queued_remaining)
 
 
 def resolve_jsonl_conflict(file_path: Path) -> bool:
@@ -1552,6 +1590,20 @@ def rebuild_commit_push() -> bool:
     global _core_files_changed
     pre_pull_hashes = _snapshot_core_hashes()
     print("[Tick] Rebuilding website index...")
+    # Regenerate the knowledge graph (lineage.json) BEFORE update_index.py so
+    # the website index loads fresh node/edge counts (otherwise lineage.json
+    # goes stale and reports fewer packages than the index).
+    try:
+        _lin = subprocess.run(
+            [sys.executable, str(REPO_ROOT / "Aether" / "lineage_extractor.py")],
+            capture_output=True, text=True, timeout=60
+        )
+        if _lin.returncode != 0:
+            print(f"[Tick] lineage_extractor.py failed: {_lin.stderr[:200]}")
+        elif _lin.stdout.strip():
+            print(f"[Tick] {_lin.stdout.strip()}")
+    except Exception as _e:
+        print(f"[Tick] lineage_extractor.py error: {_e}")
     try:
         result = subprocess.run(
             [sys.executable, "update_index.py"],
