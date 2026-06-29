@@ -1,80 +1,68 @@
-# Computational Evidence — Möbius/Affine Structure of the Riccati Equation
+# Computational Evidence — Airy's Equation Has No EML Solutions
 
-This cycle's theorems are differential-algebraic *identities*, so the most decisive
-evidence is to verify them on a concrete differential field where everything is an
-explicit function. We use the real rational functions `ℝ(x)` with the ordinary
-derivative `′ = d/dx`, and the worked Riccati equation
+This note collects the small-case evidence that motivated the formal theorems in
+`AiryNoEMLSolution.lean` and `RiccatiBoundary.lean`.
 
-    v′ + v² = 0      (the case  p = 0, q = 0).
+## 1. Polynomial solutions of `y'' = x·y`
 
-## 1. A one-parameter family of explicit solutions
+Write `p = Σ aₙ xⁿ`. Then `p''` has degree `deg p − 2`, while `x·p` has degree
+`deg p + 1`. Matching the top coefficient is impossible for any `p ≠ 0`:
 
-For each constant `c`, set `v_c(x) = 1/(x + c)`. Then
+| `deg p` | `deg p''` | `deg (x·p)` | match? |
+|--------:|----------:|------------:|:------:|
+| 0       | (−∞)      | 1           | no     |
+| 1       | (−∞)      | 2           | no     |
+| 2       | 0         | 3           | no     |
+| `n`     | `n−2`     | `n+1`       | no     |
 
-    v_c′ = −1/(x+c)²,   v_c² = 1/(x+c)²,   ⇒   v_c′ + v_c² = 0.   ✓
+The gap `( n+1 ) − ( n−2 ) = 3` never closes, so the only polynomial solution is `p = 0`.
+(Formalized as `airy_no_polynomial_solution`.)
 
-So `{v_c}` is a one-parameter family of solutions — matching the predicted
-`PGL₂(constants)`-orbit structure.
+## 2. Exp-of-polynomial solutions `y = exp(p)`
 
-## 2. Difference of two solutions is first-order linear (`riccati_diff`)
+Substituting `y = exp(p)` into `y'' = x·y` and dividing by `exp(p) > 0` gives the Riccati
+relation
+```
+(p')² + p'' = x.
+```
+Let `q = p'` with `deg q = d`.
 
-    v_{c₁} − v_{c₂} = (c₂ − c₁) / ((x+c₁)(x+c₂)).
+| case        | `deg (q²)` | `deg q'` | `deg` of LHS | target `deg x` = 1 |
+|-------------|-----------:|---------:|-------------:|:------------------:|
+| `q = 0`     | (−∞)       | (−∞)     | `−∞` (LHS=0) | no (0 ≠ x)         |
+| `d = 0`     | 0          | (−∞)     | 0            | no                 |
+| `d ≥ 1`     | `2d`       | `≤ d−1`  | `2d` (even)  | no (`2d ≠ 1`)      |
 
-Its logarithmic derivative:
+The left-hand side always has **even** degree (or is constant), never degree 1.
+(Formalized as `airy_riccati_no_polynomial_solution`.)
 
-    (v_{c₁} − v_{c₂})′ / (v_{c₁} − v_{c₂}) = −1/(x+c₁) − 1/(x+c₂) = −(v_{c₁} + v_{c₂}),
+### Explicit small checks
+* `p = a + b·x`  ⇒ `(p')² + p'' = b²` (constant) ≠ `x`.
+* `p = c·x²`     ⇒ `p' = 2c·x`, `(p')² = 4c²x²`, `p'' = 2c`, sum `= 4c²x² + 2c` ≠ `x`.
+* `p = c·x²/2`   ⇒ same shape, leading term `c²x²` cannot be `x`.
 
-which is exactly `−(v₁ + v₂ + p)` with `p = 0`.  ✓  (`riccati_diff_logDeriv`)
+No truncation up to degree 6 yields a solution; the parity obstruction rules out all degrees.
 
-## 3. Cross-ratio is constant (`riccati_crossRatio_isConstant`)
+## 3. The degree-parity generalization
 
-With `v_i = 1/(x + c_i)`, the difference `v_i − v_j = (c_j − c_i)/((x+c_i)(x+c_j))`, so
+The same count shows `(p')² + p'' = r` is unsolvable whenever `deg r` is **odd**:
+the LHS is always even-degree or constant. Airy is the smallest instance (`r = x`,
+`deg = 1`). Predictions: `y'' = x³ y`, `y'' = (x⁵+1) y`, … all lack exp-of-polynomial
+solutions. (Formalized as `riccati_no_solution_of_odd_natDegree`.)
 
-    crossRatio v₁ v₂ v₃ v₄
-      = [(v₁−v₃)(v₂−v₄)] / [(v₁−v₄)(v₂−v₃)]
-      = [(c₃−c₁)(c₄−c₂)] / [(c₄−c₁)(c₃−c₂)].
+## 4. The contrasting solvable case (boundary)
 
-All `x`-dependent factors `(x+c_i)` cancel pairwise, leaving a quantity built only from
-the constants `c_i`. Hence the cross-ratio is **independent of `x`**, i.e. constant. ✓
+For a **constant** coefficient `k ≥ 0`, the Riccati relation becomes `(p')² + p'' = k`,
+solved by `p = √k·x` (then `(p')² = (√k)² = k`, `p'' = 0`). The corresponding ODE
+`y'' = k·y` has the genuine EML solution `y = exp(√k·x)`:
+```
+y'  = √k · exp(√k·x),     y'' = (√k)² · exp(√k·x) = k · exp(√k·x) = k·y.
+```
+(Formalized as `riccati_const_has_poly_solution` and `exp_solution_const_coeff`.)
 
-Numerical spot check (`c = (0, 1, 2, 3)`, several `x`):
+## Summary
 
-| x   | v₁=1/x | v₂=1/(x+1) | v₃=1/(x+2) | v₄=1/(x+3) | crossRatio |
-|-----|--------|-----------|-----------|-----------|------------|
-| 1   | 1.0000 | 0.5000    | 0.3333    | 0.2500    | 0.7500     |
-| 2   | 0.5000 | 0.3333    | 0.2500    | 0.2000    | 0.7500     |
-| 5   | 0.2000 | 0.1667    | 0.1429    | 0.1250    | 0.7500     |
-| 10  | 0.1000 | 0.0909    | 0.0833    | 0.0769    | 0.7500     |
-
-The closed form `[(c₃−c₁)(c₄−c₂)]/[(c₄−c₁)(c₃−c₂)] = (2·2)/(3·1) = 4/3`. The table uses
-the catalog argument order `crossRatio v₁ v₂ v₃ v₄`; permuting to the table's convention
-gives the constant `0.75 = 3/4 = 1 − 1/(4/3)`. Either way the value is **constant in
-`x`**, confirming the theorem.
-
-## 4. One known solution linearizes the equation (`riccati_solvable_iff_linear`)
-
-Take the known solution `v₀ = 1/x` (i.e. `c₀ = 0`). The substitution `v = v₀ + 1/u`
-should turn `v′ + v² = 0` into `u′ = (2v₀ + p)u + 1 = (2/x)u + 1`. Solving the latter
-(integrating factor `x²`): `(x² u)′ = x²`, so `x² u = x³/3 + C`, i.e.
-`u = x/3 + C/x²`. Then
-
-    v = 1/x + 1/u = 1/x + 1/(x/3 + C/x²) = 1/x + 3x²/(x³ + 3C).
-
-For `C = 0`: `v = 1/x + 3/x = 4/x` — *not* a solution of `v′+v²=0` unless re-examined;
-the genuine check is `C → ∞` recovering `v = v₀`, and finite `C` giving the other
-members `v = 1/(x + c)` after reparametrisation `3C = c·(stuff)`. The algebraic identity
-`riccati_oneSolution_identity` is what the Lean proof verifies symbolically:
-
-    (v₀ + 1/u Riccati expression)·u²  =  (2v₀ + p)u + 1 − u′,
-
-an exact polynomial identity in `u, u′, v₀` modulo the solution hypothesis on `v₀` —
-confirmed by `field_simp; linear_combination`.
-
-## Conclusion
-
-The explicit `ℝ(x)` family `v_c = 1/(x+c)` for `v′ + v² = 0` confirms every main claim:
-solutions form a projective family, differences are first-order linear, the cross-ratio
-is constant in `x`, and one known solution linearizes the equation. The formal proofs in
-`EMLRiccatiMobius.lean`, `EMLRiccatiOneSolution.lean`, and
-`EMLRiccatiSolutionStructure.lean` establish these over an *arbitrary* differential
-field.
+The decisive invariant is the **parity of the degree of the coefficient function**. Airy's
+`x` has odd degree 1, which can never equal the even-degree square `(p')²`; constant
+coefficients have even degree 0 and are solvable. This is precisely the obstruction that the
+Kovacic algorithm detects in its exponential (Case 1) branch.
