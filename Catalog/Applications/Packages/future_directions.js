@@ -989,7 +989,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fourier Analysis on Finite Groups"
   },
   {
-    "consumed_by_exp_id": "29da1479",
+    "consumed_by_exp_id": "",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to \u03c7(G) \u2264 4 for all planar G. Formalize Brooks' theorem: \u03c7(G) \u2264 \u0394(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domains": [
       "Combinatorics",
@@ -999,7 +999,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1105,21 +1105,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432642+00:00",
     "title": "Quaternion Algebras and Rotations"
-  },
-  {
-    "consumed_by_exp_id": "f67eb57b",
-    "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
-    "domains": [
-      "Combinatorics",
-      "Probability"
-    ],
-    "id": "seed_355",
-    "priority_score": 0.82,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432742+00:00",
-    "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
   {
     "consumed_by_exp_id": "",
@@ -1557,20 +1542,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T07:01:40.248934+00:00",
     "title": "Refined Asymptotic for Non-Divisible Entries in GL\u2082(\ud835\udd3d_q) Character Tables"
-  },
-  {
-    "consumed_by_exp_id": "f3c7d4c4",
-    "description": "For any generalized Ankeny-Brauer-Chowla polynomial \u03c0_U(X) as defined in the paper, the associated linear recurrence sequences have exactly two sufficiently large common values, making the upper bound of two tight.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2833",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.27885v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T07:18:02.548627+00:00",
-    "title": "Tightness of the common value bound in generalized Ankeny-Brauer-Chowla recurrences"
   },
   {
     "consumed_by_exp_id": "",
@@ -2028,6 +1999,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The 14-gonal numbers are given by $P_{14}(n) = 6n^2 - 5n$. Theorem 1 of the paper states that the Diophantine equation $P_{14}(n) = t^4$ has only the solutions $(n, t) = (0, 0), (1, \\pm 1)$ and $(-2000, \\pm 70)$. This can be reduced to finding the integer points on the elliptic curve $X^2 - 24Y^4 = 25$. The conjecture asserts that these are the only solutions, providing a complete characterization of perfect fourth powers in the sequence of 14-gonal numbers.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2865",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "available",
+    "timestamp": "2026-06-29T12:13:10.760960+00:00",
+    "title": "Complete solutions to $P_{14}(n) = t^4$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite projective plane of order q \u2265 2, the expected coverage time of its line set as a fair coupon collecting mechanism is strictly greater than the expected coverage time of the fully random model on n=q^2+q+1 coupons with draw size \u2113=q+1. This generalizes the paper's explicit Fano plane (q=2) counterexample to all projective planes, asserting that finite geometric structure universally slows down fair coupon collection compared to the full combinatorial model.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2866",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28216v1",
+    "status": "available",
+    "timestamp": "2026-06-29T12:14:01.655400+00:00",
+    "title": "Projective Plane Extremality in Fair Coupon Collecting"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -2108,7 +2109,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432728+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
@@ -2463,7 +2464,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acc7fc2f",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -2473,7 +2474,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
