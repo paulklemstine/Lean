@@ -1,2 +1,0 @@
-# Summary of changes for run 8f2efd0e-9048-45b0-916e-ca886db40189
-The theorem `test_one_eq_one : 1 = 1` in `Test.lean` is proved using `rfl` (reflexivity). The proof compiles successfully with no sorries.

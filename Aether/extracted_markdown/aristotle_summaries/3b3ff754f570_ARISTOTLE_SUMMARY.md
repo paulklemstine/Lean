@@ -1,2 +1,0 @@
-# Summary of changes for run a78e11e2-c97d-4d9a-993a-8743c7da7dd4
-The theorem `test_one_eq_one : 1 = 1` in `Test.lean` was already proved using `rfl` (reflexivity). I fixed the `lakefile.lean` which had a configuration error, and verified that the project builds successfully with no sorries remaining.

@@ -1,2 +1,0 @@
-# Summary of changes for run 3dcb38ae-ce8f-4de7-95f8-e2268fa3234c
-Filled in the sorry in `Main.lean`. The theorem `tropical_kolmogorov_bound` has goal `True`, which is proved by `trivial`. The file compiles cleanly with no remaining sorries.

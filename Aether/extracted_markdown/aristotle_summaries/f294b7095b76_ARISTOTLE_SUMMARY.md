@@ -1,2 +1,0 @@
-# Summary of changes for run 66b10c7c-4916-45f3-bd98-354771ea2808
-The theorem `test_one_eq_one : 1 = 1` in `Test.lean` is already proved using `rfl` (reflexivity). The project builds successfully with no errors.

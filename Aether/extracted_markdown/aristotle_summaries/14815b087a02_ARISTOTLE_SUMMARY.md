@@ -1,9 +1,0 @@
-# Summary of changes for run cb18619e-87ad-4756-9962-757b0d6ea001
-Created `Catalog/Bridges/PrimeIndexPrimitiveDivisors.lean`, completing the prime-index primitive-divisor development on top of the existing strong-divisibility API in `Catalog/Bridges/StrongDivisibilitySequences.lean` (imported directly, no parallel framework introduced).
-
-Contents (all proved, no sorries):
-- `StrongDivSeq.entryPoint_ne_one` — the auxiliary rigidity lemma: if `p ∤ s 1` then the entry point of `p` cannot equal `1`.
-- `StrongDivSeq.isPrimitive_of_prime_index` — the generic theorem: for any `s : StrongDivSeq`, if `n` is prime, `p ∣ s n` and `p ∤ s 1`, then `p` is a primitive divisor at index `n` (`s.IsPrimitive p n`). The proof uses the existing entry-point API: `p ∣ s n` gives `entryPoint p ∣ n`, primality forces `entryPoint p ∈ {1, n}`, `entryPoint_ne_one` discards `1`, and `primitive_iff_entryPoint_eq` concludes. I used the project's existing `IsPrimitive` notion (minimality quantified over positive indices), since the literal "for all `m < n`" form is false at `m = 0` where `s 0 = 0` is divisible by everything.
-- Two one-line specialisations through the existing instances: `fib_isPrimitive_of_prime_index` (Fibonacci, with `p ≠ 1` standing in for `p ∤ F 1 = p ∤ 1`) and `mersenne_isPrimitive_of_prime_index` (for `b^n - 1`, with hypothesis `p ∤ b - 1`).
-
-The omitted existence corollary (extracting a prime factor from `1 < s n`) was intentionally left out per the scope guidance, as it is not needed for the generic theorem and its immediate specialisations. The file typechecks cleanly and the main results depend only on the standard axioms `propext`, `Classical.choice`, `Quot.sound`.

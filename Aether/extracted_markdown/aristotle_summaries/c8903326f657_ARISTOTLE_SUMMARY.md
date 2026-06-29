@@ -1,9 +1,0 @@
-# Summary of changes for run c4aa79f4-43e9-4865-a9f4-66066ab9b9d1
-Created `Catalog/Algebra/KorseltUnitsBridge.lean` (54 lines) containing exactly the four requested results, each with a complete proof and no `sorry`:
-
-1. `orderOf_dvd_of_forall_pow_eq_one` — in a monoid, if `g^m = 1` for all `g`, then `orderOf g ∣ m`.
-2. `orderOf_map_dvd_of_surjective` — for a group hom `φ : G →* H`, `orderOf (φ g) ∣ orderOf g` (surjectivity kept as `_hφ` for interface compatibility, unused in the proof as noted in the docstring).
-3. `unitsMap_surjective_of_squarefree` — for `n` squarefree with prime divisor `p`, the reduction map `ZMod.unitsMap : (ZMod n)ˣ →* (ZMod p)ˣ` is surjective. The primality hypothesis is kept (`_hp`) for the requested interface; the proof needs only `NeZero n` (from `Squarefree.ne_zero`) plus `ZMod.unitsMap_surjective`, and the docstring records that primality turned out unnecessary.
-4. Main theorem `prime_sub_one_dvd_of_forall_units_pow_eq_one` — if `n` is squarefree, `p` is a prime divisor of `n`, and every unit of `ZMod n` satisfies `u^(n-1) = 1`, then `(p-1) ∣ (n-1)`. The proof follows the intended strategy: take a generator `g` of the cyclic group `(ZMod p)ˣ`, lift it through the surjective reduction map (lemma 3), bound `orderOf` of the lift by `n-1` (lemma 1), transport the order along the homomorphism (lemma 2), and identify `orderOf g = p-1` via `orderOf_eq_card_of_forall_mem_zpowers`, `ZMod.card_units_eq_totient`, and `Nat.totient_prime`.
-
-The file uses `import Mathlib`. It builds successfully as module `Algebra.KorseltUnitsBridge`, contains no other declarations, and `#print axioms` on the main theorem shows only `propext`, `Classical.choice`, and `Quot.sound`.

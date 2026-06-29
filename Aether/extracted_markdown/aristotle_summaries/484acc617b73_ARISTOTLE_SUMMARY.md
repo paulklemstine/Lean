@@ -1,2 +1,0 @@
-# Summary of changes for run cda6adc5-f5d6-4469-acfa-ed43fafb0085
-Filled in the single `sorry` in `Main.lean`. The theorem `tropical_kolmogorov_bound` has the conclusion `True`, so the proof is simply `trivial`. The file compiles cleanly with no sorries and no non-standard axioms.

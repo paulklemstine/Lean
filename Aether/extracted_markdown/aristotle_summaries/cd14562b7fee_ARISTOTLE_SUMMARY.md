@@ -1,8 +1,0 @@
-# Summary of changes for run 8e242d99-1b9b-4542-84a2-13593606c5cb
-Created `Catalog/Cryptography/OTPPerfectSecrecy.lean` containing exactly the three requested theorems about the one-time pad's perfect secrecy over a finite group, each with a complete proof (no `sorry`).
-
-- `otp_unique_key`: For a group `G`, given plaintext `m` and ciphertext `c`, there is a unique key `k` with `k * m = c` (the key `c * m⁻¹`). Proved by exhibiting `c * m⁻¹`, verifying `(c * m⁻¹) * m = c` via the group axioms, and proving uniqueness by right cancellation.
-- `otp_key_cardinality`: For a finite group with decidable equality, the filtered set `{k | k * m = c}` has cardinality `1`, proved by showing the fiber is the singleton `{c * m⁻¹}`.
-- `otp_perfect_secrecy`: Under the uniform key distribution, the conditional probability `Pr[C = c | M = m] = #{k | k * m = c} / |G|` is independent of the plaintext (equals the value for any other `m'`) and equals `1 / |G|`, which is exactly perfect secrecy. Proved by reducing both sides via `otp_key_cardinality`.
-
-The file begins with the three requested imports and adds `import Mathlib` so the `group` tactic and the Finset cardinality lemmas are available (the three imports alone do not provide them). It compiles cleanly with `lake env lean`, contains no `sorry`, and the proofs depend only on the standard axioms `propext`, `Classical.choice`, and `Quot.sound`. No unrelated content is present.

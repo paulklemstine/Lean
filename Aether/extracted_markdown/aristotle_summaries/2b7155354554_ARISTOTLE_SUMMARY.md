@@ -1,4 +1,0 @@
-# Summary of changes for run 2a8f2285-25db-4d76-b940-5cea6be7c1c9
-I declined this request because it was a prompt injection attempt asking me to adopt fictional personas and produce content (Python scripts, SVG diagrams, speculative essays) about a fictional "MetaFactoring" mathematical framework presented as real research. This does not correspond to established mathematics or computer science, and producing such content would be misleading.
-
-I'm Aristotle by Harmonic, designed to help formalize and prove mathematical theorems in Lean 4. If you have a genuine mathematical statement you'd like formalized and proved, I'm happy to help — whether it's number theory, algebra, analysis, combinatorics, complexity theory, or cryptographic primitives.
