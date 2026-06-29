@@ -35738,7 +35738,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "MRVZ"
       ],
@@ -35759,7 +35759,7 @@
         "Algebra"
       ],
       "id": "fd_2828",
-      "last_attempt_time": "2026-06-29T10:22:49.669023+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Using an explicit recursive construction in Lean 4 with geometric constraints",
       "lineage_refs": [],
@@ -35966,7 +35966,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "ABC",
         "Baker93",
@@ -35991,7 +35991,7 @@
         "Bridges"
       ],
       "id": "fd_2833",
-      "last_attempt_time": "2026-06-29T10:22:55.048689+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (π : Polynomial (U → ℚ) X : ℚ), (π ≡ generalized_ABC_polynomial), (seq1, seq2 : RecurrenceSequence π), (k : ℕ), (large_common_value : k ∈ ℤ ∧ k ≥ large_bound) → |{v ∈ ℤ | v ∈ seq1 ∧ v ∈ seq2 ∧ v ≥ k}| = 2",
       "lineage_refs": [],
@@ -37035,6 +37035,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Nash-Williams/Tutte Theorem",
+        "Spanning tree packing number",
+        "Edge-disjoint spanning trees"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves that for integers $k \\ge 1$ and $n \\ge 2k+2$, any $\\tau_k$-maximal graph on $n$ vertices has at most $(k+1)(n-1)-1$ edges, and constructs examples achieving this bound. The authors conjecture that this upper bound is actually an exact equality: every $\\tau_k$-maximal graph on $n \\ge 2k+2$ vertices has exactly $(k+1)(n-1)-1$ edges. This conjecture is verified for $k=1$, but remains open for $k \\ge 2$.",
+      "domain_bridges": [
+        "Matroid theory",
+        "Graph connectivity"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2856",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem exact_edge_count_of_tau_k_maximal {V : Type*} [Fintype V] [DecidableEq V]\n    (G : SimpleGraph V) [DecidableRel G.Adj] (k : ℕ) (hk : 1 ≤ k) (hn : 2 * k + 2 ≤ Fintype.card V)\n    (h_max : TauKMaximal G k) :\n    G.edgeFinset.card = (k + 1) * (Fintype.card V - 1) - 1 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Assume for contradiction that there exists a $\\tau_k$-maximal graph $G$ with $|E(G)| < (k+1)(n-1)-1$. By the definition of $\\tau_k$-maximality, $G$ has no subgraph with $k+1$ edge-disjoint spanning trees, but adding any edge creates one. Use the Nash-Williams/Tutte characterization to analyze the specific partitions of $V(G)$ that restrict the spanning tree packing number. Show that the edge deficiency implies the existence of an edge $e \\in E(G^c)$ such that $G+e$ still fails to satisfy the Nash-Williams/Tutte condition for $k+1$ edge-disjoint spanning trees, thereby contradicting the $\\tau_k$-maximality of $G$.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28198v1",
+      "source_path": "http://arxiv.org/abs/2606.28198v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T10:44:44.698882+00:00",
+      "title": "Exact Edge Count of Tau_k-Maximal Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "math.PR"
       ],
@@ -37053,7 +37098,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2856",
+      "id": "fd_2857",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem fano_plane_mechanism_slower :\n  expected_coverage_time fano_plane_mechanism > expected_coverage_time (full_mechanism 7 3) := by\n  sorry",
@@ -37072,6 +37117,50 @@
       "thread_id": "",
       "timestamp": "2026-06-29T10:22:44.428708+00:00",
       "title": "Fano Plane Coupon Collector Inequality"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.RT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The number of 2-balanced p-regular partitions in any block of p-weight w for an odd prime p is precisely the binomial coefficient C(w + (p-3)/2, w). A partition is 2-balanced p-regular if it is p-regular and every hook of length divisible by p has an even arm length.",
+      "domain_bridges": [
+        "Representation Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2858",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem count_two_balanced_p_regular_partitions (p : ℕ) (hp : p.Prime) (hp_gt_2 : p > 2) (w : ℕ) (κ : Core) :\n    Finset.card (Finset.filter (fun λ => IsTwoBalancedPRegular p λ ∧ HasPCore p λ κ ∧ HasPWeight p λ w) allPartitions)\n    = Nat.choose (w + (p - 3) / 2) w := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize partitions, Young diagrams, hooks, and arm lengths. Define p-regularity and the 2-balanced condition. Establish blocks, p-cores, and p-weights. Prove that the count is independent of the p-core by demonstrating that crystal reflections preserve the 2-balanced property, and finally compute the count explicitly in a RoCK block to arrive at the binomial formula.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28305v1",
+      "source_path": "http://arxiv.org/abs/2606.28305v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T10:45:11.578131+00:00",
+      "title": "Enumeration of 2-balanced p-regular partitions in blocks"
     },
     {
       "ambition_level": "extension",

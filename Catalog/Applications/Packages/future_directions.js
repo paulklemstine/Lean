@@ -1911,17 +1911,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves that for integers $k \\ge 1$ and $n \\ge 2k+2$, any $\\tau_k$-maximal graph on $n$ vertices has at most $(k+1)(n-1)-1$ edges, and constructs examples achieving this bound. The authors conjecture that this upper bound is actually an exact equality: every $\\tau_k$-maximal graph on $n \\ge 2k+2$ vertices has exactly $(k+1)(n-1)-1$ edges. This conjecture is verified for $k=1$, but remains open for $k \\ge 2$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2856",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "available",
+    "timestamp": "2026-06-29T10:44:44.698882+00:00",
+    "title": "Exact Edge Count of Tau_k-Maximal Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The expected time to collect all 7 coupons when drawing uniformly from the 7 lines of the Fano plane (a fair mechanism with n=7, \u2113=3) is strictly greater than the expected time when drawing uniformly from all 35 possible 3-element subsets.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2856",
+    "id": "fd_2857",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
     "status": "available",
     "timestamp": "2026-06-29T10:22:44.428708+00:00",
     "title": "Fano Plane Coupon Collector Inequality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The number of 2-balanced p-regular partitions in any block of p-weight w for an odd prime p is precisely the binomial coefficient C(w + (p-3)/2, w). A partition is 2-balanced p-regular if it is p-regular and every hook of length divisible by p has an even arm length.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2858",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T10:45:11.578131+00:00",
+    "title": "Enumeration of 2-balanced p-regular partitions in blocks"
   },
   {
     "consumed_by_exp_id": "",

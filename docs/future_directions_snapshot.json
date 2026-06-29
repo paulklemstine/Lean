@@ -2939,6 +2939,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Nash-Williams/Tutte Theorem",
+      "Spanning tree packing number",
+      "Edge-disjoint spanning trees"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for integers $k \\ge 1$ and $n \\ge 2k+2$, any $\\tau_k$-maximal graph on $n$ vertices has at most $(k+1)(n-1)-1$ edges, and constructs examples achieving this bound. The authors conjecture that this upper bound is actually an exact equality: every $\\tau_k$-maximal graph on $n \\ge 2k+2$ vertices has exactly $(k+1)(n-1)-1$ edges. This conjecture is verified for $k=1$, but remains open for $k \\ge 2$.",
+    "domain_bridges": [
+      "Matroid theory",
+      "Graph connectivity"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2856",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Assume for contradiction that there exists a $\\tau_k$-maximal graph $G$ with $|E(G)| < (k+1)(n-1)-1$. By the definition of $\\tau_k$-maximality, $G$ has no subgraph with $k+1$ edge-disjoint spanning trees, but adding any edge creates one. Use the Nash-Williams/Tutte characterization to analyze the specific partitions of $V(G)$ that restrict the spanning tree packing number. Show that the edge deficiency implies the existence of an edge $e \\in E(G^c)$ such that $G+e$ still fails to satisfy the Nash-Williams/Tutte condition for $k+1$ edge-disjoint spanning trees, thereby contradicting the $\\tau_k$-maximality of $G$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "available",
+    "timestamp": "2026-06-29T10:44:44.698882+00:00",
+    "title": "Exact Edge Count of Tau_k-Maximal Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "math.PR"
     ],
@@ -2951,7 +2977,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2856",
+    "id": "fd_2857",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the exact expected coverage times for both mechanisms. For the full model, use the standard formula. For the Fano plane, reduce the Markov chain state space using the symmetries of the Fano plane (tracking only the number of collected coupons and the intersection size with the last drawn line), compute the transition probabilities, and solve for the expected hitting time. Finally, verify the strict inequality between the two resulting rational numbers.",
@@ -2960,6 +2986,31 @@
     "status": "available",
     "timestamp": "2026-06-29T10:22:44.428708+00:00",
     "title": "Fano Plane Coupon Collector Inequality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.RT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The number of 2-balanced p-regular partitions in any block of p-weight w for an odd prime p is precisely the binomial coefficient C(w + (p-3)/2, w). A partition is 2-balanced p-regular if it is p-regular and every hook of length divisible by p has an even arm length.",
+    "domain_bridges": [
+      "Representation Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2858",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize partitions, Young diagrams, hooks, and arm lengths. Define p-regularity and the 2-balanced condition. Establish blocks, p-cores, and p-weights. Prove that the count is independent of the p-core by demonstrating that crystal reflections preserve the 2-balanced property, and finally compute the count explicitly in a RoCK block to arrive at the binomial formula.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28305v1",
+    "status": "available",
+    "timestamp": "2026-06-29T10:45:11.578131+00:00",
+    "title": "Enumeration of 2-balanced p-regular partitions in blocks"
   },
   {
     "ambition_level": "extension",
