@@ -35918,6 +35918,51 @@
       "title": "Limit points of largest matching roots below the golden‑ratio threshold"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Peluse and Soundararajan's work on Miller's conjecture",
+        "Miller's original conjecture for symmetric groups",
+        "Character theory of GL₂(𝔽_q)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that the error term in the asymptotic count of entries not divisible by ℓ in the character table of GL₂(𝔽_q) is O(q³) rather than O(q³+ε).",
+      "domain_bridges": [
+        "connections between character divisibility and equidistribution",
+        "analytic number theory techniques in representation theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2832",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "∀ (q : ℕ) (ℓ : prime) (q odd prime power) → N_ℓ(q) = q⁴/2 + O(q³)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Refine existing equidistribution arguments to extract sharper bounds on character vanishing behavior",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28085v1",
+      "source_path": "http://arxiv.org/abs/2606.28085v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T07:01:40.248934+00:00",
+      "title": "Refined Asymptotic for Non-Divisible Entries in GL₂(𝔽_q) Character Tables"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -35946,7 +35991,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2832",
+      "id": "fd_2833",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_plane_coverage_time_gt_random (q : ℕ) (hq : 2 ≤ q) : \n  expected_coverage_time (line_family (PG(2, q))) > expected_coverage_time (uniform_family (q^2 + q + 1) (q + 1))",
@@ -35992,7 +36037,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2833",
+      "id": "fd_2834",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem count_d_balanced_e_regular_partitions {d e w : ℕ} (hd : d > 1) (he : e > 1) (hdiv : (e - 3) % d = 0) : (Finset.card (setOf (d-balanced e-regular partitions in block of e-weight w))) = Nat.choose (w + (e - 3) / d) w := by sorry",
@@ -36034,7 +36079,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2834",
+      "id": "fd_2835",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃ (L : Fin n → Fin n → Fin n),\n  (∀ r : Fin n, Function.Bijective (fun x => L r x)) ∧\n  (∀ c1 c2 : Fin n, c1 ≠ c2 → (∀ p q : Fin n,\n    (∑ r : Fin n, if L r c1 = p ∧ L r c2 = q then 1 else 0) = (∑ r : Fin n, if L r c1 = q ∧ L r c2 = p then 1 else 0)))",
@@ -36082,7 +36127,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2835",
+      "id": "fd_2836",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem signless_laplacian_tK3_free_extremal_improved_bound {t n : ℕ} (ht : t ≥ 2) (hn : n ≥ 3 * t) :\n  UniqueExtremalGraph (tK3Free t) (signlessLaplacianSpectralRadius) n =\n    KJoin (CompleteGraph (t-1)) (CompleteBipartiteGraph ⌊(n-t+1)/2⌋ ⌈(n-t+1)/2⌉) := by sorry",
@@ -36101,6 +36146,50 @@
       "thread_id": "",
       "timestamp": "2026-06-29T06:44:32.889471+00:00",
       "title": "Improved Bound for Signless Laplacian Spectral Radius of $tK_3$-Free Graphs"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Borsuk1948"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "This paper proposes a computational framework to determine homology groups of simplicial complexes through discrete Morse theory and gradient vector fields, offering a formalizable path for practical applications.",
+      "domain_bridges": [
+        "combinatorial topology",
+        "computational topology"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2837",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "The nerve theorem applies to finite simplicial complexes and preserves finiteness properties",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Constructive existence argument via combinatorial dimension tracking",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28047v1",
+      "source_path": "http://arxiv.org/abs/2606.28047v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-29T07:01:46.131020+00:00",
+      "title": "A combinatorial approach to the effective nerve theorem"
     },
     {
       "ambition_level": "extension",

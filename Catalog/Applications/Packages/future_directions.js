@@ -1603,12 +1603,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that the error term in the asymptotic count of entries not divisible by \u2113 in the character table of GL\u2082(\ud835\udd3d_q) is O(q\u00b3) rather than O(q\u00b3+\u03b5).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2832",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28085v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:01:40.248934+00:00",
+    "title": "Refined Asymptotic for Non-Divisible Entries in GL\u2082(\ud835\udd3d_q) Character Tables"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every projective plane of order q (q \u2265 2), the family of its lines (a 2-(q^2+q+1, q+1, 1) design) defines a fair \u2113\u2011regular mechanism whose expected coupon\u2011collection time strictly exceeds that of the fully random model on the same parameters, and that this mechanism attains the maximal possible expected time among all uniform \u2113\u2011regular families on the underlying n\u2011set.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2832",
+    "id": "fd_2833",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
@@ -1623,7 +1637,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2833",
+    "id": "fd_2834",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
@@ -1637,7 +1651,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2834",
+    "id": "fd_2835",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
@@ -1652,13 +1666,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2835",
+    "id": "fd_2836",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
     "status": "available",
     "timestamp": "2026-06-29T06:44:32.889471+00:00",
     "title": "Improved Bound for Signless Laplacian Spectral Radius of $tK_3$-Free Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper proposes a computational framework to determine homology groups of simplicial complexes through discrete Morse theory and gradient vector fields, offering a formalizable path for practical applications.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2837",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28047v1",
+    "status": "available",
+    "timestamp": "2026-06-29T07:01:46.131020+00:00",
+    "title": "A combinatorial approach to the effective nerve theorem"
   },
   {
     "consumed_by_exp_id": "",
