@@ -700,7 +700,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8acf5433",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -714,7 +714,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -922,7 +922,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd05632c",
     "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
     "domain_bridges": [],
     "domains": [
@@ -934,7 +934,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:58.445057+00:00",
     "title": "Sums of Three Cubes"
   },
@@ -1682,7 +1682,7 @@
       "math.PR",
       "math.CO/design_theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98d48aca",
     "description": "For every prime power q ≥ 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q²+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domain_bridges": [
       "finite_geometry-probability",
@@ -1699,7 +1699,7 @@
     "proof_strategy": "Compare the two expected coverage times via their inclusion-exclusion representations. The key structural difference is that any two lines of PG(2,q) intersect in exactly one point, creating negative correlations that slow coverage, whereas random (q+1)-subsets have binomially-distributed intersection sizes. One might attempt to show that the Fano/Fano-like intersection structure maximizes the second-order inclusion-exclusion terms, or develop a coupling argument showing the projective plane mechanism is stochastically dominated in coverage by the full model.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -2327,7 +2327,7 @@
       "math.AG",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68364c9e",
     "description": "For any partition λ of n and any support pattern S ⊆ [n] × [n], the number of n × n nilpotent matrices over F_q with Jordan canonical form type λ and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian–Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
     "domain_bridges": [
       "Algebraic geometry (Hessenberg varieties and Springer fibers)",
@@ -2344,7 +2344,7 @@
     "proof_strategy": "Leverage the paper's Hall scalar product formula expressing the count in terms of skew modified Hall-Littlewood functions and q-Whittaker functions. For Hessenberg supports, connect to chromatic quasisymmetric functions and the Shareshian-Wachs theorem relating Hessenberg variety point counts to chromatic quasisymmetric function evaluations. For general supports, develop combinatorial-algebraic tools showing the relevant Hall scalar products specialize to polynomials in q, potentially using geometric methods on Springer fibers and deformation arguments to reduce arbitrary supports to Hessenberg-type patterns.",
     "research_mode": "team",
     "source_exp_id": "2606.27497v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
@@ -3133,7 +3133,7 @@
       "q_Pochhammer_symbols",
       "vertex_operator_algebras"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6607dc7d",
     "description": "For the scalar factor Ω_{t,s}(u) of the general mixed product 𝒴(z;t)𝒴(z;s) of modified Greaves-Jing-Zhu operators with two independent deformation parameters t and s, which equals a quotient of infinite Pochhammer products, the coefficient of u^n satisfies ω_n(t,s) = (-1)^n · F_n(t,s) where F_n(t,s) is a formal power series in t and s with nonnegative integer coefficients. This extends the paper's established result that for s = t^M, the coefficients of (u;t)_M/(-u;t)_M are (after removing signs) nonnegative palindromic polynomials, to the case of arbitrary independent parameters.",
     "domain_bridges": [
       "symmetric_function_theory",
@@ -3149,7 +3149,7 @@
     "proof_strategy": "Factor the general scalar factor as a product of the s=t^M case and an infinite correction factor arising from the parameter mismatch. Show the correction factor contributes nonnegatively by interpreting it as a generating function of signed strict partitions with suitable weight. Alternatively, extend the principal specialization identity connecting one-row Schur Q-functions to the scalar factor coefficients from the univariate to the bivariate setting using a Cauchy-type identity for spin characters with two deformation parameters.",
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:23:54.603938+00:00",
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
@@ -3271,7 +3271,7 @@
     "catalog_references": [
       "Transversal Difference Numbers in Finite Abelian Quotients"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3fd12f6e",
     "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
     "domain_bridges": [
       "Additive Combinatorics",
@@ -3287,7 +3287,7 @@
     "proof_strategy": "Translate the transversal difference problem into an optimization over functions $\\mathbb{F}_p^2 \\to \\mathbb{F}_p^2$ representing transversals, where the difference support decomposes into carry-corrected finite-field derivative images. Apply Kneser's theorem for cross-transversal estimates and analyze polynomial sections to establish that the minimal difference support is achieved by linear sections, yielding the exact $(2p-1)^2$ bound.",
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:43:09.952578+00:00",
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
@@ -3297,7 +3297,7 @@
       "math.AT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c47f9e0e",
     "description": "Let X be a simplicial complex covered by a finite collection of subcomplexes A_1, ..., A_k. For each non-empty subset S of {1, ..., k}, let A_S denote the intersection of the subcomplexes indexed by S, equipped with a gradient vector field V_S. There exists a chain complex (the combinatorial nerve complex) whose chain groups are direct sums of the Morse chain groups of (A_S, V_S), and which is quasi-isomorphic to the simplicial chain complex of X. Consequently, the homology of X can be computed explicitly from the combinatorial data of the gradient vector fields on the subcomplexes and their intersections.",
     "domain_bridges": [
       "Simplicial Complexes",
@@ -3314,7 +3314,7 @@
     "proof_strategy": "Define simplicial complexes, covers, and discrete gradient vector fields. Construct the Morse chain complex for each intersection A_S. Define the combinatorial nerve complex as a total complex of a bicomplex or filtered complex whose terms are direct sums of the Morse complexes of the intersections. Prove the quasi-isomorphism by constructing explicit chain maps and homotopies using the gradient flows between the combinatorial nerve complex and the simplicial chain complex of X, ensuring the approach remains purely combinatorial without geometric realization.",
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:02:46.148570+00:00",
     "title": "Effective Combinatorial Nerve Theorem"
   },
@@ -4219,7 +4219,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75f8dfec",
     "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
     "domain_bridges": [],
     "domains": [
@@ -4231,7 +4231,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.481690+00:00",
     "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
