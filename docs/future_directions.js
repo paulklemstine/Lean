@@ -1449,7 +1449,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite sign conjecture for Ramanujan's third order mock theta function \u03c1(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98b2cea0",
     "description": "The paper proves that every spherical (weight 0) automorphic form on SL(2,Z)\\H decomposes into a cusp form and a linear combination of Laurent coefficients of the standard Eisenstein series, using only Green's identity and basic analysis. We conjecture that the same direct proof strategy extends to automorphic forms of any integer weight k, yielding a decomposition of the space A_k(X) into cusp forms of weight k and the span of Laurent coefficients of the weight k Eisenstein series.",
     "domains": [
       "Pythagorean",
@@ -1459,7 +1459,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T08:01:14.506352+00:00",
     "title": "Generalization of Franke's theorem to higher weight automorphic forms via Green's identity"
   },
@@ -1508,7 +1508,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp lower bound for the sixth moment of the Riemann zeta function"
   },
   {
-    "consumed_by_exp_id": "68364c9e",
+    "consumed_by_exp_id": "",
     "description": "For any partition \u03bb of n and any support pattern S \u2286 [n] \u00d7 [n], the number of n \u00d7 n nilpotent matrices over F_q with Jordan canonical form type \u03bb and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian\u2013Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
     "domains": [
       "Algebra",
@@ -1518,7 +1518,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27497v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
@@ -1946,7 +1946,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Enumeration of 2-balanced p-regular partitions of fixed p-weight"
   },
   {
-    "consumed_by_exp_id": "6607dc7d",
+    "consumed_by_exp_id": "",
     "description": "For the scalar factor \u03a9_{t,s}(u) of the general mixed product \ud835\udcb4(z;t)\ud835\udcb4(z;s) of modified Greaves-Jing-Zhu operators with two independent deformation parameters t and s, which equals a quotient of infinite Pochhammer products, the coefficient of u^n satisfies \u03c9_n(t,s) = (-1)^n \u00b7 F_n(t,s) where F_n(t,s) is a formal power series in t and s with nonnegative integer coefficients. This extends the paper's established result that for s = t^M, the coefficients of (u;t)_M/(-u;t)_M are (after removing signs) nonnegative palindromic polynomials, to the case of arbitrary independent parameters.",
     "domains": [
       "Bridges"
@@ -1955,7 +1955,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:23:54.603938+00:00",
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
@@ -2180,7 +2180,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremal Signless Laplacian Spectral Radius of tK3-Free Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e1ebbb3",
     "description": "For any integer $n \\ge 3$, the minimum size of a finite poset realizing $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ as its automorphism group is $2^{n+1} + 2$.",
     "domains": [
       "Algebra"
@@ -2189,7 +2189,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T21:48:16.342337+00:00",
     "title": "Minimum Poset Size for Automorphism Group Z2 x Z2^n"
   },
@@ -2369,11 +2369,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any lacunary sequence $(a_n)_{n \\geq 1} \\subset \\mathbb{N}$ satisfying $a_{n+1} \\geq q a_n$ for some $q > 1$, and for Lebesgue-almost every $x \\in \\mathbb{T}$, the maximal circular gap satisfies $\\lim_{N\\to\\infty} \\frac{N \\cdot G_N(x)}{\\log N} = 1$. The paper proves this when $a_n \\mid a_{n+1}$ for all $n$, and establishes $\\frac{1}{2} \\leq \\liminf \\leq \\limsup \\leq \\frac{q+1}{q-1}$ in general. The conjecture asserts that the divisibility assumption is unnecessary\u2014the limit always exists and equals 1, matching the random i.i.d. model.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2917",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28860v1",
+    "status": "available",
+    "timestamp": "2026-06-30T03:24:28.294396+00:00",
+    "title": "Universal Gap Asymptotic for Lacunary Dilations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2917",
+    "id": "fd_2918",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2387,7 +2402,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2918",
+    "id": "fd_2919",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2401,7 +2416,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2919",
+    "id": "fd_2920",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2415,7 +2430,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2920",
+    "id": "fd_2921",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2429,7 +2444,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2921",
+    "id": "fd_2922",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2444,7 +2459,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2459,7 +2474,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2473,7 +2488,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2487,7 +2502,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2501,7 +2516,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",

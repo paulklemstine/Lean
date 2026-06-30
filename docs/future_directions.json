@@ -36655,7 +36655,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Franke_firstPaper",
         "Langlands-Spectral",
@@ -36663,7 +36663,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "98b2cea0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36678,7 +36678,7 @@
         "MachineLearning"
       ],
       "id": "fd_2848",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T03:24:34.162698+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem franke_weight_k (k : ℤ) : ∀ (F : AutomorphicForm k), ∃ (F_cusp : CuspForm k) (c : Finsupp ℕ (LaurentCoeff (EisensteinSeries k))), F = F_cusp + ∑ i, c i • i := by sorry",
       "lineage_refs": [],
@@ -36692,7 +36692,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27749v1",
       "source_path": "http://arxiv.org/abs/2606.27749v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T08:01:14.506352+00:00",
       "title": "Generalization of Franke's theorem to higher weight automorphic forms via Green's identity"
@@ -36902,7 +36902,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "68364c9e",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36932,7 +36932,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27497v1",
       "source_path": "http://arxiv.org/abs/2606.27497v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T09:52:47.763963+00:00",
       "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
@@ -38459,7 +38459,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "6607dc7d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38488,7 +38488,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28108v1",
       "source_path": "http://arxiv.org/abs/2606.28108v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T19:23:54.603938+00:00",
       "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
@@ -38497,7 +38497,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO"
       ],
@@ -38518,7 +38518,7 @@
         "Physics"
       ],
       "id": "fd_2888",
-      "last_attempt_time": "2026-06-30T03:01:20.328923+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def extremal_tK3_free_graph (t n : ℕ) : SimpleGraph (Fin n) := \n  sorry -- K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}\n\ntheorem signless_laplacian_spectral_radius_le_extremal (t n : ℕ) (ht : t ≥ 2) (hn : n ≥ 28 * t - 17) \n    {G : SimpleGraph (Fin n)} (hG : NoTDisjointTriangles G t) :\n    signlessLaplacianSpectralRadius G ≤ signlessLaplacianSpectralRadius (extremal_tK3_free_graph t n) :=\n  by sorry",
       "lineage_refs": [],
@@ -39251,14 +39251,14 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.GR"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "6e1ebbb3",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39273,7 +39273,7 @@
         "Algebra"
       ],
       "id": "fd_2904",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T03:24:39.272374+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem beta_Z2_times_Z2_pow_n (n : ℕ) (hn : 3 ≤ n) :\n    β (ZMod 2 × ZMod (2 ^ n)) = 2 ^ (n + 1) + 2 := by\n  sorry",
       "lineage_refs": [],
@@ -39287,7 +39287,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28231v1",
       "source_path": "http://arxiv.org/abs/2606.28231v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T21:48:16.342337+00:00",
       "title": "Minimum Poset Size for Automorphism Group Z2 x Z2^n"
@@ -39849,6 +39849,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.NT",
+        "math.DS",
+        "math.PR"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any lacunary sequence $(a_n)_{n \\geq 1} \\subset \\mathbb{N}$ satisfying $a_{n+1} \\geq q a_n$ for some $q > 1$, and for Lebesgue-almost every $x \\in \\mathbb{T}$, the maximal circular gap satisfies $\\lim_{N\\to\\infty} \\frac{N \\cdot G_N(x)}{\\log N} = 1$. The paper proves this when $a_n \\mid a_{n+1}$ for all $n$, and establishes $\\frac{1}{2} \\leq \\liminf \\leq \\limsup \\leq \\frac{q+1}{q-1}$ in general. The conjecture asserts that the divisibility assumption is unnecessary—the limit always exists and equals 1, matching the random i.i.d. model.",
+      "domain_bridges": [
+        "ergodic_theory",
+        "probabilistic_number_theory",
+        "diophantine_approximation"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Computation"
+      ],
+      "id": "fd_2917",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem lacunary_gap_universal_asymptotic {q : ℝ} (hq : 1 < q) {a : ℕ → ℕ} (h_lac : ∀ n, (q : ℝ) * a n ≤ a (n + 1)) : ∀ᵐ x ∂(MeasureSpace.volume : Measure 𝕋), Tendsto (fun N : ℕ => (N : ℝ) * maximalCircularGap a N x / Real.log N) atTop (𝓝 1) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The paper's divisibility proof leverages a martingale structure from the $a_n | a_{n+1}$ condition. For general lacunary sequences, one could attempt: (1) Show the $\\Gamma$ parameter defined in the paper satisfies $\\limsup N G_N(x)/\\log N \\leq 1 + \\Gamma$ a.e., then prove $\\Gamma$ can be made arbitrarily small by passing to subsequences; (2) Approximate a general lacunary sequence by one satisfying divisibility (e.g., replacing $a_n$ with $\\prod_{k=1}^n a_k$) and control the gap distortion; (3) Prove the liminf and limsup bounds converge by developing a variance estimate showing $\\text{Var}(N G_N(x)/\\log N) \\to 0$ a.e., using the independence properties of lacunary trigonometric sums.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28860v1",
+      "source_path": "http://arxiv.org/abs/2606.28860v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T03:24:28.294396+00:00",
+      "title": "Universal Gap Asymptotic for Lacunary Dilations"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2501.12018",
         "MRVZ_geometric_fractional",
         "deGrey_chromatic_plane"
@@ -39869,7 +39916,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2917",
+      "id": "fd_2918",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -39915,7 +39962,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2918",
+      "id": "fd_2919",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -39961,7 +40008,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2919",
+      "id": "fd_2920",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -40006,7 +40053,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2920",
+      "id": "fd_2921",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -40054,7 +40101,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2921",
+      "id": "fd_2922",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -40101,7 +40148,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2922",
+      "id": "fd_2923",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -40150,7 +40197,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2923",
+      "id": "fd_2924",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -40197,7 +40244,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2924",
+      "id": "fd_2925",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
@@ -40245,7 +40292,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2925",
+      "id": "fd_2926",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_second_moment_sqroot_expsum (δ : ℝ) (hδ : 0 < δ) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ, 2 ≤ n → ∀ H : ℕ,\n    ⌈(n : ℝ)^(1/2 + δ)⌉₊ ≤ H →\n    (∑ h in Finset.Icc ⌈H/2⌉₊ H,\n      (∑ a in Finset.Icc ⌈n/2⌉₊ n,\n        Complex.exp (2 * Real.pi * Complex.I * (h : ℂ) * Real.sqrt (a : ℝ)))\n        .norm_sq)\n    ≤ C * (H : ℝ) * (n : ℝ) * (Real.log (n : ℝ))^c := by\n  sorry",
@@ -40288,7 +40335,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2926",
+      "id": "fd_2927",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Basic diagram-filling and counting techniques over finite graphs",
