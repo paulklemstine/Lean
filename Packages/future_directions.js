@@ -1552,7 +1552,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete classification of 4th powers in the 14-gonal numbers"
   },
   {
-    "consumed_by_exp_id": "31227a11",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that for integers $k \\ge 1$ and $n \\ge 2k+2$, any $\\tau_k$-maximal graph on $n$ vertices has at most $(k+1)(n-1)-1$ edges, and constructs examples achieving this bound. The authors conjecture that this upper bound is actually an exact equality: every $\\tau_k$-maximal graph on $n \\ge 2k+2$ vertices has exactly $(k+1)(n-1)-1$ edges. This conjecture is verified for $k=1$, but remains open for $k \\ge 2$.",
     "domains": [
       "Pythagorean"
@@ -1561,7 +1561,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T10:44:44.698882+00:00",
     "title": "Exact Edge Count of Tau_k-Maximal Graphs"
   },
@@ -2020,7 +2020,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Pairwise Reflection-Symmetric Latin Squares iff Power of Two"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb546dc1",
     "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
     "domains": [
       "Pythagorean"
@@ -2029,7 +2029,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:43:09.952578+00:00",
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
@@ -2662,11 +2662,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For some absolute constant C, any subset A of {1, ..., N} with cardinality at least 5N/8 + C contains distinct elements a, b, c such that a+b, a+c, and b+c are all in A. This resolves Erd\u0151s Problem 865 and corresponds to Theorem 1.1 of the paper.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2937",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29361v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:28:39.364137+00:00",
+    "title": "Sharp 5/8 Bound for Erd\u0151s-S\u00f3s Pairwise-Sums Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2680,7 +2694,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2694,7 +2708,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2708,7 +2722,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2722,7 +2736,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2737,7 +2751,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2752,7 +2766,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2766,7 +2780,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2780,7 +2794,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2794,7 +2808,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2809,7 +2823,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2824,7 +2838,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2948",
+    "id": "fd_2949",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2838,7 +2852,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2949",
+    "id": "fd_2950",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2847,30 +2861,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "L^p Relaxation of the KNRS Conjecture for Graphons"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "For a prime p \u2265 3 and an integer b \u2265 2 with p \u2224 b, if the multiplicative order of b modulo p is l = (p-1)/2^m and p \u2261 1 mod 2^(m+1), then the sum of the base-b digits in one full period of the expansion of 1/p equals (b-1)(p-1)/2^(m+1).",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2950",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29930v1",
-    "status": "available",
-    "timestamp": "2026-06-30T05:05:42.798221+00:00",
-    "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
-  },
-  {
     "consumed_by_exp_id": "f47f3dac",
-    "description": "The paper establishes that c(s/log s)^{4/3} \u2264 F(s) \u2264 (1+o(1))s^{3/2}/log s, where F(s) = max{\u03c7(G) : \u03c9(G) \u2264 s, g(G\u0305) \u2265 6}. The conjecture proposes that the true asymptotic growth rate is \u0398(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) \u2265 c \u00b7 s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
+    "description": "For a prime p \u2265 3 and an integer b \u2265 2 with p \u2224 b, if the multiplicative order of b modulo p is l = (p-1)/2^m and p \u2261 1 mod 2^(m+1), then the sum of the base-b digits in one full period of the expansion of 1/p equals (b-1)(p-1)/2^(m+1).",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2951",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.29873v1",
+    "source_exp_id": "2606.29930v1",
     "status": "in_progress",
+    "timestamp": "2026-06-30T05:05:42.798221+00:00",
+    "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes that c(s/log s)^{4/3} \u2264 F(s) \u2264 (1+o(1))s^{3/2}/log s, where F(s) = max{\u03c7(G) : \u03c9(G) \u2264 s, g(G\u0305) \u2265 6}. The conjecture proposes that the true asymptotic growth rate is \u0398(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) \u2265 c \u00b7 s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2952",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29873v1",
+    "status": "available",
     "timestamp": "2026-06-30T05:26:20.098555+00:00",
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
@@ -2880,7 +2894,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2952",
+    "id": "fd_2953",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29553v1",
@@ -2894,7 +2908,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2953",
+    "id": "fd_2954",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
@@ -2908,7 +2922,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2954",
+    "id": "fd_2955",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -2917,31 +2931,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of P-positions in three-pile Halve Nim"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65d4cbfc",
     "description": "For the siblings of the coupon collector problem with N coupon types and album index j \u2265 2, the expected number of empty spaces E_p[U_j^N] in sibling j's album at the main collector's completion time is uniquely maximized over all probability distributions p = (p_1, ..., p_N) with p_i > 0 and \u03a3 p_i = 1 by the uniform distribution p_i = 1/N. Moreover, E_p[U_j^N] decreases strictly along every nonconstant ray from the uniform vector in the probability simplex.",
     "domains": [
-      "Computation"
-    ],
-    "id": "fd_2955",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29635v1",
-    "status": "available",
-    "timestamp": "2026-06-30T06:59:00.925390+00:00",
-    "title": "Uniform Distribution Uniquely Maximizes Expected Empty Spaces in Sibling Coupon Collection"
-  },
-  {
-    "consumed_by_exp_id": "65d4cbfc",
-    "description": "The probability that exactly u labels are untouched after k_n independent uniform m_n-subset drawings from n labels converges to the Poisson probability e^{-\u03bb} \u03bb^u / u! whenever the expected number of untouched labels \u03bb_n = n ((n-m_n)/n)^{k_n} \u2192 \u03bb \u2208 (0, \u221e) and the complement size b_n = n - m_n \u2192 \u221e.",
-    "domains": [
-      "Algebra",
       "Computation"
     ],
     "id": "fd_2956",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.29530v1",
+    "source_exp_id": "2606.29635v1",
     "status": "in_progress",
+    "timestamp": "2026-06-30T06:59:00.925390+00:00",
+    "title": "Uniform Distribution Uniquely Maximizes Expected Empty Spaces in Sibling Coupon Collection"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The probability that exactly u labels are untouched after k_n independent uniform m_n-subset drawings from n labels converges to the Poisson probability e^{-\u03bb} \u03bb^u / u! whenever the expected number of untouched labels \u03bb_n = n ((n-m_n)/n)^{k_n} \u2192 \u03bb \u2208 (0, \u221e) and the complement size b_n = n - m_n \u2192 \u221e.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2957",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29530v1",
+    "status": "available",
     "timestamp": "2026-06-30T07:19:31.725431+00:00",
     "title": "Poisson Limit for Group-Drawing Coupon Collector"
   },
@@ -2952,7 +2966,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Computation"
     ],
-    "id": "fd_2957",
+    "id": "fd_2958",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
@@ -2966,7 +2980,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2958",
+    "id": "fd_2959",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
@@ -2981,7 +2995,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2959",
+    "id": "fd_2960",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
@@ -2995,7 +3009,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2960",
+    "id": "fd_2961",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29507v1",
@@ -3010,7 +3024,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2961",
+    "id": "fd_2962",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29446v1",
@@ -3025,7 +3039,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2962",
+    "id": "fd_2963",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
@@ -3040,7 +3054,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2963",
+    "id": "fd_2964",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
@@ -3054,7 +3068,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2964",
+    "id": "fd_2965",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29321v1",
@@ -3069,13 +3083,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2965",
+    "id": "fd_2966",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29297v1",
     "status": "available",
     "timestamp": "2026-06-30T10:09:12.619347+00:00",
     "title": "Third-Threshold Coset Structure in 2-Torsion-Free Abelian Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite simple digraph G, the cycle rank of G is less than or equal to the size of a minimum feedback vertex set of G. This inequality establishes a fundamental bound between the depth parameter cycle rank and the width parameter feedback vertex set, which is tight for tournaments (a subclass of semi-complete digraphs studied in the paper) and provides structural intuition for FPT algorithms related to cycle rank and feedback sets.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2967",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29336v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:29:35.546539+00:00",
+    "title": "Cycle Rank is Bounded by Minimum Feedback Vertex Set Size"
   },
   {
     "consumed_by_exp_id": "",
@@ -3800,7 +3828,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
   {
-    "consumed_by_exp_id": "a0b4b9f2",
+    "consumed_by_exp_id": "",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domains": [
       "Physics",
@@ -3810,7 +3838,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.732241+00:00",
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
