@@ -1012,7 +1012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Size of a Poset Realizing Z_2 x Z_{2^n}"
   },
   {
-    "consumed_by_exp_id": "cfd9a3cb",
+    "consumed_by_exp_id": "",
     "description": "The Diophantine equation $14n^2 - 13n = t^3$ has exactly five integer solutions: $(0, 0)$, $(1, 1)$, $(13, 13)$, $(-1, 3)$, and $(-8, 10)$. This corresponds to the exceptional case $k=13$ in Theorem 1(ii) of the paper, where $P_{30}(n) = t^3$ has the additional solutions $(-1,3)$ and $(-8,10)$ alongside the trivial ones.",
     "domains": [
       "Pythagorean"
@@ -1021,7 +1021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:27:12.259238+00:00",
     "title": "Finiteness of Integer Solutions to the Cubic Triacontagonal Number Equation"
   },
@@ -1797,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension and Vertex Count of the Optimal Geometric Fractional Coloring Polytope for G27"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6de85f07",
     "description": "Every \u03c4_k-maximal graph on n \u2265 2k+2 vertices with minimum degree at least k+1 must have exactly (k+1)(n-1)-1 edges.",
     "domains": [
       "Pythagorean"
@@ -1806,7 +1806,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T16:56:43.577232+00:00",
     "title": "Conjecture on edge count of \u03c4_k-maximal graphs with minimum degree at least k+1"
   },
@@ -2642,7 +2642,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Phase transition for variance asymptotics of Steinhaus short-interval sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "212a0b41",
     "description": "For any graph G with maximum degree d, there exists a signing \u03c3 of its edges such that the spectral radius of the signed adjacency matrix A_\u03c3 is at most 2\u221a(3(d-1)).",
     "domains": [
       "Physics"
@@ -2651,7 +2651,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T11:32:36.681739+00:00",
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
@@ -3541,12 +3541,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any set of n labeled points in general position in the plane, the number of non-crossing (plane) graphs on these points is at least the number of plane graphs on n points in convex position. This formalizes the long-standing conjecture that convex position minimizes the number of plane graphs, which is supported by the paper's findings that sets with small convex hulls have significantly more plane graphs.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_3003",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29446v1",
+    "status": "available",
+    "timestamp": "2026-06-30T21:35:08.599202+00:00",
+    "title": "Minimum Plane Graphs Conjecture for Convex Position"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3561,7 +3576,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3575,7 +3590,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3590,7 +3605,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3605,7 +3620,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3620,7 +3635,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3635,7 +3650,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3649,7 +3664,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3663,7 +3678,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3677,7 +3692,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3691,7 +3706,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3706,7 +3721,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3720,7 +3735,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3734,7 +3749,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3748,7 +3763,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3763,7 +3778,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3778,7 +3793,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3792,7 +3807,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3807,7 +3822,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3821,7 +3836,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3022",
+    "id": "fd_3023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3836,7 +3851,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3023",
+    "id": "fd_3024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -3850,7 +3865,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3024",
+    "id": "fd_3025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3864,7 +3879,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3025",
+    "id": "fd_3026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -3879,7 +3894,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3026",
+    "id": "fd_3027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3894,7 +3909,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -3909,7 +3924,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3028",
+    "id": "fd_3029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -3923,7 +3938,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3029",
+    "id": "fd_3030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -3937,7 +3952,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3030",
+    "id": "fd_3031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -3952,13 +3967,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3031",
+    "id": "fd_3032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
     "status": "available",
     "timestamp": "2026-06-30T21:18:10.152547+00:00",
     "title": "Unit Distance Density in Q\u00b2 is \u0398(n^{4/3})"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For integers $1 \\le r \\le n+1$, let $N(n,r)$ denote the minimum number of maximal chains in the Boolean lattice $B_n$ required to cover every strict $r$-term chain. The paper proves a general upper bound $N(n,n-t) \\le n!/t$ using the inversion number of permutations modulo $t$, and shows it is exact for $t=2$. This conjecture posits the exact value $N(n,n-2) = n!/2$ for all $n \\ge 2$, which is equivalent to stating that the set of permutations of $[n]$ with an even number of inversions (the alternating group $A_n$) covers all strict $(n-2)$-term chains, and no smaller set of permutations can do so.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3033",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29385v1",
+    "status": "available",
+    "timestamp": "2026-06-30T21:36:09.655202+00:00",
+    "title": "Exact Value of Near-Maximal Chain Covering Number for t=2"
   },
   {
     "consumed_by_exp_id": "",
@@ -4294,7 +4324,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Idempotent Probability: Large Deviations"
   },
   {
-    "consumed_by_exp_id": "c941ad90",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical",
@@ -4304,7 +4334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
