@@ -4510,7 +4510,7 @@
       "MRVZ_geometric_fractional",
       "deGrey_chromatic_plane"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0bd0cdee",
     "description": "The 27-vertex unit-distance graph G₂₇ constructed by Matolcsi, Ruzsa, Varga, and Zsámboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G₂₉ of G₂₇ (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in ℝ² and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p₂₈, p₂₉ ∈ ℝ² such that the graph G₂₉ on 29 vertices, with edges determined by unit distance among all 29 points, satisfies χ_gf(G₂₉) > 4.",
     "domain_bridges": [
       "convex_optimization_to_graph_independence",
@@ -4526,7 +4526,7 @@
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T21:48:36.541820+00:00",
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi–Ruzsa–Varga–Zsámboki graph"
   },
