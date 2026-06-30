@@ -1682,7 +1682,7 @@
       "math.PR",
       "math.CO/design_theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98d48aca",
     "description": "For every prime power q ≥ 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q²+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domain_bridges": [
       "finite_geometry-probability",
@@ -1699,7 +1699,7 @@
     "proof_strategy": "Compare the two expected coverage times via their inclusion-exclusion representations. The key structural difference is that any two lines of PG(2,q) intersect in exactly one point, creating negative correlations that slow coverage, whereas random (q+1)-subsets have binomially-distributed intersection sizes. One might attempt to show that the Fano/Fano-like intersection structure maximizes the second-order inclusion-exclusion terms, or develop a coupling argument showing the projective plane mechanism is stochastically dominated in coverage by the full model.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
