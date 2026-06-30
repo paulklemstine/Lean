@@ -12990,11 +12990,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "efa9038a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13006,7 +13006,7 @@
         "Logic"
       ],
       "id": "fd_0446",
-      "last_attempt_time": "2026-06-11T21:13:20.937034+00:00",
+      "last_attempt_time": "2026-06-30T08:16:30.363490+00:00",
       "last_reviewed_at": "2026-06-09T15:03:10.049285+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13020,7 +13020,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.050227+00:00",
       "title": "Homotopy Type Theory as Foundations"
@@ -14783,7 +14783,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -14799,7 +14799,7 @@
         "Algebra"
       ],
       "id": "fd_0493",
-      "last_attempt_time": "2026-06-30T07:59:20.781072+00:00",
+      "last_attempt_time": "2026-06-29T12:14:20.950658+00:00",
       "last_reviewed_at": "2026-06-25T03:28:31.395772+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16893,7 +16893,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "9610cda9",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16919,7 +16919,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:08.217813+00:00",
       "title": "ML Universal Approximation: Width vs Depth Trade-offs"
@@ -35548,7 +35548,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.PR",
@@ -35556,7 +35556,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "e0125bc2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35572,7 +35572,7 @@
         "Geometry"
       ],
       "id": "fd_2824",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T08:16:24.960135+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pg2_mechanism_slower_than_full {q : ℕ} (hq : q ≥ 2) (hq_prime_pow : IsPrimePow q) : expectedCoverageTime (lineSetPG2 q) > expectedCoverageTime (fullModel (q*q + q + 1) (q + 1)) := by sorry",
       "lineage_refs": [],
@@ -35586,7 +35586,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28216v1",
       "source_path": "http://arxiv.org/abs/2606.28216v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T04:27:32.789484+00:00",
       "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
@@ -37867,7 +37867,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "Order theory",
@@ -37889,7 +37889,7 @@
         "Algebra"
       ],
       "id": "fd_2874",
-      "last_attempt_time": "2026-06-30T07:59:32.682029+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Algebra.Group.Basic\nimport Mathlib.Data.ZMod.Basic\n\n/-- The minimum size of a poset whose automorphism group is isomorphic to G -/\ndef beta (G : Type*) [Group G] : ℕ := sorry\n\ntheorem beta_Z2_pow_k_times_Z2_pow_n (k n : ℕ) (hk : 0 < k) (hn : 3 ≤ n) :\n  beta (ZMod (2^n) × (Fin k → ZMod 2)) = 2^(n+1) + 2 * k := by\n  sorry",
       "lineage_refs": [],
@@ -40181,7 +40181,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "8e533c39",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -40212,7 +40212,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29688v1",
       "source_path": "http://arxiv.org/abs/2606.29688v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T06:09:51.264477+00:00",
       "title": "Effective Degree Bound for t-Module Relation Modules"
@@ -40445,6 +40445,55 @@
       "title": "Effective Resistance-Determined Subgaussian Tail Bounds for Random Homomorphisms on Infinite Trees"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Zuev's chamber interpretation of threshold functions",
+        "central hyperplane arrangement facet counts",
+        "resonance arrangement",
+        "Fukuda-Tamura-Tokuyama theorem on average facet counts"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves that for a Boolean threshold function f on n variables, if the symmetric-variable extension f^sym on n+1 variables is also threshold, then minimum specification number is preserved (i.e., simplicial chambers map to simplicial chambers). The natural generalization is that the specification number always increments by exactly one under this extension: σ_{n+1}(f^sym) = σ_n(f) + 1. Equivalently, the gap σ_n(f) - (n+1) from the minimum is invariant under symmetric extension whenever the extension is threshold. This would follow from a facet-counting argument showing the chamber for f^sym has exactly one more facet than the chamber for f, via the chamber-facet correspondence established in the paper.",
+      "domain_bridges": [
+        "Hyperplane arrangement chambers ↔ Boolean threshold functions",
+        "Facet counts ↔ Specification numbers",
+        "Simplicial cones ↔ Minimum specification number functions",
+        "Zonotopes ↔ One-inclusion graphs"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Bridges"
+      ],
+      "id": "fd_2930",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem spec_num_symmetric_extension_increment (n : ℕ) (f : ThresholdFunc n)\n    (h_threshold : IsThreshold (symmetricVarExtension f)) :\n    specNum (symmetricVarExtension f) = specNum f + 1 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Using the chamber-facet correspondence: the chamber C(f) ⊂ A for function f has exactly σ_n(f) facets (corresponding to essential examples). Under symmetric extension, the parameter space gains one dimension and the chamber C(f^sym) is the product of C(f) with a half-line (by the product-with-half-line structure established for other extension operations). This product operation adds exactly one facet (the 'new' facet from the half-line boundary), yielding σ_{n+1}(f^sym) = σ_n(f) + 1. The key step is verifying the symmetric extension induces this product structure on chambers whenever it yields a threshold function.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29477v1",
+      "source_path": "http://arxiv.org/abs/2606.29477v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T08:15:49.530723+00:00",
+      "title": "Specification Number Increments by One Under Symmetric Variable Extension"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -40470,7 +40519,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2930",
+      "id": "fd_2931",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -40516,7 +40565,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2931",
+      "id": "fd_2932",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -40562,7 +40611,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2932",
+      "id": "fd_2933",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -40607,7 +40656,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2933",
+      "id": "fd_2934",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -40655,7 +40704,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2934",
+      "id": "fd_2935",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -40702,7 +40751,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2935",
+      "id": "fd_2936",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -40751,7 +40800,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2936",
+      "id": "fd_2937",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -40798,7 +40847,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2937",
+      "id": "fd_2938",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
@@ -40846,7 +40895,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2938",
+      "id": "fd_2939",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_second_moment_sqroot_expsum (δ : ℝ) (hδ : 0 < δ) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ, 2 ≤ n → ∀ H : ℕ,\n    ⌈(n : ℝ)^(1/2 + δ)⌉₊ ≤ H →\n    (∑ h in Finset.Icc ⌈H/2⌉₊ H,\n      (∑ a in Finset.Icc ⌈n/2⌉₊ n,\n        Complex.exp (2 * Real.pi * Complex.I * (h : ℂ) * Real.sqrt (a : ℝ)))\n        .norm_sq)\n    ≤ C * (H : ℝ) * (n : ℝ) * (Real.log (n : ℝ))^c := by\n  sorry",
@@ -40889,7 +40938,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2939",
+      "id": "fd_2940",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Basic diagram-filling and counting techniques over finite graphs",
@@ -40937,7 +40986,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2940",
+      "id": "fd_2941",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem harder_conjecture_k_equals_3 (j : ℕ) (hj : j ≥ 2 ∧ Even j) (f : PrimitiveEllipticCuspForm (j + 4)) (p : Ideal (HeckeField f)) (hp : p ∣ L_alg (j + 3) f) : ∃ (F : SiegelCuspEigenForm (det^3 * Sym^j)) (P : Ideal (HeckeField F)) (hP : P ∣ p), ∀ ℓ : ℕ, ℓ.Prime → SpinLPoly ℓ F ≡ LPoly ℓ f * (1 - (ℓ : ℤ)^1 * X) * (1 - (ℓ : ℤ)^(j + 2) * X) [MOD P] := by sorry",
@@ -40984,7 +41033,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2941",
+      "id": "fd_2942",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bessel_distribution_regular_GLn {F : Type*} [PAdicField F] {n : ℕ} [NeZero n] (π : IrreducibleSmoothAdmissibleRep (GL n F)) (hπ : IsGeneric π) (ℓ₁ : WhittakerFunctional π) (ℓ₂ : WhittakerFunctional π.contrargredient) : IsRegular (besselDistribution ℓ₁ ℓ₂) := by\n  sorry",
@@ -41030,7 +41079,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2942",
+      "id": "fd_2943",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lp_knrs {V : Type*} [Fintype V] [DecidableEq V]\n    (F : SimpleGraph V) [DecidableRel F.Adj]\n    (m : ℕ) (hm : m = F.edgeFinset.card) (hm_pos : 0 < m)\n    (n : ℕ) (hn : n = F.support.card)\n    (p : ℝ) (hp : p ≥ (n.choose 2 : ℝ) / m)\n    (ρ : ℝ) (hρ : ρ ∈ Set.Icc 0 1)\n    (W : UnitInterval → UnitInterval → ℝ)\n    (hW_meas : Measurable (Function.uncurry W))\n    (hW_sym : ∀ x y, W x y = W y x)\n    (hW_range : ∀ x y, W x y ∈ Set.Icc (0 : ℝ) 1)\n    (hW_locally_dense :\n      ∀ S : Set UnitInterval, MeasurableSet S →\n        (∫ x in S, ∫ y in S, W x y ∂volume) ≥ ρ * (volume S) ^ 2)\n    : (∫ x : V → UnitInterval,\n        (∏ e in F.edgeFinset.attach,\n          W (x (Sym2.toProd e.1).1) (x (Sym2.toProd e.1).2)) ^ p\n        ∂(Measure.pi fun _ => volume)) ^ (1 / p : ℝ)\n      ≥ ρ ^ (m : ℝ) := by\n  sorry",
@@ -41077,7 +41126,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2943",
+      "id": "fd_2944",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem digit_sum_formula (p : ℕ) (hp : p.Prime) (b : ℕ) (hb : 2 ≤ b) (hpb : ¬(p ∣ b)) (m : ℕ) (l : ℕ) (hl : l = (p - 1) / 2^m) (h_ord : (∀ k : ℕ, 0 < k → k < l → b^k % p ≠ 1) ∧ b^l % p = 1) (h_mod : p % 2^(m+1) = 1) : (∑ i : Fin l, (b * (b^(i.1) % p)) / p) = (b - 1) * (p - 1) / 2^(m+1) := by sorry",
@@ -41124,7 +41173,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2944",
+      "id": "fd_2945",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sivaraman_F_asymptotic_lower_bound :\n    ∃ c > 0, ∃ s₀ : ℕ, ∀ s ≥ s₀,\n      F s ≥ c * (s : ℝ)^(3/2) / Real.log s :=\n  by\n    sorry",
@@ -41169,7 +41218,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2945",
+      "id": "fd_2946",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tx_graffiti_conjecture (G : Graph) [connected G] [nontrivial G] : α G ≥ (a G + R G) / Δ G",
@@ -41215,7 +41264,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2946",
+      "id": "fd_2947",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem second_order_theta_mode_identity (n : ℕ) (hn : 1 ≤ n) (t : ℝ) : phi n t = (second_deriv (fun t => Real.exp (t/2) * Real.exp (-Real.pi * (n : ℝ)^2 * Real.exp (2*t))) t - (1/4) * (Real.exp (t/2) * Real.exp (-Real.pi * (n : ℝ)^2 * Real.exp (2*t)))) := by sorry",
@@ -41258,7 +41307,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2947",
+      "id": "fd_2948",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem halve_nim_three_pile_ppos {a b c : ℕ} (hc : c ≤ 10) : HalveNim.isPPos a b c ↔ a ^ b ^ c = 0 := by sorry",
@@ -41304,7 +41353,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2948",
+      "id": "fd_2949",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_maximizes_expected_empty_spaces (N : ℕ) (j : ℕ) (hN : 2 ≤ N) (hj : 2 ≤ j) (p : Fin N → ℝ) (hp_pos : ∀ i, 0 < p i) (hp_sum : ∑ i, p i = 1) : expected_empty_spaces p j ≤ expected_empty_spaces (fun _ => (1 : ℝ) / N) j ∧ (expected_empty_spaces p j = expected_empty_spaces (fun _ => (1 : ℝ) / N) j ↔ ∀ i, p i = (1 : ℝ) / N) := by sorry",
@@ -41351,7 +41400,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2949",
+      "id": "fd_2950",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Analysis.SpecialFunctions.Pow.Real\n\ndef prob_untouched_exact (n m k u : ℕ) : ℝ :=\n  (n.choose u : ℝ) * ∑ j in Finset.range (n - u + 1),\n    (-1 : ℝ)^j * (n - u).choose j * (((n - u - j).choose m : ℝ) / (n.choose m : ℝ)) ^ k\n\ntheorem group_drawing_poisson_limit\n  {f g : ℕ → ℕ} {λ : ℝ} (hλ : 0 < λ)\n  (hf : ∀ n, 1 ≤ f n ∧ f n < n)\n  (hλ_lim : Tendsto (fun n => (n : ℝ) * ((n - f n : ℝ) / n) ^ g n) atTop (𝓝 λ))\n  (hb_lim : Tendsto (fun n => n - f n) atTop atTop) (u : ℕ) :\n  Tendsto (fun n => prob_untouched_exact n (f n) (g n) u) atTop (𝓝 (Real.exp (-λ) * λ^u / (Nat.factorial u : ℝ))) :=\n  sorry",
@@ -41398,7 +41447,7 @@
         "Geometry",
         "Computation"
       ],
-      "id": "fd_2950",
+      "id": "fd_2951",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem local_to_global_KKL\n    {d : ℕ} (X : WeightedSimplicialComplex d) (α : ℝ) (hα : 0 < α)\n    (h_links_KKL : ∀ σ ∈ X.faces (d - 2),\n      ∀ g : X.link σ |.faces| 1 → ℝ,\n        ∃ v ∈ (X.link σ).faces 0,\n          (X.link σ).influence v g ≥ α * (X.link σ).variance g)\n    (f : X.faces d → ℝ) :\n    ∃ σ ∈ X.faces (d - 2),\n      X.influence σ f ≥ α * X.variance f := by\n  sorry",
@@ -41447,7 +41496,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2951",
+      "id": "fd_2952",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_stretching_quotient_labeling {n t : ℕ} (G : SimpleGraph V) [Connected G] (P : EdgePartition G t) (A : Matrix (Fin (cycle_classes P).length) (Fin t) (ZMod 2)) (hA : A = cycle_class_parity_matrix P) (ℓ : V → (ZMod 2)^(t - A.rank)) (H : CayleyGraph (ZMod 2)^(t - A.rank) (standard_generators _)) (hℓ : ℓ = quotient_labeling P A) : ∀ u v : V, SimpleGraph.dist G u v ≥ SimpleGraph.dist H (ℓ u) (ℓ v) := by sorry",
@@ -41466,6 +41515,53 @@
       "thread_id": "",
       "timestamp": "2026-06-30T07:59:17.309660+00:00",
       "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Lemmens-Seidel-73",
+        "Balla-Draxler-Keevash-Sudakov-18",
+        "Jiang-Polyanskii-20"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For all d ≥ 1, the maximum number of equiangular lines in ℝ^d with common angle arccos(1/3) satisfies N_{1/3}(d) ≤ max{28, 2(d − 1)}. This is a special case of Balla's conjecture where the spectral radius order κ₁ = 2 (witnessed by K₂), making the bound reduce to max{(1−1/9)(1−2/9)/(2/81), ⌊2(d−1)/1⌋} = max{28, 2(d−1)}.",
+      "domain_bridges": [
+        "spectral_graph_theory",
+        "real_inner_product_spaces",
+        "extremal_combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Physics"
+      ],
+      "id": "fd_2953",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem balla_conjecture_alpha_one_third (d : ℕ) (hd : d ≥ 1) :\n  N_α (1/3 : ℝ) d ≤ max 28 (2 * (d - 1)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First establish κ₁ = 2 by showing K₂ has spectral radius 1 and no 1-vertex graph has spectral radius 1. Then use the relative bound / Lemmens-Seidel framework: given a set of equiangular lines with angle arccos(1/3), form the Gram matrix M with diagonal 1 and off-diagonal ±1/3. The eigenvalue structure of M combined with the spectral radius order constraint yields the linear upper bound 2(d−1) for d ≥ 15, and the absolute bound gives 28 for small d.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29392v1",
+      "source_path": "http://arxiv.org/abs/2606.29392v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T08:16:16.372094+00:00",
+      "title": "Balla's Conjecture for α = 1/3"
     },
     {
       "ambition_level": "extension",
@@ -45805,7 +45901,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "71da124a",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -45831,7 +45927,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:18.020118+00:00",
       "title": "Reverse Mathematics: Ramsey's Theorem"
@@ -47872,11 +47968,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3a13aa90",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47889,7 +47985,7 @@
         "Computation"
       ],
       "id": "seed_372",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T08:16:19.421410+00:00",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -47903,7 +47999,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432794+00:00",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"
