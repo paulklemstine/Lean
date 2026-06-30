@@ -2942,7 +2942,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
   {
-    "consumed_by_exp_id": "65ebb6ab",
+    "consumed_by_exp_id": "",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling \u2113: V(G) \u2192 (Z/2Z)^(t \u2212 rank(A)) satisfies d_G(u,v) \u2265 d_H(\u2113(u), \u2113(v)) for all u,v \u2208 V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t \u2212 rank(A)). That is, the labeling never stretches distances\u2014it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domains": [
       "Algebra"
@@ -2951,7 +2951,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
@@ -3321,12 +3321,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
+    "description": "The set of positive integers that admit exactly one representation in the form p + F_{2^k} + F_q, where p and q are primes and k is a nonnegative integer, has positive lower asymptotic density. This extends the main theorem of the paper\u2014which establishes positive lower density for the representable set\u2014by paralleling recent uniqueness results for related Romanoff-type problems.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_2988",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30188v1",
+    "status": "available",
+    "timestamp": "2026-06-30T16:33:08.122188+00:00",
+    "title": "Uniqueness of Representations as p + F_{2^k} + F_q"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2989",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3341,7 +3356,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3355,7 +3370,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3370,7 +3385,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3385,7 +3400,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3400,7 +3415,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3415,7 +3430,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3429,7 +3444,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3443,7 +3458,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3457,7 +3472,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3471,7 +3486,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3486,7 +3501,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3500,7 +3515,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3514,13 +3529,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
     "status": "available",
     "timestamp": "2026-06-30T16:12:05.845657+00:00",
     "title": "Modulo 4 Characterization of Two-Color Distinct-Part Partition Coefficients"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every finite group G and every integer d \u2265 3, there exists a finite, simple, connected d-regular graph \u0393 that admits a proper d-edge-colouring \u03ba : E(\u0393) \u2192 {1,...,d} such that (1) Aut(\u0393) \u2245 G, and (2) \u03ba is Aut(\u0393)-invariant, meaning \u03ba(\u03c6(e)) = \u03ba(e) for all \u03c6 \u2208 Aut(\u0393) and all e \u2208 E(\u0393). This strengthens Sabidussi's classical theorem (itself a strengthening of Frucht's theorem from arbitrary graphs to regular graphs) by additionally guaranteeing the existence of an automorphism-compatible edge-colouring, correcting an oversight in Sabidussi's original construction.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3003",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29768v1",
+    "status": "available",
+    "timestamp": "2026-06-30T16:33:23.044415+00:00",
+    "title": "Strengthened Sabidussi: Regular Graphs with Prescribed Automorphism Groups Admit Aut-Invariant Proper Edge-Colourings"
   },
   {
     "consumed_by_exp_id": "",

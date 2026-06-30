@@ -5061,7 +5061,7 @@
       "Cayley graphs of abelian groups",
       "GF(2) linear algebra"
     ],
-    "consumed_by_exp_id": "65ebb6ab",
+    "consumed_by_exp_id": "",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling ℓ: V(G) → (Z/2Z)^(t − rank(A)) satisfies d_G(u,v) ≥ d_H(ℓ(u), ℓ(v)) for all u,v ∈ V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t − rank(A)). That is, the labeling never stretches distances—it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domain_bridges": [
       "graph_metrics",
@@ -5078,7 +5078,7 @@
     "proof_strategy": "Show that each edge of G maps to an edge of H under the quotient labeling (by construction of the labeling from the edge partition), so every path in G maps to a path of equal or shorter length in H. The key step is proving that the GF(2) quotient construction preserves adjacency: if uv ∈ E(G) and uv lies in partition class i, then ℓ(u) and ℓ(v) differ in exactly the coordinate corresponding to the image of class i in the quotient. The non-stretching then follows by taking d_G(u,v) as the infimum over all path lengths, which bound the Hamming distance of the labels from below.",
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
@@ -5785,6 +5785,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The set of positive integers that admit exactly one representation in the form p + F_{2^k} + F_q, where p and q are primes and k is a nonnegative integer, has positive lower asymptotic density. This extends the main theorem of the paper—which establishes positive lower density for the representable set—by paralleling recent uniqueness results for related Romanoff-type problems.",
+    "domain_bridges": [
+      "Analytic Number Theory",
+      "Sieve Methods",
+      "Linear Recurrences"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2988",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the circle method and sieve techniques used by Wang and Chen for the uniqueness of p+F_k representations, combined with the density arguments for mixed sparse sequences from Chen and Xu, to show that the minor arc contribution does not overwhelm the major arcs, ensuring that a positive proportion of integers have exactly one representation.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30188v1",
+    "status": "available",
+    "timestamp": "2026-06-30T16:33:08.122188+00:00",
+    "title": "Uniqueness of Representations as p + F_{2^k} + F_q"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "math.GR"
     ],
@@ -5799,7 +5825,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5827,7 +5853,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5856,7 +5882,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5887,7 +5913,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5917,7 +5943,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -5945,7 +5971,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -5975,7 +6001,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -6000,7 +6026,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -6019,7 +6045,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Convergence bounds via recursive bounds",
@@ -6046,7 +6072,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k, characterizing the extremal counterexamples for n < (k choose 2) + 3 using structural hypergraph theory, and applying the absorbing method to embed the Berge tight cycles for n ≥ (k choose 2) + 3.",
@@ -6073,7 +6099,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof uses the Chinese Remainder Theorem to split the congruence modulo $q^t p$ into independent conditions modulo $p$ and modulo $q^t$. The condition modulo $p$ is derived using Lucas' theorem and Fermat's Little theorem. The condition modulo $q^t$ is established by computing the $q$-adic valuation of the binomial coefficient using Legendre's formula, which reduces the problem to bounding the base-$q$ digit sum.",
@@ -6102,7 +6128,7 @@
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Reformulate the visibility condition gcd(v − x) = 1 as a local condition: for all primes p, v ≢ x (mod p) in (ℤ/pℤ)ᵏ. 2. Apply the Chinese Remainder Theorem to decompose the joint condition v ∈ V_S ∩ (V_S − z) into independent conditions at each prime p: v (mod p) ∉ S_p ∪ (S−z)_p. 3. Compute each local factor as a finite counting problem in (ℤ/pℤ)ᵏ, yielding factor (1 − |S_p ∪ (S−z)_p|/pᵏ). 4. Prove convergence of the infinite Euler product using the bound |S_p ∪ (S−z)_p| ≤ 2|S| for all but finitely many p, combined with k ≥ 2 ensuring ∑_p 2|S|/pᵏ converges. 5. Rigorously justify the CRT-based density decomposition via inclusion-exclusion over primes and the uniform convergence of the partial products.",
@@ -6129,7 +6155,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the game inductively as a tree of states, each tracking remaining unchosen players and current team compositions (membership lists). Define strategies as functions from game states to moves (which player to pick or which team to assign to). Prove the parity advantage by constructing explicit strategies: for even n, Alice uses a symmetric pairing strategy where she maintains a potential function based on deviations from the mean; for odd n, Bob uses a mirror strategy. The key lemma is that at each decision point, the advantaged player can make a move that preserves the invariant that their team's running sum stays at least (resp. at most) the pro-rated share of the total.",
@@ -6154,7 +6180,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the sequence s_1(n) via its generating function or combinatorial interpretation, establish the equivalence to Andrews' strictly concave compositions, and verify the congruence using the refined parity analysis and q-series expansions modulo 4.",
@@ -6163,6 +6189,32 @@
     "status": "available",
     "timestamp": "2026-06-30T16:12:05.845657+00:00",
     "title": "Modulo 4 Characterization of Two-Color Distinct-Part Partition Coefficients"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.GR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every finite group G and every integer d ≥ 3, there exists a finite, simple, connected d-regular graph Γ that admits a proper d-edge-colouring κ : E(Γ) → {1,...,d} such that (1) Aut(Γ) ≅ G, and (2) κ is Aut(Γ)-invariant, meaning κ(φ(e)) = κ(e) for all φ ∈ Aut(Γ) and all e ∈ E(Γ). This strengthens Sabidussi's classical theorem (itself a strengthening of Frucht's theorem from arbitrary graphs to regular graphs) by additionally guaranteeing the existence of an automorphism-compatible edge-colouring, correcting an oversight in Sabidussi's original construction.",
+    "domain_bridges": [
+      "finite_group_theory",
+      "graph_theory",
+      "combinatorial_designs"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3003",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the core graph-theoretic notions (simple graph, d-regularity, proper d-edge-colouring, automorphism group, Aut-invariance) and group-theoretic notions (finite group, group isomorphism) in Lean 4. The proof proceeds constructively: given G and d, build Γ via a modified Sabidussi-type construction (e.g., using the Cayley colour graph of G with generating set carefully chosen to ensure d-regularity, then applying a replacement operation on edges to enforce both Aut(Γ) ≅ G and the existence of an Aut-invariant proper d-edge-colouring). The key difficulty is showing the modified construction preserves Aut(Γ) ≅ G while introducing the colouring structure. A secondary approach would formalize the corrected replacement lemma that fixes Sabidussi's oversight, showing that substituting coloured gadgets for edges of the Cayley graph preserves the automorphism group.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29768v1",
+    "status": "available",
+    "timestamp": "2026-06-30T16:33:23.044415+00:00",
+    "title": "Strengthened Sabidussi: Regular Graphs with Prescribed Automorphism Groups Admit Aut-Invariant Proper Edge-Colourings"
   },
   {
     "ambition_level": "extension",

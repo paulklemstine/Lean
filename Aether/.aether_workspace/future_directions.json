@@ -13029,7 +13029,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -13045,7 +13045,7 @@
         "Algebra"
       ],
       "id": "fd_0447",
-      "last_attempt_time": "2026-06-30T16:12:24.359955+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-16T10:48:45.376139+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -40689,7 +40689,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.NT",
         "11S15",
@@ -40713,7 +40713,7 @@
         "Logic"
       ],
       "id": "fd_2935",
-      "last_attempt_time": "2026-06-30T16:12:30.390957+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ramification_dichotomy_iterated_tower\n    {K : Type*} [Field K] [Valued K ℤₒ₀] [IsFiniteDimensional ℚ_[p] K] [CompleteSpace K]\n    {f : 𝒪_K[X]} (hf_monic : f.Monic) (hf_deg : 2 ≤ f.natDegree)\n    (hf_deriv : ∀ i, f.derivative.coeff i ∈ 𝔪_K)\n    {t : ℕ → K} (ht : ∀ n, Polynomial.eval (t (n+1)) f = t n)\n    (ht_int : ∀ n, t n ∈ 𝒪_K)\n    (h_ram : ∃ n, 1 < ramIdx (K_adjoin K (t n)) (K_adjoin K (t n) ⊓ K_ur K)) :\n    ∀ N, ∃ m, N < ramIdx (K_adjoin K (t m)) (K_adjoin K (t m) ⊓ K_ur K) :=\n  sorry",
       "lineage_refs": [],
@@ -41951,7 +41951,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "65ebb6ab",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41981,7 +41981,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29391v1",
       "source_path": "http://arxiv.org/abs/2606.29391v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T07:59:17.309660+00:00",
       "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
@@ -43167,6 +43167,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The set of positive integers that admit exactly one representation in the form p + F_{2^k} + F_q, where p and q are primes and k is a nonnegative integer, has positive lower asymptotic density. This extends the main theorem of the paper—which establishes positive lower density for the representable set—by paralleling recent uniqueness results for related Romanoff-type problems.",
+      "domain_bridges": [
+        "Analytic Number Theory",
+        "Sieve Methods",
+        "Linear Recurrences"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2988",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Nat.Prime.Basic\n\ndef fib : ℕ → ℕ\n  | 0 => 0\n  | 1 => 1\n  | n + 2 => fib (n + 1) + fib n\n\ndef HasUniqueRep (n : ℕ) : Prop :=\n  ∃! (p q k : ℕ), Nat.Prime p ∧ Nat.Prime q ∧ n = p + fib (2^k) + fib q\n\n-- The set of integers with exactly one representation has positive lower asymptotic density.\ntheorem unique_rep_positive_density :\n  ∃ δ > (0 : ℝ), ∀ᶠ N in atTop,\n    ((Finset.range (N + 1)).filter HasUniqueRep |>.card : ℝ) / N ≥ δ :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the circle method and sieve techniques used by Wang and Chen for the uniqueness of p+F_k representations, combined with the density arguments for mixed sparse sequences from Chen and Xu, to show that the minor arc contribution does not overwhelm the major arcs, ensuring that a positive proportion of integers have exactly one representation.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30188v1",
+      "source_path": "http://arxiv.org/abs/2606.30188v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T16:33:08.122188+00:00",
+      "title": "Uniqueness of Representations as p + F_{2^k} + F_q"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "math.GR"
       ],
@@ -43187,7 +43232,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2988",
+      "id": "fd_2989",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem nilpotent_extension_feng_sun_xiang (G : Type*) [Group G] [Fintype G] [IsNilpotent G] {p : ℕ} (hp : Nat.Prime p) (hp_min : ∀ q ∣ Fintype.card G, Nat.Prime q → p ≤ q) {k : ℕ} (hk : k < p) (a : Fin k → G) (ha : Function.Injective a) (b : Fin k → G) : ∃ σ : Equiv.Perm (Fin k), Function.Injective fun i => a i * b (σ i) := by sorry",
@@ -43234,7 +43279,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2989",
+      "id": "fd_2990",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem odd_kneser_strong_chromatic_index : forall k >= 2, odd_kneser_graph (2*k-1) k ~~> strong_chromatic_index (2*k-1) := ...",
@@ -43282,7 +43327,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2990",
+      "id": "fd_2991",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_sign_changes_sym_power_over_sums_of_squares\n    (k j m : ℕ) (hk : Even k ∧ k ≥ 2) (hm : Even m ∧ m ≥ 2)\n    (f : Sl2Z.ModularForm k) (hf : f ∈ HeckeEigenforms k)\n    (hf_norm : IsNormalised f) :\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n > 0} ∧\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n < 0} := by\n  sorry",
@@ -43332,7 +43377,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2991",
+      "id": "fd_2992",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem shifted_convolution_sym_power_k_full_sums_of_squares\n    (f : ModularForms.SL2Z) (κ : ℕ) (hf : IsHeckeEigenform f κ)\n    (j k h q m : ℕ) (hk : k ≥ 2) (hj : j ≥ 1) (hm : m ∈ {2,4,6,8,10,12})\n    (a : ℕ → ℕ) (ha_kfull : IsKFullKernel a k) (ha_bound : ∀ ε > 0, ∃ C, ∀ n, (a n : ℝ) ≤ C * n^ε) :\n    ∃ (δ : ℝ) (hδ : δ > 0) (C₀ : ℝ) (hC₀ : C₀ > 0) (α : ℕ),\n    ∀ ε > 0, ∃ B : ℝ, ∀ x ≥ (1 : ℝ),\n    let S := ∑ n in Finset.Icc 1 ⌊x⌋ₙ |>.filter\n      (fun n => n % q = 1 ∧ IsSumOfMSquares n m),\n      (a n : ℝ) * λSymPower f j (n + h)\n    let M := C₀ * x * (Real.log x)^α\n    |S - M| ≤ B * x^(1 - δ + ε) := sorry",
@@ -43381,7 +43426,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2992",
+      "id": "fd_2993",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vertex_ramsey_stability {r : ℕ} (hr : 2 ≤ r) {H : SimpleGraph ℕ} (hH : 2 ≤ H.chromaticNumber) : ∀ ε > 0, ∃ n₀ : ℕ, ∃ δ > 0, ∀ n ≥ n₀, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj], G.minDegree ≥ (1 - 1 / (r * (H.chromaticNumber - 1))) * n → ¬(G →_v (H, r)) → ∃ (G' : SimpleGraph (Fin n)) [DecidableRel G'.Adj], G'.IsKPartite (r * (H.chromaticNumber - 1)) ∧ (G.edgeSet \\ G'.edgeSet).card ≤ ε * n ^ 2",
@@ -43428,7 +43473,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2993",
+      "id": "fd_2994",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem orbit_closure_bruhat_relation {n : ℕ} {v w : Equiv.Perm (Fin (n+1))} (hv : v ≤ w) : (ιₙ ⁻¹ (BOrbit O_w)) ⊆ closure (ιₙ ⁻¹ (BOrbit O_v))",
@@ -43477,7 +43522,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2994",
+      "id": "fd_2995",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: For any m ≥ 1, p ∈ [0, 1/3], and positive weights w₁,...,wₘ\n    summing to 1, if v₁,...,vₘ are i.i.d. Bernoulli(p), then P(∑ wᵢ vᵢ ≥ p) ≥ p. -/\ntheorem prob_weighted_bernoulli_sum_ge_mean {m : ℕ} (p : ℝ)\n    (hp₁ : 0 ≤ p) (hp₂ : p ≤ 1 / 3)\n    (w : Fin m → ℝ) (hw₁ : ∀ i, 0 < w i) (hw₂ : ∑ i, w i = 1) :\n    let μ := Measure.pi (fun (_ : Fin m) => (PMF.bernoulli p hp₁).toMeasure)\n    (μ {x : Fin m → Bool | (∑ i, w i * if x i then (1 : ℝ) else 0) ≥ p}).toReal ≥ p := by\n  sorry",
@@ -43521,7 +43566,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2995",
+      "id": "fd_2996",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_concentration_of_measure (ε : ℝ) (hε : ε ∈ Ioo 0 1) :\n    ∃ (γ : ℝ) (C : ℕ), 0 < γ ∧ 0 < C ∧\n    ∀ (n : ℕ) (A S : Finset (Fin n → ZMod 2)),\n      (A.card : ℝ) ≥ ε * (2 : ℝ) ^ n ∧ IsWellSpread S γ C →\n      ((A + S).card : ℝ) ≥ (1 - ε) * (2 : ℝ) ^ n := by\n  sorry",
@@ -43559,7 +43604,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2996",
+      "id": "fd_2997",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Integral asymptotic estimates",
@@ -43605,7 +43650,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2997",
+      "id": "fd_2998",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem berge_tight_cycle_threshold {k : ℕ} (hk : 3 ≤ k) {n : ℕ} (hn : n ≥ Nat.choose k 2 + 3) \n    (H : Hypergraph (Fin n)) (hR : H.Is_R_graph (Finset.Icc 1 k)) \n    (hδ : H.min_s_degree (k - 1) ≥ 1) (t : ℕ) (ht : k ≤ t ∧ t ≤ n) :\n    H.Contains_Berge_Tight_Cycle t (k - 1) := by\n  sorry",
@@ -43651,7 +43696,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2998",
+      "id": "fd_2999",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem prime_base_reduction (q p t : ℕ) (hq : Nat.Prime q) (hp : Nat.Prime p) (hneq : p ≠ q) (ht : 0 < t) :\n    let n := q^t * p\n    let A_t := (q^(t+1)).choose (q^t) - q^(q^t)\n    (q * n).choose n ≡ q^n [MOD n] ↔ (p ∣ A_t ∧ s q ((q - 1) * p) ≥ (q - 1) * t) :=\n  sorry",
@@ -43699,7 +43744,7 @@
         "Pythagorean",
         "Cryptography"
       ],
-      "id": "fd_2999",
+      "id": "fd_3000",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem simultaneously_visible_autocorrelation_euler_product\n    {k : ℕ} (hk : 2 ≤ k) (S : Finset (Fin k → ℤ)) (z : Fin k → ℤ) :\n    autocorrelation (simultaneouslyVisible S) z =\n    ∏ᶠ (p : ℕ) in Nat.primes,\n      (1 - ((S.reduceMod p ∪ (S.shift (-z)).reduceMod p).card : ℚ) / (p : ℚ) ^ k) :=\n  sorry",
@@ -43745,7 +43790,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_3000",
+      "id": "fd_3001",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem avg_game_parity_advantage {n : ℕ} (h_n : 2 ≤ n)\n    (a : Fin n → ℝ) (h_mono : ∀ i j : Fin n, i ≤ j → a i ≤ a j) :\n    let x := (∑ i : Fin n, a i) / n\n    (∀ hn : Even n, ∃ (σ : AliceStrategy n a),\n      ∀ (τ : BobStrategy n a), avg (aliceTeam σ τ) ≥ x) ∧\n    (∀ hn : ¬Even n, ∃ (τ : BobStrategy n a),\n      ∀ (σ : AliceStrategy n a), avg (aliceTeam σ τ) ≤ x) :=\n  by sorry",
@@ -43789,7 +43834,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_3001",
+      "id": "fd_3002",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mod4_s1_coeff (n : ℕ) : (∃ r, n = r * (r + 1) / 2 ∧ s_1 n ≡ (-1)^r [ZMOD 4]) ∨ (¬ (∃ r, n = r * (r + 1) / 2) ∧ s_1 n ≡ 0 [ZMOD 4]) := by sorry",
@@ -43808,6 +43853,51 @@
       "thread_id": "",
       "timestamp": "2026-06-30T16:12:05.845657+00:00",
       "title": "Modulo 4 Characterization of Two-Color Distinct-Part Partition Coefficients"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.GR"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every finite group G and every integer d ≥ 3, there exists a finite, simple, connected d-regular graph Γ that admits a proper d-edge-colouring κ : E(Γ) → {1,...,d} such that (1) Aut(Γ) ≅ G, and (2) κ is Aut(Γ)-invariant, meaning κ(φ(e)) = κ(e) for all φ ∈ Aut(Γ) and all e ∈ E(Γ). This strengthens Sabidussi's classical theorem (itself a strengthening of Frucht's theorem from arbitrary graphs to regular graphs) by additionally guaranteeing the existence of an automorphism-compatible edge-colouring, correcting an oversight in Sabidussi's original construction.",
+      "domain_bridges": [
+        "finite_group_theory",
+        "graph_theory",
+        "combinatorial_designs"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_3003",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem strengthened_sabidussi (G : Type*) [Fintype G] [Group G] {d : ℕ} (hd : d ≥ 3) :\n    ∃ (Γ : SimpleGraph G_fin) (κ : Γ.EdgeFin → Fin d),\n      Γ.Connected ∧ Γ.IsRegularOfDegree d ∧\n      (∃ (φ : Aut Γ ≃* G), True) ∧\n      (∀ (e : Γ.EdgeFin) (σ : Aut Γ), κ (σ.mapEdge e) = κ e) ∧\n      (∀ (v : V Γ) (e₁ e₂ : Γ.EdgeFin), e₁.fst ∈ {v, e₁.snd} → e₂.fst ∈ {v, e₂.snd} → e₁ ≠ e₂ → κ e₁ ≠ κ e₂) :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First formalize the core graph-theoretic notions (simple graph, d-regularity, proper d-edge-colouring, automorphism group, Aut-invariance) and group-theoretic notions (finite group, group isomorphism) in Lean 4. The proof proceeds constructively: given G and d, build Γ via a modified Sabidussi-type construction (e.g., using the Cayley colour graph of G with generating set carefully chosen to ensure d-regularity, then applying a replacement operation on edges to enforce both Aut(Γ) ≅ G and the existence of an Aut-invariant proper d-edge-colouring). The key difficulty is showing the modified construction preserves Aut(Γ) ≅ G while introducing the colouring structure. A secondary approach would formalize the corrected replacement lemma that fixes Sabidussi's oversight, showing that substituting coloured gadgets for edges of the Cayley graph preserves the automorphism group.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29768v1",
+      "source_path": "http://arxiv.org/abs/2606.29768v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T16:33:23.044415+00:00",
+      "title": "Strengthened Sabidussi: Regular Graphs with Prescribed Automorphism Groups Admit Aut-Invariant Proper Edge-Colourings"
     },
     {
       "ambition_level": "extension",
@@ -46217,7 +46307,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -46232,7 +46322,7 @@
         "Algebra"
       ],
       "id": "seed_027",
-      "last_attempt_time": "2026-06-30T16:12:11.941528+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-16T10:48:52.128685+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
