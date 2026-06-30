@@ -15836,11 +15836,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7d80a3e0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15852,7 +15852,7 @@
         "Geometry"
       ],
       "id": "fd_0528",
-      "last_attempt_time": "2026-06-09T01:46:59.603373+00:00",
+      "last_attempt_time": "2026-06-30T05:26:25.682746+00:00",
       "last_reviewed_at": "2026-06-09T14:59:10.846174+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -15866,7 +15866,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:05.964661+00:00",
       "title": "Bridge: Galois Connections Between Order Theory and Topology"
@@ -16421,11 +16421,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "8d4fed95",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16437,7 +16437,7 @@
         "Physics"
       ],
       "id": "fd_0543",
-      "last_attempt_time": "2026-06-30T05:05:46.009130+00:00",
+      "last_attempt_time": "2026-06-10T07:49:49.912385+00:00",
       "last_reviewed_at": "2026-06-10T07:42:09.279379+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16451,7 +16451,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.214033+00:00",
       "title": "Quantum Key Distribution: BB84 Security Proof"
@@ -16460,11 +16460,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "da1c103e",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16476,7 +16476,7 @@
         "Computation"
       ],
       "id": "fd_0544",
-      "last_attempt_time": "2026-06-30T05:05:51.735088+00:00",
+      "last_attempt_time": "2026-06-11T07:47:34.716203+00:00",
       "last_reviewed_at": "2026-06-09T17:35:09.672546+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16490,7 +16490,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.295536+00:00",
       "title": "Code-Based Cryptography: McEliece from Goppa Codes"
@@ -37958,14 +37958,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "https://arxiv.org/abs/math/0507175",
         "https://arxiv.org/abs/math/0608105"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d6285deb",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37980,7 +37980,7 @@
         "Bridges"
       ],
       "id": "fd_2876",
-      "last_attempt_time": "2026-06-30T05:05:57.021327+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem coeffs_are_signed_principal_spec (M : ℕ) : let scalar_factor : LaurentSeries ℚ := (lpochhammer t M / lpochhammer (-t) M).subst (X := (∑ k in range (M+1), X^k)).expand let coeffs : List ℚ := scalar_factor.coeffs let q_funcs : List (LaurentSeries ℚ) := List.map (λ k, one_row_schur_Q k) (List.range (M+1)) let principal_specs : List ℚ := List.map (λ f, evaluate_at_one_plus_t_sum f M) q_funcs in coeffs = List.zipWith (· * ·) (List.map (-1)^k) principal_specs",
       "lineage_refs": [],
@@ -37994,7 +37994,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28108v1",
       "source_path": "http://arxiv.org/abs/2606.28108v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T17:13:36.219637+00:00",
       "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur Q-Functions"
@@ -39258,7 +39258,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "6e1ebbb3",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39287,7 +39287,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28231v1",
       "source_path": "http://arxiv.org/abs/2606.28231v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T21:48:16.342337+00:00",
       "title": "Minimum Poset Size for Automorphism Group Z2 x Z2^n"
@@ -39633,7 +39633,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "30133a3d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39662,7 +39662,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27902v1",
       "source_path": "http://arxiv.org/abs/2606.27902v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T00:52:54.836226+00:00",
       "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
@@ -40082,6 +40082,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.NT",
+        "automorphic_forms",
+        "shifted_convolution_sums",
+        "L_functions"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For f a normalized Hecke eigenform for SL(2,Z) (holomorphic of weight k ≥ 2 or Hecke-Maass) with Hecke eigenvalues λ_f(n), and for any ε > 0 with 1 ≤ Y ≤ X^{1/2-ε}, the triple correlation sum satisfies |∑_{n≤X} ∑_{m≤Y} λ_f(n)λ_f(m)λ_f(n+m)| ≪_{f,ε} X^{1/2+ε}Y. This is the optimal bound predicted by Sato-Tate heuristics and random matrix theory, going beyond the non-trivial power-saving bounds established in the paper for bilinear sums of GL(2) Fourier coefficients.",
+      "domain_bridges": [
+        "spectral_theory",
+        "automorphic_representations",
+        "harmonic_analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "id": "fd_2922",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem triple_corr_sqrt_cancel {k : ℕ} (f : HeckeEigenform (weight k)) (hf : f.IsNormalized) (ε : ℝ) (hε : ε > 0) (X Y : ℝ) (hY : 1 ≤ Y) (hXY : Y ≤ X ^ (1/2 - ε)) (hX : 1 ≤ X) : ∃ C : ℝ, C > 0 ∧ |(∑ n in Finset.Icc 1 ⌊X⌋₊, ∑ m in Finset.Icc 1 ⌊Y⌋₊, f.λ n * f.λ m * f.λ (n + m))| ≤ C * X ^ (1/2 + ε) * Y := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Apply the delta method of Duke-Friedlander-Iwaniec to decouple the constraint n+m, then deploy Voronoi summation in both n and m variables. Use Cauchy-Schwarz to reduce to a shifted convolution sum and apply the Kuznetsov trace formula to express triple products of Fourier coefficients as central L-values via Watson's formula. The crux is obtaining subconvexity for the triple product L-function L(s, f⊗f⊗f) at s=1/2, which GRH supplies but which remains unconditionally open; any unconditional proof would constitute a breakthrough in subconvexity theory.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29822v1",
+      "source_path": "http://arxiv.org/abs/2606.29822v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T05:25:55.578636+00:00",
+      "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2501.12018",
         "MRVZ_geometric_fractional",
         "deGrey_chromatic_plane"
@@ -40102,7 +40149,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2922",
+      "id": "fd_2923",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -40148,7 +40195,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2923",
+      "id": "fd_2924",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -40194,7 +40241,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2924",
+      "id": "fd_2925",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -40239,7 +40286,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2925",
+      "id": "fd_2926",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -40287,7 +40334,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2926",
+      "id": "fd_2927",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -40334,7 +40381,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2927",
+      "id": "fd_2928",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -40383,7 +40430,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2928",
+      "id": "fd_2929",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -40430,7 +40477,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2929",
+      "id": "fd_2930",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
@@ -40478,7 +40525,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2930",
+      "id": "fd_2931",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_second_moment_sqroot_expsum (δ : ℝ) (hδ : 0 < δ) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ, 2 ≤ n → ∀ H : ℕ,\n    ⌈(n : ℝ)^(1/2 + δ)⌉₊ ≤ H →\n    (∑ h in Finset.Icc ⌈H/2⌉₊ H,\n      (∑ a in Finset.Icc ⌈n/2⌉₊ n,\n        Complex.exp (2 * Real.pi * Complex.I * (h : ℂ) * Real.sqrt (a : ℝ)))\n        .norm_sq)\n    ≤ C * (H : ℝ) * (n : ℝ) * (Real.log (n : ℝ))^c := by\n  sorry",
@@ -40521,7 +40568,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2931",
+      "id": "fd_2932",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Basic diagram-filling and counting techniques over finite graphs",
@@ -40569,7 +40616,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2932",
+      "id": "fd_2933",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem harder_conjecture_k_equals_3 (j : ℕ) (hj : j ≥ 2 ∧ Even j) (f : PrimitiveEllipticCuspForm (j + 4)) (p : Ideal (HeckeField f)) (hp : p ∣ L_alg (j + 3) f) : ∃ (F : SiegelCuspEigenForm (det^3 * Sym^j)) (P : Ideal (HeckeField F)) (hP : P ∣ p), ∀ ℓ : ℕ, ℓ.Prime → SpinLPoly ℓ F ≡ LPoly ℓ f * (1 - (ℓ : ℤ)^1 * X) * (1 - (ℓ : ℤ)^(j + 2) * X) [MOD P] := by sorry",
@@ -40616,7 +40663,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2933",
+      "id": "fd_2934",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bessel_distribution_regular_GLn {F : Type*} [PAdicField F] {n : ℕ} [NeZero n] (π : IrreducibleSmoothAdmissibleRep (GL n F)) (hπ : IsGeneric π) (ℓ₁ : WhittakerFunctional π) (ℓ₂ : WhittakerFunctional π.contrargredient) : IsRegular (besselDistribution ℓ₁ ℓ₂) := by\n  sorry",
@@ -40662,7 +40709,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2934",
+      "id": "fd_2935",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lp_knrs {V : Type*} [Fintype V] [DecidableEq V]\n    (F : SimpleGraph V) [DecidableRel F.Adj]\n    (m : ℕ) (hm : m = F.edgeFinset.card) (hm_pos : 0 < m)\n    (n : ℕ) (hn : n = F.support.card)\n    (p : ℝ) (hp : p ≥ (n.choose 2 : ℝ) / m)\n    (ρ : ℝ) (hρ : ρ ∈ Set.Icc 0 1)\n    (W : UnitInterval → UnitInterval → ℝ)\n    (hW_meas : Measurable (Function.uncurry W))\n    (hW_sym : ∀ x y, W x y = W y x)\n    (hW_range : ∀ x y, W x y ∈ Set.Icc (0 : ℝ) 1)\n    (hW_locally_dense :\n      ∀ S : Set UnitInterval, MeasurableSet S →\n        (∫ x in S, ∫ y in S, W x y ∂volume) ≥ ρ * (volume S) ^ 2)\n    : (∫ x : V → UnitInterval,\n        (∏ e in F.edgeFinset.attach,\n          W (x (Sym2.toProd e.1).1) (x (Sym2.toProd e.1).2)) ^ p\n        ∂(Measure.pi fun _ => volume)) ^ (1 / p : ℝ)\n      ≥ ρ ^ (m : ℝ) := by\n  sorry",
@@ -40709,7 +40756,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2935",
+      "id": "fd_2936",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem digit_sum_formula (p : ℕ) (hp : p.Prime) (b : ℕ) (hb : 2 ≤ b) (hpb : ¬(p ∣ b)) (m : ℕ) (l : ℕ) (hl : l = (p - 1) / 2^m) (h_ord : (∀ k : ℕ, 0 < k → k < l → b^k % p ≠ 1) ∧ b^l % p = 1) (h_mod : p % 2^(m+1) = 1) : (∑ i : Fin l, (b * (b^(i.1) % p)) / p) = (b - 1) * (p - 1) / 2^(m+1) := by sorry",
@@ -40728,6 +40775,53 @@
       "thread_id": "",
       "timestamp": "2026-06-30T05:05:42.798221+00:00",
       "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "χ-boundedness",
+        "girth",
+        "complement_graph",
+        "chromatic_number"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper establishes that c(s/log s)^{4/3} ≤ F(s) ≤ (1+o(1))s^{3/2}/log s, where F(s) = max{χ(G) : ω(G) ≤ s, g(G̅) ≥ 6}. The conjecture proposes that the true asymptotic growth rate is Θ(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) ≥ c · s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
+      "domain_bridges": [
+        "asymptotic_analysis",
+        "combinatorial_optimization"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2937",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sivaraman_F_asymptotic_lower_bound :\n    ∃ c > 0, ∃ s₀ : ℕ, ∀ s ≥ s₀,\n      F s ≥ c * (s : ℝ)^(3/2) / Real.log s :=\n  by\n    sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "To prove the lower bound F(s) ≥ c·s^{3/2}/log s, construct an explicit family of graphs G_s with ω(G_s) ≤ s and g(G̅_s) ≥ 6 such that χ(G_s) ≥ c·s^{3/2}/log s. This likely requires probabilistic constructions or algebraic graph families that saturate the complement-girth-6 constraint while maximizing chromatic number relative to clique number. The existing lower bound construction yielding s^{4/3} would need substantial refinement—potentially using blow-ups of Ramsey-type constructions or sparse pseudorandom graphs with controlled complement girth.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29873v1",
+      "source_path": "http://arxiv.org/abs/2606.29873v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T05:26:20.098555+00:00",
+      "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
     },
     {
       "ambition_level": "extension",
@@ -42683,7 +42777,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "fd05632c",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42708,7 +42802,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:24:58.445057+00:00",
       "title": "Sums of Three Cubes"
@@ -42836,7 +42930,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "75f8dfec",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42861,7 +42955,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:24:59.481690+00:00",
       "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
@@ -45067,7 +45161,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "71da124a",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -45093,7 +45187,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:18.020118+00:00",
       "title": "Reverse Mathematics: Ramsey's Theorem"

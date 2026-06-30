@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "71da124a",
+    "consumed_by_exp_id": "",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -693,7 +693,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
-    "consumed_by_exp_id": "fd05632c",
+    "consumed_by_exp_id": "",
     "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
     "domains": [
       "Algebra"
@@ -702,7 +702,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:58.445057+00:00",
     "title": "Sums of Three Cubes"
   },
@@ -1816,7 +1816,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No nontrivial perfect powers in even-indexed polygonal numbers for exponents p \u2265 11"
   },
   {
-    "consumed_by_exp_id": "d6285deb",
+    "consumed_by_exp_id": "",
     "description": "When the parameter relationship s = t^M is imposed on the mixed product of modified Greaves-Jing-Zhu operators, the coefficients in the scalar factor (u;t)_M/(-u;t)_M expansion are signed principal specializations of one-row Schur Q-functions. Specifically, if c_k^{(M)} denotes the coefficient of u^k in (u;t)_M/(-u;t)_M, then c_k^{(M)} = (-1)^k Q_k(1+t+...+t^M) where Q_k is the one-row Schur Q-function defined by equation (4).",
     "domains": [
       "Bridges"
@@ -1825,7 +1825,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T17:13:36.219637+00:00",
     "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur Q-Functions"
   },
@@ -2180,7 +2180,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremal Signless Laplacian Spectral Radius of tK3-Free Graphs"
   },
   {
-    "consumed_by_exp_id": "6e1ebbb3",
+    "consumed_by_exp_id": "",
     "description": "For any integer $n \\ge 3$, the minimum size of a finite poset realizing $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ as its automorphism group is $2^{n+1} + 2$.",
     "domains": [
       "Algebra"
@@ -2189,7 +2189,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T21:48:16.342337+00:00",
     "title": "Minimum Poset Size for Automorphism Group Z2 x Z2^n"
   },
@@ -2297,7 +2297,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Skeleton-Coskeleton Determination for Regular Maniplexes"
   },
   {
-    "consumed_by_exp_id": "30133a3d",
+    "consumed_by_exp_id": "",
     "description": "Let \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n \u2208 {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n \u2208 {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domains": [
       "Bridges"
@@ -2306,7 +2306,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function \u03c1(q)"
   },
@@ -2443,11 +2443,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For f a normalized Hecke eigenform for SL(2,Z) (holomorphic of weight k \u2265 2 or Hecke-Maass) with Hecke eigenvalues \u03bb_f(n), and for any \u03b5 > 0 with 1 \u2264 Y \u2264 X^{1/2-\u03b5}, the triple correlation sum satisfies |\u2211_{n\u2264X} \u2211_{m\u2264Y} \u03bb_f(n)\u03bb_f(m)\u03bb_f(n+m)| \u226a_{f,\u03b5} X^{1/2+\u03b5}Y. This is the optimal bound predicted by Sato-Tate heuristics and random matrix theory, going beyond the non-trivial power-saving bounds established in the paper for bilinear sums of GL(2) Fourier coefficients.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2922",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29822v1",
+    "status": "available",
+    "timestamp": "2026-06-30T05:25:55.578636+00:00",
+    "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2461,7 +2475,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2475,7 +2489,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2489,7 +2503,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2503,7 +2517,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2518,7 +2532,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2533,7 +2547,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2547,7 +2561,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2561,7 +2575,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2930",
+    "id": "fd_2931",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2575,7 +2589,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2590,7 +2604,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2605,7 +2619,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2933",
+    "id": "fd_2934",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2619,7 +2633,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2934",
+    "id": "fd_2935",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2633,13 +2647,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2935",
+    "id": "fd_2936",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
     "status": "available",
     "timestamp": "2026-06-30T05:05:42.798221+00:00",
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes that c(s/log s)^{4/3} \u2264 F(s) \u2264 (1+o(1))s^{3/2}/log s, where F(s) = max{\u03c7(G) : \u03c9(G) \u2264 s, g(G\u0305) \u2265 6}. The conjecture proposes that the true asymptotic growth rate is \u0398(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) \u2265 c \u00b7 s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2937",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29873v1",
+    "status": "available",
+    "timestamp": "2026-06-30T05:26:20.098555+00:00",
+    "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2657,7 +2685,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Perfect Cuboid (Euler Brick)"
   },
   {
-    "consumed_by_exp_id": "75f8dfec",
+    "consumed_by_exp_id": "",
     "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
     "domains": [
       "Algebra"
@@ -2666,7 +2694,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.481690+00:00",
     "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
@@ -2843,7 +2871,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "da1c103e",
+    "consumed_by_exp_id": "",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -2853,7 +2881,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -3094,7 +3122,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "8d4fed95",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -3104,7 +3132,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
@@ -3244,7 +3272,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d80a3e0",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domains": [
       "Bridges",
@@ -3254,7 +3282,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
