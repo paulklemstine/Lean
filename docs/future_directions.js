@@ -1157,7 +1157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d69db06d",
     "description": "Every \u03c4_k-maximal graph on n vertices (with n \u2265 2k+2) has exactly (k+1)(n-1)-1 edges. A graph is \u03c4_k-maximal if it contains no subgraph with k+1 edge-disjoint spanning trees, yet adding any edge from its complement creates such a subgraph.",
     "domains": [
       "Bridges"
@@ -1166,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:06:52.919140+00:00",
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
@@ -1884,7 +1884,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Enumeration of 2-balanced p-regular partitions of fixed p-weight"
   },
   {
-    "consumed_by_exp_id": "0d72d14d",
+    "consumed_by_exp_id": "",
     "description": "For the scalar factor \u03a9_{t,s}(u) of the general mixed product \ud835\udcb4(z;t)\ud835\udcb4(z;s) of modified Greaves-Jing-Zhu operators with two independent deformation parameters t and s, which equals a quotient of infinite Pochhammer products, the coefficient of u^n satisfies \u03c9_n(t,s) = (-1)^n \u00b7 F_n(t,s) where F_n(t,s) is a formal power series in t and s with nonnegative integer coefficients. This extends the paper's established result that for s = t^M, the coefficients of (u;t)_M/(-u;t)_M are (after removing signs) nonnegative palindromic polynomials, to the case of arbitrary independent parameters.",
     "domains": [
       "Bridges"
@@ -1893,7 +1893,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:23:54.603938+00:00",
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
@@ -3394,12 +3394,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Establishes that the optimal \u03c7-bounding function F(3) for the class of graphs whose complements have girth at least 6 is exactly 4. This means that any finite simple graph with clique number at most 3 and complement girth at least 6 has chromatic number at most 4, and there exists such a graph where this bound is tight.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2993",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29873v1",
+    "status": "available",
+    "timestamp": "2026-06-30T18:20:00.643679+00:00",
+    "title": "Exact Value of Sivaraman's Function F at 3"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3414,7 +3428,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3428,7 +3442,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3443,7 +3457,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3458,7 +3472,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3473,7 +3487,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3488,7 +3502,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3502,7 +3516,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3516,7 +3530,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3530,7 +3544,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3544,7 +3558,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3559,7 +3573,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3573,7 +3587,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3587,7 +3601,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3601,7 +3615,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3616,7 +3630,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3631,7 +3645,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3645,7 +3659,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3660,13 +3674,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
     "status": "available",
     "timestamp": "2026-06-30T18:02:52.934666+00:00",
     "title": "Square-Root Cancellation for Double Shifted Convolution of GL(2) Fourier Coefficients"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The graph algebra \ud835\udc9c\u2099, whose monomial basis is indexed by simple graphs on n vertices (equivalently, the algebra of pseudo-Boolean functions on the Boolean cube {0,1}^m where m = C(n,2)), equipped with the sl\u2082-action defined by edge-addition and edge-deletion operators, is isomorphic as an sl\u2082-module to the m-th tensor power of the standard 2-dimensional sl\u2082-module V. Concretely, the raising operator E = \u03a3_{i<j} e_{ij} (adding edge {i,j}) and lowering operator F = \u03a3_{i<j} d_{ij} (deleting edge {i,j}) satisfy the sl\u2082 relations [E,F]=H, [H,E]=2E, [H,F]=-2F, and the resulting module structure on \ud835\udc9c\u2099 is isomorphic to V^\u2297m.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3013",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29558v1",
+    "status": "available",
+    "timestamp": "2026-06-30T18:20:32.524775+00:00",
+    "title": "Graph Algebra sl\u2082-Module Tensor Power Isomorphism"
   },
   {
     "consumed_by_exp_id": "",

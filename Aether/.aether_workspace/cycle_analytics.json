@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-30T18:00:57.529796+00:00",
+  "last_updated": "2026-06-30T18:19:26.678304+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -21766,6 +21766,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-30T18:00:57.064574+00:00",
       "title": "Birch and Swinnerton-Dyer Conjecture"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 20,
+      "domain": "Algebra",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "0d72d14d",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782838566.2458901,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-30T18:19:26.367659+00:00",
+      "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
     }
   ]
 }
