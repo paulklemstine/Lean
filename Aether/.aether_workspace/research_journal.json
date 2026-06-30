@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9c488c94",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Character Tables of `Sₙ`\n\nThis cycle established the \"column count\" of the character table of the symmetric group:\nthe table is square of side `p(n)`, via a from-scratch proof th",
-      "quality_score": 0.6903199999999999,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-26T14:28:48",
-      "title": "Representation Theory: Character Tables of S_n"
-    },
-    {
       "cycle_id": "7281fa18",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Row-exchange under eventual contraction (five-vertex half-strip)\n\nThis cycle established, for `TM = Matrix (Fin 5) (Fin 5) ℝ` with the `L∞` operator norm:\n\n* `conj_inverse_one_su",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-30T06:07:15",
       "title": "Sums of Three Cubes"
+    },
+    {
+      "cycle_id": "30133a3d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — sign laws for third-order mock theta coefficients\n\nThese conjectures grow out of the exact analysis of the coefficient sequence `r(n)` of\nRamanujan's third-order mock theta funct",
+      "quality_score": 0.3375488878571429,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-30T07:56:37",
+      "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76576
     }
   ],
-  "last_updated": "2026-06-30T06:07:15",
+  "last_updated": "2026-06-30T07:56:37",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2b7b775f",
-        "quality": 0.69949,
-        "theorems": 0,
-        "title": "Sufficient condition for non-periodicity of awaited set of Wang tiles"
-      },
-      {
         "cycle_id": "cfea11f0",
         "quality": 0.65976,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.76576,
         "theorems": 15,
         "title": "Certified Adversarial Robustness via Sheaf Cohomology"
+      },
+      {
+        "cycle_id": "30133a3d",
+        "quality": 0.3375488878571429,
+        "theorems": 7,
+        "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ"
       }
     ],
     "NumberTheory": [

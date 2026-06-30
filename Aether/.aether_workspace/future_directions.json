@@ -14783,11 +14783,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "8bace5dd",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14799,7 +14799,7 @@
         "Algebra"
       ],
       "id": "fd_0493",
-      "last_attempt_time": "2026-06-29T12:14:20.950658+00:00",
+      "last_attempt_time": "2026-06-30T07:59:20.781072+00:00",
       "last_reviewed_at": "2026-06-25T03:28:31.395772+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14813,7 +14813,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.995091+00:00",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
@@ -37041,7 +37041,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "31227a11",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37069,7 +37069,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28198v1",
       "source_path": "http://arxiv.org/abs/2606.28198v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T10:44:44.698882+00:00",
       "title": "Exact Edge Count of Tau_k-Maximal Graphs"
@@ -37965,7 +37965,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d6285deb",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37994,7 +37994,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28108v1",
       "source_path": "http://arxiv.org/abs/2606.28108v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T17:13:36.219637+00:00",
       "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur Q-Functions"
@@ -39010,7 +39010,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "MRVZ_27_vertex_graph",
         "geometric_fractional_chromatic_number",
@@ -39018,7 +39018,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "259111f2",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39034,11 +39034,11 @@
         "Algebra"
       ],
       "id": "fd_2899",
-      "last_attempt_time": "2026-06-30T07:38:02.467258+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_colorings_of_G27 (G : UnitDistanceGraph) (hG : G = G27) : let P := geometricFractionalColoringPolytope G; P.dim = 11 ∧ (P.extremePoints).ncard = 23 ∧ ∀ c ∈ P.extremePoints, c.totalWeight = 4",
       "lineage_refs": [],
-      "outcome_quality": 0.3375488878571429,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph with its coordinates. Encode the geometric fractional chromatic number as a linear program over measurable functions. Use the finite-dimensional reduction (the LP with 182304 variables capturing the constraints on finite sub-configurations) to extract the extreme points computationally. Verify each of the 23 extremal colorings satisfies all unit-distance constraints and achieves total weight exactly 4, and confirm no other extreme points exist via vertex enumeration on the LP's feasible polytope.",
@@ -39048,7 +39048,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28157v1",
       "source_path": "http://arxiv.org/abs/2606.28157v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T20:19:39.963436+00:00",
       "title": "Extremal Geometric Fractional Colorings of G₂₇ Have Exactly 23 Vertices"
@@ -40181,7 +40181,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "8e533c39",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -40212,7 +40212,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29688v1",
       "source_path": "http://arxiv.org/abs/2606.29688v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T06:09:51.264477+00:00",
       "title": "Effective Degree Bound for t-Module Relation Modules"
@@ -40403,6 +40403,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "arXiv:2003.02158",
+        "arXiv:1801.09841",
+        "arXiv:1603.05924"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We propose that the absolute value of random homomorphism values at the root of infinite, locally finite trees with leaves fixed at zero exhibits subgaussian tail bounds governed by effective resistance, extending results from regular trees to all transient trees via comparison with discrete Gaussian-like distributions.",
+      "domain_bridges": [
+        "Electrical network theory (via effective resistance computations)",
+        "Spectral graph theory (for Laplacian comparison)",
+        "Stochastic processes on groups (for coarse classification theory)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation",
+        "Algebra"
+      ],
+      "id": "fd_2929",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem homomorphism_subgaussian_tail : forall (T : tree) (rho : real) (r : real) (h : rho >= r), |\\text{homomorphism}(T) - 0| <= ρ * sqrt(2 * ln(r))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Prove a novel large deviation principle for homomorphism models using effective resistance and compare to discrete Gaussian processes via coupling arguments, leveraging recent advances in coarse classification theory for infinite trees.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29426v1",
+      "source_path": "http://arxiv.org/abs/2606.29426v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T07:58:54.415191+00:00",
+      "title": "Effective Resistance-Determined Subgaussian Tail Bounds for Random Homomorphisms on Infinite Trees"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2501.12018",
         "MRVZ_geometric_fractional",
         "deGrey_chromatic_plane"
@@ -40423,7 +40470,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2929",
+      "id": "fd_2930",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -40469,7 +40516,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2930",
+      "id": "fd_2931",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -40515,7 +40562,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2931",
+      "id": "fd_2932",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -40560,7 +40607,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2932",
+      "id": "fd_2933",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -40608,7 +40655,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2933",
+      "id": "fd_2934",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -40655,7 +40702,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2934",
+      "id": "fd_2935",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -40704,7 +40751,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2935",
+      "id": "fd_2936",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -40751,7 +40798,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2936",
+      "id": "fd_2937",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
@@ -40799,7 +40846,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2937",
+      "id": "fd_2938",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_second_moment_sqroot_expsum (δ : ℝ) (hδ : 0 < δ) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ, 2 ≤ n → ∀ H : ℕ,\n    ⌈(n : ℝ)^(1/2 + δ)⌉₊ ≤ H →\n    (∑ h in Finset.Icc ⌈H/2⌉₊ H,\n      (∑ a in Finset.Icc ⌈n/2⌉₊ n,\n        Complex.exp (2 * Real.pi * Complex.I * (h : ℂ) * Real.sqrt (a : ℝ)))\n        .norm_sq)\n    ≤ C * (H : ℝ) * (n : ℝ) * (Real.log (n : ℝ))^c := by\n  sorry",
@@ -40842,7 +40889,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2938",
+      "id": "fd_2939",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Basic diagram-filling and counting techniques over finite graphs",
@@ -40890,7 +40937,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2939",
+      "id": "fd_2940",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem harder_conjecture_k_equals_3 (j : ℕ) (hj : j ≥ 2 ∧ Even j) (f : PrimitiveEllipticCuspForm (j + 4)) (p : Ideal (HeckeField f)) (hp : p ∣ L_alg (j + 3) f) : ∃ (F : SiegelCuspEigenForm (det^3 * Sym^j)) (P : Ideal (HeckeField F)) (hP : P ∣ p), ∀ ℓ : ℕ, ℓ.Prime → SpinLPoly ℓ F ≡ LPoly ℓ f * (1 - (ℓ : ℤ)^1 * X) * (1 - (ℓ : ℤ)^(j + 2) * X) [MOD P] := by sorry",
@@ -40937,7 +40984,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2940",
+      "id": "fd_2941",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bessel_distribution_regular_GLn {F : Type*} [PAdicField F] {n : ℕ} [NeZero n] (π : IrreducibleSmoothAdmissibleRep (GL n F)) (hπ : IsGeneric π) (ℓ₁ : WhittakerFunctional π) (ℓ₂ : WhittakerFunctional π.contrargredient) : IsRegular (besselDistribution ℓ₁ ℓ₂) := by\n  sorry",
@@ -40983,7 +41030,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2941",
+      "id": "fd_2942",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lp_knrs {V : Type*} [Fintype V] [DecidableEq V]\n    (F : SimpleGraph V) [DecidableRel F.Adj]\n    (m : ℕ) (hm : m = F.edgeFinset.card) (hm_pos : 0 < m)\n    (n : ℕ) (hn : n = F.support.card)\n    (p : ℝ) (hp : p ≥ (n.choose 2 : ℝ) / m)\n    (ρ : ℝ) (hρ : ρ ∈ Set.Icc 0 1)\n    (W : UnitInterval → UnitInterval → ℝ)\n    (hW_meas : Measurable (Function.uncurry W))\n    (hW_sym : ∀ x y, W x y = W y x)\n    (hW_range : ∀ x y, W x y ∈ Set.Icc (0 : ℝ) 1)\n    (hW_locally_dense :\n      ∀ S : Set UnitInterval, MeasurableSet S →\n        (∫ x in S, ∫ y in S, W x y ∂volume) ≥ ρ * (volume S) ^ 2)\n    : (∫ x : V → UnitInterval,\n        (∏ e in F.edgeFinset.attach,\n          W (x (Sym2.toProd e.1).1) (x (Sym2.toProd e.1).2)) ^ p\n        ∂(Measure.pi fun _ => volume)) ^ (1 / p : ℝ)\n      ≥ ρ ^ (m : ℝ) := by\n  sorry",
@@ -41030,7 +41077,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2942",
+      "id": "fd_2943",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem digit_sum_formula (p : ℕ) (hp : p.Prime) (b : ℕ) (hb : 2 ≤ b) (hpb : ¬(p ∣ b)) (m : ℕ) (l : ℕ) (hl : l = (p - 1) / 2^m) (h_ord : (∀ k : ℕ, 0 < k → k < l → b^k % p ≠ 1) ∧ b^l % p = 1) (h_mod : p % 2^(m+1) = 1) : (∑ i : Fin l, (b * (b^(i.1) % p)) / p) = (b - 1) * (p - 1) / 2^(m+1) := by sorry",
@@ -41077,7 +41124,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2943",
+      "id": "fd_2944",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sivaraman_F_asymptotic_lower_bound :\n    ∃ c > 0, ∃ s₀ : ℕ, ∀ s ≥ s₀,\n      F s ≥ c * (s : ℝ)^(3/2) / Real.log s :=\n  by\n    sorry",
@@ -41122,7 +41169,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2944",
+      "id": "fd_2945",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tx_graffiti_conjecture (G : Graph) [connected G] [nontrivial G] : α G ≥ (a G + R G) / Δ G",
@@ -41168,7 +41215,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2945",
+      "id": "fd_2946",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem second_order_theta_mode_identity (n : ℕ) (hn : 1 ≤ n) (t : ℝ) : phi n t = (second_deriv (fun t => Real.exp (t/2) * Real.exp (-Real.pi * (n : ℝ)^2 * Real.exp (2*t))) t - (1/4) * (Real.exp (t/2) * Real.exp (-Real.pi * (n : ℝ)^2 * Real.exp (2*t)))) := by sorry",
@@ -41211,7 +41258,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2946",
+      "id": "fd_2947",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem halve_nim_three_pile_ppos {a b c : ℕ} (hc : c ≤ 10) : HalveNim.isPPos a b c ↔ a ^ b ^ c = 0 := by sorry",
@@ -41257,7 +41304,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2947",
+      "id": "fd_2948",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_maximizes_expected_empty_spaces (N : ℕ) (j : ℕ) (hN : 2 ≤ N) (hj : 2 ≤ j) (p : Fin N → ℝ) (hp_pos : ∀ i, 0 < p i) (hp_sum : ∑ i, p i = 1) : expected_empty_spaces p j ≤ expected_empty_spaces (fun _ => (1 : ℝ) / N) j ∧ (expected_empty_spaces p j = expected_empty_spaces (fun _ => (1 : ℝ) / N) j ↔ ∀ i, p i = (1 : ℝ) / N) := by sorry",
@@ -41304,7 +41351,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2948",
+      "id": "fd_2949",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Analysis.SpecialFunctions.Pow.Real\n\ndef prob_untouched_exact (n m k u : ℕ) : ℝ :=\n  (n.choose u : ℝ) * ∑ j in Finset.range (n - u + 1),\n    (-1 : ℝ)^j * (n - u).choose j * (((n - u - j).choose m : ℝ) / (n.choose m : ℝ)) ^ k\n\ntheorem group_drawing_poisson_limit\n  {f g : ℕ → ℕ} {λ : ℝ} (hλ : 0 < λ)\n  (hf : ∀ n, 1 ≤ f n ∧ f n < n)\n  (hλ_lim : Tendsto (fun n => (n : ℝ) * ((n - f n : ℝ) / n) ^ g n) atTop (𝓝 λ))\n  (hb_lim : Tendsto (fun n => n - f n) atTop atTop) (u : ℕ) :\n  Tendsto (fun n => prob_untouched_exact n (f n) (g n) u) atTop (𝓝 (Real.exp (-λ) * λ^u / (Nat.factorial u : ℝ))) :=\n  sorry",
@@ -41351,7 +41398,7 @@
         "Geometry",
         "Computation"
       ],
-      "id": "fd_2949",
+      "id": "fd_2950",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem local_to_global_KKL\n    {d : ℕ} (X : WeightedSimplicialComplex d) (α : ℝ) (hα : 0 < α)\n    (h_links_KKL : ∀ σ ∈ X.faces (d - 2),\n      ∀ g : X.link σ |.faces| 1 → ℝ,\n        ∃ v ∈ (X.link σ).faces 0,\n          (X.link σ).influence v g ≥ α * (X.link σ).variance g)\n    (f : X.faces d → ℝ) :\n    ∃ σ ∈ X.faces (d - 2),\n      X.influence σ f ≥ α * X.variance f := by\n  sorry",
@@ -41376,39 +41423,49 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "Djokovic-Winkler relation",
+        "partial cubes",
+        "isometric embeddings",
+        "Cayley graphs of abelian groups",
+        "GF(2) linear algebra"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — sign laws for third-order mock theta coefficients\n\nThese conjectures grow out of the exact analysis of the coefficient sequence `r(n)` of\nRamanujan's third-order mock theta function\n\n```\nρ(q) = ∑_{m ≥ 0} q^{2m(m+1)} / ∏_{j=0}^{m} (1 + q^{2j+1} + q^{4j+2}) = ∑_{n ≥ 0} r(n) qⁿ,\n```\n\nfor which the mod-3 sign law `r(3n) > 0`, `r(3n+1) ≤ 0`, `r(3n+2) ≤ 0` and the exact\nfinite zero set `{2, 4, 8, 11, 20}` have been established on the initial segment that\ncontains every zero.\n\n## Conjecture 1 — The sign law is unconditional\n\nFor *all* `n ≥ 0` one has `r(3n) > 0`, `r(3n+1) ≤ 0`, and `r(3n+2) ≤ 0`, and the only\nindices where `r(n) = 0` are `n ∈ {2, 4, 8, 11, 20}`.\n\nThe key insight is that each denominator block factors as `(1 - x^3)/(1 - x)` at\n`x = q^{2j+1}`, so the reciprocal of every factor distributes its mass onto the residues\n`0` and `1` modulo `3` with opposite signs; the even shifts `q^{2m(m+1)}` then align the\npositive contributions onto multiples of `3`, leaving the off-residue families with a\ndefinite (non-positive) sign once the finitely many small cancellations are exhausted.\n\nWhy now? The eventual positivity/negativity of mock theta coefficients is exactly the\nregime where Rademacher–Hardy–Ramanujan circle-method expansions for mock modular forms\nhave recently become effective, with explicit error bounds; coupling those asymptotics\nto the finite exact verification (which already pins down every zero) turns a numerical\npattern into a closed theorem.\n\n## Conjecture 2 — Growth rate and the magnitude law\n\nThe absolute values `|r(n)|` grow sub-exponentially with `n^{-1} log|r(n)| → 0`, and more\nprecisely `|r(n)|` is asymptotic to a constant times `n^{-1} exp(c √n)` for an explicit\n`c > 0`, with the `3n` family dominating each window of three consecutive indices.\n\nThe key insight is that the dominant singularity of `ρ` on the unit circle is governed\nby the `m = 0` term `1/(1 + q + q^2)`, a rational function with poles at primitive cube\nroots of unity, so the leading growth is dictated by the order of vanishing of the\ndenominator there, while the mock-modular completion contributes only lower-order\noscillation that cannot overturn the sign of the leading block.\n\nWhy now? Sharp Rademacher-type expansions for the third-order family are now available in\nforms precise enough to compare the three residue families term by term, making a\nprovable \"the multiple-of-three coefficient is the largest in its block\" statement within\nreach.\n\n## Conjecture 3 — Sporadic zeros are genuinely finite and arithmetic\n\nThe exceptional zero `r(11) = 0` is the *last* zero: for all `n > 20`, `r(n) ≠ 0`.\nEquivalently, the vanishing locus of `r` is finite, and its elements `{2,4,8,11,20}`\nare characterised by a congruence-plus-size obstruction rather than by a single modular\ncondition.\n\nThe key insight is that a coefficient can vanish only when the finitely many competing\nterms `q^{2m(m+1)}/∏(...)` that reach degree `n` cancel exactly; once `n` is large the\npositive `m = 0` background strictly dominates the alternating tail, so exact\ncancellation becomes impossible and zeros cannot recur.\n\nWhy now? Effective lower bounds on partial-theta and Lambert-type series — the building\nblocks of each `1/∏(...)` factor — have matured to the point where one can bound the tail\ncontributions uniformly and certify non-vanishing beyond an explicit threshold, closing\nthe gap above the last computed zero.\n\n## Conjecture 4 — A universal trichotomy across the third-order family\n\nEvery third-order mock theta function with an analogous `q^{quadratic}/∏(1 + q^{odd} +\nq^{even})` shape (the `ρ`-type members of the classical list `f, φ, ψ, χ, ω, ν, ρ`)\nexhibits its own eventual mod-`d` sign law, with `d` determined by the cyclotomic order\nof the repeated denominator block, and with only finitely many sign-violating or\nvanishing coefficients.\n\nThe key insight is that the sign structure is not special to `ρ` but is forced by the\ncyclotomic factorisation of the repeated denominator: a block `1 + x + ... + x^{d-1}`\nequals `(1 - x^d)/(1 - x)`, so its reciprocal is supported on `d - 1` residue classes\nwith a fixed sign pattern, and the quadratic shift selects which class carries the\ndominant positive mass.\n\nWhy now? With the full third-order family now organised by their denominator cyclotomy,\na single template proof — cyclotomic factorisation plus circle-method dominance — promises\nto settle the sign behaviour of the entire family at once rather than one function at a\ntime.\n",
-      "domain_bridges": [],
+      "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling ℓ: V(G) → (Z/2Z)^(t − rank(A)) satisfies d_G(u,v) ≥ d_H(ℓ(u), ℓ(v)) for all u,v ∈ V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t − rank(A)). That is, the labeling never stretches distances—it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
+      "domain_bridges": [
+        "graph_metrics",
+        "group_theory",
+        "linear_algebra_over_ZMod_2",
+        "cayley_graphs"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Pythagorean",
-        "Logic"
+        "Algebra"
       ],
-      "id": "fd_2950",
+      "id": "fd_2951",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem no_stretching_quotient_labeling {n t : ℕ} (G : SimpleGraph V) [Connected G] (P : EdgePartition G t) (A : Matrix (Fin (cycle_classes P).length) (Fin t) (ZMod 2)) (hA : A = cycle_class_parity_matrix P) (ℓ : V → (ZMod 2)^(t - A.rank)) (H : CayleyGraph (ZMod 2)^(t - A.rank) (standard_generators _)) (hℓ : ℓ = quotient_labeling P A) : ∀ u v : V, SimpleGraph.dist G u v ≥ SimpleGraph.dist H (ℓ u) (ℓ v) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Show that each edge of G maps to an edge of H under the quotient labeling (by construction of the labeling from the edge partition), so every path in G maps to a path of equal or shorter length in H. The key step is proving that the GF(2) quotient construction preserves adjacency: if uv ∈ E(G) and uv lies in partition class i, then ℓ(u) and ℓ(v) differ in exactly the coordinate corresponding to the image of class i in the quotient. The non-stretching then follows by taking d_G(u,v) as the infimum over all path lengths, which bound the Hamming distance of the labels from below.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "30133a3d",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/30133a3d_retry3",
+      "source_exp_id": "2606.29391v1",
+      "source_path": "http://arxiv.org/abs/2606.29391v1",
       "status": "available",
-      "thread_id": "th_120040b8",
-      "timestamp": "2026-06-30T07:56:30.690282+00:00",
-      "title": "These conjectures grow out of the exact analysis of the coefficient sequence `r("
+      "thread_id": "",
+      "timestamp": "2026-06-30T07:59:17.309660+00:00",
+      "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
     },
     {
       "ambition_level": "extension",
@@ -144538,13 +144595,13 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 304,
+    "Algebra": 303,
     "Applications": 117,
     "Bridges": 58,
     "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
-    "Geometry": 169,
+    "Geometry": 168,
     "Logic": 116,
     "MachineLearning": 37,
     "Novelty": 200,
@@ -144582,7 +144639,7 @@
     "directions": 531,
     "distinct": 72,
     "distribution": 48,
-    "enabling": 40,
+    "enabling": 39,
     "ensemble": 10,
     "exhibit": 55,
     "exists": 132,
