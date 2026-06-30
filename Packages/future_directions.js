@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "3131feed",
+    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -13,12 +13,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432569+00:00",
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "d5c197ae",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -733,7 +733,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Happy End Problem"
   },
   {
-    "consumed_by_exp_id": "d7ba0e3f",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
     "domains": [
       "Algebra"
@@ -742,7 +742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:01.338705+00:00",
     "title": "Euler-Mascheroni Constant Irrationality"
   },
@@ -790,7 +790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "b897e106",
+    "consumed_by_exp_id": "",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domains": [
       "NumberTheory",
@@ -800,7 +800,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -1884,7 +1884,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Enumeration of 2-balanced p-regular partitions of fixed p-weight"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d72d14d",
     "description": "For the scalar factor \u03a9_{t,s}(u) of the general mixed product \ud835\udcb4(z;t)\ud835\udcb4(z;s) of modified Greaves-Jing-Zhu operators with two independent deformation parameters t and s, which equals a quotient of infinite Pochhammer products, the coefficient of u^n satisfies \u03c9_n(t,s) = (-1)^n \u00b7 F_n(t,s) where F_n(t,s) is a formal power series in t and s with nonnegative integer coefficients. This extends the paper's established result that for s = t^M, the coefficients of (u;t)_M/(-u;t)_M are (after removing signs) nonnegative palindromic polynomials, to the case of arbitrary independent parameters.",
     "domains": [
       "Bridges"
@@ -1893,7 +1893,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:23:54.603938+00:00",
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
@@ -2571,7 +2571,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Andr\u00e9's Theorem with Linear Height Dependence for Curves with Unequal Coordinate Degrees"
   },
   {
-    "consumed_by_exp_id": "dd49223d",
+    "consumed_by_exp_id": "",
     "description": "For a finite extension K/Q_p, a monic polynomial f \u2208 O_K[X] of degree \u2265 2 satisfying f'(X) \u2208 m_K\u00b7O_K[X] (equivalently f\u0304 \u2208 k[X^p]), and a compatible inverse branch (t_n) with t_0 \u2208 O_K and f(t_{n+1}) = t_n, define K_n = K(t_n), E_n = K_n \u2229 K^{ur}, and e_n = [K_n : E_n]. If e_n > 1 for some n, then e_n \u2192 \u221e as n \u2192 \u221e. This is the key intermediate result in the proof of the paper's main theorem (Theorem 1.2), establishing that iterated polynomial towers under the purely inseparable reduction condition exhibit a ramification dichotomy: either the tower is entirely unramified over the maximal unramified subextension, or the ramification indices grow without bound.",
     "domains": [
       "Logic"
@@ -2580,7 +2580,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29310v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T09:44:57.818915+00:00",
     "title": "Unbounded Ramification Indices in Iterated p-Adic Polynomial Towers"
   },
@@ -2798,7 +2798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "All minimum $C_4$-saturated multipartite graphs"
   },
   {
-    "consumed_by_exp_id": "07b22854",
+    "consumed_by_exp_id": "",
     "description": "Let k=3 and j>=2 be an even integer, and let f be a primitive elliptic cusp form of weight j+4 for SL_2(Z). For any prime ideal p of the Hecke field Q(f) dividing the algebraic critical value L^alg(j+3, f), there exists a Siegel cusp eigenform F of weight det^3 Sym^j for Sp_2 and a prime ideal P above p such that the spinor L-polynomial congruence L_ell(X, F, Spin) = L_ell(X, f)(1 - ell X)(1 - ell^{j+2} X) mod P holds for all primes ell.",
     "domains": [
       "Algebra",
@@ -2808,7 +2808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T04:09:54.071727+00:00",
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
@@ -3336,12 +3336,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves Harder's conjecture on spinor L-polynomial congruences between elliptic cusp forms and Siegel cusp forms of degree two for all k \u2265 4 and even j \u2265 2, by way of Hermitian automorphic forms on U_{2,2}. The case k = 3 is excluded because the Hermitian weight becomes scalar-valued (det^{j/2+2} \u22a0 det^{j/2+2}) and Arthur parameters may involve a non-trivial SL_2-factor, requiring separate treatment. The conjecture is that Harder's L-polynomial congruence still holds for k = 3: given a primitive elliptic cusp form f \u2208 S_{2k+j-2}(SL_2(Z)) with k=3 and even j \u2265 2, and a prime ideal \ud835\udd2d of Q(f) dividing the algebraic critical value L^alg(k+j, f), there exists a Siegel cusp eigenform F \u2208 S_{det^k Sym^j}(Sp_2) and a prime ideal \ud835\udd13 above \ud835\udd2d such that L_\u2113(X, F, Spin) \u2261 L_\u2113(X, f)(1 \u2212 \u2113^{k-2}X)(1 \u2212 \u2113^{k+j-1}X) mod \ud835\udd13 for every prime \u2113.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2989",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30063v1",
+    "status": "available",
+    "timestamp": "2026-06-30T16:55:24.117892+00:00",
+    "title": "Harder's congruence for the scalar-valued boundary case k=3"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3356,7 +3371,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3370,7 +3385,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3385,7 +3400,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3400,7 +3415,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3415,7 +3430,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3430,7 +3445,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3444,7 +3459,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3458,7 +3473,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3472,7 +3487,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3486,7 +3501,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3501,7 +3516,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3515,7 +3530,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3529,7 +3544,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3543,13 +3558,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
     "status": "available",
     "timestamp": "2026-06-30T16:33:23.044415+00:00",
     "title": "Strengthened Sabidussi: Regular Graphs with Prescribed Automorphism Groups Admit Aut-Invariant Proper Edge-Colourings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any natural number d, every discrete d-pseudomanifold has at least 2(d+1) vertices. This captures the fundamental extremal lower bound proven in the paper, establishing the octahedral d-sphere as the minimal such structure.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3005",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29753v1",
+    "status": "available",
+    "timestamp": "2026-06-30T16:55:54.627184+00:00",
+    "title": "Minimal Vertex Bound for Discrete Pseudomanifolds"
   },
   {
     "consumed_by_exp_id": "",
@@ -4019,7 +4049,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "6a76cdb0",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4029,7 +4059,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -4079,7 +4109,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
   {
-    "consumed_by_exp_id": "733eb681",
+    "consumed_by_exp_id": "",
     "description": "Formalize the p-adic Langlands correspondence for GL\u2082(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
     "domains": [
       "Bridges",
@@ -4089,7 +4119,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.128786+00:00",
     "title": "p-adic Langlands for GL\u2082(Q_p)"
   },
