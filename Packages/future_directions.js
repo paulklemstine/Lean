@@ -2705,11 +2705,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any graph G with maximum degree d, there exists a signing \u03c3 of its edges such that the spectral radius of the signed adjacency matrix A_\u03c3 is at most 2\u221a(3(d-1)).",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_2940",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28797v1",
+    "status": "available",
+    "timestamp": "2026-06-30T11:32:36.681739+00:00",
+    "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2723,7 +2737,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2737,7 +2751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2751,7 +2765,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2765,7 +2779,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2780,7 +2794,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2795,7 +2809,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2809,7 +2823,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2823,7 +2837,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2948",
+    "id": "fd_2949",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2837,7 +2851,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2949",
+    "id": "fd_2950",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2852,7 +2866,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2950",
+    "id": "fd_2951",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2867,7 +2881,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2951",
+    "id": "fd_2952",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2881,7 +2895,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2952",
+    "id": "fd_2953",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2895,7 +2909,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2953",
+    "id": "fd_2954",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
@@ -2909,7 +2923,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2954",
+    "id": "fd_2955",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
@@ -2918,30 +2932,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "For any nontrivial connected graph G, the independence number \u03b1(G) is bounded below by (a(G) + R(G))/\u0394(G), where a(G) is the annihilation number, R(G) is the residue, and \u0394(G) is the maximum degree. This conjecture, originally posed by TxGraffiti, has been proven for all connected graphs with maximum degree \u2265 2, except for the single edge (K\u2082), where it fails. The bound is sharp, as equality is achieved for complete graphs like K\u2084.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2955",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29553v1",
-    "status": "available",
-    "timestamp": "2026-06-30T05:48:51.779938+00:00",
-    "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
-  },
-  {
     "consumed_by_exp_id": "65d4cbfc",
-    "description": "For each integer n \u2265 1, the theta-mode component \u03c6_n(t) of the even Riemann phase kernel equals the action of the differential operator (\u2202_t\u00b2 \u2212 1/4) on the explicit function e^{t/2} \u00b7 e^{\u2212\u03c0n\u00b2e^{2t}}. This is the key analytic identity underpinning the finite-core Volterra program: it provides an exact same-sign formula decomposing the phase kernel modes into a boundary term and a Volterra tail, and is the foundation for the quotient Schur certificate. Formalization requires the definition of \u03c6_n via the even Riemann kernel \u03a6, the computation of the second derivative of the explicit exponential, and the verification of the equality as an identity of smooth functions on \u211d.",
+    "description": "For any nontrivial connected graph G, the independence number \u03b1(G) is bounded below by (a(G) + R(G))/\u0394(G), where a(G) is the annihilation number, R(G) is the residue, and \u0394(G) is the maximum degree. This conjecture, originally posed by TxGraffiti, has been proven for all connected graphs with maximum degree \u2265 2, except for the single edge (K\u2082), where it fails. The bound is sharp, as equality is achieved for complete graphs like K\u2084.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2956",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.29555v1",
+    "source_exp_id": "2606.29553v1",
     "status": "in_progress",
+    "timestamp": "2026-06-30T05:48:51.779938+00:00",
+    "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For each integer n \u2265 1, the theta-mode component \u03c6_n(t) of the even Riemann phase kernel equals the action of the differential operator (\u2202_t\u00b2 \u2212 1/4) on the explicit function e^{t/2} \u00b7 e^{\u2212\u03c0n\u00b2e^{2t}}. This is the key analytic identity underpinning the finite-core Volterra program: it provides an exact same-sign formula decomposing the phase kernel modes into a boundary term and a Volterra tail, and is the foundation for the quotient Schur certificate. Formalization requires the definition of \u03c6_n via the even Riemann kernel \u03a6, the computation of the second derivative of the explicit exponential, and the verification of the equality as an identity of smooth functions on \u211d.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2957",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29555v1",
+    "status": "available",
     "timestamp": "2026-06-30T06:10:07.946305+00:00",
     "title": "Second-order theta-mode identity for the Riemann phase kernel"
   },
@@ -2951,7 +2965,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2957",
+    "id": "fd_2958",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -2965,7 +2979,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2958",
+    "id": "fd_2959",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
@@ -2980,7 +2994,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2959",
+    "id": "fd_2960",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29530v1",
@@ -2995,7 +3009,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Computation"
     ],
-    "id": "fd_2960",
+    "id": "fd_2961",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
@@ -3009,7 +3023,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2961",
+    "id": "fd_2962",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
@@ -3024,7 +3038,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2962",
+    "id": "fd_2963",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
@@ -3038,7 +3052,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2963",
+    "id": "fd_2964",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29507v1",
@@ -3053,7 +3067,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2964",
+    "id": "fd_2965",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29446v1",
@@ -3068,7 +3082,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2965",
+    "id": "fd_2966",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
@@ -3083,7 +3097,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2966",
+    "id": "fd_2967",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
@@ -3097,7 +3111,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2967",
+    "id": "fd_2968",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29321v1",
@@ -3112,7 +3126,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2968",
+    "id": "fd_2969",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29297v1",
@@ -3126,7 +3140,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2969",
+    "id": "fd_2970",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29336v1",
@@ -3141,7 +3155,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2970",
+    "id": "fd_2971",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29057v1",
@@ -3155,13 +3169,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2971",
+    "id": "fd_2972",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29022v1",
     "status": "available",
     "timestamp": "2026-06-30T11:12:42.547859+00:00",
     "title": "Complete Characterization of Optimal Equidistant Binary Codes via Symmetric Designs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let p be an odd prime, K/Q_p an unramified quadratic extension, and \u03c1\u0304: Gal(K\u0304/K) \u2192 GL\u2082(F) an irreducible mod p Galois representation (F a finite extension of F_p). Using perfectoid geometry on the Drinfeld tower, one associates to \u03c1\u0304 an infinite-dimensional smooth mod p representation \u03a0(\u03c1\u0304) of the Borel subgroup B_K = {(a b; 0 1) : a \u2208 K^\u00d7, b \u2208 K} \u2282 GL\u2082(K). The conjecture states that \u03a0(\u03c1\u0304) is irreducible as a smooth representation of B_K. This is a necessary condition for \u03a0(\u03c1\u0304) to equal the restriction of the (conjectural) supersingular representation \u03c0 of GL\u2082(K) corresponding to \u03c1\u0304, which is the central hope expressed in the paper for resolving the locality question.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2973",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28818v1",
+    "status": "available",
+    "timestamp": "2026-06-30T11:33:02.160306+00:00",
+    "title": "Irreducibility of the perfectoid Borel representation for quadratic unramified extensions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3961,7 +3990,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },
   {
-    "consumed_by_exp_id": "efa9038a",
+    "consumed_by_exp_id": "",
     "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
     "domains": [
       "Bridges",
@@ -3971,7 +4000,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.050227+00:00",
     "title": "Homotopy Type Theory as Foundations"
   },

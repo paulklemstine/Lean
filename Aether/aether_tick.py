@@ -1394,6 +1394,76 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     _print_tick_report(extractor, completed_jobs, remaining, queued_remaining)
 
 
+def resolve_json_conflict(file_path: Path) -> bool:
+    import json
+    from datetime import datetime
+    try:
+        content = file_path.read_text(encoding="utf-8", errors="replace")
+        if "<<<<<<<" not in content:
+            return True
+        
+        ours_lines = []
+        theirs_lines = []
+        in_conflict = False
+        in_theirs = False
+        
+        for line in content.splitlines():
+            if line.startswith("<<<<<<<"):
+                in_conflict = True
+                in_theirs = False
+            elif line.startswith("======="):
+                in_theirs = True
+            elif line.startswith(">>>>>>>"):
+                in_conflict = False
+                in_theirs = False
+            else:
+                if in_conflict:
+                    if in_theirs:
+                        theirs_lines.append(line)
+                    else:
+                        ours_lines.append(line)
+                else:
+                    ours_lines.append(line)
+                    theirs_lines.append(line)
+        
+        ours_json = json.loads("\n".join(ours_lines))
+        theirs_json = json.loads("\n".join(theirs_lines))
+        
+        merged_directions = {}
+        for item in ours_json.get("directions", []) + theirs_json.get("directions", []):
+            key = item.get("id") or item.get("timestamp") or str(item)
+            merged_directions[key] = item
+            
+        def get_timestamp(item):
+            t = item.get("timestamp")
+            if isinstance(t, (int, float)):
+                return t
+            if isinstance(t, str):
+                try:
+                    return datetime.fromisoformat(t.replace("Z", "+00:00")).timestamp()
+                except Exception:
+                    pass
+            return 0
+            
+        sorted_directions = sorted(merged_directions.values(), key=get_timestamp)
+        
+        merged_syntheses = {}
+        merged_syntheses.update(ours_json.get("cycle_syntheses", {}))
+        merged_syntheses.update(theirs_json.get("cycle_syntheses", {}))
+        
+        final_json = {
+            "cycle_syntheses": merged_syntheses,
+            "directions": sorted_directions
+        }
+        
+        file_path.write_text(json.dumps(final_json, indent=2) + "\n", encoding="utf-8")
+        print(f"[GitResolve] Resolved JSON conflict for {file_path.name}")
+        return True
+    except Exception as e:
+        print(f"[GitResolve] Failed to resolve JSON conflict for {file_path}: {e}")
+        return False
+
+
 def resolve_jsonl_conflict(file_path: Path) -> bool:
     import json
     import re
@@ -1519,7 +1589,9 @@ def resolve_all_conflicts() -> bool:
                 continue
                 
             success = False
-            if file_path.suffix == ".jsonl" or file_path.name == "future_directions.json":
+            if file_path.name == "future_directions.json":
+                success = resolve_json_conflict(file_path)
+            elif file_path.suffix == ".jsonl":
                 success = resolve_jsonl_conflict(file_path)
             elif file_path.suffix == ".lean" and file_path.name != "Main.lean":
                 success = resolve_lean_conflict(file_path)
