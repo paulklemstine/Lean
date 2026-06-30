@@ -631,7 +631,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
-    "consumed_by_exp_id": "dc685fbb",
+    "consumed_by_exp_id": "",
     "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
     "domains": [
       "Algebra"
@@ -640,7 +640,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:58.445057+00:00",
     "title": "Sums of Three Cubes"
   },
@@ -2512,7 +2512,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Specification Number Increments by One Under Symmetric Variable Extension"
   },
   {
-    "consumed_by_exp_id": "cc2eec01",
+    "consumed_by_exp_id": "",
     "description": "An irreducible polynomial P(x) \u2208 \u2124[x] of even degree 2d \u2265 4 equals the full reciprocal-radius polynomial P_\u0393 of some finite connected K_{2d+1}-free graph \u0393 if and only if P is a Salem polynomial and the coefficient a\u2081 of x^{2d-1} in P satisfies a\u2081 \u2264 -5. The necessity direction (the first-coefficient obstruction) is established in the paper; the sufficiency direction \u2014 that every Salem polynomial meeting this coefficient bound is realizable as some P_\u0393 \u2014 remains open and would yield a complete algebraic-combinatorial characterization of strongly primitive Salem growth rates.",
     "domains": [
       "Algebra"
@@ -2521,7 +2521,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T08:32:47.774863+00:00",
     "title": "Salem Clique Polynomial Characterization"
   },
@@ -2756,7 +2756,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of the Large-N Master Field for Heat-Kernel Yang-Mills on Z^d at All Couplings"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "77398284",
     "description": "The mis\u00e8re quotient for a two-step escalation game (m=2) is isomorphic to the order-six monoid \u27e8a,b | a\u00b2=1, b\u00b3=b\u27e9 with loss set {a, b\u00b2}.",
     "domains": [
       "Bridges"
@@ -2765,7 +2765,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T02:13:20.548500+00:00",
     "title": "Structure of the Mis\u00e8re Quotient for Two-Step Escalation"
   },
@@ -2912,7 +2912,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniform Distribution Uniquely Maximizes Expected Empty Spaces in Sibling Coupon Collection"
   },
   {
-    "consumed_by_exp_id": "4a47c2e7",
+    "consumed_by_exp_id": "",
     "description": "The probability that exactly u labels are untouched after k_n independent uniform m_n-subset drawings from n labels converges to the Poisson probability e^{-\u03bb} \u03bb^u / u! whenever the expected number of untouched labels \u03bb_n = n ((n-m_n)/n)^{k_n} \u2192 \u03bb \u2208 (0, \u221e) and the complement size b_n = n - m_n \u2192 \u221e.",
     "domains": [
       "Algebra",
@@ -2922,7 +2922,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29530v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T07:19:31.725431+00:00",
     "title": "Poisson Limit for Group-Drawing Coupon Collector"
   },
@@ -3174,7 +3174,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial-Free Sunflower Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49607a45",
     "description": "There exists an absolute constant c > 0 such that for every d-regular n-vertex graph G (with 1 \u2264 d \u2264 n\u22121), there is a spanning subgraph H of G in which for each degree i \u2208 {0, 1, \u2026, d}, the number of vertices of degree exactly i in H is at least c\u00b7n/(d+1). This extends the paper's result\u2014which requires d = o(n) and achieves (1\u2212\u03b5)\u00b7n/(d+1)\u2014by asking whether a weaker constant-fraction guarantee holds uniformly for all d, removing the d = o(n) restriction entirely.",
     "domains": [
       "Computation"
@@ -3183,7 +3183,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:00:09.568943+00:00",
     "title": "Universal constant-fraction nearly-uniform degree distribution in spanning subgraphs"
   },
@@ -3526,12 +3526,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer $k \\ge 3$, if a multiplicative function $f: \\mathbb{N} \\to \\mathbb{C}$ satisfies $f(\\sum_{i=1}^{2k} x_i^2) = \\sum_{j=1}^k f(x_{2j-1}^2 + x_{2j}^2)$ for all positive integers $x_1, \\dots, x_{2k}$, and $f(2) \\neq 0$, then $f$ must be the identity function $f(n) = n$ for all $n \\in \\mathbb{N}$. This extends the paper's result for $k=3,4$ by conjecturing that the exceptional zero-tail case for $k \\ge 5$ is impossible when $f(2) \\neq 0$.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_3002",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29507v1",
+    "status": "available",
+    "timestamp": "2026-06-30T21:17:33.790336+00:00",
+    "title": "Universal Identity Characterization for Multiplicative Functions Additive on $2k$ Nonzero Squares"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3546,7 +3561,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3560,7 +3575,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3575,7 +3590,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3590,7 +3605,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3605,7 +3620,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3620,7 +3635,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3634,7 +3649,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3648,7 +3663,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3662,7 +3677,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3676,7 +3691,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3691,7 +3706,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3705,7 +3720,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3719,7 +3734,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3733,7 +3748,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3748,7 +3763,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3763,7 +3778,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3777,7 +3792,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3792,7 +3807,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3806,7 +3821,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3821,7 +3836,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3022",
+    "id": "fd_3023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -3835,7 +3850,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3023",
+    "id": "fd_3024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3849,7 +3864,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3024",
+    "id": "fd_3025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -3864,7 +3879,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3025",
+    "id": "fd_3026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3879,7 +3894,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3026",
+    "id": "fd_3027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -3894,7 +3909,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -3908,7 +3923,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3028",
+    "id": "fd_3029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -3922,13 +3937,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3029",
+    "id": "fd_3030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
     "status": "available",
     "timestamp": "2026-06-30T20:58:35.716548+00:00",
     "title": "Complete First-Coefficient Spectrum for Strongly Primitive Salem Growth Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The maximum number of unit-distance pairs among n points in the rational plane Q\u00b2 is \u0398(n^{4/3}). The upper bound O(n^{4/3}) follows from the Szemer\u00e9di-Trotter incidence theorem applied to unit circles in Q\u00b2 (as a subset of R\u00b2). The lower bound \u03a9(n^{4/3}) is conjectural and supported by the algorithmic constructions in this paper, which exploit the algebraic structure of Pythagorean-type parametric families in Q\u00b2 to surpass previous grid-based lower bounds. Resolving this would settle the rational analogue of the Erd\u0151s unit distance problem with matching upper and lower asymptotic exponents.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_3031",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29415v1",
+    "status": "available",
+    "timestamp": "2026-06-30T21:18:10.152547+00:00",
+    "title": "Unit Distance Density in Q\u00b2 is \u0398(n^{4/3})"
   },
   {
     "consumed_by_exp_id": "",
@@ -4608,7 +4638,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "430e86c9",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -4618,7 +4648,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
