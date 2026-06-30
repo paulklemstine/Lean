@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "d5c197ae",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -27,12 +27,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "40cf3069",
     "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
     "domains": [
       "Algebra"
@@ -41,7 +41,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:56.613461+00:00",
     "title": "Twin Prime Conjecture"
   },
@@ -1913,7 +1913,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0ca51c42",
     "description": "For every integer n \u2265 2 and every prime \u2113, the proportion of entries in the character table of GL_n(F_q) not divisible by \u2113 (in the ring of algebraic integers) converges to 1/2 as q \u2192 \u221e over prime powers coprime to \u2113. Formally: lim_{q\u2192\u221e} N_\u2113^{(n)}(q) / k_n(q)^2 = 1/2, where N_\u2113^{(n)}(q) = |{(\u03c7, C) \u2208 Irr(GL_n(F_q)) \u00d7 Cl(GL_n(F_q)) : \u2113 \u2224 \u03c7(C)}| counts character table entries not divisible by \u2113, and k_n(q) is the number of conjugacy classes of GL_n(F_q). This generalizes the paper's Theorem 1.1, which establishes the n = 2 case with the asymptotic N_\u2113(q) = q^4/2 + O_\u03b5(q^{3+\u03b5}).",
     "domains": [
       "Algebra",
@@ -1923,7 +1923,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28085v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:02:03.579210+00:00",
     "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
   },
@@ -2571,7 +2571,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Andr\u00e9's Theorem with Linear Height Dependence for Curves with Unequal Coordinate Degrees"
   },
   {
-    "consumed_by_exp_id": "dd49223d",
+    "consumed_by_exp_id": "",
     "description": "For a finite extension K/Q_p, a monic polynomial f \u2208 O_K[X] of degree \u2265 2 satisfying f'(X) \u2208 m_K\u00b7O_K[X] (equivalently f\u0304 \u2208 k[X^p]), and a compatible inverse branch (t_n) with t_0 \u2208 O_K and f(t_{n+1}) = t_n, define K_n = K(t_n), E_n = K_n \u2229 K^{ur}, and e_n = [K_n : E_n]. If e_n > 1 for some n, then e_n \u2192 \u221e as n \u2192 \u221e. This is the key intermediate result in the proof of the paper's main theorem (Theorem 1.2), establishing that iterated polynomial towers under the purely inseparable reduction condition exhibit a ramification dichotomy: either the tower is entirely unramified over the maximal unramified subextension, or the ramification indices grow without bound.",
     "domains": [
       "Logic"
@@ -2580,7 +2580,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29310v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T09:44:57.818915+00:00",
     "title": "Unbounded Ramification Indices in Iterated p-Adic Polynomial Towers"
   },
@@ -3366,12 +3366,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any graph F with m > 0 edges and n non-isolated vertices, there exists a \u03c1-locally dense graphon W such that t(F, W^{\u2218p}) < \u03c1^{pm} whenever p < binom(n,2)/m. This would establish that the exponent bound in the L^p-form of the KNRS conjecture is essentially tight.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2991",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30010v1",
+    "status": "available",
+    "timestamp": "2026-06-30T17:36:49.914123+00:00",
+    "title": "Sharpness of the L^p Threshold for KNRS Relaxation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3386,7 +3400,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3400,7 +3414,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3415,7 +3429,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3430,7 +3444,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3445,7 +3459,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3460,7 +3474,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3474,7 +3488,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3488,7 +3502,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3502,7 +3516,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3516,7 +3530,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3531,7 +3545,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3545,7 +3559,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3559,7 +3573,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3573,7 +3587,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3588,7 +3602,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3603,13 +3617,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
     "status": "available",
     "timestamp": "2026-06-30T17:14:12.597747+00:00",
     "title": "Finite Field Falconer Conjecture at the Critical Exponent for Even Dimensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The sequence of log-convexity gaps $G_n = B_{n+1}B_{n-1} - (B_n)^2$ for Bell numbers is itself log-convex, meaning $G_{n+1}G_{n-1} \\ge (G_n)^2$ for all $n \\ge 2$.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3009",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29884v1",
+    "status": "available",
+    "timestamp": "2026-06-30T17:37:27.634066+00:00",
+    "title": "Log-Convexity of the Bell Number Gap Sequence"
   },
   {
     "consumed_by_exp_id": "",
@@ -3871,7 +3899,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da4fd36d",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -3880,7 +3908,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
@@ -4079,7 +4107,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "6a76cdb0",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4089,7 +4117,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -4139,7 +4167,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
   {
-    "consumed_by_exp_id": "733eb681",
+    "consumed_by_exp_id": "",
     "description": "Formalize the p-adic Langlands correspondence for GL\u2082(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
     "domains": [
       "Bridges",
@@ -4149,7 +4177,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.128786+00:00",
     "title": "p-adic Langlands for GL\u2082(Q_p)"
   },

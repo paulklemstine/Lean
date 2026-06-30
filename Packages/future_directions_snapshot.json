@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d5c197ae",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -34,14 +34,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "40cf3069",
     "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
     "domain_bridges": [],
     "domains": [
@@ -53,7 +53,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:56.613461+00:00",
     "title": "Twin Prime Conjecture"
   },
@@ -3103,7 +3103,7 @@
       "math.NT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0ca51c42",
     "description": "For every integer n ≥ 2 and every prime ℓ, the proportion of entries in the character table of GL_n(F_q) not divisible by ℓ (in the ring of algebraic integers) converges to 1/2 as q → ∞ over prime powers coprime to ℓ. Formally: lim_{q→∞} N_ℓ^{(n)}(q) / k_n(q)^2 = 1/2, where N_ℓ^{(n)}(q) = |{(χ, C) ∈ Irr(GL_n(F_q)) × Cl(GL_n(F_q)) : ℓ ∤ χ(C)}| counts character table entries not divisible by ℓ, and k_n(q) is the number of conjugacy classes of GL_n(F_q). This generalizes the paper's Theorem 1.1, which establishes the n = 2 case with the asymptotic N_ℓ(q) = q^4/2 + O_ε(q^{3+ε}).",
     "domain_bridges": [
       "finite groups of Lie type",
@@ -3121,7 +3121,7 @@
     "proof_strategy": "Generalize the GL_2 argument to GL_n using Green's character formula and Deligne-Lusztig theory. The key steps mirror the n=2 proof: (1) Show that approximately half the character table entries are zero by analyzing the vanishing behavior of Deligne-Lusztig characters—specifically, that the regular semisimple and unipotent contributions produce a systematic pattern of zeros affecting roughly half the table. (2) Show that nonzero character values are typically not divisible by ℓ, using that they are sums of roots of unity whose orders are coprime to ℓ (since character values of GL_n(F_q) lie in cyclotomic fields with conductors dividing (q-1)^n or similar). (3) Combine to show N_ℓ^{(n)}(q) / k_n(q)^2 → 1/2. The main difficulty for n ≥ 3 is handling the richer representation theory: cuspidal representations of GL_n, the combinatorics of parabolic induction, and the interaction between unipotent and semisimple characters.",
     "research_mode": "team",
     "source_exp_id": "2606.28085v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:02:03.579210+00:00",
     "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
   },
@@ -4347,7 +4347,7 @@
       "37P30",
       "11S20"
     ],
-    "consumed_by_exp_id": "dd49223d",
+    "consumed_by_exp_id": "",
     "description": "For a finite extension K/Q_p, a monic polynomial f ∈ O_K[X] of degree ≥ 2 satisfying f'(X) ∈ m_K·O_K[X] (equivalently f̄ ∈ k[X^p]), and a compatible inverse branch (t_n) with t_0 ∈ O_K and f(t_{n+1}) = t_n, define K_n = K(t_n), E_n = K_n ∩ K^{ur}, and e_n = [K_n : E_n]. If e_n > 1 for some n, then e_n → ∞ as n → ∞. This is the key intermediate result in the proof of the paper's main theorem (Theorem 1.2), establishing that iterated polynomial towers under the purely inseparable reduction condition exhibit a ramification dichotomy: either the tower is entirely unramified over the maximal unramified subextension, or the ramification indices grow without bound.",
     "domain_bridges": [
       "Valuation theory → Local field extensions",
@@ -4363,7 +4363,7 @@
     "proof_strategy": "Construct the tower K_n inductively. The condition f̄ ∈ k[X^p] ensures the reduction of f factors through Frobenius. When ramification first appears at level n₀ (i.e., e_{n₀} > 1), apply a uniform valuation estimate: since f'(X) ∈ m_K·O_K[X], the Taylor expansion gives v_K(f(t_{n+1}) - f(s)) ≥ v_K(t_{n+1} - s) + 1 for suitable s, forcing successive roots to have strictly growing valuation discrepancies. This recursive lower bound on v_K(t_{n+1} - t_n) propagates through the tower, showing that each ramified step compounds the ramification index over the maximal unramified subfield. The reduction step (subtracting unramified residue lifts) ensures we may assume positive-valuation conditions at the ramified tail, after which the uniform estimate forces e_n to be unbounded.",
     "research_mode": "team",
     "source_exp_id": "2606.29310v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T09:44:57.818915+00:00",
     "title": "Unbounded Ramification Indices in Iterated p-Adic Polynomial Towers"
   },
@@ -5867,6 +5867,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Sidorenko's conjecture",
+      "L^p Sidorenko theory",
+      "graph limits and graphons"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any graph F with m > 0 edges and n non-isolated vertices, there exists a ρ-locally dense graphon W such that t(F, W^{∘p}) < ρ^{pm} whenever p < binom(n,2)/m. This would establish that the exponent bound in the L^p-form of the KNRS conjecture is essentially tight.",
+    "domain_bridges": [
+      "functional analysis (L^p norms)",
+      "measure theory (graphons)",
+      "probabilistic combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2991",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct extremal graphons violating the inequality using step-function approximations and analyze the limiting behavior as p approaches the threshold from below. Employ variational methods and duality arguments in L^p spaces.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30010v1",
+    "status": "available",
+    "timestamp": "2026-06-30T17:36:49.914123+00:00",
+    "title": "Sharpness of the L^p Threshold for KNRS Relaxation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "math.GR"
     ],
@@ -5881,7 +5908,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5909,7 +5936,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5938,7 +5965,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5969,7 +5996,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5999,7 +6026,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -6027,7 +6054,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -6057,7 +6084,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -6082,7 +6109,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -6101,7 +6128,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Convergence bounds via recursive bounds",
@@ -6128,7 +6155,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k, characterizing the extremal counterexamples for n < (k choose 2) + 3 using structural hypergraph theory, and applying the absorbing method to embed the Berge tight cycles for n ≥ (k choose 2) + 3.",
@@ -6155,7 +6182,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof uses the Chinese Remainder Theorem to split the congruence modulo $q^t p$ into independent conditions modulo $p$ and modulo $q^t$. The condition modulo $p$ is derived using Lucas' theorem and Fermat's Little theorem. The condition modulo $q^t$ is established by computing the $q$-adic valuation of the binomial coefficient using Legendre's formula, which reduces the problem to bounding the base-$q$ digit sum.",
@@ -6184,7 +6211,7 @@
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Reformulate the visibility condition gcd(v − x) = 1 as a local condition: for all primes p, v ≢ x (mod p) in (ℤ/pℤ)ᵏ. 2. Apply the Chinese Remainder Theorem to decompose the joint condition v ∈ V_S ∩ (V_S − z) into independent conditions at each prime p: v (mod p) ∉ S_p ∪ (S−z)_p. 3. Compute each local factor as a finite counting problem in (ℤ/pℤ)ᵏ, yielding factor (1 − |S_p ∪ (S−z)_p|/pᵏ). 4. Prove convergence of the infinite Euler product using the bound |S_p ∪ (S−z)_p| ≤ 2|S| for all but finitely many p, combined with k ≥ 2 ensuring ∑_p 2|S|/pᵏ converges. 5. Rigorously justify the CRT-based density decomposition via inclusion-exclusion over primes and the uniform convergence of the partial products.",
@@ -6211,7 +6238,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the game inductively as a tree of states, each tracking remaining unchosen players and current team compositions (membership lists). Define strategies as functions from game states to moves (which player to pick or which team to assign to). Prove the parity advantage by constructing explicit strategies: for even n, Alice uses a symmetric pairing strategy where she maintains a potential function based on deviations from the mean; for odd n, Bob uses a mirror strategy. The key lemma is that at each decision point, the advantaged player can make a move that preserves the invariant that their team's running sum stays at least (resp. at most) the pro-rated share of the total.",
@@ -6236,7 +6263,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the sequence s_1(n) via its generating function or combinatorial interpretation, establish the equivalence to Andrews' strictly concave compositions, and verify the congruence using the refined parity analysis and q-series expansions modulo 4.",
@@ -6262,7 +6289,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the core graph-theoretic notions (simple graph, d-regularity, proper d-edge-colouring, automorphism group, Aut-invariance) and group-theoretic notions (finite group, group isomorphism) in Lean 4. The proof proceeds constructively: given G and d, build Γ via a modified Sabidussi-type construction (e.g., using the Cayley colour graph of G with generating set carefully chosen to ensure d-regularity, then applying a replacement operation on edges to enforce both Aut(Γ) ≅ G and the existence of an Aut-invariant proper d-edge-colouring). The key difficulty is showing the modified construction preserves Aut(Γ) ≅ G while introducing the colouring structure. A secondary approach would formalize the corrected replacement lemma that fixes Sabidussi's oversight, showing that substituting coloured gadgets for edges of the Cayley graph preserves the automorphism group.",
@@ -6289,7 +6316,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define discrete d-pseudomanifolds inductively, where a 1-pseudomanifold is defined as a cycle of length at least 4. Prove the base case for d=1 (minimum 4 vertices), and proceed by induction on d. The neighborhood of any vertex in a d-pseudomanifold forms a (d-1)-pseudomanifold, which by the inductive hypothesis has at least 2d vertices. A connectivity and regularity argument on the graph structure then bounds the total number of vertices from below by 2(d+1).",
@@ -6316,7 +6343,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Strengthen the Delsarte LP feasible solution construction by replacing the Kloosterman-sum-based analysis with optimal eigenvalue bounds for the association scheme of the Euclidean quadratic form in even dimensions. Alternatively, combine the LP method with Fourier-analytic incidence estimates or develop a sharp spectral gap argument for the association scheme's dual eigenvalues to eliminate the 1/3 deficit.",
@@ -6325,6 +6352,31 @@
     "status": "available",
     "timestamp": "2026-06-30T17:14:12.597747+00:00",
     "title": "Finite Field Falconer Conjecture at the Critical Exponent for Even Dimensions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "OEIS_A000110",
+      "Alzer_2019_Engel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The sequence of log-convexity gaps $G_n = B_{n+1}B_{n-1} - (B_n)^2$ for Bell numbers is itself log-convex, meaning $G_{n+1}G_{n-1} \\ge (G_n)^2$ for all $n \\ge 2$.",
+    "domain_bridges": [
+      "Integer Sequences",
+      "Asymptotic Analysis"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3009",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish that the ratio $G_{n+1}/G_n$ is monotonically increasing by leveraging the asymptotic expansion of Bell numbers alongside the explicit lower bounds for the gap provided in the paper.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29884v1",
+    "status": "available",
+    "timestamp": "2026-06-30T17:37:27.634066+00:00",
+    "title": "Log-Convexity of the Bell Number Gap Sequence"
   },
   {
     "ambition_level": "extension",
@@ -6678,7 +6730,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da4fd36d",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -6690,7 +6742,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
@@ -6956,7 +7008,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6a76cdb0",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -6969,7 +7021,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -7036,7 +7088,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "733eb681",
+    "consumed_by_exp_id": "",
     "description": "Formalize the p-adic Langlands correspondence for GL₂(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
     "domain_bridges": [],
     "domains": [
@@ -7049,7 +7101,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.128786+00:00",
     "title": "p-adic Langlands for GL₂(Q_p)"
   },
