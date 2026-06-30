@@ -16889,7 +16889,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16905,7 +16905,7 @@
         "Computation"
       ],
       "id": "fd_0555",
-      "last_attempt_time": "2026-06-30T06:59:12.100637+00:00",
+      "last_attempt_time": "2026-06-23T01:48:45.023208+00:00",
       "last_reviewed_at": "2026-06-09T17:32:42.519242+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -40172,7 +40172,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Masser's relation module theorem for algebraic groups",
         "Anderson t-modules",
@@ -40198,7 +40198,7 @@
         "Pythagorean"
       ],
       "id": "fd_2924",
-      "last_attempt_time": "2026-06-30T06:59:06.427552+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem effective_degree_bound_tmodule_relations {q : ℕ} [hq : Fact (Nat.Prime q)] {d : ℕ} [hd : Fact (0 < d)] {L : Type*} [Field L] (E : TModule q d L) {ℓ : ℕ} (P : Fin ℓ → E) (H : ℕ) (hH : ∀ i, height (P i) ≤ H) : ∃ C₁ C₂ : ℕ, (∀ r : Fin ℓ → Polynomial (F q), (∑ i : Fin ℓ, r i • P i = 0) → ∃ gens : Fin _ → Fin ℓ → Polynomial (F q), r = ∑ j, Polynomial.smul (gens j) (basis_of_relations E P) ∧ ∀ j i, (gens j i).natDegree ≤ C₁ * H ^ (C₂ * ℓ)) := by sorry",
       "lineage_refs": [],
@@ -40302,6 +40302,56 @@
       "title": "Conjecture on irrational angles of non‑monic unit palindromes"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
+        "Bombieri-Vinogradov_theorem",
+        "Goldbach_problem",
+        "almost_primes",
+        "sieve_methods",
+        "level_of_distribution"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For almost all even integers N > 0, there exist primes p₁, p₂ with p₁ + p₂ = N and |p₁ - p₂| + 1 having at most 2 prime factors counted with multiplicity (i.e., |p₁ - p₂| + 1 ∈ P₂). This strengthens the paper's P₄ result and would follow from a level of distribution of at least 1/3 for Goldbach primes, compared to the 1/6 level established here.",
+      "domain_bridges": [
+        "harmonic_analysis_exponential_sums",
+        "probabilistic_number_theory",
+        "combinatorial_sieve_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2927",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "def omega (n : ℕ) : ℕ := n.primeFactorization.sum fun _ e => e\n\n/-- For almost all even N, Goldbach decomposition p₁ + p₂ = N exists with |p₁ - p₂| + 1 ∈ P₂ -/\ntheorem goldbach_semiprime_difference_conjecture (A : ℝ) (hA : 0 < A) :\n    ∃ C : ℝ, ∀ᶠ X in atTop,\n      (Finset.filter (fun N ↦ Even N ∧\n        ¬∃ p₁ p₂, Nat.Prime p₁ ∧ Nat.Prime p₂ ∧\n          p₁ + p₂ = N ∧ omega ((p₁ - p₂).natAbs + 1) ≤ 2)\n        (Finset.Ioc ⌊X / 2⌋ ⌊X⌋)).card\n      ≤ C * X / (Real.log X) ^ A := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Improve the level of distribution of Goldbach primes from θ = 1/6 to θ = 1/3 by refining the Type II exponential sum estimates in the circle method decomposition. The bottleneck is the bilinear sum bound where the well-factorability condition currently limits the level to 1/6. Achieving θ = 1/3 would then permit a Chen-type weighted sieve or Selberg sieve argument to reduce the almost-prime condition from P₄ to P₂ for the difference |p₁ - p₂| + 1, analogous to how Matomäki's well-factorable level 1/2 yields P₂ results under additional hypotheses.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29559v1",
+      "source_path": "http://arxiv.org/abs/2606.29559v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T07:18:15.267040+00:00",
+      "title": "Goldbach partitions with semiprime difference"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -40327,7 +40377,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2927",
+      "id": "fd_2928",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -40373,7 +40423,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2928",
+      "id": "fd_2929",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -40419,7 +40469,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2929",
+      "id": "fd_2930",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -40464,7 +40514,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2930",
+      "id": "fd_2931",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -40512,7 +40562,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2931",
+      "id": "fd_2932",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -40559,7 +40609,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2932",
+      "id": "fd_2933",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -40608,7 +40658,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2933",
+      "id": "fd_2934",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -40655,7 +40705,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2934",
+      "id": "fd_2935",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
@@ -40703,7 +40753,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2935",
+      "id": "fd_2936",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_second_moment_sqroot_expsum (δ : ℝ) (hδ : 0 < δ) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ, 2 ≤ n → ∀ H : ℕ,\n    ⌈(n : ℝ)^(1/2 + δ)⌉₊ ≤ H →\n    (∑ h in Finset.Icc ⌈H/2⌉₊ H,\n      (∑ a in Finset.Icc ⌈n/2⌉₊ n,\n        Complex.exp (2 * Real.pi * Complex.I * (h : ℂ) * Real.sqrt (a : ℝ)))\n        .norm_sq)\n    ≤ C * (H : ℝ) * (n : ℝ) * (Real.log (n : ℝ))^c := by\n  sorry",
@@ -40746,7 +40796,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2936",
+      "id": "fd_2937",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Basic diagram-filling and counting techniques over finite graphs",
@@ -40794,7 +40844,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2937",
+      "id": "fd_2938",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem harder_conjecture_k_equals_3 (j : ℕ) (hj : j ≥ 2 ∧ Even j) (f : PrimitiveEllipticCuspForm (j + 4)) (p : Ideal (HeckeField f)) (hp : p ∣ L_alg (j + 3) f) : ∃ (F : SiegelCuspEigenForm (det^3 * Sym^j)) (P : Ideal (HeckeField F)) (hP : P ∣ p), ∀ ℓ : ℕ, ℓ.Prime → SpinLPoly ℓ F ≡ LPoly ℓ f * (1 - (ℓ : ℤ)^1 * X) * (1 - (ℓ : ℤ)^(j + 2) * X) [MOD P] := by sorry",
@@ -40841,7 +40891,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2938",
+      "id": "fd_2939",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bessel_distribution_regular_GLn {F : Type*} [PAdicField F] {n : ℕ} [NeZero n] (π : IrreducibleSmoothAdmissibleRep (GL n F)) (hπ : IsGeneric π) (ℓ₁ : WhittakerFunctional π) (ℓ₂ : WhittakerFunctional π.contrargredient) : IsRegular (besselDistribution ℓ₁ ℓ₂) := by\n  sorry",
@@ -40887,7 +40937,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2939",
+      "id": "fd_2940",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lp_knrs {V : Type*} [Fintype V] [DecidableEq V]\n    (F : SimpleGraph V) [DecidableRel F.Adj]\n    (m : ℕ) (hm : m = F.edgeFinset.card) (hm_pos : 0 < m)\n    (n : ℕ) (hn : n = F.support.card)\n    (p : ℝ) (hp : p ≥ (n.choose 2 : ℝ) / m)\n    (ρ : ℝ) (hρ : ρ ∈ Set.Icc 0 1)\n    (W : UnitInterval → UnitInterval → ℝ)\n    (hW_meas : Measurable (Function.uncurry W))\n    (hW_sym : ∀ x y, W x y = W y x)\n    (hW_range : ∀ x y, W x y ∈ Set.Icc (0 : ℝ) 1)\n    (hW_locally_dense :\n      ∀ S : Set UnitInterval, MeasurableSet S →\n        (∫ x in S, ∫ y in S, W x y ∂volume) ≥ ρ * (volume S) ^ 2)\n    : (∫ x : V → UnitInterval,\n        (∏ e in F.edgeFinset.attach,\n          W (x (Sym2.toProd e.1).1) (x (Sym2.toProd e.1).2)) ^ p\n        ∂(Measure.pi fun _ => volume)) ^ (1 / p : ℝ)\n      ≥ ρ ^ (m : ℝ) := by\n  sorry",
@@ -40934,7 +40984,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2940",
+      "id": "fd_2941",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem digit_sum_formula (p : ℕ) (hp : p.Prime) (b : ℕ) (hb : 2 ≤ b) (hpb : ¬(p ∣ b)) (m : ℕ) (l : ℕ) (hl : l = (p - 1) / 2^m) (h_ord : (∀ k : ℕ, 0 < k → k < l → b^k % p ≠ 1) ∧ b^l % p = 1) (h_mod : p % 2^(m+1) = 1) : (∑ i : Fin l, (b * (b^(i.1) % p)) / p) = (b - 1) * (p - 1) / 2^(m+1) := by sorry",
@@ -40981,7 +41031,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2941",
+      "id": "fd_2942",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sivaraman_F_asymptotic_lower_bound :\n    ∃ c > 0, ∃ s₀ : ℕ, ∀ s ≥ s₀,\n      F s ≥ c * (s : ℝ)^(3/2) / Real.log s :=\n  by\n    sorry",
@@ -41026,7 +41076,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2942",
+      "id": "fd_2943",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tx_graffiti_conjecture (G : Graph) [connected G] [nontrivial G] : α G ≥ (a G + R G) / Δ G",
@@ -41072,7 +41122,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2943",
+      "id": "fd_2944",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem second_order_theta_mode_identity (n : ℕ) (hn : 1 ≤ n) (t : ℝ) : phi n t = (second_deriv (fun t => Real.exp (t/2) * Real.exp (-Real.pi * (n : ℝ)^2 * Real.exp (2*t))) t - (1/4) * (Real.exp (t/2) * Real.exp (-Real.pi * (n : ℝ)^2 * Real.exp (2*t)))) := by sorry",
@@ -41115,7 +41165,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2944",
+      "id": "fd_2945",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem halve_nim_three_pile_ppos {a b c : ℕ} (hc : c ≤ 10) : HalveNim.isPPos a b c ↔ a ^ b ^ c = 0 := by sorry",
@@ -41161,7 +41211,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2945",
+      "id": "fd_2946",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_maximizes_expected_empty_spaces (N : ℕ) (j : ℕ) (hN : 2 ≤ N) (hj : 2 ≤ j) (p : Fin N → ℝ) (hp_pos : ∀ i, 0 < p i) (hp_sum : ∑ i, p i = 1) : expected_empty_spaces p j ≤ expected_empty_spaces (fun _ => (1 : ℝ) / N) j ∧ (expected_empty_spaces p j = expected_empty_spaces (fun _ => (1 : ℝ) / N) j ↔ ∀ i, p i = (1 : ℝ) / N) := by sorry",
@@ -41180,6 +41230,53 @@
       "thread_id": "",
       "timestamp": "2026-06-30T06:59:00.925390+00:00",
       "title": "Uniform Distribution Uniquely Maximizes Expected Empty Spaces in Sibling Coupon Collection"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Cutoff profiles for colored top-m-to-random shuffles with growing block size",
+        "Variable-block group-drawing Poisson limits",
+        "Berend and Sher group-drawing coupon-collector"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The probability that exactly u labels are untouched after k_n independent uniform m_n-subset drawings from n labels converges to the Poisson probability e^{-λ} λ^u / u! whenever the expected number of untouched labels λ_n = n ((n-m_n)/n)^{k_n} → λ ∈ (0, ∞) and the complement size b_n = n - m_n → ∞.",
+      "domain_bridges": [
+        "Probability theory",
+        "Combinatorics",
+        "Markov chains"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "id": "fd_2947",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Analysis.SpecialFunctions.Pow.Real\n\ndef prob_untouched_exact (n m k u : ℕ) : ℝ :=\n  (n.choose u : ℝ) * ∑ j in Finset.range (n - u + 1),\n    (-1 : ℝ)^j * (n - u).choose j * (((n - u - j).choose m : ℝ) / (n.choose m : ℝ)) ^ k\n\ntheorem group_drawing_poisson_limit\n  {f g : ℕ → ℕ} {λ : ℝ} (hλ : 0 < λ)\n  (hf : ∀ n, 1 ≤ f n ∧ f n < n)\n  (hλ_lim : Tendsto (fun n => (n : ℝ) * ((n - f n : ℝ) / n) ^ g n) atTop (𝓝 λ))\n  (hb_lim : Tendsto (fun n => n - f n) atTop atTop) (u : ℕ) :\n  Tendsto (fun n => prob_untouched_exact n (f n) (g n) u) atTop (𝓝 (Real.exp (-λ) * λ^u / (Nat.factorial u : ℝ))) :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Compute the factorial moments of the untouched-label statistic E_n by evaluating the expected size of the intersection of r untouched labels, showing they converge to λ^r. By inclusion-exclusion, the probability that exactly u labels are untouched is expressed as an alternating sum involving the probabilities of larger sets of untouched labels. The asymptotic conditions λ_n → λ and b_n → ∞ (equivalently γ_n → 0) ensure that the inclusion-exclusion sum converges to the Poisson probabilities, using the method of moments or direct asymptotic analysis of the binomial coefficients.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29530v1",
+      "source_path": "http://arxiv.org/abs/2606.29530v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T07:19:31.725431+00:00",
+      "title": "Poisson Limit for Group-Drawing Coupon Collector"
     },
     {
       "ambition_level": "extension",
