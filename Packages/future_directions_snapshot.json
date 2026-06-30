@@ -3872,6 +3872,34 @@
     "title": "Inheritance of strongly 1-principled property under matrix powers"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "11F11",
+      "11F03",
+      "33C05"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For τ in the upper half-plane, define G(τ) = 2E₂(2τ) - E₂(τ) and let t(τ) be the Hauptmodul on Γ₀(2) with q-expansion t = 256q + 4096q² + …. Then the identity E₄(τ)/G(τ)² = (t(τ) + 256)/(t(τ) + 64) holds as an identity of modular functions on Γ₀(2). This is a key technical lemma used to prove that G(τ) satisfies the pulled-back hypergeometric ODE, thereby identifying G with ₃F₂(1/4, 1/2, 3/4; 1, 1; X(τ)).",
+    "domain_bridges": [
+      "q-expansions and formal power series",
+      "modular forms on congruence subgroups",
+      "hypergeometric ODE and Picard–Fuchs theory"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2915",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Both sides are modular functions on Γ₀(2) (i.e., weight-0 meromorphic modular forms). Clear denominators to obtain a modular form D₁ = (t+64)E₄ - (t+256)G² of weight 4 on Γ₀(2). By the finite divisor check lemma, D₁ is holomorphic and has no poles, so it suffices to verify that its q-expansion vanishes to sufficiently high order. Since the space M₄(Γ₀(2)) is finite-dimensional (dimension 2), checking finitely many q-expansion coefficients forces D₁ = 0. In Lean, one can compute q-expansions as formal power series over ℚ and verify the identity coefficient-by-coefficient up to the Sturm bound.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28966v1",
+    "status": "available",
+    "timestamp": "2026-06-30T02:35:13.608193+00:00",
+    "title": "Rational modular ratio for E₄ on Γ₀(2)"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO/2501.12018",
@@ -3888,7 +3916,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2915",
+    "id": "fd_2916",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
@@ -3915,7 +3943,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2916",
+    "id": "fd_2917",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
@@ -3942,7 +3970,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2917",
+    "id": "fd_2918",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -3968,7 +3996,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2918",
+    "id": "fd_2919",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -3997,7 +4025,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2919",
+    "id": "fd_2920",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -4025,7 +4053,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2920",
+    "id": "fd_2921",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
@@ -4055,7 +4083,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2921",
+    "id": "fd_2922",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes the rooted heat-kernel master loop equation and proves convergence of the order-truncated trajectory expansion at strong coupling (T > T₀(d)). To extend to all T > 0: (1) Develop uniform-in-T estimates for the trajectory expansion coefficients, leveraging the universal finite-N duality formulas and refined heat-kernel asymptotics that remain valid for small T. (2) Prove convergence of the rooted trajectory expansion for all T > 0 by establishing tighter control on the combinatorial growth of decorated loop observables—specifically, show the expansion is absolutely convergent with radius independent of T. (3) For the weak-coupling regime (small T), exploit the Gaussian limit T → 0 where the theory reduces to a lattice Gaussian free field, and use this as the base of an expansion valid for all T. (4) Bridge strong and weak coupling using monotonicity of Wilson loop expectations in T and real-analyticity of heat-kernel coefficients, establishing a single master field",
@@ -4083,7 +4111,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the monoid in Lean, compute the misère quotient via backward induction, and prove isomorphism through homomorphism properties and loss set verification",
@@ -4092,6 +4120,35 @@
     "status": "available",
     "timestamp": "2026-06-30T02:13:20.548500+00:00",
     "title": "Structure of the Misère Quotient for Two-Step Escalation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "exponential_sums",
+      "Weyl_bounds",
+      "discrepancy_modulo_one",
+      "Erdos_Turan_inequality"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the exponential sum $S(h,n) = \\sum_{a=\\lceil n/2 \\rceil}^{n} e^{2\\pi i h \\sqrt{a}}$, the authors prove $\\sum_{H/2 \\le h \\le H} |S(h,n)|^2 \\ll_{\\varepsilon,\\delta} H n^{1+\\varepsilon}$ for $H \\ge n^{1/2+\\delta}$. This conjecture proposes that the $n^\\varepsilon$ factor can be replaced by a polylogarithmic factor $(\\log n)^c$ for some absolute constant $c \\ge 0$, yielding the sharper bound $\\sum_{H/2 \\le h \\le H} |S(h,n)|^2 \\le C(\\delta) \\cdot H \\cdot n \\cdot (\\log n)^c$ for all $H \\ge \\lceil n^{1/2+\\delta}\\rceil$. This would constitute a near-optimal second-moment estimate matching the diagonal scale up to polylogarithmic factors.",
+    "domain_bridges": [
+      "harmonic_analysis",
+      "metric_number_theory",
+      "diophantine_approximation"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2924",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Refine the Weyl differencing and van der Corput B-process arguments from the paper with tighter control on off-diagonal contributions. The key improvement would come from replacing power-saving arguments with logarithmic precision via careful saddle-point analysis of the complete exponential sums arising from Poisson summation applied to $e(h\\sqrt{a})$ over dyadic subintervals of $[n/2, n]$. One should track how the exponent pairs obtained from the $B^2$-process interact with the moment sum over $h$, exploiting cancellation more finely than the $n^\\varepsilon$-losing bound permits.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28986v1",
+    "status": "available",
+    "timestamp": "2026-06-30T02:38:43.115881+00:00",
+    "title": "Sharp Second-Moment Bound for Square-Root Exponential Sums with Polylogarithmic Loss"
   },
   {
     "ambition_level": "extension",
@@ -4116,7 +4173,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75f8dfec",
     "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
     "domain_bridges": [],
     "domains": [
@@ -4128,7 +4185,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.481690+00:00",
     "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
@@ -4484,7 +4541,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "230b77ce",
+    "consumed_by_exp_id": "",
     "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
     "domain_bridges": [],
     "domains": [
@@ -4497,7 +4554,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.385376+00:00",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },

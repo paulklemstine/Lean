@@ -2340,11 +2340,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
+    "description": "For \u03c4 in the upper half-plane, define G(\u03c4) = 2E\u2082(2\u03c4) - E\u2082(\u03c4) and let t(\u03c4) be the Hauptmodul on \u0393\u2080(2) with q-expansion t = 256q + 4096q\u00b2 + \u2026. Then the identity E\u2084(\u03c4)/G(\u03c4)\u00b2 = (t(\u03c4) + 256)/(t(\u03c4) + 64) holds as an identity of modular functions on \u0393\u2080(2). This is a key technical lemma used to prove that G(\u03c4) satisfies the pulled-back hypergeometric ODE, thereby identifying G with \u2083F\u2082(1/4, 1/2, 3/4; 1, 1; X(\u03c4)).",
     "domains": [
       "Geometry"
     ],
     "id": "fd_2915",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28966v1",
+    "status": "available",
+    "timestamp": "2026-06-30T02:35:13.608193+00:00",
+    "title": "Rational modular ratio for E\u2084 on \u0393\u2080(2)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2916",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2358,7 +2372,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2916",
+    "id": "fd_2917",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2372,7 +2386,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2917",
+    "id": "fd_2918",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2386,7 +2400,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2918",
+    "id": "fd_2919",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2400,7 +2414,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2919",
+    "id": "fd_2920",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2415,7 +2429,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2920",
+    "id": "fd_2921",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2430,7 +2444,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2921",
+    "id": "fd_2922",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2444,13 +2458,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
     "status": "available",
     "timestamp": "2026-06-30T02:13:20.548500+00:00",
     "title": "Structure of the Mis\u00e8re Quotient for Two-Step Escalation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the exponential sum $S(h,n) = \\sum_{a=\\lceil n/2 \\rceil}^{n} e^{2\\pi i h \\sqrt{a}}$, the authors prove $\\sum_{H/2 \\le h \\le H} |S(h,n)|^2 \\ll_{\\varepsilon,\\delta} H n^{1+\\varepsilon}$ for $H \\ge n^{1/2+\\delta}$. This conjecture proposes that the $n^\\varepsilon$ factor can be replaced by a polylogarithmic factor $(\\log n)^c$ for some absolute constant $c \\ge 0$, yielding the sharper bound $\\sum_{H/2 \\le h \\le H} |S(h,n)|^2 \\le C(\\delta) \\cdot H \\cdot n \\cdot (\\log n)^c$ for all $H \\ge \\lceil n^{1/2+\\delta}\\rceil$. This would constitute a near-optimal second-moment estimate matching the diagonal scale up to polylogarithmic factors.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2924",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28986v1",
+    "status": "available",
+    "timestamp": "2026-06-30T02:38:43.115881+00:00",
+    "title": "Sharp Second-Moment Bound for Square-Root Exponential Sums with Polylogarithmic Loss"
   },
   {
     "consumed_by_exp_id": "",
@@ -2468,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Perfect Cuboid (Euler Brick)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75f8dfec",
     "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
     "domains": [
       "Algebra"
@@ -2477,7 +2505,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.481690+00:00",
     "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
@@ -2741,7 +2769,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Category-Theoretic Neural Architectures"
   },
   {
-    "consumed_by_exp_id": "230b77ce",
+    "consumed_by_exp_id": "",
     "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
     "domains": [
       "MachineLearning",
@@ -2751,7 +2779,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.385376+00:00",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },

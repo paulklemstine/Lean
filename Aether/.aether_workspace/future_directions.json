@@ -38686,7 +38686,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Transversal Difference Numbers in Finite Abelian Quotients"
       ],
@@ -38707,11 +38707,11 @@
         "Pythagorean"
       ],
       "id": "fd_2892",
-      "last_attempt_time": "2026-06-30T02:13:32.808271+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.ZMod.Basic\nimport Mathlib.Algebra.Group.Subgroup.Basic\n\n-- Placeholder for the formal definition of transversal difference number\n-- def delta (G : Type*) [AddCommGroup G] [Fintype G] (H : AddSubgroup G) : ℕ := ...\n\ntheorem same_prime_square_plane_conjecture (p : ℕ) (hp : p.Prime) (hodd : Odd p) :\n    let G := ZMod (p * p) × ZMod (p * p)\n    let H := (p : ℕ) • (⊤ : AddSubgroup G)\n    delta G H = (2 * p - 1) * (2 * p - 1) :=\n  sorry",
       "lineage_refs": [],
-      "outcome_quality": 0.6655200000000001,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Translate the transversal difference problem into an optimization over functions $\\mathbb{F}_p^2 \\to \\mathbb{F}_p^2$ representing transversals, where the difference support decomposes into carry-corrected finite-field derivative images. Apply Kneser's theorem for cross-transversal estimates and analyze polynomial sections to establish that the minimal difference support is achieved by linear sections, yielding the exact $(2p-1)^2$ bound.",
@@ -38721,7 +38721,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27961v1",
       "source_path": "http://arxiv.org/abs/2606.27961v1",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T19:43:09.952578+00:00",
       "title": "Same-Prime Square Plane Transversal Difference Conjecture"
@@ -39756,6 +39756,53 @@
       "title": "Inheritance of strongly 1-principled property under matrix powers"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
+        "11F11",
+        "11F03",
+        "33C05"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For τ in the upper half-plane, define G(τ) = 2E₂(2τ) - E₂(τ) and let t(τ) be the Hauptmodul on Γ₀(2) with q-expansion t = 256q + 4096q² + …. Then the identity E₄(τ)/G(τ)² = (t(τ) + 256)/(t(τ) + 64) holds as an identity of modular functions on Γ₀(2). This is a key technical lemma used to prove that G(τ) satisfies the pulled-back hypergeometric ODE, thereby identifying G with ₃F₂(1/4, 1/2, 3/4; 1, 1; X(τ)).",
+      "domain_bridges": [
+        "q-expansions and formal power series",
+        "modular forms on congruence subgroups",
+        "hypergeometric ODE and Picard–Fuchs theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "id": "fd_2915",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem rational_modular_ratio_E4 (τ : UpperHalfPlane) (hτ : True) :\n    EisensteinSeries.E₄ τ / (G_modular τ) ^ 2 =\n    (hauptmodul_t τ + 256) / (hauptmodul_t τ + 64) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Both sides are modular functions on Γ₀(2) (i.e., weight-0 meromorphic modular forms). Clear denominators to obtain a modular form D₁ = (t+64)E₄ - (t+256)G² of weight 4 on Γ₀(2). By the finite divisor check lemma, D₁ is holomorphic and has no poles, so it suffices to verify that its q-expansion vanishes to sufficiently high order. Since the space M₄(Γ₀(2)) is finite-dimensional (dimension 2), checking finitely many q-expansion coefficients forces D₁ = 0. In Lean, one can compute q-expansions as formal power series over ℚ and verify the identity coefficient-by-coefficient up to the Sturm bound.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28966v1",
+      "source_path": "http://arxiv.org/abs/2606.28966v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T02:35:13.608193+00:00",
+      "title": "Rational modular ratio for E₄ on Γ₀(2)"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -39781,7 +39828,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2915",
+      "id": "fd_2916",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -39827,7 +39874,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2916",
+      "id": "fd_2917",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -39873,7 +39920,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2917",
+      "id": "fd_2918",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -39918,7 +39965,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2918",
+      "id": "fd_2919",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -39966,7 +40013,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2919",
+      "id": "fd_2920",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -40013,7 +40060,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2920",
+      "id": "fd_2921",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -40062,7 +40109,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2921",
+      "id": "fd_2922",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -40109,7 +40156,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2922",
+      "id": "fd_2923",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
@@ -40134,39 +40181,48 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "math.NT",
+        "exponential_sums",
+        "Weyl_bounds",
+        "discrepancy_modulo_one",
+        "Erdos_Turan_inequality"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Structured vs. Uniform Coverage\n\nThe cycle established that, on the points of a projective plane of order `q`, the\nmechanism that samples whole *lines* covers the point set strictly more slowly\nthan the mechanism that samples uniformly random subsets of the same size — fully\nfor `q = 2`, and at the level of the third-order truncation for every `q`. Three\nthreads run through the findings: the two mechanisms are identical on all\nsize-averaged marginals; they first separate at triples, where collinearity\nsplits one value into two; and the separation is driven entirely by the convexity\nof the harmonic weight `1/(1−p)`. The conjectures below grow out of those\nthreads.\n\n## 1. The sign-controlled tail is dominated by order three\n\n**Conjecture.** For every prime power `q ≥ 2`, the surplus that the structured\nline mechanism accrues at order three strictly exceeds the total signed\ncontribution of all higher orders combined; consequently the structured\nmechanism is slower for every `q`.\n\n*The key insight is* that the per-order gap between the two mechanisms is exactly\nthe variance of the line-incidence counts across same-size targets weighted by a\nconvex function, and this variance decays geometrically in the order because\nhigh-order configurations are overwhelmingly \"generic\" (their incidence counts\nconcentrate on the uniform value), so the alternating tail cannot overturn the\norder-three surplus.\n\n*Why now?* The order-three surplus and the mean-matching identity that forces all\nlower orders to cancel are now both established in closed form; what remains is a\nsingle quantitative tail bound, turning a previously open universal statement\ninto a concrete estimation problem.\n\n## 2. Variance, not mean, is the universal slowness order parameter\n\n**Conjecture.** Among all coverage mechanisms on `n` points whose blocks have a\nfixed size `k` and whose size-`j` marginals match the uniform mechanism for every\n`j`, the expected cover time is a strictly increasing function of the incidence\nvariance profile `(Var_j)`; the projective-plane line family maximizes the\nlow-order variances and is therefore the extremal *slowest* such design.\n\n*The key insight is* that matching all marginals collapses the comparison of two\nmechanisms to a comparison of their incidence-count distributions at equal mean,\nwhere a strict convexity (Jensen) argument makes higher spread cost strictly more\ntime at every order of the inclusion–exclusion expansion.\n\n*Why now?* The marginal-matching identity isolates variance as the only surviving\ndegree of freedom, so the long-standing intuition that \"designs cover\nefficiently\" can finally be replaced by the sharper and testable principle that\n*balanced* designs cover slowly.\n\n## 3. A duality between blocking and slowness\n\n**Conjecture.** The same combinatorial designs that are extremal for *strong\nblocking* (every low-dimensional flat is met) are extremal for *coverage\nslowness*; quantitatively, a design's cover-time excess over uniform is\ncontrolled by its minimum blocking redundancy.\n\n*The key insight is* that both phenomena measure how evenly a family's blocks\ndistribute their incidences across targets — blocking demands no target is missed,\nslowness is produced by no target being favored — so the extremizers coincide.\n\n*Why now?* Strong-blocking sets over finite geometries are under active study, and\nthe coverage-time functional gives them a new, probabilistic invariant that can be\ncomputed and compared against their established blocking parameters.\n\n## 4. The slowness gap vanishes at the rate of a single line\n\n**Conjecture.** For the projective plane of order `q`, the relative cover-time\nexcess `(E_plane − E_uniform)/E_uniform` decays polynomially in `q`, on the order\nof `q^{-c}` for an explicit constant `c`, reflecting that the line and uniform\nmechanisms differ in their triple-incidence counts by exactly one line.\n\n*The key insight is* that collinear and generic triples differ by precisely one\nincident line regardless of `q`, so the absolute order-three spread is `O(1)`\nwhile the total cover time grows like `n·log n`, forcing the relative gap to\nshrink to zero even as the strict inequality persists.\n\n*Why now?* The exact `q = 2` gap `7/527` provides an anchor point, and the\nclosed-form order-three surplus makes the leading asymptotic constant directly\nextractable, converting a qualitative \"tiny but positive\" observation into a\nprecise decay law.\n",
-      "domain_bridges": [],
+      "description": "For the exponential sum $S(h,n) = \\sum_{a=\\lceil n/2 \\rceil}^{n} e^{2\\pi i h \\sqrt{a}}$, the authors prove $\\sum_{H/2 \\le h \\le H} |S(h,n)|^2 \\ll_{\\varepsilon,\\delta} H n^{1+\\varepsilon}$ for $H \\ge n^{1/2+\\delta}$. This conjecture proposes that the $n^\\varepsilon$ factor can be replaced by a polylogarithmic factor $(\\log n)^c$ for some absolute constant $c \\ge 0$, yielding the sharper bound $\\sum_{H/2 \\le h \\le H} |S(h,n)|^2 \\le C(\\delta) \\cdot H \\cdot n \\cdot (\\log n)^c$ for all $H \\ge \\lceil n^{1/2+\\delta}\\rceil$. This would constitute a near-optimal second-moment estimate matching the diagonal scale up to polylogarithmic factors.",
+      "domain_bridges": [
+        "harmonic_analysis",
+        "metric_number_theory",
+        "diophantine_approximation"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
-        "Geometry"
+        "Pythagorean"
       ],
-      "id": "fd_2923",
+      "id": "fd_2924",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem sharp_second_moment_sqroot_expsum (δ : ℝ) (hδ : 0 < δ) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ, 2 ≤ n → ∀ H : ℕ,\n    ⌈(n : ℝ)^(1/2 + δ)⌉₊ ≤ H →\n    (∑ h in Finset.Icc ⌈H/2⌉₊ H,\n      (∑ a in Finset.Icc ⌈n/2⌉₊ n,\n        Complex.exp (2 * Real.pi * Complex.I * (h : ℂ) * Real.sqrt (a : ℝ)))\n        .norm_sq)\n    ≤ C * (H : ℝ) * (n : ℝ) * (Real.log (n : ℝ))^c := by\n  sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Refine the Weyl differencing and van der Corput B-process arguments from the paper with tighter control on off-diagonal contributions. The key improvement would come from replacing power-saving arguments with logarithmic precision via careful saddle-point analysis of the complete exponential sums arising from Poisson summation applied to $e(h\\sqrt{a})$ over dyadic subintervals of $[n/2, n]$. One should track how the exponent pairs obtained from the $B^2$-process interact with the moment sum over $h$, exploiting cancellation more finely than the $n^\\varepsilon$-losing bound permits.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "4aec8950",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4aec8950",
+      "source_exp_id": "2606.28986v1",
+      "source_path": "http://arxiv.org/abs/2606.28986v1",
       "status": "available",
-      "thread_id": "th_eb6a7fdd",
-      "timestamp": "2026-06-30T02:34:39.873932+00:00",
-      "title": "The cycle established that, on the points of a projective plane of order `q`, th"
+      "thread_id": "",
+      "timestamp": "2026-06-30T02:38:43.115881+00:00",
+      "title": "Sharp Second-Moment Bound for Square-Root Exponential Sums with Polylogarithmic Loss"
     },
     {
       "ambition_level": "extension",
@@ -42122,7 +42178,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "fd05632c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42147,7 +42203,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-08T19:24:58.445057+00:00",
       "title": "Sums of Three Cubes"
@@ -42271,11 +42327,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "75f8dfec",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42286,7 +42342,7 @@
         "Algebra"
       ],
       "id": "seed_019",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T02:38:47.137943+00:00",
       "last_reviewed_at": "2026-06-16T10:48:52.128685+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42300,7 +42356,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-08T19:24:59.481690+00:00",
       "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
@@ -46573,7 +46629,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -46590,7 +46646,7 @@
         "Computation"
       ],
       "id": "seed_372",
-      "last_attempt_time": "2026-06-30T02:13:26.732715+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -143308,7 +143364,7 @@
     "Novelty": 200,
     "Physics": 45,
     "Probability": 1,
-    "Pythagorean": 112,
+    "Pythagorean": 111,
     "Shared": 6,
     "Tropical": 33
   },
@@ -143326,7 +143382,7 @@
     "compute": 99,
     "computed": 42,
     "condition": 100,
-    "conjecture": 407,
+    "conjecture": 406,
     "connection": 56,
     "constant": 144,
     "construct": 81,
@@ -143367,7 +143423,7 @@
     "normally": 2,
     "novelty": 139,
     "now?**": 143,
-    "number": 179,
+    "number": 178,
     "o(1/log": 2,
     "original": 353,
     "parameter": 58,
