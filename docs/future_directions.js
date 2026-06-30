@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "3131feed",
+    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432569+00:00",
     "title": "Goldbach Verification Framework"
   },
@@ -32,7 +32,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
   {
-    "consumed_by_exp_id": "40cf3069",
+    "consumed_by_exp_id": "",
     "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
     "domains": [
       "Algebra"
@@ -41,7 +41,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:56.613461+00:00",
     "title": "Twin Prime Conjecture"
   },
@@ -631,7 +631,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dc685fbb",
     "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
     "domains": [
       "Algebra"
@@ -640,7 +640,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:58.445057+00:00",
     "title": "Sums of Three Cubes"
   },
@@ -733,7 +733,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Happy End Problem"
   },
   {
-    "consumed_by_exp_id": "d7ba0e3f",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
     "domains": [
       "Algebra"
@@ -742,7 +742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:01.338705+00:00",
     "title": "Euler-Mascheroni Constant Irrationality"
   },
@@ -1490,7 +1490,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete classification of 4th powers in the 14-gonal numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bff16fd3",
     "description": "The paper proves that for integers $k \\ge 1$ and $n \\ge 2k+2$, any $\\tau_k$-maximal graph on $n$ vertices has at most $(k+1)(n-1)-1$ edges, and constructs examples achieving this bound. The authors conjecture that this upper bound is actually an exact equality: every $\\tau_k$-maximal graph on $n \\ge 2k+2$ vertices has exactly $(k+1)(n-1)-1$ edges. This conjecture is verified for $k=1$, but remains open for $k \\ge 2$.",
     "domains": [
       "Pythagorean"
@@ -1499,7 +1499,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T10:44:44.698882+00:00",
     "title": "Exact Edge Count of Tau_k-Maximal Graphs"
   },
@@ -3423,12 +3423,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Weyl symbol \u03c3_\u03a6 derived from the even Riemann kernel \u03a6 satisfies the Kastler\u2013Loupias\u2013Miracle-Sole (KLM) condition: for all N \u2208 \u2115 and all phase-space points z\u2081,\u2026,z\u2099 \u2208 \u2102, the N\u00d7N Hermitian matrix with entries M_{ij} = \u03c3_\u03a6((z_i+z_j)/2) \u00b7 exp(i\u00b7Im(z\u0304_i\u00b7z_j)/2) is positive semi-definite. This is the central positivity conjecture in the finite-core Volterra reduction program for the Riemann phase kernel. It has been verified in all numerical tests performed and constitutes the paper's stated 'immediate analytic target.' A proof would establish the Weyl-positivity certificate for the normalized model, leaving only the quotient-to-original Weyl lift and uniform \u03c9-coverage as remaining external bridges to RH.",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_2995",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29555v1",
+    "status": "available",
+    "timestamp": "2026-06-30T19:03:51.361093+00:00",
+    "title": "KLM Positivity for the Riemann Weyl Phase Kernel"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3443,7 +3458,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3457,7 +3472,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3472,7 +3487,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3487,7 +3502,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3502,7 +3517,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3511,31 +3526,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Correspondence for Borel Orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56c1bc1c",
     "description": "For any positive integer m, any real number p with 0 \u2264 p \u2264 1/3, and any positive weights w\u2081,...,w\u2098 summing to 1, if v\u2081,...,v\u2098 are i.i.d. Bernoulli(p) random variables, then P(\u2211\u1d62 w\u1d62v\u1d62 \u2265 p) \u2265 p. This is the central conjecture of the paper, which the authors connect to the Manickam-Mikl\u00f3s-Singhi conjecture and prove for sufficiently small p. The bound p is sharp, achieved when m=1 and w\u2081=1.",
     "domains": [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:38:03.172846+00:00",
     "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
   },
   {
-    "consumed_by_exp_id": "56c1bc1c",
+    "consumed_by_exp_id": "",
     "description": "For any 0 < \u03b5 < 1, there exist constants \u03b3 > 0 and C > 0 such that for any dimension n, any subset A of the discrete cube (ZMod 2)^n with |A| \u2265 \u03b5 * 2^n, and any (\u03b3, C)-well-spread set S, the Minkowski sum A + S has size at least (1 - \u03b5) * 2^n. This generalizes the classical concentration of measure phenomenon where S is a Hamming ball.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T13:57:52.389023+00:00",
     "title": "Generalized Concentration of Measure for Well-Spread Sets"
   },
@@ -3545,7 +3560,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3559,7 +3574,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3573,7 +3588,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3588,7 +3603,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3602,7 +3617,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3616,7 +3631,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3630,7 +3645,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3645,7 +3660,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3660,7 +3675,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3674,7 +3689,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3689,7 +3704,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3703,7 +3718,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3718,13 +3733,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
     "status": "available",
     "timestamp": "2026-06-30T18:40:11.183273+00:00",
     "title": "Explicit Degree Bound for Generators of $\\mathbb{F}_q[t]$-Linear Relations on $t$-Modules"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every plane triangulation on n vertices contains a P3-packing of size at least floor(n/5). This is the primary theorem for P3-packings established in the paper, proved by combining Barnette's theorem on spanning trees in 3-connected planar graphs with an inductive packing lemma on subcubic trees.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3017",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29743v1",
+    "status": "available",
+    "timestamp": "2026-06-30T19:04:14.554319+00:00",
+    "title": "P3-Packing Lower Bound in Plane Triangulations"
   },
   {
     "consumed_by_exp_id": "",
