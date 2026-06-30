@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-30T08:15:00.881903+00:00",
+  "last_updated": "2026-06-30T08:50:40.511094+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -20607,6 +20607,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-30T08:15:00.615177+00:00",
       "title": "ML Universal Approximation: Width vs Depth Trade-offs"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4046,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 28,
+      "domain": "Algebra",
+      "duration_seconds": -152.46241927146912,
+      "end_time": 1782803676.8955066,
+      "files_integrated": 0,
+      "job_id": "d6285deb",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.62,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "cross_domain": 0.7,
+        "importance": 0.4452152631578947,
+        "novelty": 0.9500000000000001,
+        "pegb_compliance": 0.25,
+        "proof_depth": 0.22887894736842102,
+        "usefulness": 0.46443947368421046
+      },
+      "quality_score": 0.45539696947368424,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782803829.357926,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-30T08:50:40.219119+00:00",
+      "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur "
     }
   ]
 }
