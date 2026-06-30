@@ -1441,7 +1441,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cfd9a3cb",
     "description": "The Diophantine equation $14n^2 - 13n = t^3$ has exactly five integer solutions: $(0, 0)$, $(1, 1)$, $(13, 13)$, $(-1, 3)$, and $(-8, 10)$. This corresponds to the exceptional case $k=13$ in Theorem 1(ii) of the paper, where $P_{30}(n) = t^3$ has the additional solutions $(-1,3)$ and $(-8,10)$ alongside the trivial ones.",
     "domain_bridges": [
       "Diophantine equations",
@@ -1456,7 +1456,7 @@
     "proof_strategy": "Translate the Diophantine equation $14n^2 - 13n = t^3$ into an elliptic curve by substituting variables to obtain a Weierstrass form. Compute the Mordell-Weil group of this elliptic curve over the rationals, determining its rank and generators. Map the rational points back to integer solutions $(n,t)$ and verify that exactly these five solutions exist.",
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:27:12.259238+00:00",
     "title": "Finiteness of Integer Solutions to the Cubic Triacontagonal Number Equation"
   },
@@ -6054,6 +6054,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.PR",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For sequences of block sizes $m_n$ and draw counts $k_n$ with $b_n = n - m_n \\to \\infty$ and $\\lambda_n = n(b_n/n)^{k_n} \\to \\lambda \\in (0, \\infty)$, the number of untouched labels after $k_n$ independent uniform $m_n$-subset draws from $[n]$ converges in distribution to a Poisson($\\lambda$) random variable. This captures the core coupon-collector mechanism driving the cutoff profiles for colored top-$m$-to-random shuffles.",
+    "domain_bridges": [
+      "Poisson limit theorems",
+      "Coupon collector problem",
+      "Markov chain mixing times"
+    ],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_2998",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use inclusion-exclusion to express the probability that a specific set of $r$ labels remains untouched after $k_n$ draws, showing the $r$-th factorial moment of the untouched label count converges to $\\lambda^r$. This is derived by analyzing the asymptotics of $\\prod_{i=0}^{r-1} \\frac{b_n-i}{n-i}$ raised to the $k_n$-th power and bounding the remainder terms using the condition $\\gamma_n \\to 0$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29530v1",
+    "status": "available",
+    "timestamp": "2026-06-30T20:02:07.863792+00:00",
+    "title": "Poisson Limit Theorem for Variable-Block Group-Drawing"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "math.GR"
     ],
@@ -6068,7 +6095,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -6096,7 +6123,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -6125,7 +6152,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -6144,7 +6171,7 @@
       "11L40",
       "11N37"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56c1bc1c",
     "description": "For any normalized Hecke eigenform f of weight κ for SL(2,Z), integers j ≥ 1, k ≥ 2, h ≥ 1, q ≥ 1, and even m ∈ {2,4,6,8,10,12}, and any k-full kernel function a: ℕ → ℕ with a(n) ≪ n^ε for all ε > 0, the shifted convolution sum S(x) = ∑_{n ≤ x, n ≡ 1 (mod q), n ∈ S_m} a(n) · λ_{sym^j f}(n + h) — where S_m denotes the set of integers representable as a sum of m squares — admits an asymptotic formula S(x) = M(x) + O(x^{1-δ}) with an explicit main term M(x) satisfying M(x) ≫ x and a power-saving error term with δ > 0 depending on j, k, m, q, and h. This extends the Lü–Wang result (j = 1, k = 2) and the Venkatasubbareddy–Sankaranarayanan generalization to arbitrary symmetric power L-functions.",
     "domain_bridges": [
       "Modular forms",
@@ -6156,13 +6183,13 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T12:42:50.216839+00:00",
     "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
   },
@@ -6174,7 +6201,7 @@
       "Turán-type-stability",
       "randomly-perturbed-graphs"
     ],
-    "consumed_by_exp_id": "56c1bc1c",
+    "consumed_by_exp_id": "",
     "description": "For every integer r ≥ 2, every graph H with chromatic number at least 2, and every ε > 0, there exist n₀ ∈ ℕ and δ > 0 such that for all n ≥ n₀: every n-vertex simple graph G with minimum degree δ(G) ≥ (1 − 1/(r(χ(H) − 1))) · n that is NOT (H, r)_v-Ramsey can be made r(χ(H) − 1)-partite by deleting at most εn² edges. This is the stability analogue of Observation 1.2 in the paper (which gives a Turán-type edge-density threshold for the vertex-Ramsey property), asserting that the extremal examples—complete r(χ(H)−1)-partite graphs—are essentially the only near-extremal constructions.",
     "domain_bridges": [
       "Szemerédi-regularity-lemma",
@@ -6186,13 +6213,13 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T13:01:31.627918+00:00",
     "title": "Vertex-Ramsey Stability Conjecture"
   },
@@ -6214,7 +6241,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -6244,7 +6271,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -6269,7 +6296,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -6288,7 +6315,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Convergence bounds via recursive bounds",
@@ -6315,7 +6342,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k, characterizing the extremal counterexamples for n < (k choose 2) + 3 using structural hypergraph theory, and applying the absorbing method to embed the Berge tight cycles for n ≥ (k choose 2) + 3.",
@@ -6342,7 +6369,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof uses the Chinese Remainder Theorem to split the congruence modulo $q^t p$ into independent conditions modulo $p$ and modulo $q^t$. The condition modulo $p$ is derived using Lucas' theorem and Fermat's Little theorem. The condition modulo $q^t$ is established by computing the $q$-adic valuation of the binomial coefficient using Legendre's formula, which reduces the problem to bounding the base-$q$ digit sum.",
@@ -6371,7 +6398,7 @@
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Reformulate the visibility condition gcd(v − x) = 1 as a local condition: for all primes p, v ≢ x (mod p) in (ℤ/pℤ)ᵏ. 2. Apply the Chinese Remainder Theorem to decompose the joint condition v ∈ V_S ∩ (V_S − z) into independent conditions at each prime p: v (mod p) ∉ S_p ∪ (S−z)_p. 3. Compute each local factor as a finite counting problem in (ℤ/pℤ)ᵏ, yielding factor (1 − |S_p ∪ (S−z)_p|/pᵏ). 4. Prove convergence of the infinite Euler product using the bound |S_p ∪ (S−z)_p| ≤ 2|S| for all but finitely many p, combined with k ≥ 2 ensuring ∑_p 2|S|/pᵏ converges. 5. Rigorously justify the CRT-based density decomposition via inclusion-exclusion over primes and the uniform convergence of the partial products.",
@@ -6398,7 +6425,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the game inductively as a tree of states, each tracking remaining unchosen players and current team compositions (membership lists). Define strategies as functions from game states to moves (which player to pick or which team to assign to). Prove the parity advantage by constructing explicit strategies: for even n, Alice uses a symmetric pairing strategy where she maintains a potential function based on deviations from the mean; for odd n, Bob uses a mirror strategy. The key lemma is that at each decision point, the advantaged player can make a move that preserves the invariant that their team's running sum stays at least (resp. at most) the pro-rated share of the total.",
@@ -6423,7 +6450,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the sequence s_1(n) via its generating function or combinatorial interpretation, establish the equivalence to Andrews' strictly concave compositions, and verify the congruence using the refined parity analysis and q-series expansions modulo 4.",
@@ -6449,7 +6476,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the core graph-theoretic notions (simple graph, d-regularity, proper d-edge-colouring, automorphism group, Aut-invariance) and group-theoretic notions (finite group, group isomorphism) in Lean 4. The proof proceeds constructively: given G and d, build Γ via a modified Sabidussi-type construction (e.g., using the Cayley colour graph of G with generating set carefully chosen to ensure d-regularity, then applying a replacement operation on edges to enforce both Aut(Γ) ≅ G and the existence of an Aut-invariant proper d-edge-colouring). The key difficulty is showing the modified construction preserves Aut(Γ) ≅ G while introducing the colouring structure. A secondary approach would formalize the corrected replacement lemma that fixes Sabidussi's oversight, showing that substituting coloured gadgets for edges of the Cayley graph preserves the automorphism group.",
@@ -6476,7 +6503,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define discrete d-pseudomanifolds inductively, where a 1-pseudomanifold is defined as a cycle of length at least 4. Prove the base case for d=1 (minimum 4 vertices), and proceed by induction on d. The neighborhood of any vertex in a d-pseudomanifold forms a (d-1)-pseudomanifold, which by the inductive hypothesis has at least 2d vertices. A connectivity and regularity argument on the graph structure then bounds the total number of vertices from below by 2(d+1).",
@@ -6503,7 +6530,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Strengthen the Delsarte LP feasible solution construction by replacing the Kloosterman-sum-based analysis with optimal eigenvalue bounds for the association scheme of the Euclidean quadratic form in even dimensions. Alternatively, combine the LP method with Fourier-analytic incidence estimates or develop a sharp spectral gap argument for the association scheme's dual eigenvalues to eliminate the 1/3 deficit.",
@@ -6528,7 +6555,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish that the ratio $G_{n+1}/G_n$ is monotonically increasing by leveraging the asymptotic expansion of Bell numbers alongside the explicit lower bounds for the gap provided in the paper.",
@@ -6557,7 +6584,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the delta symbol method to separate the variables n and m, then use the spectral decomposition of the space of square-integrable automorphic forms for SL_2(Z). The main terms are controlled by the orthogonality of cusp forms, and the error terms can be bounded by applying the Kuznetsov trace formula. This ultimately reduces the conjecture to establishing the generalized Lindelöf hypothesis for the triple product L-functions L(s, f × g × h).",
@@ -6584,7 +6611,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the graph algebra 𝒜ₙ as the quotient of the polynomial ring k[x_{ij} | 1 ≤ i < j ≤ n] by the ideal (x_{ij}² - x_{ij} | 1 ≤ i < j ≤ n). Define edge-addition operators e_{ij} acting by (1 - x_{ij})· and edge-deletion operators d_{ij} acting by x_{ij}· on 𝒜ₙ. Verify the sl₂ relations for E = Σ e_{ij}, F = Σ d_{ij}, H = Σ h_{ij} where h_{ij} = e_{ij}d_{ij} - d_{ij}e_{ij}. Construct the explicit module isomorphism φ: V^⊗m → 𝒜ₙ by sending the tensor basis element ⊗_e v_e^{ε_e} to the monomial Π_{e} x_e^{ε_e}, and prove it intertwines the sl₂-actions. The key insight is that each edge position independently carries a copy of the standard sl₂-module V, with the coordinate x_{ij} tracking edge presence.",
@@ -6615,7 +6642,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Translate the problem of finding generators for the $\\mathbb{F}_q[t]$-linear relations to the existence of polynomial solutions for Frobenius difference equations, as established in the paper. Then, apply effective height bounds for polynomial solutions of such difference equations using tools from algebraic geometry over global function fields to derive the explicit polynomial degree bound.",
@@ -6641,7 +6668,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize Barnette's theorem to extract a spanning tree of maximum degree at most 3 from any triangulation. Then prove by induction on the number of vertices that any tree with maximum degree at most 3 contains a P3-packing of size at least floor(n/5), rooting the tree and extracting a minimal subtree of size between 3 and 5 to apply the inductive hypothesis. Finally, combine the two results to establish the bound for triangulations.",
@@ -6671,7 +6698,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Define self-reciprocal polynomials in Lean (coeff k = coeff (n - k)) and the Chebyshev transform Q via the identity P(x)/x^m = Q(x + 1/x), using the Chebyshev polynomial basis x^j + x^{-j} = S_j(u). 2) Prove existence and uniqueness of Q by expressing P(x)/x^m = Σ d_{m+j}(x^j + x^{-j}) + d_m = Σ d_{m+j} S_j(u) + d_m. 3) For forward direction: if |x| = 1, write x = e^{iθ}, then u = 2cos(θ) ∈ [-2,2] is real. 4) For reverse: if u ∈ [-2,2] is real, the quadratic x² - ux + 1 = 0 has roots with |x|² = 1 (discriminant u² - 4 ≤ 0 gives complex conjugate roots on the circle; u = ±2 gives x = ±1). 5) Combine multiplicity correspondence to establish the iff.",
@@ -6700,7 +6727,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Improve the level of distribution of Goldbach primes from θ = 1/6 to θ = 1/4 by refining the bilinear sum estimates in the minor-arc analysis, then apply the weighted sieve of Richert with the stronger level to reduce the almost-prime order from 4 to 2. The key bottleneck is bounding the Type II exponential sums with well-factorable coefficients for the Goldbach prime set.",
@@ -6709,6 +6736,35 @@
     "status": "available",
     "timestamp": "2026-06-30T19:45:04.465776+00:00",
     "title": "Almost-Prime Goldbach Gap Conjecture"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "math.AG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let K and L be anabelomorphic p-adic fields (i.e., their absolute Galois groups Gal(K̄/K) and Gal(L̄/L) are topologically isomorphic), and let G be a connected split reductive group over Q_p. The Synchronization Conjecture (Conjecture 3.3.1 of the paper) asserts that the Fargues-Scholze local Langlands correspondence for G over K is compatible with the correspondence for G over L via the anabelomorphism. Concretely, if φ: Gal(K̄/K) → Gal(L̄/L) is a topological isomorphism, then the bijection between smooth irreducible representations of G(K) and Langlands parameters for (G, K) synchronizes with the corresponding bijection for (G, L) via the functoriality induced by φ. The author establishes this for split tori (Theorem 4.1); the conjecture extends it to all connected split reductive groups.",
+    "domain_bridges": [
+      "algebraic_geometry.stacks",
+      "representation_theory.reductive_groups",
+      "topology.profinite_groups",
+      "number_theory.local_fields",
+      "category_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_3023",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Follow the author's strategy for split tori and extend: (1) Formalize that anabelomorphic p-adic fields yield isomorphic Langlands parameter stacks (Theorem 2.2.1), which holds because the parameter stack depends only on the absolute Galois group and the dual group Ĝ; (2) For split tori, the LLC reduces to local class field theory, which is anabelomorphically invariant by Neukirch–Uchida–Iwasawa–Ikeda theory; (3) For general reductive groups, the key obstacle is showing the excursion algebra and the central functor of Fargues-Scholze respect anabelomorphisms. A promising approach uses the geometric reformulation: show that the spectral action of the excursion algebra on ind-coherent sheaves on the stack of Langlands parameters is functorial with respect to anabelomorphisms of the base field, leveraging that Bun_G is defined purely in terms of the reductive group and the curve, while the spectral side depends only on the Galois group.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29478v1",
+    "status": "available",
+    "timestamp": "2026-06-30T20:03:02.619132+00:00",
+    "title": "Anabelomorphic Synchronization of the Fargues-Scholze Local Langlands Correspondence"
   },
   {
     "ambition_level": "extension",
@@ -6984,7 +7040,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d7cf3728",
+    "consumed_by_exp_id": "",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domain_bridges": [],
     "domains": [
@@ -6997,7 +7053,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },

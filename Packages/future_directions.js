@@ -1012,7 +1012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Size of a Poset Realizing Z_2 x Z_{2^n}"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cfd9a3cb",
     "description": "The Diophantine equation $14n^2 - 13n = t^3$ has exactly five integer solutions: $(0, 0)$, $(1, 1)$, $(13, 13)$, $(-1, 3)$, and $(-8, 10)$. This corresponds to the exceptional case $k=13$ in Theorem 1(ii) of the paper, where $P_{30}(n) = t^3$ has the additional solutions $(-1,3)$ and $(-8,10)$ alongside the trivial ones.",
     "domains": [
       "Pythagorean"
@@ -1021,7 +1021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:27:12.259238+00:00",
     "title": "Finiteness of Integer Solutions to the Cubic Triacontagonal Number Equation"
   },
@@ -3467,12 +3467,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For sequences of block sizes $m_n$ and draw counts $k_n$ with $b_n = n - m_n \\to \\infty$ and $\\lambda_n = n(b_n/n)^{k_n} \\to \\lambda \\in (0, \\infty)$, the number of untouched labels after $k_n$ independent uniform $m_n$-subset draws from $[n]$ converges in distribution to a Poisson($\\lambda$) random variable. This captures the core coupon-collector mechanism driving the cutoff profiles for colored top-$m$-to-random shuffles.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_2998",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29530v1",
+    "status": "available",
+    "timestamp": "2026-06-30T20:02:07.863792+00:00",
+    "title": "Poisson Limit Theorem for Variable-Block Group-Drawing"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3487,7 +3502,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3501,7 +3516,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3510,32 +3525,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56c1bc1c",
     "description": "For any normalized Hecke eigenform f of weight \u03ba for SL(2,Z), integers j \u2265 1, k \u2265 2, h \u2265 1, q \u2265 1, and even m \u2208 {2,4,6,8,10,12}, and any k-full kernel function a: \u2115 \u2192 \u2115 with a(n) \u226a n^\u03b5 for all \u03b5 > 0, the shifted convolution sum S(x) = \u2211_{n \u2264 x, n \u2261 1 (mod q), n \u2208 S_m} a(n) \u00b7 \u03bb_{sym^j f}(n + h) \u2014 where S_m denotes the set of integers representable as a sum of m squares \u2014 admits an asymptotic formula S(x) = M(x) + O(x^{1-\u03b4}) with an explicit main term M(x) satisfying M(x) \u226b x and a power-saving error term with \u03b4 > 0 depending on j, k, m, q, and h. This extends the L\u00fc\u2013Wang result (j = 1, k = 2) and the Venkatasubbareddy\u2013Sankaranarayanan generalization to arbitrary symmetric power L-functions.",
     "domains": [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T12:42:50.216839+00:00",
     "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
   },
   {
-    "consumed_by_exp_id": "56c1bc1c",
+    "consumed_by_exp_id": "",
     "description": "For every integer r \u2265 2, every graph H with chromatic number at least 2, and every \u03b5 > 0, there exist n\u2080 \u2208 \u2115 and \u03b4 > 0 such that for all n \u2265 n\u2080: every n-vertex simple graph G with minimum degree \u03b4(G) \u2265 (1 \u2212 1/(r(\u03c7(H) \u2212 1))) \u00b7 n that is NOT (H, r)_v-Ramsey can be made r(\u03c7(H) \u2212 1)-partite by deleting at most \u03b5n\u00b2 edges. This is the stability analogue of Observation 1.2 in the paper (which gives a Tur\u00e1n-type edge-density threshold for the vertex-Ramsey property), asserting that the extremal examples\u2014complete r(\u03c7(H)\u22121)-partite graphs\u2014are essentially the only near-extremal constructions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T13:01:31.627918+00:00",
     "title": "Vertex-Ramsey Stability Conjecture"
   },
@@ -3546,7 +3561,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3561,7 +3576,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3575,7 +3590,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3589,7 +3604,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3603,7 +3618,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3617,7 +3632,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3632,7 +3647,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3646,7 +3661,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3660,7 +3675,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3674,7 +3689,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3689,7 +3704,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3704,7 +3719,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3718,7 +3733,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3733,7 +3748,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3747,7 +3762,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3762,7 +3777,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -3776,7 +3791,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3790,7 +3805,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -3805,13 +3820,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
     "status": "available",
     "timestamp": "2026-06-30T19:45:04.465776+00:00",
     "title": "Almost-Prime Goldbach Gap Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let K and L be anabelomorphic p-adic fields (i.e., their absolute Galois groups Gal(K\u0304/K) and Gal(L\u0304/L) are topologically isomorphic), and let G be a connected split reductive group over Q_p. The Synchronization Conjecture (Conjecture 3.3.1 of the paper) asserts that the Fargues-Scholze local Langlands correspondence for G over K is compatible with the correspondence for G over L via the anabelomorphism. Concretely, if \u03c6: Gal(K\u0304/K) \u2192 Gal(L\u0304/L) is a topological isomorphism, then the bijection between smooth irreducible representations of G(K) and Langlands parameters for (G, K) synchronizes with the corresponding bijection for (G, L) via the functoriality induced by \u03c6. The author establishes this for split tori (Theorem 4.1); the conjecture extends it to all connected split reductive groups.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_3023",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29478v1",
+    "status": "available",
+    "timestamp": "2026-06-30T20:03:02.619132+00:00",
+    "title": "Anabelomorphic Synchronization of the Fargues-Scholze Local Langlands Correspondence"
   },
   {
     "consumed_by_exp_id": "",
@@ -4015,7 +4045,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "d7cf3728",
+    "consumed_by_exp_id": "",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -4025,7 +4055,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-30T19:43:56.875899+00:00",
+  "last_updated": "2026-06-30T20:01:21.499553+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -21995,6 +21995,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-30T19:43:56.584732+00:00",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 22,
+      "domain": "Algebra",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "d7cf3728",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782844594.352669,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-30T20:01:21.218150+00:00",
+      "title": "Code-Based Cryptography: McEliece from Goppa Codes"
     }
   ]
 }
