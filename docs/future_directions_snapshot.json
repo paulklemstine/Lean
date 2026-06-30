@@ -1054,7 +1054,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b897e106",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1067,7 +1067,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -3189,7 +3189,7 @@
     "catalog_references": [
       "Transversal Difference Numbers in Finite Abelian Quotients"
     ],
-    "consumed_by_exp_id": "fb546dc1",
+    "consumed_by_exp_id": "",
     "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
     "domain_bridges": [
       "Additive Combinatorics",
@@ -3205,7 +3205,7 @@
     "proof_strategy": "Translate the transversal difference problem into an optimization over functions $\\mathbb{F}_p^2 \\to \\mathbb{F}_p^2$ representing transversals, where the difference support decomposes into carry-corrected finite-field derivative images. Apply Kneser's theorem for cross-transversal estimates and analyze polynomial sections to establish that the minimal difference support is achieved by linear sections, yielding the exact $(2p-1)^2$ bound.",
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:43:09.952578+00:00",
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
@@ -3985,7 +3985,7 @@
       "shifted_convolution_sums",
       "L_functions"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9be47248",
     "description": "For f a normalized Hecke eigenform for SL(2,Z) (holomorphic of weight k ≥ 2 or Hecke-Maass) with Hecke eigenvalues λ_f(n), and for any ε > 0 with 1 ≤ Y ≤ X^{1/2-ε}, the triple correlation sum satisfies |∑_{n≤X} ∑_{m≤Y} λ_f(n)λ_f(m)λ_f(n+m)| ≪_{f,ε} X^{1/2+ε}Y. This is the optimal bound predicted by Sato-Tate heuristics and random matrix theory, going beyond the non-trivial power-saving bounds established in the paper for bilinear sums of GL(2) Fourier coefficients.",
     "domain_bridges": [
       "spectral_theory",
@@ -4001,7 +4001,7 @@
     "proof_strategy": "Apply the delta method of Duke-Friedlander-Iwaniec to decouple the constraint n+m, then deploy Voronoi summation in both n and m variables. Use Cauchy-Schwarz to reduce to a shifted convolution sum and apply the Kuznetsov trace formula to express triple products of Fourier coefficients as central L-values via Watson's formula. The crux is obtaining subconvexity for the triple product L-function L(s, f⊗f⊗f) at s=1/2, which GRH supplies but which remains unconditionally open; any unconditional proof would constitute a breakthrough in subconvexity theory.",
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:25:55.578636+00:00",
     "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
   },
@@ -5512,6 +5512,34 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
+      "graph_spanning_subgraph",
+      "degree_distribution",
+      "regular_graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "There exists an absolute constant c > 0 such that for every d-regular n-vertex graph G (with 1 ≤ d ≤ n−1), there is a spanning subgraph H of G in which for each degree i ∈ {0, 1, …, d}, the number of vertices of degree exactly i in H is at least c·n/(d+1). This extends the paper's result—which requires d = o(n) and achieves (1−ε)·n/(d+1)—by asking whether a weaker constant-fraction guarantee holds uniformly for all d, removing the d = o(n) restriction entirely.",
+    "domain_bridges": [
+      "probability_concentration",
+      "probabilistic_method",
+      "algebraic_graph_theory"
+    ],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2978",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "For small d, a random subgraph (each edge included with probability 1/2) yields near-uniform degree distribution via concentration. For large d (linear in n), the binomial degree distribution concentrates around d/2 with width O(√d), so most degrees cluster and the random approach fails to cover all d+1 degree values. A hybrid strategy might combine: (1) random sparsification to reduce effective degree, (2) deterministic local adjustments (edge swaps) to redistribute degrees, or (3) algebraic methods (e.g., polynomial interpolation via inclusion matrices) to guarantee each degree class is populated. The key obstacle is ensuring low-degree vertices (near 0) and high-degree vertices (near d) coexist when d is large.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30612v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:00:09.568943+00:00",
+    "title": "Universal constant-fraction nearly-uniform degree distribution in spanning subgraphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
       "math.GR"
     ],
     "consumed_by_exp_id": "",
@@ -5525,7 +5553,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2978",
+    "id": "fd_2979",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5553,7 +5581,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2979",
+    "id": "fd_2980",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5582,7 +5610,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2980",
+    "id": "fd_2981",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5613,7 +5641,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2981",
+    "id": "fd_2982",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5622,6 +5650,36 @@
     "status": "available",
     "timestamp": "2026-06-30T12:42:50.216839+00:00",
     "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Ramsey-theory",
+      "Turán-type-stability",
+      "randomly-perturbed-graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer r ≥ 2, every graph H with chromatic number at least 2, and every ε > 0, there exist n₀ ∈ ℕ and δ > 0 such that for all n ≥ n₀: every n-vertex simple graph G with minimum degree δ(G) ≥ (1 − 1/(r(χ(H) − 1))) · n that is NOT (H, r)_v-Ramsey can be made r(χ(H) − 1)-partite by deleting at most εn² edges. This is the stability analogue of Observation 1.2 in the paper (which gives a Turán-type edge-density threshold for the vertex-Ramsey property), asserting that the extremal examples—complete r(χ(H)−1)-partite graphs—are essentially the only near-extremal constructions.",
+    "domain_bridges": [
+      "Szemerédi-regularity-lemma",
+      "Andrásfai-Erdős-Sós-theorem",
+      "Erdős-Simonovits-stability",
+      "Kohayakawa-Kreuter-conjecture"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2983",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30548v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:01:31.627918+00:00",
+    "title": "Vertex-Ramsey Stability Conjecture"
   },
   {
     "ambition_level": "extension",

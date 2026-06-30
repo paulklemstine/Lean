@@ -790,7 +790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b897e106",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domains": [
       "NumberTheory",
@@ -800,7 +800,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -1958,7 +1958,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Pairwise Reflection-Symmetric Latin Squares iff Power of Two"
   },
   {
-    "consumed_by_exp_id": "fb546dc1",
+    "consumed_by_exp_id": "",
     "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
     "domains": [
       "Pythagorean"
@@ -1967,7 +1967,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:43:09.952578+00:00",
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
@@ -2380,7 +2380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9be47248",
     "description": "For f a normalized Hecke eigenform for SL(2,Z) (holomorphic of weight k \u2265 2 or Hecke-Maass) with Hecke eigenvalues \u03bb_f(n), and for any \u03b5 > 0 with 1 \u2264 Y \u2264 X^{1/2-\u03b5}, the triple correlation sum satisfies |\u2211_{n\u2264X} \u2211_{m\u2264Y} \u03bb_f(n)\u03bb_f(m)\u03bb_f(n+m)| \u226a_{f,\u03b5} X^{1/2+\u03b5}Y. This is the optimal bound predicted by Sato-Tate heuristics and random matrix theory, going beyond the non-trivial power-saving bounds established in the paper for bilinear sums of GL(2) Fourier coefficients.",
     "domains": [
       "Computation"
@@ -2389,7 +2389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:25:55.578636+00:00",
     "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
   },
@@ -3175,12 +3175,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "There exists an absolute constant c > 0 such that for every d-regular n-vertex graph G (with 1 \u2264 d \u2264 n\u22121), there is a spanning subgraph H of G in which for each degree i \u2208 {0, 1, \u2026, d}, the number of vertices of degree exactly i in H is at least c\u00b7n/(d+1). This extends the paper's result\u2014which requires d = o(n) and achieves (1\u2212\u03b5)\u00b7n/(d+1)\u2014by asking whether a weaker constant-fraction guarantee holds uniformly for all d, removing the d = o(n) restriction entirely.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2978",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30612v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:00:09.568943+00:00",
+    "title": "Universal constant-fraction nearly-uniform degree distribution in spanning subgraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2978",
+    "id": "fd_2979",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3195,7 +3209,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2979",
+    "id": "fd_2980",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3209,7 +3223,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2980",
+    "id": "fd_2981",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3224,13 +3238,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2981",
+    "id": "fd_2982",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
     "status": "available",
     "timestamp": "2026-06-30T12:42:50.216839+00:00",
     "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer r \u2265 2, every graph H with chromatic number at least 2, and every \u03b5 > 0, there exist n\u2080 \u2208 \u2115 and \u03b4 > 0 such that for all n \u2265 n\u2080: every n-vertex simple graph G with minimum degree \u03b4(G) \u2265 (1 \u2212 1/(r(\u03c7(H) \u2212 1))) \u00b7 n that is NOT (H, r)_v-Ramsey can be made r(\u03c7(H) \u2212 1)-partite by deleting at most \u03b5n\u00b2 edges. This is the stability analogue of Observation 1.2 in the paper (which gives a Tur\u00e1n-type edge-density threshold for the vertex-Ramsey property), asserting that the extremal examples\u2014complete r(\u03c7(H)\u22121)-partite graphs\u2014are essentially the only near-extremal constructions.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2983",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30548v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:01:31.627918+00:00",
+    "title": "Vertex-Ramsey Stability Conjecture"
   },
   {
     "consumed_by_exp_id": "",
