@@ -3482,12 +3482,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every \u03b5 > 0, there exist constants \u03b4 > 0 and C > 0 (depending only on \u03b5, not on dimension d) such that: for any d-dimensional pure simplicial complex X with two-sided local spectral expansion at most \u03b4, every boolean function f : X(d) \u2192 {0,1} satisfying max_i Inf_i(f) \u2264 \u03b5 is \u03b5-close (in L\u00b2) to a junta on at most C faces. This conjecture asserts that the dimension dependence in the authors' Theorem 1.2 can be removed entirely for complexes with bounded local expansion, matching the dimension-independence of the classical KKL theorem on the hypercube.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2999",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29449v1",
+    "status": "available",
+    "timestamp": "2026-06-30T20:19:41.430947+00:00",
+    "title": "Dimension-Free KKL for Bounded-Degree HDX"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3502,7 +3517,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3511,31 +3526,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Strong Edge-Colorings of Odd Kneser Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56c1bc1c",
     "description": "For any normalised Hecke eigenform f of even weight k \u2265 2 for SL(2,\u2124), any positive integer j, and any even integer m \u2265 2, the Dirichlet coefficients \u03bb_{sym^j f}(n) exhibit infinitely many sign changes as n ranges over integers representable as a sum of m squares. That is, the sets {n : n is a sum of m squares and \u03bb_{sym^j f}(n) > 0} and {n : n is a sum of m squares and \u03bb_{sym^j f}(n) < 0} are both infinite. This extends the paper's result (which covers 2 \u2264 m \u2264 12) to all even m \u2265 2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T12:22:21.874221+00:00",
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
   },
   {
-    "consumed_by_exp_id": "56c1bc1c",
+    "consumed_by_exp_id": "",
     "description": "For any normalized Hecke eigenform f of weight \u03ba for SL(2,Z), integers j \u2265 1, k \u2265 2, h \u2265 1, q \u2265 1, and even m \u2208 {2,4,6,8,10,12}, and any k-full kernel function a: \u2115 \u2192 \u2115 with a(n) \u226a n^\u03b5 for all \u03b5 > 0, the shifted convolution sum S(x) = \u2211_{n \u2264 x, n \u2261 1 (mod q), n \u2208 S_m} a(n) \u00b7 \u03bb_{sym^j f}(n + h) \u2014 where S_m denotes the set of integers representable as a sum of m squares \u2014 admits an asymptotic formula S(x) = M(x) + O(x^{1-\u03b4}) with an explicit main term M(x) satisfying M(x) \u226b x and a power-saving error term with \u03b4 > 0 depending on j, k, m, q, and h. This extends the L\u00fc\u2013Wang result (j = 1, k = 2) and the Venkatasubbareddy\u2013Sankaranarayanan generalization to arbitrary symmetric power L-functions.",
     "domains": [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T12:42:50.216839+00:00",
     "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
   },
@@ -3546,7 +3561,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3561,7 +3576,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3576,7 +3591,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3590,7 +3605,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3604,7 +3619,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3618,7 +3633,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3632,7 +3647,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3647,7 +3662,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3661,7 +3676,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3675,7 +3690,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3689,7 +3704,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3704,7 +3719,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3719,7 +3734,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3733,7 +3748,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3748,7 +3763,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3762,7 +3777,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3777,7 +3792,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -3791,7 +3806,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3805,7 +3820,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -3820,7 +3835,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3022",
+    "id": "fd_3023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3835,13 +3850,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3023",
+    "id": "fd_3024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
     "status": "available",
     "timestamp": "2026-06-30T20:03:02.619132+00:00",
     "title": "Anabelomorphic Synchronization of the Fargues-Scholze Local Langlands Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite tree T with designated root r and leaf set L, if there exists a graph homomorphism f: V(T) \u2192 \u2124 (satisfying |f(u) - f(v)| = 1 for all adjacent u, v) with f(v) = 0 for all v \u2208 L, then for a uniformly random such homomorphism f, the variance of f(r) is at least the effective resistance R_eff(r, L) in the unit resistance network on T. This conjectures that the discrete random homomorphism variance always dominates the corresponding Gaussian (continuous) variance, which equals R_eff. Verified for paths (where Var(f(k)) \u2265 k(n-k)/n on P_n) and star graphs (where Var = 1 \u2265 1/n = R_eff).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3025",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29426v1",
+    "status": "available",
+    "timestamp": "2026-06-30T20:21:50.897757+00:00",
+    "title": "Variance-Resistance Inequality for Root Value of Random Tree Homomorphisms"
   },
   {
     "consumed_by_exp_id": "",
