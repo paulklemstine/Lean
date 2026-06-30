@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3131feed",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -13,12 +13,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432569+00:00",
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5c197ae",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -733,7 +733,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Happy End Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7ba0e3f",
     "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
     "domains": [
       "Algebra"
@@ -742,7 +742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.338705+00:00",
     "title": "Euler-Mascheroni Constant Irrationality"
   },
@@ -790,7 +790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b897e106",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domains": [
       "NumberTheory",
@@ -800,7 +800,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -2571,7 +2571,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Andr\u00e9's Theorem with Linear Height Dependence for Curves with Unequal Coordinate Degrees"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd49223d",
     "description": "For a finite extension K/Q_p, a monic polynomial f \u2208 O_K[X] of degree \u2265 2 satisfying f'(X) \u2208 m_K\u00b7O_K[X] (equivalently f\u0304 \u2208 k[X^p]), and a compatible inverse branch (t_n) with t_0 \u2208 O_K and f(t_{n+1}) = t_n, define K_n = K(t_n), E_n = K_n \u2229 K^{ur}, and e_n = [K_n : E_n]. If e_n > 1 for some n, then e_n \u2192 \u221e as n \u2192 \u221e. This is the key intermediate result in the proof of the paper's main theorem (Theorem 1.2), establishing that iterated polynomial towers under the purely inseparable reduction condition exhibit a ramification dichotomy: either the tower is entirely unramified over the maximal unramified subextension, or the ramification indices grow without bound.",
     "domains": [
       "Logic"
@@ -2580,7 +2580,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29310v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T09:44:57.818915+00:00",
     "title": "Unbounded Ramification Indices in Iterated p-Adic Polynomial Towers"
   },
@@ -2798,7 +2798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "All minimum $C_4$-saturated multipartite graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07b22854",
     "description": "Let k=3 and j>=2 be an even integer, and let f be a primitive elliptic cusp form of weight j+4 for SL_2(Z). For any prime ideal p of the Hecke field Q(f) dividing the algebraic critical value L^alg(j+3, f), there exists a Siegel cusp eigenform F of weight det^3 Sym^j for Sp_2 and a prime ideal P above p such that the spinor L-polynomial congruence L_ell(X, F, Spin) = L_ell(X, f)(1 - ell X)(1 - ell^{j+2} X) mod P holds for all primes ell.",
     "domains": [
       "Algebra",
@@ -2808,7 +2808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T04:09:54.071727+00:00",
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
@@ -4049,7 +4049,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a76cdb0",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4059,7 +4059,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -4109,7 +4109,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "733eb681",
     "description": "Formalize the p-adic Langlands correspondence for GL\u2082(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
     "domains": [
       "Bridges",
@@ -4119,7 +4119,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.128786+00:00",
     "title": "p-adic Langlands for GL\u2082(Q_p)"
   },
