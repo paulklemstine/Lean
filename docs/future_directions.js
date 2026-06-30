@@ -1012,7 +1012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Size of a Poset Realizing Z_2 x Z_{2^n}"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1729a4b4",
     "description": "The Diophantine equation $14n^2 - 13n = t^3$ has exactly five integer solutions: $(0, 0)$, $(1, 1)$, $(13, 13)$, $(-1, 3)$, and $(-8, 10)$. This corresponds to the exceptional case $k=13$ in Theorem 1(ii) of the paper, where $P_{30}(n) = t^3$ has the additional solutions $(-1,3)$ and $(-8,10)$ alongside the trivial ones.",
     "domains": [
       "Pythagorean"
@@ -1021,7 +1021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:27:12.259238+00:00",
     "title": "Finiteness of Integer Solutions to the Cubic Triacontagonal Number Equation"
   },
@@ -1548,7 +1548,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elementary Abelian 2-Group Uniqueness for Pairwise Reflection-Symmetric Latin Squares"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e8394a2",
     "description": "For any integer $n \\ge 3$, the minimum number of elements in a poset $P$ such that its automorphism group $\\text{Aut}(P)$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is exactly $2^{n+1} + 2$. This conjecture formalizes the main theorem of the paper.",
     "domains": [
       "Pythagorean",
@@ -1558,7 +1558,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T11:24:35.150210+00:00",
     "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
   },
@@ -2670,7 +2670,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f1435224",
     "description": "Every real number greater than or equal to \u221a(\u221a5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number \u03b3 \u2265 \u221a(\u221a5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to \u03b3.",
     "domains": [
       "Bridges"
@@ -2679,7 +2679,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T23:08:33.027778+00:00",
     "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
   },
@@ -2942,7 +2942,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65ebb6ab",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling \u2113: V(G) \u2192 (Z/2Z)^(t \u2212 rank(A)) satisfies d_G(u,v) \u2265 d_H(\u2113(u), \u2113(v)) for all u,v \u2208 V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t \u2212 rank(A)). That is, the labeling never stretches distances\u2014it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domains": [
       "Algebra"
@@ -2951,7 +2951,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
@@ -3419,7 +3419,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f3d7834",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -3429,7 +3429,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
