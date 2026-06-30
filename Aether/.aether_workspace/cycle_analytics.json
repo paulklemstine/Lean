@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-30T14:35:31.116831+00:00",
+  "last_updated": "2026-06-30T15:38:49.909767+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -21352,6 +21352,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-30T14:35:30.835419+00:00",
       "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7016,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 49,
+      "domain": "Applications",
+      "duration_seconds": -73.90128540992737,
+      "end_time": 1782827644.2926676,
+      "files_integrated": 0,
+      "job_id": "815a888f",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "cross_domain": 1.0,
+        "importance": 0.7185087719298245,
+        "novelty": 0.9500000000000001,
+        "pegb_compliance": 0.75,
+        "proof_depth": 0.619298245614035,
+        "usefulness": 0.8096491228070175
+      },
+      "quality_score": 0.4836543859649123,
+      "sorry_count": 6,
+      "sorry_density": 0.13333333333333333,
+      "start_time": 1782827718.193953,
+      "strategy_count": 0,
+      "theorem_count": 45,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 45,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-30T15:38:49.579806+00:00",
+      "title": "EML Universal Approximation: Density of EML Functions"
     }
   ]
 }

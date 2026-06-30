@@ -2798,7 +2798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "All minimum $C_4$-saturated multipartite graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07b22854",
     "description": "Let k=3 and j>=2 be an even integer, and let f be a primitive elliptic cusp form of weight j+4 for SL_2(Z). For any prime ideal p of the Hecke field Q(f) dividing the algebraic critical value L^alg(j+3, f), there exists a Siegel cusp eigenform F of weight det^3 Sym^j for Sp_2 and a prime ideal P above p such that the spinor L-polynomial congruence L_ell(X, F, Spin) = L_ell(X, f)(1 - ell X)(1 - ell^{j+2} X) mod P holds for all primes ell.",
     "domains": [
       "Algebra",
@@ -2808,7 +2808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T04:09:54.071727+00:00",
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
@@ -3292,12 +3292,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let $X$ be a smooth projective toric variety of dimension $n \\ge 2$, and let $L$ be a basepoint-free line bundle on $X$. The Song-Zhu conjecture posits that if the intersection number $L \\cdot C \\ge n - 1 + p$ for every $T$-invariant curve $C$ on $X$, then $L$ satisfies Property $N_p$. This removes the uniform unimodularity and Thomsen stratification conditions required by the paper's main theorem, providing a purely intersection-theoretic criterion for the linearity of syzygies.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2986",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30160v1",
+    "status": "available",
+    "timestamp": "2026-06-30T15:39:45.806869+00:00",
+    "title": "Song-Zhu Conjecture on Property N_p for Toric Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3312,7 +3327,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3326,7 +3341,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3341,7 +3356,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3356,7 +3371,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3371,7 +3386,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3386,7 +3401,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3400,7 +3415,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3414,7 +3429,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3428,7 +3443,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3442,7 +3457,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3457,13 +3472,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
     "status": "available",
     "timestamp": "2026-06-30T15:19:26.975381+00:00",
     "title": "Euler Product for Autocorrelation of Simultaneously Visible Lattice Points"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the two-player average-strength team selection game with n players of strengths a_1 \u2264 a_2 \u2264 ... \u2264 a_n and overall mean x, the parity of n completely determines which player has a non-losing strategy: if n is even, Alice (the first player/picker) has a strategy guaranteeing her team's average strength is at least x; if n is odd, Bob (the second player/picker) has a strategy guaranteeing Alice's team's average strength is at most x. This subsumes the strict winning condition: when the multiset of values with odd multiplicity is asymmetric about x, the advantaged player can guarantee a strict win.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2999",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30076v1",
+    "status": "available",
+    "timestamp": "2026-06-30T15:41:06.648288+00:00",
+    "title": "Average-Game Parity Advantage Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -3873,22 +3902,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "815a888f",
-    "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0508",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:47.125386+00:00",
-    "title": "EML Universal Approximation: Density of EML Functions"
-  },
-  {
-    "consumed_by_exp_id": "913b7f3f",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
@@ -3898,7 +3912,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
