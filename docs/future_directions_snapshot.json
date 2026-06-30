@@ -941,7 +941,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cf6f2c37",
     "description": "Prove that if a polynomial map F: Cⁿ → Cⁿ has constant non-zero Jacobian determinant, then F is invertible. Formalize the reduction to degree 3 and connect to the Dixmier conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -954,7 +954,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:02.571310+00:00",
     "title": "Jacobian Conjecture"
   },
@@ -2761,7 +2761,7 @@
       "fractional chromatic number of the plane",
       "unit-distance graphs"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d61f190",
     "description": "The 27-vertex unit-distance graph configuration G₂₇ of Matolcsi, Ruzsa, Varga, and Zsámboki has geometric fractional chromatic number exactly 4. Augmenting this configuration with two specifically chosen additional vertices (as explicitly constructed in the paper) yields a 29-vertex unit-distance graph G₂₉ whose geometric fractional chromatic number is strictly greater than 4. This is the key lemma that, via the blow-up framework, implies χ_f(ℝ²) > 4 and answers Erdős's question in the negative. The proof proceeds by characterizing all 23 extremal geometric fractional colorings of G₂₇ (forming a convex polytope of affine dimension 11) and showing by linear programming that none of these can be extended to color the augmented graph with fractional chromatic number exactly 4.",
     "domain_bridges": [
       "Euclidean geometry",
@@ -2779,7 +2779,7 @@
     "proof_strategy": "Define the 29-vertex configuration G₂₉ explicitly with computable coordinates. Formalize the geometric fractional chromatic number for finite point configurations. Characterize the polytope of optimal geometric fractional colorings of G₂₇ as the convex hull of 23 explicitly given extremal colorings. Then verify by certified linear programming (e.g., via LP duality certificates) that every extension of these extremal colorings to the two new vertices forces the fractional chromatic number strictly above 4. The core computational step is checking that a specific linear program over the 23 extremal colorings has optimal value exceeding 4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T15:51:56.356300+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented unit-distance graph exceeds 4"
   },
@@ -4145,6 +4145,25 @@
   },
   {
     "ambition_level": "grand_challenge",
+    "catalog_references": "null",
+    "consumed_by_exp_id": "",
+    "description": "A conjecture asserting that any triangulation of n vertices guarantees an H-packing of minimal size floor(n/5), forming a tight lower bound.",
+    "domain_bridges": "null",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2925",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "direct application of inductive bounds on triangulations",
+    "research_mode": "team",
+    "source_exp_id": "2606.29743v1",
+    "status": "available",
+    "timestamp": "2026-06-30T06:33:23.138811+00:00",
+    "title": "Floor(n/5) H-Bounding"
+  },
+  {
+    "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO/2501.12018",
       "MRVZ_geometric_fractional",
@@ -4160,7 +4179,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
@@ -4187,7 +4206,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
@@ -4214,7 +4233,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -4240,7 +4259,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -4269,7 +4288,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -4297,7 +4316,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2930",
+    "id": "fd_2931",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
@@ -4327,7 +4346,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes the rooted heat-kernel master loop equation and proves convergence of the order-truncated trajectory expansion at strong coupling (T > T₀(d)). To extend to all T > 0: (1) Develop uniform-in-T estimates for the trajectory expansion coefficients, leveraging the universal finite-N duality formulas and refined heat-kernel asymptotics that remain valid for small T. (2) Prove convergence of the rooted trajectory expansion for all T > 0 by establishing tighter control on the combinatorial growth of decorated loop observables—specifically, show the expansion is absolutely convergent with radius independent of T. (3) For the weak-coupling regime (small T), exploit the Gaussian limit T → 0 where the theory reduces to a lattice Gaussian free field, and use this as the base of an expansion valid for all T. (4) Bridge strong and weak coupling using monotonicity of Wilson loop expectations in T and real-analyticity of heat-kernel coefficients, establishing a single master field",
@@ -4355,7 +4374,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the monoid in Lean, compute the misère quotient via backward induction, and prove isomorphism through homomorphism properties and loss set verification",
@@ -4384,7 +4403,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2933",
+    "id": "fd_2934",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the Weyl differencing and van der Corput B-process arguments from the paper with tighter control on off-diagonal contributions. The key improvement would come from replacing power-saving arguments with logarithmic precision via careful saddle-point analysis of the complete exponential sums arising from Poisson summation applied to $e(h\\sqrt{a})$ over dyadic subintervals of $[n/2, n]$. One should track how the exponent pairs obtained from the $B^2$-process interact with the moment sum over $h$, exploiting cancellation more finely than the $n^\\varepsilon$-losing bound permits.",
@@ -4408,7 +4427,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2934",
+    "id": "fd_2935",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive construction combined with probabilistic extremal arguments",
@@ -4437,7 +4456,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2935",
+    "id": "fd_2936",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
@@ -4465,7 +4484,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2936",
+    "id": "fd_2937",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the paper's conditional regularity theorem (Bessel distributions are regular provided Kloosterman sums for all Levi subgroups have nontrivial bounds) to GL(n). Since every Levi subgroup of GL(n) is isomorphic to a product ∏ GL(mᵢ) with ∑ mᵢ = n, the corresponding Kloosterman sums admit nontrivial bounds by Deligne's estimates from the Riemann hypothesis for varieties over finite fields (Weil II), yielding unconditional regularity for GL(n). The key intermediate step is formalizing the germ expansion of Kloosterman integrals and verifying the nontrivial bound condition for all Levi subgroups.",
@@ -4492,7 +4511,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Hölder uniformization over vertex relabellings in the spirit of Conlon–Lee: reduce the general case to the edge-transitive case by averaging over graph automorphisms and applying Hölder's inequality to symmetrize, then exploit the positive-semidefinite structure implicit in local density for edge-transitive graphs. Key sub-lemmas include the equivalence between the L^p formulation and the graphon composition formulation, and the comparison principle with edge-transitive KNRS supergraphs.",
@@ -4520,7 +4539,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the base-b digit sequence of 1/p using the division algorithm on remainders, a_i = ⌊b * r_i / p⌋ where r_i = b^i mod p. The sum of digits S = Σ a_i can be expressed in terms of the sum of remainders. The condition that the order of b is (p-1)/2^m restricts the remainders to a subgroup of (ℤ/pℤ)×. The congruence p ≡ 1 mod 2^(m+1) ensures that this subgroup is stable under negation modulo p (since l is even and b^(l/2) ≡ -1 mod p), which allows the sum of remainders to be simplified to p*l/2, leading directly to the formula S = (b-1)*l/2 = (b-1)(p-1)/2^(m+1).",
@@ -4548,7 +4567,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To prove the lower bound F(s) ≥ c·s^{3/2}/log s, construct an explicit family of graphs G_s with ω(G_s) ≤ s and g(G̅_s) ≥ 6 such that χ(G_s) ≥ c·s^{3/2}/log s. This likely requires probabilistic constructions or algebraic graph families that saturate the complement-girth-6 constraint while maximizing chromatic number relative to clique number. The existing lower bound construction yielding s^{4/3} would need substantial refinement—potentially using blow-ups of Ramsey-type constructions or sparse pseudorandom graphs with controlled complement girth.",
@@ -4574,7 +4593,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing definitions of α, a, R, and Δ, then establishing the inequality using the paper's result that a ≤ (Δ+1)/2 * W (where W is the Caro-Wei sum) combined with classical lower bounds α ≥ R and α ≥ W. Key steps include handling the special cases for Δ = 2 and Δ ≥ 3, while explicitly excluding K₂ as a counterexample.",
@@ -4601,7 +4620,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the even Riemann kernel Φ and its phase-mode decomposition into components φ_n. Then define the explicit test function g_n(t) = exp(t/2) · exp(−π·n²·exp(2t)). Compute ∂_t g_n and ∂_t² g_n symbolically using differentiation rules for compositions and products. Subtract (1/4)·g_n to form (∂_t² − 1/4)g_n. The equality φ_n = (∂_t² − 1/4)g_n then follows from the Jacobi-type theta identity and the Poisson summation relation connecting the Riemann kernel to the theta function, rearranged via the heat-equation eigenfunction expansion that produces the second-order operator.",
@@ -4610,6 +4629,30 @@
     "status": "available",
     "timestamp": "2026-06-30T06:10:07.946305+00:00",
     "title": "Second-order theta-mode identity for the Riemann phase kernel"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2503.07456"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: In the game of Halve Nim (where a move consists of either a standard Nim move on a single pile or replacing every pile of size n by ⌊n/2⌋), a position with three piles of sizes (a, b, c) is a P-position if and only if the nim‑sum a ⊕ b ⊕ c equals zero. This extends the known result for two‑pile Halve Nim and the partial result for three‑pile Halve Nim with one pile bounded by ten.",
+    "domain_bridges": [
+      "Number theory (binary representations)",
+      "Discrete mathematics (nim‑values)"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2943",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Proceed by induction on the total number of coins. Show that the Grundy value of a pile of size n is exactly n (i.e., the halving move does not change the nim‑value), using the mex recurrence and the fact that ⌊n/2⌋ < n for n>0. Then the Sprague‑Grundy theorem gives that the Grundy value of a position is the xor of the pile sizes, so P‑positions are precisely those with xor zero. The induction handles the base case (empty position) and the step where either a standard Nim move or a global halving move is considered.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29740v1",
+    "status": "available",
+    "timestamp": "2026-06-30T06:36:22.156279+00:00",
+    "title": "Characterization of P-positions in three-pile Halve Nim"
   },
   {
     "ambition_level": "extension",
@@ -4885,7 +4928,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "da1c103e",
+    "consumed_by_exp_id": "",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domain_bridges": [],
     "domains": [
@@ -4898,7 +4941,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -5221,7 +5264,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8d4fed95",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -5234,7 +5277,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },

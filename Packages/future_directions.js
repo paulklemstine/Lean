@@ -707,7 +707,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sums of Three Cubes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cf6f2c37",
     "description": "Prove that if a polynomial map F: C\u207f \u2192 C\u207f has constant non-zero Jacobian determinant, then F is invertible. Formalize the reduction to degree 3 and connect to the Dixmier conjecture.",
     "domains": [
       "Algebra",
@@ -717,7 +717,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:02.571310+00:00",
     "title": "Jacobian Conjecture"
   },
@@ -1743,7 +1743,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Size of a Poset Realizing $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d61f190",
     "description": "The 27-vertex unit-distance graph configuration G\u2082\u2087 of Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. Augmenting this configuration with two specifically chosen additional vertices (as explicitly constructed in the paper) yields a 29-vertex unit-distance graph G\u2082\u2089 whose geometric fractional chromatic number is strictly greater than 4. This is the key lemma that, via the blow-up framework, implies \u03c7_f(\u211d\u00b2) > 4 and answers Erd\u0151s's question in the negative. The proof proceeds by characterizing all 23 extremal geometric fractional colorings of G\u2082\u2087 (forming a convex polytope of affine dimension 11) and showing by linear programming that none of these can be extended to color the augmented graph with fractional chromatic number exactly 4.",
     "domains": [
       "Geometry",
@@ -1753,7 +1753,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T15:51:56.356300+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented unit-distance graph exceeds 4"
   },
@@ -2487,11 +2487,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A conjecture asserting that any triangulation of n vertices guarantees an H-packing of minimal size floor(n/5), forming a tight lower bound.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2925",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29743v1",
+    "status": "available",
+    "timestamp": "2026-06-30T06:33:23.138811+00:00",
+    "title": "Floor(n/5) H-Bounding"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2505,7 +2519,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2519,7 +2533,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2533,7 +2547,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2547,7 +2561,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2562,7 +2576,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2930",
+    "id": "fd_2931",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2577,7 +2591,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2591,7 +2605,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2605,7 +2619,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2933",
+    "id": "fd_2934",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2619,7 +2633,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2934",
+    "id": "fd_2935",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2634,7 +2648,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2935",
+    "id": "fd_2936",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2649,7 +2663,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2936",
+    "id": "fd_2937",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2663,7 +2677,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2677,7 +2691,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
@@ -2691,7 +2705,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
@@ -2705,7 +2719,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29553v1",
@@ -2719,13 +2733,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
     "status": "available",
     "timestamp": "2026-06-30T06:10:07.946305+00:00",
     "title": "Second-order theta-mode identity for the Riemann phase kernel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: In the game of Halve Nim (where a move consists of either a standard Nim move on a single pile or replacing every pile of size n by \u230an/2\u230b), a position with three piles of sizes (a, b, c) is a P-position if and only if the nim\u2011sum a \u2295 b \u2295 c equals zero. This extends the known result for two\u2011pile Halve Nim and the partial result for three\u2011pile Halve Nim with one pile bounded by ten.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2943",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29740v1",
+    "status": "available",
+    "timestamp": "2026-06-30T06:36:22.156279+00:00",
+    "title": "Characterization of P-positions in three-pile Halve Nim"
   },
   {
     "consumed_by_exp_id": "",
@@ -2929,7 +2957,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "da1c103e",
+    "consumed_by_exp_id": "",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -2939,7 +2967,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -3180,7 +3208,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "8d4fed95",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -3190,7 +3218,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
