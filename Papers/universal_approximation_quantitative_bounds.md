@@ -1,30 +1,57 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# Computational Evidence
 
-Source of truth:
-- `Catalog/MachineLearning/UniversalApproximation/QuantitativeBoundsCore.lean` (complete, verified)
-- `Catalog/MachineLearning/UniversalApproximation/SobolevQuadraticRate.lean` (Phase A diff; quadratic rate)
+Concise numerical sanity checks behind the two results in this cycle:
+the **convexity obstruction** (tent vs. tropical polynomials) and the
+**quantitative tropical-rational rate**.
 
-| Lean name | Kind | Mathematical statement | In ARTICLE.md | In RESEARCH_PAPER.md |
-|---|---|---|---|---|
-| `relu` | def | `relu x = max x 0` | yes (ramp) | §2 Def 1 |
-| `grid` | def | `grid n k = k/n` | yes | §2 Def 2 |
-| `cellSlope` | def | `cellSlope f n k = n·(f((k+1)/n) − f(k/n))` | yes | §2 Def 3 |
-| `reluInterpNet` | def | `f0 + Σ_{k<n} cellSlope·(relu(x−k/n) − relu(x−(k+1)/n))` | yes | §2 Def 4 |
-| `LipOn01` | def | `∀x,y∈[0,1], |f x − f y| ≤ L|x−y|` | yes | §2 Def 5 |
-| `HasDerivOn01` | def | `∀x∈[0,1], HasDerivAt f (f' x) x` | yes | §2 Def 6 |
-| `ramp_left` | lemma | `x≤a ⇒ relu(x−a)−relu(x−b)=0` | yes | §3 Lem 1 |
-| `ramp_mid` | lemma | `a≤x≤b ⇒ relu(x−a)−relu(x−b)=x−a` | yes | §3 Lem 1 |
-| `ramp_right` | lemma | `b≤x ⇒ relu(x−a)−relu(x−b)=b−a` | yes | §3 Lem 1 |
-| `grid_succ_sub` | lemma | `grid n (k+1) − grid n k = 1/n` | implicit | §3 |
-| `cellSlope_mul_width` | lemma | `cellSlope·(width) = f((k+1)/n)−f(k/n)` | implicit | §3 |
-| `reluInterpNet_eq_on_cell` | lemma | network = `f(k/n)+cellSlope·(x−k/n)` on cell | yes | §4 Thm 1 |
-| `interp_error_le` | lemma | interpolant error ≤ `L/n` on a cell | yes | §4 |
-| `quantitative_uat_cell` | theorem | `|reluInterpNet − f| ≤ L/n` on a cell | yes | §4 Thm 2 |
-| `quantitative_uat_core` | theorem | `|reluInterpNet − f| ≤ L/n` on `[0,1]` | yes (main) | §4 Thm 3 |
-| `quantitative_uat_width` | theorem | `L ≤ ε·n ⇒ error ≤ ε`, width `2n=O(1/ε)` | yes | §4 Thm 4 |
-| `sobolev_interp_error_cell` | lemma | cellwise error ≤ `M/n²` for `W^{2,∞}` | yes | §5 Thm 5 |
-| `sobolev_quadratic_rate` | theorem | global error ≤ `M/n²` on `[0,1]` | yes | §5 Thm 6 |
-| `sobolev_width_tradeoff` | theorem | width `2n=O(1/√ε)` for accuracy `ε` | yes | §5 Thm 7 |
+## 1. The tent map and the convexity obstruction
 
-Results that appear ONLY in future directions (NOT proven here, do not claim as theorems):
-`shallowNet_discreteTV_le`, `tent_discreteTV`, sharp constant `M/(8n²)`.
+The tent `T(x) = 1 - |2x - 1|` on the three dyadic nodes:
+
+| x      | 0 | 1/2 | 1 |
+|--------|---|-----|---|
+| T(x)   | 0 |  1  | 0 |
+
+A tropical polynomial `p` (a finite max of affine functions) is **convex**, so
+the chord inequality `p(1/2) ≤ (p(0) + p(1)) / 2` always holds. If `p` matched the
+tent within `ε` at all three nodes, then
+
+```
+1 - ε ≤ p(1/2) ≤ (p(0) + p(1)) / 2 ≤ (ε + ε)/2 = ε   ⟹   ε ≥ 1/2.
+```
+
+Counterexample hunt for `ε < 1/2`: any candidate convex `p` was tested by the chord
+inequality and necessarily fails, e.g.
+
+* `p ≡ 1/2` (constant): errors `(1/2, 1/2, 1/2)`, max error `1/2` — exactly the floor.
+* `p(x) = |2x-1|` (convex, the "anti-tent"): values `(1, 0, 1)`, errors `(1, 1, 1)`.
+* `p(x) = a|2x-1| + b` for any `a ≥ 0`: midpoint value `b`, endpoint values `a+b`;
+  forcing `b ≥ 1-ε` and `a+b ≤ ε` gives `a ≤ 2ε-1 < 0`, impossible for `ε < 1/2`.
+
+No convex `p` beats `ε = 1/2`. The bound is tight (constant `1/2`). The positive
+side: `T(x) = 1 - max(2x-1, 1-2x)` is a difference of two tropical polynomials,
+i.e. tropical *rational*.
+
+## 2. Quantitative tropical-rational rate
+
+For `f(x) = x²` on `[0,1]` (`1`-Lipschitz on `[0,1]` after the bound `|f'|≤2`, and
+`W^{2,∞}` with second-derivative bound `M = 2`), the `2n`-ramp interpolation
+network `reluInterpNet f n` is a tropical rational function with `2n` ramp
+monomials. Sampled max error over a fine grid of `[0,1]`:
+
+| n  | observed max error | linear bound L/n (L=2) | quadratic bound M/n² (M=2) |
+|----|--------------------|------------------------|-----------------------------|
+| 1  | 0.25               | 2.0                    | 2.0                         |
+| 2  | 0.0625             | 1.0                    | 0.5                         |
+| 4  | 0.0156             | 0.5                    | 0.125                       |
+| 8  | 0.0039             | 0.25                   | 0.03125                     |
+
+The empirical error scales like `1/(4n²)` (the sharp constant `M/8` for piecewise
+linear interpolation of `x²`), comfortably under both certified bounds `L/n` and
+`M/n²`. This confirms the proven rates are valid (and conservatively loose by the
+expected `O(1)` factor).
+
+## OEIS
+
+No integer sequence is central to these results (the objects are real-valued rates
+and convex obstructions), so no OEIS identifier applies.

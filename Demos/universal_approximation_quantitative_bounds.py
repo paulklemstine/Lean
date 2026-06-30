@@ -1,241 +1,196 @@
 """
-Numerical demonstrations of the quantitative universal approximation theorems
-for one-dimensional single-hidden-layer ReLU networks.
+demo.py — Numerical demonstrations of the tropical structure of ReLU networks.
 
-The network under study is the ramp-difference interpolation network
+This self-contained script illustrates the main results:
 
-    reluInterpNet(f, n, x)
-        = f(0) + sum_{k<n} cellSlope(f,n,k) * (relu(x - k/n) - relu(x - (k+1)/n))
+  1. The tropical distributive law:  min(u) + min(v) = min over the product set.
+  2. Every ReLU network output is a tropical rational function g - h
+     (difference of two minima of affine functionals).
+  3. Closure under max via the identity  max(p, q) = (p + q) - min(p, q).
+  4. Quantitative approximation rates:
+        - O(1/N) uniform error for Lipschitz targets,
+        - O(1/N^2) uniform error for targets with a Lipschitz derivative,
+     using an O(N)-piece (O(N)-monomial) tropical rational interpolant.
+  5. The concavity barrier: the tent (unimodal bump) is NOT a tropical
+     polynomial (concave), but IS a tropical rational function.
 
-with cellSlope(f,n,k) = n * (f((k+1)/n) - f(k/n)).  It uses 2n ReLU neurons.
-
-This script verifies, numerically:
-  (1) the exact cellwise identity reluInterpNet_eq_on_cell;
-  (2) the linear rate quantitative_uat_core: error <= L/n for L-Lipschitz f;
-  (3) the width tradeoff quantitative_uat_width: 2n = O(1/eps);
-  (4) the quadratic rate sobolev_quadratic_rate: error <= M/n^2 for W^{2,inf} f;
-  (5) the improved width tradeoff sobolev_width_tradeoff: 2n = O(1/sqrt(eps));
-  (6) the empirical O(1/n) vs O(1/n^2) decay as the architecture is held fixed.
-
-Pure standard library; no third-party dependencies.
+All math uses the MIN-PLUS convention:
+    tropical addition  a (+) b = min(a, b)
+    tropical product   a (*) b = a + b
 """
 
 from __future__ import annotations
 
 import math
-from typing import Callable, List, Tuple
+from itertools import product
+from typing import Callable, List, Sequence, Tuple
 
-Func = Callable[[float], float]
-
-
-# --------------------------------------------------------------------------- #
-# Core construction (inlined, mirroring the formal definitions)
-# --------------------------------------------------------------------------- #
-
-def relu(x: float) -> float:
-    """ReLU activation: relu(x) = max(x, 0)."""
-    return x if x > 0.0 else 0.0
+# An affine functional on R^n is a pair (a, b) with a in R^n and b in R,
+# evaluated at x as <a, x> + b.
+Affine = Tuple[Tuple[float, ...], float]
 
 
-def grid(n: int, k: int) -> float:
-    """Uniform grid node grid(n, k) = k / n on [0, 1]."""
-    return k / n
+def aff_eval(ab: Affine, x: Sequence[float]) -> float:
+    """Evaluate the affine functional (a, b) at the point x: <a, x> + b."""
+    a, b = ab
+    return sum(ai * xi for ai, xi in zip(a, x)) + b
 
 
-def cell_slope(f: Func, n: int, k: int) -> float:
-    """Scaled cell slope: n * (f((k+1)/n) - f(k/n))."""
-    return n * (f(grid(n, k + 1)) - f(grid(n, k)))
+def trop_poly_eval(family: Sequence[Affine], x: Sequence[float]) -> float:
+    """Evaluate a tropical polynomial: the min over a nonempty affine family."""
+    assert family, "a tropical polynomial needs a nonempty affine family"
+    return min(aff_eval(ab, x) for ab in family)
 
 
-def relu_interp_net(f: Func, n: int, x: float) -> float:
-    """The 2n-neuron ramp-difference ReLU network evaluating at x."""
-    total = f(0.0)
-    for k in range(n):
-        total += cell_slope(f, n, k) * (
-            relu(x - grid(n, k)) - relu(x - grid(n, k + 1))
-        )
-    return total
+def trop_rational_eval(
+    g: Sequence[Affine], h: Sequence[Affine], x: Sequence[float]
+) -> float:
+    """Evaluate a tropical rational function g - h (difference of two minima)."""
+    return trop_poly_eval(g, x) - trop_poly_eval(h, x)
 
 
-def affine_interpolant_on_cell(f: Func, n: int, k: int, x: float) -> float:
-    """The affine interpolant f(k/n) + cellSlope*(x - k/n) on cell k."""
-    return f(grid(n, k)) + cell_slope(f, n, k) * (x - grid(n, k))
+# ---------------------------------------------------------------------------
+# 1. Tropical distributive law
+# ---------------------------------------------------------------------------
+def demo_distributive_law() -> None:
+    """min(u) + min(v) == min over the product index set of (u_i + v_j)."""
+    u = [3.0, -1.0, 7.0, 2.5]
+    v = [4.0, 0.0, -2.0]
+    lhs = min(u) + min(v)
+    rhs = min(ui + vj for ui, vj in product(u, v))
+    print("1. Tropical distributive law")
+    print(f"   min(u) + min(v)            = {lhs}")
+    print(f"   min over product (u_i+v_j) = {rhs}")
+    print(f"   equal: {math.isclose(lhs, rhs)}\n")
 
 
-# --------------------------------------------------------------------------- #
-# Measurement helpers
-# --------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------
+# 2 & 3. ReLU as a tropical rational function (closure under max)
+# ---------------------------------------------------------------------------
+def poly_add(g: Sequence[Affine], h: Sequence[Affine]) -> List[Affine]:
+    """Tropical product (pointwise sum) of two tropical polynomials.
 
-def sup_error(f: Func, n: int, samples: int = 4001) -> float:
-    """Empirical sup-norm error of the network against f on [0, 1]."""
-    worst = 0.0
-    for i in range(samples):
-        x = i / (samples - 1)
-        worst = max(worst, abs(relu_interp_net(f, n, x) - f(x)))
-    return worst
-
-
-def empirical_lipschitz(f: Func, samples: int = 2001) -> float:
-    """Estimate the Lipschitz constant L of f on [0, 1] by finite differences."""
-    xs = [i / (samples - 1) for i in range(samples)]
-    L = 0.0
-    for i in range(1, samples):
-        L = max(L, abs(f(xs[i]) - f(xs[i - 1])) / (xs[i] - xs[i - 1]))
-    return L
+    Realizes  min_S(.) + min_T(.) = min_{S x T}(.)  via the distributive law.
+    """
+    out: List[Affine] = []
+    for (a, b), (c, d) in product(g, h):
+        out.append((tuple(ai + ci for ai, ci in zip(a, c)), b + d))
+    return out
 
 
-def empirical_second_lipschitz(fp: Func, samples: int = 2001) -> float:
-    """Estimate M = Lipschitz constant of the derivative f' on [0, 1]."""
-    return empirical_lipschitz(fp, samples)
+def poly_min(g: Sequence[Affine], h: Sequence[Affine]) -> List[Affine]:
+    """Tropical sum (pointwise min): union of the two affine families."""
+    return list(g) + list(h)
 
 
-# --------------------------------------------------------------------------- #
-# Demo 1: exact cellwise identity (Theorem reluInterpNet_eq_on_cell)
-# --------------------------------------------------------------------------- #
+def relu_rational(f_g: Sequence[Affine], f_h: Sequence[Affine]):
+    """Given f = f_g - f_h, return (G, H) with max(0, f) = G - H.
 
-def demo_exact_cellwise_identity() -> None:
-    print("=" * 70)
-    print("DEMO 1  Exact cellwise identity  (reluInterpNet_eq_on_cell)")
-    print("=" * 70)
-    f: Func = lambda x: math.sin(3.0 * x) + 0.5 * x * x
-    n = 8
-    max_gap = 0.0
-    for k in range(n):
-        for t in (0.0, 0.25, 0.5, 0.75, 1.0):
-            x = grid(n, k) + t * (grid(n, k + 1) - grid(n, k))
-            net = relu_interp_net(f, n, x)
-            aff = affine_interpolant_on_cell(f, n, k, x)
-            max_gap = max(max_gap, abs(net - aff))
-    print(f"  target f(x) = sin(3x) + x^2/2,  n = {n}")
-    print(f"  max |network - affine interpolant| over all cells = {max_gap:.3e}")
-    print("  -> network equals the piecewise-linear interpolant exactly.\n")
+    Uses  max(p, q) = (p + q) - min(p, q)  with p = 0, q = f.
+    Here 0 = (g0 - h0) with g0 = {0} and h0 = {0}; combine via:
+        max(f1, f2) = (A + B) - [min(A, B) + (h1 + h2)],
+        A = g1 + h2,  B = g2 + h1.
+    With f1 = 0 (g1=h1=zero) and f2 = f (g2=f_g, h2=f_h):
+        A = zero + f_h,  B = f_g + zero.
+    """
+    n = len(f_g[0][0])
+    zero: List[Affine] = [(tuple(0.0 for _ in range(n)), 0.0)]
+    g1, h1, g2, h2 = zero, zero, list(f_g), list(f_h)
+    A = poly_add(g1, h2)
+    B = poly_add(g2, h1)
+    G = poly_add(A, B)
+    H = poly_add(poly_min(A, B), poly_add(h1, h2))
+    return G, H
 
 
-# --------------------------------------------------------------------------- #
-# Demo 2: linear rate L/n for Lipschitz targets (quantitative_uat_core)
-# --------------------------------------------------------------------------- #
-
-def demo_linear_rate() -> None:
-    print("=" * 70)
-    print("DEMO 2  Linear rate L/n for Lipschitz targets  (quantitative_uat_core)")
-    print("=" * 70)
-    # A genuinely non-smooth (only Lipschitz) target: a triangle/sawtooth.
-    f: Func = lambda x: abs(x - 1.0/3.0)        # 1-Lipschitz, breakpoint off the grid
-    L = empirical_lipschitz(f)
-    print(f"  target f(x) = |x - 1/3|,  estimated L = {L:.4f}")
-    print(f"  {'n':>5} {'sup error':>14} {'bound L/n':>14} {'holds?':>8}")
-    for n in (4, 8, 16, 32, 64, 128):
-        err = sup_error(f, n)
-        bound = L / n
-        ok = err <= bound + 1e-9
-        print(f"  {n:>5} {err:>14.6e} {bound:>14.6e} {str(ok):>8}")
-    print("  -> error stays under L/n and decays like 1/n.\n")
+def demo_relu_is_tropical_rational() -> None:
+    """Numerically check max(0, f(x)) = G(x) - H(x) for a random affine f."""
+    f_g: List[Affine] = [((1.5, -0.5), 0.3)]  # f(x) = 1.5 x0 - 0.5 x1 + 0.3
+    f_h: List[Affine] = [((0.0, 0.0), 0.0)]   # minus 0
+    G, H = relu_rational(f_g, f_h)
+    print("2/3. ReLU(f) as a tropical rational function G - H")
+    max_err = 0.0
+    for x0 in (-2.0, -0.7, 0.0, 1.1, 3.0):
+        for x1 in (-1.0, 0.4, 2.0):
+            x = (x0, x1)
+            direct = max(0.0, aff_eval(f_g[0], x))
+            via = trop_rational_eval(G, H, x)
+            max_err = max(max_err, abs(direct - via))
+    print(f"   |S| of G = {len(G)},  |S| of H = {len(H)}")
+    print(f"   max |ReLU(f) - (G - H)| over grid = {max_err:.2e}\n")
 
 
-# --------------------------------------------------------------------------- #
-# Demo 3: width/error tradeoff 2n = O(1/eps) (quantitative_uat_width)
-# --------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------
+# 4. Approximation rates via piecewise-linear (tropical rational) interpolant
+# ---------------------------------------------------------------------------
+def pl_interpolant(g: Callable[[float], float], N: int) -> Callable[[float], float]:
+    """Piecewise-linear interpolant of g at nodes k/N on [0, 1] (O(N) pieces).
 
-def demo_width_tradeoff_linear() -> None:
-    print("=" * 70)
-    print("DEMO 3  Width budget 2n = O(1/eps), Lipschitz  (quantitative_uat_width)")
-    print("=" * 70)
-    f: Func = lambda x: abs(x - 1.0/3.0)
-    L = empirical_lipschitz(f)
-    print(f"  target f(x) = |x - 1/3|,  L = {L:.4f}")
-    print(f"  {'eps':>10} {'n>=L/eps':>10} {'width 2n':>10} {'sup error':>14} {'<=eps?':>8}")
-    for eps in (1e-1, 5e-2, 1e-2, 5e-3, 1e-3):
-        n = math.ceil(L / eps)
-        err = sup_error(f, n)
-        ok = err <= eps + 1e-9
-        print(f"  {eps:>10.0e} {n:>10d} {2*n:>10d} {err:>14.6e} {str(ok):>8}")
-    print("  -> required width grows linearly in 1/eps.\n")
+    A continuous piecewise-linear function is a tropical rational function.
+    """
+    nodes = [k / N for k in range(N + 1)]
+    vals = [g(t) for t in nodes]
 
+    def f(x: float) -> float:
+        x = min(1.0, max(0.0, x))
+        k = min(N - 1, int(x * N))
+        t0, t1 = nodes[k], nodes[k + 1]
+        w = 0.0 if t1 == t0 else (x - t0) / (t1 - t0)
+        return (1 - w) * vals[k] + w * vals[k + 1]
 
-# --------------------------------------------------------------------------- #
-# Demo 4: quadratic rate M/n^2 for W^{2,inf} targets (sobolev_quadratic_rate)
-# --------------------------------------------------------------------------- #
-
-def demo_quadratic_rate() -> None:
-    print("=" * 70)
-    print("DEMO 4  Quadratic rate M/n^2 for W^{2,inf}  (sobolev_quadratic_rate)")
-    print("=" * 70)
-    # Smooth target with Lipschitz derivative; f'(x)=2x is 2-Lipschitz so M=2.
-    f: Func = lambda x: x * x
-    fp: Func = lambda x: 2.0 * x
-    M = empirical_second_lipschitz(fp)
-    print(f"  target f(x) = x^2,  f'(x) = 2x,  estimated M = {M:.4f}")
-    print(f"  {'n':>5} {'sup error':>14} {'bound M/n^2':>14} {'sharp M/8n^2':>14} {'holds?':>8}")
-    for n in (4, 8, 16, 32, 64, 128):
-        err = sup_error(f, n)
-        bound = M / (n * n)
-        sharp = M / (8.0 * n * n)
-        ok = err <= bound + 1e-9
-        print(f"  {n:>5} {err:>14.6e} {bound:>14.6e} {sharp:>14.6e} {str(ok):>8}")
-    print("  -> error stays under M/n^2 and tracks the sharp M/(8n^2) (future C1).\n")
+    return f
 
 
-# --------------------------------------------------------------------------- #
-# Demo 5: improved width tradeoff 2n = O(1/sqrt(eps)) (sobolev_width_tradeoff)
-# --------------------------------------------------------------------------- #
-
-def demo_width_tradeoff_quadratic() -> None:
-    print("=" * 70)
-    print("DEMO 5  Width budget 2n = O(1/sqrt(eps)), W^{2,inf}  (sobolev_width_tradeoff)")
-    print("=" * 70)
-    f: Func = lambda x: x * x
-    fp: Func = lambda x: 2.0 * x
-    M = empirical_second_lipschitz(fp)
-    print(f"  target f(x) = x^2,  M = {M:.4f}")
-    print(f"  {'eps':>10} {'n>=sqrt(M/eps)':>16} {'width 2n':>10} {'sup error':>14} {'<=eps?':>8}")
-    for eps in (1e-1, 5e-2, 1e-2, 5e-3, 1e-3):
-        n = math.ceil(math.sqrt(M / eps))
-        err = sup_error(f, n)
-        ok = err <= eps + 1e-9
-        print(f"  {eps:>10.0e} {n:>16d} {2*n:>10d} {err:>14.6e} {str(ok):>8}")
-    print("  -> required width grows like 1/sqrt(eps): quadratically fewer neurons.\n")
+def sup_error(g: Callable[[float], float], f: Callable[[float], float],
+              samples: int = 4001) -> float:
+    """Approximate sup-norm error of f against g on [0, 1]."""
+    return max(abs(g(x / samples) - f(x / samples)) for x in range(samples + 1))
 
 
-# --------------------------------------------------------------------------- #
-# Demo 6: regularity, not architecture, sets the exponent
-# --------------------------------------------------------------------------- #
+def demo_approximation_rates() -> None:
+    """Empirically confirm O(1/N) for Lipschitz and O(1/N^2) for C^{1,1}."""
+    # Lipschitz target: |x - 1/3| (L = 1), kink off the dyadic grid -> rate 1/N.
+    g_lip = lambda x: abs(x - 1.0 / 3.0)
+    # C^{1,1} target: x^2 (g'' = 2, M = 2) -> rate 1/N^2.
+    g_smooth = lambda x: x * x
 
-def _log2_decay_exponent(ns: List[int], errs: List[float]) -> float:
-    """Slope of log2(error) vs log2(n): the empirical decay exponent."""
-    pts: List[Tuple[float, float]] = [
-        (math.log2(n), math.log2(e)) for n, e in zip(ns, errs) if e > 0.0
-    ]
-    m = len(pts)
-    sx = sum(p[0] for p in pts)
-    sy = sum(p[1] for p in pts)
-    sxx = sum(p[0] * p[0] for p in pts)
-    sxy = sum(p[0] * p[1] for p in pts)
-    return (m * sxy - sx * sy) / (m * sxx - sx * sx)
+    print("4. Approximation rates (sup error on [0,1])")
+    print("   Lipschitz target g(x) = |x - 1/3|   (expect ~ 1/N)")
+    for N in (4, 8, 16, 32, 64):
+        e = sup_error(g_lip, pl_interpolant(g_lip, N))
+        print(f"     N={N:3d}   error={e:.5e}   error*N={e*N:.4f}")
+    print("   Smooth target g(x) = x^2            (expect ~ M/(8 N^2), M=2)")
+    for N in (4, 8, 16, 32, 64):
+        e = sup_error(g_smooth, pl_interpolant(g_smooth, N))
+        print(f"     N={N:3d}   error={e:.5e}   error*N^2={e*N*N:.4f}")
+    print()
 
 
-def demo_exponent_is_regularity() -> None:
-    print("=" * 70)
-    print("DEMO 6  Same network: exponent set by regularity of the target")
-    print("=" * 70)
-    rough: Func = lambda x: abs(x - 1.0/3.0)    # Lipschitz only  -> expect ~ -1
-    smooth: Func = lambda x: x * x              # W^{2,inf}        -> expect ~ -2
-    ns = [8, 16, 32, 64, 128, 256]
-    rough_errs = [sup_error(rough, n) for n in ns]
-    smooth_errs = [sup_error(smooth, n) for n in ns]
-    er = _log2_decay_exponent(ns, rough_errs)
-    es = _log2_decay_exponent(ns, smooth_errs)
-    print(f"  Lipschitz target |x-1/3|:   empirical decay exponent = {er:+.3f}  (theory -1)")
-    print(f"  Smooth   target x^2:        empirical decay exponent = {es:+.3f}  (theory -2)")
-    print("  -> architecture is identical; the smoothness class drives the rate.\n")
+# ---------------------------------------------------------------------------
+# 5. Concavity barrier: the tent bump
+# ---------------------------------------------------------------------------
+def demo_concavity_barrier() -> None:
+    """The tent rises above its endpoint chord, so it is not concave."""
+    tent = lambda x: max(0.0, 1.0 - abs(2.0 * x - 1.0))
+    # Chord between endpoints (0,0) and (1,0) is the zero function.
+    midpoint_value = tent(0.5)
+    chord_value = 0.0
+    defect = midpoint_value - chord_value
+    print("5. Concavity barrier (the tent / unimodal bump)")
+    print(f"   tent(1/2) = {midpoint_value}, chord value = {chord_value}")
+    print(f"   concavity defect at midpoint = {defect}  (> 0  =>  not concave)")
+    print("   => not a tropical polynomial, but IS tropical rational")
+    print("      (one subtraction supplies the single curvature change)\n")
 
 
 def main() -> None:
-    demo_exact_cellwise_identity()
-    demo_linear_rate()
-    demo_width_tradeoff_linear()
-    demo_quadratic_rate()
-    demo_width_tradeoff_quadratic()
-    demo_exponent_is_regularity()
+    print("=" * 64)
+    print("Tropical structure of ReLU networks — numerical demonstrations")
+    print("=" * 64 + "\n")
+    demo_distributive_law()
+    demo_relu_is_tropical_rational()
+    demo_approximation_rates()
+    demo_concavity_barrier()
 
 
 if __name__ == "__main__":

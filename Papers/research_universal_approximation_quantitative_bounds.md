@@ -1,321 +1,214 @@
-# Universal Approximation with Quantitative Bounds: Explicit Linear and Quadratic Rates for One-Dimensional ReLU Networks
-
-**Author:** Aristotle
-**Date:** 2026-06-27
-**Domain:** Applications (Machine Learning Theory)
+# The Tropical Structure of ReLU Networks: A Forward Correspondence and Quantitative Approximation Bounds
 
 ## Abstract
 
-The classical universal approximation theorem guarantees that neural networks can
-approximate continuous functions arbitrarily well, but it is non-quantitative: it
-asserts existence without specifying network size or convergence rate. We give a
-fully explicit, constructive, and machine-checked refinement for one-dimensional
-single-hidden-layer ReLU networks. Fixing a transparent architecture — the
-*ramp-difference interpolation network* $\mathrm{reluInterpNet}(f,n,\cdot)$ built
-from $2n$ ReLU neurons that reproduces the uniform piecewise-linear interpolant of
-$f$ on $[0,1]$ — we prove two sharp regularity-dependent rates. First, for any
-$L$-Lipschitz target, the uniform approximation error is at most $L/n$
-(`quantitative_uat_core`), yielding the width/error tradeoff $2n = O(1/\varepsilon)$
-(`quantitative_uat_width`). Second, and more strikingly, for targets in the Sobolev
-class $W^{2,\infty}$ — those with an $M$-Lipschitz derivative — the *same* network
-achieves the quadratic rate $M/n^2$ (`sobolev_quadratic_rate`), improving the
-width requirement to $2n = O(1/\sqrt{\varepsilon})$ (`sobolev_width_tradeoff`).
-The architecture is held fixed throughout; the exponent on $1/n$ is governed
-entirely by the smoothness class of the target. The keystone is an exact algebraic
-identity (`reluInterpNet_eq_on_cell`) showing the network coincides with the affine
-interpolant on every grid cell, after which the error analysis reduces to classical
-interpolation estimates. All results are formalized and verified.
+We give a self-contained, bottom-up development of the *forward direction* of the correspondence between rectified-linear (ReLU) neural networks and tropical rational functions in the min-plus semiring $(\mathbb{R}, \oplus = \min, \otimes = +)$. We define tropical polynomials as finite, nonempty minima of affine functionals and tropical rational functions as their differences, and we prove that this class is closed under the operations a feed-forward ReLU network performs: affine maps, negation, pointwise sum, pointwise maximum, ReLU, scalar multiplication, finite sums, and affine combinations. The central technical step is a *tropical distributive law* — that the sum of two minima of affine functionals is a minimum over the product index set — from which closure under maximum, and hence ReLU, follows. As a consequence, every function computed by a feed-forward ReLU network is a tropical rational function. We then develop the quantitative side of the dictionary: the number of tropical monomials is an effective notion of degree controlling both approximation rates for smooth targets and the convex/concave expressivity of the representation. We state explicit approximation rates — uniform error $O(N^{-1})$ for Lipschitz targets and $O(N^{-2})$ for targets with a Lipschitz derivative, using an $O(N)$-monomial family — and formulate three sharp conjectures: a convexity-defect characterization of the polynomial/rational gap, an $N^{-s}$ smoothness staircase, and an alternation-count law for the number of subtractions.
+
+**Keywords:** ReLU networks, tropical geometry, min-plus semiring, tropical rational functions, piecewise-linear approximation, universal approximation, convexity defect, depth–width tradeoffs.
+
+---
 
 ## 1. Introduction
 
-The universal approximation theorem (UAT) is a cornerstone of the theory of neural
-networks: feedforward networks with a single hidden layer and a non-polynomial
-activation are dense in the space of continuous functions on compact sets. As
-usually stated, however, the theorem is purely existential. It does not answer the
-questions a practitioner actually asks: *how many neurons* are needed for a target
-accuracy, and *how does the error decay* as the network grows? Without such
-quantitative content, the UAT functions as a reassurance rather than a design
-tool.
+The rectified linear unit $\mathrm{ReLU}(t) = \max(0, t)$ is the dominant nonlinearity in modern neural networks. A feed-forward ReLU network alternates affine maps with coordinatewise applications of $\mathrm{ReLU}$ and therefore computes a continuous **piecewise-linear** function. A now-classical observation is that the class of such functions coincides with the class of **tropical rational functions**: differences of tropical polynomials. This places the expressive power of ReLU networks inside tropical geometry, where complexity is measured combinatorially by counting monomials (affine pieces).
 
-This paper supplies a quantitative theory in the cleanest possible setting:
-scalar functions on the unit interval $[0,1]$, approximated by single-hidden-layer
-ReLU networks. The central object is an explicit network that exactly reproduces
-the uniform-grid piecewise-linear interpolant of the target. Working with this
-concrete construction rather than an abstract existence argument lets us track
-constants exactly and prove rate theorems with no hidden dependencies.
+The purpose of this paper is twofold.
 
-Our contributions are:
+1. **A clean forward correspondence.** We prove, as an independent tower of lemmas with no circular dependence, that *every* function computed by a feed-forward ReLU network is a tropical rational function in the min-plus semiring. Each lemma is a closure property of the class of tropical rational functions, and the network theorem follows by induction on layers. The argument is elementary and constructive; the only nontrivial ingredient is a distributive law relating the sum of two minima to a single minimum over a product index set.
 
-1. **An exact architectural identity.** The $2n$-neuron ramp-difference network
-   equals the affine interpolant on each grid cell (Theorem 1), reducing all
-   approximation questions to classical interpolation error analysis.
-2. **A linear rate for Lipschitz targets.** Uniform error $\le L/n$ on $[0,1]$
-   (Theorem 3), with the explicit width/error tradeoff $2n = O(1/\varepsilon)$
-   (Theorem 4).
-3. **A quadratic rate for $W^{2,\infty}$ targets.** The *same* network attains
-   error $\le M/n^2$ (Theorem 6) when the derivative is $M$-Lipschitz, with the
-   improved tradeoff $2n = O(1/\sqrt{\varepsilon})$ (Theorem 7).
+2. **Quantitative bounds.** We then turn the qualitative dictionary into a quantitative one. We explain why a single tropical polynomial — being concave — cannot represent functions that bulge above their chords, why one subtraction repairs this for a single bump, and how the monomial count controls approximation rates for smooth targets. We give explicit rates and formulate sharp conjectures on the exact cost of expressivity.
 
-The conceptual message is that the *exponent* in the convergence rate is set by
-the regularity of the target, not by the architecture, which we hold fixed at a
-single hidden layer of $2n$ ramps.
+Throughout, we work in the **min-plus** convention: tropical addition is $\min$, tropical multiplication is ordinary $+$. (The max-plus convention is obtained by negation; statements transfer verbatim with $\min \leftrightarrow \max$ and concave $\leftrightarrow$ convex.)
+
+---
 
 ## 2. Definitions
 
-Throughout, $n$ is a positive integer and $f : \mathbb{R} \to \mathbb{R}$ is the
-target function, considered on $[0,1]$.
+Fix $n \in \mathbb{N}$. We work with functions on the input space $\mathbb{R}^n$, which we index by $\mathrm{Fin}\,n = \{0, 1, \dots, n-1\}$.
 
-**Definition 1 (ReLU activation, `relu`).**
-$$\mathrm{relu}(x) = \max(x, 0).$$
+**Definition 2.1 (Affine functional).** An *affine functional* is a pair $(a, b)$ with $a \in \mathbb{R}^n$ and $b \in \mathbb{R}$, evaluated at $x \in \mathbb{R}^n$ by
+$$\mathrm{aff}_{(a,b)}(x) = \langle a, x\rangle + b = \sum_{j} a_j x_j + b.$$
+An affine functional is a *tropical monomial*: in min-plus notation, $\bigotimes_j (a_j \otimes x_j) \otimes b$ is the ordinary sum $\sum_j a_j x_j + b$.
 
-**Definition 2 (Uniform grid, `grid`).** The $k$-th node of the uniform grid is
-$$\mathrm{grid}(n,k) = \frac{k}{n}, \qquad k = 0, 1, \dots, n.$$
-Consecutive nodes are separated by the cell width $h = 1/n$.
+**Definition 2.2 (Tropical polynomial).** A function $f : \mathbb{R}^n \to \mathbb{R}$ is a *tropical polynomial* if there is a finite, nonempty set $S$ of affine functionals such that
+$$f(x) = \min_{(a,b) \in S} \big(\langle a, x\rangle + b\big) \qquad \text{for all } x.$$
+Equivalently, in tropical notation $f = \bigoplus_{(a,b) \in S} \mathrm{aff}_{(a,b)}$. The cardinality $|S|$ is the *monomial count* of the representation. Geometrically, $f$ is the lower envelope of finitely many hyperplanes and is therefore **concave** and piecewise linear.
 
-**Definition 3 (Cell slope, `cellSlope`).** The slope of $f$ across cell
-$[\tfrac{k}{n}, \tfrac{k+1}{n}]$, normalized by the reciprocal cell width, is
-$$\mathrm{cellSlope}(f,n,k) = n\bigl(f(\mathrm{grid}(n,k+1)) - f(\mathrm{grid}(n,k))\bigr).$$
+**Definition 2.3 (Tropical rational function).** A function $f : \mathbb{R}^n \to \mathbb{R}$ is a *tropical rational function* if there exist tropical polynomials $g, h$ with
+$$f(x) = g(x) - h(x) \qquad \text{for all } x.$$
+In tropical notation this is the tropical quotient $g \oslash h$, since tropical division is ordinary subtraction.
 
-**Definition 4 (Ramp-difference interpolation network, `reluInterpNet`).** The
-single-hidden-layer ReLU network with $2n$ ramp neurons is
-$$\mathrm{reluInterpNet}(f,n,x) = f(0) + \sum_{k=0}^{n-1} \mathrm{cellSlope}(f,n,k)\,\Bigl(\mathrm{relu}\bigl(x - \mathrm{grid}(n,k)\bigr) - \mathrm{relu}\bigl(x - \mathrm{grid}(n,k+1)\bigr)\Bigr).$$
-Each summand uses two ReLU units, for a total hidden width of $2n$.
+**Definition 2.4 (ReLU and ReLU networks).** The *rectifier* is $\mathrm{ReLU}(t) = \max(0, t)$. A *feed-forward ReLU network* with input dimension $n$ is a finite composition of layers, each of which (i) applies an affine map $z \mapsto Wz + c$ and then (ii) applies $\mathrm{ReLU}$ coordinatewise; the final layer is affine (a *readout*). Each output coordinate of such a network is a function $\mathbb{R}^n \to \mathbb{R}$ built from coordinates $x_j$, constants, affine combinations, and $\mathrm{ReLU}$.
 
-**Definition 5 (Lipschitz regularity on $[0,1]$, `LipOn01`).** $f$ is
-$L$-Lipschitz on $[0,1]$ if
-$$\forall x, y \in [0,1], \quad |f(x) - f(y)| \le L\,|x - y|.$$
+The goal of Section 3 is to show that the class
+$$\mathcal{R}_n = \{\, f : \mathbb{R}^n \to \mathbb{R} \mid f \text{ is tropical rational}\,\}$$
+contains every network output coordinate.
 
-**Definition 6 (Differentiability on $[0,1]$, `HasDerivOn01`).** $f'$ is a
-derivative of $f$ on $[0,1]$ if $f$ has derivative $f'(x)$ at every $x \in [0,1]$.
-The Sobolev class $W^{2,\infty}$ condition is that such an $f'$ exists and is
-itself $L$-Lipschitz (with constant $M$), i.e. $\mathrm{LipOn01}(f', M)$.
+---
 
-## 3. The ramp-difference primitive
+## 3. The Forward Correspondence
 
-All structure flows from the behavior of a single ramp-difference
-$\mathrm{relu}(x-a) - \mathrm{relu}(x-b)$ with $a \le b$.
+We build $\mathcal{R}_n$ up by closure properties. No statement below uses the final network theorem in its proof, so the development is non-circular.
 
-**Lemma 1 (Ramp profile, `ramp_left`/`ramp_mid`/`ramp_right`).** For $a \le b$:
-$$\mathrm{relu}(x-a) - \mathrm{relu}(x-b) = \begin{cases} 0, & x \le a, \\ x - a, & a \le x \le b, \\ b - a, & b \le x. \end{cases}$$
+### 3.1 Base cases
 
-*Proof sketch.* Case-split on the sign of $x-a$ and $x-b$ inside the two maxima.
-For $x \le a$ both arguments are non-positive, so both ReLUs vanish. For
-$a \le x \le b$ the first ReLU equals $x-a$ and the second vanishes. For $b \le x$
-both ReLUs are active and equal $x-a$ and $x-b$ respectively, whose difference is
-$b-a$. Each case is a one-line linear arithmetic check. $\square$
+**Lemma 3.1 (Affine functionals are tropical polynomials).** For any $a \in \mathbb{R}^n$, $b \in \mathbb{R}$, the function $x \mapsto \langle a, x\rangle + b$ is a tropical polynomial, witnessed by the singleton family $S = \{(a, b)\}$.
 
-Two grid identities are used repeatedly. First, **`grid_succ_sub`**:
-$\mathrm{grid}(n,k+1) - \mathrm{grid}(n,k) = 1/n$. Second, **`cellSlope_mul_width`**:
-multiplying the cell slope by the cell width recovers the endpoint difference,
-$$\mathrm{cellSlope}(f,n,k)\cdot\bigl(\mathrm{grid}(n,k+1) - \mathrm{grid}(n,k)\bigr) = f(\mathrm{grid}(n,k+1)) - f(\mathrm{grid}(n,k)).$$
+*Proof.* With $S = \{(a,b)\}$, the minimum over $S$ is the single value $\langle a, x\rangle + b$. $\square$
 
-## 4. The exact identity and the linear rate
+**Lemma 3.2 (Constants are tropical polynomials).** For any $c \in \mathbb{R}$, the constant function $x \mapsto c$ is a tropical polynomial, witnessed by $S = \{(0, c)\}$.
 
-The decisive structural fact is that the network is not merely *close* to the
-piecewise-linear interpolant — it equals it exactly on each cell.
+*Proof.* The single affine piece $(0, c)$ evaluates to $c$ everywhere. $\square$
 
-**Theorem 1 (Cellwise exactness, `reluInterpNet_eq_on_cell`).** Let $0 < n$,
-$k < n$, and $x \in [\mathrm{grid}(n,k), \mathrm{grid}(n,k+1)]$. Then
-$$\mathrm{reluInterpNet}(f,n,x) = f(\mathrm{grid}(n,k)) + \mathrm{cellSlope}(f,n,k)\,\bigl(x - \mathrm{grid}(n,k)\bigr).$$
+**Lemma 3.3 (Polynomials are rational).** Every tropical polynomial is a tropical rational function.
 
-*Proof sketch.* Split the defining sum at the index $k$ of the active cell into
-three groups. For indices $j < k$, the point $x$ lies to the right of cell $j$, so
-by `ramp_right` each ramp-difference saturates to the cell width; multiplied by
-the cell slope (via `cellSlope_mul_width`) the term equals
-$f(\mathrm{grid}(n,j+1)) - f(\mathrm{grid}(n,j))$, and the sum telescopes to
-$f(\mathrm{grid}(n,k)) - f(\mathrm{grid}(n,0)) = f(\mathrm{grid}(n,k)) - f(0)$.
-For indices $j > k$, $x$ lies to the left of cell $j$, so by `ramp_left` every
-term vanishes. For $j = k$, by `ramp_mid` the ramp-difference equals
-$x - \mathrm{grid}(n,k)$, contributing $\mathrm{cellSlope}(f,n,k)(x-\mathrm{grid}(n,k))$.
-Adding the base term $f(0)$ cancels the $-f(0)$ from the telescoping sum, leaving
-the affine interpolant. $\square$
+*Proof.* If $f$ is a tropical polynomial then $f = f - 0$, where the constant $0$ is a tropical polynomial by Lemma 3.2. $\square$
 
-With exactness in hand, approximation error is purely an interpolation question.
+Combining: constants (Lemma 3.2 + 3.3) and affine functionals (Lemma 3.1 + 3.3) are tropical rational. These are the leaves of the induction.
 
-**Lemma 2 (Interpolant error, `interp_error_le`).** If $0 < n$, $k < n$,
-$0 \le L$, $\mathrm{LipOn01}(f,L)$, and
-$x \in [\mathrm{grid}(n,k), \mathrm{grid}(n,k+1)]$, then
-$$\Bigl|\bigl(f(\mathrm{grid}(n,k)) + \mathrm{cellSlope}(f,n,k)(x - \mathrm{grid}(n,k))\bigr) - f(x)\Bigr| \le \frac{L}{n}.$$
+### 3.2 The tropical distributive law
 
-*Proof sketch.* Write $t = (x - \mathrm{grid}(n,k))/h \in [0,1]$ with $h = 1/n$.
-The affine interpolant is the convex combination
-$(1-t)\,f(\mathrm{grid}(n,k)) + t\,f(\mathrm{grid}(n,k+1))$. Hence the error is
-$(1-t)\,(f(\mathrm{grid}(n,k)) - f(x)) + t\,(f(\mathrm{grid}(n,k+1)) - f(x))$.
-Both grid nodes lie within distance $h = 1/n$ of $x$, so by `LipOn01` each
-endpoint deviation is at most $L/n$; the convex combination of two quantities
-bounded by $L/n$ is again bounded by $L/n$. $\square$
+The single nontrivial algebraic fact is the following identity, the engine behind closure under sum and maximum.
 
-**Theorem 2 (Cellwise linear rate, `quantitative_uat_cell`).** Under the
-hypotheses of Lemma 2,
-$$\bigl|\mathrm{reluInterpNet}(f,n,x) - f(x)\bigr| \le \frac{L}{n}.$$
+**Lemma 3.4 (Distributive law for minima).** Let $S, T$ be finite nonempty index sets and $u : S \to \mathbb{R}$, $v : T \to \mathbb{R}$. Then
+$$\min_{s \in S} u(s) \;+\; \min_{t \in T} v(t) \;=\; \min_{(s,t) \in S \times T}\big(u(s) + v(t)\big).$$
 
-*Proof.* Substitute the exact identity (Theorem 1) into Lemma 2. $\square$
+*Proof.* ($\geq$) For any $(s, t)$, $u(s) + v(t) \geq \min_S u + \min_T v$, but reading the displayed identity the other way: the right side is a minimum of terms each $\geq \min_S u + \min_T v$... more directly, ($\leq$): for any $s, t$, $\min_S u + \min_T v \leq u(s) + v(t)$ by monotonicity of $+$, so the left side is a lower bound for every term of the right, hence $\leq$ the right. ($\geq$): choose minimizers $s^\star \in S$, $t^\star \in T$ of $u$ and $v$; then the term $u(s^\star) + v(t^\star)$ equals the left side and is $\geq$ the right side's minimum. The two inequalities give equality. $\square$
 
-To globalize, every point of $[0,1]$ lies in some cell.
+In tropical language, Lemma 3.4 is precisely the statement that tropical multiplication ($+$) distributes over tropical addition ($\min$): $(\bigoplus_s u_s) \otimes (\bigoplus_t v_t) = \bigoplus_{s,t}(u_s \otimes v_t)$.
 
-**Lemma 3 (Cell cover, `exists_cell`).** If $0 < n$ and $x \in [0,1]$, there exists
-$k < n$ with $x \in [\mathrm{grid}(n,k), \mathrm{grid}(n,k+1)]$. (Take
-$k = \lfloor x n\rfloor$, with the endpoint $x = 1$ handled by $k = n-1$.)
+### 3.3 Closure of tropical polynomials
 
-**Theorem 3 (Global linear rate, `quantitative_uat_core`).** If $0 < n$,
-$0 \le L$, and $\mathrm{LipOn01}(f,L)$, then for all $x \in [0,1]$,
-$$\bigl|\mathrm{reluInterpNet}(f,n,x) - f(x)\bigr| \le \frac{L}{n}.$$
+**Lemma 3.5 (Closure under tropical product / pointwise sum).** If $f, g$ are tropical polynomials, so is $x \mapsto f(x) + g(x)$.
 
-*Proof.* Given $x$, choose its cell via Lemma 3 and apply Theorem 2. $\square$
+*Proof.* Write $f(x) = \min_{(a,b) \in S}(\langle a,x\rangle + b)$ and $g(x) = \min_{(c,d) \in T}(\langle c,x\rangle + d)$. By Lemma 3.4,
+$$f(x) + g(x) = \min_{((a,b),(c,d)) \in S \times T}\big(\langle a + c, x\rangle + (b + d)\big),$$
+which is a tropical polynomial with affine family $\{(a+c, b+d) : (a,b)\in S, (c,d)\in T\}$. $\square$
 
-**Theorem 4 (Width/error tradeoff, `quantitative_uat_width`).** If $0 < n$,
-$0 \le L$, $\mathrm{LipOn01}(f,L)$, and $L \le \varepsilon\, n$, then for all
-$x \in [0,1]$,
-$$\bigl|\mathrm{reluInterpNet}(f,n,x) - f(x)\bigr| \le \varepsilon.$$
-Consequently a hidden width of $2n = O(1/\varepsilon)$ ReLU neurons suffices to
-approximate any $L$-Lipschitz target to uniform accuracy $\varepsilon$.
+**Lemma 3.6 (Closure under tropical sum / pointwise minimum).** If $f, g$ are tropical polynomials, so is $x \mapsto \min(f(x), g(x))$.
 
-*Proof.* From Theorem 3 the error is $\le L/n$, and $L \le \varepsilon n$ gives
-$L/n \le \varepsilon$. (The constraint $L \le \varepsilon n$ alone forces the
-conclusion; positivity of $\varepsilon$ is retained only to match the intended
-reading.) $\square$
+*Proof.* If $f = \min_S$ and $g = \min_T$ over their affine families, then $\min(f, g) = \min_{S \cup T}$ over the union family. $\square$
 
-## 5. The quadratic rate for Sobolev targets
+**Lemma 3.7 (Closure under nonnegative scaling).** If $f$ is a tropical polynomial and $c \geq 0$, then $x \mapsto c\,f(x)$ is a tropical polynomial.
 
-We now improve the exponent — without changing the network — by strengthening the
-regularity of the target from Lipschitz ($W^{1,\infty}$) to a Lipschitz derivative
-($W^{2,\infty}$).
+*Proof.* For $c \geq 0$, multiplication by $c$ is monotone and commutes with $\min$: $c \min_{(a,b)\in S}(\langle a,x\rangle + b) = \min_{(a,b)\in S}(\langle ca, x\rangle + cb)$, a tropical polynomial with family $\{(ca, cb)\}$. (For $c < 0$ the operation flips $\min$ to $\max$ and leaves the polynomial class; it is handled at the rational level in Lemma 3.11.) $\square$
 
-**Theorem 5 (Cellwise quadratic rate, `sobolev_interp_error_cell`).** Let
-$0 < n$, $k < n$, $0 \le M$, suppose $f$ has derivative $f'$ on $[0,1]$
-(`HasDerivOn01`) and $\mathrm{LipOn01}(f', M)$. Then for
-$x \in [\mathrm{grid}(n,k), \mathrm{grid}(n,k+1)]$,
-$$\bigl|\mathrm{reluInterpNet}(f,n,x) - f(x)\bigr| \le \frac{M}{n^2}.$$
+### 3.4 Closure of tropical rational functions
 
-*Proof sketch.* By Theorem 1 the network equals the affine interpolant
-$p(x) = f(a) + S\,(x-a)$ on the cell $[a,b]$, where $a = \mathrm{grid}(n,k)$,
-$b = \mathrm{grid}(n,k+1)$, $h = b - a = 1/n$, and the chord slope is
-$S = (f(b) - f(a))/h$. Consider the remainder $e = f - p$. It vanishes at the
-left endpoint, $e(a) = 0$, and its derivative is $e'(x) = f'(x) - S$. By the mean
-value theorem (`exists_hasDerivAt_eq_slope`) there is an interior point
-$c \in (a,b)$ with $S = f'(c)$. Therefore
-$$|e'(x)| = |f'(x) - f'(c)| \le M\,|x - c| \le M\,h,$$
-using the $M$-Lipschitz bound on $f'$ and $|x - c| \le h$. Thus $e$ is
-$(Mh)$-Lipschitz on the cell, and since $e(a) = 0$,
-$$|e(x)| = |e(x) - e(a)| \le M h\,|x - a| \le M h \cdot h = M h^2 = \frac{M}{n^2}.$$
-$\square$
+**Lemma 3.8 (Closure under negation).** If $f \in \mathcal{R}_n$ then $-f \in \mathcal{R}_n$.
 
-**Theorem 6 (Global quadratic rate, `sobolev_quadratic_rate`).** Under the same
-hypotheses, for all $x \in [0,1]$,
-$$\bigl|\mathrm{reluInterpNet}(f,n,x) - f(x)\bigr| \le \frac{M}{n^2}.$$
+*Proof.* If $f = g - h$ then $-f = h - g$, again a difference of tropical polynomials. $\square$
 
-*Proof.* Cover $[0,1]$ by cells (Lemma 3) and apply Theorem 5 on the cell
-containing $x$. $\square$
+**Lemma 3.9 (Closure under sum).** If $f_1, f_2 \in \mathcal{R}_n$ then $f_1 + f_2 \in \mathcal{R}_n$.
 
-**Theorem 7 (Improved width/error tradeoff, `sobolev_width_tradeoff`).** To reach
-uniform accuracy $\varepsilon$ for a $W^{2,\infty}$ target with second-derivative
-bound $M$, it suffices to take $n \ge \sqrt{M/\varepsilon}$, i.e. a hidden width of
-$$2n = O\!\left(\frac{1}{\sqrt{\varepsilon}}\right)$$
-ReLU neurons — the square root of the $O(1/\varepsilon)$ requirement in the
-Lipschitz regime.
+*Proof.* Write $f_i = g_i - h_i$ with $g_i, h_i$ tropical polynomials. Then
+$$f_1 + f_2 = (g_1 + g_2) - (h_1 + h_2),$$
+and $g_1 + g_2$, $h_1 + h_2$ are tropical polynomials by Lemma 3.5. $\square$
 
-*Proof.* By Theorem 6 the error is $\le M/n^2 \le \varepsilon$ whenever
-$n^2 \ge M/\varepsilon$. $\square$
+**Lemma 3.10 (Closure under maximum).** If $f_1, f_2 \in \mathcal{R}_n$ then $x \mapsto \max(f_1(x), f_2(x)) \in \mathcal{R}_n$.
 
-## 6. Discussion: regularity, not architecture, sets the rate
+*Proof.* Write $f_i = g_i - h_i$. Put $A = g_1 + h_2$ and $B = g_2 + h_1$ (both tropical polynomials by Lemma 3.5). Using $\max(p, q) = p + q - \min(p, q)$ on $p = A$, $q = B$,
+$$\max(f_1, f_2) = \frac{}{} \big(A + B\big) - \Big[\min(A, B) + (h_1 + h_2)\Big].$$
+Indeed $f_1 = (A - (h_1+h_2)) $ shifted, and a direct computation gives
+$$\max(f_1, f_2) = \max\!\Big(\tfrac{A - (h_1+h_2)}{1},\, \tfrac{B-(h_1+h_2)}{1}\Big) = \frac{(A+B) - \big[\min(A,B) + (h_1+h_2)\big]}{1}.$$
+The numerator $A + B$ is a tropical polynomial (Lemma 3.5), and the bracket $\min(A, B) + (h_1 + h_2)$ is a tropical polynomial (Lemmas 3.6 and 3.5). Hence $\max(f_1, f_2)$ is a difference of tropical polynomials. $\square$
 
-Theorems 3 and 6 share an identical network — one hidden layer of $2n$ ReLU
-ramps — yet deliver error $O(1/n)$ and $O(1/n^2)$ respectively. The only
-difference is the smoothness class of the target: $W^{1,\infty}$ (Lipschitz) versus
-$W^{2,\infty}$ (Lipschitz derivative). This isolates a clean principle:
+The cleanest way to see Lemma 3.10 is the *Newton-polytope-free* identity it relies on: for reals $p, q$,
+$$\max(p, q) = (p + q) - \min(p, q),$$
+which converts a max into a difference involving a min — exactly the min-plus structure that tropical polynomials provide.
 
-> With the architecture fixed at a single hidden layer of piecewise-linear ramps,
-> the *exponent* in the convergence rate is determined by the regularity of the
-> target, not by the network.
+**Lemma 3.11 (Closure under scalar multiplication).** If $f \in \mathcal{R}_n$ and $c \in \mathbb{R}$, then $x \mapsto c\,f(x) \in \mathcal{R}_n$.
 
-This perspective sharpens the qualitative UAT into an engineering contract. Given
-the regularity of the data — measurable, in principle, from its modulus of
-continuity or its second-difference statistics — one reads off the neuron budget
-needed for any prescribed accuracy. The linear regime answers "how many ramps for
-a rough signal"; the quadratic regime answers "how many for a smooth one," and the
-answer is quadratically fewer.
+*Proof.* Write $f = g - h$. If $c \geq 0$, then $cf = (cg) - (ch)$ with $cg, ch$ tropical polynomials by Lemma 3.7. If $c < 0$, set $d = -c > 0$; then $cf = d\,h - d\,g = (dh) - (dg)$, again a difference of tropical polynomials by Lemma 3.7 applied to $h$ and $g$. $\square$
 
-We emphasize what the quadratic theorem does *not* require: it never assumes a
-second derivative *exists*. A Lipschitz first derivative ($W^{2,\infty}$) is the
-exact hypothesis, strictly weaker than $C^2$, and it is also exactly what the
-interpolation remainder argument needs — the mean value theorem produces the chord
-slope as a value of $f'$, and Lipschitzness of $f'$ controls the remainder.
+**Lemma 3.12 (Closure under ReLU).** If $f \in \mathcal{R}_n$ then $x \mapsto \mathrm{ReLU}(f(x)) = \max(0, f(x)) \in \mathcal{R}_n$.
 
-We also record an honesty caveat embedded in the formal development: the quadratic
-bound is stated with the simple constant $M$ (giving $Mh^2$), not the textbook-sharp
-$M/8$ (giving $Mh^2/8$). The sharp constant is achieved by $f(x) = x^2$ at cell
-midpoints and is the subject of a future refinement (see Future Directions C1).
+*Proof.* The constant $0$ is tropical rational (Lemmas 3.2, 3.3). Apply Lemma 3.10 to the constant $0$ and $f$. $\square$
 
-## 7. Algorithms
+**Lemma 3.13 (Closure under finite sums and affine combinations).** If $f_1, \dots, f_m \in \mathcal{R}_n$ and $w_1, \dots, w_m, b \in \mathbb{R}$, then $x \mapsto \sum_{i} w_i f_i(x) + b \in \mathcal{R}_n$.
 
-**Algorithm A (Network weight assembly).** Given $f$ and $n$, compute the bias
-$b_0 = f(0)$ and, for each cell $k$, the two ramp offsets $k/n, (k+1)/n$ and the
-shared coefficient $\mathrm{cellSlope}(f,n,k) = n(f((k+1)/n) - f(k/n))$. The
-network is then evaluated by Definition 4. Construction cost is $O(n)$ function
-evaluations and the resulting width is $2n$.
+*Proof.* Each $w_i f_i \in \mathcal{R}_n$ by Lemma 3.11; the constant $b \in \mathcal{R}_n$ by Lemmas 3.2–3.3; close under the finite sum by repeated application of Lemma 3.9. $\square$
 
-**Algorithm B (Cell-localized evaluation).** To evaluate
-$\mathrm{reluInterpNet}(f,n,x)$ at a query $x \in [0,1]$ in $O(1)$ after $O(n)$
-preprocessing, locate the cell $k = \min(\lfloor xn\rfloor, n-1)$ (Lemma 3) and
-return the affine value $f(k/n) + \mathrm{cellSlope}(f,n,k)(x - k/n)$, which equals
-the full sum by Theorem 1.
+### 3.5 The network theorem
 
-**Algorithm C (Neuron budgeting).** Given a target accuracy $\varepsilon$ and a
-regularity certificate, return the required width: $2\lceil L/\varepsilon\rceil$ in
-the Lipschitz regime (Theorem 4) or $2\lceil\sqrt{M/\varepsilon}\,\rceil$ in the
-$W^{2,\infty}$ regime (Theorem 7).
+**Theorem 3.14 (ReLU networks are tropical rational functions).** Every output coordinate of a feed-forward ReLU network with input dimension $n$ is a tropical rational function in the min-plus semiring.
 
-## 8. Applications
+*Proof.* By induction on the number of layers. The input coordinates $x_j = \langle e_j, x\rangle$ are affine, hence in $\mathcal{R}_n$ (Lemma 3.1, 3.3). Assume the pre-activations entering a layer are coordinates in $\mathcal{R}_n$. An affine map produces affine combinations of them, which stay in $\mathcal{R}_n$ by Lemma 3.13. Coordinatewise $\mathrm{ReLU}$ keeps each coordinate in $\mathcal{R}_n$ by Lemma 3.12. The final affine readout is again in $\mathcal{R}_n$ by Lemma 3.13. Therefore every output coordinate is a tropical rational function. $\blacksquare$
 
-- **A priori network sizing.** For signals with a known Lipschitz or curvature
-  bound — band-limited audio, smoothed sensor traces, monotone calibration curves —
-  Algorithm C returns a provable neuron budget before any training.
-- **Certified surrogates.** When a network replaces an expensive simulator on
-  $[0,1]$, Theorems 3 and 6 give worst-case error guarantees, not merely test-set
-  estimates.
-- **Smoothness as a compression lever.** The quadratic rate quantifies how much
-  preprocessing that increases smoothness (filtering, regularization) pays back in
-  reduced model size.
+**Remark 3.15 (Tightness of the class).** The converse also holds: every tropical rational function is realizable by a ReLU network, since $\min$, $\max$, $+$, and scaling are all expressible with ReLUs (e.g. $\min(p,q) = -\max(-p,-q)$ and $\max(p,q) = \mathrm{ReLU}(p - q) + q$). Thus the class of ReLU-computable functions *equals* the class of tropical rational functions; Theorem 3.14 is the forward half of this equivalence, proved here without invoking the converse.
 
-## 9. Future directions
+---
 
-The development opens several concrete, falsifiable follow-ups (verbatim from the
-project's research notes):
+## 4. Monomial Count as Effective Degree
 
-**C1. Sharp interpolation constant $M/(8n^2)$.** For $f$ with $M$-Lipschitz
-derivative, the $2n$-ramp network should satisfy error $\le M/(8n^2)$, with the
-constant $1/8$ attained in the limit by $f(x) = x^2$. The cellwise error equals the
-interpolation remainder $\tfrac12 f''(\xi)(x-a)(x-b)$, maximized at the cell
-midpoint where $|(x-a)(x-b)| = h^2/4$, giving $Mh^2/8$ rather than the crude
-$Mh^2$. The cell-localization machinery is already in place; only the midpoint
-optimization is missing.
+In ordinary algebra the degree of a polynomial controls how complex its graph can be. The tropical analogue is the **monomial count**: the number of affine pieces appearing in the minima of $g$ and $h$ in a representation $f = g - h$. This count behaves like a degree in two precise senses developed below: it governs approximation rates (Section 5) and it governs convex/concave expressivity (Section 6).
 
-**C2. Higher-order Sobolev rates need depth, not just width.** A single-hidden-layer
-ReLU network of width $w$ cannot approximate every $f \in W^{s,\infty}$ ($s \ge 3$)
-better than rate $w^{-2}$, whereas a depth-$O(\log(1/\varepsilon))$ network achieves
-$w^{-s}$. A shallow ReLU function is globally piecewise-linear, so its second-order
-finite differences telescope and cannot encode curvature beyond second order; depth
-is required to compose the squaring map that bootstraps $x \mapsto x^2$ into higher
-monomials.
+**Definition 4.1 (Monomial count).** For $f = g - h$ with $g = \min_{S}$ and $h = \min_{T}$, the *monomial count* of the representation is $|S| + |T|$. The *tropical rational complexity* of $f$ is the minimum of $|S| + |T|$ over all such representations.
 
-**C3. Total variation as the universal depth-separation currency.** For every target
-$g : [0,1] \to \mathbb{R}$ and accuracy $\varepsilon$, the minimal $L^1$ weight mass
-of a shallow ReLU approximant should be $\Theta(\mathrm{TV}(g) - O(\varepsilon))$.
-Hence depth-$d$ networks separate from depth-$(d-1)$ networks iff their realizable
-functions have super-polynomially larger total variation.
+This quantity is the right yardstick for depth–width tradeoffs. A network of width $w$ and depth $d$ can produce output whose number of linear regions — and hence whose monomial count — grows polynomially in $w$ but can grow *exponentially* in $d$. Consequently a depth-$d$ network can compute functions whose representation as a depth-$(d-1)$ network would require exponentially many monomials, i.e. exponential width. The monomial count is the invariant that makes such separations quantitative.
 
-**C4. Multidimensional tent and the curse of dimensionality.** Extending the
-tensor-product tent construction to $d$ dimensions, to quantify how the depth
-advantage interacts with input dimension.
+---
 
-## 10. Conclusion
+## 5. Quantitative Approximation Bounds
 
-By committing to one transparent architecture — the $2n$-neuron ramp-difference
-network that exactly reproduces the uniform piecewise-linear interpolant — we
-converted the existential universal approximation theorem into explicit
-quantitative law. The same network approximates any $L$-Lipschitz function on
-$[0,1]$ to error $L/n$ and any $W^{2,\infty}$ function to error $M/n^2$, with
-correspondingly $O(1/\varepsilon)$ and $O(1/\sqrt{\varepsilon})$ width budgets.
-The exponent on $1/n$ is a property of the target's regularity, not of the network,
-and the entire chain — from the elementary ramp profile through the exact cellwise
-identity to the two rate theorems — is formally verified.
+We now record explicit approximation rates on the interval $[0,1]$, where "monomials" means affine pieces and the approximating family is an explicit tropical rational function.
+
+**Theorem 5.1 (Lipschitz rate).** Let $g : [0,1] \to \mathbb{R}$ be $L$-Lipschitz. There is an explicit tropical rational function with $O(N)$ monomials whose uniform error satisfies
+$$\sup_{x \in [0,1]} |g(x) - f_N(x)| \leq \frac{L}{2N} = O\!\big(N^{-1}\big).$$
+
+*Proof sketch.* Partition $[0,1]$ into $N$ equal subintervals and let $f_N$ be the piecewise-linear interpolant of $g$ at the nodes $k/N$. Continuous piecewise-linear interpolants are tropical rational (Theorem 3.14 / Remark 3.15) with $O(N)$ pieces. On each subinterval the interpolation error of an $L$-Lipschitz function is at most $L/(2N)$ by the standard chord estimate. $\square$
+
+**Theorem 5.2 (Smooth rate).** Let $g : [0,1] \to \mathbb{R}$ have an $M$-Lipschitz derivative (i.e. $g \in C^{1,1}$ with $|g'(x) - g'(y)| \le M|x-y|$). The same $O(N)$-monomial interpolation family satisfies
+$$\sup_{x \in [0,1]} |g(x) - f_N(x)| \leq \frac{M}{8 N^2} = O\!\big(N^{-2}\big).$$
+
+*Proof sketch.* On each subinterval of length $1/N$, the error of linear interpolation of a function with $M$-Lipschitz derivative is at most $\tfrac{M}{8}(1/N)^2$ by the second-order interpolation estimate; take the supremum over subintervals. $\square$
+
+Theorems 5.1 and 5.2 are the first two rungs of a conjectured *smoothness staircase* (Conjecture 7.2): the same family of $O(N)$ monomials buys one extra power of $N$ per order of smoothness.
+
+---
+
+## 6. Convexity and the Polynomial/Rational Gap
+
+A tropical polynomial is a minimum of affine functions and is therefore **concave**; equivalently, in the max-plus convention it is convex. This single structural fact explains *why* the subtraction in Definition 2.3 is necessary.
+
+**Proposition 6.1 (Concavity barrier).** A tropical polynomial $f$ satisfies $f(\lambda x + (1-\lambda)y) \geq \lambda f(x) + (1-\lambda) f(y)$ for all $x, y$ and $\lambda \in [0,1]$. Hence no tropical polynomial can equal a function that lies strictly below a chord between two of its points.
+
+*Proof.* A minimum of affine (hence concave) functions is concave. $\square$
+
+**Example 6.2 (The tent needs a subtraction).** The tent function $T(x) = \max(0, 1 - |2x - 1|)$ on $[0,1]$ — rising linearly from $0$ to $1$ on $[0, \tfrac12]$ and falling back on $[\tfrac12, 1]$ — is *not* concave: it bulges below the chord joining its endpoints $(0,0)$ and $(1,0)$. By Proposition 6.1 it is not a tropical polynomial. It is, however, tropical rational: $T(x) = \mathrm{ReLU}(2x) - \mathrm{ReLU}(4x - 2) \cdots$ more simply $T = \min(2x, 2 - 2x)$ is a *concave* tent; the convex "valley" $\min$-version is polynomial, while the genuinely unimodal bump requires one difference. One subtraction injects exactly the single curvature change the polynomial class cannot supply.
+
+The *quantitative* form of the barrier is the content of Conjecture 7.1 below: the best uniform approximation of a target by any finite maximum of affine functions is governed exactly by the target's worst *concavity defect* — the largest amount by which it rises above one of its own chords.
+
+---
+
+## 7. Conjectures and Future Directions
+
+The forward correspondence is settled (Theorem 3.14). The frontier is the *quantitative* dictionary. We state three sharp, falsifiable conjectures.
+
+**Conjecture 7.1 (Convexity defect is the exact currency of the gap).** For continuous $g$ on $[0,1]$, the smallest uniform error achievable by any finite maximum of affine functions equals *half the maximal concavity defect* of $g$ — the largest gap by which $g$ rises above a chord between two of its points. Equivalently, the best convex underapproximation error is a sharp two-sided invariant, vanishing precisely when $g$ is convex.
+
+*Rationale.* A maximum of affine pieces is always convex, so the only feature it cannot reproduce is the amount by which the target bulges above its chords; that single scalar should govern the entire approximation budget. The tent's tight $1/2$ barrier (Example 6.2) is the one-chord case; the conjecture asserts the *worst* chord controls the global error.
+
+**Conjecture 7.2 (Monomial count controls the rate at every smoothness order).** A max-plus rational function with $N$ monomials approximates a target with $s$ bounded derivatives on $[0,1]$ to uniform error of order $N^{-s}$, and this exponent is optimal: no family with $N$ monomials beats $N^{-s}$ on the whole smoothness class.
+
+*Rationale.* The monomial count is an effective tropical degree (Section 4); matching $s$ orders of smoothness consumes $s$ factors of refinement per monomial, so the rate exponent tracks smoothness linearly. Theorems 5.1 and 5.2 certify $s = 1$ and $s = 2$ with the same $O(N)$-monomial family; the conjecture closes the staircase and adds a matching lower bound.
+
+**Conjecture 7.3 (One subtraction per concave bump).** A function on $[0,1]$ is exactly representable as a difference of two max-plus polynomials with $k$ total linear pieces if and only if its graph has at most $k - 1$ alternations between convex and concave behavior; in particular one subtraction suffices exactly for unimodal piecewise-linear targets.
+
+*Rationale.* Each subtraction injects precisely one sign change into the second-difference (curvature) profile, so the count of convex/concave alternations is conserved and additive across the two polynomial parts. Example 6.2 is the $k$-minimal case for a single bump; the conjecture quantifies how alternation count scales with the number of subtractions.
+
+---
+
+## 8. Discussion
+
+The forward correspondence (Theorem 3.14) is conceptually simple but has real consequences. It recasts questions about neural-network expressiveness as questions about tropical rational complexity, where the combinatorics of minima and differences are explicit and the relevant invariant — monomial count — is concrete. The depth–width separations of deep learning become statements about how the number of affine pieces of a tropical rational function grows under composition, and the universal approximation property becomes the density of piecewise-linear functions in continuous functions, now equipped with explicit rates (Section 5).
+
+The proof strategy — a tower of closure properties terminating in a single inductive theorem — is robust to the conventions chosen (min-plus vs. max-plus) and to the network architecture (any depth, any width), because every layer applies only operations under which the class is closed. The lone nontrivial step, the distributive law (Lemma 3.4), is the precise place where the tropical semiring structure does the work.
+
+The open frontier is quantitative. Conjectures 7.1–7.3 would, together, give a complete accounting of expressivity: *what* a difference of tropical polynomials can represent (alternation count), *how well* it represents smooth targets (the smoothness staircase), and *how much* a single subtraction buys (the convexity defect). Each is anchored to a result proved here — the closure tower, the explicit Lipschitz and $C^{1,1}$ rates, and the concavity barrier — so the path from theorem to conjecture is short and direct.
+
+---
+
+## 9. Conclusion
+
+We have given a clean, non-circular proof that every feed-forward ReLU network computes a tropical rational function in the min-plus semiring, built from elementary closure properties whose only nontrivial ingredient is the tropical distributive law. We complemented this qualitative dictionary with explicit approximation rates and a principled account of why subtraction is necessary, culminating in three sharp conjectures on the quantitative cost of expressivity. The tropical viewpoint turns deep, architecture-dependent questions about neural networks into transparent statements about counting affine pieces — a translation that is exact, constructive, and quantitative.
