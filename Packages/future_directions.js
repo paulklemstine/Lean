@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5c197ae",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -1548,7 +1548,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elementary Abelian 2-Group Uniqueness for Pairwise Reflection-Symmetric Latin Squares"
   },
   {
-    "consumed_by_exp_id": "6e8394a2",
+    "consumed_by_exp_id": "",
     "description": "For any integer $n \\ge 3$, the minimum number of elements in a poset $P$ such that its automorphism group $\\text{Aut}(P)$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is exactly $2^{n+1} + 2$. This conjecture formalizes the main theorem of the paper.",
     "domains": [
       "Pythagorean",
@@ -1558,7 +1558,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T11:24:35.150210+00:00",
     "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
   },
@@ -3204,12 +3204,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every convex polytope P \u2286 \u211d_{>0}^k with vertices in \u211a^k, the sieve integral I(P) = \u222b_P (dt\u2081\u22efdt_k)/(t\u2081\u22eft_k) is a finite \u211a-linear combination of logarithms of positive rational numbers. This formalizes the algebraic nature of the outputs produced by the LattE-based computation method proposed in the paper, asserting that the transcendental content of sieve integrals over rational polytopes is entirely captured by log-rational expressions.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2980",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30428v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:37:11.866313+00:00",
+    "title": "Sieve Integral Rational Polytope Algebraicity Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2980",
+    "id": "fd_2981",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3224,7 +3239,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2981",
+    "id": "fd_2982",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3238,7 +3253,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2982",
+    "id": "fd_2983",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3253,7 +3268,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2983",
+    "id": "fd_2984",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3268,7 +3283,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2984",
+    "id": "fd_2985",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3283,13 +3298,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
     "status": "available",
     "timestamp": "2026-06-30T13:20:24.782492+00:00",
     "title": "Bruhat Correspondence for Borel Orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer m, any real number p with 0 \u2264 p \u2264 1/3, and any positive weights w\u2081,...,w\u2098 summing to 1, if v\u2081,...,v\u2098 are i.i.d. Bernoulli(p) random variables, then P(\u2211\u1d62 w\u1d62v\u1d62 \u2265 p) \u2265 p. This is the central conjecture of the paper, which the authors connect to the Manickam-Mikl\u00f3s-Singhi conjecture and prove for sufficiently small p. The bound p is sharp, achieved when m=1 and w\u2081=1.",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_2987",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30287v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:38:03.172846+00:00",
+    "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
   },
   {
     "consumed_by_exp_id": "",

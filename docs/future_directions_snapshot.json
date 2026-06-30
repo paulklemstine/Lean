@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5c197ae",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -34,7 +34,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -2432,7 +2432,7 @@
       "math.CO",
       "order_theory"
     ],
-    "consumed_by_exp_id": "6e8394a2",
+    "consumed_by_exp_id": "",
     "description": "For any integer $n \\ge 3$, the minimum number of elements in a poset $P$ such that its automorphism group $\\text{Aut}(P)$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is exactly $2^{n+1} + 2$. This conjecture formalizes the main theorem of the paper.",
     "domain_bridges": [
       "group_theory",
@@ -2448,7 +2448,7 @@
     "proof_strategy": "Define the function $\\beta(G)$ as the infimum of the cardinalities of posets $P$ with $\\text{Aut}(P) \\cong G$. The upper bound is established by constructing a poset of size $2^{n+1}+2$ realizing the group, which can be done via a recursive construction adding two minimal elements (as in Proposition 2.2). The lower bound requires showing that any poset realizing this group must have at least $2^{n+1}+2$ elements, utilizing the structural constraints of the group action on the poset.",
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T11:24:35.150210+00:00",
     "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
   },
@@ -5568,6 +5568,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT",
+      "math.NA",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every convex polytope P ⊆ ℝ_{>0}^k with vertices in ℚ^k, the sieve integral I(P) = ∫_P (dt₁⋯dt_k)/(t₁⋯t_k) is a finite ℚ-linear combination of logarithms of positive rational numbers. This formalizes the algebraic nature of the outputs produced by the LattE-based computation method proposed in the paper, asserting that the transcendental content of sieve integrals over rational polytopes is entirely captured by log-rational expressions.",
+    "domain_bridges": [
+      "polyhedral_geometry",
+      "transcendental_number_theory",
+      "computational_integration"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2980",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use Brion's theorem to decompose the integral I(P) as a sum over vertex cones of P. For each vertex cone C with rational apex, apply the change of variables t_i = exp(u_i) to transform ∫_C dt/(t₁⋯t_k) into ∫_{log C} du, where log C is an unbounded polyhedral cone. Then apply Barvinok's decomposition of log C into unimodular cones, and evaluate each unimodular cone integral as a rational-linear combination of products of rational reciprocals and logarithms of rationals, using the iterated integration formula for monomial integrals over simplicial cones.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30428v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:37:11.866313+00:00",
+    "title": "Sieve Integral Rational Polytope Algebraicity Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "math.GR"
     ],
@@ -5582,7 +5610,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2980",
+    "id": "fd_2981",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5610,7 +5638,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2981",
+    "id": "fd_2982",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5639,7 +5667,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2982",
+    "id": "fd_2983",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5670,7 +5698,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2983",
+    "id": "fd_2984",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5700,7 +5728,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2984",
+    "id": "fd_2985",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -5728,7 +5756,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -5737,6 +5765,36 @@
     "status": "available",
     "timestamp": "2026-06-30T13:20:24.782492+00:00",
     "title": "Bruhat Correspondence for Borel Orbits on 𝔅ₙ × ℙⁿ⁻¹"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2406.xxxxx",
+      "Manickam-Miklós-Singhi conjecture",
+      "Alon-Emek-Feldman-Tennenholtz 2013",
+      "Feige's conjecture"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer m, any real number p with 0 ≤ p ≤ 1/3, and any positive weights w₁,...,wₘ summing to 1, if v₁,...,vₘ are i.i.d. Bernoulli(p) random variables, then P(∑ᵢ wᵢvᵢ ≥ p) ≥ p. This is the central conjecture of the paper, which the authors connect to the Manickam-Miklós-Singhi conjecture and prove for sufficiently small p. The bound p is sharp, achieved when m=1 and w₁=1.",
+    "domain_bridges": [
+      "Probability Theory",
+      "Extremal Combinatorics",
+      "Concentration Inequalities",
+      "Nonneg k-sums"
+    ],
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_2987",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30287v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:38:03.172846+00:00",
+    "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
   },
   {
     "ambition_level": "extension",
