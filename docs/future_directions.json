@@ -12990,11 +12990,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2fac4f85",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13006,7 +13006,7 @@
         "Logic"
       ],
       "id": "fd_0446",
-      "last_attempt_time": "2026-06-11T21:13:20.937034+00:00",
+      "last_attempt_time": "2026-06-30T00:14:07.957556+00:00",
       "last_reviewed_at": "2026-06-09T15:03:10.049285+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13020,7 +13020,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.050227+00:00",
       "title": "Homotopy Type Theory as Foundations"
@@ -13228,7 +13228,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "5f4fe8b8",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13254,7 +13254,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.504025+00:00",
       "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
@@ -35680,7 +35680,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28047v1",
       "source_path": "http://arxiv.org/abs/2606.28047v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-29T05:28:37.951608+00:00",
       "title": "Combinatorial Nerve Chain Homotopy Equivalence"
@@ -36840,7 +36840,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27519v1",
       "source_path": "http://arxiv.org/abs/2606.27519v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-29T09:08:52.620285+00:00",
       "title": "Necessary Conditions are Sufficient for CURD Existence with Partition m^1 2^{(n-m)/2}"
@@ -37176,7 +37176,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "43fcf247",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37204,7 +37204,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28305v1",
       "source_path": "http://arxiv.org/abs/2606.28305v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T10:45:11.578131+00:00",
       "title": "Enumeration of 2-balanced p-regular partitions in blocks"
@@ -38598,7 +38598,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "99e4c1c9",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38628,7 +38628,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28216v1",
       "source_path": "http://arxiv.org/abs/2606.28216v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T18:49:21.986832+00:00",
       "title": "Projective Plane Coupon Collection Slowness"
@@ -38877,7 +38877,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "feb44fa2",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38907,7 +38907,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28198v1",
       "source_path": "http://arxiv.org/abs/2606.28198v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T20:55:49.745314+00:00",
       "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
@@ -39018,7 +39018,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "c9b3d24f",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39048,7 +39048,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28157v1",
       "source_path": "http://arxiv.org/abs/2606.28157v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T20:19:39.963436+00:00",
       "title": "Extremal Geometric Fractional Colorings of G₂₇ Have Exactly 23 Vertices"
@@ -39529,6 +39529,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.RT",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any p-adic field F, non-trivial additive character ψ, and two irreducible admissible ψ-generic representations π₁, π₂ of GL₆(F) with the same central character, there exists an integer c such that for any character χ of F^× with conductor ≥ c, the local gamma factors satisfy γ(s, π₁⊗χ, ∧³, ψ) = γ(s, π₂⊗χ, ∧³, ψ).",
+      "domain_bridges": [
+        "RepresentationTheory.Rep",
+        "NumberTheory.PAdicField",
+        "MeasureTheory.Integral",
+        "LinearAlgebra.ExteriorPower"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2910",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem stability_ext_cube_gamma_GL6 (F : Type*) [Field F] [IsPadicField F] (ψ : AddChar F) (π₁ π₂ : Rep F (GL 6 F)) (h_gen_1 : IsGeneric ψ π₁) (h_gen_2 : IsGeneric ψ π₂) (h_center : CentralCharacter π₁ = CentralCharacter π₂) : ∃ (c : ℕ), ∀ (χ : MulChar F) (h_cond : Cond χ ≥ c), γ_factor s (π₁ ⊗ χ) wedge_3 ψ = γ_factor s (π₂ ⊗ χ) wedge_3 ψ := sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize p-adic fields, smooth representations, generic representations, and the Langlands-Shahidi local coefficients. Construct the exterior cube representation of GL_6 and the parabolic subgroup of E_6. Compute the invariant measure of the geometric quotient U_M \\ N', relate Shahidi's partial Bessel functions to partial Bessel integrals, and prove the asymptotic expansion of these integrals. Conclude by showing the vanishing of highly ramified Mellin transforms to establish the equality of gamma factors.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28091v1",
+      "source_path": "http://arxiv.org/abs/2606.28091v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T00:13:35.309935+00:00",
+      "title": "Stability of the Exterior Cube Local Gamma-Factor for GL(6)"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2501.12018",
         "MRVZ_geometric_fractional",
         "deGrey_chromatic_plane"
@@ -39549,7 +39595,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2910",
+      "id": "fd_2911",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -39595,7 +39641,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2911",
+      "id": "fd_2912",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -39641,7 +39687,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2912",
+      "id": "fd_2913",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -39660,6 +39706,51 @@
       "thread_id": "",
       "timestamp": "2026-06-29T23:32:39.265092+00:00",
       "title": "Transversal Difference Number for the Same-Prime Square Plane"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "05C35",
+        "05C75"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every triangle-free graph on $N$ vertices can be made bipartite by deleting at most $N^2/25$ edges. Equivalently, for any triangle-free graph $G$ on $N$ vertices, the bipartization number $\\beta(G) \\le N^2/25$. The bound is tight, achieved by the balanced blow-up $C_5[N/5]$.",
+      "domain_bridges": [
+        "graph_theory",
+        "semidefinite_programming"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2914",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28041v1",
+      "source_path": "http://arxiv.org/abs/2606.28041v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T00:14:02.577213+00:00",
+      "title": "Erdős n²/25 Max-Cut Conjecture"
     },
     {
       "ambition_level": "extension",
@@ -43999,7 +44090,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "fe28c0d9",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -44025,7 +44116,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:18.020118+00:00",
       "title": "Reverse Mathematics: Ramsey's Theorem"
