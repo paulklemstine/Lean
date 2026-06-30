@@ -345,7 +345,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Type Theory: Cubical Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8a7d0352",
     "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
     "domains": [
       "Physics",
@@ -356,7 +356,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432775+00:00",
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
@@ -1797,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension and Vertex Count of the Optimal Geometric Fractional Coloring Polytope for G27"
   },
   {
-    "consumed_by_exp_id": "6de85f07",
+    "consumed_by_exp_id": "",
     "description": "Every \u03c4_k-maximal graph on n \u2265 2k+2 vertices with minimum degree at least k+1 must have exactly (k+1)(n-1)-1 edges.",
     "domains": [
       "Pythagorean"
@@ -1806,7 +1806,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T16:56:43.577232+00:00",
     "title": "Conjecture on edge count of \u03c4_k-maximal graphs with minimum degree at least k+1"
   },
