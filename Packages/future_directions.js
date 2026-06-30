@@ -1157,7 +1157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
   {
-    "consumed_by_exp_id": "d69db06d",
+    "consumed_by_exp_id": "",
     "description": "Every \u03c4_k-maximal graph on n vertices (with n \u2265 2k+2) has exactly (k+1)(n-1)-1 edges. A graph is \u03c4_k-maximal if it contains no subgraph with k+1 edge-disjoint spanning trees, yet adding any edge from its complement creates such a subgraph.",
     "domains": [
       "Bridges"
@@ -1166,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T06:06:52.919140+00:00",
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
@@ -2380,7 +2380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c69c4ab9",
     "description": "For f a normalized Hecke eigenform for SL(2,Z) (holomorphic of weight k \u2265 2 or Hecke-Maass) with Hecke eigenvalues \u03bb_f(n), and for any \u03b5 > 0 with 1 \u2264 Y \u2264 X^{1/2-\u03b5}, the triple correlation sum satisfies |\u2211_{n\u2264X} \u2211_{m\u2264Y} \u03bb_f(n)\u03bb_f(m)\u03bb_f(n+m)| \u226a_{f,\u03b5} X^{1/2+\u03b5}Y. This is the optimal bound predicted by Sato-Tate heuristics and random matrix theory, going beyond the non-trivial power-saving bounds established in the paper for bilinear sums of GL(2) Fourier coefficients.",
     "domains": [
       "Computation"
@@ -2389,7 +2389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:25:55.578636+00:00",
     "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
   },
@@ -3512,12 +3512,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer $d \\ge 1$, the maximum number of equiangular lines in $\\mathbb{R}^d$ with common angle $\\arccos(1/3)$ is bounded by $\\max\\{28, 2d-2\\}$. This is a specific instance of Balla's conjecture, which was verified for $\\alpha=1/3$ in prior work and serves as a foundational result in the theory of equiangular lines.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_3001",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29392v1",
+    "status": "available",
+    "timestamp": "2026-06-30T20:57:57.577778+00:00",
+    "title": "Balla's Conjecture for Equiangular Lines with $\\alpha = 1/3$"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3532,7 +3546,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3546,7 +3560,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3561,7 +3575,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3576,7 +3590,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3591,7 +3605,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3606,7 +3620,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3620,7 +3634,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3634,7 +3648,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3648,7 +3662,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3662,7 +3676,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3677,7 +3691,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3691,7 +3705,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3705,7 +3719,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3719,7 +3733,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3734,7 +3748,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3749,7 +3763,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3763,7 +3777,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3778,7 +3792,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3792,7 +3806,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3807,7 +3821,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -3821,7 +3835,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3022",
+    "id": "fd_3023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3835,7 +3849,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3023",
+    "id": "fd_3024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -3850,7 +3864,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3024",
+    "id": "fd_3025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3865,7 +3879,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3025",
+    "id": "fd_3026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -3880,7 +3894,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3026",
+    "id": "fd_3027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -3894,13 +3908,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
     "status": "available",
     "timestamp": "2026-06-30T20:40:41.523700+00:00",
     "title": "Strict lower bound on the average specification number of Boolean threshold functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 5, there exists a finite connected graph \u0393 such that the full reciprocal-radius polynomial P_\u0393 is an irreducible Salem polynomial with first sub-leading coefficient a\u2081 = -k. This extends the paper's sharp obstruction bound a\u2081 \u2264 -5 by asserting realizability of every integer value in the admissible range.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3029",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29397v1",
+    "status": "available",
+    "timestamp": "2026-06-30T20:58:35.716548+00:00",
+    "title": "Complete First-Coefficient Spectrum for Strongly Primitive Salem Growth Polynomials"
   },
   {
     "consumed_by_exp_id": "",
