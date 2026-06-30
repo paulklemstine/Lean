@@ -253,7 +253,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07a868e4",
     "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
     "domains": [
       "Analysis",
@@ -264,7 +264,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432652+00:00",
     "title": "Spectral Theory: Self-Adjoint Operators"
   },
@@ -1859,7 +1859,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension and Vertex Count of the Optimal Geometric Fractional Coloring Polytope for G27"
   },
   {
-    "consumed_by_exp_id": "9456b101",
+    "consumed_by_exp_id": "",
     "description": "Every \u03c4_k-maximal graph on n \u2265 2k+2 vertices with minimum degree at least k+1 must have exactly (k+1)(n-1)-1 edges.",
     "domains": [
       "Pythagorean"
@@ -1868,7 +1868,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T16:56:43.577232+00:00",
     "title": "Conjecture on edge count of \u03c4_k-maximal graphs with minimum degree at least k+1"
   },
@@ -2691,11 +2691,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a Steinhaus random multiplicative function f, the ratio E[|\u2211_{x\u2264n\u2264x+y} f(n)|\u00b2] / y converges to 1 if and only if y = o(x / (log x)^{log 4 - 1}). This precisely identifies the phase transition where the natural normalization \u221ay ceases to yield a standard Gaussian limit, connecting to the exponent log 4 \u2212 1 \u2248 0.386 that appeared in Soundararajan\u2013Xu's earlier range and which the current paper overcomes by introducing a corrected normalization.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2939",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29040v1",
+    "status": "available",
+    "timestamp": "2026-06-30T11:11:22.919414+00:00",
+    "title": "Phase transition for variance asymptotics of Steinhaus short-interval sums"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2709,7 +2723,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2723,7 +2737,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2737,7 +2751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2751,7 +2765,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2766,7 +2780,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2781,7 +2795,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2795,7 +2809,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2809,7 +2823,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2823,7 +2837,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2948",
+    "id": "fd_2949",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2838,7 +2852,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2949",
+    "id": "fd_2950",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2853,7 +2867,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2950",
+    "id": "fd_2951",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2867,7 +2881,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2951",
+    "id": "fd_2952",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2881,7 +2895,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2952",
+    "id": "fd_2953",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
@@ -2895,7 +2909,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2953",
+    "id": "fd_2954",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
@@ -2909,7 +2923,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2954",
+    "id": "fd_2955",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29553v1",
@@ -2918,30 +2932,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "For each integer n \u2265 1, the theta-mode component \u03c6_n(t) of the even Riemann phase kernel equals the action of the differential operator (\u2202_t\u00b2 \u2212 1/4) on the explicit function e^{t/2} \u00b7 e^{\u2212\u03c0n\u00b2e^{2t}}. This is the key analytic identity underpinning the finite-core Volterra program: it provides an exact same-sign formula decomposing the phase kernel modes into a boundary term and a Volterra tail, and is the foundation for the quotient Schur certificate. Formalization requires the definition of \u03c6_n via the even Riemann kernel \u03a6, the computation of the second derivative of the explicit exponential, and the verification of the equality as an identity of smooth functions on \u211d.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2955",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29555v1",
-    "status": "available",
-    "timestamp": "2026-06-30T06:10:07.946305+00:00",
-    "title": "Second-order theta-mode identity for the Riemann phase kernel"
-  },
-  {
     "consumed_by_exp_id": "65d4cbfc",
-    "description": "Conjecture: In the game of Halve Nim (where a move consists of either a standard Nim move on a single pile or replacing every pile of size n by \u230an/2\u230b), a position with three piles of sizes (a, b, c) is a P-position if and only if the nim\u2011sum a \u2295 b \u2295 c equals zero. This extends the known result for two\u2011pile Halve Nim and the partial result for three\u2011pile Halve Nim with one pile bounded by ten.",
+    "description": "For each integer n \u2265 1, the theta-mode component \u03c6_n(t) of the even Riemann phase kernel equals the action of the differential operator (\u2202_t\u00b2 \u2212 1/4) on the explicit function e^{t/2} \u00b7 e^{\u2212\u03c0n\u00b2e^{2t}}. This is the key analytic identity underpinning the finite-core Volterra program: it provides an exact same-sign formula decomposing the phase kernel modes into a boundary term and a Volterra tail, and is the foundation for the quotient Schur certificate. Formalization requires the definition of \u03c6_n via the even Riemann kernel \u03a6, the computation of the second derivative of the explicit exponential, and the verification of the equality as an identity of smooth functions on \u211d.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2956",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.29740v1",
+    "source_exp_id": "2606.29555v1",
     "status": "in_progress",
+    "timestamp": "2026-06-30T06:10:07.946305+00:00",
+    "title": "Second-order theta-mode identity for the Riemann phase kernel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: In the game of Halve Nim (where a move consists of either a standard Nim move on a single pile or replacing every pile of size n by \u230an/2\u230b), a position with three piles of sizes (a, b, c) is a P-position if and only if the nim\u2011sum a \u2295 b \u2295 c equals zero. This extends the known result for two\u2011pile Halve Nim and the partial result for three\u2011pile Halve Nim with one pile bounded by ten.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2957",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29740v1",
+    "status": "available",
     "timestamp": "2026-06-30T06:36:22.156279+00:00",
     "title": "Characterization of P-positions in three-pile Halve Nim"
   },
@@ -2951,7 +2965,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2957",
+    "id": "fd_2958",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
@@ -2966,7 +2980,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2958",
+    "id": "fd_2959",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29530v1",
@@ -2981,7 +2995,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Computation"
     ],
-    "id": "fd_2959",
+    "id": "fd_2960",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
@@ -2995,7 +3009,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2960",
+    "id": "fd_2961",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
@@ -3010,7 +3024,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2961",
+    "id": "fd_2962",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
@@ -3024,7 +3038,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2962",
+    "id": "fd_2963",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29507v1",
@@ -3039,7 +3053,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2963",
+    "id": "fd_2964",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29446v1",
@@ -3054,7 +3068,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2964",
+    "id": "fd_2965",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
@@ -3069,7 +3083,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2965",
+    "id": "fd_2966",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
@@ -3083,7 +3097,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2966",
+    "id": "fd_2967",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29321v1",
@@ -3098,7 +3112,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2967",
+    "id": "fd_2968",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29297v1",
@@ -3112,7 +3126,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2968",
+    "id": "fd_2969",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29336v1",
@@ -3127,13 +3141,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2969",
+    "id": "fd_2970",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29057v1",
     "status": "available",
     "timestamp": "2026-06-30T10:50:36.802724+00:00",
     "title": "Strong Dense Orbit Transversality for Products of Non-Isogenous Simple Abelian Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "An optimal equidistant binary code E(n, d*, m*) of length n >= 3 exists if and only if a corresponding symmetric balanced incomplete block design exists. Specifically, for n \u2261 3 mod 4, it is equivalent to a Hadamard matrix of order n+1; for n \u2261 0 mod 4, a Hadamard matrix of order n; for n \u2261 1 mod 4, a (2u^2+2u+1, u^2, u(u-1)/2)-SBIBD; and for n \u2261 2 mod 4, it is equivalent to one of two specific subcases of SBIBDs, including the previously missed subcase identified in the paper.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2971",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29022v1",
+    "status": "available",
+    "timestamp": "2026-06-30T11:12:42.547859+00:00",
+    "title": "Complete Characterization of Optimal Equidistant Binary Codes via Symmetric Designs"
   },
   {
     "consumed_by_exp_id": "",
