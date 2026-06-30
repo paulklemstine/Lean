@@ -1449,7 +1449,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite sign conjecture for Ramanujan's third order mock theta function \u03c1(q)"
   },
   {
-    "consumed_by_exp_id": "98b2cea0",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that every spherical (weight 0) automorphic form on SL(2,Z)\\H decomposes into a cusp form and a linear combination of Laurent coefficients of the standard Eisenstein series, using only Green's identity and basic analysis. We conjecture that the same direct proof strategy extends to automorphic forms of any integer weight k, yielding a decomposition of the space A_k(X) into cusp forms of weight k and the span of Laurent coefficients of the weight k Eisenstein series.",
     "domains": [
       "Pythagorean",
@@ -1459,7 +1459,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T08:01:14.506352+00:00",
     "title": "Generalization of Franke's theorem to higher weight automorphic forms via Green's identity"
   },
@@ -2297,7 +2297,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Skeleton-Coskeleton Determination for Regular Maniplexes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "30133a3d",
     "description": "Let \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n \u2208 {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n \u2208 {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domains": [
       "Bridges"
@@ -2306,7 +2306,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function \u03c1(q)"
   },
@@ -2414,11 +2414,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every even dimension n \u2265 2, every 0 < \u03b1 < 1/2, and every non-degenerate quadratic form Q on F_q^n (q an odd prime power), there exist constants C_\u03b1 > 0 and q_\u03b1 such that for all q \u2265 q_\u03b1 and all E \u2286 F_q^n with |E| \u2265 C_\u03b1 \u00b7 q^{n/2+1/3}, the distance set \u0394_Q(E) = {Q(x\u2212y) : x,y \u2208 E} satisfies |\u0394_Q(E)| > 1 + \u03b1(q\u22121). This improves the previous threshold exponent (n+1)/2 to n/2+1/3, achieved via a Delsarte linear programming bound on the association scheme of level sets of Q, with eigenvalue estimates relying on Gauss sums and Kloosterman sums via the Weil bound.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2920",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29965v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:46:13.465158+00:00",
+    "title": "Erd\u0151s-Falconer Distance Set Threshold n/2+1/3 in Even Dimensions over Finite Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2920",
+    "id": "fd_2921",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2432,7 +2447,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2921",
+    "id": "fd_2922",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2446,7 +2461,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2460,7 +2475,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2474,7 +2489,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2489,7 +2504,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2504,7 +2519,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2518,7 +2533,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2532,7 +2547,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2546,7 +2561,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2561,7 +2576,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2930",
+    "id": "fd_2931",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2576,13 +2591,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
     "status": "available",
     "timestamp": "2026-06-30T04:29:53.482836+00:00",
     "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every finite graph F with m > 0 edges and n non-isolated vertices, if p \u2265 C(n,2)/m, then for every \u03c1-locally dense graphon W, the L^p norm of the subgraph density function W_F satisfies ||W_F||_{L^p} \u2265 \u03c1^m, where W_F(x\u2081,...,x\u2099) = \u220f_{ij\u2208E(F)} W(x\u1d62,x\u2c7c) and \u03c1-local density means \u222b_{S\u00d7S} W \u2265 \u03c1\u00b7\u03bb(S)\u00b2 for all measurable S \u2286 [0,1]. This is the main theorem of the paper, establishing that every graph satisfies an L^p relaxation of the KNRS conjecture at the threshold p = C(n,2)/m.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2933",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30010v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:47:04.548698+00:00",
+    "title": "L^p Relaxation of the KNRS Conjecture for Graphons"
   },
   {
     "consumed_by_exp_id": "",

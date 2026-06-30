@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-30T04:28:32.071268+00:00",
+  "last_updated": "2026-06-30T04:45:27.444440+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -19983,6 +19983,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-30T04:28:31.784402+00:00",
       "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 21,
+      "domain": "Bridges",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "98b2cea0",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782789878.3041945,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-30T04:45:27.160910+00:00",
+      "title": "Generalization of Franke's theorem to higher weight automorphic forms via Green's identity"
     }
   ]
 }

@@ -2215,7 +2215,7 @@
       "Langlands-Spectral",
       "Waldspurger1997Franke"
     ],
-    "consumed_by_exp_id": "98b2cea0",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that every spherical (weight 0) automorphic form on SL(2,Z)\\H decomposes into a cusp form and a linear combination of Laurent coefficients of the standard Eisenstein series, using only Green's identity and basic analysis. We conjecture that the same direct proof strategy extends to automorphic forms of any integer weight k, yielding a decomposition of the space A_k(X) into cusp forms of weight k and the span of Laurent coefficients of the weight k Eisenstein series.",
     "domain_bridges": [
       "math.RT",
@@ -2231,7 +2231,7 @@
     "proof_strategy": "Extend the automorphic Green's identity to weight k Eisenstein series and automorphic forms. Use the meromorphic continuation and functional equation of the weight k Eisenstein series. Show that the boundary terms in the Green's identity for the truncated weight k Eisenstein series yield the projection onto the cuspidal subspace and the Laurent coefficients at the poles.",
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T08:01:14.506352+00:00",
     "title": "Generalization of Franke's theorem to higher weight automorphic forms via Green's identity"
   },
@@ -3801,7 +3801,7 @@
       "Rademacher_expansions",
       "q_series"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "30133a3d",
     "description": "Let ρ(q) = Σ_{m≥0} q^{2m(m+1)} / Π_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = Σ_{n≥0} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n ≥ 0: r(3n) > 0, r(3n+1) ≤ 0, and r(3n+2) ≤ 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n ∈ {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n ∈ {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domain_bridges": [
       "analytic_number_theory ↔ formal_power_series_coefficients",
@@ -3817,7 +3817,7 @@
     "proof_strategy": "The asymptotic sign law is proven via Watson's identity 2ρ(q) + ω(q) = T(q) combined with Rademacher-type expansions for ω(q) and the theta-eta product T(q), yielding r(n) ~ κ_{n mod 3} · (2π)/(12n+8)^{1/4} · I_{1/2}(π√(12n+8)/18) where κ₀ > 0, κ₁ < 0, κ₂ < 0. To prove the exact finite conjecture, one must: (1) make the error term in the Rademacher expansion fully effective with explicit constants, yielding an explicit N₀ such that the sign law holds for all n ≥ N₀; (2) computationally verify all cases n < N₀. The effective bound requires careful tracking of all error terms in the circle method analysis, similar to effective Rademacher bounds for partition ranks.",
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
   },
@@ -4006,6 +4006,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.CO",
+      "math.CA"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every even dimension n ≥ 2, every 0 < α < 1/2, and every non-degenerate quadratic form Q on F_q^n (q an odd prime power), there exist constants C_α > 0 and q_α such that for all q ≥ q_α and all E ⊆ F_q^n with |E| ≥ C_α · q^{n/2+1/3}, the distance set Δ_Q(E) = {Q(x−y) : x,y ∈ E} satisfies |Δ_Q(E)| > 1 + α(q−1). This improves the previous threshold exponent (n+1)/2 to n/2+1/3, achieved via a Delsarte linear programming bound on the association scheme of level sets of Q, with eigenvalue estimates relying on Gauss sums and Kloosterman sums via the Weil bound.",
+    "domain_bridges": [
+      "association_schemes_over_finite_fields",
+      "quadratic_forms_over_finite_fields",
+      "character_sums_Gauss_Kloosterman",
+      "Delsarte_linear_programming"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2920",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1) Formalize the association scheme arising from the level sets of a non-degenerate quadratic form Q on F_q^n (even n), establishing the Q-polynomial property and computing the eigenvalues via Gauss sums. 2) Prove the key eigenvalue bound |P_i(0)| ≤ q^{n/4} √(2/(q−1)) using the Weil bound on Kloosterman sums. 3) Construct a feasible solution to the Delsarte linear program yielding the exponent n/2+1/3. 4) Apply the Delsarte LP bound to derive |Δ_Q(E)| > 1+α(q−1) when |E| ≥ C_α q^{n/2+1/3}.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29965v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:46:13.465158+00:00",
+    "title": "Erdős-Falconer Distance Set Threshold n/2+1/3 in Even Dimensions over Finite Fields"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.CO/2501.12018",
       "MRVZ_geometric_fractional",
       "deGrey_chromatic_plane"
@@ -4020,7 +4048,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2920",
+    "id": "fd_2921",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
@@ -4047,7 +4075,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2921",
+    "id": "fd_2922",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
@@ -4074,7 +4102,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -4100,7 +4128,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -4129,7 +4157,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -4157,7 +4185,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
@@ -4187,7 +4215,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes the rooted heat-kernel master loop equation and proves convergence of the order-truncated trajectory expansion at strong coupling (T > T₀(d)). To extend to all T > 0: (1) Develop uniform-in-T estimates for the trajectory expansion coefficients, leveraging the universal finite-N duality formulas and refined heat-kernel asymptotics that remain valid for small T. (2) Prove convergence of the rooted trajectory expansion for all T > 0 by establishing tighter control on the combinatorial growth of decorated loop observables—specifically, show the expansion is absolutely convergent with radius independent of T. (3) For the weak-coupling regime (small T), exploit the Gaussian limit T → 0 where the theory reduces to a lattice Gaussian free field, and use this as the base of an expansion valid for all T. (4) Bridge strong and weak coupling using monotonicity of Wilson loop expectations in T and real-analyticity of heat-kernel coefficients, establishing a single master field",
@@ -4215,7 +4243,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the monoid in Lean, compute the misère quotient via backward induction, and prove isomorphism through homomorphism properties and loss set verification",
@@ -4244,7 +4272,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the Weyl differencing and van der Corput B-process arguments from the paper with tighter control on off-diagonal contributions. The key improvement would come from replacing power-saving arguments with logarithmic precision via careful saddle-point analysis of the complete exponential sums arising from Poisson summation applied to $e(h\\sqrt{a})$ over dyadic subintervals of $[n/2, n]$. One should track how the exponent pairs obtained from the $B^2$-process interact with the moment sum over $h$, exploiting cancellation more finely than the $n^\\varepsilon$-losing bound permits.",
@@ -4268,7 +4296,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive construction combined with probabilistic extremal arguments",
@@ -4297,7 +4325,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2930",
+    "id": "fd_2931",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
@@ -4325,7 +4353,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the paper's conditional regularity theorem (Bessel distributions are regular provided Kloosterman sums for all Levi subgroups have nontrivial bounds) to GL(n). Since every Levi subgroup of GL(n) is isomorphic to a product ∏ GL(mᵢ) with ∑ mᵢ = n, the corresponding Kloosterman sums admit nontrivial bounds by Deligne's estimates from the Riemann hypothesis for varieties over finite fields (Weil II), yielding unconditional regularity for GL(n). The key intermediate step is formalizing the germ expansion of Kloosterman integrals and verifying the nontrivial bound condition for all Levi subgroups.",
@@ -4334,6 +4362,33 @@
     "status": "available",
     "timestamp": "2026-06-30T04:29:53.482836+00:00",
     "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.FA"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every finite graph F with m > 0 edges and n non-isolated vertices, if p ≥ C(n,2)/m, then for every ρ-locally dense graphon W, the L^p norm of the subgraph density function W_F satisfies ||W_F||_{L^p} ≥ ρ^m, where W_F(x₁,...,xₙ) = ∏_{ij∈E(F)} W(xᵢ,xⱼ) and ρ-local density means ∫_{S×S} W ≥ ρ·λ(S)² for all measurable S ⊆ [0,1]. This is the main theorem of the paper, establishing that every graph satisfies an L^p relaxation of the KNRS conjecture at the threshold p = C(n,2)/m.",
+    "domain_bridges": [
+      "Measure theory on [0,1]",
+      "L^p norms of measurable functions",
+      "Graph homomorphism densities",
+      "Locally dense graphons"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2933",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Hölder uniformization over vertex relabellings in the spirit of Conlon–Lee: reduce the general case to the edge-transitive case by averaging over graph automorphisms and applying Hölder's inequality to symmetrize, then exploit the positive-semidefinite structure implicit in local density for edge-transitive graphs. Key sub-lemmas include the equivalence between the L^p formulation and the graphon composition formulation, and the comparison principle with edge-transitive KNRS supergraphs.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30010v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:47:04.548698+00:00",
+    "title": "L^p Relaxation of the KNRS Conjecture for Graphons"
   },
   {
     "ambition_level": "extension",
