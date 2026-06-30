@@ -1787,7 +1787,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a finite unit-distance graph in R\u00b2 with independence ratio below 1/4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d4e2b7e",
     "description": "Generalizing the paper's main theorem from Z_2 x Z_{2^n} to Z_2^k x Z_{2^n}, we conjecture that the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} is 2^{n+1} + 2k for any k >= 1 and n >= 3. This matches the upper bound obtained by iteratively applying Proposition 1.1 to a minimal poset for Z_{2^n}.",
     "domains": [
       "Pythagorean",
@@ -1797,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T16:28:32.494303+00:00",
     "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
   },

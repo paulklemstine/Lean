@@ -2848,7 +2848,7 @@
       "Order theory",
       "Poset automorphisms"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d4e2b7e",
     "description": "Generalizing the paper's main theorem from Z_2 x Z_{2^n} to Z_2^k x Z_{2^n}, we conjecture that the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} is 2^{n+1} + 2k for any k >= 1 and n >= 3. This matches the upper bound obtained by iteratively applying Proposition 1.1 to a minimal poset for Z_{2^n}.",
     "domain_bridges": [
       "Group theory"
@@ -2863,7 +2863,7 @@
     "proof_strategy": "Proceed by induction on k. The base case k=1 is the main theorem of the paper. For the inductive step, use the structural lemmas to show that any minimal poset realizing Z_2^k x Z_{2^n} must contain a subposet realizing Z_2^{k-1} x Z_{2^n}, and then apply the additive property of the two new elements analogous to Proposition 1.1 to establish the lower bound.",
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T16:28:32.494303+00:00",
     "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
   },

@@ -37867,7 +37867,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "Order theory",
@@ -37875,7 +37875,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3d4e2b7e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37889,7 +37889,7 @@
         "Algebra"
       ],
       "id": "fd_2874",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T07:59:32.682029+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Algebra.Group.Basic\nimport Mathlib.Data.ZMod.Basic\n\n/-- The minimum size of a poset whose automorphism group is isomorphic to G -/\ndef beta (G : Type*) [Group G] : ℕ := sorry\n\ntheorem beta_Z2_pow_k_times_Z2_pow_n (k n : ℕ) (hk : 0 < k) (hn : 3 ≤ n) :\n  beta (ZMod (2^n) × (Fin k → ZMod 2)) = 2^(n+1) + 2 * k := by\n  sorry",
       "lineage_refs": [],
@@ -37903,7 +37903,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28231v1",
       "source_path": "http://arxiv.org/abs/2606.28231v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T16:28:32.494303+00:00",
       "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
