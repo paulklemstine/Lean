@@ -422,7 +422,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Collatz Conjecture"
   },
   {
-    "consumed_by_exp_id": "ce89ece2",
+    "consumed_by_exp_id": "",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "Algebra"
@@ -431,7 +431,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -1508,7 +1508,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp lower bound for the sixth moment of the Riemann zeta function"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68364c9e",
     "description": "For any partition \u03bb of n and any support pattern S \u2286 [n] \u00d7 [n], the number of n \u00d7 n nilpotent matrices over F_q with Jordan canonical form type \u03bb and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian\u2013Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
     "domains": [
       "Algebra",
@@ -1518,7 +1518,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27497v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
@@ -1946,7 +1946,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Enumeration of 2-balanced p-regular partitions of fixed p-weight"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6607dc7d",
     "description": "For the scalar factor \u03a9_{t,s}(u) of the general mixed product \ud835\udcb4(z;t)\ud835\udcb4(z;s) of modified Greaves-Jing-Zhu operators with two independent deformation parameters t and s, which equals a quotient of infinite Pochhammer products, the coefficient of u^n satisfies \u03c9_n(t,s) = (-1)^n \u00b7 F_n(t,s) where F_n(t,s) is a formal power series in t and s with nonnegative integer coefficients. This extends the paper's established result that for s = t^M, the coefficients of (u;t)_M/(-u;t)_M are (after removing signs) nonnegative palindromic polynomials, to the case of arbitrary independent parameters.",
     "domains": [
       "Bridges"
@@ -1955,7 +1955,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:23:54.603938+00:00",
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
@@ -2312,15 +2312,29 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "a1200a14",
-    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
+    "description": "The paper proves that $g$ point counts determine the zeta function of a $g$-dimensional abelian variety over $\\mathbb{F}_q$ if $q > Q(g)$, where $Q(g)$ is super-exponential. This conjecture asserts that a quadratic bound on $q$ suffices, similar to Kedlaya's bound for $2g$ counts. Specifically, there exists an absolute constant $C$ such that for any integer $g \\ge 1$ and prime power $q > Cg^2$, if $A$ and $B$ are abelian varieties of dimension $g$ over $\\mathbb{F}_q$ with equal point counts $\\#A(\\mathbb{F}_{q^i}) = \\#B(\\mathbb{F}_{q^i})$ for all $1 \\le i \\le g$, then $A$ and $B$ have the same zeta function.",
     "domains": [
-      "Geometry"
+      "Pythagorean"
     ],
     "id": "fd_2913",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.28157v1",
+    "source_exp_id": "2606.28989v1",
     "status": "in_progress",
+    "timestamp": "2026-06-30T01:47:41.126812+00:00",
+    "title": "Polynomial bound for point counts determining zeta functions of abelian varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2914",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
     "timestamp": "2026-06-29T21:48:36.541820+00:00",
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
   },
@@ -2330,7 +2344,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2914",
+    "id": "fd_2915",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2344,7 +2358,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2915",
+    "id": "fd_2916",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2358,7 +2372,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2916",
+    "id": "fd_2917",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2372,7 +2386,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2917",
+    "id": "fd_2918",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2387,13 +2401,28 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2918",
+    "id": "fd_2919",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
     "status": "available",
     "timestamp": "2026-06-30T00:54:24.854529+00:00",
     "title": "Multiplicative Coalescent Scaling Limit for Critical Percolation on Preferential Attachment Graphs with Infinite Variance Degrees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every dimension d \u2265 2 and every heat time T > 0, the infinite-volume large-N limit of normalized Wilson loop expectations in heat-kernel Yang-Mills theory on Z^d with structure group U(N) and N-scaled heat time T/N per plaquette exists. Precisely: for every loop \u03b3 on Z^d, the limit \u03a6_T(\u03b3) := lim_{N\u2192\u221e} lim_{V\u2192Z^d} (1/N) E_{V,N,T}[Tr(W_\u03b3)] exists, where the inner limit is over exhausting sequences of finite sublattices V \u2282 Z^d. This extends the paper's strong-coupling existence result (which requires T > T\u2080(d) for a dimension-dependent threshold) to the entire positive real line, establishing the master field across all coupling regimes. For d = 2 this should follow from Makeenko\u2013Migdal theory, but for d \u2265 3 it remains a fundamental open problem in mathematical gauge theory.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2920",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28945v1",
+    "status": "available",
+    "timestamp": "2026-06-30T01:48:50.690554+00:00",
+    "title": "Existence of the Large-N Master Field for Heat-Kernel Yang-Mills on Z^d at All Couplings"
   },
   {
     "consumed_by_exp_id": "",
@@ -3193,7 +3222,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },
   {
-    "consumed_by_exp_id": "2fac4f85",
+    "consumed_by_exp_id": "",
     "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
     "domains": [
       "Bridges",
@@ -3203,7 +3232,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.050227+00:00",
     "title": "Homotopy Type Theory as Foundations"
   },

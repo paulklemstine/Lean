@@ -561,7 +561,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ce89ece2",
+    "consumed_by_exp_id": "",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domain_bridges": [],
     "domains": [
@@ -573,7 +573,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -2327,7 +2327,7 @@
       "math.AG",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68364c9e",
     "description": "For any partition λ of n and any support pattern S ⊆ [n] × [n], the number of n × n nilpotent matrices over F_q with Jordan canonical form type λ and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian–Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
     "domain_bridges": [
       "Algebraic geometry (Hessenberg varieties and Springer fibers)",
@@ -2344,7 +2344,7 @@
     "proof_strategy": "Leverage the paper's Hall scalar product formula expressing the count in terms of skew modified Hall-Littlewood functions and q-Whittaker functions. For Hessenberg supports, connect to chromatic quasisymmetric functions and the Shareshian-Wachs theorem relating Hessenberg variety point counts to chromatic quasisymmetric function evaluations. For general supports, develop combinatorial-algebraic tools showing the relevant Hall scalar products specialize to polynomials in q, potentially using geometric methods on Springer fibers and deformation arguments to reduce arbitrary supports to Hessenberg-type patterns.",
     "research_mode": "team",
     "source_exp_id": "2606.27497v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
@@ -3133,7 +3133,7 @@
       "q_Pochhammer_symbols",
       "vertex_operator_algebras"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6607dc7d",
     "description": "For the scalar factor Ω_{t,s}(u) of the general mixed product 𝒴(z;t)𝒴(z;s) of modified Greaves-Jing-Zhu operators with two independent deformation parameters t and s, which equals a quotient of infinite Pochhammer products, the coefficient of u^n satisfies ω_n(t,s) = (-1)^n · F_n(t,s) where F_n(t,s) is a formal power series in t and s with nonnegative integer coefficients. This extends the paper's established result that for s = t^M, the coefficients of (u;t)_M/(-u;t)_M are (after removing signs) nonnegative palindromic polynomials, to the case of arbitrary independent parameters.",
     "domain_bridges": [
       "symmetric_function_theory",
@@ -3149,7 +3149,7 @@
     "proof_strategy": "Factor the general scalar factor as a product of the s=t^M case and an infinite correction factor arising from the parameter mismatch. Show the correction factor contributes nonnegatively by interpreting it as a generating function of signed strict partitions with suitable weight. Alternatively, extend the principal specialization identity connecting one-row Schur Q-functions to the scalar factor coefficients from the univariate to the bivariate setting using a Cauchy-type identity for spin characters with two deformation parameters.",
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:23:54.603938+00:00",
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
@@ -3822,13 +3822,38 @@
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "math.AG"
+    ],
+    "consumed_by_exp_id": "a1200a14",
+    "description": "The paper proves that $g$ point counts determine the zeta function of a $g$-dimensional abelian variety over $\\mathbb{F}_q$ if $q > Q(g)$, where $Q(g)$ is super-exponential. This conjecture asserts that a quadratic bound on $q$ suffices, similar to Kedlaya's bound for $2g$ counts. Specifically, there exists an absolute constant $C$ such that for any integer $g \\ge 1$ and prime power $q > Cg^2$, if $A$ and $B$ are abelian varieties of dimension $g$ over $\\mathbb{F}_q$ with equal point counts $\\#A(\\mathbb{F}_{q^i}) = \\#B(\\mathbb{F}_{q^i})$ for all $1 \\le i \\le g$, then $A$ and $B$ have the same zeta function.",
+    "domain_bridges": [
+      "arithmetic_geometry",
+      "number_theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2913",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Refine the inductive error analysis from the paper to show that the power sums of the inverse Frobenius eigenvalues can be controlled with polynomial precision. This could involve bounding the coefficients of the L-polynomial more tightly using the functional equation and Weil conjectures bounds, avoiding the exponential blow-up in the current analysis.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28989v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-30T01:47:41.126812+00:00",
+    "title": "Polynomial bound for point counts determining zeta functions of abelian varieties"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO/2501.12018",
       "MRVZ_geometric_fractional",
       "deGrey_chromatic_plane"
     ],
-    "consumed_by_exp_id": "a1200a14",
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G₂₇ constructed by Matolcsi, Ruzsa, Varga, and Zsámboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G₂₉ of G₂₇ (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in ℝ² and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p₂₈, p₂₉ ∈ ℝ² such that the graph G₂₉ on 29 vertices, with edges determined by unit distance among all 29 points, satisfies χ_gf(G₂₉) > 4.",
     "domain_bridges": [
       "convex_optimization_to_graph_independence",
@@ -3838,13 +3863,13 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2913",
+    "id": "fd_2914",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T21:48:36.541820+00:00",
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi–Ruzsa–Varga–Zsámboki graph"
   },
@@ -3865,7 +3890,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2914",
+    "id": "fd_2915",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
@@ -3892,7 +3917,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2915",
+    "id": "fd_2916",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -3918,7 +3943,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2916",
+    "id": "fd_2917",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -3947,7 +3972,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2917",
+    "id": "fd_2918",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -3975,7 +4000,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2918",
+    "id": "fd_2919",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
@@ -3984,6 +4009,36 @@
     "status": "available",
     "timestamp": "2026-06-30T00:54:24.854529+00:00",
     "title": "Multiplicative Coalescent Scaling Limit for Critical Percolation on Preferential Attachment Graphs with Infinite Variance Degrees"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math-ph: lattice Yang-Mills theory",
+      "math.PR: large-N limits and random matrices on compact groups",
+      "math.CO: combinatorial expansions for lattice gauge theories",
+      "math.RT: representation theory of U(N) and Weingarten calculus"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every dimension d ≥ 2 and every heat time T > 0, the infinite-volume large-N limit of normalized Wilson loop expectations in heat-kernel Yang-Mills theory on Z^d with structure group U(N) and N-scaled heat time T/N per plaquette exists. Precisely: for every loop γ on Z^d, the limit Φ_T(γ) := lim_{N→∞} lim_{V→Z^d} (1/N) E_{V,N,T}[Tr(W_γ)] exists, where the inner limit is over exhausting sequences of finite sublattices V ⊂ Z^d. This extends the paper's strong-coupling existence result (which requires T > T₀(d) for a dimension-dependent threshold) to the entire positive real line, establishing the master field across all coupling regimes. For d = 2 this should follow from Makeenko–Migdal theory, but for d ≥ 3 it remains a fundamental open problem in mathematical gauge theory.",
+    "domain_bridges": [
+      "free probability and large-N random matrix theory",
+      "combinatorial map enumeration and ribbon graphs",
+      "Markov processes and heat kernels on compact Lie groups",
+      "lattice statistical mechanics and phase transitions"
+    ],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2920",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The paper establishes the rooted heat-kernel master loop equation and proves convergence of the order-truncated trajectory expansion at strong coupling (T > T₀(d)). To extend to all T > 0: (1) Develop uniform-in-T estimates for the trajectory expansion coefficients, leveraging the universal finite-N duality formulas and refined heat-kernel asymptotics that remain valid for small T. (2) Prove convergence of the rooted trajectory expansion for all T > 0 by establishing tighter control on the combinatorial growth of decorated loop observables—specifically, show the expansion is absolutely convergent with radius independent of T. (3) For the weak-coupling regime (small T), exploit the Gaussian limit T → 0 where the theory reduces to a lattice Gaussian free field, and use this as the base of an expansion valid for all T. (4) Bridge strong and weak coupling using monotonicity of Wilson loop expectations in T and real-analyticity of heat-kernel coefficients, establishing a single master field",
+    "research_mode": "team",
+    "source_exp_id": "2606.28945v1",
+    "status": "available",
+    "timestamp": "2026-06-30T01:48:50.690554+00:00",
+    "title": "Existence of the Large-N Master Field for Heat-Kernel Yang-Mills on Z^d at All Couplings"
   },
   {
     "ambition_level": "extension",
@@ -5055,7 +5110,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2fac4f85",
+    "consumed_by_exp_id": "",
     "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
     "domain_bridges": [],
     "domains": [
@@ -5068,7 +5123,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.050227+00:00",
     "title": "Homotopy Type Theory as Foundations"
   },
