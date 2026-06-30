@@ -700,7 +700,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8acf5433",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -714,7 +714,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -922,7 +922,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fd05632c",
+    "consumed_by_exp_id": "",
     "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
     "domain_bridges": [],
     "domains": [
@@ -934,7 +934,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:58.445057+00:00",
     "title": "Sums of Three Cubes"
   },
@@ -1682,7 +1682,7 @@
       "math.PR",
       "math.CO/design_theory"
     ],
-    "consumed_by_exp_id": "98d48aca",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q ≥ 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q²+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domain_bridges": [
       "finite_geometry-probability",
@@ -1699,7 +1699,7 @@
     "proof_strategy": "Compare the two expected coverage times via their inclusion-exclusion representations. The key structural difference is that any two lines of PG(2,q) intersect in exactly one point, creating negative correlations that slow coverage, whereas random (q+1)-subsets have binomially-distributed intersection sizes. One might attempt to show that the Fano/Fano-like intersection structure maximizes the second-order inclusion-exclusion terms, or develop a coupling argument showing the projective plane mechanism is stochastically dominated in coverage by the full model.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -2327,7 +2327,7 @@
       "math.AG",
       "math.RT"
     ],
-    "consumed_by_exp_id": "68364c9e",
+    "consumed_by_exp_id": "",
     "description": "For any partition λ of n and any support pattern S ⊆ [n] × [n], the number of n × n nilpotent matrices over F_q with Jordan canonical form type λ and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian–Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
     "domain_bridges": [
       "Algebraic geometry (Hessenberg varieties and Springer fibers)",
@@ -2344,7 +2344,7 @@
     "proof_strategy": "Leverage the paper's Hall scalar product formula expressing the count in terms of skew modified Hall-Littlewood functions and q-Whittaker functions. For Hessenberg supports, connect to chromatic quasisymmetric functions and the Shareshian-Wachs theorem relating Hessenberg variety point counts to chromatic quasisymmetric function evaluations. For general supports, develop combinatorial-algebraic tools showing the relevant Hall scalar products specialize to polynomials in q, potentially using geometric methods on Springer fibers and deformation arguments to reduce arbitrary supports to Hessenberg-type patterns.",
     "research_mode": "team",
     "source_exp_id": "2606.27497v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
@@ -3133,7 +3133,7 @@
       "q_Pochhammer_symbols",
       "vertex_operator_algebras"
     ],
-    "consumed_by_exp_id": "6607dc7d",
+    "consumed_by_exp_id": "",
     "description": "For the scalar factor Ω_{t,s}(u) of the general mixed product 𝒴(z;t)𝒴(z;s) of modified Greaves-Jing-Zhu operators with two independent deformation parameters t and s, which equals a quotient of infinite Pochhammer products, the coefficient of u^n satisfies ω_n(t,s) = (-1)^n · F_n(t,s) where F_n(t,s) is a formal power series in t and s with nonnegative integer coefficients. This extends the paper's established result that for s = t^M, the coefficients of (u;t)_M/(-u;t)_M are (after removing signs) nonnegative palindromic polynomials, to the case of arbitrary independent parameters.",
     "domain_bridges": [
       "symmetric_function_theory",
@@ -3149,7 +3149,7 @@
     "proof_strategy": "Factor the general scalar factor as a product of the s=t^M case and an infinite correction factor arising from the parameter mismatch. Show the correction factor contributes nonnegatively by interpreting it as a generating function of signed strict partitions with suitable weight. Alternatively, extend the principal specialization identity connecting one-row Schur Q-functions to the scalar factor coefficients from the univariate to the bivariate setting using a Cauchy-type identity for spin characters with two deformation parameters.",
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:23:54.603938+00:00",
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
@@ -3158,7 +3158,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9364ff3a",
     "description": "For any integer t ≥ 2 and any tK3-free graph G of order n ≥ 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}, with equality if and only if G is isomorphic to this extremal graph.",
     "domain_bridges": [
       "Linear Algebra",
@@ -3174,7 +3174,7 @@
     "proof_strategy": "Apply the stability method in extremal graph theory combined with spectral techniques. Specifically, analyze the eigenvector corresponding to the largest eigenvalue of the signless Laplacian, bound the maximum degree, and iteratively remove vertex-disjoint triangles to reduce the problem to smaller subgraphs, ultimately characterizing the extremal structure as the join of a clique and a balanced complete bipartite graph.",
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -3271,7 +3271,7 @@
     "catalog_references": [
       "Transversal Difference Numbers in Finite Abelian Quotients"
     ],
-    "consumed_by_exp_id": "3fd12f6e",
+    "consumed_by_exp_id": "",
     "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
     "domain_bridges": [
       "Additive Combinatorics",
@@ -3287,7 +3287,7 @@
     "proof_strategy": "Translate the transversal difference problem into an optimization over functions $\\mathbb{F}_p^2 \\to \\mathbb{F}_p^2$ representing transversals, where the difference support decomposes into carry-corrected finite-field derivative images. Apply Kneser's theorem for cross-transversal estimates and analyze polynomial sections to establish that the minimal difference support is achieved by linear sections, yielding the exact $(2p-1)^2$ bound.",
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:43:09.952578+00:00",
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
@@ -3297,7 +3297,7 @@
       "math.AT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "c47f9e0e",
+    "consumed_by_exp_id": "",
     "description": "Let X be a simplicial complex covered by a finite collection of subcomplexes A_1, ..., A_k. For each non-empty subset S of {1, ..., k}, let A_S denote the intersection of the subcomplexes indexed by S, equipped with a gradient vector field V_S. There exists a chain complex (the combinatorial nerve complex) whose chain groups are direct sums of the Morse chain groups of (A_S, V_S), and which is quasi-isomorphic to the simplicial chain complex of X. Consequently, the homology of X can be computed explicitly from the combinatorial data of the gradient vector fields on the subcomplexes and their intersections.",
     "domain_bridges": [
       "Simplicial Complexes",
@@ -3314,7 +3314,7 @@
     "proof_strategy": "Define simplicial complexes, covers, and discrete gradient vector fields. Construct the Morse chain complex for each intersection A_S. Define the combinatorial nerve complex as a total complex of a bicomplex or filtered complex whose terms are direct sums of the Morse complexes of the intersections. Prove the quasi-isomorphism by constructing explicit chain maps and homotopies using the gradient flows between the combinatorial nerve complex and the simplicial chain complex of X, ensuring the approach remains purely combinatorial without geometric realization.",
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T20:02:46.148570+00:00",
     "title": "Effective Combinatorial Nerve Theorem"
   },
@@ -3902,6 +3902,28 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Szegedy2015SparseGL"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper investigates whether the sequence of graphs representing finite projective planes over finite fields converges log-converges toward a specific random graph model.",
+    "domain_bridges": "log-convergence, graphons, probabilistic graph theory",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2916",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a lemmatic refinement of the lemma governing the limit ratio under logarithmic transformation.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28890v1",
+    "status": "available",
+    "timestamp": "2026-06-30T02:58:55.439404+00:00",
+    "title": "Logarithmic convergence of finite projective-plane incidence graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.CO/2501.12018",
       "MRVZ_geometric_fractional",
       "deGrey_chromatic_plane"
@@ -3916,7 +3938,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2916",
+    "id": "fd_2917",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
@@ -3943,7 +3965,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2917",
+    "id": "fd_2918",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
@@ -3970,7 +3992,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2918",
+    "id": "fd_2919",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -3996,7 +4018,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2919",
+    "id": "fd_2920",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -4025,7 +4047,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2920",
+    "id": "fd_2921",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -4053,7 +4075,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2921",
+    "id": "fd_2922",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
@@ -4083,7 +4105,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes the rooted heat-kernel master loop equation and proves convergence of the order-truncated trajectory expansion at strong coupling (T > T₀(d)). To extend to all T > 0: (1) Develop uniform-in-T estimates for the trajectory expansion coefficients, leveraging the universal finite-N duality formulas and refined heat-kernel asymptotics that remain valid for small T. (2) Prove convergence of the rooted trajectory expansion for all T > 0 by establishing tighter control on the combinatorial growth of decorated loop observables—specifically, show the expansion is absolutely convergent with radius independent of T. (3) For the weak-coupling regime (small T), exploit the Gaussian limit T → 0 where the theory reduces to a lattice Gaussian free field, and use this as the base of an expansion valid for all T. (4) Bridge strong and weak coupling using monotonicity of Wilson loop expectations in T and real-analyticity of heat-kernel coefficients, establishing a single master field",
@@ -4111,7 +4133,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the monoid in Lean, compute the misère quotient via backward induction, and prove isomorphism through homomorphism properties and loss set verification",
@@ -4140,7 +4162,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the Weyl differencing and van der Corput B-process arguments from the paper with tighter control on off-diagonal contributions. The key improvement would come from replacing power-saving arguments with logarithmic precision via careful saddle-point analysis of the complete exponential sums arising from Poisson summation applied to $e(h\\sqrt{a})$ over dyadic subintervals of $[n/2, n]$. One should track how the exponent pairs obtained from the $B^2$-process interact with the moment sum over $h$, exploiting cancellation more finely than the $n^\\varepsilon$-losing bound permits.",
@@ -4149,6 +4171,30 @@
     "status": "available",
     "timestamp": "2026-06-30T02:38:43.115881+00:00",
     "title": "Sharp Second-Moment Bound for Square-Root Exponential Sums with Polylogarithmic Loss"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "OLL-TUZ 1967; MOORE AND SYOMI 1973"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture concerns the exact asymptotic behavior of the saturation number for complete 4-partite graphs, quantifying the minimal edge count required to ensure saturation of saturation levels for $C_4$-free graphs.",
+    "domain_bridges": [
+      "partite graphs",
+      "extremal graph theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2926",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "inductive construction combined with probabilistic extremal arguments",
+    "research_mode": "team",
+    "source_exp_id": "2606.28903v1",
+    "status": "available",
+    "timestamp": "2026-06-30T03:01:16.520960+00:00",
+    "title": "All minimum $C_4$-saturated multipartite graphs"
   },
   {
     "ambition_level": "extension",
@@ -4173,7 +4219,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "75f8dfec",
+    "consumed_by_exp_id": "",
     "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
     "domain_bridges": [],
     "domains": [
@@ -4185,7 +4231,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.481690+00:00",
     "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },

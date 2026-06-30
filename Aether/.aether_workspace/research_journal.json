@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7b228cc3",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Differential Galois Theory for EML ODEs\n\nDerived from this cycle's results in `EMLDifferentialGalois.lean`,\n`EMLKovacicSharp.lean`, and `EMLWronskianGalois.lean` (which build on",
-      "quality_score": 0.74264,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-26T19:56:58",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
-    {
       "cycle_id": "913e3580",
       "domain": "Applications",
       "key_insight": "# Future Directions — Shifted t-Schur Basis / Plethystic Triviality\n\nThis cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the\ngenerating-function backbone of the shifted (Schur `Q`) basis",
@@ -499,19 +489,19 @@
       "theorem_count": 16,
       "timestamp": "2026-06-30T00:32:14",
       "title": "Projective Plane Coupon Collection Slowness"
+    },
+    {
+      "cycle_id": "230b77ce",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Certified Robustness via Cover Cohomology\n\nThese conjectures are derived from the present cycle, in which we proved that on a\ntree-shaped cover of a classifier's input space the",
+      "quality_score": 0.76576,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-30T02:56:43",
+      "title": "Certified Adversarial Robustness via Sheaf Cohomology"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cb117fe9",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Hermitian Bianchi lattice S_K and its discriminant\n\nDerived from the cycle that proved `det Gram(S_K) = D_K` (file\n`HermitianBianchiDiscriminant.lean`) and the scaling/parity pro",
-      "quality_score": 0.531112,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-26T13:16:06",
-      "title": "Discriminant of the Hermitian Bianchi lattice S_K"
-    },
     {
       "cycle_id": "a7c4b074",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-06-30T02:34:47",
       "title": "Projective Plane Coupon Collection Slowness"
+    },
+    {
+      "cycle_id": "230b77ce",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Certified Robustness via Cover Cohomology\n\nThese conjectures are derived from the present cycle, in which we proved that on a\ntree-shaped cover of a classifier's input space the",
+      "quality_score": 0.76576,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-30T02:56:43",
+      "title": "Certified Adversarial Robustness via Sheaf Cohomology"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2f2206c6",
-      "domain": "Novelty",
-      "name": "leftDvd_trans",
-      "quality": 0.71552
-    },
-    {
-      "cycle_id": "2f2206c6",
-      "domain": "Novelty",
-      "name": "group_leftDvd",
-      "quality": 0.71552
-    },
-    {
-      "cycle_id": "c011c95b",
-      "domain": "Novelty",
-      "name": "completeness",
-      "quality": 0.7862199999999999
-    },
     {
       "cycle_id": "c011c95b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "Eunif_value",
       "quality": 0.77624
+    },
+    {
+      "cycle_id": "230b77ce",
+      "domain": "Novelty",
+      "name": "exhibits",
+      "quality": 0.76576
+    },
+    {
+      "cycle_id": "230b77ce",
+      "domain": "Novelty",
+      "name": "linf_certified_radius_pos",
+      "quality": 0.76576
+    },
+    {
+      "cycle_id": "230b77ce",
+      "domain": "Novelty",
+      "name": "global_robustness_certificate",
+      "quality": 0.76576
     }
   ],
-  "last_updated": "2026-06-30T02:34:47",
+  "last_updated": "2026-06-30T02:56:43",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "333b621d",
-        "quality": 0.72324,
-        "theorems": 0,
-        "title": "Consciousness as Integrated Information: Mathematical Foundations"
-      },
-      {
         "cycle_id": "2b7b775f",
         "quality": 0.69949,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.5394642553191489,
         "theorems": 15,
         "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varie"
+      },
+      {
+        "cycle_id": "230b77ce",
+        "quality": 0.76576,
+        "theorems": 15,
+        "title": "Certified Adversarial Robustness via Sheaf Cohomology"
       }
     ],
     "NumberTheory": [
