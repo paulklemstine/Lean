@@ -38139,7 +38139,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Nash-Williams 1961",
         "Tutte 1961",
@@ -38162,7 +38162,7 @@
         "Pythagorean"
       ],
       "id": "fd_2880",
-      "last_attempt_time": "2026-06-30T09:45:28.111865+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_maximal_edge_count {k n : ℕ} (hk : 1 ≤ k) (hn : 2 * k + 2 ≤ n) {G : Graph ℕ} (hG : IsTauKMaximal k G) (hmin : ∀ v, 0 < G.degree v) (hdeg : ∀ v, G.degree v ≥ k + 1) : G.edgeCount = (k + 1) * (n - 1) - 1 := by sorry",
       "lineage_refs": [],
@@ -40738,6 +40738,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "math.GT",
+        "math.AT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every mod 2 toric-colorable PL (n-1)-sphere with n ≤ 5 admits a Z-characteristic map. Equivalently, for PL spheres of dimension at most 4, mod 2 toric-colorability implies Z-toric-colorability. This generalizes the paper's computational verification that all 198,846 mod 2 toric-colorable seeds of dimension 4 and Picard number 5 are toric-colorable to all such spheres of dimension ≤ 4, regardless of Picard number. The conjecture asserts that the only obstruction to lifting a Z_2-characteristic map to a Z-characteristic map vanishes for PL spheres of dimension ≤ 4.",
+      "domain_bridges": [
+        "Binary matroid theory",
+        "Toric geometry",
+        "PL topology",
+        "Obstruction theory for characteristic maps"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2936",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem mod2_toric_colorable_implies_toric_colorable_dim_le_four\n    {n : ℕ} (hn : n ≤ 5)\n    {m : ℕ} {K : SimplicialComplex (Fin m)}\n    (hK : IsPLSphere K (n - 1))\n    (h_mod2 : ∃ (λ : Fin m → (ZMod 2) ^ n),\n        IsMod2CharacteristicMap K λ) :\n    ∃ (λ' : Fin m → Fin n → ℤ),\n        IsZCharacteristicMap K λ' :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the binary matroid framework to parametrize all mod 2 characteristic maps on low-dimensional PL spheres. Develop an obstruction theory for lifting Z/2Z-characteristic maps to Z-characteristic maps, identifying the obstruction in terms of cohomology classes. Show that the relevant cohomological obstructions (related to orientability and compatibility conditions on the sphere) vanish for PL spheres of dimension ≤ 4, using the classification of low-dimensional PL spheres and structural properties of the contraction categories from the paper's dynamic programming framework.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29309v1",
+      "source_path": "http://arxiv.org/abs/2606.29309v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T10:07:29.451224+00:00",
+      "title": "Mod 2 to Z Characteristic Map Lifting for Low-Dimensional PL Spheres"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2501.12018",
         "MRVZ_geometric_fractional",
         "deGrey_chromatic_plane"
@@ -40758,7 +40805,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2936",
+      "id": "fd_2937",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -40804,7 +40851,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2937",
+      "id": "fd_2938",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -40850,7 +40897,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2938",
+      "id": "fd_2939",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -40895,7 +40942,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2939",
+      "id": "fd_2940",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -40943,7 +40990,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2940",
+      "id": "fd_2941",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -40990,7 +41037,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2941",
+      "id": "fd_2942",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -41039,7 +41086,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2942",
+      "id": "fd_2943",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -41086,7 +41133,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2943",
+      "id": "fd_2944",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
@@ -41134,7 +41181,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2944",
+      "id": "fd_2945",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_second_moment_sqroot_expsum (δ : ℝ) (hδ : 0 < δ) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ, 2 ≤ n → ∀ H : ℕ,\n    ⌈(n : ℝ)^(1/2 + δ)⌉₊ ≤ H →\n    (∑ h in Finset.Icc ⌈H/2⌉₊ H,\n      (∑ a in Finset.Icc ⌈n/2⌉₊ n,\n        Complex.exp (2 * Real.pi * Complex.I * (h : ℂ) * Real.sqrt (a : ℝ)))\n        .norm_sq)\n    ≤ C * (H : ℝ) * (n : ℝ) * (Real.log (n : ℝ))^c := by\n  sorry",
@@ -41177,7 +41224,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2945",
+      "id": "fd_2946",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Basic diagram-filling and counting techniques over finite graphs",
@@ -41225,7 +41272,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2946",
+      "id": "fd_2947",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem harder_conjecture_k_equals_3 (j : ℕ) (hj : j ≥ 2 ∧ Even j) (f : PrimitiveEllipticCuspForm (j + 4)) (p : Ideal (HeckeField f)) (hp : p ∣ L_alg (j + 3) f) : ∃ (F : SiegelCuspEigenForm (det^3 * Sym^j)) (P : Ideal (HeckeField F)) (hP : P ∣ p), ∀ ℓ : ℕ, ℓ.Prime → SpinLPoly ℓ F ≡ LPoly ℓ f * (1 - (ℓ : ℤ)^1 * X) * (1 - (ℓ : ℤ)^(j + 2) * X) [MOD P] := by sorry",
@@ -41272,7 +41319,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2947",
+      "id": "fd_2948",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bessel_distribution_regular_GLn {F : Type*} [PAdicField F] {n : ℕ} [NeZero n] (π : IrreducibleSmoothAdmissibleRep (GL n F)) (hπ : IsGeneric π) (ℓ₁ : WhittakerFunctional π) (ℓ₂ : WhittakerFunctional π.contrargredient) : IsRegular (besselDistribution ℓ₁ ℓ₂) := by\n  sorry",
@@ -41318,7 +41365,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2948",
+      "id": "fd_2949",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lp_knrs {V : Type*} [Fintype V] [DecidableEq V]\n    (F : SimpleGraph V) [DecidableRel F.Adj]\n    (m : ℕ) (hm : m = F.edgeFinset.card) (hm_pos : 0 < m)\n    (n : ℕ) (hn : n = F.support.card)\n    (p : ℝ) (hp : p ≥ (n.choose 2 : ℝ) / m)\n    (ρ : ℝ) (hρ : ρ ∈ Set.Icc 0 1)\n    (W : UnitInterval → UnitInterval → ℝ)\n    (hW_meas : Measurable (Function.uncurry W))\n    (hW_sym : ∀ x y, W x y = W y x)\n    (hW_range : ∀ x y, W x y ∈ Set.Icc (0 : ℝ) 1)\n    (hW_locally_dense :\n      ∀ S : Set UnitInterval, MeasurableSet S →\n        (∫ x in S, ∫ y in S, W x y ∂volume) ≥ ρ * (volume S) ^ 2)\n    : (∫ x : V → UnitInterval,\n        (∏ e in F.edgeFinset.attach,\n          W (x (Sym2.toProd e.1).1) (x (Sym2.toProd e.1).2)) ^ p\n        ∂(Measure.pi fun _ => volume)) ^ (1 / p : ℝ)\n      ≥ ρ ^ (m : ℝ) := by\n  sorry",
@@ -41365,7 +41412,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2949",
+      "id": "fd_2950",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem digit_sum_formula (p : ℕ) (hp : p.Prime) (b : ℕ) (hb : 2 ≤ b) (hpb : ¬(p ∣ b)) (m : ℕ) (l : ℕ) (hl : l = (p - 1) / 2^m) (h_ord : (∀ k : ℕ, 0 < k → k < l → b^k % p ≠ 1) ∧ b^l % p = 1) (h_mod : p % 2^(m+1) = 1) : (∑ i : Fin l, (b * (b^(i.1) % p)) / p) = (b - 1) * (p - 1) / 2^(m+1) := by sorry",
@@ -41399,7 +41446,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f47f3dac",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41412,7 +41459,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2950",
+      "id": "fd_2951",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sivaraman_F_asymptotic_lower_bound :\n    ∃ c > 0, ∃ s₀ : ℕ, ∀ s ≥ s₀,\n      F s ≥ c * (s : ℝ)^(3/2) / Real.log s :=\n  by\n    sorry",
@@ -41427,7 +41474,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29873v1",
       "source_path": "http://arxiv.org/abs/2606.29873v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-30T05:26:20.098555+00:00",
       "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
@@ -41443,7 +41490,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f47f3dac",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41457,7 +41504,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2951",
+      "id": "fd_2952",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tx_graffiti_conjecture (G : Graph) [connected G] [nontrivial G] : α G ≥ (a G + R G) / Δ G",
@@ -41472,7 +41519,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29553v1",
       "source_path": "http://arxiv.org/abs/2606.29553v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T05:48:51.779938+00:00",
       "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
@@ -41503,7 +41550,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2952",
+      "id": "fd_2953",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem second_order_theta_mode_identity (n : ℕ) (hn : 1 ≤ n) (t : ℝ) : phi n t = (second_deriv (fun t => Real.exp (t/2) * Real.exp (-Real.pi * (n : ℝ)^2 * Real.exp (2*t))) t - (1/4) * (Real.exp (t/2) * Real.exp (-Real.pi * (n : ℝ)^2 * Real.exp (2*t)))) := by sorry",
@@ -41546,7 +41593,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2953",
+      "id": "fd_2954",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem halve_nim_three_pile_ppos {a b c : ℕ} (hc : c ≤ 10) : HalveNim.isPPos a b c ↔ a ^ b ^ c = 0 := by sorry",
@@ -41592,7 +41639,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2954",
+      "id": "fd_2955",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_maximizes_expected_empty_spaces (N : ℕ) (j : ℕ) (hN : 2 ≤ N) (hj : 2 ≤ j) (p : Fin N → ℝ) (hp_pos : ∀ i, 0 < p i) (hp_sum : ∑ i, p i = 1) : expected_empty_spaces p j ≤ expected_empty_spaces (fun _ => (1 : ℝ) / N) j ∧ (expected_empty_spaces p j = expected_empty_spaces (fun _ => (1 : ℝ) / N) j ↔ ∀ i, p i = (1 : ℝ) / N) := by sorry",
@@ -41624,7 +41671,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "65d4cbfc",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41639,7 +41686,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2955",
+      "id": "fd_2956",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Analysis.SpecialFunctions.Pow.Real\n\ndef prob_untouched_exact (n m k u : ℕ) : ℝ :=\n  (n.choose u : ℝ) * ∑ j in Finset.range (n - u + 1),\n    (-1 : ℝ)^j * (n - u).choose j * (((n - u - j).choose m : ℝ) / (n.choose m : ℝ)) ^ k\n\ntheorem group_drawing_poisson_limit\n  {f g : ℕ → ℕ} {λ : ℝ} (hλ : 0 < λ)\n  (hf : ∀ n, 1 ≤ f n ∧ f n < n)\n  (hλ_lim : Tendsto (fun n => (n : ℝ) * ((n - f n : ℝ) / n) ^ g n) atTop (𝓝 λ))\n  (hb_lim : Tendsto (fun n => n - f n) atTop atTop) (u : ℕ) :\n  Tendsto (fun n => prob_untouched_exact n (f n) (g n) u) atTop (𝓝 (Real.exp (-λ) * λ^u / (Nat.factorial u : ℝ))) :=\n  sorry",
@@ -41654,7 +41701,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29530v1",
       "source_path": "http://arxiv.org/abs/2606.29530v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-30T07:19:31.725431+00:00",
       "title": "Poisson Limit for Group-Drawing Coupon Collector"
@@ -41671,7 +41718,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "65d4cbfc",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41686,7 +41733,7 @@
         "Geometry",
         "Computation"
       ],
-      "id": "fd_2956",
+      "id": "fd_2957",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem local_to_global_KKL\n    {d : ℕ} (X : WeightedSimplicialComplex d) (α : ℝ) (hα : 0 < α)\n    (h_links_KKL : ∀ σ ∈ X.faces (d - 2),\n      ∀ g : X.link σ |.faces| 1 → ℝ,\n        ∃ v ∈ (X.link σ).faces 0,\n          (X.link σ).influence v g ≥ α * (X.link σ).variance g)\n    (f : X.faces d → ℝ) :\n    ∃ σ ∈ X.faces (d - 2),\n      X.influence σ f ≥ α * X.variance f := by\n  sorry",
@@ -41701,7 +41748,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29449v1",
       "source_path": "http://arxiv.org/abs/2606.29449v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T07:37:59.489217+00:00",
       "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
@@ -41735,7 +41782,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2957",
+      "id": "fd_2958",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_stretching_quotient_labeling {n t : ℕ} (G : SimpleGraph V) [Connected G] (P : EdgePartition G t) (A : Matrix (Fin (cycle_classes P).length) (Fin t) (ZMod 2)) (hA : A = cycle_class_parity_matrix P) (ℓ : V → (ZMod 2)^(t - A.rank)) (H : CayleyGraph (ZMod 2)^(t - A.rank) (standard_generators _)) (hℓ : ℓ = quotient_labeling P A) : ∀ u v : V, SimpleGraph.dist G u v ≥ SimpleGraph.dist H (ℓ u) (ℓ v) := by sorry",
@@ -41782,7 +41829,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2958",
+      "id": "fd_2959",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem balla_conjecture_alpha_one_third (d : ℕ) (hd : d ≥ 1) :\n  N_α (1/3 : ℝ) d ≤ max 28 (2 * (d - 1)) := by\n  sorry",
@@ -41827,7 +41874,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2959",
+      "id": "fd_2960",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem k3_additive_uniqueness_on_E2 (f : ℕ → ℂ)\n    (hf_coprime : ∀ {m n : ℕ}, m.Coprime n → f (m * n) = f m * f n)\n    (hf1 : f 1 = 1)\n    (hf2 : f 2 ≠ 0)\n    (h_add : ∀ x₁ x₂ x₃ x₄ x₅ x₆ : ℕ,\n        0 < x₁ → 0 < x₂ → 0 < x₃ → 0 < x₄ → 0 < x₅ → 0 < x₆ →\n        f (x₁^2 + x₂^2 + x₃^2 + x₄^2 + x₅^2 + x₆^2) =\n          f (x₁^2 + x₂^2) + f (x₃^2 + x₄^2) + f (x₅^2 + x₆^2)) :\n    ∀ n : ℕ, f n = n := by\n  sorry",
@@ -41876,7 +41923,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2960",
+      "id": "fd_2961",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem convex_position_minimizes_plane_graphs (n : ℕ) (hn : n ≥ 3) (P : Finset (Fin 2 → ℝ)) (h_gen : general_position P) (h_card : P.card = n) : plane_graph_count P ≥ plane_graph_count_convex n := by\n  sorry",
@@ -41925,7 +41972,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2961",
+      "id": "fd_2962",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem berry_keating_spectrum_equals_riemann_zeros :\n  ∀ (t : ℝ),\n  (∃ (n : ℕ), riemannZetaNontrivialZeros n = Complex.mk (1/2) t) ↔\n  (∃ (λ : ℝ), λ = t^2 + 1/4 ∧ λ ∈ spectrum (selfAdjointExtension berryKeatingHamiltonian)) :=\n  by sorry",
@@ -41973,7 +42020,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2962",
+      "id": "fd_2963",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cayer_turan_complete_prime {p : ℕ} (hp : Nat.Prime p) (hp_odd : Odd p)\n    {r : ℕ} (hr : 1 ≤ r) (hr_bound : r ≤ p - 1) :\n    exCay (completeGraph (Fin (r + 1))) (ZMod p) = p - 1 - 2 * (p / (r + 1)) := by\n  sorry",
@@ -42021,7 +42068,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2963",
+      "id": "fd_2964",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem kim_octonary_universal_iff_MD_one (D : ℕ) (hD : Squarefree D ∧ 1 < D)\n    (K : Type*) [Field K] [NumberField K] [IsQuadraticField K D]\n    (ε_plus : (𝓞 K)ˣ) (hε : IsFundamentalUnit ε_plus)\n    (f : QuadraticForm (Fin 8) (𝓞 K)) (h_f : f = KimOctonaryForm ε_plus)\n    (MD : ℕ) (hMD : MD = blomerKalaInvariant D) :\n    f.IsUniversal ↔ MD = 1 := by\n  sorry",
@@ -42040,6 +42087,55 @@
       "thread_id": "",
       "timestamp": "2026-06-30T09:45:22.756457+00:00",
       "title": "Universality of Kim's Octonary Form via the Blomer-Kala Invariant"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "CrootLev",
+        "Kneser_theorem",
+        "Kemperman_critical_pairs",
+        "popular_differences",
+        "sumset_structure"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The Croot-Lev half-threshold problem, now resolved by the authors, establishes that in a 2-torsion-free abelian group G, if r_A(d) ≥ |A|/2 for all d ∈ A−A, then A is either a single coset or a union of two cosets of some finite subgroup H. This conjecture proposes the natural generalization to the 1/3 threshold: if r_A(d) ≥ |A|/3 for all d ∈ A−A, then A is contained in at most 3 cosets of some finite subgroup H. The bound k on the number of cosets scales with the reciprocal of the threshold, and the 2-torsion-free hypothesis remains essential (as the authors' counterexamples in F_2^{2r+1} also violate the 1/3-threshold coset conclusion).",
+      "domain_bridges": [
+        "additive_combinatorics -> group_theory",
+        "representation_functions -> coset_decompositions",
+        "torsion_obstructions -> structural_thresholds"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2965",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem third_threshold_coset_structure {G : Type*} [AddCommGroup G] [Fintype G]\n    (A : Finset G) (hA : A.Nonempty)\n    (h_torsion_free : ∀ g : G, 2 • g = 0 → g = 0)\n    (h_popular : ∀ d ∈ A - A,\n      3 * ((A ×ˢ A).filter (fun p : G × G => p.1 - p.2 = d)).card ≥ A.card) :\n    ∃ (H : AddSubgroup G) (s : Finset G),\n      s.card ≤ 3 ∧ ∀ a ∈ A, ∃ x ∈ s, a - x ∈ H :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the authors' Kneser quotient reduction and Kemperman critical-pair framework from the 1/2-threshold to the 1/3-threshold regime. The key steps would be: (1) Establish a Kneser-type lower bound for |A−A| when the 1/3-popular condition holds, showing that the deficit |A−A| − |A| is controlled by the Kneser quotient; (2) Classify the critical-pair configurations that achieve equality or near-equality in the 1/3-threshold regime, showing that the deficit forces a 3-coset structure; (3) Handle the case where A−A is a subgroup separately (where A is a single coset) versus the case where A−A is not a subgroup (where the Kemperman analysis forces A into at most 3 cosets). The 2-torsion-free assumption is used in the Kemperman step to ensure that the critical-pair classification yields coset structures rather than the exotic configurations the authors construct in F_2^{2r+1}.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29297v1",
+      "source_path": "http://arxiv.org/abs/2606.29297v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T10:09:12.619347+00:00",
+      "title": "Third-Threshold Coset Structure in 2-Torsion-Free Abelian Groups"
     },
     {
       "ambition_level": "extension",

@@ -2648,11 +2648,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every mod 2 toric-colorable PL (n-1)-sphere with n \u2264 5 admits a Z-characteristic map. Equivalently, for PL spheres of dimension at most 4, mod 2 toric-colorability implies Z-toric-colorability. This generalizes the paper's computational verification that all 198,846 mod 2 toric-colorable seeds of dimension 4 and Picard number 5 are toric-colorable to all such spheres of dimension \u2264 4, regardless of Picard number. The conjecture asserts that the only obstruction to lifting a Z_2-characteristic map to a Z-characteristic map vanishes for PL spheres of dimension \u2264 4.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2936",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29309v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:07:29.451224+00:00",
+    "title": "Mod 2 to Z Characteristic Map Lifting for Low-Dimensional PL Spheres"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2936",
+    "id": "fd_2937",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2666,7 +2680,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2680,7 +2694,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2694,7 +2708,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2708,7 +2722,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2723,7 +2737,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2738,7 +2752,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2752,7 +2766,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2766,7 +2780,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2780,7 +2794,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2795,7 +2809,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2810,7 +2824,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2824,7 +2838,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2948",
+    "id": "fd_2949",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2838,7 +2852,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2949",
+    "id": "fd_2950",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
@@ -2847,30 +2861,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "The paper establishes that c(s/log s)^{4/3} \u2264 F(s) \u2264 (1+o(1))s^{3/2}/log s, where F(s) = max{\u03c7(G) : \u03c9(G) \u2264 s, g(G\u0305) \u2265 6}. The conjecture proposes that the true asymptotic growth rate is \u0398(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) \u2265 c \u00b7 s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2950",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29873v1",
-    "status": "available",
-    "timestamp": "2026-06-30T05:26:20.098555+00:00",
-    "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
-  },
-  {
     "consumed_by_exp_id": "f47f3dac",
-    "description": "For any nontrivial connected graph G, the independence number \u03b1(G) is bounded below by (a(G) + R(G))/\u0394(G), where a(G) is the annihilation number, R(G) is the residue, and \u0394(G) is the maximum degree. This conjecture, originally posed by TxGraffiti, has been proven for all connected graphs with maximum degree \u2265 2, except for the single edge (K\u2082), where it fails. The bound is sharp, as equality is achieved for complete graphs like K\u2084.",
+    "description": "The paper establishes that c(s/log s)^{4/3} \u2264 F(s) \u2264 (1+o(1))s^{3/2}/log s, where F(s) = max{\u03c7(G) : \u03c9(G) \u2264 s, g(G\u0305) \u2265 6}. The conjecture proposes that the true asymptotic growth rate is \u0398(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) \u2265 c \u00b7 s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2951",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.29553v1",
+    "source_exp_id": "2606.29873v1",
     "status": "in_progress",
+    "timestamp": "2026-06-30T05:26:20.098555+00:00",
+    "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any nontrivial connected graph G, the independence number \u03b1(G) is bounded below by (a(G) + R(G))/\u0394(G), where a(G) is the annihilation number, R(G) is the residue, and \u0394(G) is the maximum degree. This conjecture, originally posed by TxGraffiti, has been proven for all connected graphs with maximum degree \u2265 2, except for the single edge (K\u2082), where it fails. The bound is sharp, as equality is achieved for complete graphs like K\u2084.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2952",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29553v1",
+    "status": "available",
     "timestamp": "2026-06-30T05:48:51.779938+00:00",
     "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
   },
@@ -2880,7 +2894,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2952",
+    "id": "fd_2953",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
@@ -2894,7 +2908,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2953",
+    "id": "fd_2954",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -2908,7 +2922,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2954",
+    "id": "fd_2955",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
@@ -2917,32 +2931,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniform Distribution Uniquely Maximizes Expected Empty Spaces in Sibling Coupon Collection"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65d4cbfc",
     "description": "The probability that exactly u labels are untouched after k_n independent uniform m_n-subset drawings from n labels converges to the Poisson probability e^{-\u03bb} \u03bb^u / u! whenever the expected number of untouched labels \u03bb_n = n ((n-m_n)/n)^{k_n} \u2192 \u03bb \u2208 (0, \u221e) and the complement size b_n = n - m_n \u2192 \u221e.",
     "domains": [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2955",
+    "id": "fd_2956",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29530v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T07:19:31.725431+00:00",
     "title": "Poisson Limit for Group-Drawing Coupon Collector"
   },
   {
-    "consumed_by_exp_id": "65d4cbfc",
+    "consumed_by_exp_id": "",
     "description": "Let X be a d-dimensional weighted simplicial complex with distribution \u03c0 on X(d). If there exists \u03b1 > 0 such that every link X_\u03c3 for \u03c3 \u2208 X(d-2) satisfies a KKL property with parameter \u03b1 \u2014 meaning for every g : X_\u03c3(1) \u2192 \u211d, max_{v \u2208 X_\u03c3(0)} Inf_v(g) \u2265 \u03b1 \u00b7 Var(g) \u2014 then X globally satisfies a KKL property with the same parameter \u03b1: for every f : X(d) \u2192 \u211d, max_{\u03c3 \u2208 X(d-2)} Inf_\u03c3(f) \u2265 \u03b1 \u00b7 Var(f). This captures the paper's central local-to-global principle: the KKL phenomenon on a simplicial complex is inherited from its links.",
     "domains": [
       "Geometry",
       "Computation"
     ],
-    "id": "fd_2956",
+    "id": "fd_2957",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T07:37:59.489217+00:00",
     "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
@@ -2952,7 +2966,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2957",
+    "id": "fd_2958",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
@@ -2967,7 +2981,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2958",
+    "id": "fd_2959",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
@@ -2981,7 +2995,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2959",
+    "id": "fd_2960",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29507v1",
@@ -2996,7 +3010,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2960",
+    "id": "fd_2961",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29446v1",
@@ -3011,7 +3025,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2961",
+    "id": "fd_2962",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
@@ -3026,7 +3040,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2962",
+    "id": "fd_2963",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
@@ -3040,13 +3054,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2963",
+    "id": "fd_2964",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29321v1",
     "status": "available",
     "timestamp": "2026-06-30T09:45:22.756457+00:00",
     "title": "Universality of Kim's Octonary Form via the Blomer-Kala Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Croot-Lev half-threshold problem, now resolved by the authors, establishes that in a 2-torsion-free abelian group G, if r_A(d) \u2265 |A|/2 for all d \u2208 A\u2212A, then A is either a single coset or a union of two cosets of some finite subgroup H. This conjecture proposes the natural generalization to the 1/3 threshold: if r_A(d) \u2265 |A|/3 for all d \u2208 A\u2212A, then A is contained in at most 3 cosets of some finite subgroup H. The bound k on the number of cosets scales with the reciprocal of the threshold, and the 2-torsion-free hypothesis remains essential (as the authors' counterexamples in F_2^{2r+1} also violate the 1/3-threshold coset conclusion).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2965",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29297v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:09:12.619347+00:00",
+    "title": "Third-Threshold Coset Structure in 2-Torsion-Free Abelian Groups"
   },
   {
     "consumed_by_exp_id": "",
