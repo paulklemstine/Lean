@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3131feed",
+    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n ≤ 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domain_bridges": [],
     "domains": [
@@ -15,14 +15,14 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432569+00:00",
     "title": "Goldbach Verification Framework"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d5c197ae",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -34,7 +34,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -977,7 +977,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7ba0e3f",
     "description": "Prove that the Euler-Mascheroni constant γ ≈ 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
     "domain_bridges": [],
     "domains": [
@@ -989,7 +989,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.338705+00:00",
     "title": "Euler-Mascheroni Constant Irrationality"
   },
@@ -1054,7 +1054,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b897e106",
+    "consumed_by_exp_id": "",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1067,7 +1067,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -3719,7 +3719,7 @@
       "Rademacher_expansions",
       "q_series"
     ],
-    "consumed_by_exp_id": "bb7d7825",
+    "consumed_by_exp_id": "",
     "description": "Let ρ(q) = Σ_{m≥0} q^{2m(m+1)} / Π_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = Σ_{n≥0} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n ≥ 0: r(3n) > 0, r(3n+1) ≤ 0, and r(3n+2) ≤ 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n ∈ {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n ∈ {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domain_bridges": [
       "analytic_number_theory ↔ formal_power_series_coefficients",
@@ -3735,7 +3735,7 @@
     "proof_strategy": "The asymptotic sign law is proven via Watson's identity 2ρ(q) + ω(q) = T(q) combined with Rademacher-type expansions for ω(q) and the theta-eta product T(q), yielding r(n) ~ κ_{n mod 3} · (2π)/(12n+8)^{1/4} · I_{1/2}(π√(12n+8)/18) where κ₀ > 0, κ₁ < 0, κ₂ < 0. To prove the exact finite conjecture, one must: (1) make the error term in the Rademacher expansion fully effective with explicit constants, yielding an explicit N₀ such that the sign law holds for all n ≥ N₀; (2) computationally verify all cases n < N₀. The effective bound requires careful tracking of all error terms in the circle method analysis, similar to effective Rademacher bounds for partition ranks.",
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
   },
@@ -4786,7 +4786,7 @@
       "Siegel modular forms",
       "Arthur parameters"
     ],
-    "consumed_by_exp_id": "07b22854",
+    "consumed_by_exp_id": "",
     "description": "Let k=3 and j>=2 be an even integer, and let f be a primitive elliptic cusp form of weight j+4 for SL_2(Z). For any prime ideal p of the Hecke field Q(f) dividing the algebraic critical value L^alg(j+3, f), there exists a Siegel cusp eigenform F of weight det^3 Sym^j for Sp_2 and a prime ideal P above p such that the spinor L-polynomial congruence L_ell(X, F, Spin) = L_ell(X, f)(1 - ell X)(1 - ell^{j+2} X) mod P holds for all primes ell.",
     "domain_bridges": [
       "Automorphic Forms",
@@ -4803,7 +4803,7 @@
     "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T04:09:54.071727+00:00",
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
@@ -5061,7 +5061,7 @@
       "Cayley graphs of abelian groups",
       "GF(2) linear algebra"
     ],
-    "consumed_by_exp_id": "65ebb6ab",
+    "consumed_by_exp_id": "",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling ℓ: V(G) → (Z/2Z)^(t − rank(A)) satisfies d_G(u,v) ≥ d_H(ℓ(u), ℓ(v)) for all u,v ∈ V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t − rank(A)). That is, the labeling never stretches distances—it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domain_bridges": [
       "graph_metrics",
@@ -5078,7 +5078,7 @@
     "proof_strategy": "Show that each edge of G maps to an edge of H under the quotient labeling (by construction of the labeling from the edge partition), so every path in G maps to a path of equal or shorter length in H. The key step is proving that the GF(2) quotient construction preserves adjacency: if uv ∈ E(G) and uv lies in partition class i, then ℓ(u) and ℓ(v) differ in exactly the coordinate corresponding to the image of class i in the quotient. The non-stretching then follows by taking d_G(u,v) as the infimum over all path lengths, which bound the Hamming distance of the labels from below.",
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
@@ -5760,6 +5760,32 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
+      "math.GT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a connected orientable hypermap H = (σ, α) with medial map M(H), an all-crossing direction Φ of M(H) exists if and only if every cycle of α has even length. This conjecture connects the paper's novel obstruction (all hyperedges must have even length for any bipartite partial dual to exist) with the paper's main bipartite characterization (H^{E'} is bipartite iff E' = C(Φ) for some all-crossing direction Φ), yielding a complete existence criterion: a bipartite partial dual exists iff all hyperedges have even length.",
+    "domain_bridges": [
+      "topological_graph_theory",
+      "permutation_groups",
+      "combinatorial_maps"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2987",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The 'only if' direction follows from the paper's obstruction result: if an all-crossing direction exists, then C(Φ) bipartitizes, so all hyperedges must have even length. The 'if' direction requires constructing an all-crossing direction of M(H) from the even-length condition on α-cycles, likely by inductively assigning crossing directions at each medial vertex and using the even-length constraint to ensure local consistency propagates globally.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30071v1",
+    "status": "available",
+    "timestamp": "2026-06-30T16:08:35.725959+00:00",
+    "title": "All-Crossing Directions Exist iff All Hyperedges Have Even Length"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
       "math.GR"
     ],
     "consumed_by_exp_id": "",
@@ -5773,7 +5799,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5801,7 +5827,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5830,7 +5856,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5861,7 +5887,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5891,7 +5917,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -5919,7 +5945,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -5949,7 +5975,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -5974,7 +6000,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -5993,7 +6019,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Convergence bounds via recursive bounds",
@@ -6020,7 +6046,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k, characterizing the extremal counterexamples for n < (k choose 2) + 3 using structural hypergraph theory, and applying the absorbing method to embed the Berge tight cycles for n ≥ (k choose 2) + 3.",
@@ -6047,7 +6073,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof uses the Chinese Remainder Theorem to split the congruence modulo $q^t p$ into independent conditions modulo $p$ and modulo $q^t$. The condition modulo $p$ is derived using Lucas' theorem and Fermat's Little theorem. The condition modulo $q^t$ is established by computing the $q$-adic valuation of the binomial coefficient using Legendre's formula, which reduces the problem to bounding the base-$q$ digit sum.",
@@ -6076,7 +6102,7 @@
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Reformulate the visibility condition gcd(v − x) = 1 as a local condition: for all primes p, v ≢ x (mod p) in (ℤ/pℤ)ᵏ. 2. Apply the Chinese Remainder Theorem to decompose the joint condition v ∈ V_S ∩ (V_S − z) into independent conditions at each prime p: v (mod p) ∉ S_p ∪ (S−z)_p. 3. Compute each local factor as a finite counting problem in (ℤ/pℤ)ᵏ, yielding factor (1 − |S_p ∪ (S−z)_p|/pᵏ). 4. Prove convergence of the infinite Euler product using the bound |S_p ∪ (S−z)_p| ≤ 2|S| for all but finitely many p, combined with k ≥ 2 ensuring ∑_p 2|S|/pᵏ converges. 5. Rigorously justify the CRT-based density decomposition via inclusion-exclusion over primes and the uniform convergence of the partial products.",
@@ -6103,7 +6129,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the game inductively as a tree of states, each tracking remaining unchosen players and current team compositions (membership lists). Define strategies as functions from game states to moves (which player to pick or which team to assign to). Prove the parity advantage by constructing explicit strategies: for even n, Alice uses a symmetric pairing strategy where she maintains a potential function based on deviations from the mean; for odd n, Bob uses a mirror strategy. The key lemma is that at each decision point, the advantaged player can make a move that preserves the invariant that their team's running sum stays at least (resp. at most) the pro-rated share of the total.",
@@ -6112,6 +6138,31 @@
     "status": "available",
     "timestamp": "2026-06-30T15:41:06.648288+00:00",
     "title": "Average-Game Parity Advantage Theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every non-negative integer n, the number of two-color partitions of n into distinct parts, where the smallest part occurs in exactly one prescribed color and every larger part may occur in either color or both colors, is congruent to (-1)^r modulo 4 if n is the r-th triangular number r(r+1)/2, and is congruent to 0 modulo 4 otherwise.",
+    "domain_bridges": [
+      "partition_theory",
+      "quadratic_forms"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3001",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the sequence s_1(n) via its generating function or combinatorial interpretation, establish the equivalence to Andrews' strictly concave compositions, and verify the congruence using the refined parity analysis and q-series expansions modulo 4.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30208v1",
+    "status": "available",
+    "timestamp": "2026-06-30T16:12:05.845657+00:00",
+    "title": "Modulo 4 Characterization of Two-Color Distinct-Part Partition Coefficients"
   },
   {
     "ambition_level": "extension",
@@ -6643,7 +6694,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fbd53921",
+    "consumed_by_exp_id": "",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domain_bridges": [],
     "domains": [
@@ -6656,7 +6707,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
@@ -7163,7 +7214,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2b75e6b3",
+    "consumed_by_exp_id": "",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -7176,7 +7227,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },

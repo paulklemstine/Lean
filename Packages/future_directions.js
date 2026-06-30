@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "3131feed",
+    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -13,12 +13,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432569+00:00",
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "d5c197ae",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -733,7 +733,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Happy End Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7ba0e3f",
     "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
     "domains": [
       "Algebra"
@@ -742,7 +742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.338705+00:00",
     "title": "Euler-Mascheroni Constant Irrationality"
   },
@@ -790,7 +790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "b897e106",
+    "consumed_by_exp_id": "",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domains": [
       "NumberTheory",
@@ -800,7 +800,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -2235,7 +2235,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Skeleton-Coskeleton Determination for Regular Maniplexes"
   },
   {
-    "consumed_by_exp_id": "bb7d7825",
+    "consumed_by_exp_id": "",
     "description": "Let \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n \u2208 {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n \u2208 {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domains": [
       "Bridges"
@@ -2244,7 +2244,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function \u03c1(q)"
   },
@@ -2798,7 +2798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "All minimum $C_4$-saturated multipartite graphs"
   },
   {
-    "consumed_by_exp_id": "07b22854",
+    "consumed_by_exp_id": "",
     "description": "Let k=3 and j>=2 be an even integer, and let f be a primitive elliptic cusp form of weight j+4 for SL_2(Z). For any prime ideal p of the Hecke field Q(f) dividing the algebraic critical value L^alg(j+3, f), there exists a Siegel cusp eigenform F of weight det^3 Sym^j for Sp_2 and a prime ideal P above p such that the spinor L-polynomial congruence L_ell(X, F, Spin) = L_ell(X, f)(1 - ell X)(1 - ell^{j+2} X) mod P holds for all primes ell.",
     "domains": [
       "Algebra",
@@ -2808,7 +2808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T04:09:54.071727+00:00",
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
@@ -2942,7 +2942,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
   {
-    "consumed_by_exp_id": "65ebb6ab",
+    "consumed_by_exp_id": "",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling \u2113: V(G) \u2192 (Z/2Z)^(t \u2212 rank(A)) satisfies d_G(u,v) \u2265 d_H(\u2113(u), \u2113(v)) for all u,v \u2208 V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t \u2212 rank(A)). That is, the labeling never stretches distances\u2014it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domains": [
       "Algebra"
@@ -2951,7 +2951,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
@@ -3307,12 +3307,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a connected orientable hypermap H = (\u03c3, \u03b1) with medial map M(H), an all-crossing direction \u03a6 of M(H) exists if and only if every cycle of \u03b1 has even length. This conjecture connects the paper's novel obstruction (all hyperedges must have even length for any bipartite partial dual to exist) with the paper's main bipartite characterization (H^{E'} is bipartite iff E' = C(\u03a6) for some all-crossing direction \u03a6), yielding a complete existence criterion: a bipartite partial dual exists iff all hyperedges have even length.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2987",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30071v1",
+    "status": "available",
+    "timestamp": "2026-06-30T16:08:35.725959+00:00",
+    "title": "All-Crossing Directions Exist iff All Hyperedges Have Even Length"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3327,7 +3341,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3341,7 +3355,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3356,7 +3370,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3371,7 +3385,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3386,7 +3400,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3401,7 +3415,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3415,7 +3429,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3429,7 +3443,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3443,7 +3457,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3457,7 +3471,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3472,7 +3486,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3486,13 +3500,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
     "status": "available",
     "timestamp": "2026-06-30T15:41:06.648288+00:00",
     "title": "Average-Game Parity Advantage Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every non-negative integer n, the number of two-color partitions of n into distinct parts, where the smallest part occurs in exactly one prescribed color and every larger part may occur in either color or both colors, is congruent to (-1)^r modulo 4 if n is the r-th triangular number r(r+1)/2, and is congruent to 0 modulo 4 otherwise.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3001",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30208v1",
+    "status": "available",
+    "timestamp": "2026-06-30T16:12:05.845657+00:00",
+    "title": "Modulo 4 Characterization of Two-Color Distinct-Part Partition Coefficients"
   },
   {
     "consumed_by_exp_id": "",
@@ -3887,7 +3915,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "fbd53921",
+    "consumed_by_exp_id": "",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -3897,7 +3925,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
@@ -4277,7 +4305,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "2b75e6b3",
+    "consumed_by_exp_id": "",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domains": [
       "Bridges",
@@ -4287,7 +4315,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },

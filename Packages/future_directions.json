@@ -13228,7 +13228,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "2b75e6b3",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13254,7 +13254,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.504025+00:00",
       "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
@@ -15138,7 +15138,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "fbd53921",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15164,7 +15164,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:46.684855+00:00",
       "title": "Diffusion Models as Stochastic Differential Equations"
@@ -39633,7 +39633,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "bb7d7825",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39662,7 +39662,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27902v1",
       "source_path": "http://arxiv.org/abs/2606.27902v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T00:52:54.836226+00:00",
       "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
@@ -41432,7 +41432,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.NT",
         "Harder's conjecture",
@@ -41441,7 +41441,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "07b22854",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41457,7 +41457,7 @@
         "Pythagorean"
       ],
       "id": "fd_2951",
-      "last_attempt_time": "2026-06-30T15:41:12.222309+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem harder_conjecture_k_equals_3 (j : ℕ) (hj : j ≥ 2 ∧ Even j) (f : PrimitiveEllipticCuspForm (j + 4)) (p : Ideal (HeckeField f)) (hp : p ∣ L_alg (j + 3) f) : ∃ (F : SiegelCuspEigenForm (det^3 * Sym^j)) (P : Ideal (HeckeField F)) (hP : P ∣ p), ∀ ℓ : ℕ, ℓ.Prime → SpinLPoly ℓ F ≡ LPoly ℓ f * (1 - (ℓ : ℤ)^1 * X) * (1 - (ℓ : ℤ)^(j + 2) * X) [MOD P] := by sorry",
       "lineage_refs": [],
@@ -41471,7 +41471,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.30063v1",
       "source_path": "http://arxiv.org/abs/2606.30063v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T04:09:54.071727+00:00",
       "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
@@ -41951,7 +41951,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "65ebb6ab",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41981,7 +41981,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29391v1",
       "source_path": "http://arxiv.org/abs/2606.29391v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T07:59:17.309660+00:00",
       "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
@@ -43123,6 +43123,51 @@
       "attempt_count": 0,
       "catalog_references": [
         "math.CO",
+        "math.GT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a connected orientable hypermap H = (σ, α) with medial map M(H), an all-crossing direction Φ of M(H) exists if and only if every cycle of α has even length. This conjecture connects the paper's novel obstruction (all hyperedges must have even length for any bipartite partial dual to exist) with the paper's main bipartite characterization (H^{E'} is bipartite iff E' = C(Φ) for some all-crossing direction Φ), yielding a complete existence criterion: a bipartite partial dual exists iff all hyperedges have even length.",
+      "domain_bridges": [
+        "topological_graph_theory",
+        "permutation_groups",
+        "combinatorial_maps"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2987",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem all_crossing_direction_iff_all_even_length {n : ℕ} (σ α : Perm (Fin n)) (h_trans : Transitive (RelGeneratedBy σ α)) : ExistsAllCrossingDirection (medialMap σ α) ↔ ∀ c ∈ α.cycleType, Even c",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The 'only if' direction follows from the paper's obstruction result: if an all-crossing direction exists, then C(Φ) bipartitizes, so all hyperedges must have even length. The 'if' direction requires constructing an all-crossing direction of M(H) from the even-length condition on α-cycles, likely by inductively assigning crossing directions at each medial vertex and using the even-length constraint to ensure local consistency propagates globally.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30071v1",
+      "source_path": "http://arxiv.org/abs/2606.30071v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T16:08:35.725959+00:00",
+      "title": "All-Crossing Directions Exist iff All Hyperedges Have Even Length"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
         "math.GR"
       ],
       "category": "cross_domain_bridge",
@@ -43142,7 +43187,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2987",
+      "id": "fd_2988",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem nilpotent_extension_feng_sun_xiang (G : Type*) [Group G] [Fintype G] [IsNilpotent G] {p : ℕ} (hp : Nat.Prime p) (hp_min : ∀ q ∣ Fintype.card G, Nat.Prime q → p ≤ q) {k : ℕ} (hk : k < p) (a : Fin k → G) (ha : Function.Injective a) (b : Fin k → G) : ∃ σ : Equiv.Perm (Fin k), Function.Injective fun i => a i * b (σ i) := by sorry",
@@ -43189,7 +43234,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2988",
+      "id": "fd_2989",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem odd_kneser_strong_chromatic_index : forall k >= 2, odd_kneser_graph (2*k-1) k ~~> strong_chromatic_index (2*k-1) := ...",
@@ -43237,7 +43282,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2989",
+      "id": "fd_2990",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_sign_changes_sym_power_over_sums_of_squares\n    (k j m : ℕ) (hk : Even k ∧ k ≥ 2) (hm : Even m ∧ m ≥ 2)\n    (f : Sl2Z.ModularForm k) (hf : f ∈ HeckeEigenforms k)\n    (hf_norm : IsNormalised f) :\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n > 0} ∧\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n < 0} := by\n  sorry",
@@ -43287,7 +43332,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2990",
+      "id": "fd_2991",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem shifted_convolution_sym_power_k_full_sums_of_squares\n    (f : ModularForms.SL2Z) (κ : ℕ) (hf : IsHeckeEigenform f κ)\n    (j k h q m : ℕ) (hk : k ≥ 2) (hj : j ≥ 1) (hm : m ∈ {2,4,6,8,10,12})\n    (a : ℕ → ℕ) (ha_kfull : IsKFullKernel a k) (ha_bound : ∀ ε > 0, ∃ C, ∀ n, (a n : ℝ) ≤ C * n^ε) :\n    ∃ (δ : ℝ) (hδ : δ > 0) (C₀ : ℝ) (hC₀ : C₀ > 0) (α : ℕ),\n    ∀ ε > 0, ∃ B : ℝ, ∀ x ≥ (1 : ℝ),\n    let S := ∑ n in Finset.Icc 1 ⌊x⌋ₙ |>.filter\n      (fun n => n % q = 1 ∧ IsSumOfMSquares n m),\n      (a n : ℝ) * λSymPower f j (n + h)\n    let M := C₀ * x * (Real.log x)^α\n    |S - M| ≤ B * x^(1 - δ + ε) := sorry",
@@ -43336,7 +43381,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2991",
+      "id": "fd_2992",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vertex_ramsey_stability {r : ℕ} (hr : 2 ≤ r) {H : SimpleGraph ℕ} (hH : 2 ≤ H.chromaticNumber) : ∀ ε > 0, ∃ n₀ : ℕ, ∃ δ > 0, ∀ n ≥ n₀, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj], G.minDegree ≥ (1 - 1 / (r * (H.chromaticNumber - 1))) * n → ¬(G →_v (H, r)) → ∃ (G' : SimpleGraph (Fin n)) [DecidableRel G'.Adj], G'.IsKPartite (r * (H.chromaticNumber - 1)) ∧ (G.edgeSet \\ G'.edgeSet).card ≤ ε * n ^ 2",
@@ -43383,7 +43428,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2992",
+      "id": "fd_2993",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem orbit_closure_bruhat_relation {n : ℕ} {v w : Equiv.Perm (Fin (n+1))} (hv : v ≤ w) : (ιₙ ⁻¹ (BOrbit O_w)) ⊆ closure (ιₙ ⁻¹ (BOrbit O_v))",
@@ -43432,7 +43477,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2993",
+      "id": "fd_2994",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: For any m ≥ 1, p ∈ [0, 1/3], and positive weights w₁,...,wₘ\n    summing to 1, if v₁,...,vₘ are i.i.d. Bernoulli(p), then P(∑ wᵢ vᵢ ≥ p) ≥ p. -/\ntheorem prob_weighted_bernoulli_sum_ge_mean {m : ℕ} (p : ℝ)\n    (hp₁ : 0 ≤ p) (hp₂ : p ≤ 1 / 3)\n    (w : Fin m → ℝ) (hw₁ : ∀ i, 0 < w i) (hw₂ : ∑ i, w i = 1) :\n    let μ := Measure.pi (fun (_ : Fin m) => (PMF.bernoulli p hp₁).toMeasure)\n    (μ {x : Fin m → Bool | (∑ i, w i * if x i then (1 : ℝ) else 0) ≥ p}).toReal ≥ p := by\n  sorry",
@@ -43476,7 +43521,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2994",
+      "id": "fd_2995",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_concentration_of_measure (ε : ℝ) (hε : ε ∈ Ioo 0 1) :\n    ∃ (γ : ℝ) (C : ℕ), 0 < γ ∧ 0 < C ∧\n    ∀ (n : ℕ) (A S : Finset (Fin n → ZMod 2)),\n      (A.card : ℝ) ≥ ε * (2 : ℝ) ^ n ∧ IsWellSpread S γ C →\n      ((A + S).card : ℝ) ≥ (1 - ε) * (2 : ℝ) ^ n := by\n  sorry",
@@ -43514,7 +43559,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2995",
+      "id": "fd_2996",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Integral asymptotic estimates",
@@ -43560,7 +43605,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2996",
+      "id": "fd_2997",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem berge_tight_cycle_threshold {k : ℕ} (hk : 3 ≤ k) {n : ℕ} (hn : n ≥ Nat.choose k 2 + 3) \n    (H : Hypergraph (Fin n)) (hR : H.Is_R_graph (Finset.Icc 1 k)) \n    (hδ : H.min_s_degree (k - 1) ≥ 1) (t : ℕ) (ht : k ≤ t ∧ t ≤ n) :\n    H.Contains_Berge_Tight_Cycle t (k - 1) := by\n  sorry",
@@ -43606,7 +43651,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2997",
+      "id": "fd_2998",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem prime_base_reduction (q p t : ℕ) (hq : Nat.Prime q) (hp : Nat.Prime p) (hneq : p ≠ q) (ht : 0 < t) :\n    let n := q^t * p\n    let A_t := (q^(t+1)).choose (q^t) - q^(q^t)\n    (q * n).choose n ≡ q^n [MOD n] ↔ (p ∣ A_t ∧ s q ((q - 1) * p) ≥ (q - 1) * t) :=\n  sorry",
@@ -43654,7 +43699,7 @@
         "Pythagorean",
         "Cryptography"
       ],
-      "id": "fd_2998",
+      "id": "fd_2999",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem simultaneously_visible_autocorrelation_euler_product\n    {k : ℕ} (hk : 2 ≤ k) (S : Finset (Fin k → ℤ)) (z : Fin k → ℤ) :\n    autocorrelation (simultaneouslyVisible S) z =\n    ∏ᶠ (p : ℕ) in Nat.primes,\n      (1 - ((S.reduceMod p ∪ (S.shift (-z)).reduceMod p).card : ℚ) / (p : ℚ) ^ k) :=\n  sorry",
@@ -43700,7 +43745,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2999",
+      "id": "fd_3000",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem avg_game_parity_advantage {n : ℕ} (h_n : 2 ≤ n)\n    (a : Fin n → ℝ) (h_mono : ∀ i j : Fin n, i ≤ j → a i ≤ a j) :\n    let x := (∑ i : Fin n, a i) / n\n    (∀ hn : Even n, ∃ (σ : AliceStrategy n a),\n      ∀ (τ : BobStrategy n a), avg (aliceTeam σ τ) ≥ x) ∧\n    (∀ hn : ¬Even n, ∃ (τ : BobStrategy n a),\n      ∀ (σ : AliceStrategy n a), avg (aliceTeam σ τ) ≤ x) :=\n  by sorry",
@@ -43719,6 +43764,50 @@
       "thread_id": "",
       "timestamp": "2026-06-30T15:41:06.648288+00:00",
       "title": "Average-Game Parity Advantage Theorem"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every non-negative integer n, the number of two-color partitions of n into distinct parts, where the smallest part occurs in exactly one prescribed color and every larger part may occur in either color or both colors, is congruent to (-1)^r modulo 4 if n is the r-th triangular number r(r+1)/2, and is congruent to 0 modulo 4 otherwise.",
+      "domain_bridges": [
+        "partition_theory",
+        "quadratic_forms"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_3001",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem mod4_s1_coeff (n : ℕ) : (∃ r, n = r * (r + 1) / 2 ∧ s_1 n ≡ (-1)^r [ZMOD 4]) ∨ (¬ (∃ r, n = r * (r + 1) / 2) ∧ s_1 n ≡ 0 [ZMOD 4]) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the sequence s_1(n) via its generating function or combinatorial interpretation, establish the equivalence to Andrews' strictly concave compositions, and verify the congruence using the refined parity analysis and q-series expansions modulo 4.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30208v1",
+      "source_path": "http://arxiv.org/abs/2606.30208v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T16:12:05.845657+00:00",
+      "title": "Modulo 4 Characterization of Two-Color Distinct-Part Partition Coefficients"
     },
     {
       "ambition_level": "extension",
@@ -45789,7 +45878,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "d5c197ae",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -45814,7 +45903,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:24:59.227937+00:00",
       "title": "Birch and Swinnerton-Dyer Conjecture"
@@ -46128,11 +46217,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d7ba0e3f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46143,7 +46232,7 @@
         "Algebra"
       ],
       "id": "seed_027",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T16:12:11.941528+00:00",
       "last_reviewed_at": "2026-06-16T10:48:52.128685+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46157,7 +46246,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:01.338705+00:00",
       "title": "Euler-Mascheroni Constant Irrationality"
@@ -48369,7 +48458,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "3131feed",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48395,7 +48484,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432569+00:00",
       "title": "Goldbach Verification Framework"
@@ -48485,7 +48574,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "b897e106",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48511,7 +48600,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432601+00:00",
       "title": "Collatz Stopping Times: Density Analysis"

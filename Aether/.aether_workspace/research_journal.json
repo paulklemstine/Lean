@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "113a596f",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — EML Differential Equations (Airy / Kovacic layer)\n\nDerived from this cycle's findings in `EML/EMLAiryRiccati.lean` (rational Riccati\nobstruction) and `EML/EMLRiccatiTransform.lea",
-      "quality_score": 0.67667,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-26T14:56:06",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
-    {
       "cycle_id": "bc0a8e2b",
       "domain": "Applications",
       "key_insight": "# Future Directions: Boolean Degree One Functions on `J_q(n,2)`\n\nThese conjectures are stated relative to the formal framework in\n`Core.lean` (abstract finite linear space modelling `J_q(n,2)`: points",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-06-30T12:40:39",
       "title": "Balla's Conjecture for α = 1/3"
+    },
+    {
+      "cycle_id": "913b7f3f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Pairings, Binding, and Aggregate Signatures\n\nThese conjectures grew out of a single structural observation about bilinear\npairings on torsion groups: nondegeneracy *as a form* an",
+      "quality_score": 0.682396,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-30T16:07:52",
+      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76576
     }
   ],
-  "last_updated": "2026-06-30T12:40:39",
+  "last_updated": "2026-06-30T16:07:52",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cfea11f0",
-        "quality": 0.65976,
-        "theorems": 0,
-        "title": "Optimal Transport and Wasserstein Distances"
-      },
-      {
         "cycle_id": "f589dfb5",
         "quality": 0.55062,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.3375488878571429,
         "theorems": 7,
         "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ"
+      },
+      {
+        "cycle_id": "913b7f3f",
+        "quality": 0.682396,
+        "theorems": 15,
+        "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
       }
     ],
     "NumberTheory": [
