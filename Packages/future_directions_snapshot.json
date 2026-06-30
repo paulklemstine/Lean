@@ -6874,7 +6874,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "733eb681",
     "description": "Formalize the p-adic Langlands correspondence for GL₂(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
     "domain_bridges": [],
     "domains": [
@@ -6887,7 +6887,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.128786+00:00",
     "title": "p-adic Langlands for GL₂(Q_p)"
   },
