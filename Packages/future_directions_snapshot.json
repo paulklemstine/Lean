@@ -5699,6 +5699,36 @@
     "title": "Tight Square-Root Bound for Complete 3-AP-Free Sets in Finite Vector Spaces"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.AG",
+      "math.CO",
+      "cs.DM",
+      "math.MG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all positive integers n and r, the basic r-symmetric tropical polynomials of degree at most n separate the orbits of the symmetric group S_n acting on R^{n×r} by row permutations. Formally: for any two matrices A, B ∈ R^{n×r}, if p_α(A) = p_α(B) for every multi-index α ∈ Z_{≥0}^r with |α| ≤ n, then there exists a permutation σ ∈ S_n such that B is obtained from A by permuting rows via σ. Here p_α(M) = max over all tuples (S_1,...,S_r) of pairwise disjoint subsets of {1,...,n} with |S_j| = α_j, of the sum Σ_{j=1}^r Σ_{i∈S_j} M_{ij}, interpreted in the max-plus (tropical) semiring. This resolves in full a conjecture of Kubo (2019) and yields a separating set of size C(n+r,r), far smaller than Derksen's general construction of nr + (nr)!/n! invariants.",
+    "domain_bridges": [
+      "combinatorial_optimization",
+      "invariant_theory",
+      "optimal_transport",
+      "persistent_homology"
+    ],
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_2985",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof identifies each p_α with the optimal value of an assignment/transportation problem (selecting α_j rows for each column j, maximizing total weight), then shows the dual transportation problem uniquely determines the multiset via an explicit greedy recovery algorithm. Formalization strategy: (1) define the max-plus semiring and tropical polynomials in Lean; (2) formalize the transportation/assignment problem and strong duality for it; (3) prove that equal p_α values for all α imply equal dual solutions; (4) construct the row-by-row recovery algorithm and prove it inverts the map from orbits to invariant vectors. The key combinatorial lemma is that the transportation polytope's dual uniquely encodes the sorted row data.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30184v1",
+    "status": "available",
+    "timestamp": "2026-06-30T15:17:25.027417+00:00",
+    "title": "Basic r-Symmetric Tropical Polynomials Separate S_n Orbits"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -5715,7 +5745,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5743,7 +5773,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5772,7 +5802,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5803,7 +5833,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5833,7 +5863,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -5861,7 +5891,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -5891,7 +5921,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -5916,7 +5946,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -5935,7 +5965,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Convergence bounds via recursive bounds",
@@ -5962,7 +5992,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k, characterizing the extremal counterexamples for n < (k choose 2) + 3 using structural hypergraph theory, and applying the absorbing method to embed the Berge tight cycles for n ≥ (k choose 2) + 3.",
@@ -5971,63 +6001,6 @@
     "status": "available",
     "timestamp": "2026-06-30T14:37:35.688846+00:00",
     "title": "Exact Threshold for Berge Tight Cycles in k-graphs"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.NT",
-      "erdos_conjecture",
-      "ray_class_group",
-      "prime_ideal_products"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For every fixed number field K and every κ > 0, there exists Q₀ such that for every integral ideal 𝔮 ⊆ O_K with N𝔮 ≥ Q₀, every class c in the narrow ray class group Cl^(∞)_𝔮 is represented by a product of two prime ideals: c = [𝔭₁]·[𝔭₂] with N𝔭₁ ≤ (N𝔮)^{1+κ} and N𝔭₂ ≤ (N𝔮)^{1+κ}. This is the number-field analogue of Erdős's original conjecture (every reduced residue class mod q is a product of two primes ≤ q), extended beyond the integer setting. The present paper establishes this for three primes at scale (N𝔮)^{103/64+κ}, but the binary case at scale (N𝔮)^{1+κ} remains open.",
-    "domain_bridges": [
-      "analytic_number_theory",
-      "additive_combinatorics",
-      "dense_model_theory"
-    ],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2994",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Extend the multiplicative dense-model and transference framework of Matomäki--Teräväinen (as adapted to number fields in this paper) to show that the product set P_X(𝔮) · P_X(𝔮) covers all of Cl^(∞)_𝔮 for X = (N𝔮)^{1+κ}. This requires improving the quantitative bounds on short character sums and subconvexity inputs to the point where the coset obstructions in the dense-model theorem can be overcome with only two factors. The key bottleneck is controlling the Fourier coefficients of the prime indicator function restricted to ray classes, which currently forces a ternary decomposition.",
-    "research_mode": "team",
-    "source_exp_id": "2606.30567v1",
-    "status": "available",
-    "timestamp": "2026-06-30T14:51:00.465515+00:00",
-    "title": "Number-Field Erdős Conjecture: Binary Prime Products in Narrow Ray Class Groups"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "DKSS",
-      "Feng-Sun-Xiang",
-      "Arsovski",
-      "Alon"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Let G be a finite group, let p be the smallest prime divisor of |G|, and let k < p. For any sequence of pairwise distinct elements a_1, ..., a_k in G and any sequence of elements b_1, ..., b_k in G, there exists a permutation σ on {1, ..., k} such that the products a_1 * b_{σ(1)}, ..., a_k * b_{σ(k)} are pairwise distinct. This extends the original DKSS conjecture (which was for abelian groups) and the paper's theorem (which is for p-groups) to arbitrary finite groups.",
-    "domain_bridges": [
-      "math.GR",
-      "math.CO"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2994",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Generalize the exterior algebra and representation-theoretic methods used for p-groups and abelian groups to arbitrary finite groups. This would involve bounding the number of 'bad' permutations using character sums over all irreducible representations of the group, potentially leveraging the structure of Sylow subgroups to control the vanishing of exterior algebra elements.",
-    "research_mode": "team",
-    "source_exp_id": "2606.30506v1",
-    "status": "available",
-    "timestamp": "2026-06-30T14:51:50.119468+00:00",
-    "title": "Generalized Dasgupta-Károlyi-Serra-Szegedy Conjecture for Finite Groups"
   },
   {
     "ambition_level": "extension",
@@ -6046,7 +6019,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof uses the Chinese Remainder Theorem to split the congruence modulo $q^t p$ into independent conditions modulo $p$ and modulo $q^t$. The condition modulo $p$ is derived using Lucas' theorem and Fermat's Little theorem. The condition modulo $q^t$ is established by computing the $q$-adic valuation of the binomial coefficient using Legendre's formula, which reduces the problem to bounding the base-$q$ digit sum.",
@@ -6055,6 +6028,35 @@
     "status": "available",
     "timestamp": "2026-06-30T14:55:27.919935+00:00",
     "title": "Prime-Base Reduction for $n=q^t p$"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "math-ph",
+      "52C23",
+      "11N25"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For k ≥ 2 and a finite set S ⊂ ℤᵏ, let V_S = {v ∈ ℤᵏ : ∀x ∈ S, gcd(v − x) = 1} be the set of points simultaneously visible from all points in S. The autocorrelation γ_S(z) = lim_{N→∞} |V_S ∩ (V_S + z) ∩ [−N,N]ᵏ| / (2N+1)ᵏ exists for all z ∈ ℤᵏ and equals the convergent Euler product ∏_p (1 − |S_p ∪ (S−z)_p| / pᵏ), where S_p and (S−z)_p denote the images of S and S−z in (ℤ/pℤ)ᵏ respectively. This generalizes the classical single-origin visible lattice point autocorrelation (where S = {0} recovers the known formula involving the Möbius function and Riemann zeta values) to arbitrary finite observation sets, and the Euler product structure immediately implies the pure point nature of the diffraction spectrum.",
+    "domain_bridges": [
+      "Multiplicative Number Theory ↔ Aperiodic Order",
+      "Chinese Remainder Theorem ↔ Diffraction Theory",
+      "Algebraic Number Theory ↔ Mathematical Crystallography"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_2997",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Reformulate the visibility condition gcd(v − x) = 1 as a local condition: for all primes p, v ≢ x (mod p) in (ℤ/pℤ)ᵏ. 2. Apply the Chinese Remainder Theorem to decompose the joint condition v ∈ V_S ∩ (V_S − z) into independent conditions at each prime p: v (mod p) ∉ S_p ∪ (S−z)_p. 3. Compute each local factor as a finite counting problem in (ℤ/pℤ)ᵏ, yielding factor (1 − |S_p ∪ (S−z)_p|/pᵏ). 4. Prove convergence of the infinite Euler product using the bound |S_p ∪ (S−z)_p| ≤ 2|S| for all but finitely many p, combined with k ≥ 2 ensuring ∑_p 2|S|/pᵏ converges. 5. Rigorously justify the CRT-based density decomposition via inclusion-exclusion over primes and the uniform convergence of the partial products.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30132v1",
+    "status": "available",
+    "timestamp": "2026-06-30T15:19:26.975381+00:00",
+    "title": "Euler Product for Autocorrelation of Simultaneously Visible Lattice Points"
   },
   {
     "ambition_level": "extension",

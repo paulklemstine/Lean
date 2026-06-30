@@ -3277,12 +3277,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For all positive integers n and r, the basic r-symmetric tropical polynomials of degree at most n separate the orbits of the symmetric group S_n acting on R^{n\u00d7r} by row permutations. Formally: for any two matrices A, B \u2208 R^{n\u00d7r}, if p_\u03b1(A) = p_\u03b1(B) for every multi-index \u03b1 \u2208 Z_{\u22650}^r with |\u03b1| \u2264 n, then there exists a permutation \u03c3 \u2208 S_n such that B is obtained from A by permuting rows via \u03c3. Here p_\u03b1(M) = max over all tuples (S_1,...,S_r) of pairwise disjoint subsets of {1,...,n} with |S_j| = \u03b1_j, of the sum \u03a3_{j=1}^r \u03a3_{i\u2208S_j} M_{ij}, interpreted in the max-plus (tropical) semiring. This resolves in full a conjecture of Kubo (2019) and yields a separating set of size C(n+r,r), far smaller than Derksen's general construction of nr + (nr)!/n! invariants.",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_2985",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30184v1",
+    "status": "available",
+    "timestamp": "2026-06-30T15:17:25.027417+00:00",
+    "title": "Basic r-Symmetric Tropical Polynomials Separate S_n Orbits"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3297,7 +3312,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3311,7 +3326,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3326,7 +3341,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3341,7 +3356,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3356,7 +3371,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3371,7 +3386,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3385,7 +3400,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3399,7 +3414,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3413,7 +3428,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3427,13 +3442,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
     "status": "available",
     "timestamp": "2026-06-30T14:55:27.919935+00:00",
     "title": "Prime-Base Reduction for $n=q^t p$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For k \u2265 2 and a finite set S \u2282 \u2124\u1d4f, let V_S = {v \u2208 \u2124\u1d4f : \u2200x \u2208 S, gcd(v \u2212 x) = 1} be the set of points simultaneously visible from all points in S. The autocorrelation \u03b3_S(z) = lim_{N\u2192\u221e} |V_S \u2229 (V_S + z) \u2229 [\u2212N,N]\u1d4f| / (2N+1)\u1d4f exists for all z \u2208 \u2124\u1d4f and equals the convergent Euler product \u220f_p (1 \u2212 |S_p \u222a (S\u2212z)_p| / p\u1d4f), where S_p and (S\u2212z)_p denote the images of S and S\u2212z in (\u2124/p\u2124)\u1d4f respectively. This generalizes the classical single-origin visible lattice point autocorrelation (where S = {0} recovers the known formula involving the M\u00f6bius function and Riemann zeta values) to arbitrary finite observation sets, and the Euler product structure immediately implies the pure point nature of the diffraction spectrum.",
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_2997",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30132v1",
+    "status": "available",
+    "timestamp": "2026-06-30T15:19:26.975381+00:00",
+    "title": "Euler Product for Autocorrelation of Simultaneously Visible Lattice Points"
   },
   {
     "consumed_by_exp_id": "",
