@@ -1159,7 +1159,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
   },
   {
-    "consumed_by_exp_id": "e0125bc2",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q\u00b2+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domains": [
       "Pythagorean",
@@ -1169,7 +1169,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -1859,7 +1859,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension and Vertex Count of the Optimal Geometric Fractional Coloring Polytope for G27"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9456b101",
     "description": "Every \u03c4_k-maximal graph on n \u2265 2k+2 vertices with minimum degree at least k+1 must have exactly (k+1)(n-1)-1 edges.",
     "domains": [
       "Pythagorean"
@@ -1868,7 +1868,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T16:56:43.577232+00:00",
     "title": "Conjecture on edge count of \u03c4_k-maximal graphs with minimum degree at least k+1"
   },
@@ -2634,11 +2634,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a finite extension K/Q_p, a monic polynomial f \u2208 O_K[X] of degree \u2265 2 satisfying f'(X) \u2208 m_K\u00b7O_K[X] (equivalently f\u0304 \u2208 k[X^p]), and a compatible inverse branch (t_n) with t_0 \u2208 O_K and f(t_{n+1}) = t_n, define K_n = K(t_n), E_n = K_n \u2229 K^{ur}, and e_n = [K_n : E_n]. If e_n > 1 for some n, then e_n \u2192 \u221e as n \u2192 \u221e. This is the key intermediate result in the proof of the paper's main theorem (Theorem 1.2), establishing that iterated polynomial towers under the purely inseparable reduction condition exhibit a ramification dichotomy: either the tower is entirely unramified over the maximal unramified subextension, or the ramification indices grow without bound.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_2935",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29310v1",
+    "status": "available",
+    "timestamp": "2026-06-30T09:44:57.818915+00:00",
+    "title": "Unbounded Ramification Indices in Iterated p-Adic Polynomial Towers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2935",
+    "id": "fd_2936",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2652,7 +2666,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2936",
+    "id": "fd_2937",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2666,7 +2680,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2680,7 +2694,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2694,7 +2708,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2709,7 +2723,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2724,7 +2738,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2738,7 +2752,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2752,7 +2766,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2766,7 +2780,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2781,7 +2795,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2796,7 +2810,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2810,7 +2824,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2824,7 +2838,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2948",
+    "id": "fd_2949",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
@@ -2838,7 +2852,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2949",
+    "id": "fd_2950",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
@@ -2847,30 +2861,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "For any nontrivial connected graph G, the independence number \u03b1(G) is bounded below by (a(G) + R(G))/\u0394(G), where a(G) is the annihilation number, R(G) is the residue, and \u0394(G) is the maximum degree. This conjecture, originally posed by TxGraffiti, has been proven for all connected graphs with maximum degree \u2265 2, except for the single edge (K\u2082), where it fails. The bound is sharp, as equality is achieved for complete graphs like K\u2084.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2950",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29553v1",
-    "status": "available",
-    "timestamp": "2026-06-30T05:48:51.779938+00:00",
-    "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
-  },
-  {
     "consumed_by_exp_id": "f47f3dac",
-    "description": "For each integer n \u2265 1, the theta-mode component \u03c6_n(t) of the even Riemann phase kernel equals the action of the differential operator (\u2202_t\u00b2 \u2212 1/4) on the explicit function e^{t/2} \u00b7 e^{\u2212\u03c0n\u00b2e^{2t}}. This is the key analytic identity underpinning the finite-core Volterra program: it provides an exact same-sign formula decomposing the phase kernel modes into a boundary term and a Volterra tail, and is the foundation for the quotient Schur certificate. Formalization requires the definition of \u03c6_n via the even Riemann kernel \u03a6, the computation of the second derivative of the explicit exponential, and the verification of the equality as an identity of smooth functions on \u211d.",
+    "description": "For any nontrivial connected graph G, the independence number \u03b1(G) is bounded below by (a(G) + R(G))/\u0394(G), where a(G) is the annihilation number, R(G) is the residue, and \u0394(G) is the maximum degree. This conjecture, originally posed by TxGraffiti, has been proven for all connected graphs with maximum degree \u2265 2, except for the single edge (K\u2082), where it fails. The bound is sharp, as equality is achieved for complete graphs like K\u2084.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2951",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.29555v1",
+    "source_exp_id": "2606.29553v1",
     "status": "in_progress",
+    "timestamp": "2026-06-30T05:48:51.779938+00:00",
+    "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For each integer n \u2265 1, the theta-mode component \u03c6_n(t) of the even Riemann phase kernel equals the action of the differential operator (\u2202_t\u00b2 \u2212 1/4) on the explicit function e^{t/2} \u00b7 e^{\u2212\u03c0n\u00b2e^{2t}}. This is the key analytic identity underpinning the finite-core Volterra program: it provides an exact same-sign formula decomposing the phase kernel modes into a boundary term and a Volterra tail, and is the foundation for the quotient Schur certificate. Formalization requires the definition of \u03c6_n via the even Riemann kernel \u03a6, the computation of the second derivative of the explicit exponential, and the verification of the equality as an identity of smooth functions on \u211d.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2952",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29555v1",
+    "status": "available",
     "timestamp": "2026-06-30T06:10:07.946305+00:00",
     "title": "Second-order theta-mode identity for the Riemann phase kernel"
   },
@@ -2880,7 +2894,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2952",
+    "id": "fd_2953",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -2894,7 +2908,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2953",
+    "id": "fd_2954",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
@@ -2909,7 +2923,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2954",
+    "id": "fd_2955",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29530v1",
@@ -2918,31 +2932,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Poisson Limit for Group-Drawing Coupon Collector"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65d4cbfc",
     "description": "Let X be a d-dimensional weighted simplicial complex with distribution \u03c0 on X(d). If there exists \u03b1 > 0 such that every link X_\u03c3 for \u03c3 \u2208 X(d-2) satisfies a KKL property with parameter \u03b1 \u2014 meaning for every g : X_\u03c3(1) \u2192 \u211d, max_{v \u2208 X_\u03c3(0)} Inf_v(g) \u2265 \u03b1 \u00b7 Var(g) \u2014 then X globally satisfies a KKL property with the same parameter \u03b1: for every f : X(d) \u2192 \u211d, max_{\u03c3 \u2208 X(d-2)} Inf_\u03c3(f) \u2265 \u03b1 \u00b7 Var(f). This captures the paper's central local-to-global principle: the KKL phenomenon on a simplicial complex is inherited from its links.",
     "domains": [
       "Geometry",
       "Computation"
     ],
-    "id": "fd_2955",
+    "id": "fd_2956",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T07:37:59.489217+00:00",
     "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
   {
-    "consumed_by_exp_id": "65d4cbfc",
+    "consumed_by_exp_id": "",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling \u2113: V(G) \u2192 (Z/2Z)^(t \u2212 rank(A)) satisfies d_G(u,v) \u2265 d_H(\u2113(u), \u2113(v)) for all u,v \u2208 V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t \u2212 rank(A)). That is, the labeling never stretches distances\u2014it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2956",
+    "id": "fd_2957",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
@@ -2953,7 +2967,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2957",
+    "id": "fd_2958",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
@@ -2967,7 +2981,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2958",
+    "id": "fd_2959",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29507v1",
@@ -2982,7 +2996,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2959",
+    "id": "fd_2960",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29446v1",
@@ -2997,7 +3011,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2960",
+    "id": "fd_2961",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
@@ -3012,13 +3026,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2961",
+    "id": "fd_2962",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
     "status": "available",
     "timestamp": "2026-06-30T09:28:09.181224+00:00",
     "title": "Cayley-Tur\u00e1n number of complete graphs over prime cyclic groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a real quadratic field K = \u211a(\u221aD) with D > 1 squarefree, the octonary diagonal form f = x\u2081\u00b2 + x\u2082\u00b2 + x\u2083\u00b2 + x\u2084\u00b2 + \u03b5\u208a(x\u2085\u00b2 + x\u2086\u00b2 + x\u2087\u00b2 + x\u2088\u00b2) over the ring of integers \ud835\udcde\u2096 is universal if and only if the Blomer-Kala invariant M_D (the cardinality of the set S\u2080 of indecomposable totally positive integers modulo totally positive units) equals 1.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2963",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29321v1",
+    "status": "available",
+    "timestamp": "2026-06-30T09:45:22.756457+00:00",
+    "title": "Universality of Kim's Octonary Form via the Blomer-Kala Invariant"
   },
   {
     "consumed_by_exp_id": "",

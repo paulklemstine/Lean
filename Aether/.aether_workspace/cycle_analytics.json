@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-30T09:27:11.442869+00:00",
+  "last_updated": "2026-06-30T09:43:49.486957+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -20735,6 +20735,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-30T09:27:11.088888+00:00",
       "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 41,
+      "domain": "Geometry",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "e0125bc2",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782807389.3342652,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-30T09:43:49.205553+00:00",
+      "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
     }
   ]
 }

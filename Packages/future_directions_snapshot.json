@@ -1682,7 +1682,7 @@
       "math.PR",
       "math.CO/design_theory"
     ],
-    "consumed_by_exp_id": "e0125bc2",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q ≥ 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q²+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domain_bridges": [
       "finite_geometry-probability",
@@ -1699,7 +1699,7 @@
     "proof_strategy": "Compare the two expected coverage times via their inclusion-exclusion representations. The key structural difference is that any two lines of PG(2,q) intersect in exactly one point, creating negative correlations that slow coverage, whereas random (q+1)-subsets have binomially-distributed intersection sizes. One might attempt to show that the Fano/Fano-like intersection structure maximizes the second-order inclusion-exclusion terms, or develop a coupling argument showing the projective plane mechanism is stochastically dominated in coverage by the full model.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -2980,7 +2980,7 @@
       "Tutte 1961",
       "Kundu 1974"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9456b101",
     "description": "Every τ_k-maximal graph on n ≥ 2k+2 vertices with minimum degree at least k+1 must have exactly (k+1)(n-1)-1 edges.",
     "domain_bridges": [
       "extremal_graph_theory",
@@ -2996,7 +2996,7 @@
     "proof_strategy": "induction_on_n_and_case_analysis_on_min_degree",
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T16:56:43.577232+00:00",
     "title": "Conjecture on edge count of τ_k-maximal graphs with minimum degree at least k+1"
   },
@@ -4422,6 +4422,34 @@
     "title": "Effective André's Theorem with Linear Height Dependence for Curves with Unequal Coordinate Degrees"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "11S15",
+      "37P30",
+      "11S20"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a finite extension K/Q_p, a monic polynomial f ∈ O_K[X] of degree ≥ 2 satisfying f'(X) ∈ m_K·O_K[X] (equivalently f̄ ∈ k[X^p]), and a compatible inverse branch (t_n) with t_0 ∈ O_K and f(t_{n+1}) = t_n, define K_n = K(t_n), E_n = K_n ∩ K^{ur}, and e_n = [K_n : E_n]. If e_n > 1 for some n, then e_n → ∞ as n → ∞. This is the key intermediate result in the proof of the paper's main theorem (Theorem 1.2), establishing that iterated polynomial towers under the purely inseparable reduction condition exhibit a ramification dichotomy: either the tower is entirely unramified over the maximal unramified subextension, or the ramification indices grow without bound.",
+    "domain_bridges": [
+      "Valuation theory → Local field extensions",
+      "p-adic dynamics → Ramification theory",
+      "Newton polygons → Tower discriminants"
+    ],
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_2935",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct the tower K_n inductively. The condition f̄ ∈ k[X^p] ensures the reduction of f factors through Frobenius. When ramification first appears at level n₀ (i.e., e_{n₀} > 1), apply a uniform valuation estimate: since f'(X) ∈ m_K·O_K[X], the Taylor expansion gives v_K(f(t_{n+1}) - f(s)) ≥ v_K(t_{n+1} - s) + 1 for suitable s, forcing successive roots to have strictly growing valuation discrepancies. This recursive lower bound on v_K(t_{n+1} - t_n) propagates through the tower, showing that each ramified step compounds the ramification index over the maximal unramified subfield. The reduction step (subtracting unramified residue lifts) ensures we may assume positive-valuation conditions at the ramified tail, after which the uniform estimate forces e_n to be unbounded.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29310v1",
+    "status": "available",
+    "timestamp": "2026-06-30T09:44:57.818915+00:00",
+    "title": "Unbounded Ramification Indices in Iterated p-Adic Polynomial Towers"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO/2501.12018",
@@ -4438,7 +4466,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2935",
+    "id": "fd_2936",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
@@ -4465,7 +4493,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2936",
+    "id": "fd_2937",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
@@ -4492,7 +4520,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -4518,7 +4546,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -4547,7 +4575,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -4575,7 +4603,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
@@ -4605,7 +4633,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes the rooted heat-kernel master loop equation and proves convergence of the order-truncated trajectory expansion at strong coupling (T > T₀(d)). To extend to all T > 0: (1) Develop uniform-in-T estimates for the trajectory expansion coefficients, leveraging the universal finite-N duality formulas and refined heat-kernel asymptotics that remain valid for small T. (2) Prove convergence of the rooted trajectory expansion for all T > 0 by establishing tighter control on the combinatorial growth of decorated loop observables—specifically, show the expansion is absolutely convergent with radius independent of T. (3) For the weak-coupling regime (small T), exploit the Gaussian limit T → 0 where the theory reduces to a lattice Gaussian free field, and use this as the base of an expansion valid for all T. (4) Bridge strong and weak coupling using monotonicity of Wilson loop expectations in T and real-analyticity of heat-kernel coefficients, establishing a single master field",
@@ -4633,7 +4661,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the monoid in Lean, compute the misère quotient via backward induction, and prove isomorphism through homomorphism properties and loss set verification",
@@ -4662,7 +4690,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the Weyl differencing and van der Corput B-process arguments from the paper with tighter control on off-diagonal contributions. The key improvement would come from replacing power-saving arguments with logarithmic precision via careful saddle-point analysis of the complete exponential sums arising from Poisson summation applied to $e(h\\sqrt{a})$ over dyadic subintervals of $[n/2, n]$. One should track how the exponent pairs obtained from the $B^2$-process interact with the moment sum over $h$, exploiting cancellation more finely than the $n^\\varepsilon$-losing bound permits.",
@@ -4686,7 +4714,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive construction combined with probabilistic extremal arguments",
@@ -4715,7 +4743,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
@@ -4743,7 +4771,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the paper's conditional regularity theorem (Bessel distributions are regular provided Kloosterman sums for all Levi subgroups have nontrivial bounds) to GL(n). Since every Levi subgroup of GL(n) is isomorphic to a product ∏ GL(mᵢ) with ∑ mᵢ = n, the corresponding Kloosterman sums admit nontrivial bounds by Deligne's estimates from the Riemann hypothesis for varieties over finite fields (Weil II), yielding unconditional regularity for GL(n). The key intermediate step is formalizing the germ expansion of Kloosterman integrals and verifying the nontrivial bound condition for all Levi subgroups.",
@@ -4770,7 +4798,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Hölder uniformization over vertex relabellings in the spirit of Conlon–Lee: reduce the general case to the edge-transitive case by averaging over graph automorphisms and applying Hölder's inequality to symmetrize, then exploit the positive-semidefinite structure implicit in local density for edge-transitive graphs. Key sub-lemmas include the equivalence between the L^p formulation and the graphon composition formulation, and the comparison principle with edge-transitive KNRS supergraphs.",
@@ -4798,7 +4826,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2948",
+    "id": "fd_2949",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the base-b digit sequence of 1/p using the division algorithm on remainders, a_i = ⌊b * r_i / p⌋ where r_i = b^i mod p. The sum of digits S = Σ a_i can be expressed in terms of the sum of remainders. The condition that the order of b is (p-1)/2^m restricts the remainders to a subgroup of (ℤ/pℤ)×. The congruence p ≡ 1 mod 2^(m+1) ensures that this subgroup is stable under negation modulo p (since l is even and b^(l/2) ≡ -1 mod p), which allows the sum of remainders to be simplified to p*l/2, leading directly to the formula S = (b-1)*l/2 = (b-1)(p-1)/2^(m+1).",
@@ -4826,7 +4854,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2949",
+    "id": "fd_2950",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To prove the lower bound F(s) ≥ c·s^{3/2}/log s, construct an explicit family of graphs G_s with ω(G_s) ≤ s and g(G̅_s) ≥ 6 such that χ(G_s) ≥ c·s^{3/2}/log s. This likely requires probabilistic constructions or algebraic graph families that saturate the complement-girth-6 constraint while maximizing chromatic number relative to clique number. The existing lower bound construction yielding s^{4/3} would need substantial refinement—potentially using blow-ups of Ramsey-type constructions or sparse pseudorandom graphs with controlled complement girth.",
@@ -4842,7 +4870,7 @@
       "Davila2025reverie",
       "Fajtlowicz1988graffiti"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f47f3dac",
     "description": "For any nontrivial connected graph G, the independence number α(G) is bounded below by (a(G) + R(G))/Δ(G), where a(G) is the annihilation number, R(G) is the residue, and Δ(G) is the maximum degree. This conjecture, originally posed by TxGraffiti, has been proven for all connected graphs with maximum degree ≥ 2, except for the single edge (K₂), where it fails. The bound is sharp, as equality is achieved for complete graphs like K₄.",
     "domain_bridges": [
       "graph invariants",
@@ -4852,13 +4880,13 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2950",
+    "id": "fd_2951",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing definitions of α, a, R, and Δ, then establishing the inequality using the paper's result that a ≤ (Δ+1)/2 * W (where W is the Caro-Wei sum) combined with classical lower bounds α ≥ R and α ≥ W. Key steps include handling the special cases for Δ = 2 and Δ ≥ 3, while explicitly excluding K₂ as a counterexample.",
     "research_mode": "team",
     "source_exp_id": "2606.29553v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:48:51.779938+00:00",
     "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
   },
@@ -4869,7 +4897,7 @@
       "math.AP/Volterra_integral_equations",
       "math.FA/operator_positivity"
     ],
-    "consumed_by_exp_id": "f47f3dac",
+    "consumed_by_exp_id": "",
     "description": "For each integer n ≥ 1, the theta-mode component φ_n(t) of the even Riemann phase kernel equals the action of the differential operator (∂_t² − 1/4) on the explicit function e^{t/2} · e^{−πn²e^{2t}}. This is the key analytic identity underpinning the finite-core Volterra program: it provides an exact same-sign formula decomposing the phase kernel modes into a boundary term and a Volterra tail, and is the foundation for the quotient Schur certificate. Formalization requires the definition of φ_n via the even Riemann kernel Φ, the computation of the second derivative of the explicit exponential, and the verification of the equality as an identity of smooth functions on ℝ.",
     "domain_bridges": [
       "theta_functions_to_differential_operators",
@@ -4879,13 +4907,13 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2951",
+    "id": "fd_2952",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the even Riemann kernel Φ and its phase-mode decomposition into components φ_n. Then define the explicit test function g_n(t) = exp(t/2) · exp(−π·n²·exp(2t)). Compute ∂_t g_n and ∂_t² g_n symbolically using differentiation rules for compositions and products. Subtract (1/4)·g_n to form (∂_t² − 1/4)g_n. The equality φ_n = (∂_t² − 1/4)g_n then follows from the Jacobi-type theta identity and the Poisson summation relation connecting the Riemann kernel to the theta function, rearranged via the heat-equation eigenfunction expansion that produces the second-order operator.",
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T06:10:07.946305+00:00",
     "title": "Second-order theta-mode identity for the Riemann phase kernel"
   },
@@ -4903,7 +4931,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2952",
+    "id": "fd_2953",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on the total number of coins. Show that the Grundy value of a pile of size n is exactly n (i.e., the halving move does not change the nim‑value), using the mex recurrence and the fact that ⌊n/2⌋ < n for n>0. Then the Sprague‑Grundy theorem gives that the Grundy value of a position is the xor of the pile sizes, so P‑positions are precisely those with xor zero. The induction handles the base case (empty position) and the step where either a standard Nim move or a global halving move is considered.",
@@ -4930,7 +4958,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2953",
+    "id": "fd_2954",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof relies on: (1) establishing the Adler-Oren-Ross integral formula for E_p[U_j^N] as a sum of integrals involving the product of survival functions, (2) showing that E_p[U_j^N] is a Schur-convex function of the probability vector p (using the characterization that symmetric convex functions are Schur-convex), and (3) applying the majorization order to conclude that the uniform distribution (which is majorized by all other distributions) maximizes the expectation. The ray-decrease property follows from strict Schur-convexity. Formalization requires building the probability space for the coupon collector, the integral formula, and the Schur-convexity framework.",
@@ -4958,7 +4986,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2954",
+    "id": "fd_2955",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the factorial moments of the untouched-label statistic E_n by evaluating the expected size of the intersection of r untouched labels, showing they converge to λ^r. By inclusion-exclusion, the probability that exactly u labels are untouched is expressed as an alternating sum involving the probabilities of larger sets of untouched labels. The asymptotic conditions λ_n → λ and b_n → ∞ (equivalently γ_n → 0) ensure that the inclusion-exclusion sum converges to the Poisson probabilities, using the method of moments or direct asymptotic analysis of the binomial coefficients.",
@@ -4975,7 +5003,7 @@
       "cs.CC",
       "cs.DM"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65d4cbfc",
     "description": "Let X be a d-dimensional weighted simplicial complex with distribution π on X(d). If there exists α > 0 such that every link X_σ for σ ∈ X(d-2) satisfies a KKL property with parameter α — meaning for every g : X_σ(1) → ℝ, max_{v ∈ X_σ(0)} Inf_v(g) ≥ α · Var(g) — then X globally satisfies a KKL property with the same parameter α: for every f : X(d) → ℝ, max_{σ ∈ X(d-2)} Inf_σ(f) ≥ α · Var(f). This captures the paper's central local-to-global principle: the KKL phenomenon on a simplicial complex is inherited from its links.",
     "domain_bridges": [
       "Spectral graph theory",
@@ -4986,13 +5014,13 @@
       "Geometry",
       "Computation"
     ],
-    "id": "fd_2955",
+    "id": "fd_2956",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose global variance and influence via the link structure. Show that Var(f) on X(d) can be written as a weighted sum of local variances on links, and that the global max influence is at least the local max influence at each link, using the local KKL property at each link X_σ. The key step is establishing that the influence Inf_σ(f) on the global complex dominates the corresponding influence in the link X_σ, possibly up to dimension-dependent factors that cancel due to the uniform transfer of the KKL parameter α.",
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T07:37:59.489217+00:00",
     "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
@@ -5005,7 +5033,7 @@
       "Cayley graphs of abelian groups",
       "GF(2) linear algebra"
     ],
-    "consumed_by_exp_id": "65d4cbfc",
+    "consumed_by_exp_id": "",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling ℓ: V(G) → (Z/2Z)^(t − rank(A)) satisfies d_G(u,v) ≥ d_H(ℓ(u), ℓ(v)) for all u,v ∈ V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t − rank(A)). That is, the labeling never stretches distances—it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domain_bridges": [
       "graph_metrics",
@@ -5016,13 +5044,13 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2956",
+    "id": "fd_2957",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that each edge of G maps to an edge of H under the quotient labeling (by construction of the labeling from the edge partition), so every path in G maps to a path of equal or shorter length in H. The key step is proving that the GF(2) quotient construction preserves adjacency: if uv ∈ E(G) and uv lies in partition class i, then ℓ(u) and ℓ(v) differ in exactly the coordinate corresponding to the image of class i in the quotient. The non-stretching then follows by taking d_G(u,v) as the infimum over all path lengths, which bound the Hamming distance of the labels from below.",
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
@@ -5044,7 +5072,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2957",
+    "id": "fd_2958",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First establish κ₁ = 2 by showing K₂ has spectral radius 1 and no 1-vertex graph has spectral radius 1. Then use the relative bound / Lemmens-Seidel framework: given a set of equiangular lines with angle arccos(1/3), form the Gram matrix M with diagonal 1 and off-diagonal ±1/3. The eigenvalue structure of M combined with the spectral radius order constraint yields the linear upper bound 2(d−1) for d ≥ 15, and the absolute bound gives 28 for small d.",
@@ -5070,7 +5098,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2958",
+    "id": "fd_2959",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the result by first proving base cases for small numbers and primes. Use the multiplicative property along with the 3-additive condition on E₂ to show f(p) = p for all primes p. Then extend multiplicatively to all natural numbers, carefully utilizing the f(2) ≠ 0 condition to rule out the zero-like exceptional cases.",
@@ -5100,7 +5128,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2959",
+    "id": "fd_2960",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the vertex potential framework from the paper to show that interior points (not on the convex hull) strictly increase the number of plane graphs relative to convex position. The potential φ(v) = deg(v) + vis(v) captures the local combinatorial richness at each vertex. The strategy would be: (1) establish that the expected potential of an interior vertex in a random plane graph strictly exceeds that of a hull vertex, (2) show this potential gap translates to a multiplicative increase in the total count of plane graphs, and (3) induct on the number of interior points, reducing to the base case of convex position. A key lemma would be that moving a hull point to the interior (while maintaining general position) strictly increases the plane graph count.",
@@ -5130,7 +5158,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2960",
+    "id": "fd_2961",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Define H_BK = (xp+px)/2 rigorously as an unbounded operator on L²(ℝ⁺) with domain specified by boundary conditions. 2) Prove existence and uniqueness of the self-adjoint extension using von Neumann deficiency index theory. 3) Compute the trace of the resolvent Tr((H_BK - s(s-1))⁻¹) via the Gutzwiller trace formula for this Hamiltonian. 4) Show via analytic continuation that the spectral zeta function ζ_{H_BK}(s) equals the Riemann xi function ξ(s). 5) Conclude spectral correspondence via the equality of zeta-regularized spectral determinants: det_ζ(H_BK - s(s-1)I) = ξ(s).",
@@ -5159,7 +5187,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2961",
+    "id": "fd_2962",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize Cayley graphs over ZMod p, symmetric connection sets, and K_{r+1}-freeness. Prove the lower bound by showing Cay(ℤ_p, ℤ_p \\ D_0) is K_{r+1}-free where D_0 = {0, ±1, ..., ±⌊p/(r+1)⌋}. Prove the upper bound via the polynomial method: for a K_{r+1}-free Cayley graph with connection set S, construct a nonzero polynomial of bounded degree vanishing on the complement D = ℤ_p \\ S, then use the Combinatorial Nullstellensatz or degree-counting to derive |S| ≤ p - 1 - 2⌊p/(r+1)⌋.",
@@ -5168,6 +5196,35 @@
     "status": "available",
     "timestamp": "2026-06-30T09:28:09.181224+00:00",
     "title": "Cayley-Turán number of complete graphs over prime cyclic groups"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "11E12 (Quadratic forms over number fields)",
+      "11R11 (Quadratic extensions)",
+      "11A55 (Continued fractions)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a real quadratic field K = ℚ(√D) with D > 1 squarefree, the octonary diagonal form f = x₁² + x₂² + x₃² + x₄² + ε₊(x₅² + x₆² + x₇² + x₈²) over the ring of integers 𝓞ₖ is universal if and only if the Blomer-Kala invariant M_D (the cardinality of the set S₀ of indecomposable totally positive integers modulo totally positive units) equals 1.",
+    "domain_bridges": [
+      "Algebraic Number Theory",
+      "Quadratic Forms",
+      "Continued Fractions",
+      "Order Theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2963",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First, formalize the Blomer-Kala invariant M_D as a continued fraction sum evaluating the cardinality of the set S₀ of indecomposable totally positive integers. Next, formalize the universality of the octonary form f. The backward direction (M_D = 1 implies universality) requires demonstrating that the Blomer-Kala universal 8M_D-variable construction collapses exactly to f, and then verifying that M_D = 1 implies D belongs to one of the two classified families (D = n²-1 or D = n²-4), for which universality holds. The forward direction (universality implies M_D = 1) requires demonstrating that if M_D > 1, the form f fails to represent certain indecomposable elements in S₀.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29321v1",
+    "status": "available",
+    "timestamp": "2026-06-30T09:45:22.756457+00:00",
+    "title": "Universality of Kim's Octonary Form via the Blomer-Kala Invariant"
   },
   {
     "ambition_level": "extension",
