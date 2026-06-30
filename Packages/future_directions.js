@@ -790,7 +790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "b897e106",
+    "consumed_by_exp_id": "",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domains": [
       "NumberTheory",
@@ -800,7 +800,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -2798,7 +2798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "All minimum $C_4$-saturated multipartite graphs"
   },
   {
-    "consumed_by_exp_id": "07b22854",
+    "consumed_by_exp_id": "",
     "description": "Let k=3 and j>=2 be an even integer, and let f be a primitive elliptic cusp form of weight j+4 for SL_2(Z). For any prime ideal p of the Hecke field Q(f) dividing the algebraic critical value L^alg(j+3, f), there exists a Siegel cusp eigenform F of weight det^3 Sym^j for Sp_2 and a prime ideal P above p such that the spinor L-polynomial congruence L_ell(X, F, Spin) = L_ell(X, f)(1 - ell X)(1 - ell^{j+2} X) mod P holds for all primes ell.",
     "domains": [
       "Algebra",
@@ -2808,7 +2808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T04:09:54.071727+00:00",
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
@@ -3351,12 +3351,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any irreducible admissible generic representation \u03c0 of a split reductive group G over a p-adic field F, the Whittaker Bessel distribution B_{\u2113\u2081,\u2113\u2082} is regular. That is, there exists a unique locally integrable function j on G, which is smooth on a dense open subset of G, such that B_{\u2113\u2081,\u2113\u2082}(f) = \u222b_G j(g)f(g)dg for all Schwartz functions f. This conjecture is implied by the paper's main theorem provided that Kloosterman sums for all Levi subgroups of G have nontrivial bounds.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2990",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29852v1",
+    "status": "available",
+    "timestamp": "2026-06-30T17:13:49.865900+00:00",
+    "title": "Regularity of Whittaker Bessel Distributions for Split Reductive Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3371,7 +3386,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3385,7 +3400,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3400,7 +3415,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3415,7 +3430,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3430,7 +3445,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3445,7 +3460,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3459,7 +3474,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3473,7 +3488,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3487,7 +3502,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3501,7 +3516,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3516,7 +3531,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3530,7 +3545,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3544,7 +3559,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3558,7 +3573,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3573,13 +3588,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
     "status": "available",
     "timestamp": "2026-06-30T16:55:54.627184+00:00",
     "title": "Minimal Vertex Bound for Discrete Pseudomanifolds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every even dimension n \u2265 4, there exists a constant C > 0 such that for all odd prime powers q and all subsets E \u2286 F_q^n with |E| \u2265 C\u00b7q^{n/2}, the distance set |\u0394_d(E)| > (q-1)/2, where \u0394_d(E) = {\u03a3(x_i - y_i)\u00b2 : x,y \u2208 E}. This asserts that the exponent n/2 (rather than n/2 + 1/3 achieved in the paper) is the true threshold guaranteeing a positive proportion of distances in even dimensions.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3007",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29965v1",
+    "status": "available",
+    "timestamp": "2026-06-30T17:14:12.597747+00:00",
+    "title": "Finite Field Falconer Conjecture at the Critical Exponent for Even Dimensions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3783,7 +3813,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7cf3728",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -3793,7 +3823,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -4244,7 +4274,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3e94420",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domains": [
       "Cryptography",
@@ -4254,7 +4284,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },

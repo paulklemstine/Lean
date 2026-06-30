@@ -13380,11 +13380,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b3e94420",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13396,7 +13396,7 @@
         "Logic"
       ],
       "id": "fd_0456",
-      "last_attempt_time": "2026-06-11T10:13:38.580566+00:00",
+      "last_attempt_time": "2026-06-30T17:14:16.500680+00:00",
       "last_reviewed_at": "2026-06-09T15:03:13.623660+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13410,7 +13410,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.834642+00:00",
       "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
@@ -16460,11 +16460,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d7cf3728",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16476,7 +16476,7 @@
         "Computation"
       ],
       "id": "fd_0544",
-      "last_attempt_time": "2026-06-11T07:47:34.716203+00:00",
+      "last_attempt_time": "2026-06-30T17:14:22.591612+00:00",
       "last_reviewed_at": "2026-06-09T17:35:09.672546+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16490,7 +16490,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.295536+00:00",
       "title": "Code-Based Cryptography: McEliece from Goppa Codes"
@@ -38450,7 +38450,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "schur_Q_functions",
@@ -38474,7 +38474,7 @@
         "Bridges"
       ],
       "id": "fd_2887",
-      "last_attempt_time": "2026-06-30T16:56:00.035432+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mixed_product_scalar_factor_coeff_nonneg (n : ℕ) :\n    ∃ (f : ℕ → ℕ → ℕ),\n      scalarFactorCoeff n = (-1)^n * (∑' i j, (f i j : ℤ) * t^i * s^j) := by\n  sorry",
       "lineage_refs": [],
@@ -41441,7 +41441,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "07b22854",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41471,7 +41471,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.30063v1",
       "source_path": "http://arxiv.org/abs/2606.30063v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T04:09:54.071727+00:00",
       "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
@@ -43255,6 +43255,52 @@
       "title": "Harder's congruence for the scalar-valued boundary case k=3"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
+        "math.RT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any irreducible admissible generic representation π of a split reductive group G over a p-adic field F, the Whittaker Bessel distribution B_{ℓ₁,ℓ₂} is regular. That is, there exists a unique locally integrable function j on G, which is smooth on a dense open subset of G, such that B_{ℓ₁,ℓ₂}(f) = ∫_G j(g)f(g)dg for all Schwartz functions f. This conjecture is implied by the paper's main theorem provided that Kloosterman sums for all Levi subgroups of G have nontrivial bounds.",
+      "domain_bridges": [
+        "p-adic analysis",
+        "Lie theory",
+        "Harmonic analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2990",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem bessel_distribution_regular {G : Type*} [SplitReductiveGroup G] {F : Type*} [PAdicField F] {π : IrreducibleAdmissibleRepresentation G F} [Generic π] {ℓ₁ : π^*} {ℓ₂ : (π^∨)^*} (hℓ₁ : ℓ₁ ∈ WhittakerFunctional π) (hℓ₂ : ℓ₂ ∈ WhittakerFunctional π) : IsRegular (besselDistribution ℓ₁ ℓ₂) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize p-adic split reductive groups and their Levi subgroups, then establish nontrivial bounds for Kloosterman sums on these subgroups. Subsequently, formalize the germ expansion of Kloosterman integrals as constructed in the paper, and finally deduce the regularity of the Bessel distribution by demonstrating that the expansion yields a locally integrable function representing the distribution.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29852v1",
+      "source_path": "http://arxiv.org/abs/2606.29852v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T17:13:49.865900+00:00",
+      "title": "Regularity of Whittaker Bessel Distributions for Split Reductive Groups"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -43280,7 +43326,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2990",
+      "id": "fd_2991",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem nilpotent_extension_feng_sun_xiang (G : Type*) [Group G] [Fintype G] [IsNilpotent G] {p : ℕ} (hp : Nat.Prime p) (hp_min : ∀ q ∣ Fintype.card G, Nat.Prime q → p ≤ q) {k : ℕ} (hk : k < p) (a : Fin k → G) (ha : Function.Injective a) (b : Fin k → G) : ∃ σ : Equiv.Perm (Fin k), Function.Injective fun i => a i * b (σ i) := by sorry",
@@ -43327,7 +43373,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2991",
+      "id": "fd_2992",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem odd_kneser_strong_chromatic_index : forall k >= 2, odd_kneser_graph (2*k-1) k ~~> strong_chromatic_index (2*k-1) := ...",
@@ -43375,7 +43421,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2992",
+      "id": "fd_2993",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_sign_changes_sym_power_over_sums_of_squares\n    (k j m : ℕ) (hk : Even k ∧ k ≥ 2) (hm : Even m ∧ m ≥ 2)\n    (f : Sl2Z.ModularForm k) (hf : f ∈ HeckeEigenforms k)\n    (hf_norm : IsNormalised f) :\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n > 0} ∧\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n < 0} := by\n  sorry",
@@ -43425,7 +43471,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2993",
+      "id": "fd_2994",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem shifted_convolution_sym_power_k_full_sums_of_squares\n    (f : ModularForms.SL2Z) (κ : ℕ) (hf : IsHeckeEigenform f κ)\n    (j k h q m : ℕ) (hk : k ≥ 2) (hj : j ≥ 1) (hm : m ∈ {2,4,6,8,10,12})\n    (a : ℕ → ℕ) (ha_kfull : IsKFullKernel a k) (ha_bound : ∀ ε > 0, ∃ C, ∀ n, (a n : ℝ) ≤ C * n^ε) :\n    ∃ (δ : ℝ) (hδ : δ > 0) (C₀ : ℝ) (hC₀ : C₀ > 0) (α : ℕ),\n    ∀ ε > 0, ∃ B : ℝ, ∀ x ≥ (1 : ℝ),\n    let S := ∑ n in Finset.Icc 1 ⌊x⌋ₙ |>.filter\n      (fun n => n % q = 1 ∧ IsSumOfMSquares n m),\n      (a n : ℝ) * λSymPower f j (n + h)\n    let M := C₀ * x * (Real.log x)^α\n    |S - M| ≤ B * x^(1 - δ + ε) := sorry",
@@ -43474,7 +43520,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2994",
+      "id": "fd_2995",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vertex_ramsey_stability {r : ℕ} (hr : 2 ≤ r) {H : SimpleGraph ℕ} (hH : 2 ≤ H.chromaticNumber) : ∀ ε > 0, ∃ n₀ : ℕ, ∃ δ > 0, ∀ n ≥ n₀, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj], G.minDegree ≥ (1 - 1 / (r * (H.chromaticNumber - 1))) * n → ¬(G →_v (H, r)) → ∃ (G' : SimpleGraph (Fin n)) [DecidableRel G'.Adj], G'.IsKPartite (r * (H.chromaticNumber - 1)) ∧ (G.edgeSet \\ G'.edgeSet).card ≤ ε * n ^ 2",
@@ -43521,7 +43567,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2995",
+      "id": "fd_2996",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem orbit_closure_bruhat_relation {n : ℕ} {v w : Equiv.Perm (Fin (n+1))} (hv : v ≤ w) : (ιₙ ⁻¹ (BOrbit O_w)) ⊆ closure (ιₙ ⁻¹ (BOrbit O_v))",
@@ -43570,7 +43616,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2996",
+      "id": "fd_2997",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: For any m ≥ 1, p ∈ [0, 1/3], and positive weights w₁,...,wₘ\n    summing to 1, if v₁,...,vₘ are i.i.d. Bernoulli(p), then P(∑ wᵢ vᵢ ≥ p) ≥ p. -/\ntheorem prob_weighted_bernoulli_sum_ge_mean {m : ℕ} (p : ℝ)\n    (hp₁ : 0 ≤ p) (hp₂ : p ≤ 1 / 3)\n    (w : Fin m → ℝ) (hw₁ : ∀ i, 0 < w i) (hw₂ : ∑ i, w i = 1) :\n    let μ := Measure.pi (fun (_ : Fin m) => (PMF.bernoulli p hp₁).toMeasure)\n    (μ {x : Fin m → Bool | (∑ i, w i * if x i then (1 : ℝ) else 0) ≥ p}).toReal ≥ p := by\n  sorry",
@@ -43614,7 +43660,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2997",
+      "id": "fd_2998",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_concentration_of_measure (ε : ℝ) (hε : ε ∈ Ioo 0 1) :\n    ∃ (γ : ℝ) (C : ℕ), 0 < γ ∧ 0 < C ∧\n    ∀ (n : ℕ) (A S : Finset (Fin n → ZMod 2)),\n      (A.card : ℝ) ≥ ε * (2 : ℝ) ^ n ∧ IsWellSpread S γ C →\n      ((A + S).card : ℝ) ≥ (1 - ε) * (2 : ℝ) ^ n := by\n  sorry",
@@ -43652,7 +43698,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2998",
+      "id": "fd_2999",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Integral asymptotic estimates",
@@ -43698,7 +43744,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2999",
+      "id": "fd_3000",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem berge_tight_cycle_threshold {k : ℕ} (hk : 3 ≤ k) {n : ℕ} (hn : n ≥ Nat.choose k 2 + 3) \n    (H : Hypergraph (Fin n)) (hR : H.Is_R_graph (Finset.Icc 1 k)) \n    (hδ : H.min_s_degree (k - 1) ≥ 1) (t : ℕ) (ht : k ≤ t ∧ t ≤ n) :\n    H.Contains_Berge_Tight_Cycle t (k - 1) := by\n  sorry",
@@ -43744,7 +43790,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_3000",
+      "id": "fd_3001",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem prime_base_reduction (q p t : ℕ) (hq : Nat.Prime q) (hp : Nat.Prime p) (hneq : p ≠ q) (ht : 0 < t) :\n    let n := q^t * p\n    let A_t := (q^(t+1)).choose (q^t) - q^(q^t)\n    (q * n).choose n ≡ q^n [MOD n] ↔ (p ∣ A_t ∧ s q ((q - 1) * p) ≥ (q - 1) * t) :=\n  sorry",
@@ -43792,7 +43838,7 @@
         "Pythagorean",
         "Cryptography"
       ],
-      "id": "fd_3001",
+      "id": "fd_3002",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem simultaneously_visible_autocorrelation_euler_product\n    {k : ℕ} (hk : 2 ≤ k) (S : Finset (Fin k → ℤ)) (z : Fin k → ℤ) :\n    autocorrelation (simultaneouslyVisible S) z =\n    ∏ᶠ (p : ℕ) in Nat.primes,\n      (1 - ((S.reduceMod p ∪ (S.shift (-z)).reduceMod p).card : ℚ) / (p : ℚ) ^ k) :=\n  sorry",
@@ -43838,7 +43884,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_3002",
+      "id": "fd_3003",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem avg_game_parity_advantage {n : ℕ} (h_n : 2 ≤ n)\n    (a : Fin n → ℝ) (h_mono : ∀ i j : Fin n, i ≤ j → a i ≤ a j) :\n    let x := (∑ i : Fin n, a i) / n\n    (∀ hn : Even n, ∃ (σ : AliceStrategy n a),\n      ∀ (τ : BobStrategy n a), avg (aliceTeam σ τ) ≥ x) ∧\n    (∀ hn : ¬Even n, ∃ (τ : BobStrategy n a),\n      ∀ (σ : AliceStrategy n a), avg (aliceTeam σ τ) ≤ x) :=\n  by sorry",
@@ -43882,7 +43928,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_3003",
+      "id": "fd_3004",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mod4_s1_coeff (n : ℕ) : (∃ r, n = r * (r + 1) / 2 ∧ s_1 n ≡ (-1)^r [ZMOD 4]) ∨ (¬ (∃ r, n = r * (r + 1) / 2) ∧ s_1 n ≡ 0 [ZMOD 4]) := by sorry",
@@ -43927,7 +43973,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_3004",
+      "id": "fd_3005",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strengthened_sabidussi (G : Type*) [Fintype G] [Group G] {d : ℕ} (hd : d ≥ 3) :\n    ∃ (Γ : SimpleGraph G_fin) (κ : Γ.EdgeFin → Fin d),\n      Γ.Connected ∧ Γ.IsRegularOfDegree d ∧\n      (∃ (φ : Aut Γ ≃* G), True) ∧\n      (∀ (e : Γ.EdgeFin) (σ : Aut Γ), κ (σ.mapEdge e) = κ e) ∧\n      (∀ (v : V Γ) (e₁ e₂ : Γ.EdgeFin), e₁.fst ∈ {v, e₁.snd} → e₂.fst ∈ {v, e₂.snd} → e₁ ≠ e₂ → κ e₁ ≠ κ e₂) :=\n  by sorry",
@@ -43973,7 +44019,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_3005",
+      "id": "fd_3006",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem min_vertices_discrete_pseudomanifold {V : Type*} [Fintype V] {M : SimpleGraph V} {d : ℕ} (hM : IsDiscreteDPseudomanifold M d) : Fintype.card V ≥ 2 * (d + 1) := by sorry",
@@ -43992,6 +44038,52 @@
       "thread_id": "",
       "timestamp": "2026-06-30T16:55:54.627184+00:00",
       "title": "Minimal Vertex Bound for Discrete Pseudomanifolds"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.CA"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every even dimension n ≥ 4, there exists a constant C > 0 such that for all odd prime powers q and all subsets E ⊆ F_q^n with |E| ≥ C·q^{n/2}, the distance set |Δ_d(E)| > (q-1)/2, where Δ_d(E) = {Σ(x_i - y_i)² : x,y ∈ E}. This asserts that the exponent n/2 (rather than n/2 + 1/3 achieved in the paper) is the true threshold guaranteeing a positive proportion of distances in even dimensions.",
+      "domain_bridges": [
+        "finite_fields",
+        "quadratic_forms_over_finite_fields",
+        "Delsarte_linear_programming"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_3007",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem finite_field_falconer_critical_exponent (n : ℕ) (hn : Even n) (hn4 : n ≥ 4) :\n    ∃ C : ℝ, C > 0 ∧ ∀ (q : ℕ) (hq : Odd q ∧ q > 1)\n      (E : Finset (ZMod q)ⁿ),\n      (E.card : ℝ) ≥ C * (q : ℝ)^(n / 2) →\n      (E.offDiag.image (fun p => ∑ i : Fin n, (p.1 i - p.2 i)²)).card > (q - 1) / 2 :=\n  by\n    sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Strengthen the Delsarte LP feasible solution construction by replacing the Kloosterman-sum-based analysis with optimal eigenvalue bounds for the association scheme of the Euclidean quadratic form in even dimensions. Alternatively, combine the LP method with Fourier-analytic incidence estimates or develop a sharp spectral gap argument for the association scheme's dual eigenvalues to eliminate the 1/3 deficit.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29965v1",
+      "source_path": "http://arxiv.org/abs/2606.29965v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T17:14:12.597747+00:00",
+      "title": "Finite Field Falconer Conjecture at the Critical Exponent for Even Dimensions"
     },
     {
       "ambition_level": "extension",
@@ -48758,7 +48850,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "b897e106",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48784,7 +48876,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432601+00:00",
       "title": "Collatz Stopping Times: Density Analysis"

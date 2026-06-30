@@ -1054,7 +1054,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b897e106",
+    "consumed_by_exp_id": "",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1067,7 +1067,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -4786,7 +4786,7 @@
       "Siegel modular forms",
       "Arthur parameters"
     ],
-    "consumed_by_exp_id": "07b22854",
+    "consumed_by_exp_id": "",
     "description": "Let k=3 and j>=2 be an even integer, and let f be a primitive elliptic cusp form of weight j+4 for SL_2(Z). For any prime ideal p of the Hecke field Q(f) dividing the algebraic critical value L^alg(j+3, f), there exists a Siegel cusp eigenform F of weight det^3 Sym^j for Sp_2 and a prime ideal P above p such that the spinor L-polynomial congruence L_ell(X, F, Spin) = L_ell(X, f)(1 - ell X)(1 - ell^{j+2} X) mod P holds for all primes ell.",
     "domain_bridges": [
       "Automorphic Forms",
@@ -4803,7 +4803,7 @@
     "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T04:09:54.071727+00:00",
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
@@ -5838,6 +5838,33 @@
     "title": "Harder's congruence for the scalar-valued boundary case k=3"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "math.RT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any irreducible admissible generic representation π of a split reductive group G over a p-adic field F, the Whittaker Bessel distribution B_{ℓ₁,ℓ₂} is regular. That is, there exists a unique locally integrable function j on G, which is smooth on a dense open subset of G, such that B_{ℓ₁,ℓ₂}(f) = ∫_G j(g)f(g)dg for all Schwartz functions f. This conjecture is implied by the paper's main theorem provided that Kloosterman sums for all Levi subgroups of G have nontrivial bounds.",
+    "domain_bridges": [
+      "p-adic analysis",
+      "Lie theory",
+      "Harmonic analysis"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2990",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize p-adic split reductive groups and their Levi subgroups, then establish nontrivial bounds for Kloosterman sums on these subgroups. Subsequently, formalize the germ expansion of Kloosterman integrals as constructed in the paper, and finally deduce the regularity of the Bessel distribution by demonstrating that the expansion yields a locally integrable function representing the distribution.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29852v1",
+    "status": "available",
+    "timestamp": "2026-06-30T17:13:49.865900+00:00",
+    "title": "Regularity of Whittaker Bessel Distributions for Split Reductive Groups"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -5854,7 +5881,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5882,7 +5909,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5911,7 +5938,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5942,7 +5969,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5972,7 +5999,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -6000,7 +6027,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -6030,7 +6057,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -6055,7 +6082,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -6074,7 +6101,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Convergence bounds via recursive bounds",
@@ -6101,7 +6128,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k, characterizing the extremal counterexamples for n < (k choose 2) + 3 using structural hypergraph theory, and applying the absorbing method to embed the Berge tight cycles for n ≥ (k choose 2) + 3.",
@@ -6128,7 +6155,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof uses the Chinese Remainder Theorem to split the congruence modulo $q^t p$ into independent conditions modulo $p$ and modulo $q^t$. The condition modulo $p$ is derived using Lucas' theorem and Fermat's Little theorem. The condition modulo $q^t$ is established by computing the $q$-adic valuation of the binomial coefficient using Legendre's formula, which reduces the problem to bounding the base-$q$ digit sum.",
@@ -6157,7 +6184,7 @@
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Reformulate the visibility condition gcd(v − x) = 1 as a local condition: for all primes p, v ≢ x (mod p) in (ℤ/pℤ)ᵏ. 2. Apply the Chinese Remainder Theorem to decompose the joint condition v ∈ V_S ∩ (V_S − z) into independent conditions at each prime p: v (mod p) ∉ S_p ∪ (S−z)_p. 3. Compute each local factor as a finite counting problem in (ℤ/pℤ)ᵏ, yielding factor (1 − |S_p ∪ (S−z)_p|/pᵏ). 4. Prove convergence of the infinite Euler product using the bound |S_p ∪ (S−z)_p| ≤ 2|S| for all but finitely many p, combined with k ≥ 2 ensuring ∑_p 2|S|/pᵏ converges. 5. Rigorously justify the CRT-based density decomposition via inclusion-exclusion over primes and the uniform convergence of the partial products.",
@@ -6184,7 +6211,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the game inductively as a tree of states, each tracking remaining unchosen players and current team compositions (membership lists). Define strategies as functions from game states to moves (which player to pick or which team to assign to). Prove the parity advantage by constructing explicit strategies: for even n, Alice uses a symmetric pairing strategy where she maintains a potential function based on deviations from the mean; for odd n, Bob uses a mirror strategy. The key lemma is that at each decision point, the advantaged player can make a move that preserves the invariant that their team's running sum stays at least (resp. at most) the pro-rated share of the total.",
@@ -6209,7 +6236,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the sequence s_1(n) via its generating function or combinatorial interpretation, establish the equivalence to Andrews' strictly concave compositions, and verify the congruence using the refined parity analysis and q-series expansions modulo 4.",
@@ -6235,7 +6262,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the core graph-theoretic notions (simple graph, d-regularity, proper d-edge-colouring, automorphism group, Aut-invariance) and group-theoretic notions (finite group, group isomorphism) in Lean 4. The proof proceeds constructively: given G and d, build Γ via a modified Sabidussi-type construction (e.g., using the Cayley colour graph of G with generating set carefully chosen to ensure d-regularity, then applying a replacement operation on edges to enforce both Aut(Γ) ≅ G and the existence of an Aut-invariant proper d-edge-colouring). The key difficulty is showing the modified construction preserves Aut(Γ) ≅ G while introducing the colouring structure. A secondary approach would formalize the corrected replacement lemma that fixes Sabidussi's oversight, showing that substituting coloured gadgets for edges of the Cayley graph preserves the automorphism group.",
@@ -6262,7 +6289,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define discrete d-pseudomanifolds inductively, where a 1-pseudomanifold is defined as a cycle of length at least 4. Prove the base case for d=1 (minimum 4 vertices), and proceed by induction on d. The neighborhood of any vertex in a d-pseudomanifold forms a (d-1)-pseudomanifold, which by the inductive hypothesis has at least 2d vertices. A connectivity and regularity argument on the graph structure then bounds the total number of vertices from below by 2(d+1).",
@@ -6271,6 +6298,33 @@
     "status": "available",
     "timestamp": "2026-06-30T16:55:54.627184+00:00",
     "title": "Minimal Vertex Bound for Discrete Pseudomanifolds"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.CA"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every even dimension n ≥ 4, there exists a constant C > 0 such that for all odd prime powers q and all subsets E ⊆ F_q^n with |E| ≥ C·q^{n/2}, the distance set |Δ_d(E)| > (q-1)/2, where Δ_d(E) = {Σ(x_i - y_i)² : x,y ∈ E}. This asserts that the exponent n/2 (rather than n/2 + 1/3 achieved in the paper) is the true threshold guaranteeing a positive proportion of distances in even dimensions.",
+    "domain_bridges": [
+      "finite_fields",
+      "quadratic_forms_over_finite_fields",
+      "Delsarte_linear_programming"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3007",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Strengthen the Delsarte LP feasible solution construction by replacing the Kloosterman-sum-based analysis with optimal eigenvalue bounds for the association scheme of the Euclidean quadratic form in even dimensions. Alternatively, combine the LP method with Fourier-analytic incidence estimates or develop a sharp spectral gap argument for the association scheme's dual eigenvalues to eliminate the 1/3 deficit.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29965v1",
+    "status": "available",
+    "timestamp": "2026-06-30T17:14:12.597747+00:00",
+    "title": "Finite Field Falconer Conjecture at the Critical Exponent for Even Dimensions"
   },
   {
     "ambition_level": "extension",
@@ -6546,7 +6600,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7cf3728",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domain_bridges": [],
     "domains": [
@@ -6559,7 +6613,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -7162,7 +7216,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3e94420",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domain_bridges": [],
     "domains": [
@@ -7175,7 +7229,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
