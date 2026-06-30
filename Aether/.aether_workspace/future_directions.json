@@ -11119,7 +11119,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -11134,11 +11134,11 @@
         "Algebra"
       ],
       "id": "fd_0398",
-      "last_attempt_time": "2026-06-30T17:37:44.513280+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-16T10:48:45.376139+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.4285765151515152,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.5499999999999999,
       "proof_strategy": "",
@@ -11148,7 +11148,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:25.154250+00:00",
       "title": "Langlands Program: Functoriality"
@@ -13384,7 +13384,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b3e94420",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13410,7 +13410,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.834642+00:00",
       "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
@@ -16464,7 +16464,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d7cf3728",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16490,7 +16490,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.295536+00:00",
       "title": "Code-Based Cryptography: McEliece from Goppa Codes"
@@ -16772,11 +16772,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "e7355298",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16788,7 +16788,7 @@
         "Logic"
       ],
       "id": "fd_0552",
-      "last_attempt_time": "2026-06-07T22:40:42.374910+00:00",
+      "last_attempt_time": "2026-06-30T18:02:58.456546+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16802,7 +16802,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.956863+00:00",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
@@ -38541,7 +38541,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.RT",
         "math.NT",
@@ -38566,7 +38566,7 @@
         "Pythagorean"
       ],
       "id": "fd_2889",
-      "last_attempt_time": "2026-06-30T17:37:33.353467+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem avg_divisibility_GLn (n : ℕ) (ℓ : ℕ) (hn : n ≥ 2) (hℓ : Nat.Prime ℓ) :\n    Tendsto (fun q : ℕ ↦\n      (N_ℓ_n q n ℓ : ℝ) / (k_n q n : ℝ) ^ 2)\n      atTop (nhds (1 / 2)) :=\n  sorry\n\n-- N_ℓ_n q n ℓ : number of entries in the character table of\n-- GL_n(F_q) not divisible by ℓ in the ring of algebraic integers\n-- k_n q n : number of conjugacy classes of GL_n(F_q)\n-- q ranges over prime powers coprime to ℓ",
       "lineage_refs": [],
@@ -43352,6 +43352,48 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let p be a prime, b an integer ≥ 2 such that p does not divide b. If the multiplicative order of b modulo p is (p-1)/2, and p ≡ 1 mod 4, then the sum of the digits of one period of the base-b expansion of 1/p is (b-1)(p-1)/4.",
+      "domain_bridges": [
+        "Discrete Mathematics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2992",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sum_digits_half_period (p b : ℕ) (hp : Nat.Prime p) (hb : 2 ≤ b) (hcoprime : Nat.gcd p b = 1) (h_order : orderOf b p = (p - 1) / 2) (h_mod : p % 4 = 1) :\n  (∑ i in Finset.range ((p - 1) / 2), (b * (b^i % p)) / p) = (b - 1) * (p - 1) / 4 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the sequence of digits in the base-b expansion of 1/p. Show that they are given by the integer division of b by p times the sequence of remainders. Use the fact that the remainders cycle through the elements of the subgroup of index 2 in (Z/pZ)*. Since p ≡ 1 mod 4, -1 is in this subgroup, which implies that the digits can be paired as (d, b-1-d). The sum of each pair is b-1, and there are (p-1)/4 pairs, giving a total sum of (b-1)(p-1)/4.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29930v1",
+      "source_path": "http://arxiv.org/abs/2606.29930v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T18:01:55.527180+00:00",
+      "title": "Sum of digits of 1/p for half-period length and p ≡ 1 mod 4"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "math.GR"
       ],
@@ -43372,7 +43414,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2992",
+      "id": "fd_2993",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem nilpotent_extension_feng_sun_xiang (G : Type*) [Group G] [Fintype G] [IsNilpotent G] {p : ℕ} (hp : Nat.Prime p) (hp_min : ∀ q ∣ Fintype.card G, Nat.Prime q → p ≤ q) {k : ℕ} (hk : k < p) (a : Fin k → G) (ha : Function.Injective a) (b : Fin k → G) : ∃ σ : Equiv.Perm (Fin k), Function.Injective fun i => a i * b (σ i) := by sorry",
@@ -43419,7 +43461,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2993",
+      "id": "fd_2994",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem odd_kneser_strong_chromatic_index : forall k >= 2, odd_kneser_graph (2*k-1) k ~~> strong_chromatic_index (2*k-1) := ...",
@@ -43467,7 +43509,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2994",
+      "id": "fd_2995",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_sign_changes_sym_power_over_sums_of_squares\n    (k j m : ℕ) (hk : Even k ∧ k ≥ 2) (hm : Even m ∧ m ≥ 2)\n    (f : Sl2Z.ModularForm k) (hf : f ∈ HeckeEigenforms k)\n    (hf_norm : IsNormalised f) :\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n > 0} ∧\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n < 0} := by\n  sorry",
@@ -43517,7 +43559,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2995",
+      "id": "fd_2996",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem shifted_convolution_sym_power_k_full_sums_of_squares\n    (f : ModularForms.SL2Z) (κ : ℕ) (hf : IsHeckeEigenform f κ)\n    (j k h q m : ℕ) (hk : k ≥ 2) (hj : j ≥ 1) (hm : m ∈ {2,4,6,8,10,12})\n    (a : ℕ → ℕ) (ha_kfull : IsKFullKernel a k) (ha_bound : ∀ ε > 0, ∃ C, ∀ n, (a n : ℝ) ≤ C * n^ε) :\n    ∃ (δ : ℝ) (hδ : δ > 0) (C₀ : ℝ) (hC₀ : C₀ > 0) (α : ℕ),\n    ∀ ε > 0, ∃ B : ℝ, ∀ x ≥ (1 : ℝ),\n    let S := ∑ n in Finset.Icc 1 ⌊x⌋ₙ |>.filter\n      (fun n => n % q = 1 ∧ IsSumOfMSquares n m),\n      (a n : ℝ) * λSymPower f j (n + h)\n    let M := C₀ * x * (Real.log x)^α\n    |S - M| ≤ B * x^(1 - δ + ε) := sorry",
@@ -43566,7 +43608,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2996",
+      "id": "fd_2997",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vertex_ramsey_stability {r : ℕ} (hr : 2 ≤ r) {H : SimpleGraph ℕ} (hH : 2 ≤ H.chromaticNumber) : ∀ ε > 0, ∃ n₀ : ℕ, ∃ δ > 0, ∀ n ≥ n₀, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj], G.minDegree ≥ (1 - 1 / (r * (H.chromaticNumber - 1))) * n → ¬(G →_v (H, r)) → ∃ (G' : SimpleGraph (Fin n)) [DecidableRel G'.Adj], G'.IsKPartite (r * (H.chromaticNumber - 1)) ∧ (G.edgeSet \\ G'.edgeSet).card ≤ ε * n ^ 2",
@@ -43613,7 +43655,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2997",
+      "id": "fd_2998",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem orbit_closure_bruhat_relation {n : ℕ} {v w : Equiv.Perm (Fin (n+1))} (hv : v ≤ w) : (ιₙ ⁻¹ (BOrbit O_w)) ⊆ closure (ιₙ ⁻¹ (BOrbit O_v))",
@@ -43662,7 +43704,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2998",
+      "id": "fd_2999",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: For any m ≥ 1, p ∈ [0, 1/3], and positive weights w₁,...,wₘ\n    summing to 1, if v₁,...,vₘ are i.i.d. Bernoulli(p), then P(∑ wᵢ vᵢ ≥ p) ≥ p. -/\ntheorem prob_weighted_bernoulli_sum_ge_mean {m : ℕ} (p : ℝ)\n    (hp₁ : 0 ≤ p) (hp₂ : p ≤ 1 / 3)\n    (w : Fin m → ℝ) (hw₁ : ∀ i, 0 < w i) (hw₂ : ∑ i, w i = 1) :\n    let μ := Measure.pi (fun (_ : Fin m) => (PMF.bernoulli p hp₁).toMeasure)\n    (μ {x : Fin m → Bool | (∑ i, w i * if x i then (1 : ℝ) else 0) ≥ p}).toReal ≥ p := by\n  sorry",
@@ -43706,7 +43748,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2999",
+      "id": "fd_3000",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_concentration_of_measure (ε : ℝ) (hε : ε ∈ Ioo 0 1) :\n    ∃ (γ : ℝ) (C : ℕ), 0 < γ ∧ 0 < C ∧\n    ∀ (n : ℕ) (A S : Finset (Fin n → ZMod 2)),\n      (A.card : ℝ) ≥ ε * (2 : ℝ) ^ n ∧ IsWellSpread S γ C →\n      ((A + S).card : ℝ) ≥ (1 - ε) * (2 : ℝ) ^ n := by\n  sorry",
@@ -43744,7 +43786,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_3000",
+      "id": "fd_3001",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Integral asymptotic estimates",
@@ -43790,7 +43832,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_3001",
+      "id": "fd_3002",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem berge_tight_cycle_threshold {k : ℕ} (hk : 3 ≤ k) {n : ℕ} (hn : n ≥ Nat.choose k 2 + 3) \n    (H : Hypergraph (Fin n)) (hR : H.Is_R_graph (Finset.Icc 1 k)) \n    (hδ : H.min_s_degree (k - 1) ≥ 1) (t : ℕ) (ht : k ≤ t ∧ t ≤ n) :\n    H.Contains_Berge_Tight_Cycle t (k - 1) := by\n  sorry",
@@ -43836,7 +43878,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_3002",
+      "id": "fd_3003",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem prime_base_reduction (q p t : ℕ) (hq : Nat.Prime q) (hp : Nat.Prime p) (hneq : p ≠ q) (ht : 0 < t) :\n    let n := q^t * p\n    let A_t := (q^(t+1)).choose (q^t) - q^(q^t)\n    (q * n).choose n ≡ q^n [MOD n] ↔ (p ∣ A_t ∧ s q ((q - 1) * p) ≥ (q - 1) * t) :=\n  sorry",
@@ -43884,7 +43926,7 @@
         "Pythagorean",
         "Cryptography"
       ],
-      "id": "fd_3003",
+      "id": "fd_3004",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem simultaneously_visible_autocorrelation_euler_product\n    {k : ℕ} (hk : 2 ≤ k) (S : Finset (Fin k → ℤ)) (z : Fin k → ℤ) :\n    autocorrelation (simultaneouslyVisible S) z =\n    ∏ᶠ (p : ℕ) in Nat.primes,\n      (1 - ((S.reduceMod p ∪ (S.shift (-z)).reduceMod p).card : ℚ) / (p : ℚ) ^ k) :=\n  sorry",
@@ -43930,7 +43972,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_3004",
+      "id": "fd_3005",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem avg_game_parity_advantage {n : ℕ} (h_n : 2 ≤ n)\n    (a : Fin n → ℝ) (h_mono : ∀ i j : Fin n, i ≤ j → a i ≤ a j) :\n    let x := (∑ i : Fin n, a i) / n\n    (∀ hn : Even n, ∃ (σ : AliceStrategy n a),\n      ∀ (τ : BobStrategy n a), avg (aliceTeam σ τ) ≥ x) ∧\n    (∀ hn : ¬Even n, ∃ (τ : BobStrategy n a),\n      ∀ (σ : AliceStrategy n a), avg (aliceTeam σ τ) ≤ x) :=\n  by sorry",
@@ -43974,7 +44016,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_3005",
+      "id": "fd_3006",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mod4_s1_coeff (n : ℕ) : (∃ r, n = r * (r + 1) / 2 ∧ s_1 n ≡ (-1)^r [ZMOD 4]) ∨ (¬ (∃ r, n = r * (r + 1) / 2) ∧ s_1 n ≡ 0 [ZMOD 4]) := by sorry",
@@ -44019,7 +44061,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_3006",
+      "id": "fd_3007",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strengthened_sabidussi (G : Type*) [Fintype G] [Group G] {d : ℕ} (hd : d ≥ 3) :\n    ∃ (Γ : SimpleGraph G_fin) (κ : Γ.EdgeFin → Fin d),\n      Γ.Connected ∧ Γ.IsRegularOfDegree d ∧\n      (∃ (φ : Aut Γ ≃* G), True) ∧\n      (∀ (e : Γ.EdgeFin) (σ : Aut Γ), κ (σ.mapEdge e) = κ e) ∧\n      (∀ (v : V Γ) (e₁ e₂ : Γ.EdgeFin), e₁.fst ∈ {v, e₁.snd} → e₂.fst ∈ {v, e₂.snd} → e₁ ≠ e₂ → κ e₁ ≠ κ e₂) :=\n  by sorry",
@@ -44065,7 +44107,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_3007",
+      "id": "fd_3008",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem min_vertices_discrete_pseudomanifold {V : Type*} [Fintype V] {M : SimpleGraph V} {d : ℕ} (hM : IsDiscreteDPseudomanifold M d) : Fintype.card V ≥ 2 * (d + 1) := by sorry",
@@ -44111,7 +44153,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_3008",
+      "id": "fd_3009",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem finite_field_falconer_critical_exponent (n : ℕ) (hn : Even n) (hn4 : n ≥ 4) :\n    ∃ C : ℝ, C > 0 ∧ ∀ (q : ℕ) (hq : Odd q ∧ q > 1)\n      (E : Finset (ZMod q)ⁿ),\n      (E.card : ℝ) ≥ C * (q : ℝ)^(n / 2) →\n      (E.offDiag.image (fun p => ∑ i : Fin n, (p.1 i - p.2 i)²)).card > (q - 1) / 2 :=\n  by\n    sorry",
@@ -44155,7 +44197,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_3009",
+      "id": "fd_3010",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bell_gap_log_convex {n : Nat} (h : n >= 2) :\n  let G := fun k => bell (k + 1) * bell (k - 1) - bell k * bell k\n  G (n + 1) * G (n - 1) >= G n * G n := by\n  sorry",
@@ -44176,43 +44218,52 @@
       "title": "Log-Convexity of the Bell Number Gap Sequence"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "math.NT",
+        "Shifted Convolution Sums",
+        "Hecke-Maass Forms",
+        "Automorphic L-functions"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Probabilistic Birch–Swinnerton-Dyer\n\nThis cycle established two probabilistic pillars of the Birch–Swinnerton-Dyer\ncircle: the Sato–Tate measure `(2/π) sin²θ dθ` is a genuine probability measure\nwhose normalized-trace even moments are the Catalan numbers `1, 1, 2, 5, …`\n(verified through the sixth moment), and the sign of the functional equation\ndeterministically fixes the parity of the analytic rank, so an unbiased ±1 root\nnumber yields even rank with probability exactly `1/2`. The following conjectures\nare the bold, falsifiable continuations these findings suggest.\n\n## 1. Fourth-moment detection of complex multiplication\n\n**Conjecture.** For an elliptic curve over the rationals, the empirical fourth\nmoment of the normalized Frobenius traces `a_p/√p`, averaged over primes up to `x`,\nconverges to `2` if and only if the curve has no complex multiplication; curves\nwith complex multiplication converge to `3` instead. Consequently a single\nreal-valued statistic — the limiting fourth moment — partitions all elliptic\ncurves into the CM and non-CM classes.\n\nThe key insight is that the Catalan number `C₂ = 2` is the fourth moment of the\nWigner semicircle law, which governs equidistribution only in the non-CM case;\ncomplex multiplication forces the angle to spend half its time at the poles,\ninflating the fourth moment to `3`. **Why now?** Tables of Frobenius traces for\nmillions of curves are now routinely available, so the fourth-moment statistic can\nbe evaluated empirically at a scale that makes the dichotomy sharply testable.\n\n## 2. Parity is the whole story behind the even-rank density\n\n**Conjecture.** In every geometric family of elliptic curves the root number is an\nasymptotically fair ±1 coin, and therefore the density of curves of even rank is\nexactly `1/2`, with the discrepancy from `1/2` decaying faster than any power of\nthe conductor.\n\nThe key insight is that the parity of the rank is a deterministic function of the\nroot number alone, so the entire even-rank density question collapses to the\npurely local problem of how often the root number equals `+1`. **Why now?** Recent\nlarge-conductor samples show the even/odd split hugging `1/2` to within sampling\nerror, isolating root-number balance — rather than the rank itself — as the object\nto control.\n\n## 3. Symmetry type of low-lying zeros is read off from the sign\n\n**Conjecture.** The statistics of the zeros of an elliptic curve L-function nearest\nthe central point match those of a random matrix drawn from the even orthogonal\nensemble when the root number is `+1`, and from the odd orthogonal ensemble when it\nis `-1`; in particular the average order of vanishing at the center over a fair\nfamily is exactly `1/2`.\n\nThe key insight is that the functional-equation sign is simultaneously the parity\nof the central vanishing order and the determinant sign of the conjectural\nsymmetry group, so the same `±1` that fixes rank parity also selects the\nrandom-matrix ensemble. **Why now?** High-precision computations of the lowest\nzeros are now feasible, letting the predicted even-vs-odd orthogonal spacing laws\nbe distinguished directly.\n\n## 4. Catalan moments force a hard spectral edge at ±2\n\n**Conjecture.** The normalized Frobenius traces of a non-CM elliptic curve have a\nlimiting distribution supported exactly on `[-2, 2]`, with density vanishing like a\nsquare root at both endpoints, and no prime produces a normalized trace escaping\nthis interval by more than `O(p^{-1/2})`.\n\nThe key insight is that the Catalan growth `C_k ∼ 4^k / (k^{3/2}√π)` pins the\neven moments to those of a measure whose support edge is precisely `±2`; the\nsub-exponential `4^k` rate is incompatible with any mass beyond the interval.\n**Why now?** The Hasse bound already confines every normalized trace to `[-2, 2]`,\nso the conjecture sharpens a known hard constraint into a precise edge law whose\nsquare-root vanishing can be probed against existing prime-by-prime data.\n",
-      "domain_bridges": [],
+      "description": "This conjecture posits square-root cancellation for the double shifted convolution sum of Fourier coefficients of Hecke-Maass cusp forms for SL(2,Z). Specifically, for normalized Hecke-Maass cusp forms f, g, h with Fourier coefficients λ_f, λ_g, λ_h, we conjecture that for any ε > 0, the sum S(X,Y) = Σ_{1≤n≤X} Σ_{1≤m≤Y} λ_f(n) λ_g(m) λ_h(n+m) is bounded by O_{f,g,h,ε}((XY)^{1/2+ε}) whenever 1 ≤ Y ≤ X. This represents the optimal analog of the additive divisor problem for GL(2) forms and implies subconvexity for triple product L-functions.",
+      "domain_bridges": [
+        "Arithmetic Geometry",
+        "Automorphic Forms",
+        "Spectral Theory"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
-        "Computation"
+        "Pythagorean",
+        "Geometry"
       ],
-      "id": "fd_3010",
+      "id": "fd_3011",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "import Mathlib.Data.Real.Basic\nimport Mathlib.Data.Finset.Basic\n\n-- Representing Fourier coefficients of Hecke-Maass cusp forms as functions ℕ → ℝ\nvariable (f g h : ℕ → ℝ)\n\n/-- Square-root cancellation for double shifted convolution of GL(2) Fourier coefficients. -/\ntheorem double_shifted_convolution_cancellation\n    (ε : ℝ) (hε : ε > 0) :\n    ∃ (C : ℝ) (hC : C > 0),\n    ∀ (X Y : ℝ) (hY : 1 ≤ Y) (hXY : Y ≤ X),\n    |(∑ n in Finset.Icc 1 ⌊X⌋₊, ∑ m in Finset.Icc 1 ⌊Y⌋₊, (f n) * (g m) * (h (n + m)))|\n      ≤ C * (X * Y)^(1/2 + ε) :=\nby\n  sorry\n",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Apply the delta symbol method to separate the variables n and m, then use the spectral decomposition of the space of square-integrable automorphic forms for SL_2(Z). The main terms are controlled by the orthogonality of cusp forms, and the error terms can be bounded by applying the Kuznetsov trace formula. This ultimately reduces the conjecture to establishing the generalized Lindelöf hypothesis for the triple product L-functions L(s, f × g × h).",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "d5c197ae",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d5c197ae_retry3",
+      "source_exp_id": "2606.29822v1",
+      "source_path": "http://arxiv.org/abs/2606.29822v1",
       "status": "available",
-      "thread_id": "th_f2f4577b",
-      "timestamp": "2026-06-30T18:00:49.085844+00:00",
-      "title": "Two probabilistic pillars of the Birch–Swinnerton-Dyer"
+      "thread_id": "",
+      "timestamp": "2026-06-30T18:02:52.934666+00:00",
+      "title": "Square-Root Cancellation for Double Shifted Convolution of GL(2) Fourier Coefficients"
     },
     {
       "ambition_level": "extension",
@@ -45856,7 +45907,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -45871,7 +45922,7 @@
         "Algebra"
       ],
       "id": "seed_004",
-      "last_attempt_time": "2026-06-30T17:37:38.927888+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-09T13:04:11.320190+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46626,7 +46677,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d7ba0e3f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46651,7 +46702,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:01.338705+00:00",
       "title": "Euler-Mascheroni Constant Irrationality"
@@ -48863,7 +48914,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3131feed",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48889,7 +48940,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432569+00:00",
       "title": "Goldbach Verification Framework"
@@ -147342,7 +147393,7 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 304,
+    "Algebra": 303,
     "Applications": 117,
     "Bridges": 58,
     "Computation": 100,
@@ -147394,7 +147445,7 @@
     "first": 325,
     "first-order": 19,
     "formal": 133,
-    "formalize": 225,
+    "formalize": 224,
     "framework": 103,
     "function": 204,
     "functions": 99,

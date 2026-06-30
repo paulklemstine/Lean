@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3131feed",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432569+00:00",
     "title": "Goldbach Verification Framework"
   },
@@ -733,7 +733,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Happy End Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7ba0e3f",
     "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
     "domains": [
       "Algebra"
@@ -742,7 +742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.338705+00:00",
     "title": "Euler-Mascheroni Constant Irrationality"
   },
@@ -3380,12 +3380,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let p be a prime, b an integer \u2265 2 such that p does not divide b. If the multiplicative order of b modulo p is (p-1)/2, and p \u2261 1 mod 4, then the sum of the digits of one period of the base-b expansion of 1/p is (b-1)(p-1)/4.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2992",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29930v1",
+    "status": "available",
+    "timestamp": "2026-06-30T18:01:55.527180+00:00",
+    "title": "Sum of digits of 1/p for half-period length and p \u2261 1 mod 4"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3400,7 +3414,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3414,7 +3428,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3429,7 +3443,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3444,7 +3458,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3459,7 +3473,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3474,7 +3488,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3488,7 +3502,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3502,7 +3516,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3516,7 +3530,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3530,7 +3544,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3545,7 +3559,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3559,7 +3573,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3573,7 +3587,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3587,7 +3601,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3602,7 +3616,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3617,7 +3631,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3631,13 +3645,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
     "status": "available",
     "timestamp": "2026-06-30T17:37:27.634066+00:00",
     "title": "Log-Convexity of the Bell Number Gap Sequence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture posits square-root cancellation for the double shifted convolution sum of Fourier coefficients of Hecke-Maass cusp forms for SL(2,Z). Specifically, for normalized Hecke-Maass cusp forms f, g, h with Fourier coefficients \u03bb_f, \u03bb_g, \u03bb_h, we conjecture that for any \u03b5 > 0, the sum S(X,Y) = \u03a3_{1\u2264n\u2264X} \u03a3_{1\u2264m\u2264Y} \u03bb_f(n) \u03bb_g(m) \u03bb_h(n+m) is bounded by O_{f,g,h,\u03b5}((XY)^{1/2+\u03b5}) whenever 1 \u2264 Y \u2264 X. This represents the optimal analog of the additive divisor problem for GL(2) forms and implies subconvexity for triple product L-functions.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_3011",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29822v1",
+    "status": "available",
+    "timestamp": "2026-06-30T18:02:52.934666+00:00",
+    "title": "Square-Root Cancellation for Double Shifted Convolution of GL(2) Fourier Coefficients"
   },
   {
     "consumed_by_exp_id": "",
@@ -3783,21 +3812,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Probabilistic Birch\u2013Swinnerton-Dyer\n\nThis cycle established two probabilistic pillars of the Birch\u2013Swinnerton-Dyer\ncircle: the Sato\u2013Tate measure `(2/\u03c0) sin\u00b2\u03b8 d\u03b8` is a genuine probability measure\nwhose normalized-trace even moments are the Catalan numbers `1, 1, 2, 5, \u2026`\n(verified through the sixth moment), and the sign of the functional equation\ndeterministically fixes the parity of the analytic rank, so an unbiased \u00b11 root\nnumber yields even rank with probability exactly `1/2`. The following conjectures\nare the bold, falsifiable continuations these findings suggest.\n\n## 1. Fourth-moment detection of complex multiplication\n\n**Conjecture.** For an elliptic curve over the rationals, the empirical fourth\nmoment of the normalized Frobenius traces `a_p/\u221ap`, averaged over primes up to `x`,\nconverges to `2` if and only if the curve has no complex multiplication; curves\nwith complex multiplication converge to `3` instead. Consequently a single\nreal-valued statistic \u2014 the limiting fourth moment \u2014 partitions all elliptic\ncurves into the CM and non-CM classes.\n\nThe key insight is that the Catalan number `C\u2082 = 2` is the fourth moment of the\nWigner semicircle law, which governs equidistribution only in the non-CM case;\ncomplex multiplication forces the angle to spend half its time at the poles,\ninflating the fourth moment to `3`. **Why now?** Tables of Frobenius traces for\nmillions of curves are now routinely available, so the fourth-moment statistic can\nbe evaluated empirically at a scale that makes the dichotomy sharply testable.\n\n## 2. Parity is the whole story behind the even-rank density\n\n**Conjecture.** In every geometric family of elliptic curves the root number is an\nasymptotically fair \u00b11 coin, and therefore the density of curves of even rank is\nexactly `1/2`, with the discrepancy from `1/2` decaying faster than any power of\nthe conductor.\n\nThe key insight is that the parity of the rank is a deterministic function of the\nroot number alone, so the entire even-rank density question collapses to the\npurely local problem of how often the root number equals `+1`. **Why now?** Recent\nlarge-conductor samples show the even/odd split hugging `1/2` to within sampling\nerror, isolating root-number balance \u2014 rather than the rank itself \u2014 as the object\nto control.\n\n## 3. Symmetry type of low-lying zeros is read off from the sign\n\n**Conjecture.** The statistics of the zeros of an elliptic curve L-function nearest\nthe central point match those of a random matrix drawn from the even orthogonal\nensemble when the root number is `+1`, and from the odd orthogonal ensemble when it\nis `-1`; in particular the average order of vanishing at the center over a fair\nfamily is exactly `1/2`.\n\nThe key insight is that the functional-equation sign is simultaneously the parity\nof the central vanishing order and the determinant sign of the conjectural\nsymmetry group, so the same `\u00b11` that fixes rank parity also selects the\nrandom-matrix ensemble. **Why now?** High-precision computations of the lowest\nzeros are now feasible, letting the predicted even-vs-odd orthogonal spacing laws\nbe distinguished directly.\n\n## 4. Catalan moments force a hard spectral edge at \u00b12\n\n**Conjecture.** The normalized Frobenius traces of a non-CM elliptic curve have a\nlimiting distribution supported exactly on `[-2, 2]`, with density vanishing like a\nsquare root at both endpoints, and no prime produces a normalized trace escaping\nthis interval by more than `O(p^{-1/2})`.\n\nThe key insight is that the Catalan growth `C_k \u223c 4^k / (k^{3/2}\u221a\u03c0)` pins the\neven moments to those of a measure whose support edge is precisely `\u00b12`; the\nsub-exponential `4^k` rate is incompatible with any mass beyond the interval.\n**Why now?** The Hasse bound already confines every normalized trace to `[-2, 2]`,\nso the conjecture sharpens a known hard constraint into a precise edge law whose\nsquare-root vanishing can be probed against existing prime-by-prime data.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_3010",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d5c197ae",
-    "status": "available",
-    "timestamp": "2026-06-30T18:00:49.085844+00:00",
-    "title": "Two probabilistic pillars of the Birch\u2013Swinnerton-Dyer"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3856,7 +3870,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7cf3728",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -3866,7 +3880,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -3912,6 +3926,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
+  },
+  {
+    "consumed_by_exp_id": "da4fd36d",
+    "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0398",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:25.154250+00:00",
+    "title": "Langlands Program: Functoriality"
   },
   {
     "consumed_by_exp_id": "",
@@ -4108,7 +4136,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e7355298",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4118,7 +4146,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -4303,7 +4331,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3e94420",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domains": [
       "Cryptography",
@@ -4313,7 +4341,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },

@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3131feed",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n ≤ 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432569+00:00",
     "title": "Goldbach Verification Framework"
   },
@@ -977,7 +977,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7ba0e3f",
     "description": "Prove that the Euler-Mascheroni constant γ ≈ 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
     "domain_bridges": [],
     "domains": [
@@ -989,7 +989,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.338705+00:00",
     "title": "Euler-Mascheroni Constant Irrationality"
   },
@@ -5894,6 +5894,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let p be a prime, b an integer ≥ 2 such that p does not divide b. If the multiplicative order of b modulo p is (p-1)/2, and p ≡ 1 mod 4, then the sum of the digits of one period of the base-b expansion of 1/p is (b-1)(p-1)/4.",
+    "domain_bridges": [
+      "Discrete Mathematics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2992",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the sequence of digits in the base-b expansion of 1/p. Show that they are given by the integer division of b by p times the sequence of remainders. Use the fact that the remainders cycle through the elements of the subgroup of index 2 in (Z/pZ)*. Since p ≡ 1 mod 4, -1 is in this subgroup, which implies that the digits can be paired as (d, b-1-d). The sum of each pair is b-1, and there are (p-1)/4 pairs, giving a total sum of (b-1)(p-1)/4.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29930v1",
+    "status": "available",
+    "timestamp": "2026-06-30T18:01:55.527180+00:00",
+    "title": "Sum of digits of 1/p for half-period length and p ≡ 1 mod 4"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "math.GR"
     ],
@@ -5908,7 +5931,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5936,7 +5959,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5965,7 +5988,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2994",
+    "id": "fd_2995",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5996,7 +6019,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2995",
+    "id": "fd_2996",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -6026,7 +6049,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -6054,7 +6077,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -6084,7 +6107,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -6109,7 +6132,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -6128,7 +6151,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Convergence bounds via recursive bounds",
@@ -6155,7 +6178,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k, characterizing the extremal counterexamples for n < (k choose 2) + 3 using structural hypergraph theory, and applying the absorbing method to embed the Berge tight cycles for n ≥ (k choose 2) + 3.",
@@ -6182,7 +6205,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof uses the Chinese Remainder Theorem to split the congruence modulo $q^t p$ into independent conditions modulo $p$ and modulo $q^t$. The condition modulo $p$ is derived using Lucas' theorem and Fermat's Little theorem. The condition modulo $q^t$ is established by computing the $q$-adic valuation of the binomial coefficient using Legendre's formula, which reduces the problem to bounding the base-$q$ digit sum.",
@@ -6211,7 +6234,7 @@
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Reformulate the visibility condition gcd(v − x) = 1 as a local condition: for all primes p, v ≢ x (mod p) in (ℤ/pℤ)ᵏ. 2. Apply the Chinese Remainder Theorem to decompose the joint condition v ∈ V_S ∩ (V_S − z) into independent conditions at each prime p: v (mod p) ∉ S_p ∪ (S−z)_p. 3. Compute each local factor as a finite counting problem in (ℤ/pℤ)ᵏ, yielding factor (1 − |S_p ∪ (S−z)_p|/pᵏ). 4. Prove convergence of the infinite Euler product using the bound |S_p ∪ (S−z)_p| ≤ 2|S| for all but finitely many p, combined with k ≥ 2 ensuring ∑_p 2|S|/pᵏ converges. 5. Rigorously justify the CRT-based density decomposition via inclusion-exclusion over primes and the uniform convergence of the partial products.",
@@ -6238,7 +6261,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the game inductively as a tree of states, each tracking remaining unchosen players and current team compositions (membership lists). Define strategies as functions from game states to moves (which player to pick or which team to assign to). Prove the parity advantage by constructing explicit strategies: for even n, Alice uses a symmetric pairing strategy where she maintains a potential function based on deviations from the mean; for odd n, Bob uses a mirror strategy. The key lemma is that at each decision point, the advantaged player can make a move that preserves the invariant that their team's running sum stays at least (resp. at most) the pro-rated share of the total.",
@@ -6263,7 +6286,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the sequence s_1(n) via its generating function or combinatorial interpretation, establish the equivalence to Andrews' strictly concave compositions, and verify the congruence using the refined parity analysis and q-series expansions modulo 4.",
@@ -6289,7 +6312,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the core graph-theoretic notions (simple graph, d-regularity, proper d-edge-colouring, automorphism group, Aut-invariance) and group-theoretic notions (finite group, group isomorphism) in Lean 4. The proof proceeds constructively: given G and d, build Γ via a modified Sabidussi-type construction (e.g., using the Cayley colour graph of G with generating set carefully chosen to ensure d-regularity, then applying a replacement operation on edges to enforce both Aut(Γ) ≅ G and the existence of an Aut-invariant proper d-edge-colouring). The key difficulty is showing the modified construction preserves Aut(Γ) ≅ G while introducing the colouring structure. A secondary approach would formalize the corrected replacement lemma that fixes Sabidussi's oversight, showing that substituting coloured gadgets for edges of the Cayley graph preserves the automorphism group.",
@@ -6316,7 +6339,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define discrete d-pseudomanifolds inductively, where a 1-pseudomanifold is defined as a cycle of length at least 4. Prove the base case for d=1 (minimum 4 vertices), and proceed by induction on d. The neighborhood of any vertex in a d-pseudomanifold forms a (d-1)-pseudomanifold, which by the inductive hypothesis has at least 2d vertices. A connectivity and regularity argument on the graph structure then bounds the total number of vertices from below by 2(d+1).",
@@ -6343,7 +6366,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Strengthen the Delsarte LP feasible solution construction by replacing the Kloosterman-sum-based analysis with optimal eigenvalue bounds for the association scheme of the Euclidean quadratic form in even dimensions. Alternatively, combine the LP method with Fourier-analytic incidence estimates or develop a sharp spectral gap argument for the association scheme's dual eigenvalues to eliminate the 1/3 deficit.",
@@ -6368,7 +6391,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish that the ratio $G_{n+1}/G_n$ is monotonically increasing by leveraging the asymptotic expansion of Bell numbers alongside the explicit lower bounds for the gap provided in the paper.",
@@ -6377,6 +6400,35 @@
     "status": "available",
     "timestamp": "2026-06-30T17:37:27.634066+00:00",
     "title": "Log-Convexity of the Bell Number Gap Sequence"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "Shifted Convolution Sums",
+      "Hecke-Maass Forms",
+      "Automorphic L-functions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture posits square-root cancellation for the double shifted convolution sum of Fourier coefficients of Hecke-Maass cusp forms for SL(2,Z). Specifically, for normalized Hecke-Maass cusp forms f, g, h with Fourier coefficients λ_f, λ_g, λ_h, we conjecture that for any ε > 0, the sum S(X,Y) = Σ_{1≤n≤X} Σ_{1≤m≤Y} λ_f(n) λ_g(m) λ_h(n+m) is bounded by O_{f,g,h,ε}((XY)^{1/2+ε}) whenever 1 ≤ Y ≤ X. This represents the optimal analog of the additive divisor problem for GL(2) forms and implies subconvexity for triple product L-functions.",
+    "domain_bridges": [
+      "Arithmetic Geometry",
+      "Automorphic Forms",
+      "Spectral Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_3011",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply the delta symbol method to separate the variables n and m, then use the spectral decomposition of the space of square-integrable automorphic forms for SL_2(Z). The main terms are controlled by the orthogonality of cusp forms, and the error terms can be bounded by applying the Kuznetsov trace formula. This ultimately reduces the conjecture to establishing the generalized Lindelöf hypothesis for the triple product L-functions L(s, f × g × h).",
+    "research_mode": "team",
+    "source_exp_id": "2606.29822v1",
+    "status": "available",
+    "timestamp": "2026-06-30T18:02:52.934666+00:00",
+    "title": "Square-Root Cancellation for Double Shifted Convolution of GL(2) Fourier Coefficients"
   },
   {
     "ambition_level": "extension",
@@ -6574,26 +6626,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Probabilistic Birch–Swinnerton-Dyer\n\nThis cycle established two probabilistic pillars of the Birch–Swinnerton-Dyer\ncircle: the Sato–Tate measure `(2/π) sin²θ dθ` is a genuine probability measure\nwhose normalized-trace even moments are the Catalan numbers `1, 1, 2, 5, …`\n(verified through the sixth moment), and the sign of the functional equation\ndeterministically fixes the parity of the analytic rank, so an unbiased ±1 root\nnumber yields even rank with probability exactly `1/2`. The following conjectures\nare the bold, falsifiable continuations these findings suggest.\n\n## 1. Fourth-moment detection of complex multiplication\n\n**Conjecture.** For an elliptic curve over the rationals, the empirical fourth\nmoment of the normalized Frobenius traces `a_p/√p`, averaged over primes up to `x`,\nconverges to `2` if and only if the curve has no complex multiplication; curves\nwith complex multiplication converge to `3` instead. Consequently a single\nreal-valued statistic — the limiting fourth moment — partitions all elliptic\ncurves into the CM and non-CM classes.\n\nThe key insight is that the Catalan number `C₂ = 2` is the fourth moment of the\nWigner semicircle law, which governs equidistribution only in the non-CM case;\ncomplex multiplication forces the angle to spend half its time at the poles,\ninflating the fourth moment to `3`. **Why now?** Tables of Frobenius traces for\nmillions of curves are now routinely available, so the fourth-moment statistic can\nbe evaluated empirically at a scale that makes the dichotomy sharply testable.\n\n## 2. Parity is the whole story behind the even-rank density\n\n**Conjecture.** In every geometric family of elliptic curves the root number is an\nasymptotically fair ±1 coin, and therefore the density of curves of even rank is\nexactly `1/2`, with the discrepancy from `1/2` decaying faster than any power of\nthe conductor.\n\nThe key insight is that the parity of the rank is a deterministic function of the\nroot number alone, so the entire even-rank density question collapses to the\npurely local problem of how often the root number equals `+1`. **Why now?** Recent\nlarge-conductor samples show the even/odd split hugging `1/2` to within sampling\nerror, isolating root-number balance — rather than the rank itself — as the object\nto control.\n\n## 3. Symmetry type of low-lying zeros is read off from the sign\n\n**Conjecture.** The statistics of the zeros of an elliptic curve L-function nearest\nthe central point match those of a random matrix drawn from the even orthogonal\nensemble when the root number is `+1`, and from the odd orthogonal ensemble when it\nis `-1`; in particular the average order of vanishing at the center over a fair\nfamily is exactly `1/2`.\n\nThe key insight is that the functional-equation sign is simultaneously the parity\nof the central vanishing order and the determinant sign of the conjectural\nsymmetry group, so the same `±1` that fixes rank parity also selects the\nrandom-matrix ensemble. **Why now?** High-precision computations of the lowest\nzeros are now feasible, letting the predicted even-vs-odd orthogonal spacing laws\nbe distinguished directly.\n\n## 4. Catalan moments force a hard spectral edge at ±2\n\n**Conjecture.** The normalized Frobenius traces of a non-CM elliptic curve have a\nlimiting distribution supported exactly on `[-2, 2]`, with density vanishing like a\nsquare root at both endpoints, and no prime produces a normalized trace escaping\nthis interval by more than `O(p^{-1/2})`.\n\nThe key insight is that the Catalan growth `C_k ∼ 4^k / (k^{3/2}√π)` pins the\neven moments to those of a measure whose support edge is precisely `±2`; the\nsub-exponential `4^k` rate is incompatible with any mass beyond the interval.\n**Why now?** The Hasse bound already confines every normalized trace to `[-2, 2]`,\nso the conjecture sharpens a known hard constraint into a precise edge law whose\nsquare-root vanishing can be probed against existing prime-by-prime data.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_3010",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d5c197ae",
-    "status": "available",
-    "timestamp": "2026-06-30T18:00:49.085844+00:00",
-    "title": "Two probabilistic pillars of the Birch–Swinnerton-Dyer"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -6672,7 +6704,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7cf3728",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domain_bridges": [],
     "domains": [
@@ -6685,7 +6717,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -6746,6 +6778,25 @@
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "da4fd36d",
+    "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0398",
+    "lineage_refs": [],
+    "priority_score": 0.5499999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:25.154250+00:00",
+    "title": "Langlands Program: Functoriality"
   },
   {
     "ambition_level": "extension",
@@ -7009,7 +7060,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e7355298",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -7022,7 +7073,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -7269,7 +7320,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3e94420",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domain_bridges": [],
     "domains": [
@@ -7282,7 +7333,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
