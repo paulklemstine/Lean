@@ -3262,12 +3262,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
+    "description": "For every odd prime p, there exists a constant C(p) such that for all n \u2265 1, there exists a complete 3-AP-free subset of F_p^n of cardinality at most C(p) \u00b7 p^{\u2308n/2\u2309}. This conjectures that the trivial counting lower bound \u03a9(p^{n/2}) on the minimum size a(3-AP, F_p^n) is asymptotically tight, improving the paper's upper bound of O(n^{1+\u03b5} \u00b7 p^{n/2}) by removing the n^{1+\u03b5} factor. The cyclic group analogue is resolved in the paper with the tight O(\u221am) bound, and the two-dimensional case F_p^2 is known to admit complete 3-AP-free sets of size O(p) = O(p^{2/2}), so the conjecture is consistent with all known cases.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_2984",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30186v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:54:51.496214+00:00",
+    "title": "Tight Square-Root Bound for Complete 3-AP-Free Sets in Finite Vector Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2985",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3282,7 +3297,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3296,7 +3311,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3311,7 +3326,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3326,7 +3341,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3341,7 +3356,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3356,7 +3371,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3370,7 +3385,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3384,7 +3399,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3398,13 +3413,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
     "status": "available",
     "timestamp": "2026-06-30T14:37:35.688846+00:00",
     "title": "Exact Threshold for Berge Tight Cycles in k-graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a prime $q$, an integer $t \\ge 1$, and a prime $p \\neq q$, the congruence $\\binom{q(q^t p)}{q^t p} \\equiv q^{q^t p} \\pmod{q^t p}$ holds if and only if $p$ divides $\\binom{q^{t+1}}{q^t} - q^{q^t}$ and the base-$q$ digit sum of $(q-1)p$ is at least $(q-1)t$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2995",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30232v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:55:27.919935+00:00",
+    "title": "Prime-Base Reduction for $n=q^t p$"
   },
   {
     "consumed_by_exp_id": "",

@@ -5676,6 +5676,32 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime p, there exists a constant C(p) such that for all n ≥ 1, there exists a complete 3-AP-free subset of F_p^n of cardinality at most C(p) · p^{⌈n/2⌉}. This conjectures that the trivial counting lower bound Ω(p^{n/2}) on the minimum size a(3-AP, F_p^n) is asymptotically tight, improving the paper's upper bound of O(n^{1+ε} · p^{n/2}) by removing the n^{1+ε} factor. The cyclic group analogue is resolved in the paper with the tight O(√m) bound, and the two-dimensional case F_p^2 is known to admit complete 3-AP-free sets of size O(p) = O(p^{2/2}), so the conjecture is consistent with all known cases.",
+    "domain_bridges": [
+      "finite_geometry",
+      "coding_theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2984",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the flexible binary interval block technique from the cyclic group construction to vector spaces. The cyclic group result achieves the tight O(√m) bound using subset-sum sets of flexible digits satisfying 2S_i+1 ≤ d_{i+1} ≤ 3S_i+1, yielding both (2,-1)-avoiding and interval-saturating properties simultaneously. For vector spaces, the paper's construction uses two-sided complete quadratic graphs over subfield flags followed by a padding argument that introduces the n^{1+ε} factor. The key is to replace this padding with a more efficient mechanism—either refine the quadratic graph construction to achieve saturation with only O(p^{n/2}) vertices, or develop a direct-product mechanism analogous to the cyclic group case that avoids dimensional overhead by leveraging the nested subfield structure more directly.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30186v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:54:51.496214+00:00",
+    "title": "Tight Square-Root Bound for Complete 3-AP-Free Sets in Finite Vector Spaces"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
       "math.GR"
     ],
     "consumed_by_exp_id": "",
@@ -5689,7 +5715,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2984",
+    "id": "fd_2985",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5717,7 +5743,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5746,7 +5772,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5777,7 +5803,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5807,7 +5833,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -5835,7 +5861,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -5865,7 +5891,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -5890,7 +5916,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -5909,7 +5935,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2992",
+    "id": "fd_2993",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Convergence bounds via recursive bounds",
@@ -5936,7 +5962,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2993",
+    "id": "fd_2994",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k, characterizing the extremal counterexamples for n < (k choose 2) + 3 using structural hypergraph theory, and applying the absorbing method to embed the Berge tight cycles for n ≥ (k choose 2) + 3.",
@@ -5945,6 +5971,33 @@
     "status": "available",
     "timestamp": "2026-06-30T14:37:35.688846+00:00",
     "title": "Exact Threshold for Berge Tight Cycles in k-graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "math.CO",
+      "OEIS:A080469"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a prime $q$, an integer $t \\ge 1$, and a prime $p \\neq q$, the congruence $\\binom{q(q^t p)}{q^t p} \\equiv q^{q^t p} \\pmod{q^t p}$ holds if and only if $p$ divides $\\binom{q^{t+1}}{q^t} - q^{q^t}$ and the base-$q$ digit sum of $(q-1)p$ is at least $(q-1)t$.",
+    "domain_bridges": [
+      "Combinatorics",
+      "Elementary Number Theory",
+      "p-adic Analysis"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2995",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof uses the Chinese Remainder Theorem to split the congruence modulo $q^t p$ into independent conditions modulo $p$ and modulo $q^t$. The condition modulo $p$ is derived using Lucas' theorem and Fermat's Little theorem. The condition modulo $q^t$ is established by computing the $q$-adic valuation of the binomial coefficient using Legendre's formula, which reduces the problem to bounding the base-$q$ digit sum.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30232v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:55:27.919935+00:00",
+    "title": "Prime-Base Reduction for $n=q^t p$"
   },
   {
     "ambition_level": "extension",

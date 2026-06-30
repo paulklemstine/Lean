@@ -13224,7 +13224,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -13240,7 +13240,7 @@
         "Logic"
       ],
       "id": "fd_0452",
-      "last_attempt_time": "2026-06-30T14:37:38.971755+00:00",
+      "last_attempt_time": "2026-06-10T05:58:37.554772+00:00",
       "last_reviewed_at": "2026-06-09T15:03:10.049285+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -15134,7 +15134,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -15150,7 +15150,7 @@
         "Physics"
       ],
       "id": "fd_0502",
-      "last_attempt_time": "2026-06-30T14:37:44.626331+00:00",
+      "last_attempt_time": "2026-06-10T06:05:09.735020+00:00",
       "last_reviewed_at": "2026-06-09T17:35:09.672546+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42982,6 +42982,51 @@
       "attempt_count": 0,
       "catalog_references": [
         "math.CO",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every odd prime p, there exists a constant C(p) such that for all n ≥ 1, there exists a complete 3-AP-free subset of F_p^n of cardinality at most C(p) · p^{⌈n/2⌉}. This conjectures that the trivial counting lower bound Ω(p^{n/2}) on the minimum size a(3-AP, F_p^n) is asymptotically tight, improving the paper's upper bound of O(n^{1+ε} · p^{n/2}) by removing the n^{1+ε} factor. The cyclic group analogue is resolved in the paper with the tight O(√m) bound, and the two-dimensional case F_p^2 is known to admit complete 3-AP-free sets of size O(p) = O(p^{2/2}), so the conjecture is consistent with all known cases.",
+      "domain_bridges": [
+        "finite_geometry",
+        "coding_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2984",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem tight_complete_3AP_free_bound (p : ℕ) (hp : Nat.Prime p) (hp_odd : Odd p) :\n    ∃ C : ℕ, ∀ n : ℕ, 0 < n →\n    ∃ S : Finset (Fin n → ZMod p),\n      -- S is 3-AP-free: no three distinct elements x, y, z ∈ S satisfy x + z = 2·y\n      (∀ x y z ∈ S, x ≠ y → y ≠ z → x ≠ z → x + z ≠ 2 • y) ∧\n      -- S is complete: every element outside S forms a 3-AP with two elements of S\n      (∀ v : Fin n → ZMod p, v ∉ S →\n        ∃ s ∈ S, ∃ t ∈ S,\n          v + t = 2 • s ∨ v + s = 2 • t ∨ s + t = 2 • v) ∧\n      -- Size bound: |S| ≤ C · p^{⌈n/2⌉}\n      S.card ≤ C * p ^ ⌈(n : ℝ) / 2⌉₊ := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the flexible binary interval block technique from the cyclic group construction to vector spaces. The cyclic group result achieves the tight O(√m) bound using subset-sum sets of flexible digits satisfying 2S_i+1 ≤ d_{i+1} ≤ 3S_i+1, yielding both (2,-1)-avoiding and interval-saturating properties simultaneously. For vector spaces, the paper's construction uses two-sided complete quadratic graphs over subfield flags followed by a padding argument that introduces the n^{1+ε} factor. The key is to replace this padding with a more efficient mechanism—either refine the quadratic graph construction to achieve saturation with only O(p^{n/2}) vertices, or develop a direct-product mechanism analogous to the cyclic group case that avoids dimensional overhead by leveraging the nested subfield structure more directly.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30186v1",
+      "source_path": "http://arxiv.org/abs/2606.30186v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T14:54:51.496214+00:00",
+      "title": "Tight Square-Root Bound for Complete 3-AP-Free Sets in Finite Vector Spaces"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
         "math.GR"
       ],
       "category": "cross_domain_bridge",
@@ -43001,7 +43046,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2984",
+      "id": "fd_2985",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem nilpotent_extension_feng_sun_xiang (G : Type*) [Group G] [Fintype G] [IsNilpotent G] {p : ℕ} (hp : Nat.Prime p) (hp_min : ∀ q ∣ Fintype.card G, Nat.Prime q → p ≤ q) {k : ℕ} (hk : k < p) (a : Fin k → G) (ha : Function.Injective a) (b : Fin k → G) : ∃ σ : Equiv.Perm (Fin k), Function.Injective fun i => a i * b (σ i) := by sorry",
@@ -43048,7 +43093,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2985",
+      "id": "fd_2986",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem odd_kneser_strong_chromatic_index : forall k >= 2, odd_kneser_graph (2*k-1) k ~~> strong_chromatic_index (2*k-1) := ...",
@@ -43096,7 +43141,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2986",
+      "id": "fd_2987",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_sign_changes_sym_power_over_sums_of_squares\n    (k j m : ℕ) (hk : Even k ∧ k ≥ 2) (hm : Even m ∧ m ≥ 2)\n    (f : Sl2Z.ModularForm k) (hf : f ∈ HeckeEigenforms k)\n    (hf_norm : IsNormalised f) :\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n > 0} ∧\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n < 0} := by\n  sorry",
@@ -43146,7 +43191,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2987",
+      "id": "fd_2988",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem shifted_convolution_sym_power_k_full_sums_of_squares\n    (f : ModularForms.SL2Z) (κ : ℕ) (hf : IsHeckeEigenform f κ)\n    (j k h q m : ℕ) (hk : k ≥ 2) (hj : j ≥ 1) (hm : m ∈ {2,4,6,8,10,12})\n    (a : ℕ → ℕ) (ha_kfull : IsKFullKernel a k) (ha_bound : ∀ ε > 0, ∃ C, ∀ n, (a n : ℝ) ≤ C * n^ε) :\n    ∃ (δ : ℝ) (hδ : δ > 0) (C₀ : ℝ) (hC₀ : C₀ > 0) (α : ℕ),\n    ∀ ε > 0, ∃ B : ℝ, ∀ x ≥ (1 : ℝ),\n    let S := ∑ n in Finset.Icc 1 ⌊x⌋ₙ |>.filter\n      (fun n => n % q = 1 ∧ IsSumOfMSquares n m),\n      (a n : ℝ) * λSymPower f j (n + h)\n    let M := C₀ * x * (Real.log x)^α\n    |S - M| ≤ B * x^(1 - δ + ε) := sorry",
@@ -43195,7 +43240,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2988",
+      "id": "fd_2989",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vertex_ramsey_stability {r : ℕ} (hr : 2 ≤ r) {H : SimpleGraph ℕ} (hH : 2 ≤ H.chromaticNumber) : ∀ ε > 0, ∃ n₀ : ℕ, ∃ δ > 0, ∀ n ≥ n₀, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj], G.minDegree ≥ (1 - 1 / (r * (H.chromaticNumber - 1))) * n → ¬(G →_v (H, r)) → ∃ (G' : SimpleGraph (Fin n)) [DecidableRel G'.Adj], G'.IsKPartite (r * (H.chromaticNumber - 1)) ∧ (G.edgeSet \\ G'.edgeSet).card ≤ ε * n ^ 2",
@@ -43242,7 +43287,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2989",
+      "id": "fd_2990",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem orbit_closure_bruhat_relation {n : ℕ} {v w : Equiv.Perm (Fin (n+1))} (hv : v ≤ w) : (ιₙ ⁻¹ (BOrbit O_w)) ⊆ closure (ιₙ ⁻¹ (BOrbit O_v))",
@@ -43291,7 +43336,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2990",
+      "id": "fd_2991",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: For any m ≥ 1, p ∈ [0, 1/3], and positive weights w₁,...,wₘ\n    summing to 1, if v₁,...,vₘ are i.i.d. Bernoulli(p), then P(∑ wᵢ vᵢ ≥ p) ≥ p. -/\ntheorem prob_weighted_bernoulli_sum_ge_mean {m : ℕ} (p : ℝ)\n    (hp₁ : 0 ≤ p) (hp₂ : p ≤ 1 / 3)\n    (w : Fin m → ℝ) (hw₁ : ∀ i, 0 < w i) (hw₂ : ∑ i, w i = 1) :\n    let μ := Measure.pi (fun (_ : Fin m) => (PMF.bernoulli p hp₁).toMeasure)\n    (μ {x : Fin m → Bool | (∑ i, w i * if x i then (1 : ℝ) else 0) ≥ p}).toReal ≥ p := by\n  sorry",
@@ -43335,7 +43380,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2991",
+      "id": "fd_2992",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_concentration_of_measure (ε : ℝ) (hε : ε ∈ Ioo 0 1) :\n    ∃ (γ : ℝ) (C : ℕ), 0 < γ ∧ 0 < C ∧\n    ∀ (n : ℕ) (A S : Finset (Fin n → ZMod 2)),\n      (A.card : ℝ) ≥ ε * (2 : ℝ) ^ n ∧ IsWellSpread S γ C →\n      ((A + S).card : ℝ) ≥ (1 - ε) * (2 : ℝ) ^ n := by\n  sorry",
@@ -43373,7 +43418,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2992",
+      "id": "fd_2993",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Integral asymptotic estimates",
@@ -43419,7 +43464,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2993",
+      "id": "fd_2994",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem berge_tight_cycle_threshold {k : ℕ} (hk : 3 ≤ k) {n : ℕ} (hn : n ≥ Nat.choose k 2 + 3) \n    (H : Hypergraph (Fin n)) (hR : H.Is_R_graph (Finset.Icc 1 k)) \n    (hδ : H.min_s_degree (k - 1) ≥ 1) (t : ℕ) (ht : k ≤ t ∧ t ≤ n) :\n    H.Contains_Berge_Tight_Cycle t (k - 1) := by\n  sorry",
@@ -43438,6 +43483,52 @@
       "thread_id": "",
       "timestamp": "2026-06-30T14:37:35.688846+00:00",
       "title": "Exact Threshold for Berge Tight Cycles in k-graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
+        "math.CO",
+        "OEIS:A080469"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a prime $q$, an integer $t \\ge 1$, and a prime $p \\neq q$, the congruence $\\binom{q(q^t p)}{q^t p} \\equiv q^{q^t p} \\pmod{q^t p}$ holds if and only if $p$ divides $\\binom{q^{t+1}}{q^t} - q^{q^t}$ and the base-$q$ digit sum of $(q-1)p$ is at least $(q-1)t$.",
+      "domain_bridges": [
+        "Combinatorics",
+        "Elementary Number Theory",
+        "p-adic Analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2995",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem prime_base_reduction (q p t : ℕ) (hq : Nat.Prime q) (hp : Nat.Prime p) (hneq : p ≠ q) (ht : 0 < t) :\n    let n := q^t * p\n    let A_t := (q^(t+1)).choose (q^t) - q^(q^t)\n    (q * n).choose n ≡ q^n [MOD n] ↔ (p ∣ A_t ∧ s q ((q - 1) * p) ≥ (q - 1) * t) :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The proof uses the Chinese Remainder Theorem to split the congruence modulo $q^t p$ into independent conditions modulo $p$ and modulo $q^t$. The condition modulo $p$ is derived using Lucas' theorem and Fermat's Little theorem. The condition modulo $q^t$ is established by computing the $q$-adic valuation of the binomial coefficient using Legendre's formula, which reduces the problem to bounding the base-$q$ digit sum.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30232v1",
+      "source_path": "http://arxiv.org/abs/2606.30232v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T14:55:27.919935+00:00",
+      "title": "Prime-Base Reduction for $n=q^t p$"
     },
     {
       "ambition_level": "extension",
