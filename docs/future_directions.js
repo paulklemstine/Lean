@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "71da124a",
+    "consumed_by_exp_id": "",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -2714,7 +2714,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Perfect Cuboid (Euler Brick)"
   },
   {
-    "consumed_by_exp_id": "75f8dfec",
+    "consumed_by_exp_id": "",
     "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
     "domains": [
       "Algebra"
@@ -2723,7 +2723,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.481690+00:00",
     "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
@@ -2842,6 +2842,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Sums of Three Cubes\n\nThe work in this cycle isolates a single, fully explicit local obstruction modulo nine,\nexhibits algebraic families that realise certain values infinitely often, and certifies\nthe deep isolated witnesses for the hardest small targets. The conjectures below grow\ndirectly out of that separation between the \"local\" and the \"global\" halves of the\nproblem.\n\n## Conjecture 1 \u2014 Nine is the whole story\n\nEvery integer not congruent to four or five modulo nine is a sum of three integer cubes.\n\nThe key insight is that the only residues unreachable by three cubes occur modulo nine,\nand the proportion of reachable residues there is exactly seven of nine; once that single\ncongruence is satisfied there appears to be no further arithmetic barrier, so the\ncongruence should be not merely necessary but also sufficient.\n\nWhy now? Every target below one hundred has finally been settled, with thirty-three and\nforty-two resolved only recently, and not one of them violated the prediction. With the\nsmall-number frontier cleared, attention can shift from finding sporadic witnesses to\nexplaining why no second obstruction ever appears.\n\n## Conjecture 2 \u2014 Infinitely many essentially different families\n\nFor each value that is a sum of three cubes in more than one way, there is a polynomial\nfamily in one parameter producing infinitely many representations of that value.\n\nThe key insight is that the two classical identities for one and for two are not\naccidents but instances of a general phenomenon: whenever a value sits on the cubic\nsurface with enough symmetry, the surface carries an algebraic curve through that point,\nand integral points along the curve give an unbounded supply of representations.\n\nWhy now? The explicit one-parameter identities verified here show that such families are\nconcrete and checkable, and the surface's central symmetry already halves the search,\nsuggesting the families can be catalogued systematically rather than discovered by luck.\n\n## Conjecture 3 \u2014 Representations grow without bound for every admissible value\n\nFor every integer not congruent to four or five modulo nine, the number of\nrepresentations as a sum of three cubes with all coordinates bounded by a given size\ntends to infinity as that size grows.\n\nThe key insight is that a heuristic count of lattice points near the surface predicts a\nslowly growing but unbounded number of solutions for each admissible value, mirroring the\ndensity seven-ninths seen at the level of residues.\n\nWhy now? Modern searches reach coordinate sizes far beyond what was once possible, so the\npredicted slow growth has become testable in ranges where a genuine ceiling, if one\nexisted, would already be visible.\n\n## Conjecture 4 \u2014 Symmetry forces balanced witnesses\n\nFor values that require very large coordinates, the minimal witnesses are asymptotically\nbalanced: the three cubes nearly cancel, with two large terms of opposite sign and a\ncontrolled remainder.\n\nThe key insight is that the central symmetry sending each coordinate to its negative pairs\nsolutions, and the cancellation needed to land on a fixed small target forces the extreme\nwitnesses toward the near-diagonal of the surface where the cubes almost annihilate.\n\nWhy now? The recently found witnesses for the hardest small targets all display exactly\nthis near-cancellation, providing the first empirical anchor for a structural prediction\nabout where the deepest solutions must live.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2940",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fd05632c",
+    "status": "available",
+    "timestamp": "2026-06-30T06:07:08.548802+00:00",
+    "title": "The work in this cycle isolates a single, fully explicit local obstruction modul"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2900,7 +2915,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "da1c103e",
+    "consumed_by_exp_id": "",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -2910,7 +2925,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -3151,7 +3166,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "8d4fed95",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -3161,7 +3176,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
@@ -3194,6 +3209,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle fd05632c (Q=0.401) proved 14 theorems in Physics but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Complete formalization of the mod-9 obstruction for sums of three cubes, proving the obstruction is both necessary AND sharp. The negative result: residues 4 and 5 mod 9 are never representable as sum",
+    "domains": [
+      "Physics"
+    ],
+    "id": "sorry_fill_fd05632c_3753f85c",
+    "priority_score": 0.4514115714285715,
+    "research_mode": "team",
+    "source_exp_id": "fd05632c",
+    "status": "available",
+    "timestamp": "2026-06-30T06:07:15.521945+00:00",
+    "title": "Close Proofs: Sums of Three Cubes"
   },
   {
     "consumed_by_exp_id": "",
@@ -3301,7 +3330,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "7d80a3e0",
+    "consumed_by_exp_id": "",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domains": [
       "Bridges",
@@ -3311,7 +3340,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },

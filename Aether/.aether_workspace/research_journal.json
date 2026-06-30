@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ab42f98e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions: Cryptography from Iterated Collatz Maps\n\nDerived from this cycle's findings (see `Map.lean`, `Reversibility.lean`,\n`HashCollision.lean`). Each conjecture is bold, falsifiable, and",
-      "quality_score": 0.70551,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-26T13:59:07",
-      "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
-    },
-    {
       "cycle_id": "9c488c94",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Character Tables of `Sₙ`\n\nThis cycle established the \"column count\" of the character table of the symmetric group:\nthe table is square of side `p(n)`, via a from-scratch proof th",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-30T05:25:05",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+    },
+    {
+      "cycle_id": "fd05632c",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Sums of Three Cubes\n\nThe work in this cycle isolates a single, fully explicit local obstruction modulo nine,\nexhibits algebraic families that realise certain values infinitely of",
+      "quality_score": 0.40141157142857153,
+      "sorry_count": 2,
+      "theorem_count": 14,
+      "timestamp": "2026-06-30T06:07:15",
+      "title": "Sums of Three Cubes"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.76576
     }
   ],
-  "last_updated": "2026-06-30T05:25:05",
+  "last_updated": "2026-06-30T06:07:15",
   "open_questions": [
-    {
-      "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
-      "cycle_id": "16e95997",
-      "domain": "Physics",
-      "sorry_count": 5,
-      "timestamp": "2026-06-16T12:53:15"
-    },
     {
       "context": "",
       "cycle_id": "595ce011",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 4,
       "timestamp": "2026-06-29T23:28:10"
+    },
+    {
+      "context": "mathematics).  It is recorded here as a hypothesis, with an honest `sorry`, and is used only; sorry",
+      "cycle_id": "fd05632c",
+      "domain": "Physics",
+      "sorry_count": 2,
+      "timestamp": "2026-06-30T06:07:15"
     }
   ],
   "research_threads": {
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "acb790ee",
-        "quality": 0.8075699999999999,
-        "theorems": 238,
-        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-      },
-      {
         "cycle_id": "831891b4",
         "quality": 0.49792574394463673,
         "theorems": 28,
@@ -3761,6 +3755,12 @@
         "quality": 0.3683071607142858,
         "theorems": 7,
         "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
+      },
+      {
+        "cycle_id": "fd05632c",
+        "quality": 0.40141157142857153,
+        "theorems": 14,
+        "title": "Sums of Three Cubes"
       }
     ],
     "Probability": [
