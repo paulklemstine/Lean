@@ -1,401 +1,229 @@
 """
-Sheaf Cohomology Robustness — Interactive Demo
+Certified Adversarial Robustness via Sheaf Cohomology
+=====================================================
 
-Demonstrates the key results:
-1. Persistent robustness filtration for a simple 2D classifier
-2. Composition robustness bounds for multi-layer networks
-3. Mayer-Vietoris gluing of local certificates
-4. Weight perturbation stability
-5. Čech cohomology computation on a cover
+Numerical demonstrations of the results:
+
+  * Stalk certificate: a linear score s_w(x) = <w, x> against L-infinity
+    perturbations is sign-stable on the ball of radius r whenever
+        ||w||_1 * r < |s_w(x0)|,
+    with tight certified radius  R = |s_w(x0)| / ||w||_1.
+
+  * Tree gluing primitive: on a path nerve, every 1-cochain of overlap
+    discrepancies is the coboundary of a global potential (partial sums),
+    so the first cohomology vanishes.
+
+  * Cyclic obstruction: on a loop nerve, a 1-cochain glues iff its holonomy
+    (sum around the loop) is zero; the unit cochain has holonomy n+1 != 0
+    and is therefore an ineliminable obstruction.
+
+  * Global certificate: combining the stalk certificates (uniform margin)
+    with vanishing first cohomology on a tree cover yields a single global
+    certified radius equal to the worst (minimum) stalk radius.
+
+Self-contained; standard library only.
 """
 
-import numpy as np
-from algorithms import (
-    compute_lipschitz_robustness_radius,
-    composition_robustness_radius,
-    mayer_vietoris_robustness_radius,
-    cech_cohomology_vanishes,
-    sheaf_lipschitz_globalization,
-    weight_perturbation_stability,
-    refinement_radius_comparison,
-)
+from __future__ import annotations
+
+import math
+import random
+from typing import List, Sequence, Tuple
 
 
-def demo_lipschitz_robustness():
-    """Demo 1: Lipschitz Robustness Radius"""
-    print("=" * 60)
-    print("Demo 1: Lipschitz Robustness Radius")
-    print("=" * 60)
+# ---------------------------------------------------------------------------
+# 1. The linear stalk certificate
+# ---------------------------------------------------------------------------
 
-    margins = [0.5, 1.0, 2.0, 0.1]
-    lip_consts = [1.0, 2.0, 0.5, 10.0]
-
-    print(f"{'Margin':>8} {'Lipschitz':>10} {'Radius':>8}")
-    print("-" * 30)
-    for m, L in zip(margins, lip_consts):
-        r = compute_lipschitz_robustness_radius(m, L)
-        print(f"{m:8.2f} {L:10.2f} {r:8.4f}")
-
-    print()
+def score(w: Sequence[float], x: Sequence[float]) -> float:
+    """Linear score s_w(x) = sum_i w_i x_i."""
+    return sum(wi * xi for wi, xi in zip(w, x))
 
 
-def demo_composition_robustness():
-    """Demo 2: Multi-Layer Composition Robustness"""
-    print("=" * 60)
-    print("Demo 2: Composition Robustness (Multi-Layer)")
-    print("=" * 60)
-
-    configs = [
-        {"margin": 1.0, "L1": 1.0, "L2": 1.0, "desc": "Unit Lipschitz"},
-        {"margin": 2.0, "L1": 3.0, "L2": 2.0, "desc": "Deep network"},
-        {"margin": 0.5, "L1": 10.0, "L2": 5.0, "desc": "High Lipschitz"},
-        {"margin": 5.0, "L1": 1.5, "L2": 1.2, "desc": "High margin"},
-    ]
-
-    print(f"{'Config':>18} {'Margin':>7} {'L1':>5} {'L2':>5} {'Radius':>8}")
-    print("-" * 48)
-    for c in configs:
-        r = composition_robustness_radius(c["margin"], c["L1"], c["L2"])
-        print(f"{c['desc']:>18} {c['margin']:7.2f} {c['L1']:5.1f} {c['L2']:5.1f} {r:8.4f}")
-
-    print()
+def weight_l1(w: Sequence[float]) -> float:
+    """Weight L1 norm ||w||_1 = sum_i |w_i| (dual norm to L-infinity)."""
+    return sum(abs(wi) for wi in w)
 
 
-def demo_mayer_vietoris():
-    """Demo 3: Mayer-Vietoris Gluing"""
-    print("=" * 60)
-    print("Demo 3: Mayer-Vietoris Robustness Gluing")
-    print("=" * 60)
+def certified_radius(w: Sequence[float], x0: Sequence[float]) -> float:
+    """
+    Tight L-infinity certified radius R = |s_w(x0)| / ||w||_1.
 
-    covers = [
-        [1.0, 1.0],
-        [0.5, 2.0],
-        [0.1, 0.3, 0.5],
-        [1.0, 1.0, 1.0, 1.0],
-        [0.8, 0.9, 1.0, 0.7, 0.6],
-    ]
-
-    for radii in covers:
-        global_r = mayer_vietoris_robustness_radius(radii)
-        print(f"  Local radii: {radii}")
-        print(f"  Global radius: {global_r:.4f}")
-        print()
+    Returns +inf if the weights vanish but the score does not (the sign
+    can never be flipped), and 0.0 if the point lies on the boundary.
+    """
+    margin = abs(score(w, x0))
+    n1 = weight_l1(w)
+    if n1 == 0.0:
+        return math.inf if margin > 0.0 else 0.0
+    return margin / n1
 
 
-def demo_cech_cohomology():
-    """Demo 4: Čech Cohomology Computation"""
-    print("=" * 60)
-    print("Demo 4: Čech Cohomology on Finite Cover")
-    print("=" * 60)
-
-    # Example 1: A valid cocycle (coboundary)
-    n = 3
-    potential = np.array([1.0, 2.5, -0.5])
-    cocycle = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            cocycle[i, j] = potential[j] - potential[i]
-
-    vanishes, pot = cech_cohomology_vanishes(cocycle)
-    print(f"  Coboundary from potential {potential}:")
-    print(f"  H¹ vanishes: {vanishes}")
-    if pot is not None:
-        print(f"  Recovered potential: {pot}")
-    print()
-
-    # Example 2: Random cocycle (should also vanish for finite sets)
-    n = 4
-    base = np.random.randn(n)
-    cocycle2 = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            cocycle2[i, j] = base[j] - base[i]
-
-    vanishes2, pot2 = cech_cohomology_vanishes(cocycle2)
-    print(f"  Random coboundary (n=4):")
-    print(f"  H¹ vanishes: {vanishes2}")
-    print()
+def margin_condition(w: Sequence[float], x0: Sequence[float], r: float) -> bool:
+    """Strict margin test  ||w||_1 * r < |s_w(x0)|  (Theorem: sign stability)."""
+    return weight_l1(w) * r < abs(score(w, x0))
 
 
-def demo_sheaf_lipschitz():
-    """Demo 5: Sheaf-Lipschitz Globalization"""
-    print("=" * 60)
-    print("Demo 5: Sheaf-Lipschitz Globalization")
-    print("=" * 60)
-
-    # 4-region ReLU network
-    margins = [1.2, 0.8, 1.5, 0.3]
-    lip_consts = [2.0, 1.5, 3.0, 0.5]
-
-    global_r = sheaf_lipschitz_globalization(margins, lip_consts)
-    print(f"  Margins:    {margins}")
-    print(f"  Lipschitz:  {lip_consts}")
-    local_radii = [m/L for m, L in zip(margins, lip_consts)]
-    print(f"  Local radii: {[f'{r:.4f}' for r in local_radii]}")
-    print(f"  Global radius: {global_r:.4f}")
-    print(f"  Bottleneck: region {np.argmin(local_radii)} (radius {min(local_radii):.4f})")
-    print()
-
-
-def demo_weight_perturbation():
-    """Demo 6: Weight Perturbation Stability"""
-    print("=" * 60)
-    print("Demo 6: Weight Perturbation Stability")
-    print("=" * 60)
-
-    original_radius = 1.0
-    deltas = [0.0, 0.1, 0.3, 0.5, 0.8, 0.99, 1.0]
-    margin = 1.5  # margin lower bound on the R-ball
-
-    print(f"  Original radius: {original_radius}")
-    print(f"  Margin lower bound: {margin}")
-    print(f"{'Delta':>8} {'Preserved':>10} {'Status':>12}")
-    print("-" * 35)
-    for delta in deltas:
-        new_r = weight_perturbation_stability(margin, delta, original_radius)
-        status = "robust" if new_r > 0 else "VULNERABLE"
-        print(f"{delta:8.2f} {new_r:10.4f} {status:>12}")
-    print()
-
-
-def demo_refinement():
-    """Demo 7: Cover Refinement Comparison"""
-    print("=" * 60)
-    print("Demo 7: Cover Refinement Improvement")
-    print("=" * 60)
-
-    coarse = [0.5, 0.3]
-    fine = [0.6, 0.4, 0.7, 0.5]
-    ref_map = [0, 0, 1, 1]  # fine[0],fine[1] refine coarse[0], etc.
-
-    c, f, improved = refinement_radius_comparison(coarse, fine, ref_map)
-    print(f"  Coarse radii: {coarse} → global = {c:.4f}")
-    print(f"  Fine radii:   {fine} → global = {f:.4f}")
-    print(f"  Refinement improved: {improved}")
-    print()
-
-
-if __name__ == "__main__":
-    np.random.seed(42)
-
-    demo_lipschitz_robustness()
-    demo_composition_robustness()
-    demo_mayer_vietoris()
-    demo_cech_cohomology()
-    demo_sheaf_lipschitz()
-    demo_weight_perturbation()
-    demo_refinement()
-
-    print("=" * 60)
-    print("All demos completed successfully.")
-    print("=" * 60)
-
-
-"""
-Visualization: Composition Robustness and Layer-wise Degradation
-
-Shows how the certified robustness radius degrades as the number of
-Lipschitz layers increases — the composition robustness theorem in action.
-"""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-
-
-def main():
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-    # Plot 1: Radius vs number of layers
-    ax = axes[0]
-    margin = 2.0
-    n_layers_range = range(1, 11)
-
-    for L in [1.1, 1.5, 2.0, 3.0]:
-        radii = [margin / (L ** n) for n in n_layers_range]
-        ax.semilogy(list(n_layers_range), radii, 'o-', label=f'L = {L}', linewidth=2)
-
-    ax.set_xlabel('Number of layers', fontsize=12)
-    ax.set_ylabel('Certified radius (log scale)', fontsize=12)
-    ax.set_title('Composition Robustness\nvs. Network Depth', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-
-    # Plot 2: Radius vs margin (fixed depth)
-    ax = axes[1]
-    margins = np.linspace(0.1, 5.0, 50)
-    L1, L2 = 2.0, 1.5
-
-    ax.plot(margins, margins / (L1 * L2), 'b-', linewidth=2,
-            label=f'2 layers (L₁={L1}, L₂={L2})')
-    ax.plot(margins, margins / (L1 * L2 * 1.3), 'r--', linewidth=2,
-            label=f'3 layers (+L₃=1.3)')
-    ax.plot(margins, margins / (L1 * L2 * 1.3 * 1.1), 'g:', linewidth=2,
-            label=f'4 layers (+L₄=1.1)')
-
-    ax.set_xlabel('Margin m', fontsize=12)
-    ax.set_ylabel('Certified radius', fontsize=12)
-    ax.set_title('Certified Radius\nvs. Margin', fontsize=13, fontweight='bold')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
-
-    # Plot 3: Cover refinement improvement
-    ax = axes[2]
-    np.random.seed(42)
-    n_trials = 50
-    n_regions_range = [2, 3, 5, 8, 12, 20]
-    avg_radii = []
-    std_radii = []
-
-    for n_reg in n_regions_range:
-        trial_radii = []
-        for _ in range(n_trials):
-            margins = np.random.exponential(1.0, size=n_reg) + 0.1
-            lips = np.random.exponential(1.0, size=n_reg) + 0.5
-            local_r = margins / lips
-            trial_radii.append(np.min(local_r))
-        avg_radii.append(np.mean(trial_radii))
-        std_radii.append(np.std(trial_radii))
-
-    ax.errorbar(n_regions_range, avg_radii, yerr=std_radii,
-                fmt='s-', linewidth=2, capsize=5, color='purple')
-    ax.set_xlabel('Number of cover regions', fontsize=12)
-    ax.set_ylabel('Expected global radius', fontsize=12)
-    ax.set_title('Global Radius vs.\nCover Granularity', fontsize=13, fontweight='bold')
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('composition_robustness.png', dpi=150, bbox_inches='tight')
-    print("Saved: composition_robustness.png")
-
-
-if __name__ == "__main__":
-    main()
-
-
-"""
-Visualization: Persistent Robustness Filtration
-
-Standalone script that generates a figure showing how the persistent robust set
-shrinks as the perturbation radius increases, creating a "robustness barcode."
-"""
-
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
-from matplotlib.collections import PatchCollection
-
-
-def score_gap_2d(x: np.ndarray, centers: np.ndarray, weights: np.ndarray) -> float:
-    """Simple 2-class RBF classifier score gap."""
-    dists = np.linalg.norm(x - centers, axis=1)
-    activations = np.exp(-dists**2)
-    return float(np.dot(weights, activations))
-
-
-def is_robust_at_radius(
-    x: np.ndarray, radius: float, score_gap_fn, n_samples: int = 200
+def empirically_sign_stable(
+    w: Sequence[float],
+    x0: Sequence[float],
+    r: float,
+    trials: int = 20000,
+    seed: int = 0,
 ) -> bool:
-    """Check if point x is in the persistent robust set at given radius."""
-    d = x.shape[0]
-    for _ in range(n_samples):
-        delta = np.random.uniform(-radius, radius, size=d)
-        if score_gap_fn(x + delta) <= 0:
+    """
+    Monte-Carlo check that the sign of s_w is constant on the L-infinity ball
+    of radius r about x0 (perturb every coordinate within [-r, r]).
+    """
+    rng = random.Random(seed)
+    base = score(w, x0) > 0.0
+    d = len(w)
+    for _ in range(trials):
+        x = [x0[i] + rng.uniform(-r, r) for i in range(d)]
+        if (score(w, x) > 0.0) != base:
             return False
     return True
 
 
-def main():
-    np.random.seed(42)
+# ---------------------------------------------------------------------------
+# 2. Cohomology of the cover nerve
+# ---------------------------------------------------------------------------
 
-    # Setup classifier
-    centers = np.array([[0.3, 0.3], [0.7, 0.7], [0.3, 0.7], [0.7, 0.3]])
-    weights = np.array([1.5, 1.0, -1.2, -0.8])
+def delta0_path(f: Sequence[float]) -> List[float]:
+    """Path coboundary (delta^0 f)_i = f_{i+1} - f_i  for i = 0..n-1."""
+    return [f[i + 1] - f[i] for i in range(len(f) - 1)]
 
-    def sg(x):
-        return score_gap_2d(x, centers, weights)
 
-    # Grid of test points
-    grid_n = 40
-    xs = np.linspace(0, 1, grid_n)
-    ys = np.linspace(0, 1, grid_n)
-    XX, YY = np.meshgrid(xs, ys)
-    points = np.column_stack([XX.ravel(), YY.ravel()])
+def tree_glue(g: Sequence[float]) -> List[float]:
+    """
+    Gluing primitive on a path nerve: given a 1-cochain g (length n),
+    return the global potential f (length n+1) with delta^0 f = g.
+    Construction: f_0 = 0, f_{k} = f_{k-1} + g_{k-1}  (partial sums).
+    """
+    f = [0.0]
+    for gi in g:
+        f.append(f[-1] + gi)
+    return f
 
-    # Compute persistent robust sets at different radii
-    radii = [0.0, 0.02, 0.05, 0.1, 0.15, 0.2]
 
-    fig, axes = plt.subplots(2, 3, figsize=(14, 9))
-    fig.suptitle('Persistent Robustness Filtration', fontsize=16, fontweight='bold')
+def delta_cyc(f: Sequence[float]) -> List[float]:
+    """Cyclic coboundary (delta^cyc f)_i = f_{(i+1) mod (n+1)} - f_i."""
+    m = len(f)
+    return [f[(i + 1) % m] - f[i] for i in range(m)]
 
-    for idx, (ax, r) in enumerate(zip(axes.flat, radii)):
-        # Score gap values
-        sg_vals = np.array([sg(p) for p in points]).reshape(grid_n, grid_n)
 
-        # Background: score gap heatmap
-        im = ax.contourf(XX, YY, sg_vals, levels=20, cmap='RdYlGn', alpha=0.5)
-        ax.contour(XX, YY, sg_vals, levels=[0], colors='black', linewidths=2)
+def holonomy(g: Sequence[float]) -> float:
+    """Loop holonomy = sum of the 1-cochain around the cycle."""
+    return sum(g)
 
-        if r > 0:
-            # Compute robust set
-            robust = np.array([is_robust_at_radius(p, r, sg, 100) for p in points])
-            robust_grid = robust.reshape(grid_n, grid_n)
 
-            # Overlay robust region
-            ax.contourf(XX, YY, robust_grid.astype(float), levels=[0.5, 1.5],
-                       colors=['blue'], alpha=0.25)
-            ax.contour(XX, YY, robust_grid.astype(float), levels=[0.5],
-                      colors='blue', linewidths=1.5, linestyles='--')
+def loop_cochain_glues(g: Sequence[float]) -> bool:
+    """A loop 1-cochain is a coboundary iff its holonomy vanishes."""
+    return math.isclose(holonomy(g), 0.0, abs_tol=1e-12)
 
-        # Mark centers
-        pos_centers = centers[weights > 0]
-        neg_centers = centers[weights < 0]
-        ax.scatter(pos_centers[:, 0], pos_centers[:, 1], c='green', s=60,
-                  marker='^', zorder=5, edgecolors='black', label='+ class')
-        ax.scatter(neg_centers[:, 0], neg_centers[:, 1], c='red', s=60,
-                  marker='v', zorder=5, edgecolors='black', label='- class')
 
-        ax.set_title(f'r = {r:.2f}', fontsize=12)
-        ax.set_xlim(0, 1)
-        ax.set_ylim(0, 1)
-        ax.set_aspect('equal')
-        if idx == 0:
-            ax.legend(loc='lower right', fontsize=8)
+# ---------------------------------------------------------------------------
+# 3. Global certificate on a tree cover
+# ---------------------------------------------------------------------------
 
-    plt.tight_layout()
-    plt.savefig('persistent_robustness_filtration.png', dpi=150, bbox_inches='tight')
-    print("Saved: persistent_robustness_filtration.png")
+def global_tree_certificate(
+    weights: Sequence[Sequence[float]],
+    refs: Sequence[Sequence[float]],
+    R: float,
+) -> Tuple[bool, float]:
+    """
+    Check the uniform per-region margin condition on a path (tree) cover.
 
-    # Plot 2: Robustness barcode
-    fig2, ax2 = plt.subplots(figsize=(10, 5))
+    Returns (certified, worst_stalk_radius) where `certified` is True iff
+    every region clears  ||w_i||_1 * R < |s_{w_i}(x0_i)|, in which case R is a
+    valid global certified radius. The worst (minimum) stalk radius is the
+    largest such R that the cover supports.
+    """
+    ok = all(margin_condition(w, x0, R) for w, x0 in zip(weights, refs))
+    worst = min(certified_radius(w, x0) for w, x0 in zip(weights, refs))
+    return ok, worst
 
-    test_radii = np.linspace(0, 0.25, 30)
-    n_test_points = 200
-    test_points = np.random.rand(n_test_points, 2)
 
-    robust_fracs = []
-    for r in test_radii:
-        if r == 0:
-            frac = np.mean([sg(p) > 0 for p in test_points])
-        else:
-            frac = np.mean([is_robust_at_radius(p, r, sg, 50) for p in test_points])
-        robust_fracs.append(frac)
+# ---------------------------------------------------------------------------
+# Demonstrations
+# ---------------------------------------------------------------------------
 
-    ax2.fill_between(test_radii, robust_fracs, alpha=0.3, color='blue')
-    ax2.plot(test_radii, robust_fracs, 'b-', linewidth=2, label='Fraction robust')
-    ax2.set_xlabel('Perturbation radius r', fontsize=13)
-    ax2.set_ylabel('Fraction of points in R(r)', fontsize=13)
-    ax2.set_title('Robustness Persistence Curve', fontsize=15, fontweight='bold')
-    ax2.legend(fontsize=12)
-    ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(0, 1.05)
+def demo_stalk() -> None:
+    print("=" * 68)
+    print("1. STALK CERTIFICATE  (tight L-infinity radius = margin / ||w||_1)")
+    print("=" * 68)
+    w = [2.0, -1.0, 0.5]
+    x0 = [1.0, 1.0, 2.0]
+    s = score(w, x0)
+    R = certified_radius(w, x0)
+    print(f"  weights w      = {w}")
+    print(f"  reference x0   = {x0}")
+    print(f"  score s_w(x0)  = {s:.4f}   (margin {abs(s):.4f})")
+    print(f"  ||w||_1        = {weight_l1(w):.4f}")
+    print(f"  certified R    = {R:.6f}")
+    # just inside the radius: provably stable; just outside: may flip.
+    for r in (0.99 * R, 1.5 * R):
+        cond = margin_condition(w, x0, r)
+        stable = empirically_sign_stable(w, x0, r)
+        tag = "certified" if cond else "NOT certified"
+        print(f"  r = {r:.4f}: margin test {tag:>13}; "
+              f"empirically stable = {stable}")
+    print()
 
-    plt.tight_layout()
-    plt.savefig('robustness_barcode.png', dpi=150, bbox_inches='tight')
-    print("Saved: robustness_barcode.png")
+
+def demo_tree_gluing() -> None:
+    print("=" * 68)
+    print("2. TREE GLUING  (vanishing first cohomology: every g is a coboundary)")
+    print("=" * 68)
+    g = [0.7, -1.2, 2.4, 0.1]          # arbitrary overlap discrepancies
+    f = tree_glue(g)
+    recovered = delta0_path(f)
+    print(f"  overlap discrepancies g = {g}")
+    print(f"  global potential     f  = {f}")
+    print(f"  delta^0 f               = {[round(v, 6) for v in recovered]}")
+    print(f"  delta^0 f == g          = "
+          f"{all(math.isclose(a, b) for a, b in zip(recovered, g))}")
+    print()
+
+
+def demo_cyclic_obstruction() -> None:
+    print("=" * 68)
+    print("3. CYCLIC OBSTRUCTION  (loop nerve: unit cochain is NOT a coboundary)")
+    print("=" * 68)
+    for n in (2, 4, 7):
+        unit = [1.0] * (n + 1)
+        h = holonomy(unit)
+        print(f"  n+1 = {n + 1:>2} regions: unit cochain holonomy = {h:.1f}"
+              f"  -> glues? {loop_cochain_glues(unit)}")
+    # a zero-holonomy loop cochain DOES glue
+    g = [1.0, -2.0, 0.5, 0.5]          # holonomy 0
+    print(f"\n  zero-holonomy cochain g = {g}, holonomy = {holonomy(g):.1f}"
+          f"  -> glues? {loop_cochain_glues(g)}")
+    print()
+
+
+def demo_global() -> None:
+    print("=" * 68)
+    print("4. GLOBAL CERTIFICATE  (tree cover, uniform margin = min stalk radius)")
+    print("=" * 68)
+    weights = [[2.0, -1.0], [1.5, 1.5], [-3.0, 0.5]]
+    refs = [[1.0, 0.5], [0.8, 0.9], [1.0, 1.0]]
+    radii = [certified_radius(w, x0) for w, x0 in zip(weights, refs)]
+    print(f"  per-region stalk radii = {[round(r, 4) for r in radii]}")
+    worst = min(radii)
+    print(f"  worst (min) stalk radius = {worst:.4f}")
+    for R in (0.99 * worst, 1.10 * worst):
+        ok, _ = global_tree_certificate(weights, refs, R)
+        print(f"  candidate global R = {R:.4f}: certified globally = {ok}")
+    print()
+
+
+def main() -> None:
+    demo_stalk()
+    demo_tree_gluing()
+    demo_cyclic_obstruction()
+    demo_global()
+    print("All demonstrations completed.")
 
 
 if __name__ == "__main__":
