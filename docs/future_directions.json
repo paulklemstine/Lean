@@ -40080,7 +40080,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.NT",
         "automorphic_forms",
@@ -40104,7 +40104,7 @@
         "Computation"
       ],
       "id": "fd_2922",
-      "last_attempt_time": "2026-06-30T13:01:43.355805+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem triple_corr_sqrt_cancel {k : ℕ} (f : HeckeEigenform (weight k)) (hf : f.IsNormalized) (ε : ℝ) (hε : ε > 0) (X Y : ℝ) (hY : 1 ≤ Y) (hXY : Y ≤ X ^ (1/2 - ε)) (hX : 1 ≤ X) : ∃ C : ℝ, C > 0 ∧ |(∑ n in Finset.Icc 1 ⌊X⌋₊, ∑ m in Finset.Icc 1 ⌊Y⌋₊, f.λ n * f.λ m * f.λ (n + m))| ≤ C * X ^ (1/2 + ε) * Y := by sorry",
       "lineage_refs": [],
@@ -42750,6 +42750,54 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.NT",
+        "Jacobi forms",
+        "pseudodifferential operators",
+        "Rankin-Cohen brackets"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For each integer k and complex parameters (mₗ, mᵣ), the slash action |_{k,[mₗ,mᵣ]} defined on pseudodifferential operators on the Jacobi upper half space—via the decomposition of cocycles into left and right parts α_{k-n,mₗ} and α_{mᵣ}—satisfies the right group action axioms: (1) φ ∂ⁿ |_{k,[mₗ,mᵣ]} e = φ ∂ⁿ for the identity e ∈ G, and (2) (φ ∂ⁿ |_{k,[mₗ,mᵣ]} g₁) |_{k,[mₗ,mᵣ]} g₂ = φ ∂ⁿ |_{k,[mₗ,mᵣ]} (g₁g₂) for all g₁, g₂ ∈ G. This is the foundational verification (referenced as checked directly in the paper) upon which the equivariant isomorphism between invariant pseudodifferential operators and Jacobi forms depends.",
+      "domain_bridges": [
+        "Lie_group_actions",
+        "cocycles",
+        "modular_forms"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Logic"
+      ],
+      "id": "fd_2979",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem slash_action_is_right_action (k : ℤ) (mₗ mᵣ : ℂ) : IsRightGroupAction G (slash PDO k mₗ mᵣ) := by\n  constructor\n  · -- identity: φ ∂ⁿ |_{k,[mₗ,mᵣ]} e = φ ∂ⁿ\n    intro φ\n    simp [slash, cocycle_id]\n  · -- compatibility: (φ | g₁) | g₂ = φ | (g₁ * g₂)\n    intro φ g₁ g₂\n    simp [slash, cocycle_comp, beta_comp]",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the extended real Jacobi group G as a semidirect product, formalize the cocycles α_{k,mₗ} and α_{mᵣ} and their composition properties under group multiplication, then verify the two group action axioms by direct computation using the cocycle identity and the compatibility of the β-factor (cτ+d) with the derivative ∂ under coordinate change z ↦ z∘g.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30409v1",
+      "source_path": "http://arxiv.org/abs/2606.30409v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T13:17:59.139035+00:00",
+      "title": "Slash action of the Jacobi group on pseudodifferential operators is a well-defined right group action"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "math.GR"
       ],
@@ -42770,7 +42818,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2979",
+      "id": "fd_2980",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem nilpotent_extension_feng_sun_xiang (G : Type*) [Group G] [Fintype G] [IsNilpotent G] {p : ℕ} (hp : Nat.Prime p) (hp_min : ∀ q ∣ Fintype.card G, Nat.Prime q → p ≤ q) {k : ℕ} (hk : k < p) (a : Fin k → G) (ha : Function.Injective a) (b : Fin k → G) : ∃ σ : Equiv.Perm (Fin k), Function.Injective fun i => a i * b (σ i) := by sorry",
@@ -42817,7 +42865,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2980",
+      "id": "fd_2981",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem odd_kneser_strong_chromatic_index : forall k >= 2, odd_kneser_graph (2*k-1) k ~~> strong_chromatic_index (2*k-1) := ...",
@@ -42865,7 +42913,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2981",
+      "id": "fd_2982",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_sign_changes_sym_power_over_sums_of_squares\n    (k j m : ℕ) (hk : Even k ∧ k ≥ 2) (hm : Even m ∧ m ≥ 2)\n    (f : Sl2Z.ModularForm k) (hf : f ∈ HeckeEigenforms k)\n    (hf_norm : IsNormalised f) :\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n > 0} ∧\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n < 0} := by\n  sorry",
@@ -42915,7 +42963,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2982",
+      "id": "fd_2983",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem shifted_convolution_sym_power_k_full_sums_of_squares\n    (f : ModularForms.SL2Z) (κ : ℕ) (hf : IsHeckeEigenform f κ)\n    (j k h q m : ℕ) (hk : k ≥ 2) (hj : j ≥ 1) (hm : m ∈ {2,4,6,8,10,12})\n    (a : ℕ → ℕ) (ha_kfull : IsKFullKernel a k) (ha_bound : ∀ ε > 0, ∃ C, ∀ n, (a n : ℝ) ≤ C * n^ε) :\n    ∃ (δ : ℝ) (hδ : δ > 0) (C₀ : ℝ) (hC₀ : C₀ > 0) (α : ℕ),\n    ∀ ε > 0, ∃ B : ℝ, ∀ x ≥ (1 : ℝ),\n    let S := ∑ n in Finset.Icc 1 ⌊x⌋ₙ |>.filter\n      (fun n => n % q = 1 ∧ IsSumOfMSquares n m),\n      (a n : ℝ) * λSymPower f j (n + h)\n    let M := C₀ * x * (Real.log x)^α\n    |S - M| ≤ B * x^(1 - δ + ε) := sorry",
@@ -42964,7 +43012,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2983",
+      "id": "fd_2984",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vertex_ramsey_stability {r : ℕ} (hr : 2 ≤ r) {H : SimpleGraph ℕ} (hH : 2 ≤ H.chromaticNumber) : ∀ ε > 0, ∃ n₀ : ℕ, ∃ δ > 0, ∀ n ≥ n₀, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj], G.minDegree ≥ (1 - 1 / (r * (H.chromaticNumber - 1))) * n → ¬(G →_v (H, r)) → ∃ (G' : SimpleGraph (Fin n)) [DecidableRel G'.Adj], G'.IsKPartite (r * (H.chromaticNumber - 1)) ∧ (G.edgeSet \\ G'.edgeSet).card ≤ ε * n ^ 2",
@@ -42983,6 +43031,53 @@
       "thread_id": "",
       "timestamp": "2026-06-30T13:01:31.627918+00:00",
       "title": "Vertex-Ramsey Stability Conjecture"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "OEIS A000142",
+        "Mathlib.GroupTheory.SymmetricGroup",
+        "Mathlib.AlgebraicGeometry.FlagVariety",
+        "https://arxiv.org/abs/2204.00121"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let B ⊂ GL(n) be a Borel subgroup and let 𝔅ₙ be the flag variety of GL(n).  There is an explicit B‑equivariant embedding ιₙ of the set of B‑orbits on 𝔅ₙ × ℙⁿ⁻¹ into the set of Borel orbits on the flag variety 𝔅_{n+1} of GL(n+1).  Each orbit in the image of ιₙ is indexed by a permutation w ∈ S_{n+1}.  The conjecture states that for any two such permutations v,w the following are equivalent:\n1. The orbit ιₙ⁻¹(O_w) lies in the Zariski closure of ιₙ⁻¹(O_v).\n2. v ≤ w in the Bruhat order on S_{n+1}.\nThis gives a complete, combinatorial description of the orbit‑closure poset on 𝔅ₙ × ℙⁿ⁻¹ and shows that the embedding ιₙ preserves the closure relations exactly as the Bruhat order does on 𝔅_{n+1}.  The conjecture is falsifiable: a counter‑example would be a pair (v,w) with v ≤ w but with ιₙ⁻¹(O_w) not contained in the closure of ιₙ⁻¹(O_v), or vice‑versa.",
+      "domain_bridges": [
+        "Algebraic Geometry ↔ Representation Theory",
+        "Combinatorics ↔ Algebraic Geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2985",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem orbit_closure_bruhat_relation {n : ℕ} {v w : Equiv.Perm (Fin (n+1))} (hv : v ≤ w) : (ιₙ ⁻¹ (BOrbit O_w)) ⊆ closure (ιₙ ⁻¹ (BOrbit O_v))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30478v1",
+      "source_path": "http://arxiv.org/abs/2606.30478v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T13:20:24.782492+00:00",
+      "title": "Bruhat Correspondence for Borel Orbits on 𝔅ₙ × ℙⁿ⁻¹"
     },
     {
       "ambition_level": "extension",
@@ -47745,7 +47840,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -47761,7 +47856,7 @@
         "Computation"
       ],
       "id": "seed_330",
-      "last_attempt_time": "2026-06-30T13:01:37.804089+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:41:55.238483+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],

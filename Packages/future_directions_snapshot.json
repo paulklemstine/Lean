@@ -5539,6 +5539,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT",
+      "Jacobi forms",
+      "pseudodifferential operators",
+      "Rankin-Cohen brackets"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For each integer k and complex parameters (mₗ, mᵣ), the slash action |_{k,[mₗ,mᵣ]} defined on pseudodifferential operators on the Jacobi upper half space—via the decomposition of cocycles into left and right parts α_{k-n,mₗ} and α_{mᵣ}—satisfies the right group action axioms: (1) φ ∂ⁿ |_{k,[mₗ,mᵣ]} e = φ ∂ⁿ for the identity e ∈ G, and (2) (φ ∂ⁿ |_{k,[mₗ,mᵣ]} g₁) |_{k,[mₗ,mᵣ]} g₂ = φ ∂ⁿ |_{k,[mₗ,mᵣ]} (g₁g₂) for all g₁, g₂ ∈ G. This is the foundational verification (referenced as checked directly in the paper) upon which the equivariant isomorphism between invariant pseudodifferential operators and Jacobi forms depends.",
+    "domain_bridges": [
+      "Lie_group_actions",
+      "cocycles",
+      "modular_forms"
+    ],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2979",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the extended real Jacobi group G as a semidirect product, formalize the cocycles α_{k,mₗ} and α_{mᵣ} and their composition properties under group multiplication, then verify the two group action axioms by direct computation using the cocycle identity and the compatibility of the β-factor (cτ+d) with the derivative ∂ under coordinate change z ↦ z∘g.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30409v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:17:59.139035+00:00",
+    "title": "Slash action of the Jacobi group on pseudodifferential operators is a well-defined right group action"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "math.GR"
     ],
@@ -5553,7 +5582,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2979",
+    "id": "fd_2980",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5581,7 +5610,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2980",
+    "id": "fd_2981",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5610,7 +5639,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2981",
+    "id": "fd_2982",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5641,7 +5670,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2982",
+    "id": "fd_2983",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5671,7 +5700,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2983",
+    "id": "fd_2984",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -5680,6 +5709,34 @@
     "status": "available",
     "timestamp": "2026-06-30T13:01:31.627918+00:00",
     "title": "Vertex-Ramsey Stability Conjecture"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "OEIS A000142",
+      "Mathlib.GroupTheory.SymmetricGroup",
+      "Mathlib.AlgebraicGeometry.FlagVariety",
+      "https://arxiv.org/abs/2204.00121"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let B ⊂ GL(n) be a Borel subgroup and let 𝔅ₙ be the flag variety of GL(n).  There is an explicit B‑equivariant embedding ιₙ of the set of B‑orbits on 𝔅ₙ × ℙⁿ⁻¹ into the set of Borel orbits on the flag variety 𝔅_{n+1} of GL(n+1).  Each orbit in the image of ιₙ is indexed by a permutation w ∈ S_{n+1}.  The conjecture states that for any two such permutations v,w the following are equivalent:\n1. The orbit ιₙ⁻¹(O_w) lies in the Zariski closure of ιₙ⁻¹(O_v).\n2. v ≤ w in the Bruhat order on S_{n+1}.\nThis gives a complete, combinatorial description of the orbit‑closure poset on 𝔅ₙ × ℙⁿ⁻¹ and shows that the embedding ιₙ preserves the closure relations exactly as the Bruhat order does on 𝔅_{n+1}.  The conjecture is falsifiable: a counter‑example would be a pair (v,w) with v ≤ w but with ιₙ⁻¹(O_w) not contained in the closure of ιₙ⁻¹(O_v), or vice‑versa.",
+    "domain_bridges": [
+      "Algebraic Geometry ↔ Representation Theory",
+      "Combinatorics ↔ Algebraic Geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2985",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30478v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:20:24.782492+00:00",
+    "title": "Bruhat Correspondence for Borel Orbits on 𝔅ₙ × ℙⁿ⁻¹"
   },
   {
     "ambition_level": "extension",

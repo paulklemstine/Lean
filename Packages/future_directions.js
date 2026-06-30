@@ -3189,12 +3189,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For each integer k and complex parameters (m\u2097, m\u1d63), the slash action |_{k,[m\u2097,m\u1d63]} defined on pseudodifferential operators on the Jacobi upper half space\u2014via the decomposition of cocycles into left and right parts \u03b1_{k-n,m\u2097} and \u03b1_{m\u1d63}\u2014satisfies the right group action axioms: (1) \u03c6 \u2202\u207f |_{k,[m\u2097,m\u1d63]} e = \u03c6 \u2202\u207f for the identity e \u2208 G, and (2) (\u03c6 \u2202\u207f |_{k,[m\u2097,m\u1d63]} g\u2081) |_{k,[m\u2097,m\u1d63]} g\u2082 = \u03c6 \u2202\u207f |_{k,[m\u2097,m\u1d63]} (g\u2081g\u2082) for all g\u2081, g\u2082 \u2208 G. This is the foundational verification (referenced as checked directly in the paper) upon which the equivariant isomorphism between invariant pseudodifferential operators and Jacobi forms depends.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2979",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30409v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:17:59.139035+00:00",
+    "title": "Slash action of the Jacobi group on pseudodifferential operators is a well-defined right group action"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2979",
+    "id": "fd_2980",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3209,7 +3224,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2980",
+    "id": "fd_2981",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3223,7 +3238,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2981",
+    "id": "fd_2982",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3238,7 +3253,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2982",
+    "id": "fd_2983",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3253,13 +3268,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2983",
+    "id": "fd_2984",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
     "status": "available",
     "timestamp": "2026-06-30T13:01:31.627918+00:00",
     "title": "Vertex-Ramsey Stability Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let B \u2282 GL(n) be a Borel subgroup and let \ud835\udd05\u2099 be the flag variety of GL(n).  There is an explicit B\u2011equivariant embedding \u03b9\u2099 of the set of B\u2011orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 into the set of Borel orbits on the flag variety \ud835\udd05_{n+1} of GL(n+1).  Each orbit in the image of \u03b9\u2099 is indexed by a permutation w \u2208 S_{n+1}.  The conjecture states that for any two such permutations v,w the following are equivalent:\n1. The orbit \u03b9\u2099\u207b\u00b9(O_w) lies in the Zariski closure of \u03b9\u2099\u207b\u00b9(O_v).\n2. v \u2264 w in the Bruhat order on S_{n+1}.\nThis gives a complete, combinatorial description of the orbit\u2011closure poset on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 and shows that the embedding \u03b9\u2099 preserves the closure relations exactly as the Bruhat order does on \ud835\udd05_{n+1}.  The conjecture is falsifiable: a counter\u2011example would be a pair (v,w) with v \u2264 w but with \u03b9\u2099\u207b\u00b9(O_w) not contained in the closure of \u03b9\u2099\u207b\u00b9(O_v), or vice\u2011versa.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2985",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30478v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:20:24.782492+00:00",
+    "title": "Bruhat Correspondence for Borel Orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9"
   },
   {
     "consumed_by_exp_id": "",
