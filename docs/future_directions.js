@@ -3194,6 +3194,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every sufficiently large prime p, every nonzero residue class modulo p is represented by a product of two primes each at most p. This is Erd\u0151s's original conjecture that motivates the paper's ternary result; the paper proves the ternary analogue (every class is a product of three primes) and shows a positive proportion of classes are products of two primes, but the full binary conjecture remains open.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2974",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30567v1",
+    "status": "available",
+    "timestamp": "2026-06-30T11:34:45.339212+00:00",
+    "title": "Erd\u0151s Binary Product Conjecture for Primes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2974",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30506v1",
+    "status": "available",
+    "timestamp": "2026-06-30T11:35:11.884153+00:00",
+    "title": "Nilpotent Extension of the Feng-Sun-Xiang Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
