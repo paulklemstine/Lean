@@ -38692,7 +38692,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "3fd12f6e",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38721,7 +38721,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27961v1",
       "source_path": "http://arxiv.org/abs/2606.27961v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T19:43:09.952578+00:00",
       "title": "Same-Prime Square Plane Transversal Difference Conjecture"
@@ -39715,14 +39715,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.AC",
         "math.CO"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a018a0f0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39736,7 +39736,7 @@
         "Algebra"
       ],
       "id": "fd_2914",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T03:45:55.256271+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Algebra.BigOperators.Group.Finset\n\nvariable {R : Type*} [CommRing R] {n : ℕ}\n\ndef CyclicProduct (A : Matrix (Fin n) (Fin n) R) {k : ℕ} (ι : Fin k ↪ Fin n) : R :=\n  ∏ j : Fin k, A (ι j) (ι (j + 1))\n\ndef Strongly1Principled (A : Matrix (Fin n) (Fin n) R) : Prop :=\n  (∀ i : Fin n, A i i = 1) ∧\n  (∀ k : ℕ, ∀ ι : Fin k ↪ Fin n, k > 1 → CyclicProduct A ι = 0)\n\ntheorem power_strongly_1_principled (A : Matrix (Fin n) (Fin n) R) (m : ℕ)\n  (hA : Strongly1Principled A) : Strongly1Principled (A ^ m) := by sorry",
       "lineage_refs": [],
@@ -39750,7 +39750,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28976v1",
       "source_path": "http://arxiv.org/abs/2606.28976v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-30T02:10:27.678210+00:00",
       "title": "Inheritance of strongly 1-principled property under matrix powers"

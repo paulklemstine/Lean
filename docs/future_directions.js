@@ -2020,7 +2020,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Pairwise Reflection-Symmetric Latin Squares iff Power of Two"
   },
   {
-    "consumed_by_exp_id": "3fd12f6e",
+    "consumed_by_exp_id": "",
     "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
     "domains": [
       "Pythagorean"
@@ -2029,7 +2029,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:43:09.952578+00:00",
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
@@ -2325,7 +2325,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial bound for point counts determining zeta functions of abelian varieties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a018a0f0",
     "description": "For any commutative ring R and matrix A \u2208 R^{n\u00d7n}, if A is strongly 1-principled (all diagonal entries are 1 and all cyclic products of length > 1 vanish), then A^m is also strongly 1-principled for any m \u2265 1.",
     "domains": [
       "Algebra"
@@ -2334,7 +2334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28976v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T02:10:27.678210+00:00",
     "title": "Inheritance of strongly 1-principled property under matrix powers"
   },

@@ -3271,7 +3271,7 @@
     "catalog_references": [
       "Transversal Difference Numbers in Finite Abelian Quotients"
     ],
-    "consumed_by_exp_id": "3fd12f6e",
+    "consumed_by_exp_id": "",
     "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
     "domain_bridges": [
       "Additive Combinatorics",
@@ -3287,7 +3287,7 @@
     "proof_strategy": "Translate the transversal difference problem into an optimization over functions $\\mathbb{F}_p^2 \\to \\mathbb{F}_p^2$ representing transversals, where the difference support decomposes into carry-corrected finite-field derivative images. Apply Kneser's theorem for cross-transversal estimates and analyze polynomial sections to establish that the minimal difference support is achieved by linear sections, yielding the exact $(2p-1)^2$ bound.",
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:43:09.952578+00:00",
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
@@ -3852,7 +3852,7 @@
       "math.AC",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a018a0f0",
     "description": "For any commutative ring R and matrix A ∈ R^{n×n}, if A is strongly 1-principled (all diagonal entries are 1 and all cyclic products of length > 1 vanish), then A^m is also strongly 1-principled for any m ≥ 1.",
     "domain_bridges": [
       "Matrix Theory",
@@ -3867,7 +3867,7 @@
     "proof_strategy": "Induction on m and combinatorial expansion of matrix power entries. A cyclic product of A^m expands into a sum of products of cyclic products of A. Since the total length is > 1, at least one factor in each term is a cyclic product of length > 1, which vanishes, causing the entire sum to vanish.",
     "research_mode": "team",
     "source_exp_id": "2606.28976v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T02:10:27.678210+00:00",
     "title": "Inheritance of strongly 1-principled property under matrix powers"
   },
