@@ -5947,6 +5947,63 @@
     "title": "Exact Threshold for Berge Tight Cycles in k-graphs"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "erdos_conjecture",
+      "ray_class_group",
+      "prime_ideal_products"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed number field K and every κ > 0, there exists Q₀ such that for every integral ideal 𝔮 ⊆ O_K with N𝔮 ≥ Q₀, every class c in the narrow ray class group Cl^(∞)_𝔮 is represented by a product of two prime ideals: c = [𝔭₁]·[𝔭₂] with N𝔭₁ ≤ (N𝔮)^{1+κ} and N𝔭₂ ≤ (N𝔮)^{1+κ}. This is the number-field analogue of Erdős's original conjecture (every reduced residue class mod q is a product of two primes ≤ q), extended beyond the integer setting. The present paper establishes this for three primes at scale (N𝔮)^{103/64+κ}, but the binary case at scale (N𝔮)^{1+κ} remains open.",
+    "domain_bridges": [
+      "analytic_number_theory",
+      "additive_combinatorics",
+      "dense_model_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2994",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the multiplicative dense-model and transference framework of Matomäki--Teräväinen (as adapted to number fields in this paper) to show that the product set P_X(𝔮) · P_X(𝔮) covers all of Cl^(∞)_𝔮 for X = (N𝔮)^{1+κ}. This requires improving the quantitative bounds on short character sums and subconvexity inputs to the point where the coset obstructions in the dense-model theorem can be overcome with only two factors. The key bottleneck is controlling the Fourier coefficients of the prime indicator function restricted to ray classes, which currently forces a ternary decomposition.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30567v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:51:00.465515+00:00",
+    "title": "Number-Field Erdős Conjecture: Binary Prime Products in Narrow Ray Class Groups"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "DKSS",
+      "Feng-Sun-Xiang",
+      "Arsovski",
+      "Alon"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let G be a finite group, let p be the smallest prime divisor of |G|, and let k < p. For any sequence of pairwise distinct elements a_1, ..., a_k in G and any sequence of elements b_1, ..., b_k in G, there exists a permutation σ on {1, ..., k} such that the products a_1 * b_{σ(1)}, ..., a_k * b_{σ(k)} are pairwise distinct. This extends the original DKSS conjecture (which was for abelian groups) and the paper's theorem (which is for p-groups) to arbitrary finite groups.",
+    "domain_bridges": [
+      "math.GR",
+      "math.CO"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2994",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Generalize the exterior algebra and representation-theoretic methods used for p-groups and abelian groups to arbitrary finite groups. This would involve bounding the number of 'bad' permutations using character sums over all irreducible representations of the group, potentially leveraging the structure of Sylow subgroups to control the vanishing of exterior algebra elements.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30506v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:51:50.119468+00:00",
+    "title": "Generalized Dasgupta-Károlyi-Serra-Szegedy Conjecture for Finite Groups"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",

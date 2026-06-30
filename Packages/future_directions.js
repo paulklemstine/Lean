@@ -3408,6 +3408,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every fixed number field K and every \u03ba > 0, there exists Q\u2080 such that for every integral ideal \ud835\udd2e \u2286 O_K with N\ud835\udd2e \u2265 Q\u2080, every class c in the narrow ray class group Cl^(\u221e)_\ud835\udd2e is represented by a product of two prime ideals: c = [\ud835\udd2d\u2081]\u00b7[\ud835\udd2d\u2082] with N\ud835\udd2d\u2081 \u2264 (N\ud835\udd2e)^{1+\u03ba} and N\ud835\udd2d\u2082 \u2264 (N\ud835\udd2e)^{1+\u03ba}. This is the number-field analogue of Erd\u0151s's original conjecture (every reduced residue class mod q is a product of two primes \u2264 q), extended beyond the integer setting. The present paper establishes this for three primes at scale (N\ud835\udd2e)^{103/64+\u03ba}, but the binary case at scale (N\ud835\udd2e)^{1+\u03ba} remains open.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2994",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30567v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:51:00.465515+00:00",
+    "title": "Number-Field Erd\u0151s Conjecture: Binary Prime Products in Narrow Ray Class Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a finite group, let p be the smallest prime divisor of |G|, and let k < p. For any sequence of pairwise distinct elements a_1, ..., a_k in G and any sequence of elements b_1, ..., b_k in G, there exists a permutation \u03c3 on {1, ..., k} such that the products a_1 * b_{\u03c3(1)}, ..., a_k * b_{\u03c3(k)} are pairwise distinct. This extends the original DKSS conjecture (which was for abelian groups) and the paper's theorem (which is for p-groups) to arbitrary finite groups.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2994",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30506v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:51:50.119468+00:00",
+    "title": "Generalized Dasgupta-K\u00e1rolyi-Serra-Szegedy Conjecture for Finite Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
