@@ -253,7 +253,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "07a868e4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
     "domains": [
       "Analysis",
@@ -264,7 +264,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432652+00:00",
     "title": "Spectral Theory: Self-Adjoint Operators"
   },
@@ -377,7 +377,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
   {
-    "consumed_by_exp_id": "e6cf72d1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
     "domains": [
       "MachineLearning",
@@ -387,7 +387,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432777+00:00",
     "title": "Universal Approximation: Quantitative Bounds"
   },
@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "75611ca8",
+    "consumed_by_exp_id": "",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -526,7 +526,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "3a13aa90",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
       "Cryptography",
@@ -537,7 +537,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1608,21 +1608,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T11:04:31.405897+00:00",
     "title": "Elementary Abelian 2-Group Uniqueness for Pairwise Reflection-Symmetric Latin Squares"
-  },
-  {
-    "consumed_by_exp_id": "6e8394a2",
-    "description": "For any integer $n \\ge 3$, the minimum number of elements in a poset $P$ such that its automorphism group $\\text{Aut}(P)$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is exactly $2^{n+1} + 2$. This conjecture formalizes the main theorem of the paper.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2861",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T11:24:35.150210+00:00",
-    "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
   },
   {
     "consumed_by_exp_id": "",
@@ -3395,6 +3380,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nBold, falsifiable conjectures emerging from this cycle's two findings:\n(i) the concave bump is rational but not polynomial in the max-plus world, the\nobstruction being convexity; and (ii) the explicit `O(n)`-monomial rational\napproximant achieves error `1/n` for Lipschitz targets and `1/n\u00b2` for targets with\na Lipschitz derivative.\n\n## 1. Convexity defect is the exact currency of the rational/polynomial gap\n\n**Conjecture.** For a continuous function `g` on `[0,1]`, the smallest uniform error\nachievable by any finite max of affine functions equals half the maximal\n*concavity defect* of `g` \u2014 the largest gap by which `g` rises above a chord drawn\nbetween two of its points. Equivalently, the best convex underapproximation error\nis a sharp two-sided invariant, and it vanishes precisely for convex `g`.\n\nThe key insight is that a max of affine pieces can only ever be convex, so the one\nthing it cannot reproduce is the amount by which a target bulges above its own\nchords; that single scalar should govern the entire approximation budget.\n\nWhy now? The tent's tight `1/2` barrier shows the bound is attained at one chord;\nthe natural next step is to prove that the *worst* chord controls the global error\nfor arbitrary targets, turning a single example into a complete characterization.\n\n## 2. Monomial count controls the rate at every smoothness order\n\n**Conjecture.** A max-plus rational function with `N` monomials approximates a\ntarget with `s` bounded derivatives on `[0,1]` to uniform error of order\n`N^{-s}`, and this exponent is optimal: no family with `N` monomials can beat\n`N^{-s}` on the whole smoothness class.\n\nThe key insight is that the number of monomials plays the role of an effective\ntropical degree, and matching `s` orders of smoothness consumes exactly `s`\nfactors of refinement per monomial, so the rate exponent should track the\nsmoothness order linearly.\n\nWhy now? The cycle already certifies the first two rungs of this ladder \u2014 `N^{-1}`\nfor Lipschitz and `N^{-2}` for a Lipschitz derivative \u2014 using the *same* `O(N)`-\nmonomial family; extending to general `s` and proving a matching lower bound would\nclose the staircase.\n\n## 3. One subtraction is necessary and sufficient for one concave bump\n\n**Conjecture.** A function on `[0,1]` is exactly representable as a difference of\ntwo max-plus polynomials with a total of `k` linear pieces if and only if its graph\nhas at most `k-1` alternations between convex and concave behavior; in particular a\nsingle subtraction suffices exactly for unimodal piecewise-linear targets.\n\nThe key insight is that each subtraction injects precisely one sign change into the\nsecond-difference profile, so the count of convex/concave alternations is conserved\nand additive across the two polynomial parts.\n\nWhy now? We have proven that the tent \u2014 one bump \u2014 needs the rational form but not\nmore; quantifying how alternation count scales with the number of subtractions\nwould yield a clean, testable representation theorem for piecewise-linear shapes.\n\n## 4. Depth trades against monomial count exponentially for oscillatory targets\n\n**Conjecture.** A target that oscillates `2^d` times on `[0,1]` is realized by a\ncomposition of `d` constant-size max-plus rational maps, yet any single\n(uncomposed) max-plus rational function reproducing it within accuracy below `1/2`\nmust use at least `c \u00b7 2^d` monomials, for an absolute constant `c > 0`.\n\nThe key insight is that composition multiplies the number of linear regions while a\nsingle rational layer can only add them, so oscillation count \u2014 an exponential\nresource under composition \u2014 becomes an exponential cost without it.\n\nWhy now? The total-variation separation for the iterated tent already exhibits the\nexponential blow-up on the shallow side; recasting it as a sharp monomial-count\nlower bound for the rational (not merely affine) class would unify the structural\nand the quantitative pictures of the depth tradeoff.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2978",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e6cf72d1",
+    "status": "available",
+    "timestamp": "2026-06-30T12:18:59.203028+00:00",
+    "title": "Bold, falsifiable conjectures emerging from this cycle's two findings:"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3659,7 +3659,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "815a888f",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -3669,7 +3669,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
@@ -3884,7 +3884,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
-    "consumed_by_exp_id": "352bbcf4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
@@ -3894,7 +3894,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },

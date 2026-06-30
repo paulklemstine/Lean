@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a2f737c1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Incoherence indices of standard social decision frames\n\nDerived from this cycle's findings (`IncoherenceIndex.lean`,\n`SaturationContrast.lean`, `ComputationalEvidence.md`).  This",
-      "quality_score": 0.4444762417582418,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-26T14:32:19",
-      "title": "Realization of all even incoherence indices ≥4 by maximal standard frames"
-    },
-    {
       "cycle_id": "abbbde7c",
       "domain": "Applications",
       "key_insight": "# Navier–Stokes: 2D Regularity and Partial 3D Results — Future Directions\n\nThis cycle formalized, in an abstract Galerkin framework, the precise structural\ndivide between 2D global regularity and 3D c",
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-30T11:57:56",
       "title": "Homotopy Type Theory as Foundations"
+    },
+    {
+      "cycle_id": "e6cf72d1",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures emerging from this cycle's two findings:\n(i) the concave bump is rational but not polynomial in the max-plus world, the\nobstruction being convexity;",
+      "quality_score": 0.65752,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-06-30T12:19:05",
+      "title": "Universal Approximation: Quantitative Bounds"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76576
     }
   ],
-  "last_updated": "2026-06-30T11:57:56",
+  "last_updated": "2026-06-30T12:19:05",
   "open_questions": [
     {
       "context": "",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "d9e56a6a",
-        "quality": 0.5512728045325779,
-        "theorems": 33,
-        "title": "*normalization functor into the probability simplex*"
-      },
-      {
         "cycle_id": "a747a0a8",
         "quality": 0.60792,
         "theorems": 45,
@@ -4009,6 +4003,12 @@
         "quality": 0.68192,
         "theorems": 15,
         "title": "Idempotent Probability: Large Deviations"
+      },
+      {
+        "cycle_id": "e6cf72d1",
+        "quality": 0.65752,
+        "theorems": 18,
+        "title": "Universal Approximation: Quantitative Bounds"
       }
     ]
   }
