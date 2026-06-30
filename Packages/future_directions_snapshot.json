@@ -3855,7 +3855,7 @@
       "05C31",
       "05C70"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1200a14",
     "description": "Every real number greater than or equal to √(√5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number γ ≥ √(√5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to γ.",
     "domain_bridges": [
       "Real analysis",
@@ -3871,7 +3871,7 @@
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T23:08:33.027778+00:00",
     "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
   },
