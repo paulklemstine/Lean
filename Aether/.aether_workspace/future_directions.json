@@ -36894,7 +36894,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "math.AG",
@@ -36918,7 +36918,7 @@
         "Geometry"
       ],
       "id": "fd_2853",
-      "last_attempt_time": "2026-06-30T01:49:07.800985+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem nilpotent_count_prescribed_support_polynomial (n : ℕ) (λ : Partition n) (S : Set (Fin n × Fin n)) : ∃ p : Polynomial ℤ, ∀ (q : ℕ) (hq : 1 < q), nilpotentCountWithSupport q n λ S = p.eval (q : ℤ) := sorry",
       "lineage_refs": [],
@@ -38450,7 +38450,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "schur_Q_functions",
@@ -38474,7 +38474,7 @@
         "Bridges"
       ],
       "id": "fd_2887",
-      "last_attempt_time": "2026-06-30T01:49:16.360905+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem mixed_product_scalar_factor_coeff_nonneg (n : ℕ) :\n    ∃ (f : ℕ → ℕ → ℕ),\n      scalarFactorCoeff n = (-1)^n * (∑' i j, (f i j : ℤ) * t^i * s^j) := by\n  sorry",
       "lineage_refs": [],
@@ -38598,7 +38598,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "4aec8950",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38628,7 +38628,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28216v1",
       "source_path": "http://arxiv.org/abs/2606.28216v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T18:49:21.986832+00:00",
       "title": "Projective Plane Coupon Collection Slowness"
@@ -38686,13 +38686,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Transversal Difference Numbers in Finite Abelian Quotients"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3fd12f6e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38707,7 +38707,7 @@
         "Pythagorean"
       ],
       "id": "fd_2892",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T02:13:32.808271+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.ZMod.Basic\nimport Mathlib.Algebra.Group.Subgroup.Basic\n\n-- Placeholder for the formal definition of transversal difference number\n-- def delta (G : Type*) [AddCommGroup G] [Fintype G] (H : AddSubgroup G) : ℕ := ...\n\ntheorem same_prime_square_plane_conjecture (p : ℕ) (hp : p.Prime) (hodd : Odd p) :\n    let G := ZMod (p * p) × ZMod (p * p)\n    let H := (p : ℕ) • (⊤ : AddSubgroup G)\n    delta G H = (2 * p - 1) * (2 * p - 1) :=\n  sorry",
       "lineage_refs": [],
@@ -38721,7 +38721,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27961v1",
       "source_path": "http://arxiv.org/abs/2606.27961v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T19:43:09.952578+00:00",
       "title": "Same-Prime Square Plane Transversal Difference Conjecture"
@@ -39018,7 +39018,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "c9b3d24f",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39048,7 +39048,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28157v1",
       "source_path": "http://arxiv.org/abs/2606.28157v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T20:19:39.963436+00:00",
       "title": "Extremal Geometric Fractional Colorings of G₂₇ Have Exactly 23 Vertices"
@@ -39678,7 +39678,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a1200a14",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39706,10 +39706,54 @@
       "research_mode": "team",
       "source_exp_id": "2606.28989v1",
       "source_path": "http://arxiv.org/abs/2606.28989v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T01:47:41.126812+00:00",
       "title": "Polynomial bound for point counts determining zeta functions of abelian varieties"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.AC",
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any commutative ring R and matrix A ∈ R^{n×n}, if A is strongly 1-principled (all diagonal entries are 1 and all cyclic products of length > 1 vanish), then A^m is also strongly 1-principled for any m ≥ 1.",
+      "domain_bridges": [
+        "Matrix Theory",
+        "Ring Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2914",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Algebra.BigOperators.Group.Finset\n\nvariable {R : Type*} [CommRing R] {n : ℕ}\n\ndef CyclicProduct (A : Matrix (Fin n) (Fin n) R) {k : ℕ} (ι : Fin k ↪ Fin n) : R :=\n  ∏ j : Fin k, A (ι j) (ι (j + 1))\n\ndef Strongly1Principled (A : Matrix (Fin n) (Fin n) R) : Prop :=\n  (∀ i : Fin n, A i i = 1) ∧\n  (∀ k : ℕ, ∀ ι : Fin k ↪ Fin n, k > 1 → CyclicProduct A ι = 0)\n\ntheorem power_strongly_1_principled (A : Matrix (Fin n) (Fin n) R) (m : ℕ)\n  (hA : Strongly1Principled A) : Strongly1Principled (A ^ m) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Induction on m and combinatorial expansion of matrix power entries. A cyclic product of A^m expands into a sum of products of cyclic products of A. Since the total length is > 1, at least one factor in each term is a cyclic product of length > 1, which vanishes, causing the entire sum to vanish.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.28976v1",
+      "source_path": "http://arxiv.org/abs/2606.28976v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T02:10:27.678210+00:00",
+      "title": "Inheritance of strongly 1-principled property under matrix powers"
     },
     {
       "ambition_level": "grand_challenge",
@@ -39737,7 +39781,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2914",
+      "id": "fd_2915",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -39783,7 +39827,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2915",
+      "id": "fd_2916",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -39829,7 +39873,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2916",
+      "id": "fd_2917",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -39874,7 +39918,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2917",
+      "id": "fd_2918",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -39922,7 +39966,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2918",
+      "id": "fd_2919",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -39969,7 +40013,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2919",
+      "id": "fd_2920",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -40018,7 +40062,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2920",
+      "id": "fd_2921",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -40037,6 +40081,53 @@
       "thread_id": "",
       "timestamp": "2026-06-30T01:48:50.690554+00:00",
       "title": "Existence of the Large-N Master Field for Heat-Kernel Yang-Mills on Z^d at All Couplings"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "kahn1965",
+        "guysmith1956",
+        "sprague1935",
+        "grundy1939",
+        "conway1976"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The misère quotient for a two-step escalation game (m=2) is isomorphic to the order-six monoid ⟨a,b | a²=1, b³=b⟩ with loss set {a, b²}.",
+      "domain_bridges": [
+        "political science (escalation theory)",
+        "algebraic combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2922",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the monoid in Lean, compute the misère quotient via backward induction, and prove isomorphism through homomorphism properties and loss set verification",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29015v1",
+      "source_path": "http://arxiv.org/abs/2606.29015v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T02:13:20.548500+00:00",
+      "title": "Structure of the Misère Quotient for Two-Step Escalation"
     },
     {
       "ambition_level": "extension",
@@ -46443,11 +46534,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "8acf5433",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46460,7 +46551,7 @@
         "Computation"
       ],
       "id": "seed_372",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T02:13:26.732715+00:00",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46474,7 +46565,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432794+00:00",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"

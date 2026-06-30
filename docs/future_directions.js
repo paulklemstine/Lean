@@ -526,7 +526,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8acf5433",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
       "Cryptography",
@@ -537,7 +537,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1990,7 +1990,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "4aec8950",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
@@ -2000,7 +2000,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
@@ -2020,7 +2020,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Pairwise Reflection-Symmetric Latin Squares iff Power of Two"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3fd12f6e",
     "description": "For any odd prime $p$, let $G = (\\mathbb{Z}/p^2\\mathbb{Z})^2$ and $H = pG$. The transversal difference number $\\delta(G, H)$, which is the minimum size of the difference support $T - T$ over all transversals $T$ for $G/H$, is exactly $(2p - 1)^2$.",
     "domains": [
       "Pythagorean"
@@ -2029,7 +2029,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:43:09.952578+00:00",
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
@@ -2120,7 +2120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Point Continuum of Largest Matching Roots"
   },
   {
-    "consumed_by_exp_id": "c9b3d24f",
+    "consumed_by_exp_id": "",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domains": [
       "Geometry",
@@ -2130,7 +2130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G\u2082\u2087 Have Exactly 23 Vertices"
   },
@@ -2311,7 +2311,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function \u03c1(q)"
   },
   {
-    "consumed_by_exp_id": "a1200a14",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that $g$ point counts determine the zeta function of a $g$-dimensional abelian variety over $\\mathbb{F}_q$ if $q > Q(g)$, where $Q(g)$ is super-exponential. This conjecture asserts that a quadratic bound on $q$ suffices, similar to Kedlaya's bound for $2g$ counts. Specifically, there exists an absolute constant $C$ such that for any integer $g \\ge 1$ and prime power $q > Cg^2$, if $A$ and $B$ are abelian varieties of dimension $g$ over $\\mathbb{F}_q$ with equal point counts $\\#A(\\mathbb{F}_{q^i}) = \\#B(\\mathbb{F}_{q^i})$ for all $1 \\le i \\le g$, then $A$ and $B$ have the same zeta function.",
     "domains": [
       "Pythagorean"
@@ -2320,9 +2320,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28989v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T01:47:41.126812+00:00",
     "title": "Polynomial bound for point counts determining zeta functions of abelian varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any commutative ring R and matrix A \u2208 R^{n\u00d7n}, if A is strongly 1-principled (all diagonal entries are 1 and all cyclic products of length > 1 vanish), then A^m is also strongly 1-principled for any m \u2265 1.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2914",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28976v1",
+    "status": "available",
+    "timestamp": "2026-06-30T02:10:27.678210+00:00",
+    "title": "Inheritance of strongly 1-principled property under matrix powers"
   },
   {
     "consumed_by_exp_id": "",
@@ -2330,7 +2344,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2914",
+    "id": "fd_2915",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2344,7 +2358,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2915",
+    "id": "fd_2916",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2358,7 +2372,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2916",
+    "id": "fd_2917",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2372,7 +2386,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2917",
+    "id": "fd_2918",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2386,7 +2400,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2918",
+    "id": "fd_2919",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2401,7 +2415,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2919",
+    "id": "fd_2920",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2416,13 +2430,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2920",
+    "id": "fd_2921",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
     "status": "available",
     "timestamp": "2026-06-30T01:48:50.690554+00:00",
     "title": "Existence of the Large-N Master Field for Heat-Kernel Yang-Mills on Z^d at All Couplings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The mis\u00e8re quotient for a two-step escalation game (m=2) is isomorphic to the order-six monoid \u27e8a,b | a\u00b2=1, b\u00b3=b\u27e9 with loss set {a, b\u00b2}.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2922",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29015v1",
+    "status": "available",
+    "timestamp": "2026-06-30T02:13:20.548500+00:00",
+    "title": "Structure of the Mis\u00e8re Quotient for Two-Step Escalation"
   },
   {
     "consumed_by_exp_id": "",
