@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1ce6e294",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Alien Number Systems (Beyond Base-N)\n\nThis cycle built `MixedRadix`, a general variable-base positional system with a\nproved existence/uniqueness bijection `Fin bs.prod ≃ {valid",
-      "quality_score": 0.571318,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-26T16:12:15",
-      "title": "Deepening: Alien Number Systems: Beyond Base-N"
-    },
-    {
       "cycle_id": "be72639d",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nDerived from this cycle's findings on *exponential diameter contraction under\nDelaunay minicenter refinement* and the *approximate Carathéodory / Maurey*\ncatalog references. Each",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-06-30T16:55:02",
       "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
+    },
+    {
+      "cycle_id": "d5c197ae",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Probabilistic Birch–Swinnerton-Dyer\n\nThis cycle established two probabilistic pillars of the Birch–Swinnerton-Dyer\ncircle: the Sato–Tate measure `(2/π) sin²θ dθ` is a genuine pro",
+      "quality_score": 0.4285765151515152,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-30T18:00:55",
+      "title": "Birch and Swinnerton-Dyer Conjecture"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76576
     }
   ],
-  "last_updated": "2026-06-30T16:55:02",
+  "last_updated": "2026-06-30T18:00:55",
   "open_questions": [
     {
       "context": "",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "5bd61b22",
-        "quality": 0.5515805555555555,
-        "theorems": 227,
-        "title": "Uniqueness of Minimal Median Decompositions for Graphs"
-      },
-      {
         "cycle_id": "8892ab13",
         "quality": 0.43946266666666667,
         "theorems": 3,
@@ -3823,6 +3817,12 @@
         "quality": 0.73856,
         "theorems": 9,
         "title": "Proof Complexity: Resolution and Cutting Planes"
+      },
+      {
+        "cycle_id": "d5c197ae",
+        "quality": 0.4285765151515152,
+        "theorems": 7,
+        "title": "Birch and Swinnerton-Dyer Conjecture"
       }
     ],
     "Pythagorean": [
