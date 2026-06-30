@@ -422,7 +422,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Collatz Conjecture"
   },
   {
-    "consumed_by_exp_id": "ce89ece2",
+    "consumed_by_exp_id": "",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "Algebra"
@@ -431,7 +431,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "fe28c0d9",
+    "consumed_by_exp_id": "",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -1159,7 +1159,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
   },
   {
-    "consumed_by_exp_id": "98d48aca",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q\u00b2+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domains": [
       "Pythagorean",
@@ -1169,7 +1169,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -1595,7 +1595,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Palindromicity and Non-Negativity of Principal Specializations of One-Row Schur Q-Functions"
   },
   {
-    "consumed_by_exp_id": "43fcf247",
+    "consumed_by_exp_id": "",
     "description": "The number of 2-balanced p-regular partitions in any block of p-weight w for an odd prime p is precisely the binomial coefficient C(w + (p-3)/2, w). A partition is 2-balanced p-regular if it is p-regular and every hook of length divisible by p has an even arm length.",
     "domains": [
       "Pythagorean",
@@ -1605,7 +1605,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T10:45:11.578131+00:00",
     "title": "Enumeration of 2-balanced p-regular partitions in blocks"
   },
@@ -2135,7 +2135,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Point Continuum of Largest Matching Roots"
   },
   {
-    "consumed_by_exp_id": "c9b3d24f",
+    "consumed_by_exp_id": "",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domains": [
       "Geometry",
@@ -2145,7 +2145,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G\u2082\u2087 Have Exactly 23 Vertices"
   },
@@ -2298,11 +2298,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Two regular maniplexes of rank n \u2265 3 are isomorphic if and only if their 1-skeleton graphs are isomorphic and their 1-coskeleton graphs are isomorphic. The forward direction is immediate since maniplex isomorphisms induce graph isomorphisms on both the 1-skeleton (vertex-edge graph) and 1-coskeleton (facet-ridge graph). The substantive claim is the converse: for regular maniplexes, the pair of boundary graphs uniquely determines the internal flag structure, because regularity (the automorphism group acts regularly on flags) constrains the rank-1-through-rank-(n-2) incidences to be recoverable from how the boundary graphs interlock. This conjecture is motivated by the database interoperability problem: if true, the 1-skeleton and 1-coskeleton suffice as complete identifying invariants for regular maniplexes, eliminating the need to store full flag graphs for classification.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2911",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27987v1",
+    "status": "available",
+    "timestamp": "2026-06-30T00:33:20.590984+00:00",
+    "title": "Skeleton-Coskeleton Determination for Regular Maniplexes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2911",
+    "id": "fd_2912",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2316,7 +2331,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2912",
+    "id": "fd_2913",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2330,7 +2345,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2913",
+    "id": "fd_2914",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2344,13 +2359,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2914",
+    "id": "fd_2915",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
     "status": "available",
     "timestamp": "2026-06-30T00:14:02.577213+00:00",
     "title": "Erd\u0151s n\u00b2/25 Max-Cut Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For each dimension d \u2265 1, the Young conjugation involution \u03c3_Y on the natural extension (\u03a9_d, T\u0303_d, \u03bc_d) of the d-dimensional triangle map\u2014induced by transposition of Young diagrams (swapping parts and multiplicities in the integer partition interpretation)\u2014is a \u03bc_d-measure-preserving involution that conjugates T\u0303_d to its inverse: \u03c3_Y \u2218 T\u0303_d \u2218 \u03c3_Y = T\u0303_d^{-1} holds \u03bc_d-almost everywhere. This time-reversal property explains the four-fold decomposition of \u03a9_d into subdomains of equal invariant measure documented in the source paper: the Klein four-group generated by \u03c3_Y and the involution induced by the matrix transpose symmetry of the triangle map partition matrices yields four fundamental domains \u03a9_d^(\u03c3) for \u03c3 \u2208 {id, \u03c3_Y, \u03c3_T, \u03c3_Y\u2218\u03c3_T}, each of measure \u03bc_d(\u03a9_d)/4. The result is non-trivial even for d = 1 (Farey/Gauss map case).",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2916",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28014v1",
+    "status": "available",
+    "timestamp": "2026-06-30T00:35:19.561198+00:00",
+    "title": "Young Conjugation is a Time-Reversal Symmetry of Triangle Map Natural Extensions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2641,7 +2670,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Category-Theoretic Neural Architectures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "230b77ce",
     "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
     "domains": [
       "MachineLearning",
@@ -2651,7 +2680,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.385376+00:00",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
@@ -3150,7 +3179,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },
   {
-    "consumed_by_exp_id": "2fac4f85",
+    "consumed_by_exp_id": "",
     "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
     "domains": [
       "Bridges",
@@ -3160,12 +3189,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.050227+00:00",
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "5f4fe8b8",
+    "consumed_by_exp_id": "",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domains": [
       "Bridges",
@@ -3175,7 +3204,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },

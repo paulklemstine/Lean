@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "580d1f18",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Certified Novelty Detection for Theorem Provers\n\nDerived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,\n`FibonacciNoveltyStream.lean`).  This cycle establishe",
-      "quality_score": 0.73672,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-06-26T19:55:31",
-      "title": "Certified Novelty Detection for Theorem Provers"
-    },
-    {
       "cycle_id": "7b228cc3",
       "domain": "Applications",
       "key_insight": "# Future Directions — Differential Galois Theory for EML ODEs\n\nDerived from this cycle's results in `EMLDifferentialGalois.lean`,\n`EMLKovacicSharp.lean`, and `EMLWronskianGalois.lean` (which build on",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-06-29T22:36:11",
       "title": "Proof Complexity: Resolution and Cutting Planes"
+    },
+    {
+      "cycle_id": "99e4c1c9",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Structured Coupon Collection on Finite Geometries\n\nThese conjectures grow out of a single discovery: when coupon batches are drawn\nas the lines of a projective plane rather than",
+      "quality_score": 0.77624,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-30T00:32:14",
+      "title": "Projective Plane Coupon Collection Slowness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d4e980c4",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's formalization (`WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`). Each conjecture is bold, fals",
-      "quality_score": 0.713,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-26T13:13:27",
-      "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
-    },
     {
       "cycle_id": "f014f8e3",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-29T23:31:43",
       "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
+    },
+    {
+      "cycle_id": "99e4c1c9",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Structured Coupon Collection on Finite Geometries\n\nThese conjectures grow out of a single discovery: when coupon batches are drawn\nas the lines of a projective plane rather than",
+      "quality_score": 0.77624,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-30T00:32:14",
+      "title": "Projective Plane Coupon Collection Slowness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ba81674a",
-      "domain": "Novelty",
-      "name": "strongChromaticIndex_riordan_complete_bipartite",
-      "quality": 0.79596
-    },
-    {
-      "cycle_id": "ba81674a",
-      "domain": "Novelty",
-      "name": "strongChromaticIndex_riordan_binomial",
-      "quality": 0.79596
-    },
-    {
-      "cycle_id": "2f2206c6",
-      "domain": "Novelty",
-      "name": "leftDvd_refl",
-      "quality": 0.71552
-    },
     {
       "cycle_id": "2f2206c6",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "not_derivable_nil",
       "quality": 0.73856
+    },
+    {
+      "cycle_id": "99e4c1c9",
+      "domain": "MachineLearning",
+      "name": "remains",
+      "quality": 0.77624
+    },
+    {
+      "cycle_id": "99e4c1c9",
+      "domain": "MachineLearning",
+      "name": "Eplane_value",
+      "quality": 0.77624
+    },
+    {
+      "cycle_id": "99e4c1c9",
+      "domain": "MachineLearning",
+      "name": "Eunif_value",
+      "quality": 0.77624
     }
   ],
-  "last_updated": "2026-06-29T23:31:43",
+  "last_updated": "2026-06-30T00:32:14",
   "open_questions": [
     {
       "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "bf991533",
-        "quality": 0.5450164281345566,
-        "theorems": 469,
-        "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-      },
-      {
         "cycle_id": "2683755a",
         "quality": 0.5860000000000001,
         "theorems": 14,
@@ -3575,6 +3569,12 @@
         "quality": 0.75084,
         "theorems": 9,
         "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
+      },
+      {
+        "cycle_id": "99e4c1c9",
+        "quality": 0.77624,
+        "theorems": 16,
+        "title": "Projective Plane Coupon Collection Slowness"
       }
     ],
     "Novelty": [
