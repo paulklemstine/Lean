@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3131feed",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n ≤ 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domain_bridges": [],
     "domains": [
@@ -15,14 +15,14 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432569+00:00",
     "title": "Goldbach Verification Framework"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5c197ae",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -34,7 +34,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -1054,7 +1054,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b897e106",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1067,7 +1067,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -4347,7 +4347,7 @@
       "37P30",
       "11S20"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd49223d",
     "description": "For a finite extension K/Q_p, a monic polynomial f ∈ O_K[X] of degree ≥ 2 satisfying f'(X) ∈ m_K·O_K[X] (equivalently f̄ ∈ k[X^p]), and a compatible inverse branch (t_n) with t_0 ∈ O_K and f(t_{n+1}) = t_n, define K_n = K(t_n), E_n = K_n ∩ K^{ur}, and e_n = [K_n : E_n]. If e_n > 1 for some n, then e_n → ∞ as n → ∞. This is the key intermediate result in the proof of the paper's main theorem (Theorem 1.2), establishing that iterated polynomial towers under the purely inseparable reduction condition exhibit a ramification dichotomy: either the tower is entirely unramified over the maximal unramified subextension, or the ramification indices grow without bound.",
     "domain_bridges": [
       "Valuation theory → Local field extensions",
@@ -4363,7 +4363,7 @@
     "proof_strategy": "Construct the tower K_n inductively. The condition f̄ ∈ k[X^p] ensures the reduction of f factors through Frobenius. When ramification first appears at level n₀ (i.e., e_{n₀} > 1), apply a uniform valuation estimate: since f'(X) ∈ m_K·O_K[X], the Taylor expansion gives v_K(f(t_{n+1}) - f(s)) ≥ v_K(t_{n+1} - s) + 1 for suitable s, forcing successive roots to have strictly growing valuation discrepancies. This recursive lower bound on v_K(t_{n+1} - t_n) propagates through the tower, showing that each ramified step compounds the ramification index over the maximal unramified subfield. The reduction step (subtracting unramified residue lifts) ensures we may assume positive-valuation conditions at the ramified tail, after which the uniform estimate forces e_n to be unbounded.",
     "research_mode": "team",
     "source_exp_id": "2606.29310v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T09:44:57.818915+00:00",
     "title": "Unbounded Ramification Indices in Iterated p-Adic Polynomial Towers"
   },
@@ -4786,7 +4786,7 @@
       "Siegel modular forms",
       "Arthur parameters"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07b22854",
     "description": "Let k=3 and j>=2 be an even integer, and let f be a primitive elliptic cusp form of weight j+4 for SL_2(Z). For any prime ideal p of the Hecke field Q(f) dividing the algebraic critical value L^alg(j+3, f), there exists a Siegel cusp eigenform F of weight det^3 Sym^j for Sp_2 and a prime ideal P above p such that the spinor L-polynomial congruence L_ell(X, F, Spin) = L_ell(X, f)(1 - ell X)(1 - ell^{j+2} X) mod P holds for all primes ell.",
     "domain_bridges": [
       "Automorphic Forms",
@@ -4803,7 +4803,7 @@
     "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T04:09:54.071727+00:00",
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
@@ -5061,7 +5061,7 @@
       "Cayley graphs of abelian groups",
       "GF(2) linear algebra"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65ebb6ab",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling ℓ: V(G) → (Z/2Z)^(t − rank(A)) satisfies d_G(u,v) ≥ d_H(ℓ(u), ℓ(v)) for all u,v ∈ V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t − rank(A)). That is, the labeling never stretches distances—it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domain_bridges": [
       "graph_metrics",
@@ -5078,7 +5078,7 @@
     "proof_strategy": "Show that each edge of G maps to an edge of H under the quotient labeling (by construction of the labeling from the edge partition), so every path in G maps to a path of equal or shorter length in H. The key step is proving that the GF(2) quotient construction preserves adjacency: if uv ∈ E(G) and uv lies in partition class i, then ℓ(u) and ℓ(v) differ in exactly the coordinate corresponding to the image of class i in the quotient. The non-stretching then follows by taking d_G(u,v) as the infimum over all path lengths, which bound the Hamming distance of the labels from below.",
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
@@ -6794,7 +6794,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a76cdb0",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -6807,7 +6807,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -6874,7 +6874,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "733eb681",
     "description": "Formalize the p-adic Langlands correspondence for GL₂(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
     "domain_bridges": [],
     "domains": [
@@ -6887,7 +6887,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.128786+00:00",
     "title": "p-adic Langlands for GL₂(Q_p)"
   },
