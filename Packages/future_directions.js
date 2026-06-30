@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71da124a",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -1960,7 +1960,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
   {
-    "consumed_by_exp_id": "9364ff3a",
+    "consumed_by_exp_id": "",
     "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
     "domains": [
       "Algebra",
@@ -1970,7 +1970,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -2399,11 +2399,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every discrete d-pseudomanifold (for d \u2265 1) on a finite vertex set has at least 2(d+1) vertices, as established in the paper. This provides a foundational combinatorial bound for these manifold-like graph structures.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2919",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29753v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:29:16.518753+00:00",
+    "title": "Minimum Vertex Bound for Discrete Pseudomanifolds"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2919",
+    "id": "fd_2920",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2417,7 +2432,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2920",
+    "id": "fd_2921",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2431,7 +2446,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2921",
+    "id": "fd_2922",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2445,7 +2460,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2459,7 +2474,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2474,7 +2489,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2489,7 +2504,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2503,7 +2518,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2517,7 +2532,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2531,7 +2546,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2546,13 +2561,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
     "status": "available",
     "timestamp": "2026-06-30T04:09:54.071727+00:00",
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any p-adic field F and any irreducible smooth admissible generic representation \u03c0 of GL(n, F), the Bessel distribution B_{\u2113\u2081,\u2113\u2082} associated to Whittaker functionals is regular: there exists a unique smooth function j defined on a dense open subset of GL(n, F), locally integrable on GL(n, F), such that B_{\u2113\u2081,\u2113\u2082}(f) = \u222b_{GL(n,F)} j(g)f(g)dg for all Schwartz functions f. This follows from the paper's main result (regularity follows from nontrivial bounds on Kloosterman sums for all Levi subgroups) combined with the known Deligne-Weil bounds on Kloosterman sums for all Levi subgroups of GL(n), which are products of smaller GL(m)'s.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2931",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29852v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:29:53.482836+00:00",
+    "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
   },
   {
     "consumed_by_exp_id": "",

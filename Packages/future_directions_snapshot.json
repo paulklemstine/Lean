@@ -620,7 +620,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71da124a",
     "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -633,7 +633,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -3158,7 +3158,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "9364ff3a",
+    "consumed_by_exp_id": "",
     "description": "For any integer t ≥ 2 and any tK3-free graph G of order n ≥ 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}, with equality if and only if G is isomorphic to this extremal graph.",
     "domain_bridges": [
       "Linear Algebra",
@@ -3174,7 +3174,7 @@
     "proof_strategy": "Apply the stability method in extremal graph theory combined with spectral techniques. Specifically, analyze the eigenvector corresponding to the largest eigenvalue of the signless Laplacian, bound the maximum degree, and iteratively remove vertex-disjoint triangles to reduce the problem to smaller subgraphs, ultimately characterizing the extremal structure as the join of a clique and a balanced complete bipartite graph.",
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -3978,6 +3978,32 @@
     "title": "Simultaneous Invariant Strong Embedding and Edge-Coloring Realization"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.GT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every discrete d-pseudomanifold (for d ≥ 1) on a finite vertex set has at least 2(d+1) vertices, as established in the paper. This provides a foundational combinatorial bound for these manifold-like graph structures.",
+    "domain_bridges": [
+      "graph_theory",
+      "topology"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2919",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define discrete d-pseudomanifolds inductively on d: for d=1, it is an n-cycle (n ≥ 4); for d>1, the induced subgraph on the neighborhood of every vertex must be a discrete (d-1)-pseudomanifold. Prove the vertex bound by induction on d, utilizing the base case of cycles and the fact that the neighborhood condition enforces a minimum degree and structural constraints that bound the total number of vertices from below.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29753v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:29:16.518753+00:00",
+    "title": "Minimum Vertex Bound for Discrete Pseudomanifolds"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO/2501.12018",
@@ -3994,7 +4020,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2919",
+    "id": "fd_2920",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
@@ -4021,7 +4047,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2920",
+    "id": "fd_2921",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
@@ -4048,7 +4074,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2921",
+    "id": "fd_2922",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -4074,7 +4100,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -4103,7 +4129,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -4131,7 +4157,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
@@ -4161,7 +4187,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes the rooted heat-kernel master loop equation and proves convergence of the order-truncated trajectory expansion at strong coupling (T > T₀(d)). To extend to all T > 0: (1) Develop uniform-in-T estimates for the trajectory expansion coefficients, leveraging the universal finite-N duality formulas and refined heat-kernel asymptotics that remain valid for small T. (2) Prove convergence of the rooted trajectory expansion for all T > 0 by establishing tighter control on the combinatorial growth of decorated loop observables—specifically, show the expansion is absolutely convergent with radius independent of T. (3) For the weak-coupling regime (small T), exploit the Gaussian limit T → 0 where the theory reduces to a lattice Gaussian free field, and use this as the base of an expansion valid for all T. (4) Bridge strong and weak coupling using monotonicity of Wilson loop expectations in T and real-analyticity of heat-kernel coefficients, establishing a single master field",
@@ -4189,7 +4215,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the monoid in Lean, compute the misère quotient via backward induction, and prove isomorphism through homomorphism properties and loss set verification",
@@ -4218,7 +4244,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the Weyl differencing and van der Corput B-process arguments from the paper with tighter control on off-diagonal contributions. The key improvement would come from replacing power-saving arguments with logarithmic precision via careful saddle-point analysis of the complete exponential sums arising from Poisson summation applied to $e(h\\sqrt{a})$ over dyadic subintervals of $[n/2, n]$. One should track how the exponent pairs obtained from the $B^2$-process interact with the moment sum over $h$, exploiting cancellation more finely than the $n^\\varepsilon$-losing bound permits.",
@@ -4242,7 +4268,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive construction combined with probabilistic extremal arguments",
@@ -4271,7 +4297,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
@@ -4280,6 +4306,34 @@
     "status": "available",
     "timestamp": "2026-06-30T04:09:54.071727+00:00",
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "math.RT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any p-adic field F and any irreducible smooth admissible generic representation π of GL(n, F), the Bessel distribution B_{ℓ₁,ℓ₂} associated to Whittaker functionals is regular: there exists a unique smooth function j defined on a dense open subset of GL(n, F), locally integrable on GL(n, F), such that B_{ℓ₁,ℓ₂}(f) = ∫_{GL(n,F)} j(g)f(g)dg for all Schwartz functions f. This follows from the paper's main result (regularity follows from nontrivial bounds on Kloosterman sums for all Levi subgroups) combined with the known Deligne-Weil bounds on Kloosterman sums for all Levi subgroups of GL(n), which are products of smaller GL(m)'s.",
+    "domain_bridges": [
+      "p-adic harmonic analysis",
+      "Kloosterman sums and exponential sums",
+      "germ expansions of orbital integrals",
+      "theory of spherical varieties"
+    ],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2931",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply the paper's conditional regularity theorem (Bessel distributions are regular provided Kloosterman sums for all Levi subgroups have nontrivial bounds) to GL(n). Since every Levi subgroup of GL(n) is isomorphic to a product ∏ GL(mᵢ) with ∑ mᵢ = n, the corresponding Kloosterman sums admit nontrivial bounds by Deligne's estimates from the Riemann hypothesis for varieties over finite fields (Weil II), yielding unconditional regularity for GL(n). The key intermediate step is formalizing the germ expansion of Kloosterman integrals and verifying the nontrivial bound condition for all Levi subgroups.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29852v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:29:53.482836+00:00",
+    "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
   },
   {
     "ambition_level": "extension",

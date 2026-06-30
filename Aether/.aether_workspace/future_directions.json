@@ -38503,7 +38503,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "9364ff3a",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38532,7 +38532,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28121v1",
       "source_path": "http://arxiv.org/abs/2606.28121v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T19:42:40.348725+00:00",
       "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
@@ -39938,6 +39938,51 @@
       "title": "Simultaneous Invariant Strong Embedding and Edge-Coloring Realization"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.GT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every discrete d-pseudomanifold (for d ≥ 1) on a finite vertex set has at least 2(d+1) vertices, as established in the paper. This provides a foundational combinatorial bound for these manifold-like graph structures.",
+      "domain_bridges": [
+        "graph_theory",
+        "topology"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2919",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem min_vertices_discrete_pseudomanifold {V : Type*} [Fintype V] \n    {d : ℕ} (M : SimpleGraph V) (hd : 1 ≤ d) \n    (hM : M.IsDiscretePseudomanifold d) :\n    Fintype.card V ≥ 2 * (d + 1) :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define discrete d-pseudomanifolds inductively on d: for d=1, it is an n-cycle (n ≥ 4); for d>1, the induced subgraph on the neighborhood of every vertex must be a discrete (d-1)-pseudomanifold. Prove the vertex bound by induction on d, utilizing the base case of cycles and the fact that the neighborhood condition enforces a minimum degree and structural constraints that bound the total number of vertices from below.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29753v1",
+      "source_path": "http://arxiv.org/abs/2606.29753v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T04:29:16.518753+00:00",
+      "title": "Minimum Vertex Bound for Discrete Pseudomanifolds"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -39963,7 +40008,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2919",
+      "id": "fd_2920",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -40009,7 +40054,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2920",
+      "id": "fd_2921",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -40055,7 +40100,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2921",
+      "id": "fd_2922",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -40100,7 +40145,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2922",
+      "id": "fd_2923",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -40148,7 +40193,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2923",
+      "id": "fd_2924",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -40195,7 +40240,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2924",
+      "id": "fd_2925",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -40244,7 +40289,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2925",
+      "id": "fd_2926",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -40291,7 +40336,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2926",
+      "id": "fd_2927",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
@@ -40339,7 +40384,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2927",
+      "id": "fd_2928",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_second_moment_sqroot_expsum (δ : ℝ) (hδ : 0 < δ) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ, 2 ≤ n → ∀ H : ℕ,\n    ⌈(n : ℝ)^(1/2 + δ)⌉₊ ≤ H →\n    (∑ h in Finset.Icc ⌈H/2⌉₊ H,\n      (∑ a in Finset.Icc ⌈n/2⌉₊ n,\n        Complex.exp (2 * Real.pi * Complex.I * (h : ℂ) * Real.sqrt (a : ℝ)))\n        .norm_sq)\n    ≤ C * (H : ℝ) * (n : ℝ) * (Real.log (n : ℝ))^c := by\n  sorry",
@@ -40382,7 +40427,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2928",
+      "id": "fd_2929",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Basic diagram-filling and counting techniques over finite graphs",
@@ -40430,7 +40475,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2929",
+      "id": "fd_2930",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem harder_conjecture_k_equals_3 (j : ℕ) (hj : j ≥ 2 ∧ Even j) (f : PrimitiveEllipticCuspForm (j + 4)) (p : Ideal (HeckeField f)) (hp : p ∣ L_alg (j + 3) f) : ∃ (F : SiegelCuspEigenForm (det^3 * Sym^j)) (P : Ideal (HeckeField F)) (hP : P ∣ p), ∀ ℓ : ℕ, ℓ.Prime → SpinLPoly ℓ F ≡ LPoly ℓ f * (1 - (ℓ : ℤ)^1 * X) * (1 - (ℓ : ℤ)^(j + 2) * X) [MOD P] := by sorry",
@@ -40449,6 +40494,53 @@
       "thread_id": "",
       "timestamp": "2026-06-30T04:09:54.071727+00:00",
       "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
+        "math.RT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any p-adic field F and any irreducible smooth admissible generic representation π of GL(n, F), the Bessel distribution B_{ℓ₁,ℓ₂} associated to Whittaker functionals is regular: there exists a unique smooth function j defined on a dense open subset of GL(n, F), locally integrable on GL(n, F), such that B_{ℓ₁,ℓ₂}(f) = ∫_{GL(n,F)} j(g)f(g)dg for all Schwartz functions f. This follows from the paper's main result (regularity follows from nontrivial bounds on Kloosterman sums for all Levi subgroups) combined with the known Deligne-Weil bounds on Kloosterman sums for all Levi subgroups of GL(n), which are products of smaller GL(m)'s.",
+      "domain_bridges": [
+        "p-adic harmonic analysis",
+        "Kloosterman sums and exponential sums",
+        "germ expansions of orbital integrals",
+        "theory of spherical varieties"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "id": "fd_2931",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem bessel_distribution_regular_GLn {F : Type*} [PAdicField F] {n : ℕ} [NeZero n] (π : IrreducibleSmoothAdmissibleRep (GL n F)) (hπ : IsGeneric π) (ℓ₁ : WhittakerFunctional π) (ℓ₂ : WhittakerFunctional π.contrargredient) : IsRegular (besselDistribution ℓ₁ ℓ₂) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Apply the paper's conditional regularity theorem (Bessel distributions are regular provided Kloosterman sums for all Levi subgroups have nontrivial bounds) to GL(n). Since every Levi subgroup of GL(n) is isomorphic to a product ∏ GL(mᵢ) with ∑ mᵢ = n, the corresponding Kloosterman sums admit nontrivial bounds by Deligne's estimates from the Riemann hypothesis for varieties over finite fields (Weil II), yielding unconditional regularity for GL(n). The key intermediate step is formalizing the germ expansion of Kloosterman integrals and verifying the nontrivial bound condition for all Levi subgroups.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29852v1",
+      "source_path": "http://arxiv.org/abs/2606.29852v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T04:29:53.482836+00:00",
+      "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
     },
     {
       "ambition_level": "extension",
@@ -44784,11 +44876,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "71da124a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -44800,7 +44892,7 @@
         "Computation"
       ],
       "id": "seed_236",
-      "last_attempt_time": "2026-06-11T14:47:56.035256+00:00",
+      "last_attempt_time": "2026-06-30T04:29:59.087158+00:00",
       "last_reviewed_at": "2026-06-09T15:03:10.049285+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -44814,7 +44906,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:18.020118+00:00",
       "title": "Reverse Mathematics: Ramsey's Theorem"
