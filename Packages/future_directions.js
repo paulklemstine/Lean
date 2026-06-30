@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "fe28c0d9",
+    "consumed_by_exp_id": "",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -1405,21 +1405,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pairwise Reflection-Symmetric Latin Squares Exist Exactly for Powers of Two"
   },
   {
-    "consumed_by_exp_id": "3dcc6c2b",
-    "description": "The paper proves that for $t \\geq 2$ and $n \\geq 28t-17$, the unique $tK_3$-free graph of order $n$ maximizing the signless Laplacian spectral radius is $K_{t-1} \\vee K_{\\lfloor (n-t+1)/2 \\rfloor, \\lceil (n-t+1)/2 \\rceil}$. For $t=2$, this holds for all $n \\geq 6 = 3 \\cdot 2$. We conjecture that the bound $28t-17$ can be universally improved to $3t$ for all $t \\geq 2$.",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_2844",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28121v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T06:44:32.889471+00:00",
-    "title": "Improved Bound for Signless Laplacian Spectral Radius of $tK_3$-Free Graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "This paper proposes a computational framework to determine homology groups of simplicial complexes through discrete Morse theory and gradient vector fields, offering a formalizable path for practical applications.",
     "domains": [
@@ -2005,7 +1990,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4aec8950",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
@@ -2015,7 +2000,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
@@ -2049,7 +2034,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c47f9e0e",
     "description": "Let X be a simplicial complex covered by a finite collection of subcomplexes A_1, ..., A_k. For each non-empty subset S of {1, ..., k}, let A_S denote the intersection of the subcomplexes indexed by S, equipped with a gradient vector field V_S. There exists a chain complex (the combinatorial nerve complex) whose chain groups are direct sums of the Morse chain groups of (A_S, V_S), and which is quasi-isomorphic to the simplicial chain complex of X. Consequently, the homology of X can be computed explicitly from the combinatorial data of the gradient vector fields on the subcomplexes and their intersections.",
     "domains": [
       "Algebra",
@@ -2059,7 +2044,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:02:46.148570+00:00",
     "title": "Effective Combinatorial Nerve Theorem"
   },
@@ -2313,29 +2298,43 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
+    "description": "Let \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n \u2208 {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n \u2208 {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domains": [
-      "Geometry"
+      "Bridges"
     ],
     "id": "fd_2912",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.28157v1",
+    "source_exp_id": "2606.27902v1",
     "status": "available",
-    "timestamp": "2026-06-29T21:48:36.541820+00:00",
-    "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
+    "timestamp": "2026-06-30T00:52:54.836226+00:00",
+    "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function \u03c1(q)"
   },
   {
     "consumed_by_exp_id": "a1200a14",
-    "description": "Every real number greater than or equal to \u221a(\u221a5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number \u03b3 \u2265 \u221a(\u221a5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to \u03b3.",
+    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
-      "Bridges"
+      "Geometry"
     ],
     "id": "fd_2913",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.28162v1",
+    "source_exp_id": "2606.28157v1",
     "status": "in_progress",
+    "timestamp": "2026-06-29T21:48:36.541820+00:00",
+    "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every real number greater than or equal to \u221a(\u221a5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number \u03b3 \u2265 \u221a(\u221a5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to \u03b3.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2914",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28162v1",
+    "status": "available",
     "timestamp": "2026-06-29T23:08:33.027778+00:00",
     "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
   },
@@ -2345,7 +2344,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2914",
+    "id": "fd_2915",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2359,7 +2358,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2915",
+    "id": "fd_2916",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2373,13 +2372,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2916",
+    "id": "fd_2917",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
     "status": "available",
     "timestamp": "2026-06-30T00:35:19.561198+00:00",
     "title": "Young Conjugation is a Time-Reversal Symmetry of Triangle Map Natural Extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the inhomogeneous random graph with preferential attachment kernel \u03ba_{\u03b2,\u03b3}(x,y) = \u03b2(x \u2227 y)^{-\u03b3}(x \u2228 y)^{\u03b3-1} where \u03b3 \u2208 (1/2, 1) (equivalently, degree exponent \u03c4 = 1 + 1/\u03b3 \u2208 (2,3)), the rescaled ordered component sizes in the critical percolation window converge to a multiplicative coalescent. Specifically, parametrizing p_n(t) = \u03b2 \u00b7 n^{(\u03c4-3)/(2\u03c4-2)} \u00b7 (1 + t \u00b7 n^{-(3-\u03c4)/(2(\u03c4-1))}) for t \u2208 \u211d, the process (n^{-1/2} \u00b7 C_{(k)}(G_n(p_n(t))))_{k \u2265 1, t \u2208 \u211d} converges in distribution in the Skorokhod topology on \u2113\u00b2\u2193 \u00d7 \u211d to a multiplicative coalescent with merger rate \u03ba_{\u03b2,\u03b3}(x_i, x_j) between components carrying marks x_i, x_j, where the initial mark distribution is the Norros\u2013Reittu intensity of the associated subcritical graph. This extends Aldous' multiplicative coalescent limit for Erd\u0151s\u2013R\u00e9nyi graphs and the Bhamidi\u2013van der Hofstad\u2013Hooghiemstra dynamic scaling results for finite-variance inhomogeneous random graphs to the infinite-variance preferential attachment setting, and provides a process-level refinement of the static convergence in distribution established in the paper.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_2918",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27844v1",
+    "status": "available",
+    "timestamp": "2026-06-30T00:54:24.854529+00:00",
+    "title": "Multiplicative Coalescent Scaling Limit for Critical Percolation on Preferential Attachment Graphs with Infinite Variance Degrees"
   },
   {
     "consumed_by_exp_id": "",

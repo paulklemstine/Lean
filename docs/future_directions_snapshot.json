@@ -620,7 +620,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fe28c0d9",
+    "consumed_by_exp_id": "",
     "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -633,7 +633,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -2126,35 +2126,6 @@
     "title": "Pairwise Reflection-Symmetric Latin Squares Exist Exactly for Powers of Two"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Zhang2024_2K3",
-      "ZhangLei2024_2K3",
-      "ZhangWang2024_3K3",
-      "NiWangKang2023_tKr"
-    ],
-    "consumed_by_exp_id": "3dcc6c2b",
-    "description": "The paper proves that for $t \\geq 2$ and $n \\geq 28t-17$, the unique $tK_3$-free graph of order $n$ maximizing the signless Laplacian spectral radius is $K_{t-1} \\vee K_{\\lfloor (n-t+1)/2 \\rfloor, \\lceil (n-t+1)/2 \\rceil}$. For $t=2$, this holds for all $n \\geq 6 = 3 \\cdot 2$. We conjecture that the bound $28t-17$ can be universally improved to $3t$ for all $t \\geq 2$.",
-    "domain_bridges": [
-      "spectral_graph_theory",
-      "extremal_graph_theory",
-      "turán_type_problems"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_2844",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Extend the stability method used in the paper by analyzing the structure of near-extremal graphs for smaller $n$. Leverage the known exact result for $t=2$ ($n \\geq 6$) as a base case. Use spectral perturbation arguments to show that any deviation from the conjectured extremal graph reduces the spectral radius when $n \\geq 3t$. The key is to tighten the eigenvalue interlacing bounds and degree sequence estimates that currently require $n \\geq 28t-17$.",
-    "research_mode": "team",
-    "source_exp_id": "2606.28121v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T06:44:32.889471+00:00",
-    "title": "Improved Bound for Signless Laplacian Spectral Radius of $tK_3$-Free Graphs"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Borsuk1948"
@@ -3244,7 +3215,7 @@
       "finite_geometry",
       "coupon_collector"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4aec8950",
     "description": "For every prime power q ≥ 2, the expected time to collect all n = q² + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum–Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domain_bridges": [
       "finite_geometry_to_probability",
@@ -3261,7 +3232,7 @@
     "proof_strategy": "Use the 2-(q²+q+1, q+1, 1) design properties of projective planes to derive exact inclusion-exclusion formulas for the expected coverage time. The key structural insight is that in a projective plane, any two points lie on exactly one common line, creating systematic 'clustering' that delays coverage. Compare the resulting expression term-by-term against the full model's expected time using the fact that the full model minimizes certain overlap statistics while the projective plane maximizes them. A potential approach leverages the eigenvalue structure of the incidence matrix to bound the probability that k specific coupons remain uncollected after t draws.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
@@ -3326,7 +3297,7 @@
       "math.AT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c47f9e0e",
     "description": "Let X be a simplicial complex covered by a finite collection of subcomplexes A_1, ..., A_k. For each non-empty subset S of {1, ..., k}, let A_S denote the intersection of the subcomplexes indexed by S, equipped with a gradient vector field V_S. There exists a chain complex (the combinatorial nerve complex) whose chain groups are direct sums of the Morse chain groups of (A_S, V_S), and which is quasi-isomorphic to the simplicial chain complex of X. Consequently, the homology of X can be computed explicitly from the combinatorial data of the gradient vector fields on the subcomplexes and their intersections.",
     "domain_bridges": [
       "Simplicial Complexes",
@@ -3343,7 +3314,7 @@
     "proof_strategy": "Define simplicial complexes, covers, and discrete gradient vector fields. Construct the Morse chain complex for each intersection A_S. Define the combinatorial nerve complex as a total complex of a bicomplex or filtered complex whose terms are direct sums of the Morse complexes of the intersections. Prove the quasi-isomorphism by constructing explicit chain maps and homotopies using the gradient flows between the combinatorial nerve complex and the simplicial chain complex of X, ensuring the approach remains purely combinatorial without geometric realization.",
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:02:46.148570+00:00",
     "title": "Effective Combinatorial Nerve Theorem"
   },
@@ -3824,11 +3795,40 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.NT",
+      "mock_theta_functions",
+      "Ramanujan",
+      "Rademacher_expansions",
+      "q_series"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let ρ(q) = Σ_{m≥0} q^{2m(m+1)} / Π_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = Σ_{n≥0} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n ≥ 0: r(3n) > 0, r(3n+1) ≤ 0, and r(3n+2) ≤ 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n ∈ {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n ∈ {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
+    "domain_bridges": [
+      "analytic_number_theory ↔ formal_power_series_coefficients",
+      "asymptotic_analysis ↔ effective_bounds",
+      "q_series_identities ↔ computable_arithmetic_functions"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2912",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The asymptotic sign law is proven via Watson's identity 2ρ(q) + ω(q) = T(q) combined with Rademacher-type expansions for ω(q) and the theta-eta product T(q), yielding r(n) ~ κ_{n mod 3} · (2π)/(12n+8)^{1/4} · I_{1/2}(π√(12n+8)/18) where κ₀ > 0, κ₁ < 0, κ₂ < 0. To prove the exact finite conjecture, one must: (1) make the error term in the Rademacher expansion fully effective with explicit constants, yielding an explicit N₀ such that the sign law holds for all n ≥ N₀; (2) computationally verify all cases n < N₀. The effective bound requires careful tracking of all error terms in the circle method analysis, similar to effective Rademacher bounds for partition ranks.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27902v1",
+    "status": "available",
+    "timestamp": "2026-06-30T00:52:54.836226+00:00",
+    "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.CO/2501.12018",
       "MRVZ_geometric_fractional",
       "deGrey_chromatic_plane"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1200a14",
     "description": "The 27-vertex unit-distance graph G₂₇ constructed by Matolcsi, Ruzsa, Varga, and Zsámboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G₂₉ of G₂₇ (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in ℝ² and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p₂₈, p₂₉ ∈ ℝ² such that the graph G₂₉ on 29 vertices, with edges determined by unit distance among all 29 points, satisfies χ_gf(G₂₉) > 4.",
     "domain_bridges": [
       "convex_optimization_to_graph_independence",
@@ -3838,13 +3838,13 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2912",
+    "id": "fd_2913",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T21:48:36.541820+00:00",
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi–Ruzsa–Varga–Zsámboki graph"
   },
@@ -3855,7 +3855,7 @@
       "05C31",
       "05C70"
     ],
-    "consumed_by_exp_id": "a1200a14",
+    "consumed_by_exp_id": "",
     "description": "Every real number greater than or equal to √(√5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number γ ≥ √(√5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to γ.",
     "domain_bridges": [
       "Real analysis",
@@ -3865,13 +3865,13 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2913",
+    "id": "fd_2914",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T23:08:33.027778+00:00",
     "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
   },
@@ -3892,7 +3892,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2914",
+    "id": "fd_2915",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -3918,7 +3918,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2915",
+    "id": "fd_2916",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -3947,7 +3947,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2916",
+    "id": "fd_2917",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -3956,6 +3956,34 @@
     "status": "available",
     "timestamp": "2026-06-30T00:35:19.561198+00:00",
     "title": "Young Conjugation is a Time-Reversal Symmetry of Triangle Map Natural Extensions"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.PR",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the inhomogeneous random graph with preferential attachment kernel κ_{β,γ}(x,y) = β(x ∧ y)^{-γ}(x ∨ y)^{γ-1} where γ ∈ (1/2, 1) (equivalently, degree exponent τ = 1 + 1/γ ∈ (2,3)), the rescaled ordered component sizes in the critical percolation window converge to a multiplicative coalescent. Specifically, parametrizing p_n(t) = β · n^{(τ-3)/(2τ-2)} · (1 + t · n^{-(3-τ)/(2(τ-1))}) for t ∈ ℝ, the process (n^{-1/2} · C_{(k)}(G_n(p_n(t))))_{k ≥ 1, t ∈ ℝ} converges in distribution in the Skorokhod topology on ℓ²↓ × ℝ to a multiplicative coalescent with merger rate κ_{β,γ}(x_i, x_j) between components carrying marks x_i, x_j, where the initial mark distribution is the Norros–Reittu intensity of the associated subcritical graph. This extends Aldous' multiplicative coalescent limit for Erdős–Rényi graphs and the Bhamidi–van der Hofstad–Hooghiemstra dynamic scaling results for finite-variance inhomogeneous random graphs to the infinite-variance preferential attachment setting, and provides a process-level refinement of the static convergence in distribution established in the paper.",
+    "domain_bridges": [
+      "Multiplicative coalescent theory",
+      "Crump-Mode-Jagers branching processes",
+      "Norros-Reittu hidden-variable graphs",
+      "Scaling limits of random structures"
+    ],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_2918",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27844v1",
+    "status": "available",
+    "timestamp": "2026-06-30T00:54:24.854529+00:00",
+    "title": "Multiplicative Coalescent Scaling Limit for Critical Percolation on Preferential Attachment Graphs with Infinite Variance Degrees"
   },
   {
     "ambition_level": "extension",
