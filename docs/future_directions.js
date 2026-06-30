@@ -526,7 +526,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "8acf5433",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
       "Cryptography",
@@ -537,7 +537,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1159,7 +1159,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
   },
   {
-    "consumed_by_exp_id": "98d48aca",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q\u00b2+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domains": [
       "Pythagorean",
@@ -1169,7 +1169,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -1816,7 +1816,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No nontrivial perfect powers in even-indexed polygonal numbers for exponents p \u2265 11"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6285deb",
     "description": "When the parameter relationship s = t^M is imposed on the mixed product of modified Greaves-Jing-Zhu operators, the coefficients in the scalar factor (u;t)_M/(-u;t)_M expansion are signed principal specializations of one-row Schur Q-functions. Specifically, if c_k^{(M)} denotes the coefficient of u^k in (u;t)_M/(-u;t)_M, then c_k^{(M)} = (-1)^k Q_k(1+t+...+t^M) where Q_k is the one-row Schur Q-function defined by equation (4).",
     "domains": [
       "Bridges"
@@ -1825,7 +1825,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T17:13:36.219637+00:00",
     "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur Q-Functions"
   },
@@ -2034,7 +2034,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Same-Prime Square Plane Transversal Difference Conjecture"
   },
   {
-    "consumed_by_exp_id": "c47f9e0e",
+    "consumed_by_exp_id": "",
     "description": "Let X be a simplicial complex covered by a finite collection of subcomplexes A_1, ..., A_k. For each non-empty subset S of {1, ..., k}, let A_S denote the intersection of the subcomplexes indexed by S, equipped with a gradient vector field V_S. There exists a chain complex (the combinatorial nerve complex) whose chain groups are direct sums of the Morse chain groups of (A_S, V_S), and which is quasi-isomorphic to the simplicial chain complex of X. Consequently, the homology of X can be computed explicitly from the combinatorial data of the gradient vector fields on the subcomplexes and their intersections.",
     "domains": [
       "Algebra",
@@ -2044,7 +2044,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T20:02:46.148570+00:00",
     "title": "Effective Combinatorial Nerve Theorem"
   },
@@ -2325,7 +2325,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial bound for point counts determining zeta functions of abelian varieties"
   },
   {
-    "consumed_by_exp_id": "a018a0f0",
+    "consumed_by_exp_id": "",
     "description": "For any commutative ring R and matrix A \u2208 R^{n\u00d7n}, if A is strongly 1-principled (all diagonal entries are 1 and all cyclic products of length > 1 vanish), then A^m is also strongly 1-principled for any m \u2265 1.",
     "domains": [
       "Algebra"
@@ -2334,7 +2334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28976v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T02:10:27.678210+00:00",
     "title": "Inheritance of strongly 1-principled property under matrix powers"
   },
@@ -2429,11 +2429,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
+    "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domains": [
       "Geometry"
     ],
     "id": "fd_2921",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29884v1",
+    "status": "available",
+    "timestamp": "2026-06-30T05:04:18.171502+00:00",
+    "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2922",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2447,7 +2461,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2461,7 +2475,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2475,7 +2489,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2489,7 +2503,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2504,7 +2518,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2519,7 +2533,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2533,7 +2547,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2547,7 +2561,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2561,7 +2575,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2930",
+    "id": "fd_2931",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2576,7 +2590,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2591,7 +2605,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2605,13 +2619,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2933",
+    "id": "fd_2934",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
     "status": "available",
     "timestamp": "2026-06-30T04:47:04.548698+00:00",
     "title": "L^p Relaxation of the KNRS Conjecture for Graphons"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a prime p \u2265 3 and an integer b \u2265 2 with p \u2224 b, if the multiplicative order of b modulo p is l = (p-1)/2^m and p \u2261 1 mod 2^(m+1), then the sum of the base-b digits in one full period of the expansion of 1/p equals (b-1)(p-1)/2^(m+1).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2935",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29930v1",
+    "status": "available",
+    "timestamp": "2026-06-30T05:05:42.798221+00:00",
+    "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
   {
     "consumed_by_exp_id": "",
@@ -2815,7 +2843,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da1c103e",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -2825,7 +2853,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -3066,7 +3094,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d4fed95",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -3076,7 +3104,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },

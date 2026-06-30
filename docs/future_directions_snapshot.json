@@ -700,7 +700,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8acf5433",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -714,7 +714,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1682,7 +1682,7 @@
       "math.PR",
       "math.CO/design_theory"
     ],
-    "consumed_by_exp_id": "98d48aca",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q ≥ 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q²+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domain_bridges": [
       "finite_geometry-probability",
@@ -1699,7 +1699,7 @@
     "proof_strategy": "Compare the two expected coverage times via their inclusion-exclusion representations. The key structural difference is that any two lines of PG(2,q) intersect in exactly one point, creating negative correlations that slow coverage, whereas random (q+1)-subsets have binomially-distributed intersection sizes. One might attempt to show that the Fano/Fano-like intersection structure maximizes the second-order inclusion-exclusion terms, or develop a coupling argument showing the projective plane mechanism is stochastically dominated in coverage by the full model.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -2900,7 +2900,7 @@
       "https://arxiv.org/abs/math/0507175",
       "https://arxiv.org/abs/math/0608105"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6285deb",
     "description": "When the parameter relationship s = t^M is imposed on the mixed product of modified Greaves-Jing-Zhu operators, the coefficients in the scalar factor (u;t)_M/(-u;t)_M expansion are signed principal specializations of one-row Schur Q-functions. Specifically, if c_k^{(M)} denotes the coefficient of u^k in (u;t)_M/(-u;t)_M, then c_k^{(M)} = (-1)^k Q_k(1+t+...+t^M) where Q_k is the one-row Schur Q-function defined by equation (4).",
     "domain_bridges": [
       "Algebraic Combinatorics",
@@ -2916,7 +2916,7 @@
     "proof_strategy": "Establish a bijection between the coefficient recurrence for (u;t)_M/(-u;t)_M and the recurrence satisfied by signed principal specializations of one-row Schur Q-functions. Use the Pfaffian Giambelli identity (equation 10) and the generating function (equation 4) to show both sequences satisfy the same recurrence with matching initial conditions.",
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T17:13:36.219637+00:00",
     "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur Q-Functions"
   },
@@ -3297,7 +3297,7 @@
       "math.AT",
       "math.CO"
     ],
-    "consumed_by_exp_id": "c47f9e0e",
+    "consumed_by_exp_id": "",
     "description": "Let X be a simplicial complex covered by a finite collection of subcomplexes A_1, ..., A_k. For each non-empty subset S of {1, ..., k}, let A_S denote the intersection of the subcomplexes indexed by S, equipped with a gradient vector field V_S. There exists a chain complex (the combinatorial nerve complex) whose chain groups are direct sums of the Morse chain groups of (A_S, V_S), and which is quasi-isomorphic to the simplicial chain complex of X. Consequently, the homology of X can be computed explicitly from the combinatorial data of the gradient vector fields on the subcomplexes and their intersections.",
     "domain_bridges": [
       "Simplicial Complexes",
@@ -3314,7 +3314,7 @@
     "proof_strategy": "Define simplicial complexes, covers, and discrete gradient vector fields. Construct the Morse chain complex for each intersection A_S. Define the combinatorial nerve complex as a total complex of a bicomplex or filtered complex whose terms are direct sums of the Morse complexes of the intersections. Prove the quasi-isomorphism by constructing explicit chain maps and homotopies using the gradient flows between the combinatorial nerve complex and the simplicial chain complex of X, ensuring the approach remains purely combinatorial without geometric realization.",
     "research_mode": "team",
     "source_exp_id": "2606.28047v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T20:02:46.148570+00:00",
     "title": "Effective Combinatorial Nerve Theorem"
   },
@@ -3852,7 +3852,7 @@
       "math.AC",
       "math.CO"
     ],
-    "consumed_by_exp_id": "a018a0f0",
+    "consumed_by_exp_id": "",
     "description": "For any commutative ring R and matrix A ∈ R^{n×n}, if A is strongly 1-principled (all diagonal entries are 1 and all cyclic products of length > 1 vanish), then A^m is also strongly 1-principled for any m ≥ 1.",
     "domain_bridges": [
       "Matrix Theory",
@@ -3867,7 +3867,7 @@
     "proof_strategy": "Induction on m and combinatorial expansion of matrix power entries. A cyclic product of A^m expands into a sum of products of cyclic products of A. Since the total length is > 1, at least one factor in each term is a cyclic product of length > 1, which vanishes, causing the entire sum to vanish.",
     "research_mode": "team",
     "source_exp_id": "2606.28976v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T02:10:27.678210+00:00",
     "title": "Inheritance of strongly 1-principled property under matrix powers"
   },
@@ -4032,6 +4032,34 @@
     "title": "Erdős-Falconer Distance Set Threshold n/2+1/3 in Even Dimensions over Finite Fields"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Bell numbers",
+      "log-convexity",
+      "Fibonacci numbers"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
+    "domain_bridges": [
+      "Combinatorics",
+      "Number Theory",
+      "Inequalities"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2921",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the combinatorial injection mapping pairs of partitions of [n] with the same base to partitions of [n+1], apply the Cauchy-Schwarz inequality on the sums grouped by base, and bound the remaining terms recursively using the Fibonacci sequence properties.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29884v1",
+    "status": "available",
+    "timestamp": "2026-06-30T05:04:18.171502+00:00",
+    "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO/2501.12018",
@@ -4048,7 +4076,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2921",
+    "id": "fd_2922",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
@@ -4075,7 +4103,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
@@ -4102,7 +4130,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -4128,7 +4156,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -4157,7 +4185,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -4185,7 +4213,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
@@ -4215,7 +4243,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes the rooted heat-kernel master loop equation and proves convergence of the order-truncated trajectory expansion at strong coupling (T > T₀(d)). To extend to all T > 0: (1) Develop uniform-in-T estimates for the trajectory expansion coefficients, leveraging the universal finite-N duality formulas and refined heat-kernel asymptotics that remain valid for small T. (2) Prove convergence of the rooted trajectory expansion for all T > 0 by establishing tighter control on the combinatorial growth of decorated loop observables—specifically, show the expansion is absolutely convergent with radius independent of T. (3) For the weak-coupling regime (small T), exploit the Gaussian limit T → 0 where the theory reduces to a lattice Gaussian free field, and use this as the base of an expansion valid for all T. (4) Bridge strong and weak coupling using monotonicity of Wilson loop expectations in T and real-analyticity of heat-kernel coefficients, establishing a single master field",
@@ -4243,7 +4271,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the monoid in Lean, compute the misère quotient via backward induction, and prove isomorphism through homomorphism properties and loss set verification",
@@ -4272,7 +4300,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the Weyl differencing and van der Corput B-process arguments from the paper with tighter control on off-diagonal contributions. The key improvement would come from replacing power-saving arguments with logarithmic precision via careful saddle-point analysis of the complete exponential sums arising from Poisson summation applied to $e(h\\sqrt{a})$ over dyadic subintervals of $[n/2, n]$. One should track how the exponent pairs obtained from the $B^2$-process interact with the moment sum over $h$, exploiting cancellation more finely than the $n^\\varepsilon$-losing bound permits.",
@@ -4296,7 +4324,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2930",
+    "id": "fd_2931",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive construction combined with probabilistic extremal arguments",
@@ -4325,7 +4353,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
@@ -4353,7 +4381,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the paper's conditional regularity theorem (Bessel distributions are regular provided Kloosterman sums for all Levi subgroups have nontrivial bounds) to GL(n). Since every Levi subgroup of GL(n) is isomorphic to a product ∏ GL(mᵢ) with ∑ mᵢ = n, the corresponding Kloosterman sums admit nontrivial bounds by Deligne's estimates from the Riemann hypothesis for varieties over finite fields (Weil II), yielding unconditional regularity for GL(n). The key intermediate step is formalizing the germ expansion of Kloosterman integrals and verifying the nontrivial bound condition for all Levi subgroups.",
@@ -4380,7 +4408,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2933",
+    "id": "fd_2934",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Hölder uniformization over vertex relabellings in the spirit of Conlon–Lee: reduce the general case to the edge-transitive case by averaging over graph automorphisms and applying Hölder's inequality to symmetrize, then exploit the positive-semidefinite structure implicit in local density for edge-transitive graphs. Key sub-lemmas include the equivalence between the L^p formulation and the graphon composition formulation, and the comparison principle with edge-transitive KNRS supergraphs.",
@@ -4389,6 +4417,34 @@
     "status": "available",
     "timestamp": "2026-06-30T04:47:04.548698+00:00",
     "title": "L^p Relaxation of the KNRS Conjecture for Graphons"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "Dedekind sums",
+      "Generalized Bernoulli numbers",
+      "Digit expansions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a prime p ≥ 3 and an integer b ≥ 2 with p ∤ b, if the multiplicative order of b modulo p is l = (p-1)/2^m and p ≡ 1 mod 2^(m+1), then the sum of the base-b digits in one full period of the expansion of 1/p equals (b-1)(p-1)/2^(m+1).",
+    "domain_bridges": [
+      "algebraic_number_theory",
+      "elementary_number_theory",
+      "formal_power_series"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2935",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the base-b digit sequence of 1/p using the division algorithm on remainders, a_i = ⌊b * r_i / p⌋ where r_i = b^i mod p. The sum of digits S = Σ a_i can be expressed in terms of the sum of remainders. The condition that the order of b is (p-1)/2^m restricts the remainders to a subgroup of (ℤ/pℤ)×. The congruence p ≡ 1 mod 2^(m+1) ensures that this subgroup is stable under negation modulo p (since l is even and b^(l/2) ≡ -1 mod p), which allows the sum of remainders to be simplified to p*l/2, leading directly to the formula S = (b-1)*l/2 = (b-1)(p-1)/2^(m+1).",
+    "research_mode": "team",
+    "source_exp_id": "2606.29930v1",
+    "status": "available",
+    "timestamp": "2026-06-30T05:05:42.798221+00:00",
+    "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
   {
     "ambition_level": "extension",
@@ -4664,7 +4720,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da1c103e",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domain_bridges": [],
     "domains": [
@@ -4677,7 +4733,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -5000,7 +5056,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d4fed95",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -5013,7 +5069,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
