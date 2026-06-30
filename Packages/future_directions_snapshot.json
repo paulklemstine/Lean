@@ -1441,7 +1441,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "1729a4b4",
+    "consumed_by_exp_id": "",
     "description": "The Diophantine equation $14n^2 - 13n = t^3$ has exactly five integer solutions: $(0, 0)$, $(1, 1)$, $(13, 13)$, $(-1, 3)$, and $(-8, 10)$. This corresponds to the exceptional case $k=13$ in Theorem 1(ii) of the paper, where $P_{30}(n) = t^3$ has the additional solutions $(-1,3)$ and $(-8,10)$ alongside the trivial ones.",
     "domain_bridges": [
       "Diophantine equations",
@@ -1456,7 +1456,7 @@
     "proof_strategy": "Translate the Diophantine equation $14n^2 - 13n = t^3$ into an elliptic curve by substituting variables to obtain a Weierstrass form. Compute the Mordell-Weil group of this elliptic curve over the rationals, determining its rank and generators. Map the rational points back to integer solutions $(n,t)$ and verify that exactly these five solutions exist.",
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:27:12.259238+00:00",
     "title": "Finiteness of Integer Solutions to the Cubic Triacontagonal Number Equation"
   },
@@ -3985,7 +3985,7 @@
       "shifted_convolution_sums",
       "L_functions"
     ],
-    "consumed_by_exp_id": "9be47248",
+    "consumed_by_exp_id": "",
     "description": "For f a normalized Hecke eigenform for SL(2,Z) (holomorphic of weight k ≥ 2 or Hecke-Maass) with Hecke eigenvalues λ_f(n), and for any ε > 0 with 1 ≤ Y ≤ X^{1/2-ε}, the triple correlation sum satisfies |∑_{n≤X} ∑_{m≤Y} λ_f(n)λ_f(m)λ_f(n+m)| ≪_{f,ε} X^{1/2+ε}Y. This is the optimal bound predicted by Sato-Tate heuristics and random matrix theory, going beyond the non-trivial power-saving bounds established in the paper for bilinear sums of GL(2) Fourier coefficients.",
     "domain_bridges": [
       "spectral_theory",
@@ -4001,7 +4001,7 @@
     "proof_strategy": "Apply the delta method of Duke-Friedlander-Iwaniec to decouple the constraint n+m, then deploy Voronoi summation in both n and m variables. Use Cauchy-Schwarz to reduce to a shifted convolution sum and apply the Kuznetsov trace formula to express triple products of Fourier coefficients as central L-values via Watson's formula. The crux is obtaining subconvexity for the triple product L-function L(s, f⊗f⊗f) at s=1/2, which GRH supplies but which remains unconditionally open; any unconditional proof would constitute a breakthrough in subconvexity theory.",
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:25:55.578636+00:00",
     "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
   },
@@ -5647,6 +5647,32 @@
     "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "28A78"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let $q_n \\ge 2$ be a sequence of integers and $\\psi$ a monotonic function. Define $W_Q(\\psi)$ as the set of $x \\in [0,1)$ such that $x - \\omega_n(x) < \\psi(n)/Q_n$ for infinitely many $n$, where $\\omega_n(x)$ is the $n$-th partial sum of the Cantor series expansion and $Q_n = \\prod_{i=1}^n q_i$. Define the exact approximation set $E_Q(\\psi) = W_Q(\\psi) \\setminus \\bigcup_{0<c<1} W_Q(c\\psi)$. If $\\lim_{n\\to\\infty} \\frac{\\log q_n}{\\log Q_n} = 0$, then the Hausdorff dimension of $E_Q(\\psi)$ is $1/\\lambda$, where $\\lambda = \\liminf_{n\\to\\infty} \\frac{-\\log \\psi(n)}{\\log Q_n}$.",
+    "domain_bridges": [
+      "Hausdorff dimension",
+      "Diophantine approximation",
+      "Cantor series expansion"
+    ],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_2983",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt Bugeaud's techniques to the non-autonomous dynamical system setting: establish the upper bound for the Hausdorff dimension using a standard $s$-dimensional Hausdorff measure covering argument, and establish the lower bound by constructing a suitable Cantor set inside the exact approximation set and applying a non-autonomous mass transference principle.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30435v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:36:04.702713+00:00",
+    "title": "Exact Hausdorff Dimension of Exact Approximation Sets in Cantor Series Expansions"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -5663,7 +5689,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2983",
+    "id": "fd_2984",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5691,7 +5717,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2984",
+    "id": "fd_2985",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5720,7 +5746,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5751,7 +5777,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5781,7 +5807,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -5809,7 +5835,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -5839,7 +5865,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -5864,7 +5890,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -5883,7 +5909,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Convergence bounds via recursive bounds",
@@ -5892,6 +5918,33 @@
     "status": "available",
     "timestamp": "2026-06-30T14:19:18.123295+00:00",
     "title": "Sublinear Growth of Joint Descendants"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Berge_tight_cycles",
+      "Lu_Wang_2021",
+      "minimum_degree_hypergraphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer k ≥ 3, every [k]-graph H on n ≥ (k choose 2) + 3 vertices with δ_{k-1}(H) ≥ 1 contains a Berge-C_t^{k-1} for all k ≤ t ≤ n. This generalizes the exact bound n_0(4,3) = 9 established in the paper and the bound n_0(3,2) = 6 by Lu and Wang, positing a unified quadratic threshold for all uniformities.",
+    "domain_bridges": [
+      "hypergraphs",
+      "graph_theory",
+      "extremal_combinatorics"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2993",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Induction on k, characterizing the extremal counterexamples for n < (k choose 2) + 3 using structural hypergraph theory, and applying the absorbing method to embed the Berge tight cycles for n ≥ (k choose 2) + 3.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30418v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:37:35.688846+00:00",
+    "title": "Exact Threshold for Berge Tight Cycles in k-graphs"
   },
   {
     "ambition_level": "extension",
@@ -6423,7 +6476,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fbd53921",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domain_bridges": [],
     "domains": [
@@ -6436,7 +6489,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
@@ -6963,7 +7016,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2b75e6b3",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -6976,7 +7029,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },

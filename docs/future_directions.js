@@ -1012,7 +1012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Size of a Poset Realizing Z_2 x Z_{2^n}"
   },
   {
-    "consumed_by_exp_id": "1729a4b4",
+    "consumed_by_exp_id": "",
     "description": "The Diophantine equation $14n^2 - 13n = t^3$ has exactly five integer solutions: $(0, 0)$, $(1, 1)$, $(13, 13)$, $(-1, 3)$, and $(-8, 10)$. This corresponds to the exceptional case $k=13$ in Theorem 1(ii) of the paper, where $P_{30}(n) = t^3$ has the additional solutions $(-1,3)$ and $(-8,10)$ alongside the trivial ones.",
     "domains": [
       "Pythagorean"
@@ -1021,7 +1021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:27:12.259238+00:00",
     "title": "Finiteness of Integer Solutions to the Cubic Triacontagonal Number Equation"
   },
@@ -2380,7 +2380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
   {
-    "consumed_by_exp_id": "9be47248",
+    "consumed_by_exp_id": "",
     "description": "For f a normalized Hecke eigenform for SL(2,Z) (holomorphic of weight k \u2265 2 or Hecke-Maass) with Hecke eigenvalues \u03bb_f(n), and for any \u03b5 > 0 with 1 \u2264 Y \u2264 X^{1/2-\u03b5}, the triple correlation sum satisfies |\u2211_{n\u2264X} \u2211_{m\u2264Y} \u03bb_f(n)\u03bb_f(m)\u03bb_f(n+m)| \u226a_{f,\u03b5} X^{1/2+\u03b5}Y. This is the optimal bound predicted by Sato-Tate heuristics and random matrix theory, going beyond the non-trivial power-saving bounds established in the paper for bilinear sums of GL(2) Fourier coefficients.",
     "domains": [
       "Computation"
@@ -2389,7 +2389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:25:55.578636+00:00",
     "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
   },
@@ -3248,12 +3248,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let $q_n \\ge 2$ be a sequence of integers and $\\psi$ a monotonic function. Define $W_Q(\\psi)$ as the set of $x \\in [0,1)$ such that $x - \\omega_n(x) < \\psi(n)/Q_n$ for infinitely many $n$, where $\\omega_n(x)$ is the $n$-th partial sum of the Cantor series expansion and $Q_n = \\prod_{i=1}^n q_i$. Define the exact approximation set $E_Q(\\psi) = W_Q(\\psi) \\setminus \\bigcup_{0<c<1} W_Q(c\\psi)$. If $\\lim_{n\\to\\infty} \\frac{\\log q_n}{\\log Q_n} = 0$, then the Hausdorff dimension of $E_Q(\\psi)$ is $1/\\lambda$, where $\\lambda = \\liminf_{n\\to\\infty} \\frac{-\\log \\psi(n)}{\\log Q_n}$.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_2983",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30435v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:36:04.702713+00:00",
+    "title": "Exact Hausdorff Dimension of Exact Approximation Sets in Cantor Series Expansions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2983",
+    "id": "fd_2984",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3268,7 +3282,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2984",
+    "id": "fd_2985",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3282,7 +3296,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3297,7 +3311,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3312,7 +3326,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3327,7 +3341,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3342,7 +3356,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3356,7 +3370,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2990",
+    "id": "fd_2991",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3370,13 +3384,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2991",
+    "id": "fd_2992",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
     "status": "available",
     "timestamp": "2026-06-30T14:19:18.123295+00:00",
     "title": "Sublinear Growth of Joint Descendants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer k \u2265 3, every [k]-graph H on n \u2265 (k choose 2) + 3 vertices with \u03b4_{k-1}(H) \u2265 1 contains a Berge-C_t^{k-1} for all k \u2264 t \u2264 n. This generalizes the exact bound n_0(4,3) = 9 established in the paper and the bound n_0(3,2) = 6 by Lu and Wang, positing a unified quadratic threshold for all uniformities.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2993",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30418v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:37:35.688846+00:00",
+    "title": "Exact Threshold for Berge Tight Cycles in k-graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3771,7 +3799,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fbd53921",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -3781,7 +3809,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
@@ -4176,7 +4204,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2b75e6b3",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domains": [
       "Bridges",
@@ -4186,7 +4214,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
