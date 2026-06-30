@@ -2512,7 +2512,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Specification Number Increments by One Under Symmetric Variable Extension"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc2eec01",
     "description": "An irreducible polynomial P(x) \u2208 \u2124[x] of even degree 2d \u2265 4 equals the full reciprocal-radius polynomial P_\u0393 of some finite connected K_{2d+1}-free graph \u0393 if and only if P is a Salem polynomial and the coefficient a\u2081 of x^{2d-1} in P satisfies a\u2081 \u2264 -5. The necessity direction (the first-coefficient obstruction) is established in the paper; the sufficiency direction \u2014 that every Salem polynomial meeting this coefficient bound is realizable as some P_\u0393 \u2014 remains open and would yield a complete algebraic-combinatorial characterization of strongly primitive Salem growth rates.",
     "domains": [
       "Algebra"
@@ -2521,7 +2521,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T08:32:47.774863+00:00",
     "title": "Salem Clique Polynomial Characterization"
   },
@@ -2912,7 +2912,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniform Distribution Uniquely Maximizes Expected Empty Spaces in Sibling Coupon Collection"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4a47c2e7",
     "description": "The probability that exactly u labels are untouched after k_n independent uniform m_n-subset drawings from n labels converges to the Poisson probability e^{-\u03bb} \u03bb^u / u! whenever the expected number of untouched labels \u03bb_n = n ((n-m_n)/n)^{k_n} \u2192 \u03bb \u2208 (0, \u221e) and the complement size b_n = n - m_n \u2192 \u221e.",
     "domains": [
       "Algebra",
@@ -2922,7 +2922,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29530v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T07:19:31.725431+00:00",
     "title": "Poisson Limit for Group-Drawing Coupon Collector"
   },
@@ -3452,12 +3452,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every fixed N \u2265 2 and j \u2265 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_2997",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29635v1",
+    "status": "available",
+    "timestamp": "2026-06-30T19:44:33.195784+00:00",
+    "title": "Uniform Extremality for Siblings of the Coupon Collector"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3472,7 +3487,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3486,7 +3501,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3501,7 +3516,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3510,23 +3525,8 @@ window.FUTURE_DIRECTIONS = [
     "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "For every integer r \u2265 2, every graph H with chromatic number at least 2, and every \u03b5 > 0, there exist n\u2080 \u2208 \u2115 and \u03b4 > 0 such that for all n \u2265 n\u2080: every n-vertex simple graph G with minimum degree \u03b4(G) \u2265 (1 \u2212 1/(r(\u03c7(H) \u2212 1))) \u00b7 n that is NOT (H, r)_v-Ramsey can be made r(\u03c7(H) \u2212 1)-partite by deleting at most \u03b5n\u00b2 edges. This is the stability analogue of Observation 1.2 in the paper (which gives a Tur\u00e1n-type edge-density threshold for the vertex-Ramsey property), asserting that the extremal examples\u2014complete r(\u03c7(H)\u22121)-partite graphs\u2014are essentially the only near-extremal constructions.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_3001",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30548v1",
-    "status": "available",
-    "timestamp": "2026-06-30T13:01:31.627918+00:00",
-    "title": "Vertex-Ramsey Stability Conjecture"
-  },
-  {
     "consumed_by_exp_id": "56c1bc1c",
-    "description": "Let B \u2282 GL(n) be a Borel subgroup and let \ud835\udd05\u2099 be the flag variety of GL(n).  There is an explicit B\u2011equivariant embedding \u03b9\u2099 of the set of B\u2011orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 into the set of Borel orbits on the flag variety \ud835\udd05_{n+1} of GL(n+1).  Each orbit in the image of \u03b9\u2099 is indexed by a permutation w \u2208 S_{n+1}.  The conjecture states that for any two such permutations v,w the following are equivalent:\n1. The orbit \u03b9\u2099\u207b\u00b9(O_w) lies in the Zariski closure of \u03b9\u2099\u207b\u00b9(O_v).\n2. v \u2264 w in the Bruhat order on S_{n+1}.\nThis gives a complete, combinatorial description of the orbit\u2011closure poset on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 and shows that the embedding \u03b9\u2099 preserves the closure relations exactly as the Bruhat order does on \ud835\udd05_{n+1}.  The conjecture is falsifiable: a counter\u2011example would be a pair (v,w) with v \u2264 w but with \u03b9\u2099\u207b\u00b9(O_w) not contained in the closure of \u03b9\u2099\u207b\u00b9(O_v), or vice\u2011versa.",
+    "description": "For every integer r \u2265 2, every graph H with chromatic number at least 2, and every \u03b5 > 0, there exist n\u2080 \u2208 \u2115 and \u03b4 > 0 such that for all n \u2265 n\u2080: every n-vertex simple graph G with minimum degree \u03b4(G) \u2265 (1 \u2212 1/(r(\u03c7(H) \u2212 1))) \u00b7 n that is NOT (H, r)_v-Ramsey can be made r(\u03c7(H) \u2212 1)-partite by deleting at most \u03b5n\u00b2 edges. This is the stability analogue of Observation 1.2 in the paper (which gives a Tur\u00e1n-type edge-density threshold for the vertex-Ramsey property), asserting that the extremal examples\u2014complete r(\u03c7(H)\u22121)-partite graphs\u2014are essentially the only near-extremal constructions.",
     "domains": [
       "Algebra",
       "Pythagorean"
@@ -3534,8 +3534,23 @@ window.FUTURE_DIRECTIONS = [
     "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.30478v1",
+    "source_exp_id": "2606.30548v1",
     "status": "in_progress",
+    "timestamp": "2026-06-30T13:01:31.627918+00:00",
+    "title": "Vertex-Ramsey Stability Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let B \u2282 GL(n) be a Borel subgroup and let \ud835\udd05\u2099 be the flag variety of GL(n).  There is an explicit B\u2011equivariant embedding \u03b9\u2099 of the set of B\u2011orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 into the set of Borel orbits on the flag variety \ud835\udd05_{n+1} of GL(n+1).  Each orbit in the image of \u03b9\u2099 is indexed by a permutation w \u2208 S_{n+1}.  The conjecture states that for any two such permutations v,w the following are equivalent:\n1. The orbit \u03b9\u2099\u207b\u00b9(O_w) lies in the Zariski closure of \u03b9\u2099\u207b\u00b9(O_v).\n2. v \u2264 w in the Bruhat order on S_{n+1}.\nThis gives a complete, combinatorial description of the orbit\u2011closure poset on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 and shows that the embedding \u03b9\u2099 preserves the closure relations exactly as the Bruhat order does on \ud835\udd05_{n+1}.  The conjecture is falsifiable: a counter\u2011example would be a pair (v,w) with v \u2264 w but with \u03b9\u2099\u207b\u00b9(O_w) not contained in the closure of \u03b9\u2099\u207b\u00b9(O_v), or vice\u2011versa.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3003",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30478v1",
+    "status": "available",
     "timestamp": "2026-06-30T13:20:24.782492+00:00",
     "title": "Bruhat Correspondence for Borel Orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9"
   },
@@ -3546,7 +3561,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3560,7 +3575,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3574,7 +3589,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3588,7 +3603,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3602,7 +3617,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3617,7 +3632,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3631,7 +3646,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3645,7 +3660,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3659,7 +3674,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3674,7 +3689,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3689,7 +3704,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3703,7 +3718,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3718,7 +3733,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3732,7 +3747,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3747,7 +3762,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -3761,7 +3776,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3775,13 +3790,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
     "status": "available",
     "timestamp": "2026-06-30T19:27:53.327772+00:00",
     "title": "Chebyshev Transform Root Location Equivalence for Self-Reciprocal Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every \u03b5 > 0, there exists X\u2080 such that for all X \u2265 X\u2080, at least (1 - \u03b5)\u230aX/2\u230b even integers N \u2208 [4, X] can be expressed as N = p\u2081 + p\u2082 with p\u2081, p\u2082 prime and p\u2081 - p\u2082 + 1 \u2208 \u2119\u2082 (a product of at most 2 primes). This strengthens the paper's Theorem for \u2119\u2084 to \u2119\u2082, and would follow from an improved level of distribution for Goldbach primes beyond 1/6.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_3021",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29559v1",
+    "status": "available",
+    "timestamp": "2026-06-30T19:45:04.465776+00:00",
+    "title": "Almost-Prime Goldbach Gap Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -4043,7 +4073,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "da4fd36d",
+    "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -4052,7 +4082,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
@@ -4251,7 +4281,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "e7355298",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4261,7 +4291,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
