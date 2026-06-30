@@ -693,7 +693,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
-    "consumed_by_exp_id": "fd05632c",
+    "consumed_by_exp_id": "",
     "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
     "domains": [
       "Algebra"
@@ -702,7 +702,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:58.445057+00:00",
     "title": "Sums of Three Cubes"
   },
@@ -2457,11 +2457,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The graph algebra $\\mathcal{A}_n$ on $n$ vertices, defined as the quotient of the multivariate polynomial ring $K[x_{ij} \\mid 1 \\le i < j \\le n]$ by the ideal $\\langle x_{ij}^2 - x_{ij} \\rangle$, carries a natural $\\mathfrak{sl}_2(K)$-module structure. The action is defined on the monomial basis $x^G$ (where $G$ is a simple graph on $n$ vertices) by $h \\cdot x^G = (2|G| - m) x^G$, $e \\cdot x^G = \\sum_{e' \\notin G} x^{G \\cup e'}$, and $f \\cdot x^G = \\sum_{e' \\in G} x^{G \\setminus e'}$, where $m = \\binom{n}{2}$. The conjecture states that as an $\\mathfrak{sl}_2(K)$-module, $\\mathcal{A}_n$ is isomorphic to the $m$-th tensor power of the standard two-dimensional $\\mathfrak{sl}_2(K)$-module $V$.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2923",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29558v1",
+    "status": "available",
+    "timestamp": "2026-06-30T05:46:20.902218+00:00",
+    "title": "Graph Algebra $\\mathfrak{sl}_2$-Module Isomorphism to Tensor Power"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2475,7 +2490,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2489,7 +2504,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2503,7 +2518,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2517,7 +2532,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2532,7 +2547,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2547,7 +2562,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2561,7 +2576,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2930",
+    "id": "fd_2931",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2575,7 +2590,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2589,7 +2604,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2604,7 +2619,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2933",
+    "id": "fd_2934",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2619,7 +2634,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2934",
+    "id": "fd_2935",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2633,7 +2648,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2935",
+    "id": "fd_2936",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2647,7 +2662,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2936",
+    "id": "fd_2937",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
@@ -2661,13 +2676,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
     "status": "available",
     "timestamp": "2026-06-30T05:26:20.098555+00:00",
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any nontrivial connected graph G, the independence number \u03b1(G) is bounded below by (a(G) + R(G))/\u0394(G), where a(G) is the annihilation number, R(G) is the residue, and \u0394(G) is the maximum degree. This conjecture, originally posed by TxGraffiti, has been proven for all connected graphs with maximum degree \u2265 2, except for the single edge (K\u2082), where it fails. The bound is sharp, as equality is achieved for complete graphs like K\u2084.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2939",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29553v1",
+    "status": "available",
+    "timestamp": "2026-06-30T05:48:51.779938+00:00",
+    "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
   },
   {
     "consumed_by_exp_id": "",
