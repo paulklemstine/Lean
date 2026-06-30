@@ -2384,11 +2384,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every finite group $G$ and integer $d \\ge 3$, there exists a $d$-regular graph $\\Gamma$ with $\\operatorname{Aut}(\\Gamma) \\cong G$ that admits both an $\\operatorname{Aut}(\\Gamma)$-invariant proper $d$-edge-coloring and a strong embedding $\\beta$ into an orientable surface such that $\\operatorname{Aut}(\\Gamma) \\cong \\operatorname{Aut}(\\beta(\\Gamma)) \\cong G$.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2918",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29768v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:09:24.273589+00:00",
+    "title": "Simultaneous Invariant Strong Embedding and Edge-Coloring Realization"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2918",
+    "id": "fd_2919",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2402,7 +2417,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2919",
+    "id": "fd_2920",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2416,7 +2431,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2920",
+    "id": "fd_2921",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2430,7 +2445,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2921",
+    "id": "fd_2922",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2444,7 +2459,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2922",
+    "id": "fd_2923",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2459,7 +2474,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2923",
+    "id": "fd_2924",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2474,7 +2489,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2924",
+    "id": "fd_2925",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2488,7 +2503,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2925",
+    "id": "fd_2926",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2502,7 +2517,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2926",
+    "id": "fd_2927",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2516,13 +2531,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2927",
+    "id": "fd_2928",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
     "status": "available",
     "timestamp": "2026-06-30T03:01:16.520960+00:00",
     "title": "All minimum $C_4$-saturated multipartite graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let k=3 and j>=2 be an even integer, and let f be a primitive elliptic cusp form of weight j+4 for SL_2(Z). For any prime ideal p of the Hecke field Q(f) dividing the algebraic critical value L^alg(j+3, f), there exists a Siegel cusp eigenform F of weight det^3 Sym^j for Sp_2 and a prime ideal P above p such that the spinor L-polynomial congruence L_ell(X, F, Spin) = L_ell(X, f)(1 - ell X)(1 - ell^{j+2} X) mod P holds for all primes ell.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2929",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30063v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:09:54.071727+00:00",
+    "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
   {
     "consumed_by_exp_id": "",

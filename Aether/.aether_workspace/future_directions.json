@@ -36655,7 +36655,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Franke_firstPaper",
         "Langlands-Spectral",
@@ -36678,7 +36678,7 @@
         "MachineLearning"
       ],
       "id": "fd_2848",
-      "last_attempt_time": "2026-06-30T03:24:34.162698+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem franke_weight_k (k : ℤ) : ∀ (F : AutomorphicForm k), ∃ (F_cusp : CuspForm k) (c : Finsupp ℕ (LaurentCoeff (EisensteinSeries k))), F = F_cusp + ∑ i, c i • i := by sorry",
       "lineage_refs": [],
@@ -39251,7 +39251,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "math.GR"
@@ -39273,7 +39273,7 @@
         "Algebra"
       ],
       "id": "fd_2904",
-      "last_attempt_time": "2026-06-30T03:24:39.272374+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem beta_Z2_times_Z2_pow_n (n : ℕ) (hn : 3 ≤ n) :\n    β (ZMod 2 × ZMod (2 ^ n)) = 2 ^ (n + 1) + 2 := by\n  sorry",
       "lineage_refs": [],
@@ -39715,7 +39715,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.AC",
         "math.CO"
@@ -39736,7 +39736,7 @@
         "Algebra"
       ],
       "id": "fd_2914",
-      "last_attempt_time": "2026-06-30T03:45:55.256271+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Algebra.BigOperators.Group.Finset\n\nvariable {R : Type*} [CommRing R] {n : ℕ}\n\ndef CyclicProduct (A : Matrix (Fin n) (Fin n) R) {k : ℕ} (ι : Fin k ↪ Fin n) : R :=\n  ∏ j : Fin k, A (ι j) (ι (j + 1))\n\ndef Strongly1Principled (A : Matrix (Fin n) (Fin n) R) : Prop :=\n  (∀ i : Fin n, A i i = 1) ∧\n  (∀ k : ℕ, ∀ ι : Fin k ↪ Fin n, k > 1 → CyclicProduct A ι = 0)\n\ntheorem power_strongly_1_principled (A : Matrix (Fin n) (Fin n) R) (m : ℕ)\n  (hA : Strongly1Principled A) : Strongly1Principled (A ^ m) := by sorry",
       "lineage_refs": [],
@@ -39896,6 +39896,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "math.GR",
+        "math.GT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every finite group $G$ and integer $d \\ge 3$, there exists a $d$-regular graph $\\Gamma$ with $\\operatorname{Aut}(\\Gamma) \\cong G$ that admits both an $\\operatorname{Aut}(\\Gamma)$-invariant proper $d$-edge-coloring and a strong embedding $\\beta$ into an orientable surface such that $\\operatorname{Aut}(\\Gamma) \\cong \\operatorname{Aut}(\\beta(\\Gamma)) \\cong G$.",
+      "domain_bridges": [
+        "graph theory",
+        "group theory",
+        "topological graph theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2918",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Regular\nimport Mathlib.Combinatorics.SimpleGraph.Coloring\n\n-- The existence of a d-regular graph with prescribed automorphism group G,\n-- an Aut(Γ)-invariant proper d-edge-coloring, and a strong embedding\n-- with the same automorphism group.\ntheorem simultaneous_embedding_coloring_realization\n    (G : Type*) [Group G] [Fintype G] (d : ℕ) (hd : 3 ≤ d) :\n    ∃ (V : Type*) (Γ : SimpleGraph V) [Fintype V] [DecidableRel Γ.Adj] [Fintype Γ.EdgeSet],\n      Γ.IsRegularOfDegree d ∧\n      Nonempty (Aut Γ ≃* G) ∧\n      ∃ (κ : Γ.EdgeColoring (Fin d)), ∀ (e : Γ.EdgeSet) (φ : Aut Γ), κ (φ.val e) = κ e ∧\n      True -- Placeholder for the existence of a strong embedding β with Aut(β(Γ)) ≃* Aut(Γ)\n",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Start with the paper's corrected Sabidussi construction, which yields a $d$-regular graph with an invariant proper $d$-edge-coloring. Then, adapt the paper's unbounded genus sequence construction—which replaces edges with specific 2-cell embedded graphs—to also preserve or lift the invariant edge-coloring, ensuring the modified graph simultaneously admits a strong embedding with the prescribed automorphism group and the invariant coloring.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29768v1",
+      "source_path": "http://arxiv.org/abs/2606.29768v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T04:09:24.273589+00:00",
+      "title": "Simultaneous Invariant Strong Embedding and Edge-Coloring Realization"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2501.12018",
         "MRVZ_geometric_fractional",
         "deGrey_chromatic_plane"
@@ -39916,7 +39963,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2918",
+      "id": "fd_2919",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -39962,7 +40009,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2919",
+      "id": "fd_2920",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -40008,7 +40055,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2920",
+      "id": "fd_2921",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -40053,7 +40100,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2921",
+      "id": "fd_2922",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -40101,7 +40148,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2922",
+      "id": "fd_2923",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -40148,7 +40195,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2923",
+      "id": "fd_2924",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -40197,7 +40244,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2924",
+      "id": "fd_2925",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -40244,7 +40291,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2925",
+      "id": "fd_2926",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
@@ -40292,7 +40339,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2926",
+      "id": "fd_2927",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_second_moment_sqroot_expsum (δ : ℝ) (hδ : 0 < δ) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ, 2 ≤ n → ∀ H : ℕ,\n    ⌈(n : ℝ)^(1/2 + δ)⌉₊ ≤ H →\n    (∑ h in Finset.Icc ⌈H/2⌉₊ H,\n      (∑ a in Finset.Icc ⌈n/2⌉₊ n,\n        Complex.exp (2 * Real.pi * Complex.I * (h : ℂ) * Real.sqrt (a : ℝ)))\n        .norm_sq)\n    ≤ C * (H : ℝ) * (n : ℝ) * (Real.log (n : ℝ))^c := by\n  sorry",
@@ -40335,7 +40382,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2927",
+      "id": "fd_2928",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Basic diagram-filling and counting techniques over finite graphs",
@@ -40354,6 +40401,54 @@
       "thread_id": "",
       "timestamp": "2026-06-30T03:01:16.520960+00:00",
       "title": "All minimum $C_4$-saturated multipartite graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
+        "Harder's conjecture",
+        "Siegel modular forms",
+        "Arthur parameters"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let k=3 and j>=2 be an even integer, and let f be a primitive elliptic cusp form of weight j+4 for SL_2(Z). For any prime ideal p of the Hecke field Q(f) dividing the algebraic critical value L^alg(j+3, f), there exists a Siegel cusp eigenform F of weight det^3 Sym^j for Sp_2 and a prime ideal P above p such that the spinor L-polynomial congruence L_ell(X, F, Spin) = L_ell(X, f)(1 - ell X)(1 - ell^{j+2} X) mod P holds for all primes ell.",
+      "domain_bridges": [
+        "Automorphic Forms",
+        "Algebraic Number Theory",
+        "Langlands Program"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2929",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem harder_conjecture_k_equals_3 (j : ℕ) (hj : j ≥ 2 ∧ Even j) (f : PrimitiveEllipticCuspForm (j + 4)) (p : Ideal (HeckeField f)) (hp : p ∣ L_alg (j + 3) f) : ∃ (F : SiegelCuspEigenForm (det^3 * Sym^j)) (P : Ideal (HeckeField F)) (hP : P ∣ p), ∀ ℓ : ℕ, ℓ.Prime → SpinLPoly ℓ F ≡ LPoly ℓ f * (1 - (ℓ : ℤ)^1 * X) * (1 - (ℓ : ℤ)^(j + 2) * X) [MOD P] := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30063v1",
+      "source_path": "http://arxiv.org/abs/2606.30063v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T04:09:54.071727+00:00",
+      "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
     },
     {
       "ambition_level": "extension",
