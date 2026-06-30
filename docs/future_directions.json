@@ -37259,14 +37259,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "order_theory"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "6e8394a2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37281,7 +37281,7 @@
         "Algebra"
       ],
       "id": "fd_2861",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T12:01:42.091263+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.ZMod.Basic\nimport Mathlib.Order.Basic\n\n/-- The minimum size of a poset P whose automorphism group is isomorphic to G -/\ndef beta (G : Type*) [Group G] [Finite G] : ℕ := \n  sInf { n : ℕ | ∃ (P : Type*) [Fintype P] [LE P] [IsPartialOrder P LE],\n    Fintype.card P = n ∧ Nonempty (MulEquiv (OrderIso P P) G) }\n\ntheorem beta_Z2_cross_Z2_pow_n (n : ℕ) (hn : n ≥ 3) :\n    beta (Multiplicative (ZMod 2 × ZMod (2^n))) = 2 ^ (n + 1) + 2 := by\n  sorry",
       "lineage_refs": [],
@@ -37295,7 +37295,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28231v1",
       "source_path": "http://arxiv.org/abs/2606.28231v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-29T11:24:35.150210+00:00",
       "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
@@ -42558,6 +42558,54 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Pisot_numbers",
+        "p_adic_numbers",
+        "Topological_groups",
+        "Numeration_systems"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For the Fibonacci numeration system $U$ with standard initial conditions (where $u_0=1, u_1=2$), the topological group $\\mathbb{Z}_U$, constructed as the completion of $\\mathbb{Z}$ under the pseudo-valuation $\\nu_U$, is continuously isomorphic to the circle group $\\mathbb{R}/\\mathbb{Z}$. This is a specific instance of the paper's main theorem where the Pisot number is the golden ratio (unimodular, degree 2).",
+      "domain_bridges": [
+        "Topology",
+        "Number_Theory",
+        "Group_Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2975",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem fibonacci_Z_U_iso_circle : ContinuousEquiv (Z_U fibonacci_numeration) (Circle) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the Fibonacci numeration system and its pseudo-valuation, construct the completion $\\mathbb{Z}_U$ as a topological group, define the evaluation map $\\tau_U$ using the non-trivial Galois conjugate of the golden ratio ($\\phi' = 1-\\phi$), and prove it is a continuous group isomorphism to $\\mathbb{R}/\\mathbb{Z}$.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30496v1",
+      "source_path": "http://arxiv.org/abs/2606.30496v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T11:59:08.845373+00:00",
+      "title": "Fibonacci Numeration Group is the Circle Group"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "math.GR"
       ],
@@ -42578,7 +42626,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2974",
+      "id": "fd_2976",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem nilpotent_extension_feng_sun_xiang (G : Type*) [Group G] [Fintype G] [IsNilpotent G] {p : ℕ} (hp : Nat.Prime p) (hp_min : ∀ q ∣ Fintype.card G, Nat.Prime q → p ≤ q) {k : ℕ} (hk : k < p) (a : Fin k → G) (ha : Function.Injective a) (b : Fin k → G) : ∃ σ : Equiv.Perm (Fin k), Function.Injective fun i => a i * b (σ i) := by sorry",
@@ -42597,6 +42645,53 @@
       "thread_id": "",
       "timestamp": "2026-06-30T11:35:11.884153+00:00",
       "title": "Nilpotent Extension of the Feng-Sun-Xiang Theorem"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "BEGS1989",
+        "LMS1990",
+        "KneserGraphs"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that for any k ≥ 2, the strong chromatic index of the odd Kneser graph O(2k-1,k) equals 2k-1. This conjecture will be used to formalize the local density inequality required for proving the affirmative answer to the first problem posed by Burr, Erdős, Graham, and Sós on maximal anti-Ramsey functions for P₄.",
+      "domain_bridges": [
+        "strong edge-coloring",
+        "Kneser graphs",
+        "local density inequalities"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2977",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem odd_kneser_strong_chromatic_index : forall k >= 2, odd_kneser_graph (2*k-1) k ~~> strong_chromatic_index (2*k-1) := ...",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30505v1",
+      "source_path": "http://arxiv.org/abs/2606.30505v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T12:01:36.796826+00:00",
+      "title": "Conjecture on Strong Edge-Colorings of Odd Kneser Graphs"
     },
     {
       "ambition_level": "extension",

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-30T11:11:00.876710+00:00",
+  "last_updated": "2026-06-30T11:57:58.380159+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -20921,6 +20921,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-30T11:11:00.581683+00:00",
       "title": "Conjecture on edge count of \u03c4_k-maximal graphs with minimum degree at least k+1"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2946,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 42,
+      "domain": "Pythagorean",
+      "duration_seconds": 1158.2471737861633,
+      "end_time": 1782820277.697858,
+      "files_integrated": 6,
+      "job_id": "efa9038a",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.5971,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.379,
+        "novelty": 0.8,
+        "proof_depth": 0.1986,
+        "usefulness": 0.5243
+      },
+      "quality_score": 0.455,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782819119.4506843,
+      "strategy_count": 0,
+      "theorem_count": 5,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-30T11:57:57.951452+00:00",
+      "title": "Homotopy Type Theory as Foundations"
     }
   ]
 }

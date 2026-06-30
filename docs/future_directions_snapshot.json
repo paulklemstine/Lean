@@ -2514,7 +2514,7 @@
       "math.CO",
       "order_theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e8394a2",
     "description": "For any integer $n \\ge 3$, the minimum number of elements in a poset $P$ such that its automorphism group $\\text{Aut}(P)$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is exactly $2^{n+1} + 2$. This conjecture formalizes the main theorem of the paper.",
     "domain_bridges": [
       "group_theory",
@@ -2530,7 +2530,7 @@
     "proof_strategy": "Define the function $\\beta(G)$ as the infimum of the cardinalities of posets $P$ with $\\text{Aut}(P) \\cong G$. The upper bound is established by constructing a poset of size $2^{n+1}+2$ realizing the group, which can be done via a recursive construction adding two minimal elements (as in Proposition 2.2). The lower bound requires showing that any poset realizing this group must have at least $2^{n+1}+2$ elements, utilizing the structural constraints of the group action on the poset.",
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T11:24:35.150210+00:00",
     "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
   },
@@ -5531,6 +5531,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Pisot_numbers",
+      "p_adic_numbers",
+      "Topological_groups",
+      "Numeration_systems"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the Fibonacci numeration system $U$ with standard initial conditions (where $u_0=1, u_1=2$), the topological group $\\mathbb{Z}_U$, constructed as the completion of $\\mathbb{Z}$ under the pseudo-valuation $\\nu_U$, is continuously isomorphic to the circle group $\\mathbb{R}/\\mathbb{Z}$. This is a specific instance of the paper's main theorem where the Pisot number is the golden ratio (unimodular, degree 2).",
+    "domain_bridges": [
+      "Topology",
+      "Number_Theory",
+      "Group_Theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2975",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the Fibonacci numeration system and its pseudo-valuation, construct the completion $\\mathbb{Z}_U$ as a topological group, define the evaluation map $\\tau_U$ using the non-trivial Galois conjugate of the golden ratio ($\\phi' = 1-\\phi$), and prove it is a continuous group isomorphism to $\\mathbb{R}/\\mathbb{Z}$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30496v1",
+    "status": "available",
+    "timestamp": "2026-06-30T11:59:08.845373+00:00",
+    "title": "Fibonacci Numeration Group is the Circle Group"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "math.GR"
     ],
@@ -5545,7 +5574,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2974",
+    "id": "fd_2976",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5554,6 +5583,34 @@
     "status": "available",
     "timestamp": "2026-06-30T11:35:11.884153+00:00",
     "title": "Nilpotent Extension of the Feng-Sun-Xiang Theorem"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "BEGS1989",
+      "LMS1990",
+      "KneserGraphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any k ≥ 2, the strong chromatic index of the odd Kneser graph O(2k-1,k) equals 2k-1. This conjecture will be used to formalize the local density inequality required for proving the affirmative answer to the first problem posed by Burr, Erdős, Graham, and Sós on maximal anti-Ramsey functions for P₄.",
+    "domain_bridges": [
+      "strong edge-coloring",
+      "Kneser graphs",
+      "local density inequalities"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2977",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30505v1",
+    "status": "available",
+    "timestamp": "2026-06-30T12:01:36.796826+00:00",
+    "title": "Conjecture on Strong Edge-Colorings of Odd Kneser Graphs"
   },
   {
     "ambition_level": "extension",

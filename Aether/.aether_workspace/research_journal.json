@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7281fa18",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Row-exchange under eventual contraction (five-vertex half-strip)\n\nThis cycle established, for `TM = Matrix (Fin 5) (Fin 5) ℝ` with the `L∞` operator norm:\n\n* `conj_inverse_one_su",
-      "quality_score": 0.5050399999999999,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-26T14:30:18",
-      "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
-    },
-    {
       "cycle_id": "a2f737c1",
       "domain": "Applications",
       "key_insight": "# Future Directions — Incoherence indices of standard social decision frames\n\nDerived from this cycle's findings (`IncoherenceIndex.lean`,\n`SaturationContrast.lean`, `ComputationalEvidence.md`).  This",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-06-30T07:56:37",
       "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
+    },
+    {
+      "cycle_id": "efa9038a",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Univalence as an Independent Foundational Axiom\n\nThe cycle established a sharp boundary between two foundations of mathematics: a\nclassical, set-level foundation in which every c",
+      "quality_score": 0.455,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-30T11:57:56",
+      "title": "Homotopy Type Theory as Foundations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76576
     }
   ],
-  "last_updated": "2026-06-30T07:56:37",
+  "last_updated": "2026-06-30T11:57:56",
   "open_questions": [
     {
       "context": "",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "ebc08ab7",
-        "quality": 0.4770719626168225,
-        "theorems": 90,
-        "title": "Tropical Differential Equations: Power Series Solutions"
-      },
-      {
         "cycle_id": "bab04850",
         "quality": 0.4604252747252747,
         "theorems": 177,
@@ -3885,6 +3879,12 @@
         "quality": 0.7400800000000001,
         "theorems": 22,
         "title": "Bourgain's Slicing Problem"
+      },
+      {
+        "cycle_id": "efa9038a",
+        "quality": 0.455,
+        "theorems": 5,
+        "title": "Homotopy Type Theory as Foundations"
       }
     ],
     "Shared": [

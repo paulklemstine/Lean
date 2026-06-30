@@ -1610,7 +1610,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elementary Abelian 2-Group Uniqueness for Pairwise Reflection-Symmetric Latin Squares"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e8394a2",
     "description": "For any integer $n \\ge 3$, the minimum number of elements in a poset $P$ such that its automorphism group $\\text{Aut}(P)$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is exactly $2^{n+1} + 2$. This conjecture formalizes the main theorem of the paper.",
     "domains": [
       "Pythagorean",
@@ -1620,7 +1620,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T11:24:35.150210+00:00",
     "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
   },
@@ -3208,18 +3208,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the Fibonacci numeration system $U$ with standard initial conditions (where $u_0=1, u_1=2$), the topological group $\\mathbb{Z}_U$, constructed as the completion of $\\mathbb{Z}$ under the pseudo-valuation $\\nu_U$, is continuously isomorphic to the circle group $\\mathbb{R}/\\mathbb{Z}$. This is a specific instance of the paper's main theorem where the Pisot number is the golden ratio (unimodular, degree 2).",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2975",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30496v1",
+    "status": "available",
+    "timestamp": "2026-06-30T11:59:08.845373+00:00",
+    "title": "Fibonacci Numeration Group is the Circle Group"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2974",
+    "id": "fd_2976",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
     "status": "available",
     "timestamp": "2026-06-30T11:35:11.884153+00:00",
     "title": "Nilpotent Extension of the Feng-Sun-Xiang Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any k \u2265 2, the strong chromatic index of the odd Kneser graph O(2k-1,k) equals 2k-1. This conjecture will be used to formalize the local density inequality required for proving the affirmative answer to the first problem posed by Burr, Erd\u0151s, Graham, and S\u00f3s on maximal anti-Ramsey functions for P\u2084.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2977",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30505v1",
+    "status": "available",
+    "timestamp": "2026-06-30T12:01:36.796826+00:00",
+    "title": "Conjecture on Strong Edge-Colorings of Odd Kneser Graphs"
   },
   {
     "consumed_by_exp_id": "",
