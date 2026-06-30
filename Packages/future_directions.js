@@ -253,22 +253,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
-    "consumed_by_exp_id": "07a868e4",
-    "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
-    "domains": [
-      "Analysis",
-      "Physics",
-      "Algebra"
-    ],
-    "id": "seed_344",
-    "priority_score": 0.87,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432652+00:00",
-    "title": "Spectral Theory: Self-Adjoint Operators"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
@@ -496,23 +480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "3a13aa90",
-    "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
-    "domains": [
-      "Cryptography",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_372",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432794+00:00",
-    "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c99f10d",
     "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
     "domains": [
       "Algebra",
@@ -523,7 +491,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432807+00:00",
     "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
   },
@@ -1580,7 +1548,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elementary Abelian 2-Group Uniqueness for Pairwise Reflection-Symmetric Latin Squares"
   },
   {
-    "consumed_by_exp_id": "6e8394a2",
+    "consumed_by_exp_id": "",
     "description": "For any integer $n \\ge 3$, the minimum number of elements in a poset $P$ such that its automorphism group $\\text{Aut}(P)$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is exactly $2^{n+1} + 2$. This conjecture formalizes the main theorem of the paper.",
     "domains": [
       "Pythagorean",
@@ -1590,7 +1558,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T11:24:35.150210+00:00",
     "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
   },
@@ -2702,7 +2670,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
   },
   {
-    "consumed_by_exp_id": "f1435224",
+    "consumed_by_exp_id": "",
     "description": "Every real number greater than or equal to \u221a(\u221a5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number \u03b3 \u2265 \u221a(\u221a5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to \u03b3.",
     "domains": [
       "Bridges"
@@ -2711,7 +2679,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T23:08:33.027778+00:00",
     "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
   },
@@ -2902,20 +2870,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
   {
-    "consumed_by_exp_id": "65d4cbfc",
-    "description": "For any nontrivial connected graph G, the independence number \u03b1(G) is bounded below by (a(G) + R(G))/\u0394(G), where a(G) is the annihilation number, R(G) is the residue, and \u0394(G) is the maximum degree. This conjecture, originally posed by TxGraffiti, has been proven for all connected graphs with maximum degree \u2265 2, except for the single edge (K\u2082), where it fails. The bound is sharp, as equality is achieved for complete graphs like K\u2084.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2956",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29553v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-30T05:48:51.779938+00:00",
-    "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For each integer n \u2265 1, the theta-mode component \u03c6_n(t) of the even Riemann phase kernel equals the action of the differential operator (\u2202_t\u00b2 \u2212 1/4) on the explicit function e^{t/2} \u00b7 e^{\u2212\u03c0n\u00b2e^{2t}}. This is the key analytic identity underpinning the finite-core Volterra program: it provides an exact same-sign formula decomposing the phase kernel modes into a boundary term and a Volterra tail, and is the foundation for the quotient Schur certificate. Formalization requires the definition of \u03c6_n via the even Riemann kernel \u03a6, the computation of the second derivative of the explicit exponential, and the verification of the equality as an identity of smooth functions on \u211d.",
     "domains": [
@@ -2988,7 +2942,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
   {
-    "consumed_by_exp_id": "65ebb6ab",
+    "consumed_by_exp_id": "",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling \u2113: V(G) \u2192 (Z/2Z)^(t \u2212 rank(A)) satisfies d_G(u,v) \u2265 d_H(\u2113(u), \u2113(v)) for all u,v \u2208 V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t \u2212 rank(A)). That is, the labeling never stretches distances\u2014it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domains": [
       "Algebra"
@@ -2997,7 +2951,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
@@ -3207,12 +3161,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The polynomial prefactor in the bound for sunflower-free families can be eliminated entirely. Specifically, there exists an absolute constant C > 0 such that for all n \u2265 1 and all 3-sunflower-free families F \u2286 2^{[n]}, |F| \u2264 C \u00b7 (3/2^{2/3})^n. This would strengthen the paper's O(n^{1/6}(3/2^{2/3})^n) bound by removing the polynomial factor, and would follow if i-triangular tensor methods could be applied with arbitrarily large tensor orders to drive the polynomial factor to a constant.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2977",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30593v1",
+    "status": "available",
+    "timestamp": "2026-06-30T12:41:52.875344+00:00",
+    "title": "Polynomial-Free Sunflower Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2977",
+    "id": "fd_2978",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3227,7 +3195,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2978",
+    "id": "fd_2979",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3241,13 +3209,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2979",
+    "id": "fd_2980",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
     "status": "available",
     "timestamp": "2026-06-30T12:22:21.874221+00:00",
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any normalized Hecke eigenform f of weight \u03ba for SL(2,Z), integers j \u2265 1, k \u2265 2, h \u2265 1, q \u2265 1, and even m \u2208 {2,4,6,8,10,12}, and any k-full kernel function a: \u2115 \u2192 \u2115 with a(n) \u226a n^\u03b5 for all \u03b5 > 0, the shifted convolution sum S(x) = \u2211_{n \u2264 x, n \u2261 1 (mod q), n \u2208 S_m} a(n) \u00b7 \u03bb_{sym^j f}(n + h) \u2014 where S_m denotes the set of integers representable as a sum of m squares \u2014 admits an asymptotic formula S(x) = M(x) + O(x^{1-\u03b4}) with an explicit main term M(x) satisfying M(x) \u226b x and a power-saving error term with \u03b4 > 0 depending on j, k, m, q, and h. This extends the L\u00fc\u2013Wang result (j = 1, k = 2) and the Venkatasubbareddy\u2013Sankaranarayanan generalization to arbitrary symmetric power L-functions.",
+    "domains": [
+      "Pythagorean",
+      "MachineLearning"
+    ],
+    "id": "fd_2981",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30618v1",
+    "status": "available",
+    "timestamp": "2026-06-30T12:42:50.216839+00:00",
+    "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3436,7 +3419,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "2f3d7834",
+    "consumed_by_exp_id": "",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -3446,7 +3429,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },

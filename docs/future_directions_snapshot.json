@@ -337,27 +337,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "07a868e4",
-    "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
-    "domain_bridges": [],
-    "domains": [
-      "Analysis",
-      "Physics",
-      "Algebra"
-    ],
-    "id": "seed_344",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432652+00:00",
-    "title": "Spectral Theory: Self-Adjoint Operators"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domain_bridges": [],
@@ -660,28 +639,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3a13aa90",
-    "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_372",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432794+00:00",
-    "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c99f10d",
     "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
     "domain_bridges": [],
     "domains": [
@@ -695,7 +653,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432807+00:00",
     "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
   },
@@ -2474,7 +2432,7 @@
       "math.CO",
       "order_theory"
     ],
-    "consumed_by_exp_id": "6e8394a2",
+    "consumed_by_exp_id": "",
     "description": "For any integer $n \\ge 3$, the minimum number of elements in a poset $P$ such that its automorphism group $\\text{Aut}(P)$ is isomorphic to $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ is exactly $2^{n+1} + 2$. This conjecture formalizes the main theorem of the paper.",
     "domain_bridges": [
       "group_theory",
@@ -2490,7 +2448,7 @@
     "proof_strategy": "Define the function $\\beta(G)$ as the infimum of the cardinalities of posets $P$ with $\\text{Aut}(P) \\cong G$. The upper bound is established by constructing a poset of size $2^{n+1}+2$ realizing the group, which can be done via a recursive construction adding two minimal elements (as in Proposition 2.2). The lower bound requires showing that any poset realizing this group must have at least $2^{n+1}+2$ elements, utilizing the structural constraints of the group action on the poset.",
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T11:24:35.150210+00:00",
     "title": "Poset Realization Size for $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$"
   },
@@ -4579,7 +4537,7 @@
       "05C31",
       "05C70"
     ],
-    "consumed_by_exp_id": "f1435224",
+    "consumed_by_exp_id": "",
     "description": "Every real number greater than or equal to √(√5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number γ ≥ √(√5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to γ.",
     "domain_bridges": [
       "Real analysis",
@@ -4595,7 +4553,7 @@
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T23:08:33.027778+00:00",
     "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
   },
@@ -4963,32 +4921,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Davila2025reverie",
-      "Fajtlowicz1988graffiti"
-    ],
-    "consumed_by_exp_id": "65d4cbfc",
-    "description": "For any nontrivial connected graph G, the independence number α(G) is bounded below by (a(G) + R(G))/Δ(G), where a(G) is the annihilation number, R(G) is the residue, and Δ(G) is the maximum degree. This conjecture, originally posed by TxGraffiti, has been proven for all connected graphs with maximum degree ≥ 2, except for the single edge (K₂), where it fails. The bound is sharp, as equality is achieved for complete graphs like K₄.",
-    "domain_bridges": [
-      "graph invariants",
-      "degree sequences",
-      "independence number bounds"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2956",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The proof requires formalizing definitions of α, a, R, and Δ, then establishing the inequality using the paper's result that a ≤ (Δ+1)/2 * W (where W is the Caro-Wei sum) combined with classical lower bounds α ≥ R and α ≥ W. Key steps include handling the special cases for Δ = 2 and Δ ≥ 3, while explicitly excluding K₂ as a counterexample.",
-    "research_mode": "team",
-    "source_exp_id": "2606.29553v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-30T05:48:51.779938+00:00",
-    "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "math.NT/Riemann_hypothesis",
       "math.AP/Volterra_integral_equations",
       "math.FA/operator_positivity"
@@ -5129,7 +5061,7 @@
       "Cayley graphs of abelian groups",
       "GF(2) linear algebra"
     ],
-    "consumed_by_exp_id": "65ebb6ab",
+    "consumed_by_exp_id": "",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling ℓ: V(G) → (Z/2Z)^(t − rank(A)) satisfies d_G(u,v) ≥ d_H(ℓ(u), ℓ(v)) for all u,v ∈ V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t − rank(A)). That is, the labeling never stretches distances—it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domain_bridges": [
       "graph_metrics",
@@ -5146,7 +5078,7 @@
     "proof_strategy": "Show that each edge of G maps to an edge of H under the quotient labeling (by construction of the labeling from the edge partition), so every path in G maps to a path of equal or shorter length in H. The key step is proving that the GF(2) quotient construction preserves adjacency: if uv ∈ E(G) and uv lies in partition class i, then ℓ(u) and ℓ(v) differ in exactly the coordinate corresponding to the image of class i in the quotient. The non-stretching then follows by taking d_G(u,v) as the infimum over all path lengths, which bound the Hamming distance of the labels from below.",
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
@@ -5547,6 +5479,36 @@
     "title": "Seymour's Second Neighborhood Conjecture holds for oriented graphs with minimum out-degree at most 7"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Naslund-Sawin sunflower bound",
+      "i-triangular tensors",
+      "slice-rank method",
+      "Erdős-Szemerédi sunflower conjecture",
+      "sunflower-free set families"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The polynomial prefactor in the bound for sunflower-free families can be eliminated entirely. Specifically, there exists an absolute constant C > 0 such that for all n ≥ 1 and all 3-sunflower-free families F ⊆ 2^{[n]}, |F| ≤ C · (3/2^{2/3})^n. This would strengthen the paper's O(n^{1/6}(3/2^{2/3})^n) bound by removing the polynomial factor, and would follow if i-triangular tensor methods could be applied with arbitrarily large tensor orders to drive the polynomial factor to a constant.",
+    "domain_bridges": [
+      "tensor_decomposition",
+      "algebraic_combinatorics",
+      "property_testing",
+      "computational_complexity"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2977",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a hierarchy of i-triangular tensor encodings for sunflower-free families with increasing tensor order k and triangularity parameter i, applying the generalized slice-rank lemma to drive the polynomial exponent toward 0. Alternatively, develop a recursive composition of the 1-triangular construction where the output of one layer feeds into the next, achieving polylogarithmic or constant prefactor.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30593v1",
+    "status": "available",
+    "timestamp": "2026-06-30T12:41:52.875344+00:00",
+    "title": "Polynomial-Free Sunflower Bound"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -5563,7 +5525,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2977",
+    "id": "fd_2978",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5591,7 +5553,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2978",
+    "id": "fd_2979",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5620,7 +5582,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2979",
+    "id": "fd_2980",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5629,6 +5591,37 @@
     "status": "available",
     "timestamp": "2026-06-30T12:22:21.874221+00:00",
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "11F11",
+      "11F30",
+      "11L40",
+      "11N37"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any normalized Hecke eigenform f of weight κ for SL(2,Z), integers j ≥ 1, k ≥ 2, h ≥ 1, q ≥ 1, and even m ∈ {2,4,6,8,10,12}, and any k-full kernel function a: ℕ → ℕ with a(n) ≪ n^ε for all ε > 0, the shifted convolution sum S(x) = ∑_{n ≤ x, n ≡ 1 (mod q), n ∈ S_m} a(n) · λ_{sym^j f}(n + h) — where S_m denotes the set of integers representable as a sum of m squares — admits an asymptotic formula S(x) = M(x) + O(x^{1-δ}) with an explicit main term M(x) satisfying M(x) ≫ x and a power-saving error term with δ > 0 depending on j, k, m, q, and h. This extends the Lü–Wang result (j = 1, k = 2) and the Venkatasubbareddy–Sankaranarayanan generalization to arbitrary symmetric power L-functions.",
+    "domain_bridges": [
+      "Modular forms",
+      "L-functions",
+      "Arithmetic functions",
+      "Additive number theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "MachineLearning"
+    ],
+    "id": "fd_2981",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30618v1",
+    "status": "available",
+    "timestamp": "2026-06-30T12:42:50.216839+00:00",
+    "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
   },
   {
     "ambition_level": "extension",
@@ -5884,7 +5877,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2f3d7834",
+    "consumed_by_exp_id": "",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domain_bridges": [],
     "domains": [
@@ -5897,7 +5890,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
