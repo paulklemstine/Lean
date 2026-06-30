@@ -480,7 +480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "6c99f10d",
+    "consumed_by_exp_id": "",
     "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
     "domains": [
       "Algebra",
@@ -491,7 +491,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432807+00:00",
     "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
   },
@@ -2235,7 +2235,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Skeleton-Coskeleton Determination for Regular Maniplexes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb7d7825",
     "description": "Let \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n \u2208 {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n \u2208 {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domains": [
       "Bridges"
@@ -2244,7 +2244,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function \u03c1(q)"
   },
@@ -3234,12 +3234,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that any C4-free graph of diameter 2 without universal vertices and maximum degree at least 17 is not 3-colorable, formalizing the main structural result of the paper.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2982",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30282v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:16:39.007092+00:00",
+    "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2982",
+    "id": "fd_2983",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3254,7 +3268,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2983",
+    "id": "fd_2984",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3268,7 +3282,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2984",
+    "id": "fd_2985",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3283,7 +3297,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3298,7 +3312,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3313,7 +3327,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3328,7 +3342,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3342,13 +3356,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
     "status": "available",
     "timestamp": "2026-06-30T13:57:52.389023+00:00",
     "title": "Generalized Concentration of Measure for Well-Spread Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture posits that joint descendant sizes scale asymptotically below linear growth, bounded by \u221an, conflicting with polynomial expectations from recursive dependencies.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2991",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30475v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:19:18.123295+00:00",
+    "title": "Sublinear Growth of Joint Descendants"
   },
   {
     "consumed_by_exp_id": "",

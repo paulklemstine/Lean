@@ -639,7 +639,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6c99f10d",
+    "consumed_by_exp_id": "",
     "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
     "domain_bridges": [],
     "domains": [
@@ -653,7 +653,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432807+00:00",
     "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
   },
@@ -3719,7 +3719,7 @@
       "Rademacher_expansions",
       "q_series"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb7d7825",
     "description": "Let ρ(q) = Σ_{m≥0} q^{2m(m+1)} / Π_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = Σ_{n≥0} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n ≥ 0: r(3n) > 0, r(3n+1) ≤ 0, and r(3n+2) ≤ 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n ∈ {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n ∈ {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domain_bridges": [
       "analytic_number_theory ↔ formal_power_series_coefficients",
@@ -3735,7 +3735,7 @@
     "proof_strategy": "The asymptotic sign law is proven via Watson's identity 2ρ(q) + ω(q) = T(q) combined with Rademacher-type expansions for ω(q) and the theta-eta product T(q), yielding r(n) ~ κ_{n mod 3} · (2π)/(12n+8)^{1/4} · I_{1/2}(π√(12n+8)/18) where κ₀ > 0, κ₁ < 0, κ₂ < 0. To prove the exact finite conjecture, one must: (1) make the error term in the Rademacher expansion fully effective with explicit constants, yielding an explicit N₀ such that the sign law holds for all n ≥ N₀; (2) computationally verify all cases n < N₀. The effective bound requires careful tracking of all error terms in the circle method analysis, similar to effective Rademacher bounds for partition ranks.",
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
   },
@@ -5622,6 +5622,31 @@
     "title": "Entropic MMS for Rényi Entropy of Order 2 (Collision Entropy)"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "cs.DM"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that any C4-free graph of diameter 2 without universal vertices and maximum degree at least 17 is not 3-colorable, formalizing the main structural result of the paper.",
+    "domain_bridges": [
+      "Combinatorics",
+      "Logic and Computation"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2982",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the graph properties (C4-freeness, diameter-2, absence of universal vertices, max degree >= 17) in Lean. Proceed by contradiction by assuming a valid 3-coloring exists, then derive a contradiction using the structural properties of the neighborhood of a vertex with degree >= 17. Specifically, exploit the fact that the neighborhood of any vertex in a C4-free graph induces a matching, and use the diameter-2 condition to show that the coloring constraints force a contradiction.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30282v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:16:39.007092+00:00",
+    "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -5638,7 +5663,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2982",
+    "id": "fd_2983",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5666,7 +5691,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2983",
+    "id": "fd_2984",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5695,7 +5720,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2984",
+    "id": "fd_2985",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5726,7 +5751,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5756,7 +5781,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -5784,7 +5809,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -5814,7 +5839,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2988",
+    "id": "fd_2989",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -5839,7 +5864,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2989",
+    "id": "fd_2990",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -5848,6 +5873,25 @@
     "status": "available",
     "timestamp": "2026-06-30T13:57:52.389023+00:00",
     "title": "Generalized Concentration of Measure for Well-Spread Sets"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": "Janson's work on ancestry processes",
+    "consumed_by_exp_id": "",
+    "description": "The conjecture posits that joint descendant sizes scale asymptotically below linear growth, bounded by √n, conflicting with polynomial expectations from recursive dependencies.",
+    "domain_bridges": "n and n+1",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2991",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Convergence bounds via recursive bounds",
+    "research_mode": "team",
+    "source_exp_id": "2606.30475v1",
+    "status": "available",
+    "timestamp": "2026-06-30T14:19:18.123295+00:00",
+    "title": "Sublinear Growth of Joint Descendants"
   },
   {
     "ambition_level": "extension",

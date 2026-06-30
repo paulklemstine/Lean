@@ -16343,7 +16343,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16359,7 +16359,7 @@
         "Algebra"
       ],
       "id": "fd_0541",
-      "last_attempt_time": "2026-06-30T13:57:56.286152+00:00",
+      "last_attempt_time": "2026-06-10T06:51:24.727877+00:00",
       "last_reviewed_at": "2026-06-09T14:59:44.907609+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39623,7 +39623,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.NT",
         "mock_theta_functions",
@@ -39633,7 +39633,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "bb7d7825",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39648,7 +39648,7 @@
         "Bridges"
       ],
       "id": "fd_2912",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T14:19:23.896069+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ramanujan_rho_sign_law (n : ℕ) :\n    r (3 * n) > 0 ∧\n    r (3 * n + 1) ≤ 0 ∧\n    r (3 * n + 2) ≤ 0 :=\n  by\n    sorry\n\n-- where r is defined via the power series coefficients of ρ(q)\ndef r (n : ℕ) : ℤ :=\n  -- coefficient of q^n in Σ_{m≥0} q^{2m(m+1)} / Π_{j=0}^{m} (1+q^{2j+1}+q^{4j+2})\n  sorry\n\n-- The complete conjecture including zero characterization:\ntheorem ramanujan_rho_sign_law_complete (n : ℕ) :\n    r (3 * n) > 0 ∧\n    (r (3 * n + 1) < 0 ∨ n ∈ {0, 1}) ∧\n    (r (3 * n + 2) < 0 ∨ n ∈ {0, 2, 6}) ∧\n    r 11 = 0 :=\n  by\n    sorry",
       "lineage_refs": [],
@@ -39662,7 +39662,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27902v1",
       "source_path": "http://arxiv.org/abs/2606.27902v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-30T00:52:54.836226+00:00",
       "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
@@ -42887,6 +42887,50 @@
       "title": "Entropic MMS for Rényi Entropy of Order 2 (Collision Entropy)"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "cs.DM"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that any C4-free graph of diameter 2 without universal vertices and maximum degree at least 17 is not 3-colorable, formalizing the main structural result of the paper.",
+      "domain_bridges": [
+        "Combinatorics",
+        "Logic and Computation"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2982",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem not_three_colorable_of_C4_free_diam2_max_degree_ge_17 {V : Type*} [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj] (hC4 : ∀ (a b c d : V), ¬(G.Adj a b ∧ G.Adj b c ∧ G.Adj c d ∧ G.Adj d a ∧ a ≠ c ∧ b ≠ d)) (hdiam : G.diam ≤ 2) (hno_univ : ¬∃ u : V, ∀ v : V, v = u ∨ G.Adj u v) (hmax_deg : ∃ u : V, 17 ≤ G.degree u) : ¬(G.Colorable 3) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the graph properties (C4-freeness, diameter-2, absence of universal vertices, max degree >= 17) in Lean. Proceed by contradiction by assuming a valid 3-coloring exists, then derive a contradiction using the structural properties of the neighborhood of a vertex with degree >= 17. Specifically, exploit the fact that the neighborhood of any vertex in a C4-free graph induces a matching, and use the diameter-2 condition to show that the coloring constraints force a contradiction.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30282v1",
+      "source_path": "http://arxiv.org/abs/2606.30282v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T14:16:39.007092+00:00",
+      "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -42912,7 +42956,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2982",
+      "id": "fd_2983",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem nilpotent_extension_feng_sun_xiang (G : Type*) [Group G] [Fintype G] [IsNilpotent G] {p : ℕ} (hp : Nat.Prime p) (hp_min : ∀ q ∣ Fintype.card G, Nat.Prime q → p ≤ q) {k : ℕ} (hk : k < p) (a : Fin k → G) (ha : Function.Injective a) (b : Fin k → G) : ∃ σ : Equiv.Perm (Fin k), Function.Injective fun i => a i * b (σ i) := by sorry",
@@ -42959,7 +43003,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2983",
+      "id": "fd_2984",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem odd_kneser_strong_chromatic_index : forall k >= 2, odd_kneser_graph (2*k-1) k ~~> strong_chromatic_index (2*k-1) := ...",
@@ -43007,7 +43051,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2984",
+      "id": "fd_2985",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_sign_changes_sym_power_over_sums_of_squares\n    (k j m : ℕ) (hk : Even k ∧ k ≥ 2) (hm : Even m ∧ m ≥ 2)\n    (f : Sl2Z.ModularForm k) (hf : f ∈ HeckeEigenforms k)\n    (hf_norm : IsNormalised f) :\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n > 0} ∧\n    Infinite {n : ℕ | IsSumOfMSquares n m ∧ λ_sym_pow f j n < 0} := by\n  sorry",
@@ -43057,7 +43101,7 @@
         "Pythagorean",
         "MachineLearning"
       ],
-      "id": "fd_2985",
+      "id": "fd_2986",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem shifted_convolution_sym_power_k_full_sums_of_squares\n    (f : ModularForms.SL2Z) (κ : ℕ) (hf : IsHeckeEigenform f κ)\n    (j k h q m : ℕ) (hk : k ≥ 2) (hj : j ≥ 1) (hm : m ∈ {2,4,6,8,10,12})\n    (a : ℕ → ℕ) (ha_kfull : IsKFullKernel a k) (ha_bound : ∀ ε > 0, ∃ C, ∀ n, (a n : ℝ) ≤ C * n^ε) :\n    ∃ (δ : ℝ) (hδ : δ > 0) (C₀ : ℝ) (hC₀ : C₀ > 0) (α : ℕ),\n    ∀ ε > 0, ∃ B : ℝ, ∀ x ≥ (1 : ℝ),\n    let S := ∑ n in Finset.Icc 1 ⌊x⌋ₙ |>.filter\n      (fun n => n % q = 1 ∧ IsSumOfMSquares n m),\n      (a n : ℝ) * λSymPower f j (n + h)\n    let M := C₀ * x * (Real.log x)^α\n    |S - M| ≤ B * x^(1 - δ + ε) := sorry",
@@ -43106,7 +43150,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2986",
+      "id": "fd_2987",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vertex_ramsey_stability {r : ℕ} (hr : 2 ≤ r) {H : SimpleGraph ℕ} (hH : 2 ≤ H.chromaticNumber) : ∀ ε > 0, ∃ n₀ : ℕ, ∃ δ > 0, ∀ n ≥ n₀, ∀ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj], G.minDegree ≥ (1 - 1 / (r * (H.chromaticNumber - 1))) * n → ¬(G →_v (H, r)) → ∃ (G' : SimpleGraph (Fin n)) [DecidableRel G'.Adj], G'.IsKPartite (r * (H.chromaticNumber - 1)) ∧ (G.edgeSet \\ G'.edgeSet).card ≤ ε * n ^ 2",
@@ -43153,7 +43197,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2987",
+      "id": "fd_2988",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem orbit_closure_bruhat_relation {n : ℕ} {v w : Equiv.Perm (Fin (n+1))} (hv : v ≤ w) : (ιₙ ⁻¹ (BOrbit O_w)) ⊆ closure (ιₙ ⁻¹ (BOrbit O_v))",
@@ -43202,7 +43246,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2988",
+      "id": "fd_2989",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "/-- Conjecture: For any m ≥ 1, p ∈ [0, 1/3], and positive weights w₁,...,wₘ\n    summing to 1, if v₁,...,vₘ are i.i.d. Bernoulli(p), then P(∑ wᵢ vᵢ ≥ p) ≥ p. -/\ntheorem prob_weighted_bernoulli_sum_ge_mean {m : ℕ} (p : ℝ)\n    (hp₁ : 0 ≤ p) (hp₂ : p ≤ 1 / 3)\n    (w : Fin m → ℝ) (hw₁ : ∀ i, 0 < w i) (hw₂ : ∑ i, w i = 1) :\n    let μ := Measure.pi (fun (_ : Fin m) => (PMF.bernoulli p hp₁).toMeasure)\n    (μ {x : Fin m → Bool | (∑ i, w i * if x i then (1 : ℝ) else 0) ≥ p}).toReal ≥ p := by\n  sorry",
@@ -43246,7 +43290,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2989",
+      "id": "fd_2990",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_concentration_of_measure (ε : ℝ) (hε : ε ∈ Ioo 0 1) :\n    ∃ (γ : ℝ) (C : ℕ), 0 < γ ∧ 0 < C ∧\n    ∀ (n : ℕ) (A S : Finset (Fin n → ZMod 2)),\n      (A.card : ℝ) ≥ ε * (2 : ℝ) ^ n ∧ IsWellSpread S γ C →\n      ((A + S).card : ℝ) ≥ (1 - ε) * (2 : ℝ) ^ n := by\n  sorry",
@@ -43265,6 +43309,44 @@
       "thread_id": "",
       "timestamp": "2026-06-30T13:57:52.389023+00:00",
       "title": "Generalized Concentration of Measure for Well-Spread Sets"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": "Janson's work on ancestry processes",
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The conjecture posits that joint descendant sizes scale asymptotically below linear growth, bounded by √n, conflicting with polynomial expectations from recursive dependencies.",
+      "domain_bridges": "n and n+1",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2991",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Integral asymptotic estimates",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Convergence bounds via recursive bounds",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.30475v1",
+      "source_path": "http://arxiv.org/abs/2606.30475v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T14:19:18.123295+00:00",
+      "title": "Sublinear Growth of Joint Descendants"
     },
     {
       "ambition_level": "extension",
@@ -47911,7 +47993,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -47927,7 +48009,7 @@
         "Algebra"
       ],
       "id": "seed_327",
-      "last_attempt_time": "2026-06-30T13:58:01.994343+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:28:10.507485+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -49915,7 +49997,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "6c99f10d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -49942,7 +50024,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432807+00:00",
       "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
