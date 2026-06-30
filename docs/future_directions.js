@@ -377,7 +377,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e6cf72d1",
     "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
     "domains": [
       "MachineLearning",
@@ -387,7 +387,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432777+00:00",
     "title": "Universal Approximation: Quantitative Bounds"
   },
@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71da124a",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -1552,7 +1552,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete classification of 4th powers in the 14-gonal numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31227a11",
     "description": "The paper proves that for integers $k \\ge 1$ and $n \\ge 2k+2$, any $\\tau_k$-maximal graph on $n$ vertices has at most $(k+1)(n-1)-1$ edges, and constructs examples achieving this bound. The authors conjecture that this upper bound is actually an exact equality: every $\\tau_k$-maximal graph on $n \\ge 2k+2$ vertices has exactly $(k+1)(n-1)-1$ edges. This conjecture is verified for $k=1$, but remains open for $k \\ge 2$.",
     "domains": [
       "Pythagorean"
@@ -1561,7 +1561,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T10:44:44.698882+00:00",
     "title": "Exact Edge Count of Tau_k-Maximal Graphs"
   },
@@ -1816,7 +1816,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No nontrivial perfect powers in even-indexed polygonal numbers for exponents p \u2265 11"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6285deb",
     "description": "When the parameter relationship s = t^M is imposed on the mixed product of modified Greaves-Jing-Zhu operators, the coefficients in the scalar factor (u;t)_M/(-u;t)_M expansion are signed principal specializations of one-row Schur Q-functions. Specifically, if c_k^{(M)} denotes the coefficient of u^k in (u;t)_M/(-u;t)_M, then c_k^{(M)} = (-1)^k Q_k(1+t+...+t^M) where Q_k is the one-row Schur Q-function defined by equation (4).",
     "domains": [
       "Bridges"
@@ -1825,7 +1825,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T17:13:36.219637+00:00",
     "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur Q-Functions"
   },
@@ -2120,7 +2120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Point Continuum of Largest Matching Roots"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "259111f2",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domains": [
       "Geometry",
@@ -2130,7 +2130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G\u2082\u2087 Have Exactly 23 Vertices"
   },
@@ -2471,7 +2471,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph Algebra $\\mathfrak{sl}_2$-Module Isomorphism to Tensor Power"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e533c39",
     "description": "Let E = (G_a^d, \u03c6) be a d-dimensional Anderson t-module defined over a global function field L with constant field F_q, and let P_1, ..., P_\u2113 \u2208 E(L) be points with logarithmic heights at most H. The F_q[t]-module of relations R = {(a_1, ..., a_\u2113) \u2208 F_q[t]^\u2113 : \u03a3 a_i \u00b7 P_i = 0} is finitely generated and free (since F_q[t] is a PID). Conjecture: there exist effective constants C_1, C_2 depending only on q, d, and the t-module E, such that R is generated by elements whose entries have degree at most C_1 \u00b7 H^{C_2 \u00b7 \u2113}. This is the function-field analogue of Masser's effective bound on generators of relation modules for points on commutative algebraic groups over number fields, and would provide effective termination bounds for the algorithm presented in the paper.",
     "domains": [
       "Algebra",
@@ -2481,7 +2481,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T06:09:51.264477+00:00",
     "title": "Effective Degree Bound for t-Module Relation Modules"
   },
@@ -3089,7 +3089,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9610cda9",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -3099,7 +3099,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },

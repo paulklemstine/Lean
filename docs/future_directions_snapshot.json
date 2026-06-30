@@ -501,7 +501,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e6cf72d1",
     "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
     "domain_bridges": [],
     "domains": [
@@ -514,7 +514,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432777+00:00",
     "title": "Universal Approximation: Quantitative Bounds"
   },
@@ -620,7 +620,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71da124a",
     "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -633,7 +633,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -2409,7 +2409,7 @@
       "Spanning tree packing number",
       "Edge-disjoint spanning trees"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31227a11",
     "description": "The paper proves that for integers $k \\ge 1$ and $n \\ge 2k+2$, any $\\tau_k$-maximal graph on $n$ vertices has at most $(k+1)(n-1)-1$ edges, and constructs examples achieving this bound. The authors conjecture that this upper bound is actually an exact equality: every $\\tau_k$-maximal graph on $n \\ge 2k+2$ vertices has exactly $(k+1)(n-1)-1$ edges. This conjecture is verified for $k=1$, but remains open for $k \\ge 2$.",
     "domain_bridges": [
       "Matroid theory",
@@ -2424,7 +2424,7 @@
     "proof_strategy": "Assume for contradiction that there exists a $\\tau_k$-maximal graph $G$ with $|E(G)| < (k+1)(n-1)-1$. By the definition of $\\tau_k$-maximality, $G$ has no subgraph with $k+1$ edge-disjoint spanning trees, but adding any edge creates one. Use the Nash-Williams/Tutte characterization to analyze the specific partitions of $V(G)$ that restrict the spanning tree packing number. Show that the edge deficiency implies the existence of an edge $e \\in E(G^c)$ such that $G+e$ still fails to satisfy the Nash-Williams/Tutte condition for $k+1$ edge-disjoint spanning trees, thereby contradicting the $\\tau_k$-maximality of $G$.",
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T10:44:44.698882+00:00",
     "title": "Exact Edge Count of Tau_k-Maximal Graphs"
   },
@@ -2848,7 +2848,7 @@
       "Order theory",
       "Poset automorphisms"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d4e2b7e",
     "description": "Generalizing the paper's main theorem from Z_2 x Z_{2^n} to Z_2^k x Z_{2^n}, we conjecture that the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} is 2^{n+1} + 2k for any k >= 1 and n >= 3. This matches the upper bound obtained by iteratively applying Proposition 1.1 to a minimal poset for Z_{2^n}.",
     "domain_bridges": [
       "Group theory"
@@ -2863,7 +2863,7 @@
     "proof_strategy": "Proceed by induction on k. The base case k=1 is the main theorem of the paper. For the inductive step, use the structural lemmas to show that any minimal poset realizing Z_2^k x Z_{2^n} must contain a subposet realizing Z_2^{k-1} x Z_{2^n}, and then apply the additive property of the two new elements analogous to Proposition 1.1 to establish the lower bound.",
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T16:28:32.494303+00:00",
     "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
   },
@@ -2900,7 +2900,7 @@
       "https://arxiv.org/abs/math/0507175",
       "https://arxiv.org/abs/math/0608105"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6285deb",
     "description": "When the parameter relationship s = t^M is imposed on the mixed product of modified Greaves-Jing-Zhu operators, the coefficients in the scalar factor (u;t)_M/(-u;t)_M expansion are signed principal specializations of one-row Schur Q-functions. Specifically, if c_k^{(M)} denotes the coefficient of u^k in (u;t)_M/(-u;t)_M, then c_k^{(M)} = (-1)^k Q_k(1+t+...+t^M) where Q_k is the one-row Schur Q-function defined by equation (4).",
     "domain_bridges": [
       "Algebraic Combinatorics",
@@ -2916,7 +2916,7 @@
     "proof_strategy": "Establish a bijection between the coefficient recurrence for (u;t)_M/(-u;t)_M and the recurrence satisfied by signed principal specializations of one-row Schur Q-functions. Use the Pfaffian Giambelli identity (equation 10) and the generating function (equation 4) to show both sequences satisfy the same recurrence with matching initial conditions.",
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T17:13:36.219637+00:00",
     "title": "Coefficients of Mixed Operator Scalar Factors are Signed Principal Specializations of One-Row Schur Q-Functions"
   },
@@ -3464,7 +3464,7 @@
       "geometric_fractional_chromatic_number",
       "extremal_coloring_polytope"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "259111f2",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G₂₇ constructed by Matolcsi, Ruzsa, Varga, and Zsámboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes χ_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domain_bridges": [
       "linear_programming",
@@ -3481,7 +3481,7 @@
     "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph with its coordinates. Encode the geometric fractional chromatic number as a linear program over measurable functions. Use the finite-dimensional reduction (the LP with 182304 variables capturing the constraints on finite sub-configurations) to extract the extreme points computationally. Verify each of the 23 extremal colorings satisfies all unit-distance constraints and achieves total weight exactly 4, and confirm no other extreme points exist via vertex enumeration on the LP's feasible polytope.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G₂₇ Have Exactly 23 Vertices"
   },
@@ -4121,7 +4121,7 @@
       "Frobenius difference equations",
       "Drinfeld modules"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e533c39",
     "description": "Let E = (G_a^d, φ) be a d-dimensional Anderson t-module defined over a global function field L with constant field F_q, and let P_1, ..., P_ℓ ∈ E(L) be points with logarithmic heights at most H. The F_q[t]-module of relations R = {(a_1, ..., a_ℓ) ∈ F_q[t]^ℓ : Σ a_i · P_i = 0} is finitely generated and free (since F_q[t] is a PID). Conjecture: there exist effective constants C_1, C_2 depending only on q, d, and the t-module E, such that R is generated by elements whose entries have degree at most C_1 · H^{C_2 · ℓ}. This is the function-field analogue of Masser's effective bound on generators of relation modules for points on commutative algebraic groups over number fields, and would provide effective termination bounds for the algorithm presented in the paper.",
     "domain_bridges": [
       "Geometry of numbers over function fields (F_q[t]-lattices)",
@@ -4139,7 +4139,7 @@
     "proof_strategy": "Via the paper's correspondence, reduce to bounding degrees of polynomial solutions to Frobenius difference equations v^(1) = A·v. Apply the geometry of numbers over the valuation ring F_q[[1/θ]] combined with the theory of rigid analytic t-motives: (1) embed the relation module into a lattice in a rigid analytic space, (2) use successive minima estimates for F_q[t]-lattices analogous to Masser's geometry-of-numbers argument, (3) control the growth of entries under iteration of the Frobenius-twisted equation via height bounds on the t-module action, yielding polynomial degree bounds on generators.",
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T06:09:51.264477+00:00",
     "title": "Effective Degree Bound for t-Module Relation Modules"
   },
@@ -5174,7 +5174,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9610cda9",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domain_bridges": [],
     "domains": [
@@ -5187,7 +5187,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
