@@ -1,180 +1,82 @@
-# The Hidden Geometry of a Simple Equation
+# The Three-Cube Puzzle: Which Numbers Hide a Triple of Cubes?
 
-## When 33 broke the internet
+Pick a whole number — say $29$. Can you write it as the sum of three perfect cubes, allowing negative numbers? After a little fiddling you might find
+$$
+29 = 3^3 + 1^3 + 1^3 = 27 + 1 + 1.
+$$
+Easy. Now try $30$. This one is far harder; the smallest solution known is
+$$
+30 = 2{,}220{,}422{,}932^3 + (-2{,}218{,}888{,}517)^3 + (-283{,}059{,}965)^3,
+$$
+a triple of ten-digit giants that nearly cancel one another out. And then try $33$. For decades nobody could decide whether it was possible at all — until $2019$, when a worldwide computation finally produced an answer with numbers sixteen digits long.
 
-In 2019, the mathematician Andrew Booker made headlines with an announcement that seemed almost comically simple: he had found three numbers whose cubes add up to 33. The answer—after sixty-five years of searching—was:
+This is the **sum of three cubes** problem, one of the most deceptively simple questions in all of mathematics. It asks, for a given integer $n$, whether there exist integers $x$, $y$, $z$ with
+$$
+x^3 + y^3 + z^3 = n.
+$$
+The catch — and the beauty — is that the cubes may be negative, so there is no upper limit on how large the ingredients can grow. A number might be representable using astronomically large cubes that all but annihilate each other, leaving behind a small remainder. There is no obvious way to bound the search, and that is precisely what makes the problem so slippery.
 
-**(8,866,128,975,287,528)³ + (–8,778,405,442,862,239)³ + (–2,736,111,468,807,040)³ = 33.**
+## A wall that nine builds
 
-Each of those numbers has sixteen digits. The cubes have forty-eight. And yet the equation itself is something a child could understand: *find three whole numbers whose cubes add up to 33*.
+Before chasing giant solutions, there is a much cheaper question to ask: are there numbers for which the answer is *obviously no*? Remarkably, yes — and the reason is a single, elegant piece of arithmetic involving the number nine.
 
-How can such a simple question hide such staggering complexity? The answer takes us on a journey through one of the deepest frontiers of modern mathematics—a place where arithmetic, geometry, and the architecture of numbers themselves intertwine in ways that are still only partially understood.
+Look at what cubes do modulo $9$ (that is, look at their remainders after dividing by $9$). Run through the possibilities:
+$$
+0^3 \equiv 0,\quad 1^3 \equiv 1,\quad 2^3 \equiv 8,\quad 3^3 \equiv 0,\quad 4^3 \equiv 1,\quad 5^3 \equiv 8,\ \dots
+$$
+The pattern never escapes a tiny set. **Every cube of an integer leaves a remainder of $0$, $1$, or $8$ when divided by $9$.** There are no other options. This is the heart of the matter, and it is easy to see why: any integer is one of $0, \pm 1, \pm 2, \pm 3, \pm 4$ modulo $9$, and cubing each of these nine possibilities only ever yields $0$, $1$, or $8$.
 
----
+Now suppose $n$ is a sum of three cubes. Then modulo $9$, $n$ must be a sum of three numbers each drawn from the set $\{0, 1, 8\}$. How many totals can three such picks produce? We can simply list them. The possible sums are
+$$
+0,\ 1,\ 2,\ 3,\ 8,\ 9,\ 10,\ 16,\ 17,\ 24,
+$$
+which modulo $9$ collapse to the remainders
+$$
+0,\ 1,\ 2,\ 3,\ 6,\ 7,\ 8.
+$$
+Two remainders are conspicuously missing: **$4$ and $5$**. No matter how you combine three elements of $\{0,1,8\}$, you can never land on $4$ or $5$ modulo $9$.
 
-## A deceptively easy question
+The conclusion is immediate and airtight:
 
-Take any integer—say, 29. Can you write it as the sum of three cubes?
+> **The Modular Obstruction.** If $n \equiv 4$ or $n \equiv 5 \pmod 9$, then $n$ is *not* a sum of three integer cubes.
 
-**3³ + 1³ + 1³ = 27 + 1 + 1 = 29.** ✓
+This rules out infinitely many numbers in one stroke — $4, 5, 13, 14, 22, 23, \dots$ and so on, the entire arithmetic progressions $\equiv \pm 4 \pmod 9$. It is a complete, unconditional proof of impossibility, and it costs nothing more than checking a handful of remainders. Mathematicians call this kind of barrier a *local obstruction*: a failure that can be detected by looking at a single modulus.
 
-That was easy. Try 6:
+## The conjecture: is nine the *only* wall?
 
-**(–1)³ + (–1)³ + 2³ = –1 – 1 + 8 = 6.** ✓
+The obvious next question is whether nine tells the whole story. We now know that $n \equiv 4, 5 \pmod 9$ is impossible. But is *every other* number representable?
 
-Now try 4. Or 5. Go ahead, try any combination you like.
+Concretely: if $n$ is **not** congruent to $4$ or $5$ modulo $9$, must $n$ be a sum of three cubes? This is the celebrated **conjecture of Heath-Brown**, and it remains *open* — one of the genuinely unsolved problems of modern number theory. All available evidence says yes. Every integer below $100$ has now been settled, including the two notorious holdouts $33$ and $42$, cracked only in $2019$ after enormous distributed computations. Not a single admissible number has ever resisted. Yet there is no proof, and the difficulty is structural: each residue class contains infinitely many integers, and there is no finite list of examples that could ever certify them all. The number $0$, the number $9$, the number $18$ — all live in the same class modulo $9$, yet each may demand a genuinely different and larger representation. A conjecture about infinitely many numbers cannot be settled by checking finitely many of them.
 
-You won't find one. And this isn't because you haven't looked hard enough—it's because *it's impossible*. There is a beautiful and ancient reason why, and it has to do with the secret life of cubes.
+So the problem splits cleanly into two halves of utterly different character:
 
----
+- **The impossibility half** is *finished*. The modular obstruction is a theorem, proved completely and rigorously: numbers congruent to $4$ or $5$ modulo $9$ are forever beyond reach.
+- **The possibility half** is *conjectural*. Whether nine is the only obstacle is unknown, and it cannot be reduced to a finite computation.
 
-## The mod 9 wall
+We can package both halves into a single statement, being scrupulously honest about which side is settled:
 
-Here's a curious fact about cubes: take any whole number, cube it, and divide by 9. The remainder is always 0, 1, or 8. Always. No exceptions.
+> **Characterization (one direction open).** An integer $n$ fails to be a sum of three cubes *if and only if* $n \equiv 4$ or $5 \pmod 9$. The "if" direction — that these residues are impossible — is a proven theorem. The "only if" direction — that nothing else is impossible — is exactly Heath-Brown's open conjecture.
 
-- 0³ = 0, remainder 0
-- 1³ = 1, remainder 1
-- 2³ = 8, remainder 8
-- 3³ = 27, remainder 0
-- 4³ = 64, remainder 1
-- 5³ = 125, remainder 8
+## Why the giants appear
 
-The pattern repeats with period 9, and every cube falls into one of just three bins: {0, 1, 8}. Now add three such remainders together. The possible sums, after dividing by 9, give remainders:
+What makes the *possibility* half so computationally savage? Geometry offers a clue. The equation $x^3 + y^3 + z^3 = n$ describes a surface floating in three-dimensional space — a smooth **cubic surface**. Asking whether $n$ is a sum of three cubes is asking whether this surface passes through any point with whole-number coordinates.
 
-**0, 1, 2, 3, 6, 7, 8** — but *never* 4 or 5.
+The surface stretches off to infinity, and integer points on it can be extraordinarily sparse and far from the origin. Heuristic counting arguments — essentially estimating how many lattice points lie near the surface — predict that solutions should exist for every admissible $n$, but that the *smallest* one can be wildly large. That is why $30$ needs ten-digit cubes and $33$ needs sixteen-digit ones: not because the numbers are special, but because the surface only grazes the integer lattice at remote outposts. The hunt for these points is a triumph of clever number theory and raw computational power, often phrased as searching for $x, y$ with $x^3 + y^3 - n$ divisible by a cube and combing through residues with sophisticated sieves.
 
-This is why neither 4 nor 5 (nor 13, 14, 22, 23, 31, 32, ...) can ever be written as a sum of three cubes. The "clock arithmetic" of cubes modulo 9 creates an absolute, impenetrable wall.
+There is also a built-in symmetry that softens the search: since
+$$
+(-x)^3 + (-y)^3 + (-z)^3 = -(x^3+y^3+z^3),
+$$
+a number $n$ is a sum of three cubes exactly when $-n$ is. Representations come in mirror-image pairs, halving the work and reflecting the central symmetry of the cubic surface itself.
 
-Mathematicians call this a **local obstruction**: a test you can perform using only the arithmetic of remainders—without ever needing to find actual solutions—that can definitively rule out certain numbers.
+## Families that never run out
 
----
+Not every number is a tightrope walk. Some values are *abundantly* representable, and the reason is algebraic identity rather than brute search. For instance, there is a polynomial recipe that produces solutions for the value $1$ for every parameter, and a classical identity does the same for $2$. These are not lucky accidents; they are whole one-parameter families of solutions, infinite assembly lines that manufacture representations on demand. Small targets like $0 = 0^3+0^3+0^3$, $2 = 1^3 + 1^3 + 0^3$, $3 = 1^3+1^3+1^3$, $6 = 2^3 + (-1)^3 + (-1)^3$, and $7 = 2^3 + 0^3 + (-1)^3$ fall out instantly, while the same surface can hide its solutions for a number like $33$ for the better part of a century.
 
-## But what about everyone else?
+This contrast — effortless families on one side, deep isolated giants on the other — is the signature of the three-cube problem. It is what links a question a schoolchild can pose to the frontier of analytic number theory, the geometry of cubic surfaces, and the grand philosophy of the **Hasse principle**, which asks when local solvability (no obstruction at any modulus, no obstruction over the real numbers) guarantees global solvability (an actual integer solution). The modular obstruction modulo $9$ is the one and only local barrier here; Heath-Brown's conjecture is the bold claim that, for three cubes, local solvability is *enough*.
 
-The mod 9 test sorts all integers into two camps: the **obstructed** (those congruent to 4 or 5 mod 9, about 22% of all integers) and the **admissible** (the remaining 78%). For the obstructed ones, the story is over—they can never be represented. But for the admissible ones, the story has barely begun.
+## The state of play
 
-*Can every admissible number be written as a sum of three cubes?*
+So where do we stand? We have a clean, complete, and final answer to one of the two halves: the numbers that are $\pm 4$ modulo $9$ are impossible, no exceptions, no loopholes, proved by nothing more than the arithmetic of remainders. We have overwhelming computational evidence, and not a single counterexample, for the other half. And we have a beautiful conjecture — nine is the whole story — that has resisted proof for decades despite its innocent appearance.
 
-This question, simple to state, is one of the great open problems of number theory. It has resisted solution since at least 1953, when Louis Mordell first brought attention to it. As of today, we still don't know whether 114 has a representation. We still don't know about 390, or 627, or 906.
-
-The numbers aren't huge. They're not exotic. They're just... stubbornly opaque.
-
----
-
-## Seeing the geometry
-
-Here's where the story takes an unexpected turn. The equation x³ + y³ + z³ = k isn't just an arithmetic puzzle—it describes a *geometric object*.
-
-In three-dimensional space, the set of all points (x, y, z) satisfying this equation forms a **surface**—specifically, an *affine cubic surface*. For each value of k, you get a different surface, each with its own shape, its own curves, its own character. These surfaces belong to a family that algebraic geometers have studied intensively for over a century.
-
-The question "does x³ + y³ + z³ = k have integer solutions?" becomes: does this geometric surface contain any points with all-integer coordinates?
-
-This change of perspective is transformative. Instead of hunting for numbers that satisfy an equation, we're studying the *shape* of the equation itself and asking what that shape tells us about where integers can live on it.
-
----
-
-## Symmetry: the first tool
-
-Every cubic surface x³ + y³ + z³ = k has symmetries. The most obvious: you can rearrange the variables in any order. Since addition is commutative, (1, 2, 3) and (3, 1, 2) are equally valid solutions. The six permutations of three coordinates form the symmetric group S₃, and every solution generates an orbit of up to six "equivalent" solutions.
-
-There's an even more surprising symmetry: **negation**. If you negate all three coordinates, (x, y, z) becomes (–x, –y, –z), and each cube flips sign. So x³ + y³ + z³ = k becomes (–x)³ + (–y)³ + (–z)³ = –k. This means: *if k is representable, so is –k*.
-
-This is not merely a bookkeeping trick. It means the family of surfaces {X_k} has a mirror symmetry: the surface for k = 29 is the "negative twin" of the surface for k = –29, and integer points on one map perfectly to integer points on the other.
-
----
-
-## The factorization key
-
-The identity
-
-**x³ + y³ = (x + y)(x² – xy + y²)**
-
-is usually encountered in algebra textbooks as a curiosity. In the context of three cubes, it becomes a powerful tool.
-
-If x³ + y³ + z³ = k, then x³ + y³ = k – z³. Setting s = x + y and q = x² – xy + y², we get s · q = k – z³. So for each choice of z, the problem reduces to: can we factor k – z³ into a product s · q, where s and q are related by the constraints of the quadratic form?
-
-The quadratic form q = x² – xy + y² is none other than the **norm form of the Eisenstein integers**—the ring ℤ[ω] where ω = e^(2πi/3) is a primitive cube root of unity. This form is always non-negative, and it encodes deep information about which numbers can be represented as norms in this ring.
-
-This connection transforms brute-force search (try all x, y, z in a box) into *structured search* (for each z, factor k – z³ and check a quadratic constraint). The difference is dramatic: instead of searching a three-dimensional cube, we're searching a one-dimensional line of z-values, then solving a factorization problem at each step.
-
----
-
-## The local-global philosophy
-
-The mod 9 obstruction is the simplest example of a profound principle in number theory: the tension between **local** and **global** information.
-
-A "local" test checks whether an equation has solutions modulo some number n. For *every* positive integer n, we can ask: does x³ + y³ + z³ ≡ k (mod n) have solutions? If k genuinely has an integer representation, then it automatically passes every local test—just reduce the solution modulo n. The converse is the deep question.
-
-The **Hasse principle** (or local-global principle) says, roughly: if an equation has solutions modulo every prime and over the real numbers, then it has rational solutions. For quadratic equations (like x² + y² = n), this principle holds perfectly. For cubic equations, it can fail—spectacularly.
-
-The equation x³ + y³ + z³ = k lives in the fascinating borderland where the Hasse principle is neither clearly true nor clearly false. Every integer that passes the mod 9 test also passes *every other local test*. Computations up to modulus 1000 and beyond have found no additional obstructions. Yet we cannot prove that local admissibility implies global representability.
-
----
-
-## The conjecture
-
-Here is the current state of belief among experts:
-
-**Conjecture.** *Every integer k not congruent to 4 or 5 modulo 9 can be represented as a sum of three integer cubes.*
-
-This conjecture is supported by:
-- Heuristic arguments based on the density of cubes, which predict infinitely many representations for each admissible k
-- Extensive computation (solutions now known for all k ≤ 1000 except a handful of holdouts)
-- The absence of any local obstruction beyond mod 9
-
-But "supported by" is not "proved." The conjecture remains wide open. And the holdout numbers—those admissible integers for which no representation has been found despite enormous computational effort—tantalize researchers precisely because there is no known *reason* they should resist.
-
----
-
-## The search landscape
-
-Finding representations is a kind of mathematical treasure hunt. For k = 33, the smallest solution has numbers with sixteen digits. For k = 42, the solution found in 2019 by Booker and Sutherland has numbers with *seventeen* digits:
-
-**(–80,538,738,812,075,974)³ + 80,435,758,145,817,515³ + 12,602,123,297,335,631³ = 42.**
-
-These discoveries required hundreds of thousands of hours of computation on modern hardware. They used sophisticated algorithms far beyond brute force—algorithms that exploit the algebraic structure of cubic surfaces, the arithmetic of number fields, and the geometry of lattices.
-
-The factorization reduction described above is one ingredient. By writing x³ + y³ = (x+y)(x²–xy+y²), we convert each z-candidate into a factorization problem. The discriminant relation 4q – s² = 3(x–y)² then gives a precise criterion: a factorization s · q = k – z³ can be "lifted" to actual integers x, y if and only if 4q – s² is three times a perfect square.
-
-This transforms the problem from "find a needle in a three-dimensional haystack" into "walk along a line and check a sequence of quadratic conditions." Still hard—but structured, attackable, and illuminated by theory.
-
----
-
-## Why this matters
-
-The sum-of-three-cubes problem is not just a puzzle. It sits at the intersection of several major areas of mathematics:
-
-**Arithmetic geometry** studies integer and rational points on algebraic varieties—higher-dimensional analogues of curves and surfaces. The cubic surface x³ + y³ + z³ = k is a fundamental test case for the theory.
-
-**The Hasse principle and Brauer-Manin obstructions** ask when local solvability implies global solvability. Understanding when and why this principle fails is one of the central goals of modern number theory.
-
-**Computational number theory** develops algorithms for finding or ruling out solutions to Diophantine equations. The three-cubes problem has driven advances in large-scale search algorithms, lattice methods, and the computational exploitation of algebraic identities.
-
-**Analytic number theory** provides heuristic predictions for the density of solutions, connecting the discrete world of integers to the continuous world of real analysis.
-
-Each of these fields brings its own tools and perspectives. The three-cubes problem, sitting at their intersection, serves as both a testing ground and a source of new ideas.
-
----
-
-## The frontier
-
-Recent work has begun to build a rigorous formal framework for this problem—one where definitions, theorems, and proofs are stated with mathematical precision and verified by computer. In this framework:
-
-- The mod 9 obstruction becomes the *first term* in a hierarchy of local obstructions, each associated with a modulus
-- The sign symmetry and permutation invariance become *automorphisms* of the cubic surface family
-- The factorization identity becomes a *reduction theorem*, converting between additive and multiplicative structure
-- The gap between local admissibility and global representability becomes a formally stated *open question*, ready for future attack
-
-This is not just formalization for its own sake. By building the infrastructure—precise definitions, proven relationships, verified algorithms—researchers create a platform for attacking the problem more effectively. Every theorem proved is a tool that future work can use without re-deriving.
-
----
-
-## An equation that keeps giving
-
-The equation x³ + y³ + z³ = k has been studied for at least seventy years, and it shows no signs of giving up its secrets easily. Every advance—the solution for 33, for 42, for 3 (where a representation with 21-digit numbers was found in 2019)—reveals new complexity hidden beneath the surface.
-
-What makes this equation special is not its difficulty alone, but the *quality* of mathematics it touches. It reaches from the simplest number theory (remainders on division) to the deepest geometry (rational points on algebraic varieties). It connects local arithmetic to global structure. It challenges our computational methods while rewarding them with beautiful surprises.
-
-And it all starts with the simplest possible question: *can you add three cubes and get this number?*
-
-The answer, for most of mathematics, is: we don't know yet. But we're getting closer, one surface at a time.
+The sum of three cubes problem endures because it sits exactly on the boundary between the knowable and the unknown. One small number, nine, draws an unbreakable wall. Beyond that wall, we believe everything is reachable — but the proof, like the cubes for $33$, may be hiding very far away indeed.
