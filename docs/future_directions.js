@@ -1157,7 +1157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
   {
-    "consumed_by_exp_id": "d69db06d",
+    "consumed_by_exp_id": "",
     "description": "Every \u03c4_k-maximal graph on n vertices (with n \u2265 2k+2) has exactly (k+1)(n-1)-1 edges. A graph is \u03c4_k-maximal if it contains no subgraph with k+1 edge-disjoint spanning trees, yet adding any edge from its complement creates such a subgraph.",
     "domains": [
       "Bridges"
@@ -1166,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T06:06:52.919140+00:00",
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
@@ -1488,20 +1488,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T10:22:21.182498+00:00",
     "title": "Complete classification of 4th powers in the 14-gonal numbers"
-  },
-  {
-    "consumed_by_exp_id": "bff16fd3",
-    "description": "The paper proves that for integers $k \\ge 1$ and $n \\ge 2k+2$, any $\\tau_k$-maximal graph on $n$ vertices has at most $(k+1)(n-1)-1$ edges, and constructs examples achieving this bound. The authors conjecture that this upper bound is actually an exact equality: every $\\tau_k$-maximal graph on $n \\ge 2k+2$ vertices has exactly $(k+1)(n-1)-1$ edges. This conjecture is verified for $k=1$, but remains open for $k \\ge 2$.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2856",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28198v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T10:44:44.698882+00:00",
-    "title": "Exact Edge Count of Tau_k-Maximal Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3899,6 +3885,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Additive Structure of the Primes\n\nThese conjectures grow out of the present cycle's study of two-prime and\nthree-prime representations: the smallest-summand phenomenon, the ordered\nrepresentation count, and the residue pairing of summands modulo small moduli.\n\n## 1. The bounded-summand strengthening of Goldbach\n\n**Conjecture.** There is an absolute constant `C` such that every even number\n`n \u2265 6` can be written as `n = p + q` with both primes and the *smaller* prime\n`p \u2264 C \u00b7 (log n)^2`.\n\nThe key insight is that the empirical \"a tiny prime almost always works\"\nbehaviour is not an accident of small cases but a quantitative law: the density\nof primes near `n` is large enough that one of the very first primes `p` already\nleaves `n - p` prime, so the search depth is poly-logarithmic rather than linear.\n\nWhy now? Exhaustive scans to the hundred-thousand range show the smaller summand\nnever exceeds a slowly growing envelope, and modern sieve bounds on prime gaps\nmake the `(log n)^2` envelope concrete and testable far beyond current data.\n\n## 2. Residue-balanced Goldbach partitions\n\n**Conjecture.** For every modulus `m` and every sufficiently large even `n`\ncoprime-compatible with `m`, the number of Goldbach partitions `n = p + q` whose\nsummands realise each admissible residue pair `(a, b)` mod `m` is asymptotically\nproportional to a fixed local density, with no admissible pair omitted.\n\nThe key insight is that the rigid mod-4 dichotomy proved here \u2014 summands share a\nclass when `n \u2261 2 (mod 4)` and split classes when `n \u2261 0 (mod 4)` \u2014 is the first\nvisible layer of a complete local-density law governing *which* residue pairs can\nand must occur for every modulus.\n\nWhy now? The mod-4 pairing is now a theorem rather than a heuristic, which fixes\nthe base case; extending it to general `m` connects directly to the singular\nseries and is checkable against partition tables for the first several thousand\neven numbers.\n\n## 3. Monotonicity of the ordered representation count\n\n**Conjecture.** The ordered two-prime representation count `r(n)` is eventually\n\"non-collapsing\": for all sufficiently large even `n`, `r(n) \u2265 r(n')` fails only\nfor `n'` in a set of density zero, and in particular `r(n) \u2192 \u221e`.\n\nThe key insight is that representability is governed by a *count*, not a yes/no\nquestion, and the count inherits a smoothing structure from the convolution of\nthe prime indicator with itself, so isolated dips are forced to be rare.\n\nWhy now? The representation count has been isolated as a clean finite object\nequivalent to representability, so its growth is directly measurable, and its\ndivergence is the quantitative heart of every circle-method approach to Goldbach.\n\n## 4. The three-prime threshold is sharp at the parity barrier\n\n**Conjecture.** Every odd number `n \u2265 7` is a sum of three primes, and the bound\n`7` is sharp: it is the least odd number for which the reduction `n = 3 + (n-3)`\nto an even Goldbach instance is available, and no smaller odd number is a sum of\nthree primes with all summands `\u2265 2`.\n\nThe key insight is that the ternary problem is *strictly downstream* of the binary\none through the single deterministic move \"subtract the prime 3\", so the ternary\nthreshold is completely controlled by the smallest even Goldbach instance.\n\nWhy now? The binary \u21d2 ternary reduction is now explicit and unconditional below\nthe certified binary range, turning the ternary threshold into a finite, fully\ndecidable question rather than an asymptotic one.\n\n## 5. A density-one effective Goldbach engine\n\n**Conjecture.** There is an explicit, fast procedure that, for every even `n`,\neither outputs a two-prime partition or a certificate of failure, and the failure\nset is empty up to any bound reachable by a near-linear-time sieve \u2014 making\nunconditional verification of Goldbach to `10^9` and beyond feasible.\n\nThe key insight is that the only obstruction to scaling exhaustive verification is\nrepeated primality testing, which a single precomputed sieve removes, decoupling\nthe verification cost from the cost of testing each summand in isolation.\n\nWhy now? Verification to the hundred-thousand range is already certified by a\nnaive search; replacing trial division with one shared sieve is a routine\nengineering step that immediately pushes the certified frontier by several orders\nof magnitude.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3018",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3131feed",
+    "status": "available",
+    "timestamp": "2026-06-30T19:23:40.206488+00:00",
+    "title": "These conjectures grow out of the present cycle's study of two-prime and"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3957,7 +3958,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "d7cf3728",
+    "consumed_by_exp_id": "",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -3967,7 +3968,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -4015,7 +4016,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "da4fd36d",
+    "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -4024,7 +4025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
@@ -4089,7 +4090,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Idempotent Probability: Large Deviations"
   },
   {
-    "consumed_by_exp_id": "c941ad90",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical",
@@ -4099,7 +4100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
@@ -4223,7 +4224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "e7355298",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4233,7 +4234,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

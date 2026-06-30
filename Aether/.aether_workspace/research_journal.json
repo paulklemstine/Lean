@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "be72639d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's findings on *exponential diameter contraction under\nDelaunay minicenter refinement* and the *approximate Carathéodory / Maurey*\ncatalog references. Each",
-      "quality_score": 0.7645600000000001,
-      "sorry_count": 3,
-      "theorem_count": 26,
-      "timestamp": "2026-06-26T16:40:58",
-      "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
-    },
-    {
       "cycle_id": "5077231f",
       "domain": "Applications",
       "key_insight": "# Future Directions — Hydrogen Spectral Theory\n\nDerived from the cycle that produced `HydrogenSpectrum.lean`,\n`HydrogenSelectionRules.lean`, and `HydrogenAngularEigen.lean`. Each conjecture\nis falsifi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-06-30T18:00:55",
       "title": "Birch and Swinnerton-Dyer Conjecture"
+    },
+    {
+      "cycle_id": "3131feed",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Additive Structure of the Primes\n\nThese conjectures grow out of the present cycle's study of two-prime and\nthree-prime representations: the smallest-summand phenomenon, the order",
+      "quality_score": 0.41286596521739133,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-30T19:23:48",
+      "title": "Goldbach Verification Framework"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76576
     }
   ],
-  "last_updated": "2026-06-30T18:00:55",
+  "last_updated": "2026-06-30T19:23:48",
   "open_questions": [
     {
       "context": "",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "8892ab13",
-        "quality": 0.43946266666666667,
-        "theorems": 3,
-        "title": "Finite approximate Ramsey degrees characterize metrizable universal minimal flow"
-      },
-      {
         "cycle_id": "57fbcb2f",
         "quality": 0.48476875555555554,
         "theorems": 16,
@@ -3823,6 +3817,12 @@
         "quality": 0.4285765151515152,
         "theorems": 7,
         "title": "Birch and Swinnerton-Dyer Conjecture"
+      },
+      {
+        "cycle_id": "3131feed",
+        "quality": 0.41286596521739133,
+        "theorems": 8,
+        "title": "Goldbach Verification Framework"
       }
     ],
     "Pythagorean": [
