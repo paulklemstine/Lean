@@ -1,50 +1,46 @@
-# Computational Evidence — Schnorr Σ-protocol extensions
+# Computational Evidence — Chaum–Pedersen DLEQ and message-bound Schnorr signatures
 
-This cycle extends the catalog's `SchnorrIdentification` / `SchnorrFiatShamir` with three
-quantitative results. The claims are algebraic identities over the prime field `ZMod p`, so
-the decisive evidence is small-field enumeration; the Lean proofs are field-uniform.
+All claims in this cycle are **exact algebraic identities over the prime field `ZMod p`**,
+so the relevant computational evidence is checking the defining equations on small concrete
+fields. We summarise the spot checks that motivated the formal statements.
 
-## 1. Soundness error is exactly `1/p`
+## 1. Chaum–Pedersen completeness (small case)
 
-Claim: for a nonzero public key `Y` and a pre-committed pair `(t, s)`, exactly one
-challenge `c ∈ ZMod p` satisfies `s·g = t + c·Y`.
+Work in `ZMod 7` with generators `g = 3`, `h = 5`, secret `x = 4`, randomness `r = 2`,
+challenge `c = 6`.
 
-Small-case enumeration (mental / `#eval`-style, over `ZMod 5`, `g = 1`):
-- Fix `Y = 2, t = 1, s = 3`. Acceptance: `3·1 = 1 + c·2`, i.e. `2 = 1 + 2c`, `2c = 1`,
-  `c = 1·2⁻¹ = 1·3 = 3`. Unique solution `c = 3`. Count = 1 out of 5 ⇒ error `1/5`. ✓
-- Sweeping all `(Y≠0, t, s)` over `ZMod 5` and `ZMod 7`: every filtered challenge set has
-  size exactly 1. No counterexample found. This matches `winning_challenges_card` and
-  `soundness_error`.
+* `Y₁ = x·g = 4·3 = 12 = 5`, `Y₂ = x·h = 4·5 = 20 = 6`.
+* Commitments `t₁ = r·g = 2·3 = 6`, `t₂ = r·h = 2·5 = 10 = 3`.
+* Response `s = r + c·x = 2 + 6·4 = 26 = 5`.
+* Check 1: `s·g = 5·3 = 15 = 1`; `t₁ + c·Y₁ = 6 + 6·5 = 6 + 30 = 36 = 1`. ✓
+* Check 2: `s·h = 5·5 = 25 = 4`; `t₂ + c·Y₂ = 3 + 6·6 = 3 + 36 = 39 = 4`. ✓
 
-Degeneracy check (`Y = 0`): acceptance becomes `s·g = t`, independent of `c`; the set is
-either all of `ZMod p` or empty. Hence the `Y ≠ 0` hypothesis is necessary and is stated.
+## 2. Chaum–Pedersen special soundness / DLEQ extraction
 
-## 2. Knowledge soundness for arbitrary public keys
+Same field, two transcripts sharing `(t₁, t₂)` with challenges `c₁ = 6, c₂ = 1` and
+honest responses `s₁ = r + c₁·x = 5`, `s₂ = r + c₂·x = 2 + 1·4 = 6`.
 
-Claim: from two accepting transcripts `(t,c₁,s₁),(t,c₂,s₂)` with `c₁ ≠ c₂`, the extractor
-`x* = (c₁−c₂)⁻¹(s₁−s₂)` satisfies `x*·g = Y`, with NO assumption that `Y` already has a
-discrete log.
+* Extractor: `x* = (c₁ - c₂)⁻¹·(s₁ - s₂) = (6-1)⁻¹·(5-6) = 5⁻¹·(-1)`.
+  In `ZMod 7`, `5⁻¹ = 3` (since `5·3 = 15 = 1`), `-1 = 6`, so `x* = 3·6 = 18 = 4 = x`. ✓
+* The same `x*` reproduces **both** `Y₁` and `Y₂`, which is exactly why the protocol proves
+  *equality* of the two discrete logs rather than two independent logs.
 
-Spot check over `ZMod 7`, `g = 3`, `Y = 5` (note `5` need not be a "registered" key):
-pick `t = 2`. Responses are forced: `s_c = (t + c·Y)·g⁻¹ = (2 + 5c)·3⁻¹ = (2+5c)·5`.
-- `c₁ = 1 ⇒ s₁ = (2+5)·5 = 7·5 = 0`.
-- `c₂ = 4 ⇒ s₂ = (2+20)·5 = 22·5 = 1·5 = 5` (`22 ≡ 1 mod 7`).
-Extractor: `x* = (1−4)⁻¹(0−5) = (−3)⁻¹(−5) = 4⁻¹·2 = 2·2 = 4`.
-Verify: `x*·g = 4·3 = 12 ≡ 5 = Y`. ✓  Matches `extractWitness_is_witness`.
+## 3. Message binding of Schnorr signatures
 
-## 3. Perfect HVZK as equal event counts
+In `ZMod 11`, `g = 2`, `x = 3`, `Y = x·g = 6`. Sign message-tag value `H(t,m) = c`.
+A signature `(t,s)` valid for `m₁` with `H(t,m₁) = c₁` and also valid for `m₂` with
+`H(t,m₂) = c₂` would force `c₁·Y = c₂·Y`, i.e. `c₁·6 = c₂·6`; since `6 ≠ 0` and `11` is
+prime, `c₁ = c₂`. So cross-message reuse is impossible unless the oracle collides at the two
+message-tagged points — confirming `sig_cross_message_forces_collision`.
 
-Claim: for every event `E` on transcripts, `#{(r,c) : E(honest)} = #{(s,c) : E(sim)}`.
+## 4. Counterexample hunt
 
-This is the catalog bijection `honestSimEquiv` made statistical. Sanity check over
-`ZMod 3`, `x = 1`, `E = "challenge component equals 0"`: honest pairs `(r,0)` give 3 of 9;
-simulated pairs `(s,0)` give 3 of 9. Equal. Choosing `E = "transcript = some fixed accepting
-triple"` gives count 1 on both sides (the bijection is one-to-one). No event separates the
-two distributions; consistent with `hvzk_event_card_eq` / `hvzk_probability_eq`.
+* **Without** the shared response in Chaum–Pedersen (two independent responses `s₁ ≠ s₂`
+  for the two bases), the protocol does NOT prove equality of discrete logs: any pair
+  `(Y₁, Y₂)` admits accepting transcripts. This negative check is what fixes the protocol
+  design (single response `s`) and is recorded in the Lab Notes failure analysis.
+* The `Y ≠ 0` hypothesis in the message-binding lemma is necessary: at `Y = 0` every
+  message tag is trivially accepted with `s·g = t`, so no collision is forced.
 
-## Counterexample hunt summary
-
-No counterexamples to any of the three claims were found across `ZMod p` for
-`p ∈ {3,5,7,11}` with several generators. The only boundary case is `Y = 0` in claim 1,
-which is excluded by hypothesis. All three statements are proved field-uniformly in Lean
-(no `decide`/`native_decide`), so the enumeration is corroboration, not the proof.
+No counterexample to any *formalized* statement was found; all are proved in Lean with
+0 sorries over `propext, Classical.choice, Quot.sound` only.

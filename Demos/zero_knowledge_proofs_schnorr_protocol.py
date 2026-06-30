@@ -1,215 +1,230 @@
 """
-Numerical demonstration of the Schnorr Sigma-protocol and its Fiat-Shamir transform.
+Numerical demonstrations for the Schnorr identification protocol over a finite
+cyclic group of prime order q.
 
-We model the underlying cyclic group additively as (Z/pZ, +) with a fixed nonzero
-generator g, exactly as in the formalized development. Scalar multiplication of a
-scalar a by the generator is the field product (a * g) mod p, and the public key of
-a secret x is pk(x) = (x * g) mod p.
+We model the group multiplicatively as the unique subgroup of order q inside the
+multiplicative group (Z/pZ)^*, where p is a prime with q | (p - 1). Exponents
+live in the field Z/qZ. Every routine is self-contained with type hints.
 
-A transcript is a triple (t, c, s) of commitment, challenge, response; the verifier
-accepts against public key Y iff  s * g == t + c * Y  (mod p).
-
-This script demonstrates, with concrete numbers:
-  1. Completeness                  -- honest transcripts always verify.
-  2. Knowledge soundness           -- two forking transcripts extract a real witness.
-  3. Exact soundness error 1/p     -- exactly one challenge is answerable per commitment.
-  4. Perfect HVZK                   -- honest and simulated transcript distributions are equal.
-  5. Fiat-Shamir                    -- non-interactive completeness and forking extraction.
-
-All functions are self-contained and use only the Python standard library.
+Demonstrated results:
+  * Completeness: honest transcripts always verify.
+  * Power automorphism: x -> x^k is a bijection of the group for k != 0 (mod q).
+  * Extraction / special soundness: two accepting transcripts that fork at the
+    challenge recover the secret discrete logarithm.
+  * Soundness error: a pre-committed (A, s) accepts for exactly one challenge,
+    so the cheating probability is exactly 1/q.
+  * Honest-verifier zero-knowledge: the simulator reproduces the honest
+    transcript distribution exactly.
+  * Fiat-Shamir: the non-interactive verifier equals the interactive one with
+    challenge fixed by the hash.
 """
 
 from __future__ import annotations
 
-from collections import Counter
-from typing import Callable, Dict, Tuple
+import hashlib
+import random
+from typing import Dict, Tuple
 
-# A transcript is (commitment t, challenge c, response s), all in Z/pZ.
-Transcript = Tuple[int, int, int]
-
-
-# --------------------------------------------------------------------------- #
-# Field helpers over Z/pZ (p prime, so every nonzero element is invertible).
-# --------------------------------------------------------------------------- #
-def inv_mod(a: int, p: int) -> int:
-    """Multiplicative inverse of a modulo prime p (a not divisible by p)."""
-    return pow(a % p, p - 2, p)
+# ---------------------------------------------------------------------------
+# Group parameters: subgroup of order q inside (Z/pZ)^*.
+# ---------------------------------------------------------------------------
+# p = 2*q + 1 is a safe prime, so the squares form a subgroup of prime order q.
+P: int = 2027          # safe prime
+Q: int = 1013          # (P - 1) // 2, also prime
 
 
-# --------------------------------------------------------------------------- #
-# Protocol primitives (mirroring the Lean definitions).
-# --------------------------------------------------------------------------- #
-def pk(x: int, g: int, p: int) -> int:
-    """Public key for secret x:  pk(x) = x * g  (mod p)."""
-    return (x * g) % p
+def is_prime(n: int) -> bool:
+    """Trial-division primality test (small inputs only)."""
+    if n < 2:
+        return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
 
 
-def accepts(Y: int, tr: Transcript, g: int, p: int) -> bool:
-    """Verifier acceptance:  s * g == t + c * Y  (mod p)."""
-    t, c, s = tr
-    return (s * g) % p == (t + c * Y) % p
+def find_safe_prime(lower: int) -> Tuple[int, int]:
+    """Return (p, q) with p = 2q + 1 both prime and p >= lower."""
+    candidate = lower | 1
+    while True:
+        q = (candidate - 1) // 2
+        if is_prime(candidate) and is_prime(q):
+            return candidate, q
+        candidate += 2
 
 
-def honest_transcript(x: int, r: int, c: int, g: int, p: int) -> Transcript:
-    """Honest prover transcript:  (r*g, c, r + c*x)."""
-    return ((r * g) % p, c % p, (r + c * x) % p)
+def group_generator(p: int, q: int) -> int:
+    """A generator g of the order-q subgroup of (Z/pZ)^*: g = h^2 for h != +-1."""
+    for h in range(2, p - 1):
+        g = pow(h, 2, p)  # square => lands in the order-q subgroup
+        if g != 1 and pow(g, q, p) == 1:
+            return g
+    raise RuntimeError("no generator found")
 
 
-def sim_transcript(Y: int, c: int, s: int, g: int, p: int) -> Transcript:
-    """Simulator transcript (no secret used):  (s*g - c*Y, c, s)."""
-    return ((s * g - c * Y) % p, c % p, s % p)
+def gmul(a: int, b: int, p: int) -> int:
+    """Group multiplication inside (Z/pZ)^*."""
+    return (a * b) % p
 
 
-def extract_witness(c1: int, s1: int, c2: int, s2: int, p: int) -> int:
-    """Witness extractor:  (c1 - c2)^{-1} * (s1 - s2)  (mod p)."""
-    return (inv_mod((c1 - c2) % p, p) * ((s1 - s2) % p)) % p
+def gexp(x: int, e: int, p: int, q: int) -> int:
+    """Field-scalar exponentiation: x^(e mod q) inside the group."""
+    return pow(x, e % q, p)
 
 
-# --------------------------------------------------------------------------- #
+def ginv(x: int, p: int) -> int:
+    """Group inverse inside (Z/pZ)^*."""
+    return pow(x, p - 2, p)
+
+
+# ---------------------------------------------------------------------------
+# Schnorr protocol.
+# ---------------------------------------------------------------------------
+def accepts(g: int, y: int, a: int, c: int, s: int, p: int, q: int) -> bool:
+    """Verifier predicate: g^s == A * Y^c."""
+    return gexp(g, s, p, q) == gmul(a, gexp(y, c, p, q), p)
+
+
+def honest_transcript(
+    g: int, x: int, r: int, c: int, p: int, q: int
+) -> Tuple[int, int, int]:
+    """Honest prover with secret x, randomness r, challenge c -> (A, c, s)."""
+    a = gexp(g, r, p, q)
+    s = (r + c * x) % q
+    return a, c, s
+
+
+def simulate_transcript(
+    g: int, y: int, c: int, s: int, p: int, q: int
+) -> Tuple[int, int, int]:
+    """HVZK simulator: choose s, set A = g^s * (Y^c)^{-1}."""
+    a = gmul(gexp(g, s, p, q), ginv(gexp(y, c, p, q), p), p)
+    return a, c, s
+
+
+def extract_witness(c1: int, s1: int, c2: int, s2: int, q: int) -> int:
+    """Special-soundness extractor: x = (s1 - s2) * (c1 - c2)^{-1} mod q."""
+    inv = pow((c1 - c2) % q, q - 2, q)  # field inverse, q prime
+    return ((s1 - s2) * inv) % q
+
+
+def fiat_shamir_challenge(a: int, q: int, message: bytes = b"") -> int:
+    """Non-interactive challenge c = H(A || message) mod q (random-oracle model)."""
+    digest = hashlib.sha256(message + str(a).encode()).digest()
+    return int.from_bytes(digest, "big") % q
+
+
+# ---------------------------------------------------------------------------
 # Demonstrations.
-# --------------------------------------------------------------------------- #
-def demo_completeness(g: int, p: int) -> None:
-    print("=" * 70)
-    print("1. COMPLETENESS: honest transcripts always verify")
-    print("=" * 70)
-    x = 7
-    Y = pk(x, g, p)
+# ---------------------------------------------------------------------------
+def demo_completeness(g: int, p: int, q: int) -> None:
+    print("== Completeness: honest transcripts always verify ==")
+    x = 723
+    y = gexp(g, x, p, q)
     ok = True
-    for r in range(p):
-        for c in range(p):
-            tr = honest_transcript(x, r, c, g, p)
-            ok &= accepts(Y, tr, g, p)
-    print(f"  p = {p}, g = {g}, secret x = {x}, public key Y = {Y}")
-    print(f"  All {p * p} honest (r, c) transcripts verify: {ok}")
+    for _ in range(1000):
+        r = random.randrange(q)
+        c = random.randrange(q)
+        a, c, s = honest_transcript(g, x, r, c, p, q)
+        ok &= accepts(g, y, a, c, s, p, q)
+    print(f"  1000/1000 honest runs verified: {ok}\n")
+
+
+def demo_power_automorphism(g: int, p: int, q: int) -> None:
+    print("== Power automorphism: x -> x^k is a bijection for k != 0 ==")
+    # enumerate the subgroup
+    subgroup = sorted({gexp(g, e, p, q) for e in range(q)})
+    assert len(subgroup) == q
+    for k in (1, 2, 17, q - 1):
+        image = {gexp(x, k, p, q) for x in subgroup}
+        print(f"  k={k:>4}: image size {len(image)} (== q? {len(image) == q})")
     print()
 
 
-def demo_knowledge_soundness(g: int, p: int) -> None:
-    print("=" * 70)
-    print("2. KNOWLEDGE SOUNDNESS: forking transcripts extract a real witness")
-    print("=" * 70)
-    x = 11
-    Y = pk(x, g, p)
-    r = 3  # shared commitment randomness => shared commitment t
-    c1, c2 = 2, 9
-    tr1 = honest_transcript(x, r, c1, g, p)
-    tr2 = honest_transcript(x, r, c2, g, p)
-    assert tr1[0] == tr2[0], "commitments must match for a fork"
-    xstar = extract_witness(c1, tr1[2], c2, tr2[2], p)
-    print(f"  Two accepting transcripts share commitment t = {tr1[0]}")
-    print(f"    (t, c1, s1) = {tr1}")
-    print(f"    (t, c2, s2) = {tr2}")
-    print(f"  Extracted witness x* = {xstar}")
-    print(f"  Check pk(x*) == Y :  {pk(xstar, g, p)} == {Y}  ->  {pk(xstar, g, p) == Y}")
-    print(f"  Recovered the true secret (x* == x): {xstar == x}")
-    print()
+def demo_extraction(g: int, p: int, q: int) -> None:
+    print("== Special soundness: forking transcripts recover the secret ==")
+    x = 911
+    y = gexp(g, x, p, q)
+    r = random.randrange(q)
+    a = gexp(g, r, p, q)
+    c1, c2 = 5, 88
+    s1 = (r + c1 * x) % q
+    s2 = (r + c2 * x) % q
+    assert accepts(g, y, a, c1, s1, p, q)
+    assert accepts(g, y, a, c2, s2, p, q)
+    recovered = extract_witness(c1, s1, c2, s2, q)
+    print(f"  true secret x      = {x}")
+    print(f"  extracted witness  = {recovered}")
+    print(f"  match: {recovered == x}, and g^extracted == Y: "
+          f"{gexp(g, recovered, p, q) == y}\n")
 
 
-def demo_soundness_error(g: int, p: int) -> None:
-    print("=" * 70)
-    print("3. EXACT SOUNDNESS ERROR 1/p: one winning challenge per commitment")
-    print("=" * 70)
-    # A witness-free cheater fixes a commitment t and a single response strategy.
-    # For each challenge c there is a unique response s = g^{-1}(t + cY) that the
-    # verifier accepts, but a cheater who has pre-committed without the witness can
-    # only pre-plan a response for ONE challenge. We count, for a fixed (t, s),
-    # how many challenges accept -- it is exactly one.
-    Y = pk(5, g, p)
-    ginv = inv_mod(g, p)
-    t = 4  # arbitrary fixed commitment
-    s = 6  # arbitrary fixed pre-planned response
-    winning = [c for c in range(p) if accepts(Y, (t, c, s), g, p)]
-    print(f"  Fixed commitment t = {t}, fixed response s = {s}, key Y = {Y}")
-    print(f"  Challenges in Z/{p}Z the cheater can answer: {winning}")
-    print(f"  Number of winning challenges: {len(winning)}  (theory: exactly 1)")
-    print(f"  Soundness error = 1/p = {1}/{p} = {1 / p:.6f}")
-    print(f"  (the unique winning challenge is g*s - t over Y when Y != 0)")
-    _ = ginv
-    print()
+def demo_soundness_error(g: int, p: int, q: int) -> None:
+    print("== Soundness error: a pre-committed (A, s) accepts for exactly 1 of q challenges ==")
+    x = 123
+    y = gexp(g, x, p, q)          # Y != 1
+    # A cheater fixes (A, s) WITHOUT knowing x.
+    a = gexp(g, 42, p, q)
+    s = 99
+    winning = [c for c in range(q) if accepts(g, y, a, c, s, p, q)]
+    print(f"  q = {q}")
+    print(f"  winning challenges for fixed (A,s): {winning}")
+    print(f"  count = {len(winning)}, soundness error = {len(winning)}/{q} = "
+          f"{len(winning) / q:.6e}\n")
 
 
-def demo_perfect_hvzk(g: int, p: int) -> None:
-    print("=" * 70)
-    print("4. PERFECT HVZK: honest and simulated distributions are identical")
-    print("=" * 70)
-    x = 8
-    Y = pk(x, g, p)
-    # Honest distribution: uniform over (r, c) in (Z/pZ)^2.
-    honest_dist: Counter[Transcript] = Counter()
-    for r in range(p):
-        for c in range(p):
-            honest_dist[honest_transcript(x, r, c, g, p)] += 1
-    # Simulated distribution: uniform over (c, s) in (Z/pZ)^2, no secret used.
-    sim_dist: Counter[Transcript] = Counter()
-    for c in range(p):
-        for s in range(p):
-            sim_dist[sim_transcript(Y, c, s, g, p)] += 1
-    identical = honest_dist == sim_dist
-    print(f"  p = {p}: sample space size p^2 = {p * p}")
-    print(f"  distinct transcripts (honest): {len(honest_dist)}")
-    print(f"  distinct transcripts (sim)   : {len(sim_dist)}")
-    print(f"  Distributions identical on EVERY transcript: {identical}")
-
-    # Check equality of probability on an arbitrary event E (counting form).
-    def event(tr: Transcript) -> bool:
-        return tr[2] % 2 == 0  # "response is even" -- an arbitrary event
-
-    honest_count = sum(n for tr, n in honest_dist.items() if event(tr))
-    sim_count = sum(n for tr, n in sim_dist.items() if event(tr))
-    print(f"  Event E = 'response is even':")
-    print(f"    honest count = {honest_count}, sim count = {sim_count}  "
-          f"-> equal: {honest_count == sim_count}")
-    print(f"    Pr_honest[E] = Pr_sim[E] = {honest_count}/{p * p} "
-          f"= {honest_count / (p * p):.6f}")
-    print()
+def demo_hvzk(g: int, p: int, q: int) -> None:
+    print("== Honest-verifier zero-knowledge: simulator matches real distribution ==")
+    x = 555
+    y = gexp(g, x, p, q)
+    c = 31
+    # Real distribution of A over uniform r (challenge fixed to c).
+    real: Dict[int, int] = {}
+    for r in range(q):
+        a, _, _ = honest_transcript(g, x, r, c, p, q)
+        real[a] = real.get(a, 0) + 1
+    # Simulated distribution of A over uniform s.
+    sim: Dict[int, int] = {}
+    for s in range(q):
+        a, _, _ = simulate_transcript(g, y, c, s, p, q)
+        sim[a] = sim.get(a, 0) + 1
+    print(f"  real and simulated A-distributions identical: {real == sim}")
+    print(f"  both are uniform over the {len(real)} group elements: "
+          f"{set(real.values()) == {1}}\n")
 
 
-def demo_fiat_shamir(g: int, p: int) -> None:
-    print("=" * 70)
-    print("5. FIAT-SHAMIR: non-interactive completeness and forking extraction")
-    print("=" * 70)
-
-    def H(t: int) -> int:
-        # A toy 'random oracle' (deterministic hash) Z/pZ -> Z/pZ.
-        return (1103515245 * t + 12345) % p
-
-    def fs_prove(x: int, r: int) -> Tuple[int, int]:
-        t = (r * g) % p
-        c = H(t)
-        s = (r + c * x) % p
-        return (t, s)
-
-    def fs_accepts(Y: int, proof: Tuple[int, int]) -> bool:
-        t, s = proof
-        return (s * g) % p == (t + H(t) * Y) % p
-
-    x = 13
-    Y = pk(x, g, p)
-    ok = all(fs_accepts(Y, fs_prove(x, r)) for r in range(p))
-    print(f"  Non-interactive completeness over all r: {ok}")
-
-    # Forking: reprogram the oracle to two answers c1 != c2 at the same commitment.
-    r = 2
-    t = (r * g) % p
-    c1, c2 = 3, 10
-    s1 = (r + c1 * x) % p
-    s2 = (r + c2 * x) % p
-    xstar = extract_witness(c1, s1, c2, s2, p)
-    print(f"  Fork at commitment t = {t} with oracle answers c1={c1}, c2={c2}")
-    print(f"  Extracted secret x* = {xstar} (true x = {x}) -> match: {xstar == x}")
-    print()
+def demo_fiat_shamir(g: int, p: int, q: int) -> None:
+    print("== Fiat-Shamir: non-interactive proof verifies, and forks still extract ==")
+    x = 777
+    y = gexp(g, x, p, q)
+    r = random.randrange(q)
+    a = gexp(g, r, p, q)
+    msg = b"transfer 10 coins to Bob"
+    c = fiat_shamir_challenge(a, q, msg)
+    s = (r + c * x) % q
+    print(f"  non-interactive proof (A,s) verifies: {accepts(g, y, a, c, s, p, q)}")
+    # Forking: two different oracle answers at the same A reveal the secret.
+    c1 = fiat_shamir_challenge(a, q, b"context-1")
+    c2 = fiat_shamir_challenge(a, q, b"context-2")
+    s1 = (r + c1 * x) % q
+    s2 = (r + c2 * x) % q
+    recovered = extract_witness(c1, s1, c2, s2, q)
+    print(f"  fork recovers secret: {recovered == x}\n")
 
 
 def main() -> None:
-    p = 23  # a small prime, for exhaustive enumeration
-    g = 5   # a fixed nonzero generator
-    print("Schnorr Sigma-protocol over (Z/pZ, +)\n")
-    demo_completeness(g, p)
-    demo_knowledge_soundness(g, p)
-    demo_soundness_error(g, p)
-    demo_perfect_hvzk(g, p)
-    demo_fiat_shamir(g, p)
-    print("All demonstrations completed.")
+    p, q = P, Q
+    assert is_prime(p) and is_prime(q) and p == 2 * q + 1, "need a safe prime"
+    g = group_generator(p, q)
+    print(f"Group: order-q subgroup of (Z/{p}Z)^*, q = {q} (prime), generator g = {g}\n")
+    demo_completeness(g, p, q)
+    demo_power_automorphism(g, p, q)
+    demo_extraction(g, p, q)
+    demo_soundness_error(g, p, q)
+    demo_hvzk(g, p, q)
+    demo_fiat_shamir(g, p, q)
 
 
 if __name__ == "__main__":
