@@ -1787,7 +1787,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a finite unit-distance graph in R\u00b2 with independence ratio below 1/4"
   },
   {
-    "consumed_by_exp_id": "3d4e2b7e",
+    "consumed_by_exp_id": "",
     "description": "Generalizing the paper's main theorem from Z_2 x Z_{2^n} to Z_2^k x Z_{2^n}, we conjecture that the minimum size of a poset realizing the abelian group Z_2^k x Z_{2^n} is 2^{n+1} + 2k for any k >= 1 and n >= 3. This matches the upper bound obtained by iteratively applying Proposition 1.1 to a minimal poset for Z_{2^n}.",
     "domains": [
       "Pythagorean",
@@ -1797,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T16:28:32.494303+00:00",
     "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
   },
@@ -2368,7 +2368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logarithmic convergence of finite projective-plane incidence graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62b48ce6",
     "description": "For any lacunary sequence $(a_n)_{n \\geq 1} \\subset \\mathbb{N}$ satisfying $a_{n+1} \\geq q a_n$ for some $q > 1$, and for Lebesgue-almost every $x \\in \\mathbb{T}$, the maximal circular gap satisfies $\\lim_{N\\to\\infty} \\frac{N \\cdot G_N(x)}{\\log N} = 1$. The paper proves this when $a_n \\mid a_{n+1}$ for all $n$, and establishes $\\frac{1}{2} \\leq \\liminf \\leq \\limsup \\leq \\frac{q+1}{q-1}$ in general. The conjecture asserts that the divisibility assumption is unnecessary\u2014the limit always exists and equals 1, matching the random i.i.d. model.",
     "domains": [
       "Pythagorean",
@@ -2378,7 +2378,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28860v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T03:24:28.294396+00:00",
     "title": "Universal Gap Asymptotic for Lacunary Dilations"
   },
@@ -2619,11 +2619,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any geometrically irreducible, non-special algebraic curve V in the affine plane A^2 defined over Q with deg(X|_V) \u2260 deg(Y|_V), the Weil heights of special points (pairs of CM j-invariants) on V are bounded linearly in the height of V. Specifically, there exist effectively computable constants c\u2081 depending only on max{deg X, deg Y} such that for every special point (x,y) \u2208 V, max{h(x), h(y)} \u2264 c\u2081 + 26\u00b7max{deg X, deg Y}\u00b3\u00b7h(V). This improves upon prior effective results by K\u00fchne and Bilu-Masser-Zannier which had worse (non-linear) dependence on h(V).",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2934",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29369v1",
+    "status": "available",
+    "timestamp": "2026-06-30T09:27:47.720127+00:00",
+    "title": "Effective Andr\u00e9's Theorem with Linear Height Dependence for Curves with Unequal Coordinate Degrees"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2934",
+    "id": "fd_2935",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2637,7 +2652,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2935",
+    "id": "fd_2936",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2651,7 +2666,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2936",
+    "id": "fd_2937",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2665,7 +2680,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2679,7 +2694,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2694,7 +2709,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2709,7 +2724,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2723,7 +2738,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2737,7 +2752,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2751,7 +2766,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2766,7 +2781,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2781,7 +2796,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2795,7 +2810,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2809,7 +2824,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
@@ -2823,7 +2838,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2948",
+    "id": "fd_2949",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
@@ -2837,7 +2852,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2949",
+    "id": "fd_2950",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29553v1",
@@ -2846,16 +2861,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "TxGraffiti's Annihilation-Residue Conjecture on Independence Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f47f3dac",
     "description": "For each integer n \u2265 1, the theta-mode component \u03c6_n(t) of the even Riemann phase kernel equals the action of the differential operator (\u2202_t\u00b2 \u2212 1/4) on the explicit function e^{t/2} \u00b7 e^{\u2212\u03c0n\u00b2e^{2t}}. This is the key analytic identity underpinning the finite-core Volterra program: it provides an exact same-sign formula decomposing the phase kernel modes into a boundary term and a Volterra tail, and is the foundation for the quotient Schur certificate. Formalization requires the definition of \u03c6_n via the even Riemann kernel \u03a6, the computation of the second derivative of the explicit exponential, and the verification of the equality as an identity of smooth functions on \u211d.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2950",
+    "id": "fd_2951",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T06:10:07.946305+00:00",
     "title": "Second-order theta-mode identity for the Riemann phase kernel"
   },
@@ -2865,7 +2880,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2951",
+    "id": "fd_2952",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -2879,7 +2894,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2952",
+    "id": "fd_2953",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
@@ -2894,7 +2909,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2953",
+    "id": "fd_2954",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29530v1",
@@ -2909,7 +2924,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Computation"
     ],
-    "id": "fd_2954",
+    "id": "fd_2955",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
@@ -2918,31 +2933,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65d4cbfc",
     "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling \u2113: V(G) \u2192 (Z/2Z)^(t \u2212 rank(A)) satisfies d_G(u,v) \u2265 d_H(\u2113(u), \u2113(v)) for all u,v \u2208 V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t \u2212 rank(A)). That is, the labeling never stretches distances\u2014it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2955",
+    "id": "fd_2956",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
   {
-    "consumed_by_exp_id": "65d4cbfc",
+    "consumed_by_exp_id": "",
     "description": "For all d \u2265 1, the maximum number of equiangular lines in \u211d^d with common angle arccos(1/3) satisfies N_{1/3}(d) \u2264 max{28, 2(d \u2212 1)}. This is a special case of Balla's conjecture where the spectral radius order \u03ba\u2081 = 2 (witnessed by K\u2082), making the bound reduce to max{(1\u22121/9)(1\u22122/9)/(2/81), \u230a2(d\u22121)/1\u230b} = max{28, 2(d\u22121)}.",
     "domains": [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2956",
+    "id": "fd_2957",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for \u03b1 = 1/3"
   },
@@ -2952,7 +2967,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2957",
+    "id": "fd_2958",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29507v1",
@@ -2967,7 +2982,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2958",
+    "id": "fd_2959",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29446v1",
@@ -2982,13 +2997,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2959",
+    "id": "fd_2960",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
     "status": "available",
     "timestamp": "2026-06-30T09:11:33.770269+00:00",
     "title": "Berry-Keating Hamiltonian Spectrum Corresponds to Riemann Zeta Non-Trivial Zeros"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime p and integer r with 1 \u2264 r \u2264 p-1, the maximum size of a symmetric set S = -S \u2286 \u2124_p \\ {0} such that the Cayley graph Cay(\u2124_p, S) is K_{r+1}-free equals p - 1 - 2\u230ap/(r+1)\u230b. This is the main theorem of the paper, established via a polynomial method.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2961",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29284v1",
+    "status": "available",
+    "timestamp": "2026-06-30T09:28:09.181224+00:00",
+    "title": "Cayley-Tur\u00e1n number of complete graphs over prime cyclic groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -3368,7 +3398,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "8bace5dd",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -3378,7 +3408,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },

@@ -14787,7 +14787,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "8bace5dd",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14813,7 +14813,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.995091+00:00",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
@@ -37875,7 +37875,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "3d4e2b7e",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37903,7 +37903,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28231v1",
       "source_path": "http://arxiv.org/abs/2606.28231v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-29T16:28:32.494303+00:00",
       "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
@@ -39847,7 +39847,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.NT",
         "math.DS",
@@ -39855,7 +39855,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "62b48ce6",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39871,7 +39871,7 @@
         "Computation"
       ],
       "id": "fd_2917",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-30T09:28:20.736150+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lacunary_gap_universal_asymptotic {q : ℝ} (hq : 1 < q) {a : ℕ → ℕ} (h_lac : ∀ n, (q : ℝ) * a n ≤ a (n + 1)) : ∀ᵐ x ∂(MeasureSpace.volume : Measure 𝕋), Tendsto (fun N : ℕ => (N : ℝ) * maximalCircularGap a N x / Real.log N) atTop (𝓝 1) := by sorry",
       "lineage_refs": [],
@@ -39885,7 +39885,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.28860v1",
       "source_path": "http://arxiv.org/abs/2606.28860v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-30T03:24:28.294396+00:00",
       "title": "Universal Gap Asymptotic for Lacunary Dilations"
@@ -40641,6 +40641,56 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "André-Oort conjecture",
+        "André's theorem for A^2",
+        "CM j-invariants (singular moduli)",
+        "Weil height",
+        "Pila-Wilkie counting theorem",
+        "o-minimal structures"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any geometrically irreducible, non-special algebraic curve V in the affine plane A^2 defined over Q with deg(X|_V) ≠ deg(Y|_V), the Weil heights of special points (pairs of CM j-invariants) on V are bounded linearly in the height of V. Specifically, there exist effectively computable constants c₁ depending only on max{deg X, deg Y} such that for every special point (x,y) ∈ V, max{h(x), h(y)} ≤ c₁ + 26·max{deg X, deg Y}³·h(V). This improves upon prior effective results by Kühne and Bilu-Masser-Zannier which had worse (non-linear) dependence on h(V).",
+      "domain_bridges": [
+        "O-minimality (Pila-Wilkie) → Diophantine geometry (rational point counting)",
+        "Complex multiplication theory → Height theory (CM points have controlled heights)",
+        "Algebraic curve degree theory → Arakelov height of varieties"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Algebra"
+      ],
+      "id": "fd_2934",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem effective_andre_height_bound_linear\n    (V : AlgebraicCurve ℚ) -- irreducible curve in A^2\n    (hV_irred : Irreducible V)\n    (hV_nonspecial : ¬IsSpecialCurve V)\n    (hV_deg_ineq : coordinateDegree V X ≠ coordinateDegree V Y)\n    (x y : ℂ)\n    (hxy : (x, y) ∈ V(ℂ))\n    (hx : IsCMJInvariant x)\n    (hy : IsCMJInvariant y) :\n    max (weilHeight x) (weilHeight y) ≤\n      effectiveConstant (max (coordinateDegree V X) (coordinateDegree V Y)) +\n      26 * (max (coordinateDegree V X) (coordinateDegree V Y))^3 * height V := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The proof proceeds by: (1) establishing that when deg X ≠ deg Y, the curve V satisfies a 'weakly bounded height' condition—meaning the height of V controls the heights of the coordinate functions in a linear fashion; (2) using the theory of complex multiplication to bound the heights of CM j-invariants in terms of their discriminants; (3) applying the Pila-Wilkie counting theorem to the o-minimal structure generated by the j-function and its derivatives to bound the number and size of rational points on definable sets associated to V; (4) combining these to derive the linear dependence on h(V), contrasting with the polynomial dependence in earlier approaches that could not exploit the degree inequality.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29369v1",
+      "source_path": "http://arxiv.org/abs/2606.29369v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T09:27:47.720127+00:00",
+      "title": "Effective André's Theorem with Linear Height Dependence for Curves with Unequal Coordinate Degrees"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2501.12018",
         "MRVZ_geometric_fractional",
         "deGrey_chromatic_plane"
@@ -40661,7 +40711,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2934",
+      "id": "fd_2935",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem gf_chromatic_number_augmented_G27_gt_4 : ∃ (p28 p29 : EuclideanSpace ℝ (Fin 2)), ∃ (G29 : SimpleGraph (Fin 29)) (h_unit : IsUnitDistanceGraph G29 (by decide : Fin 29 → EuclideanSpace ℝ (Fin 2))), χ_gf G29 > 4 := by sorry",
@@ -40707,7 +40757,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2935",
+      "id": "fd_2936",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem largest_matching_root_limit_points_above_threshold\n    (γ : ℝ) (hγ : γ ≥ Real.sqrt (Real.sqrt 5 + 2)) :\n    ∃ (n : ℕ → ℕ) (G : ∀ i, SimpleGraph (Fin (n i))),\n      (∀ i j, i ≠ j → largestMatchingRoot (G i) ≠ largestMatchingRoot (G j)) ∧\n      Tendsto (fun i => largestMatchingRoot (G i)) atTop (𝓝 γ) :=\n  by sorry",
@@ -40753,7 +40803,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2936",
+      "id": "fd_2937",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_prime_square_delta (p : ℕ) (hp : p.Prime) (ho : Odd p) :\n    let G := ZMod (p^2) × ZMod (p^2)\n    let H := p • (⊤ : Subgroup G)\n    transversalDiffNumber G H = (2 * p - 1) ^ 2 := by\n  sorry",
@@ -40798,7 +40848,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2937",
+      "id": "fd_2938",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_bipartization_conjecture (N : ℕ) (G : SimpleGraph (Fin N)) [DecidableRel G.Adj]\n    (h_tri_free : ¬∃ u v w : Fin N, G.Adj u v ∧ G.Adj v w ∧ G.Adj w u) :\n    25 * G.bipartization_number ≤ N ^ 2 := by\n  sorry",
@@ -40846,7 +40896,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2938",
+      "id": "fd_2939",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem young_conjugation_time_reversal {d : ℕ} (hd : 1 ≤ d) :\n    ∃ (σ_Y σ_T : Ω d → Ω d) (hσ_Y : MeasurePreserving σ_Y (μ d) (μ d))\n      (hσ_T : MeasurePreserving σ_T (μ d) (μ d))\n      (inv_Y : Involution σ_Y) (inv_T : Involution σ_T)\n      (commute : ∀ x, σ_Y (σ_T x) = σ_T (σ_Y x)),\n      ∀ᵐ x ∂(μ d), σ_Y (T̃ d (σ_Y x)) = (T̃ d)⁻¹ x ∧\n      ∀ i : Fin 4, μ d (fundamentalDomain σ_Y σ_T i) = μ d (Ω d) / 4 :=\n  by\n    sorry",
@@ -40893,7 +40943,7 @@
         "Computation",
         "Algebra"
       ],
-      "id": "fd_2939",
+      "id": "fd_2940",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multiplicative_coalescent_scaling_limit_pa\n    {β γ : ℝ} (hβ : β > 0) (hγ : γ ∈ Set.Ioo (1/2) 1)\n    (τ : ℝ) (hτ : τ = 1 + 1/γ)\n    (α : ℝ) (hα : α = (3 - τ) / (2 * (τ - 1)))\n    (κ : ℝ → ℝ → ℝ) (hκ : ∀ x y, κ x y = β * (min x y) ^ (-γ) * (max x y) ^ (γ - 1))\n    (p_n : ℕ → ℝ → ℝ)\n    (h_pn : ∀ n t, p_n n t = β * n ^ ((τ - 3) / (2 * τ - 2)) * (1 + t * n ^ (-α)))\n    (G_n : ℕ → ℝ → SimpleGraph (Fin n))\n    (h_Gn : ∀ n t, G_n n t = inhomogeneousPA κ n (p_n n t))\n    (C : ℕ → ℝ → ℕ → ℕ) \n    (h_C : ∀ n t k, C n t k = (orderedComponentSizes (G_n n t)).getD k 0)\n    (MC : MultiplicativeCoalescent κ)\n    :\n    -- The rescaled ordered component size process converges in distribution\n    -- to the multiplicative coalescent in ℓ²↓ × ℝ with Skorokhod topology\n    ∀ᵐ t, tendsto (λ n, λ k, (C n t k : ℝ) / √n)\n      atTop (distr (MC.componentProcess t)) :=\n  sorry",
@@ -40942,7 +40992,7 @@
         "Algebra",
         "Physics"
       ],
-      "id": "fd_2940",
+      "id": "fd_2941",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem master_field_all_couplings {d : ℕ} (hd : 2 ≤ d) (T : ℝ) (hT : 0 < T) (γ : LatticeLoop d) : ∃ (φ : ℝ), Tendsto (λ N, (1 / (N : ℝ)) * wilson_loop_expectation_inf_vol d N T γ) at_top (nhds φ) := by sorry",
@@ -40989,7 +41039,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2941",
+      "id": "fd_2942",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem misere2_quotient_isomorphic : quotient ≅ order_six_monoid := ... // Define monoid structure and quotient computation in Lean",
@@ -41037,7 +41087,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2942",
+      "id": "fd_2943",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_second_moment_sqroot_expsum (δ : ℝ) (hδ : 0 < δ) :\n    ∃ C c : ℝ, 0 < C ∧ 0 < c ∧ ∀ n : ℕ, 2 ≤ n → ∀ H : ℕ,\n    ⌈(n : ℝ)^(1/2 + δ)⌉₊ ≤ H →\n    (∑ h in Finset.Icc ⌈H/2⌉₊ H,\n      (∑ a in Finset.Icc ⌈n/2⌉₊ n,\n        Complex.exp (2 * Real.pi * Complex.I * (h : ℂ) * Real.sqrt (a : ℝ)))\n        .norm_sq)\n    ≤ C * (H : ℝ) * (n : ℝ) * (Real.log (n : ℝ))^c := by\n  sorry",
@@ -41080,7 +41130,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2943",
+      "id": "fd_2944",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Basic diagram-filling and counting techniques over finite graphs",
@@ -41128,7 +41178,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2944",
+      "id": "fd_2945",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem harder_conjecture_k_equals_3 (j : ℕ) (hj : j ≥ 2 ∧ Even j) (f : PrimitiveEllipticCuspForm (j + 4)) (p : Ideal (HeckeField f)) (hp : p ∣ L_alg (j + 3) f) : ∃ (F : SiegelCuspEigenForm (det^3 * Sym^j)) (P : Ideal (HeckeField F)) (hP : P ∣ p), ∀ ℓ : ℕ, ℓ.Prime → SpinLPoly ℓ F ≡ LPoly ℓ f * (1 - (ℓ : ℤ)^1 * X) * (1 - (ℓ : ℤ)^(j + 2) * X) [MOD P] := by sorry",
@@ -41175,7 +41225,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2945",
+      "id": "fd_2946",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bessel_distribution_regular_GLn {F : Type*} [PAdicField F] {n : ℕ} [NeZero n] (π : IrreducibleSmoothAdmissibleRep (GL n F)) (hπ : IsGeneric π) (ℓ₁ : WhittakerFunctional π) (ℓ₂ : WhittakerFunctional π.contrargredient) : IsRegular (besselDistribution ℓ₁ ℓ₂) := by\n  sorry",
@@ -41221,7 +41271,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2946",
+      "id": "fd_2947",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lp_knrs {V : Type*} [Fintype V] [DecidableEq V]\n    (F : SimpleGraph V) [DecidableRel F.Adj]\n    (m : ℕ) (hm : m = F.edgeFinset.card) (hm_pos : 0 < m)\n    (n : ℕ) (hn : n = F.support.card)\n    (p : ℝ) (hp : p ≥ (n.choose 2 : ℝ) / m)\n    (ρ : ℝ) (hρ : ρ ∈ Set.Icc 0 1)\n    (W : UnitInterval → UnitInterval → ℝ)\n    (hW_meas : Measurable (Function.uncurry W))\n    (hW_sym : ∀ x y, W x y = W y x)\n    (hW_range : ∀ x y, W x y ∈ Set.Icc (0 : ℝ) 1)\n    (hW_locally_dense :\n      ∀ S : Set UnitInterval, MeasurableSet S →\n        (∫ x in S, ∫ y in S, W x y ∂volume) ≥ ρ * (volume S) ^ 2)\n    : (∫ x : V → UnitInterval,\n        (∏ e in F.edgeFinset.attach,\n          W (x (Sym2.toProd e.1).1) (x (Sym2.toProd e.1).2)) ^ p\n        ∂(Measure.pi fun _ => volume)) ^ (1 / p : ℝ)\n      ≥ ρ ^ (m : ℝ) := by\n  sorry",
@@ -41268,7 +41318,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2947",
+      "id": "fd_2948",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem digit_sum_formula (p : ℕ) (hp : p.Prime) (b : ℕ) (hb : 2 ≤ b) (hpb : ¬(p ∣ b)) (m : ℕ) (l : ℕ) (hl : l = (p - 1) / 2^m) (h_ord : (∀ k : ℕ, 0 < k → k < l → b^k % p ≠ 1) ∧ b^l % p = 1) (h_mod : p % 2^(m+1) = 1) : (∑ i : Fin l, (b * (b^(i.1) % p)) / p) = (b - 1) * (p - 1) / 2^(m+1) := by sorry",
@@ -41315,7 +41365,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2948",
+      "id": "fd_2949",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sivaraman_F_asymptotic_lower_bound :\n    ∃ c > 0, ∃ s₀ : ℕ, ∀ s ≥ s₀,\n      F s ≥ c * (s : ℝ)^(3/2) / Real.log s :=\n  by\n    sorry",
@@ -41360,7 +41410,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2949",
+      "id": "fd_2950",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tx_graffiti_conjecture (G : Graph) [connected G] [nontrivial G] : α G ≥ (a G + R G) / Δ G",
@@ -41384,7 +41434,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.NT/Riemann_hypothesis",
         "math.AP/Volterra_integral_equations",
@@ -41392,7 +41442,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f47f3dac",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41406,8 +41456,8 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2950",
-      "last_attempt_time": "",
+      "id": "fd_2951",
+      "last_attempt_time": "2026-06-30T09:28:15.164221+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem second_order_theta_mode_identity (n : ℕ) (hn : 1 ≤ n) (t : ℝ) : phi n t = (second_deriv (fun t => Real.exp (t/2) * Real.exp (-Real.pi * (n : ℝ)^2 * Real.exp (2*t))) t - (1/4) * (Real.exp (t/2) * Real.exp (-Real.pi * (n : ℝ)^2 * Real.exp (2*t)))) := by sorry",
       "lineage_refs": [],
@@ -41421,7 +41471,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29555v1",
       "source_path": "http://arxiv.org/abs/2606.29555v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-30T06:10:07.946305+00:00",
       "title": "Second-order theta-mode identity for the Riemann phase kernel"
@@ -41449,7 +41499,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2951",
+      "id": "fd_2952",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem halve_nim_three_pile_ppos {a b c : ℕ} (hc : c ≤ 10) : HalveNim.isPPos a b c ↔ a ^ b ^ c = 0 := by sorry",
@@ -41495,7 +41545,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2952",
+      "id": "fd_2953",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_maximizes_expected_empty_spaces (N : ℕ) (j : ℕ) (hN : 2 ≤ N) (hj : 2 ≤ j) (p : Fin N → ℝ) (hp_pos : ∀ i, 0 < p i) (hp_sum : ∑ i, p i = 1) : expected_empty_spaces p j ≤ expected_empty_spaces (fun _ => (1 : ℝ) / N) j ∧ (expected_empty_spaces p j = expected_empty_spaces (fun _ => (1 : ℝ) / N) j ↔ ∀ i, p i = (1 : ℝ) / N) := by sorry",
@@ -41542,7 +41592,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2953",
+      "id": "fd_2954",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Analysis.SpecialFunctions.Pow.Real\n\ndef prob_untouched_exact (n m k u : ℕ) : ℝ :=\n  (n.choose u : ℝ) * ∑ j in Finset.range (n - u + 1),\n    (-1 : ℝ)^j * (n - u).choose j * (((n - u - j).choose m : ℝ) / (n.choose m : ℝ)) ^ k\n\ntheorem group_drawing_poisson_limit\n  {f g : ℕ → ℕ} {λ : ℝ} (hλ : 0 < λ)\n  (hf : ∀ n, 1 ≤ f n ∧ f n < n)\n  (hλ_lim : Tendsto (fun n => (n : ℝ) * ((n - f n : ℝ) / n) ^ g n) atTop (𝓝 λ))\n  (hb_lim : Tendsto (fun n => n - f n) atTop atTop) (u : ℕ) :\n  Tendsto (fun n => prob_untouched_exact n (f n) (g n) u) atTop (𝓝 (Real.exp (-λ) * λ^u / (Nat.factorial u : ℝ))) :=\n  sorry",
@@ -41589,7 +41639,7 @@
         "Geometry",
         "Computation"
       ],
-      "id": "fd_2954",
+      "id": "fd_2955",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem local_to_global_KKL\n    {d : ℕ} (X : WeightedSimplicialComplex d) (α : ℝ) (hα : 0 < α)\n    (h_links_KKL : ∀ σ ∈ X.faces (d - 2),\n      ∀ g : X.link σ |.faces| 1 → ℝ,\n        ∃ v ∈ (X.link σ).faces 0,\n          (X.link σ).influence v g ≥ α * (X.link σ).variance g)\n    (f : X.faces d → ℝ) :\n    ∃ σ ∈ X.faces (d - 2),\n      X.influence σ f ≥ α * X.variance f := by\n  sorry",
@@ -41623,7 +41673,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "65d4cbfc",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41638,7 +41688,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2955",
+      "id": "fd_2956",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_stretching_quotient_labeling {n t : ℕ} (G : SimpleGraph V) [Connected G] (P : EdgePartition G t) (A : Matrix (Fin (cycle_classes P).length) (Fin t) (ZMod 2)) (hA : A = cycle_class_parity_matrix P) (ℓ : V → (ZMod 2)^(t - A.rank)) (H : CayleyGraph (ZMod 2)^(t - A.rank) (standard_generators _)) (hℓ : ℓ = quotient_labeling P A) : ∀ u v : V, SimpleGraph.dist G u v ≥ SimpleGraph.dist H (ℓ u) (ℓ v) := by sorry",
@@ -41653,7 +41703,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29391v1",
       "source_path": "http://arxiv.org/abs/2606.29391v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-30T07:59:17.309660+00:00",
       "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
@@ -41662,7 +41712,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Lemmens-Seidel-73",
         "Balla-Draxler-Keevash-Sudakov-18",
@@ -41670,7 +41720,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "65d4cbfc",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41685,8 +41735,8 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2956",
-      "last_attempt_time": "2026-06-30T09:11:40.037096+00:00",
+      "id": "fd_2957",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem balla_conjecture_alpha_one_third (d : ℕ) (hd : d ≥ 1) :\n  N_α (1/3 : ℝ) d ≤ max 28 (2 * (d - 1)) := by\n  sorry",
       "lineage_refs": [],
@@ -41700,7 +41750,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.29392v1",
       "source_path": "http://arxiv.org/abs/2606.29392v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-30T08:16:16.372094+00:00",
       "title": "Balla's Conjecture for α = 1/3"
@@ -41730,7 +41780,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2957",
+      "id": "fd_2958",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem k3_additive_uniqueness_on_E2 (f : ℕ → ℂ)\n    (hf_coprime : ∀ {m n : ℕ}, m.Coprime n → f (m * n) = f m * f n)\n    (hf1 : f 1 = 1)\n    (hf2 : f 2 ≠ 0)\n    (h_add : ∀ x₁ x₂ x₃ x₄ x₅ x₆ : ℕ,\n        0 < x₁ → 0 < x₂ → 0 < x₃ → 0 < x₄ → 0 < x₅ → 0 < x₆ →\n        f (x₁^2 + x₂^2 + x₃^2 + x₄^2 + x₅^2 + x₆^2) =\n          f (x₁^2 + x₂^2) + f (x₃^2 + x₄^2) + f (x₅^2 + x₆^2)) :\n    ∀ n : ℕ, f n = n := by\n  sorry",
@@ -41779,7 +41829,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2958",
+      "id": "fd_2959",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem convex_position_minimizes_plane_graphs (n : ℕ) (hn : n ≥ 3) (P : Finset (Fin 2 → ℝ)) (h_gen : general_position P) (h_card : P.card = n) : plane_graph_count P ≥ plane_graph_count_convex n := by\n  sorry",
@@ -41828,7 +41878,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2959",
+      "id": "fd_2960",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem berry_keating_spectrum_equals_riemann_zeros :\n  ∀ (t : ℝ),\n  (∃ (n : ℕ), riemannZetaNontrivialZeros n = Complex.mk (1/2) t) ↔\n  (∃ (λ : ℝ), λ = t^2 + 1/4 ∧ λ ∈ spectrum (selfAdjointExtension berryKeatingHamiltonian)) :=\n  by sorry",
@@ -41847,6 +41897,54 @@
       "thread_id": "",
       "timestamp": "2026-06-30T09:11:33.770269+00:00",
       "title": "Berry-Keating Hamiltonian Spectrum Corresponds to Riemann Zeta Non-Trivial Zeros"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "extremal_combinatorics",
+        "Cayley_graphs",
+        "Turán_theorem"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every odd prime p and integer r with 1 ≤ r ≤ p-1, the maximum size of a symmetric set S = -S ⊆ ℤ_p \\ {0} such that the Cayley graph Cay(ℤ_p, S) is K_{r+1}-free equals p - 1 - 2⌊p/(r+1)⌋. This is the main theorem of the paper, established via a polynomial method.",
+      "domain_bridges": [
+        "additive_combinatorics",
+        "algebraic_graph_theory",
+        "polynomial_method"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2961",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cayer_turan_complete_prime {p : ℕ} (hp : Nat.Prime p) (hp_odd : Odd p)\n    {r : ℕ} (hr : 1 ≤ r) (hr_bound : r ≤ p - 1) :\n    exCay (completeGraph (Fin (r + 1))) (ZMod p) = p - 1 - 2 * (p / (r + 1)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize Cayley graphs over ZMod p, symmetric connection sets, and K_{r+1}-freeness. Prove the lower bound by showing Cay(ℤ_p, ℤ_p \\ D_0) is K_{r+1}-free where D_0 = {0, ±1, ..., ±⌊p/(r+1)⌋}. Prove the upper bound via the polynomial method: for a K_{r+1}-free Cayley graph with connection set S, construct a nonzero polynomial of bounded degree vanishing on the complement D = ℤ_p \\ S, then use the Combinatorial Nullstellensatz or degree-counting to derive |S| ≤ p - 1 - 2⌊p/(r+1)⌋.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.29284v1",
+      "source_path": "http://arxiv.org/abs/2606.29284v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-30T09:28:09.181224+00:00",
+      "title": "Cayley-Turán number of complete graphs over prime cyclic groups"
     },
     {
       "ambition_level": "extension",
