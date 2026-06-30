@@ -1157,7 +1157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d69db06d",
     "description": "Every \u03c4_k-maximal graph on n vertices (with n \u2265 2k+2) has exactly (k+1)(n-1)-1 edges. A graph is \u03c4_k-maximal if it contains no subgraph with k+1 edge-disjoint spanning trees, yet adding any edge from its complement creates such a subgraph.",
     "domains": [
       "Bridges"
@@ -1166,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:06:52.919140+00:00",
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
@@ -1488,6 +1488,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T10:22:21.182498+00:00",
     "title": "Complete classification of 4th powers in the 14-gonal numbers"
+  },
+  {
+    "consumed_by_exp_id": "bff16fd3",
+    "description": "The paper proves that for integers $k \\ge 1$ and $n \\ge 2k+2$, any $\\tau_k$-maximal graph on $n$ vertices has at most $(k+1)(n-1)-1$ edges, and constructs examples achieving this bound. The authors conjecture that this upper bound is actually an exact equality: every $\\tau_k$-maximal graph on $n \\ge 2k+2$ vertices has exactly $(k+1)(n-1)-1$ edges. This conjecture is verified for $k=1$, but remains open for $k \\ge 2$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2856",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28198v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-29T10:44:44.698882+00:00",
+    "title": "Exact Edge Count of Tau_k-Maximal Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3424,12 +3438,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite number of piles, a position in Halve Nim is a P\u2011position (previous player winning) if and only if the bitwise XOR (nim\u2011sum) of the pile sizes is zero. This extends the known results for two\u2011pile Halve Nim and for three\u2011pile Halve Nim with a bounded pile to arbitrary pile numbers and sizes.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2996",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29740v1",
+    "status": "available",
+    "timestamp": "2026-06-30T19:26:39.562037+00:00",
+    "title": "P-positions of Halve Nim coincide with ordinary Nim P-positions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2996",
+    "id": "fd_2997",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3444,7 +3472,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2997",
+    "id": "fd_2998",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3458,7 +3486,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2998",
+    "id": "fd_2999",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3473,7 +3501,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2999",
+    "id": "fd_3000",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3488,7 +3516,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3000",
+    "id": "fd_3001",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3497,32 +3525,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vertex-Ramsey Stability Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "56c1bc1c",
     "description": "Let B \u2282 GL(n) be a Borel subgroup and let \ud835\udd05\u2099 be the flag variety of GL(n).  There is an explicit B\u2011equivariant embedding \u03b9\u2099 of the set of B\u2011orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 into the set of Borel orbits on the flag variety \ud835\udd05_{n+1} of GL(n+1).  Each orbit in the image of \u03b9\u2099 is indexed by a permutation w \u2208 S_{n+1}.  The conjecture states that for any two such permutations v,w the following are equivalent:\n1. The orbit \u03b9\u2099\u207b\u00b9(O_w) lies in the Zariski closure of \u03b9\u2099\u207b\u00b9(O_v).\n2. v \u2264 w in the Bruhat order on S_{n+1}.\nThis gives a complete, combinatorial description of the orbit\u2011closure poset on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 and shows that the embedding \u03b9\u2099 preserves the closure relations exactly as the Bruhat order does on \ud835\udd05_{n+1}.  The conjecture is falsifiable: a counter\u2011example would be a pair (v,w) with v \u2264 w but with \u03b9\u2099\u207b\u00b9(O_w) not contained in the closure of \u03b9\u2099\u207b\u00b9(O_v), or vice\u2011versa.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3001",
+    "id": "fd_3002",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:20:24.782492+00:00",
     "title": "Bruhat Correspondence for Borel Orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9"
   },
   {
-    "consumed_by_exp_id": "56c1bc1c",
+    "consumed_by_exp_id": "",
     "description": "For any positive integer m, any real number p with 0 \u2264 p \u2264 1/3, and any positive weights w\u2081,...,w\u2098 summing to 1, if v\u2081,...,v\u2098 are i.i.d. Bernoulli(p) random variables, then P(\u2211\u1d62 w\u1d62v\u1d62 \u2265 p) \u2265 p. This is the central conjecture of the paper, which the authors connect to the Manickam-Mikl\u00f3s-Singhi conjecture and prove for sufficiently small p. The bound p is sharp, achieved when m=1 and w\u2081=1.",
     "domains": [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3002",
+    "id": "fd_3003",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T13:38:03.172846+00:00",
     "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
   },
@@ -3532,7 +3560,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3003",
+    "id": "fd_3004",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3546,7 +3574,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3004",
+    "id": "fd_3005",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3560,7 +3588,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3005",
+    "id": "fd_3006",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3574,7 +3602,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3006",
+    "id": "fd_3007",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3589,7 +3617,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3007",
+    "id": "fd_3008",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3603,7 +3631,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3617,7 +3645,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3631,7 +3659,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3646,7 +3674,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3661,7 +3689,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3675,7 +3703,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3690,7 +3718,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3704,7 +3732,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3719,7 +3747,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -3733,13 +3761,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
     "status": "available",
     "timestamp": "2026-06-30T19:04:14.554319+00:00",
     "title": "P3-Packing Lower Bound in Plane Triangulations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every self-reciprocal (palindromic) polynomial P \u2208 \u2124[X] of even degree 2m, the polynomial factors as P(x) = x^m \u00b7 Q(x + x\u207b\u00b9) for a unique degree-m polynomial Q (the Chebyshev transform). All roots of P lie on the unit circle in \u2102 if and only if all roots of Q are real and lie in the interval [-2, 2]. The forward direction follows because x on the unit circle implies u = x + x\u207b\u00b9 = 2Re(x) \u2208 [-2, 2]; the reverse because u \u2208 [-2, 2] implies both roots of x\u00b2 - ux + 1 = 0 satisfy |x| = 1 since |x|\u00b2 = x\u00b7x\u0304 = 1 when x\u207b\u00b9 = x\u0304.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3019",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29669v1",
+    "status": "available",
+    "timestamp": "2026-06-30T19:27:53.327772+00:00",
+    "title": "Chebyshev Transform Root Location Equivalence for Self-Reciprocal Polynomials"
   },
   {
     "consumed_by_exp_id": "",
@@ -3885,21 +3927,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Additive Structure of the Primes\n\nThese conjectures grow out of the present cycle's study of two-prime and\nthree-prime representations: the smallest-summand phenomenon, the ordered\nrepresentation count, and the residue pairing of summands modulo small moduli.\n\n## 1. The bounded-summand strengthening of Goldbach\n\n**Conjecture.** There is an absolute constant `C` such that every even number\n`n \u2265 6` can be written as `n = p + q` with both primes and the *smaller* prime\n`p \u2264 C \u00b7 (log n)^2`.\n\nThe key insight is that the empirical \"a tiny prime almost always works\"\nbehaviour is not an accident of small cases but a quantitative law: the density\nof primes near `n` is large enough that one of the very first primes `p` already\nleaves `n - p` prime, so the search depth is poly-logarithmic rather than linear.\n\nWhy now? Exhaustive scans to the hundred-thousand range show the smaller summand\nnever exceeds a slowly growing envelope, and modern sieve bounds on prime gaps\nmake the `(log n)^2` envelope concrete and testable far beyond current data.\n\n## 2. Residue-balanced Goldbach partitions\n\n**Conjecture.** For every modulus `m` and every sufficiently large even `n`\ncoprime-compatible with `m`, the number of Goldbach partitions `n = p + q` whose\nsummands realise each admissible residue pair `(a, b)` mod `m` is asymptotically\nproportional to a fixed local density, with no admissible pair omitted.\n\nThe key insight is that the rigid mod-4 dichotomy proved here \u2014 summands share a\nclass when `n \u2261 2 (mod 4)` and split classes when `n \u2261 0 (mod 4)` \u2014 is the first\nvisible layer of a complete local-density law governing *which* residue pairs can\nand must occur for every modulus.\n\nWhy now? The mod-4 pairing is now a theorem rather than a heuristic, which fixes\nthe base case; extending it to general `m` connects directly to the singular\nseries and is checkable against partition tables for the first several thousand\neven numbers.\n\n## 3. Monotonicity of the ordered representation count\n\n**Conjecture.** The ordered two-prime representation count `r(n)` is eventually\n\"non-collapsing\": for all sufficiently large even `n`, `r(n) \u2265 r(n')` fails only\nfor `n'` in a set of density zero, and in particular `r(n) \u2192 \u221e`.\n\nThe key insight is that representability is governed by a *count*, not a yes/no\nquestion, and the count inherits a smoothing structure from the convolution of\nthe prime indicator with itself, so isolated dips are forced to be rare.\n\nWhy now? The representation count has been isolated as a clean finite object\nequivalent to representability, so its growth is directly measurable, and its\ndivergence is the quantitative heart of every circle-method approach to Goldbach.\n\n## 4. The three-prime threshold is sharp at the parity barrier\n\n**Conjecture.** Every odd number `n \u2265 7` is a sum of three primes, and the bound\n`7` is sharp: it is the least odd number for which the reduction `n = 3 + (n-3)`\nto an even Goldbach instance is available, and no smaller odd number is a sum of\nthree primes with all summands `\u2265 2`.\n\nThe key insight is that the ternary problem is *strictly downstream* of the binary\none through the single deterministic move \"subtract the prime 3\", so the ternary\nthreshold is completely controlled by the smallest even Goldbach instance.\n\nWhy now? The binary \u21d2 ternary reduction is now explicit and unconditional below\nthe certified binary range, turning the ternary threshold into a finite, fully\ndecidable question rather than an asymptotic one.\n\n## 5. A density-one effective Goldbach engine\n\n**Conjecture.** There is an explicit, fast procedure that, for every even `n`,\neither outputs a two-prime partition or a certificate of failure, and the failure\nset is empty up to any bound reachable by a near-linear-time sieve \u2014 making\nunconditional verification of Goldbach to `10^9` and beyond feasible.\n\nThe key insight is that the only obstruction to scaling exhaustive verification is\nrepeated primality testing, which a single precomputed sieve removes, decoupling\nthe verification cost from the cost of testing each summand in isolation.\n\nWhy now? Verification to the hundred-thousand range is already certified by a\nnaive search; replacing trial division with one shared sieve is a routine\nengineering step that immediately pushes the certified frontier by several orders\nof magnitude.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_3018",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3131feed",
-    "status": "available",
-    "timestamp": "2026-06-30T19:23:40.206488+00:00",
-    "title": "These conjectures grow out of the present cycle's study of two-prime and"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3958,7 +3985,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7cf3728",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -3968,7 +3995,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -4016,7 +4043,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da4fd36d",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -4025,7 +4052,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
@@ -4090,7 +4117,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Idempotent Probability: Large Deviations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c941ad90",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical",
@@ -4100,7 +4127,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
@@ -4224,7 +4251,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e7355298",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4234,7 +4261,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
