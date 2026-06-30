@@ -422,7 +422,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Collatz Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce89ece2",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "Algebra"
@@ -431,7 +431,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe28c0d9",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -693,7 +693,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd05632c",
     "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
     "domains": [
       "Algebra"
@@ -702,7 +702,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:58.445057+00:00",
     "title": "Sums of Three Cubes"
   },
@@ -1159,7 +1159,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "98d48aca",
     "description": "For every prime power q \u2265 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q\u00b2+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domains": [
       "Pythagorean",
@@ -1169,7 +1169,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -2135,7 +2135,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Point Continuum of Largest Matching Roots"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c9b3d24f",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domains": [
       "Geometry",
@@ -2145,7 +2145,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G\u2082\u2087 Have Exactly 23 Vertices"
   },
@@ -2326,7 +2326,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1200a14",
     "description": "Every real number greater than or equal to \u221a(\u221a5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number \u03b3 \u2265 \u221a(\u221a5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to \u03b3.",
     "domains": [
       "Bridges"
@@ -2335,7 +2335,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T23:08:33.027778+00:00",
     "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
   },
@@ -3179,7 +3179,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2fac4f85",
     "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
     "domains": [
       "Bridges",
@@ -3189,7 +3189,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.050227+00:00",
     "title": "Homotopy Type Theory as Foundations"
   },
