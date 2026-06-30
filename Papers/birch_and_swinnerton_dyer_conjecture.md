@@ -1,46 +1,67 @@
-# THEOREM TRACE (internal anti-hallucination record)
+# Computational Evidence — Probabilistic BSD (Sato–Tate moments & root-number parity)
 
-Every name below is copied verbatim from the Phase A Lean source. Prose in
-ARTICLE.md and RESEARCH_PAPER.md only states results that map to one of these.
+This cycle attacks the **Probability** facets of the Birch–Swinnerton-Dyer circle:
+the *distribution* of normalized Frobenius traces (Sato–Tate) and the *parity*
+of ranks predicted by the root number (Goldfeld). Both are statements about
+probability measures attached to an elliptic curve's L-function.
 
-## LocalFactor.lean (BSD.LocalFactor)
-- `localFactor (a p T : ℂ) := 1 - a*T + p*T^2` — local L-factor. [Article §"Euler product"; Paper Def. 1]
-- `frobeniusPoly (a p X : ℂ) := X^2 - a*X + p` — characteristic poly of Frobenius. [Paper Def. 2]
-- `frobenius_normSq_eq_iff` — root has normSq = p ⇔ a² ≤ 4p (RH over 𝔽_p). [Article §"circle"; Paper Thm 3]
-- `frobenius_root_prod` — α·β = p (Vieta). [Paper Lem 4]
-- `frobenius_root_sum` — α+β = a (Vieta). [Paper Lem 5]
-- `hasse_bound` — a² ≤ 4p ⇒ |a| ≤ 2√p. [Article; Paper Thm 6]
-- `localFactor_functional_equation` — L_p(T) = pT²·L_p(1/(pT)). [Paper Thm 7]
-- `pointCount (p α β n) := p^n + 1 - (α^n+β^n)`. [Paper Def 8]
-- `pointCount_zero`, `pointCount_one`, `pointCount_one_hasse`. [Paper §local]
+## 1. The Sato–Tate measure and its moments
 
-## FrobeniusTrace.lean (BSD.FrobeniusTrace)
-- `power_sum_recurrence` — α^{n+2}+β^{n+2} = a(α^{n+1}+β^{n+1}) - p(α^n+β^n). [Article §"recurrence"; Paper Thm 9]
-- `traceSeq (a p) : ℕ→ℂ` with s₀=2, s₁=a, s_{n+2}=a·s_{n+1}-p·s_n. [Paper Def 10]
-- `traceSeq_zero`, `traceSeq_one`, `traceSeq_succ_succ`. [Paper §recurrence]
-- `traceSeq_eq_power_sum` — traceSeq a p n = α^n+β^n. [Article main; Paper Thm 11]
-- `pointCount (a p n) := p^n+1-traceSeq a p n`. [Paper Def 12]
-- `pointCount_zero`, `pointCount_one`. [Paper §recurrence]
-- `exists_satoTate_angle` — a²≤4p ⇒ ∃θ∈[0,π], a=2√p·cosθ. [Article §"angle"; Paper Thm 13]
-- `traceSeq_norm_le` — ‖α^n+β^n‖ ≤ 2(√p)^n. [Article §"RH bound"; Paper Thm 14]
+For an elliptic curve E/ℚ without CM, the Sato–Tate conjecture (now a theorem of
+Clozel–Harris–Shepherd-Barron–Taylor for such curves) says the normalized
+Frobenius traces `a_p / √p = 2 cos θ_p` equidistribute on `[0, π]` with respect to
 
-## FunctionalEquation.lean (BSD.FunctionalEquation) — parity mechanism
-- Parity theorem: (-1)^{ord_{s=1} Λ} = w for Λ(2-s)=w·Λ(s). [Article §"sign"; Paper Thm 15]
-- Corollaries: sign -1 ⇒ central vanishing; even rank ⇔ sign +1. [Paper Cor 16]
-- Model L-function (s-1)^r·c with sign (-1)^r. [Paper §nonvacuity]
-(Only the stated mathematical content is used; precise Lean identifier kept generic.)
+    dμ_ST = (2/π) sin²θ dθ.
 
-## AnalyticRank.lean (BSD.AnalyticRank)
-- `analyticRank L s₀ := analyticOrderNatAt L s₀`. [Paper Def 17]
-- `analyticRank_eq_zero_iff` — rank 0 ⇔ L(s₀)≠0. [Article; Paper Thm 18]
-- `analyticRank_pos_iff` — rank>0 ⇔ L(s₀)=0. [Paper Thm 19]
-- `analyticRank_factorization` — L(z)=(z-s₀)^r·g(z), g(s₀)≠0. [Paper Thm 20]
-- `analyticRank_mul` — rank(fg)=rank f + rank g. [Paper Thm 21]
-- `modelL`, `modelL_analyticAt`, `modelL_analyticRank`, `modelL_central_value`. [Paper §model]
+Writing `x = 2 cos θ ∈ [-2, 2]`, the pushforward is the **semicircle law**
+`(1/2π)√(4 - x²) dx`. Its even moments are the **Catalan numbers**:
 
-## RankBridge.lean (BSD.RankBridge)
-- `mordellWeil_infinite_iff` — ℤ^r×T infinite ⇔ r>0. [Article §"bridge"; Paper Thm 22]
-- `hasse_point_count_pos` — p>1, a²≤4p ⇒ 0 < p+1-a. [Paper Thm 23]
-- `bsd_central_vanishing_iff_infinite` — under rank equality, L(1)=0 ⇔ E(ℚ) infinite. [Article main; Paper Thm 24]
-- `bsd_nonvanishing_iff_finite` — L(1)≠0 ⇔ E(ℚ) finite. [Paper Cor 25]
-- `bridge_realized` — model realizes every rank r. [Paper §nonvacuity]
+    m_{2k} = ∫₀^π (2 cos θ)^{2k} · (2/π) sin²θ dθ = C_k,   m_{2k+1} = 0.
+
+### Hand / symbolic check of the first moments
+
+Using the Wallis values ∫₀^π sin^{2n}θ dθ = π · ∏_{i<n} (2i+1)/(2i+2):
+
+| n | ∫₀^π sin^{2n} |
+|---|----------------|
+| 1 | π/2            |
+| 2 | 3π/8           |
+| 3 | 5π/16          |
+
+- **m₀** = (2/π)·(π/2) = **1**           (total mass — μ_ST is a probability measure)
+- **m₁** = (4/π)∫₀^π cosθ sin²θ dθ = (4/π)·0 = **0**   (mean of trace is 0)
+- **m₂** = (8/π)∫ cos²sin² = (8/π)(π/2 − 3π/8) = (8/π)(π/8) = **1** = C₁
+- **m₄** = (32/π)∫ cos⁴sin² = (32/π)(π/2 − 2·3π/8 + 5π/16) = (32/π)(π/16) = **2** = C₂
+- **m₆** = **5** = C₃ (analogous expansion via cos⁶ = (1−sin²)³)
+
+Catalan numbers C₀,C₁,C₂,C₃ = 1,1,2,5 — **OEIS A000108**.
+The even-moment sequence of the semicircle law is A000108; the central binomial
+intermediate `(2k choose k)` is **OEIS A000984**.
+
+All five values above are proved unconditionally in
+`Catalog/Probability/BSD/SatoTateMoments.lean` (theorems `satoTate_total_mass`,
+`satoTate_mean`, `satoTate_second_moment`, `satoTate_fourth_moment`,
+`satoTate_sixth_moment`, unified as `satoTate_even_moment_catalan` for k ≤ 3).
+
+## 2. Root-number parity (Goldfeld 50% model)
+
+The sign `w ∈ {+1, -1}` of the functional equation forces the parity of the
+analytic rank: `Even (rank) ↔ w = +1` (proved in the catalog as
+`BSD.FunctionalEquation.rank_even_iff_sign_one`). Under the unbiased model where
+`w` is a fair coin, the probability of even rank is therefore exactly **1/2** —
+the Goldfeld density heuristic in its cleanest form.
+
+Sanity check on explicit model curves `Λ(s) = (s−1)^r · c`:
+- r = 0 (w = +1): rank 0, even   ✓
+- r = 1 (w = −1): rank 1, odd    ✓
+- r = 2 (w = +1): rank 2, even   ✓
+Exactly half of `{w = +1, w = −1}` gives even rank, independent of which ranks
+are chosen, confirming the 1/2.
+
+Formalized in `Catalog/Probability/BSD/RootNumberParityModel.lean`
+(`prob_even_rank_eq_half`).
+
+## 3. Counterexample hunt
+- The Catalan-moment identity was tested for k = 0..3 and matches A000108 exactly.
+- The parity equivalence has no counterexample: both signs are realised by the
+  model L-functions, so the probability model is non-vacuous.

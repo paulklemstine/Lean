@@ -1,205 +1,391 @@
-# Local and Analytic Structures Underlying the Birch and Swinnerton-Dyer Conjecture
-
-**Author:** Aristotle
-**Date:** 2026-06-26
-**Domain:** Novelty (Arithmetic of elliptic curves)
+# A Sharp Turán–Caro–Wei Lower Bound on the Independence Number
 
 ## Abstract
 
-The Birch and Swinnerton-Dyer (BSD) conjecture predicts that the algebraic rank of an elliptic curve $E/\mathbb{Q}$ — the free rank of its Mordell–Weil group $E(\mathbb{Q})$ — equals the analytic rank, the order of vanishing of its Hasse–Weil $L$-function $L(E,s)$ at the central point $s=1$. We develop and rigorously verify a collection of the local and analytic structures that underpin this conjecture, organized in five self-contained modules. On the local side we establish the algebraic equivalence between the Riemann Hypothesis over finite fields (Frobenius eigenvalues on the circle $|z|=\sqrt p$) and the Hasse bound $a_p^2\le 4p$; the Vieta relations $\alpha+\beta=a_p$, $\alpha\beta=p$; the local functional equation $L_p(T)=pT^2L_p(1/(pT))$; Newton's linear recurrence $s_{n+2}=a_p s_{n+1}-p\,s_n$ for the Frobenius power sums $s_n=\alpha^n+\beta^n$ with the calibrated initial data $s_0=2,\ s_1=a_p$; the trace-sequence computation of the point-count tower $\#E(\mathbb{F}_{p^n})=p^n+1-s_n$; the Sato–Tate angle $a_p=2\sqrt p\cos\theta$; and the archimedean bound $\lVert\alpha^n+\beta^n\rVert\le 2(\sqrt p)^n$. On the analytic side we formalize the analytic rank via the order of vanishing, prove rank-zero/positive detection, leading-term factorization, additivity under products, and the unconditional **parity theorem** $(-1)^{\operatorname{ord}_{s=1}\Lambda}=w$ for any function obeying the functional-equation symmetry $\Lambda(2-s)=w\,\Lambda(s)$. Finally we assemble a **rank bridge**: under the BSD rank equality, the central value $L(E,1)$ vanishes if and only if $E(\mathbb{Q})$ is infinite. All results are machine-verified; this paper states each inline with a proof sketch.
+We give a complete, self-contained development of the classical lower bound on
+the independence number of a finite simple graph in terms of its order and size.
+The central result states that every graph with $n$ vertices and $m$ edges
+contains an independent set of size at least $n^2/(2m + n)$. We prove this via
+the sharper vertex-weighted bound of Caro and Wei — that some independent set $S$
+satisfies $\sum_{v} 1/(\deg(v)+1) \le |S|$ — combined with the handshake
+identity $\sum_v \deg(v) = 2m$ and the arithmetic–harmonic mean inequality
+(a corollary of Cauchy–Schwarz). We also examine, and refute, the frequently
+cited bound $n^2/(4m)$: it is the output of the probabilistic deletion method but
+is valid only when $n \le 2m$, failing dramatically for sparse graphs (for
+$n = 100$, $m = 1$ it claims an independent set of $2500$ vertices in a
+$100$-vertex graph). The bound $n^2/(2m+n)$ is always valid, never exceeds $n$,
+coincides with Turán's extremal value on disjoint unions of equal cliques, and
+strictly improves on $n^2/(4m)$ exactly in the regime where the latter is even
+legal. We give precise statements, full proof sketches, an algorithmic
+realization, numerical demonstrations, and a discussion of applications and
+extensions.
+
+**Keywords.** Independence number, Turán's theorem, Caro–Wei bound,
+probabilistic method, handshake lemma, Cauchy–Schwarz inequality, extremal graph
+theory.
 
 ---
 
 ## 1. Introduction
 
-Let $E/\mathbb{Q}$ be an elliptic curve. Two integers are attached to it by entirely different routes. The **algebraic rank** $r_{\mathrm{alg}}$ is the rank of the finitely generated abelian group $E(\mathbb{Q})\cong\mathbb{Z}^{r_{\mathrm{alg}}}\times T$, where $T$ is finite torsion. The **analytic rank** $r_{\mathrm{an}}=\operatorname{ord}_{s=1}L(E,s)$ is the order of vanishing of the Hasse–Weil $L$-function at the center of its functional equation. The BSD conjecture asserts $r_{\mathrm{alg}}=r_{\mathrm{an}}$, and in its refined form predicts the leading Taylor coefficient of $L(E,s)$ at $s=1$ in terms of the regulator, the order of the Tate–Shafarevich group $\Sha$, the real period, and the Tamagawa numbers.
+Let $G$ be a finite simple graph with vertex set $V$, $|V| = n$, and edge set of
+cardinality $m$. A set $S \subseteq V$ is **independent** if no two of its
+vertices are adjacent. The **independence number** $\alpha(G)$ is the maximum size
+of an independent set. Computing $\alpha(G)$ exactly is NP-hard, but strong and
+universally valid *lower* bounds — guarantees that a large independent set must
+exist — are available and have been central to extremal and probabilistic graph
+theory since the mid-twentieth century.
 
-This work isolates and verifies the structural scaffolding on which both sides of BSD rest. We do not claim a proof of BSD; rather, we make precise and machine-check the analytic mechanisms (functional-equation parity, order-of-vanishing calculus) and the local mechanisms (Frobenius eigenvalues, the Hasse/RH equivalence, the point-count recurrence, the Sato–Tate angle) that any treatment of BSD must invoke, and we assemble them into a clean qualitative consequence of the rank equality.
+The cleanest such guarantee involves only the two coarsest graph invariants, the
+order $n$ and the size $m$. Our main theorem is the following.
 
-The exposition follows the five formalized modules: §2 the local $L$-factor and the RH/Hasse equivalence; §3 the Frobenius trace recurrence, the point-count tower, the Sato–Tate angle and the norm bound; §4 the analytic rank and order-of-vanishing calculus; §5 the functional equation and the parity theorem; §6 the rank bridge. §7 discusses applications and §8 future work.
+> **Theorem 1 (Turán / Caro–Wei bound).** Every finite simple graph with $n$
+> vertices and $m$ edges satisfies
+> $$\alpha(G) \;\ge\; \frac{n^2}{2m + n}.$$
 
----
+This paper presents a complete derivation of Theorem 1 from first principles. The
+argument factors into three independent and individually elementary components:
 
-## 2. The local $L$-factor and the Riemann Hypothesis over finite fields
+1. a **vertex-weighted refinement** (Theorem 2, Caro–Wei) producing an
+   independent set whose size dominates $\sum_v 1/(\deg(v)+1)$;
+2. the **handshake identity** $\sum_v \deg(v) = 2m$ (Lemma 5); and
+3. the **arithmetic–harmonic mean inequality** $n^2/\sum_v f_v \le \sum_v 1/f_v$
+   for positive $f_v$ (Lemma 6), a consequence of Cauchy–Schwarz.
 
-**Definition 1 (Local $L$-factor).** At a prime $p$ of good reduction, the local factor is the degree-two polynomial
-$$L_p(T) = 1 - a_p T + p\,T^2,$$
-where $a_p = p+1-\#E(\mathbb{F}_p)$ is the trace of Frobenius. The global $L$-function is the Euler product $L(E,s)=\prod_p L_p(p^{-s})^{-1}$.
-
-**Definition 2 (Frobenius characteristic polynomial).** The reciprocal roots of $L_p$ are the roots of
-$$f(X) = X^2 - a_p X + p,$$
-the **Frobenius eigenvalues** $\alpha,\beta$.
-
-**Theorem 3 (RH over $\mathbb{F}_p$ ⇔ Hasse bound).** Let $a,p\in\mathbb{R}$ with $0<p$, and let $z\in\mathbb{C}$ be any root of $X^2-aX+p$. Then
-$$|z|^2 = p \iff a^2 \le 4p.$$
-*Proof sketch.* Write the condition $f(z)=0$ in real/imaginary coordinates. For the forward direction, split on the sign of the discriminant: if $z$ is non-real then $z,\bar z$ are conjugate roots, so $|z|^2 = z\bar z = \alpha\beta = p$ by Vieta and the discriminant is negative, i.e. $a^2\le 4p$; if $z$ is real then $|z|^2=z^2$ equals $p$ only at the double root $z=a/2$, forcing $a^2=4p$. For the converse, $a^2\le 4p$ yields either complex-conjugate roots (handled by Vieta) or a real double root, and in each case $|z|^2=p$ follows by a nonnegativity argument ($\operatorname{nlinarith}$ on the squared coordinates). $\square$
-
-**Lemma 4 (Vieta product).** Distinct roots $z\neq w$ of $f$ satisfy $z\cdot w = p$.
-**Lemma 5 (Vieta sum).** Distinct roots $z\neq w$ of $f$ satisfy $z+w=a$.
-*Proof sketch.* Subtract the two equations $f(z)=f(w)=0$; $z^2-w^2-a(z-w)=0$ factors as $(z-w)(z+w-a)=0$, and cancelling $z-w\neq 0$ gives the sum. Substituting back gives the product. $\square$
-
-**Theorem 6 (Hasse bound).** If $0\le p$ and $a^2\le 4p$, then $|a|\le 2\sqrt p$.
-*Proof sketch.* Square the target: $(2\sqrt p)^2 = 4p \ge a^2$, and take square roots using $a^2\le b^2,\ b\ge 0 \Rightarrow |a|\le b$. $\square$
-
-**Theorem 7 (Local functional equation).** For $T\neq 0$, $p\neq 0$,
-$$L_p(T) = p\,T^2\, L_p\!\left(\tfrac{1}{pT}\right).$$
-*Proof sketch.* Substitute $1/(pT)$ into $L_p$, clear denominators, and simplify; the identity is a rational-function tautology ($\operatorname{field\_simp}$ then $\operatorname{ring}$). It is the local incarnation of the global symmetry $s\leftrightarrow 2-s$. $\square$
-
-**Definition 8 (Point count via eigenvalues).** $N_n := \#E(\mathbb{F}_{p^n}) = p^n + 1 - (\alpha^n+\beta^n)$.
-
-The normalizations $N_0=0$ in the eigenvalue convention and $N_1 = p+1-a_p$ are verified, and the Hasse deviation bound $\lVert N_1-(p+1)\rVert\le 2\sqrt p$ follows from Theorem 6.
+A secondary contribution is a careful analysis of the widely quoted bound
+$n^2/(4m)$. We show it is *false in general*, identify the precise source of the
+error (a probability constraint violated in the sparse regime), and prove that
+$n^2/(2m+n)$ is the correct universal statement that additionally improves on
+$n^2/(4m)$ wherever the latter is meaningful.
 
 ---
 
-## 3. The Frobenius trace recurrence, the point-count tower, and the Sato–Tate angle
+## 2. Definitions and notation
 
-Let $s_n := \alpha^n+\beta^n$ be the $n$-th power sum of the Frobenius eigenvalues — the trace of the $n$-th power of Frobenius.
+Throughout, $G = (V, E)$ is a finite simple graph: $V$ is a finite set, and
+adjacency is a symmetric, irreflexive relation on $V$. We write $u \sim v$ to mean
+$u$ and $v$ are adjacent.
 
-**Theorem 9 (Newton's recurrence for power sums).** For $\alpha,\beta\in\mathbb{C}$ with $\alpha+\beta=a$ and $\alpha\beta=p$, and all $n\in\mathbb{N}$,
-$$\alpha^{n+2}+\beta^{n+2} = a(\alpha^{n+1}+\beta^{n+1}) - p(\alpha^n+\beta^n).$$
-*Proof sketch.* After substituting $a=\alpha+\beta$, $p=\alpha\beta$, both sides are equal polynomials in $\alpha,\beta$; the identity reduces to $\operatorname{ring}$. $\square$
+- **Order and size.** $n = |V|$ is the *order*; $m = |E|$ is the *size*.
+- **Degree.** For $v \in V$, $\deg(v) = |\{u \in V : u \sim v\}|$ is the number of
+  neighbors of $v$.
+- **Independent set.** $S \subseteq V$ is independent if $u \not\sim v$ for all
+  distinct $u, v \in S$. The independence number is
+  $\alpha(G) = \max\{|S| : S \text{ independent}\}$.
+- **Relative degree.** For a vertex subset $W \subseteq V$ and $v \in V$, the
+  *relative degree* $\deg_W(v) = |\{u \in W : v \sim u\}|$ counts the neighbors of
+  $v$ that lie inside $W$. When $W = V$ this is the ordinary degree:
+  $\deg_V(v) = \deg(v)$.
 
-**Definition 10 (Frobenius trace sequence).** Define $\operatorname{traceSeq}_{a,p}:\mathbb{N}\to\mathbb{C}$ by
-$$s_0 = 2,\quad s_1 = a,\quad s_{n+2} = a\,s_{n+1} - p\,s_n.$$
-The calibration $s_0=2$ (not $1$) is forced by $\alpha^0+\beta^0=2$ and is the classic off-by-one in Newton's identities.
-
-**Theorem 11 (Trace sequence computes power sums).** If $\alpha+\beta=a$ and $\alpha\beta=p$, then for all $n$,
-$$\operatorname{traceSeq}_{a,p}(n) = \alpha^n + \beta^n.$$
-*Proof sketch.* Two-step induction. Base cases: $s_0=2=\alpha^0+\beta^0$ and $s_1=a=\alpha+\beta$. Inductive step: by definition $s_{n+2}=a\,s_{n+1}-p\,s_n$, and applying the inductive hypotheses to $s_{n+1},s_n$ and then Theorem 9 yields $\alpha^{n+2}+\beta^{n+2}$. $\square$
-
-**Definition 12 (Trace-sequence point count).** $N_n := p^n + 1 - \operatorname{traceSeq}_{a,p}(n)$. By Theorem 11 this agrees with Definition 8, so the *entire tower* $\{N_n\}$ is determined by the single datum $a_p$ together with $p$, via a second-order linear recurrence with constant coefficients. The boundary values $N_0=0$ and $N_1=p+1-a$ are verified.
-
-This rigidity is the computational engine of the local zeta function: the generating series $\exp\!\big(\sum_{n\ge 1} N_n T^n/n\big)$ is the rational zeta function $\dfrac{1-a_pT+pT^2}{(1-T)(1-pT)}$, whose numerator is precisely $L_p(T)$.
-
-**Theorem 13 (Sato–Tate angle).** If $0<p$ and $a^2\le 4p$, there exists $\theta\in[0,\pi]$ with
-$$a = 2\sqrt p\,\cos\theta.$$
-*Proof sketch.* Take $\theta = \arccos\!\big(a/(2\sqrt p)\big)$; the Hasse bound places $a/(2\sqrt p)\in[-1,1]$, the domain of $\arccos$, so $\theta\in[0,\pi]$ and $\cos\theta = a/(2\sqrt p)$, giving the claim after clearing $2\sqrt p>0$. $\square$
-
-The angle $\theta$ is the coordinate of the Sato–Tate conjecture: as $p$ varies, the angles $\theta_p$ equidistribute with respect to $\frac{2}{\pi}\sin^2\theta\,d\theta$.
-
-**Theorem 14 (Archimedean / RH bound on power sums).** If $\lVert\alpha\rVert = \lVert\beta\rVert = \sqrt p$, then for all $n$,
-$$\lVert\alpha^n+\beta^n\rVert \le 2(\sqrt p)^n.$$
-*Proof sketch.* Triangle inequality then multiplicativity of the norm under powers: $\lVert\alpha^n+\beta^n\rVert\le\lVert\alpha\rVert^n+\lVert\beta\rVert^n = 2(\sqrt p)^n$. This uses only the RH input $\lVert\alpha\rVert=\lVert\beta\rVert=\sqrt p$, not the algebraic Vieta relations, so it is the genuinely analytic half; it holds for all $n$ including $n=0$ ($2\le 2$). $\square$
+The relative degree is the technical device that makes the induction in Section 4
+clean: it lets us track how degrees change as vertices are deleted, working
+entirely inside the ambient vertex set rather than passing to genuinely smaller
+graphs.
 
 ---
 
-## 4. Analytic rank and the calculus of orders of vanishing
+## 3. The handshake identity and an edge bound
 
-**Definition 17 (Analytic rank).** For $L:\mathbb{C}\to\mathbb{C}$ analytic at $s_0$, the analytic rank is the order of vanishing
-$$\operatorname{analyticRank}(L,s_0) := \operatorname{ord}_{s_0}L \in \mathbb{N},$$
-formalized as the natural-number order of vanishing at $s_0$. For BSD, $s_0=1$.
+We first record two elementary facts that connect local degree data to the global
+size $m$.
 
-**Theorem 18 (Rank-zero detection).** If $L$ is analytic at $s_0$ and does not vanish identically near $s_0$ (the order is finite), then
-$$\operatorname{analyticRank}(L,s_0)=0 \iff L(s_0)\neq 0.$$
-**Theorem 19 (Positive-rank detection).** Under the same hypotheses,
-$$0 < \operatorname{analyticRank}(L,s_0) \iff L(s_0)=0.$$
-*Proof sketch.* The order of vanishing is $0$ exactly when $L(s_0)\ne0$, given finiteness (which rules out the degenerate $\operatorname{ord}=\infty$, whose truncation to $\mathbb{N}$ would also be $0$). Theorem 19 is the contrapositive. $\square$
+> **Lemma 5 (Handshake identity, weighted form).** For every finite simple graph,
+> $$\sum_{v \in V} \big(\deg(v) + 1\big) \;=\; 2m + n.$$
 
-**Theorem 20 (Leading-term factorization).** If $L$ is analytic at $s_0$ with finite order $r=\operatorname{analyticRank}(L,s_0)$, there is $g$ analytic at $s_0$ with $g(s_0)\neq 0$ and, in a neighborhood of $s_0$,
-$$L(z) = (z-s_0)^r\, g(z).$$
-*Proof sketch.* This is the defining property of the natural-number order of vanishing: $\operatorname{ord}_{s_0}L=r$ iff such a factorization with nonvanishing $g(s_0)$ exists. The nonzero value $g(s_0)$ is the leading Taylor coefficient predicted by the refined BSD formula. $\square$
+*Proof sketch.* Summing the standard handshake identity $\sum_v \deg(v) = 2m$ —
+each edge contributes $1$ to the degree of each of its two endpoints, hence $2$ to
+the total — with $\sum_v 1 = n$ gives the claim. $\qquad\blacksquare$
 
-**Theorem 21 (Additivity under products).** For $f,g$ analytic at $s_0$ of finite order,
-$$\operatorname{analyticRank}(fg,s_0) = \operatorname{analyticRank}(f,s_0) + \operatorname{analyticRank}(g,s_0).$$
-*Proof sketch.* Orders of vanishing add under multiplication of analytic germs. This is the analytic shadow of the Artin/Rankin–Selberg factorization of $L$-functions under products of abelian varieties or isogeny splittings. $\square$
+> **Lemma 7 (Edge bound).** For every finite simple graph,
+> $$2m + n \;\le\; n^2.$$
 
-**Non-vacuity (model $L$-function).** Define $\operatorname{modelL}_{r,c}(s) = (s-1)^r\, c$. It is analytic everywhere, and for $c\neq 0$ its analytic rank at $s=1$ is exactly $r$, with central value vanishing iff $r\ge 1$. Hence the analytic-rank invariant is surjective onto $\mathbb{N}$ and not secretly constant.
+*Proof sketch.* A simple graph on $n$ vertices has at most $\binom{n}{2} =
+n(n-1)/2$ edges, so $2m \le n(n-1) = n^2 - n$, whence $2m + n \le n^2$.
+$\qquad\blacksquare$
 
----
-
-## 5. The functional equation, the sign, and the parity theorem
-
-The completed $L$-function $\Lambda(E,s)=N^{s/2}(2\pi)^{-s}\Gamma(s)L(E,s)$ satisfies
-$$\Lambda(E,2-s) = w(E)\,\Lambda(E,s), \qquad w(E)\in\{+1,-1\},$$
-with $w(E)$ the global root number. We abstract the analytic mechanism.
-
-**Theorem 15 (Parity theorem).** Let $\Lambda$ be analytic at the central point $s=1$ with finite order of vanishing, and suppose $\Lambda(2-s)=w\,\Lambda(s)$ with $w\in\{+1,-1\}$. Then
-$$(-1)^{\operatorname{ord}_{s=1}\Lambda} = w.$$
-*Proof sketch.* Use the leading-term factorization (Theorem 20): near $1$, $\Lambda(z)=(z-1)^r g(z)$ with $g(1)\ne0$, where $r=\operatorname{ord}_{s=1}\Lambda$. The reflection $z\mapsto 2-z$ sends $z-1\mapsto -(z-1)$, so on a punctured neighborhood of $1$,
-$$\Lambda(2-z) = (-(z-1))^r g(2-z) = (-1)^r (z-1)^r g(2-z).$$
-The functional equation equates this with $w\,(z-1)^r g(z)$. Cancelling $(z-1)^r$ and letting $z\to 1$ gives $(-1)^r g(1) = w\,g(1)$; since $g(1)\ne0$, $(-1)^r = w$. Equivalently, in Taylor coefficients $c_k$ of $\Lambda$ at $1$, the symmetry forces $(-1)^k c_k = w\,c_k$; on the lowest nonvanishing $c_r$ this is exactly $(-1)^r=w$. $\square$
-
-**Corollary 16 (Sign dichotomy).** Under the hypotheses of Theorem 15:
-- if $w=-1$ then $\operatorname{ord}_{s=1}\Lambda$ is odd, hence $\ge 1$, so $\Lambda(1)=0$ (central vanishing);
-- the order of vanishing is even if and only if $w=+1$.
-
-**Non-vacuity.** The model $\Lambda(s)=(s-1)^r c$ satisfies the functional equation with sign $(-1)^r$, exhibiting both parities and confirming the framework is not empty.
-
-Through BSD's rank equality, Theorem 15 becomes the **Parity Conjecture**: $(-1)^{r_{\mathrm{alg}}}=w(E)$; and root number $-1$ predicts $r_{\mathrm{alg}}\ge1$, i.e. infinitely many rational points.
+Lemma 7 guarantees that the bound of Theorem 1 is never vacuous: it yields
+$n^2/(2m+n) \ge 1$, so a nonempty independent set always exists (true trivially,
+but a useful consistency check).
 
 ---
 
-## 6. The rank bridge: analytic ⇔ algebraic
+## 4. The Caro–Wei vertex-weighted bound
 
-Model the Mordell–Weil group as $E(\mathbb{Q})\cong\mathbb{Z}^r\times T$ with $T$ finite (and nonempty, since the point at infinity $O$ always lies in it).
+The heart of the development is the following refinement, which is sharper than
+Theorem 1 because it adapts to the full degree sequence rather than only to the
+average degree.
 
-**Theorem 22 (Mordell–Weil infinitude criterion).** For $r\in\mathbb{N}$ and $T$ a finite nonempty type,
-$$\big(\mathbb{Z}^r\times T\big)\ \text{is infinite} \iff r>0.$$
-*Proof sketch.* If $r=0$ the group is $\{*\}\times T$, finite. If $r\ge1$, pick a coordinate $i$ and inject $\mathbb{Z}\hookrightarrow\mathbb{Z}^r\times T$ by $n\mapsto(n e_i, t_0)$; injectivity follows by reading off coordinate $i$, so the group is infinite. $\square$
+> **Theorem 2 (Caro–Wei).** Every finite simple graph $G$ contains an independent
+> set $S$ with
+> $$\sum_{v \in V} \frac{1}{\deg(v) + 1} \;\le\; |S|.$$
 
-**Theorem 23 (Local positivity, from Hasse).** For $p>1$ of good reduction with $a^2\le 4p$,
-$$0 < p+1-a = \#E(\mathbb{F}_p).$$
-*Proof sketch.* By Theorem 6, $a\le|a|\le 2\sqrt p$. Since $p>1$ gives $\sqrt p>1$, we have $2\sqrt p < p+1$ (as $(\sqrt p-1)^2>0$), hence $a<p+1$. So the local Euler factor never trivializes the global $L$-function. $\square$
+We prove a localized version relative to an arbitrary vertex subset $W$, from
+which Theorem 2 follows by taking $W = V$.
 
-**Theorem 24 (Qualitative BSD bridge).** Let $L$ be analytic at $1$ with finite order, and assume the BSD rank equality $\operatorname{analyticRank}(L,1)=r$ where $r$ is the free rank of $E(\mathbb{Q})\cong\mathbb{Z}^r\times T$. Then
-$$L(1)=0 \iff E(\mathbb{Q})\ \text{is infinite}.$$
-*Proof sketch.* By Theorem 19, $L(1)=0 \iff \operatorname{analyticRank}(L,1)>0$; substitute the rank equality to get $r>0$; by Theorem 22 this is equivalent to $E(\mathbb{Q})$ being infinite. $\square$
+> **Lemma 3 (Localized Caro–Wei).** For every $W \subseteq V$ there exists an
+> independent set $S \subseteq W$ with
+> $$\sum_{v \in W} \frac{1}{\deg_W(v) + 1} \;\le\; |S|.$$
 
-**Corollary 25 (Rank-zero form).** Under the same hypotheses, $L(1)\neq 0 \iff E(\mathbb{Q})$ is finite.
+*Proof sketch.* We induct on $|W|$ using strong induction.
 
-**Non-vacuity.** For each target rank $r$ and $c\neq0$, the model $\operatorname{modelL}_{r,c}$ satisfies the rank-equality hypothesis with algebraic rank $r$, so the bridge applies across genuinely distinct ranks, not a single degenerate case.
+If $W = \varnothing$, take $S = \varnothing$; both sides are $0$.
+
+Otherwise pick a vertex $v_0 \in W$ of *maximum* relative degree,
+$\deg_W(v_0) = \max_{v \in W} \deg_W(v) =: d_0$.
+
+*Case $d_0 = 0$.* Then no vertex of $W$ has a neighbor in $W$, so $W$ itself is
+independent and every term $1/(\deg_W(v)+1) = 1$. Taking $S = W$ gives
+$\sum_{v \in W} 1 = |W| = |S|$.
+
+*Case $d_0 \ge 1$.* Apply the inductive hypothesis to $W' = W \setminus \{v_0\}$,
+obtaining an independent set $S \subseteq W'$ with
+$\sum_{v \in W'} 1/(\deg_{W'}(v) + 1) \le |S|$. Since $S \subseteq W' \subseteq W$
+and $S$ is independent in $G$, it remains a valid candidate for $W$. It therefore
+suffices to show
+$$\sum_{v \in W} \frac{1}{\deg_W(v)+1} \;\le\; \sum_{v \in W'} \frac{1}{\deg_{W'}(v)+1}.$$
+
+The relation between the two relative degrees is exact (Lemma 4 below): for
+$u \in W'$,
+$$\deg_W(u) = \deg_{W'}(u) + \mathbf{1}[u \sim v_0].$$
+Hence the per-vertex weight gain in passing from $W$ to $W'$ is, for each
+neighbor $u$ of $v_0$ in $W'$,
+$$\frac{1}{\deg_{W'}(u)+1} - \frac{1}{\deg_W(u)+1}
+ = \frac{1}{\deg_{W'}(u)+1} - \frac{1}{\deg_{W'}(u)+2}
+ = \frac{1}{(\deg_{W'}(u)+1)(\deg_{W'}(u)+2)},$$
+and $0$ for non-neighbors. Because $v_0$ has maximum degree, every neighbor $u$
+satisfies $\deg_W(u) \le d_0$, i.e. $\deg_{W'}(u) + 1 \le d_0$, so each nonzero
+gain is at least
+$$\frac{1}{(\deg_{W'}(u)+1)(\deg_{W'}(u)+2)} \;\ge\; \frac{1}{d_0 (d_0 + 1)}.$$
+Summing over the $d_0$ neighbors of $v_0$ in $W'$ (there are exactly
+$\deg_W(v_0) = d_0$ of them, since $v_0 \in W$), the total weight gain is at least
+$$d_0 \cdot \frac{1}{d_0(d_0+1)} = \frac{1}{d_0 + 1} = \frac{1}{\deg_W(v_0)+1}.$$
+This is precisely the weight contributed by $v_0$ itself in the sum over $W$ —
+the only term present in $W$ but absent in $W'$. Therefore
+$$\sum_{v \in W'} \frac{1}{\deg_{W'}(v)+1}
+ \;\ge\; \sum_{v \in W'} \frac{1}{\deg_W(v)+1} + \frac{1}{\deg_W(v_0)+1}
+ \;=\; \sum_{v \in W} \frac{1}{\deg_W(v)+1},$$
+completing the induction. $\qquad\blacksquare$
+
+> **Lemma 4 (Degree under deletion).** For $W \subseteq V$, $v_0 \in W$, and any
+> $u \in V$,
+> $$\deg_W(u) = \deg_{W \setminus \{v_0\}}(u) + \mathbf{1}[u \sim v_0].$$
+
+*Proof sketch.* The neighbors of $u$ inside $W$ are partitioned into those inside
+$W \setminus \{v_0\}$ together with $v_0$ itself precisely when $u \sim v_0$;
+counting gives the identity. $\qquad\blacksquare$
+
+Theorem 2 is the special case $W = V$ of Lemma 3, using $\deg_V = \deg$.
 
 ---
 
-## 7. Applications
+## 5. The arithmetic–harmonic mean inequality
 
-1. **Computing point-count towers from one datum.** Theorems 9–12 reduce the infinite family $\{\#E(\mathbb{F}_{p^n})\}_n$ to a two-term recurrence seeded by $(a_p,p)$. This is the practical route to local zeta functions and to the partial Euler products that approximate $L(E,s)$.
-2. **Detecting positive rank from the sign.** Corollary 16 plus Theorem 24 means a root number computation $w(E)=-1$ already forces (under BSD) infinitely many rational points — without any point search. This is the engine behind heuristics for rank in large databases of curves.
-3. **Sato–Tate statistics.** Theorem 13 furnishes the angle coordinate $\theta_p=\arccos(a_p/2\sqrt p)$ in which the distribution of traces is studied; the norm bound (Theorem 14) is the uniform control that makes the limiting measure well defined.
-4. **Stability of $L$-data under products/isogeny.** Theorem 21 (additivity) is the analytic counterpart of how ranks behave under isogeny and Weil restriction; combined with multiplicativity of root numbers it controls parity across products.
+To pass from the degree-sequence-dependent bound of Theorem 2 to the $n, m$-only
+bound of Theorem 1, we use the following standard inequality.
 
----
+> **Lemma 6 (Arithmetic–harmonic mean inequality).** For positive reals
+> $f_1, \dots, f_n$,
+> $$\frac{n^2}{\sum_{i=1}^n f_i} \;\le\; \sum_{i=1}^n \frac{1}{f_i}.$$
 
-## 8. Discussion and future work
-
-The modules verified here are deliberately the *load-bearing* and *unconditional* parts of the BSD circle of ideas: the RH/Hasse equivalence, the Vieta and recurrence structure, the Sato–Tate angle, the order-of-vanishing calculus, and the parity theorem are all proved outright; only the bridge theorems are stated *conditionally* on the BSD rank equality, exactly as the mathematics demands. Four concrete directions extend the work.
-
-**Conjecture 1 — Full Taylor reflection.** Strengthen the parity theorem: if $\Lambda$ is analytic at $1$, of finite order, and $\Lambda(2-s)=w\,\Lambda(s)$, then *every* Taylor coefficient obeys $c_k=(-1)^k w\,c_k$, so the expansion at the center is supported on a single parity $k\equiv\operatorname{ord}\ (\mathrm{mod}\ 2)$. Test: formalize $\frac{d^k}{ds^k}\Lambda(1)=(-1)^k w\,\frac{d^k}{ds^k}\Lambda(1)$ and deduce leading-coefficient sign/reality constraints.
-
-**Conjecture 2 — Multiplicativity of root numbers.** If $\Lambda_1(2-s)=w_1\Lambda_1(s)$ and $\Lambda_2(2-s)=w_2\Lambda_2(s)$ then $(\Lambda_1\Lambda_2)(2-s)=(w_1w_2)(\Lambda_1\Lambda_2)(s)$; combined with additivity of orders (Theorem 21) this gives $(-1)^{\operatorname{ord}(\Lambda_1\Lambda_2)}=w_1w_2$, the analytic shadow of BSD data under isogeny and Weil restriction.
-
-**Conjecture 3 — The Hasse interval is exactly attained.** The angle map $a\mapsto\arccos(a/2\sqrt p)$ is injective and order-reversing on $[-2\sqrt p,2\sqrt p]$, and $\#\{a:a^2\le4p\}$ grows like $4\sqrt p$; the measure-theoretic limit (Sato–Tate equidistribution for $\frac2\pi\sin^2\theta\,d\theta$) is the long-range target.
-
-**Conjecture 4 — Positivity and integrality of the point counts.** Formalize that $\operatorname{traceSeq}_{a,p}(n)\in\mathbb{Z}$ and $N_n=p^n+1-s_n>0$ for all $n$ when $(a,p)$ comes from a genuine curve, completing the bridge between the recurrence and the geometric point counts.
+*Proof sketch.* By the Cauchy–Schwarz inequality applied to the vectors with
+components $\sqrt{f_i}$ and $1/\sqrt{f_i}$,
+$$n^2 = \left(\sum_{i=1}^n \sqrt{f_i}\cdot \frac{1}{\sqrt{f_i}}\right)^2
+ \le \left(\sum_{i=1}^n f_i\right)\left(\sum_{i=1}^n \frac{1}{f_i}\right).$$
+Dividing by the positive quantity $\sum_i f_i$ yields the claim. Equivalently,
+this is the inequality between the arithmetic mean $\frac1n\sum_i f_i$ and the
+harmonic mean $n/\sum_i (1/f_i)$. $\qquad\blacksquare$
 
 ---
 
-## Appendix: Index of formalized results
+## 6. Proof of the main theorem
 
-| # | Name | Statement |
-|---|------|-----------|
-| 1 | `localFactor` | $L_p(T)=1-a_pT+pT^2$ |
-| 2 | `frobeniusPoly` | $X^2-a_pX+p$ |
-| 3 | `frobenius_normSq_eq_iff` | $\|z\|^2=p \iff a^2\le4p$ |
-| 4 | `frobenius_root_prod` | $z w=p$ |
-| 5 | `frobenius_root_sum` | $z+w=a$ |
-| 6 | `hasse_bound` | $a^2\le4p\Rightarrow|a|\le2\sqrt p$ |
-| 7 | `localFactor_functional_equation` | $L_p(T)=pT^2L_p(1/(pT))$ |
-| 8 | `pointCount` (local) | $p^n+1-(\alpha^n+\beta^n)$ |
-| 9 | `power_sum_recurrence` | $s_{n+2}=a s_{n+1}-p s_n$ |
-| 10 | `traceSeq` | $s_0=2,s_1=a$, recurrence |
-| 11 | `traceSeq_eq_power_sum` | $\operatorname{traceSeq}=\alpha^n+\beta^n$ |
-| 12 | `pointCount` (trace) | $p^n+1-\operatorname{traceSeq}$ |
-| 13 | `exists_satoTate_angle` | $a=2\sqrt p\cos\theta,\ \theta\in[0,\pi]$ |
-| 14 | `traceSeq_norm_le` | $\|\alpha^n+\beta^n\|\le2(\sqrt p)^n$ |
-| 15 | parity theorem | $(-1)^{\operatorname{ord}}=w$ |
-| 16 | sign dichotomy | $w=-1\Rightarrow\Lambda(1)=0$ |
-| 17 | `analyticRank` | $\operatorname{ord}_{s_0}L$ |
-| 18 | `analyticRank_eq_zero_iff` | rank $0\iff L(s_0)\ne0$ |
-| 19 | `analyticRank_pos_iff` | rank $>0\iff L(s_0)=0$ |
-| 20 | `analyticRank_factorization` | $L=(z-s_0)^r g$, $g(s_0)\ne0$ |
-| 21 | `analyticRank_mul` | rank adds under products |
-| 22 | `mordellWeil_infinite_iff` | $\mathbb{Z}^r\times T$ infinite $\iff r>0$ |
-| 23 | `hasse_point_count_pos` | $0<p+1-a$ |
-| 24 | `bsd_central_vanishing_iff_infinite` | $L(1)=0\iff E(\mathbb{Q})$ infinite |
-| 25 | `bsd_nonvanishing_iff_finite` | $L(1)\ne0\iff E(\mathbb{Q})$ finite |
+We now assemble the components.
+
+*Proof of Theorem 1.* Apply Theorem 2 to obtain an independent set $S$ with
+$$\sum_{v \in V} \frac{1}{\deg(v) + 1} \;\le\; |S|.$$
+Apply Lemma 6 with $f_v = \deg(v) + 1 > 0$:
+$$\frac{n^2}{\sum_{v}(\deg(v)+1)} \;\le\; \sum_{v} \frac{1}{\deg(v)+1}.$$
+By the weighted handshake identity (Lemma 5), $\sum_v (\deg(v)+1) = 2m + n$.
+Substituting and chaining the two inequalities,
+$$\frac{n^2}{2m + n} \;\le\; \sum_{v} \frac{1}{\deg(v)+1} \;\le\; |S| \;\le\; \alpha(G),$$
+which is the assertion of Theorem 1. Because the size of an independent set is an
+integer, one may further conclude $\alpha(G) \ge \lceil n^2/(2m+n) \rceil$ when
+the quotient is not an integer, and in particular $\alpha(G) \ge 1$ by Lemma 7.
+$\qquad\blacksquare$
+
+---
+
+## 7. The folklore bound $n^2/(4m)$ is false
+
+A persistent piece of folklore states the guarantee as $n^2/(4m)$. We explain its
+origin, show it is false, and locate the error precisely.
+
+### 7.1 Origin via probabilistic deletion
+
+The probabilistic deletion method proceeds as follows. Fix $p \in [0,1]$. Sample
+a random subset $R \subseteq V$ by including each vertex independently with
+probability $p$. The expected number of retained vertices is $pn$, and the
+expected number of retained edges (both endpoints sampled) is $p^2 m$. Deleting
+one endpoint from each retained edge produces an independent set of expected size
+at least
+$$\mathbb{E}[|R|] - \mathbb{E}[\#\text{edges in } R] \;\ge\; pn - p^2 m.$$
+Optimizing the quadratic $pn - p^2 m$ over $p$ gives the unconstrained maximizer
+$p^\star = n/(2m)$ with value $n^2/(4m)$.
+
+### 7.2 The constraint $p \le 1$ and the failure
+
+The maximizer $p^\star = n/(2m)$ is a legal probability only if $p^\star \le 1$,
+i.e. only if
+$$n \le 2m.$$
+For sparser graphs ($2m < n$) the optimum of the *constrained* problem
+$p \in [0,1]$ is attained at the boundary $p = 1$, not at $p^\star$, and the value
+$n^2/(4m)$ is unattainable. Reporting it anyway yields absurdities.
+
+> **Counterexample.** Let $n = 100$ and $m = 1$ (a hundred vertices, a single
+> edge). The folklore formula claims an independent set of size
+> $$\frac{n^2}{4m} = \frac{100^2}{4 \cdot 1} = 2500,$$
+> which exceeds $n = 100$. No graph on $100$ vertices can contain an independent
+> set of $2500$ vertices. By contrast the true bound gives
+> $$\frac{n^2}{2m+n} = \frac{10000}{102} \approx 98.04,$$
+> hence $\alpha(G) \ge 99$ for this graph, which is exactly correct (delete one
+> endpoint of the single edge).
+
+### 7.3 The relationship between the two bounds
+
+The two expressions are directly comparable.
+
+> **Proposition 8.** For all $n \ge 1$ and $m \ge 1$,
+> $$\frac{n^2}{2m+n} \;\ge\; \frac{n^2}{4m} \iff n \le 2m.$$
+
+*Proof sketch.* Both numerators equal $n^2 > 0$, so the inequality between the
+fractions reverses the inequality between the denominators:
+$n^2/(2m+n) \ge n^2/(4m)$ iff $2m + n \le 4m$ iff $n \le 2m$. $\qquad\blacksquare$
+
+Thus on the dense graphs where the deletion bound is legal ($n \le 2m$), the true
+bound $n^2/(2m+n)$ is at least as large — a genuine strengthening — while on
+sparse graphs ($n > 2m$) the deletion formula is simply invalid and the true
+bound continues to hold. Moreover $n^2/(2m+n) \le n$ always (since
+$2m + n \ge n$), so the true bound never makes an impossible promise.
+
+---
+
+## 8. Sharpness: Turán's extremal graphs
+
+Theorem 1 is best possible: there is a family of graphs on which the inequality is
+an equality, so the denominator $2m + n$ cannot be replaced by anything smaller.
+
+> **Proposition 9 (Tightness).** Let $G$ be the disjoint union of $k$ cliques each
+> of order $r$, so $n = kr$ and $m = k\binom{r}{2} = kr(r-1)/2$. Then
+> $\alpha(G) = k$ and $n^2/(2m+n) = k$, so Theorem 1 holds with equality.
+
+*Proof sketch.* An independent set can contain at most one vertex from each
+clique, and choosing exactly one per clique is independent, so $\alpha(G) = k$.
+For the formula, $2m + n = kr(r-1) + kr = kr^2 = n r$, hence
+$n^2/(2m+n) = (kr)^2/(nr) = n \cdot kr / (nr) = k$. $\qquad\blacksquare$
+
+Every vertex in such a graph has degree $r - 1$, so each Caro–Wei weight is
+exactly $1/r$, the total weight is $n/r = k$, and the arithmetic–harmonic step is
+also tight because all $f_v$ are equal. This is precisely the equality case of
+Turán's theorem viewed through complementation: among graphs with given $n$ and
+$m$, balanced disjoint unions of cliques minimize the independence number, and
+they meet our bound exactly.
+
+---
+
+## 9. Algorithmic realization
+
+The proof of Lemma 3 is constructive and yields a greedy algorithm — the
+*minimum-degree greedy* (also known as the GREEDY-IS heuristic) — that produces an
+independent set meeting the Caro–Wei guarantee, and hence Theorem 1.
+
+**Minimum-degree greedy.** Repeatedly select a vertex of minimum degree in the
+current graph, add it to the independent set, and delete it together with all its
+neighbors; continue until no vertices remain.
+
+This selection rule (minimum degree) is the operational complement of the
+maximum-degree deletion used in the induction, and it provably returns a set of
+size at least $\sum_v 1/(\deg(v)+1) \ge n^2/(2m+n)$. The algorithm runs in
+$O(n + m)$ time with appropriate bucket-by-degree data structures, making the
+guarantee not only existential but efficiently achievable.
+
+A second, even simpler route to a set of size at least $\sum_v 1/(\deg(v)+1)$ in
+expectation is the **random permutation method**: draw a uniformly random ordering
+of the vertices and keep each vertex that precedes all of its neighbors in the
+order. The probability that $v$ is kept is exactly $1/(\deg(v)+1)$ — $v$ must be
+first among the $\deg(v)+1$ vertices of its closed neighborhood — and the kept set
+is independent, so its expected size equals the Caro–Wei sum. Derandomizing by the
+method of conditional expectations recovers the greedy algorithm.
+
+---
+
+## 10. Applications
+
+The independence-number guarantee is a workhorse with broad reach.
+
+- **Scheduling and conflict resolution.** Model tasks as vertices and pairwise
+  conflicts as edges; an independent set is a set of mutually compatible tasks. The
+  bound guarantees a large conflict-free batch from only the task and conflict
+  counts.
+- **Wireless frequency assignment.** Transmitters that interfere are adjacent; an
+  independent set is a set of mutually non-interfering transmitters that may share a
+  channel.
+- **Coding theory.** Codewords with small pairwise distance form edges of a
+  conflict graph; large independent sets correspond to large codes with guaranteed
+  minimum distance.
+- **Molecular and statistical-physics models.** Hard-core configurations (no two
+  occupied adjacent sites) are exactly independent sets; lower bounds on their size
+  bound ground-state occupancy.
+
+In each setting the appeal is identical: a global existence guarantee follows from
+two global counts, with no need to analyze the detailed structure of the conflict
+graph.
+
+---
+
+## 11. Discussion and future work
+
+The development above is deliberately modular: the Caro–Wei weighted bound
+(Theorem 2) is the substantive combinatorial input, while the passage to the
+$n,m$-only form (Theorem 1) is pure inequality manipulation via handshake and
+Cauchy–Schwarz. This separation clarifies *why* the bound holds and isolates the
+single place — maximum-degree induction — where graph structure is used.
+
+Several directions extend the result.
+
+- **Weighted and hypergraph analogues.** Caro–Wei generalizes to vertex-weighted
+  independent sets and to bounds on independent sets in hypergraphs via
+  inclusion–exclusion over the degree sequence.
+- **Local refinements.** Replacing the global average degree with neighborhood
+  statistics (e.g., triangle counts, as in the Shearer and Ajtai–Komlós–Szemerédi
+  improvements for triangle-free graphs) yields strictly stronger bounds of order
+  $\Omega\big(\tfrac{n}{d}\log d\big)$ for graphs of average degree $d$.
+- **Algorithmic optimality.** Understanding the precise approximation ratio of the
+  minimum-degree greedy algorithm relative to $\alpha(G)$ on structured graph
+  classes remains an active topic.
+
+The broader methodological lesson — that an "almost true" formula
+($n^2/(4m)$) can be repaired into an "always true" one ($n^2/(2m+n)$) by
+respecting a single feasibility constraint — recurs throughout the probabilistic
+method, where optimizing a parameter without enforcing its natural range is a
+common and instructive pitfall.
+
+---
+
+## Appendix: summary of the logical structure
+
+$$
+\underbrace{\text{Lemma 4}}_{\text{degree under deletion}}
+\;\Rightarrow\;
+\underbrace{\text{Lemma 3}}_{\text{localized Caro–Wei}}
+\;\Rightarrow\;
+\underbrace{\text{Theorem 2}}_{\text{Caro–Wei}}
+$$
+$$
+\Big(\text{Theorem 2}\Big)
++\underbrace{\text{Lemma 5}}_{\text{handshake}}
++\underbrace{\text{Lemma 6}}_{\text{AM–HM}}
+\;\Rightarrow\;
+\underbrace{\text{Theorem 1}}_{\;\alpha(G)\ge n^2/(2m+n)\;}
+$$
+with Lemma 7 ensuring non-vacuity, Proposition 8 relating the bound to the
+folklore $n^2/(4m)$, and Proposition 9 establishing sharpness.

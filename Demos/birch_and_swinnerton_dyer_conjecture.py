@@ -1,203 +1,235 @@
 """
-Numerical demonstrations of the local and analytic structures underlying the
-Birch and Swinnerton-Dyer conjecture.
+Numerical demonstrations of the Turán / Caro–Wei lower bound on the
+independence number of a finite simple graph.
 
-Every function here mirrors a machine-verified theorem:
+Main result:
+    Every graph with n vertices and m edges has an independent set of size at
+    least  n^2 / (2m + n).
 
-  * trace_sequence / trace_eq_power_sum  <->  traceSeq, traceSeq_eq_power_sum,
-                                              power_sum_recurrence
-  * point_count_tower                    <->  pointCount (= p^n + 1 - s_n)
-  * sato_tate_angle                      <->  exists_satoTate_angle
-  * power_sum_norm_bound                 <->  traceSeq_norm_le
-  * hasse_bound / frobenius_normsq       <->  hasse_bound, frobenius_normSq_eq_iff
-  * analytic_rank_of_model               <->  modelL_analyticRank, analyticRank_*
-  * parity_of_order                      <->  parity theorem (-1)^ord = w
-  * mordell_weil_infinite                <->  mordellWeil_infinite_iff
-  * bsd_central_vanishing_iff_infinite   <->  bsd_central_vanishing_iff_infinite
+This file is fully self-contained (standard library only). It
 
-Run:  python demo.py
+  * implements graphs, degrees, and the handshake identity;
+  * implements the minimum-degree greedy algorithm that realizes the
+    Caro–Wei weighted bound  sum_v 1/(deg v + 1) <= |S|;
+  * verifies the chain  n^2/(2m+n) <= sum_v 1/(deg v + 1) <= |greedy set|
+    on a battery of graphs;
+  * exhibits the failure of the folklore bound  n^2/(4m);
+  * confirms tightness on disjoint unions of equal cliques.
+
+Run:  python3 demo.py
 """
 
 from __future__ import annotations
 
-import cmath
+import itertools
 import math
-from typing import List, Tuple
+import random
+from typing import Dict, List, Set, Tuple
+
+Vertex = int
+Edge = Tuple[Vertex, Vertex]
 
 
-# --------------------------------------------------------------------------
-# Local theory: Frobenius eigenvalues, Hasse bound, RH circle
-# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# Graph primitives
+# --------------------------------------------------------------------------- #
+class Graph:
+    """A finite simple graph on vertices 0..n-1 stored as adjacency sets."""
 
-def frobenius_eigenvalues(a: float, p: float) -> Tuple[complex, complex]:
-    """Roots alpha, beta of X^2 - a*X + p (the Frobenius eigenvalues)."""
-    disc = cmath.sqrt(complex(a * a - 4 * p))
-    return ((a + disc) / 2, (a - disc) / 2)
+    def __init__(self, n: int, edges: List[Edge]) -> None:
+        self.n: int = n
+        self.adj: List[Set[Vertex]] = [set() for _ in range(n)]
+        for u, v in edges:
+            if u == v:
+                continue  # simple graph: no loops
+            self.adj[u].add(v)
+            self.adj[v].add(u)
+
+    @property
+    def m(self) -> int:
+        """Number of edges (size)."""
+        return sum(len(nbrs) for nbrs in self.adj) // 2
+
+    def degree(self, v: Vertex) -> int:
+        return len(self.adj[v])
+
+    def is_independent(self, s: Set[Vertex]) -> bool:
+        return all(v not in self.adj[u] for u, v in itertools.combinations(s, 2))
 
 
-def hasse_bound_holds(a: float, p: float) -> bool:
-    """Theorem `hasse_bound`/`frobenius_normSq_eq_iff`: a^2 <= 4p  <=>  |a| <= 2 sqrt p."""
-    return a * a <= 4 * p
+# --------------------------------------------------------------------------- #
+# The three ingredients of the proof
+# --------------------------------------------------------------------------- #
+def handshake_check(g: Graph) -> bool:
+    """Handshake identity: sum_v (deg v + 1) = 2m + n."""
+    lhs = sum(g.degree(v) + 1 for v in range(g.n))
+    rhs = 2 * g.m + g.n
+    return lhs == rhs
 
 
-def frobenius_normsq(a: float, p: float) -> Tuple[float, float]:
-    """|alpha|^2 and |beta|^2.  Theorem: both equal p iff a^2 <= 4p."""
-    alpha, beta = frobenius_eigenvalues(a, p)
-    return (abs(alpha) ** 2, abs(beta) ** 2)
+def caro_wei_weight(g: Graph) -> float:
+    """The Caro–Wei weighted lower bound  sum_v 1/(deg v + 1)."""
+    return sum(1.0 / (g.degree(v) + 1) for v in range(g.n))
 
 
-# --------------------------------------------------------------------------
-# The trace-sequence recurrence (Theorems power_sum_recurrence,
-# traceSeq, traceSeq_eq_power_sum)
-# --------------------------------------------------------------------------
+def turan_bound(g: Graph) -> float:
+    """The clean lower bound  n^2 / (2m + n)."""
+    return g.n ** 2 / (2 * g.m + g.n)
 
-def trace_sequence(a: float, p: float, n: int) -> List[float]:
+
+def folklore_bound(g: Graph) -> float:
+    """The (generally FALSE) folklore bound  n^2 / (4m).  Returns inf if m=0."""
+    return math.inf if g.m == 0 else g.n ** 2 / (4 * g.m)
+
+
+# --------------------------------------------------------------------------- #
+# Algorithm: minimum-degree greedy independent set
+# --------------------------------------------------------------------------- #
+def min_degree_greedy(g: Graph) -> Set[Vertex]:
     """
-    s_0 = 2, s_1 = a, s_{k+2} = a*s_{k+1} - p*s_k   (Definition `traceSeq`).
-    Returns [s_0, ..., s_n].
+    Repeatedly pick a vertex of minimum degree in the remaining graph, add it
+    to the independent set, and delete it together with all its neighbors.
+    Provably returns a set of size >= sum_v 1/(deg v + 1) >= n^2/(2m+n).
     """
-    s: List[float] = [2.0, a]
-    for _ in range(2, n + 1):
-        s.append(a * s[-1] - p * s[-2])
-    return s[: n + 1]
+    remaining: Set[Vertex] = set(range(g.n))
+    result: Set[Vertex] = set()
+    while remaining:
+        # minimum degree within the induced subgraph on `remaining`
+        v = min(remaining, key=lambda x: len(g.adj[x] & remaining))
+        result.add(v)
+        remaining.discard(v)
+        remaining -= g.adj[v]
+    return result
 
 
-def power_sums_directly(a: float, p: float, n: int) -> List[complex]:
-    """s_k = alpha^k + beta^k computed straight from the eigenvalues."""
-    alpha, beta = frobenius_eigenvalues(a, p)
-    return [alpha ** k + beta ** k for k in range(n + 1)]
-
-
-def trace_eq_power_sum(a: float, p: float, n: int, tol: float = 1e-9) -> bool:
-    """Theorem `traceSeq_eq_power_sum`: traceSeq(n) == alpha^n + beta^n."""
-    rec = trace_sequence(a, p, n)
-    direct = power_sums_directly(a, p, n)
-    return all(abs(complex(r) - d) < tol for r, d in zip(rec, direct))
-
-
-def point_count_tower(a: float, p: float, n: int) -> List[float]:
+def random_permutation_independent_set(g: Graph, seed: int = 0) -> Set[Vertex]:
     """
-    #E(F_{p^k}) = p^k + 1 - s_k   (Definition `pointCount`).
-    The whole tower comes from (a, p) alone via the recurrence.
+    Keep each vertex that precedes all its neighbors in a random ordering.
+    The expected size equals the Caro–Wei sum.
     """
-    s = trace_sequence(a, p, n)
-    return [p ** k + 1 - s[k] for k in range(n + 1)]
+    rng = random.Random(seed)
+    order = list(range(g.n))
+    rng.shuffle(order)
+    rank: Dict[Vertex, int] = {v: i for i, v in enumerate(order)}
+    return {v for v in range(g.n)
+            if all(rank[v] < rank[u] for u in g.adj[v])}
 
 
-# --------------------------------------------------------------------------
-# Sato-Tate angle and the RH norm bound
-# --------------------------------------------------------------------------
-
-def sato_tate_angle(a: float, p: float) -> float:
-    """Theorem `exists_satoTate_angle`: theta in [0, pi] with a = 2 sqrt p cos theta."""
-    return math.acos(a / (2 * math.sqrt(p)))
+# --------------------------------------------------------------------------- #
+# Sample graph constructors
+# --------------------------------------------------------------------------- #
+def cycle(n: int) -> Graph:
+    return Graph(n, [(i, (i + 1) % n) for i in range(n)])
 
 
-def power_sum_norm_bound_holds(a: float, p: float, n: int) -> bool:
-    """Theorem `traceSeq_norm_le`: |alpha^n + beta^n| <= 2 (sqrt p)^n."""
-    alpha, beta = frobenius_eigenvalues(a, p)
-    return abs(alpha ** n + beta ** n) <= 2 * math.sqrt(p) ** n + 1e-9
+def complete(n: int) -> Graph:
+    return Graph(n, list(itertools.combinations(range(n), 2)))
 
 
-# --------------------------------------------------------------------------
-# Analytic side: model L-function, rank, parity theorem
-# --------------------------------------------------------------------------
-
-def model_L(r: int, c: complex, s: complex) -> complex:
-    """Model L-function (s-1)^r * c  (Definition `modelL`)."""
-    return (s - 1) ** r * c
-
-
-def analytic_rank_of_model(r: int, c: complex) -> int:
-    """
-    Theorem `modelL_analyticRank`: the order of vanishing of (s-1)^r c at s=1 is r.
-    Detect it numerically by the growth rate  log|L(1+eps)| / log(eps) -> r
-    as eps -> 0, which is numerically stable for all r (unlike high-order
-    finite differences).
-    """
-    if r == 0:
-        return 0
-    eps1, eps2 = 1e-2, 1e-4
-    v1 = abs(model_L(r, c, 1 + eps1))
-    v2 = abs(model_L(r, c, 1 + eps2))
-    slope = (math.log(v2) - math.log(v1)) / (math.log(eps2) - math.log(eps1))
-    return round(slope)
+def disjoint_cliques(k: int, r: int) -> Graph:
+    """k disjoint cliques each of order r (Turán's extremal family)."""
+    edges: List[Edge] = []
+    for c in range(k):
+        base = c * r
+        edges.extend((base + i, base + j)
+                     for i, j in itertools.combinations(range(r), 2))
+    return Graph(k * r, edges)
 
 
-def parity_of_order(r: int) -> int:
-    """
-    Parity theorem: (-1)^{ord} = w, and the model (s-1)^r c has sign w = (-1)^r.
-    Returns the sign w in {+1, -1}.
-    """
-    return 1 if r % 2 == 0 else -1
+def random_graph(n: int, p: float, seed: int = 0) -> Graph:
+    rng = random.Random(seed)
+    edges = [(i, j) for i, j in itertools.combinations(range(n), 2)
+             if rng.random() < p]
+    return Graph(n, edges)
 
 
-def functional_equation_residual(r: int, c: complex, s: complex) -> float:
-    """Check Lambda(2-s) = w Lambda(s) with w = (-1)^r for the model."""
-    w = parity_of_order(r)
-    return abs(model_L(r, c, 2 - s) - w * model_L(r, c, s))
+# --------------------------------------------------------------------------- #
+# Demonstrations
+# --------------------------------------------------------------------------- #
+def demo_chain_of_inequalities() -> None:
+    print("=" * 72)
+    print("DEMO 1:  n^2/(2m+n)  <=  Caro–Wei sum  <=  |greedy set|  <= alpha(G)")
+    print("=" * 72)
+    graphs = {
+        "C_5 (5-cycle)": cycle(5),
+        "C_10 (10-cycle)": cycle(10),
+        "K_6 (complete)": complete(6),
+        "G(20, 0.3) random": random_graph(20, 0.3, seed=1),
+        "G(40, 0.1) random": random_graph(40, 0.1, seed=2),
+    }
+    for name, g in graphs.items():
+        assert handshake_check(g), "handshake identity failed!"
+        tb = turan_bound(g)
+        cw = caro_wei_weight(g)
+        s = min_degree_greedy(g)
+        assert g.is_independent(s), "greedy set not independent!"
+        ok = tb <= cw + 1e-9 <= len(s) + 1e-9
+        print(f"{name:24s}  n={g.n:3d} m={g.m:4d}  "
+              f"turan={tb:7.3f}  caro_wei={cw:7.3f}  |greedy|={len(s):3d}  "
+              f"{'OK' if ok else 'FAIL'}")
+    print()
 
 
-# --------------------------------------------------------------------------
-# The rank bridge (Theorems mordellWeil_infinite_iff,
-# bsd_central_vanishing_iff_infinite)
-# --------------------------------------------------------------------------
+def demo_folklore_failure() -> None:
+    print("=" * 72)
+    print("DEMO 2:  the folklore bound n^2/(4m) is FALSE for sparse graphs")
+    print("=" * 72)
+    # 100 vertices, a single edge.
+    g = Graph(100, [(0, 1)])
+    print(f"Graph: n={g.n}, m={g.m} (one edge among 100 vertices)")
+    print(f"  folklore  n^2/(4m)   = {folklore_bound(g):8.2f}   "
+          f"(> n = {g.n}  --> IMPOSSIBLE)")
+    print(f"  true      n^2/(2m+n) = {turan_bound(g):8.2f}   (<= n, sensible)")
+    s = min_degree_greedy(g)
+    print(f"  greedy independent set has size {len(s)} (true alpha = 99)")
+    print()
+    print("Comparison n^2/(2m+n) vs n^2/(4m): equal-numerator, so")
+    print("  n^2/(2m+n) >= n^2/(4m)  iff  n <= 2m  (Proposition 8).")
+    for n, m in [(10, 2), (10, 5), (10, 20), (100, 1), (100, 200)]:
+        g2 = type("G", (), {"n": n, "m": m})()  # lightweight stand-in
+        t = n ** 2 / (2 * m + n)
+        f = n ** 2 / (4 * m)
+        relation = "true >= folklore" if t >= f else "true <  folklore"
+        feasible = "n<=2m" if n <= 2 * m else "n> 2m (folklore illegal)"
+        print(f"  n={n:3d} m={m:3d}:  true={t:8.2f}  folklore={f:8.2f}  "
+              f"[{relation}; {feasible}]")
+    print()
 
-def mordell_weil_infinite(r: int) -> bool:
-    """Theorem `mordellWeil_infinite_iff`: Z^r x (finite) is infinite iff r > 0."""
-    return r > 0
+
+def demo_tightness() -> None:
+    print("=" * 72)
+    print("DEMO 3:  tightness on disjoint unions of equal cliques")
+    print("=" * 72)
+    print("For k cliques of order r:  alpha = k  and  n^2/(2m+n) = k exactly.")
+    for k, r in [(3, 4), (5, 3), (4, 5), (10, 2)]:
+        g = disjoint_cliques(k, r)
+        tb = turan_bound(g)
+        s = min_degree_greedy(g)
+        print(f"  k={k:2d} r={r:2d}  n={g.n:3d} m={g.m:4d}  "
+              f"alpha=k={k:2d}  turan={tb:6.3f}  |greedy|={len(s):2d}")
+    print()
 
 
-def bsd_central_vanishing_iff_infinite(r: int, c: complex) -> Tuple[bool, bool]:
-    """
-    Theorem `bsd_central_vanishing_iff_infinite`: under analyticRank = r,
-    L(1) = 0  <=>  E(Q) infinite.  Returns (L(1)==0, E(Q) infinite); they agree.
-    """
-    central_vanishes = abs(model_L(r, c, 1)) < 1e-12
-    infinite_points = mordell_weil_infinite(r)
-    return (central_vanishes, infinite_points)
-
-
-# --------------------------------------------------------------------------
-# Driver
-# --------------------------------------------------------------------------
-
-def main() -> None:
-    print("=" * 70)
-    print("BSD local & analytic structures -- numerical demonstrations")
-    print("=" * 70)
-
-    # Worked example from the article: p = 5, a = 3
-    a, p, N = 3.0, 5.0, 6
-    print(f"\n[1] Trace recurrence and point-count tower  (a={a}, p={p})")
-    print(f"    Hasse bound a^2 <= 4p ?  {a*a} <= {4*p}  -> {hasse_bound_holds(a, p)}")
-    print(f"    |alpha|^2, |beta|^2 = {tuple(round(x,4) for x in frobenius_normsq(a,p))}  (should be {p}, {p})")
-    print(f"    trace sequence s_0..s_{N} = {[round(x,3) for x in trace_sequence(a, p, N)]}")
-    print(f"    recurrence == eigenvalue power sums ?  {trace_eq_power_sum(a, p, N)}")
-    print(f"    #E(F_(5^n)), n=0..{N} = {[round(x,1) for x in point_count_tower(a, p, N)]}")
-
-    print(f"\n[2] Sato-Tate angle and RH norm bound  (a={a}, p={p})")
-    theta = sato_tate_angle(a, p)
-    print(f"    theta = arccos(a/2sqrt p) = {theta:.5f} rad  in [0, pi]")
-    print(f"    check a = 2 sqrt p cos theta = {2*math.sqrt(p)*math.cos(theta):.5f}")
-    print(f"    norm bounds hold for n=0..{N} ?  {all(power_sum_norm_bound_holds(a,p,n) for n in range(N+1))}")
-
-    print("\n[3] Hasse boundary case a^2 = 4p  (a=2*sqrt(2), p=2): eigenvalues on circle")
-    a2, p2 = 2 * math.sqrt(2), 2.0
-    print(f"    |alpha|^2, |beta|^2 = {tuple(round(x,4) for x in frobenius_normsq(a2,p2))}  (== p = {p2})")
-
-    print("\n[4] Analytic rank, parity theorem, and the BSD bridge")
-    for r in range(0, 5):
-        c = 2.0 + 0.0j
-        rank = analytic_rank_of_model(r, c)
-        w = parity_of_order(r)
-        resid = functional_equation_residual(r, c, 1.3 + 0.4j)
-        vanish, inf = bsd_central_vanishing_iff_infinite(r, c)
-        print(f"    r={r}: analyticRank={rank}, (-1)^ord = w = {w:+d}, "
-              f"FE residual={resid:.1e}, L(1)=0 ? {vanish}  <=>  E(Q) infinite ? {inf}")
-
-    print("\nAll demonstrations consistent with the verified theorems.")
+def demo_random_permutation_expectation() -> None:
+    print("=" * 72)
+    print("DEMO 4:  random-permutation method achieves Caro–Wei in expectation")
+    print("=" * 72)
+    g = random_graph(30, 0.2, seed=7)
+    cw = caro_wei_weight(g)
+    trials = 20000
+    total = sum(len(random_permutation_independent_set(g, seed=t))
+                for t in range(trials))
+    avg = total / trials
+    print(f"Graph G(30, 0.2): n={g.n}, m={g.m}")
+    print(f"  Caro–Wei sum           = {cw:8.4f}")
+    print(f"  empirical mean (|S|)   = {avg:8.4f}  over {trials} permutations")
+    print(f"  difference             = {abs(cw - avg):8.4f}")
+    print()
 
 
 if __name__ == "__main__":
-    main()
+    demo_chain_of_inequalities()
+    demo_folklore_failure()
+    demo_tightness()
+    demo_random_permutation_expectation()
+    print("All demonstrations complete.")
