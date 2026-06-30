@@ -2586,6 +2586,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every class in the narrow ray class group modulo a nonzero integral ideal \ud835\udd2e of a fixed number field K can be represented by a product of three prime ideals coprime to \ud835\udd2e. This formalizes the core existential result of the paper, which proves this representation with the explicit norm bound N(\ud835\udd2d) \u2264 N(\ud835\udd2e)^(103/64+\u03ba) relying on Hecke L-function subconvexity.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2932",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30567v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:43:08.297835+00:00",
+    "title": "Ternary Representation in Narrow Ray Class Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a finite p-group of order p^m, where p is a prime. Let k < p. Let a_1, ..., a_k be pairwise distinct elements of G, and b_1, ..., b_k be elements of G. Then there exists a permutation sigma of {1, ..., k} such that the products a_i * b_{sigma(i)} are pairwise distinct.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2932",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30506v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:43:27.217640+00:00",
+    "title": "Extension of Feng-Sun-Xiang Theorem to p-groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",

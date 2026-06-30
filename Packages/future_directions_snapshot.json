@@ -4336,6 +4336,62 @@
     "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "11R44",
+      "Subconvexity bounds",
+      "Hecke L-functions",
+      "Dense model theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every class in the narrow ray class group modulo a nonzero integral ideal 𝔮 of a fixed number field K can be represented by a product of three prime ideals coprime to 𝔮. This formalizes the core existential result of the paper, which proves this representation with the explicit norm bound N(𝔭) ≤ N(𝔮)^(103/64+κ) relying on Hecke L-function subconvexity.",
+    "domain_bridges": [
+      "Algebraic Number Theory",
+      "Analytic Number Theory",
+      "Additive Combinatorics"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2932",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the narrow ray class group as the quotient of the group of fractional ideals coprime to 𝔮 by the narrow principal ideals congruent to 1 mod 𝔮. Formalize the multiplicative dense-model theorem and transference principle to map the problem to a product-set problem in finite abelian groups. Use bounds on short character sums for Hecke L-functions (subconvexity) to establish that the prime ideals are sufficiently dense in the group, forcing the 3-fold product set of their classes to cover the entire narrow ray class group.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30567v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:43:08.297835+00:00",
+    "title": "Ternary Representation in Narrow Ray Class Groups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Exterior Algebra and an Extension of the Feng-Sun-Xiang Theorem in p-groups"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let G be a finite p-group of order p^m, where p is a prime. Let k < p. Let a_1, ..., a_k be pairwise distinct elements of G, and b_1, ..., b_k be elements of G. Then there exists a permutation sigma of {1, ..., k} such that the products a_i * b_{sigma(i)} are pairwise distinct.",
+    "domain_bridges": [
+      "Combinatorics",
+      "Group Theory",
+      "Exterior Algebra"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2932",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the exterior algebra argument by constructing a polynomial or determinant over the group algebra and showing its non-vanishing under the given conditions, leveraging the fact that the group is a p-group to bound the order of elements and applying properties of alternating multilinear maps.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30506v1",
+    "status": "available",
+    "timestamp": "2026-06-30T04:43:27.217640+00:00",
+    "title": "Extension of Feng-Sun-Xiang Theorem to p-groups"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
