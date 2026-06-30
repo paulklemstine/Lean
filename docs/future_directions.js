@@ -2575,11 +2575,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "An irreducible polynomial P(x) \u2208 \u2124[x] of even degree 2d \u2265 4 equals the full reciprocal-radius polynomial P_\u0393 of some finite connected K_{2d+1}-free graph \u0393 if and only if P is a Salem polynomial and the coefficient a\u2081 of x^{2d-1} in P satisfies a\u2081 \u2264 -5. The necessity direction (the first-coefficient obstruction) is established in the paper; the sufficiency direction \u2014 that every Salem polynomial meeting this coefficient bound is realizable as some P_\u0393 \u2014 remains open and would yield a complete algebraic-combinatorial characterization of strongly primitive Salem growth rates.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2931",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29397v1",
+    "status": "available",
+    "timestamp": "2026-06-30T08:32:47.774863+00:00",
+    "title": "Salem Clique Polynomial Characterization"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2593,7 +2607,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2607,7 +2621,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2933",
+    "id": "fd_2934",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2621,7 +2635,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2934",
+    "id": "fd_2935",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2635,7 +2649,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2935",
+    "id": "fd_2936",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2650,7 +2664,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2936",
+    "id": "fd_2937",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2665,7 +2679,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2679,7 +2693,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2693,7 +2707,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2707,7 +2721,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2722,7 +2736,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2737,7 +2751,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2751,7 +2765,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2765,7 +2779,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
@@ -2779,7 +2793,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
@@ -2793,7 +2807,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29553v1",
@@ -2807,7 +2821,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
@@ -2821,7 +2835,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2948",
+    "id": "fd_2949",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -2835,7 +2849,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2949",
+    "id": "fd_2950",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
@@ -2850,7 +2864,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2950",
+    "id": "fd_2951",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29530v1",
@@ -2865,7 +2879,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Computation"
     ],
-    "id": "fd_2951",
+    "id": "fd_2952",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
@@ -2879,7 +2893,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2952",
+    "id": "fd_2953",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
@@ -2894,13 +2908,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2953",
+    "id": "fd_2954",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
     "status": "available",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for \u03b1 = 1/3"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For k=3, any multiplicative function f : \u2115 \u2192 \u2102 that is 3-additive on the set E\u2082 of sums of two nonzero squares and satisfies f(2) \u2260 0 must be the identity function. Formally, if f is multiplicative, f(2) \u2260 0, and f(x\u2081\u00b2 + x\u2082\u00b2 + x\u2083\u00b2 + x\u2084\u00b2 + x\u2085\u00b2 + x\u2086\u00b2) = f(x\u2081\u00b2 + x\u2082\u00b2) + f(x\u2083\u00b2 + x\u2084\u00b2) + f(x\u2085\u00b2 + x\u2086\u00b2) for all positive integers x\u2081, ..., x\u2086, then f(n) = n for all n \u2208 \u2115.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2955",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29507v1",
+    "status": "available",
+    "timestamp": "2026-06-30T08:33:25.944831+00:00",
+    "title": "k=3 Additive Uniqueness of Multiplicative Functions on Sums of Two Nonzero Squares"
   },
   {
     "consumed_by_exp_id": "",
