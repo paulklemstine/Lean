@@ -2120,7 +2120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Point Continuum of Largest Matching Roots"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "259111f2",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes \u03c7_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domains": [
       "Geometry",
@@ -2130,7 +2130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G\u2082\u2087 Have Exactly 23 Vertices"
   },
@@ -2297,7 +2297,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Skeleton-Coskeleton Determination for Regular Maniplexes"
   },
   {
-    "consumed_by_exp_id": "30133a3d",
+    "consumed_by_exp_id": "",
     "description": "Let \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n \u2208 {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n \u2208 {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domains": [
       "Bridges"
@@ -2306,7 +2306,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function \u03c1(q)"
   },
@@ -2530,11 +2530,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any connected split reductive group G over Q_p, if K and L are anabelomorphic p-adic fields (i.e., Gal_K \u2245 Gal_L as topological groups), then the Fargues\u2013Scholze stacks of L-parameters for (G, K) and (G, L) are isomorphic as algebraic stacks. This is Theorem 2.2.1 of the paper, whose formalization would require building the theory of L-parameter stacks and establishing their functorial dependence on the absolute Galois group.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2928",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29478v1",
+    "status": "available",
+    "timestamp": "2026-06-30T07:37:06.178385+00:00",
+    "title": "Anabelomorphic Invariance of Fargues\u2013Scholze Parameter Stacks"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2548,7 +2563,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2562,7 +2577,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2930",
+    "id": "fd_2931",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2576,7 +2591,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2590,7 +2605,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2605,7 +2620,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2933",
+    "id": "fd_2934",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2620,7 +2635,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2934",
+    "id": "fd_2935",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2634,7 +2649,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2935",
+    "id": "fd_2936",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2648,7 +2663,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2936",
+    "id": "fd_2937",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2662,7 +2677,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2677,7 +2692,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2692,7 +2707,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2706,7 +2721,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2720,7 +2735,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
@@ -2734,7 +2749,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
@@ -2748,7 +2763,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29553v1",
@@ -2762,7 +2777,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
@@ -2776,7 +2791,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
@@ -2790,7 +2805,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
@@ -2805,13 +2820,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29530v1",
     "status": "available",
     "timestamp": "2026-06-30T07:19:31.725431+00:00",
     "title": "Poisson Limit for Group-Drawing Coupon Collector"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let X be a d-dimensional weighted simplicial complex with distribution \u03c0 on X(d). If there exists \u03b1 > 0 such that every link X_\u03c3 for \u03c3 \u2208 X(d-2) satisfies a KKL property with parameter \u03b1 \u2014 meaning for every g : X_\u03c3(1) \u2192 \u211d, max_{v \u2208 X_\u03c3(0)} Inf_v(g) \u2265 \u03b1 \u00b7 Var(g) \u2014 then X globally satisfies a KKL property with the same parameter \u03b1: for every f : X(d) \u2192 \u211d, max_{\u03c3 \u2208 X(d-2)} Inf_\u03c3(f) \u2265 \u03b1 \u00b7 Var(f). This captures the paper's central local-to-global principle: the KKL phenomenon on a simplicial complex is inherited from its links.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_2949",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29449v1",
+    "status": "available",
+    "timestamp": "2026-06-30T07:37:59.489217+00:00",
+    "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
   {
     "consumed_by_exp_id": "",
@@ -3073,7 +3103,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "b973ff6b",
+    "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -3082,7 +3112,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },

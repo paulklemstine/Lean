@@ -3464,7 +3464,7 @@
       "geometric_fractional_chromatic_number",
       "extremal_coloring_polytope"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "259111f2",
     "description": "The set of optimal geometric fractional colorings of the 27-vertex unit-distance graph G₂₇ constructed by Matolcsi, Ruzsa, Varga, and Zsámboki, viewed as a convex polytope in the space of measurable assignments, has exactly 23 extreme points and affine dimension 11. This finite characterization is the key structural fact enabling the two-vertex augmentation that pushes χ_gf strictly above 4, and it can in principle be verified by solving the associated linear program with 182304 variables.",
     "domain_bridges": [
       "linear_programming",
@@ -3481,7 +3481,7 @@
     "proof_strategy": "Formalize G₂₇ as an explicit 27-vertex unit-distance graph with its coordinates. Encode the geometric fractional chromatic number as a linear program over measurable functions. Use the finite-dimensional reduction (the LP with 182304 variables capturing the constraints on finite sub-configurations) to extract the extreme points computationally. Verify each of the 23 extremal colorings satisfies all unit-distance constraints and achieves total weight exactly 4, and confirm no other extreme points exist via vertex enumeration on the LP's feasible polytope.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:39.963436+00:00",
     "title": "Extremal Geometric Fractional Colorings of G₂₇ Have Exactly 23 Vertices"
   },
@@ -3801,7 +3801,7 @@
       "Rademacher_expansions",
       "q_series"
     ],
-    "consumed_by_exp_id": "30133a3d",
+    "consumed_by_exp_id": "",
     "description": "Let ρ(q) = Σ_{m≥0} q^{2m(m+1)} / Π_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = Σ_{n≥0} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n ≥ 0: r(3n) > 0, r(3n+1) ≤ 0, and r(3n+2) ≤ 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n ∈ {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n ∈ {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domain_bridges": [
       "analytic_number_theory ↔ formal_power_series_coefficients",
@@ -3817,7 +3817,7 @@
     "proof_strategy": "The asymptotic sign law is proven via Watson's identity 2ρ(q) + ω(q) = T(q) combined with Rademacher-type expansions for ω(q) and the theta-eta product T(q), yielding r(n) ~ κ_{n mod 3} · (2π)/(12n+8)^{1/4} · I_{1/2}(π√(12n+8)/18) where κ₀ > 0, κ₁ < 0, κ₂ < 0. To prove the exact finite conjecture, one must: (1) make the error term in the Rademacher expansion fully effective with explicit constants, yielding an explicit N₀ such that the sign law holds for all n ≥ N₀; (2) computationally verify all cases n < N₀. The effective bound requires careful tracking of all error terms in the circle method analysis, similar to effective Rademacher bounds for partition ranks.",
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
   },
@@ -4223,6 +4223,33 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.NT",
+      "math.AG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any connected split reductive group G over Q_p, if K and L are anabelomorphic p-adic fields (i.e., Gal_K ≅ Gal_L as topological groups), then the Fargues–Scholze stacks of L-parameters for (G, K) and (G, L) are isomorphic as algebraic stacks. This is Theorem 2.2.1 of the paper, whose formalization would require building the theory of L-parameter stacks and establishing their functorial dependence on the absolute Galois group.",
+    "domain_bridges": [
+      "number_theory",
+      "topology",
+      "category_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2928",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the notion of anabelomorphic p-adic fields (topologically isomorphic absolute Galois groups). Then construct the Fargues–Scholze stack of L-parameters as a functor from the category of split reductive groups and topological Galois groups to algebraic stacks. Show this functor factors through the topological isomorphism class of the Galois group, yielding the desired isomorphism of parameter stacks. The split torus case (Theorem 4.1) provides the base case for an inductive argument on the reductive group structure.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29478v1",
+    "status": "available",
+    "timestamp": "2026-06-30T07:37:06.178385+00:00",
+    "title": "Anabelomorphic Invariance of Fargues–Scholze Parameter Stacks"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.CO/2501.12018",
       "MRVZ_geometric_fractional",
       "deGrey_chromatic_plane"
@@ -4237,7 +4264,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2928",
+    "id": "fd_2929",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
@@ -4264,7 +4291,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2929",
+    "id": "fd_2930",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
@@ -4291,7 +4318,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2930",
+    "id": "fd_2931",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -4317,7 +4344,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2931",
+    "id": "fd_2932",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -4346,7 +4373,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -4374,7 +4401,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2933",
+    "id": "fd_2934",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
@@ -4404,7 +4431,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2934",
+    "id": "fd_2935",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes the rooted heat-kernel master loop equation and proves convergence of the order-truncated trajectory expansion at strong coupling (T > T₀(d)). To extend to all T > 0: (1) Develop uniform-in-T estimates for the trajectory expansion coefficients, leveraging the universal finite-N duality formulas and refined heat-kernel asymptotics that remain valid for small T. (2) Prove convergence of the rooted trajectory expansion for all T > 0 by establishing tighter control on the combinatorial growth of decorated loop observables—specifically, show the expansion is absolutely convergent with radius independent of T. (3) For the weak-coupling regime (small T), exploit the Gaussian limit T → 0 where the theory reduces to a lattice Gaussian free field, and use this as the base of an expansion valid for all T. (4) Bridge strong and weak coupling using monotonicity of Wilson loop expectations in T and real-analyticity of heat-kernel coefficients, establishing a single master field",
@@ -4432,7 +4459,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2935",
+    "id": "fd_2936",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the monoid in Lean, compute the misère quotient via backward induction, and prove isomorphism through homomorphism properties and loss set verification",
@@ -4461,7 +4488,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2936",
+    "id": "fd_2937",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the Weyl differencing and van der Corput B-process arguments from the paper with tighter control on off-diagonal contributions. The key improvement would come from replacing power-saving arguments with logarithmic precision via careful saddle-point analysis of the complete exponential sums arising from Poisson summation applied to $e(h\\sqrt{a})$ over dyadic subintervals of $[n/2, n]$. One should track how the exponent pairs obtained from the $B^2$-process interact with the moment sum over $h$, exploiting cancellation more finely than the $n^\\varepsilon$-losing bound permits.",
@@ -4485,7 +4512,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2937",
+    "id": "fd_2938",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive construction combined with probabilistic extremal arguments",
@@ -4514,7 +4541,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
@@ -4542,7 +4569,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the paper's conditional regularity theorem (Bessel distributions are regular provided Kloosterman sums for all Levi subgroups have nontrivial bounds) to GL(n). Since every Levi subgroup of GL(n) is isomorphic to a product ∏ GL(mᵢ) with ∑ mᵢ = n, the corresponding Kloosterman sums admit nontrivial bounds by Deligne's estimates from the Riemann hypothesis for varieties over finite fields (Weil II), yielding unconditional regularity for GL(n). The key intermediate step is formalizing the germ expansion of Kloosterman integrals and verifying the nontrivial bound condition for all Levi subgroups.",
@@ -4569,7 +4596,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Hölder uniformization over vertex relabellings in the spirit of Conlon–Lee: reduce the general case to the edge-transitive case by averaging over graph automorphisms and applying Hölder's inequality to symmetrize, then exploit the positive-semidefinite structure implicit in local density for edge-transitive graphs. Key sub-lemmas include the equivalence between the L^p formulation and the graphon composition formulation, and the comparison principle with edge-transitive KNRS supergraphs.",
@@ -4597,7 +4624,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the base-b digit sequence of 1/p using the division algorithm on remainders, a_i = ⌊b * r_i / p⌋ where r_i = b^i mod p. The sum of digits S = Σ a_i can be expressed in terms of the sum of remainders. The condition that the order of b is (p-1)/2^m restricts the remainders to a subgroup of (ℤ/pℤ)×. The congruence p ≡ 1 mod 2^(m+1) ensures that this subgroup is stable under negation modulo p (since l is even and b^(l/2) ≡ -1 mod p), which allows the sum of remainders to be simplified to p*l/2, leading directly to the formula S = (b-1)*l/2 = (b-1)(p-1)/2^(m+1).",
@@ -4625,7 +4652,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To prove the lower bound F(s) ≥ c·s^{3/2}/log s, construct an explicit family of graphs G_s with ω(G_s) ≤ s and g(G̅_s) ≥ 6 such that χ(G_s) ≥ c·s^{3/2}/log s. This likely requires probabilistic constructions or algebraic graph families that saturate the complement-girth-6 constraint while maximizing chromatic number relative to clique number. The existing lower bound construction yielding s^{4/3} would need substantial refinement—potentially using blow-ups of Ramsey-type constructions or sparse pseudorandom graphs with controlled complement girth.",
@@ -4651,7 +4678,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing definitions of α, a, R, and Δ, then establishing the inequality using the paper's result that a ≤ (Δ+1)/2 * W (where W is the Caro-Wei sum) combined with classical lower bounds α ≥ R and α ≥ W. Key steps include handling the special cases for Δ = 2 and Δ ≥ 3, while explicitly excluding K₂ as a counterexample.",
@@ -4678,7 +4705,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the even Riemann kernel Φ and its phase-mode decomposition into components φ_n. Then define the explicit test function g_n(t) = exp(t/2) · exp(−π·n²·exp(2t)). Compute ∂_t g_n and ∂_t² g_n symbolically using differentiation rules for compositions and products. Subtract (1/4)·g_n to form (∂_t² − 1/4)g_n. The equality φ_n = (∂_t² − 1/4)g_n then follows from the Jacobi-type theta identity and the Poisson summation relation connecting the Riemann kernel to the theta function, rearranged via the heat-equation eigenfunction expansion that produces the second-order operator.",
@@ -4702,7 +4729,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on the total number of coins. Show that the Grundy value of a pile of size n is exactly n (i.e., the halving move does not change the nim‑value), using the mex recurrence and the fact that ⌊n/2⌋ < n for n>0. Then the Sprague‑Grundy theorem gives that the Grundy value of a position is the xor of the pile sizes, so P‑positions are precisely those with xor zero. The induction handles the base case (empty position) and the step where either a standard Nim move or a global halving move is considered.",
@@ -4729,7 +4756,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof relies on: (1) establishing the Adler-Oren-Ross integral formula for E_p[U_j^N] as a sum of integrals involving the product of survival functions, (2) showing that E_p[U_j^N] is a Schur-convex function of the probability vector p (using the characterization that symmetric convex functions are Schur-convex), and (3) applying the majorization order to conclude that the uniform distribution (which is majorized by all other distributions) maximizes the expectation. The ray-decrease property follows from strict Schur-convexity. Formalization requires building the probability space for the coupon collector, the integral formula, and the Schur-convexity framework.",
@@ -4757,7 +4784,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the factorial moments of the untouched-label statistic E_n by evaluating the expected size of the intersection of r untouched labels, showing they converge to λ^r. By inclusion-exclusion, the probability that exactly u labels are untouched is expressed as an alternating sum involving the probabilities of larger sets of untouched labels. The asymptotic conditions λ_n → λ and b_n → ∞ (equivalently γ_n → 0) ensure that the inclusion-exclusion sum converges to the Poisson probabilities, using the method of moments or direct asymptotic analysis of the binomial coefficients.",
@@ -4766,6 +4793,34 @@
     "status": "available",
     "timestamp": "2026-06-30T07:19:31.725431+00:00",
     "title": "Poisson Limit for Group-Drawing Coupon Collector"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "cs.CC",
+      "cs.DM"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let X be a d-dimensional weighted simplicial complex with distribution π on X(d). If there exists α > 0 such that every link X_σ for σ ∈ X(d-2) satisfies a KKL property with parameter α — meaning for every g : X_σ(1) → ℝ, max_{v ∈ X_σ(0)} Inf_v(g) ≥ α · Var(g) — then X globally satisfies a KKL property with the same parameter α: for every f : X(d) → ℝ, max_{σ ∈ X(d-2)} Inf_σ(f) ≥ α · Var(f). This captures the paper's central local-to-global principle: the KKL phenomenon on a simplicial complex is inherited from its links.",
+    "domain_bridges": [
+      "Spectral graph theory",
+      "High-dimensional expanders",
+      "Probability theory"
+    ],
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_2949",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Decompose global variance and influence via the link structure. Show that Var(f) on X(d) can be written as a weighted sum of local variances on links, and that the global max influence is at least the local max influence at each link, using the local KKL property at each link X_σ. The key step is establishing that the influence Inf_σ(f) on the global complex dominates the corresponding influence in the link X_σ, possibly up to dimension-dependent factors that cancel due to the uniform transfer of the KKL parameter α.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29449v1",
+    "status": "available",
+    "timestamp": "2026-06-30T07:37:59.489217+00:00",
+    "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
   {
     "ambition_level": "extension",
@@ -5119,7 +5174,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b973ff6b",
+    "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -5131,7 +5186,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
