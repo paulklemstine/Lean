@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3131feed",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432569+00:00",
     "title": "Goldbach Verification Framework"
   },
@@ -2670,7 +2670,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
   },
   {
-    "consumed_by_exp_id": "f1435224",
+    "consumed_by_exp_id": "",
     "description": "Every real number greater than or equal to \u221a(\u221a5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number \u03b3 \u2265 \u221a(\u221a5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to \u03b3.",
     "domains": [
       "Bridges"
@@ -2679,7 +2679,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T23:08:33.027778+00:00",
     "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
   },
@@ -3219,12 +3219,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves that for a multiset P of n real numbers summing to zero (not all zero) and 1 \u2264 k < n, the Shannon entropy of X_P (the sum of k elements sampled uniformly without replacement from P) satisfies H(X_P) \u2265 H(Ber(k/n)). This conjecture asserts that the same inequality holds for R\u00e9nyi entropy of order 2 (collision entropy): H\u2082(X_P) \u2265 H\u2082(Ber(k/n)), equivalently, the collision probability of X_P is at most (k/n)\u00b2 + (1\u2212k/n)\u00b2. Equality is achieved when P consists of one large positive value and n\u22121 equal negative values (e.g., P = {(n\u22121), \u22121, \u2026, \u22121}), since then X_P is a scaled Bernoulli variable. The conjecture fails for min-entropy (\u03b1 \u2192 \u221e), as demonstrated by P = {1,1,\u22121,\u22121} with k=2 where max probability = 2/3 > 1/2, so the threshold \u03b1 \u2264 2 is natural.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2981",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30486v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:57:07.277044+00:00",
+    "title": "Entropic MMS for R\u00e9nyi Entropy of Order 2 (Collision Entropy)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2981",
+    "id": "fd_2982",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3239,7 +3254,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2982",
+    "id": "fd_2983",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3253,7 +3268,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2983",
+    "id": "fd_2984",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3268,7 +3283,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2984",
+    "id": "fd_2985",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3283,7 +3298,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3298,7 +3313,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3313,13 +3328,27 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
     "status": "available",
     "timestamp": "2026-06-30T13:38:03.172846+00:00",
     "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any 0 < \u03b5 < 1, there exist constants \u03b3 > 0 and C > 0 such that for any dimension n, any subset A of the discrete cube (ZMod 2)^n with |A| \u2265 \u03b5 * 2^n, and any (\u03b3, C)-well-spread set S, the Minkowski sum A + S has size at least (1 - \u03b5) * 2^n. This generalizes the classical concentration of measure phenomenon where S is a Hamming ball.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2989",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30351v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:57:52.389023+00:00",
+    "title": "Generalized Concentration of Measure for Well-Spread Sets"
   },
   {
     "consumed_by_exp_id": "",
@@ -3508,7 +3537,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "2f3d7834",
+    "consumed_by_exp_id": "",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -3518,7 +3547,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
@@ -3744,7 +3773,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "913b7f3f",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
@@ -3754,7 +3783,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },

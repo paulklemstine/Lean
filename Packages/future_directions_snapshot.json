@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3131feed",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n ≤ 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432569+00:00",
     "title": "Goldbach Verification Framework"
   },
@@ -4537,7 +4537,7 @@
       "05C31",
       "05C70"
     ],
-    "consumed_by_exp_id": "f1435224",
+    "consumed_by_exp_id": "",
     "description": "Every real number greater than or equal to √(√5 + 2) is a limit point of the set of largest matching roots of simple graphs. Specifically, for any real number γ ≥ √(√5 + 2), there exists an infinite sequence of simple graphs whose largest matching roots are all distinct and converge to γ.",
     "domain_bridges": [
       "Real analysis",
@@ -4553,7 +4553,7 @@
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T23:08:33.027778+00:00",
     "title": "Density of Largest Matching Root Limit Points Above Golden Ratio Threshold"
   },
@@ -5597,6 +5597,34 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
+      "math.PR",
+      "cs.IT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for a multiset P of n real numbers summing to zero (not all zero) and 1 ≤ k < n, the Shannon entropy of X_P (the sum of k elements sampled uniformly without replacement from P) satisfies H(X_P) ≥ H(Ber(k/n)). This conjecture asserts that the same inequality holds for Rényi entropy of order 2 (collision entropy): H₂(X_P) ≥ H₂(Ber(k/n)), equivalently, the collision probability of X_P is at most (k/n)² + (1−k/n)². Equality is achieved when P consists of one large positive value and n−1 equal negative values (e.g., P = {(n−1), −1, …, −1}), since then X_P is a scaled Bernoulli variable. The conjecture fails for min-entropy (α → ∞), as demonstrated by P = {1,1,−1,−1} with k=2 where max probability = 2/3 > 1/2, so the threshold α ≤ 2 is natural.",
+    "domain_bridges": [
+      "information_theory",
+      "probability_theory",
+      "combinatorial_optimization"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2981",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the Schur-concavity and majorization arguments from the paper. The key steps would be: (1) Show that H₂(X_P) is Schur-concave in the probability vector of X_P; (2) Reduce to the case where P has a specific extremal structure (e.g., two-valued multisets) using majorization; (3) For two-valued multisets {a,…,a,b,…,b} with ka+(n−k)b=0, X_P is a scaled hypergeometric variable—prove that H₂ is minimized when the hypergeometric reduces to Bernoulli (i.e., when one value appears exactly once); (4) Alternatively, use the data-processing inequality for Rényi divergence under suitable channels, extending the information-theoretic approach.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30486v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:57:07.277044+00:00",
+    "title": "Entropic MMS for Rényi Entropy of Order 2 (Collision Entropy)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
       "math.GR"
     ],
     "consumed_by_exp_id": "",
@@ -5610,7 +5638,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2981",
+    "id": "fd_2982",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -5638,7 +5666,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2982",
+    "id": "fd_2983",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -5667,7 +5695,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2983",
+    "id": "fd_2984",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -5698,7 +5726,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2984",
+    "id": "fd_2985",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -5728,7 +5756,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2985",
+    "id": "fd_2986",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -5756,7 +5784,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2986",
+    "id": "fd_2987",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -5786,7 +5814,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2987",
+    "id": "fd_2988",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -5795,6 +5823,31 @@
     "status": "available",
     "timestamp": "2026-06-30T13:38:03.172846+00:00",
     "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2309.13573"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any 0 < ε < 1, there exist constants γ > 0 and C > 0 such that for any dimension n, any subset A of the discrete cube (ZMod 2)^n with |A| ≥ ε * 2^n, and any (γ, C)-well-spread set S, the Minkowski sum A + S has size at least (1 - ε) * 2^n. This generalizes the classical concentration of measure phenomenon where S is a Hamming ball.",
+    "domain_bridges": [
+      "measure_theory",
+      "combinatorics",
+      "finite_fields"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2989",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30351v1",
+    "status": "available",
+    "timestamp": "2026-06-30T13:57:52.389023+00:00",
+    "title": "Generalized Concentration of Measure for Well-Spread Sets"
   },
   {
     "ambition_level": "extension",
@@ -6050,7 +6103,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2f3d7834",
+    "consumed_by_exp_id": "",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domain_bridges": [],
     "domains": [
@@ -6063,7 +6116,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
@@ -6366,7 +6419,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "913b7f3f",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domain_bridges": [],
     "domains": [
@@ -6379,7 +6432,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
