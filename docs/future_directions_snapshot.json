@@ -1888,7 +1888,7 @@
     "proof_strategy": "Refine existing equidistribution arguments to extract sharper bounds on character vanishing behavior",
     "research_mode": "team",
     "source_exp_id": "2606.28085v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-29T07:01:40.248934+00:00",
     "title": "Refined Asymptotic for Non-Divisible Entries in GL₂(𝔽_q) Character Tables"
   },
@@ -2021,7 +2021,7 @@
     "proof_strategy": "First formalize optimal 1-planar graphs (1-planar graphs with exactly 4|V| - 8 edges) and graph connectivity. Then establish structural properties of 6-connected optimal 1-planar graphs, likely leveraging their tight connection to triangulations. Use these structural properties and high edge density to show that any two disjoint 5-element vertex subsets can be covered by disjoint connected subgraphs, proving the (5,5)-linked property.",
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-29T09:07:48.439935+00:00",
     "title": "6-Connected Optimal 1-Planar Graphs are (5,5)-Linked"
   },
@@ -3573,32 +3573,6 @@
     "title": "Extremal Signless Laplacian Spectral Radius of tK3-Free Graphs"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.CO",
-      "math.GR"
-    ],
-    "consumed_by_exp_id": "6e1ebbb3",
-    "description": "For any integer $n \\ge 3$, the minimum size of a finite poset realizing $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ as its automorphism group is $2^{n+1} + 2$.",
-    "domain_bridges": [
-      "Finite Posets",
-      "Group Automorphisms",
-      "Realizability"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2904",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Define β(G) as the minimal cardinality of a finite poset P such that Aut(P) is isomorphic to G. Establish the upper bound by constructing a specific poset of size 2^{n+1} + 2 with the desired automorphism group, relying on the product with Z2 construction. Establish the lower bound by showing any poset realizing Z2 x Z_{2^n} must have at least 2^{n+1} + 2 elements, analyzing the orbit structure and fixed points of the automorphism group action.",
-    "research_mode": "team",
-    "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T21:48:16.342337+00:00",
-    "title": "Minimum Poset Size for Automorphism Group Z2 x Z2^n"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "projective_planes",
@@ -4381,7 +4355,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the exterior algebra argument by constructing a polynomial or determinant over the group algebra and showing its non-vanishing under the given conditions, leveraging the fact that the group is a p-group to bound the order of elements and applying properties of alternating multilinear maps.",
@@ -4390,6 +4364,63 @@
     "status": "available",
     "timestamp": "2026-06-30T04:43:27.217640+00:00",
     "title": "Extension of Feng-Sun-Xiang Theorem to p-groups"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Erdős conjecture on products of primes in residue classes",
+      "Matomäki–Teräväinen multiplicative dense-model theorem",
+      "narrow ray class groups",
+      "Hecke L-function subconvexity",
+      "Green–Tao transference principle"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every number field K and every ε > 0, there exists a constant C = C(K, ε) such that for every nonzero integral ideal 𝔮 ⊆ O_K with N𝔮 ≥ C, every class c in the narrow ray class group Cl_𝔮^(∞) can be written as c = [𝔭₁]·[𝔭₂] where 𝔭₁, 𝔭₂ are prime ideals not dividing 𝔮, with N𝔭ᵢ ≤ (N𝔮)^(1+ε) for i = 1,2. This extends the classical Erdős conjecture (the case K = ℚ, ε = 0, 𝔮 = (q) prime) to arbitrary number fields and is the natural binary strengthening of the paper's ternary result. The commented-out proportions (2/3 − ε and 11/16 − ε) and the proven 'positive proportion' binary result provide partial evidence.",
+    "domain_bridges": [
+      "Additive combinatorics (dense-model theorems, product-set growth in finite abelian groups)",
+      "Analytic number theory (short character sums, subconvexity for Hecke L-functions)",
+      "Algebraic number theory (ray class groups, prime ideal factorization, ideal norm bounds)"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2934",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the Matomäki–Teräväinen multiplicative dense-model and transference framework to handle binary products in narrow ray class groups. The ternary case succeeds because sumset arguments in finite abelian groups become tractable with three factors. The binary case requires: (1) resolving the parity obstruction that products of two primes cannot cover odd-order cosets in certain quotient groups, likely by developing a binary product-set theorem for dense subsets of finite abelian groups under spectral conditions; (2) improving the short character-sum exponent α toward 1/2 (the Burgess exponent in the integer case), which would require stronger subconvexity bounds for Hecke L-functions; (3) showing that the set of prime ideal classes P_X(𝔮) has sufficiently large Fourier coefficients to support Gold-type binary additive combinatorics. A key intermediate milestone would be proving the conjecture with exponent 2+ε (matching the proven ternary exponent 103/64 ≈ 1.61), before attempting t",
+    "research_mode": "team",
+    "source_exp_id": "2606.30567v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:23:19.979783+00:00",
+    "title": "Binary Erdős Conjecture for Narrow Ray Class Groups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Feng-Sun-Xiang_2011",
+      "Dasgupta-Karolyi-Serra-Szegedy_2005",
+      "Snevily_1999"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite group G of order p^m (where p is a prime and m > 0), if k < p, and a_1, ..., a_k are pairwise distinct elements of G, and b_1, ..., b_k are elements of G, then there exists a permutation σ on {1, ..., k} such that a_1 * b_σ(1), ..., a_k * b_σ(k) are pairwise distinct.",
+    "domain_bridges": [
+      "representation_theory",
+      "exterior_algebra"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2935",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the regular representation of the group algebra C[G] and its k-th exterior power. Since the dimensions of irreducible representations of a p-group are powers of p and k < p, the 1-dimensional representations (characters) are the only ones that act non-trivially on the k-th wedge. This reduces the problem to the abelian case, allowing one to show that the determinant of the relevant matrix in the exterior algebra is non-zero, which implies the existence of the required permutation.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30506v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:23:54.588746+00:00",
+    "title": "Non-abelian p-group extension of the Feng-Sun-Xiang Theorem"
   },
   {
     "ambition_level": "extension",
@@ -4410,25 +4441,6 @@
     "status": "available",
     "timestamp": "2026-06-08T19:24:58.210984+00:00",
     "title": "Perfect Cuboid (Euler Brick)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "75f8dfec",
-    "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_019",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:24:59.481690+00:00",
-    "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
   {
     "ambition_level": "extension",

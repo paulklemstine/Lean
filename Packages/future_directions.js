@@ -1270,7 +1270,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28085v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-29T07:01:40.248934+00:00",
     "title": "Refined Asymptotic for Non-Divisible Entries in GL\u2082(\ud835\udd3d_q) Character Tables"
   },
@@ -1342,7 +1342,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-29T09:07:48.439935+00:00",
     "title": "6-Connected Optimal 1-Planar Graphs are (5,5)-Linked"
   },
@@ -2180,20 +2180,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremal Signless Laplacian Spectral Radius of tK3-Free Graphs"
   },
   {
-    "consumed_by_exp_id": "6e1ebbb3",
-    "description": "For any integer $n \\ge 3$, the minimum size of a finite poset realizing $\\mathbb{Z}_2 \\times \\mathbb{Z}_{2^n}$ as its automorphism group is $2^{n+1} + 2$.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2904",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T21:48:16.342337+00:00",
-    "title": "Minimum Poset Size for Automorphism Group Z2 x Z2^n"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, consider the fair mechanism given by uniformly sampling lines of the projective plane PG(2,q), where n = q\u00b2 + q + 1 is the number of points and \u2113 = q + 1 is the line size. The expected coverage time of this projective plane mechanism strictly exceeds that of the full model (uniform sampling of all \u2113-subsets of an n-element set). This generalizes the paper's Fano plane (q=2) counterexample to the Grunbaum\u2013Yaakobi conjecture and posits that projective plane line sets systematically yield slower fair mechanisms than the full model across all orders.",
     "domains": [
@@ -2606,13 +2592,43 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2932",
+    "id": "fd_2933",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
     "status": "available",
     "timestamp": "2026-06-30T04:43:27.217640+00:00",
     "title": "Extension of Feng-Sun-Xiang Theorem to p-groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every number field K and every \u03b5 > 0, there exists a constant C = C(K, \u03b5) such that for every nonzero integral ideal \ud835\udd2e \u2286 O_K with N\ud835\udd2e \u2265 C, every class c in the narrow ray class group Cl_\ud835\udd2e^(\u221e) can be written as c = [\ud835\udd2d\u2081]\u00b7[\ud835\udd2d\u2082] where \ud835\udd2d\u2081, \ud835\udd2d\u2082 are prime ideals not dividing \ud835\udd2e, with N\ud835\udd2d\u1d62 \u2264 (N\ud835\udd2e)^(1+\u03b5) for i = 1,2. This extends the classical Erd\u0151s conjecture (the case K = \u211a, \u03b5 = 0, \ud835\udd2e = (q) prime) to arbitrary number fields and is the natural binary strengthening of the paper's ternary result. The commented-out proportions (2/3 \u2212 \u03b5 and 11/16 \u2212 \u03b5) and the proven 'positive proportion' binary result provide partial evidence.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2934",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30567v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:23:19.979783+00:00",
+    "title": "Binary Erd\u0151s Conjecture for Narrow Ray Class Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite group G of order p^m (where p is a prime and m > 0), if k < p, and a_1, ..., a_k are pairwise distinct elements of G, and b_1, ..., b_k are elements of G, then there exists a permutation \u03c3 on {1, ..., k} such that a_1 * b_\u03c3(1), ..., a_k * b_\u03c3(k) are pairwise distinct.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2935",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30506v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:23:54.588746+00:00",
+    "title": "Non-abelian p-group extension of the Feng-Sun-Xiang Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -2628,20 +2644,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:58.210984+00:00",
     "title": "Perfect Cuboid (Euler Brick)"
-  },
-  {
-    "consumed_by_exp_id": "75f8dfec",
-    "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_019",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:24:59.481690+00:00",
-    "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
   {
     "consumed_by_exp_id": "",
