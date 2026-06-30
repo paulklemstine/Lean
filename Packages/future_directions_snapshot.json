@@ -620,7 +620,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75611ca8",
     "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -633,7 +633,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -3928,7 +3928,7 @@
       "math.DS",
       "math.PR"
     ],
-    "consumed_by_exp_id": "62b48ce6",
+    "consumed_by_exp_id": "",
     "description": "For any lacunary sequence $(a_n)_{n \\geq 1} \\subset \\mathbb{N}$ satisfying $a_{n+1} \\geq q a_n$ for some $q > 1$, and for Lebesgue-almost every $x \\in \\mathbb{T}$, the maximal circular gap satisfies $\\lim_{N\\to\\infty} \\frac{N \\cdot G_N(x)}{\\log N} = 1$. The paper proves this when $a_n \\mid a_{n+1}$ for all $n$, and establishes $\\frac{1}{2} \\leq \\liminf \\leq \\limsup \\leq \\frac{q+1}{q-1}$ in general. The conjecture asserts that the divisibility assumption is unnecessary—the limit always exists and equals 1, matching the random i.i.d. model.",
     "domain_bridges": [
       "ergodic_theory",
@@ -3945,7 +3945,7 @@
     "proof_strategy": "The paper's divisibility proof leverages a martingale structure from the $a_n | a_{n+1}$ condition. For general lacunary sequences, one could attempt: (1) Show the $\\Gamma$ parameter defined in the paper satisfies $\\limsup N G_N(x)/\\log N \\leq 1 + \\Gamma$ a.e., then prove $\\Gamma$ can be made arbitrarily small by passing to subsequences; (2) Approximate a general lacunary sequence by one satisfying divisibility (e.g., replacing $a_n$ with $\\prod_{k=1}^n a_k$) and control the gap distortion; (3) Prove the liminf and limsup bounds converge by developing a variance estimate showing $\\text{Var}(N G_N(x)/\\log N) \\to 0$ a.e., using the independence properties of lacunary trigonometric sums.",
     "research_mode": "team",
     "source_exp_id": "2606.28860v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T03:24:28.294396+00:00",
     "title": "Universal Gap Asymptotic for Lacunary Dilations"
   },
@@ -4505,6 +4505,35 @@
     "title": "Sharp 5/8 Bound for Erdős-Sós Pairwise-Sums Problem"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "Bateman-Horn_conjecture",
+      "profinite_completion",
+      "procounting_measure"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let $f_1, \\dots, f_k \\in \\mathbb{Z}[x]$ be distinct irreducible polynomials with positive leading coefficients, and let $S_f$ be the set of integers $a$ such that $f_i(a)$ is prime for all $i$. Let $\\overline{S_f}$ be the closure of $S_f$ in the profinite completion of $\\mathbb{Z}$, and let $\\nu$ be the procounting measure on $\\hat{\\mathbb{Z}}$. The profinite Bateman-Horn conjecture proposes that the procounting measure of $\\overline{S_f}$ is equal to the Bateman-Horn Euler product constant $C(f)$.",
+    "domain_bridges": [
+      "Measure Theory",
+      "Topology",
+      "Commutative Algebra"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2938",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the procounting measure on the profinite integers, define the Bateman-Horn Euler product constant $C(f)$, and establish that the measure of the closure of the prime-generating set equals $C(f)$. This bridges the topological properties of $\\hat{\\mathbb{Z}}$ with the analytic properties of the Euler product, starting with the base case $f(x)=x$ where $C(f)=1$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29250v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:49:22.469237+00:00",
+    "title": "Profinite Bateman-Horn Conjecture for Polynomials over Z"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.CO/2501.12018",
@@ -4521,7 +4550,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define G₂₇ as an explicit 27-point configuration in ℝ² with coordinates. Define the geometric fractional chromatic number χ_gf(G) as the optimum of a linear program over measurable colorings invariant under the Euclidean motion group. First establish χ_gf(G₂₇) = 4 by characterizing all 23 extremal geometric fractional colorings (forming a polytope of affine dimension 11). Then identify two augmentation points p₂₈, p₂₉ such that every optimal coloring of G₂₇ forces a unit-distance conflict with at least one of p₂₈ or p₂₉, which by LP duality pushes the objective value strictly above 4. The blow-up steps of Matolcsi et al. then propagate this to independence ratio < 1/4.",
@@ -4548,7 +4577,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of graphs (e.g., using paths with pendant edges or specific tree families) parameterized such that their largest matching roots continuously approach any given γ ≥ √(√5 + 2). Utilize the interlacing properties of matching polynomials and the intermediate value theorem on the continuous dependence of roots on graph parameters to establish convergence and distinctness.",
@@ -4575,7 +4604,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper reduces the problem to analyzing transversals as graphs of functions F_p^2 → F_p^2 with carry-corrected finite-field derivative images. A proof would likely require extending this derivative analysis, potentially using algebraic-geometric properties of the polynomial maps arising from the transversal condition, or establishing tight bounds on the union of derivative image fibers via combinatorial methods over F_p.",
@@ -4601,7 +4630,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the per-root-MaxCut envelope and blow-up integrality techniques to arbitrarily large N, resolve the medium-density band using higher-order flag algebra certificates verified in exact rational arithmetic, and provide stability analysis to transition to the extremal C_5[N/5] configuration.",
@@ -4630,7 +4659,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Formalize σ_Y on Ω_d via the partition-theoretic interpretation: σ_Y swaps the 'parts' vector (λ_i) and 'multiplicities' vector [k_j], corresponding to Young diagram transposition. 2) Verify σ_Y is μ_d-preserving by showing the invariant measure density is symmetric under this coordinate swap (the symplectic form [k̄]·(λ̄)^⊤ = N is preserved). 3) Prove the time-reversal relation σ_Y ∘ T̃_d ∘ σ_Y = T̃_d^{-1}: the triangle map acts on partitions via non-negative integer matrices A with A^{-1} also non-negative integer, and Young conjugation transposes these matrices (since transposing A transposes the symplectic form), which reverses the direction of the continued fraction expansion. 4) Deduce the four-fold decomposition: σ_Y and the companion involution σ_T (from the second matrix in the triangle map construction) generate a Klein four-group whose fundamental domains partition Ω_d into four equal-measure subdomains. For d = 1, verify explicitly using the known natural extension of th",
@@ -4658,7 +4687,7 @@
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Establish a dynamic coupling between percolation processes at different retention probabilities to show the component merging dynamics are well-approximated by multiplicative coalescent transitions with the preferential attachment kernel. 2) Characterize the limiting mark distribution using the Norros-Reittu representation of the subcritical graph, verifying it belongs to the appropriate ℓ²↓ initial condition class. 3) Prove the susceptibility function χ(p, n) diverges with the predicted exponent at the critical point, providing the necessary entrance boundary condition for the coalescent. 4) Generalize the Aldous–Limic abstract convergence criterion for multiplicative coalescents to accommodate inhomogeneous kernels with power-law mark distributions (infinite variance). 5) Verify the tightness of the rescaled component size processes in ℓ²↓ using the star-shaped component structure identified in the subcritical regime.",
@@ -4688,7 +4717,7 @@
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes the rooted heat-kernel master loop equation and proves convergence of the order-truncated trajectory expansion at strong coupling (T > T₀(d)). To extend to all T > 0: (1) Develop uniform-in-T estimates for the trajectory expansion coefficients, leveraging the universal finite-N duality formulas and refined heat-kernel asymptotics that remain valid for small T. (2) Prove convergence of the rooted trajectory expansion for all T > 0 by establishing tighter control on the combinatorial growth of decorated loop observables—specifically, show the expansion is absolutely convergent with radius independent of T. (3) For the weak-coupling regime (small T), exploit the Gaussian limit T → 0 where the theory reduces to a lattice Gaussian free field, and use this as the base of an expansion valid for all T. (4) Bridge strong and weak coupling using monotonicity of Wilson loop expectations in T and real-analyticity of heat-kernel coefficients, establishing a single master field",
@@ -4716,7 +4745,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the monoid in Lean, compute the misère quotient via backward induction, and prove isomorphism through homomorphism properties and loss set verification",
@@ -4745,7 +4774,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the Weyl differencing and van der Corput B-process arguments from the paper with tighter control on off-diagonal contributions. The key improvement would come from replacing power-saving arguments with logarithmic precision via careful saddle-point analysis of the complete exponential sums arising from Poisson summation applied to $e(h\\sqrt{a})$ over dyadic subintervals of $[n/2, n]$. One should track how the exponent pairs obtained from the $B^2$-process interact with the moment sum over $h$, exploiting cancellation more finely than the $n^\\varepsilon$-losing bound permits.",
@@ -4769,7 +4798,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive construction combined with probabilistic extremal arguments",
@@ -4798,7 +4827,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2948",
+    "id": "fd_2949",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Hermitian Klingenstein-Eisenstein lift congruence to the scalar-valued boundary case (k=3) by modifying Mok's endoscopic classification to handle the non-trivial SL_2-factor in the Arthur parameters, and adapting the Selmer-group vanishing arguments as outlined in the paper's discussion of the k=3 boundary.",
@@ -4826,7 +4855,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2949",
+    "id": "fd_2950",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the paper's conditional regularity theorem (Bessel distributions are regular provided Kloosterman sums for all Levi subgroups have nontrivial bounds) to GL(n). Since every Levi subgroup of GL(n) is isomorphic to a product ∏ GL(mᵢ) with ∑ mᵢ = n, the corresponding Kloosterman sums admit nontrivial bounds by Deligne's estimates from the Riemann hypothesis for varieties over finite fields (Weil II), yielding unconditional regularity for GL(n). The key intermediate step is formalizing the germ expansion of Kloosterman integrals and verifying the nontrivial bound condition for all Levi subgroups.",
@@ -4853,7 +4882,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2950",
+    "id": "fd_2951",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Hölder uniformization over vertex relabellings in the spirit of Conlon–Lee: reduce the general case to the edge-transitive case by averaging over graph automorphisms and applying Hölder's inequality to symmetrize, then exploit the positive-semidefinite structure implicit in local density for edge-transitive graphs. Key sub-lemmas include the equivalence between the L^p formulation and the graphon composition formulation, and the comparison principle with edge-transitive KNRS supergraphs.",
@@ -4871,7 +4900,7 @@
       "Generalized Bernoulli numbers",
       "Digit expansions"
     ],
-    "consumed_by_exp_id": "f47f3dac",
+    "consumed_by_exp_id": "",
     "description": "For a prime p ≥ 3 and an integer b ≥ 2 with p ∤ b, if the multiplicative order of b modulo p is l = (p-1)/2^m and p ≡ 1 mod 2^(m+1), then the sum of the base-b digits in one full period of the expansion of 1/p equals (b-1)(p-1)/2^(m+1).",
     "domain_bridges": [
       "algebraic_number_theory",
@@ -4881,13 +4910,13 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2951",
+    "id": "fd_2952",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the base-b digit sequence of 1/p using the division algorithm on remainders, a_i = ⌊b * r_i / p⌋ where r_i = b^i mod p. The sum of digits S = Σ a_i can be expressed in terms of the sum of remainders. The condition that the order of b is (p-1)/2^m restricts the remainders to a subgroup of (ℤ/pℤ)×. The congruence p ≡ 1 mod 2^(m+1) ensures that this subgroup is stable under negation modulo p (since l is even and b^(l/2) ≡ -1 mod p), which allows the sum of remainders to be simplified to p*l/2, leading directly to the formula S = (b-1)*l/2 = (b-1)(p-1)/2^(m+1).",
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:05:42.798221+00:00",
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
@@ -4909,7 +4938,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2952",
+    "id": "fd_2953",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To prove the lower bound F(s) ≥ c·s^{3/2}/log s, construct an explicit family of graphs G_s with ω(G_s) ≤ s and g(G̅_s) ≥ 6 such that χ(G_s) ≥ c·s^{3/2}/log s. This likely requires probabilistic constructions or algebraic graph families that saturate the complement-girth-6 constraint while maximizing chromatic number relative to clique number. The existing lower bound construction yielding s^{4/3} would need substantial refinement—potentially using blow-ups of Ramsey-type constructions or sparse pseudorandom graphs with controlled complement girth.",
@@ -4935,7 +4964,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2953",
+    "id": "fd_2954",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing definitions of α, a, R, and Δ, then establishing the inequality using the paper's result that a ≤ (Δ+1)/2 * W (where W is the Caro-Wei sum) combined with classical lower bounds α ≥ R and α ≥ W. Key steps include handling the special cases for Δ = 2 and Δ ≥ 3, while explicitly excluding K₂ as a counterexample.",
@@ -4962,7 +4991,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2954",
+    "id": "fd_2955",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the even Riemann kernel Φ and its phase-mode decomposition into components φ_n. Then define the explicit test function g_n(t) = exp(t/2) · exp(−π·n²·exp(2t)). Compute ∂_t g_n and ∂_t² g_n symbolically using differentiation rules for compositions and products. Subtract (1/4)·g_n to form (∂_t² − 1/4)g_n. The equality φ_n = (∂_t² − 1/4)g_n then follows from the Jacobi-type theta identity and the Poisson summation relation connecting the Riemann kernel to the theta function, rearranged via the heat-equation eigenfunction expansion that produces the second-order operator.",
@@ -4977,7 +5006,7 @@
     "catalog_references": [
       "arXiv:2503.07456"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65d4cbfc",
     "description": "Conjecture: In the game of Halve Nim (where a move consists of either a standard Nim move on a single pile or replacing every pile of size n by ⌊n/2⌋), a position with three piles of sizes (a, b, c) is a P-position if and only if the nim‑sum a ⊕ b ⊕ c equals zero. This extends the known result for two‑pile Halve Nim and the partial result for three‑pile Halve Nim with one pile bounded by ten.",
     "domain_bridges": [
       "Number theory (binary representations)",
@@ -4986,13 +5015,13 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2955",
+    "id": "fd_2956",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on the total number of coins. Show that the Grundy value of a pile of size n is exactly n (i.e., the halving move does not change the nim‑value), using the mex recurrence and the fact that ⌊n/2⌋ < n for n>0. Then the Sprague‑Grundy theorem gives that the Grundy value of a position is the xor of the pile sizes, so P‑positions are precisely those with xor zero. The induction handles the base case (empty position) and the step where either a standard Nim move or a global halving move is considered.",
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T06:36:22.156279+00:00",
     "title": "Characterization of P-positions in three-pile Halve Nim"
   },
@@ -5004,7 +5033,7 @@
       "majorization_theory",
       "exponential_order_statistics"
     ],
-    "consumed_by_exp_id": "65d4cbfc",
+    "consumed_by_exp_id": "",
     "description": "For the siblings of the coupon collector problem with N coupon types and album index j ≥ 2, the expected number of empty spaces E_p[U_j^N] in sibling j's album at the main collector's completion time is uniquely maximized over all probability distributions p = (p_1, ..., p_N) with p_i > 0 and Σ p_i = 1 by the uniform distribution p_i = 1/N. Moreover, E_p[U_j^N] decreases strictly along every nonconstant ray from the uniform vector in the probability simplex.",
     "domain_bridges": [
       "probability_expectations → convex_optimization",
@@ -5013,13 +5042,13 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2956",
+    "id": "fd_2957",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof relies on: (1) establishing the Adler-Oren-Ross integral formula for E_p[U_j^N] as a sum of integrals involving the product of survival functions, (2) showing that E_p[U_j^N] is a Schur-convex function of the probability vector p (using the characterization that symmetric convex functions are Schur-convex), and (3) applying the majorization order to conclude that the uniform distribution (which is majorized by all other distributions) maximizes the expectation. The ray-decrease property follows from strict Schur-convexity. Formalization requires building the probability space for the coupon collector, the integral formula, and the Schur-convexity framework.",
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T06:59:00.925390+00:00",
     "title": "Uniform Distribution Uniquely Maximizes Expected Empty Spaces in Sibling Coupon Collection"
   },
@@ -5041,7 +5070,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2957",
+    "id": "fd_2958",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the factorial moments of the untouched-label statistic E_n by evaluating the expected size of the intersection of r untouched labels, showing they converge to λ^r. By inclusion-exclusion, the probability that exactly u labels are untouched is expressed as an alternating sum involving the probabilities of larger sets of untouched labels. The asymptotic conditions λ_n → λ and b_n → ∞ (equivalently γ_n → 0) ensure that the inclusion-exclusion sum converges to the Poisson probabilities, using the method of moments or direct asymptotic analysis of the binomial coefficients.",
@@ -5069,7 +5098,7 @@
       "Geometry",
       "Computation"
     ],
-    "id": "fd_2958",
+    "id": "fd_2959",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose global variance and influence via the link structure. Show that Var(f) on X(d) can be written as a weighted sum of local variances on links, and that the global max influence is at least the local max influence at each link, using the local KKL property at each link X_σ. The key step is establishing that the influence Inf_σ(f) on the global complex dominates the corresponding influence in the link X_σ, possibly up to dimension-dependent factors that cancel due to the uniform transfer of the KKL parameter α.",
@@ -5099,7 +5128,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2959",
+    "id": "fd_2960",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that each edge of G maps to an edge of H under the quotient labeling (by construction of the labeling from the edge partition), so every path in G maps to a path of equal or shorter length in H. The key step is proving that the GF(2) quotient construction preserves adjacency: if uv ∈ E(G) and uv lies in partition class i, then ℓ(u) and ℓ(v) differ in exactly the coordinate corresponding to the image of class i in the quotient. The non-stretching then follows by taking d_G(u,v) as the infimum over all path lengths, which bound the Hamming distance of the labels from below.",
@@ -5127,7 +5156,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2960",
+    "id": "fd_2961",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First establish κ₁ = 2 by showing K₂ has spectral radius 1 and no 1-vertex graph has spectral radius 1. Then use the relative bound / Lemmens-Seidel framework: given a set of equiangular lines with angle arccos(1/3), form the Gram matrix M with diagonal 1 and off-diagonal ±1/3. The eigenvalue structure of M combined with the spectral radius order constraint yields the linear upper bound 2(d−1) for d ≥ 15, and the absolute bound gives 28 for small d.",
@@ -5153,7 +5182,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2961",
+    "id": "fd_2962",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the result by first proving base cases for small numbers and primes. Use the multiplicative property along with the 3-additive condition on E₂ to show f(p) = p for all primes p. Then extend multiplicatively to all natural numbers, carefully utilizing the f(2) ≠ 0 condition to rule out the zero-like exceptional cases.",
@@ -5183,7 +5212,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2962",
+    "id": "fd_2963",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the vertex potential framework from the paper to show that interior points (not on the convex hull) strictly increase the number of plane graphs relative to convex position. The potential φ(v) = deg(v) + vis(v) captures the local combinatorial richness at each vertex. The strategy would be: (1) establish that the expected potential of an interior vertex in a random plane graph strictly exceeds that of a hull vertex, (2) show this potential gap translates to a multiplicative increase in the total count of plane graphs, and (3) induct on the number of interior points, reducing to the base case of convex position. A key lemma would be that moving a hull point to the interior (while maintaining general position) strictly increases the plane graph count.",
@@ -5213,7 +5242,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2963",
+    "id": "fd_2964",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Define H_BK = (xp+px)/2 rigorously as an unbounded operator on L²(ℝ⁺) with domain specified by boundary conditions. 2) Prove existence and uniqueness of the self-adjoint extension using von Neumann deficiency index theory. 3) Compute the trace of the resolvent Tr((H_BK - s(s-1))⁻¹) via the Gutzwiller trace formula for this Hamiltonian. 4) Show via analytic continuation that the spectral zeta function ζ_{H_BK}(s) equals the Riemann xi function ξ(s). 5) Conclude spectral correspondence via the equality of zeta-regularized spectral determinants: det_ζ(H_BK - s(s-1)I) = ξ(s).",
@@ -5242,7 +5271,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2964",
+    "id": "fd_2965",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize Cayley graphs over ZMod p, symmetric connection sets, and K_{r+1}-freeness. Prove the lower bound by showing Cay(ℤ_p, ℤ_p \\ D_0) is K_{r+1}-free where D_0 = {0, ±1, ..., ±⌊p/(r+1)⌋}. Prove the upper bound via the polynomial method: for a K_{r+1}-free Cayley graph with connection set S, construct a nonzero polynomial of bounded degree vanishing on the complement D = ℤ_p \\ S, then use the Combinatorial Nullstellensatz or degree-counting to derive |S| ≤ p - 1 - 2⌊p/(r+1)⌋.",
@@ -5271,7 +5300,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2965",
+    "id": "fd_2966",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First, formalize the Blomer-Kala invariant M_D as a continued fraction sum evaluating the cardinality of the set S₀ of indecomposable totally positive integers. Next, formalize the universality of the octonary form f. The backward direction (M_D = 1 implies universality) requires demonstrating that the Blomer-Kala universal 8M_D-variable construction collapses exactly to f, and then verifying that M_D = 1 implies D belongs to one of the two classified families (D = n²-1 or D = n²-4), for which universality holds. The forward direction (universality implies M_D = 1) requires demonstrating that if M_D > 1, the form f fails to represent certain indecomposable elements in S₀.",
@@ -5301,7 +5330,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2966",
+    "id": "fd_2967",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the authors' Kneser quotient reduction and Kemperman critical-pair framework from the 1/2-threshold to the 1/3-threshold regime. The key steps would be: (1) Establish a Kneser-type lower bound for |A−A| when the 1/3-popular condition holds, showing that the deficit |A−A| − |A| is controlled by the Kneser quotient; (2) Classify the critical-pair configurations that achieve equality or near-equality in the 1/3-threshold regime, showing that the deficit forces a 3-coset structure; (3) Handle the case where A−A is a subgroup separately (where A is a single coset) versus the case where A−A is not a subgroup (where the Kemperman analysis forces A into at most 3 cosets). The 2-torsion-free assumption is used in the Kemperman step to ensure that the critical-pair classification yields coset structures rather than the exotic configurations the authors construct in F_2^{2r+1}.",
@@ -5326,7 +5355,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2967",
+    "id": "fd_2968",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on the size k of a minimum feedback vertex set S. Base case k=0: G is acyclic, so crank(G) = 0. If G is not strongly connected, crank(G) is the maximum cycle rank over its strongly connected components, each of which has a feedback vertex set of size <= k, so the bound holds by the inductive hypothesis. If G is strongly connected and k>0, then |V(G)| >= 2 (since simple digraphs have no self-loops and k>0 implies a cycle exists). Removing any vertex v in S reduces the minimum feedback vertex set size of G-v to k-1. By the recursive definition of cycle rank, crank(G) = 1 + min_u crank(G-u) <= 1 + crank(G-v) <= 1 + (k-1) = k.",
@@ -5335,6 +5364,34 @@
     "status": "available",
     "timestamp": "2026-06-30T10:29:35.546539+00:00",
     "title": "Cycle Rank is Bounded by Minimum Feedback Vertex Set Size"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "math.AG",
+      "math.DS"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let A₁, …, Aᵣ be simple abelian varieties over Q̄ such that no two are isogenous, let X = A₁ × ⋯ × Aᵣ, and let f: X → X be an endomorphism with a Zariski dense orbit. Then there exists a number field K such that every (f,K)-transversal is Zariski dense in X. This extends the Pasten-Silverman S-DOT result (which covers only the case r=1, i.e., geometrically simple abelian varieties) to products of pairwise non-isogenous simples, and strengthens the current paper's W-DOT result (which only guarantees the existence of some dense transversal) to the universality of density for all transversals.",
+    "domain_bridges": [
+      "Arithmetic geometry of abelian varieties",
+      "Algebraic dynamical systems",
+      "Diophantine geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2969",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Decompose the endomorphism f on X = A₁ × ⋯ × Aᵣ into component maps fᵢⱼ: Aⱼ → Aᵢ using the structure of End(X) ≅ ⊕ End(Aᵢ) when the Aᵢ are pairwise non-isogenous. Apply the Pasten-Silverman S-DOT result on each simple factor to obtain independent transversality, then show that the product structure forces any global transversal to project onto Zariski dense subsets of each factor, yielding Zariski density in the product. The key difficulty is ensuring no transversal can concentrate on a proper closed subset that projects surjectively onto each factor.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29057v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:50:36.802724+00:00",
+    "title": "Strong Dense Orbit Transversality for Products of Non-Isogenous Simple Abelian Varieties"
   },
   {
     "ambition_level": "extension",
@@ -5886,7 +5943,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "815a888f",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domain_bridges": [],
     "domains": [
@@ -5899,7 +5956,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
@@ -6186,7 +6243,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "352bbcf4",
     "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domain_bridges": [],
     "domains": [
@@ -6199,7 +6256,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },

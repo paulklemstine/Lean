@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75611ca8",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -2368,7 +2368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logarithmic convergence of finite projective-plane incidence graphs"
   },
   {
-    "consumed_by_exp_id": "62b48ce6",
+    "consumed_by_exp_id": "",
     "description": "For any lacunary sequence $(a_n)_{n \\geq 1} \\subset \\mathbb{N}$ satisfying $a_{n+1} \\geq q a_n$ for some $q > 1$, and for Lebesgue-almost every $x \\in \\mathbb{T}$, the maximal circular gap satisfies $\\lim_{N\\to\\infty} \\frac{N \\cdot G_N(x)}{\\log N} = 1$. The paper proves this when $a_n \\mid a_{n+1}$ for all $n$, and establishes $\\frac{1}{2} \\leq \\liminf \\leq \\limsup \\leq \\frac{q+1}{q-1}$ in general. The conjecture asserts that the divisibility assumption is unnecessary\u2014the limit always exists and equals 1, matching the random i.i.d. model.",
     "domains": [
       "Pythagorean",
@@ -2378,7 +2378,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28860v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T03:24:28.294396+00:00",
     "title": "Universal Gap Asymptotic for Lacunary Dilations"
   },
@@ -2676,11 +2676,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let $f_1, \\dots, f_k \\in \\mathbb{Z}[x]$ be distinct irreducible polynomials with positive leading coefficients, and let $S_f$ be the set of integers $a$ such that $f_i(a)$ is prime for all $i$. Let $\\overline{S_f}$ be the closure of $S_f$ in the profinite completion of $\\mathbb{Z}$, and let $\\nu$ be the procounting measure on $\\hat{\\mathbb{Z}}$. The profinite Bateman-Horn conjecture proposes that the procounting measure of $\\overline{S_f}$ is equal to the Bateman-Horn Euler product constant $C(f)$.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2938",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29250v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:49:22.469237+00:00",
+    "title": "Profinite Bateman-Horn Conjecture for Polynomials over Z"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2938",
+    "id": "fd_2939",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
@@ -2694,7 +2709,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2939",
+    "id": "fd_2940",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
@@ -2708,7 +2723,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2940",
+    "id": "fd_2941",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27961v1",
@@ -2722,7 +2737,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2941",
+    "id": "fd_2942",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28041v1",
@@ -2736,7 +2751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2942",
+    "id": "fd_2943",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28014v1",
@@ -2751,7 +2766,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Algebra"
     ],
-    "id": "fd_2943",
+    "id": "fd_2944",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -2766,7 +2781,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Physics"
     ],
-    "id": "fd_2944",
+    "id": "fd_2945",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28945v1",
@@ -2780,7 +2795,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2945",
+    "id": "fd_2946",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29015v1",
@@ -2794,7 +2809,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2946",
+    "id": "fd_2947",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28986v1",
@@ -2808,7 +2823,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2947",
+    "id": "fd_2948",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28903v1",
@@ -2823,7 +2838,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2948",
+    "id": "fd_2949",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30063v1",
@@ -2838,7 +2853,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2949",
+    "id": "fd_2950",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
@@ -2852,7 +2867,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2950",
+    "id": "fd_2951",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30010v1",
@@ -2861,16 +2876,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "L^p Relaxation of the KNRS Conjecture for Graphons"
   },
   {
-    "consumed_by_exp_id": "f47f3dac",
+    "consumed_by_exp_id": "",
     "description": "For a prime p \u2265 3 and an integer b \u2265 2 with p \u2224 b, if the multiplicative order of b modulo p is l = (p-1)/2^m and p \u2261 1 mod 2^(m+1), then the sum of the base-b digits in one full period of the expansion of 1/p equals (b-1)(p-1)/2^(m+1).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2951",
+    "id": "fd_2952",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:05:42.798221+00:00",
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
@@ -2880,7 +2895,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2952",
+    "id": "fd_2953",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
@@ -2894,7 +2909,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2953",
+    "id": "fd_2954",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29553v1",
@@ -2908,7 +2923,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2954",
+    "id": "fd_2955",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29555v1",
@@ -2917,30 +2932,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Second-order theta-mode identity for the Riemann phase kernel"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "65d4cbfc",
     "description": "Conjecture: In the game of Halve Nim (where a move consists of either a standard Nim move on a single pile or replacing every pile of size n by \u230an/2\u230b), a position with three piles of sizes (a, b, c) is a P-position if and only if the nim\u2011sum a \u2295 b \u2295 c equals zero. This extends the known result for two\u2011pile Halve Nim and the partial result for three\u2011pile Halve Nim with one pile bounded by ten.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2955",
+    "id": "fd_2956",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29740v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T06:36:22.156279+00:00",
     "title": "Characterization of P-positions in three-pile Halve Nim"
   },
   {
-    "consumed_by_exp_id": "65d4cbfc",
+    "consumed_by_exp_id": "",
     "description": "For the siblings of the coupon collector problem with N coupon types and album index j \u2265 2, the expected number of empty spaces E_p[U_j^N] in sibling j's album at the main collector's completion time is uniquely maximized over all probability distributions p = (p_1, ..., p_N) with p_i > 0 and \u03a3 p_i = 1 by the uniform distribution p_i = 1/N. Moreover, E_p[U_j^N] decreases strictly along every nonconstant ray from the uniform vector in the probability simplex.",
     "domains": [
       "Computation"
     ],
-    "id": "fd_2956",
+    "id": "fd_2957",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T06:59:00.925390+00:00",
     "title": "Uniform Distribution Uniquely Maximizes Expected Empty Spaces in Sibling Coupon Collection"
   },
@@ -2951,7 +2966,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2957",
+    "id": "fd_2958",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29530v1",
@@ -2966,7 +2981,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Computation"
     ],
-    "id": "fd_2958",
+    "id": "fd_2959",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29449v1",
@@ -2980,7 +2995,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2959",
+    "id": "fd_2960",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
@@ -2995,7 +3010,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2960",
+    "id": "fd_2961",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
@@ -3009,7 +3024,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2961",
+    "id": "fd_2962",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29507v1",
@@ -3024,7 +3039,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2962",
+    "id": "fd_2963",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29446v1",
@@ -3039,7 +3054,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2963",
+    "id": "fd_2964",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
@@ -3054,7 +3069,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2964",
+    "id": "fd_2965",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
@@ -3068,7 +3083,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2965",
+    "id": "fd_2966",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29321v1",
@@ -3083,7 +3098,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2966",
+    "id": "fd_2967",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29297v1",
@@ -3097,13 +3112,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2967",
+    "id": "fd_2968",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29336v1",
     "status": "available",
     "timestamp": "2026-06-30T10:29:35.546539+00:00",
     "title": "Cycle Rank is Bounded by Minimum Feedback Vertex Set Size"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let A\u2081, \u2026, A\u1d63 be simple abelian varieties over Q\u0304 such that no two are isogenous, let X = A\u2081 \u00d7 \u22ef \u00d7 A\u1d63, and let f: X \u2192 X be an endomorphism with a Zariski dense orbit. Then there exists a number field K such that every (f,K)-transversal is Zariski dense in X. This extends the Pasten-Silverman S-DOT result (which covers only the case r=1, i.e., geometrically simple abelian varieties) to products of pairwise non-isogenous simples, and strengthens the current paper's W-DOT result (which only guarantees the existence of some dense transversal) to the universality of density for all transversals.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2969",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29057v1",
+    "status": "available",
+    "timestamp": "2026-06-30T10:50:36.802724+00:00",
+    "title": "Strong Dense Orbit Transversality for Products of Non-Isogenous Simple Abelian Varieties"
   },
   {
     "consumed_by_exp_id": "",
@@ -3513,7 +3543,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "815a888f",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -3523,7 +3553,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
@@ -3738,7 +3768,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "352bbcf4",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
@@ -3748,7 +3778,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
