@@ -970,7 +970,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
   },
   {
-    "consumed_by_exp_id": "57aacce9",
+    "consumed_by_exp_id": "",
     "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
     "domains": [
       "Geometry"
@@ -979,7 +979,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:01:41.266053+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
@@ -1855,7 +1855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Indivisibility of Nonzero Character Values in GL_n(F_q)"
   },
   {
-    "consumed_by_exp_id": "35d54dba",
+    "consumed_by_exp_id": "",
     "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
     "domains": [
       "Bridges"
@@ -1864,7 +1864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T18:26:42.958632+00:00",
     "title": "Minimum Independence Ratio Constraint"
   },
@@ -2030,7 +2030,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
   },
   {
-    "consumed_by_exp_id": "7ddc2247",
+    "consumed_by_exp_id": "",
     "description": "For every positive integer M and integer k with 0 \u2264 k \u2264 M, define a_{M,k}(t) as the absolute value of the coefficient of u^k in the expansion (u;t)_M / (-u;t)_M = \u03a3_{k=0}^{M} (-1)^k a_{M,k}(t) u^k, where (u;t)_M = \u03a0_{j=0}^{M-1}(1 - u t^j) and (-u;t)_M = \u03a0_{j=0}^{M-1}(1 + u t^j). The paper establishes that each a_{M,k}(t) is a palindromic polynomial in t with nonnegative integer coefficients (being signed principal specializations of one-row Schur Q-functions). The conjecture is that each a_{M,k}(t) is also unimodal as a polynomial in t: if a_{M,k}(t) = \u03a3_{i=0}^{d} c_i t^i, then there exists j such that c_0 \u2264 c_1 \u2264 \u00b7\u00b7\u00b7 \u2264 c_j \u2265 c_{j+1} \u2265 \u00b7\u00b7\u00b7 \u2265 c_d. Since a_{M,k}(t) is palindromic, this is equivalent to the first half of the coefficient sequence being weakly increasing.",
     "domains": [
       "Pythagorean"
@@ -2039,7 +2039,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T21:16:08.826100+00:00",
     "title": "Unimodality of the Mixed Scalar Factor Coefficients"
   },
@@ -2642,7 +2642,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Phase transition for variance asymptotics of Steinhaus short-interval sums"
   },
   {
-    "consumed_by_exp_id": "f955b422",
+    "consumed_by_exp_id": "",
     "description": "For any graph G with maximum degree d, there exists a signing \u03c3 of its edges such that the spectral radius of the signed adjacency matrix A_\u03c3 is at most 2\u221a(3(d-1)).",
     "domains": [
       "Physics"
@@ -2651,7 +2651,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T11:32:36.681739+00:00",
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
@@ -2956,7 +2956,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "946cfca3",
     "description": "For all d \u2265 1, the maximum number of equiangular lines in \u211d^d with common angle arccos(1/3) satisfies N_{1/3}(d) \u2264 max{28, 2(d \u2212 1)}. This is a special case of Balla's conjecture where the spectral radius order \u03ba\u2081 = 2 (witnessed by K\u2082), making the bound reduce to max{(1\u22121/9)(1\u22122/9)/(2/81), \u230a2(d\u22121)/1\u230b} = max{28, 2(d\u22121)}.",
     "domains": [
       "Pythagorean",
@@ -2966,7 +2966,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for \u03b1 = 1/3"
   },
@@ -3015,7 +3015,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berry-Keating Hamiltonian Spectrum Corresponds to Riemann Zeta Non-Trivial Zeros"
   },
   {
-    "consumed_by_exp_id": "b03dbdb9",
+    "consumed_by_exp_id": "",
     "description": "For every odd prime p and integer r with 1 \u2264 r \u2264 p-1, the maximum size of a symmetric set S = -S \u2286 \u2124_p \\ {0} such that the Cayley graph Cay(\u2124_p, S) is K_{r+1}-free equals p - 1 - 2\u230ap/(r+1)\u230b. This is the main theorem of the paper, established via a polynomial method.",
     "domains": [
       "Pythagorean",
@@ -3025,7 +3025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T09:28:09.181224+00:00",
     "title": "Cayley-Tur\u00e1n number of complete graphs over prime cyclic groups"
   },
@@ -3496,7 +3496,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension-Free KKL for Bounded-Degree HDX"
   },
   {
-    "consumed_by_exp_id": "a725bb00",
+    "consumed_by_exp_id": "",
     "description": "The Petersen graph does not admit an isometric embedding into any Cayley graph of any finite abelian group. Since the Petersen graph is not a partial cube (not bipartite), it cannot embed into hypercubes Q_k = Cay((Z/2)^k, standard basis). This conjecture asserts the stronger claim that no abelian group structure whatsoever can serve as a host. The obstruction arises from the interplay between the Petersen graph's odd girth (5), vertex-transitivity under the non-abelian group S_5, and the constraint that abelian Cayley graphs impose on metric structure via their generating sets. A proof would demonstrate the limits of the paper's GF(2) quotient labeling framework and establish the Petersen graph as a minimal counterexample to isometric abelian Cayley embeddability beyond bipartite graphs.",
     "domains": [
       "Pythagorean",
@@ -3506,7 +3506,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T20:40:18.725594+00:00",
     "title": "Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
   },
@@ -3626,20 +3626,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-01T01:01:53.020039+00:00",
     "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
-  },
-  {
-    "consumed_by_exp_id": "307e78f2",
-    "description": "Let \u03c1(q) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third order mock theta function defined by \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{k=0}^{m} (1 + q^{2k+1} + q^{4k+2}). Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. The paper proves the asymptotic version (for sufficiently large n) but the exact finite sign law remains open. The only zeros in the negative residue classes are r(2) = r(4) = r(8) = r(11) = r(20) = 0.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_3009",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.27902v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-01T01:31:32.953293+00:00",
-    "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function \u03c1(q)"
   },
   {
     "consumed_by_exp_id": "",
@@ -5618,6 +5604,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nBold, testable conjectures distilled from this cycle's study of three\nreusable proof patterns: max-plus (tropical) simplification, reflective\nsmall-case primality testing, and row-sum eigenvalue estimates.\n\n## 1. A canonical Horner factorization for every tropical polynomial\n\n**Conjecture.** Every univariate max-plus polynomial of degree `d`, written as\n`max over k \u2264 d of (a\u2096 + k\u00b7x)`, admits a unique nested factorization\n`a\u2080 \u2295 x \u2299 (a\u2081 \u2295 x \u2299 (a\u2082 \u2295 \u22ef))`, and this nesting evaluates with exactly `d`\ntropical additions and `d` tropical multiplications \u2014 the min-plus analogue of\nHorner's rule \u2014 with no shorter straight-line evaluation possible.\n\nThe key insight is that the two-sided distributivity of ordinary addition over\n`max` is enough to collapse any max-of-affine expression into a single nested\nform, so the classical arithmetic-circuit theory of polynomial evaluation\ntransports verbatim to the tropical world.\n\nWhy now? Tropical polynomials are the exact algebra of piecewise-linear\nactivation networks, and an optimal, canonical evaluation order directly bounds\nthe number of comparison-and-add operations such networks need \u2014 a quantity that\ngoverns both their expressive depth and their inference cost.\n\n## 2. Trial division is optimal among divisor-scan primality certificates\n\n**Conjecture.** Among all primality tests that certify `n` by exhibiting the\nabsence of a proper divisor in an explicitly scanned range, the scan can always\nbe truncated at `\u230a\u221an\u230b` without loss, and no certificate of this shape can\ninspect asymptotically fewer than `\u221an / log n` candidate divisors on infinitely\nmany `n`.\n\nThe key insight is that a composite number always has a nontrivial factor at or\nbelow its square root, so the *witness* to compositeness lives in a range of\nsize `\u221an`, while primes force the scan to rule out every prime below `\u221an`,\npinning the lower bound to the density of primes.\n\nWhy now? Reflective, self-certifying number-theoretic procedures are becoming\nthe backbone of verified cryptographic libraries, where the guarantee is not\nmerely \"the answer is correct\" but \"here is a checkable reason\"; understanding\nthe minimal certificate size sharpens the cost model for these guarantees.\n\n## 3. Row-sum bounds are exactly tight precisely for scaled stochastic matrices\n\n**Conjecture.** The row-sum bound `|\u03bb| \u2264 max\u1d62 \u03a3\u2c7c |A\u1d62\u2c7c|` is attained by an\neigenvalue of `A` if and only if, after a diagonal sign change, some maximal\nrow is a nonnegative multiple of a common probability vector shared by all\nmaximal rows; equivalently, equality forces the extremal eigenvector to be\nconstant in modulus across the support of the maximal rows.\n\nThe key insight is that equality in the triangle inequality used to prove the\nbound demands perfect phase alignment of the eigenvector entries, which rigidly\nconstrains the maximal rows to a scaled-stochastic shape.\n\nWhy now? Spectral radius controls the stability of iterated linear dynamics \u2014\nfrom message-passing and diffusion on graphs to the training dynamics of linear\nrecurrent models \u2014 and knowing exactly when the cheap row-sum bound is tight\ntells practitioners when it is safe to replace an expensive eigenvalue\ncomputation with a single pass over the matrix rows.\n\n## 4. A unified \"distribute, then decide\" tactic discipline\n\n**Conjecture.** A large class of routine identities across idempotent semirings,\nbounded arithmetic, and finite-dimensional operator estimates can be discharged\nby a single two-phase strategy: normalize by the semiring's distributive law,\nthen settle the residual by a decision procedure over a linear order \u2014 and this\nstrategy is complete for the quantifier-free fragment of each theory.\n\nThe key insight is that in all three settings the \"hard\" content is a single\ndistributive rewrite, after which the remaining goal lives in a decidable\ntheory of linear order and addition.\n\nWhy now? As libraries of certified mathematics scale, the bottleneck shifts from\nproving individual theorems to designing small, provably sound tactics that\nretire whole families of goals at once; a completeness result would turn tactic\ndesign from craft into theory.\n",
+    "domains": [
+      "Pythagorean",
+      "Tropical"
+    ],
+    "id": "fd_3136",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7469cf90",
+    "status": "available",
+    "timestamp": "2026-07-01T23:10:10.846486+00:00",
+    "title": "Bold, testable conjectures distilled from this cycle's study of three"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5732,6 +5733,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 7469cf90 (Q=0.644) proved 15 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_7469cf90_bdbd23aa",
+    "priority_score": 0.6937080000000001,
+    "research_mode": "team",
+    "source_exp_id": "7469cf90",
+    "status": "available",
+    "timestamp": "2026-07-01T23:10:20.766578+00:00",
+    "title": "Close Proofs: Proof Automation: Custom Lean 4 Tactics"
   },
   {
     "consumed_by_exp_id": "",
