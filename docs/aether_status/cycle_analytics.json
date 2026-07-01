@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-01T09:27:15.080926+00:00",
+  "last_updated": "2026-07-01T10:04:04.349584+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -23668,6 +23668,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-01T09:27:14.786224+00:00",
       "title": "Euler Identity for Harmonic Zeta Function Values"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 82,
+      "domain": "MachineLearning",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "8641bed1",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782894625.9078825,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-01T10:04:04.066649+00:00",
+      "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
     }
   ]
 }

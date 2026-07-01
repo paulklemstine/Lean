@@ -761,7 +761,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Beal's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12d1b2fa",
     "description": "Determine all integer solutions to n! + 1 = m\u00b2. Only three solutions are known (n=4,5,7). Formalize the connection to the ABC conjecture and explore bounds on the spacing between Brown numbers.",
     "domains": [
       "Algebra"
@@ -770,7 +770,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:08.676107+00:00",
     "title": "Brocard's Problem: n! + 1 = m\u00b2"
   },
@@ -3893,12 +3893,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "There exists a constant N such that every nontrivial 3-critical graph on at least N vertices contains a snark (a bridgeless cubic class-2 graph) as a subgraph. The characterization theorem for nontrivial 3-critical graphs identifies snarks as a key structural component in one case; this conjecture asserts that all sufficiently large nontrivial 3-critical graphs must fall into this snark-based case. If true, it establishes that the structural complexity of all large nontrivial 3-critical graphs fundamentally derives from snarks, tightly connecting edge-chromatic criticality to snark theory. The conjecture is falsifiable: a counterexample would be an infinite family of snark-free nontrivial 3-critical graphs of unbounded order.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_3027",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27131v1",
+    "status": "available",
+    "timestamp": "2026-07-01T10:05:40.441261+00:00",
+    "title": "Snark Presence in Large Nontrivial 3-Critical Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3913,7 +3928,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3028",
+    "id": "fd_3029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3922,16 +3937,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Strong Edge-Colorings of Odd Kneser Graphs"
   },
   {
-    "consumed_by_exp_id": "8641bed1",
+    "consumed_by_exp_id": "",
     "description": "For any normalised Hecke eigenform f of even weight k \u2265 2 for SL(2,\u2124), any positive integer j, and any even integer m \u2265 2, the Dirichlet coefficients \u03bb_{sym^j f}(n) exhibit infinitely many sign changes as n ranges over integers representable as a sum of m squares. That is, the sets {n : n is a sum of m squares and \u03bb_{sym^j f}(n) > 0} and {n : n is a sum of m squares and \u03bb_{sym^j f}(n) < 0} are both infinite. This extends the paper's result (which covers 2 \u2264 m \u2264 12) to all even m \u2265 2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3029",
+    "id": "fd_3030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T12:22:21.874221+00:00",
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
   },
@@ -3942,7 +3957,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3030",
+    "id": "fd_3031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3957,7 +3972,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3031",
+    "id": "fd_3032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3972,7 +3987,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3032",
+    "id": "fd_3033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3987,7 +4002,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3033",
+    "id": "fd_3034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3996,30 +4011,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3257177e",
     "description": "For any 0 < \u03b5 < 1, there exist constants \u03b3 > 0 and C > 0 such that for any dimension n, any subset A of the discrete cube (ZMod 2)^n with |A| \u2265 \u03b5 * 2^n, and any (\u03b3, C)-well-spread set S, the Minkowski sum A + S has size at least (1 - \u03b5) * 2^n. This generalizes the classical concentration of measure phenomenon where S is a Hamming ball.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3034",
+    "id": "fd_3035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:57:52.389023+00:00",
     "title": "Generalized Concentration of Measure for Well-Spread Sets"
   },
   {
-    "consumed_by_exp_id": "3257177e",
+    "consumed_by_exp_id": "",
     "description": "The conjecture posits that joint descendant sizes scale asymptotically below linear growth, bounded by \u221an, conflicting with polynomial expectations from recursive dependencies.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3035",
+    "id": "fd_3036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T14:19:18.123295+00:00",
     "title": "Sublinear Growth of Joint Descendants"
   },
@@ -4029,7 +4044,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3036",
+    "id": "fd_3037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -4043,7 +4058,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3037",
+    "id": "fd_3038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -4058,7 +4073,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3038",
+    "id": "fd_3039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -4072,7 +4087,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3039",
+    "id": "fd_3040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -4086,7 +4101,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3040",
+    "id": "fd_3041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -4100,7 +4115,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3041",
+    "id": "fd_3042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -4115,7 +4130,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3042",
+    "id": "fd_3043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -4130,7 +4145,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3043",
+    "id": "fd_3044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -4144,7 +4159,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3044",
+    "id": "fd_3045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -4159,7 +4174,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3045",
+    "id": "fd_3046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -4173,7 +4188,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3046",
+    "id": "fd_3047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -4188,7 +4203,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3047",
+    "id": "fd_3048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -4202,7 +4217,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3048",
+    "id": "fd_3049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -4216,7 +4231,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3049",
+    "id": "fd_3050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -4231,7 +4246,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3050",
+    "id": "fd_3051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -4246,7 +4261,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3051",
+    "id": "fd_3052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -4261,7 +4276,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3052",
+    "id": "fd_3053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4275,7 +4290,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3053",
+    "id": "fd_3054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4289,7 +4304,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3054",
+    "id": "fd_3055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4304,7 +4319,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3055",
+    "id": "fd_3056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4319,7 +4334,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3056",
+    "id": "fd_3057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4334,7 +4349,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3057",
+    "id": "fd_3058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4348,7 +4363,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3058",
+    "id": "fd_3059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4362,7 +4377,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3059",
+    "id": "fd_3060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4376,7 +4391,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3060",
+    "id": "fd_3061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -4390,7 +4405,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3061",
+    "id": "fd_3062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27507v1",
@@ -4405,7 +4420,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3062",
+    "id": "fd_3063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27516v1",
@@ -4419,7 +4434,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3063",
+    "id": "fd_3064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
@@ -4434,7 +4449,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3064",
+    "id": "fd_3065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27273v1",
@@ -4448,7 +4463,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3065",
+    "id": "fd_3066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
@@ -4463,7 +4478,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3066",
+    "id": "fd_3067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
@@ -4477,7 +4492,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3067",
+    "id": "fd_3068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
@@ -4491,7 +4506,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_3068",
+    "id": "fd_3069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27451v1",
@@ -4506,7 +4521,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3069",
+    "id": "fd_3070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27208v1",
@@ -4521,7 +4536,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3070",
+    "id": "fd_3071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27170v1",
@@ -4535,7 +4550,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3071",
+    "id": "fd_3072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27179v2",
@@ -4549,7 +4564,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3072",
+    "id": "fd_3073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27197v1",
@@ -4564,7 +4579,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3073",
+    "id": "fd_3074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27190v1",
@@ -4579,7 +4594,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3074",
+    "id": "fd_3075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27118v1",
@@ -4593,7 +4608,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3075",
+    "id": "fd_3076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27104v1",
@@ -4608,13 +4623,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Bridges"
     ],
-    "id": "fd_3076",
+    "id": "fd_3077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27070v1",
     "status": "available",
     "timestamp": "2026-07-01T09:46:53.072016+00:00",
     "title": "Cartesian 1-Capacity of Trees Equals Independence Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For nonnegative integers s, t, u, v, the inequality |sA \u2212 tA| \u2264 |uA \u2212 vA| holds for all finite subsets A of \u2124 if and only if min(s,t) \u2264 min(u,v) and max(s,t) \u2264 max(u,v). The 'if' direction follows from Pl\u00fcnnecke\u2013Ruzsa type arguments and set-theoretic embeddings. The 'only if' direction requires constructing explicit counterexamples generalizing Ruzsa's 2016 construction, producing striking examples like |10A \u2212 10A| > |9A \u2212 100000A|.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3078",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27087v1",
+    "status": "available",
+    "timestamp": "2026-07-01T10:06:03.524185+00:00",
+    "title": "Characterization of Higher-Order Difference Set Inequalities in \u2124"
   },
   {
     "consumed_by_exp_id": "",
