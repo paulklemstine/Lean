@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "11521acf",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Differential & Linear Cryptanalysis Bounds\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. Each conjecture is bold, falsifiable, and ready for",
-      "quality_score": 0.72888,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-27T03:44:32",
-      "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
-    },
-    {
       "cycle_id": "8ed8ca57",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Sharp approximate Carathéodory & iterated Delaunay refinement\n\nDerived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,\n`Contraction.lean`, `Bridge.lean`, and the",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-01T15:19:18",
       "title": "Minimum Independence Ratio Constraint"
+    },
+    {
+      "cycle_id": "52dd778d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: sign changes of symmetric-power coefficients on thin sets\n\nThese conjectures grow out of the central finding of this cycle: the constraint \"`n` is a sum\nof `m` squares\" stops bind",
+      "quality_score": 0.7232000000000001,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-01T15:21:02",
+      "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1f3047ef",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Representation theory of `Sₙ`\n\nDerived from this cycle's findings: we formally pinned down the **shape** of the `Sₙ`\ncharacter table (`p(n)` rows, via the partition ↔ conjugacy-c",
-      "quality_score": 0.45104400000000006,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-06-26T20:28:00",
-      "title": "Representation Theory: Character Tables of S_n"
-    },
     {
       "cycle_id": "bdb5ae9b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-07-01T15:19:18",
       "title": "Minimum Independence Ratio Constraint"
+    },
+    {
+      "cycle_id": "52dd778d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: sign changes of symmetric-power coefficients on thin sets\n\nThese conjectures grow out of the central finding of this cycle: the constraint \"`n` is a sum\nof `m` squares\" stops bind",
+      "quality_score": 0.7232000000000001,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-01T15:21:02",
+      "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "72f7aee6",
-      "domain": "Novelty",
-      "name": "airyKernel_diagonal_tendsto",
-      "quality": 0.73264
-    },
-    {
-      "cycle_id": "72f7aee6",
-      "domain": "Novelty",
-      "name": "gram_corr_det_nonneg",
-      "quality": 0.73264
-    },
-    {
-      "cycle_id": "8ffddeae",
-      "domain": "Applications",
-      "name": "explains",
-      "quality": 0.76734
-    },
     {
       "cycle_id": "8ffddeae",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "triGraph_colorable",
       "quality": 0.7476214285714285
+    },
+    {
+      "cycle_id": "52dd778d",
+      "domain": "Applications",
+      "name": "every",
+      "quality": 0.7232000000000001
+    },
+    {
+      "cycle_id": "52dd778d",
+      "domain": "Applications",
+      "name": "from",
+      "quality": 0.7232000000000001
+    },
+    {
+      "cycle_id": "52dd778d",
+      "domain": "Applications",
+      "name": "all_sum_of_m_squares",
+      "quality": 0.7232000000000001
     }
   ],
-  "last_updated": "2026-07-01T15:19:18",
+  "last_updated": "2026-07-01T15:21:02",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "52a20f8b",
-        "quality": 0.59432,
-        "theorems": 0,
-        "title": "EML Kolmogorov-Arnold Representation"
-      },
-      {
         "cycle_id": "dfab202e",
         "quality": 0.8119999999999999,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.45705761904761916,
         "theorems": 1,
         "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
+      },
+      {
+        "cycle_id": "52dd778d",
+        "quality": 0.7232000000000001,
+        "theorems": 8,
+        "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m "
       }
     ],
     "Bridges": [
