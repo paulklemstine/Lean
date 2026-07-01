@@ -1,233 +1,84 @@
-# The Golden Theorem, Twice: How One Law Hides in Geometry and in Algebra
+# The Golden Theorem, Seen From Five Windows
 
-Some facts in mathematics are so important that their discoverers prove them
-again and again, as if circling a mountain to photograph it from every angle.
-Carl Friedrich Gauss called one such fact the *theorema aureum* — the **golden
-theorem**. Over his lifetime he found eight different proofs of it. Today there
-are more than two hundred. The statement they all converge on is the **Law of
-Quadratic Reciprocity**, and it is one of the most beautiful surprises in all of
-number theory.
+## A puzzle hidden in the remainders
 
-This article tells the story of that law and then walks through two of its proofs
-that could not look more different on the surface — one built from **counting dots
-in a rectangle**, the other from a piece of **algebraic sorcery involving roots of
-unity** — and shows how both arrive at exactly the same conclusion.
+Pick a prime number, say $p = 7$. Now ask a deceptively simple question: which numbers are *perfect squares* when we only care about remainders after dividing by $7$? Squaring $1, 2, 3, 4, 5, 6$ and reducing modulo $7$ gives $1, 4, 2, 2, 4, 1$. So the squares modulo $7$ are exactly $\{1, 2, 4\}$. The other residues, $\{3, 5, 6\}$, are *non-squares*. Half the nonzero residues are squares and half are not — a tidy split that happens for every odd prime.
 
-## A simple question with a strange answer
+Mathematicians encode this split with a compact piece of notation, the **Legendre symbol**. For an odd prime $p$ and an integer $a$ not divisible by $p$, we write
 
-Start with a prime number $p$, say $p = 7$. Now ask: *which numbers are perfect
-squares, if we only care about remainders after dividing by $7$?*
+$$\left(\frac{a}{p}\right) = \begin{cases} +1 & \text{if } a \text{ is a nonzero square modulo } p, \\ -1 & \text{if } a \text{ is not a square modulo } p. \end{cases}$$
 
-Squaring $1, 2, 3, 4, 5, 6$ and reducing modulo $7$ gives
-$$1, 4, 2, 2, 4, 1.$$
-So the nonzero "squares mod $7$" are exactly $\{1, 2, 4\}$. The numbers $3, 5, 6$
-are *not* squares mod $7$. We call $1, 2, 4$ the **quadratic residues** of $7$,
-and $3, 5, 6$ the **non-residues**.
+So $\left(\frac{2}{7}\right) = +1$ because $2 \equiv 3^2 \pmod 7$, while $\left(\frac{3}{7}\right) = -1$.
 
-Mathematicians compress this into a tidy symbol, the **Legendre symbol**, written
-$\left(\frac{a}{p}\right)$. It equals $+1$ if $a$ is a nonzero square modulo $p$,
-$-1$ if $a$ is a non-square, and $0$ if $p$ divides $a$. For example
-$\left(\frac{2}{7}\right) = +1$ because $2$ is a square mod $7$, while
-$\left(\frac{3}{7}\right) = -1$.
+This looks like bookkeeping. But buried inside it is one of the most beautiful and surprising facts in all of mathematics — a fact so admired that Carl Friedrich Gauss called it the **theorema aureum**, the *golden theorem*, and returned to it again and again, producing eight different proofs over his lifetime.
 
-Here is the question that launched a thousand proofs. Take two different odd
-primes, $p$ and $q$. There are two natural things to ask:
+## The astonishing symmetry
 
-- Is $q$ a square modulo $p$? That is, what is $\left(\frac{q}{p}\right)$?
-- Is $p$ a square modulo $q$? That is, what is $\left(\frac{p}{q}\right)$?
+Take two distinct odd primes, say $p = 5$ and $q = 13$. Ask two seemingly unrelated questions:
 
-These look like two completely separate questions. Whether $q$ happens to be a
-square in the world of remainders mod $p$ seems to have nothing to do with whether
-$p$ is a square in the entirely different world of remainders mod $q$. And yet —
-astonishingly — **the two answers are locked together**.
+- Is $5$ a square modulo $13$?
+- Is $13$ a square modulo $5$?
 
-## The golden theorem
+There is no obvious reason these should have anything to do with each other. The first lives in the arithmetic of $13$; the second in the arithmetic of $5$. And yet **the Law of Quadratic Reciprocity** says their answers are locked together. In its cleanest form:
 
-The Law of Quadratic Reciprocity says that for distinct odd primes $p$ and $q$,
-$$\left(\frac{q}{p}\right)\left(\frac{p}{q}\right) = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}.$$
+$$\left(\frac{p}{q}\right)\left(\frac{q}{p}\right) = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}.$$
 
-Read that right-hand side carefully, because it is the whole secret. The exponent
-is a product of two halves. If *either* $p$ or $q$ leaves remainder $1$ when
-divided by $4$, then one of the two fractions $\frac{p-1}{2}$ or $\frac{q-1}{2}$
-is even, the exponent is even, and the right side is $+1$. In that case the two
-questions have the **same** answer: $q$ is a square mod $p$ exactly when $p$ is a
-square mod $q$.
+Read that again. The question "is $p$ a square mod $q$?" and the reverse question "is $q$ a square mod $p$?" always give the *same* answer — unless **both** $p$ and $q$ leave remainder $3$ when divided by $4$, in which case the answers are *opposite*. That single exponent, $\frac{p-1}{2}\cdot\frac{q-1}{2}$, is odd precisely when both primes are of the form $4k+3$.
 
-Only when **both** primes leave remainder $3$ mod $4$ does the exponent become
-odd, making the right side $-1$. In that single case the two questions have
-**opposite** answers.
+For our example, $5 = 4\cdot1+1$ and $13 = 4\cdot3+1$, so the exponent is even and the two answers agree. Indeed $5 \equiv 25/... $ — checking directly, the squares mod $13$ are $\{1,3,4,9,10,12\}$, which contains none equal to $5$, so $\left(\frac{5}{13}\right)=-1$; and the squares mod $5$ are $\{1,4\}$, and $13\equiv 3$, so $\left(\frac{13}{5}\right)=-1$. Both $-1$: they agree, exactly as the law predicts.
 
-Let's see it work. Take $p = 7$ and $q = 5$. We computed that the squares mod $7$
-are $\{1,2,4\}$, so $5$ is *not* among them: $\left(\frac{5}{7}\right) = -1$.
-Going the other way, the squares mod $5$ are $\{1, 4\}$, and $7 \equiv 2 \pmod 5$,
-which is not a square mod $5$, so $\left(\frac{7}{5}\right) = -1$. Their product is
-$(-1)(-1) = +1$. And the law predicts $+1$, because $5 \equiv 1 \pmod 4$. The
-prophecy holds.
+Why should a fact about $13$ know anything about a fact about $5$? This mystery has driven number theory for two centuries. The reciprocity law was the seed from which class field theory, the Langlands program, and much of modern arithmetic grew.
 
-Now take two primes that are both $3$ mod $4$, say $p = 7$ and $q = 3$. The
-squares mod $7$ are $\{1,2,4\}$, so $3$ is a non-residue:
-$\left(\frac{3}{7}\right) = -1$. But mod $3$, the only nonzero square is $1$, and
-$7 \equiv 1 \pmod 3$, so $\left(\frac{7}{3}\right) = +1$. The product is
-$(-1)(+1) = -1$, exactly as the law demands when both primes are $3$ mod $4$.
+## The two companions
 
-This is the kind of statement that feels like a magic trick. Two independent-looking
-worlds turn out to be reflections of each other. The remainder of this article is
-about *why* — told through two utterly different explanations.
+Reciprocity, in its main form, relates two *odd* primes. But two special cases sit slightly apart and deserve their own names — the **supplementary laws**. They answer: when is $-1$ a square modulo $p$, and when is $2$ a square modulo $p$?
 
-## Two warm-up laws
+**The first supplement.** For every odd prime $p$,
 
-Before the main event, there are two smaller "supplementary" facts that the same
-theory delivers as a bonus, and they have a clean elementary flavor.
+$$\left(\frac{-1}{p}\right) = (-1)^{\frac{p-1}{2}}.$$
 
-The first answers: *when is $-1$ a square modulo $p$?* The answer depends only on
-$p$ modulo $4$:
-$$\left(\frac{-1}{p}\right) = +1 \iff p \equiv 1 \pmod 4.$$
-So $-1$ is a square mod $5$ (indeed $2^2 = 4 \equiv -1$) and mod $13$, but not mod
-$7$ or mod $11$.
+Unwinding the exponent: $-1$ is a square modulo $p$ exactly when $p \equiv 1 \pmod 4$. This is not a curiosity — it is the arithmetic heart of Fermat's theorem that a prime is a sum of two squares if and only if it is $2$ or leaves remainder $1$ modulo $4$. The number $-1$ having a square root modulo $p$ is what lets $p$ split as $a^2 + b^2$.
 
-The second answers: *when is $2$ a square modulo $p$?* Here the deciding factor is
-$p$ modulo $8$:
-$$\left(\frac{2}{p}\right) = +1 \iff p \equiv \pm 1 \pmod 8.$$
-So $2$ is a square mod $7$ (we saw $3^2 = 9 \equiv 2$) and mod $17$, but not mod
-$3$, $5$, $11$, or $13$.
+**The second supplement.** For every odd prime $p$,
 
-These two "supplementary laws" are the appetizers. The main course is reciprocity
-itself.
+$$\left(\frac{2}{p}\right) = (-1)^{\frac{p^2-1}{8}}.$$
 
-## First proof: counting dots in a rectangle
+Here the exponent $\frac{p^2-1}{8}$ is always a whole number, and it is even exactly when $p \equiv \pm 1 \pmod 8$. So $2$ is a square modulo $p$ precisely when $p$ leaves remainder $1$ or $7$ when divided by $8$, and a non-square when the remainder is $3$ or $5$. Try $p = 7$: since $7 \equiv 7 \pmod 8$, the law predicts $2$ is a square, and indeed we saw $2 \equiv 3^2 \pmod 7$. Try $p = 5$: since $5 \equiv 5 \pmod 8$, the law predicts a non-square, and indeed $\{1,4\}$ omits $2$.
 
-The first proof, due to Gotthold Eisenstein, is so visual you can almost draw it
-on graph paper. Its surprise is that a deep statement about squares and remainders
-turns out to be, at heart, a problem of **counting lattice points** — the grid of
-integer-coordinate dots in the plane.
+Both of these compact formulas — the answer to an infinite family of questions, packaged into a single exponent — are established here with complete rigor, and independently of the main reciprocity law.
 
-The starting observation is a formula that converts a Legendre symbol into a
-parity count. For distinct odd primes $p$ and $q$,
-$$\left(\frac{q}{p}\right) = (-1)^{\,S}, \qquad S = \sum_{x=1}^{(p-1)/2} \left\lfloor \frac{xq}{p} \right\rfloor,$$
-where $\lfloor \cdot \rfloor$ is the floor function (round down to the nearest
-integer). In words: walk through the values $x = 1, 2, \dots, \frac{p-1}{2}$,
-compute $\lfloor xq/p \rfloor$ for each, add them all up, and the *parity* of that
-sum — even or odd — decides whether $q$ is a square mod $p$.
+## Five windows onto one truth
 
-What does $\lfloor xq/p \rfloor$ actually count? Picture the straight line
-$y = \frac{q}{p}x$ in the plane. For a fixed column $x$, the quantity
-$\lfloor xq/p\rfloor$ is precisely the number of integer-height dots $(x, y)$ with
-$1 \le y$ lying strictly **below** that line. So the sum $S$ counts all the lattice
-points underneath the diagonal, inside the left half of a rectangle.
+What makes quadratic reciprocity endlessly fascinating is not just that it is true, but that it is true *for so many different reasons*. Gauss's eight proofs were only the beginning; today well over two hundred are known. Each proof is a different window onto the same landscape, and each reveals a feature the others hide.
 
-Now play the same game with the roles of $p$ and $q$ swapped. The companion
-formula reads
-$$\left(\frac{p}{q}\right) = (-1)^{\,T}, \qquad T = \sum_{y=1}^{(q-1)/2} \left\lfloor \frac{yp}{q} \right\rfloor,$$
-and $T$ counts the lattice points to the **right** of the very same diagonal, in
-the bottom half of the same rectangle.
+**Window 1 — Euler's criterion.** The most elementary lens comes from a beautiful fact of Euler: for an odd prime $p$,
 
-Here is the punch line. Consider the rectangle whose interior integer points have
-coordinates $1 \le x \le \frac{p-1}{2}$ and $1 \le y \le \frac{q-1}{2}$. It
-contains exactly
-$$\frac{p-1}{2}\cdot\frac{q-1}{2}$$
-lattice points. Because $p$ and $q$ are distinct primes, the diagonal line
-$y = \frac{q}{p}x$ never passes exactly through one of these grid points (that
-would force $p$ to divide $x$, which is impossible in our range). So every single
-point in the rectangle is either strictly below the diagonal or strictly above it —
-no point sits on the fence. The points below are counted by $S$; the points above
-are counted by $T$. Therefore
-$$S + T = \frac{p-1}{2}\cdot\frac{q-1}{2}.$$
+$$\left(\frac{a}{p}\right) \equiv a^{\frac{p-1}{2}} \pmod p.$$
 
-Multiply the two parity formulas together:
-$$\left(\frac{q}{p}\right)\left(\frac{p}{q}\right) = (-1)^{S}(-1)^{T} = (-1)^{S+T} = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}.$$
-That is the golden theorem, falling out of nothing more than a rectangle cut by
-its diagonal. The entire mystery of "why are these two worlds linked" becomes:
-*because a rectangle splits into two triangular halves.* The formalized version of
-this argument proves exactly the identity
-$\left(\frac{q}{p}\right)\left(\frac{p}{q}\right) = (-1)^{\lfloor p/2\rfloor\lfloor q/2\rfloor}$,
-with $\lfloor p/2\rfloor = \frac{p-1}{2}$ for odd $p$.
+Raising $a$ to the power $\frac{p-1}{2}$ acts as a perfect detector: the result is $+1$ if $a$ is a square and $-1$ if it is not. This single congruence is the bedrock on which every other approach rests. In particular, the first supplement drops out immediately: set $a = -1$, and $(-1)^{\frac{p-1}{2}}$ *is* the answer.
 
-## Second proof: a magic square root of $\pm p$
+**Window 2 — Gauss's lemma and counting.** Gauss's lemma reframes the Legendre symbol as a counting problem. Look at the multiples $a, 2a, 3a, \dots, \frac{p-1}{2}a$ modulo $p$, and count how many land in the "upper half" of the residues (those bigger than $p/2$). If that count is $m$, then $\left(\frac{a}{p}\right) = (-1)^m$. The whole subtlety of whether $a$ is a square is converted into a tally of how often multiplication pushes numbers past the halfway mark. This is the window through which the second supplement is proved here: for $a=2$, one shows the count of multiples $2, 4, 6, \dots$ that exceed $p/2$ has exactly the same parity as $\frac{p^2-1}{8}$, a fact that reduces to a clean check of the residue of $p$ modulo $8$.
 
-The second proof abandons geometry entirely and reaches instead for one of the
-most elegant objects in algebra: the **Gauss sum**. If Eisenstein's proof is a
-draftsman's sketch, this one is a chemist's reaction.
+**Window 3 — Eisenstein's lattice points.** Gotthold Eisenstein, a student of Gauss, turned the counting of the lemma into geometry. He interpreted the exponent $\frac{p-1}{2}\cdot\frac{q-1}{2}$ as the number of lattice points — points with whole-number coordinates — strictly inside a rectangle, and split them by a diagonal line. Counting the points below the diagonal one way, and above it another way, and noting that together they fill the rectangle, produces the reciprocity exponent almost by inspection. It is arguably the most visual proof ever devised: reciprocity as a matter of dots in a box.
 
-Fix a prime $p$ and a primitive $p$-th root of unity $\zeta$ — a complex number
-satisfying $\zeta^p = 1$ but $\zeta \neq 1$, sitting on the unit circle like one
-vertex of a regular $p$-gon. Now form the weighted sum
-$$g = \sum_{x} \left(\frac{x}{p}\right)\zeta^{x},$$
-where $x$ runs over the residues mod $p$ and each term is the root of unity
-$\zeta^x$ tagged with the sign $\left(\frac{x}{p}\right)$ that says whether $x$ is
-a square. This is the **quadratic Gauss sum**. It looks like a chaotic jumble of
-complex numbers pointing in all directions.
+**Window 4 — Gauss sums.** The deepest classical window uses roots of unity. A **Gauss sum** blends the Legendre symbol with the complex exponentials $\zeta^k = e^{2\pi i k/p}$:
 
-The miracle — the engine of the whole proof — is that when you **square** this
-chaotic sum, almost everything cancels and you are left with something astonishingly
-clean:
-$$g^2 = \left(\frac{-1}{p}\right) p.$$
-In words: the square of the Gauss sum is just $\pm p$, with the sign decided by
-that first supplementary law. The wild combination of roots of unity is secretly a
-*square root of $\pm p$*. (More generally, for any non-trivial quadratic character
-$\chi$ of a finite field $F$ paired with a primitive additive character $\psi$,
-the corresponding Gauss sum $g$ satisfies $g^2 = \chi(-1)\,|F|$, where $|F|$ is the
-number of elements in the field — that is the exact identity the formal proof rests
-on.)
+$$g = \sum_{k=1}^{p-1} \left(\frac{k}{p}\right)\zeta^{k}.$$
 
-This single fact is the bridge between the two primes. Here is the idea. To compare
-$p$ and $q$, we don't work in the ordinary complex numbers; we work **modulo $q$**,
-in a finite field of characteristic $q$. In that world there is a wonderful
-shortcut called the Frobenius map: raising to the $q$-th power. Crucially, raising
-a sum to the $q$-th power modulo $q$ behaves like applying it term-by-term — the
-cross terms vanish — so the Frobenius map acts on our Gauss sum in a way that is
-completely controlled by how the root of unity $\zeta$ gets permuted.
+This object has a magical property: its square is $\pm p$, with the sign governed by the first supplement. Feeding this algebraic identity through the arithmetic of the primes $p$ and $q$ inside the same ring of roots of unity forces the reciprocity relation to appear. Gauss sums are the ancestors of $L$-functions and the analytic engine of modern number theory.
 
-Chase the consequences. On one hand, raising $g$ to the $q$-th power shuffles the
-exponents of $\zeta$ and pulls out a factor of $\left(\frac{q}{p}\right)$ — that is
-how the question "is $q$ a square mod $p$?" enters. On the other hand, because
-$g^2 = \pm p$, raising $g$ to the $q$-th power is the same as multiplying $g$ by
-$(\pm p)^{(q-1)/2}$, and by an old result of Euler this power is exactly
-$\left(\frac{\pm p}{q}\right)$ — that is how the *reverse* question "is $p$ a square
-mod $q$?" enters. Setting the two computations of $g^q$ equal to each other, and
-untangling the sign coming from the $\left(\frac{-1}{p}\right)$ factor, the
-relationship between the two Legendre symbols pops out as precisely
-$$\left(\frac{q}{p}\right)\left(\frac{p}{q}\right) = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}.$$
+**Window 5 — the permutation sign (Zolotarev) and class field theory.** Zolotarev discovered that the Legendre symbol $\left(\frac{a}{p}\right)$ is nothing other than the *sign* of the permutation that multiplication-by-$a$ induces on the residues modulo $p$. Squareness becomes a statement about whether a shuffle is even or odd. Pushed to its natural conclusion, this idea — that reciprocity is about how one arithmetic system sits symmetrically inside another — becomes the founding principle of **class field theory**, where reciprocity laws describe how primes factor in field extensions. From this height, the golden theorem is a shadow cast by a vast structural symmetry.
 
-Same destination, completely different vehicle. There are no rectangles, no lattice
-points, no floors. Instead there is a single algebraic object — the Gauss sum —
-that simultaneously "knows" about both primes and forces them into agreement.
+## Why five proofs, and not one?
 
-## Why the two proofs together matter
+A skeptic might ask: once a theorem is proved, why hunt for more proofs? The answer is that in mathematics a proof is not only a certificate of truth; it is a *map of connections*. Each of the five windows links quadratic reciprocity to a different continent of mathematics — elementary congruences, combinatorial counting, lattice geometry, harmonic analysis over finite fields, and the deep symmetries of Galois theory. The fact that all five arrive at the same summit is itself a discovery: it says these continents are secretly one landmass.
 
-It would be reasonable to ask: if we already have one airtight proof, why bother
-with a second? The answer is that different proofs see different things.
+The three structurally independent routes emphasized here — cyclotomic Gauss sums, Eisenstein's lattice-point counting, and the parity of the multiplication permutation — are genuinely different arguments, sharing only Euler's criterion as common ground. Their independence matters. It means the golden theorem does not rest on a single clever trick that might one day be undermined; it is overdetermined, cornered from many directions at once.
 
-Eisenstein's lattice-counting proof is *elementary and concrete*. It needs nothing
-beyond floors, sums, and the observation that a rectangle has two triangular
-halves. It explains reciprocity as a conservation law: the points below the
-diagonal plus the points above equal the whole rectangle, and the rectangle's size
-$\frac{p-1}{2}\cdot\frac{q-1}{2}$ is the source of the famous sign.
+## The reach of the golden theorem
 
-The Gauss-sum proof is *structural and far-reaching*. The object it builds, the
-quadratic Gauss sum, is a square root of $\pm p$ living inside the world of $p$-th
-roots of unity. That observation is the seed of a vast modern theory — it is the
-degree-two shadow of what number theorists call class field theory and Artin
-reciprocity, the framework that governs how primes split in algebraic number
-fields. From this vantage point, quadratic reciprocity is not a curiosity about
-squares and remainders; it is the simplest visible case of one of the deepest
-organizing principles in mathematics.
+Quadratic reciprocity is not a museum piece. Deciding whether a number is a square modulo a prime is a computational primitive that appears throughout modern cryptography and algorithmic number theory. Reciprocity, generalized to the Jacobi symbol, lets one compute these answers with astonishing speed — without ever factoring the numbers involved — by a process that mirrors the Euclidean algorithm. Primality tests, the security of certain cryptosystems, and the design of error-correcting codes all lean on this two-hundred-year-old symmetry between primes.
 
-That these two roads — pure counting and pure algebra — arrive at the identical
-formula is itself a kind of meta-theorem. It tells us the golden theorem is not an
-accident of any one technique. It is a genuine feature of the integers, robust
-enough to be discovered from the geometry of a rectangle and from the algebra of
-roots of unity alike. Gauss proved it eight times because each proof was a new
-window onto the same landscape. Here we have opened two of those windows side by
-side, and the view from both is the same: the squares modulo $p$ and the squares
-modulo $q$ are, against all first impressions, two faces of a single coin.
+And the story is not finished. The exponents $\frac{p-1}{2}$ and $\frac{p^2-1}{8}$ that govern $-1$ and $2$ are only the first two members of an infinite family: for every small number $d$, the question "is $d$ a square modulo $p$?" is answered by a formula depending only on the remainder of $p$ modulo $4d$. The search for the cleanest unified statement of all these laws — a single functional that simultaneously reads as a Gauss-sum sign, a lattice-point parity, and a permutation sign — is an active frontier.
 
-## Try it yourself
-
-Pick any two odd primes you like — $11$ and $13$, or $19$ and $23$ — and check the
-law by hand. Compute the squares modulo each, read off the two Legendre symbols,
-multiply them, and compare against $(-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}$. The
-prediction never fails. And when you tire of small cases, remember that the same
-formula governs primes with hundreds of digits, the kind used in cryptography,
-where deciding whether a number is a square modulo a prime is a routine but
-indispensable computation. The golden theorem is more than two centuries old, and
-it still does honest work every day.
+Two centuries after Gauss christened it golden, quadratic reciprocity remains what it always was: a small, exact, astonishing fact about remainders, radiating outward into nearly every corner of number theory. Five windows, one view — and the view is still expanding.

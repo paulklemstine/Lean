@@ -1,345 +1,146 @@
-# Two Independent Derivations of the Law of Quadratic Reciprocity: Eisenstein's Lattice-Point Count and the Quadratic Gauss Sum
-
-**Author:** Aristotle
-**Date:** 2026-06-25
-**Domain:** Number Theory
+# Quadratic Reciprocity Through Five Windows, with Rigorous Proofs of Both Supplementary Laws
 
 ## Abstract
 
-The Law of Quadratic Reciprocity is the assertion that, for distinct odd primes
-$p$ and $q$, the Legendre symbols $\left(\frac{q}{p}\right)$ and
-$\left(\frac{p}{q}\right)$ satisfy
-$$\left(\frac{q}{p}\right)\left(\frac{p}{q}\right) = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}.$$
-We present two derivations of this law that rest on **disjoint** mechanisms. The
-first is Eisenstein's geometric proof: a Legendre symbol is rewritten as the parity
-of a sum of floor functions counting lattice points beneath a line, and reciprocity
-emerges from partitioning a rectangle into two triangles by its diagonal. The
-second is the algebraic proof via the quadratic Gauss sum, whose defining identity
-$g^2 = \chi(-1)\,|F|$ exhibits a square root of $\pm p$ inside a cyclotomic field
-and converts reciprocity into the compatibility of two Frobenius computations. We
-state both as the identity
-$\left(\frac{q}{p}\right)\left(\frac{p}{q}\right) = (-1)^{\lfloor p/2\rfloor\lfloor q/2\rfloor}$
-(equal to the displayed form because $\lfloor p/2\rfloor = \frac{p-1}{2}$ for odd
-$p$), and we record the two supplementary laws governing $\left(\frac{-1}{p}\right)$
-and $\left(\frac{2}{p}\right)$. The development is organized so that the two main
-theorems share no common proof-theoretic core: the geometric proof bottoms out on
-lattice-point identities, the algebraic proof on character theory and the Frobenius
-power map.
+The Law of Quadratic Reciprocity — Gauss's *theorema aureum* — is among the most consequential theorems in number theory, seeding class field theory and the modern Langlands program. This paper surveys five structurally distinct proofs of the law and its two supplements, organized around a single common foundation, Euler's criterion. We then give complete, self-contained proofs of the two supplementary laws in their classical exponent form:
+$$\left(\frac{-1}{p}\right) = (-1)^{\frac{p-1}{2}}, \qquad \left(\frac{2}{p}\right) = (-1)^{\frac{p^2-1}{8}},$$
+for every odd prime $p$. Crucially, our proofs of the supplements are logically **independent** of the main reciprocity law and of the Gauss-sum machinery: the first supplement follows from Euler's criterion applied at $-1$, and the second follows from Gauss's lemma together with a residue computation modulo $8$. We isolate the exact combinatorial lemma at the heart of the second supplement — that a certain count of "upper-half" multiples of $2$ has the same parity as $\frac{p^2-1}{8}$ — and prove it by reduction to the residue of $p$ modulo $8$. We conclude with algorithmic applications (fast evaluation of the Jacobi symbol) and open directions toward a unified sign functional binding the three principal proofs.
+
+**Keywords:** quadratic reciprocity, Legendre symbol, Euler's criterion, Gauss's lemma, Gauss sums, Eisenstein lattice-point counting, Zolotarev permutation sign, supplementary laws.
 
 ## 1. Introduction
 
-Quadratic reciprocity, Gauss's *theorema aureum*, is the prototype of all
-reciprocity laws in number theory. Its statement concerns the **Legendre symbol**,
-the most basic measure of whether an integer is a perfect square modulo a prime.
+Let $p$ be an odd prime and let $a$ be an integer coprime to $p$. The **Legendre symbol** $\left(\frac{a}{p}\right)$ equals $+1$ if $a$ is a nonzero quadratic residue modulo $p$ (that is, $a \equiv x^2 \pmod p$ for some $x$) and $-1$ otherwise; by convention $\left(\frac{a}{p}\right) = 0$ when $p \mid a$. The symbol is completely multiplicative in its upper argument and depends only on $a \bmod p$.
 
-A striking feature of the law is the multiplicity of its proofs: hundreds are
-known, drawing on lattice geometry, finite-field algebra, Gauss sums, the theory
-of cyclotomic fields, permutation parity (Zolotarev), and class field theory. These
-proofs are not merely cosmetic variations; they reveal genuinely different
-structural reasons for the same arithmetic coincidence.
+The **Law of Quadratic Reciprocity** states that, for distinct odd primes $p$ and $q$,
+$$\left(\frac{p}{q}\right)\left(\frac{q}{p}\right) = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}. \tag{QR}$$
+Equivalently, $\left(\frac{p}{q}\right) = \left(\frac{q}{p}\right)$ unless $p \equiv q \equiv 3 \pmod 4$, in which case the two symbols differ in sign.
 
-This paper isolates and contrasts two of these reasons. We give:
+Two special cases stand apart because they cannot be reduced to (QR) — they concern the residuacity of $-1$ and $2$, and are called the **supplementary laws**:
+$$\left(\frac{-1}{p}\right) = (-1)^{\frac{p-1}{2}}, \tag{S1}$$
+$$\left(\frac{2}{p}\right) = (-1)^{\frac{p^2-1}{8}}. \tag{S2}$$
 
-1. **A geometric proof** (Section 3), following Eisenstein, in which the Legendre
-   symbol is realized as a lattice-point parity and reciprocity becomes a
-   rectangle-splitting identity.
-2. **An algebraic proof** (Section 4), via the quadratic Gauss sum, in which
-   reciprocity becomes the compatibility of two Frobenius actions on a square root
-   of $\pm p$.
+This paper has two goals. First (Sections 2–5), to present five distinct proof strategies for reciprocity and its supplements, all descending from a single elementary root, and to explain what each contributes. Second (Sections 6–7), to give complete and independent proofs of (S1) and (S2), with full attention to the combinatorial parity lemma that drives (S2). Sections 8–10 treat algorithms, applications, and open problems.
 
-We also record (Section 5) the two supplementary laws. Throughout, the emphasis is
-on the *independence* of the two main arguments: they share definitions (the
-Legendre symbol, the quadratic character) but no theorem that does the decisive
-work.
+Throughout, "independent" is meant in a precise, anti-circular sense: the proofs of (S1) and (S2) below do not invoke (QR), do not invoke any Gauss-sum square-value identity, and neither supplement is used to prove the other.
 
-## 2. Definitions and conventions
+## 2. The common root: Euler's criterion
 
-Throughout, $p$ and $q$ denote distinct odd primes.
+Every window in this paper opens from one theorem.
 
-**Definition 2.1 (Quadratic residue).** A nonzero residue $a$ modulo a prime $p$
-is a *quadratic residue* if $a \equiv x^2 \pmod p$ for some integer $x$, and a
-*quadratic non-residue* otherwise.
+**Theorem 2.1 (Euler's criterion).** For an odd prime $p$ and $a$ coprime to $p$,
+$$a^{\frac{p-1}{2}} \equiv \left(\frac{a}{p}\right) \pmod p.$$
 
-**Definition 2.2 (Legendre symbol).** For a prime $p$ and an integer $a$, the
-Legendre symbol is
-$$\left(\frac{a}{p}\right) = \begin{cases} 0 & \text{if } p \mid a,\\ +1 & \text{if } a \text{ is a quadratic residue mod } p,\\ -1 & \text{if } a \text{ is a quadratic non-residue mod } p.\end{cases}$$
-Equivalently, by Euler's criterion, $\left(\frac{a}{p}\right) \equiv a^{(p-1)/2}
-\pmod p$ as an element of $\{-1,0,1\}$. The Legendre symbol is completely
-multiplicative in its top argument:
-$\left(\frac{ab}{p}\right) = \left(\frac{a}{p}\right)\left(\frac{b}{p}\right)$.
+*Proof sketch.* The multiplicative group $(\mathbb{Z}/p\mathbb{Z})^\times$ is cyclic of order $p-1$. If $g$ is a generator and $a = g^k$, then $a$ is a square iff $k$ is even. Meanwhile $a^{\frac{p-1}{2}} = g^{k(p-1)/2}$, which is $+1$ iff $(p-1) \mid k(p-1)/2$, i.e. iff $k$ is even. Since $a^{p-1} = 1$, the value $a^{\frac{p-1}{2}}$ is a square root of $1$, hence $\pm 1$, and it is $+1$ exactly for squares. $\square$
 
-**Definition 2.3 (Quadratic character of a finite field).** For a finite field $F$
-with $|F|$ odd, the *quadratic character* $\chi$ is the multiplicative character
-$\chi(a) = +1$ if $a$ is a nonzero square, $\chi(a) = -1$ if $a$ is a non-square,
-and $\chi(0) = 0$. It is the unique multiplicative character of order $2$. For
-$F = \mathbb{Z}/p$ it coincides with the Legendre symbol.
+Euler's criterion is the sole shared ancestor of the arguments below; all logical independence claims are relative to it. It already yields (S1) with no further input (Section 6).
 
-**Definition 2.4 (Additive character).** An *additive character* of a finite field
-$F$ valued in a commutative ring $R$ is a homomorphism $\psi : (F,+) \to (R^\times,
-\cdot)$. It is *primitive* if it is non-trivial; concretely, for $F = \mathbb{Z}/p$
-and $\zeta$ a primitive $p$-th root of unity, $\psi(x) = \zeta^x$ is primitive.
+## 3. Window I — Gauss's lemma and the counting proof
 
-**Definition 2.5 (Gauss sum).** For a multiplicative character $\chi$ and an
-additive character $\psi$ of $F$, the *Gauss sum* is
-$$g(\chi,\psi) = \sum_{x \in F} \chi(x)\,\psi(x).$$
-When $\chi$ is the quadratic character we call $g$ the *quadratic Gauss sum*.
+**Lemma 3.1 (Gauss's lemma).** Let $p$ be an odd prime and $a$ coprime to $p$. Consider the half-system $a, 2a, \dots, \frac{p-1}{2}a$ reduced to representatives in $\{1, \dots, p-1\}$, and let $\mu$ be the number of these representatives exceeding $p/2$. Then
+$$\left(\frac{a}{p}\right) = (-1)^{\mu}.$$
 
-**Definition 2.6 (Floor sum).** For distinct odd primes $p,q$ we write
-$$S_{q,p} = \sum_{x=1}^{(p-1)/2} \left\lfloor \frac{xq}{p} \right\rfloor.$$
-In the formal development this is rendered over the half-open integer interval
-$x \in [1, \lfloor q/2 \rfloor + 1)$ with summand $\lfloor xp/q\rfloor$ for the
-companion sum; we use the classical notation here.
+*Proof sketch.* Reducing each $ja$ into $\{1,\dots,p-1\}$ and folding representatives above $p/2$ to their negatives $p - r \in \{1,\dots,\frac{p-1}{2}\}$ produces, up to sign, a permutation of $\{1,\dots,\frac{p-1}{2}\}$. Multiplying all the congruences $ja \equiv \pm r_j$ and cancelling the common factor $\left(\frac{p-1}{2}\right)!$ leaves $a^{\frac{p-1}{2}} \equiv (-1)^\mu$; Euler's criterion converts the left side into $\left(\frac{a}{p}\right)$. $\square$
 
-## 3. The geometric proof (Eisenstein)
+Gauss's lemma is the workhorse behind the second supplement (Section 7). It reframes residuacity as a *tally*: the parity of how many multiples of $a$ get pushed past the midpoint $p/2$.
 
-The geometric proof has two ingredients: a translation of the Legendre symbol into
-a lattice-point parity, and a counting identity for a rectangle.
+## 4. Window II — Eisenstein's lattice-point proof of (QR)
 
-### 3.1 The Eisenstein expansion
+Eisenstein's proof interprets Gauss's lemma geometrically. Applying Lemma 3.1 to compute $\left(\frac{q}{p}\right)$, the exponent $\mu$ equals $\sum_{j=1}^{(p-1)/2} \lfloor jq/p \rfloor \bmod 2$, which counts lattice points $(x,y)$ with $1 \le x \le \frac{p-1}{2}$ lying below the line $y = qx/p$ inside a $\frac{p-1}{2} \times \frac{q-1}{2}$ rectangle. Computing $\left(\frac{p}{q}\right)$ symmetrically counts the lattice points on the other side of the same diagonal. Because the diagonal $py = qx$ passes through no interior lattice point (as $\gcd(p,q)=1$), the two counts partition the rectangle's interior, whose total lattice-point count is $\frac{p-1}{2}\cdot\frac{q-1}{2}$. Hence
+$$\left(\frac{p}{q}\right)\left(\frac{q}{p}\right) = (-1)^{\sum \lfloor jq/p\rfloor + \sum \lfloor iq/... \rfloor} = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}},$$
+which is (QR). This is the most visual of the classical proofs: reciprocity as the partition of dots in a box by a diagonal.
 
-**Lemma 1 (Eisenstein lattice-point expansion).**
-*For distinct odd primes $p$ and $q$,*
-$$\left(\frac{q}{p}\right) = (-1)^{\,S_{q,p}}, \qquad S_{q,p} = \sum_{x=1}^{(p-1)/2}\left\lfloor \frac{xq}{p}\right\rfloor.$$
+## 5. Windows III–V — Gauss sums, permutation sign, and class field theory
 
-*(Formal name: `QuadraticReciprocity.Eisenstein.legendreSym_eq_neg_one_pow_sum`,
-stated with the companion sum $\sum_{x=1}^{(q-1)/2}\lfloor xp/q\rfloor$ governing
-$\left(\frac{q}{p}\right)$.)*
+**Window III (Gauss sums).** Fix a primitive $p$-th root of unity $\zeta$ and form the quadratic Gauss sum $g = \sum_{k=1}^{p-1}\left(\frac{k}{p}\right)\zeta^k$. One shows $g^2 = \left(\frac{-1}{p}\right)p = (-1)^{\frac{p-1}{2}}p$, tying the value directly to (S1). Working in the ring $\mathbb{Z}[\zeta]$ and comparing $g^q$ computed two ways modulo $q$ — via the Frobenius $x \mapsto x^q$ and via the multiplicativity of the symbol — yields $\left(\frac{q}{p}\right)$ on one side and $\left(\frac{p}{q}\right)$ on the other, giving (QR). Gauss sums are the prototype of $L$-function analytic machinery.
 
-**Proof sketch.** This is Eisenstein's refinement of Gauss's lemma. Gauss's lemma
-states that $\left(\frac{q}{p}\right) = (-1)^\mu$, where $\mu$ is the number of
-elements of $\{q\cdot 1, q\cdot 2, \dots, q\cdot\frac{p-1}{2}\}$ whose least
-positive residue modulo $p$ exceeds $p/2$. Writing $xq = p\lfloor xq/p\rfloor +
-r_x$ with $0 < r_x < p$ and summing over $x = 1,\dots,\frac{p-1}{2}$, one compares
-the parity of $\sum_x \lfloor xq/p\rfloor$ with $\mu$ modulo $2$, using that $q$ is
-odd and that the residues $r_x$ pair up symmetrically about $p/2$. The floor sum
-and the Gauss-lemma count have the same parity, yielding the claimed exponent.
-$\square$
+**Window IV (Zolotarev's permutation sign).** For $a$ coprime to $p$, multiplication-by-$a$ is a permutation $\pi_a$ of $\mathbb{Z}/p\mathbb{Z}$. Zolotarev's theorem states $\left(\frac{a}{p}\right) = \operatorname{sgn}(\pi_a)$. Residuacity is thereby recast as the parity of a shuffle. For coprime odd moduli this globalizes to a "grid-transpose" permutation of the $m \times n$ Chinese-Remainder array whose sign is $(-1)^{\frac{m-1}{2}\cdot\frac{n-1}{2}}$, recovering reciprocity for the Jacobi symbol.
 
-Geometrically, for fixed $x$ the integer $\lfloor xq/p\rfloor$ is the number of
-lattice points $(x,y)$ with $1 \le y$ lying strictly below the line $y =
-\frac{q}{p}x$. Hence $S_{q,p}$ counts the lattice points strictly below the
-diagonal in the columns $1 \le x \le \frac{p-1}{2}$.
+**Window V (Class field theory).** From a structural height, (QR) is the simplest instance of Artin reciprocity: the splitting of a prime $p$ in the quadratic field $\mathbb{Q}(\sqrt{q^*})$, with $q^* = (-1)^{\frac{q-1}{2}}q$, is governed by a residue symbol, and Artin's reciprocity map identifies this splitting with the Legendre symbol. This is the modern lens that subsumes all classical reciprocity laws.
 
-### 3.2 The rectangle identity and the main theorem
+These three routes — III, IV, and V — are, together with the elementary counting of Windows I–II, structurally independent arguments sharing only Euler's criterion.
 
-**Theorem 1 (Quadratic reciprocity, geometric proof).**
-*For distinct odd primes $p$ and $q$,*
-$$\left(\frac{q}{p}\right)\left(\frac{p}{q}\right) = (-1)^{\lfloor p/2\rfloor\cdot\lfloor q/2\rfloor} = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}.$$
+## 6. The first supplementary law
 
-*(Formal name: `QuadraticReciprocity.Eisenstein.quadratic_reciprocity`.)*
+**Theorem 6.1 (First supplement, S1).** For every odd prime $p$,
+$$\left(\frac{-1}{p}\right) = (-1)^{\frac{p-1}{2}}.$$
+Equivalently, $-1$ is a quadratic residue modulo $p$ iff $p \equiv 1 \pmod 4$.
 
-**Proof sketch.** Apply Lemma 1 to both symbols:
-$$\left(\frac{q}{p}\right) = (-1)^{S_{q,p}}, \qquad \left(\frac{p}{q}\right) = (-1)^{S_{p,q}},$$
-with $S_{p,q} = \sum_{y=1}^{(q-1)/2}\lfloor yp/q\rfloor$. Multiplying,
-$$\left(\frac{q}{p}\right)\left(\frac{p}{q}\right) = (-1)^{S_{q,p}+S_{p,q}}.$$
-It remains to evaluate the combined exponent. Consider the open rectangle
-$R = \{(x,y) : 1 \le x \le \frac{p-1}{2},\ 1 \le y \le \frac{q-1}{2}\}$, which
-contains exactly $\frac{p-1}{2}\cdot\frac{q-1}{2}$ lattice points. The diagonal
-$y = \frac{q}{p}x$ contains no lattice point of $R$: equality $py = qx$ with
-$1 \le x \le \frac{p-1}{2}$ would force $p \mid x$ (as $\gcd(p,q)=1$), impossible in
-range. Thus every lattice point of $R$ lies strictly below or strictly above the
-diagonal. The points below, counted column by column, number $S_{q,p}$; the points
-above, counted row by row, number $S_{p,q}$. Therefore
-$$S_{q,p} + S_{p,q} = \frac{p-1}{2}\cdot\frac{q-1}{2} = \left\lfloor\frac{p}{2}\right\rfloor\left\lfloor\frac{q}{2}\right\rfloor.$$
-Substituting yields the claim. In the formal development this rectangle identity is
-the lemma `ZMod.sum_mul_div_add_sum_mul_div_eq_mul`, and the two halves of the
-Eisenstein expansion are `ZMod.eisenstein_lemma`; the proof combines them with
-`pow_add` and never invokes the library's own reciprocity theorem. $\square$
+*Proof.* By Euler's criterion, $\left(\frac{-1}{p}\right) \equiv (-1)^{\frac{p-1}{2}} \pmod p$. Both sides lie in $\{-1, +1\}$, and these two values are distinct modulo $p$ because $p$ is odd (so $p \nmid 2$). A congruence between two elements of $\{-1,+1\}$ modulo an odd prime forces equality in $\mathbb{Z}$. Hence $\left(\frac{-1}{p}\right) = (-1)^{\frac{p-1}{2}}$. $\square$
 
-**Remark.** The proof is genuinely elementary: it uses only properties of floor
-functions, finite sums, and the partition of a rectangle by a generic diagonal.
-The sign $(-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}$ is *the area of the rectangle*
-read modulo $2$.
+Equivalently, one may package the sign via the nontrivial quadratic character modulo $4$: the value $\left(\frac{-1}{p}\right)$ equals $+1$ when $p \equiv 1 \pmod 4$ and $-1$ when $p \equiv 3 \pmod 4$, and $(-1)^{\frac{p-1}{2}}$ realizes exactly this dichotomy since $\frac{p-1}{2}$ is even iff $p \equiv 1 \pmod 4$. This proof uses only Euler's criterion — no Gauss sums, no reciprocity.
 
-## 4. The algebraic proof (quadratic Gauss sum)
+**Corollary 6.2 (Two-squares connection).** An odd prime is a sum of two integer squares iff $p \equiv 1 \pmod 4$. The forward implication rests on $-1$ being a residue, i.e. on Theorem 6.1.
 
-The algebraic proof replaces lattice geometry with the algebra of characters. Its
-fulcrum is a single identity about the square of a Gauss sum.
+## 7. The second supplementary law
 
-### 4.1 The Gauss-sum square identity
+The second supplement is the substantive combinatorial result. We prove it via Gauss's lemma applied to $a = 2$, isolating the parity computation as an independent lemma.
 
-**Lemma 2 (Gauss-sum square).**
-*Let $F$ be a finite field and $R$ a commutative integral domain. Let $\chi : F \to
-R$ be a non-trivial quadratic multiplicative character and $\psi : F \to R$ a
-primitive additive character. Then the Gauss sum satisfies*
-$$g(\chi,\psi)^2 = \chi(-1)\,|F|,$$
-*where $|F|$ is the cardinality of $F$ regarded as an element of $R$.*
+### 7.1 The relevant count
 
-*(Formal name: `QuadraticReciprocity.GaussSum.gauss_sum_sq_value`.)*
+Applying Gauss's lemma with $a = 2$, we must count
+$$\mu = \#\left\{ x : 1 \le x \le \tfrac{p-1}{2},\ \left(2x \bmod p\right) > \tfrac{p}{2}\right\}.$$
 
-**Proof sketch.** Expand the square:
-$$g(\chi,\psi)^2 = \sum_{x,y} \chi(x)\chi(y)\,\psi(x+y) = \sum_{x,y}\chi(xy)\,\psi(x+y).$$
-For $x \neq 0$ substitute $y = xt$, so $xy = x^2 t$ and $\chi(xy) = \chi(t)$ (since
-$\chi(x^2)=1$), while $x+y = x(1+t)$. Summing over $x$ for fixed $t$ and using that
-$\psi$ is a non-trivial character (so $\sum_x \psi(x(1+t)) = -1$ unless $t=-1$, in
-which case it equals $|F|-1$), the double sum collapses. The only surviving
-contribution is from $t = -1$, giving $\chi(-1)(|F|-1) - \sum_{t\neq -1}\chi(t)$;
-since $\sum_t \chi(t) = 0$ for a non-trivial character, this simplifies to
-$\chi(-1)\,|F|$. $\square$
+**Lemma 7.1 (Counting the upper-half doublings).** For an odd prime $p \ne 2$,
+$$\mu = \left\lfloor \tfrac{p}{2}\right\rfloor - \left\lfloor \tfrac{p}{4}\right\rfloor.$$
 
-Specializing to $F = \mathbb{Z}/p$ and $\psi(x) = \zeta^x$ gives the classical
-$g^2 = \left(\frac{-1}{p}\right)p = (-1)^{(p-1)/2}p$: the quadratic Gauss sum is a
-square root of $\pm p$.
+*Proof.* For $1 \le x \le \frac{p-1}{2}$ we have $2 \le 2x \le p-1 < p$, so $2x$ is already its own least nonnegative residue: $(2x \bmod p) = 2x$. The upper-half condition $2x > p/2$ is therefore equivalent to $x > p/4$. Thus the qualifying $x$ are exactly those with $\lfloor p/4 \rfloor < x \le \lfloor p/2 \rfloor$, an interval of integers of length $\lfloor p/2\rfloor - \lfloor p/4\rfloor$. $\square$
 
-### 4.2 The Frobenius comparison and the main theorem
+### 7.2 The parity identity
 
-**Theorem 2 (Quadratic reciprocity, Gauss-sum proof).**
-*For distinct odd primes $p$ and $q$,*
-$$\left(\frac{q}{p}\right)\left(\frac{p}{q}\right) = (-1)^{\lfloor p/2\rfloor\cdot\lfloor q/2\rfloor} = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}.$$
+**Lemma 7.2 (Parity of the count).** For an odd natural number $p$,
+$$\left(\left\lfloor \tfrac{p}{2}\right\rfloor - \left\lfloor \tfrac{p}{4}\right\rfloor\right) \equiv \frac{p^2-1}{8} \pmod 2.$$
 
-*(Formal name: `QuadraticReciprocity.GaussSum.quadratic_reciprocity`.)*
+*Proof.* Write $p = 8k + r$ with $0 \le r < 8$; since $p$ is odd, $r \in \{1,3,5,7\}$. Then
+$$p^2 = 64k^2 + 16kr + r^2,\qquad \frac{p^2-1}{8} = 8k^2 + 2kr + \frac{r^2-1}{8},$$
+so modulo $2$ the exponent depends only on $\frac{r^2-1}{8}$. Likewise $\lfloor p/2\rfloor - \lfloor p/4\rfloor$ modulo $2$ depends only on $r$ (the $8k$ contributes $4k - 2k = 2k$, even). Checking the four odd residues:
 
-**Proof sketch.** Work in a finite field $F'$ of characteristic $q$ large enough to
-contain a $p$-th root of unity, and let $g$ be the quadratic Gauss sum for
-$\mathbb{Z}/p$ realized in $F'$. By Lemma 2, $g^2 = (-1)^{(p-1)/2}p =: p^\ast$ in
-$F'$. We compute $g^q$ in two ways.
+| $r$ | $\frac{r^2-1}{8}\bmod 2$ | $(\lfloor r/2\rfloor - \lfloor r/4\rfloor)\bmod 2$ |
+|-----|--------------------------|----------------------------------------------------|
+| $1$ | $0$ | $0-0=0$ |
+| $3$ | $1$ | $1-0=1$ |
+| $5$ | $1$ | $2-1=1$ |
+| $7$ | $0$ | $3-1=2\equiv 0$ |
 
-*First way (Frobenius/permutation of exponents).* In characteristic $q$ the map
-$z \mapsto z^q$ is a ring homomorphism (the Frobenius), so it acts on
-$g = \sum_x \left(\frac{x}{p}\right)\zeta^x$ termwise:
-$$g^q = \sum_x \left(\frac{x}{p}\right)\zeta^{qx} = \left(\frac{q}{p}\right)\sum_x \left(\frac{q^{-1}\cdot qx}{p}\right)\zeta^{qx} = \left(\frac{q}{p}\right)g,$$
-where reindexing $x \mapsto q^{-1}x$ and multiplicativity of the Legendre symbol
-extract the factor $\left(\frac{q}{p}\right)$.
+The columns agree for every odd $r$, proving the congruence. $\square$
 
-*Second way (Euler's criterion).* Since $g^2 = p^\ast$,
-$$g^q = g\cdot g^{q-1} = g\cdot (p^\ast)^{(q-1)/2} = g\cdot\left(\frac{p^\ast}{q}\right),$$
-by Euler's criterion applied in $F'$ (characteristic $q$).
+### 7.3 The theorem
 
-Equating and cancelling $g$ (which is a unit, as $g^2 = p^\ast \neq 0$ in $F'$),
-$$\left(\frac{q}{p}\right) = \left(\frac{p^\ast}{q}\right) = \left(\frac{(-1)^{(p-1)/2}p}{q}\right) = \left(\frac{-1}{q}\right)^{(p-1)/2}\left(\frac{p}{q}\right).$$
-By the first supplementary law $\left(\frac{-1}{q}\right) = (-1)^{(q-1)/2}$, so
-$$\left(\frac{q}{p}\right) = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}\left(\frac{p}{q}\right),$$
-which rearranges (using $\left(\frac{p}{q}\right)^2 = 1$) to the stated identity.
-In the formal development this entire chain is packaged by the finite-field
-character identity `quadraticChar_odd_prime`, which is the field-theoretic shadow of
-Lemma 2 together with the Frobenius power law `Char.card_pow_card`; the
-$\left(\frac{-1}{\cdot}\right)$ bookkeeping is handled by `ZMod.χ₄_eq_neg_one_pow`
-and `quadraticChar_sq_one`, and the result is transported to Legendre symbols over
-$\mathbb{Z}/p$ and $\mathbb{Z}/q$. $\square$
+**Theorem 7.3 (Second supplement, S2).** For every odd prime $p$,
+$$\left(\frac{2}{p}\right) = (-1)^{\frac{p^2-1}{8}}.$$
+Equivalently, $2$ is a quadratic residue modulo $p$ iff $p \equiv \pm 1 \pmod 8$.
 
-**Remark.** No lattice point, floor, or rectangle appears anywhere in Section 4.
-The decisive object is the Gauss sum and the decisive fact is its square; the rest
-is the algebra of the Frobenius endomorphism. This is the sense in which the two
-proofs are *independent*: Theorem 1 rests on `eisenstein_lemma` and the rectangle
-identity, Theorem 2 on `gaussSum_sq`/`quadraticChar_odd_prime` and
-`card_pow_card`, with no shared decisive lemma.
+*Proof.* Since $p$ is odd, $2 \not\equiv 0 \pmod p$, so Gauss's lemma applies to $a = 2$ and gives $\left(\frac{2}{p}\right) = (-1)^{\mu}$ with $\mu$ as above. By Lemma 7.1, $\mu = \lfloor p/2\rfloor - \lfloor p/4\rfloor$; by Lemma 7.2, $\mu \equiv \frac{p^2-1}{8} \pmod 2$. Since $(-1)^N$ depends only on $N \bmod 2$, we conclude $\left(\frac{2}{p}\right) = (-1)^{\frac{p^2-1}{8}}$. The residue-class reformulation follows because $\frac{p^2-1}{8}$ is even exactly when $r \in \{1,7\}$, i.e. $p \equiv \pm 1 \pmod 8$. $\square$
 
-## 5. The supplementary laws
+This proof depends only on Gauss's lemma (hence on Euler's criterion) plus the elementary modulo-$8$ computation. It uses neither reciprocity, nor Gauss sums, nor the first supplement.
 
-The same circle of ideas yields the two "supplementary" laws, which determine the
-Legendre symbols of $-1$ and $2$ purely from congruence conditions on $p$.
+**Supporting fact used above.** For an odd prime $p$, the integer $2$ is nonzero modulo $p$: if $p \mid 2$ then $p = 2$, contradicting oddness. This is what licenses the application of Gauss's lemma at $a=2$.
 
-**Proposition 3 (First supplementary law).** *For an odd prime $p$,*
-$$\left(\frac{-1}{p}\right) = (-1)^{(p-1)/2}, \qquad\text{i.e.}\qquad \left(\frac{-1}{p}\right) = +1 \iff p \equiv 1 \pmod 4.$$
-**Proof sketch.** Immediate from Euler's criterion $\left(\frac{-1}{p}\right)
-\equiv (-1)^{(p-1)/2}\pmod p$, both sides lying in $\{-1,1\}$. $\square$
+## 8. Algorithms
 
-**Proposition 4 (Second supplementary law).** *For an odd prime $p$,*
-$$\left(\frac{2}{p}\right) = (-1)^{(p^2-1)/8}, \qquad\text{i.e.}\qquad \left(\frac{2}{p}\right) = +1 \iff p \equiv \pm 1 \pmod 8.$$
-**Proof sketch.** Apply Gauss's lemma to $a = 2$: count the multiples $2\cdot
-1,\dots,2\cdot\frac{p-1}{2}$ exceeding $p/2$. The count is
-$\frac{p-1}{2}-\lfloor p/4\rfloor$, whose parity matches $(p^2-1)/8$, giving the
-exponent. Alternatively, evaluate the relevant Gauss sum in a field of
-characteristic $p$ containing a primitive $8$-th root of unity. $\square$
+The theory yields fast algorithms. The **Jacobi symbol** $\left(\frac{a}{n}\right)$ for odd $n>0$ extends the Legendre symbol multiplicatively over the prime factorization of $n$; reciprocity and the supplements hold for it verbatim (with $\pm 1 \pmod 8$ and $\pmod 4$ conditions read off $n$).
 
-In the formal development the supplementary laws are stated in explicit congruence
-form: $\left(\frac{-1}{p}\right)$ controlled by $p \bmod 4$ and
-$\left(\frac{2}{p}\right)$ by $p \bmod 8$, in both the residue and non-residue
-directions.
+**Fast Jacobi evaluation.** Using (a) multiplicativity, (b) the second supplement to strip factors of $2$, and (c) reciprocity to swap $\left(\frac{a}{n}\right) \leftrightarrow \left(\frac{n}{a}\right)$, one computes $\left(\frac{a}{n}\right)$ in $O(\log^2 n)$ bit operations *without factoring $n$* — a structure exactly mirroring the Euclidean algorithm. This is the standard subroutine behind the Solovay–Strassen primality test and quadratic-residue-based cryptography.
 
-## 6. Algorithms
+## 9. Applications
 
-The proofs are constructive enough to drive direct computation. We summarize three
-algorithms (full Python in the accompanying demonstration).
+- **Sums of two squares.** Corollary 6.2: primes $\equiv 1 \pmod 4$ are sums of two squares, powered by (S1).
+- **Primality testing.** The Solovay–Strassen test compares $a^{(n-1)/2} \bmod n$ against the Jacobi symbol $\left(\frac{a}{n}\right)$; agreement for random $a$ is strong evidence of primality (Euler witnesses).
+- **Cryptography.** The hardness of the quadratic residuosity problem — distinguishing residues from non-residues modulo a composite of unknown factorization — underlies the Goldwasser–Micali cryptosystem and related constructions. The Jacobi symbol is efficiently computable, but residuosity modulo a composite is not, and this gap is the security assumption.
+- **Coding and pseudorandomness.** Legendre-symbol sequences $\left(\frac{n}{p}\right)$ furnish quadratic-residue codes and low-autocorrelation binary sequences.
 
-**Algorithm A — Lattice-point evaluation of the Eisenstein exponent.** Given
-distinct odd primes $p,q$, compute $S_{q,p} = \sum_{x=1}^{(p-1)/2}\lfloor
-xq/p\rfloor$ and $S_{p,q} = \sum_{y=1}^{(q-1)/2}\lfloor yp/q\rfloor$ by direct
-summation, then verify $\left(\frac{q}{p}\right) = (-1)^{S_{q,p}}$ and the rectangle
-identity $S_{q,p}+S_{p,q} = \frac{p-1}{2}\cdot\frac{q-1}{2}$. Complexity:
-$O(p+q)$ additions and integer divisions.
+## 10. Discussion and future directions
 
-**Algorithm B — Gauss-sum square verification over $\mathbb{C}$.** Given a prime
-$p$, form $g = \sum_{x=0}^{p-1}\left(\frac{x}{p}\right)e^{2\pi i x/p}$ numerically
-and check $g^2 \approx (-1)^{(p-1)/2}p$. Complexity: $O(p)$ complex operations.
+The five windows are not redundant. Each links reciprocity to a different mathematical domain — elementary congruences (Euler), combinatorial counting (Gauss's lemma), lattice geometry (Eisenstein), harmonic analysis over finite fields (Gauss sums), and Galois symmetry (Zolotarev / class field theory). Their agreement is itself informative: it certifies the golden theorem as *overdetermined*, cornered simultaneously from many directions.
 
-**Algorithm C — Direct Legendre symbol via Euler's criterion.** Compute
-$\left(\frac{a}{p}\right)$ as $a^{(p-1)/2} \bmod p$ normalized to $\{-1,0,1\}$, used
-as the ground-truth oracle against which the two proof-driven computations are
-checked. Complexity: $O(\log p)$ modular multiplications by fast exponentiation.
+Three concrete conjectural directions emerge.
 
-## 7. Applications
+**Permutation-sign reciprocity for all odd moduli.** For coprime odd $m,n$, the product $\left(\frac{m}{n}\right)\left(\frac{n}{m}\right)$ should equal the sign of the grid-transpose permutation of the $m \times n$ Chinese-Remainder array, which equals $(-1)^{\frac{m-1}{2}\cdot\frac{n-1}{2}}$. Reciprocity thereby becomes a pure statement about shuffling a rectangle, generalizing past primes to all odd moduli.
 
-Quadratic reciprocity, with its supplementary laws and the Jacobi-symbol extension,
-is the foundation of fast quadratic-residuosity testing. It underlies:
+**A unified sign functional.** One seeks a single integer-valued invariant $\Phi(a,p)$ — simultaneously a Frobenius eigenvalue, a lattice-point parity, and a permutation sign — with $\Phi(a,p) = \left(\frac{a}{p}\right)$ in all three descriptions, so that the three classical proofs become three evaluations of one functional and their pairwise agreements encode genuine combinatorial identities.
 
-- **Primality and compositeness testing.** Solovay–Strassen primality testing
-  compares $a^{(n-1)/2}\bmod n$ with the Jacobi symbol $\left(\frac{a}{n}\right)$;
-  the reciprocity law makes the Jacobi symbol computable in $O(\log^2 n)$ time
-  without factoring.
-- **Cryptography.** The hardness of the quadratic residuosity problem (deciding
-  residuosity modulo a composite without its factorization) underpins the
-  Goldwasser–Micali cryptosystem and related protocols; reciprocity is what makes
-  the symbol efficiently computable for the prime case while leaving the composite
-  case hard.
-- **Solving congruences.** Deciding whether $x^2 \equiv a \pmod p$ has a solution,
-  a basic step in algorithms for square roots modulo primes and for representing
-  integers by quadratic forms.
+**Higher supplements in exponent form.** For every fixed small integer $d$, the value $\left(\frac{d}{p}\right)$ should admit a closed exponent formula $(-1)^{f_d(p)}$ with $f_d$ an explicit quadratic quasi-polynomial in $p \bmod 4d$, the period $4d$ being optimal exactly when $d$ is squarefree — extending the two supplements $\frac{p-1}{2}$ and $\frac{p^2-1}{8}$ into a single conductor-controlled family.
 
-## 8. Discussion
+## 11. Conclusion
 
-The two proofs presented here are representatives of two grand traditions. The
-Eisenstein proof belongs to the **geometric/combinatorial** tradition, where
-arithmetic statements are recast as counting problems; its conceptual payload is
-that the reciprocity sign is the parity of the area of an explicit rectangle. The
-Gauss-sum proof belongs to the **algebraic/arithmetic-geometric** tradition, where
-the same statement is read off the action of Frobenius on a distinguished algebraic
-object; its conceptual payload is that the quadratic Gauss sum realizes a square
-root of $\pm p$ inside the cyclotomic field $\mathbb{Q}(\zeta_p)$, and reciprocity
-is the compatibility of two Frobenius computations on it.
-
-This second viewpoint is not an endpoint but a doorway. The Gauss sum exhibits the
-unique quadratic subfield $\mathbb{Q}(\sqrt{p^\ast}) \subseteq \mathbb{Q}(\zeta_p)$,
-and "$q$ is a square mod $p$" becomes "$q$ splits in $\mathbb{Q}(\sqrt{p^\ast})$".
-That reformulation is precisely the degree-two case of Artin reciprocity in class
-field theory; quadratic reciprocity is its smallest, most visible instance.
-
-The value of carrying *both* proofs to completion is methodological. A single proof
-establishes truth; two independent proofs establish *robustness* and isolate which
-features of the integers are responsible. Here the geometric proof shows the law
-needs nothing beyond elementary counting, while the algebraic proof shows the law
-is the shadow of a much larger structure.
-
-## 9. Future directions
-
-Three concrete continuations are natural.
-
-1. **A permutation-sign (Zolotarev) proof.** The Legendre symbol
-   $\left(\frac{a}{p}\right)$ equals the sign of the permutation $x \mapsto ax$ of
-   $\mathbb{Z}/p$; reciprocity then follows by comparing two such signs on
-   $\mathbb{Z}/(pq)$ through the Chinese Remainder isomorphism $\mathbb{Z}/(pq)
-   \cong \mathbb{Z}/p \times \mathbb{Z}/q$. This recasts the law as the sign of a
-   single linear map under a change of basis.
-
-2. **Reciprocity as a special case of Artin reciprocity.** The Gauss-sum proof is
-   the degree-two shadow of Artin reciprocity for the quadratic subfield
-   $\mathbb{Q}(\sqrt{p^\ast}) \subseteq \mathbb{Q}(\zeta_p)$; a development based on
-   cyclotomic extensions would reproduce Theorem 2 as the splitting law of $q$ in
-   that subfield, since "$p^\ast$ is a square mod $q$" is exactly the condition for
-   $q$ to split.
-
-3. **Jacobi-symbol reciprocity, proved independently of the prime case.** Extending
-   the law to the Jacobi symbol $\left(\frac{a}{n}\right)$ for odd $n$ directly,
-   rather than by reduction to primes, gives the algorithmically useful form and
-   clarifies which parts of the argument are intrinsically about primality.
-
-## 10. Conclusion
-
-We have presented the Law of Quadratic Reciprocity through two independent lenses.
-Theorem 1 derives it from Eisenstein's lattice-point count and a rectangle-splitting
-identity; Theorem 2 derives it from the square of the quadratic Gauss sum and the
-Frobenius map. Both arrive at
-$\left(\frac{q}{p}\right)\left(\frac{p}{q}\right) = (-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}$,
-and together with the two supplementary laws for $\left(\frac{-1}{p}\right)$ and
-$\left(\frac{2}{p}\right)$ they give a complete, self-contained account of the
-quadratic reciprocity of odd primes from two genuinely different starting points.
+We have surveyed five structurally independent proofs of quadratic reciprocity, all descending from Euler's criterion, and given complete, mutually independent proofs of both supplementary laws in exponent form: $\left(\frac{-1}{p}\right) = (-1)^{\frac{p-1}{2}}$ and $\left(\frac{2}{p}\right) = (-1)^{\frac{p^2-1}{8}}$. The second supplement was reduced to a transparent parity identity between the count of upper-half doublings and $\frac{p^2-1}{8}$, settled by a residue computation modulo $8$. These results anchor a rich algorithmic and cryptographic toolkit and point toward a unified combinatorial account of reciprocity across its many proofs.

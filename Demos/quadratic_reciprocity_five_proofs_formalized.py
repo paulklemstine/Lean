@@ -1,180 +1,167 @@
 """
-Numerical demonstrations of the Law of Quadratic Reciprocity.
+Numerical demonstrations for "Quadratic Reciprocity Through Five Windows".
 
-This script exercises the two main theorems:
+This self-contained script verifies, over many primes:
 
-  * Theorem 1 (Eisenstein, geometric):
-        (q/p)(p/q) = (-1)^( floor(p/2) * floor(q/2) )
-    obtained from the lattice-point expansion
-        (q/p) = (-1)^( sum_{x=1}^{(p-1)/2} floor(x*q/p) )
-    and the rectangle identity
-        S_{q,p} + S_{p,q} = (p-1)/2 * (q-1)/2.
+  * Euler's criterion for the Legendre symbol,
+  * the first supplementary law   (-1/p) = (-1)^((p-1)/2),
+  * the second supplementary law  ( 2/p) = (-1)^((p^2-1)/8),
+  * Gauss's lemma count for a = 2 equals  floor(p/2) - floor(p/4),
+  * the parity identity           (floor(p/2)-floor(p/4)) == (p^2-1)/8  (mod 2),
+  * the main Law of Quadratic Reciprocity,
+  * a fast (factorization-free) Jacobi-symbol evaluator.
 
-  * Theorem 2 (Gauss sum, algebraic):
-        the quadratic Gauss sum g = sum_x (x/p) * zeta^x satisfies
-        g^2 = (-1)^((p-1)/2) * p,
-    a square root of +/- p, from which the same reciprocity sign follows.
-
-It also checks the two supplementary laws for (-1/p) and (2/p).
-
-All functions are self-contained and type-hinted; no external dependencies
-beyond the Python standard library (cmath/math).
+Run:  python demo.py
 """
 
 from __future__ import annotations
 
-import cmath
-import math
-from typing import List, Tuple
+from typing import List
 
 
 # --------------------------------------------------------------------------
-# Ground-truth oracle: Legendre symbol via Euler's criterion.
+# Basic number theory helpers
 # --------------------------------------------------------------------------
-def legendre_symbol(a: int, p: int) -> int:
-    """Return the Legendre symbol (a/p) in {-1, 0, 1} via Euler's criterion.
-
-    Uses (a/p) = a^((p-1)/2) mod p, normalized so that p-1 maps to -1.
-    """
-    a_mod: int = a % p
-    if a_mod == 0:
-        return 0
-    result: int = pow(a_mod, (p - 1) // 2, p)
-    return -1 if result == p - 1 else result
-
-
-def is_odd_prime(n: int) -> bool:
-    """Trial-division primality test; True iff n is an odd prime."""
-    if n < 3 or n % 2 == 0:
+def is_prime(n: int) -> bool:
+    """Deterministic trial-division primality test."""
+    if n < 2:
         return False
-    for d in range(3, int(math.isqrt(n)) + 1, 2):
-        if n % d == 0:
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
             return False
+        i += 1
     return True
 
 
-# --------------------------------------------------------------------------
-# Theorem 1 (Eisenstein): lattice-point counting.
-# --------------------------------------------------------------------------
-def eisenstein_floor_sum(q: int, p: int) -> int:
-    """Compute S_{q,p} = sum_{x=1}^{(p-1)/2} floor(x*q/p)."""
-    half: int = (p - 1) // 2
-    return sum((x * q) // p for x in range(1, half + 1))
+def primes_up_to(limit: int) -> List[int]:
+    """All primes p with 2 <= p <= limit."""
+    return [n for n in range(2, limit + 1) if is_prime(n)]
 
 
-def legendre_via_eisenstein(q: int, p: int) -> int:
-    """Compute (q/p) as (-1)^(S_{q,p}), the Eisenstein lattice-point expansion."""
-    return -1 if eisenstein_floor_sum(q, p) % 2 == 1 else 1
+def legendre_symbol_bruteforce(a: int, p: int) -> int:
+    """Legendre symbol (a/p) computed directly from the definition."""
+    a %= p
+    if a == 0:
+        return 0
+    squares = {(x * x) % p for x in range(1, p)}
+    return 1 if a in squares else -1
 
 
-def reciprocity_sign_eisenstein(p: int, q: int) -> Tuple[int, int, int]:
-    """Return (lhs, rhs, S_qp + S_pq) for Eisenstein's proof.
-
-    lhs = (q/p)*(p/q) computed via the floor-sum expansion;
-    rhs = (-1)^( floor(p/2)*floor(q/2) ) the reciprocity sign;
-    third entry is the combined exponent, which must equal
-    floor(p/2)*floor(q/2) by the rectangle identity.
-    """
-    lhs: int = legendre_via_eisenstein(q, p) * legendre_via_eisenstein(p, q)
-    exponent: int = (p // 2) * (q // 2)
-    rhs: int = -1 if exponent % 2 == 1 else 1
-    combined: int = eisenstein_floor_sum(q, p) + eisenstein_floor_sum(p, q)
-    return lhs, rhs, combined
+def legendre_symbol_euler(a: int, p: int) -> int:
+    """Legendre symbol (a/p) via Euler's criterion  a^((p-1)/2) mod p."""
+    a %= p
+    if a == 0:
+        return 0
+    r = pow(a, (p - 1) // 2, p)
+    return 1 if r == 1 else -1  # r is p-1 for non-residues
 
 
-# --------------------------------------------------------------------------
-# Theorem 2 (Gauss sum): g^2 = (-1)^((p-1)/2) * p.
-# --------------------------------------------------------------------------
-def quadratic_gauss_sum(p: int) -> complex:
-    """Compute the quadratic Gauss sum g = sum_{x=0}^{p-1} (x/p) * zeta^x.
-
-    Here zeta = exp(2*pi*i/p) is a primitive p-th root of unity.
-    """
-    total: complex = 0 + 0j
-    for x in range(p):
-        total += legendre_symbol(x, p) * cmath.exp(2j * cmath.pi * x / p)
-    return total
-
-
-def gauss_sum_square_check(p: int) -> Tuple[complex, complex]:
-    """Return (g^2, predicted) where predicted = (-1)^((p-1)/2) * p."""
-    g: complex = quadratic_gauss_sum(p)
-    sign: int = -1 if ((p - 1) // 2) % 2 == 1 else 1
-    return g * g, complex(sign * p, 0.0)
+def gauss_lemma_count(a: int, p: int) -> int:
+    """Number of x in [1,(p-1)//2] with (a*x mod p) > p/2 (Gauss's lemma mu)."""
+    half = (p - 1) // 2
+    return sum(1 for x in range(1, half + 1) if (a * x) % p > p / 2)
 
 
 # --------------------------------------------------------------------------
-# Supplementary laws.
+# Fast, factorization-free Jacobi symbol (uses reciprocity + supplements)
 # --------------------------------------------------------------------------
-def supplementary_minus_one(p: int) -> Tuple[int, int]:
-    """Return ((-1/p) via Euler, predicted by p mod 4)."""
-    actual: int = legendre_symbol(-1, p)
-    predicted: int = 1 if p % 4 == 1 else -1
-    return actual, predicted
-
-
-def supplementary_two(p: int) -> Tuple[int, int]:
-    """Return ((2/p) via Euler, predicted by p mod 8)."""
-    actual: int = legendre_symbol(2, p)
-    predicted: int = 1 if p % 8 in (1, 7) else -1
-    return actual, predicted
+def jacobi_symbol(a: int, n: int) -> int:
+    """Jacobi symbol (a/n) for odd n > 0, in O(log^2 n) bit operations."""
+    if n <= 0 or n % 2 == 0:
+        raise ValueError("n must be a positive odd integer")
+    a %= n
+    result = 1
+    while a != 0:
+        while a % 2 == 0:  # second supplement strips factors of 2
+            a //= 2
+            if n % 8 in (3, 5):
+                result = -result
+        a, n = n, a  # reciprocity swap
+        if a % 4 == 3 and n % 4 == 3:
+            result = -result
+        a %= n
+    return result if n == 1 else 0
 
 
 # --------------------------------------------------------------------------
-# Driver.
+# Demonstrations
 # --------------------------------------------------------------------------
-def odd_prime_pairs(limit: int) -> List[Tuple[int, int]]:
-    """All ordered pairs (p, q) of distinct odd primes below `limit`."""
-    primes: List[int] = [n for n in range(3, limit) if is_odd_prime(n)]
-    return [(p, q) for p in primes for q in primes if p != q]
+def demo_euler(primes: List[int]) -> None:
+    print("== Euler's criterion vs. brute force ==")
+    ok = all(
+        legendre_symbol_euler(a, p) == legendre_symbol_bruteforce(a, p)
+        for p in primes if p != 2
+        for a in range(1, p)
+    )
+    print(f"  agreement over all a mod p for {len(primes)} primes: {ok}")
+
+
+def demo_first_supplement(primes: List[int]) -> None:
+    print("== First supplement  (-1/p) = (-1)^((p-1)/2) ==")
+    for p in primes[:10]:
+        if p == 2:
+            continue
+        lhs = legendre_symbol_bruteforce(-1, p)
+        rhs = (-1) ** ((p - 1) // 2)
+        residue = "square" if lhs == 1 else "non-square"
+        print(f"  p={p:3d}:  (-1/p)={lhs:+d}  formula={rhs:+d}  "
+              f"[-1 is a {residue} mod p;  p mod 4 = {p % 4}]")
+
+
+def demo_second_supplement(primes: List[int]) -> None:
+    print("== Second supplement  (2/p) = (-1)^((p^2-1)/8) ==")
+    for p in primes[:10]:
+        if p == 2:
+            continue
+        lhs = legendre_symbol_bruteforce(2, p)
+        rhs = (-1) ** ((p * p - 1) // 8)
+        mu = gauss_lemma_count(2, p)
+        count = p // 2 - p // 4
+        assert mu == count, (p, mu, count)
+        assert (mu % 2) == (((p * p - 1) // 8) % 2)
+        print(f"  p={p:3d}:  (2/p)={lhs:+d}  formula={rhs:+d}  "
+              f"mu={mu}=floor(p/2)-floor(p/4)  [p mod 8 = {p % 8}]")
+
+
+def demo_reciprocity(primes: List[int]) -> None:
+    print("== Law of Quadratic Reciprocity ==")
+    odd = [p for p in primes if p != 2]
+    ok = True
+    for p in odd:
+        for q in odd:
+            if p == q:
+                continue
+            lhs = legendre_symbol_bruteforce(p, q) * legendre_symbol_bruteforce(q, p)
+            rhs = (-1) ** (((p - 1) // 2) * ((q - 1) // 2))
+            if lhs != rhs:
+                ok = False
+    print(f"  (p/q)(q/p) = (-1)^(...) holds for all odd prime pairs up to "
+          f"{odd[-1]}: {ok}")
+
+
+def demo_jacobi(primes: List[int]) -> None:
+    print("== Fast Jacobi symbol vs. Legendre (on primes) ==")
+    ok = all(
+        jacobi_symbol(a, p) == legendre_symbol_bruteforce(a, p)
+        for p in primes if p != 2
+        for a in range(1, p)
+    )
+    print(f"  fast Jacobi matches Legendre for all a mod p: {ok}")
+    print(f"  example: (1001 / 9907) = {jacobi_symbol(1001, 9907)}")
 
 
 def main() -> None:
-    print("=" * 72)
-    print("THEOREM 1 (Eisenstein): reciprocity via lattice-point counting")
-    print("=" * 72)
-    print(f"{'p':>4} {'q':>4} | {'(q/p)(p/q)':>11} {'(-1)^e':>8} "
-          f"{'S_qp+S_pq':>10} {'(p-1)/2*(q-1)/2':>16}  ok")
-    failures: int = 0
-    for p, q in odd_prime_pairs(20):
-        lhs, rhs, combined = reciprocity_sign_eisenstein(p, q)
-        rect: int = ((p - 1) // 2) * ((q - 1) // 2)
-        ok: bool = (lhs == rhs) and (combined == rect)
-        failures += 0 if ok else 1
-        print(f"{p:>4} {q:>4} | {lhs:>11} {rhs:>8} {combined:>10} "
-              f"{rect:>16}  {'YES' if ok else 'NO'}")
-    print(f"\nEisenstein failures: {failures}\n")
-
-    print("=" * 72)
-    print("THEOREM 2 (Gauss sum): g^2 = (-1)^((p-1)/2) * p")
-    print("=" * 72)
-    print(f"{'p':>4} | {'g^2 (numeric)':>28} {'predicted':>14}  ok")
-    for p in [3, 5, 7, 11, 13, 17, 19, 23]:
-        g2, predicted = gauss_sum_square_check(p)
-        ok = abs(g2 - predicted) < 1e-6
-        print(f"{p:>4} | {f'{g2.real:+.4f}{g2.imag:+.4f}i':>28} "
-              f"{f'{predicted.real:+.1f}':>14}  {'YES' if ok else 'NO'}")
+    primes = primes_up_to(60)
+    demo_euler(primes)
     print()
-
-    print("=" * 72)
-    print("SUPPLEMENTARY LAWS")
-    print("=" * 72)
-    print(f"{'p':>4} | {'(-1/p)':>7} {'p%4':>4} | {'(2/p)':>6} {'p%8':>4}  ok")
-    for p in [3, 5, 7, 11, 13, 17, 19, 23, 29, 31]:
-        m1_actual, m1_pred = supplementary_minus_one(p)
-        t_actual, t_pred = supplementary_two(p)
-        ok = (m1_actual == m1_pred) and (t_actual == t_pred)
-        print(f"{p:>4} | {m1_actual:>7} {p % 4:>4} | {t_actual:>6} {p % 8:>4}  "
-              f"{'YES' if ok else 'NO'}")
-
-    print("\nA worked example from the article: p = 7, q = 5")
-    print(f"  (5/7) = {legendre_symbol(5, 7)}, (7/5) = {legendre_symbol(7, 5)}, "
-          f"product = {legendre_symbol(5, 7) * legendre_symbol(7, 5)}")
-    print(f"  predicted (-1)^(3*2) = {(-1) ** (3 * 2)}  (both primes: 5 = 1 mod 4)")
-    print("Another: p = 7, q = 3 (both 3 mod 4)")
-    print(f"  (3/7) = {legendre_symbol(3, 7)}, (7/3) = {legendre_symbol(7, 3)}, "
-          f"product = {legendre_symbol(3, 7) * legendre_symbol(7, 3)}")
-    print(f"  predicted (-1)^(3*1) = {(-1) ** (3 * 1)}")
+    demo_first_supplement(primes)
+    print()
+    demo_second_supplement(primes)
+    print()
+    demo_reciprocity(primes)
+    print()
+    demo_jacobi(primes)
 
 
 if __name__ == "__main__":
