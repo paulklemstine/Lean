@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1a8e3469",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Cusick density bias for `s₂(n+t) ≥ s₂(n)`\n\nContext. The binary digit-sum problem of Cusick asks for the asymptotic density\n`c_t = dens{ n : s₂(n+t) ≥ s₂(n) }` and conjectures `c_",
-      "quality_score": 0.5860000000000001,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-26T19:28:25",
-      "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
-    },
-    {
       "cycle_id": "580d1f18",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Certified Novelty Detection for Theorem Provers\n\nDerived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,\n`FibonacciNoveltyStream.lean`).  This cycle establishe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-07-01T12:58:40",
       "title": "Crystal Reflections Preserve d-Balanced Property of Partitions"
+    },
+    {
+      "cycle_id": "c4e68c8d",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Signed Total Roman Domination and the Complexity Frontier\n\nThis cycle established a sharp structural fact: in a graph of minimum degree at least one,\na single vertex of degree th",
+      "quality_score": 0.6812400000000001,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-01T13:02:10",
+      "title": "STRD Domatic Number Equals One for Graphs with a Degree-3 Vertex"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74152
     }
   ],
-  "last_updated": "2026-07-01T12:58:40",
+  "last_updated": "2026-07-01T13:02:10",
   "open_questions": [
     {
       "context": "",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "5a2118a3",
-        "quality": 0.49160000000000004,
-        "theorems": 13,
-        "title": "Quantum Key Distribution: BB84 Security Proof"
-      },
-      {
         "cycle_id": "d453f6ce",
         "quality": 0.5671600000000001,
         "theorems": 9,
@@ -3389,6 +3383,12 @@
         "quality": 0.6648000000000001,
         "theorems": 16,
         "title": "Kähler-Einstein Metrics and K-Stability"
+      },
+      {
+        "cycle_id": "c4e68c8d",
+        "quality": 0.6812400000000001,
+        "theorems": 9,
+        "title": "STRD Domatic Number Equals One for Graphs with a Degree-3 Vertex"
       }
     ],
     "Geometry": [

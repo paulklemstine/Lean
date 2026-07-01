@@ -1856,6 +1856,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2884",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "available",
+    "timestamp": "2026-06-29T18:26:42.958632+00:00",
+    "title": "Minimum Independence Ratio Constraint"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any odd prime p and non-negative integer w, the number of 2-balanced p-regular partitions in a block of p-weight w is exactly the binomial coefficient (w + (p-3)/2) choose w. A partition is p-regular if no part is repeated p or more times, and it is 2-balanced if every hook of length divisible by p has an even arm length.",
     "domains": [
       "Pythagorean",
@@ -3365,7 +3379,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the L^p Threshold for KNRS Relaxation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04b163c8",
     "description": "Let p be a prime, b an integer \u2265 2 such that p does not divide b. If the multiplicative order of b modulo p is (p-1)/2, and p \u2261 1 mod 4, then the sum of the digits of one period of the base-b expansion of 1/p is (b-1)(p-1)/4.",
     "domains": [
       "Pythagorean"
@@ -3374,7 +3388,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:01:55.527180+00:00",
     "title": "Sum of digits of 1/p for half-period length and p \u2261 1 mod 4"
   },
@@ -3702,7 +3716,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Class-Uniformly Resolvable Designs for Powers of Two"
   },
   {
-    "consumed_by_exp_id": "dd442784",
+    "consumed_by_exp_id": "",
     "description": "For any Latin square M of order n \u2265 5, the dimension of the second homology group of the clique complex of the strongly regular graph associated with M over any field F is exactly (n-1)^3 - I(M), where I(M) is the number of intercalates (2x2 Latin subsquares) in M.",
     "domains": [
       "Algebra",
@@ -3712,7 +3726,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27328v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T05:47:37.249707+00:00",
     "title": "Dimension of Second Clique Homology for Latin Square Graphs"
   },
@@ -3981,12 +3995,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "In an odd wheel up to multiple edges, every spoke edge is a forcing edge, and no other edges are forcing edges.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3034",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26594v1",
+    "status": "available",
+    "timestamp": "2026-07-01T13:04:38.847751+00:00",
+    "title": "ForcingEdges in Odd Wheels"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3034",
+    "id": "fd_3035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -4001,7 +4029,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3035",
+    "id": "fd_3036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -4015,7 +4043,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3036",
+    "id": "fd_3037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -4030,7 +4058,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3037",
+    "id": "fd_3038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -4045,7 +4073,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3038",
+    "id": "fd_3039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -4060,7 +4088,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3039",
+    "id": "fd_3040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -4075,7 +4103,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3040",
+    "id": "fd_3041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -4089,7 +4117,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3041",
+    "id": "fd_3042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -4103,7 +4131,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3042",
+    "id": "fd_3043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -4117,7 +4145,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3043",
+    "id": "fd_3044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -4131,7 +4159,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3044",
+    "id": "fd_3045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -4146,7 +4174,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3045",
+    "id": "fd_3046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -4160,7 +4188,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3046",
+    "id": "fd_3047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -4174,7 +4202,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3047",
+    "id": "fd_3048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -4188,7 +4216,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3048",
+    "id": "fd_3049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -4203,7 +4231,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3049",
+    "id": "fd_3050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -4218,7 +4246,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3050",
+    "id": "fd_3051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -4232,7 +4260,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3051",
+    "id": "fd_3052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -4247,7 +4275,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3052",
+    "id": "fd_3053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -4261,7 +4289,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3053",
+    "id": "fd_3054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -4276,7 +4304,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3054",
+    "id": "fd_3055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -4290,7 +4318,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3055",
+    "id": "fd_3056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -4304,7 +4332,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3056",
+    "id": "fd_3057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -4319,7 +4347,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3057",
+    "id": "fd_3058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -4334,7 +4362,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3058",
+    "id": "fd_3059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -4349,7 +4377,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3059",
+    "id": "fd_3060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4363,7 +4391,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3060",
+    "id": "fd_3061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4377,7 +4405,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3061",
+    "id": "fd_3062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4392,7 +4420,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3062",
+    "id": "fd_3063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4407,7 +4435,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3063",
+    "id": "fd_3064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4422,7 +4450,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3064",
+    "id": "fd_3065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4436,7 +4464,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3065",
+    "id": "fd_3066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4450,7 +4478,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3066",
+    "id": "fd_3067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4464,7 +4492,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3067",
+    "id": "fd_3068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -4478,7 +4506,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3068",
+    "id": "fd_3069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27507v1",
@@ -4493,7 +4521,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3069",
+    "id": "fd_3070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27516v1",
@@ -4507,7 +4535,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3070",
+    "id": "fd_3071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
@@ -4522,7 +4550,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3071",
+    "id": "fd_3072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27273v1",
@@ -4536,7 +4564,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3072",
+    "id": "fd_3073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
@@ -4551,7 +4579,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3073",
+    "id": "fd_3074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
@@ -4560,16 +4588,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diameter Concentration for High-Genus Triangulations"
   },
   {
-    "consumed_by_exp_id": "19ffaeae",
+    "consumed_by_exp_id": "",
     "description": "For any prime $l \\equiv 3 \\pmod 4$ and any odd prime $p \\neq l$, the Legendre symbol $(l/p)$ equals 1 if and only if either ($p \\equiv 1 \\pmod 4$ and $p$ is a quadratic residue modulo $l$) or ($p \\equiv 3 \\pmod 4$ and $p$ is a quadratic nonresidue modulo $l$). This is equivalent to stating that $(l/p) = 1 \\iff (p \\equiv 1 \\pmod 4 \\land (p/l) = 1) \\lor (p \\equiv 3 \\pmod 4 \\land (p/l) = -1)$. This proposition is a key stepping stone in the paper for bounding the exceptional residue classes of the weighted fruit Diophantine equation.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3074",
+    "id": "fd_3075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T06:31:51.361312+00:00",
     "title": "Legendre Symbol Characterization for Primes 3 mod 4"
   },
@@ -4579,7 +4607,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_3075",
+    "id": "fd_3076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27451v1",
@@ -4594,7 +4622,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3076",
+    "id": "fd_3077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27208v1",
@@ -4609,7 +4637,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3077",
+    "id": "fd_3078",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27170v1",
@@ -4623,7 +4651,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3078",
+    "id": "fd_3079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27179v2",
@@ -4637,7 +4665,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3079",
+    "id": "fd_3080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27197v1",
@@ -4652,7 +4680,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3080",
+    "id": "fd_3081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27190v1",
@@ -4667,7 +4695,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3081",
+    "id": "fd_3082",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27118v1",
@@ -4681,7 +4709,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3082",
+    "id": "fd_3083",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27104v1",
@@ -4696,7 +4724,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Bridges"
     ],
-    "id": "fd_3083",
+    "id": "fd_3084",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27070v1",
@@ -4710,7 +4738,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3084",
+    "id": "fd_3085",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27087v1",
@@ -4725,7 +4753,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_3085",
+    "id": "fd_3086",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26851v1",
@@ -4740,7 +4768,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3086",
+    "id": "fd_3087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26983v1",
@@ -4754,7 +4782,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3087",
+    "id": "fd_3088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26776v2",
@@ -4769,7 +4797,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3088",
+    "id": "fd_3089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26589v1",
@@ -4784,7 +4812,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3089",
+    "id": "fd_3090",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26761v1",
@@ -4799,13 +4827,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3090",
+    "id": "fd_3091",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26639v1",
     "status": "available",
     "timestamp": "2026-07-01T12:37:27.586012+00:00",
     "title": "In\u2011Dominating Seed Property for Weighted and Multi\u2011Layer k\u2011Cores"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a regular Cayley map of skew-type three on a semidihedral group G, the core-free subgroup C in the skew-product decomposition of Aut(M) is trivial.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3092",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26570v1",
+    "status": "available",
+    "timestamp": "2026-07-01T13:06:15.949911+00:00",
+    "title": "Triviality of the core-free subgroup in regular Cayley maps of skew-type three on semidihedral groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -4948,21 +4990,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erd\u0151s\u2013Straus Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Balanced Partitions under Crystal Reflections\n\nFix integers `d, e > 1`. Call a partition **`d`-balanced** (with respect to `e`) if\nevery cell whose hook length is divisible by `e` has arm length divisible by `d`.\nThe affine crystal-reflection operators `s_0, \u2026, s_{e-1}` act on the set of all\npartitions. The observations below organize a program around a single phenomenon:\nthese reflections respect the fine arithmetic of hook arms.\n\n## Conjecture 1 (Reflection invariance of balance)\n\nFor all `d, e > 1`, every `d`-balanced partition is sent by every crystal\nreflection `s_i` to a `d`-balanced partition.\n\nThe key insight is that a crystal reflection rearranges only the boxes lying on a\nsingle residue class of contents, so it never disturbs the *hook length* of a cell\nthat already sits on an `e`-divisible hook \u2014 it can only slide such a cell along\nits own diagonal, and along that diagonal the arm changes in steps that are forced\nto be multiples of `d`.\n\nWhy now? Exhaustive testing across all partitions of size up to 16, every\n`d \u2208 {2,3,4}` and `e \u2208 {2,3,4,5}`, produced no counterexample, while the *mirror*\norientation of the same operators fails already at size 6. The sharp dependence on\norientation is a strong signal that the invariance is a real structural law rather\nthan numerical coincidence, and it pins down exactly which normalization must be\nused to state and attack the theorem.\n\n## Conjecture 2 (Arm-quantization mechanism)\n\nUnder a crystal reflection `s_i`, each cell that carries an `e`-divisible hook has\nits arm length changed by an integer multiple of `d` (in particular, arms that were\ndivisible by `d` remain so).\n\nThe key insight is that the reflection permutes the beads of the `e`-abacus on a\npair of adjacent runners; the number of beads jumped over \u2014 which is exactly the\nchange in arm length \u2014 is controlled by the balanced condition itself, so the arm\nincrement is quantized in multiples of `d`.\n\nWhy now? Conjecture 2 refines Conjecture 1 from a yes/no invariance into a precise\nbook-keeping statement about how individual arms move. It is the natural bridge\nbetween the global invariance and a local, cell-by-cell proof, and the abacus\npicture that makes it precise is completely explicit.\n\n## Conjecture 3 (Duality and the reflection orbit)\n\nConjugation of Young diagrams interchanges the arm-balanced and leg-balanced\npartitions; consequently a partition is `d`-balanced if and only if its conjugate\nis *leg*-`d`-balanced, and every partition in a single crystal-reflection orbit\nshares the same balance status.\n\nThe key insight is that conjugation is the order-two symmetry of the underlying\naffine diagram: it swaps rows with columns, hence arms with legs, while preserving\nevery hook length; the crystal reflections commute with this symmetry up to the\ndiagram involution, so balance is constant along an entire orbit.\n\nWhy now? The arm/leg duality is already established unconditionally, which turns the\n\"orbit-constant\" half of the conjecture into a concrete, checkable prediction and\nprovides a second, independent route to Conjecture 1 through orbit representatives.\n\n## Conjecture 4 (Core\u2013quotient characterization)\n\nA partition is `d`-balanced with respect to `e` if and only if its `e`-quotient \u2014 the\n`e`-tuple of partitions read off the abacus \u2014 satisfies a uniform divisibility\ncondition by `d` on the contents of its cells, independently of the `e`-core.\n\nThe key insight is that hooks divisible by `e` correspond precisely to moves on the\nabacus that live inside the `e`-quotient, and arm lengths of those hooks translate\ninto differences of quotient contents; balance should therefore be a property of\nthe quotient alone.\n\nWhy now? Such a characterization would replace the universal quantifier over hooks\nby a finite, per-component test, making Conjecture 1 decidable in closed form and\nexplaining the observed stability of balance under the reflections, which act\ntransparently on the quotient coordinates.\n\n## Conjecture 5 (Higher-level stability)\n\nThe balance-preservation phenomenon persists for the crystal reflections acting on\nmultipartitions (the crystals of higher-level Fock spaces), for a suitably adapted\nnotion of hook that reads across all components.\n\nThe key insight is that a multi-charge simply reindexes the same residue grading;\nthe reflections still move boxes within a single residue class, so the mechanism of\nConjectures 1\u20132 should survive verbatim once arms are measured with respect to the\ncombined multipartition hook.\n\nWhy now? Higher-level analogues are where the representation-theoretic payoff lives,\nand confirming that the level-one mechanism lifts would identify balance as a\ngenuinely modular-representation-theoretic invariant rather than a level-one\naccident.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_3091",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "ddab9e68",
-    "status": "available",
-    "timestamp": "2026-07-01T12:58:34.040687+00:00",
-    "title": "Fix integers `d, e > 1`. Call a partition **`d`-balanced** (with respect to `e`)"
   },
   {
     "consumed_by_exp_id": "",
