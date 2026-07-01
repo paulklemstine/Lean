@@ -3393,7 +3393,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sum of digits of 1/p for half-period length and p \u2261 1 mod 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ec5250f",
     "description": "Establishes that the optimal \u03c7-bounding function F(3) for the class of graphs whose complements have girth at least 6 is exactly 4. This means that any finite simple graph with clique number at most 3 and complement girth at least 6 has chromatic number at most 4, and there exists such a graph where this bound is tight.",
     "domains": [
       "Bridges"
@@ -3402,7 +3402,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:20:00.643679+00:00",
     "title": "Exact Value of Sivaraman's Function F at 3"
   },
@@ -3833,7 +3833,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Maass-Raising-Operator-Characterization-of-Omega"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "89a24321",
     "description": "The algorithm's runtime for counting equitable k-colorings in graphs of bounded clique-width w, given as 2^{O(kw)} * n^{O(k)}, is optimal under the Strong Exponential Time Hypothesis (SETH), meaning no algorithm can solve it in 2^{o(kw)} * n^{O(1)} time.",
     "domains": [
       "Algebra",
@@ -3843,7 +3843,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27159v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T08:51:55.852566+00:00",
     "title": "SETH-Tight Lower Bound for Counting Equitable k-Colorings in Bounded Clique-Width Graphs"
   },
@@ -5253,7 +5253,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a3a087eb",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -5263,7 +5263,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },

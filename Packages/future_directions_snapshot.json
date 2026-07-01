@@ -5920,7 +5920,7 @@
       "math.CO",
       "Sivaraman2020"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ec5250f",
     "description": "Establishes that the optimal χ-bounding function F(3) for the class of graphs whose complements have girth at least 6 is exactly 4. This means that any finite simple graph with clique number at most 3 and complement girth at least 6 has chromatic number at most 4, and there exists such a graph where this bound is tight.",
     "domain_bridges": [
       "Combinatorics",
@@ -5935,7 +5935,7 @@
     "proof_strategy": "Analyze the structural properties of graphs with clique number at most 3 and complement girth at least 6. Show that such graphs cannot exceed a certain order or must belong to a restricted family where the chromatic number bound can be systematically verified, likely leveraging Ramsey-type bounds and exhaustive case analysis on small vertex counts.",
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:20:00.643679+00:00",
     "title": "Exact Value of Sivaraman's Function F at 3"
   },
@@ -6751,7 +6751,7 @@
       "Equitable Coloring",
       "Counting Complexity"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "89a24321",
     "description": "The algorithm's runtime for counting equitable k-colorings in graphs of bounded clique-width w, given as 2^{O(kw)} * n^{O(k)}, is optimal under the Strong Exponential Time Hypothesis (SETH), meaning no algorithm can solve it in 2^{o(kw)} * n^{O(1)} time.",
     "domain_bridges": [
       "Graph Theory",
@@ -6768,7 +6768,7 @@
     "proof_strategy": "Formalize the SETH assumption and prove that any faster algorithm would contradict SETH, possibly by reduction from a SETH-hard problem.",
     "research_mode": "team",
     "source_exp_id": "2606.27159v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T08:51:55.852566+00:00",
     "title": "SETH-Tight Lower Bound for Counting Equitable k-Colorings in Bounded Clique-Width Graphs"
   },
@@ -9290,7 +9290,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a3a087eb",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domain_bridges": [],
     "domains": [
@@ -9303,7 +9303,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
