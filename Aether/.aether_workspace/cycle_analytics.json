@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-01T19:24:45.848342+00:00",
+  "last_updated": "2026-07-01T20:10:23.492049+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -24907,6 +24907,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-01T19:24:45.552116+00:00",
       "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function \u03c1(q)"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5125,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 120,
+      "domain": "Novelty",
+      "duration_seconds": 1139.6197550296783,
+      "end_time": 1782936138.668579,
+      "files_integrated": 8,
+      "job_id": "f1070a48",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.7025,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.5507,
+        "novelty": 0.95,
+        "proof_depth": 0.3796,
+        "usefulness": 0.6648
+      },
+      "quality_score": 0.8322400000000001,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782934999.048824,
+      "strategy_count": 0,
+      "theorem_count": 18,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 18,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-01T20:10:22.897226+00:00",
+      "title": "Existence of a finite unit-distance graph in R\u00b2 with independence ratio below 1/4"
     }
   ]
 }

@@ -970,7 +970,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57aacce9",
     "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
     "domains": [
       "Geometry"
@@ -979,7 +979,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:01:41.266053+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
@@ -1987,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Combinatorial Nerve Theorem"
   },
   {
-    "consumed_by_exp_id": "c732c146",
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n \u2265 1, the minimum number of elements in a poset whose automorphism group is isomorphic to Z\u2082 \u00d7 Z_{2^n} equals 2^{n+1} + 2. This extends the paper's main theorem from n \u2265 3 to all n \u2265 1, covering the previously unresolved cases n = 1 (Klein four-group) and n = 2.",
     "domains": [
       "Algebra"
@@ -1996,7 +1996,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T20:19:27.243667+00:00",
     "title": "\u03b2(Z\u2082 \u00d7 Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
   },
@@ -2016,7 +2016,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No non-trivial prime-power solutions in specific polygonal number sequences"
   },
   {
-    "consumed_by_exp_id": "24e5f1f4",
+    "consumed_by_exp_id": "",
     "description": "Every $\\tau_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges, for integers $k \\ge 1$ and $n \\ge 2k+2$. A graph $G$ is $\\tau_k$-maximal if it contains no subgraph admitting $k+1$ edge-disjoint spanning trees (i.e., its spanning tree packing number $\\tau(G) \\le k$), but adding any edge from its complement creates a graph that does admit $k+1$ edge-disjoint spanning trees (i.e., $\\tau(G+e) \\ge k+1$ for all $e \\notin E(G)$).",
     "domains": [
       "Bridges"
@@ -2025,7 +2025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T20:55:49.745314+00:00",
     "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
   },
@@ -3117,7 +3117,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Irreducibility of the perfectoid Borel representation for quadratic unramified extensions"
   },
   {
-    "consumed_by_exp_id": "db224cfc",
+    "consumed_by_exp_id": "",
     "description": "For every sufficiently large prime p, every nonzero residue class modulo p is represented by a product of two primes each at most p. This is Erd\u0151s's original conjecture that motivates the paper's ternary result; the paper proves the ternary analogue (every class is a product of three primes) and shows a positive proportion of classes are products of two primes, but the full binary conjecture remains open.",
     "domains": [
       "Pythagorean"
@@ -3126,7 +3126,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30567v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T11:34:45.339212+00:00",
     "title": "Erd\u0151s Binary Product Conjecture for Primes"
   },
@@ -3233,7 +3233,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Entropic MMS for R\u00e9nyi Entropy of Order 2 (Collision Entropy)"
   },
   {
-    "consumed_by_exp_id": "f29abd01",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that any C4-free graph of diameter 2 without universal vertices and maximum degree at least 17 is not 3-colorable, formalizing the main structural result of the paper.",
     "domains": [
       "Pythagorean"
@@ -3242,7 +3242,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30282v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T14:16:39.007092+00:00",
     "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
   },
@@ -4181,7 +4181,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized Brylawski identities for ranked central sets"
   },
   {
-    "consumed_by_exp_id": "acbfd883",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every integer m \u2265 2 the \u2124\u2011span of integrals of Kontsevich graphs with exactly m\u202f+\u202f4\u202fN(m) vertices coincides with the \u2124\u2011span of normalized multiple zeta values of weight m\u202f+\u202f4\u202fN(m), where N(m) is defined as in the paper (the ceiling formulas depending on m mod\u202f4).",
     "domains": [
       "Pythagorean",
@@ -4191,7 +4191,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25457v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T19:07:20.837213+00:00",
     "title": "Exact module equality for Kontsevich graph integrals and normalized multiple zeta values"
   },
@@ -4227,12 +4227,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The conjecture asserts A(x)/x equals exp(-(1/(2\u221a(log 2)))\u221a(log x) log log x, confirming the asymptotic constant c=1/(2\u221a(log 2))",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_3050",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24872v1",
+    "status": "available",
+    "timestamp": "2026-07-01T20:10:58.642381+00:00",
+    "title": "Exact Proportionality of A(x)/x"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3050",
+    "id": "fd_3051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -4247,7 +4261,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3051",
+    "id": "fd_3052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -4261,7 +4275,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3052",
+    "id": "fd_3053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -4276,7 +4290,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3053",
+    "id": "fd_3054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -4291,7 +4305,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3054",
+    "id": "fd_3055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -4306,7 +4320,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3055",
+    "id": "fd_3056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -4321,7 +4335,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3056",
+    "id": "fd_3057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -4335,7 +4349,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3057",
+    "id": "fd_3058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -4349,7 +4363,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3058",
+    "id": "fd_3059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -4363,7 +4377,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3059",
+    "id": "fd_3060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -4377,7 +4391,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3060",
+    "id": "fd_3061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -4392,7 +4406,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3061",
+    "id": "fd_3062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -4406,7 +4420,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3062",
+    "id": "fd_3063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -4420,7 +4434,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3063",
+    "id": "fd_3064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -4434,7 +4448,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3064",
+    "id": "fd_3065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -4449,7 +4463,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3065",
+    "id": "fd_3066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -4464,7 +4478,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3066",
+    "id": "fd_3067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -4478,7 +4492,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3067",
+    "id": "fd_3068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -4493,7 +4507,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3068",
+    "id": "fd_3069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -4507,7 +4521,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3069",
+    "id": "fd_3070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -4516,17 +4530,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph Algebra sl\u2082-Module Tensor Power Isomorphism"
   },
   {
-    "consumed_by_exp_id": "f0b9c475",
+    "consumed_by_exp_id": "",
     "description": "Let $E$ be a $d$-dimensional Anderson $t$-module defined over a finite extension $L$ of $K=\\mathbb{F}_q(\\theta)$, and let $P_1, \\dots, P_\\ell \\in E(L)$ be $L$-rational points. The $\\mathbb{F}_q[t]$-module of linear relations among these points is free of finite rank. We conjecture that there exists an explicit polynomial bound on the degrees of the generators of this relation module, specifically that the maximum degree of any generator is bounded by a polynomial function in $d$, $\\ell$, and the maximum of the logarithmic Weil heights of $P_1, \\dots, P_\\ell$. This serves as an effective analogue of Masser's relation module bounds for commutative algebraic groups.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3070",
+    "id": "fd_3071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T18:40:11.183273+00:00",
     "title": "Explicit Degree Bound for Generators of $\\mathbb{F}_q[t]$-Linear Relations on $t$-Modules"
   },
@@ -4536,7 +4550,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3071",
+    "id": "fd_3072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -4550,7 +4564,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3072",
+    "id": "fd_3073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -4565,7 +4579,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3073",
+    "id": "fd_3074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -4580,7 +4594,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3074",
+    "id": "fd_3075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -4595,7 +4609,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3075",
+    "id": "fd_3076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4609,7 +4623,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3076",
+    "id": "fd_3077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4623,7 +4637,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3077",
+    "id": "fd_3078",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4638,7 +4652,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3078",
+    "id": "fd_3079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4653,7 +4667,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3079",
+    "id": "fd_3080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4668,7 +4682,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3080",
+    "id": "fd_3081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4682,7 +4696,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3081",
+    "id": "fd_3082",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4696,7 +4710,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3082",
+    "id": "fd_3083",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4710,7 +4724,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3083",
+    "id": "fd_3084",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -4724,7 +4738,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3084",
+    "id": "fd_3085",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27507v1",
@@ -4739,7 +4753,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3085",
+    "id": "fd_3086",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27516v1",
@@ -4753,7 +4767,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3086",
+    "id": "fd_3087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
@@ -4768,7 +4782,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3087",
+    "id": "fd_3088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27273v1",
@@ -4782,7 +4796,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3088",
+    "id": "fd_3089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
@@ -4797,7 +4811,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3089",
+    "id": "fd_3090",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
@@ -4811,7 +4825,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3090",
+    "id": "fd_3091",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
@@ -4825,7 +4839,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_3091",
+    "id": "fd_3092",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27451v1",
@@ -4840,7 +4854,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3092",
+    "id": "fd_3093",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27208v1",
@@ -4855,7 +4869,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3093",
+    "id": "fd_3094",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27170v1",
@@ -4869,7 +4883,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3094",
+    "id": "fd_3095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27179v2",
@@ -4883,7 +4897,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3095",
+    "id": "fd_3096",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27197v1",
@@ -4898,7 +4912,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3096",
+    "id": "fd_3097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27190v1",
@@ -4913,7 +4927,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3097",
+    "id": "fd_3098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27118v1",
@@ -4927,7 +4941,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3098",
+    "id": "fd_3099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27104v1",
@@ -4942,7 +4956,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Bridges"
     ],
-    "id": "fd_3099",
+    "id": "fd_3100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27070v1",
@@ -4956,7 +4970,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3100",
+    "id": "fd_3101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27087v1",
@@ -4971,7 +4985,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_3101",
+    "id": "fd_3102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26851v1",
@@ -4986,7 +5000,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3102",
+    "id": "fd_3103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26983v1",
@@ -5000,7 +5014,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3103",
+    "id": "fd_3104",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26776v2",
@@ -5015,7 +5029,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3104",
+    "id": "fd_3105",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26589v1",
@@ -5030,7 +5044,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3105",
+    "id": "fd_3106",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26761v1",
@@ -5045,7 +5059,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3106",
+    "id": "fd_3107",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26639v1",
@@ -5054,16 +5068,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "In\u2011Dominating Seed Property for Weighted and Multi\u2011Layer k\u2011Cores"
   },
   {
-    "consumed_by_exp_id": "a1f3787a",
+    "consumed_by_exp_id": "",
     "description": "For a regular Cayley map of skew-type three on a semidihedral group G, the core-free subgroup C in the skew-product decomposition of Aut(M) is trivial.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3107",
+    "id": "fd_3108",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26570v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T13:06:15.949911+00:00",
     "title": "Triviality of the core-free subgroup in regular Cayley maps of skew-type three on semidihedral groups"
   },
@@ -5073,7 +5087,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3108",
+    "id": "fd_3109",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26335v1",
@@ -5088,7 +5102,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3109",
+    "id": "fd_3110",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26550v1",
@@ -5102,7 +5116,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3110",
+    "id": "fd_3111",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
@@ -5116,7 +5130,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3111",
+    "id": "fd_3112",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -5130,7 +5144,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3112",
+    "id": "fd_3113",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5145,7 +5159,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3113",
+    "id": "fd_3114",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26275v1",
@@ -5160,7 +5174,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3114",
+    "id": "fd_3115",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26043v1",
@@ -5174,7 +5188,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3115",
+    "id": "fd_3116",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5188,7 +5202,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3116",
+    "id": "fd_3117",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5203,7 +5217,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3117",
+    "id": "fd_3118",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25724v1",
@@ -5218,7 +5232,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3118",
+    "id": "fd_3119",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25698v1",
@@ -5233,7 +5247,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3119",
+    "id": "fd_3120",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25180v1",
@@ -5247,7 +5261,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3120",
+    "id": "fd_3121",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -5261,7 +5275,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3121",
+    "id": "fd_3122",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24882v1",
@@ -5632,7 +5646,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "fd79f536",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -5642,7 +5656,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

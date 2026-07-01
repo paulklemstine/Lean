@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "905ed2dd",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings: the EML operator `f(x) = exp(a)·log(b·x + c)`\nhas a *sharp closed-form existence threshold* `c ≥ exp(a)·(1 − a)` (fo",
-      "quality_score": 0.76274,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-27T05:32:07",
-      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-    },
-    {
       "cycle_id": "43f6ae62",
       "domain": "Applications",
       "key_insight": "# Future Directions — Code-Based Cryptography (McEliece / Goppa)\n\nDerived from this cycle's findings in `LinearCode.lean`, `GoppaDistance.lean`,\nand `Parameters.lean`. Each conjecture is bold, falsifi",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-01T15:25:50",
       "title": "Dimension of Second Clique Homology for Latin Square Graphs"
+    },
+    {
+      "cycle_id": "f1070a48",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: independence ratio, unit distances, and colourings of the plane\n\nThese conjectures are distilled from the present cycle, which isolates the reduction\n\"independence ratio below `1/",
+      "quality_score": 0.8322400000000001,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-01T20:10:19",
+      "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/4"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "913e3580",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Shifted t-Schur Basis / Plethystic Triviality\n\nThis cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the\ngenerating-function backbone of the shifted (Schur `Q`) basis",
-      "quality_score": 0.7981560000000001,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-26T23:37:29",
-      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-    },
     {
       "cycle_id": "0171d9bf",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-01T18:44:41",
       "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
+    },
+    {
+      "cycle_id": "f1070a48",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: independence ratio, unit distances, and colourings of the plane\n\nThese conjectures are distilled from the present cycle, which isolates the reduction\n\"independence ratio below `1/",
+      "quality_score": 0.8322400000000001,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-01T20:10:19",
+      "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/4"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8ffddeae",
-      "domain": "Applications",
-      "name": "in",
-      "quality": 0.76734
-    },
-    {
-      "cycle_id": "8ffddeae",
-      "domain": "Applications",
-      "name": "balanced_of_maximizer",
-      "quality": 0.76734
-    },
     {
       "cycle_id": "dbb7efcb",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "all_sum_of_m_squares",
       "quality": 0.7232000000000001
+    },
+    {
+      "cycle_id": "f1070a48",
+      "domain": "Novelty",
+      "name": "card_le_colors_mul_indepNum",
+      "quality": 0.8322400000000001
+    },
+    {
+      "cycle_id": "f1070a48",
+      "domain": "Novelty",
+      "name": "not_colorable_four_of_indepRatio_lt",
+      "quality": 0.8322400000000001
     }
   ],
-  "last_updated": "2026-07-01T18:44:41",
+  "last_updated": "2026-07-01T20:10:19",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3c64518a",
-        "quality": 0.79664,
-        "theorems": 24,
-        "title": "Complete Characterization of Minimal Forbidden Partial‑Cube Minors for Daisy Cub"
-      },
-      {
         "cycle_id": "03afc47a",
         "quality": 0.6182000000000001,
         "theorems": 6,
@@ -3637,6 +3631,12 @@
         "quality": 0.759526,
         "theorems": 15,
         "title": "Dimension of Second Clique Homology for Latin Square Graphs"
+      },
+      {
+        "cycle_id": "f1070a48",
+        "quality": 0.8322400000000001,
+        "theorems": 18,
+        "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/"
       }
     ],
     "NumberTheory": [
