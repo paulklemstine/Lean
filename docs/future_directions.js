@@ -4568,7 +4568,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27197v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-07-01T08:30:18.160387+00:00",
     "title": "Classification of \u03c1-dominant elements in B(\u03c1) for symmetrizable Kac-Moody algebras"
   },
@@ -4644,6 +4644,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-01T10:06:03.524185+00:00",
     "title": "Characterization of Higher-Order Difference Set Inequalities in \u2124"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For positive integers k < g with k \u2265 2, let m_k(g) denote the minimal positive integer m such that m \u00b7 \u03b8_k is algebraic on a very general principally polarized abelian variety (X, \u0398) of dimension g, where \u03b8_k = [\u0398]^k/k!. The paper establishes that \u220f_{p \u2264 (k+1)/2} p divides m_k(g), which in particular gives exponential growth. We conjecture this divisibility bound is sharp: m_k(g) = \u220f_{p prime, p \u2264 (k+1)/2} p for all 2 \u2264 k < g. This is consistent with known values m_3(4) = 2, m_4(5) = 2, and m_5(6) = 6. Equivalently, the conjecture asserts that no prime power p^a with a \u2265 2 divides m_k(g), and no prime p > (k+1)/2 divides m_k(g).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3079",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31894v1",
+    "status": "available",
+    "timestamp": "2026-07-01T10:25:02.333721+00:00",
+    "title": "Exact Formula for Minimal Algebraic Multiples of Minimal Cohomology Classes on Abelian Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The estimator \u03c0\u0302(x) obtained by discretizing the logarithmic integral li(x) = \u222b\u2082\u02e3 dt/log(t) over the non-uniform partition defined by generalized triangular numbers T_k = k(k+1)/2 (with T_n \u2264 x < T_{n+1}), specifically \u03c0\u0302(x) = \u03a3_{k=1}^{n-1} (T_{k+1} - T_k)/log(T_k) + (x - T_n)/log(T_n), satisfies the error bound |\u03c0\u0302(x) - \u03c0(x)| = O(x^{1/2} \u00b7 log\u00b2(x)) as x \u2192 \u221e. This asserts that the triangular-number Riemann sum approximation, despite using only O(\u221ax) evaluation points with locally computed updates, achieves the same order of accuracy as the best conditional bounds on |li(x) - \u03c0(x)| under the Riemann Hypothesis.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3080",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31761v1",
+    "status": "available",
+    "timestamp": "2026-07-01T10:25:52.382688+00:00",
+    "title": "Triangular Partition Estimator Error Bound for \u03c0(x)"
   },
   {
     "consumed_by_exp_id": "",
