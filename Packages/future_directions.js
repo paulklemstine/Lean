@@ -1898,7 +1898,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9dbfa453",
     "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
     "domains": [
       "Algebra",
@@ -1908,7 +1908,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -1928,7 +1928,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "90d1d2b2",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
@@ -1938,7 +1938,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
@@ -2599,7 +2599,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mod 2 to Z Characteristic Map Lifting for Low-Dimensional PL Spheres"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "80c8b0ed",
     "description": "For some absolute constant C, any subset A of {1, ..., N} with cardinality at least 5N/8 + C contains distinct elements a, b, c such that a+b, a+c, and b+c are all in A. This resolves Erd\u0151s Problem 865 and corresponds to Theorem 1.1 of the paper.",
     "domains": [
       "Bridges"
@@ -2608,7 +2608,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29361v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T10:28:39.364137+00:00",
     "title": "Sharp 5/8 Bound for Erd\u0151s-S\u00f3s Pairwise-Sums Problem"
   },
@@ -3598,7 +3598,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finiteness of Common Values of ABC Power Sum Recurrences"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea07da03",
     "description": "The determinant of an \\( n \\times n \\) matrix with entries defined by \\( \\binom{\\ell + m - i - j + 2}{m - 1} \\) for \\( 1 \\leq i,j \\leq n \\) and \\( 2 \\leq m \\leq n \\) is identically equal to 1, as shown through a bijective correspondence between lattice paths and matrix permanents.",
     "domains": [
       "Cryptography",
@@ -3608,7 +3608,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27763v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T01:01:53.020039+00:00",
     "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
   },
