@@ -3957,7 +3957,7 @@
       "log-convexity",
       "Fibonacci numbers"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe0d0a64",
     "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domain_bridges": [
       "Combinatorics",
@@ -3973,7 +3973,7 @@
     "proof_strategy": "Formalize the combinatorial injection mapping pairs of partitions of [n] with the same base to partitions of [n+1], apply the Cauchy-Schwarz inequality on the sums grouped by base, and bound the remaining terms recursively using the Fibonacci sequence properties.",
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:04:18.171502+00:00",
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
