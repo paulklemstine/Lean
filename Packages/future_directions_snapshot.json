@@ -418,7 +418,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3fc75f2f",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domain_bridges": [],
     "domains": [
@@ -431,7 +431,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -6390,7 +6390,7 @@
       "math.NT",
       "math.CV"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "311b39b3",
     "description": "For any integer $p \\ge 2$, the classical harmonic zeta function $\\zeta_H(p)$ and the Riemann zeta function $\\zeta(s)$ satisfy the identity $2\\zeta_H(p) = (p+2)\\zeta(p+1) - \\sum_{j=1}^{p-2} \\zeta(p-j)\\zeta(j+1)$. This conjecture proposes the formalization of this specific classical identity, which expresses the special values of the harmonic zeta function at positive integers in terms of the Riemann zeta function.",
     "domain_bridges": [
       "Special Functions",
@@ -6405,7 +6405,7 @@
     "proof_strategy": "Define the harmonic zeta function and the Riemann zeta function over the reals, establish their Dirichlet series representations for convergent domains, and prove the identity using generating function techniques or by evaluating the Dirichlet convolution of the harmonic numbers and the identity sequence, reducing the sum to known telescoping properties.",
     "research_mode": "team",
     "source_exp_id": "2606.27827v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T01:51:13.586256+00:00",
     "title": "Euler Identity for Harmonic Zeta Function Values"
   },
@@ -6416,7 +6416,7 @@
       "math.CO/c_vectors",
       "math.RA/Schur_roots"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c32cc45",
     "description": "For an acyclic quiver Q of affine Dynkin type X̃ₙ where X̃ₙ ∉ {Ãₙ, Ẽ₇}, every banded coordinate projection π_{vw} (with δ_v = δ_w) surjects onto its band {(x,y) : |x−y| ≤ b_{vw}}. That is, the only non-filling banded pairs across all affine types are the source-sink diagonal in Ãₙ and the unique pair of null-root coefficient 2 vertices in Ẽ₇.",
     "domain_bridges": [
       "representation_theory/auslander_reiten_theory",
@@ -6433,7 +6433,7 @@
     "proof_strategy": "Enumerate all affine types (Ṉ, D̃₄, Ẽ₆, Ẽ₈) beyond Ãₙ and Ẽ₇. For each, compute the real Schur roots via the cluster category, verify the band-existence dichotomy via null-root coefficients δ_v = δ_w, and show that for every banded pair the AR defect obstruction vanishes off-diagonal (i.e., ∂_φ ≠ e_v − e_w for all regular indecomposables φ). Use the known classification of tube ranks and regular indecomposables in each type.",
     "research_mode": "team",
     "source_exp_id": "2606.27523v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T04:21:47.558779+00:00",
     "title": "Filling Conjecture for Banded Pairs in Affine Types Beyond Ãₙ and Ẽ₇"
   },
@@ -6867,7 +6867,7 @@
       "Mathlib.AlgebraicGeometry.FlagVariety",
       "https://arxiv.org/abs/2204.00121"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af008f91",
     "description": "Let B ⊂ GL(n) be a Borel subgroup and let 𝔅ₙ be the flag variety of GL(n).  There is an explicit B‑equivariant embedding ιₙ of the set of B‑orbits on 𝔅ₙ × ℙⁿ⁻¹ into the set of Borel orbits on the flag variety 𝔅_{n+1} of GL(n+1).  Each orbit in the image of ιₙ is indexed by a permutation w ∈ S_{n+1}.  The conjecture states that for any two such permutations v,w the following are equivalent:\n1. The orbit ιₙ⁻¹(O_w) lies in the Zariski closure of ιₙ⁻¹(O_v).\n2. v ≤ w in the Bruhat order on S_{n+1}.\nThis gives a complete, combinatorial description of the orbit‑closure poset on 𝔅ₙ × ℙⁿ⁻¹ and shows that the embedding ιₙ preserves the closure relations exactly as the Bruhat order does on 𝔅_{n+1}.  The conjecture is falsifiable: a counter‑example would be a pair (v,w) with v ≤ w but with ιₙ⁻¹(O_w) not contained in the closure of ιₙ⁻¹(O_v), or vice‑versa.",
     "domain_bridges": [
       "Algebraic Geometry ↔ Representation Theory",
@@ -6883,7 +6883,7 @@
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:20:24.782492+00:00",
     "title": "Bruhat Correspondence for Borel Orbits on 𝔅ₙ × ℙⁿ⁻¹"
   },
@@ -7236,7 +7236,7 @@
       "math.CO",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46a53213",
     "description": "The graph algebra 𝒜ₙ, whose monomial basis is indexed by simple graphs on n vertices (equivalently, the algebra of pseudo-Boolean functions on the Boolean cube {0,1}^m where m = C(n,2)), equipped with the sl₂-action defined by edge-addition and edge-deletion operators, is isomorphic as an sl₂-module to the m-th tensor power of the standard 2-dimensional sl₂-module V. Concretely, the raising operator E = Σ_{i<j} e_{ij} (adding edge {i,j}) and lowering operator F = Σ_{i<j} d_{ij} (deleting edge {i,j}) satisfy the sl₂ relations [E,F]=H, [H,E]=2E, [H,F]=-2F, and the resulting module structure on 𝒜ₙ is isomorphic to V^⊗m.",
     "domain_bridges": [
       "Lie algebra representation theory",
@@ -7253,7 +7253,7 @@
     "proof_strategy": "Define the graph algebra 𝒜ₙ as the quotient of the polynomial ring k[x_{ij} | 1 ≤ i < j ≤ n] by the ideal (x_{ij}² - x_{ij} | 1 ≤ i < j ≤ n). Define edge-addition operators e_{ij} acting by (1 - x_{ij})· and edge-deletion operators d_{ij} acting by x_{ij}· on 𝒜ₙ. Verify the sl₂ relations for E = Σ e_{ij}, F = Σ d_{ij}, H = Σ h_{ij} where h_{ij} = e_{ij}d_{ij} - d_{ij}e_{ij}. Construct the explicit module isomorphism φ: V^⊗m → 𝒜ₙ by sending the tensor basis element ⊗_e v_e^{ε_e} to the monomial Π_{e} x_e^{ε_e}, and prove it intertwines the sl₂-actions. The key insight is that each edge position independently carries a copy of the standard sl₂-module V, with the coordinate x_{ij} tracking edge presence.",
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:20:32.524775+00:00",
     "title": "Graph Algebra sl₂-Module Tensor Power Isomorphism"
   },
@@ -7351,7 +7351,7 @@
       "Goldbach_almost_primes",
       "Bombieri-Vinogradov_Goldbach"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bbb1cf47",
     "description": "For every ε > 0, there exists X₀ such that for all X ≥ X₀, at least (1 - ε)⌊X/2⌋ even integers N ∈ [4, X] can be expressed as N = p₁ + p₂ with p₁, p₂ prime and p₁ - p₂ + 1 ∈ ℙ₂ (a product of at most 2 primes). This strengthens the paper's Theorem for ℙ₄ to ℙ₂, and would follow from an improved level of distribution for Goldbach primes beyond 1/6.",
     "domain_bridges": [
       "sieve_methods",
@@ -7369,7 +7369,7 @@
     "proof_strategy": "Improve the level of distribution of Goldbach primes from θ = 1/6 to θ = 1/4 by refining the bilinear sum estimates in the minor-arc analysis, then apply the weighted sieve of Richert with the stronger level to reduce the almost-prime order from 4 to 2. The key bottleneck is bounding the Type II exponential sums with well-factorable coefficients for the Goldbach prime set.",
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T19:45:04.465776+00:00",
     "title": "Almost-Prime Goldbach Gap Conjecture"
   },
@@ -8841,7 +8841,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c19b86d",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domain_bridges": [],
     "domains": [
@@ -8854,7 +8854,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },

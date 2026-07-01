@@ -314,7 +314,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3fc75f2f",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domains": [
       "NumberTheory",
@@ -324,7 +324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -2147,7 +2147,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Projective Plane Coupon Mechanisms Dominate the Full Model"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddab9e68",
     "description": "For any integers d, e > 1, a partition \u03bb is d-balanced (with respect to e) if every hook of \u03bb whose length is divisible by e has arm length divisible by d. The conjecture states that the affine crystal reflection operators on partitions preserve the d-balanced property: for any d, e > 1, any d-balanced partition \u03bb, and any valid crystal reflection index i, the partition s_i(\u03bb) obtained by applying the i-th affine crystal reflection to \u03bb is again d-balanced.",
     "domains": [
       "Pythagorean",
@@ -2157,7 +2157,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T22:40:00.751415+00:00",
     "title": "Crystal Reflections Preserve d-Balanced Property of Partitions"
   },
@@ -3642,7 +3642,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function \u03c1(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "311b39b3",
     "description": "For any integer $p \\ge 2$, the classical harmonic zeta function $\\zeta_H(p)$ and the Riemann zeta function $\\zeta(s)$ satisfy the identity $2\\zeta_H(p) = (p+2)\\zeta(p+1) - \\sum_{j=1}^{p-2} \\zeta(p-j)\\zeta(j+1)$. This conjecture proposes the formalization of this specific classical identity, which expresses the special values of the harmonic zeta function at positive integers in terms of the Riemann zeta function.",
     "domains": [
       "Pythagorean"
@@ -3651,12 +3651,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27827v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T01:51:13.586256+00:00",
     "title": "Euler Identity for Harmonic Zeta Function Values"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c32cc45",
     "description": "For an acyclic quiver Q of affine Dynkin type X\u0303\u2099 where X\u0303\u2099 \u2209 {\u00c3\u2099, \u1ebc\u2087}, every banded coordinate projection \u03c0_{vw} (with \u03b4_v = \u03b4_w) surjects onto its band {(x,y) : |x\u2212y| \u2264 b_{vw}}. That is, the only non-filling banded pairs across all affine types are the source-sink diagonal in \u00c3\u2099 and the unique pair of null-root coefficient 2 vertices in \u1ebc\u2087.",
     "domains": [
       "Pythagorean",
@@ -3666,7 +3666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27523v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T04:21:47.558779+00:00",
     "title": "Filling Conjecture for Banded Pairs in Affine Types Beyond \u00c3\u2099 and \u1ebc\u2087"
   },
@@ -3892,7 +3892,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vertex-Ramsey Stability Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af008f91",
     "description": "Let B \u2282 GL(n) be a Borel subgroup and let \ud835\udd05\u2099 be the flag variety of GL(n).  There is an explicit B\u2011equivariant embedding \u03b9\u2099 of the set of B\u2011orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 into the set of Borel orbits on the flag variety \ud835\udd05_{n+1} of GL(n+1).  Each orbit in the image of \u03b9\u2099 is indexed by a permutation w \u2208 S_{n+1}.  The conjecture states that for any two such permutations v,w the following are equivalent:\n1. The orbit \u03b9\u2099\u207b\u00b9(O_w) lies in the Zariski closure of \u03b9\u2099\u207b\u00b9(O_v).\n2. v \u2264 w in the Bruhat order on S_{n+1}.\nThis gives a complete, combinatorial description of the orbit\u2011closure poset on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 and shows that the embedding \u03b9\u2099 preserves the closure relations exactly as the Bruhat order does on \ud835\udd05_{n+1}.  The conjecture is falsifiable: a counter\u2011example would be a pair (v,w) with v \u2264 w but with \u03b9\u2099\u207b\u00b9(O_w) not contained in the closure of \u03b9\u2099\u207b\u00b9(O_v), or vice\u2011versa.",
     "domains": [
       "Algebra",
@@ -3902,7 +3902,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:20:24.782492+00:00",
     "title": "Bruhat Correspondence for Borel Orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9"
   },
@@ -4094,7 +4094,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Square-Root Cancellation for Double Shifted Convolution of GL(2) Fourier Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46a53213",
     "description": "The graph algebra \ud835\udc9c\u2099, whose monomial basis is indexed by simple graphs on n vertices (equivalently, the algebra of pseudo-Boolean functions on the Boolean cube {0,1}^m where m = C(n,2)), equipped with the sl\u2082-action defined by edge-addition and edge-deletion operators, is isomorphic as an sl\u2082-module to the m-th tensor power of the standard 2-dimensional sl\u2082-module V. Concretely, the raising operator E = \u03a3_{i<j} e_{ij} (adding edge {i,j}) and lowering operator F = \u03a3_{i<j} d_{ij} (deleting edge {i,j}) satisfy the sl\u2082 relations [E,F]=H, [H,E]=2E, [H,F]=-2F, and the resulting module structure on \ud835\udc9c\u2099 is isomorphic to V^\u2297m.",
     "domains": [
       "Algebra"
@@ -4103,7 +4103,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:20:32.524775+00:00",
     "title": "Graph Algebra sl\u2082-Module Tensor Power Isomorphism"
   },
@@ -4151,7 +4151,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chebyshev Transform Root Location Equivalence for Self-Reciprocal Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bbb1cf47",
     "description": "For every \u03b5 > 0, there exists X\u2080 such that for all X \u2265 X\u2080, at least (1 - \u03b5)\u230aX/2\u230b even integers N \u2208 [4, X] can be expressed as N = p\u2081 + p\u2082 with p\u2081, p\u2082 prime and p\u2081 - p\u2082 + 1 \u2208 \u2119\u2082 (a product of at most 2 primes). This strengthens the paper's Theorem for \u2119\u2084 to \u2119\u2082, and would follow from an improved level of distribution for Goldbach primes beyond 1/6.",
     "domains": [
       "Pythagorean",
@@ -4161,7 +4161,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T19:45:04.465776+00:00",
     "title": "Almost-Prime Goldbach Gap Conjecture"
   },
@@ -5132,7 +5132,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c19b86d",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domains": [
       "Cryptography",
@@ -5142,7 +5142,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
