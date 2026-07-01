@@ -2737,7 +2737,7 @@
       "Hadwiger-Nelson_problem",
       "Erdos_independence_ratio"
     ],
-    "consumed_by_exp_id": "f1070a48",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of points in the Euclidean plane such that the unit-distance graph induced by these points has independence ratio strictly less than 1/4. This answers Erdős's 1987 question negatively, disproves Conjecture 1 of Matolcsi-Ruzsa-Varga-Zsámboki, and implies that the fractional chromatic number of the plane χ_f(ℝ²) > 4.",
     "domain_bridges": [
       "measure_theory",
@@ -2755,7 +2755,7 @@
     "proof_strategy": "Three-step framework: (1) Prove the 29-vertex augmented unit-distance graph (G₂₇ plus two carefully chosen vertices) has geometric fractional chromatic number > 4 by characterizing all 23 extremal geometric fractional colorings of G₂₇ in an 11-dimensional affine space and showing none extend validly to the augmented vertices; (2) Use amenability of the Euclidean motion group to blow up the construction, obtaining unit-distance graphs with fractional chromatic number arbitrarily close to the geometric fractional chromatic number; (3) Apply a second blow-up via large discrete cubes in the additive lattice to push the independence ratio strictly below 1/4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T16:16:05.000362+00:00",
     "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/4"
   },
@@ -7440,6 +7440,37 @@
     "title": "Binomial p-ary sequences form a basis of periodic vector space"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "EL: P. Erd\\u0151s and L. Lov\\u00e1sz, On the minimum number of edges in intersecting hypergraphs, 1975.",
+      "Kahn: J. Kahn, Small‑codegree hypergraph edge‑colouring, 2020.",
+      "Tripathi: A. Tripathi, On the minimum size of intersecting hypergraphs, 2020.",
+      "Barat: J. Bar\\u00e1t, On intersecting hypergraphs with prescribed cover number, 2020.",
+      "Meyer: J. Meyer, The minimal size of maximal intersecting hypergraphs, 2021.",
+      "DDFL: J. Dow, J. Drake, Z. F\\u00f6redi, M. Larson, Lower bounds for maximal intersecting hypergraphs, 2022."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the extremal function g(r) (the minimum number of edges in an r‑uniform intersecting hypergraph with cover number r) satisfies the exact linear formula g(r) = ⌅(61/20 · r) for all sufficiently large r. In other words, the optimal linear constant is 61/20, and the ceiling of (61/20)r is attained for all large r.",
+    "domain_bridges": [
+      "formal verification of combinatorial theorems",
+      "machine‑checked proofs in Lean",
+      "algorithmic construction of extremal hypergraphs"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3049",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Develop explicit near‑optimal intersecting hypergraph families via cyclic shifts and Kahn's small‑codegree edge‑colouring to obtain an upper bound of (61/20 + ε) r for any ε > 0. Combine this construction with the existing lower‑bound techniques (degree peeling and small‑codegree colourings) to show that the ceiling of (61/20)r is attainable for all large r, establishing the exact linear term.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24878v1",
+    "status": "available",
+    "timestamp": "2026-07-01T19:44:22.203059+00:00",
+    "title": "Exact Asymptotic Formula for the Erdős–Lovász Cover Number Function g(r)"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -7456,7 +7487,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3049",
+    "id": "fd_3050",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the nilpotent group G into the direct product of its Sylow p-subgroups. Project the elements to the Sylow p-subgroup for the smallest prime p, and apply the paper's p-group theorem to find a permutation that makes the projected products distinct. Then, verify that this permutation (or a refined one) satisfies the distinctness condition for the full group, potentially using the abelian DKSS theorem on the remaining components.",
@@ -7484,7 +7515,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3050",
+    "id": "fd_3051",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To verify this conjecture, we will need to analyze the structure of odd Kneser graphs, their independence numbers, and apply techniques from strong chromatic index theory. Specifically, we will use the characterization of k-regular graphs with strong chromatic index 2k-1 by Lužar, Máčajová, Škoviera, and Soták. If we can show that O(2k-1,k) satisfies the necessary conditions, then it would imply that the strong chromatic index is indeed 2k-1.",
@@ -7513,7 +7544,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3051",
+    "id": "fd_3052",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
@@ -7544,7 +7575,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3052",
+    "id": "fd_3053",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
@@ -7574,7 +7605,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3053",
+    "id": "fd_3054",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the Szemerédi regularity lemma to the reduced graph of any dense non-(H,r)_v-Ramsey graph G with δ(G) ≥ (1−1/k)n where k = r(χ(H)−1). The reduced graph inherits the non-Ramsey property and has minimum degree at least (1−1/k)|R|. By an Andrásfai-type result, the reduced graph must be close to k-partite, which pulls back to show G is close to k-partite. The key difficulty is transferring the vertex-Ramsey property through the regularity lemma, which requires careful counting lemma arguments for monochromatic copies of H in the colored partition classes.",
@@ -7602,7 +7633,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3054",
+    "id": "fd_3055",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
@@ -7632,7 +7663,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3055",
+    "id": "fd_3056",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper establishes a connection to the Manickam-Miklós-Singhi (MMS) conjecture. A proof might proceed by: (1) reducing to the case of rational weights via density/continuity arguments, (2) mapping the weighted Bernoulli sum problem to counting k-subsets with non-negative sum (the MMS framework), (3) leveraging the proven MMS result for n ≥ 4k to establish the bound for sufficiently small p, and (4) handling the remaining range p ∈ (ε, 1/3] through additional probabilistic or combinatorial arguments. The coupling argument of Alon et al. already handles p = 1/n.",
@@ -7657,7 +7688,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3056",
+    "id": "fd_3057",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the discrete cube as (Fin n → ZMod 2), the Minkowski sum, and the definition of (γ, C)-well-spread sets (likely involving intersections with Hamming balls). Apply isoperimetric inequalities on the hypercube and properties of well-spread sets to bound the size of the Minkowski sum from below.",
@@ -7676,7 +7707,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3057",
+    "id": "fd_3058",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Convergence bounds via recursive bounds",
@@ -7703,7 +7734,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3058",
+    "id": "fd_3059",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k, characterizing the extremal counterexamples for n < (k choose 2) + 3 using structural hypergraph theory, and applying the absorbing method to embed the Berge tight cycles for n ≥ (k choose 2) + 3.",
@@ -7730,7 +7761,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3059",
+    "id": "fd_3060",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof uses the Chinese Remainder Theorem to split the congruence modulo $q^t p$ into independent conditions modulo $p$ and modulo $q^t$. The condition modulo $p$ is derived using Lucas' theorem and Fermat's Little theorem. The condition modulo $q^t$ is established by computing the $q$-adic valuation of the binomial coefficient using Legendre's formula, which reduces the problem to bounding the base-$q$ digit sum.",
@@ -7759,7 +7790,7 @@
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3060",
+    "id": "fd_3061",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Reformulate the visibility condition gcd(v − x) = 1 as a local condition: for all primes p, v ≢ x (mod p) in (ℤ/pℤ)ᵏ. 2. Apply the Chinese Remainder Theorem to decompose the joint condition v ∈ V_S ∩ (V_S − z) into independent conditions at each prime p: v (mod p) ∉ S_p ∪ (S−z)_p. 3. Compute each local factor as a finite counting problem in (ℤ/pℤ)ᵏ, yielding factor (1 − |S_p ∪ (S−z)_p|/pᵏ). 4. Prove convergence of the infinite Euler product using the bound |S_p ∪ (S−z)_p| ≤ 2|S| for all but finitely many p, combined with k ≥ 2 ensuring ∑_p 2|S|/pᵏ converges. 5. Rigorously justify the CRT-based density decomposition via inclusion-exclusion over primes and the uniform convergence of the partial products.",
@@ -7786,7 +7817,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3061",
+    "id": "fd_3062",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the game inductively as a tree of states, each tracking remaining unchosen players and current team compositions (membership lists). Define strategies as functions from game states to moves (which player to pick or which team to assign to). Prove the parity advantage by constructing explicit strategies: for even n, Alice uses a symmetric pairing strategy where she maintains a potential function based on deviations from the mean; for odd n, Bob uses a mirror strategy. The key lemma is that at each decision point, the advantaged player can make a move that preserves the invariant that their team's running sum stays at least (resp. at most) the pro-rated share of the total.",
@@ -7811,7 +7842,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3062",
+    "id": "fd_3063",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the sequence s_1(n) via its generating function or combinatorial interpretation, establish the equivalence to Andrews' strictly concave compositions, and verify the congruence using the refined parity analysis and q-series expansions modulo 4.",
@@ -7837,7 +7868,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3063",
+    "id": "fd_3064",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the core graph-theoretic notions (simple graph, d-regularity, proper d-edge-colouring, automorphism group, Aut-invariance) and group-theoretic notions (finite group, group isomorphism) in Lean 4. The proof proceeds constructively: given G and d, build Γ via a modified Sabidussi-type construction (e.g., using the Cayley colour graph of G with generating set carefully chosen to ensure d-regularity, then applying a replacement operation on edges to enforce both Aut(Γ) ≅ G and the existence of an Aut-invariant proper d-edge-colouring). The key difficulty is showing the modified construction preserves Aut(Γ) ≅ G while introducing the colouring structure. A secondary approach would formalize the corrected replacement lemma that fixes Sabidussi's oversight, showing that substituting coloured gadgets for edges of the Cayley graph preserves the automorphism group.",
@@ -7864,7 +7895,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3064",
+    "id": "fd_3065",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define discrete d-pseudomanifolds inductively, where a 1-pseudomanifold is defined as a cycle of length at least 4. Prove the base case for d=1 (minimum 4 vertices), and proceed by induction on d. The neighborhood of any vertex in a d-pseudomanifold forms a (d-1)-pseudomanifold, which by the inductive hypothesis has at least 2d vertices. A connectivity and regularity argument on the graph structure then bounds the total number of vertices from below by 2(d+1).",
@@ -7891,7 +7922,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3065",
+    "id": "fd_3066",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Strengthen the Delsarte LP feasible solution construction by replacing the Kloosterman-sum-based analysis with optimal eigenvalue bounds for the association scheme of the Euclidean quadratic form in even dimensions. Alternatively, combine the LP method with Fourier-analytic incidence estimates or develop a sharp spectral gap argument for the association scheme's dual eigenvalues to eliminate the 1/3 deficit.",
@@ -7916,7 +7947,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3066",
+    "id": "fd_3067",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish that the ratio $G_{n+1}/G_n$ is monotonically increasing by leveraging the asymptotic expansion of Bell numbers alongside the explicit lower bounds for the gap provided in the paper.",
@@ -7945,7 +7976,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3067",
+    "id": "fd_3068",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the delta symbol method to separate the variables n and m, then use the spectral decomposition of the space of square-integrable automorphic forms for SL_2(Z). The main terms are controlled by the orthogonality of cusp forms, and the error terms can be bounded by applying the Kuznetsov trace formula. This ultimately reduces the conjecture to establishing the generalized Lindelöf hypothesis for the triple product L-functions L(s, f × g × h).",
@@ -7972,7 +8003,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3068",
+    "id": "fd_3069",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the graph algebra 𝒜ₙ as the quotient of the polynomial ring k[x_{ij} | 1 ≤ i < j ≤ n] by the ideal (x_{ij}² - x_{ij} | 1 ≤ i < j ≤ n). Define edge-addition operators e_{ij} acting by (1 - x_{ij})· and edge-deletion operators d_{ij} acting by x_{ij}· on 𝒜ₙ. Verify the sl₂ relations for E = Σ e_{ij}, F = Σ d_{ij}, H = Σ h_{ij} where h_{ij} = e_{ij}d_{ij} - d_{ij}e_{ij}. Construct the explicit module isomorphism φ: V^⊗m → 𝒜ₙ by sending the tensor basis element ⊗_e v_e^{ε_e} to the monomial Π_{e} x_e^{ε_e}, and prove it intertwines the sl₂-actions. The key insight is that each edge position independently carries a copy of the standard sl₂-module V, with the coordinate x_{ij} tracking edge presence.",
@@ -7991,7 +8022,7 @@
       "Diophantine_geometry",
       "Frobenius_difference_equations"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f0b9c475",
     "description": "Let $E$ be a $d$-dimensional Anderson $t$-module defined over a finite extension $L$ of $K=\\mathbb{F}_q(\\theta)$, and let $P_1, \\dots, P_\\ell \\in E(L)$ be $L$-rational points. The $\\mathbb{F}_q[t]$-module of linear relations among these points is free of finite rank. We conjecture that there exists an explicit polynomial bound on the degrees of the generators of this relation module, specifically that the maximum degree of any generator is bounded by a polynomial function in $d$, $\\ell$, and the maximum of the logarithmic Weil heights of $P_1, \\dots, P_\\ell$. This serves as an effective analogue of Masser's relation module bounds for commutative algebraic groups.",
     "domain_bridges": [
       "Anderson t-modules",
@@ -8003,13 +8034,13 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3069",
+    "id": "fd_3070",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Translate the problem of finding generators for the $\\mathbb{F}_q[t]$-linear relations to the existence of polynomial solutions for Frobenius difference equations, as established in the paper. Then, apply effective height bounds for polynomial solutions of such difference equations using tools from algebraic geometry over global function fields to derive the explicit polynomial degree bound.",
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:40:11.183273+00:00",
     "title": "Explicit Degree Bound for Generators of $\\mathbb{F}_q[t]$-Linear Relations on $t$-Modules"
   },
@@ -8019,7 +8050,7 @@
       "cs.DM",
       "math.CO"
     ],
-    "consumed_by_exp_id": "f0b9c475",
+    "consumed_by_exp_id": "",
     "description": "Every plane triangulation on n vertices contains a P3-packing of size at least floor(n/5). This is the primary theorem for P3-packings established in the paper, proved by combining Barnette's theorem on spanning trees in 3-connected planar graphs with an inductive packing lemma on subcubic trees.",
     "domain_bridges": [
       "Planar Graphs",
@@ -8029,13 +8060,13 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3070",
+    "id": "fd_3071",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize Barnette's theorem to extract a spanning tree of maximum degree at most 3 from any triangulation. Then prove by induction on the number of vertices that any tree with maximum degree at most 3 contains a P3-packing of size at least floor(n/5), rooting the tree and extracting a minimal subtree of size between 3 and 5 to apply the inductive hypothesis. Finally, combine the two results to establish the bound for triangulations.",
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T19:04:14.554319+00:00",
     "title": "P3-Packing Lower Bound in Plane Triangulations"
   },
@@ -8059,7 +8090,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3071",
+    "id": "fd_3072",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Define self-reciprocal polynomials in Lean (coeff k = coeff (n - k)) and the Chebyshev transform Q via the identity P(x)/x^m = Q(x + 1/x), using the Chebyshev polynomial basis x^j + x^{-j} = S_j(u). 2) Prove existence and uniqueness of Q by expressing P(x)/x^m = Σ d_{m+j}(x^j + x^{-j}) + d_m = Σ d_{m+j} S_j(u) + d_m. 3) For forward direction: if |x| = 1, write x = e^{iθ}, then u = 2cos(θ) ∈ [-2,2] is real. 4) For reverse: if u ∈ [-2,2] is real, the quadratic x² - ux + 1 = 0 has roots with |x|² = 1 (discriminant u² - 4 ≤ 0 gives complex conjugate roots on the circle; u = ±2 gives x = ±1). 5) Combine multiplicity correspondence to establish the iff.",
@@ -8088,7 +8119,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3072",
+    "id": "fd_3073",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Improve the level of distribution of Goldbach primes from θ = 1/6 to θ = 1/4 by refining the bilinear sum estimates in the minor-arc analysis, then apply the weighted sieve of Richert with the stronger level to reduce the almost-prime order from 4 to 2. The key bottleneck is bounding the Type II exponential sums with well-factorable coefficients for the Goldbach prime set.",
@@ -8117,7 +8148,7 @@
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3073",
+    "id": "fd_3074",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow the author's strategy for split tori and extend: (1) Formalize that anabelomorphic p-adic fields yield isomorphic Langlands parameter stacks (Theorem 2.2.1), which holds because the parameter stack depends only on the absolute Galois group and the dual group Ĝ; (2) For split tori, the LLC reduces to local class field theory, which is anabelomorphically invariant by Neukirch–Uchida–Iwasawa–Ikeda theory; (3) For general reductive groups, the key obstacle is showing the excursion algebra and the central functor of Fargues-Scholze respect anabelomorphisms. A promising approach uses the geometric reformulation: show that the spectral action of the excursion algebra on ind-coherent sheaves on the stack of Langlands parameters is functorial with respect to anabelomorphisms of the base field, leveraging that Bun_G is defined purely in terms of the reductive group and the curve, while the spectral side depends only on the Galois group.",
@@ -8145,7 +8176,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3074",
+    "id": "fd_3075",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Decompose the random homomorphism at the root into contributions from independent root-to-leaf paths. On each path, the value evolves as a discrete random walk bridge. Use a discrete-to-continuous comparison argument: the variance of a discrete random walk bridge at time k conditioned on returning to 0 at time n dominates the variance k(n-k)/n of the corresponding Brownian bridge. Apply the superposition principle for effective resistance on trees to express R_eff(r,L) as a weighted combination of path resistances, and use independence across disjoint subtrees to establish the inequality.",
@@ -8172,7 +8203,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3075",
+    "id": "fd_3076",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture reduces to showing that non-simplicial chambers contribute enough mass to raise the average facet count above n+1. Since σ_n(f) = n+1 exactly for simplicial chambers and > n+1 otherwise, it suffices to prove that for n ≥ 2, the proportion of threshold functions that are non-simplicial times their average excess specification number is at least 1. One approach: use the resonance arrangement connection (Section 4 of the paper) to show that the average facet count of chambers in the arrangement given by 2^n lifted cube points equals σ̄_n, then prove via the Zaslavsky-type counting or direct chamber analysis that for n ≥ 2 at least two chambers are non-simplicial with excess ≥ 1. Alternatively, use the threshold zonotope vertex-degree interpretation: the average degree of the one-inclusion graph exceeds n+1 since the graph is not complete on any regular substructure for n ≥ 2.",
@@ -8198,7 +8229,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3076",
+    "id": "fd_3077",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit graph families realizing each coefficient value -k (k ≥ 5) by inductively modifying known Salem-realizing graphs—e.g., via suspension or vertex addition operations that increment |a₁| by one while preserving irreducibility and the Salem property—leveraging the clique-polynomial structure of P_Γ and the independence-polynomial obstructions developed in the paper.",
@@ -8228,7 +8259,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3077",
+    "id": "fd_3078",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The upper bound O(n^{4/3}) can be derived from Szemerédi-Trotter by viewing unit-distance pairs as incidences between points and unit circles, noting that two distinct unit circles share at most 2 points. Formalizing this in Lean requires the incidence bound for algebraic curves. The lower bound Ω(n^{4/3}) requires explicit construction of rational point families with many unit distances. The paper's algorithmic approach, based on local-breadth search over bounded rational neighborhoods rather than grid structures, provides candidate constructions. A proof would likely involve parametric families derived from the arithmetic of sums of two rational squares (generalized Pythagorean structures) and counting the resulting unit distances to establish the n^{4/3} growth rate.",
@@ -8255,7 +8286,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3078",
+    "id": "fd_3079",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the correspondence between strict r-term chains in the Boolean lattice and sequences of r distinct elements, then prove that the set of permutations with even inversion number covers all sequences of length n-2, and establish the matching lower bound using the layered bound or the properties of the alternating group.",
@@ -8283,7 +8314,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3079",
+    "id": "fd_3080",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the definitions of Weil height for algebraic points and curves, complex multiplication (CM) j-invariants, and non-special curves (those that are neither horizontal/vertical lines at singular moduli nor modular curves). The core of the proof requires formalizing the Pila-Wilkie counting theorem from o-minimality or Ax-Schanuel type transcendence results, which represents a major foundational undertaking currently absent from Mathlib.",
@@ -8310,7 +8341,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3080",
+    "id": "fd_3081",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the space of automorphic forms A(X) as z-finite and uniformly moderately growing smooth functions on X. Define the constant term and cusp forms A_0(X). Define the Eisenstein series E(s; z) and prove its meromorphic continuation. Prove the decomposition by analyzing the constant term of an automorphic form, subtracting the Laurent coefficients of E(s) to cancel the non-cuspidal growth, and applying Green's identity (Maass-Selberg relations) to show the remainder is a cusp form.",
@@ -8337,7 +8368,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3081",
+    "id": "fd_3082",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify the SIP decomposition of modulus 2 for 𝒪₂ by characterizing basis partitions (overpartitions in 𝒪₂ where non-overlined parts at odd positions also satisfy gap ≥ 2, and all parts have minimal residues mod 2). Compute the basis generating function B(n; q, z) by establishing a bijection between basis partitions with n parts and appropriate combinatorial objects weighted by q^{n²+n} and z^{a(λ)}. Then apply the SIP formula ∑ B(n; q, z) / (q²; q²)_n and verify equality with the stated q-series via Heine's transformation and limiting forms.",
@@ -8365,7 +8396,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_3082",
+    "id": "fd_3083",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the result via the rank-1 kernel structure connecting the inhomogeneous random graph to a Norros-Reittu model. Use branching process exploration from high-degree vertices: the local limit of the exploration process is a branching process whose offspring distribution has a power-law tail with exponent τ. In the supercritical regime p_n ≫ p_c, the survival probability of this branching process scales as p_n^{(τ-1)/(3-τ)}, giving the component size. Concentration is obtained via martingale methods and second moment bounds on the exploration process, leveraging the rank-1 structure of the kernel.",
@@ -8394,7 +8425,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3083",
+    "id": "fd_3084",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the sign-reversing involution on the combinatorial interpretation of the numerator, establishing that the surviving terms correspond to partitions classified by the generalized minimal-excludant. Then formalize the injection between consecutive invariant subsets via the lift operator on Frobenius arms composed with Konan's bijection, yielding the coefficientwise nonnegativity. Requires substantial infrastructure for q-series manipulations, q-Pochhammer products, and coefficient extraction in formal Laurent series.",
@@ -8424,7 +8455,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3084",
+    "id": "fd_3085",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt Harper's refinement of Soundararajan's moment method to the Dedekind zeta function setting. The key steps are: (1) Under GRH, establish a sharp upper bound for log|ζ_K(1/2+it)| in terms of a sum over prime ideals, where the sum scales as (n_K/2)log log T rather than (1/2)log log T; (2) Use the Galois structure to decompose ζ_K into Artin L-functions and handle the correlation structure between prime ideals lying above the same rational prime; (3) Apply the resonance method or modified second moment analysis to eliminate the ε-loss that appears in Soundararajan's original bound; (4) The factor n_K in the exponent arises because ∑_{𝔭} 1/N(𝔭) ~ n_K·log log T, which propagates through the k²-th power in the moment calculation.",
@@ -8448,7 +8479,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3085",
+    "id": "fd_3086",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structural properties of optimal 1-planar graphs, particularly their underlying quadrangulations and separating cycles. Extend the case analysis for connectivity 6 to connectivities 4 and 5, leveraging the absence of smaller cuts to construct vertex-disjoint connected subgraphs containing the prescribed subsets.",
@@ -8476,7 +8507,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3086",
+    "id": "fd_3087",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the linear independence matroid for a finite subset of a $k$-linear space, establish that the sufficient axiom guarantees this satisfies the matroid independence axioms, and then construct a bidirectional equivalence with the standard definition of matroids over perfect idylls via circuit axioms.",
@@ -8504,7 +8535,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3087",
+    "id": "fd_3088",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Riemann zeta function and its integral moments on the critical line. Define the Keating-Snaith arithmetic factor a_k via Euler products over primes. Establish the asymptotic lower bound by formalizing the two-piece amplified moment techniques and bounding the error terms unconditionally, avoiding the reliance on the Lindelöf Hypothesis.",
@@ -8531,7 +8562,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3088",
+    "id": "fd_3089",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the volume growth estimates and local convergence arguments used for the typical distance to control the maximum distance. Leverage the expander-like properties and isoperimetric inequalities of high-genus triangulations to bound the diameter from above by $(1+o(1))D_\\theta \\log n$, while the lower bound follows immediately from the typical distance result.",
@@ -8557,7 +8588,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3089",
+    "id": "fd_3090",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the law of quadratic reciprocity, which for $l \\equiv 3 \\pmod 4$ states $(l/p) = (p/l) (-1)^{(p-1)/2}$. Analyze the two cases for $p \\bmod 4$: if $p \\equiv 1 \\pmod 4$, $(-1)^{(p-1)/2} = 1$ and $(l/p) = (p/l)$; if $p \\equiv 3 \\pmod 4$, $(-1)^{(p-1)/2} = -1$ and $(l/p) = -(p/l)$. The result follows directly from these cases.",
@@ -8582,7 +8613,7 @@
     "domains": [
       "Logic"
     ],
-    "id": "fd_3090",
+    "id": "fd_3091",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "By contradiction. Assume two totally disjoint diametral paths P1 and P2 of length d exist in a tree. Let Q be the unique path in the tree connecting P1 and P2, of length c >= 1 (since they share no vertices). Let a and b be the distances from the endpoints of P1 and P2 to the endpoints of Q. The distance between the far endpoints of P1 and P2 is a + c + (d - b), which must be <= d. The distance between the other far endpoints is (d - a) + c + b, which must also be <= d. Summing these yields 2d + 2c <= 2d, so c <= 0, contradicting c >= 1.",
@@ -8611,7 +8642,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3091",
+    "id": "fd_3092",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the definitions of R-sequenceability, R*-sequenceability, R**-sequenceability, and the odd cycle index τ(G). Then establish the base case that τ(G) = 2 for cyclic groups of order coprime with 3. Prove the inductive bound τ(G) ≤ max{τ(N), τ(G/N)} for odd ordered groups with a normal subgroup N. Finally, apply the Quotient-Normal Gadget theorem to deduce the R-sequenceability for all groups of order coprime with 30.",
@@ -8638,7 +8669,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3092",
+    "id": "fd_3093",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To prove the 'only if' direction, demonstrate that if B contains an infinite pairwise coprime subset, the hereditary closure of the B-free subshift exhibits strong rigidity properties. This could involve extending the marker method or showing that the shift map generates the entire automorphism group up to finite index, analogous to known results for the square-free subshift (where B is the set of primes).",
@@ -8666,7 +8697,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3093",
+    "id": "fd_3094",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the exact read cost of the Plotkin-based conversion by analyzing which symbols from each initial block must be accessed during the merge. Then show this quantity equals the GHW-based universal lower bound by leveraging the known generalized Hamming weight hierarchy of Reed-Muller codes (Wei's results) and characterizing the subcode intersections C_F ∩ V_i where V_i are the coordinate subspaces of the two initial blocks. The key step is proving that for the second initial block, the subcode C_F ∩ V_2 has GHW structure that matches the accessed-symbol count from the Plotkin construction, closing the gap left by the minimum-distance-only argument.",
@@ -8694,7 +8725,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3094",
+    "id": "fd_3095",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial structure of the crystal B(ρ) and the properties of the lowering operators f_i to show that any ρ-dominant element can be uniquely expressed in the form f_D^nea(R) f_I^sea(R) u_ρ. This would involve analyzing the action of the crystal operators on the elements π_{D,I} and proving that they generate all ρ-dominant elements. Alternatively, use the connection with the PRV conjecture and the classification of highest weight vectors in L(ρ) ⊗ L(ρ).",
@@ -8724,7 +8755,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3095",
+    "id": "fd_3096",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Sato-Tate equidistribution framework: (1) Establish that the Zariski-density condition on the combined Galois representation forces the Sato-Tate group of the pair (f,f') to be USp(2) × USp(2), yielding independence; (2) Apply the generalized Sato-Tate conjecture (now a theorem for non-CM forms over totally real fields by Barnet-Lamb–Geraghty–Harris–Taylor) to the product L-function; (3) Derive equidistribution of (a_f(p), a_{f'}(p)) in [-2,2]² under the product Sato-Tate measure; (4) Push forward under the rational map (x,y) ↦ x/y and verify the pushforward measure is absolutely continuous with explicit density on ℝ ∪ {∞}; (5) Handle the measure-zero set {y = 0} separately via Chebotarev density.",
@@ -8753,7 +8784,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3096",
+    "id": "fd_3097",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the centralizer counting argument from the paper's alternative proof of the [n, b^q, n] case. For a fully uniform passport [a^p, b^q, c^r] with gcd(a,b)=gcd(b,c)=gcd(a,c)=1, bound the number of dessin automorphisms from above using centralizer orders in S_n, and show the number of generating triples with this passport strictly exceeds the total number of triples fixed by any nontrivial automorphism. The coprimality condition ensures that cycle structures arising from nontrivial automorphism actions cannot align with all three passport entries simultaneously, forcing a surplus of free orbits.",
@@ -8780,7 +8811,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3097",
+    "id": "fd_3098",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Generalize the circle/particle argument from the two-period proof to a three-particle system on the circle, combined with the splitting and weakening lemmas (Lemma 1) to reduce to finitely many critical triples of periods. Alternatively, adapt the authors' folding reduction and computer-search methodology to enumerate all critical instances with three distinct periods and density ≤ 1, proving schedulability for each.",
@@ -8809,7 +8840,7 @@
       "Pythagorean",
       "Bridges"
     ],
-    "id": "fd_3098",
+    "id": "fd_3099",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by structural induction on the tree T. For the base cases and inductive step, analyze the leaf-removal and branching structures. Show that any collision-free Cartesian 1-march of length l with p agents can be mapped to an independent set of size p (e.g., by considering the initial or a stabilized stage), and conversely, that a maximum independent set of size alpha(T) can be realized as the starting configuration for a valid collision-free march by systematically shifting agents along the bridges and branches.",
@@ -8838,7 +8869,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3099",
+    "id": "fd_3100",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Split into two directions. The 'if' direction: show that when min(s,t) ≤ min(u,v) and max(s,t) ≤ max(u,v), one can embed sA−tA into uA−vA using iterated sumset inclusions and the Plünnecke–Ruzsa inequality framework. The 'only if' direction: for each violation pattern, construct a finite set A ⊆ ℤ (generalizing Ruzsa's construction using sets of the form {0, 1, b, b+1, b², b²+1, ...} for large b) and rigorously compute |sA−tA| and |uA−vA| to show the inequality reverses. Key lemma: for the Ruzsa-type set A_b parameterized by b, compute exact formulas for |sA−tA| as polynomials in b, then show the dominant terms violate the inequality when the componentwise condition fails.",
@@ -8866,7 +8897,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_3100",
+    "id": "fd_3101",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the rank-two framework: (1) extend the Green–Papanikolas rank-one construction to analyze the Anderson motive M_φ for rank three, (2) show M_φ is generated by C(3,2)=3 choose 2 appropriate elements subject to quadratic τ-relations, (3) derive the moduli equation by imposing sign-normalization and analyzing the resulting constraints on the coefficients, and (4) verify the degree formula deg(π₃) = 2(q²+q+1)−1 = 2q²+2q+1 by analyzing the pole order at ∞ of the coordinate functions on E, using that the point ∞ has degree 2 on an elliptic curve.",
@@ -8892,7 +8923,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3101",
+    "id": "fd_3102",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to generalize the Breen–Moret-Bailly cubist extension technique from curves to higher-dimensional bases. Key obstacle: on curves, H^2 vanishing arguments guarantee uniqueness of cubist extensions; for higher-dimensional S, one needs control of H^2(A, O_A) or alternative cohomological vanishing. A potential approach uses MMP-type results for the total space A, or inducts on dimension via fibration structures on S. A counterexample might arise from non-trivial Brauer classes obstructing the extension of cubist structures.",
@@ -8914,7 +8945,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3102",
+    "id": "fd_3103",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a formal model of standard homomorphisms and verify injectivity under specified conditions.",
@@ -8943,7 +8974,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3103",
+    "id": "fd_3104",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalise complex hypergeometric 2F1 and square‑root with fixed branches in Lean (using mathlib). 2. Derive the cubic equation satisfied by α and β⁺ (they are solutions of the depressed cubic). 3. Use the argument principle or Rouché’s theorem to compare the arguments of the three roots and show that the root defined by α has maximal modulus and the one defined by β⁺ has minimal modulus under the sector conditions on A and √A. 4. Lift the result from the depressed cubic back to the original cubic by the translation t ↦ u – b/(3a). 5. Verify the conjecture for a dense set of parameters (e.g., rational p,q) to gain confidence.",
@@ -8970,7 +9001,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3104",
+    "id": "fd_3105",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the equivalence by (1) showing that any forest of size ≥ n+2 must contain the specified 6-vertex configuration, and (2) constructing a polynomial-time reduction from 3-Partition to the decision problem when the configuration is absent, establishing NP-completeness.",
@@ -8997,7 +9028,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3105",
+    "id": "fd_3106",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We will formalize weighted k‑cores and multi‑layer k‑cores as monotone Boolean functions over the vertex set. Using the definitions of propagation digraph and seed‑relation digraph from the paper, we will prove that for any such system the seed‑relation digraph has a unique source for each minimal removable set, i.e., the in‑dominating seed property holds. The proof proceeds by induction on the size of the core, leveraging the monotonicity of the core condition and degree thresholds. In Lean, we will build on mathlib’s simple_graph and monotone predicate infrastructure, define the auxiliary digraphs, and verify the property for arbitrary weight functions and inter‑layer constraints.",
@@ -9014,7 +9045,7 @@
       "Cayley graphs",
       "Skew morphisms"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1f3787a",
     "description": "For a regular Cayley map of skew-type three on a semidihedral group G, the core-free subgroup C in the skew-product decomposition of Aut(M) is trivial.",
     "domain_bridges": [
       "Finite group actions",
@@ -9023,13 +9054,13 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3106",
+    "id": "fd_3107",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the structural constraints imposed by skew-type three and semidihedral group properties to force C to be trivial.",
     "research_mode": "team",
     "source_exp_id": "2606.26570v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T13:06:15.949911+00:00",
     "title": "Triviality of the core-free subgroup in regular Cayley maps of skew-type three on semidihedral groups"
   },
@@ -9039,7 +9070,7 @@
       "Ryser1967",
       "Baranyai1975"
     ],
-    "consumed_by_exp_id": "a1f3787a",
+    "consumed_by_exp_id": "",
     "description": "For any integers n ≥ 2, 1 ≤ r ≤ s ≤ n with r < n, any k with 1 ≤ k ≤ n², any k‑tuple (ρ_ℓ) of positive integers summing to n², and any r×s partial array M over [k] satisfying the natural per‑row and per‑column upper bounds ⌈ρ_ℓ / n⌉ on the size of each symbol’s multiset in each filled cell and total multiplicity ≤ ρ_ℓ, there exists an n×n array N extending M such that each symbol ℓ appears exactly ρ_ℓ times in total and the counts of ℓ in any two rows (resp. columns) differ by at most one.",
     "domain_bridges": [
       "graph edge-coloring",
@@ -9048,13 +9079,13 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3107",
+    "id": "fd_3108",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using Baranyai's theorem on equipartitions of complete multipartite graphs, combined with careful balancing of row and column counts.",
     "research_mode": "team",
     "source_exp_id": "2606.26335v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T13:32:29.710233+00:00",
     "title": "Equitable rectangle extension conjecture"
   },
@@ -9077,7 +9108,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3108",
+    "id": "fd_3109",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct quasimodes (Gaussian beams) concentrated along closed geodesics on manifolds with totally geodesic submanifolds or products of spheres; use stationary phase to evaluate the L^2 norm of their product, revealing a logarithmic divergence arising from transverse intersections of the associated Lagrangian manifolds. Combine with known upper bounds (logarithmic loss) from multilinear oscillatory integral theory to show optimality.",
@@ -9103,7 +9134,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3109",
+    "id": "fd_3110",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Geometric construction using orthogonal vectors in rational vector spaces to produce maximal standard frames with prescribed minimal violation length 2k+2.",
@@ -9124,7 +9155,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3110",
+    "id": "fd_3111",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduce the equation to the quadratic form Q'(u,v,w)=3u^2+v^2+8w^2 with the congruence constraints u odd, v≡1 mod 6, and w≡1 mod 3, and then apply the descent argument and genus theory used for the original T+P+H case. The conjecture would follow once we establish that every integer congruent to 12 modulo 24 is primitively represented by Q' under these congruence conditions.",
@@ -9149,7 +9180,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3111",
+    "id": "fd_3112",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate that universal vertices in the decomposition can be colored with distinct colors, and core vertices inherit unique neighboring colors through structural properties of planar graphs.",
@@ -9169,7 +9200,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3112",
+    "id": "fd_3113",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Monotone transformation argument using Laplace kernels and convergence theorems",
@@ -9197,7 +9228,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3113",
+    "id": "fd_3114",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Using the analytic prismatic $F$-crystal attached to $\\mathcal{L}$, apply the purity theorem of Du‑Liu‑Moon‑Shimizu to descend the $E$-height condition along the finite étale cover. Show that the pulled‑back Breuil‑Kisin module inherits a uniform bound on the $E$-height, yielding $\\mathrm{ht}(f^*\\mathcal{L})\\le\\mathrm{ht}(\\mathcal{L})$.",
@@ -9224,7 +9255,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3114",
+    "id": "fd_3115",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize sieve-based prime counting on quadrics with parameter bounds",
@@ -9250,7 +9281,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3115",
+    "id": "fd_3116",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a finite ‘seed’ pair (x0, y0) over a small alphabet that realizes exactly m intersections in D_s and has a prescribed run density γ0. Then repeat this seed periodically to obtain long sequences x, y of length n whose total run count is at most γ n (by choosing the repetition rate appropriately). The deletions that contribute to D_t(x)∩D_t(y) essentially factor into independent choices from each block, giving a count asymptotic to (m γ^{t-s}/(t-s)!) n^{t-s}. A careful counting of cross‑block interactions shows that the lower bound holds up to any multiplicative 1‑ε factor for sufficiently large n.",
@@ -9277,7 +9308,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3116",
+    "id": "fd_3117",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the classification of tame symplectic groups on superspecial K3 surfaces (Ohashi–Schütt) to list candidates G_s. For each, compute the automorphism group of the associated Néron–Severi lattice with its discriminant form in characteristic p, determine the possible liftings of non-symplectic automorphisms via the Torelli theorem for superspecial K3 surfaces, and exhibit explicit extensions (e.g., binary icosahedral group extended by a sign) for p=2,3,5,7,11 via direct construction using equations of the superspecial K3 surface and checking invariance of the holomorphic 2-form.",
@@ -9303,7 +9334,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3117",
+    "id": "fd_3118",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish generating function identities using the Hardy-Ramanujan-Rademacher approach, then show they match the product formula for Dₖ(n).",
@@ -9329,7 +9360,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3118",
+    "id": "fd_3119",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on n the rank formula for the matroid structure on minimal generating sets of transfer systems for cyclic p-groups. Use the recursive structure of the subgroup lattice and apply the basis exchange axiom to verify the matroid properties.",
@@ -9356,7 +9387,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3119",
+    "id": "fd_3120",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "combinatorial construction of counterexample via trace analysis",
@@ -9365,6 +9396,32 @@
     "status": "available",
     "timestamp": "2026-07-01T19:25:36.063270+00:00",
     "title": "Uniform witness bound for missing traces"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Erdős Problem #593",
+      "Erdős Problem #1177"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the equivalence between the structural class $\\mathcal{B}$ (generated by private-vertex expansions of bipartite graphs via disjoint unions and one-point amalgamations) and the Levi-graph characterization for finite triple systems. Specifically, a finite triple system $F$ (with isolated vertices removed) is obligatory in every uncountably chromatic triple system if and only if its Levi graph is such that every hyperedge-node is incident to a bridge and all Berge cycles are even.",
+    "domain_bridges": [
+      "Graph Theory",
+      "Hypergraph Theory",
+      "Infinite Combinatorics"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3121",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof requires defining the Levi graph of a hypergraph and formalizing the concept of Berge cycles and bridges in the context of bipartite graphs. The goal is to prove the equivalence of the constructive definition (the class $\\mathcal{B}$) and the structural graph-theoretic properties of the Levi graph. This would involve induction on the size of the triple system and the application of properties of bipartite graphs.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24882v1",
+    "status": "available",
+    "timestamp": "2026-07-01T19:45:33.412235+00:00",
+    "title": "Characterization of Obligatory Finite Triple Systems via Levi Graph Properties"
   },
   {
     "ambition_level": "extension",
