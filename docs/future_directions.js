@@ -3131,7 +3131,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s Binary Product Conjecture for Primes"
   },
   {
-    "consumed_by_exp_id": "23a5c510",
+    "consumed_by_exp_id": "",
     "description": "For the Fibonacci numeration system $U$ with standard initial conditions (where $u_0=1, u_1=2$), the topological group $\\mathbb{Z}_U$, constructed as the completion of $\\mathbb{Z}$ under the pseudo-valuation $\\nu_U$, is continuously isomorphic to the circle group $\\mathbb{R}/\\mathbb{Z}$. This is a specific instance of the paper's main theorem where the Pisot number is the golden ratio (unimodular, degree 2).",
     "domains": [
       "Algebra",
@@ -3141,7 +3141,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T11:59:08.845373+00:00",
     "title": "Fibonacci Numeration Group is the Circle Group"
   },
@@ -3218,7 +3218,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sieve Integral Rational Polytope Algebraicity Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d7e9099",
     "description": "The paper proves that for a multiset P of n real numbers summing to zero (not all zero) and 1 \u2264 k < n, the Shannon entropy of X_P (the sum of k elements sampled uniformly without replacement from P) satisfies H(X_P) \u2265 H(Ber(k/n)). This conjecture asserts that the same inequality holds for R\u00e9nyi entropy of order 2 (collision entropy): H\u2082(X_P) \u2265 H\u2082(Ber(k/n)), equivalently, the collision probability of X_P is at most (k/n)\u00b2 + (1\u2212k/n)\u00b2. Equality is achieved when P consists of one large positive value and n\u22121 equal negative values (e.g., P = {(n\u22121), \u22121, \u2026, \u22121}), since then X_P is a scaled Bernoulli variable. The conjecture fails for min-entropy (\u03b1 \u2192 \u221e), as demonstrated by P = {1,1,\u22121,\u22121} with k=2 where max probability = 2/3 > 1/2, so the threshold \u03b1 \u2264 2 is natural.",
     "domains": [
       "Pythagorean",
@@ -3228,7 +3228,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30486v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:57:07.277044+00:00",
     "title": "Entropic MMS for R\u00e9nyi Entropy of Order 2 (Collision Entropy)"
   },
@@ -3700,7 +3700,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b67d03fd",
     "description": "For any normalized Hecke eigenform f of weight \u03ba for SL(2,Z), integers j \u2265 1, k \u2265 2, h \u2265 1, q \u2265 1, and even m \u2208 {2,4,6,8,10,12}, and any k-full kernel function a: \u2115 \u2192 \u2115 with a(n) \u226a n^\u03b5 for all \u03b5 > 0, the shifted convolution sum S(x) = \u2211_{n \u2264 x, n \u2261 1 (mod q), n \u2208 S_m} a(n) \u00b7 \u03bb_{sym^j f}(n + h) \u2014 where S_m denotes the set of integers representable as a sum of m squares \u2014 admits an asymptotic formula S(x) = M(x) + O(x^{1-\u03b4}) with an explicit main term M(x) satisfying M(x) \u226b x and a power-saving error term with \u03b4 > 0 depending on j, k, m, q, and h. This extends the L\u00fc\u2013Wang result (j = 1, k = 2) and the Venkatasubbareddy\u2013Sankaranarayanan generalization to arbitrary symmetric power L-functions.",
     "domains": [
       "Pythagorean",
@@ -3710,7 +3710,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T12:42:50.216839+00:00",
     "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
   },
@@ -4178,7 +4178,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
   {
-    "consumed_by_exp_id": "2a925487",
+    "consumed_by_exp_id": "",
     "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
     "domains": [
       "Algebra"
@@ -4187,7 +4187,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:01.987080+00:00",
     "title": "Frankl's Union-Closed Conjecture"
   },
@@ -4901,7 +4901,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Strategy Mining from Deep Mathematics"
   },
   {
-    "consumed_by_exp_id": "adbfcd0f",
+    "consumed_by_exp_id": "",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domains": [
       "Geometry",
@@ -4911,7 +4911,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.310599+00:00",
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },

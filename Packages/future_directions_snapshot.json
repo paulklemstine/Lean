@@ -5428,7 +5428,7 @@
       "Topological_groups",
       "Numeration_systems"
     ],
-    "consumed_by_exp_id": "23a5c510",
+    "consumed_by_exp_id": "",
     "description": "For the Fibonacci numeration system $U$ with standard initial conditions (where $u_0=1, u_1=2$), the topological group $\\mathbb{Z}_U$, constructed as the completion of $\\mathbb{Z}$ under the pseudo-valuation $\\nu_U$, is continuously isomorphic to the circle group $\\mathbb{R}/\\mathbb{Z}$. This is a specific instance of the paper's main theorem where the Pisot number is the golden ratio (unimodular, degree 2).",
     "domain_bridges": [
       "Topology",
@@ -5445,7 +5445,7 @@
     "proof_strategy": "Define the Fibonacci numeration system and its pseudo-valuation, construct the completion $\\mathbb{Z}_U$ as a topological group, define the evaluation map $\\tau_U$ using the non-trivial Galois conjugate of the golden ratio ($\\phi' = 1-\\phi$), and prove it is a continuous group isomorphism to $\\mathbb{R}/\\mathbb{Z}$.",
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T11:59:08.845373+00:00",
     "title": "Fibonacci Numeration Group is the Circle Group"
   },
@@ -5600,7 +5600,7 @@
       "math.PR",
       "cs.IT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d7e9099",
     "description": "The paper proves that for a multiset P of n real numbers summing to zero (not all zero) and 1 ≤ k < n, the Shannon entropy of X_P (the sum of k elements sampled uniformly without replacement from P) satisfies H(X_P) ≥ H(Ber(k/n)). This conjecture asserts that the same inequality holds for Rényi entropy of order 2 (collision entropy): H₂(X_P) ≥ H₂(Ber(k/n)), equivalently, the collision probability of X_P is at most (k/n)² + (1−k/n)². Equality is achieved when P consists of one large positive value and n−1 equal negative values (e.g., P = {(n−1), −1, …, −1}), since then X_P is a scaled Bernoulli variable. The conjecture fails for min-entropy (α → ∞), as demonstrated by P = {1,1,−1,−1} with k=2 where max probability = 2/3 > 1/2, so the threshold α ≤ 2 is natural.",
     "domain_bridges": [
       "information_theory",
@@ -5617,7 +5617,7 @@
     "proof_strategy": "Adapt the Schur-concavity and majorization arguments from the paper. The key steps would be: (1) Show that H₂(X_P) is Schur-concave in the probability vector of X_P; (2) Reduce to the case where P has a specific extremal structure (e.g., two-valued multisets) using majorization; (3) For two-valued multisets {a,…,a,b,…,b} with ka+(n−k)b=0, X_P is a scaled hypergeometric variable—prove that H₂ is minimized when the hypergeometric reduces to Bernoulli (i.e., when one value appears exactly once); (4) Alternatively, use the data-processing inequality for Rényi divergence under suitable channels, extending the information-theoretic approach.",
     "research_mode": "team",
     "source_exp_id": "2606.30486v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:57:07.277044+00:00",
     "title": "Entropic MMS for Rényi Entropy of Order 2 (Collision Entropy)"
   },
@@ -6502,7 +6502,7 @@
       "11L40",
       "11N37"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b67d03fd",
     "description": "For any normalized Hecke eigenform f of weight κ for SL(2,Z), integers j ≥ 1, k ≥ 2, h ≥ 1, q ≥ 1, and even m ∈ {2,4,6,8,10,12}, and any k-full kernel function a: ℕ → ℕ with a(n) ≪ n^ε for all ε > 0, the shifted convolution sum S(x) = ∑_{n ≤ x, n ≡ 1 (mod q), n ∈ S_m} a(n) · λ_{sym^j f}(n + h) — where S_m denotes the set of integers representable as a sum of m squares — admits an asymptotic formula S(x) = M(x) + O(x^{1-δ}) with an explicit main term M(x) satisfying M(x) ≫ x and a power-saving error term with δ > 0 depending on j, k, m, q, and h. This extends the Lü–Wang result (j = 1, k = 2) and the Venkatasubbareddy–Sankaranarayanan generalization to arbitrary symmetric power L-functions.",
     "domain_bridges": [
       "Modular forms",
@@ -6520,7 +6520,7 @@
     "proof_strategy": "Combine the Hecke relation λ_{sym^j f}(n) = ∑_{d|n} ψ_j(d) λ_f(n/d) for suitable coefficients ψ_j with Voronoi-type summation over sums of m squares restricted to arithmetic progressions, apply the circle method to handle the additive constraint n ≡ 1 (mod q) over S_m, use the multiplicative structure of k-full kernel functions via Dirichlet series factorization a(n) = a(a₂(n)) separating k-free and k-full parts, and invoke subconvexity bounds for L(s, sym^j f × g) over conductor ranges arising from the spectral decomposition to obtain the power-saving δ > 0.",
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T12:42:50.216839+00:00",
     "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
   },
@@ -7387,7 +7387,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2a925487",
+    "consumed_by_exp_id": "",
     "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
     "domain_bridges": [],
     "domains": [
@@ -7399,7 +7399,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:01.987080+00:00",
     "title": "Frankl's Union-Closed Conjecture"
   },
@@ -8355,7 +8355,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "adbfcd0f",
+    "consumed_by_exp_id": "",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domain_bridges": [],
     "domains": [
@@ -8368,7 +8368,7 @@
     "proof_strategy": "Derive the stereographic Fourier transform explicitly. The key formula: F(f)(k) = integral over S^n f(x) * (1+|phi(x)|^2)^{-n/2} * exp(-2 pi i phi(x) dot k) d sigma(x) where phi is stereographic projection. Prove it is an isometry using the conformal factor (1+|x|^2)^2/4 that relates the spherical and Euclidean metrics. Show spherical harmonics Y_l^m map to generalized Hermite functions with radial profile r^l * (1+r^2)^{-(l+n/2)} * L_k^{l+n/2-1}(2r^2/(1+r^2)) where L are Laguerre polynomials. Test: compute F(Y_1^0) explicitly for n=2 and verify it is a multiple of the Hermite function H_1.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.310599+00:00",
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },
