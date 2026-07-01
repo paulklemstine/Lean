@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-01T22:05:50.576337+00:00",
+  "last_updated": "2026-07-01T22:24:10.956005+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -25236,6 +25236,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-01T22:05:50.264897+00:00",
       "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 129,
+      "domain": "Novelty",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "ea755e35",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782939547.0988483,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-01T22:24:10.344540+00:00",
+      "title": "Conjecture: Path Independence Implies Existence of a Unique Exact Potential"
     }
   ]
 }
