@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "15963379",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Monotone Circuit Complexity\n\nDerived from the v19 research cycle that produced `Basic.lean`,\n`KarchmerWigderson.lean`, and `Clique.lean`. The cycle established: monotone\ncircuits",
-      "quality_score": 0.6772,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-26T22:40:52",
-      "title": "Circuit Complexity: Monotone Lower Bounds"
-    },
-    {
       "cycle_id": "3ffd492f",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Density Thresholds for Linear `r`-Uniform Hypergraphs\n\nBuilding on `LinearHypergraphDensityThreshold.lean`, which proves the sharp pair-counting bound\n`m · C(r,2) ≤ C(n,2)` for li",
@@ -2501,6 +2491,16 @@
       "theorem_count": 26,
       "timestamp": "2026-07-01T17:18:06",
       "title": "Learning with Errors: Hardness Reductions"
+    },
+    {
+      "cycle_id": "33af5349",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Spectral Geometry of the Hypercube and Sensitivity\n\nThis cycle established the spectral core of Huang's method: a recursively defined signed\nadjacency matrix of the `n`-cube that",
+      "quality_score": 0.48355851612903233,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-01T17:45:13",
+      "title": "Sensitivity Conjecture Extensions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7232000000000001
     }
   ],
-  "last_updated": "2026-07-01T17:18:06",
+  "last_updated": "2026-07-01T17:45:13",
   "open_questions": [
     {
       "context": "",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "d5789bd5",
-        "quality": 0.69248,
-        "theorems": 14,
-        "title": "Quantum Key Distribution: BB84 Security Proof"
-      },
-      {
         "cycle_id": "805dbd7c",
         "quality": 0.32121642086956526,
         "theorems": 9,
@@ -3079,6 +3073,12 @@
         "quality": 0.6049599999999999,
         "theorems": 13,
         "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+      },
+      {
+        "cycle_id": "33af5349",
+        "quality": 0.48355851612903233,
+        "theorems": 13,
+        "title": "Sensitivity Conjecture Extensions"
       }
     ],
     "Applications": [
