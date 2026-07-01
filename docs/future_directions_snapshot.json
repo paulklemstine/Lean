@@ -1367,7 +1367,7 @@
       "de_Grey_chromatic_number",
       "Erdos_independence_ratio_problem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5cb827b",
     "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
     "domain_bridges": [
       "linear_programming",
@@ -1383,7 +1383,7 @@
     "proof_strategy": "Formalize the 27-vertex configuration G_27 as an explicit point set in R^2 with its unit-distance graph structure. Define geometric fractional chromatic number as the optimum of a linear program over Borel measurable vertex-weighting functions. Characterize the 23 extremal geometric fractional colorings of G_27 as vertices of an 11-dimensional polytope (the key computational step). Show that for the specific two-vertex augmentation, every optimal coloring of G_27 forces a constraint violation on the new vertices, implying the LP optimum must strictly exceed 4. The polytope characterization reduces the verification to checking constraints at finitely many extremal points.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:01:41.266053+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
@@ -2737,7 +2737,7 @@
       "Hadwiger-Nelson_problem",
       "Erdos_independence_ratio"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f1070a48",
     "description": "There exists a finite set of points in the Euclidean plane such that the unit-distance graph induced by these points has independence ratio strictly less than 1/4. This answers Erdős's 1987 question negatively, disproves Conjecture 1 of Matolcsi-Ruzsa-Varga-Zsámboki, and implies that the fractional chromatic number of the plane χ_f(ℝ²) > 4.",
     "domain_bridges": [
       "measure_theory",
@@ -2755,7 +2755,7 @@
     "proof_strategy": "Three-step framework: (1) Prove the 29-vertex augmented unit-distance graph (G₂₇ plus two carefully chosen vertices) has geometric fractional chromatic number > 4 by characterizing all 23 extremal geometric fractional colorings of G₂₇ in an 11-dimensional affine space and showing none extend validly to the augmented vertices; (2) Use amenability of the Euclidean motion group to blow up the construction, obtaining unit-distance graphs with fractional chromatic number arbitrarily close to the geometric fractional chromatic number; (3) Apply a second blow-up via large discrete cubes in the additive lattice to push the independence ratio strictly below 1/4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T16:16:05.000362+00:00",
     "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/4"
   },
@@ -3243,7 +3243,7 @@
       "poset_automorphism_groups",
       "minimum_realization_number"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c732c146",
     "description": "For every positive integer n ≥ 1, the minimum number of elements in a poset whose automorphism group is isomorphic to Z₂ × Z_{2^n} equals 2^{n+1} + 2. This extends the paper's main theorem from n ≥ 3 to all n ≥ 1, covering the previously unresolved cases n = 1 (Klein four-group) and n = 2.",
     "domain_bridges": [
       "finite_group_theory",
@@ -3258,7 +3258,7 @@
     "proof_strategy": "The upper bound β(Z₂ × Z_{2^n}) ≤ 2^{n+1} + 2 follows from Proposition 1 of the paper combined with the known result β(Z_{2^n}) = 2^{n+1}. The lower bound for n = 1 and n = 2 can be established by exhaustive computational verification: check that no poset on 2^{n+1} + 1 elements (5 elements for n=1, 9 elements for n=2) has automorphism group isomorphic to Z₂ × Z_{2^n}. The n=1 case (β(V₄) = 6) is particularly tractable via brute-force enumeration of all posets on 5 elements.",
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:27.243667+00:00",
     "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
   },
@@ -3719,7 +3719,7 @@
       "Rademacher_expansions",
       "q_series"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6eb8a0a9",
     "description": "Let ρ(q) = Σ_{m≥0} q^{2m(m+1)} / Π_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = Σ_{n≥0} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n ≥ 0: r(3n) > 0, r(3n+1) ≤ 0, and r(3n+2) ≤ 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n ∈ {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n ∈ {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domain_bridges": [
       "analytic_number_theory ↔ formal_power_series_coefficients",
@@ -3735,7 +3735,7 @@
     "proof_strategy": "The asymptotic sign law is proven via Watson's identity 2ρ(q) + ω(q) = T(q) combined with Rademacher-type expansions for ω(q) and the theta-eta product T(q), yielding r(n) ~ κ_{n mod 3} · (2π)/(12n+8)^{1/4} · I_{1/2}(π√(12n+8)/18) where κ₀ > 0, κ₁ < 0, κ₂ < 0. To prove the exact finite conjecture, one must: (1) make the error term in the Rademacher expansion fully effective with explicit constants, yielding an explicit N₀ such that the sign law holds for all n ≥ N₀; (2) computationally verify all cases n < N₀. The effective bound requires careful tracking of all error terms in the circle method analysis, similar to effective Rademacher bounds for partition ranks.",
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ(q)"
   },
@@ -5175,7 +5175,7 @@
       "Riemann xi function",
       "self-adjoint extension theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "32f1634b",
     "description": "The Berry-Keating Hamiltonian H_BK = (xp + px)/2 on L²(ℝ⁺), when equipped with a suitable self-adjoint extension satisfying the appropriate boundary condition, has spectrum {λ_n} such that λ_n = t_n² + 1/4, where ρ_n = 1/2 + it_n ranges over the non-trivial zeros of the Riemann zeta function. This would verify the Hilbert-Pólya conjecture for this specific operator and imply the Riemann Hypothesis, since self-adjoint operators have real eigenvalues, forcing all t_n to be real and thus all ρ_n to lie on Re(s) = 1/2.",
     "domain_bridges": [
       "spectral theory of unbounded operators ↔ analytic number theory",
@@ -5192,7 +5192,7 @@
     "proof_strategy": "1) Define H_BK = (xp+px)/2 rigorously as an unbounded operator on L²(ℝ⁺) with domain specified by boundary conditions. 2) Prove existence and uniqueness of the self-adjoint extension using von Neumann deficiency index theory. 3) Compute the trace of the resolvent Tr((H_BK - s(s-1))⁻¹) via the Gutzwiller trace formula for this Hamiltonian. 4) Show via analytic continuation that the spectral zeta function ζ_{H_BK}(s) equals the Riemann xi function ξ(s). 5) Conclude spectral correspondence via the equality of zeta-regularized spectral determinants: det_ζ(H_BK - s(s-1)I) = ξ(s).",
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T09:11:33.770269+00:00",
     "title": "Berry-Keating Hamiltonian Spectrum Corresponds to Riemann Zeta Non-Trivial Zeros"
   },
@@ -7397,7 +7397,7 @@
       "11F30",
       "11E25"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acbfd883",
     "description": "For any normalised Hecke eigenform f of even weight k ≥ 2 for SL(2,ℤ), any positive integer j, and any even integer m ≥ 2, the Dirichlet coefficients λ_{sym^j f}(n) exhibit infinitely many sign changes as n ranges over integers representable as a sum of m squares. That is, the sets {n : n is a sum of m squares and λ_{sym^j f}(n) > 0} and {n : n is a sum of m squares and λ_{sym^j f}(n) < 0} are both infinite. This extends the paper's result (which covers 2 ≤ m ≤ 12) to all even m ≥ 2.",
     "domain_bridges": [
       "Modular Forms",
@@ -7414,7 +7414,7 @@
     "proof_strategy": "Extend the circle method and spectral arguments from the paper's treatment of 2 ≤ m ≤ 12 to general even m ≥ 2. The key steps are: (1) establish uniform asymptotic formulas for the second moment Σ_{n≤X, n = sum of m squares} λ²_{sym^j f}(n) for all even m, using the fact that the theta series for sums of m squares is a modular form of weight m/2 for all even m; (2) derive upper bounds for the first moment Σ_{n≤X, n = sum of m squares} λ_{sym^j f}(n) that are of smaller order than the square root of the second moment; (3) combine these to conclude sign changes via the standard argument that if all coefficients had the same sign beyond some point, the first moment would be comparable to the second moment. The obstruction for large m is controlling error terms uniformly in m, which requires careful uniform estimates in the circle method setup.",
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T12:22:21.874221+00:00",
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
   },
@@ -8140,7 +8140,7 @@
       "math.CO:06A07",
       "math.CO:05A05"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21b9f7f8",
     "description": "For integers $1 \\le r \\le n+1$, let $N(n,r)$ denote the minimum number of maximal chains in the Boolean lattice $B_n$ required to cover every strict $r$-term chain. The paper proves a general upper bound $N(n,n-t) \\le n!/t$ using the inversion number of permutations modulo $t$, and shows it is exact for $t=2$. This conjecture posits the exact value $N(n,n-2) = n!/2$ for all $n \\ge 2$, which is equivalent to stating that the set of permutations of $[n]$ with an even number of inversions (the alternating group $A_n$) covers all strict $(n-2)$-term chains, and no smaller set of permutations can do so.",
     "domain_bridges": [
       "Permutation statistics",
@@ -8156,7 +8156,7 @@
     "proof_strategy": "Formalize the correspondence between strict r-term chains in the Boolean lattice and sequences of r distinct elements, then prove that the set of permutations with even inversion number covers all sequences of length n-2, and establish the matching lower bound using the layered bound or the properties of the alternating group.",
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T21:36:09.655202+00:00",
     "title": "Exact Value of Near-Maximal Chain Covering Number for t=2"
   },
@@ -8909,7 +8909,7 @@
       "Cayley graphs",
       "Skew morphisms"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fa2ac2e4",
     "description": "For a regular Cayley map of skew-type three on a semidihedral group G, the core-free subgroup C in the skew-product decomposition of Aut(M) is trivial.",
     "domain_bridges": [
       "Finite group actions",
@@ -8924,7 +8924,7 @@
     "proof_strategy": "Analyze the structural constraints imposed by skew-type three and semidihedral group properties to force C to be trivial.",
     "research_mode": "team",
     "source_exp_id": "2606.26570v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T13:06:15.949911+00:00",
     "title": "Triviality of the core-free subgroup in regular Cayley maps of skew-type three on semidihedral groups"
   },

@@ -970,7 +970,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5cb827b",
     "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
     "domains": [
       "Geometry"
@@ -979,7 +979,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:01:41.266053+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
@@ -1711,7 +1711,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Size of Posets Realizing $\\mathbb{Z}_2^k \\times \\mathbb{Z}_{2^n}$ as Automorphism Groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f1070a48",
     "description": "There exists a finite set of points in the Euclidean plane such that the unit-distance graph induced by these points has independence ratio strictly less than 1/4. This answers Erd\u0151s's 1987 question negatively, disproves Conjecture 1 of Matolcsi-Ruzsa-Varga-Zs\u00e1mboki, and implies that the fractional chromatic number of the plane \u03c7_f(\u211d\u00b2) > 4.",
     "domains": [
       "Pythagorean"
@@ -1720,7 +1720,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T16:16:05.000362+00:00",
     "title": "Existence of a finite unit-distance graph in R\u00b2 with independence ratio below 1/4"
   },
@@ -1987,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Combinatorial Nerve Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c732c146",
     "description": "For every positive integer n \u2265 1, the minimum number of elements in a poset whose automorphism group is isomorphic to Z\u2082 \u00d7 Z_{2^n} equals 2^{n+1} + 2. This extends the paper's main theorem from n \u2265 3 to all n \u2265 1, covering the previously unresolved cases n = 1 (Klein four-group) and n = 2.",
     "domains": [
       "Algebra"
@@ -1996,7 +1996,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:27.243667+00:00",
     "title": "\u03b2(Z\u2082 \u00d7 Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
   },
@@ -2235,7 +2235,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Skeleton-Coskeleton Determination for Regular Maniplexes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6eb8a0a9",
     "description": "Let \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n \u2208 {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n \u2208 {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domains": [
       "Bridges"
@@ -2244,7 +2244,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function \u03c1(q)"
   },
@@ -3000,7 +3000,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convex Position Minimizes Plane Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "32f1634b",
     "description": "The Berry-Keating Hamiltonian H_BK = (xp + px)/2 on L\u00b2(\u211d\u207a), when equipped with a suitable self-adjoint extension satisfying the appropriate boundary condition, has spectrum {\u03bb_n} such that \u03bb_n = t_n\u00b2 + 1/4, where \u03c1_n = 1/2 + it_n ranges over the non-trivial zeros of the Riemann zeta function. This would verify the Hilbert-P\u00f3lya conjecture for this specific operator and imply the Riemann Hypothesis, since self-adjoint operators have real eigenvalues, forcing all t_n to be real and thus all \u03c1_n to lie on Re(s) = 1/2.",
     "domains": [
       "Pythagorean",
@@ -3010,7 +3010,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T09:11:33.770269+00:00",
     "title": "Berry-Keating Hamiltonian Spectrum Corresponds to Riemann Zeta Non-Trivial Zeros"
   },
@@ -4182,7 +4182,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Strong Edge-Colorings of Odd Kneser Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acbfd883",
     "description": "For any normalised Hecke eigenform f of even weight k \u2265 2 for SL(2,\u2124), any positive integer j, and any even integer m \u2265 2, the Dirichlet coefficients \u03bb_{sym^j f}(n) exhibit infinitely many sign changes as n ranges over integers representable as a sum of m squares. That is, the sets {n : n is a sum of m squares and \u03bb_{sym^j f}(n) > 0} and {n : n is a sum of m squares and \u03bb_{sym^j f}(n) < 0} are both infinite. This extends the paper's result (which covers 2 \u2264 m \u2264 12) to all even m \u2265 2.",
     "domains": [
       "Bridges"
@@ -4191,7 +4191,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T12:22:21.874221+00:00",
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
   },
@@ -4573,7 +4573,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unit Distance Density in Q\u00b2 is \u0398(n^{4/3})"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21b9f7f8",
     "description": "For integers $1 \\le r \\le n+1$, let $N(n,r)$ denote the minimum number of maximal chains in the Boolean lattice $B_n$ required to cover every strict $r$-term chain. The paper proves a general upper bound $N(n,n-t) \\le n!/t$ using the inversion number of permutations modulo $t$, and shows it is exact for $t=2$. This conjecture posits the exact value $N(n,n-2) = n!/2$ for all $n \\ge 2$, which is equivalent to stating that the set of permutations of $[n]$ with an even number of inversions (the alternating group $A_n$) covers all strict $(n-2)$-term chains, and no smaller set of permutations can do so.",
     "domains": [
       "Algebra",
@@ -4583,7 +4583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T21:36:09.655202+00:00",
     "title": "Exact Value of Near-Maximal Chain Covering Number for t=2"
   },
@@ -4980,7 +4980,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "In\u2011Dominating Seed Property for Weighted and Multi\u2011Layer k\u2011Cores"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fa2ac2e4",
     "description": "For a regular Cayley map of skew-type three on a semidihedral group G, the core-free subgroup C in the skew-product decomposition of Aut(M) is trivial.",
     "domains": [
       "Algebra"
@@ -4989,7 +4989,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26570v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T13:06:15.949911+00:00",
     "title": "Triviality of the core-free subgroup in regular Cayley maps of skew-type three on semidihedral groups"
   },
