@@ -1711,7 +1711,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Size of Posets Realizing $\\mathbb{Z}_2^k \\times \\mathbb{Z}_{2^n}$ as Automorphism Groups"
   },
   {
-    "consumed_by_exp_id": "f1070a48",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of points in the Euclidean plane such that the unit-distance graph induced by these points has independence ratio strictly less than 1/4. This answers Erd\u0151s's 1987 question negatively, disproves Conjecture 1 of Matolcsi-Ruzsa-Varga-Zs\u00e1mboki, and implies that the fractional chromatic number of the plane \u03c7_f(\u211d\u00b2) > 4.",
     "domains": [
       "Pythagorean"
@@ -1720,7 +1720,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T16:16:05.000362+00:00",
     "title": "Existence of a finite unit-distance graph in R\u00b2 with independence ratio below 1/4"
   },
@@ -1987,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Combinatorial Nerve Theorem"
   },
   {
-    "consumed_by_exp_id": "c732c146",
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n \u2265 1, the minimum number of elements in a poset whose automorphism group is isomorphic to Z\u2082 \u00d7 Z_{2^n} equals 2^{n+1} + 2. This extends the paper's main theorem from n \u2265 3 to all n \u2265 1, covering the previously unresolved cases n = 1 (Klein four-group) and n = 2.",
     "domains": [
       "Algebra"
@@ -1996,7 +1996,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T20:19:27.243667+00:00",
     "title": "\u03b2(Z\u2082 \u00d7 Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
   },
@@ -2235,7 +2235,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Skeleton-Coskeleton Determination for Regular Maniplexes"
   },
   {
-    "consumed_by_exp_id": "6eb8a0a9",
+    "consumed_by_exp_id": "",
     "description": "Let \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{j=0}^{m} (1+q^{2j+1}+q^{4j+2}) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third-order mock theta function. Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. Moreover, the only zeros in the latter two families occur at n = 2, 4, 8, 11, 20, i.e., r(3n+1) = 0 iff n \u2208 {0, 1} (giving n=1,4) and r(3n+2) = 0 iff n \u2208 {0, 2, 6} (giving n=2,8,20), with the single exception r(11) = 0.",
     "domains": [
       "Bridges"
@@ -2244,7 +2244,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T00:52:54.836226+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function \u03c1(q)"
   },
@@ -3000,7 +3000,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convex Position Minimizes Plane Graphs"
   },
   {
-    "consumed_by_exp_id": "32f1634b",
+    "consumed_by_exp_id": "",
     "description": "The Berry-Keating Hamiltonian H_BK = (xp + px)/2 on L\u00b2(\u211d\u207a), when equipped with a suitable self-adjoint extension satisfying the appropriate boundary condition, has spectrum {\u03bb_n} such that \u03bb_n = t_n\u00b2 + 1/4, where \u03c1_n = 1/2 + it_n ranges over the non-trivial zeros of the Riemann zeta function. This would verify the Hilbert-P\u00f3lya conjecture for this specific operator and imply the Riemann Hypothesis, since self-adjoint operators have real eigenvalues, forcing all t_n to be real and thus all \u03c1_n to lie on Re(s) = 1/2.",
     "domains": [
       "Pythagorean",
@@ -3010,7 +3010,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T09:11:33.770269+00:00",
     "title": "Berry-Keating Hamiltonian Spectrum Corresponds to Riemann Zeta Non-Trivial Zeros"
   },
@@ -4182,7 +4182,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nilpotent Extension of the Feng-Sun-Xiang Theorem"
   },
   {
-    "consumed_by_exp_id": "acbfd883",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for any k \u2265 2, the strong chromatic index of the odd Kneser graph O(2k-1,k) equals 2k-1. This conjecture will be used to formalize the local density inequality required for proving the affirmative answer to the first problem posed by Burr, Erd\u0151s, Graham, and S\u00f3s on maximal anti-Ramsey functions for P\u2084.",
     "domains": [
       "Algebra",
@@ -4192,7 +4192,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T12:01:36.796826+00:00",
     "title": "Conjecture on Strong Edge-Colorings of Odd Kneser Graphs"
   },
@@ -5296,6 +5296,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 independence ratios below one quarter and the fractional chromatic number of the plane\n\nThis cycle isolated the mechanism behind the claim that a 29-vertex augmented\nconfiguration forces the geometric fractional chromatic number above four: a finite\ngraph whose independence number is only a 7/29 fraction of its vertex set already\ndrives the covering linear program past the value four. Below are bold, testable\nconjectures suggested by that mechanism.\n\n## Conjecture 1 \u2014 Twenty-nine is the exact threshold for independence number seven\n\nAmong all planar unit-distance graphs whose independence number equals seven, the\nminimum number of vertices for which the geometric fractional chromatic number\nstrictly exceeds four is exactly twenty-nine, and no configuration on twenty-eight or\nfewer vertices with independence number seven achieves the strict inequality.\n\nThe key insight is that the strict regime is governed by the single arithmetic\ninequality \"four times the independence number is smaller than the vertex count\",\nwhich first becomes strict precisely when a twenty-seven point configuration of\nindependence number seven is augmented by two additional points. Why now?  Because\nthe recent explicit twenty-seven and twenty-nine point constructions make the\nboundary case concrete and testable for the first time, turning a qualitative\nexistence statement into a sharp extremal question.\n\n## Conjecture 2 \u2014 A rational-ratio ladder of thresholds\n\nFor every rational number strictly between one quarter and one there is a finite\nunit-distance graph whose independence ratio equals that number, and consequently the\nattainable lower bounds for the fractional chromatic number of the plane form a dense\nladder rather than isolated values.\n\nThe key insight is that disjoint clique-like clusters allow the independence ratio to\nbe tuned to any prescribed rational value, so the obstruction to realizing a given\nratio is geometric (embedding by unit distances) rather than combinatorial. Why now?\nBecause the augmentation trick that produced the twenty-ninth vertex shows how to move\nthe ratio by controlled small steps, suggesting the whole spectrum is reachable.\n\n## Conjecture 3 \u2014 Independence ratio strictly below one quarter is unavoidable at scale\n\nEvery sufficiently large finite unit-distance graph that is vertex-transitive and\nlocally dense contains an induced subgraph with independence ratio below one quarter;\nequivalently, the sub-quarter phenomenon is generic rather than exceptional once the\nconfiguration is large enough.\n\nThe key insight is that local density forces many unit-distance constraints per\nvertex, and each such constraint chips away at the largest independent set faster than\nit grows the vertex count. Why now?  Because the twenty-nine vertex example is the\nfirst small witness of a sub-quarter ratio, and small witnesses of generic phenomena\ntypically presage an unconditional density theorem.\n\n## Conjecture 4 \u2014 The fractional chromatic number of the plane exceeds four plus a fixed gap\n\nThere is an absolute positive constant such that the fractional chromatic number of\nthe plane exceeds four by at least that constant, witnessed by a finite unit-distance\ngraph whose independence ratio is bounded away from one quarter.\n\nThe key insight is that once a single configuration beats the one-quarter barrier, a\nblow-up construction amplifies the deficit into a quantitative gap that no coloring of\nthe plane can close. Why now?  Because the twenty-nine vertex certificate provides the\nfirst concrete deficit to amplify, making a quantitative separation \u2014 not merely a\nstrict inequality \u2014 the natural next target.\n\n## Conjecture 5 \u2014 Minimal augmentation is two vertices\n\nNo single-vertex augmentation of the twenty-seven point configuration attains the\nstrict inequality; two added vertices is both necessary and sufficient, and this\nminimality is a stable feature of the family rather than an artifact of one\nconstruction.\n\nThe key insight is that adding one vertex to a configuration of independence number\nseven cannot simultaneously keep the independence number at seven and cross the\narithmetic threshold, whereas two vertices can, so the minimal augmentation size is an\nintrinsic invariant. Why now?  Because the explicit twenty-seven and twenty-nine\nvertex configurations finally make the one-versus-two vertex comparison precise and\ncheckable.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3114",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e5cb827b",
+    "status": "available",
+    "timestamp": "2026-07-01T18:32:37.474504+00:00",
+    "title": "This cycle isolated the mechanism behind the claim that a 29-vertex augmented"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5515,7 +5530,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "fd79f536",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -5525,7 +5540,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

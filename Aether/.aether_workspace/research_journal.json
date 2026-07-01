@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3ffd492f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Density Thresholds for Linear `r`-Uniform Hypergraphs\n\nBuilding on `LinearHypergraphDensityThreshold.lean`, which proves the sharp pair-counting bound\n`m · C(r,2) ≤ C(n,2)` for li",
-      "quality_score": 0.3990000000000001,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-26T22:47:47",
-      "title": "Optimality of the Density Threshold for Linear r‑Uniform Hypergraphs"
-    },
-    {
       "cycle_id": "5544e8f5",
       "domain": "Applications",
       "key_insight": "# Future Directions — Research Cycle Brief\n\nThese directions are grounded in verified catalog files. The selected (primary)\ndirection is **D1**; D2–D4 are alternatives in adjacent under-explored corne",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-07-01T17:45:13",
       "title": "Sensitivity Conjecture Extensions"
+    },
+    {
+      "cycle_id": "e5cb827b",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — independence ratios below one quarter and the fractional chromatic number of the plane\n\nThis cycle isolated the mechanism behind the claim that a 29-vertex augmented\nconfiguratio",
+      "quality_score": 0.45374800000000004,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-07-01T18:34:44",
+      "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7232000000000001
     }
   ],
-  "last_updated": "2026-07-01T17:45:13",
+  "last_updated": "2026-07-01T18:34:44",
   "open_questions": [
     {
       "context": "",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "805dbd7c",
-        "quality": 0.32121642086956526,
-        "theorems": 9,
-        "title": "Membrane Computing (P-Systems) and Their Computational Power"
-      },
-      {
         "cycle_id": "bcd85103",
         "quality": 0.63257,
         "theorems": 15,
@@ -3079,6 +3073,12 @@
         "quality": 0.48355851612903233,
         "theorems": 13,
         "title": "Sensitivity Conjecture Extensions"
+      },
+      {
+        "cycle_id": "e5cb827b",
+        "quality": 0.45374800000000004,
+        "theorems": 19,
+        "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration e"
       }
     ],
     "Applications": [
