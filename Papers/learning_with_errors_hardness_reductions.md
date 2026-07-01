@@ -1,67 +1,74 @@
-# Computational Evidence — LWE Worst-Case Hardness Reductions
+# Computational Evidence — LWE Hardness Reductions (Regev parameters)
 
-This note records small-case computational checks performed before formalizing
-the worst-case-to-average-case reduction parameters for Learning with Errors
-(Regev 2005 / Peikert 2009).
+This note records the small-case checks that guided the formalization of the
+worst-case (GapSVP/SIVP) → LWE reduction and its parameter regime.
 
-## 1. Minimum distance of the integer lattice ℤⁿ
+## 1. The parameter condition `α·q ≥ 2√n`
 
-For the standard integer lattice ℤⁿ ⊂ ℝⁿ, the squared Euclidean length of a
-nonzero integer vector is a sum of squares of integers, at least one of which
-is ≥ 1. Small cases:
+Regev's reduction requires the Gaussian noise width `α·q` to exceed the smoothing
+scale `≈ 2√n`. Sample admissible triples (taking `α = 1/M` inverse-polynomial):
 
-| vector            | ∑ vᵢ²  | ‖v‖    |
-|-------------------|--------|--------|
-| (1,0,0)           | 1      | 1      |
-| (1,1,0)           | 2      | √2     |
-| (2,0,0)           | 4      | 2      |
-| (1,1,1)           | 3      | √3     |
-| (-1,0,0)          | 1      | 1      |
+| n    | √n (≈)  | 2√n (≈) | M (=1/α) | q (min ≈ 2√n·M) | α·q  |
+|------|---------|---------|----------|-----------------|------|
+| 4    | 2.000   | 4.000   | 4        | 16              | 4.0  |
+| 16   | 4.000   | 8.000   | 16       | 128             | 8.0  |
+| 64   | 8.000   | 16.000  | 64       | 1024            | 16.0 |
+| 256  | 16.000  | 32.000  | 256      | 8192            | 32.0 |
 
-Minimum over nonzero vectors is exactly **1**, attained by any ± standard basis
-vector. This grounds λ₁(ℤⁿ) = 1.
+In every row `α·q = 2√n` exactly at the boundary, and any larger `q` keeps the
+condition satisfied — consistent with `modulus_lower_bound` (`q ≥ 2√n` when
+`α ≤ 1`) and `smoothing_condition` (`√n ≤ α·q/2`).
 
-## 2. GapSVP gap monotonicity
+## 2. Approximation factor vs. modulus trade-off
 
-GapSVP_γ at threshold d declares YES if λ₁ ≤ d, NO if λ₁ > γ·d. For fixed
-λ₁ = 5, d = 1:
+With `γ = C·n/α` and `α = 1/M`, the factor is the polynomial `γ = C·n·M`
+(`approx_factor_eq`). The trade-off theorem predicts `γ ≤ C·√n·q/2`. Check at the
+boundary `q = 2√n·M` (`C = 1`):
 
-| γ   | γ·d | NO needs λ₁ > γ·d | instance |
-|-----|-----|-------------------|----------|
-| 2   | 2   | λ₁ > 2  (5>2 ✓)   | NO       |
-| 4   | 4   | λ₁ > 4  (5>4 ✓)   | NO       |
-| 6   | 6   | λ₁ > 6  (5>6 ✗)   | gap-violated |
+| n   | M   | γ = n·M | C·√n·q/2 = √n·(2√n·M)/2 = n·M | γ ≤ bound? |
+|-----|-----|---------|------------------------------|------------|
+| 4   | 4   | 16      | 16                           | ✓ (tight)  |
+| 16  | 16  | 256     | 256                          | ✓ (tight)  |
+| 64  | 64  | 4096    | 4096                         | ✓ (tight)  |
 
-Observation: a valid NO instance for a *larger* γ is automatically a valid NO
-instance for any *smaller* γ. Hence GapSVP_γ becomes EASIER as γ grows — a
-correct but counter-intuitive fact verified here numerically and proved in
-`WorstCaseLattice.lean`.
+The bound is tight exactly at the boundary `α·q = 2√n`, confirming
+`approx_modulus_tradeoff` is sharp (equality is attained, so no stronger constant
+than `C/2` is possible).
 
-## 3. Regev parameter regime  αq ≥ 2√n  and  γ = n/α
+## 3. Gaussian weight `ρ_s(x) = exp(-π x²/s²)` — shape
 
-Regev's theorem: decision-LWE_{n,q,α} is at least as hard as quantumly solving
-GapSVP_γ / SIVP_γ with γ = Õ(n/α), under αq ≥ 2√n. Sample feasibility checks
-of the derived bound γ ≤ q√n / 2:
+Values of `ρ₁(x)` (peak at 0, even, monotone decay):
 
-| n   | q     | α (min = 2√n/q) | γ = n/α     | q√n/2   | γ ≤ q√n/2 |
-|-----|-------|-----------------|-------------|---------|-----------|
-| 4   | 16    | 0.25            | 16          | 16      | ✓ (eq)    |
-| 9   | 64    | 0.09375         | 96          | 96      | ✓ (eq)    |
-| 16  | 256   | 0.03125         | 512         | 512     | ✓ (eq)    |
+| x    | ρ₁(x) = exp(-π x²) |
+|------|--------------------|
+| 0.0  | 1.000000           |
+| 0.25 | 0.821725           |
+| 0.5  | 0.455938           |
+| 1.0  | 0.043214           |
+| 2.0  | 0.00000349         |
 
-At the boundary α = 2√n/q the bound is tight (equality); for larger α it is
-strict. This confirms the algebraic identity γ = q√n/2 at the boundary and the
-inequality γ ≤ q√n/2 in general, both formalized in `ReductionParameters.lean`.
+- Peak `ρ₁(0)=1` ⇒ `rho_zero`, and all values in `(0,1]` ⇒ `rho_pos`,`rho_le_one`.
+- `ρ₁(-x)=ρ₁(x)` ⇒ `rho_even`; strictly decreasing in `|x|` ⇒ `rho_antitone_abs`.
+- Scaling: `ρ_s(x) = ρ₁(x/s)`, e.g. `ρ₂(1) = ρ₁(0.5) = 0.4559` ⇒ `rho_scale`.
 
-## 4. Counterexample hunt
+## 4. Discrete Gaussian as a probability law
 
-- "λ₁(ℤⁿ) could be < 1": tested all vectors with entries in {-2..2} for n ≤ 3;
-  no nonzero vector has length < 1. No counterexample.
-- "GapSVP monotonicity might fail when d < 0": indeed if d < 0 the promise
-  algebra flips; the formal theorem therefore carries the hypothesis 0 ≤ d.
-  Boundary recorded as an explicit hypothesis.
-- "γ ≤ q√n/2 might fail for n = 0": √0 = 0 makes αq ≥ 0 vacuous and γ = n/α = 0;
-  the formal theorem assumes 1 ≤ n to stay in the meaningful regime.
+Support `pts = {-1, 0, 1}`, width `s = 1`:
+`mass = ρ(−1)+ρ(0)+ρ(1) = 0.043214 + 1 + 0.043214 = 1.086428`.
+Normalised masses: `0.039776, 0.920448, 0.039776`, which sum to `1.000000`
+⇒ `discreteGaussian_sum_one`, each in `[0,1]` ⇒ the `nonneg`/`le_one` lemmas.
 
-All universal claims that survived are the ones formalized; every failed corner
-case became an explicit hypothesis on the Lean statement.
+## 5. Counterexample hunt
+
+- Dropping `α ≤ 1` from `modulus_lower_bound`: with `α = 4, q = 1, n = 1`,
+  `α·q = 4 ≥ 2 = 2√n` but `q = 1 < 2` — so the hypothesis `α ≤ 1` is genuinely
+  load-bearing (kept in the statement).
+- Dropping `n > 0` from `approx_modulus_tradeoff`: at `n = 0`, `√n = 0`, the
+  right side is `0` while `γ = C·0/α = 0`, degenerate; the theorem is stated with
+  `hn : 0 < n` to stay in the meaningful regime.
+- `gapSVP_promise_disjoint` with `γ < 1` (e.g. `γ = 1/2, β = 2, λ₁ = 1.5`): then
+  YES (`1.5 ≤ 2`) and NO (`0.5·2 = 1 < 1.5`) both hold — so `γ ≥ 1` is required,
+  and is present in the statement.
+
+No counterexample was found to any theorem as stated; the boundary probes instead
+pinned down exactly which hypotheses are necessary.
