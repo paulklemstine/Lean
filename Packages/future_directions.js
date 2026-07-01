@@ -1623,7 +1623,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete solutions to $P_{14}(n) = t^4$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "69964b0a",
     "description": "For any finite projective plane of order q \u2265 2, the expected coverage time of its line set as a fair coupon collecting mechanism is strictly greater than the expected coverage time of the fully random model on n=q^2+q+1 coupons with draw size \u2113=q+1. This generalizes the paper's explicit Fano plane (q=2) counterexample to all projective planes, asserting that finite geometric structure universally slows down fair coupon collection compared to the full combinatorial model.",
     "domains": [
       "Algebra",
@@ -1633,7 +1633,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T12:14:01.655400+00:00",
     "title": "Projective Plane Extremality in Fair Coupon Collecting"
   },
@@ -3642,7 +3642,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function \u03c1(q)"
   },
   {
-    "consumed_by_exp_id": "311b39b3",
+    "consumed_by_exp_id": "",
     "description": "For any integer $p \\ge 2$, the classical harmonic zeta function $\\zeta_H(p)$ and the Riemann zeta function $\\zeta(s)$ satisfy the identity $2\\zeta_H(p) = (p+2)\\zeta(p+1) - \\sum_{j=1}^{p-2} \\zeta(p-j)\\zeta(j+1)$. This conjecture proposes the formalization of this specific classical identity, which expresses the special values of the harmonic zeta function at positive integers in terms of the Riemann zeta function.",
     "domains": [
       "Pythagorean"
@@ -3651,7 +3651,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27827v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T01:51:13.586256+00:00",
     "title": "Euler Identity for Harmonic Zeta Function Values"
   },
@@ -3863,12 +3863,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer g \u2265 2 and every positive integer d, there exists a positive integer B(g, d) such that for every number field K with [K:\u211a] \u2264 d and every smooth projective geometrically connected curve C of genus g over K, the set C(K) of K-rational points has cardinality at most B(g, d). This extends the proved uniform Mordell bound |C(K)| \u2264 c\u2081(g)\u00b7c\u2082(g)^{rank J(K)} by removing the dependence on the Mordell\u2013Weil rank, replacing it with a bound depending only on genus and field degree.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_3025",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27129v1",
+    "status": "available",
+    "timestamp": "2026-07-01T09:27:44.107509+00:00",
+    "title": "Uniform Boundedness of Rational Points on Curves of Fixed Genus over Bounded-Degree Number Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3025",
+    "id": "fd_3026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3883,7 +3898,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3026",
+    "id": "fd_3027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3897,7 +3912,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3906,32 +3921,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8641bed1",
     "description": "For any normalized Hecke eigenform f of weight \u03ba for SL(2,Z), integers j \u2265 1, k \u2265 2, h \u2265 1, q \u2265 1, and even m \u2208 {2,4,6,8,10,12}, and any k-full kernel function a: \u2115 \u2192 \u2115 with a(n) \u226a n^\u03b5 for all \u03b5 > 0, the shifted convolution sum S(x) = \u2211_{n \u2264 x, n \u2261 1 (mod q), n \u2208 S_m} a(n) \u00b7 \u03bb_{sym^j f}(n + h) \u2014 where S_m denotes the set of integers representable as a sum of m squares \u2014 admits an asymptotic formula S(x) = M(x) + O(x^{1-\u03b4}) with an explicit main term M(x) satisfying M(x) \u226b x and a power-saving error term with \u03b4 > 0 depending on j, k, m, q, and h. This extends the L\u00fc\u2013Wang result (j = 1, k = 2) and the Venkatasubbareddy\u2013Sankaranarayanan generalization to arbitrary symmetric power L-functions.",
     "domains": [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3028",
+    "id": "fd_3029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T12:42:50.216839+00:00",
     "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
   },
   {
-    "consumed_by_exp_id": "8641bed1",
+    "consumed_by_exp_id": "",
     "description": "For every integer r \u2265 2, every graph H with chromatic number at least 2, and every \u03b5 > 0, there exist n\u2080 \u2208 \u2115 and \u03b4 > 0 such that for all n \u2265 n\u2080: every n-vertex simple graph G with minimum degree \u03b4(G) \u2265 (1 \u2212 1/(r(\u03c7(H) \u2212 1))) \u00b7 n that is NOT (H, r)_v-Ramsey can be made r(\u03c7(H) \u2212 1)-partite by deleting at most \u03b5n\u00b2 edges. This is the stability analogue of Observation 1.2 in the paper (which gives a Tur\u00e1n-type edge-density threshold for the vertex-Ramsey property), asserting that the extremal examples\u2014complete r(\u03c7(H)\u22121)-partite graphs\u2014are essentially the only near-extremal constructions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3029",
+    "id": "fd_3030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T13:01:31.627918+00:00",
     "title": "Vertex-Ramsey Stability Conjecture"
   },
@@ -3942,7 +3957,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3030",
+    "id": "fd_3031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3957,7 +3972,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3031",
+    "id": "fd_3032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3971,7 +3986,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3032",
+    "id": "fd_3033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3985,7 +4000,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3033",
+    "id": "fd_3034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3994,30 +4009,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sublinear Growth of Joint Descendants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3257177e",
     "description": "For any integer k \u2265 3, every [k]-graph H on n \u2265 (k choose 2) + 3 vertices with \u03b4_{k-1}(H) \u2265 1 contains a Berge-C_t^{k-1} for all k \u2264 t \u2264 n. This generalizes the exact bound n_0(4,3) = 9 established in the paper and the bound n_0(3,2) = 6 by Lu and Wang, positing a unified quadratic threshold for all uniformities.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3034",
+    "id": "fd_3035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T14:37:35.688846+00:00",
     "title": "Exact Threshold for Berge Tight Cycles in k-graphs"
   },
   {
-    "consumed_by_exp_id": "3257177e",
+    "consumed_by_exp_id": "",
     "description": "For a prime $q$, an integer $t \\ge 1$, and a prime $p \\neq q$, the congruence $\\binom{q(q^t p)}{q^t p} \\equiv q^{q^t p} \\pmod{q^t p}$ holds if and only if $p$ divides $\\binom{q^{t+1}}{q^t} - q^{q^t}$ and the base-$q$ digit sum of $(q-1)p$ is at least $(q-1)t$.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3035",
+    "id": "fd_3036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T14:55:27.919935+00:00",
     "title": "Prime-Base Reduction for $n=q^t p$"
   },
@@ -4028,7 +4043,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3036",
+    "id": "fd_3037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -4042,7 +4057,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3037",
+    "id": "fd_3038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -4056,7 +4071,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3038",
+    "id": "fd_3039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -4070,7 +4085,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3039",
+    "id": "fd_3040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -4085,7 +4100,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3040",
+    "id": "fd_3041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -4094,17 +4109,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimal Vertex Bound for Discrete Pseudomanifolds"
   },
   {
-    "consumed_by_exp_id": "46a53213",
+    "consumed_by_exp_id": "",
     "description": "For every even dimension n \u2265 4, there exists a constant C > 0 such that for all odd prime powers q and all subsets E \u2286 F_q^n with |E| \u2265 C\u00b7q^{n/2}, the distance set |\u0394_d(E)| > (q-1)/2, where \u0394_d(E) = {\u03a3(x_i - y_i)\u00b2 : x,y \u2208 E}. This asserts that the exponent n/2 (rather than n/2 + 1/3 achieved in the paper) is the true threshold guaranteeing a positive proportion of distances in even dimensions.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3041",
+    "id": "fd_3042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T17:14:12.597747+00:00",
     "title": "Finite Field Falconer Conjecture at the Critical Exponent for Even Dimensions"
   },
@@ -4114,7 +4129,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3042",
+    "id": "fd_3043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -4129,7 +4144,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3043",
+    "id": "fd_3044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -4143,7 +4158,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3044",
+    "id": "fd_3045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -4158,7 +4173,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3045",
+    "id": "fd_3046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -4172,7 +4187,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3046",
+    "id": "fd_3047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -4186,7 +4201,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3047",
+    "id": "fd_3048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -4201,7 +4216,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3048",
+    "id": "fd_3049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -4216,7 +4231,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3049",
+    "id": "fd_3050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -4231,7 +4246,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3050",
+    "id": "fd_3051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4245,7 +4260,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3051",
+    "id": "fd_3052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4259,7 +4274,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3052",
+    "id": "fd_3053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4274,7 +4289,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3053",
+    "id": "fd_3054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4289,7 +4304,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3054",
+    "id": "fd_3055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4304,7 +4319,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3055",
+    "id": "fd_3056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4318,7 +4333,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3056",
+    "id": "fd_3057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4332,7 +4347,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3057",
+    "id": "fd_3058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4346,7 +4361,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3058",
+    "id": "fd_3059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -4360,7 +4375,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3059",
+    "id": "fd_3060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27507v1",
@@ -4375,7 +4390,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3060",
+    "id": "fd_3061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27516v1",
@@ -4389,7 +4404,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3061",
+    "id": "fd_3062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
@@ -4404,7 +4419,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3062",
+    "id": "fd_3063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27273v1",
@@ -4418,7 +4433,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3063",
+    "id": "fd_3064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
@@ -4433,7 +4448,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3064",
+    "id": "fd_3065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
@@ -4447,7 +4462,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3065",
+    "id": "fd_3066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
@@ -4461,7 +4476,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_3066",
+    "id": "fd_3067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27451v1",
@@ -4476,7 +4491,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3067",
+    "id": "fd_3068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27208v1",
@@ -4491,7 +4506,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3068",
+    "id": "fd_3069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27170v1",
@@ -4505,7 +4520,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3069",
+    "id": "fd_3070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27179v2",
@@ -4519,7 +4534,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3070",
+    "id": "fd_3071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27197v1",
@@ -4534,7 +4549,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3071",
+    "id": "fd_3072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27190v1",
@@ -4549,13 +4564,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3072",
+    "id": "fd_3073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27118v1",
     "status": "available",
     "timestamp": "2026-07-01T09:10:33.994257+00:00",
     "title": "Existence of Trivial-Automorphism Dessins for Coprime Fully Uniform Passports"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every pinwheel scheduling instance consisting of positive integers with at most three distinct period values and density at most 1 is schedulable. This directly extends the authors' Theorem 2 (which proves the two-distinct-period case) and sits between that result and the main 5/6 density threshold theorem. A counterexample would be a finite list of periods drawn from at most three distinct values with density \u2264 1 that admits no valid schedule, making the conjecture falsifiable by finite search.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_3074",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27104v1",
+    "status": "available",
+    "timestamp": "2026-07-01T09:28:30.277313+00:00",
+    "title": "Three-Distinct-Period Pinwheel Schedulability Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -4920,7 +4949,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4fdb1a06",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -4930,12 +4959,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "3a5f08b7",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -4945,7 +4974,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
