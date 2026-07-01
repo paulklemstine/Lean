@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ab90b095",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Saturation numbers for joins of matchings\n\nDerived from this cycle's findings in `Saturation.lean` and `SaturationClique.lean`.\nThe cycle formalized the saturation API (`IsSatura",
-      "quality_score": 0.62096,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-26T17:56:47",
-      "title": "Join-saturation equality for matchings with isolated vertices"
-    },
-    {
       "cycle_id": "3be846c2",
       "domain": "Applications",
       "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from the cycle that produced `RamseyFourFour.lean` (the exact value\n`R(4,4) = 18`) and `RamseyDiagonalBound.lean` (the general bo",
@@ -2501,6 +2491,16 @@
       "theorem_count": 1,
       "timestamp": "2026-07-01T02:49:19",
       "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
+    },
+    {
+      "cycle_id": "650b150d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Convex Position and the Combinatorics of Plane Graphs\n\nThis cycle studied the number of crossing-free (plane) straight-line graphs on a\nplanar point set, with an eye on the conjec",
+      "quality_score": 0.516675,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-07-01T04:02:29",
+      "title": "Convex Position Minimizes Plane Graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76576
     }
   ],
-  "last_updated": "2026-07-01T02:49:19",
+  "last_updated": "2026-07-01T04:02:29",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f589dfb5",
-        "quality": 0.55062,
-        "theorems": 0,
-        "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-      },
-      {
         "cycle_id": "60145036",
         "quality": 0.3726553552511416,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.682396,
         "theorems": 15,
         "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+      },
+      {
+        "cycle_id": "650b150d",
+        "quality": 0.516675,
+        "theorems": 18,
+        "title": "Convex Position Minimizes Plane Graphs"
       }
     ],
     "NumberTheory": [

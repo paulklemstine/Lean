@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
   {
-    "consumed_by_exp_id": "45565356",
+    "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -314,7 +314,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3fc75f2f",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domains": [
       "NumberTheory",
@@ -324,7 +324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -1740,7 +1740,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
   },
   {
-    "consumed_by_exp_id": "d3621329",
+    "consumed_by_exp_id": "",
     "description": "For each prime k with 5 \u2264 k \u2264 97, let s = 2k+4. For every prime p \u2265 11, the Diophantine equation P_s(n) = t^p has no integer solutions with n \u2209 {0,1}. This conjecture covers the remaining open cases from Theorem 1(iv) of the paper, where it is shown that there is at most one such solution for each p and any such solution must have n \u2265 10^{100,000p}. The paper expects no such solutions exist based on GRH and the weak effective abc conjecture.",
     "domains": [
       "Pythagorean"
@@ -1749,7 +1749,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T16:56:12.518505+00:00",
     "title": "No nontrivial perfect powers in even-indexed polygonal numbers for exponents p \u2265 11"
   },
@@ -2985,21 +2985,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "k=3 Additive Uniqueness of Multiplicative Functions on Sums of Two Nonzero Squares"
   },
   {
-    "consumed_by_exp_id": "650b150d",
-    "description": "For any set P of n \u2265 3 points in general position (no three collinear) in \u211d\u00b2, the number of labeled plane graphs on P is at least the number of labeled plane graphs on n points in convex position. This formalizes the conjecture that, among all n-point configurations in general position, convex position yields the fewest plane graphs. The paper proves that configurations with convex hull of size O(n/log n) have \u03a9(12.24^n) plane graphs, strictly more than the ~11.65^n achieved by convex position, providing strong evidence for this conjecture.",
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_2965",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29446v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-30T08:52:56.888905+00:00",
-    "title": "Convex Position Minimizes Plane Graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Berry-Keating Hamiltonian H_BK = (xp + px)/2 on L\u00b2(\u211d\u207a), when equipped with a suitable self-adjoint extension satisfying the appropriate boundary condition, has spectrum {\u03bb_n} such that \u03bb_n = t_n\u00b2 + 1/4, where \u03c1_n = 1/2 + it_n ranges over the non-trivial zeros of the Riemann zeta function. This would verify the Hilbert-P\u00f3lya conjecture for this specific operator and imply the Riemann Hypothesis, since self-adjoint operators have real eigenvalues, forcing all t_n to be real and thus all \u03c1_n to lie on Re(s) = 1/2.",
     "domains": [
@@ -3218,7 +3203,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sieve Integral Rational Polytope Algebraicity Conjecture"
   },
   {
-    "consumed_by_exp_id": "1d7e9099",
+    "consumed_by_exp_id": "",
     "description": "The paper proves that for a multiset P of n real numbers summing to zero (not all zero) and 1 \u2264 k < n, the Shannon entropy of X_P (the sum of k elements sampled uniformly without replacement from P) satisfies H(X_P) \u2265 H(Ber(k/n)). This conjecture asserts that the same inequality holds for R\u00e9nyi entropy of order 2 (collision entropy): H\u2082(X_P) \u2265 H\u2082(Ber(k/n)), equivalently, the collision probability of X_P is at most (k/n)\u00b2 + (1\u2212k/n)\u00b2. Equality is achieved when P consists of one large positive value and n\u22121 equal negative values (e.g., P = {(n\u22121), \u22121, \u2026, \u22121}), since then X_P is a scaled Bernoulli variable. The conjecture fails for min-entropy (\u03b1 \u2192 \u221e), as demonstrated by P = {1,1,\u22121,\u22121} with k=2 where max probability = 2/3 > 1/2, so the threshold \u03b1 \u2264 2 is natural.",
     "domains": [
       "Pythagorean",
@@ -3228,7 +3213,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30486v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T13:57:07.277044+00:00",
     "title": "Entropic MMS for R\u00e9nyi Entropy of Order 2 (Collision Entropy)"
   },
@@ -3700,7 +3685,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even m"
   },
   {
-    "consumed_by_exp_id": "b67d03fd",
+    "consumed_by_exp_id": "",
     "description": "For any normalized Hecke eigenform f of weight \u03ba for SL(2,Z), integers j \u2265 1, k \u2265 2, h \u2265 1, q \u2265 1, and even m \u2208 {2,4,6,8,10,12}, and any k-full kernel function a: \u2115 \u2192 \u2115 with a(n) \u226a n^\u03b5 for all \u03b5 > 0, the shifted convolution sum S(x) = \u2211_{n \u2264 x, n \u2261 1 (mod q), n \u2208 S_m} a(n) \u00b7 \u03bb_{sym^j f}(n + h) \u2014 where S_m denotes the set of integers representable as a sum of m squares \u2014 admits an asymptotic formula S(x) = M(x) + O(x^{1-\u03b4}) with an explicit main term M(x) satisfying M(x) \u226b x and a power-saving error term with \u03b4 > 0 depending on j, k, m, q, and h. This extends the L\u00fc\u2013Wang result (j = 1, k = 2) and the Venkatasubbareddy\u2013Sankaranarayanan generalization to arbitrary symmetric power L-functions.",
     "domains": [
       "Pythagorean",
@@ -3710,7 +3695,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T12:42:50.216839+00:00",
     "title": "Power-saving asymptotic for shifted convolution sums of symmetric power L-function coefficients against k-full kernels over sums of squares in arithmetic progressions"
   },
@@ -4289,6 +4274,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erd\u0151s\u2013Straus Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Convex Position and the Combinatorics of Plane Graphs\n\nThis cycle studied the number of crossing-free (plane) straight-line graphs on a\nplanar point set, with an eye on the conjecture that convex position minimizes this\ncount. Working in the exact combinatorial model of convex position, we validated\nthe count against the known sequence `1, 1, 2, 8, 48, 352, \u2026`, proved explicit\nexponential lower bounds from fixed triangulations, showed that the natural\ntriangulation-based lower bound is minimized precisely at convex position, and\ndiscovered a forced parity of the count. The following conjectures are the bold,\ntestable questions these findings suggest.\n\n## Conjecture 1 \u2014 Boundary edges are independent generators\n\nFor a set of `n` points with `h` of them on the convex hull, the number of plane\ngraphs is at least `2^h` times the number of plane graphs on the `n` points with\nall `h` hull edges deleted and forbidden. The key insight is that a hull edge\njoins two consecutive extreme points and therefore crosses no other segment, so it\ncan be freely included or excluded without affecting any crossing constraint \u2014 the\nhull edges behave like `h` independent binary switches. Why now? We have just\nproved that toggling a single hull edge is a fixed-point-free involution on the set\nof plane graphs (yielding a forced factor of `2`); promoting one switch to all `h`\nswitches is the natural next step and would give a clean structural lower bound\nthat grows with hull size.\n\n## Conjecture 2 \u2014 Monotone decrease of the count in hull size\n\nOrder all `n`-point configurations in general position by the size `h` of their\nconvex hull. Then the minimum number of plane graphs over configurations with hull\nsize `h` is a strictly decreasing function of `h`, attaining its global minimum at\n`h = n` (convex position). The key insight is that shrinking the hull frees\ninterior points to be triangulated in more ways, and every triangulation\ncontributes an independent family of `2^{(edges)}` plane subgraphs whose exponent\n`3n - 3 - h` strictly increases as `h` decreases. Why now? We have formalized\nexactly this monotonicity for the triangulation-subset lower bound; the conjecture\nasserts that the true count inherits the same monotonicity, turning a bound-level\nphenomenon into a theorem about the extremal configuration.\n\n## Conjecture 3 \u2014 A sharp exponential base for convex position\n\nThe number of plane graphs on `n` points in convex position equals\n`c \u00b7 n^{-3/2} \u00b7 \u03b2^n \u00b7 (1 + o(1))` for an explicit algebraic constant `\u03b2` near\n`11.6`, and no configuration in general position has growth base below `\u03b2`. The key\ninsight is that convex position is the unique arrangement in which the crossing\nrelation among chords is governed solely by the linear cyclic order of the points,\nso the count becomes a pure order statistic amenable to an exact transfer-matrix or\ngenerating-function analysis; every departure from convexity adds crossing\nconstraints that can only be relaxed, never tightened. Why now? Our exact model\nreproduces the initial terms `8, 48, 352` and the `2^{2n-3}` triangulation floor,\npinning down the regime in which the constant `\u03b2` lives and making the extremal\nclaim `\u03b2 = min` precise and attackable.\n\n## Conjecture 4 \u2014 Parity is only the first layer of arithmetic structure\n\nFor each `n`, the number of plane graphs on `n` convex points is divisible by\n`2^{k(n)}` where `k(n)` grows at least linearly in `n`. The key insight is that\neach of the `n` hull edges is universally crossing-free, and disjoint hull edges\ngive commuting, independent toggling involutions, so the count should carry one\nfactor of `2` per independent boundary switch rather than just the single factor we\nproved. Why now? We have established the base case `2 | count` via one boundary\nedge; the commuting-involutions viewpoint immediately predicts a much higher power\nof two and is directly testable against the exact values of the sequence.\n\n## Conjecture 5 \u2014 Convexity extremizes every crossing-free family, not just graphs\n\nAmong all `n`-point sets in general position, convex position simultaneously\nminimizes the number of plane graphs, plane spanning trees, plane perfect\nmatchings, and plane Hamiltonian cycles (each in the appropriate parity of `n`).\nThe key insight is that all these families are downward- or connectivity-closed\nsubfamilies of the plane-graph lattice, and the same order-only description of\ncrossings that makes convex position extremal for the full lattice should force it\nto be extremal for each natural sublattice. Why now? The unified combinatorial\nmodel developed this cycle treats every plane structure as a crossing-free chord\nfamily on a cyclic order, so a single extremal principle can be tested against all\nof these classical counting sequences at once.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3047",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "650b150d",
+    "status": "available",
+    "timestamp": "2026-07-01T04:02:23.525912+00:00",
+    "title": "This cycle studied the number of crossing-free (plane) straight-line graphs on a"
   },
   {
     "consumed_by_exp_id": "",
