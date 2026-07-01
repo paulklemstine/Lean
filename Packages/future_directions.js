@@ -821,7 +821,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "33af5349",
+    "consumed_by_exp_id": "",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domains": [
       "Computation",
@@ -831,7 +831,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:10.070200+00:00",
     "title": "Sensitivity Conjecture Extensions"
   },
@@ -968,20 +968,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T03:49:32.425118+00:00",
     "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
-  },
-  {
-    "consumed_by_exp_id": "e5cb827b",
-    "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_2815",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T04:01:41.266053+00:00",
-    "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
   {
     "consumed_by_exp_id": "",
@@ -1898,7 +1884,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
   {
-    "consumed_by_exp_id": "deb92459",
+    "consumed_by_exp_id": "",
     "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
     "domains": [
       "Algebra",
@@ -1908,7 +1894,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -2366,7 +2352,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s-Falconer Distance Set Threshold n/2+1/3 in Even Dimensions over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "fe0d0a64",
+    "consumed_by_exp_id": "",
     "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domains": [
       "Geometry"
@@ -2375,7 +2361,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:04:18.171502+00:00",
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
@@ -2856,7 +2842,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
   {
-    "consumed_by_exp_id": "7d2ed753",
+    "consumed_by_exp_id": "",
     "description": "The paper establishes that c(s/log s)^{4/3} \u2264 F(s) \u2264 (1+o(1))s^{3/2}/log s, where F(s) = max{\u03c7(G) : \u03c9(G) \u2264 s, g(G\u0305) \u2265 6}. The conjecture proposes that the true asymptotic growth rate is \u0398(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) \u2265 c \u00b7 s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
     "domains": [
       "Pythagorean"
@@ -2865,7 +2851,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:26:20.098555+00:00",
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
@@ -5210,6 +5196,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Digit Sums of Prime Reciprocals and Beyond\n\nThe cycle established a closed form for the base-`b` digit sum of one period of\n`1/p` when the multiplicative order of `b` modulo `p` is even, namely `(b-1)\u00b7l/2`\nwhere `l` is the period length. The proof isolated the true mechanism \u2014 the two\nhalves of a period are digit-wise complements \u2014 and showed that the elaborate\n`2^m` congruence conditions are just a convenient way to guarantee an even period.\nSeveral bold, testable questions follow.\n\n## 1. Exact block-sum formula for odd periods with prime-power order drop\n\nWhen the period `l` is odd, the two-halves symmetry disappears, yet the digit sum\nis far from arbitrary: it is governed by how the residues `b^i mod p` distribute\nacross the `b` intervals `[jp/b, (j+1)p/b)`. Conjecture: for odd `l` the digit sum\nequals `(b-1)l/2` **minus** a correction term expressible through a Dedekind-type\nsum `s(b, p)` counting sawtooth discrepancies of `{i\u00b7b^{-1}/p}`.\n\nThe key insight is that the \"missing\" complement symmetry of an odd period is\nmeasured precisely by a Dedekind sum, converting a digit-combinatorics question\ninto a lattice-point count. Why now? Dedekind sums have a mature reciprocity\ntheory and recent effective bounds, so a conjectural correction term can be pinned\ndown numerically across thousands of primes and then attacked with reciprocity.\n\n## 2. A generalized-Bernoulli spectral law for digit-sum fluctuations\n\nAverage the period digit sum of `1/p` over primes `p \u2264 X` in a fixed residue\nclass modulo a small modulus `q`. Conjecture: the second-order fluctuation of\nthese digit sums around the mean `(b-1)(p-1)/2` is controlled by generalized\nBernoulli numbers `B_{2,\u03c7}` attached to the even Dirichlet characters `\u03c7 mod q`,\nwith the leading fluctuation coefficient proportional to `L(2, \u03c7)`.\n\nThe key insight is that digit sums are linear functionals of the orbit\n`{b^i mod p}`, whose bias under a character `\u03c7` is exactly what generalized\nBernoulli numbers encode. Why now? Large-scale factorization and order\ncomputations make it feasible to sample period statistics for primes into the\nmillions, giving enough resolution to detect a character-indexed spectral signal.\n\n## 3. Midy's theorem is sharp: evenness of the order is necessary and sufficient\n\nConjecture: the identity \"period digit sum `= (b-1)\u00b7l/2`\" holds for a prime `p`\nand base `b` **if and only if** the multiplicative order `l = ord_p(b)` is even.\nEquivalently, for odd order the digit sum is strictly less than `(b-1)\u00b7l/2`, with a\nstrictly positive deficit for every such prime.\n\nThe key insight is that an even order forces a `-1` square root in the field\n`Z/pZ`, which is exactly the algebraic fingerprint of the complementary-halves\nphenomenon; no even order, no exact halving. Why now? The forward direction is\nalready established, so the converse is a crisp, isolated target whose failure\ncases are enumerable and whose deficit can be tabulated immediately.\n\n## 4. Multiplicative digit-sum towers across nested base powers\n\nFix `p` and study the period digit sums of `1/p` in the family of bases\n`b, b^2, b^4, b^8, \u2026`. Conjecture: as long as the order of `b` retains a factor of\n`2`, the digit sums follow a geometric-with-defect recursion `S(b^{2^k}) =\n(b^{2^k}-1)\u00b7l_k/2`, and the sequence of \"shape vectors\" (the multiset of digit\ncounts) stabilizes after finitely many squarings determined by the 2-adic\nvaluation of `p-1`.\n\nThe key insight is that squaring the base halves the period while doubling the\nper-digit weight, so the total digit sum is a 2-adic invariant of `p` rather than\nof the individual base. Why now? The 2-adic valuation of `p-1` is trivially\ncomputable, making the predicted stabilization index directly checkable against\nbrute-force digit expansions.\n\n## 5. A digit-sum reciprocity bridging bases b and p\n\nConjecture: there is a reciprocity relation exchanging the roles of `b` and `p` in\nthe digit sum of `1/p` in base `b` versus the digit sum of `1/b`-type expansions\nmodulo `p`, mirroring Dedekind\u2013Rademacher reciprocity, with an explicit polynomial\ncorrection in `b`, `p` and `gcd`-data.\n\nThe key insight is that both digit sums are sawtooth sums over the same lattice\n`{(i, i\u00b7b mod p)}` read along complementary axes, so a single reciprocity identity\nshould govern both. Why now? Reciprocity laws for sawtooth/Dedekind sums have been\nsharpened recently, and the two-variable digit-sum data can be generated densely\nenough to fit and then prove the exact correction polynomial.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3108",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0eefe6b1",
+    "status": "available",
+    "timestamp": "2026-07-01T16:50:55.313545+00:00",
+    "title": "The cycle established a closed form for the base-`b` digit sum of one period of"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5238,7 +5239,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "c56262ed",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -5248,7 +5249,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },

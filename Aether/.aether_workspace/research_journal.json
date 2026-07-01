@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f36ed9b7",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — strict alternating cycles in fixed-width posets\n\nDerived from the cycle that produced `AlternatingCyclePosetLowerBound.lean`, which\nproves the tight `Ω(n^{2w})` lower bound (blow",
-      "quality_score": 0.54535,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-26T21:09:33",
-      "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles in posets of fixed "
-    },
-    {
       "cycle_id": "6452feb1",
       "domain": "Applications",
       "key_insight": "# Future Directions — EML Kolmogorov–Arnold Representation\n\nDerived from this cycle's findings (see Lab Notes in\n`Catalog/Applications/KolmogorovArnoldEML.lean` and\n`Catalog/Applications/KolmogorovArn",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-01T15:25:50",
       "title": "Dimension of Second Clique Homology for Latin Square Graphs"
+    },
+    {
+      "cycle_id": "0eefe6b1",
+      "domain": "Shared",
+      "key_insight": "# Future Directions: Digit Sums of Prime Reciprocals and Beyond\n\nThe cycle established a closed form for the base-`b` digit sum of one period of\n`1/p` when the multiplicative order of `b` modulo `p` i",
+      "quality_score": 0.65777,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-01T16:51:06",
+      "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7232000000000001
     }
   ],
-  "last_updated": "2026-07-01T15:25:50",
+  "last_updated": "2026-07-01T16:51:06",
   "open_questions": [
     {
       "context": "",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "d6f5cc61",
-        "quality": 0.36854137254901964,
-        "theorems": 186,
-        "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-      },
-      {
         "cycle_id": "26902e54",
         "quality": 0.4953453636363636,
         "theorems": 34,
@@ -3947,6 +3941,12 @@
         "quality": 0.4367097362637363,
         "theorems": 9,
         "title": "Extremal Graph Theory: Turán and Szemerédi"
+      },
+      {
+        "cycle_id": "0eefe6b1",
+        "quality": 0.65777,
+        "theorems": 6,
+        "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
       }
     ],
     "Tropical": [
