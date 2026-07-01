@@ -6021,7 +6021,7 @@
       "majorization",
       "stochastic_optimization"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50540462",
     "description": "For every fixed N ≥ 2 and j ≥ 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
     "domain_bridges": [
       "probability_theory ↔ convex_analysis",
@@ -6038,7 +6038,7 @@
     "proof_strategy": "Express E_p[U_j^N] via the Adler–Oren–Ross integral formula, then verify the Schur-concavity of the integrand as a function of p using the Schur–Ostrowski criterion (the partial derivative monotonicity condition). Since the uniform distribution majorizes every probability vector on the simplex, Schur-concavity implies it uniquely maximizes the expectation. Uniqueness follows from strict Schur-concavity on the interior of the simplex.",
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T19:44:33.195784+00:00",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
