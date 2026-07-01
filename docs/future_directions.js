@@ -391,7 +391,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Collatz Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b87dcfdc",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "Algebra"
@@ -400,7 +400,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -1855,7 +1855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Indivisibility of Nonzero Character Values in GL_n(F_q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "35d54dba",
     "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
     "domains": [
       "Bridges"
@@ -1864,7 +1864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:26:42.958632+00:00",
     "title": "Minimum Independence Ratio Constraint"
   },
@@ -2030,7 +2030,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7ddc2247",
     "description": "For every positive integer M and integer k with 0 \u2264 k \u2264 M, define a_{M,k}(t) as the absolute value of the coefficient of u^k in the expansion (u;t)_M / (-u;t)_M = \u03a3_{k=0}^{M} (-1)^k a_{M,k}(t) u^k, where (u;t)_M = \u03a0_{j=0}^{M-1}(1 - u t^j) and (-u;t)_M = \u03a0_{j=0}^{M-1}(1 + u t^j). The paper establishes that each a_{M,k}(t) is a palindromic polynomial in t with nonnegative integer coefficients (being signed principal specializations of one-row Schur Q-functions). The conjecture is that each a_{M,k}(t) is also unimodal as a polynomial in t: if a_{M,k}(t) = \u03a3_{i=0}^{d} c_i t^i, then there exists j such that c_0 \u2264 c_1 \u2264 \u00b7\u00b7\u00b7 \u2264 c_j \u2265 c_{j+1} \u2265 \u00b7\u00b7\u00b7 \u2265 c_d. Since a_{M,k}(t) is palindromic, this is equivalent to the first half of the coefficient sequence being weakly increasing.",
     "domains": [
       "Pythagorean"
@@ -2039,7 +2039,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T21:16:08.826100+00:00",
     "title": "Unimodality of the Mixed Scalar Factor Coefficients"
   },
@@ -2642,7 +2642,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Phase transition for variance asymptotics of Steinhaus short-interval sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f955b422",
     "description": "For any graph G with maximum degree d, there exists a signing \u03c3 of its edges such that the spectral radius of the signed adjacency matrix A_\u03c3 is at most 2\u221a(3(d-1)).",
     "domains": [
       "Physics"
@@ -2651,7 +2651,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T11:32:36.681739+00:00",
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
@@ -3015,7 +3015,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berry-Keating Hamiltonian Spectrum Corresponds to Riemann Zeta Non-Trivial Zeros"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b03dbdb9",
     "description": "For every odd prime p and integer r with 1 \u2264 r \u2264 p-1, the maximum size of a symmetric set S = -S \u2286 \u2124_p \\ {0} such that the Cayley graph Cay(\u2124_p, S) is K_{r+1}-free equals p - 1 - 2\u230ap/(r+1)\u230b. This is the main theorem of the paper, established via a polynomial method.",
     "domains": [
       "Pythagorean",
@@ -3025,7 +3025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T09:28:09.181224+00:00",
     "title": "Cayley-Tur\u00e1n number of complete graphs over prime cyclic groups"
   },
@@ -3626,6 +3626,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-01T01:01:53.020039+00:00",
     "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
+  },
+  {
+    "consumed_by_exp_id": "307e78f2",
+    "description": "Let \u03c1(q) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third order mock theta function defined by \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{k=0}^{m} (1 + q^{2k+1} + q^{4k+2}). Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. The paper proves the asymptotic version (for sufficiently large n) but the exact finite sign law remains open. The only zeros in the negative residue classes are r(2) = r(4) = r(8) = r(11) = r(20) = 0.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3009",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27902v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-01T01:31:32.953293+00:00",
+    "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function \u03c1(q)"
   },
   {
     "consumed_by_exp_id": "",
