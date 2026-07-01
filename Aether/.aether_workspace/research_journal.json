@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "de494596",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Probabilistic Ramsey lower bounds\n\nDerived from this cycle's findings (see the Lab Notes in\n`RamseyProbabilisticLowerBound.lean` and `RamseyDiagonalSandwich.lean`).  This\ncycle f",
-      "quality_score": 0.674434,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-27T00:45:25",
-      "title": "Ramsey Theory: Bounds and Constructions"
-    },
-    {
       "cycle_id": "f881b568",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Kakeya: known cases and bounds\n\nDerived from this cycle's findings on the finite-field Kakeya model\n(`KakeyaBushFiniteField.lean`, `KakeyaKatzTaoSumset.lean`).\n\n## Conjecture 1 —",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-01T21:41:57",
       "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
+    },
+    {
+      "cycle_id": "acbfd883",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: sign changes of arithmetic coefficients over sums of squares\n\nThe cycle established that the \"sign changes over sums of `m` squares\" phenomenon,\nproved case by case for small `m`",
+      "quality_score": 0.65944,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-01T22:05:47",
+      "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8322400000000001
     }
   ],
-  "last_updated": "2026-07-01T21:41:57",
+  "last_updated": "2026-07-01T22:05:47",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c9fb85eb",
-        "quality": 0.4432100000000001,
-        "theorems": 4,
-        "title": "Classification of Perfect Cubes in 14-gonal Numbers"
-      },
-      {
         "cycle_id": "47d1dc51",
         "quality": 0.5394642553191489,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.61208,
         "theorems": 8,
         "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
+      },
+      {
+        "cycle_id": "acbfd883",
+        "quality": 0.65944,
+        "theorems": 14,
+        "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m "
       }
     ],
     "NumberTheory": [
