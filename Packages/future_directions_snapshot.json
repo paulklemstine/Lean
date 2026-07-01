@@ -1367,7 +1367,7 @@
       "de_Grey_chromatic_number",
       "Erdos_independence_ratio_problem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e5cb827b",
     "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
     "domain_bridges": [
       "linear_programming",
@@ -1383,7 +1383,7 @@
     "proof_strategy": "Formalize the 27-vertex configuration G_27 as an explicit point set in R^2 with its unit-distance graph structure. Define geometric fractional chromatic number as the optimum of a linear program over Borel measurable vertex-weighting functions. Characterize the 23 extremal geometric fractional colorings of G_27 as vertices of an 11-dimensional polytope (the key computational step). Show that for the specific two-vertex augmentation, every optimal coloring of G_27 forces a constraint violation on the new vertices, implying the LP optimum must strictly exceed 4. The polytope characterization reduces the verification to checking constraints at finitely many extremal points.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:01:41.266053+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
@@ -3076,7 +3076,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "deb92459",
     "description": "For any integer t ≥ 2 and any tK3-free graph G of order n ≥ 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}, with equality if and only if G is isomorphic to this extremal graph.",
     "domain_bridges": [
       "Linear Algebra",
@@ -3092,7 +3092,7 @@
     "proof_strategy": "Apply the stability method in extremal graph theory combined with spectral techniques. Specifically, analyze the eigenvector corresponding to the largest eigenvalue of the signless Laplacian, bound the maximum degree, and iteratively remove vertex-disjoint triangles to reduce the problem to smaller subgraphs, ultimately characterizing the extremal structure as the join of a clique and a balanced complete bipartite graph.",
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -3243,7 +3243,7 @@
       "poset_automorphism_groups",
       "minimum_realization_number"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c732c146",
     "description": "For every positive integer n ≥ 1, the minimum number of elements in a poset whose automorphism group is isomorphic to Z₂ × Z_{2^n} equals 2^{n+1} + 2. This extends the paper's main theorem from n ≥ 3 to all n ≥ 1, covering the previously unresolved cases n = 1 (Klein four-group) and n = 2.",
     "domain_bridges": [
       "finite_group_theory",
@@ -3258,7 +3258,7 @@
     "proof_strategy": "The upper bound β(Z₂ × Z_{2^n}) ≤ 2^{n+1} + 2 follows from Proposition 1 of the paper combined with the known result β(Z_{2^n}) = 2^{n+1}. The lower bound for n = 1 and n = 2 can be established by exhaustive computational verification: check that no poset on 2^{n+1} + 1 elements (5 elements for n=1, 9 elements for n=2) has automorphism group isomorphic to Z₂ × Z_{2^n}. The n=1 case (β(V₄) = 6) is particularly tractable via brute-force enumeration of all posets on 5 elements.",
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:27.243667+00:00",
     "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
   },
@@ -3957,7 +3957,7 @@
       "log-convexity",
       "Fibonacci numbers"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe0d0a64",
     "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domain_bridges": [
       "Combinatorics",
@@ -3973,7 +3973,7 @@
     "proof_strategy": "Formalize the combinatorial injection mapping pairs of partitions of [n] with the same base to partitions of [n+1], apply the Cauchy-Schwarz inequality on the sums grouped by base, and bound the remaining terms recursively using the Fibonacci sequence properties.",
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:04:18.171502+00:00",
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
@@ -4899,7 +4899,7 @@
       "complement_graph",
       "chromatic_number"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d2ed753",
     "description": "The paper establishes that c(s/log s)^{4/3} ≤ F(s) ≤ (1+o(1))s^{3/2}/log s, where F(s) = max{χ(G) : ω(G) ≤ s, g(G̅) ≥ 6}. The conjecture proposes that the true asymptotic growth rate is Θ(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) ≥ c · s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
     "domain_bridges": [
       "asymptotic_analysis",
@@ -4914,7 +4914,7 @@
     "proof_strategy": "To prove the lower bound F(s) ≥ c·s^{3/2}/log s, construct an explicit family of graphs G_s with ω(G_s) ≤ s and g(G̅_s) ≥ 6 such that χ(G_s) ≥ c·s^{3/2}/log s. This likely requires probabilistic constructions or algebraic graph families that saturate the complement-girth-6 constraint while maximizing chromatic number relative to clique number. The existing lower bound construction yielding s^{4/3} would need substantial refinement—potentially using blow-ups of Ramsey-type constructions or sparse pseudorandom graphs with controlled complement girth.",
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:26:20.098555+00:00",
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
@@ -7080,7 +7080,7 @@
       "landesman2025homologicalstabilityhurwitzspaces",
       "ES26"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "657467a8",
     "description": "The theoretical convergence of the optimal vanishing slope for homology groups with braided vector spaces, validated through asymptotic analysis of convergence rates.",
     "domain_bridges": "arithmetic_sums",
     "domains": [
@@ -7093,7 +7093,7 @@
     "proof_strategy": "asymptotic_analysis",
     "research_mode": "team",
     "source_exp_id": "2606.26440v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T13:30:00.396622+00:00",
     "title": "Convergence of Vanishing Slope"
   },
@@ -8142,7 +8142,7 @@
       "André-Oort conjecture",
       "Diophantine geometry"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21b9f7f8",
     "description": "This conjecture formalizes Theorem 1.1 of the paper: an effective version of André's theorem for curves in $\\mathbb{A}^2(\\mathbb{C})$ where the coordinate degrees are distinct. It asserts that for a geometrically irreducible, non-special curve $V$ defined over a number field $L$, the Weil heights of complex multiplication (CM) points on $V$ are bounded by a term linear in the height of $V$, with an explicit coefficient $26 \\max\\{d_1, d_2\\}^3$ and an effectively computable constant $c_1$ depending only on the field degree and maximum coordinate degree.",
     "domain_bridges": [
       "Algebraic Geometry",
@@ -8159,7 +8159,7 @@
     "proof_strategy": "Formalize the definitions of Weil height for algebraic points and curves, complex multiplication (CM) j-invariants, and non-special curves (those that are neither horizontal/vertical lines at singular moduli nor modular curves). The core of the proof requires formalizing the Pila-Wilkie counting theorem from o-minimality or Ax-Schanuel type transcendence results, which represents a major foundational undertaking currently absent from Mathlib.",
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T21:55:06.338968+00:00",
     "title": "Effective André's Height Bound for Non-Equisetential Curves"
   },
