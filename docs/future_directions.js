@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
   {
-    "consumed_by_exp_id": "45565356",
+    "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -1738,20 +1738,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T16:28:32.494303+00:00",
     "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
-  },
-  {
-    "consumed_by_exp_id": "d3621329",
-    "description": "For each prime k with 5 \u2264 k \u2264 97, let s = 2k+4. For every prime p \u2265 11, the Diophantine equation P_s(n) = t^p has no integer solutions with n \u2209 {0,1}. This conjecture covers the remaining open cases from Theorem 1(iv) of the paper, where it is shown that there is at most one such solution for each p and any such solution must have n \u2265 10^{100,000p}. The paper expects no such solutions exist based on GRH and the weak effective abc conjecture.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2875",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28227v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T16:56:12.518505+00:00",
-    "title": "No nontrivial perfect powers in even-indexed polygonal numbers for exponents p \u2265 11"
   },
   {
     "consumed_by_exp_id": "",
@@ -4395,6 +4381,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: Any continuous quantum phase transition in a local spin lattice can be identified by a non\u2011trivial element of the second cohomology group H\u00b2(G,U(1)) of the symmetry group G, computable from the model\u2019s transfer matrix. Test: For a set of exactly solvable lattice models, compute H\u00b2(G,U(1)) and verify that each observed critical point yields a non\u2011trivial class while transitions with trivial class must be first\u2011order; a counterexample would falsify the conjecture. Impact: This yields a complete algebraic classification of quantum phases, enabling precise design of topological quantum materials and error\u2011corrected quantum processors.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_3046",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-07-01T02:49:12.307234+00:00",
+    "title": "Cohomological Classification of Quantum Phase Transitions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
     "domains": [
       "Algebra"
@@ -4811,7 +4812,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "562c0234",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domains": [
       "Cryptography",
@@ -4821,7 +4822,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
