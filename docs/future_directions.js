@@ -150,20 +150,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle a725bb00 (Q=0.798), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Petersen graph does not admit an isometric embedding into any Cayley graph of any finite abelian group. Since the Petersen graph is not a partial cube (not bipartite), it cannot embed into hypercubes Q_k = Cay((Z/2)^k, standard basis). This conjecture asserts the stronger claim that no abelian g",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_a725bb00_9c9c2f64",
-    "priority_score": 0.897688,
-    "research_mode": "team",
-    "source_exp_id": "a725bb00",
-    "status": "available",
-    "timestamp": "2026-07-01T23:31:30.171856+00:00",
-    "title": "Deepening: Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that any integer a \u2260 -1,\u25a1 that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
     "domains": [
       "Algebra"
@@ -405,7 +391,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Collatz Conjecture"
   },
   {
-    "consumed_by_exp_id": "b87dcfdc",
+    "consumed_by_exp_id": "",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "Algebra"
@@ -414,7 +400,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -525,7 +511,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logic-Physics Bridge: Consistency of Physical Theories"
   },
   {
-    "consumed_by_exp_id": "d6f62dc7",
+    "consumed_by_exp_id": "",
     "description": "Prove or disprove that every bounded linear operator on a separable Hilbert space has a non-trivial closed invariant subspace. Formalize known results for compact operators and normal operators.",
     "domains": [
       "Algebra"
@@ -534,7 +520,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:01.788604+00:00",
     "title": "Invariant Subspace Problem"
   },
@@ -940,7 +926,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "38047daa",
     "description": "The paper demonstrates that augmenting the 27-vertex unit-distance graph G27 with a specific pair of vertices results in a 29-vertex graph with geometric fractional chromatic number strictly greater than 4. The authors note that such augmentations are exceedingly rare. This conjecture posits that, up to Euclidean isometry, this specific 2-vertex augmentation is the unique way to add two vertices to G27 such that the resulting unit-distance graph has a geometric fractional chromatic number strictly greater than 4.",
     "domains": [
       "Pythagorean",
@@ -950,7 +936,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T03:31:25.863443+00:00",
     "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
   },
@@ -2656,7 +2642,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Phase transition for variance asymptotics of Steinhaus short-interval sums"
   },
   {
-    "consumed_by_exp_id": "f955b422",
+    "consumed_by_exp_id": "",
     "description": "For any graph G with maximum degree d, there exists a signing \u03c3 of its edges such that the spectral radius of the signed adjacency matrix A_\u03c3 is at most 2\u221a(3(d-1)).",
     "domains": [
       "Physics"
@@ -2665,7 +2651,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T11:32:36.681739+00:00",
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
@@ -2970,7 +2956,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
   {
-    "consumed_by_exp_id": "946cfca3",
+    "consumed_by_exp_id": "",
     "description": "For all d \u2265 1, the maximum number of equiangular lines in \u211d^d with common angle arccos(1/3) satisfies N_{1/3}(d) \u2264 max{28, 2(d \u2212 1)}. This is a special case of Balla's conjecture where the spectral radius order \u03ba\u2081 = 2 (witnessed by K\u2082), making the bound reduce to max{(1\u22121/9)(1\u22122/9)/(2/81), \u230a2(d\u22121)/1\u230b} = max{28, 2(d\u22121)}.",
     "domains": [
       "Pythagorean",
@@ -2980,7 +2966,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for \u03b1 = 1/3"
   },
@@ -3465,7 +3451,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "P-positions of Halve Nim coincide with ordinary Nim P-positions"
   },
   {
-    "consumed_by_exp_id": "50540462",
+    "consumed_by_exp_id": "",
     "description": "For every fixed N \u2265 2 and j \u2265 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
     "domains": [
       "Computation",
@@ -3475,7 +3461,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T19:44:33.195784+00:00",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
@@ -3642,7 +3628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
   },
   {
-    "consumed_by_exp_id": "307e78f2",
+    "consumed_by_exp_id": "",
     "description": "Let \u03c1(q) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third order mock theta function defined by \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{k=0}^{m} (1 + q^{2k+1} + q^{4k+2}). Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. The paper proves the asymptotic version (for sufficiently large n) but the exact finite sign law remains open. The only zeros in the negative residue classes are r(2) = r(4) = r(8) = r(11) = r(20) = 0.",
     "domains": [
       "Bridges"
@@ -3651,7 +3637,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T01:31:32.953293+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function \u03c1(q)"
   },
@@ -4358,12 +4344,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
+    "description": "This conjecture asserts that for sufficiently large tree $T$, the Ramsey number satisfies a controlled bound that aligns with the structure of off-Tur\u00e1n graphs, quantifying how tree embeddings constrain multihypergraph Ramsey phenomena.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_3058",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-07-01T23:55:24.849747+00:00",
+    "title": "Formal resolution of Erd\u0151s Problem 550 via tree-embedding and compactness methods"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -4378,7 +4379,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3059",
+    "id": "fd_3060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -4392,7 +4393,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3060",
+    "id": "fd_3061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -4407,7 +4408,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3061",
+    "id": "fd_3062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -4422,7 +4423,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3062",
+    "id": "fd_3063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -4437,7 +4438,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3063",
+    "id": "fd_3064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -4452,7 +4453,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3064",
+    "id": "fd_3065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -4466,7 +4467,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3065",
+    "id": "fd_3066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -4480,7 +4481,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3066",
+    "id": "fd_3067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -4494,7 +4495,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3067",
+    "id": "fd_3068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -4508,7 +4509,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3068",
+    "id": "fd_3069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -4523,7 +4524,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3069",
+    "id": "fd_3070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -4537,7 +4538,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3070",
+    "id": "fd_3071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -4551,7 +4552,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3071",
+    "id": "fd_3072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -4565,7 +4566,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3072",
+    "id": "fd_3073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -4580,7 +4581,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3073",
+    "id": "fd_3074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -4595,7 +4596,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3074",
+    "id": "fd_3075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -4609,7 +4610,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3075",
+    "id": "fd_3076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -4624,7 +4625,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3076",
+    "id": "fd_3077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -4638,7 +4639,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3077",
+    "id": "fd_3078",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -4653,7 +4654,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3078",
+    "id": "fd_3079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -4667,7 +4668,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3079",
+    "id": "fd_3080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -4681,7 +4682,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3080",
+    "id": "fd_3081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -4696,7 +4697,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3081",
+    "id": "fd_3082",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -4711,7 +4712,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3082",
+    "id": "fd_3083",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -4726,7 +4727,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3083",
+    "id": "fd_3084",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4740,7 +4741,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3084",
+    "id": "fd_3085",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4754,7 +4755,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3085",
+    "id": "fd_3086",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4769,7 +4770,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3086",
+    "id": "fd_3087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4784,7 +4785,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3087",
+    "id": "fd_3088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4799,7 +4800,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3088",
+    "id": "fd_3089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4813,7 +4814,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3089",
+    "id": "fd_3090",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4827,7 +4828,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3090",
+    "id": "fd_3091",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4841,7 +4842,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3091",
+    "id": "fd_3092",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -4855,7 +4856,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3092",
+    "id": "fd_3093",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27507v1",
@@ -4870,7 +4871,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3093",
+    "id": "fd_3094",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27516v1",
@@ -4884,7 +4885,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3094",
+    "id": "fd_3095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
@@ -4899,7 +4900,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3095",
+    "id": "fd_3096",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27273v1",
@@ -4913,7 +4914,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3096",
+    "id": "fd_3097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
@@ -4928,7 +4929,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3097",
+    "id": "fd_3098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
@@ -4942,7 +4943,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3098",
+    "id": "fd_3099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
@@ -4956,7 +4957,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_3099",
+    "id": "fd_3100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27451v1",
@@ -4971,7 +4972,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3100",
+    "id": "fd_3101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27208v1",
@@ -4986,7 +4987,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3101",
+    "id": "fd_3102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27170v1",
@@ -5000,7 +5001,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3102",
+    "id": "fd_3103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27179v2",
@@ -5014,7 +5015,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3103",
+    "id": "fd_3104",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27197v1",
@@ -5029,7 +5030,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3104",
+    "id": "fd_3105",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27190v1",
@@ -5044,7 +5045,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3105",
+    "id": "fd_3106",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27118v1",
@@ -5058,7 +5059,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3106",
+    "id": "fd_3107",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27104v1",
@@ -5073,7 +5074,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Bridges"
     ],
-    "id": "fd_3107",
+    "id": "fd_3108",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27070v1",
@@ -5087,7 +5088,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3108",
+    "id": "fd_3109",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27087v1",
@@ -5102,7 +5103,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_3109",
+    "id": "fd_3110",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26851v1",
@@ -5117,7 +5118,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3110",
+    "id": "fd_3111",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26983v1",
@@ -5131,7 +5132,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3111",
+    "id": "fd_3112",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26776v2",
@@ -5146,7 +5147,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3112",
+    "id": "fd_3113",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26589v1",
@@ -5161,7 +5162,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3113",
+    "id": "fd_3114",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26761v1",
@@ -5176,7 +5177,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3114",
+    "id": "fd_3115",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26639v1",
@@ -5190,7 +5191,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3115",
+    "id": "fd_3116",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26570v1",
@@ -5204,7 +5205,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3116",
+    "id": "fd_3117",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26335v1",
@@ -5219,7 +5220,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3117",
+    "id": "fd_3118",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26550v1",
@@ -5233,7 +5234,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3118",
+    "id": "fd_3119",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
@@ -5247,7 +5248,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3119",
+    "id": "fd_3120",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -5261,7 +5262,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3120",
+    "id": "fd_3121",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5276,7 +5277,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3121",
+    "id": "fd_3122",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26275v1",
@@ -5291,7 +5292,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3122",
+    "id": "fd_3123",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26043v1",
@@ -5305,7 +5306,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3123",
+    "id": "fd_3124",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5319,7 +5320,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3124",
+    "id": "fd_3125",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5334,7 +5335,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3125",
+    "id": "fd_3126",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25724v1",
@@ -5349,7 +5350,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3126",
+    "id": "fd_3127",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25698v1",
@@ -5364,7 +5365,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3127",
+    "id": "fd_3128",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25180v1",
@@ -5378,7 +5379,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3128",
+    "id": "fd_3129",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -5392,7 +5393,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3129",
+    "id": "fd_3130",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24882v1",
@@ -5406,7 +5407,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3130",
+    "id": "fd_3131",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24624v1",
@@ -5420,7 +5421,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3131",
+    "id": "fd_3132",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24583v2",
@@ -5435,7 +5436,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3132",
+    "id": "fd_3133",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24685v1",
@@ -5450,7 +5451,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3133",
+    "id": "fd_3134",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5465,7 +5466,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3134",
+    "id": "fd_3135",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24325v2",
@@ -5480,13 +5481,27 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3135",
+    "id": "fd_3136",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
     "status": "available",
     "timestamp": "2026-07-01T22:46:11.498625+00:00",
     "title": "Polynomial tractability of the periodic $L^2$ discrepancy via signed linear algorithms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the relationship between the girth of a bipartite graph and its small-set expansion properties. Specifically, prove that a left-regular bipartite graph with girth at least 2k is an optimal (t, alpha)-expander for a specific t and alpha determined by the local tree-like structure, where optimality is defined by the maximum possible neighborhood size for sets of size up to t.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3137",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-07-01T23:56:04.610521+00:00",
+    "title": "Combinatorial Characterization of Optimal Small-Set Expanders via Girth"
   },
   {
     "consumed_by_exp_id": "",
@@ -5632,36 +5647,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nBold, testable conjectures distilled from this cycle's study of three\nreusable proof patterns: max-plus (tropical) simplification, reflective\nsmall-case primality testing, and row-sum eigenvalue estimates.\n\n## 1. A canonical Horner factorization for every tropical polynomial\n\n**Conjecture.** Every univariate max-plus polynomial of degree `d`, written as\n`max over k \u2264 d of (a\u2096 + k\u00b7x)`, admits a unique nested factorization\n`a\u2080 \u2295 x \u2299 (a\u2081 \u2295 x \u2299 (a\u2082 \u2295 \u22ef))`, and this nesting evaluates with exactly `d`\ntropical additions and `d` tropical multiplications \u2014 the min-plus analogue of\nHorner's rule \u2014 with no shorter straight-line evaluation possible.\n\nThe key insight is that the two-sided distributivity of ordinary addition over\n`max` is enough to collapse any max-of-affine expression into a single nested\nform, so the classical arithmetic-circuit theory of polynomial evaluation\ntransports verbatim to the tropical world.\n\nWhy now? Tropical polynomials are the exact algebra of piecewise-linear\nactivation networks, and an optimal, canonical evaluation order directly bounds\nthe number of comparison-and-add operations such networks need \u2014 a quantity that\ngoverns both their expressive depth and their inference cost.\n\n## 2. Trial division is optimal among divisor-scan primality certificates\n\n**Conjecture.** Among all primality tests that certify `n` by exhibiting the\nabsence of a proper divisor in an explicitly scanned range, the scan can always\nbe truncated at `\u230a\u221an\u230b` without loss, and no certificate of this shape can\ninspect asymptotically fewer than `\u221an / log n` candidate divisors on infinitely\nmany `n`.\n\nThe key insight is that a composite number always has a nontrivial factor at or\nbelow its square root, so the *witness* to compositeness lives in a range of\nsize `\u221an`, while primes force the scan to rule out every prime below `\u221an`,\npinning the lower bound to the density of primes.\n\nWhy now? Reflective, self-certifying number-theoretic procedures are becoming\nthe backbone of verified cryptographic libraries, where the guarantee is not\nmerely \"the answer is correct\" but \"here is a checkable reason\"; understanding\nthe minimal certificate size sharpens the cost model for these guarantees.\n\n## 3. Row-sum bounds are exactly tight precisely for scaled stochastic matrices\n\n**Conjecture.** The row-sum bound `|\u03bb| \u2264 max\u1d62 \u03a3\u2c7c |A\u1d62\u2c7c|` is attained by an\neigenvalue of `A` if and only if, after a diagonal sign change, some maximal\nrow is a nonnegative multiple of a common probability vector shared by all\nmaximal rows; equivalently, equality forces the extremal eigenvector to be\nconstant in modulus across the support of the maximal rows.\n\nThe key insight is that equality in the triangle inequality used to prove the\nbound demands perfect phase alignment of the eigenvector entries, which rigidly\nconstrains the maximal rows to a scaled-stochastic shape.\n\nWhy now? Spectral radius controls the stability of iterated linear dynamics \u2014\nfrom message-passing and diffusion on graphs to the training dynamics of linear\nrecurrent models \u2014 and knowing exactly when the cheap row-sum bound is tight\ntells practitioners when it is safe to replace an expensive eigenvalue\ncomputation with a single pass over the matrix rows.\n\n## 4. A unified \"distribute, then decide\" tactic discipline\n\n**Conjecture.** A large class of routine identities across idempotent semirings,\nbounded arithmetic, and finite-dimensional operator estimates can be discharged\nby a single two-phase strategy: normalize by the semiring's distributive law,\nthen settle the residual by a decision procedure over a linear order \u2014 and this\nstrategy is complete for the quantifier-free fragment of each theory.\n\nThe key insight is that in all three settings the \"hard\" content is a single\ndistributive rewrite, after which the remaining goal lives in a decidable\ntheory of linear order and addition.\n\nWhy now? As libraries of certified mathematics scale, the bottleneck shifts from\nproving individual theorems to designing small, provably sound tactics that\nretire whole families of goals at once; a completeness result would turn tactic\ndesign from craft into theory.\n",
-    "domains": [
-      "Pythagorean",
-      "Tropical"
-    ],
-    "id": "fd_3136",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7469cf90",
-    "status": "available",
-    "timestamp": "2026-07-01T23:10:10.846486+00:00",
-    "title": "Bold, testable conjectures distilled from this cycle's study of three"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Metric embeddings of the Petersen graph into abelian Cayley graphs\n\nThis cycle established a clean two-part obstruction: a *metric* principle (an\nisometric image of an edge is an edge, so an isometric embedding into a bipartite\nhost forces the source to be bipartite) combined with a *cheap bipartite\ncertificate* for abelian Cayley graphs (a single group character sending the\nwhole connection set to the nonzero element of the two-element group). Applied to\nthe Petersen graph \u2014 whose shortest odd closed walk has length five \u2014 this rules\nout every bipartite abelian Cayley host, hypercubes included. The following\nconjectures push past the bipartite frontier that this argument leaves open.\n\n## Conjecture 1 \u2014 The grand non-embeddability\n\nThe Petersen graph admits no distance-preserving embedding into the connection\ngraph of any finite commutative group, whatever the choice of symmetric\ngenerating set \u2014 including generating sets that produce odd cycles and are\ntherefore beyond the reach of any parity coloring.\n\nThe key insight is that commutativity forces the set of directions realized along\nshortest paths to behave like a system of independent coordinates, and the\nPetersen graph's five-fold symmetry cannot be reconciled with any such coordinate\nsystem without collapsing two of its non-adjacent vertices to equal distance\nprofiles.\n\nWhy now? The bipartite half is fully settled, so the remaining obstruction is\nsharply localized to non-bipartite hosts; isolating it turns a vague \"no abelian\nhost works\" into a precise statement whose only missing ingredient is a\ncoordinate-independence lemma for commutative connection graphs.\n\n## Conjecture 2 \u2014 Odd girth versus abelian coordinates\n\nIf a vertex-transitive graph of odd girth at least five embeds isometrically into\na commutative connection graph, then it is a Cartesian product of even cycles and\ncomplete graphs on at most two vertices; in particular no such embedding exists\nfor graphs, like the Petersen graph, that are prime with respect to the Cartesian\nproduct.\n\nThe key insight is that odd girth five simultaneously forbids the bipartite\n(hypercube) factors and the short odd-cycle factors, squeezing the host into a\nproduct structure the Petersen graph cannot possess because it is\nCartesian-prime.\n\nWhy now? Cartesian primeness of the Petersen graph is elementary and the\neven-cycle/edge factorization of bipartite abelian hosts is exactly what the\ncharacter certificate produced this cycle exposes, so the two halves are ready to\nbe joined.\n\n## Conjecture 3 \u2014 Kneser graphs as a non-embeddable family\n\nFor every `n \u2265 5`, the Kneser graph on the two-element subsets of an\n`n`-element set (of which the Petersen graph is the case `n = 5`) admits no\nisometric embedding into any finite commutative connection graph.\n\nThe key insight is that the disjointness metric on two-element subsets encodes an\nodd cycle of length five for every `n \u2265 5`, so the same parity obstruction\npropagates through the whole family, while the growing automorphism group makes a\ncoordinate representation strictly harder rather than easier.\n\nWhy now? The base case is proved for bipartite hosts, and the family shares a\nsingle reusable odd cycle, so a uniform argument needs only to be shown stable as\n`n` grows rather than re-discovered for each `n`.\n\n## Conjecture 4 \u2014 Sharp distortion into the hypercube\n\nSince the Petersen graph cannot embed isometrically into any hypercube, the least\nmultiplicative distortion of any embedding of the Petersen graph into a hypercube\nis strictly greater than one, and its exact value is `3/2`, attained by a\nlabeling that stretches exactly the edges of one perfect matching.\n\nThe key insight is that the only obstruction is the parity of the five-cycles, so\noptimal distortion is governed by how cheaply one can \"repair\" odd cycles by\nlengthening a minimum set of edges \u2014 a covering-design problem on the Petersen\ngraph's cycle space.\n\nWhy now? The exact non-embeddability result identifies parity as the sole\nbarrier, converting a hard geometric optimization into a finite combinatorial\ncovering question that current tools can attack directly.\n\n## Conjecture 5 \u2014 Bipartite double cover as the universal repair\n\nThe bipartite double cover of the Petersen graph embeds isometrically into a\nhypercube, and more generally the bipartite double cover of any non-bipartite\nabelian-Cayley-obstructed graph is the smallest bipartite graph into which the\noriginal maps with distortion two.\n\nThe key insight is that doubling the vertex set along a parity coordinate removes\nevery odd closed walk while preserving all even-distance structure, so the double\ncover is the canonical bipartite \"unfolding\" that a hypercube can host.\n\nWhy now? The double-cover construction already lives in the same commutative\nsetting used this cycle (adjoining a single order-two coordinate), so testing\nwhether it is the optimal bipartite repair is immediate rather than speculative.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_3137",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "a725bb00",
-    "status": "available",
-    "timestamp": "2026-07-01T23:31:22.493610+00:00",
-    "title": "Clean two-part obstruction: a *metric* principle (an"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5779,20 +5764,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 7469cf90 (Q=0.644) proved 15 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_7469cf90_bdbd23aa",
-    "priority_score": 0.6937080000000001,
-    "research_mode": "team",
-    "source_exp_id": "7469cf90",
-    "status": "available",
-    "timestamp": "2026-07-01T23:10:20.766578+00:00",
-    "title": "Close Proofs: Proof Automation: Custom Lean 4 Tactics"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -5866,7 +5837,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Idempotent Probability: Large Deviations"
   },
   {
-    "consumed_by_exp_id": "2bfec88c",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical",
@@ -5876,7 +5847,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
@@ -5910,7 +5881,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "7d0833a0",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -5920,7 +5891,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },

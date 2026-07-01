@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9871aa6d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Langlands for GL₂ over ℚ (Eichler–Shimura & Deligne)\n\nDerived from this cycle's findings in `Catalog/Novelty/EichlerShimuraGL2.lean` and\n`Catalog/Novelty/DeligneBoundGL2.lean`, w",
-      "quality_score": 0.7236,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-27T01:29:38",
-      "title": "Langlands for GL₂ over Q"
-    },
-    {
       "cycle_id": "cf34309d",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Erdős–Rényi threshold phenomena\n\nDerived from this cycle's findings in `Model.lean`, `SecondMoment.lean`,\n`Concrete.lean`, and the new `Threshold.lean`. This cycle established th",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-01T23:31:29",
       "title": "Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
+    },
+    {
+      "cycle_id": "35d54dba",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Independence Ratio Floor of the Plane\n\nThe independence ratio of a finite configuration of points in the plane — the\nlargest fraction of the points that can be chosen with no",
+      "quality_score": 0.527476,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-01T23:54:40",
+      "title": "Minimum Independence Ratio Constraint"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7976880000000001
     }
   ],
-  "last_updated": "2026-07-01T23:31:29",
+  "last_updated": "2026-07-01T23:54:40",
   "open_questions": [
     {
       "context": "This file develops a small but complete and `sorry`-free combinatorial foundation",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "47d1dc51",
-        "quality": 0.5394642553191489,
-        "theorems": 15,
-        "title": "Unramified Obstruction Equals Descent Obstruction for Rationally Connected Varie"
-      },
-      {
         "cycle_id": "230b77ce",
         "quality": 0.76576,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.65944,
         "theorems": 14,
         "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m "
+      },
+      {
+        "cycle_id": "35d54dba",
+        "quality": 0.527476,
+        "theorems": 8,
+        "title": "Minimum Independence Ratio Constraint"
       }
     ],
     "NumberTheory": [
