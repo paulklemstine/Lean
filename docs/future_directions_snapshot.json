@@ -99,7 +99,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7469cf90",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domain_bridges": [],
     "domains": [
@@ -113,7 +113,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -1367,7 +1367,7 @@
       "de_Grey_chromatic_number",
       "Erdos_independence_ratio_problem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57aacce9",
     "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
     "domain_bridges": [
       "linear_programming",
@@ -1383,7 +1383,7 @@
     "proof_strategy": "Formalize the 27-vertex configuration G_27 as an explicit point set in R^2 with its unit-distance graph structure. Define geometric fractional chromatic number as the optimum of a linear program over Borel measurable vertex-weighting functions. Characterize the 23 extremal geometric fractional colorings of G_27 as vertices of an 11-dimensional polytope (the key computational step). Show that for the specific two-vertex augmentation, every optimal coloring of G_27 forces a constraint violation on the new vertices, implying the LP optimum must strictly exceed 4. The polytope characterization reduces the verification to checking constraints at finitely many extremal points.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:01:41.266053+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
@@ -3001,7 +3001,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": "Matolcsi, Ruzsa, Varga, Zsámboki",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "35d54dba",
     "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
     "domain_bridges": [],
     "domains": [
@@ -3013,7 +3013,7 @@
     "proof_strategy": "Constructive existence proof",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:26:42.958632+00:00",
     "title": "Minimum Independence Ratio Constraint"
   },
@@ -3797,7 +3797,7 @@
       "11F03",
       "33C05"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03030651",
     "description": "For τ in the upper half-plane, define G(τ) = 2E₂(2τ) - E₂(τ) and let t(τ) be the Hauptmodul on Γ₀(2) with q-expansion t = 256q + 4096q² + …. Then the identity E₄(τ)/G(τ)² = (t(τ) + 256)/(t(τ) + 64) holds as an identity of modular functions on Γ₀(2). This is a key technical lemma used to prove that G(τ) satisfies the pulled-back hypergeometric ODE, thereby identifying G with ₃F₂(1/4, 1/2, 3/4; 1, 1; X(τ)).",
     "domain_bridges": [
       "q-expansions and formal power series",
@@ -3813,7 +3813,7 @@
     "proof_strategy": "Both sides are modular functions on Γ₀(2) (i.e., weight-0 meromorphic modular forms). Clear denominators to obtain a modular form D₁ = (t+64)E₄ - (t+256)G² of weight 4 on Γ₀(2). By the finite divisor check lemma, D₁ is holomorphic and has no poles, so it suffices to verify that its q-expansion vanishes to sufficiently high order. Since the space M₄(Γ₀(2)) is finite-dimensional (dimension 2), checking finitely many q-expansion coefficients forces D₁ = 0. In Lean, one can compute q-expansions as formal power series over ℚ and verify the identity coefficient-by-coefficient up to the Sturm bound.",
     "research_mode": "team",
     "source_exp_id": "2606.28966v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T02:35:13.608193+00:00",
     "title": "Rational modular ratio for E₄ on Γ₀(2)"
   },
@@ -5204,7 +5204,7 @@
       "Cayley_graphs",
       "Turán_theorem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b03dbdb9",
     "description": "For every odd prime p and integer r with 1 ≤ r ≤ p-1, the maximum size of a symmetric set S = -S ⊆ ℤ_p \\ {0} such that the Cayley graph Cay(ℤ_p, S) is K_{r+1}-free equals p - 1 - 2⌊p/(r+1)⌋. This is the main theorem of the paper, established via a polynomial method.",
     "domain_bridges": [
       "additive_combinatorics",
@@ -5221,7 +5221,7 @@
     "proof_strategy": "Formalize Cayley graphs over ZMod p, symmetric connection sets, and K_{r+1}-freeness. Prove the lower bound by showing Cay(ℤ_p, ℤ_p \\ D_0) is K_{r+1}-free where D_0 = {0, ±1, ..., ±⌊p/(r+1)⌋}. Prove the upper bound via the polynomial method: for a K_{r+1}-free Cayley graph with connection set S, construct a nonzero polynomial of bounded degree vanishing on the complement D = ℤ_p \\ S, then use the Combinatorial Nullstellensatz or degree-counting to derive |S| ≤ p - 1 - 2⌊p/(r+1)⌋.",
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T09:28:09.181224+00:00",
     "title": "Cayley-Turán number of complete graphs over prime cyclic groups"
   },
@@ -6116,7 +6116,7 @@
       "mathlib4#GroupTheory.Cayley",
       "mathlib4#Data.Finsupp.Defs"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a725bb00",
     "description": "The Petersen graph does not admit an isometric embedding into any Cayley graph of any finite abelian group. Since the Petersen graph is not a partial cube (not bipartite), it cannot embed into hypercubes Q_k = Cay((Z/2)^k, standard basis). This conjecture asserts the stronger claim that no abelian group structure whatsoever can serve as a host. The obstruction arises from the interplay between the Petersen graph's odd girth (5), vertex-transitivity under the non-abelian group S_5, and the constraint that abelian Cayley graphs impose on metric structure via their generating sets. A proof would demonstrate the limits of the paper's GF(2) quotient labeling framework and establish the Petersen graph as a minimal counterexample to isometric abelian Cayley embeddability beyond bipartite graphs.",
     "domain_bridges": [
       "algebraic_graph_theory",
@@ -6133,7 +6133,7 @@
     "proof_strategy": "Assume for contradiction that an isometric embedding φ: Petersen → Cay(Γ, S) exists with Γ finite abelian and S symmetric generating set. Since Petersen is 3-regular, |S| = 3. Use the cycle-class parity matrix framework: the Petersen graph has 15 edges and 6 independent 5-cycles. Compute rank(A) over GF(2) and show that any edge partition yields quotient dimension incompatible with shortcut-freeness. Alternatively, exploit that Cay(Γ, S) for |Γ| ≥ 10 and abelian Γ forces commutativity constraints on the Petersen's distance-2 structure that cannot be satisfied simultaneously, using the Petersen's unique (5,2)-cage properties and odd-girth constraints on abelian Cayley quotients.",
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T20:40:18.725594+00:00",
     "title": "Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
   },
@@ -7129,7 +7129,7 @@
     "catalog_references": [
       "cs.GT/1611.02678"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea755e35",
     "description": "In any finite strategic-form game that satisfies the path-independence condition (PI), there exists a function P : S → ℝ such that (i) for every unilateral deviation (x_i,s_{-i})→(x_i',s_{-i}), the change in P equals the change in the deviator’s payoff, and (ii) P is independent of the sequence of unilateral moves used to reach any profile from a fixed reference profile. Moreover, P is unique up to an additive constant.",
     "domain_bridges": [
       "cs.GT",
@@ -7145,7 +7145,7 @@
     "proof_strategy": "constructive_existence_via_path_independence",
     "research_mode": "team",
     "source_exp_id": "2606.26564v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T14:14:44.976519+00:00",
     "title": "Conjecture: Path Independence Implies Existence of a Unique Exact Potential"
   },
@@ -10172,7 +10172,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd79f536",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -10185,7 +10185,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

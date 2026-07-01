@@ -75,7 +75,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7469cf90",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -86,7 +86,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -970,7 +970,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57aacce9",
     "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
     "domains": [
       "Geometry"
@@ -979,7 +979,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:01:41.266053+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
@@ -1855,7 +1855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Indivisibility of Nonzero Character Values in GL_n(F_q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "35d54dba",
     "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
     "domains": [
       "Bridges"
@@ -1864,7 +1864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:26:42.958632+00:00",
     "title": "Minimum Independence Ratio Constraint"
   },
@@ -2277,7 +2277,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inheritance of strongly 1-principled property under matrix powers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03030651",
     "description": "For \u03c4 in the upper half-plane, define G(\u03c4) = 2E\u2082(2\u03c4) - E\u2082(\u03c4) and let t(\u03c4) be the Hauptmodul on \u0393\u2080(2) with q-expansion t = 256q + 4096q\u00b2 + \u2026. Then the identity E\u2084(\u03c4)/G(\u03c4)\u00b2 = (t(\u03c4) + 256)/(t(\u03c4) + 64) holds as an identity of modular functions on \u0393\u2080(2). This is a key technical lemma used to prove that G(\u03c4) satisfies the pulled-back hypergeometric ODE, thereby identifying G with \u2083F\u2082(1/4, 1/2, 3/4; 1, 1; X(\u03c4)).",
     "domains": [
       "Geometry"
@@ -2286,7 +2286,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28966v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T02:35:13.608193+00:00",
     "title": "Rational modular ratio for E\u2084 on \u0393\u2080(2)"
   },
@@ -3015,7 +3015,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berry-Keating Hamiltonian Spectrum Corresponds to Riemann Zeta Non-Trivial Zeros"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b03dbdb9",
     "description": "For every odd prime p and integer r with 1 \u2264 r \u2264 p-1, the maximum size of a symmetric set S = -S \u2286 \u2124_p \\ {0} such that the Cayley graph Cay(\u2124_p, S) is K_{r+1}-free equals p - 1 - 2\u230ap/(r+1)\u230b. This is the main theorem of the paper, established via a polynomial method.",
     "domains": [
       "Pythagorean",
@@ -3025,7 +3025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T09:28:09.181224+00:00",
     "title": "Cayley-Tur\u00e1n number of complete graphs over prime cyclic groups"
   },
@@ -3496,7 +3496,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension-Free KKL for Bounded-Degree HDX"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a725bb00",
     "description": "The Petersen graph does not admit an isometric embedding into any Cayley graph of any finite abelian group. Since the Petersen graph is not a partial cube (not bipartite), it cannot embed into hypercubes Q_k = Cay((Z/2)^k, standard basis). This conjecture asserts the stronger claim that no abelian group structure whatsoever can serve as a host. The obstruction arises from the interplay between the Petersen graph's odd girth (5), vertex-transitivity under the non-abelian group S_5, and the constraint that abelian Cayley graphs impose on metric structure via their generating sets. A proof would demonstrate the limits of the paper's GF(2) quotient labeling framework and establish the Petersen graph as a minimal counterexample to isometric abelian Cayley embeddability beyond bipartite graphs.",
     "domains": [
       "Pythagorean",
@@ -3506,7 +3506,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29391v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T20:40:18.725594+00:00",
     "title": "Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
   },
@@ -4037,7 +4037,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Maximum of the Augmented Sombor Index over Connected Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea755e35",
     "description": "In any finite strategic-form game that satisfies the path-independence condition (PI), there exists a function P : S \u2192 \u211d such that (i) for every unilateral deviation (x_i,s_{-i})\u2192(x_i',s_{-i}), the change in P equals the change in the deviator\u2019s payoff, and (ii) P is independent of the sequence of unilateral moves used to reach any profile from a fixed reference profile. Moreover, P is unique up to an additive constant.",
     "domains": [
       "Pythagorean"
@@ -4046,7 +4046,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26564v2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T14:14:44.976519+00:00",
     "title": "Conjecture: Path Independence Implies Existence of a Unique Exact Potential"
   },
@@ -5778,7 +5778,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd79f536",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -5788,7 +5788,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
