@@ -345,7 +345,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Type Theory: Cubical Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "8a7d0352",
+    "consumed_by_exp_id": "",
     "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
     "domains": [
       "Physics",
@@ -356,7 +356,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432775+00:00",
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
@@ -2132,7 +2132,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Poset Size for Automorphism Group Z2 x Z2^n"
   },
   {
-    "consumed_by_exp_id": "a8a11317",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, consider the fair mechanism given by uniformly sampling lines of the projective plane PG(2,q), where n = q\u00b2 + q + 1 is the number of points and \u2113 = q + 1 is the line size. The expected coverage time of this projective plane mechanism strictly exceeds that of the full model (uniform sampling of all \u2113-subsets of an n-element set). This generalizes the paper's Fano plane (q=2) counterexample to the Grunbaum\u2013Yaakobi conjecture and posits that projective plane line sets systematically yield slower fair mechanisms than the full model across all orders.",
     "domains": [
       "Pythagorean",
@@ -2142,7 +2142,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T22:13:18.479634+00:00",
     "title": "Projective Plane Coupon Mechanisms Dominate the Full Model"
   },
@@ -2656,7 +2656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
   {
-    "consumed_by_exp_id": "0bd0cdee",
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
@@ -2665,7 +2665,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T21:48:36.541820+00:00",
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
   },
@@ -3174,7 +3174,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial-Free Sunflower Bound"
   },
   {
-    "consumed_by_exp_id": "49607a45",
+    "consumed_by_exp_id": "",
     "description": "There exists an absolute constant c > 0 such that for every d-regular n-vertex graph G (with 1 \u2264 d \u2264 n\u22121), there is a spanning subgraph H of G in which for each degree i \u2208 {0, 1, \u2026, d}, the number of vertices of degree exactly i in H is at least c\u00b7n/(d+1). This extends the paper's result\u2014which requires d = o(n) and achieves (1\u2212\u03b5)\u00b7n/(d+1)\u2014by asking whether a weaker constant-fraction guarantee holds uniformly for all d, removing the d = o(n) restriction entirely.",
     "domains": [
       "Computation"
@@ -3183,7 +3183,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T13:00:09.568943+00:00",
     "title": "Universal constant-fraction nearly-uniform degree distribution in spanning subgraphs"
   },
@@ -4064,20 +4064,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Andr\u00e9's Height Bound for Non-Equisetential Curves"
   },
   {
-    "consumed_by_exp_id": "1ae9dee2",
-    "description": "Every level-one spherical automorphic form on the upper half-plane X = SL(2, Z) \\ H can be written as the sum of a cusp form and a finite linear combination of Laurent coefficients of the standard Eisenstein series E(s; z).",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_3039",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.27749v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-01T00:40:43.642727+00:00",
-    "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
@@ -4218,6 +4204,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erd\u0151s\u2013Straus Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Fourier Analysis on Finite Groups\n\nThis cycle established, for the cyclic group `Z/NZ`, the convolution theorem, the\nParseval/Plancherel identity with constant `N`, and the Donoho\u2013Stark support\nuncertainty principle `|supp f| \u00b7 |supp \\hat f| \u2265 N`. Analysis of the proofs\nisolated a clean stratification: the convolution theorem needs only that\ncharacters multiply, Parseval additionally needs character orthogonality, and the\nuncertainty principle needs neither \u2014 only that characters have modulus one\ntogether with Fourier inversion. The sharp cases of the uncertainty bound are\nexactly the subgroup indicators, where `|supp f| \u00b7 |supp \\hat f| = N` via the\nsubgroup\u2013annihilator duality. The following conjectures push these findings\noutward.\n\n## Conjecture 1 (Prime-order additive uncertainty / Tao's bound)\n\nFor a prime `p` and a nonzero function `f` on `Z/pZ`,\n`|supp f| + |supp \\hat f| \u2265 p + 1`, strictly stronger than the multiplicative\nDonoho\u2013Stark bound `|supp f| \u00b7 |supp \\hat f| \u2265 p` in this setting.\n\nThe key insight is that over a field of prime order the Fourier matrix has all\nits minors nonzero (a Chebotar\u00ebv-type nonvanishing of Vandermonde determinants at\nroots of unity), so no nonzero function can have both few nonzero values and few\nnonzero frequencies; the rigidity of prime order replaces the soft analytic bound\nby an exact additive one.\n\nWhy now? The multiplicative bound and the subgroup-equality analysis are in hand,\nand the equality cases vanish in prime order precisely because the only subgroups\nare trivial \u2014 this is exactly the regime where the additive strengthening should\nbecome provable from the determinantal nonvanishing, making prime order the\nnatural next milestone.\n\n## Conjecture 2 (Equality classification on general `Z/NZ`)\n\nEquality `|supp f| \u00b7 |supp \\hat f| = N` holds if and only if `f` is, up to a\nnonzero scalar, a translate and modulation of the indicator of a subgroup of\n`Z/NZ`; consequently the set of achievable equality sizes is exactly\n`{ (d, N/d) : d | N }`.\n\nThe key insight is that the two H\u00f6lder-type bounds underlying the uncertainty\nprinciple are simultaneously tight only when `f` is \"flat\" on its support and its\ntransform is \"flat\" on its support, and the only functions flat in both domains\nare the subgroup indicators dictated by the divisor lattice.\n\nWhy now? The proof here makes the two extremal inequalities explicit, so the\nequality case is reduced to characterising simultaneous equality in both \u2014 a\nfinite, structural problem about when an `L^1`\u2013`L^\u221e` H\u00f6lder step is saturated,\nwhich the present decomposition exposes directly.\n\n## Conjecture 3 (Uncertainty over arbitrary finite abelian groups)\n\nFor every finite abelian group `G` and nonzero `f : G \u2192 \u2102`,\n`|supp f| \u00b7 |supp \\hat f| \u2265 |G|`, with equality exactly for translated modulated\nsubgroup indicators, where the transform is taken with respect to the Pontryagin\ndual.\n\nThe key insight is that the entire argument depends on `G` only through three\nfacts \u2014 characters have modulus one, the dual group has the same cardinality as\n`G`, and Fourier inversion holds \u2014 all of which survive verbatim for any finite\nabelian group via its decomposition into cyclic factors.\n\nWhy now? The cyclic case is complete and its proof was deliberately written to use\nno special feature of `Z/NZ` beyond these three facts; the structure theorem for\nfinite abelian groups then reduces the general statement to a tensor product of\ncyclic transforms, so the extension is a matter of assembling existing pieces.\n\n## Conjecture 4 (Entropic uncertainty refinement)\n\nFor nonzero `f` with `\u2016f\u2016\u2082 = 1` on `Z/NZ`, the Shannon entropies of the\nprobability vectors `|f|\u00b2` and `|\\hat f|\u00b2 / N` satisfy `H(|f|\u00b2) + H(|\\hat f|\u00b2/N) \u2265\nlog N`, and this entropic inequality implies the support bound via the support-size\n\u2265 exp(entropy) estimate.\n\nThe key insight is that Parseval makes `|f|\u00b2` and `|\\hat f|\u00b2/N` genuine probability\ndistributions, and the uncertainty principle is the `0/\u221e`-R\u00e9nyi-entropy endpoint of\na whole family of entropic inequalities interpolated by the Hausdorff\u2013Young\nexponents.\n\nWhy now? With Parseval established at the exact constant `N`, both vectors are\nnormalised probability distributions on the nose, so the entropic formulation is\nnow well-posed and its weakest (support) instance is already proved \u2014 the natural\nnext step is the full Shannon-entropy case via Hausdorff\u2013Young.\n\n## Conjecture 5 (Spectral gap of cyclic convolution operators)\n\nFor a real nonnegative `f` on `Z/NZ` with `\u03a3 f = 1`, the convolution operator\n`g \u21a6 f \u22c6 g` has spectrum exactly `{ \\hat f(k) : k \u2208 Z/NZ }`, and its second-largest\neigenvalue modulus controls the mixing time of the associated random walk by\n`t_mix \u224d 1 / (1 - max_{k\u22600} |\\hat f(k)|)`.\n\nThe key insight is that the convolution theorem diagonalises every convolution\noperator in the Fourier basis simultaneously, turning a dynamical mixing question\ninto the pointwise behaviour of a single function `\\hat f` on the dual group.\n\nWhy now? The convolution theorem proved here is exactly the diagonalisation\nstatement, so eigenvalues are immediately identified with Fourier coefficients;\nquantifying mixing is then a clean analytic estimate on `\\hat f`, connecting this\nfinite-Fourier development to current work on random walks and expander mixing.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3040",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "83afa678",
+    "status": "available",
+    "timestamp": "2026-07-01T00:59:03.272226+00:00",
+    "title": "This cycle established, for the cyclic group `Z/NZ`, the convolution theorem, th"
   },
   {
     "consumed_by_exp_id": "",
@@ -4455,7 +4456,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "0981e8d6",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -4465,7 +4466,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -4830,7 +4831,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Strategy Mining from Deep Mathematics"
   },
   {
-    "consumed_by_exp_id": "adbfcd0f",
+    "consumed_by_exp_id": "",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domains": [
       "Geometry",
@@ -4840,7 +4841,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.310599+00:00",
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },

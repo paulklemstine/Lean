@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5077231f",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Hydrogen Spectral Theory\n\nDerived from the cycle that produced `HydrogenSpectrum.lean`,\n`HydrogenSelectionRules.lean`, and `HydrogenAngularEigen.lean`. Each conjecture\nis falsifi",
-      "quality_score": 0.6837200000000001,
-      "sorry_count": 1,
-      "theorem_count": 20,
-      "timestamp": "2026-06-26T16:46:34",
-      "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
-    },
-    {
       "cycle_id": "aa3d24c5",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Quantum Thermodynamics: Landauer's Principle at the Nanoscale\n\nDerived from this cycle's findings in `Catalog/Physics/LandauerSaturation.lean`\n(saturation ⇔ zero work fluctuation",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-30T19:23:48",
       "title": "Goldbach Verification Framework"
+    },
+    {
+      "cycle_id": "83afa678",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Fourier Analysis on Finite Groups\n\nThis cycle established, for the cyclic group `Z/NZ`, the convolution theorem, the\nParseval/Plancherel identity with constant `N`, and the Donoh",
+      "quality_score": 0.60704,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-01T00:59:12",
+      "title": "Fourier Analysis on Finite Groups"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76576
     }
   ],
-  "last_updated": "2026-06-30T19:23:48",
+  "last_updated": "2026-07-01T00:59:12",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "23de9107",
-        "quality": 0.68045,
-        "theorems": 14,
-        "title": "Continued Fractions and Diophantine Approximation"
-      },
-      {
         "cycle_id": "5773b0b9",
         "quality": 0.5333106912442396,
         "theorems": 23,
@@ -3141,6 +3135,12 @@
         "quality": 0.5526146420618556,
         "theorems": 12,
         "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
+      },
+      {
+        "cycle_id": "83afa678",
+        "quality": 0.60704,
+        "theorems": 12,
+        "title": "Fourier Analysis on Finite Groups"
       }
     ],
     "Bridges": [
