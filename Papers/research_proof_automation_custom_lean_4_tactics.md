@@ -1,424 +1,347 @@
-# Proof Automation for Fibonacci Identities: The Two-Term Basis Principle as a Decision Procedure
-
-**Author:** Aristotle
-**Domain:** Applications (Proof Automation)
-**Date:** 2026-06-27
+# Verified Proof Automation for Three Recurring Patterns: Min-Plus Simplification, Reflective Primality, and Row-Sum Spectral Bounds
 
 ## Abstract
 
-We present a small, principled toolkit of custom proof-automation tactics for
-the classical algebra of the Fibonacci numbers $F_n$ (defined by $F_0 = 0$,
-$F_1 = 1$, $F_{n+2} = F_{n+1} + F_n$), together with a verified suite of the
-identities they discharge. The mathematical engine is the **two-term basis
-principle**: for any fixed base index $n$, every shifted value $F_{n+k}$ is a
-fixed nonnegative-integer linear combination of the two coordinates $F_n$ and
-$F_{n+1}$, with coefficients $F_{k-1}$ and $F_k$. Consequently every *single-
-base* polynomial identity in shifted Fibonacci values is, after substitution, a
-formal polynomial identity in two free variables, and is therefore decided by
-ordinary commutative-ring normalization. This is the content of our primary
-tactic, the *expander* `fib_ring`. Identities carrying the alternating sign
-$(-1)^n$ — chief among them **Cassini's identity** — are not single-base
-polynomial identities; they are dispatched by a single induction step packaged
-as `fib_cassini_induct`. Genuinely *two-base* signed identities (Catalan's and
-d'Ocagne's convolution identities) are reduced to Cassini through the closed-
-form engine lemma `fib_two_basis`. We prove the engine lemma, the full set of
-single-base shift identities, both orientations of Cassini, both index-doubling
-formulas, and the convolution identities, and we analyze the scope, soundness,
-and completeness of the procedure. We close with four precise conjectures
-extending the method to all Lucas sequences and to a determinantal "$Q$-matrix"
-reflection procedure.
+We present three reusable, provably sound proof-automation procedures for
+recurring patterns in algebra, number theory, and linear algebra, together
+with the soundness theorems that justify them. The first, a *min-plus
+simplifier*, reduces any identity in the tropical semiring
+$(R, \oplus, \odot)$ with $a \oplus b = \min(a,b)$ and $a \odot b = a+b$ to an
+equivalent statement over the base ordered group, exploiting the injective
+homomorphism `untrop`; we use it to derive tropical idempotency,
+distributivity, and the tropical *freshman's dream*
+$(a \oplus b)^n = a^n \oplus b^n$. The second, a *reflective primality
+decider*, implements trial division as an explicit Boolean predicate and
+proves it extensionally equal to genuine primality, yielding self-certifying
+primality (and compositeness) judgments verified by the kernel rather than by
+an opaque oracle. The third, a *spectral bounder*, encapsulates the elementary
+half of the Gershgorin circle theorem: every real eigenvalue of a matrix is
+bounded in absolute value by the maximum absolute row sum. Each procedure is
+accompanied by a soundness statement establishing that any goal it closes is
+true and any goal it produces is logically equivalent to the original. We
+further describe a fourth, cognate development — an automation toolkit for
+Fibonacci identities based on a two-term basis principle — and discuss the
+general design pattern of *sound reduction tactics*.
 
 ## 1. Introduction
 
-The Fibonacci numbers form one of the most studied integer sequences in
-mathematics, and the literature contains hundreds of exact identities relating
-their shifted values, products, squares, and partial sums. Historically these
-identities have been discovered and verified one at a time, each with its own
-ad hoc manipulation. This paper isolates a single structural fact that reduces
-a large and well-defined class of such identities to mechanical algebra, and
-organizes the remaining cases (those involving a parity sign or two independent
-base points) around one further classical theorem, Cassini's identity.
+Automated tactics are the connective tissue of large formal developments. A
+single well-designed tactic can discharge a whole family of routine goals,
+sparing the human from repeating the same argument in a hundred slightly
+different guises. But automation carries a risk that ordinary lemmas do not: a
+tactic is a *program*, and a buggy program can, in principle, "prove" a false
+statement or, more insidiously, transform a goal into an inequivalent one and
+declare victory on the wrong problem.
 
-Our contributions are:
+The remedy pursued here is uniform. For each tactic we isolate a **soundness
+witness**: a theorem asserting that the reduction the tactic performs is
+faithful. Once the soundness witness is proved, the tactic is safe to apply
+anywhere, because every step it takes is backed by that theorem. We instantiate
+this discipline three times, in three unrelated domains, to show its
+generality.
 
-1. A precise statement and proof of the **two-term basis principle** in a form
-   convenient for substitution (Section 3, `fib_two_basis`).
-2. A decision-procedure tactic, the **expander** `fib_ring`, that discharges
-   every true single-base polynomial Fibonacci identity by ring normalization
-   (Sections 2 and 4).
-3. A one-step induction tactic, `fib_cassini_induct`, that handles parity-
-   dependent identities, used to prove Cassini's identity in both orientations
-   (Section 5).
-4. A reduction of the two-base signed convolution identities (Catalan,
-   d'Ocagne) to Cassini via the engine lemma, and a unifying convolution
-   identity that subsumes them (Section 7).
-5. Verified index-doubling formulas underlying the fast-doubling computation of
-   $F_n$ (Section 6).
+Throughout, we distinguish two notions of soundness for a reduction tactic
+that transforms a goal $G$ into a goal $G'$:
 
-Throughout, "identity" means an equation asserted for all natural numbers $n$
-(and possibly additional shift parameters), and "verified" means proved as a
-universally quantified statement, not merely checked numerically.
+- **Truth-preservation**: if $G'$ is true, then $G$ is true (so closing $G'$
+  closes $G$).
+- **Equivalence**: $G \iff G'$ (so nothing is lost — a provable $G$ becomes a
+  provable $G'$).
 
-## 2. The tactics
+Our first tactic achieves full equivalence via an injective map; the second is
+an *if-and-only-if* reflection; the third is a truth-preserving application of
+a proved inequality.
 
-We describe the three custom tactics abstractly; their soundness is discussed
-in Section 8. All three rest on the rewrite rule $F_{m+2} = F_{m+1} + F_m$,
-which we call **two-step expansion**.
+## 2. Min-Plus Simplification
 
-**The expander `fib_ring`.** Given a goal that is a polynomial equation in
-shifted Fibonacci values from a single base point, `fib_ring` first applies
-two-step expansion repeatedly. Because each application strictly decreases the
-largest shift while introducing only strictly smaller shifts, the rewriting
-terminates with every term reduced to the two atoms $F_n$ and $F_{n+1}$. The
-resulting goal is a polynomial identity in these two atoms, which is then closed
-by commutative-ring normalization (`ring`). Symbolically,
+### 2.1 The tropical semiring
 
-$$
-\text{`fib\_ring`} \;=\; (\text{repeatedly rewrite } F_{m+2}\to F_{m+1}+F_m)\;;\;\text{`ring`}.
-$$
+Let $R$ be a linearly ordered additive commutative monoid. The **tropical**
+(min-plus) semiring on $R$ has carrier $R$ (with a formal $+\infty$ as the
+additive identity when needed) and operations
+$$a \oplus b = \min(a,b), \qquad a \odot b = a + b.$$
+Tropical addition is idempotent, commutative, and associative; tropical
+multiplication is commutative, associative, and distributes over $\oplus$.
+Tropical exponentiation is repeated $\odot$, so $a^{\odot n} = n \cdot a$ in the
+base group.
 
-**The linear companion `fib_omega`.** Identical preprocessing, but the residual
-goal — which may involve truncated natural-number subtraction or inequalities
-rather than a pure ring identity — is discharged by linear-arithmetic decision
-(`omega`) instead of `ring`.
+We work through the standard device of a wrapper type $\mathrm{Trop}(R)$ with a
+bijection `untrop : Trop(R) → R` (and inverse `trop`) satisfying, for all
+$x, y$:
+$$\textsf{untrop}(x \oplus y) = \min(\textsf{untrop}\,x, \textsf{untrop}\,y), \qquad \textsf{untrop}(x \odot y) = \textsf{untrop}\,x + \textsf{untrop}\,y.$$
 
-**The parity inductor `fib_cassini_induct`.** For identities over $\mathbb{Z}$
-carrying a factor $(-1)^n$, this tactic performs induction on $n$: the base case
-is closed by simplification; the inductive step applies two-step expansion,
-normalizes integer casts, normalizes the ring structure, and finishes by linear
-arithmetic against the induction hypothesis. A single induction step suffices
-because two-step expansion reduces the statement at $n+1$ to the statement at
-$n$ with the sign reversed.
+### 2.2 The soundness witness
 
-## 2.5. Preliminaries: the two-coordinate basis in explicit form
+**Theorem 2.1 (Soundness of min-plus simplification).**
+The map $\textsf{untrop} : \mathrm{Trop}(R) \to R$ is injective, and for all
+tropical numbers $x, y$,
+$$\textsf{untrop}(x \oplus y) = \min(\textsf{untrop}\,x,\ \textsf{untrop}\,y), \qquad \textsf{untrop}(x \odot y) = \textsf{untrop}\,x + \textsf{untrop}\,y.$$
 
-Before stating the engine lemma it is worth making the central mechanism fully
-explicit, because the entire paper is, in a sense, an elaboration of one table.
-For a fixed base index $n$, repeatedly applying the recurrence $F_{m+2} =
-F_{m+1} + F_m$ expresses each shifted value as an integer combination of the two
-"coordinates" $F_n$ and $F_{n+1}$:
+*Proof sketch.* Injectivity holds because `trop` is a two-sided inverse. The
+two homomorphism identities are the definitional behavior of `untrop` on the
+tropical operations. $\qquad\blacksquare$
 
-$$
-\begin{array}{lcl}
-F_{n+0} &=& 1\cdot F_n + 0\cdot F_{n+1},\\
-F_{n+1} &=& 0\cdot F_n + 1\cdot F_{n+1},\\
-F_{n+2} &=& 1\cdot F_n + 1\cdot F_{n+1},\\
-F_{n+3} &=& 1\cdot F_n + 2\cdot F_{n+1},\\
-F_{n+4} &=& 2\cdot F_n + 3\cdot F_{n+1},\\
-F_{n+5} &=& 3\cdot F_n + 5\cdot F_{n+1},\\
-F_{n+6} &=& 5\cdot F_n + 8\cdot F_{n+1},\\
-F_{n+7} &=& 8\cdot F_n + 13\cdot F_{n+1}.
-\end{array}
-$$
+The tactic operates by (1) reducing a goal $s = t$ between tropical
+expressions to $\textsf{untrop}\,s = \textsf{untrop}\,t$ via injectivity, then
+(2) unfolding `untrop` across $\oplus$, $\odot$, powers, and units using the
+identities of Theorem 2.1. Because injectivity gives the equivalence
+$s = t \iff \textsf{untrop}\,s = \textsf{untrop}\,t$, and each unfolding is an
+equation, the resulting base-level goal is *logically equivalent* to the
+original. The reduction is therefore sound in the strong (equivalence) sense.
 
-The coefficient of $F_n$ in the row for $F_{n+k}$ is $F_{k-1}$ and the
-coefficient of $F_{n+1}$ is $F_k$ (with the convention $F_{-1} = 1$ in the row
-$k=0$). In other words, the change-of-basis matrix from the abstract pair
-$(F_n, F_{n+1})$ to $(F_{n+k}, F_{n+k+1})$ is exactly the power
-$$
-Q^k = \begin{pmatrix} F_{k+1} & F_k \\ F_k & F_{k-1} \end{pmatrix},
-\qquad Q = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}.
-$$
-This is why every single-base identity is a two-variable polynomial fact, and
-why the parity sign in Cassini is, at root, the determinant $(\det Q)^n =
-(-1)^n$. The remainder of the paper organizes the consequences of this single
-table into a layered automation strategy.
+### 2.3 Consequences
 
-## 3. The engine: the two-term basis principle
+Over $\mathrm{Trop}(\mathbb{Z})$, the reduced goals live in the fragment of
+linear integer arithmetic over $\min$ and $+$, which is decidable.
 
-Let $F : \mathbb{N} \to \mathbb{N}$ be the Fibonacci function. The structural
-heart of the entire development is the following bilinear closed form, a
-reindexing of the standard addition formula $F_{m+n+1} = F_m F_n + F_{m+1}
-F_{n+1}$.
+**Proposition 2.2 (Idempotency).** $a \oplus a = a$; equivalently
+$\min(a,a) = a$.
 
-> **Theorem 1 (`fib_two_basis`).** For all $n, k \in \mathbb{N}$,
-> $$F_{n + (k+1)} = F_k\,F_n + F_{k+1}\,F_{n+1}.$$
+**Proposition 2.3 (Distributivity).**
+$a \odot (b \oplus c) = (a \odot b) \oplus (a \odot c)$; equivalently
+$a + \min(b,c) = \min(a+b, a+c)$.
 
-*Proof.* Rewrite the index as $n + (k+1) = k + n + 1$ and apply the Fibonacci
-addition formula $F_{k+n+1} = F_k F_n + F_{k+1} F_{n+1}$. $\qquad\blacksquare$
+**Proposition 2.4 (Unit law).** $a \odot 1 = a$, where the tropical unit is
+$\textsf{trop}\,0$.
 
-Theorem 1 has two distinct uses. First, specialized in $k$ to concrete literals
-it yields the *single-base linear basis*: each $F_{n+k}$ is the fixed
-combination $F_{k-1} F_n + F_k F_{n+1}$, the engine behind `fib_ring`. Second,
-left with $k$ a free variable, it converts any *two-base* expression (one
-involving both a base point $n$ and an independent shift $k$) into a polynomial
-in the four atoms $F_k, F_{k+1}, F_n, F_{n+1}$, the engine behind the reduction
-of Catalan and d'Ocagne to Cassini.
+Each of Propositions 2.2–2.4 reduces, under Theorem 2.1, to a decidable linear
+$\min/+$ statement.
 
-## 4. Single-base shift identities
+**Theorem 2.5 (Tropical freshman's dream).** For all $n \in \mathbb{N}$ and all
+tropical $a, b$,
+$$(a \oplus b)^{\odot n} = a^{\odot n} \oplus b^{\odot n}.$$
 
-The simplest consequences are the linear basis expansions, all closed verbatim
-by `fib_ring`. The coefficients are themselves Fibonacci numbers.
+*Proof sketch.* Applying the soundness witness, the goal becomes
+$n \cdot \min(p,q) = \min(np, nq)$ with $p = \textsf{untrop}\,a$,
+$q = \textsf{untrop}\,b$, and $n \ge 0$. Case-split on $p \le q$ versus
+$q \le p$. In the first case, $\min(p,q) = p$ and, since scaling by the
+non-negative integer $n$ is monotone, $\min(np,nq) = np$; the second case is
+symmetric. $\qquad\blacksquare$
 
-> **Proposition 2 (`fib_shift_five`).** $F_{n+5} = 3F_n + 5F_{n+1}$.
->
-> **Proposition 3 (`fib_shift_six`).** $F_{n+6} = 5F_n + 8F_{n+1}$.
->
-> **Proposition 4 (`fib_shift_seven`).** $F_{n+7} = 8F_n + 13F_{n+1}$.
+Theorem 2.5 marks a precise boundary: the identity involves the product
+$n \cdot (\cdot)$ and is therefore *not* in the linear $\min/+$ fragment, so it
+requires the extra ingredient of monotonicity of scaling. Notably, the result
+*fails* if $n$ is permitted to be negative, since scaling by a negative number
+reverses order — a caveat that the hypothesis $n \ge 0$ makes explicit.
 
-*Proof (all three).* Apply two-step expansion until only $F_n, F_{n+1}$ remain,
-then normalize. For instance $F_{n+5} = F_{n+4}+F_{n+3} = (2F_{n+1}+F_{n+2})
-+ (F_{n+1}+F_{n+2}) = \cdots = 3F_n + 5F_{n+1}$; `ring` confirms the coefficient
-match. $\qquad\blacksquare$
+## 3. Reflective Small-Case Primality
 
-The procedure is not limited to linear identities. Polynomial (higher-degree)
-single-base identities are equally automatic.
+### 3.1 An explicit trial-division predicate
 
-> **Proposition 5 (`fib_square_shift`).**
-> $$F_{n+2}^{\,2} = F_n^{\,2} + 2F_n F_{n+1} + F_{n+1}^{\,2}.$$
+We implement trial division as a concrete Boolean function. Say $n$ **has a
+proper divisor** when there exists $d$ with $2 \le d < n$ and $d \mid n$;
+computationally, this is a scan over $d \in \{0, 1, \dots, n-1\}$ testing
+$2 \le d$ and $d \mid n$. Define the Boolean trial-division test
+$$\textsf{trialPrime}(n) = (2 \le n) \ \wedge\ \neg\,\textsf{hasProperDivisor}(n).$$
 
-*Proof.* Two-step expansion gives $F_{n+2} = F_n + F_{n+1}$; squaring,
-$(F_n+F_{n+1})^2 = F_n^2 + 2F_nF_{n+1} + F_{n+1}^2$ by `ring`.
+**Lemma 3.1 (Divisor characterization).**
+$\textsf{hasProperDivisor}(n) = \textsf{true} \iff \exists\, d,\ 2 \le d \wedge d < n \wedge d \mid n.$
+
+*Proof sketch.* Unfold the scan (a bounded existential over a finite range)
+and reconcile the ordering of conjuncts; the list-membership condition matches
+the bounded existential term-for-term. $\qquad\blacksquare$
+
+### 3.2 The soundness theorem
+
+**Theorem 3.2 (Correctness of trial division).**
+For every natural number $n$,
+$$\textsf{trialPrime}(n) = \textsf{true} \iff n \text{ is prime}.$$
+
+*Proof sketch.* Recall the elementary characterization: $n$ is prime iff
+$2 \le n$ and every $m$ with $m < n$ dividing $n$ satisfies $m = 1$. Unfolding
+$\textsf{trialPrime}$ and applying Lemma 3.1, the Boolean statement says
+$2 \le n$ together with the *absence* of any $d$ satisfying
+$2 \le d < n,\ d \mid n$. The forward direction shows that no such $d$ forces
+every proper divisor to be $1$; the backward direction shows that primality
+forbids any such $d$. Both directions are finite logical manipulations bridging
+the bounded quantifier and the negated existential. $\qquad\blacksquare$
+
+Theorem 3.2 is the soundness witness for the tactic. The tactic proves a goal
+"$n$ is prime" by *reflection*: it rewrites the goal along Theorem 3.2 to
+"$\textsf{trialPrime}(n) = \textsf{true}$" and then evaluates the closed Boolean
+by kernel-checked computation. Crucially, no unverified oracle is trusted —
+the equivalence itself is a proved theorem, so the reflective step is fully
+justified. The same tactic certifies *compositeness*, since it also decides the
+negation.
+
+### 3.3 Examples
+
+The tactic discharges, e.g., "$97$ is prime," "$101$ is prime," and
+"$91$ is not prime" (as $91 = 7 \times 13$), each as a kernel-verified
+computation. The design is deliberately conservative: it uses only trusted
+reduction, never an unchecked fast path, so the primality certificate is
+audited by the same core that checks the rest of the development.
+
+### 3.4 Scope and cost
+
+Trial division as stated scans candidate divisors up to $n$; a standard
+optimization truncates the scan at $\lfloor\sqrt{n}\rfloor$, since a composite
+number always has a nontrivial factor at or below its square root. For the
+small-case regime the tactic targets, correctness and auditability dominate
+raw speed, and the simple scan keeps the soundness proof maximally
+transparent.
+
+## 4. Row-Sum Spectral Bounds
+
+### 4.1 Setup
+
+Let $A$ be an $n \times n$ real matrix. A scalar $\lambda \in \mathbb{R}$ is a
+**(real) eigenvalue** of $A$ if there is a nonzero vector $v$ with
+$Av = \lambda v$. The **absolute row sum** of row $i$ is
+$\sum_j |A_{ij}|$.
+
+### 4.2 The existential form
+
+**Theorem 4.1 (Row-sum dominates an eigenvalue).**
+If $\lambda$ is a real eigenvalue of $A$ with eigenvector $v \ne 0$, then there
+is a row index $i_0$ with
+$$|\lambda| \le \sum_j |A_{i_0 j}|.$$
+
+*Proof sketch.* Since $v \ne 0$, the finite index set is nonempty and some
+coordinate is nonzero; choose $i_0$ maximizing $|v_{i_0}|$, so
+$|v_i| \le |v_{i_0}|$ for all $i$ and $|v_{i_0}| > 0$. The $i_0$-th row of
+$Av = \lambda v$ gives $\lambda\, v_{i_0} = \sum_j A_{i_0 j} v_j$. Taking
+absolute values and using the triangle inequality,
+$$|\lambda|\,|v_{i_0}| = \Big|\sum_j A_{i_0 j} v_j\Big| \le \sum_j |A_{i_0 j}|\,|v_j| \le \Big(\sum_j |A_{i_0 j}|\Big)\,|v_{i_0}|,$$
+the last inequality by $|v_j| \le |v_{i_0}|$ and non-negativity of
+$|A_{i_0 j}|$. Dividing by $|v_{i_0}| > 0$ yields the claim.
 $\qquad\blacksquare$
 
-> **Proposition 6 (`fib_mixed_shift`).**
-> $$F_{n+2}^{\,2} = F_{n+1}^{\,2} + F_n\,F_{n+3}.$$
+### 4.3 The uniform bound (soundness witness)
 
-*Proof.* Substitute $F_{n+2} = F_n + F_{n+1}$ and $F_{n+3} = F_n + 2F_{n+1}$.
-The left side is $(F_n+F_{n+1})^2 = F_n^2 + 2F_nF_{n+1} + F_{n+1}^2$; the right
-side is $F_{n+1}^2 + F_n(F_n + 2F_{n+1}) = F_{n+1}^2 + F_n^2 + 2F_nF_{n+1}$.
-The two agree as polynomials in $(F_n, F_{n+1})$, so the identity holds for all
-$n$. $\qquad\blacksquare$
+**Theorem 4.2 (Uniform row-sum eigenvalue bound).**
+If every absolute row sum of $A$ is at most $B$ — that is, $\sum_j |A_{ij}| \le
+B$ for all $i$ — then every real eigenvalue $\lambda$ of $A$ (with a nonzero
+eigenvector) satisfies
+$$|\lambda| \le B.$$
 
-The key methodological point: Propositions 2–6 are not separate theorems
-requiring separate insight. They are all instances of one decision procedure,
-and their truth is a *formal* polynomial fact in two variables.
+*Proof sketch.* Apply Theorem 4.1 to obtain a row $i_0$ with
+$|\lambda| \le \sum_j |A_{i_0 j}|$, then chain with the hypothesis
+$\sum_j |A_{i_0 j}| \le B$. $\qquad\blacksquare$
 
-## 5. Parity identities and Cassini
+Theorem 4.2 is the soundness witness for the spectral-bounding tactic. The
+tactic reduces a goal "$|\lambda| \le B$" (given an eigenpair) to the
+per-row obligations "$\sum_j |A_{ij}| \le B$." Because the tactic is a direct
+application of a proved theorem, any bound it certifies is correct. The bound
+is the accessible half of the Gershgorin circle theorem — the $\infty$-operator
+norm estimate — and is vacuous only if no eigenvector exists, which the
+nonzeroness hypothesis excludes.
 
-The expander cannot handle $(-1)^n$ because that term is not a polynomial in the
-atoms; after two-step expansion the goal still mentions $(-1)^n$ and `ring`
-makes no progress. The remedy is one induction step.
+### 4.4 A worked instance
 
-> **Theorem 7 (`cassini`, over $\mathbb{Z}$).** For all $n$,
-> $$F_{n+2}\,F_n - F_{n+1}^{\,2} = (-1)^{\,n+1}.$$
+If every absolute row sum of $A$ is at most $5$, then every real eigenvalue of
+$A$ has magnitude at most $5$. This follows immediately from Theorem 4.2 with
+$B = 5$.
 
-*Proof.* Induct on $n$. **Base** $n=0$: $F_2 F_0 - F_1^2 = 1\cdot 0 - 1 = -1
-= (-1)^1$. **Step:** assume $F_{n+2}F_n - F_{n+1}^2 = (-1)^{n+1}$. Expanding
-$F_{n+3} = F_{n+2}+F_{n+1}$ and $F_{n+2} = F_{n+1}+F_n$, the target quantity at
-$n+1$ is
-$$F_{n+3}F_{n+1} - F_{n+2}^2 = (F_{n+2}+F_{n+1})F_{n+1} - F_{n+2}^2.$$
-Linear arithmetic against the induction hypothesis (which rearranges to
-$F_{n+2}^2 - F_{n+3}F_{n+1} = F_{n+2}F_n - F_{n+1}^2 = (-1)^{n+1}$, hence the
-target equals $-(-1)^{n+1} = (-1)^{n+2}$) closes the step. $\qquad\blacksquare$
+## 5. A Cognate Development: Fibonacci Identities by a Two-Term Basis
 
-> **Theorem 8 (`cassini'`, over $\mathbb{Z}$).** For all $n$,
-> $$F_{n+1}^{\,2} - F_n\,F_{n+2} = (-1)^{\,n}.$$
+The same "sound reduction" philosophy powers a fourth toolkit, for identities
+among Fibonacci numbers $F_n$. Its engine is the **two-term basis principle**:
+for a fixed base $n$, every shifted value $F_{n+k}$ is a fixed
+$\mathbb{N}$-linear combination of the two coordinates $F_n$ and $F_{n+1}$.
+Concretely,
+$$F_{n+(k+1)} = F_k\, F_n + F_{k+1}\, F_{n+1}.$$
 
-*Proof.* This is the negation of Theorem 7, using $(-1)^{n+1} = -(-1)^n$:
-$F_{n+1}^2 - F_n F_{n+2} = -\bigl(F_{n+2}F_n - F_{n+1}^2\bigr) = -(-1)^{n+1}
-= (-1)^n$. $\qquad\blacksquare$
+**Consequence (single-base reduction).** Any single-base polynomial identity in
+shifted Fibonacci values becomes a formal polynomial identity in the two atoms
+$F_n, F_{n+1}$ and is decided by ring normalization. Examples closed this way:
+$$F_{n+5} = 3F_n + 5F_{n+1}, \qquad F_{n+7} = 8F_n + 13F_{n+1}, \qquad F_{n+2}^2 = F_{n+1}^2 + F_n F_{n+3}.$$
 
-Theorem 8 is the workhorse for the convolution identities of Section 7, where
-the quantity $F_{n+1}^2 - F_n F_{n+2}$ appears as a recurring factor.
+**Parity identities** depend on the sign $(-1)^n$, which is not a polynomial in
+$(F_n, F_{n+1})$; these need exactly one induction step. The archetype is
+**Cassini's identity**,
+$$F_{n+2} F_n - F_{n+1}^2 = (-1)^{n+1}.$$
 
-**Remark (determinantal meaning).** With $Q = \begin{pmatrix} 1 & 1 \\ 1 & 0
-\end{pmatrix}$ one has $Q^n = \begin{pmatrix} F_{n+1} & F_n \\ F_n & F_{n-1}
-\end{pmatrix}$, and Cassini is precisely $\det(Q^n) = (\det Q)^n = (-1)^n$. The
-parity sign is the determinant's multiplicativity.
+**Two-base identities** reduce to Cassini by substituting the closed form. For
+example, **d'Ocagne's identity**
+$$F_{n+k} F_{n+1} - F_{n+k+1} F_n = (-1)^n F_k$$
+and **Catalan's identity**
+$$F_{n+r}^2 - F_n F_{n+2r} = (-1)^n F_r^2$$
+each become a Fibonacci multiple of the Cassini expression
+$F_{n+1}^2 - F_n F_{n+2}$. The toolkit also yields the doubling formulas
+$$F_{2n+1} = F_{n+1}^2 + F_n^2, \qquad F_{2n} = F_n\,(2F_{n+1} - F_n),$$
+the partial sums
+$$\sum_{i<n} F_i = F_{n+1} - 1, \qquad \sum_{i \le n} F_i^2 = F_n F_{n+1},$$
+and the strong divisibility law
+$$\gcd(F_m, F_n) = F_{\gcd(m,n)}.$$
 
-## 6. Index-doubling formulas
+This development illustrates the same three-tier structure seen above: a
+*reduction* to a decidable fragment (here, polynomial identities in two atoms),
+a clearly delimited *boundary* where an extra idea is needed (parity, requiring
+induction), and *derived* results that reduce to a single hard core (Cassini).
 
-The doubling formulas pair the base point $n$ with itself and follow from the
-addition formula plus one ring normalization. They underlie the fast-doubling
-algorithm for computing $F_N$ in $O(\log N)$ big-integer multiplications.
+## 6. Discussion
 
-> **Theorem 9 (`fib_two_mul_add_one`).** $F_{2n+1} = F_{n+1}^{\,2} + F_n^{\,2}$.
+The three primary procedures share a template worth naming explicitly.
 
-*Proof.* Apply the addition formula with both arguments equal: $F_{n+n+1} =
-F_n F_n + F_{n+1} F_{n+1}$, and $n+n+1 = 2n+1$. $\qquad\blacksquare$
+1. **Identify a faithful reduction.** For min-plus, an injective homomorphism
+   to the base group; for primality, an if-and-only-if between a computable
+   Boolean and the mathematical predicate; for eigenvalues, an application of a
+   proved inequality.
+2. **Prove the soundness witness once.** Theorems 2.1, 3.2, and 4.2 are the
+   respective guarantees.
+3. **Let the tactic be a thin wrapper.** The tactic performs only the reduction
+   plus a routine finisher (linear arithmetic; kernel evaluation; a residual
+   inequality check). Because it does nothing the soundness witness does not
+   license, it cannot certify a falsehood.
 
-> **Theorem 10 (`fib_two_mul`, over $\mathbb{Z}$).**
-> $$F_{2n} = F_n\,\bigl(2F_{n+1} - F_n\bigr).$$
+This separation of concerns — heavy mathematics in a one-time theorem, light
+mechanics in the tactic — is what makes verified automation both trustworthy
+and reusable.
 
-*Proof.* For $n=0$ both sides vanish. For $n = m+1$, apply the addition formula
-$F_{m+(m+1)+1} = F_m F_{m+1} + F_{m+1} F_{m+2}$ with $m+(m+1)+1 = 2(m+1)$,
-expand $F_{m+2} = F_{m+1}+F_m$, and normalize over $\mathbb{Z}$:
-$F_{2(m+1)} = F_{m+1}(F_m + F_{m+2}) = F_{m+1}(2F_{m+1} - F_{m+1} + F_m +
-\cdots)$, which `ring` reconciles with $F_{m+1}(2F_{m+2} - F_{m+1})$ after
-substituting the two-coordinate forms. $\qquad\blacksquare$
+A recurring theme is the *boundary of easy automation*. The min-plus simplifier
+handles everything in the linear $\min/+$ fragment for free; the freshman's
+dream sits just outside it, requiring monotonicity. The Fibonacci toolkit
+handles single-base identities by pure ring reasoning; parity identities sit
+just outside, requiring one induction. Recognizing these boundaries precisely
+is itself a mathematical result about *what can be automated cheaply*.
 
-Together, Theorems 9 and 10 give the doubling step: from the pair $(F_n,
-F_{n+1})$ one computes $(F_{2n}, F_{2n+1})$ directly, so reading the binary
-digits of $N$ from most to least significant yields $F_N$ in a logarithmic
-number of steps.
+## 7. Future Directions
 
-## 7. Two-base convolution identities reduced to Cassini
+**A canonical Horner factorization for tropical polynomials.** We conjecture
+that every univariate max-plus polynomial of degree $d$, written as
+$\max_{k \le d}(a_k + kx)$, admits a unique nested factorization
+$a_0 \oplus x \odot (a_1 \oplus x \odot (a_2 \oplus \cdots))$ evaluating in
+exactly $d$ tropical additions and $d$ tropical multiplications — the min-plus
+analogue of Horner's rule — with no shorter straight-line evaluation possible.
+The two-sided distributivity of ordinary addition over $\max$ is enough to
+collapse any max-of-affine expression into a single nested form, transporting
+the classical arithmetic-circuit theory of polynomial evaluation to the
+tropical world. Because tropical polynomials are the exact algebra of
+piecewise-linear activation networks, an optimal canonical evaluation order
+directly bounds the number of comparison-and-add operations such networks need.
 
-The deepest payoff is that the signed two-parameter identities are Fibonacci
-multiples of the Cassini quantity $C_n := F_{n+1}^2 - F_n F_{n+2} = (-1)^n$
-(Theorem 8). The mechanism is uniform: substitute the closed form
-`fib_two_basis` to express the two-base quantity as a polynomial in the four
-atoms $F_k, F_{k+1}, F_n, F_{n+1}$, expand by `ring`, and recognize the result
-as a Fibonacci factor times $C_n$.
+**Optimality of trial division among divisor-scan certificates.** We conjecture
+that among all primality tests certifying $n$ by exhibiting the absence of a
+proper divisor in an explicitly scanned range, the scan can always be truncated
+at $\lfloor\sqrt{n}\rfloor$ without loss, and no certificate of this shape can
+inspect asymptotically fewer than $\sqrt{n}/\log n$ candidate divisors on
+infinitely many $n$. A composite number always has a nontrivial factor at or
+below its square root, so the witness to compositeness lives in a range of size
+$\sqrt{n}$, while primes force the scan to rule out every prime below
+$\sqrt{n}$, pinning the lower bound to the density of primes. Understanding the
+minimal certificate size sharpens the cost model for self-certifying
+number-theoretic procedures in verified cryptographic libraries.
 
-> **Theorem 11 (d'Ocagne, sign form).** For all $n, k$,
-> $$F_{n+k}\,F_{n+1} - F_{n+k+1}\,F_n = (-1)^n\,F_k.$$
+**Exact tightness of row-sum bounds.** We conjecture that the bound
+$|\lambda| \le \max_i \sum_j |A_{ij}|$ is attained by an eigenvalue of $A$ if
+and only if, after a diagonal sign change, some maximal row is a non-negative
+multiple of a common probability vector shared by all maximal rows;
+equivalently, equality forces the extremal eigenvector to be constant in
+modulus across the support of the maximal rows. Equality in the triangle
+inequality used to prove the bound demands perfect phase alignment of the
+eigenvector entries, rigidly constraining the maximal rows to a
+scaled-stochastic shape. Since spectral radius controls the stability of
+iterated linear dynamics, characterizing exact tightness sharpens stability
+thresholds for such systems.
 
-*Proof sketch.* Write $F_{n+k} = F_{k-1}F_n + F_k F_{n+1}$ and $F_{n+k+1} =
-F_k F_n + F_{k+1}F_{n+1}$ via Theorem 1. Then
-$$F_{n+k}F_{n+1} - F_{n+k+1}F_n = F_k\bigl(F_{n+1}^2 - F_n F_{n+2}\bigr)
-= F_k\,C_n = (-1)^n F_k,$$
-where the middle equality is a `ring` expansion using $F_{n+2} = F_n + F_{n+1}$
-and $F_{k+1} = F_k + F_{k-1}$, and the last step is Theorem 8.
-$\qquad\blacksquare$
+## 8. Conclusion
 
-> **Theorem 12 (Catalan).** For all $n, r$,
-> $$F_{n+r}^{\,2} - F_n\,F_{n+2r} = (-1)^n\,F_r^{\,2}.$$
-
-*Proof sketch.* Substitute Theorem 1 for $F_{n+r}$ and $F_{n+2r}$ and expand;
-the polynomial factors as $F_r^2\,(F_{n+1}^2 - F_n F_{n+2}) = F_r^2\,C_n =
-(-1)^n F_r^2$ by Theorem 8. $\qquad\blacksquare$
-
-> **Theorem 13 (Unifying convolution identity).** For all $n, a, b$,
-> $$F_{n+a}\,F_{n+b} - F_n\,F_{n+a+b} = (-1)^n\,F_a\,F_b.$$
-> d'Ocagne is the case $b = 1$ (using $F_1 = 1$, after reindexing), and
-> Catalan is the case $a = b = r$.
-
-*Proof sketch.* Apply Theorem 1 to each of $F_{n+a}, F_{n+b}, F_{n+a+b}$. The
-bilinear cross terms cancel, leaving $F_a F_b\,(F_{n+1}^2 - F_n F_{n+2}) =
-F_a F_b\,C_n = (-1)^n F_a F_b$. $\qquad\blacksquare$
-
-Theorem 13 exposes the structural content of the whole class: *every* signed
-convolution identity of this shape is the Cassini determinant scaled by a
-product of two Fibonacci numbers indexed by the shifts.
-
-## 8. Soundness, scope, and completeness
-
-**Soundness.** Each tactic is sound because every step it performs is a sound
-rewrite or a sound decision procedure. Two-step expansion is the defining
-recurrence and preserves equality. The terminal `ring`, `omega`, and `linarith`
-calls are themselves verified decision/automation procedures over commutative
-rings, linear integer arithmetic, and linear ordered fields respectively. The
-induction in `fib_cassini_induct` is ordinary mathematical induction. Hence a
-goal closed by any of these tactics is a theorem.
-
-**Scope of `fib_ring`.** The expander is complete for the class of *single-base
-polynomial* identities: equations of the form $P(F_n, F_{n+1}, F_{n+2},
-\ldots, F_{n+m}) = Q(\ldots)$ where $P, Q$ are polynomials with integer
-coefficients in finitely many shifts from a *single* base point $n$. After two-
-step expansion both sides become polynomials in $(F_n, F_{n+1})$, and `ring`
-decides their equality. Crucially, the procedure decides truth as a *formal*
-polynomial identity; see the completeness discussion below for why this is the
-"right" notion.
-
-**Out of scope without help.** Two situations require the auxiliary tactics or
-the engine lemma: (i) a parity sign $(-1)^n$ (handled by induction); (ii) two
-or more independent base points or a symbolic shift parameter $k$ (handled by
-`fib_two_basis` followed by `ring` and, for signed cases, `cassini'`).
-
-**Completeness conjecture.** We conjecture that `fib_ring` is not merely sound
-but *complete* for single-base identities in the strongest sense: a polynomial
-identity $P(F_n, F_{n+1}) = 0$ holds for all $n$ if and only if $P$ is the zero
-polynomial, if and only if it holds at the two sample points $n = 0$ and
-$n = 1$. The reason is that the points $(F_n, F_{n+1})$ for $n = 0, 1, 2,
-\ldots$ — namely $(0,1), (1,1), (1,2), (2,3), (3,5), \ldots$ — do not all lie
-on any single algebraic curve, so a polynomial vanishing on all of them must be
-identically zero. This would make a two-point numerical check a *refutation
-oracle*: any false single-base identity fails at $n = 0$ or $n = 1$. (See
-Conjecture 1 in Section 10.)
-
-## 8.5. An extended worked example
-
-To see all three layers cooperate, consider verifying the chain of facts
-needed to compute $F_{20}$ by hand using only the verified machinery. We have
-$F_{10} = 55$ and $F_{11} = 89$. The odd-doubling formula (Theorem 9) gives
-$$F_{21} = F_{11}^2 + F_{10}^2 = 89^2 + 55^2 = 7921 + 3025 = 10946,$$
-and the even-doubling formula (Theorem 10) gives
-$$F_{20} = F_{10}(2F_{11} - F_{10}) = 55\,(178 - 55) = 55\cdot 123 = 6765.$$
-These two values are produced from the single pair $(F_{10}, F_{11})$ without any
-further additions — the doubling step in action. As a consistency check, Cassini
-(Theorem 8) predicts $F_{20}\cdot F_{22} - F_{21}^2 = (-1)^{21} = -1$; indeed
-$F_{22} = F_{21} + F_{20} = 17711$, and $6765\cdot 17711 - 10946^2 =
-119814915 - 119814916 = -1$. Finally the unifying convolution identity
-(Theorem 13) with $n=10$, $a=b=5$ recovers Catalan: $F_{15}^2 - F_{10}F_{20} =
-610^2 - 55\cdot 6765 = 372100 - 372075 = 25 = (-1)^{10}F_5^2 = 5^2$. Every number
-in this paragraph is an instance of a theorem proved above, illustrating how the
-layers interlock: doubling for fast values, Cassini for the determinant
-invariant, convolution for the two-index products.
-
-## 9. Related context and design rationale
-
-The development sits in a lineage of *reflective* and *normalization-based*
-proof automation: rather than searching for a proof, one transforms the goal
-into a canonical form on which a decision procedure terminates. The novelty here
-is not any single identity — all are classical — but the recognition that a
-fixed, two-dimensional change of basis is the right normal form for an entire
-class, and that the residual obstructions (parity, multiple base points) are
-exactly two, each with a uniform remedy. This *layered* design — a fast complete
-procedure for the bulk of cases, a one-step inductive patch for the parity
-layer, and an algebraic reduction for the cross-base layer — is deliberately
-minimal: it adds no heavyweight machinery beyond ring and linear-arithmetic
-normalization that is already trusted. The same template applies to any
-sequence satisfying a fixed-order linear recurrence, which is the content of the
-generalization conjectures in Section 10.
-
-A practical consequence worth emphasizing is *maintainability*. Because the
-expander reduces an identity to a finite coefficient comparison, adding a new
-single-base identity to a verified library costs essentially nothing: state it
-and invoke the tactic. The fragile, identity-specific manipulations that
-traditionally accompany Fibonacci algebra are replaced by a single uniform call,
-and the correctness of that call rests only on the soundness of the underlying
-normalization procedures.
-
-## 9.5. Applications
-
-- **Mechanized identity libraries.** The expander turns a large fragment of the
-  Fibonacci identity literature into a push-button corpus: state the identity,
-  apply the recipe, done. This is directly useful for building and maintaining
-  verified mathematical libraries.
-- **Fast computation.** The doubling formulas (Theorems 9–10) are the
-  verified core of the fast-doubling algorithm, which computes $F_N$ using
-  $O(\log N)$ big-integer multiplications — the standard method for very large
-  indices, used in computer-algebra systems.
-- **Number-theoretic structure.** Cassini and its relatives encode the
-  unimodularity of the Fibonacci $Q$-matrix, the basis for continued-fraction
-  and lattice properties of the golden ratio, and for the appearance of
-  Fibonacci numbers as the worst case of the Euclidean algorithm.
-- **A template for proof automation.** The design — *change to a finite basis,
-  normalize with a ring decision procedure, peel off the non-polynomial part
-  with one induction* — is a reusable pattern applicable to any sequence with a
-  finite linear recurrence.
-
-## 10. Future directions
-
-We record four precise, testable conjectures.
-
-**Conjecture 1 — `fib_ring` is a complete decision procedure.** For a polynomial
-$P(x,y)$ with integer coefficients, $P(F_n, F_{n+1}) = 0$ for all $n$ iff $P$ is
-the zero polynomial iff $P(0,1) = 0$ and $P(1,1) = 0$. Thus the expander decides
-every true single-base identity and a two-point check refutes every false one.
-
-**Conjecture 2 — Generalized two-term basis for all Lucas sequences.** For
-$U_0 = 0$, $U_1 = 1$, $U_{n+2} = p\,U_{n+1} - q\,U_n$, the value $U_{n+k}$ is a
-fixed $\mathbb{Z}[p,q]$-bilinear form in $(U_k, U_{k+1})$ and $(U_n, U_{n+1})$,
-so `fib_ring` generalizes to a tactic `lucas_ring` deciding single-base
-identities for every such sequence (Fibonacci $p{=}1,q{=}{-}1$; Pell
-$p{=}2,q{=}{-}1$; Mersenne-like $p{=}3,q{=}2$; …). The generic Cassini identity
-$U_{n+1}^2 - U_n U_{n+2} = q^n$ specializes correctly.
-
-**Conjecture 3 — Catalan = $F_r^2 \cdot$ Cassini, structurally.** Every signed
-two-base convolution identity factors as a Fibonacci/Lucas multiple of the
-Cassini determinant: $F_{n+a}F_{n+b} - F_n F_{n+a+b} = (-1)^n F_a F_b$
-(Theorem 13), with d'Ocagne the case $b=1$ and Catalan the case $a=b$.
-
-**Conjecture 4 — Determinantal $Q$-matrix reflection tactic.** With $Q =
-\begin{pmatrix}1&1\\1&0\end{pmatrix}$ and $Q^n = \begin{pmatrix} F_{n+1} & F_n
-\\ F_n & F_{n-1}\end{pmatrix}$, every polynomial Fibonacci identity is an entry
-of a true matrix identity in the $Q^{n_i}$. A reflective tactic `fib_matrix`
-would replace each $F_{n+c}$ by the appropriate entry of $Q^n Q^c$, call
-noncommutative-ring normalization plus matrix extensionality, and read off the
-scalar identity, deciding the entire signed two-base class (Catalan, d'Ocagne)
-uniformly.
-
-## 11. Conclusion
-
-A single observation — that the Fibonacci sequence lives in a two-dimensional
-coordinate space and moves through it linearly — organizes the classical
-Fibonacci identities into three crisp layers: single-base polynomial identities
-decided outright by ring normalization; parity identities (Cassini) closed by
-one induction step; and two-base convolution identities (Catalan, d'Ocagne)
-factored through Cassini. The result is a compact, sound, and largely complete
-proof-automation toolkit, together with a verified suite of the canonical
-identities and a clear path toward generalization to all Lucas sequences and to
-a determinantal reflection procedure.
+We have exhibited three provably sound automation procedures — a min-plus
+simplifier, a reflective primality decider, and a row-sum spectral bounder —
+each reducing a family of routine goals to a decidable or directly checkable
+core, and each backed by an explicit soundness theorem. A fourth, cognate
+toolkit for Fibonacci identities reinforces the pattern. The unifying lesson is
+methodological: trustworthy automation is built by proving, once, that a
+reduction is faithful, and then letting the tactic do nothing more than that
+reduction. This keeps the mathematics honest and the shortcuts safe.
