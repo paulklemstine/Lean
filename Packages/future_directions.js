@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45565356",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -1738,6 +1738,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T16:28:32.494303+00:00",
     "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
+  },
+  {
+    "consumed_by_exp_id": "d3621329",
+    "description": "For each prime k with 5 \u2264 k \u2264 97, let s = 2k+4. For every prime p \u2265 11, the Diophantine equation P_s(n) = t^p has no integer solutions with n \u2209 {0,1}. This conjecture covers the remaining open cases from Theorem 1(iv) of the paper, where it is shown that there is at most one such solution for each p and any such solution must have n \u2265 10^{100,000p}. The paper expects no such solutions exist based on GRH and the weak effective abc conjecture.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2875",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28227v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-29T16:56:12.518505+00:00",
+    "title": "No nontrivial perfect powers in even-indexed polygonal numbers for exponents p \u2265 11"
   },
   {
     "consumed_by_exp_id": "",
