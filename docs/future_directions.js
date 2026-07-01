@@ -4062,7 +4062,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete First-Coefficient Spectrum for Strongly Primitive Salem Growth Polynomials"
   },
   {
-    "consumed_by_exp_id": "1ae9dee2",
+    "consumed_by_exp_id": "",
     "description": "The maximum number of unit-distance pairs among n points in the rational plane Q\u00b2 is \u0398(n^{4/3}). The upper bound O(n^{4/3}) follows from the Szemer\u00e9di-Trotter incidence theorem applied to unit circles in Q\u00b2 (as a subset of R\u00b2). The lower bound \u03a9(n^{4/3}) is conjectural and supported by the algorithmic constructions in this paper, which exploit the algebraic structure of Pythagorean-type parametric families in Q\u00b2 to surpass previous grid-based lower bounds. Resolving this would settle the rational analogue of the Erd\u0151s unit distance problem with matching upper and lower asymptotic exponents.",
     "domains": [
       "Algebra",
@@ -4072,7 +4072,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T21:18:10.152547+00:00",
     "title": "Unit Distance Density in Q\u00b2 is \u0398(n^{4/3})"
   },
@@ -4335,7 +4335,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da5ca670",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -4345,7 +4345,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },

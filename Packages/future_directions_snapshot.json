@@ -7186,7 +7186,7 @@
       "Pythagorean triples over rationals",
       "unit distance graph chromatic number"
     ],
-    "consumed_by_exp_id": "1ae9dee2",
+    "consumed_by_exp_id": "",
     "description": "The maximum number of unit-distance pairs among n points in the rational plane Q² is Θ(n^{4/3}). The upper bound O(n^{4/3}) follows from the Szemerédi-Trotter incidence theorem applied to unit circles in Q² (as a subset of R²). The lower bound Ω(n^{4/3}) is conjectural and supported by the algorithmic constructions in this paper, which exploit the algebraic structure of Pythagorean-type parametric families in Q² to surpass previous grid-based lower bounds. Resolving this would settle the rational analogue of the Erdős unit distance problem with matching upper and lower asymptotic exponents.",
     "domain_bridges": [
       "combinatorial_geometry",
@@ -7204,7 +7204,7 @@
     "proof_strategy": "The upper bound O(n^{4/3}) can be derived from Szemerédi-Trotter by viewing unit-distance pairs as incidences between points and unit circles, noting that two distinct unit circles share at most 2 points. Formalizing this in Lean requires the incidence bound for algebraic curves. The lower bound Ω(n^{4/3}) requires explicit construction of rational point families with many unit distances. The paper's algorithmic approach, based on local-breadth search over bounded rational neighborhoods rather than grid structures, provides candidate constructions. A proof would likely involve parametric families derived from the arithmetic of sums of two rational squares (generalized Pythagorean structures) and counting the resulting unit distances to establish the n^{4/3} growth rate.",
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T21:18:10.152547+00:00",
     "title": "Unit Distance Density in Q² is Θ(n^{4/3})"
   },
@@ -7599,7 +7599,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da5ca670",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domain_bridges": [],
     "domains": [
@@ -7612,7 +7612,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
