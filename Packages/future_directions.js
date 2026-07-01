@@ -1171,7 +1171,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bde25b99",
     "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves\u2011Jing\u2011Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q\u2011Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (\u2011u;s)_\\u221e / ((\u2011u;t)_\\u221e (u;s)_\\u221e). Moreover, the q\u2011expansion of F(t,s;u) has palindromic coefficients and satisfies a finite\u2011order linear recurrence; after removing the alternating signs the coefficients are non\u2011negative integers.",
     "domains": [
       "Pythagorean"
@@ -1180,7 +1180,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:24:54.047368+00:00",
     "title": "Generalized scalar factor for mixed modified Greaves\u2011Jing\u2011Zhu operators"
   },
@@ -1446,7 +1446,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp lower bound for the sixth moment of the Riemann zeta function"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "479547c5",
     "description": "For any partition \u03bb of n and any support pattern S \u2286 [n] \u00d7 [n], the number of n \u00d7 n nilpotent matrices over F_q with Jordan canonical form type \u03bb and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian\u2013Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
     "domains": [
       "Algebra",
@@ -1456,7 +1456,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27497v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
@@ -1855,7 +1855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Indivisibility of Nonzero Character Values in GL_n(F_q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8875d434",
     "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
     "domains": [
       "Bridges"
@@ -1864,7 +1864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:26:42.958632+00:00",
     "title": "Minimum Independence Ratio Constraint"
   },
@@ -2366,7 +2366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s-Falconer Distance Set Threshold n/2+1/3 in Even Dimensions over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e37bde48",
     "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domains": [
       "Geometry"
@@ -2375,7 +2375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:04:18.171502+00:00",
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
@@ -3379,7 +3379,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the L^p Threshold for KNRS Relaxation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04b163c8",
     "description": "Let p be a prime, b an integer \u2265 2 such that p does not divide b. If the multiplicative order of b modulo p is (p-1)/2, and p \u2261 1 mod 4, then the sum of the digits of one period of the base-b expansion of 1/p is (b-1)(p-1)/4.",
     "domains": [
       "Pythagorean"
@@ -3388,7 +3388,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:01:55.527180+00:00",
     "title": "Sum of digits of 1/p for half-period length and p \u2261 1 mod 4"
   },
@@ -3716,7 +3716,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Class-Uniformly Resolvable Designs for Powers of Two"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd442784",
     "description": "For any Latin square M of order n \u2265 5, the dimension of the second homology group of the clique complex of the strongly regular graph associated with M over any field F is exactly (n-1)^3 - I(M), where I(M) is the number of intercalates (2x2 Latin subsquares) in M.",
     "domains": [
       "Algebra",
@@ -3726,7 +3726,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27328v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T05:47:37.249707+00:00",
     "title": "Dimension of Second Clique Homology for Latin Square Graphs"
   },
@@ -4574,7 +4574,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Representability Equivalence for Matroids over Perfect Idylls"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19ffaeae",
     "description": "The sixth moment of the Riemann zeta function on the critical line, M_3(T) = \u222b_0^T |\u03b6(1/2+it)|^6 dt, satisfies the asymptotic lower bound M_3(T) \u2265 34 * c_3 * T * (log T)^9 for sufficiently large T, where c_3 = a_3 / 9! and a_3 is the Keating-Snaith arithmetic factor for k=3. This formalizes the unconditional improvement over Soundararajan's lower bounds by removing the Lindel\u00f6f Hypothesis assumption.",
     "domains": [
       "Pythagorean"
@@ -4583,7 +4583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T05:48:05.605037+00:00",
     "title": "Unconditional Lower Bound for the Sixth Moment of the Riemann Zeta Function"
   },
@@ -5138,7 +5138,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e9cd409c",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -5147,7 +5147,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },

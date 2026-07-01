@@ -1736,7 +1736,7 @@
       "Jing, N., Zhu, J., \"A new approach to the spin character theory\", J. Algebra 2000",
       "Stembridge, J. R., \"Skew Schur functions and the chromatic polynomial\", 1996"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bde25b99",
     "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves‑Jing‑Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q‑Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (‑u;s)_\\u221e / ((‑u;t)_\\u221e (u;s)_\\u221e). Moreover, the q‑expansion of F(t,s;u) has palindromic coefficients and satisfies a finite‑order linear recurrence; after removing the alternating signs the coefficients are non‑negative integers.",
     "domain_bridges": [
       "q-series",
@@ -1753,7 +1753,7 @@
     "proof_strategy": "The conjecture can be approached by first expressing the mixed product via the diagonal conjugation that relates the modified operator to the classical neutral operator. Using known product formulas for neutral operators and Bailey‑pair theory, one can reduce the mixed product to a ratio of infinite q‑Pochhammer symbols as stated. The resulting rational function is then analyzed via standard q‑series techniques (e.g., the pentagonal number theorem) to extract its q‑expansion, prove palindromicity and derive a finite‑order recurrence. The non‑negativity of the sign‑adjusted coefficients follows from known positivity results for principal specializations of one‑row Schur Q‑functions and can be formalized using Lean’s algebraic number theory libraries.",
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:24:54.047368+00:00",
     "title": "Generalized scalar factor for mixed modified Greaves‑Jing‑Zhu operators"
   },
@@ -2245,7 +2245,7 @@
       "math.AG",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "479547c5",
     "description": "For any partition λ of n and any support pattern S ⊆ [n] × [n], the number of n × n nilpotent matrices over F_q with Jordan canonical form type λ and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian–Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
     "domain_bridges": [
       "Algebraic geometry (Hessenberg varieties and Springer fibers)",
@@ -2262,7 +2262,7 @@
     "proof_strategy": "Leverage the paper's Hall scalar product formula expressing the count in terms of skew modified Hall-Littlewood functions and q-Whittaker functions. For Hessenberg supports, connect to chromatic quasisymmetric functions and the Shareshian-Wachs theorem relating Hessenberg variety point counts to chromatic quasisymmetric function evaluations. For general supports, develop combinatorial-algebraic tools showing the relevant Hall scalar products specialize to polynomials in q, potentially using geometric methods on Springer fibers and deformation arguments to reduce arbitrary supports to Hessenberg-type patterns.",
     "research_mode": "team",
     "source_exp_id": "2606.27497v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
@@ -3001,7 +3001,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": "Matolcsi, Ruzsa, Varga, Zsámboki",
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8875d434",
     "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
     "domain_bridges": [],
     "domains": [
@@ -3013,7 +3013,7 @@
     "proof_strategy": "Constructive existence proof",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:26:42.958632+00:00",
     "title": "Minimum Independence Ratio Constraint"
   },
@@ -3957,7 +3957,7 @@
       "log-convexity",
       "Fibonacci numbers"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e37bde48",
     "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domain_bridges": [
       "Combinatorics",
@@ -3973,7 +3973,7 @@
     "proof_strategy": "Formalize the combinatorial injection mapping pairs of partitions of [n] with the same base to partitions of [n+1], apply the Cauchy-Schwarz inequality on the sums grouped by base, and bound the remaining terms recursively using the Fibonacci sequence properties.",
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:04:18.171502+00:00",
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
@@ -5896,7 +5896,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04b163c8",
     "description": "Let p be a prime, b an integer ≥ 2 such that p does not divide b. If the multiplicative order of b modulo p is (p-1)/2, and p ≡ 1 mod 4, then the sum of the digits of one period of the base-b expansion of 1/p is (b-1)(p-1)/4.",
     "domain_bridges": [
       "Discrete Mathematics"
@@ -5910,7 +5910,7 @@
     "proof_strategy": "Define the sequence of digits in the base-b expansion of 1/p. Show that they are given by the integer division of b by p times the sequence of remainders. Use the fact that the remainders cycle through the elements of the subgroup of index 2 in (Z/pZ)*. Since p ≡ 1 mod 4, -1 is in this subgroup, which implies that the digits can be paired as (d, b-1-d). The sum of each pair is b-1, and there are (p-1)/4 pairs, giving a total sum of (b-1)(p-1)/4.",
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:01:55.527180+00:00",
     "title": "Sum of digits of 1/p for half-period length and p ≡ 1 mod 4"
   },
@@ -6524,7 +6524,7 @@
       "math.CO",
       "math.AT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd442784",
     "description": "For any Latin square M of order n ≥ 5, the dimension of the second homology group of the clique complex of the strongly regular graph associated with M over any field F is exactly (n-1)^3 - I(M), where I(M) is the number of intercalates (2x2 Latin subsquares) in M.",
     "domain_bridges": [
       "Clique complexes",
@@ -6542,7 +6542,7 @@
     "proof_strategy": "Construct the clique complex of the Latin square graph, characterize the boundary maps for the simplicial chain complex, and evaluate the rank of the second homology group by establishing a bijection between the independent 2-cycles and the intercalates of the Latin square.",
     "research_mode": "team",
     "source_exp_id": "2606.27328v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T05:47:37.249707+00:00",
     "title": "Dimension of Second Clique Homology for Latin Square Graphs"
   },
@@ -8152,7 +8152,7 @@
       "Keating-Snaith conjecture",
       "Moment inequalities"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19ffaeae",
     "description": "The sixth moment of the Riemann zeta function on the critical line, M_3(T) = ∫_0^T |ζ(1/2+it)|^6 dt, satisfies the asymptotic lower bound M_3(T) ≥ 34 * c_3 * T * (log T)^9 for sufficiently large T, where c_3 = a_3 / 9! and a_3 is the Keating-Snaith arithmetic factor for k=3. This formalizes the unconditional improvement over Soundararajan's lower bounds by removing the Lindelöf Hypothesis assumption.",
     "domain_bridges": [
       "Complex Analysis",
@@ -8168,7 +8168,7 @@
     "proof_strategy": "Formalize the Riemann zeta function and its integral moments on the critical line. Define the Keating-Snaith arithmetic factor a_k via Euler products over primes. Establish the asymptotic lower bound by formalizing the two-piece amplified moment techniques and bounding the error terms unconditionally, avoiding the reliance on the Lindelöf Hypothesis.",
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T05:48:05.605037+00:00",
     "title": "Unconditional Lower Bound for the Sixth Moment of the Riemann Zeta Function"
   },
@@ -9068,7 +9068,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e9cd409c",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -9080,7 +9080,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
