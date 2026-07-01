@@ -1987,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Combinatorial Nerve Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c732c146",
     "description": "For every positive integer n \u2265 1, the minimum number of elements in a poset whose automorphism group is isomorphic to Z\u2082 \u00d7 Z_{2^n} equals 2^{n+1} + 2. This extends the paper's main theorem from n \u2265 3 to all n \u2265 1, covering the previously unresolved cases n = 1 (Klein four-group) and n = 2.",
     "domains": [
       "Algebra"
@@ -1996,7 +1996,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:19:27.243667+00:00",
     "title": "\u03b2(Z\u2082 \u00d7 Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
   },
@@ -2016,7 +2016,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No non-trivial prime-power solutions in specific polygonal number sequences"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24e5f1f4",
     "description": "Every $\\tau_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges, for integers $k \\ge 1$ and $n \\ge 2k+2$. A graph $G$ is $\\tau_k$-maximal if it contains no subgraph admitting $k+1$ edge-disjoint spanning trees (i.e., its spanning tree packing number $\\tau(G) \\le k$), but adding any edge from its complement creates a graph that does admit $k+1$ edge-disjoint spanning trees (i.e., $\\tau(G+e) \\ge k+1$ for all $e \\notin E(G)$).",
     "domains": [
       "Bridges"
@@ -2025,7 +2025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:55:49.745314+00:00",
     "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
   },
@@ -3117,7 +3117,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Irreducibility of the perfectoid Borel representation for quadratic unramified extensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db224cfc",
     "description": "For every sufficiently large prime p, every nonzero residue class modulo p is represented by a product of two primes each at most p. This is Erd\u0151s's original conjecture that motivates the paper's ternary result; the paper proves the ternary analogue (every class is a product of three primes) and shows a positive proportion of classes are products of two primes, but the full binary conjecture remains open.",
     "domains": [
       "Pythagorean"
@@ -3126,7 +3126,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30567v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T11:34:45.339212+00:00",
     "title": "Erd\u0151s Binary Product Conjecture for Primes"
   },
@@ -3233,7 +3233,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Entropic MMS for R\u00e9nyi Entropy of Order 2 (Collision Entropy)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f29abd01",
     "description": "Conjecture that any C4-free graph of diameter 2 without universal vertices and maximum degree at least 17 is not 3-colorable, formalizing the main structural result of the paper.",
     "domains": [
       "Pythagorean"
@@ -3242,7 +3242,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30282v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T14:16:39.007092+00:00",
     "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
   },
@@ -4181,7 +4181,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized Brylawski identities for ranked central sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acbfd883",
     "description": "We conjecture that for every integer m \u2265 2 the \u2124\u2011span of integrals of Kontsevich graphs with exactly m\u202f+\u202f4\u202fN(m) vertices coincides with the \u2124\u2011span of normalized multiple zeta values of weight m\u202f+\u202f4\u202fN(m), where N(m) is defined as in the paper (the ceiling formulas depending on m mod\u202f4).",
     "domains": [
       "Pythagorean",
@@ -4191,7 +4191,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25457v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T19:07:20.837213+00:00",
     "title": "Exact module equality for Kontsevich graph integrals and normalized multiple zeta values"
   },
@@ -4516,7 +4516,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Square-Root Cancellation for Double Shifted Convolution of GL(2) Fourier Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f0b9c475",
     "description": "The graph algebra \ud835\udc9c\u2099, whose monomial basis is indexed by simple graphs on n vertices (equivalently, the algebra of pseudo-Boolean functions on the Boolean cube {0,1}^m where m = C(n,2)), equipped with the sl\u2082-action defined by edge-addition and edge-deletion operators, is isomorphic as an sl\u2082-module to the m-th tensor power of the standard 2-dimensional sl\u2082-module V. Concretely, the raising operator E = \u03a3_{i<j} e_{ij} (adding edge {i,j}) and lowering operator F = \u03a3_{i<j} d_{ij} (deleting edge {i,j}) satisfy the sl\u2082 relations [E,F]=H, [H,E]=2E, [H,F]=-2F, and the resulting module structure on \ud835\udc9c\u2099 is isomorphic to V^\u2297m.",
     "domains": [
       "Algebra"
@@ -4525,7 +4525,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:20:32.524775+00:00",
     "title": "Graph Algebra sl\u2082-Module Tensor Power Isomorphism"
   },
@@ -5053,7 +5053,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the structural threshold for f(B) \u2265 n+2 in balanced bipartite graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1f3787a",
     "description": "We conjecture that the in\u2011dominating seed property, which guarantees O((n+m) log n) enumeration of minimal removable sets, extends to weighted k\u2011cores (with non\u2011negative vertex weights) and to multi\u2011layer k\u2011cores defined via inter\u2011layer adjacency constraints. If true, the fast enumeration algorithm of the paper would apply to these richer models, yielding optimal algorithms for a broader class of network robustness analyses.",
     "domains": [
       "Pythagorean",
@@ -5063,7 +5063,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26639v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T12:37:27.586012+00:00",
     "title": "In\u2011Dominating Seed Property for Weighted and Multi\u2011Layer k\u2011Cores"
   },
@@ -5646,7 +5646,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd79f536",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -5656,7 +5656,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
