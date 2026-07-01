@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "53529d3f",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Flip graphs of the m×n Miura-ori\n\nDerived from this cycle's findings: (a) the crease graph has exactly `(m-1)(n-1)`\ndegree-4 vertices (`card_degreeFour`), and (b) the single-site",
-      "quality_score": 0.78512,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-26T19:26:17",
-      "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
-    },
-    {
       "cycle_id": "1a8e3469",
       "domain": "Applications",
       "key_insight": "# Future Directions — Cusick density bias for `s₂(n+t) ≥ s₂(n)`\n\nContext. The binary digit-sum problem of Cusick asks for the asymptotic density\n`c_t = dens{ n : s₂(n+t) ≥ s₂(n) }` and conjectures `c_",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-01T12:34:06",
       "title": "Euler Product for Autocorrelation of Simultaneously Visible Lattice Points"
+    },
+    {
+      "cycle_id": "ddab9e68",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Balanced Partitions under Crystal Reflections\n\nFix integers `d, e > 1`. Call a partition **`d`-balanced** (with respect to `e`) if\nevery cell whose hook length is divisible by `e",
+      "quality_score": 0.63296,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-01T12:58:40",
+      "title": "Crystal Reflections Preserve d-Balanced Property of Partitions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74152
     }
   ],
-  "last_updated": "2026-07-01T12:34:06",
+  "last_updated": "2026-07-01T12:58:40",
   "open_questions": [
     {
       "context": "",
@@ -3270,12 +3270,6 @@
     "Computation": [
       {
         "cycle_id": "16bb5867",
-        "quality": 0.62616,
-        "theorems": 12,
-        "title": "Langlands Program: Functoriality"
-      },
-      {
-        "cycle_id": "16bb5867",
         "quality": 0.44580200000000003,
         "theorems": 6,
         "title": "Langlands Program: Functoriality"
@@ -3327,6 +3321,12 @@
         "quality": 0.6655200000000001,
         "theorems": 18,
         "title": "Projective Plane Coupon Collection Slowness"
+      },
+      {
+        "cycle_id": "ddab9e68",
+        "quality": 0.63296,
+        "theorems": 5,
+        "title": "Crystal Reflections Preserve d-Balanced Property of Partitions"
       }
     ],
     "Cryptography": [

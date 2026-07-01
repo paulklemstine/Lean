@@ -1083,7 +1083,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Large common values of generalized Ankeny-Brauer-Chowla recurrences"
   },
   {
-    "consumed_by_exp_id": "fb9fd2df",
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G_27 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. Adding two suitably chosen augmentation vertices (at specific positions in the plane) yields a 29-vertex unit-distance graph whose geometric fractional chromatic number is strictly greater than 4. This is the key technical step that, combined with the blow-up framework of Matolcsi et al., implies the existence of a finite unit-distance graph with independence ratio below 1/4 and that the fractional chromatic number of the plane exceeds 4.",
     "domains": [
       "Geometry"
@@ -1092,12 +1092,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:07:09.204966+00:00",
     "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
   },
   {
-    "consumed_by_exp_id": "5c52e4c6",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q\u00b2+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domains": [
       "Pythagorean",
@@ -1107,7 +1107,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -1171,7 +1171,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
   {
-    "consumed_by_exp_id": "bde25b99",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves\u2011Jing\u2011Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q\u2011Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (\u2011u;s)_\\u221e / ((\u2011u;t)_\\u221e (u;s)_\\u221e). Moreover, the q\u2011expansion of F(t,s;u) has palindromic coefficients and satisfies a finite\u2011order linear recurrence; after removing the alternating signs the coefficients are non\u2011negative integers.",
     "domains": [
       "Pythagorean"
@@ -1180,7 +1180,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T06:24:54.047368+00:00",
     "title": "Generalized scalar factor for mixed modified Greaves\u2011Jing\u2011Zhu operators"
   },
@@ -1853,20 +1853,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T18:02:42.589051+00:00",
     "title": "Asymptotic Indivisibility of Nonzero Character Values in GL_n(F_q)"
-  },
-  {
-    "consumed_by_exp_id": "8875d434",
-    "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2884",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T18:26:42.958632+00:00",
-    "title": "Minimum Independence Ratio Constraint"
   },
   {
     "consumed_by_exp_id": "",
@@ -4965,6 +4951,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Balanced Partitions under Crystal Reflections\n\nFix integers `d, e > 1`. Call a partition **`d`-balanced** (with respect to `e`) if\nevery cell whose hook length is divisible by `e` has arm length divisible by `d`.\nThe affine crystal-reflection operators `s_0, \u2026, s_{e-1}` act on the set of all\npartitions. The observations below organize a program around a single phenomenon:\nthese reflections respect the fine arithmetic of hook arms.\n\n## Conjecture 1 (Reflection invariance of balance)\n\nFor all `d, e > 1`, every `d`-balanced partition is sent by every crystal\nreflection `s_i` to a `d`-balanced partition.\n\nThe key insight is that a crystal reflection rearranges only the boxes lying on a\nsingle residue class of contents, so it never disturbs the *hook length* of a cell\nthat already sits on an `e`-divisible hook \u2014 it can only slide such a cell along\nits own diagonal, and along that diagonal the arm changes in steps that are forced\nto be multiples of `d`.\n\nWhy now? Exhaustive testing across all partitions of size up to 16, every\n`d \u2208 {2,3,4}` and `e \u2208 {2,3,4,5}`, produced no counterexample, while the *mirror*\norientation of the same operators fails already at size 6. The sharp dependence on\norientation is a strong signal that the invariance is a real structural law rather\nthan numerical coincidence, and it pins down exactly which normalization must be\nused to state and attack the theorem.\n\n## Conjecture 2 (Arm-quantization mechanism)\n\nUnder a crystal reflection `s_i`, each cell that carries an `e`-divisible hook has\nits arm length changed by an integer multiple of `d` (in particular, arms that were\ndivisible by `d` remain so).\n\nThe key insight is that the reflection permutes the beads of the `e`-abacus on a\npair of adjacent runners; the number of beads jumped over \u2014 which is exactly the\nchange in arm length \u2014 is controlled by the balanced condition itself, so the arm\nincrement is quantized in multiples of `d`.\n\nWhy now? Conjecture 2 refines Conjecture 1 from a yes/no invariance into a precise\nbook-keeping statement about how individual arms move. It is the natural bridge\nbetween the global invariance and a local, cell-by-cell proof, and the abacus\npicture that makes it precise is completely explicit.\n\n## Conjecture 3 (Duality and the reflection orbit)\n\nConjugation of Young diagrams interchanges the arm-balanced and leg-balanced\npartitions; consequently a partition is `d`-balanced if and only if its conjugate\nis *leg*-`d`-balanced, and every partition in a single crystal-reflection orbit\nshares the same balance status.\n\nThe key insight is that conjugation is the order-two symmetry of the underlying\naffine diagram: it swaps rows with columns, hence arms with legs, while preserving\nevery hook length; the crystal reflections commute with this symmetry up to the\ndiagram involution, so balance is constant along an entire orbit.\n\nWhy now? The arm/leg duality is already established unconditionally, which turns the\n\"orbit-constant\" half of the conjecture into a concrete, checkable prediction and\nprovides a second, independent route to Conjecture 1 through orbit representatives.\n\n## Conjecture 4 (Core\u2013quotient characterization)\n\nA partition is `d`-balanced with respect to `e` if and only if its `e`-quotient \u2014 the\n`e`-tuple of partitions read off the abacus \u2014 satisfies a uniform divisibility\ncondition by `d` on the contents of its cells, independently of the `e`-core.\n\nThe key insight is that hooks divisible by `e` correspond precisely to moves on the\nabacus that live inside the `e`-quotient, and arm lengths of those hooks translate\ninto differences of quotient contents; balance should therefore be a property of\nthe quotient alone.\n\nWhy now? Such a characterization would replace the universal quantifier over hooks\nby a finite, per-component test, making Conjecture 1 decidable in closed form and\nexplaining the observed stability of balance under the reflections, which act\ntransparently on the quotient coordinates.\n\n## Conjecture 5 (Higher-level stability)\n\nThe balance-preservation phenomenon persists for the crystal reflections acting on\nmultipartitions (the crystals of higher-level Fock spaces), for a suitably adapted\nnotion of hook that reads across all components.\n\nThe key insight is that a multi-charge simply reindexes the same residue grading;\nthe reflections still move boxes within a single residue class, so the mechanism of\nConjectures 1\u20132 should survive verbatim once arms are measured with respect to the\ncombined multipartition hook.\n\nWhy now? Higher-level analogues are where the representation-theoretic payoff lives,\nand confirming that the level-one mechanism lifts would identify balance as a\ngenuinely modular-representation-theoretic invariant rather than a level-one\naccident.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3091",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ddab9e68",
+    "status": "available",
+    "timestamp": "2026-07-01T12:58:34.040687+00:00",
+    "title": "Fix integers `d, e > 1`. Call a partition **`d`-balanced** (with respect to `e`)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5184,7 +5185,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "09b2b1bc",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -5194,7 +5195,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
