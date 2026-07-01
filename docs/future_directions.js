@@ -405,7 +405,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Collatz Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b87dcfdc",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "Algebra"
@@ -414,7 +414,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -2656,7 +2656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Phase transition for variance asymptotics of Steinhaus short-interval sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f955b422",
     "description": "For any graph G with maximum degree d, there exists a signing \u03c3 of its edges such that the spectral radius of the signed adjacency matrix A_\u03c3 is at most 2\u221a(3(d-1)).",
     "domains": [
       "Physics"
@@ -2665,7 +2665,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T11:32:36.681739+00:00",
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
@@ -2968,6 +2968,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
+  },
+  {
+    "consumed_by_exp_id": "946cfca3",
+    "description": "For all d \u2265 1, the maximum number of equiangular lines in \u211d^d with common angle arccos(1/3) satisfies N_{1/3}(d) \u2264 max{28, 2(d \u2212 1)}. This is a special case of Balla's conjecture where the spectral radius order \u03ba\u2081 = 2 (witnessed by K\u2082), making the bound reduce to max{(1\u22121/9)(1\u22122/9)/(2/81), \u230a2(d\u22121)/1\u230b} = max{28, 2(d\u22121)}.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2963",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29392v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-30T08:16:16.372094+00:00",
+    "title": "Balla's Conjecture for \u03b1 = 1/3"
   },
   {
     "consumed_by_exp_id": "",
@@ -3450,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "P-positions of Halve Nim coincide with ordinary Nim P-positions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50540462",
     "description": "For every fixed N \u2265 2 and j \u2265 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
     "domains": [
       "Computation",
@@ -3460,7 +3475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T19:44:33.195784+00:00",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
@@ -5851,7 +5866,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Idempotent Probability: Large Deviations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2bfec88c",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical",
@@ -5861,7 +5876,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },

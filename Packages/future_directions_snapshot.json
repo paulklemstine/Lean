@@ -539,7 +539,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b87dcfdc",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domain_bridges": [],
     "domains": [
@@ -551,7 +551,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -4502,7 +4502,7 @@
       "ThisPaper",
       "MSS15_Interlacing_Families"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f955b422",
     "description": "For any graph G with maximum degree d, there exists a signing σ of its edges such that the spectral radius of the signed adjacency matrix A_σ is at most 2√(3(d-1)).",
     "domain_bridges": [
       "spectral_graph_theory",
@@ -4518,7 +4518,7 @@
     "proof_strategy": "Formalize the method of interlacing polynomials and mixed characteristic polynomials for the sum of independent random rank-1 matrices. Establish the upper bound on the largest root of the mixed characteristic polynomial to derive the spectral bound for the signed adjacency matrix.",
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T11:32:36.681739+00:00",
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
@@ -5100,6 +5100,34 @@
     "status": "available",
     "timestamp": "2026-06-30T07:59:17.309660+00:00",
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Lemmens-Seidel-73",
+      "Balla-Draxler-Keevash-Sudakov-18",
+      "Jiang-Polyanskii-20"
+    ],
+    "consumed_by_exp_id": "946cfca3",
+    "description": "For all d ≥ 1, the maximum number of equiangular lines in ℝ^d with common angle arccos(1/3) satisfies N_{1/3}(d) ≤ max{28, 2(d − 1)}. This is a special case of Balla's conjecture where the spectral radius order κ₁ = 2 (witnessed by K₂), making the bound reduce to max{(1−1/9)(1−2/9)/(2/81), ⌊2(d−1)/1⌋} = max{28, 2(d−1)}.",
+    "domain_bridges": [
+      "spectral_graph_theory",
+      "real_inner_product_spaces",
+      "extremal_combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2963",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First establish κ₁ = 2 by showing K₂ has spectral radius 1 and no 1-vertex graph has spectral radius 1. Then use the relative bound / Lemmens-Seidel framework: given a set of equiangular lines with angle arccos(1/3), form the Gram matrix M with diagonal 1 and off-diagonal ±1/3. The eigenvalue structure of M combined with the spectral radius order constraint yields the linear upper bound 2(d−1) for d ≥ 15, and the absolute bound gives 28 for small d.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29392v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-30T08:16:16.372094+00:00",
+    "title": "Balla's Conjecture for α = 1/3"
   },
   {
     "ambition_level": "extension",
@@ -10285,7 +10313,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2bfec88c",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domain_bridges": [],
     "domains": [
@@ -10298,7 +10326,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
