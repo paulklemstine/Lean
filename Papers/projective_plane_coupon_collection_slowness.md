@@ -1,77 +1,66 @@
-# Computational Evidence — Projective-Plane Coupon Collection Slowness
+# Computational Evidence: Projective-Plane Coupon Slowness
 
-We study, for a prime power `q ≥ 2` and `n = q²+q+1`, two coupon-collection
-mechanisms on the `n` points of the projective plane of order `q`:
+All exact rationals below are produced and machine-checked in the two Lean files
+`ProjectivePlaneCouponSlowness.lean` and `CouponBaselineDichotomy.lean`.
 
-* **plane** — draw a uniformly random *line* (a `(q+1)`-subset);
-* **uniform** — draw a uniformly random `(q+1)`-subset.
+## The two mechanisms
 
-Expected cover time (inclusion–exclusion):
-`E(B) = Σ_{∅ ≠ S} (-1)^{|S|+1} · |B| / (#blocks of B meeting S)`.
+On the `n = q²+q+1` points of the projective plane of order `q`:
 
-The claim under test: `E(plane) > E(uniform)` for every `q ≥ 2`.
+- **Line mechanism** `L_q`: draw a uniformly random *line* (there are `n` lines, each a
+  `(q+1)`-subset).
+- **Uniform mechanism** `U_q`: draw a uniformly random `(q+1)`-subset (all `C(n, q+1)` of them).
 
-## 1. Small-case calculation: q = 2 (Fano plane), n = 7, block size 3
+Cover time is the inclusion–exclusion functional
+`expCoverTime B = ∑_{∅≠S} (-1)^{|S|+1} |B| / coverCount(B,S)`.
 
-Computed exactly over all `127` nonempty subsets of the `7` points
-(`FanoDisproof.lean`, evaluated in ℚ):
+The claim under test: `E[cover time | L_q] > E[cover time | U_q]` for every prime power `q ≥ 2`.
 
-| mechanism                  | blocks | E (exact)        | E (decimal) |
-|----------------------------|:------:|------------------|-------------|
-| plane (Fano `7` lines)     |  7     | `163/30`         | `5.43333…`  |
-| uniform (all `35` triples) | 35     | `85691/15810`    | `5.42005…`  |
+## Small-case calculations (exact, machine-verified)
 
-Gap `E(plane) − E(uniform) = 7/527 ≈ 0.01328 > 0`.
+| q | n  | k=q+1 | E[L_q] (line)                       | E[U_q] (uniform subset)                       | L_q − U_q | L_q > U_q ? |
+|---|----|-------|-------------------------------------|-----------------------------------------------|-----------|-------------|
+| 2 | 7  | 3     | `163/30 ≈ 5.43333`                  | `85691/15810 ≈ 5.41999`                       | `7/527 > 0` | **yes**   |
+| 3 | 13 | 4     | `43633/4620 ≈ 9.44437`             | `1746879067753/185252315340 ≈ 9.42973`        | `> 0`     | **yes**     |
 
-**Conclusion (q = 2):** the plane mechanism is strictly slower. This is the
-disproof of the Grünbaum–Yaakobi conjecture, here against the *correct* uniform
-`(q+1)`-subset baseline (not against singletons).
+- `q = 2` uses the Fano plane `{{0,1,2},{0,3,4},{0,5,6},{1,3,5},{1,4,6},{2,3,6},{2,4,5}}`.
+- `q = 3` uses `PG(2,3)` realised on `ZMod 13` as the translates of the planar difference set
+  `{0,1,3,9}` (a perfect `(13,4,1)`-difference set). Both line families are verified to be genuine
+  `2-(n, q+1, 1)` designs (`fano_is_design`, `pg3_is_design`).
 
-### Order-by-order breakdown (why the gap is so small)
+The uniform-side values are **not** obtained by enumerating all `C(n, q+1)` subsets; they follow
+from the proved closed form
+`E[U_q] = ∑_{s=0}^{n} C(n,s) · (-1)^{s+1} · C(n,k) / (C(n,k) − C(n−s, k))`
+(`expCoverTime_uniform`), finished with `norm_num`.
 
-* **Order 1 (single points).** Each Fano point lies on `3` lines; a uniform
-  triple contains a given point with the matching marginal. Contributions equal.
-* **Order 2 (pairs).** Every pair of Fano points lies on a *unique* line, so a
-  pair is met by `3+3−1 = 5` lines; the uniform marginal matches. Contributions
-  equal.
-* **Order ≥ 3 (triples and up).** The Fano family meets a *collinear* triple
-  with `7` lines but a *generic* triple with `6`; the uniform family is flat.
-  This spread, fed through the strictly convex `x ↦ 1/(1−x)`, is the entire
-  source of the `7/527` gap. (Formalized in general in `Engine.lean`:
-  `match1`, `match2`, `slowness3`, `slowness_through_order3`.)
+## The three-way sandwich (q = 2)
 
-## 2. Mean-matching identity (all q, all orders)
+Adding the classical *singleton* mechanism (one point per draw), the exact ordering is
 
-For every `k` the plane avoid-probability *averaged over all `k`-subsets* equals
-the uniform avoid-probability, because of the binomial identity
-`C(n,k)·C(n−k, q+1) = C(n, q+1)·C(n−(q+1), k)` (`Engine.choose_choose_comm` /
-`Engine.meanMatch`). So the two mechanisms are indistinguishable at the level of
-size-averaged marginals; the difference is *pure variance*, present from order 3
-onward.
+`E[U_2] = 85691/15810  <  E[L_2] = 163/30  <  E[singletons] = 363/20 = 7·H₇`.
 
-## 3. Counterexample hunt
+So the Fano plane is **slower** than uniform 3-subsets but **faster** than singletons. This is the
+key to reconciling the two literatures: comparisons against singletons see a fast plane;
+comparisons against uniform subsets (the Grünbaum–Yaakobi baseline) see a slow plane.
 
-No counterexample to `E(plane) > E(uniform)` is expected, and none was found:
+## OEIS search
 
-* `q = 2` is verified exactly (above), confirming `>`.
-* The structural engine (`Engine.slowness_through_order3`) shows the *signed
-  truncation through order 3* is strictly larger for the plane for **every**
-  `q ≥ 2` — there is no `q` at which orders 1–3 fail to favour the plane.
-* The literature reports numerical confirmation for `q = 3, 4, 5`.
+The denominators/numerators of `E[U_q]` and `E[L_q]` are `q`-specific composite rationals; no
+clean integer subsequence was identified as an OEIS match, so no OEIS ID is claimed. The singleton
+values `n·Hₙ` are the classical coupon-collector expectations (`H₇ = 363/140`).
 
-The only way the full claim could fail is via the alternating tail (orders ≥ 4)
-overturning the order-3 surplus — not observed for any tested `q`.
+## Counterexample hunt
 
-## 4. Sequence note
+The universal claim `E[L_q] > E[U_q]` was tested on all realisable small prime powers we could
+verify exactly (`q = 2, 3`). No counterexample was found; both give a strict positive gap. Larger
+`q` (`q = 4`, `n = 21`; `q = 5`, `n = 31`) require summing over `2^n` subsets on the line side and
+were **not** verified here — they are reported as supporting in the source literature but are left
+as unverified in this project (see `FUTURE_DIRECTIONS.md`).
 
-The exact `q = 2` plane value `163/30` equals `Σ` of the Fano inclusion–exclusion
-and is *not* `7·H₇ = 363/20` (the singleton/coupon-collector value); the latter
-is the comparison made in `Catalog.Combinatorics.CouponCoverFramework` and is a
-*different* (block-size `1`) problem. No OEIS match was pursued for the rational
-cover-time sequence `163/30, …` as the denominators are design-specific.
+## Why the gap is positive (heuristic)
 
-## Reproduction
-
-All numbers above are reproduced by the `#eval`/`native_decide` computations in
-`FanoDisproof.lean` and proved as lemmas there (`expCoverTime_fano`,
-`expCoverTime_uniform`, `fano_slower_than_uniform`, `fano_uniform_gap`).
+For a fixed subset `S`, `coverCount(U_q, S) = C(n,k) − C(n−|S|,k)` is the *largest possible*
+per-step new-coverage count among all families of `k`-subsets. The projective lines are a highly
+structured measure-zero sub-family, so `coverCount(L_q, S) ≤ coverCount(U_q, S)` for every `S`,
+which pushes each reciprocal `|B|/coverCount` up and — after the alternating sum stabilises —
+raises the total. Making this term-by-term domination rigorous is the proposed route to general `q`.

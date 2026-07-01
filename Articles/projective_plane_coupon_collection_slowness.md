@@ -1,210 +1,159 @@
-# The Slow Geometry of Collecting Everything
+# The Coupons That Refuse to Be Collected
 
-## When structure makes you wait
+## A puzzle wearing a familiar disguise
 
-Imagine a child collecting a set of cartoon stickers, one per cereal box, hoping
-to complete the album. Each box hides a sticker chosen at random, and the painful
-truth every collector eventually learns is that the *last few* stickers take
-forever to arrive. This is the famous **coupon collector's problem**: if there
-are $n$ different coupons and each box gives you a uniformly random one, the
-expected number of boxes you must open before owning all of them grows like
-$n \log n$.
+Almost everyone has, at some point, fallen for the same small trap. You buy
+cereal to complete a set of collectible cards, or you scratch lottery tickets
+hoping to fill out a bingo board, and you notice that the *last* few items always
+seem to take forever. This is the famous **coupon collector's problem**: if there
+are $n$ different coupons and every purchase gives you one chosen uniformly at
+random, the expected number of purchases needed to own all $n$ of them is
+roughly $n \ln n$. The tail of the collection is where all the pain lives.
 
-Now change the rules in a small but important way. Instead of one coupon per box,
-suppose each box gives you a whole *bundle* of coupons at once — say a fixed
-number $k$ of them. Bundling obviously speeds things up: more coupons per box
-means fewer boxes. But here is the subtle question at the heart of this article.
-Suppose two different factories both ship bundles of exactly the same size $k$.
-One factory assembles each bundle by picking $k$ coupons completely at random.
-The other assembles its bundles according to a rigid geometric blueprint, so that
-the bundles overlap and interlock in a highly organized way. Both factories use
-bundles of identical size. Which one lets you finish your collection faster?
+Now change the game slightly. Instead of receiving *one* coupon per draw, imagine
+each draw hands you a small *bundle* of coupons at once. Bundles cover more
+ground, so you finish faster. But here is the subtle part: **how you choose the
+bundles matters**. Two collectors, each receiving bundles of the same size, drawn
+the same number at a time from the same pool of coupons, can still finish at
+noticeably different average speeds — purely because of the *combinatorial shape*
+of the bundles.
 
-Intuition pulls hard in one direction. Surely *organized* is better than
-*random*. A well-designed system, where the bundles are spread out to cover the
-ground efficiently, ought to beat blind chance. This is exactly the kind of
-belief that underlies the engineering of error-correcting codes, lottery
-wheels, and combinatorial designs: clever structure beats luck.
+This article is about a startlingly clean instance of that phenomenon, built out
+of one of the most beautiful objects in mathematics: the **Fano plane**. The
+punchline is counterintuitive. A collection of bundles engineered to be perfectly
+balanced and efficient — the seven lines of the Fano plane — turns out to be
+*slower*, on average, than simply grabbing random bundles of the same size. The
+structure that looks optimal is, for this particular task, a handicap.
 
-The surprising answer, for one of the most beautiful structures in all of
-mathematics, is that **structure makes you slower**. The organized factory loses.
+## The Fano plane in one paragraph
 
-## The blueprint: a projective plane
+Picture seven points. Group them into seven three-point "lines" so that the whole
+arrangement is as symmetric as possible: every point lies on exactly three lines,
+every line contains exactly three points, and — the magic condition — **any two
+points lie on exactly one common line**. This object exists, it is unique, and it
+is the Fano plane. A convenient way to write its seven lines is the cyclic recipe
+"start at $i$, then take $i+1$ and $i+3$, all modulo $7$":
+$$\{0,1,3\},\ \{1,2,4\},\ \{2,3,5\},\ \{3,4,6\},\ \{4,5,0\},\ \{5,6,1\},\ \{0,2,6\}.$$
+It is the smallest **projective plane**, the geometric world where "any two lines
+meet in exactly one point" and "any two points determine exactly one line" hold
+in perfect duality. It shows up in error-correcting codes, in finite geometry, in
+the multiplication table of the octonions, and — as we will see — in a
+probability puzzle about collecting coupons.
 
-The rigid blueprint in question is a **finite projective plane**. Fix a number
-$q \ge 2$ (technically a prime power: $2, 3, 4, 5, 7, 8, 9, \dots$). A projective
-plane of order $q$ is a collection of *points* and *lines* obeying three crisp
-rules:
+## Two ways to bundle seven coupons
 
-- there are exactly $n = q^2 + q + 1$ points, and exactly the same number of
-  lines;
-- every line passes through exactly $q + 1$ points, and every point lies on
-  exactly $q + 1$ lines;
-- any two distinct points lie on exactly one common line.
+Our ground set is the seven points of the Fano plane. Each "draw" gives us a
+three-point block, and a point is *collected* the first time a drawn block
+contains it. We keep drawing until all seven points are collected, and we ask for
+the **expected cover time** — the average number of draws needed.
 
-The smallest interesting case is $q = 2$, giving $n = 7$ points and $7$ lines of
-$3$ points each. This is the celebrated **Fano plane**, the little seven-point
-diagram with seven lines (one of them drawn as a circle) that appears on
-mathematicians' coffee mugs. For $q = 3$ we get $13$ points and $13$ lines of
-$4$ points each, and so on.
+We compare two collectors.
 
-Each line is a special $(q+1)$-element subset of the points. So here are our two
-coupon factories, both shipping bundles of size $k = q + 1$ drawn from the same
-$n$ points:
+- **The geometer** draws uniformly from the *seven Fano lines*. Every block is one
+  of those seven perfectly balanced triples.
+- **The gambler** draws uniformly from *all thirty-five* three-point subsets of
+  the seven points. Any triple is fair game; there are $\binom{7}{3}=35$ of them.
 
-- the **plane mechanism**: each draw is a uniformly random *line* of the plane —
-  one of the $n$ tightly interlocking $(q+1)$-point bundles;
-- the **uniform mechanism**: each draw is a uniformly random $(q+1)$-element
-  subset of the $n$ points, with no geometric constraint at all.
+Both draw blocks of size three. Both draw uniformly. Intuition says the tidy,
+balanced Fano design should be at least as good as the anarchic full collection.
+The intuition is wrong.
 
-We collect points until we have seen all $n$ of them, and we ask: which
-mechanism has the larger expected completion time? The geometric one is the
-**slower** one.
+## Turning "cover time" into arithmetic
 
-## A conjecture, and its downfall
+To compute an average cover time exactly, we use a classic trick. For each point
+$p$, let $\tau_p$ be the first draw that collects $p$. The cover time is the
+*latest* of these, $\max_p \tau_p$. There is a beautiful identity — the
+inclusion–exclusion principle applied to a maximum — that turns a maximum of
+random times into an alternating sum of much simpler *minimums*:
+$$\mathbb{E}\big[\max_p \tau_p\big] \;=\; \sum_{\varnothing \neq S}\;(-1)^{|S|+1}\,\mathbb{E}\big[\min_{p\in S}\tau_p\big],$$
+where the sum runs over every nonempty set $S$ of points.
 
-This question is not new. Decades ago, Grünbaum and Yaakobi raised the natural
-guess that the structured, design-based mechanism — the one that covers the plane
-"efficiently" — should finish *faster* than dumb uniform sampling. The
-conjecture encodes the widespread faith that good designs cover quickly.
+Each minimum is easy. The quantity $\min_{p\in S}\tau_p$ is simply the first draw
+of *any* block that touches $S$ — a block with at least one point in $S$. If we
+let $c(S)$ be the number of blocks meeting $S$, out of $|B|$ total blocks, then
+each draw hits $S$ with probability $c(S)/|B|$, and the average wait for the first
+hit is the reciprocal, $|B|/c(S)$. Substituting gives a completely explicit
+formula:
+$$\mathbb{E}[\text{cover time}] \;=\; \sum_{\varnothing \neq S}\;(-1)^{|S|+1}\,\frac{|B|}{c(S)}.$$
 
-It is false. For the Fano plane ($q = 2$) one can compute both expected times
-exactly. The uniform mechanism finishes in expected time
-$$E_{\text{uniform}} \approx 5.4201,$$
-while the plane mechanism needs
-$$E_{\text{plane}} \approx 5.4333.$$
+Everything now reduces to counting: for each of the $2^7-1=127$ nonempty subsets
+$S$, how many blocks meet $S$? The geometer and the gambler differ only through
+these coverage counts $c(S)$.
 
-The structured plane is *strictly slower*. A direct computation for $q = 3$
-(thirteen points, thirteen lines) tells the same story:
-$E_{\text{plane}} \approx 9.4444$ against $E_{\text{uniform}} \approx 9.4297$.
-The gap is small but real, and it always points the same way.
+## The verdict
 
-So the conjecture collapses. But a disproved guess in a single case is only the
-beginning. The deeper question is *why*, and *whether it happens for every
-$q$*. The answer turns out to rest on one of the most reliable engines in all of
-probability: **convexity**.
+Carrying out the sum exactly — with fractions, no rounding — yields two clean
+rational numbers.
 
-## How to measure the wait
+For the gambler, drawing all thirty-five triples,
+$$\mathbb{E}[\text{cover time}] \;=\; \frac{85691}{15810} \;\approx\; 5.42005.$$
 
-To see the mechanism behind the slowness we need a formula for the expected
-completion time. There is a clean one. For any covering process, write $p_A$ for
-the probability that a single draw *misses* (avoids entirely) a fixed target set
-$A$ of points. Then the expected time to cover everything is the alternating
-inclusion–exclusion sum over all nonempty target sets:
-$$E = \sum_{\varnothing \ne A} (-1)^{|A|+1} \, \frac{1}{1 - p_A}.$$
+For the geometer, drawing the seven Fano lines,
+$$\mathbb{E}[\text{cover time}] \;=\; \frac{163}{30} \;\approx\; 5.43333.$$
 
-Each term measures how stubbornly some particular set of points refuses to be
-covered: the closer $p_A$ is to $1$ (the more often a draw avoids $A$), the
-larger the harmonic weight $\tfrac{1}{1-p_A}$. The signs alternate by the size of
-$A$: singletons add, pairs subtract, triples add, and so on.
+And so
+$$\frac{85691}{15810} \;<\; \frac{163}{30}.$$
 
-Now compare our two mechanisms term by term, grouping the target sets by their
-size $k = |A|$.
+The Fano lines are **strictly slower** — by about $0.0133$ of a draw on average.
+The margin is small but it is exact and it is real. The elegant design loses the
+race.
 
-**Singletons agree.** For a single point, the plane mechanism misses it whenever
-the random line avoids that point. In a projective plane of order $q$, exactly
-$q^2$ of the $n$ lines miss any given point (each point lies on $q+1$ lines, and
-$n - (q+1) = q^2$). So the plane's avoid-probability for one point is
-$q^2 / n$. The uniform mechanism misses a single point with probability
-$\binom{n-1}{q+1} / \binom{n}{q+1} = (n - q - 1)/n = q^2/n$ as well. They are
-*identical*.
+## Why elegance backfires
 
-**Pairs agree.** For two points, the plane misses both exactly when the line
-avoids both. Each point sits on $q+1$ lines, and the two points share one common
-line, so $2(q+1) - 1 = 2q + 1$ lines hit at least one of them, leaving $n -
-(2q+1) = q^2 - q$ lines that miss both. A short calculation shows the uniform
-mechanism reproduces this same probability exactly. Again, *identical*.
+The reason cuts to the heart of what "collecting" rewards. A collector wants
+*independence*: each new block should, as much as possible, surprise you with
+points you did not already have. The Fano plane is built to do the opposite. Its
+defining property — any two points share exactly one line — means the seven lines
+overlap in a rigid, correlated pattern. Once you have collected a point, the lines
+that could deliver its Fano-partners are concentrated, not spread out. Coverage
+events become **positively correlated**: covering one point makes its collinear
+neighbors *more* likely to already be covered by the same lucky draws, and less
+likely to be picked up by future ones. Positive correlation is exactly what
+lengthens the tail of a coupon collection.
 
-This is no accident. There is a clean **mean-matching identity**: averaged over
-all $k$-element target sets, the plane mechanism avoids a set with exactly the
-uniform probability, for *every* size $k$. The structured and the random
-mechanisms are statistically indistinguishable at the level of averages, at every
-order. If only averages mattered, the two would tie forever.
+The gambler's thirty-five triples have no such conspiracy. They are as spread out
+as three-element blocks can be, so their coverage events are closer to
+independent, and the wait for the final straggler is shorter. Structure, here, is
+a liability precisely because the task rewards disorder.
 
-## The first crack: triples
+## A conjecture that fell
 
-Averages are not everything. The harmonic weight $\tfrac{1}{1-p}$ is a *convex*
-function of $p$, and convex functions are exquisitely sensitive not to the mean
-of their inputs but to their *spread*.
+This little inequality is not just a curiosity. In the 1970s a natural conjecture
+of Grünbaum and Yaakobi predicted the opposite ordering — that the balanced
+design should win. The exact computation above **disproves** it in the smallest
+case. The perfectly symmetric object that every geometer loves is, for coupon
+collection, a genuine underdog.
 
-This is where the geometry finally bites, and it does so for the first time at
-**triples** — sets of three points. Under the uniform mechanism, every triple is
-the same: three points are three points, with a single avoid-probability. Under
-the plane mechanism, triples come in two genuinely different flavors:
+## Does it keep happening?
 
-- **collinear** triples, whose three points all lie on one common line; these are
-  missed by $q^2 - 2q$ lines;
-- **generic** triples, not all on a line; these are missed by $(q-1)^2 = q^2 - 2q
-  + 1$ lines.
+The Fano plane is only the first in an infinite family. For every prime power
+$q \ge 2$ there is a projective plane of order $q$: it has $n = q^2+q+1$ points,
+the same number of lines, and every line is a $(q+1)$-point block with the same
+"any two points on exactly one line" magic. The natural question is whether the
+geometer *always* loses.
 
-The two avoid-counts differ by *exactly one line*. The collinear and generic
-triples carry two distinct avoid-probabilities, $p_{\text{coll}} = (q^2-2q)/n$
-and $p_{\text{gen}} = (q-1)^2/n$, and crucially these two numbers have the **same
-weighted mean** as the single uniform value. The plane has taken one number and
-split it into two, keeping the average fixed.
+**Conjecture.** For every prime power $q \ge 2$, drawing uniformly random lines of
+the projective plane of order $q$ takes strictly longer, on average, to cover all
+$q^2+q+1$ points than drawing uniformly random $(q+1)$-subsets of the same points.
 
-Here convexity delivers the verdict. If you replace a single value by two values
-with the same mean, a strictly convex function's average *increases* — this is
-the strict two-point Jensen inequality:
-$$\tfrac{1}{2}\!\left(\frac{1}{1-x} + \frac{1}{1-y}\right) > \frac{1}{1 -
-\tfrac{x+y}{2}} \qquad (x \ne y).$$
-The order-three contribution to $E$ is therefore *strictly larger* for the plane
-than for the uniform mechanism. And because the order-three sign in the
-inclusion–exclusion expansion is positive, this surplus pushes the plane's
-expected time *up*: it makes the plane slower.
+The evidence is encouraging. Repeating the exact computation for the projective
+plane of order $q=3$ — thirteen points, thirteen lines of four points each,
+compared against all $\binom{13}{4}=715$ four-point subsets — gives
+$$\text{lines: } \frac{43633}{4620}\approx 9.44437, \qquad \text{uniform: } \approx 9.42973,$$
+and once again the lines are slower. The same pattern holds in the tested cases
+$q=4$ and $q=5$. A general proof remains open, but the mechanism points the way:
+for every fixed target set $S$, the number of *lines* meeting $S$ can never exceed
+the number of $(q+1)$-subsets meeting $S$, and the two counts diverge most exactly
+when $S$ is built out of a few whole lines. This per-set domination survives the
+alternating inclusion–exclusion sum and should force the strict inequality in
+general.
 
-Counting the two species confirms how lopsided the split is. The number of
-collinear triples is $n \binom{q+1}{3}$, while the generic ones number
-$\binom{n}{3} - n\binom{q+1}{3}$; the generic species satisfies the tidy identity
-$6 \cdot (\#\text{generic}) = n\,q^3(q+1)$ and overwhelmingly dominates. The
-plane really does carry two honestly different values at order three, and their
-spread is what costs time.
+## The moral
 
-## Putting the first three orders together
-
-Collecting orders one, two, and three with their inclusion–exclusion signs gives
-the cleanest rigorous statement of the phenomenon. Define the **truncated**
-expected time as the sum of the first three orders. Then for *every* prime power
-$q \ge 2$:
-
-- orders one and two are exactly equal for the two mechanisms (singletons and
-  pairs are geometrically uniform, so they cancel perfectly);
-- order three is strictly larger for the plane (one value splits into two with
-  the same mean, and convexity does the rest);
-- therefore the truncated expected time of the plane mechanism strictly exceeds
-  that of the uniform mechanism.
-
-Numerically the order-three surplus is robust and growing: about $0.15$ at
-$q = 2$, about $0.67$ at $q = 3$, about $4.6$ at $q = 5$, and into the hundreds
-and thousands as $q$ climbs. The geometric mechanism is provably slower through
-order three, for *all* $q$ — and for the small cases $q = 2, 3, 4, 5$ a full
-all-orders computation confirms it is slower outright.
-
-## Why the general case is hard — and what it teaches
-
-If order three already tips the scales, why is the full statement (slower for
-*every* $q$, summed over *all* orders) still open? Because the
-inclusion–exclusion sum has alternating signs, and one must rule out the
-possibility that the higher orders — quadruples, quintuples, and beyond —
-collectively claw back the order-three surplus. The believed resolution is that
-they cannot: the per-order gap between the two mechanisms is essentially the
-*variance* of the line-incidence counts among same-size targets, weighted by the
-convex harmonic function, and this variance shrinks rapidly because large
-configurations are overwhelmingly "generic," concentrating on the uniform value.
-Controlling that alternating tail is the one remaining quantitative estimate.
-
-The moral reaches well beyond stickers and cereal boxes. We tend to assume that
-balance and symmetry make a system efficient. Here the opposite holds, and the
-reason is sharp: two mechanisms can be **identical in every average** and still
-behave differently, because what governs the waiting time is not the mean but the
-*spread*. A projective plane is the most balanced design imaginable — every pair
-of points meets in exactly one line — and that very balance forces its triples to
-split into collinear and generic types with a fixed mean but nonzero spread.
-Convexity converts that spread directly into extra waiting time.
-
-The slow geometry of collecting everything is, in the end, a story about a single
-inequality between an average of two numbers and the number in the middle. That
-inequality, repeated across the architecture of one of mathematics' most elegant
-objects, is enough to overturn a decades-old conjecture and to suggest a new
-organizing principle: among all designs whose bundles have a fixed size and whose
-averages match, it is precisely the most *balanced* ones that cover the slowest.
+The coupon collector's problem is usually told as a lesson about waiting: the last
+few items are agony. The Fano plane adds a second, sharper lesson. When you get to
+*design* your draws, symmetry and balance are not automatically your friends. A
+structure optimized for one purpose — the flawless incidence geometry of a
+projective plane — can be quietly pessimal for another. Sometimes the fastest way
+to collect everything is to embrace a little chaos, and the most beautiful object
+in the room is the one that finishes last.

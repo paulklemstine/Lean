@@ -1,205 +1,155 @@
-"""
-Projective-Plane Coupon Collection is Slower than Uniform
-=========================================================
+"""Projective Plane Coupon Collection Slowness — numerical demonstrations.
 
-Numerical demonstration of the structural slowness engine.
+This self-contained script reproduces the exact rational cover-time values that
+underpin the main results, and provides computational evidence for the
+general-order conjecture.
 
-On the n = q^2 + q + 1 points of a finite projective plane of order q we compare
-two coupon-collection mechanisms, both drawing blocks of size q + 1:
+The model
+---------
+We are given a ground set of ``n`` points and a family ``B`` of *blocks*
+(subsets of the points).  At each step we draw one block uniformly at random.
+A point is *covered* the first time a drawn block contains it.  The *cover time*
+is the first step at which every point has been covered.
 
-  * plane mechanism   -- each draw is a uniformly random LINE of the plane;
-  * uniform mechanism -- each draw is a uniformly random (q+1)-subset of points.
+Writing ``tau_p`` for the first step a block containing ``p`` is drawn, the cover
+time equals ``max_p tau_p``.  Inclusion-exclusion over the points gives the exact
+expectation
 
-For a covering process whose single-draw probability of AVOIDING a target set A
-is p_A, the expected time to cover the whole ground set is the inclusion-exclusion
-sum
+    E[cover time] = sum over nonempty S of  (-1)^(|S|+1) * |B| / coverCount(B, S),
 
-    E = sum_{A != empty} (-1)^{|A|+1} / (1 - p_A).
+where ``coverCount(B, S)`` is the number of blocks meeting ``S`` (i.e. blocks with
+nonempty intersection with ``S``).  Each inner term is the mean of a geometric
+random variable: the first draw of a block meeting ``S`` has success probability
+``coverCount(B, S) / |B|``.
 
-This script:
-  (1) builds PG(2,q) for prime q and computes the FULL E exactly (q = 2, 3),
-      confirming the plane mechanism is strictly slower;
-  (2) computes the order-three TRUNCATION E^(3) = S1 - S2 + S3 in closed form
-      for any prime power q, confirming the strict order-three surplus;
-  (3) verifies the mean-matching identity and the exact agreement at orders 1, 2.
-
-All arithmetic uses exact rationals (fractions.Fraction) so the strict
-inequalities are certified, not floating-point artifacts.
+We compare, on the same ground set, the *line family* of a projective plane of
+order ``q`` (n = q^2 + q + 1 points, each line a (q+1)-subset) against the
+*uniform family* of ALL (q+1)-subsets.
 """
 
 from __future__ import annotations
 
 from fractions import Fraction
 from itertools import combinations
-from math import comb
-from typing import List, Tuple
+from typing import List, Set, Tuple
 
 
 # --------------------------------------------------------------------------- #
-# Building the projective plane PG(2, q) for prime q                           #
+#  Core cover-time machinery                                                   #
 # --------------------------------------------------------------------------- #
-def build_pg2(q: int) -> Tuple[List[Tuple[int, int, int]], List[frozenset]]:
-    """Return (points, lines) of PG(2, q) for a prime q.
+def cover_count(blocks: List[Set[int]], subset: Set[int]) -> int:
+    """Number of blocks that meet ``subset`` (have nonempty intersection)."""
+    return sum(1 for b in blocks if b & subset)
 
-    Points are the 1-dimensional subspaces of F_q^3 (normalized so the first
-    nonzero coordinate is 1). A line is the set of point-indices orthogonal to a
-    given normal vector; lines are indexed the same way as points (self-dual).
-    """
-    points: List[Tuple[int, int, int]] = []
-    seen = set()
-    for a in range(q):
-        for b in range(q):
-            for c in range(q):
-                v = (a, b, c)
-                if v == (0, 0, 0):
+
+def expected_cover_time(blocks: List[Set[int]], n: int) -> Fraction:
+    """Exact expected cover time via inclusion-exclusion over all nonempty S."""
+    num_blocks = len(blocks)
+    total = Fraction(0)
+    points = list(range(n))
+    for size in range(1, n + 1):
+        sign = 1 if size % 2 == 1 else -1
+        for combo in combinations(points, size):
+            subset = set(combo)
+            cc = cover_count(blocks, subset)
+            total += Fraction(sign * num_blocks, cc)
+    return total
+
+
+# --------------------------------------------------------------------------- #
+#  Projective plane of order q (q prime): points and lines                     #
+# --------------------------------------------------------------------------- #
+def projective_points(q: int) -> List[Tuple[int, int, int]]:
+    """Normalized representatives of the 1-dimensional subspaces of GF(q)^3."""
+    pts: List[Tuple[int, int, int]] = []
+    for x in range(q):
+        for y in range(q):
+            for z in range(q):
+                if (x, y, z) == (0, 0, 0):
                     continue
-                # normalize: scale so the first nonzero coordinate equals 1
-                for i in range(3):
-                    if v[i] % q != 0:
-                        inv = pow(v[i], q - 2, q)  # Fermat inverse (q prime)
-                        nv = tuple((x * inv) % q for x in v)
+                v = (x, y, z)
+                inv = 1
+                for c in v:
+                    if c % q != 0:
+                        inv = pow(c, q - 2, q) if q > 2 else 1
                         break
-                if nv not in seen:
-                    seen.add(nv)
-                    points.append(nv)
-    lines: List[frozenset] = []
-    for normal in points:  # self-dual: each point also names a line
-        members = frozenset(
-            idx
-            for idx, p in enumerate(points)
-            if sum(a * b for a, b in zip(normal, p)) % q == 0
+                nv = tuple((inv * a) % q for a in v)
+                if nv not in pts:
+                    pts.append(nv)  # type: ignore[arg-type]
+    return pts
+
+
+def projective_lines(q: int) -> Tuple[List[Set[int]], int]:
+    """Return (lines, n) for the projective plane of order q (q prime).
+
+    A line is the set of points (x, y, z) satisfying a*x + b*y + c*z = 0 for a
+    fixed dual point (a, b, c).  There are q^2 + q + 1 such lines.
+    """
+    pts = projective_points(q)
+    index = {p: i for i, p in enumerate(pts)}
+    lines: Set[frozenset] = set()
+    for (a, b, c) in pts:
+        line = frozenset(
+            i for p, i in index.items()
+            if (a * p[0] + b * p[1] + c * p[2]) % q == 0
         )
-        lines.append(members)
-    return points, lines
+        lines.add(line)
+    return [set(l) for l in lines], len(pts)
+
+
+def uniform_k_subsets(n: int, k: int) -> List[Set[int]]:
+    """All k-element subsets of an n-point ground set."""
+    return [set(c) for c in combinations(range(n), k)]
 
 
 # --------------------------------------------------------------------------- #
-# Full expected coverage time via inclusion-exclusion                          #
+#  Demonstrations                                                              #
 # --------------------------------------------------------------------------- #
-def expected_time_plane_full(q: int) -> Fraction:
-    """Exact full E for the plane mechanism (feasible for small q)."""
-    points, lines = build_pg2(q)
-    n = len(points)
-    num_lines = len(lines)
-    total = Fraction(0)
-    for k in range(1, n + 1):
-        sk = Fraction(0)
-        for A in combinations(range(n), k):
-            target = set(A)
-            avoid = sum(1 for ln in lines if target.isdisjoint(ln))
-            p = Fraction(avoid, num_lines)
-            sk += Fraction(1) / (1 - p)
-        total += (-1) ** (k + 1) * sk
-    return total
+def fano_lines() -> List[Set[int]]:
+    """The seven lines of the Fano plane in the cyclic form {i, i+1, i+3} mod 7."""
+    base = [0, 1, 3]
+    return [set((b + s) % 7 for b in base) for s in range(7)]
 
 
-def uniform_avoid(q: int, k: int) -> Fraction:
-    """Uniform avoid-probability for a k-subset: prod_{i<k} (q^2 - i)/(n - i)."""
-    n = q * q + q + 1
-    num, den = 1, 1
-    for i in range(k):
-        num *= (q * q - i)
-        den *= (n - i)
-    return Fraction(num, den)
+def demo_fano() -> None:
+    print("=" * 68)
+    print("Fano plane (order q = 2):  n = 7 points")
+    print("=" * 68)
+    lines = fano_lines()
+    uniform = uniform_k_subsets(7, 3)
+    print(f"  #lines          = {len(lines)}   (expected 7)")
+    print(f"  #uniform 3-sets = {len(uniform)}  (expected 35 = C(7,3))")
+
+    e_lines = expected_cover_time(lines, 7)
+    e_uniform = expected_cover_time(uniform, 7)
+    print(f"  E[cover time], Fano lines   = {e_lines} = {float(e_lines):.6f}")
+    print(f"  E[cover time], uniform sets = {e_uniform} = {float(e_uniform):.6f}")
+    assert e_lines == Fraction(163, 30)
+    assert e_uniform == Fraction(85691, 15810)
+    assert e_uniform < e_lines
+    print(f"  Lines are STRICTLY SLOWER: {float(e_uniform):.6f} < {float(e_lines):.6f}")
+    print(f"  Slowdown gap  = {float(e_lines - e_uniform):.6f}")
 
 
-def expected_time_uniform_full(q: int) -> Fraction:
-    """Exact full E for the uniform mechanism."""
-    n = q * q + q + 1
-    total = Fraction(0)
-    for k in range(1, n + 1):
-        total += (-1) ** (k + 1) * comb(n, k) / (1 - uniform_avoid(q, k))
-    return total
-
-
-# --------------------------------------------------------------------------- #
-# Order-three truncation in closed form (any prime power q)                    #
-# --------------------------------------------------------------------------- #
-def truncation_order3(q: int) -> Tuple[Fraction, Fraction]:
-    """Return (E^(3)_plane, E^(3)_uniform) computed from closed-form counts."""
-    n = q * q + q + 1
-
-    # Uniform marginals.
-    u1 = Fraction(q * q, n)
-    u2 = Fraction(q * q * (q * q - 1), n * (n - 1))
-    u3 = Fraction(q * q * (q * q - 1) * (q * q - 2), n * (n - 1) * (n - 2))
-
-    # Plane avoid-probabilities by geometry.
-    p_point = Fraction(q * q, n)
-    p_pair = Fraction(q * q - q, n)
-    p_coll = Fraction(q * q - 2 * q, n)
-    p_gen = Fraction((q - 1) ** 2, n)
-
-    # Triple species counts.
-    n_coll = n * comb(q + 1, 3)
-    n_gen = comb(n, 3) - n_coll
-
-    s1_u = comb(n, 1) / (1 - u1)
-    s2_u = comb(n, 2) / (1 - u2)
-    s3_u = comb(n, 3) / (1 - u3)
-    e3_uniform = s1_u - s2_u + s3_u
-
-    s1_p = comb(n, 1) / (1 - p_point)
-    s2_p = comb(n, 2) / (1 - p_pair)
-    s3_p = n_coll / (1 - p_coll) + n_gen / (1 - p_gen)
-    e3_plane = s1_p - s2_p + s3_p
-
-    return e3_plane, e3_uniform
-
-
-# --------------------------------------------------------------------------- #
-# Identity checks                                                             #
-# --------------------------------------------------------------------------- #
-def check_mean_matching(q: int) -> bool:
-    """Verify the order-3 weighted-mean identity and exact orders 1, 2."""
-    n = q * q + q + 1
-    # orders 1, 2 pointwise agreement
-    o1 = Fraction(q * q, n) == uniform_avoid(q, 1)
-    o2 = Fraction(q * q - q, n) == uniform_avoid(q, 2)
-    # order-3 weighted mean of plane values equals uniform value
-    n_coll = n * comb(q + 1, 3)
-    n_gen = comb(n, 3) - n_coll
-    p_coll = Fraction(q * q - 2 * q, n)
-    p_gen = Fraction((q - 1) ** 2, n)
-    mean = (n_coll * p_coll + n_gen * p_gen) / comb(n, 3)
-    o3 = mean == uniform_avoid(q, 3)
-    distinct = p_coll != p_gen
-    return o1 and o2 and o3 and distinct
-
-
-# --------------------------------------------------------------------------- #
-# Driver                                                                       #
-# --------------------------------------------------------------------------- #
-def main() -> None:
-    print("=" * 70)
-    print("FULL expected coverage time E  (plane vs uniform)")
-    print("=" * 70)
-    for q in (2, 3):
-        ep = expected_time_plane_full(q)
-        eu = expected_time_uniform_full(q)
-        n = q * q + q + 1
-        print(f"q = {q}  (n = {n} points)")
-        print(f"   E_plane   = {float(ep):.6f}")
-        print(f"   E_uniform = {float(eu):.6f}")
-        print(f"   plane strictly slower: {ep > eu}\n")
-
-    print("=" * 70)
-    print("ORDER-THREE TRUNCATION  E^(3) = S1 - S2 + S3  (every prime power)")
-    print("=" * 70)
-    print(f"{'q':>3} {'n':>5} {'surplus E3_plane - E3_uniform':>32} {'>0':>5}")
-    for q in (2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 25):
-        ep, eu = truncation_order3(q)
-        n = q * q + q + 1
-        print(f"{q:>3} {n:>5} {float(ep - eu):>32.6f} {str(ep > eu):>5}")
-
+def demo_general(q_values: List[int]) -> None:
     print()
-    print("=" * 70)
-    print("IDENTITY CHECKS  (orders 1, 2 exact; order-3 weighted mean)")
-    print("=" * 70)
-    for q in (2, 3, 4, 5, 7, 9, 13):
-        print(f"q = {q:>2}:  mean-matching & exact low orders hold: "
-              f"{check_mean_matching(q)}")
+    print("=" * 68)
+    print("General projective planes of order q (prime): lines vs uniform")
+    print("=" * 68)
+    for q in q_values:
+        lines, n = projective_lines(q)
+        k = q + 1
+        uniform = uniform_k_subsets(n, k)
+        e_lines = expected_cover_time(lines, n)
+        e_uniform = expected_cover_time(uniform, n)
+        slower = e_uniform < e_lines
+        print(f"  q = {q}:  n = {n},  #lines = {len(lines)},  #uniform = {len(uniform)}")
+        print(f"        lines   = {float(e_lines):.6f}")
+        print(f"        uniform = {float(e_uniform):.6f}")
+        print(f"        lines strictly slower?  {slower}")
 
 
 if __name__ == "__main__":
-    main()
+    demo_fano()
+    # q = 2 and q = 3 run quickly; q = 4 (n = 21) is heavier but feasible.
+    demo_general([2, 3])
