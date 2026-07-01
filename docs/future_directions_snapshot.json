@@ -1573,7 +1573,7 @@
       "deGrey",
       "Er87"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb9fd2df",
     "description": "The 27-vertex unit-distance graph G_27 constructed by Matolcsi, Ruzsa, Varga, and Zsámboki has geometric fractional chromatic number exactly 4. Adding two suitably chosen augmentation vertices (at specific positions in the plane) yields a 29-vertex unit-distance graph whose geometric fractional chromatic number is strictly greater than 4. This is the key technical step that, combined with the blow-up framework of Matolcsi et al., implies the existence of a finite unit-distance graph with independence ratio below 1/4 and that the fractional chromatic number of the plane exceeds 4.",
     "domain_bridges": [
       "fractional_chromatic_number_theory",
@@ -1589,7 +1589,7 @@
     "proof_strategy": "First formalize the geometric fractional chromatic number for finite point configurations in the plane. Then characterize all 23 extremal optimal geometric fractional colorings of G_27 (which form a polytope of affine dimension 11). Finally, verify that for every convex combination of these 23 extremal colorings, the two augmentation vertices cannot both be properly colored, forcing the geometric fractional chromatic number above 4. The verification reduces to checking finitely many linear constraints over the extremal colorings.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:07:09.204966+00:00",
     "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
   },
@@ -1600,7 +1600,7 @@
       "math.PR",
       "math.CO/design_theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c52e4c6",
     "description": "For every prime power q ≥ 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q²+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domain_bridges": [
       "finite_geometry-probability",
@@ -1617,7 +1617,7 @@
     "proof_strategy": "Compare the two expected coverage times via their inclusion-exclusion representations. The key structural difference is that any two lines of PG(2,q) intersect in exactly one point, creating negative correlations that slow coverage, whereas random (q+1)-subsets have binomially-distributed intersection sizes. One might attempt to show that the Fano/Fano-like intersection structure maximizes the second-order inclusion-exclusion terms, or develop a coupling argument showing the projective plane mechanism is stochastically dominated in coverage by the full model.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -1736,7 +1736,7 @@
       "Jing, N., Zhu, J., \"A new approach to the spin character theory\", J. Algebra 2000",
       "Stembridge, J. R., \"Skew Schur functions and the chromatic polynomial\", 1996"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bde25b99",
     "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves‑Jing‑Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q‑Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (‑u;s)_\\u221e / ((‑u;t)_\\u221e (u;s)_\\u221e). Moreover, the q‑expansion of F(t,s;u) has palindromic coefficients and satisfies a finite‑order linear recurrence; after removing the alternating signs the coefficients are non‑negative integers.",
     "domain_bridges": [
       "q-series",
@@ -1753,7 +1753,7 @@
     "proof_strategy": "The conjecture can be approached by first expressing the mixed product via the diagonal conjugation that relates the modified operator to the classical neutral operator. Using known product formulas for neutral operators and Bailey‑pair theory, one can reduce the mixed product to a ratio of infinite q‑Pochhammer symbols as stated. The resulting rational function is then analyzed via standard q‑series techniques (e.g., the pentagonal number theorem) to extract its q‑expansion, prove palindromicity and derive a finite‑order recurrence. The non‑negativity of the sign‑adjusted coefficients follows from known positivity results for principal specializations of one‑row Schur Q‑functions and can be formalized using Lean’s algebraic number theory libraries.",
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:24:54.047368+00:00",
     "title": "Generalized scalar factor for mixed modified Greaves‑Jing‑Zhu operators"
   },
@@ -6524,7 +6524,7 @@
       "math.CO",
       "math.AT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd442784",
     "description": "For any Latin square M of order n ≥ 5, the dimension of the second homology group of the clique complex of the strongly regular graph associated with M over any field F is exactly (n-1)^3 - I(M), where I(M) is the number of intercalates (2x2 Latin subsquares) in M.",
     "domain_bridges": [
       "Clique complexes",
@@ -6542,7 +6542,7 @@
     "proof_strategy": "Construct the clique complex of the Latin square graph, characterize the boundary maps for the simplicial chain complex, and evaluate the rank of the second homology group by establishing a bijection between the independent 2-cycles and the intercalates of the Latin square.",
     "research_mode": "team",
     "source_exp_id": "2606.27328v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T05:47:37.249707+00:00",
     "title": "Dimension of Second Clique Homology for Latin Square Graphs"
   },
@@ -8157,7 +8157,7 @@
       "legendre_symbol",
       "chinese_remainder_theorem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19ffaeae",
     "description": "For any prime $l \\equiv 3 \\pmod 4$ and any odd prime $p \\neq l$, the Legendre symbol $(l/p)$ equals 1 if and only if either ($p \\equiv 1 \\pmod 4$ and $p$ is a quadratic residue modulo $l$) or ($p \\equiv 3 \\pmod 4$ and $p$ is a quadratic nonresidue modulo $l$). This is equivalent to stating that $(l/p) = 1 \\iff (p \\equiv 1 \\pmod 4 \\land (p/l) = 1) \\lor (p \\equiv 3 \\pmod 4 \\land (p/l) = -1)$. This proposition is a key stepping stone in the paper for bounding the exceptional residue classes of the weighted fruit Diophantine equation.",
     "domain_bridges": [
       "modular_arithmetic",
@@ -8172,7 +8172,7 @@
     "proof_strategy": "Apply the law of quadratic reciprocity, which for $l \\equiv 3 \\pmod 4$ states $(l/p) = (p/l) (-1)^{(p-1)/2}$. Analyze the two cases for $p \\bmod 4$: if $p \\equiv 1 \\pmod 4$, $(-1)^{(p-1)/2} = 1$ and $(l/p) = (p/l)$; if $p \\equiv 3 \\pmod 4$, $(-1)^{(p-1)/2} = -1$ and $(l/p) = -(p/l)$. The result follows directly from these cases.",
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T06:31:51.361312+00:00",
     "title": "Legendre Symbol Characterization for Primes 3 mod 4"
   },
@@ -9106,7 +9106,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "09b2b1bc",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -9119,7 +9119,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

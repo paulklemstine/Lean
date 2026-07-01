@@ -1083,7 +1083,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Large common values of generalized Ankeny-Brauer-Chowla recurrences"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb9fd2df",
     "description": "The 27-vertex unit-distance graph G_27 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. Adding two suitably chosen augmentation vertices (at specific positions in the plane) yields a 29-vertex unit-distance graph whose geometric fractional chromatic number is strictly greater than 4. This is the key technical step that, combined with the blow-up framework of Matolcsi et al., implies the existence of a finite unit-distance graph with independence ratio below 1/4 and that the fractional chromatic number of the plane exceeds 4.",
     "domains": [
       "Geometry"
@@ -1092,12 +1092,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:07:09.204966+00:00",
     "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly greater than 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c52e4c6",
     "description": "For every prime power q \u2265 2, the expected coverage time of the coupon collector process under uniform sampling from the line set of the projective plane PG(2,q) strictly exceeds the expected coverage time under uniform sampling from all (q+1)-subsets of a (q\u00b2+q+1)-element set. The paper establishes this for q=2 (the Fano plane) and verifies it computationally for small q, but a general proof remains open.",
     "domains": [
       "Pythagorean",
@@ -1107,7 +1107,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T04:27:32.789484+00:00",
     "title": "Projective Plane Mechanisms Dominate Full Model in Coupon Collection"
   },
@@ -1171,7 +1171,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bde25b99",
     "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves\u2011Jing\u2011Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q\u2011Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (\u2011u;s)_\\u221e / ((\u2011u;t)_\\u221e (u;s)_\\u221e). Moreover, the q\u2011expansion of F(t,s;u) has palindromic coefficients and satisfies a finite\u2011order linear recurrence; after removing the alternating signs the coefficients are non\u2011negative integers.",
     "domains": [
       "Pythagorean"
@@ -1180,7 +1180,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:24:54.047368+00:00",
     "title": "Generalized scalar factor for mixed modified Greaves\u2011Jing\u2011Zhu operators"
   },
@@ -3716,7 +3716,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Class-Uniformly Resolvable Designs for Powers of Two"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd442784",
     "description": "For any Latin square M of order n \u2265 5, the dimension of the second homology group of the clique complex of the strongly regular graph associated with M over any field F is exactly (n-1)^3 - I(M), where I(M) is the number of intercalates (2x2 Latin subsquares) in M.",
     "domains": [
       "Algebra",
@@ -3726,7 +3726,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27328v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T05:47:37.249707+00:00",
     "title": "Dimension of Second Clique Homology for Latin Square Graphs"
   },
@@ -4574,7 +4574,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diameter Concentration for High-Genus Triangulations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19ffaeae",
     "description": "For any prime $l \\equiv 3 \\pmod 4$ and any odd prime $p \\neq l$, the Legendre symbol $(l/p)$ equals 1 if and only if either ($p \\equiv 1 \\pmod 4$ and $p$ is a quadratic residue modulo $l$) or ($p \\equiv 3 \\pmod 4$ and $p$ is a quadratic nonresidue modulo $l$). This is equivalent to stating that $(l/p) = 1 \\iff (p \\equiv 1 \\pmod 4 \\land (p/l) = 1) \\lor (p \\equiv 3 \\pmod 4 \\land (p/l) = -1)$. This proposition is a key stepping stone in the paper for bounding the exceptional residue classes of the weighted fruit Diophantine equation.",
     "domains": [
       "Pythagorean"
@@ -4583,7 +4583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T06:31:51.361312+00:00",
     "title": "Legendre Symbol Characterization for Primes 3 mod 4"
   },
@@ -5184,7 +5184,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "09b2b1bc",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -5194,7 +5194,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
