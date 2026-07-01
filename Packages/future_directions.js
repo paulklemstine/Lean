@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45565356",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -345,7 +345,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Type Theory: Cubical Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8a7d0352",
     "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
     "domains": [
       "Physics",
@@ -356,7 +356,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432775+00:00",
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
@@ -2132,7 +2132,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Poset Size for Automorphism Group Z2 x Z2^n"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8a11317",
     "description": "For every prime power q \u2265 2, consider the fair mechanism given by uniformly sampling lines of the projective plane PG(2,q), where n = q\u00b2 + q + 1 is the number of points and \u2113 = q + 1 is the line size. The expected coverage time of this projective plane mechanism strictly exceeds that of the full model (uniform sampling of all \u2113-subsets of an n-element set). This generalizes the paper's Fano plane (q=2) counterexample to the Grunbaum\u2013Yaakobi conjecture and posits that projective plane line sets systematically yield slower fair mechanisms than the full model across all orders.",
     "domains": [
       "Pythagorean",
@@ -2142,7 +2142,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T22:13:18.479634+00:00",
     "title": "Projective Plane Coupon Mechanisms Dominate the Full Model"
   },
@@ -2656,7 +2656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0bd0cdee",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
@@ -2665,7 +2665,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T21:48:36.541820+00:00",
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
   },
@@ -3614,12 +3614,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The determinant of an \\( n \\times n \\) matrix with entries defined by \\( \\binom{\\ell + m - i - j + 2}{m - 1} \\) for \\( 1 \\leq i,j \\leq n \\) and \\( 2 \\leq m \\leq n \\) is identically equal to 1, as shown through a bijective correspondence between lattice paths and matrix permanents.",
+    "domains": [
+      "Cryptography",
+      "Bridges"
+    ],
+    "id": "fd_3008",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27763v1",
+    "status": "available",
+    "timestamp": "2026-07-01T01:01:53.020039+00:00",
+    "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3008",
+    "id": "fd_3009",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3634,7 +3649,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3648,7 +3663,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3663,7 +3678,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3678,7 +3693,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3693,7 +3708,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3708,7 +3723,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3722,7 +3737,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3736,7 +3751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3750,7 +3765,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3764,7 +3779,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3779,7 +3794,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3793,7 +3808,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3807,7 +3822,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3821,7 +3836,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3022",
+    "id": "fd_3023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3836,7 +3851,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3023",
+    "id": "fd_3024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3851,7 +3866,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3024",
+    "id": "fd_3025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3865,7 +3880,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3025",
+    "id": "fd_3026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3880,7 +3895,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3026",
+    "id": "fd_3027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3894,7 +3909,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3909,7 +3924,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3028",
+    "id": "fd_3029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -3923,7 +3938,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3029",
+    "id": "fd_3030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3937,7 +3952,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3030",
+    "id": "fd_3031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -3952,7 +3967,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3031",
+    "id": "fd_3032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3967,7 +3982,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3032",
+    "id": "fd_3033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -3982,7 +3997,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3033",
+    "id": "fd_3034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -3996,7 +4011,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3034",
+    "id": "fd_3035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4010,7 +4025,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3035",
+    "id": "fd_3036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4025,7 +4040,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3036",
+    "id": "fd_3037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4040,7 +4055,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3037",
+    "id": "fd_3038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4049,19 +4064,47 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Value of Near-Maximal Chain Covering Number for t=2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ae9dee2",
     "description": "This conjecture formalizes Theorem 1.1 of the paper: an effective version of Andr\u00e9's theorem for curves in $\\mathbb{A}^2(\\mathbb{C})$ where the coordinate degrees are distinct. It asserts that for a geometrically irreducible, non-special curve $V$ defined over a number field $L$, the Weil heights of complex multiplication (CM) points on $V$ are bounded by a term linear in the height of $V$, with an explicit coefficient $26 \\max\\{d_1, d_2\\}^3$ and an effectively computable constant $c_1$ depending only on the field degree and maximum coordinate degree.",
     "domains": [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3038",
+    "id": "fd_3039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T21:55:06.338968+00:00",
     "title": "Effective Andr\u00e9's Height Bound for Non-Equisetential Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every level-one spherical automorphic form on the upper half-plane X = SL(2, Z) \\ H can be written as the sum of a cusp form and a finite linear combination of Laurent coefficients of the standard Eisenstein series E(s; z).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3040",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27749v1",
+    "status": "available",
+    "timestamp": "2026-07-01T00:40:43.642727+00:00",
+    "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let \ud835\udcaa\u2082 be the class of overpartitions \u03bb = (\u03bb\u2081, \u03bb\u2082, \u2026, \u03bb_\u2113) where: (i) overlining is permitted only at parts in odd positions (\u03bb_i may be overlined only if i is odd), and (ii) the gap condition \u03bb_i \u2212 \u03bb_{i+1} \u2265 2 holds whenever i is even (with \u03bb_{\u2113+1} = 0). Then \ud835\udcaa\u2082 is a separable integer partition (SIP) class of modulus 2, and its multivariate generating function satisfies the identity: \u2211_{\u03bb \u2208 \ud835\udcaa\u2082} z^{a(\u03bb)} q^{|\u03bb|} = \u2211_{n=0}^{\u221e} q^{n\u00b2+n} (\u2212zq; q\u00b2)_n / (q\u00b2; q\u00b2)_n, where a(\u03bb) counts overlined parts. Setting z = 1 recovers the series side of Slater's identity (29), providing a combinatorial refinement via the SIP framework.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3041",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27702v1",
+    "status": "available",
+    "timestamp": "2026-07-01T01:03:19.331401+00:00",
+    "title": "Alternating-Position Overpartition Refinement of Slater's Identity (29)"
   },
   {
     "consumed_by_exp_id": "",
@@ -4093,7 +4136,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a925487",
     "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
     "domains": [
       "Algebra"
@@ -4102,7 +4145,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.987080+00:00",
     "title": "Frankl's Union-Closed Conjecture"
   },
@@ -4204,21 +4247,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erd\u0151s\u2013Straus Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Fourier Analysis on Finite Groups\n\nThis cycle established, for the cyclic group `Z/NZ`, the convolution theorem, the\nParseval/Plancherel identity with constant `N`, and the Donoho\u2013Stark support\nuncertainty principle `|supp f| \u00b7 |supp \\hat f| \u2265 N`. Analysis of the proofs\nisolated a clean stratification: the convolution theorem needs only that\ncharacters multiply, Parseval additionally needs character orthogonality, and the\nuncertainty principle needs neither \u2014 only that characters have modulus one\ntogether with Fourier inversion. The sharp cases of the uncertainty bound are\nexactly the subgroup indicators, where `|supp f| \u00b7 |supp \\hat f| = N` via the\nsubgroup\u2013annihilator duality. The following conjectures push these findings\noutward.\n\n## Conjecture 1 (Prime-order additive uncertainty / Tao's bound)\n\nFor a prime `p` and a nonzero function `f` on `Z/pZ`,\n`|supp f| + |supp \\hat f| \u2265 p + 1`, strictly stronger than the multiplicative\nDonoho\u2013Stark bound `|supp f| \u00b7 |supp \\hat f| \u2265 p` in this setting.\n\nThe key insight is that over a field of prime order the Fourier matrix has all\nits minors nonzero (a Chebotar\u00ebv-type nonvanishing of Vandermonde determinants at\nroots of unity), so no nonzero function can have both few nonzero values and few\nnonzero frequencies; the rigidity of prime order replaces the soft analytic bound\nby an exact additive one.\n\nWhy now? The multiplicative bound and the subgroup-equality analysis are in hand,\nand the equality cases vanish in prime order precisely because the only subgroups\nare trivial \u2014 this is exactly the regime where the additive strengthening should\nbecome provable from the determinantal nonvanishing, making prime order the\nnatural next milestone.\n\n## Conjecture 2 (Equality classification on general `Z/NZ`)\n\nEquality `|supp f| \u00b7 |supp \\hat f| = N` holds if and only if `f` is, up to a\nnonzero scalar, a translate and modulation of the indicator of a subgroup of\n`Z/NZ`; consequently the set of achievable equality sizes is exactly\n`{ (d, N/d) : d | N }`.\n\nThe key insight is that the two H\u00f6lder-type bounds underlying the uncertainty\nprinciple are simultaneously tight only when `f` is \"flat\" on its support and its\ntransform is \"flat\" on its support, and the only functions flat in both domains\nare the subgroup indicators dictated by the divisor lattice.\n\nWhy now? The proof here makes the two extremal inequalities explicit, so the\nequality case is reduced to characterising simultaneous equality in both \u2014 a\nfinite, structural problem about when an `L^1`\u2013`L^\u221e` H\u00f6lder step is saturated,\nwhich the present decomposition exposes directly.\n\n## Conjecture 3 (Uncertainty over arbitrary finite abelian groups)\n\nFor every finite abelian group `G` and nonzero `f : G \u2192 \u2102`,\n`|supp f| \u00b7 |supp \\hat f| \u2265 |G|`, with equality exactly for translated modulated\nsubgroup indicators, where the transform is taken with respect to the Pontryagin\ndual.\n\nThe key insight is that the entire argument depends on `G` only through three\nfacts \u2014 characters have modulus one, the dual group has the same cardinality as\n`G`, and Fourier inversion holds \u2014 all of which survive verbatim for any finite\nabelian group via its decomposition into cyclic factors.\n\nWhy now? The cyclic case is complete and its proof was deliberately written to use\nno special feature of `Z/NZ` beyond these three facts; the structure theorem for\nfinite abelian groups then reduces the general statement to a tensor product of\ncyclic transforms, so the extension is a matter of assembling existing pieces.\n\n## Conjecture 4 (Entropic uncertainty refinement)\n\nFor nonzero `f` with `\u2016f\u2016\u2082 = 1` on `Z/NZ`, the Shannon entropies of the\nprobability vectors `|f|\u00b2` and `|\\hat f|\u00b2 / N` satisfy `H(|f|\u00b2) + H(|\\hat f|\u00b2/N) \u2265\nlog N`, and this entropic inequality implies the support bound via the support-size\n\u2265 exp(entropy) estimate.\n\nThe key insight is that Parseval makes `|f|\u00b2` and `|\\hat f|\u00b2/N` genuine probability\ndistributions, and the uncertainty principle is the `0/\u221e`-R\u00e9nyi-entropy endpoint of\na whole family of entropic inequalities interpolated by the Hausdorff\u2013Young\nexponents.\n\nWhy now? With Parseval established at the exact constant `N`, both vectors are\nnormalised probability distributions on the nose, so the entropic formulation is\nnow well-posed and its weakest (support) instance is already proved \u2014 the natural\nnext step is the full Shannon-entropy case via Hausdorff\u2013Young.\n\n## Conjecture 5 (Spectral gap of cyclic convolution operators)\n\nFor a real nonnegative `f` on `Z/NZ` with `\u03a3 f = 1`, the convolution operator\n`g \u21a6 f \u22c6 g` has spectrum exactly `{ \\hat f(k) : k \u2208 Z/NZ }`, and its second-largest\neigenvalue modulus controls the mixing time of the associated random walk by\n`t_mix \u224d 1 / (1 - max_{k\u22600} |\\hat f(k)|)`.\n\nThe key insight is that the convolution theorem diagonalises every convolution\noperator in the Fourier basis simultaneously, turning a dynamical mixing question\ninto the pointwise behaviour of a single function `\\hat f` on the dual group.\n\nWhy now? The convolution theorem proved here is exactly the diagonalisation\nstatement, so eigenvalues are immediately identified with Fourier coefficients;\nquantifying mixing is then a clean analytic estimate on `\\hat f`, connecting this\nfinite-Fourier development to current work on random walks and expander mixing.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_3040",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "83afa678",
-    "status": "available",
-    "timestamp": "2026-07-01T00:59:03.272226+00:00",
-    "title": "This cycle established, for the cyclic group `Z/NZ`, the convolution theorem, th"
   },
   {
     "consumed_by_exp_id": "",
@@ -4456,7 +4484,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0981e8d6",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -4466,7 +4494,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -4831,7 +4859,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Strategy Mining from Deep Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "adbfcd0f",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domains": [
       "Geometry",
@@ -4841,7 +4869,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.310599+00:00",
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },
