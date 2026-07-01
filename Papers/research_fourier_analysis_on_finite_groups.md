@@ -1,444 +1,213 @@
-# Fourier Analysis on Finite Cyclic Groups: Convolution, Plancherel, and the Spectral Formula for Additive Energy
-
-**Author:** Aristotle
-
-**Date:** 2026-06-26
-
-**Domain:** Algebra / Additive Combinatorics (Fourier analysis on finite abelian groups)
-
----
+# Fourier Analysis on Finite Cyclic Groups: Convolution, Parseval, and the Donoho–Stark Uncertainty Principle
 
 ## Abstract
 
-We develop a self-contained toolkit for discrete Fourier analysis on the cyclic
-group $\mathbb{Z}/N\mathbb{Z}$ and apply it to additive combinatorics. Working with
-the standard additive character $e(x) = \exp(2\pi i x/N)$, we establish character
-orthogonality, the convolution theorem $\widehat{f \star g} = \widehat{f}\cdot
-\widehat{g}$, and the Parseval/Plancherel identities. We then connect this analytic
-machinery to the combinatorial notion of *additive energy* $E[A]$ of a set
-$A \subseteq \mathbb{Z}/N\mathbb{Z}$, proving the central spectral identity
+We develop the discrete Fourier transform on the finite cyclic group $\mathbb{Z}/N\mathbb{Z}$ from the viewpoint of the representation theory of abelian groups, and prove its three fundamental structural theorems in fully explicit, self-contained form. First, the **convolution theorem**: the transform intertwines cyclic convolution with pointwise multiplication, $\widehat{f\star g} = \hat f\cdot\hat g$. Second, the **Parseval/Plancherel identity**: the transform is an isometry up to the scaling constant $N$, namely $\sum_k |\hat f(k)|^2 = N\sum_j |f(j)|^2$. Third, the **Donoho–Stark uncertainty principle**: for every nonzero $f$, the sizes of the supports of $f$ and $\hat f$ satisfy $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| \ge N$. A central contribution is a clean *stratification* of the hypotheses: the convolution theorem requires only that characters are multiplicative; Parseval additionally requires character orthogonality; and the uncertainty principle requires neither, resting solely on the facts that characters have modulus one and that the transform is invertible. We isolate the two Hölder-type "mixed" bounds $\|\hat f\|_\infty \le |\operatorname{supp} f|\cdot\|f\|_\infty$ and $\|f\|_\infty \le N^{-1}|\operatorname{supp}\hat f|\cdot\|\hat f\|_\infty$ as the analytic engine of the uncertainty bound, and show that the extremal signals are the subgroup indicators, for which the bound is met with equality. We close with three conjectures extending the results to prime order (an additive strengthening), to a complete equality classification, and to arbitrary finite abelian groups.
 
-$$E[A] \;=\; \frac{1}{N}\sum_{k}\big\lVert\widehat{\mathbf 1_A}(k)\big\rVert^4,$$
-
-together with its immediate corollary $E[A] \ge |A|^4/N$. The development isolates
-the representation-counting role of self-convolution, namely
-$(\mathbf 1_A \star \mathbf 1_A)(a)$ equals the number of ordered pairs in
-$A \times A$ summing to $a$, and shows how Plancherel converts the $\ell^2$ norm of
-that count into the fourth moment of the spectrum. These results constitute the
-Fourier-analytic backbone of Roth-type theorems and of the
-Balog–Szemerédi–Gowers theorem. We also record proof sketches faithful to a fully
-formalized development, discuss algorithmic content, and outline several concrete
-directions for extension, including a general finite-abelian-group version and an
-equality characterization of the energy lower bound.
+**Keywords.** Discrete Fourier transform, cyclic group, additive character, convolution theorem, Parseval identity, Plancherel, uncertainty principle, Donoho–Stark, support, representation theory.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
-
-Additive combinatorics studies the interaction between the additive structure of a
-set and its size. A central organizing quantity is the **additive energy** of a
-finite set $A$ in an abelian group, defined as the number of additive quadruples
-
-$$E[A] \;=\; \#\{(a,b,c,d) \in A^4 : a + b = c + d\}.$$
-
-Additive energy interpolates between two extremes. A set with the structure of an
-arithmetic progression maximizes energy (of order $|A|^3$), whereas a generic
-"random" set minimizes it (of order $|A|^4/N$ in $\mathbb{Z}/N\mathbb{Z}$). The
-dichotomy *structure vs. randomness*, which animates much of modern combinatorial
-number theory, is measured precisely by where between these extremes a given set
-falls.
-
-The most powerful lens for analyzing additive energy is **Fourier analysis on
-finite abelian groups**. The discrete Fourier transform diagonalizes convolution,
-and additive energy is, at heart, an $\ell^2$ quantity built from a self-convolution.
-The purpose of this paper is to make that connection completely explicit and
-rigorous on the cyclic group $\mathbb{Z}/N\mathbb{Z}$, deriving the spectral
-formula for additive energy from first principles.
-
-### 1.2 Contributions
-
-We prove, for every $N \ge 1$ and every function or set on $\mathbb{Z}/N\mathbb{Z}$:
-
-1. **Character orthogonality** in the sharp form
-   $\sum_i e(t\cdot i) = N\cdot[\![t=0]\!]$ (`stdAddChar_sum_mul`).
-2. **The convolution theorem**
-   $\widehat{f \star g}(k) = \widehat{f}(k)\,\widehat{g}(k)$ (`dft_conv`).
-3. **Parseval's identity** in sesquilinear form and **Plancherel's identity** in
-   real $\ell^2$-norm form (`parseval`, `plancherel`).
-4. **The representation-counting lemma**
-   $(\mathbf 1_A \star \mathbf 1_A)(a) = r_A(a)$ (`conv_ind`) and the energy
-   decomposition $E[A] = \sum_a r_A(a)^2$ (`addEnergy_eq_sum_count_sq`).
-5. **The spectral formula for additive energy**
-   $E[A] = N^{-1}\sum_k \lVert\widehat{\mathbf 1_A}(k)\rVert^4$ (`addEnergy_eq_dft`)
-   and the corollary $E[A] \ge |A|^4/N$ (`card_pow_four_div_le_addEnergy`).
-
-All results are stated over $\mathbb{C}$ and hold for arbitrary complex-valued
-functions where applicable; the additive-energy results specialize to indicator
-functions of finite sets.
-
-### 1.3 Conventions
-
-Throughout, $N \ge 1$ is a fixed positive integer and we write $G = \mathbb{Z}/N\mathbb{Z}$.
-We use the **standard additive character**
-$$e\colon G \to \mathbb{C}, \qquad e(x) = \exp(2\pi i\, \tilde{x}/N),$$
-where $\tilde{x} \in \{0,\dots,N-1\}$ is the canonical representative of $x$. It
-satisfies $e(x+y) = e(x)e(y)$, $|e(x)| = 1$, and $\overline{e(x)} = e(-x)$. The
-discrete Fourier transform uses the convention
-$$\widehat{f}(k) \;=\; \sum_{j \in G} e(-jk)\, f(j),$$
-which places the normalizing factor $N$ on the inverse transform. As a consequence,
-Plancherel carries the factor $N$ on the spectral side, and the energy identity
-carries the reciprocal factor $1/N$. All sums over an unqualified index range over
-the entire group $G$.
-
----
-
-## 2. Preliminaries: characters and orthogonality
-
-### 2.1 The standard additive character
-
-The characters of $G = \mathbb{Z}/N\mathbb{Z}$ are exactly the maps $x \mapsto e(kx)$
-for $k \in G$; these are the irreducible unitary representations of the (abelian)
-group, and they form an orthogonal basis of the space $\mathbb{C}^G$ of complex
-functions on $G$. The single character $e$ generates all of them by the harmonic
-$x \mapsto e(kx) = e(x)^k$.
-
-**Lemma 2.1 (conjugation of the character; `conj_stdAddChar`).**
-For all $x \in G$,
-$$\overline{e(x)} \;=\; e(-x).$$
-
-*Proof sketch.* Since $e$ is a homomorphism into the unit circle, $e(x)$ has modulus
-$1$, so its complex conjugate equals its inverse. The inverse of $e(x)$ is $e(-x)$
-because $e(x)e(-x) = e(0) = 1$. Formally one combines `AddChar.map_neg_eq_inv`
-(the value at $-x$ is the multiplicative inverse) with the fact that for a
-unit-modulus complex number the inverse equals the conjugate. $\square$
-
-### 2.2 Orthogonality
+Fourier analysis exchanges two descriptions of a signal: a *spatial* (or temporal) description that records the value of the signal at each point, and a *spectral* description that records its content in each pure frequency. On a finite cyclic group these two descriptions are related by a linear isomorphism — the discrete Fourier transform (DFT) — that is at once elementary enough to be written down completely and rich enough to exhibit every phenomenon of harmonic analysis in exact, finite form.
 
-The cornerstone of all finite Fourier analysis is the cancellation of a nontrivial
-character summed over the whole group.
-
-**Lemma 2.2 (character orthogonality; `stdAddChar_sum_mul`).**
-For every $t \in G$,
-$$\sum_{i \in G} e(t\cdot i) \;=\; \begin{cases} N, & t = 0, \\ 0, & t \neq 0.\end{cases}$$
-
-*Proof sketch.* If $t = 0$ then every summand is $e(0) = 1$ and the sum is the
-cardinality $N$ of $G$. If $t \neq 0$, the map $i \mapsto e(t\cdot i)$ is the
-mul-shift of the primitive character $e$ by $t$, which is again a *nontrivial*
-character because $e$ is primitive (this is `ZMod.isPrimitive_stdAddChar`). A
-nontrivial character sums to zero over a finite group: writing $S = \sum_i \chi(i)$
-for a character $\chi \neq 1$ and choosing $i_0$ with $\chi(i_0) \neq 1$, the
-substitution $i \mapsto i + i_0$ gives $\chi(i_0) S = S$, forcing $S = 0$. $\square$
-
-This single lemma is the source of every subsequent cancellation: Parseval, the
-spectral collapse to a fourth moment, and the isolation of the $k = 0$ main term
-all trace back to Lemma 2.2.
-
----
+This paper presents the three pillars of that theory. We adopt the perspective that the DFT is the decomposition of a function into the *additive characters* of the group — the one-dimensional unitary representations — and we make explicit exactly which property of characters powers each result. The payoff of this bookkeeping is conceptual: it reveals that the celebrated support uncertainty principle of Donoho and Stark is, at heart, weaker in its hypotheses than the more familiar convolution and Parseval theorems, needing only that characters are unimodular and that inversion holds.
 
-## 3. Convolution and the convolution theorem
+Our exposition is self-contained. All definitions are stated inline, and every theorem is accompanied by a complete proof sketch that a reader can reconstruct from the document alone.
 
-### 3.1 Definitions
+## 2. Setup and definitions
 
-**Definition 3.1 (indicator; `ind`).** For a finite subset $s \subseteq G$, the
-complex indicator function is
-$$\mathbf 1_s(x) \;=\; \begin{cases} 1, & x \in s, \\ 0, & x \notin s.\end{cases}$$
+Throughout, fix an integer $N \ge 1$ and work over the finite cyclic group $G = \mathbb{Z}/N\mathbb{Z}$, whose elements are the residues $\{0,1,\dots,N-1\}$ under addition modulo $N$. A **signal** is a function $f\colon \mathbb{Z}/N\mathbb{Z}\to\mathbb{C}$. The set of all signals is an $N$-dimensional complex vector space.
 
-**Definition 3.2 (cyclic convolution; `conv`).** For $f, g\colon G \to \mathbb{C}$,
-$$(f \star g)(x) \;=\; \sum_{y \in G} f(y)\, g(x - y).$$
+### 2.1 Characters
 
-Convolution is commutative and associative, and the indicator of $\{0\}$ is its
-identity. Its significance here is that it is diagonalized by the Fourier transform.
+An **additive character** of $\mathbb{Z}/N\mathbb{Z}$ is a homomorphism $\chi$ from the additive group into the multiplicative group of nonzero complex numbers; equivalently, a function satisfying $\chi(a+b) = \chi(a)\chi(b)$ for all $a,b$. We fix the **standard character**
 
-### 3.2 The convolution theorem
+$$\chi(m) = e^{2\pi i m/N},$$
 
-**Theorem 3.3 (convolution theorem; `dft_conv`).**
-For all $f, g\colon G \to \mathbb{C}$ and all $k \in G$,
-$$\widehat{(f \star g)}(k) \;=\; \widehat{f}(k)\,\widehat{g}(k).$$
+which is *primitive*, meaning it is nontrivial on every nonzero element. Three properties of $\chi$ will be used, and we name them to track their role:
 
-*Proof sketch.* Expand the transform of the convolution by its definition:
-$$\widehat{(f \star g)}(k) = \sum_{x}\Big(\sum_{y} f(y)\,g(x-y)\Big) e(-kx).$$
-Fix $y$ and substitute $x = y + z$ in the outer sum; because $z \mapsto y + z$ is a
-bijection of $G$, the sum is unchanged in range. Using the multiplicativity
-$e(-k x) = e(-k y)\,e(-k z)$ we factor the double sum:
-$$\widehat{(f \star g)}(k) = \sum_y f(y)\,e(-ky) \sum_z g(z)\,e(-kz) = \widehat{f}(k)\,\widehat{g}(k).$$
-The only non-formal step is the reindexing, which is justified by invariance of a
-full-group sum under translation (`Equiv.sum_comp` with `Equiv.addRight y`). $\square$
+- **(C1) Unimodularity.** $|\chi(m)| = 1$ for all $m$.
+- **(C2) Multiplicativity.** $\chi(a+b) = \chi(a)\chi(b)$; in particular $\chi(0)=1$ and $\chi(-m) = \overline{\chi(m)}$.
+- **(C3) Orthogonality.** For each $m$, $\displaystyle\sum_{k=0}^{N-1}\chi(mk) = \begin{cases} N, & m = 0,\\ 0, & m\ne 0.\end{cases}$
 
-The convolution theorem is the workhorse of the entire development: it is what lets
-us replace the (analytically awkward) self-convolution $\mathbf 1_A \star
-\mathbf 1_A$ by the (algebraically trivial) pointwise square $\widehat{\mathbf 1_A}^2$.
+Property (C3) follows from primitivity: for $m\ne 0$ the value $\chi(m)$ is a root of unity different from $1$, and the finite geometric series of its powers sums to zero.
 
----
+### 2.2 The discrete Fourier transform
 
-## 4. Parseval and Plancherel
-
-### 4.1 Parseval (sesquilinear form)
-
-**Theorem 4.1 (Parseval; `parseval`).**
-For all $f, g\colon G \to \mathbb{C}$,
-$$\sum_{k} \widehat{f}(k)\,\overline{\widehat{g}(k)} \;=\; N\sum_{j} f(j)\,\overline{g(j)}.$$
-
-*Proof sketch.* Expand both transforms:
-$$\widehat{f}(k) = \sum_j f(j)\,e(-jk), \qquad \overline{\widehat{g}(k)} = \sum_\ell \overline{g(\ell)}\,e(\ell k),$$
-where the second equality uses Lemma 2.1, $\overline{e(-\ell k)} = e(\ell k)$.
-Multiplying and summing over $k$,
-$$\sum_k \widehat f(k)\,\overline{\widehat g(k)} = \sum_j \sum_\ell f(j)\,\overline{g(\ell)} \sum_k e\big((\ell - j)k\big).$$
-By orthogonality (Lemma 2.2) the inner $k$-sum equals $N$ when $\ell = j$ and $0$
-otherwise. Collapsing the double sum to its diagonal $\ell = j$ yields
-$N\sum_j f(j)\,\overline{g(j)}$. $\square$
+The **discrete Fourier transform** of a signal $f$ is the signal $\hat f = \mathcal{F}f$ defined by
 
-### 4.2 Plancherel (norm form)
+$$\hat f(k) = \sum_{j=0}^{N-1} f(j)\,\overline{\chi(jk)} = \sum_{j=0}^{N-1} f(j)\,\chi(-jk).$$
 
-**Theorem 4.2 (Plancherel; `plancherel`).**
-For all $f\colon G \to \mathbb{C}$,
-$$\sum_{k} \big\lVert\widehat{f}(k)\big\rVert^2 \;=\; N\sum_{j} \big\lVert f(j)\big\rVert^2.$$
-
-*Proof sketch.* Set $g = f$ in Theorem 4.1. The left-hand side becomes
-$\sum_k \widehat f(k)\overline{\widehat f(k)} = \sum_k \lVert\widehat f(k)\rVert^2$
-and the right-hand side becomes $N\sum_j \lVert f(j)\rVert^2$, using
-$z\,\overline z = \lVert z\rVert^2$. Taking real parts (both sides are already real
-and nonnegative) gives the stated identity over $\mathbb{R}$. $\square$
-
-Plancherel says the Fourier transform is, up to the scalar $\sqrt N$, an isometry of
-$\mathbb{C}^G$ with the Euclidean inner product. This isometry is precisely what
-will let us move the energy computation into the spectral domain without loss.
-
----
-
-## 5. Additive energy via Fourier
-
-### 5.1 Representation counts
-
-**Definition 5.1 (representation count; `count`).** For a finite set $s \subseteq G$
-and $a \in G$,
-$$r_s(a) \;=\; \#\{(x,y) \in s \times s : x + y = a\}.$$
-
-**Lemma 5.2 (self-convolution counts representations; `conv_ind`).**
-For all finite $s \subseteq G$ and $a \in G$,
-$$(\mathbf 1_s \star \mathbf 1_s)(a) \;=\; r_s(a).$$
-
-*Proof sketch.* By definition
-$(\mathbf 1_s \star \mathbf 1_s)(a) = \sum_y \mathbf 1_s(y)\,\mathbf 1_s(a - y)$.
-Each summand is $1$ exactly when $y \in s$ and $a - y \in s$, and $0$ otherwise.
-The map $y \mapsto (y, a-y)$ is a bijection between $\{y : y \in s,\ a - y \in s\}$
-and $\{(x,y) \in s \times s : x + y = a\}$, so the sum counts precisely $r_s(a)$.
-Formally one rewrites the filtered product set as the image of this injection and
-applies `Finset.card_image_of_injective`. $\square$
-
-### 5.2 Energy as a sum of squared counts
-
-**Lemma 5.3 (energy decomposition; `addEnergy_eq_sum_count_sq`).**
-For all finite $s \subseteq G$,
-$$E[s] \;=\; \sum_{a \in G} r_s(a)^2.$$
-
-*Proof sketch.* The additive energy counts quadruples $(a,b,c,d) \in s^4$ with
-$a + b = c + d$. Partition this set according to the common value $t = a + b = c+d$.
-For each fixed $t$, the choices of $(a,b)$ with $a+b=t$ number $r_s(t)$, and
-independently the choices of $(c,d)$ with $c+d=t$ also number $r_s(t)$, giving
-$r_s(t)^2$ quadruples. Summing over $t$ yields $\sum_t r_s(t)^2$. $\square$
-
-### 5.3 The spectral formula
-
-**Theorem 5.4 (spectral formula for additive energy; `addEnergy_eq_dft`).**
-For all finite $A \subseteq G$,
-$$E[A] \;=\; \frac{1}{N}\sum_{k} \big\lVert\widehat{\mathbf 1_A}(k)\big\rVert^4.$$
-
-*Proof sketch.* Combine the previous results in sequence:
-$$E[A] \overset{\text{(5.3)}}{=} \sum_a r_A(a)^2 \overset{\text{(5.2)}}{=} \sum_a \big\lVert(\mathbf 1_A \star \mathbf 1_A)(a)\big\rVert^2.$$
-(The values $r_A(a)$ are nonnegative reals, so squaring equals squaring the
-modulus.) Apply Plancherel (Theorem 4.2) to the function
-$h = \mathbf 1_A \star \mathbf 1_A$:
-$$\sum_a \lVert h(a)\rVert^2 = \frac{1}{N}\sum_k \lVert\widehat h(k)\rVert^2.$$
-By the convolution theorem (Theorem 3.3),
-$\widehat h(k) = \widehat{\mathbf 1_A}(k)^2$, whence
-$\lVert\widehat h(k)\rVert^2 = \lVert\widehat{\mathbf 1_A}(k)\rVert^4$. Substituting,
-$$E[A] = \frac1N \sum_k \lVert\widehat{\mathbf 1_A}(k)\rVert^4. \qquad\square$$
-
-Note the placement of the constant: because the chosen DFT convention puts the
-normalizing $N$ on the inverse transform, Plancherel reads "$\sum$ of squared
-spectrum $= N\cdot \sum$ of squared values," equivalently "$\sum$ of squared values
-$= N^{-1}\cdot\sum$ of squared spectrum." This is the origin of the $1/N$ in the
-energy identity.
-
-### 5.4 The energy lower bound
-
-**Corollary 5.5 (energy lower bound; `card_pow_four_div_le_addEnergy`).**
-For all finite $A \subseteq G$,
-$$E[A] \;\ge\; \frac{|A|^4}{N}.$$
-
-*Proof sketch.* In the spectral sum of Theorem 5.4 every term is a nonnegative real.
-Retaining only the $k = 0$ term gives a lower bound. The zeroth Fourier coefficient
-is
-$$\widehat{\mathbf 1_A}(0) = \sum_j e(0)\,\mathbf 1_A(j) = \sum_j \mathbf 1_A(j) = |A|,$$
-so $\lVert\widehat{\mathbf 1_A}(0)\rVert^4 = |A|^4$ and
-$E[A] \ge N^{-1}|A|^4$. Formally this is `Finset.single_le_sum` applied to the
-nonnegative summands. $\square$
-
-The bound is sharp: equality forces all higher-frequency terms to vanish, which
-(over $\mathbb{Z}/N\mathbb{Z}$ with $N$ prime) happens precisely when $A$ is the
-empty set or the whole group, and in general when $A$ is a coset of a subgroup
-(see Future Directions, C5).
-
----
-
-### 5.5 A worked example
-
-It is illuminating to see every identity meet in a single concrete computation.
-Take $N = 7$ and $A = \{0, 1, 2, 4\}$, so $|A| = 4$.
-
-*Representation counts.* Counting ordered pairs $(x,y) \in A \times A$ with
-$x + y \equiv a \pmod 7$ gives
-$$r_A(0)=1,\ r_A(1)=3,\ r_A(2)=3,\ r_A(3)=2,\ r_A(4)=3,\ r_A(5)=2,\ r_A(6)=2.$$
-(For instance $r_A(1) = 3$ because $1 = 0+1 = 1+0 = 4+4$, the last using $4+4=8\equiv1$.)
-The counts sum to $\sum_a r_A(a) = 16 = |A|^2$, as they must, since every ordered
-pair has *some* sum.
-
-*Energy by counts.* By Lemma 5.3,
-$$E[A] = \sum_a r_A(a)^2 = 1 + 9 + 9 + 4 + 9 + 4 + 4 = 40.$$
-
-*Energy by brute force.* Direct enumeration of quadruples $(a,b,c,d) \in A^4$ with
-$a+b \equiv c+d$ also yields $40$, confirming Lemma 5.3 on the nose.
-
-*Energy by spectrum.* The zeroth Fourier coefficient is
-$\widehat{\mathbf 1_A}(0) = |A| = 4$, contributing $\tfrac17\cdot 4^4 = \tfrac{256}{7}
-\approx 36.57$ — already most of the energy. The remaining six frequencies
-$k = 1, \dots, 6$ supply the balance, and the total
-$\tfrac17\sum_k |\widehat{\mathbf 1_A}(k)|^4$ comes to exactly $40$, matching the
-combinatorial count and confirming Theorem 5.4.
-
-*Lower bound.* Corollary 5.5 predicts $E[A] \ge |A|^4/N = 256/7 \approx 36.57$, and
-indeed $40 \ge 36.57$. The small gap $40 - 256/7 = 24/7$ is exactly the contribution
-of the nonzero frequencies, quantifying how far $A$ departs from being spectrally
-flat.
-
-*Structure vs. randomness.* For comparison, in $\mathbb{Z}/11\mathbb{Z}$ the
-arithmetic progression $\{0,1,2,3,4\}$ has energy $85$, whereas the spread-out set
-$\{0,1,3,7,9\}$ of the same size has energy $69$; both exceed the common lower bound
-$5^4/11 \approx 56.8$, but the progression — the more additively structured set — sits
-further above it. The excess over $|A|^4/N$ is precisely the mass of the nonzero
-spectrum, making the spectral formula a quantitative meter of additive structure.
-
-## 6. Algorithmic content
-
-The formal results translate directly into algorithms whose correctness is
-guaranteed by the theorems above.
-
-### 6.1 Direct vs. spectral additive energy
-
-The naive computation of $E[A]$ enumerates additive quadruples and costs
-$O(|A|^4)$ time, or $O(N^2)$ via the representation-count decomposition
-$E[A] = \sum_a r_A(a)^2$ (compute all $r_A(a)$ by an $O(N^2)$ double loop, then
-sum their squares in $O(N)$). The spectral formula offers an asymptotically faster
-route: compute $\widehat{\mathbf 1_A}$ by a Fast Fourier Transform in
-$O(N \log N)$, then evaluate $N^{-1}\sum_k |\widehat{\mathbf 1_A}(k)|^4$ in $O(N)$.
-Theorem 5.4 certifies that the two procedures return the same value.
-
-### 6.2 Spectral convolution
-
-The convolution theorem yields the standard FFT-based convolution: to compute
-$f \star g$, transform both inputs, multiply pointwise, and invert. This reduces
-the cost from $O(N^2)$ to $O(N\log N)$ and is the computational reason convolution
-is ubiquitous in signal processing. Lemma 5.2 then identifies the self-convolution
-of an indicator with its representation function, so a single FFT yields all the
-counts $r_A(a)$ at once.
-
----
-
-## 7. Applications
-
-### 7.1 Roth's theorem and three-term progressions
-
-The number of three-term arithmetic progressions $x,\ x+d,\ x+2d$ contained in
-$A \subseteq \mathbb{Z}/N\mathbb{Z}$ (with $N$ odd) admits a spectral expression
-$N^{-1}\sum_k \widehat{\mathbf 1_A}(k)^2\,\widehat{\mathbf 1_A}(-2k)$, derived from
-the convolution theorem by a linear change of variables. The $k = 0$ term is the
-expected main term $|A|^3/N$; control of the remaining terms (large vs. small
-Fourier coefficients) is the engine of the density-increment proof of Roth's
-theorem. The convolution theorem (Theorem 3.3) and Plancherel (Theorem 4.2)
-established here are exactly the ingredients that proof requires.
-
-### 7.2 Balog–Szemerédi–Gowers
-
-Additive energy is the precise quantity governed by the Balog–Szemerédi–Gowers
-theorem, which converts "large energy" into "a large structured subset." The
-spectral formula (Theorem 5.4) and the lower bound (Corollary 5.5) are the standard
-tools for computing and bounding energy in applications of this theorem, and the
-identity $E[A] = N^{-1}\sum_k|\widehat{\mathbf 1_A}(k)|^4$ makes the structure-vs-
-randomness contest explicit as a competition between the $k=0$ term and the rest.
-
-### 7.3 Signal processing and beyond
-
-Outside number theory, the same three pillars power image filtering, audio
-compression, error-correcting codes, and crystallography. The convolution theorem
-is the basis of fast filtering; Plancherel is conservation of energy across the
-spectrum; and character orthogonality is the reason distinct frequencies can be
-separated without interference.
-
----
-
-## 8. Discussion
-
-The development is deliberately minimal: a single orthogonality lemma drives
-everything. From it, Parseval follows by a diagonal collapse, Plancherel by
-specialization, and the energy identity by composing Plancherel with the
-convolution theorem applied to a self-convolution. The chain
-$$E[A] = \sum_a r_A(a)^2 = \sum_a |(\mathbf 1_A\star\mathbf 1_A)(a)|^2 = \tfrac1N\sum_k|\widehat{\mathbf 1_A}(k)^2|^2 = \tfrac1N\sum_k|\widehat{\mathbf 1_A}(k)|^4$$
-is short, but each link is a genuine theorem, and packaging them together yields a
-reusable bridge between the combinatorial and analytic descriptions of a set.
-
-A subtlety worth emphasizing is normalization. Different sources put the factor $N$
-in different places (on the forward transform, the inverse transform, or split as
-$\sqrt N$ on each). The convention used here places $N$ on the inverse transform,
-which makes the forward transform purely a sum (convenient for the combinatorics)
-at the cost of a $1/N$ in the energy identity. All identities are internally
-consistent with this choice; a reader translating to another convention must track
-the constant accordingly.
-
----
-
-## 9. Future directions
-
-The following conjectures are concrete, falsifiable targets for follow-up work.
-
-**C1. Energy lower bound via the sumset.** $E[A] \ge |A|^4/|A+A|$, refining
-Corollary 5.5 since $|A+A| \le N$. This follows from Cauchy–Schwarz applied to
-$\sum_{t \in A+A} r_A(t) = |A|^2$ together with $\sum_t r_A(t)^2 = E[A]$, and is a
-purely combinatorial companion to the Fourier bound.
-
-**C2. Spectral count of 3-APs.** For $A \subseteq \mathbb{Z}/N\mathbb{Z}$ with
-$\gcd(2,N)=1$, the number of three-term progressions equals
-$N^{-1}\sum_k \widehat{\mathbf 1_A}(k)^2\,\widehat{\mathbf 1_A}(-2k)$ (with suitable
-conjugation), with $k=0$ main term $|A|^3/N$. Derive it from the convolution
-theorem plus the substitution $y \mapsto 2y$.
-
-**C3. Convolution $\ell^2$ identity (Young-type).** The sharp identity
-$\sum_a \lVert(f\star g)(a)\rVert^2 = N^{-1}\sum_k \lVert\widehat f(k)\rVert^2
-\lVert\widehat g(k)\rVert^2$ follows directly from Theorems 3.3 and 4.2 and
-generalizes Theorem 5.4 (take $f=g=\mathbf 1_A$); the related inequality
-$\sum_a \lVert(f\star g)(a)\rVert^2 \le (\sum_a \lVert f(a)\rVert)^2
-(\sum_a \lVert g(a)\rVert^2)$ is a discrete Young inequality.
-
-**C4. Arbitrary finite abelian groups.** Re-prove Theorem 5.4 over a general finite
-abelian group $G$ using $\mathrm{AddChar}(G,\mathbb{C})$ and the built-in
-orthogonality, with $N := |G|$. The identity should hold verbatim; the only new
-ingredient is a basis-free convolution theorem for character-Fourier transforms.
-
-**C5. Equality characterization.** $E[A] = |A|^4/N$ if and only if $\widehat{\mathbf 1_A}$
-is supported only at $k=0$, i.e. $\mathbf 1_A$ is constant. Over prime $N$ this forces
-$A \in \{\varnothing, G\}$; for composite $N$ it classifies the equality sets as
-cosets of subgroups.
-
----
+It is a linear isomorphism of the space of signals, with **inverse** (Fourier inversion)
+
+$$f(j) = \frac{1}{N}\sum_{k=0}^{N-1} \hat f(k)\,\chi(kj).$$
+
+Inversion is itself a consequence of orthogonality (C3): substituting the definition of $\hat f$ into the right-hand side and interchanging the order of summation collapses the inner sum to $N$ exactly when the summation index matches $j$.
+
+### 2.3 Support and norms
+
+The **support** of $f$ is the finite set of points where it is nonzero,
+
+$$\operatorname{supp} f = \{\, j \in \mathbb{Z}/N\mathbb{Z} : f(j)\ne 0 \,\},$$
+
+and $|\operatorname{supp} f|$ denotes its cardinality. We use three norms:
+
+- the **$L^1$ norm** $\displaystyle \|f\|_1 = \sum_{j} |f(j)|$;
+- the **$L^2$ norm** $\displaystyle \|f\|_2 = \Big(\sum_j |f(j)|^2\Big)^{1/2}$;
+- the **sup-norm** $\displaystyle \|f\|_\infty = \max_{j}|f(j)|$, the maximum of $|f(j)|$ over the (nonempty) group.
+
+Because $\mathbb{Z}/N\mathbb{Z}$ is finite and nonempty, the maximum defining $\|f\|_\infty$ is attained, and $\|f\|_\infty > 0$ if and only if $f\ne 0$.
+
+## 3. Elementary norm estimates
+
+We begin with the basic inequalities that will drive everything. These are the analytic content of the paper; each is elementary but each is essential.
+
+**Lemma 3.1 (Sup-norm dominates values).** For every signal $f$ and every point $j$, $|f(j)| \le \|f\|_\infty$. Moreover $\|f\|_\infty \ge 0$, with $\|f\|_\infty > 0$ precisely when $f\ne 0$.
+
+*Proof.* The value $|f(j)|$ is one of the finitely many quantities over which the maximum is taken, so it is bounded by that maximum. Nonnegativity follows since each $|f(j)|\ge 0$. If $f\ne 0$ then some $|f(j_0)| > 0$, forcing the maximum to be positive; conversely if $f=0$ all values vanish. $\square$
+
+**Lemma 3.2 ($L^1$ bound on Fourier coefficients).** For every $f$ and every frequency $k$,
+
+$$|\hat f(k)| \le \|f\|_1 = \sum_j |f(j)|.$$
+
+*Proof.* By the triangle inequality, $|\hat f(k)| = \big|\sum_j f(j)\chi(-jk)\big| \le \sum_j |f(j)|\,|\chi(-jk)|$. By unimodularity (C1), $|\chi(-jk)| = 1$, so the right side is $\sum_j |f(j)| = \|f\|_1$. $\square$
+
+**Lemma 3.3 (Dual $L^1$ bound from inversion).** For every $f$ and every point $j$,
+
+$$|f(j)| \le \frac{1}{N}\sum_k |\hat f(k)| = \frac{1}{N}\,\|\hat f\|_1.$$
+
+*Proof.* Apply the inversion formula $f(j) = N^{-1}\sum_k \hat f(k)\chi(kj)$, take absolute values, and use the triangle inequality together with $|\chi(kj)| = 1$ from (C1). $\square$
+
+**Lemma 3.4 ($L^1 \le$ support $\times$ sup-norm).** For every $f$,
+
+$$\|f\|_1 = \sum_j |f(j)| \le |\operatorname{supp} f|\cdot\|f\|_\infty.$$
+
+*Proof.* Only points of the support contribute to the sum, since the summand vanishes off the support. Restricting to $\operatorname{supp} f$ and bounding each of the $|\operatorname{supp} f|$ terms by $\|f\|_\infty$ (Lemma 3.1) gives the claim. $\square$
+
+## 4. The convolution theorem
+
+**Definition 4.1 (Cyclic convolution).** For signals $f, g$, their **convolution** $f\star g$ is
+
+$$(f\star g)(x) = \sum_{y=0}^{N-1} f(y)\,g(x - y),$$
+
+with all arithmetic in $\mathbb{Z}/N\mathbb{Z}$.
+
+**Theorem 4.2 (Convolution theorem).** For all signals $f, g$ and every frequency $k$,
+
+$$\widehat{f\star g}(k) = \hat f(k)\cdot\hat g(k).$$
+
+*Proof sketch.* Expand
+$$\widehat{f\star g}(k) = \sum_x \chi(-xk)\sum_y f(y)\,g(x-y) = \sum_y f(y)\sum_x \chi(-xk)\,g(x-y),$$
+by interchanging the two finite sums. In the inner sum substitute $z = x - y$; the map $x\mapsto x - y$ is a bijection of $\mathbb{Z}/N\mathbb{Z}$ (translation by $-y$), so
+$$\sum_x \chi(-xk)\,g(x-y) = \sum_z \chi\big(-(z+y)k\big)\,g(z) = \chi(-yk)\sum_z \chi(-zk)\,g(z),$$
+where the last step uses multiplicativity (C2): $\chi(-(z+y)k) = \chi(-yk)\chi(-zk)$. The remaining $z$-sum is exactly $\hat g(k)$, a constant in $y$, so
+$$\widehat{f\star g}(k) = \Big(\sum_y f(y)\chi(-yk)\Big)\hat g(k) = \hat f(k)\,\hat g(k).\qquad\square$$
+
+Note that only multiplicativity (C2) and a change of variables were used; **orthogonality played no role.** This is the algebraic heart of the "DFT as representation theory" picture: the transform diagonalizes the convolution algebra because characters are precisely the algebra homomorphisms.
+
+## 5. Character orthogonality and Parseval's identity
+
+**Lemma 5.1 (Character orthogonality).** For every $m\in\mathbb{Z}/N\mathbb{Z}$,
+
+$$\sum_{k=0}^{N-1}\chi(mk) = \begin{cases} N, & m=0,\\ 0, & m\ne 0.\end{cases}$$
+
+*Proof.* If $m=0$ every term equals $\chi(0)=1$, giving $N$. If $m\ne 0$, then since $\chi$ is primitive, $\chi(m)\ne 1$ is a root of unity; the geometric series $\sum_{k}\chi(m)^k$ over a full period of the cyclic group vanishes. $\square$
+
+**Theorem 5.2 (Parseval / Plancherel identity).** For every signal $f$,
+
+$$\sum_{k=0}^{N-1} |\hat f(k)|^2 = N\sum_{j=0}^{N-1} |f(j)|^2.$$
+
+*Proof sketch.* Write $|\hat f(k)|^2 = \hat f(k)\overline{\hat f(k)}$ and expand each factor by definition:
+$$\sum_k |\hat f(k)|^2 = \sum_k \Big(\sum_j f(j)\chi(-jk)\Big)\Big(\sum_l \overline{f(l)}\,\overline{\chi(-lk)}\Big) = \sum_{j}\sum_{l} f(j)\overline{f(l)}\sum_k \chi\big((l-j)k\big),$$
+after reordering the (finite) sums and using (C2) to combine the character factors into $\chi((l-j)k)$. By orthogonality (Lemma 5.1) the inner sum over $k$ equals $N$ when $l = j$ and $0$ otherwise, collapsing the double sum to $N\sum_j f(j)\overline{f(j)} = N\sum_j |f(j)|^2$. $\square$
+
+The scaling constant $N$ is forced by this normalization of the transform: testing $f = \delta_0$, the unit impulse at $0$, gives $\hat f \equiv 1$, so $\sum_k |\hat f(k)|^2 = N$ while $\sum_j |f(j)|^2 = 1$. A different normalization of $\mathcal{F}$ would rescale the constant. Observe that Parseval used exactly one ingredient beyond the convolution theorem — orthogonality (C3).
+
+## 6. The uncertainty principle
+
+We now assemble the mixed bounds and derive the support inequality. The remarkable feature is that neither multiplicativity nor orthogonality is needed here — only unimodularity (C1) and Fourier inversion.
+
+**Proposition 6.1 (First mixed bound).** For every $f$,
+$$\|\hat f\|_\infty \le |\operatorname{supp} f|\cdot\|f\|_\infty.$$
+
+*Proof.* For any $k$, Lemma 3.2 gives $|\hat f(k)| \le \|f\|_1$, and Lemma 3.4 gives $\|f\|_1 \le |\operatorname{supp} f|\cdot\|f\|_\infty$. Taking the maximum over $k$ yields the claim. $\square$
+
+**Proposition 6.2 (Second mixed bound).** For every $f$,
+$$\|f\|_\infty \le \frac{1}{N}\,|\operatorname{supp}\hat f|\cdot\|\hat f\|_\infty.$$
+
+*Proof.* For any $j$, Lemma 3.3 gives $|f(j)| \le N^{-1}\|\hat f\|_1$, and Lemma 3.4 applied to $\hat f$ gives $\|\hat f\|_1 \le |\operatorname{supp}\hat f|\cdot\|\hat f\|_\infty$. Taking the maximum over $j$ yields the claim. $\square$
+
+**Theorem 6.3 (Donoho–Stark uncertainty principle).** For every *nonzero* signal $f\colon\mathbb{Z}/N\mathbb{Z}\to\mathbb{C}$,
+
+$$|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| \ge N.$$
+
+*Proof.* Chain Propositions 6.1 and 6.2:
+$$\|\hat f\|_\infty \le |\operatorname{supp} f|\cdot\|f\|_\infty \le |\operatorname{supp} f|\cdot\frac{1}{N}\,|\operatorname{supp}\hat f|\cdot\|\hat f\|_\infty.$$
+Since $f\ne 0$, the transform $\hat f$ is also nonzero (the transform is invertible), so $\|\hat f\|_\infty > 0$ by Lemma 3.1. Dividing both ends by $\|\hat f\|_\infty$ gives $1 \le N^{-1}|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f|$, i.e. $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| \ge N$. $\square$
+
+**Corollary 6.4.** Any nonzero signal supported on a single point has a transform whose support is the entire group. More generally, no nonzero signal can have both a support smaller than $\sqrt N$ in time and a support smaller than $\sqrt N$ in frequency.
+
+## 7. Extremal signals and sharpness
+
+The bound of Theorem 6.3 is sharp, and the extremizers are highly structured.
+
+**Definition 7.1.** For a subgroup $H \le \mathbb{Z}/N\mathbb{Z}$, its **indicator** $\mathbf{1}_H$ is the signal that is $1$ on $H$ and $0$ elsewhere. Every subgroup of $\mathbb{Z}/N\mathbb{Z}$ has the form $H_d = \{0, d, 2d, \dots\}$ of order $N/d$ for some divisor $d \mid N$.
+
+**Proposition 7.2 (Subgroup indicators are extremal).** If $H \le \mathbb{Z}/N\mathbb{Z}$ has order $|H|$, then $\widehat{\mathbf{1}_H}$ is a scalar multiple of the indicator of the **annihilator** $H^\perp = \{k : \chi(hk)=1 \text{ for all } h\in H\}$, which has order $N/|H|$. Consequently
+
+$$|\operatorname{supp}\mathbf{1}_H|\cdot|\operatorname{supp}\widehat{\mathbf{1}_H}| = |H|\cdot\frac{N}{|H|} = N,$$
+
+so equality holds in Theorem 6.3.
+
+*Proof sketch.* For $k \in H^\perp$, every term of $\widehat{\mathbf{1}_H}(k) = \sum_{h\in H}\chi(-hk)$ equals $1$, giving $|H|$. For $k \notin H^\perp$, the character $h\mapsto\chi(-hk)$ is a nontrivial character of the finite group $H$, so its sum over $H$ vanishes by orthogonality within $H$. Thus $\widehat{\mathbf{1}_H} = |H|\cdot\mathbf{1}_{H^\perp}$, and $|H^\perp| = N/|H|$ by the subgroup–annihilator duality. $\square$
+
+Because the transform commutes with translation and modulation up to scalars — translating $f$ multiplies $\hat f$ by a character (modulation), and vice versa — any translate-and-modulation of a subgroup indicator is also extremal. This produces equality cases at every divisor pair: the achievable extremal support-size pairs are exactly $\{(d, N/d) : d\mid N\}$. Conjecture 2 in Section 9 asserts these are the *only* extremizers.
+
+## 8. Algorithms
+
+The results above are constructive and translate directly into algorithms.
+
+### 8.1 Direct DFT
+
+Computing $\hat f(k) = \sum_j f(j)\chi(-jk)$ for all $k$ by the definition costs $O(N^2)$ complex operations. This is the reference implementation against which correctness is checked; it requires no assumptions on $N$.
+
+### 8.2 Fast convolution via the convolution theorem
+
+To convolve $f$ and $g$: (1) compute $\hat f$ and $\hat g$; (2) multiply pointwise to obtain $\hat f\cdot\hat g$; (3) apply the inverse transform. By Theorem 4.2 the result is $f\star g$. With a fast $O(N\log N)$ transform this yields $O(N\log N)$ convolution, versus $O(N^2)$ for the direct double sum — the basis of fast polynomial and integer multiplication.
+
+### 8.3 Support-product verification
+
+Given $f$, compute $\hat f$, count nonzero entries (above a numerical tolerance) in each, and verify $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| \ge N$. This is an $O(N^2)$ (or $O(N\log N)$ with a fast transform) empirical check of Theorem 6.3, and, on subgroup indicators, of the equality case.
+
+## 9. Discussion and future directions
+
+The organizing insight of this development is a *stratification of hypotheses*:
+
+- the **convolution theorem** (Theorem 4.2) needs only that characters multiply (C2);
+- the **Parseval identity** (Theorem 5.2) additionally needs orthogonality (C3);
+- the **uncertainty principle** (Theorem 6.3) needs neither — only unimodularity (C1) and invertibility.
+
+Since (C1), (C2), (C3), and inversion hold verbatim for the character theory of *any* finite abelian group (via Pontryagin duality), the entire development transfers with no essential change, which motivates the conjectures below.
+
+**Conjecture 1 (Prime-order additive strengthening).** For a prime $p$ and nonzero $f$ on $\mathbb{Z}/p\mathbb{Z}$,
+$$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \ge p + 1,$$
+strictly stronger than the multiplicative bound in this setting. The mechanism is a Chebotarëv-type nonvanishing: over a field of prime order, every minor of the Fourier (Vandermonde) matrix at roots of unity is nonzero, so no nonzero signal can be simultaneously sparse in both domains. Prime order is the natural first milestone because the only subgroups are trivial, so the multiplicative equality cases disappear and the additive bound should become provable from determinantal nonvanishing.
+
+**Conjecture 2 (Equality classification on general $\mathbb{Z}/N\mathbb{Z}$).** Equality $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| = N$ holds if and only if $f$ is, up to a nonzero scalar, a translate and modulation of a subgroup indicator; hence the achievable equality sizes are exactly $\{(d, N/d) : d\mid N\}$. The mechanism: the two mixed bounds (Propositions 6.1–6.2) are simultaneously tight only when $f$ is flat on its support and $\hat f$ is flat on its support, and the only functions flat in both domains are the subgroup indicators dictated by the divisor lattice.
+
+**Conjecture 3 (General finite abelian groups).** For every finite abelian group $G$ and nonzero $f\colon G\to\mathbb{C}$, $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| \ge |G|$, with equality exactly for translated, modulated subgroup indicators, the transform taken with respect to the Pontryagin dual. The argument depends on $G$ only through the three structural facts (C1)–(C3) and inversion, all of which hold for the dual pairing on any finite abelian group.
 
 ## 10. Conclusion
 
-We have given a complete, self-contained derivation of the spectral formula for
-additive energy on $\mathbb{Z}/N\mathbb{Z}$, resting on three classical pillars —
-character orthogonality, the convolution theorem, and Plancherel's identity — each
-proved from first principles. The resulting identity $E[A] = N^{-1}\sum_k
-|\widehat{\mathbf 1_A}(k)|^4$ and its corollary $E[A] \ge |A|^4/N$ are the
-analytic backbone of Roth-type theorems and of the Balog–Szemerédi–Gowers theorem,
-and the toolkit assembled here is directly reusable for the further directions
-outlined above.
+On the finite cyclic group $\mathbb{Z}/N\mathbb{Z}$, the discrete Fourier transform is simultaneously an isomorphism, an algebra homomorphism from convolution to multiplication, an isometry up to scale, and a rigid constraint on joint support. By tracking which property of characters powers each theorem — multiplicativity for convolution, orthogonality for Parseval, unimodularity and inversion for uncertainty — we obtain a transparent account in which the Donoho–Stark principle emerges from the humblest hypotheses of all. The finite setting sacrifices nothing: every statement is exact, every constant is forced, and the extremal cases are explicitly the subgroup indicators governed by the divisor lattice of $N$.
+
+---
+
+### References (background)
+
+- L. Auslander and R. Tolimieri, "Is computing with the finite Fourier transform pure or applied mathematics?", *Bulletin of the AMS*.
+- D. L. Donoho and P. B. Stark, "Uncertainty principles and signal recovery", *SIAM Journal on Applied Mathematics*.
+- T. Tao, "An uncertainty principle for cyclic groups of prime order", *Mathematical Research Letters*.
+- A. Terras, *Fourier Analysis on Finite Groups and Applications*, Cambridge University Press.

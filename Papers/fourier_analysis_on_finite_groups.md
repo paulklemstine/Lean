@@ -1,44 +1,58 @@
-# Computational Evidence — Additive Energy via Fourier on ℤ/Nℤ
+# Computational Evidence — Fourier Analysis on Finite Groups
 
-Target identity (`addEnergy_eq_dft`):
+Target identities (discrete Fourier transform `𝓕 = ZMod.dft` on `ZMod N`,
+normalisation `𝓕 f (k) = Σ_j e^{-2πi jk/N} f(j)`):
 
-    E[A] = N⁻¹ · Σ_k ‖𝓕 1_A (k)‖⁴      for A ⊆ ℤ/Nℤ,
+1. Convolution theorem: `𝓕(f ⋆ g) = 𝓕 f · 𝓕 g`.
+2. Parseval/Plancherel: `Σ_k |𝓕 f (k)|² = N · Σ_j |f(j)|²`.
+3. Donoho–Stark uncertainty: `f ≠ 0 ⟹ |supp f| · |supp 𝓕f| ≥ N`.
 
-with the Mathlib DFT convention `𝓕 Φ (k) = Σ_j stdAddChar(-(j·k))·Φ(j)`, so the normalizing factor
-`N` sits on the inverse transform and Plancherel reads `Σ_k ‖𝓕 f k‖² = N · Σ_j ‖f j‖²`.
+## 1. Small-case calculations for the uncertainty principle
 
-Here `E[A] = #{(a,b,c,d) ∈ A⁴ : a + b = c + d}` is `Finset.addEnergy A A`.
+We list `|supp f|`, `|supp 𝓕f|` and their product for canonical test functions.
 
-## Small-case checks (done by hand / direct enumeration)
+| Group | f | |supp f| | |supp 𝓕f| | product | ≥ N ? |
+|------|---|---------|-----------|---------|-------|
+| ZMod 4 | δ₀ (indicator of {0}) | 1 | 4 | 4 | = 4 (sharp) |
+| ZMod 4 | constant 1 | 4 | 1 | 4 | = 4 (sharp) |
+| ZMod 6 | indicator of subgroup {0,3} (size 2) | 2 | 3 | 6 | = 6 (sharp) |
+| ZMod 6 | indicator of subgroup {0,2,4} (size 3) | 3 | 2 | 6 | = 6 (sharp) |
+| ZMod 5 | δ₀ + δ₁ (two spikes) | 2 | 5 | 10 | ≥ 5 |
+| ZMod p (prime) | any 0 < |supp f| < p | a | b | a·b | a·b ≥ p (in fact a+b ≥ p+1, Tao) |
 
-* **N = 5, A = {0,1,2}.** Representation counts `r(t) = #{(x,y)∈A² : x+y=t}` over ℤ/5ℤ:
-  `r(0)=1, r(1)=2, r(2)=3, r(3)=2, r(4)=1` (sums 0..4). Then
-  `E[A] = Σ_t r(t)² = 1+4+9+4+1 = 19`.
-  Cross-check via `|A|⁴/N = 81/5 = 16.2`, and indeed `19 ≥ 16.2`, matching the proven lower bound
-  `card_pow_four_div_le_addEnergy`.
+**Sharpness pattern.** Equality `|supp f|·|supp 𝓕f| = N` occurs exactly for
+(translates/modulations of) indicators of subgroups: an indicator of a subgroup
+`H ≤ ZMod N` with `|H| = d` has Fourier transform supported on the annihilator
+`H^⊥`, of size `N/d`, so the product is `d · (N/d) = N`. The achievable products
+on `ZMod N` are exactly the numbers `d · (N/d) ≥ N` ranging over divisors `d | N`,
+and `N²` for "generic" `f` with full support and full spectral support.
 
-* **N = 4, A = {0,2} (a coset of the subgroup {0,2}).** `r(0)=2 (0+0,2+2), r(2)=2 (0+2,2+0)`,
-  others 0. `E[A] = 4+4 = 8 = |A|⁴/|H| = 16/2`. Subgroups/cosets saturate energy, consistent with
-  the spectral picture: `𝓕 1_H` is supported on the annihilator, giving few large Fourier modes.
+## 2. OEIS / sequence remarks
 
-* **Full set A = univ (N arbitrary).** `r(t) = N` for all `t`, so `E = N·N² = N³`. On the spectral
-  side `𝓕 1_univ` is `N` at `k=0` and `0` elsewhere, so `N⁻¹·N⁴ = N³`. ✓
+No new integer sequence is introduced; the relevant structured quantity is the set
+of equality products `{ d·(N/d) : d | N } = {N}` — equality is achieved by every
+divisor, reflecting the subgroup ⇄ annihilator duality. The divisor lattice of `N`
+(the subgroup lattice of the cyclic group, OEIS A000005 counts the divisors) indexes
+the sharp cases.
 
-* **Singleton A = {a}.** `E = 1`, and `‖𝓕 1_A k‖ = 1` for all `k`, so `N⁻¹·(N·1) = 1`. ✓
+## 3. Counterexample hunt
 
-## Sanity of the lower bound
+- **Uncertainty.** The claim is false for `f = 0` (both supports empty, `0 ≥ N`
+  fails); this is why `f ≠ 0` is a load-bearing hypothesis. For every nonzero `f`
+  on small groups (`ZMod 2..8`, spikes, sums of two spikes, subgroup indicators,
+  random ±1 vectors) the inequality held; no counterexample found, consistent with
+  the proof.
+- **Parseval constant.** Testing `f = δ₀` gives `Σ|𝓕f|² = N` and `Σ|f|² = 1`, so
+  the constant must be exactly `N`; any other normalisation (`1`, `1/N`, `√N`)
+  fails this test. The proof uses the constant `N`.
+- **Convolution.** `𝓕(δ₀ ⋆ g) = 𝓕 g` because `δ₀` is the convolution unit, and
+  `𝓕 δ₀ = 1`, matching `𝓕 f · 𝓕 g` with `f = δ₀`. No discrepancy found.
 
-For all cases above `E[A] ≥ |A|⁴/N` holds, with equality exactly when `𝓕 1_A` is concentrated at
-`k = 0` (i.e. `A` essentially a full coset). This is the equality case of dropping all `k ≠ 0`
-terms, and is consistent with the structure theory of sets with large additive energy.
+## 4. Method note
 
-## OEIS
-
-Additive-energy sequences depend on the chosen sets, so no single canonical OEIS entry applies;
-the per-`A` counts above are elementary convolution squares and need no external table.
-
-## Conclusion
-
-All finite checks agree with both the exact identity `addEnergy_eq_dft` and the inequality
-`card_pow_four_div_le_addEnergy`. Both are fully proved in `FourierFiniteGroups.lean` (0 sorries),
-so the computational evidence is corroborative rather than load-bearing.
+All three identities reduce to two structural facts about the standard additive
+character `χ = stdAddChar`: it is **multiplicative** (`χ(a+b) = χ(a)χ(b)`) and
+**orthogonal** (`Σ_k χ(mk) = N·[m=0]`). The convolution theorem needs only
+multiplicativity; Parseval additionally needs orthogonality; the uncertainty
+principle needs neither — only `|χ| = 1` and Fourier inversion. This stratification
+is what made the formal development tractable and is recorded in the Lab Notes.

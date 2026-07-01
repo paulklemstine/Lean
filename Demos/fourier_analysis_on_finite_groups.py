@@ -1,187 +1,170 @@
-"""Numerical demonstrations of Fourier analysis on the finite cyclic group Z/NZ.
+"""
+Numerical demonstrations of Fourier analysis on the finite cyclic group Z/NZ.
 
-This self-contained script demonstrates, by direct numerical computation, every
-theorem from the accompanying paper:
+This self-contained script illustrates the three structural theorems developed
+in the accompanying paper:
 
-  * character orthogonality          (stdAddChar_sum_mul)
-  * the convolution theorem          (dft_conv)
-  * Parseval / Plancherel            (parseval, plancherel)
-  * self-convolution counts          (conv_ind)
-  * energy as sum of squared counts  (addEnergy_eq_sum_count_sq)
-  * the spectral energy formula      (addEnergy_eq_dft)
-  * the energy lower bound           (card_pow_four_div_le_addEnergy)
+  1. Convolution theorem:      DFT(f * g) = DFT(f) . DFT(g)   (pointwise)
+  2. Parseval / Plancherel:    sum |DFT(f)(k)|^2 = N * sum |f(j)|^2
+  3. Donoho-Stark uncertainty: |supp f| . |supp f_hat| >= N   (f != 0)
 
-Conventions match the paper exactly:
-    e(x)     = exp(2*pi*i*x / N)            (standard additive character)
-    f_hat[k] = sum_j e(-j*k) * f[j]         (forward DFT; normalizer N on inverse)
-Consequently Plancherel reads   sum_k |f_hat[k]|^2 = N * sum_j |f[j]|^2,
-and the energy identity reads    E[A] = (1/N) * sum_k |1A_hat[k]|^4.
-
-Only the Python standard library is used (cmath, math, itertools).
+It also verifies that subgroup indicators meet the uncertainty bound with
+equality.  All routines are elementary O(N^2) reference implementations using
+only the Python standard library.
 """
 
 from __future__ import annotations
 
 import cmath
 import math
-from itertools import product
-from typing import Callable, List, Sequence, Set
-
-Complex = complex
+from typing import Callable, List
 
 
-# --------------------------------------------------------------------------- #
-# Core primitives
-# --------------------------------------------------------------------------- #
-def std_add_char(N: int, x: int) -> Complex:
-    """Standard additive character e(x) = exp(2*pi*i*x/N) on Z/NZ."""
-    return cmath.exp(2j * math.pi * (x % N) / N)
+# ---------------------------------------------------------------------------
+# Core transform
+# ---------------------------------------------------------------------------
+
+def dft(f: List[complex]) -> List[complex]:
+    """Discrete Fourier transform on Z/NZ: f_hat(k) = sum_j f(j) * exp(-2pi i jk/N)."""
+    n = len(f)
+    return [
+        sum(f[j] * cmath.exp(-2j * math.pi * j * k / n) for j in range(n))
+        for k in range(n)
+    ]
 
 
-def dft(N: int, f: Sequence[Complex]) -> List[Complex]:
-    """Forward discrete Fourier transform: f_hat[k] = sum_j e(-j*k) * f[j]."""
-    return [sum(std_add_char(N, -(j * k)) * f[j] for j in range(N)) for k in range(N)]
+def idft(fhat: List[complex]) -> List[complex]:
+    """Inverse DFT: f(j) = (1/N) sum_k f_hat(k) * exp(+2pi i jk/N)."""
+    n = len(fhat)
+    return [
+        sum(fhat[k] * cmath.exp(2j * math.pi * j * k / n) for k in range(n)) / n
+        for j in range(n)
+    ]
 
 
-def convolve(N: int, f: Sequence[Complex], g: Sequence[Complex]) -> List[Complex]:
-    """Cyclic convolution (f * g)(x) = sum_y f[y] * g[(x - y) mod N]."""
-    return [sum(f[y] * g[(x - y) % N] for y in range(N)) for x in range(N)]
+def cyclic_convolution(f: List[complex], g: List[complex]) -> List[complex]:
+    """(f * g)(x) = sum_y f(y) g(x - y), indices modulo N."""
+    n = len(f)
+    return [sum(f[y] * g[(x - y) % n] for y in range(n)) for x in range(n)]
 
 
-def indicator(N: int, A: Set[int]) -> List[Complex]:
-    """Complex indicator 1_A of a subset A of Z/NZ."""
-    return [1.0 + 0j if (x % N) in A else 0j for x in range(N)]
+# ---------------------------------------------------------------------------
+# Norms and support
+# ---------------------------------------------------------------------------
+
+def support_size(f: List[complex], tol: float = 1e-9) -> int:
+    """Number of entries whose magnitude exceeds a numerical tolerance."""
+    return sum(1 for z in f if abs(z) > tol)
 
 
-def representation_count(N: int, A: Set[int], a: int) -> int:
-    """r_A(a) = #{(x, y) in A x A : x + y = a (mod N)}."""
-    return sum(1 for x in A for y in A if (x + y) % N == a % N)
+def l1_norm(f: List[complex]) -> float:
+    return sum(abs(z) for z in f)
 
 
-def additive_energy_direct(N: int, A: Set[int]) -> int:
-    """E[A] = #{(a,b,c,d) in A^4 : a + b = c + d (mod N)} by brute force."""
-    return sum(
-        1
-        for a, b, c, d in product(A, repeat=4)
-        if (a + b) % N == (c + d) % N
-    )
+def l2_norm_sq(f: List[complex]) -> float:
+    return sum(abs(z) ** 2 for z in f)
 
 
-# --------------------------------------------------------------------------- #
-# Helpers
-# --------------------------------------------------------------------------- #
-def approx_equal(z: Complex, w: Complex, tol: float = 1e-7) -> bool:
-    return abs(z - w) < tol
+def sup_norm(f: List[complex]) -> float:
+    return max(abs(z) for z in f)
 
 
-def banner(title: str) -> None:
-    print("\n" + "=" * 70)
-    print(title)
-    print("=" * 70)
-
-
-# --------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------
 # Demonstrations
-# --------------------------------------------------------------------------- #
-def demo_orthogonality(N: int) -> None:
-    """Verify sum_i e(t*i) = N if t = 0 else 0 (stdAddChar_sum_mul)."""
-    banner(f"Character orthogonality on Z/{N}Z   (stdAddChar_sum_mul)")
-    for t in range(N):
-        s = sum(std_add_char(N, t * i) for i in range(N))
-        expected = N if t == 0 else 0
-        ok = approx_equal(s, expected)
-        print(f"  t={t:2d}:  sum_i e(t*i) = {s:+.4f}   expected {expected}   {'OK' if ok else 'FAIL'}")
+# ---------------------------------------------------------------------------
+
+def demo_convolution_theorem() -> None:
+    """DFT turns cyclic convolution into pointwise multiplication."""
+    print("=" * 68)
+    print("DEMO 1: Convolution theorem  DFT(f * g) = DFT(f) . DFT(g)")
+    print("=" * 68)
+    f = [1, 2, 0, -1, 3, 0, 1, 2]           # N = 8
+    g = [0, 1, 1, 0, 2, 0, -1, 1]
+    lhs = dft(cyclic_convolution(f, g))
+    rhs = [a * b for a, b in zip(dft(f), dft(g))]
+    err = max(abs(a - b) for a, b in zip(lhs, rhs))
+    print(f"  N = {len(f)}")
+    print(f"  max | DFT(f*g) - DFT(f).DFT(g) | = {err:.2e}")
+    print(f"  identity holds: {err < 1e-9}\n")
 
 
-def demo_convolution_theorem(N: int, f: Sequence[Complex], g: Sequence[Complex]) -> None:
-    """Verify dft(f * g)[k] = dft(f)[k] * dft(g)[k] (dft_conv)."""
-    banner(f"Convolution theorem on Z/{N}Z   (dft_conv)")
-    lhs = dft(N, convolve(N, f, g))
-    fh, gh = dft(N, f), dft(N, g)
-    rhs = [fh[k] * gh[k] for k in range(N)]
-    for k in range(N):
-        ok = approx_equal(lhs[k], rhs[k])
-        print(f"  k={k:2d}:  dft(f*g)={lhs[k]:+.3f}   dft f . dft g={rhs[k]:+.3f}   {'OK' if ok else 'FAIL'}")
+def demo_parseval() -> None:
+    """Energy is conserved up to the scaling constant N."""
+    print("=" * 68)
+    print("DEMO 2: Parseval / Plancherel  sum|f_hat|^2 = N * sum|f|^2")
+    print("=" * 68)
+    for f in ([3, -1, 4, 1, 5, 9, 2, 6], [1, 0, 0, 0, 0]):
+        n = len(f)
+        lhs = l2_norm_sq(dft([complex(x) for x in f]))
+        rhs = n * l2_norm_sq([complex(x) for x in f])
+        print(f"  N = {n}:  sum|f_hat|^2 = {lhs:.6f},  "
+              f"N*sum|f|^2 = {rhs:.6f},  match: {abs(lhs - rhs) < 1e-6}")
+    print()
 
 
-def demo_plancherel(N: int, f: Sequence[Complex]) -> None:
-    """Verify sum_k |f_hat[k]|^2 = N * sum_j |f[j]|^2 (plancherel)."""
-    banner(f"Plancherel identity on Z/{N}Z   (plancherel)")
-    fh = dft(N, f)
-    lhs = sum(abs(z) ** 2 for z in fh)
-    rhs = N * sum(abs(z) ** 2 for z in f)
-    print(f"  sum_k |f_hat[k]|^2 = {lhs:.6f}")
-    print(f"  N * sum_j |f[j]|^2 = {rhs:.6f}")
-    print(f"  match: {'OK' if approx_equal(lhs, rhs) else 'FAIL'}")
+def demo_uncertainty() -> None:
+    """|supp f| . |supp f_hat| >= N for a variety of nonzero signals."""
+    print("=" * 68)
+    print("DEMO 3: Uncertainty principle  |supp f| . |supp f_hat| >= N")
+    print("=" * 68)
+    n = 12
+    signals = {
+        "unit impulse  delta_0": [1] + [0] * (n - 1),
+        "two-spike signal":      [1 if j in (0, 5) else 0 for j in range(n)],
+        "random-ish signal":     [((7 * j + 3) % 5) - 2 for j in range(n)],
+        "constant signal":       [1] * n,
+    }
+    for name, f in signals.items():
+        fc = [complex(x) for x in f]
+        s_time = support_size(fc)
+        s_freq = support_size(dft(fc))
+        product = s_time * s_freq
+        print(f"  {name:22s}: |supp f|={s_time:2d}, |supp f_hat|={s_freq:2d}, "
+              f"product={product:3d} >= N={n}: {product >= n}")
+    print()
 
 
-def demo_parseval(N: int, f: Sequence[Complex], g: Sequence[Complex]) -> None:
-    """Verify sum_k f_hat[k] conj(g_hat[k]) = N sum_j f[j] conj(g[j]) (parseval)."""
-    banner(f"Parseval identity on Z/{N}Z   (parseval)")
-    fh, gh = dft(N, f), dft(N, g)
-    lhs = sum(fh[k] * gh[k].conjugate() for k in range(N))
-    rhs = N * sum(f[j] * g[j].conjugate() for j in range(N))
-    print(f"  lhs = {lhs:+.6f}")
-    print(f"  rhs = {rhs:+.6f}")
-    print(f"  match: {'OK' if approx_equal(lhs, rhs) else 'FAIL'}")
+def demo_extremal_subgroup() -> None:
+    """Subgroup indicators achieve equality |supp f| . |supp f_hat| = N."""
+    print("=" * 68)
+    print("DEMO 4: Extremal signals  subgroup indicators give equality = N")
+    print("=" * 68)
+    n = 12
+    for d in (1, 2, 3, 4, 6, 12):           # divisors of 12; subgroup H_d
+        # H_d = {0, d, 2d, ...} has order N/d.
+        f = [complex(1) if (j % d == 0) else complex(0) for j in range(n)]
+        s_time = support_size(f)
+        s_freq = support_size(dft(f))
+        print(f"  subgroup step d={d:2d}: |supp f|={s_time:2d}, "
+              f"|supp f_hat|={s_freq:2d}, product={s_time * s_freq:3d} "
+              f"(= N={n}: {s_time * s_freq == n})")
+    print()
 
 
-def demo_conv_ind(N: int, A: Set[int]) -> None:
-    """Verify (1_A * 1_A)(a) = r_A(a) (conv_ind)."""
-    banner(f"Self-convolution counts representations   (conv_ind), A={sorted(A)}")
-    ia = indicator(N, A)
-    conv = convolve(N, ia, ia)
-    for a in range(N):
-        r = representation_count(N, A, a)
-        ok = approx_equal(conv[a], r)
-        print(f"  a={a:2d}:  (1A*1A)(a)={conv[a].real:5.1f}   r_A(a)={r}   {'OK' if ok else 'FAIL'}")
-
-
-def demo_energy_identity(N: int, A: Set[int]) -> None:
-    """Verify E[A] = sum_a r_A(a)^2 = (1/N) sum_k |1A_hat[k]|^4 >= |A|^4 / N."""
-    banner(f"Spectral formula for additive energy   (addEnergy_eq_dft), A={sorted(A)}")
-    e_direct = additive_energy_direct(N, A)
-    e_counts = sum(representation_count(N, A, a) ** 2 for a in range(N))      # addEnergy_eq_sum_count_sq
-    ah = dft(N, indicator(N, A))
-    e_spectral = sum(abs(z) ** 4 for z in ah) / N                            # addEnergy_eq_dft
-    lower_bound = len(A) ** 4 / N                                            # card_pow_four_div_le_addEnergy
-    print(f"  E[A] (brute-force quadruples)        = {e_direct}")
-    print(f"  sum_a r_A(a)^2  (count form)         = {e_counts}")
-    print(f"  (1/N) sum_k |1A_hat[k]|^4 (spectral) = {e_spectral:.6f}")
-    print(f"  |A|^4 / N  (lower bound)             = {lower_bound:.6f}")
-    print(f"  identities match: "
-          f"{'OK' if approx_equal(e_direct, e_counts) and approx_equal(e_direct, e_spectral) else 'FAIL'}")
-    print(f"  lower bound holds: {'OK' if e_direct + 1e-9 >= lower_bound else 'FAIL'}")
-
-
-def make_function(N: int, values: Sequence[Complex]) -> List[Complex]:
-    """Pad/truncate an explicit list to a length-N complex function."""
-    return [complex(values[j]) if j < len(values) else 0j for j in range(N)]
+def demo_mixed_bounds() -> None:
+    """The two Holder-type mixed bounds that drive the uncertainty proof."""
+    print("=" * 68)
+    print("DEMO 5: Mixed bounds underlying the uncertainty principle")
+    print("=" * 68)
+    n = 9
+    f = [complex(((3 * j) % 4) - 1) for j in range(n)]
+    fhat = dft(f)
+    b1_lhs, b1_rhs = sup_norm(fhat), support_size(f) * sup_norm(f)
+    b2_lhs, b2_rhs = sup_norm(f), support_size(fhat) * sup_norm(fhat) / n
+    print(f"  ||f_hat||_inf = {b1_lhs:.4f} <= |supp f|.||f||_inf = {b1_rhs:.4f}: "
+          f"{b1_lhs <= b1_rhs + 1e-9}")
+    print(f"  ||f||_inf     = {b2_lhs:.4f} <= (1/N)|supp f_hat|.||f_hat||_inf "
+          f"= {b2_rhs:.4f}: {b2_lhs <= b2_rhs + 1e-9}")
+    print()
 
 
 def main() -> None:
-    N = 7
-    f = make_function(N, [1, 2j, -1, 3, 0, 1 - 1j, 2])
-    g = make_function(N, [0, 1, 1, 0, 2, -1j, 1])
-
-    demo_orthogonality(N)
-    demo_convolution_theorem(N, f, g)
-    demo_parseval(N, f, g)
-    demo_plancherel(N, f)
-
-    A = {0, 1, 2, 4}        # a set in Z/7Z
-    demo_conv_ind(N, A)
-    demo_energy_identity(N, A)
-
-    # An arithmetic progression has higher energy than a "spread" set of the same size.
-    banner("Structure vs. randomness: energy of different sets in Z/11Z")
-    M = 11
-    for name, S in [
-        ("AP {0,1,2,3,4}", {0, 1, 2, 3, 4}),
-        ("spread {0,1,3,7,9}", {0, 1, 3, 7, 9}),
-    ]:
-        e = additive_energy_direct(M, S)
-        print(f"  {name:22s}: E[A] = {e:3d}   |A|^4/N = {len(S)**4 / M:.2f}")
+    demo_convolution_theorem()
+    demo_parseval()
+    demo_uncertainty()
+    demo_extremal_subgroup()
+    demo_mixed_bounds()
+    print("All demonstrations complete.")
 
 
 if __name__ == "__main__":
