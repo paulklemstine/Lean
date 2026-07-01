@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-01T07:13:49.173546+00:00",
+  "last_updated": "2026-07-01T07:36:56.597111+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -23280,6 +23280,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-01T07:13:48.855018+00:00",
       "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 72,
+      "domain": "Computation",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "06ed2c3c",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782886260.9955282,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-01T07:36:56.251708+00:00",
+      "title": "Phase transition for variance asymptotics of Steinhaus short-interval sums"
     }
   ]
 }
