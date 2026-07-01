@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-01T10:04:04.349584+00:00",
+  "last_updated": "2026-07-01T10:24:37.423532+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -23697,6 +23697,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-01T10:04:04.066649+00:00",
       "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 84,
+      "domain": "Cryptography",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "0474da9b",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782895971.9464743,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-01T10:24:37.098305+00:00",
+      "title": "No Non-Trivial Higher Prime Powers in 18-gonal Numbers"
     }
   ]
 }
