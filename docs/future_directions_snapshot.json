@@ -3298,7 +3298,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24e5f1f4",
     "description": "Every $\\tau_k$-maximal graph on $n$ vertices has exactly $(k+1)(n-1)-1$ edges, for integers $k \\ge 1$ and $n \\ge 2k+2$. A graph $G$ is $\\tau_k$-maximal if it contains no subgraph admitting $k+1$ edge-disjoint spanning trees (i.e., its spanning tree packing number $\\tau(G) \\le k$), but adding any edge from its complement creates a graph that does admit $k+1$ edge-disjoint spanning trees (i.e., $\\tau(G+e) \\ge k+1$ for all $e \\notin E(G)$).",
     "domain_bridges": [
       "extremal graph theory",
@@ -3315,7 +3315,7 @@
     "proof_strategy": "The authors have already established the upper bound $|E(G)| \\le (k+1)(n-1)-1$. To prove the conjecture, one must establish the matching lower bound $|E(G)| \\ge (k+1)(n-1)-1$. This likely involves induction on $k$ and $n$, leveraging the Nash-Williams/Tutte theorem to relate edge counts across partitions, and analyzing the structural properties and edge-connectivity bounds of $\\tau_k$-maximal graphs to show that fewer edges would contradict the maximality condition.",
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T20:55:49.745314+00:00",
     "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
   },
