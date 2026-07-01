@@ -120,7 +120,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45565356",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domain_bridges": [],
     "domains": [
@@ -133,7 +133,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -4813,7 +4813,7 @@
       "math.NT",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c347334",
     "description": "For any p-adic field F and any irreducible smooth admissible generic representation π of GL(n, F), the Bessel distribution B_{ℓ₁,ℓ₂} associated to Whittaker functionals is regular: there exists a unique smooth function j defined on a dense open subset of GL(n, F), locally integrable on GL(n, F), such that B_{ℓ₁,ℓ₂}(f) = ∫_{GL(n,F)} j(g)f(g)dg for all Schwartz functions f. This follows from the paper's main result (regularity follows from nontrivial bounds on Kloosterman sums for all Levi subgroups) combined with the known Deligne-Weil bounds on Kloosterman sums for all Levi subgroups of GL(n), which are products of smaller GL(m)'s.",
     "domain_bridges": [
       "p-adic harmonic analysis",
@@ -4831,7 +4831,7 @@
     "proof_strategy": "Apply the paper's conditional regularity theorem (Bessel distributions are regular provided Kloosterman sums for all Levi subgroups have nontrivial bounds) to GL(n). Since every Levi subgroup of GL(n) is isomorphic to a product ∏ GL(mᵢ) with ∑ mᵢ = n, the corresponding Kloosterman sums admit nontrivial bounds by Deligne's estimates from the Riemann hypothesis for varieties over finite fields (Weil II), yielding unconditional regularity for GL(n). The key intermediate step is formalizing the germ expansion of Kloosterman integrals and verifying the nontrivial bound condition for all Levi subgroups.",
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T04:29:53.482836+00:00",
     "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
   },
@@ -5144,7 +5144,7 @@
       "05C30",
       "05C10"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "650b150d",
     "description": "For any set P of n ≥ 3 points in general position (no three collinear) in ℝ², the number of labeled plane graphs on P is at least the number of labeled plane graphs on n points in convex position. This formalizes the conjecture that, among all n-point configurations in general position, convex position yields the fewest plane graphs. The paper proves that configurations with convex hull of size O(n/log n) have Ω(12.24^n) plane graphs, strictly more than the ~11.65^n achieved by convex position, providing strong evidence for this conjecture.",
     "domain_bridges": [
       "combinatorics",
@@ -5162,7 +5162,7 @@
     "proof_strategy": "Use the vertex potential framework from the paper to show that interior points (not on the convex hull) strictly increase the number of plane graphs relative to convex position. The potential φ(v) = deg(v) + vis(v) captures the local combinatorial richness at each vertex. The strategy would be: (1) establish that the expected potential of an interior vertex in a random plane graph strictly exceeds that of a hull vertex, (2) show this potential gap translates to a multiplicative increase in the total count of plane graphs, and (3) induct on the number of interior points, reducing to the base case of convex position. A key lemma would be that moving a hull point to the interior (while maintaining general position) strictly increases the plane graph count.",
     "research_mode": "team",
     "source_exp_id": "2606.29446v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T08:52:56.888905+00:00",
     "title": "Convex Position Minimizes Plane Graphs"
   },
@@ -5428,7 +5428,7 @@
       "Topological_groups",
       "Numeration_systems"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23a5c510",
     "description": "For the Fibonacci numeration system $U$ with standard initial conditions (where $u_0=1, u_1=2$), the topological group $\\mathbb{Z}_U$, constructed as the completion of $\\mathbb{Z}$ under the pseudo-valuation $\\nu_U$, is continuously isomorphic to the circle group $\\mathbb{R}/\\mathbb{Z}$. This is a specific instance of the paper's main theorem where the Pisot number is the golden ratio (unimodular, degree 2).",
     "domain_bridges": [
       "Topology",
@@ -5445,7 +5445,7 @@
     "proof_strategy": "Define the Fibonacci numeration system and its pseudo-valuation, construct the completion $\\mathbb{Z}_U$ as a topological group, define the evaluation map $\\tau_U$ using the non-trivial Galois conjugate of the golden ratio ($\\phi' = 1-\\phi$), and prove it is a continuous group isomorphism to $\\mathbb{R}/\\mathbb{Z}$.",
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T11:59:08.845373+00:00",
     "title": "Fibonacci Numeration Group is the Circle Group"
   },
@@ -7186,7 +7186,7 @@
       "Pythagorean triples over rationals",
       "unit distance graph chromatic number"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ae9dee2",
     "description": "The maximum number of unit-distance pairs among n points in the rational plane Q² is Θ(n^{4/3}). The upper bound O(n^{4/3}) follows from the Szemerédi-Trotter incidence theorem applied to unit circles in Q² (as a subset of R²). The lower bound Ω(n^{4/3}) is conjectural and supported by the algorithmic constructions in this paper, which exploit the algebraic structure of Pythagorean-type parametric families in Q² to surpass previous grid-based lower bounds. Resolving this would settle the rational analogue of the Erdős unit distance problem with matching upper and lower asymptotic exponents.",
     "domain_bridges": [
       "combinatorial_geometry",
@@ -7204,7 +7204,7 @@
     "proof_strategy": "The upper bound O(n^{4/3}) can be derived from Szemerédi-Trotter by viewing unit-distance pairs as incidences between points and unit circles, noting that two distinct unit circles share at most 2 points. Formalizing this in Lean requires the incidence bound for algebraic curves. The lower bound Ω(n^{4/3}) requires explicit construction of rational point families with many unit distances. The paper's algorithmic approach, based on local-breadth search over bounded rational neighborhoods rather than grid structures, provides candidate constructions. A proof would likely involve parametric families derived from the arithmetic of sums of two rational squares (generalized Pythagorean structures) and counting the resulting unit distances to establish the n^{4/3} growth rate.",
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T21:18:10.152547+00:00",
     "title": "Unit Distance Density in Q² is Θ(n^{4/3})"
   },
@@ -7387,7 +7387,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a925487",
     "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
     "domain_bridges": [],
     "domains": [
@@ -7399,7 +7399,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.987080+00:00",
     "title": "Frankl's Union-Closed Conjecture"
   },
@@ -8355,7 +8355,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "adbfcd0f",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domain_bridges": [],
     "domains": [
@@ -8368,7 +8368,7 @@
     "proof_strategy": "Derive the stereographic Fourier transform explicitly. The key formula: F(f)(k) = integral over S^n f(x) * (1+|phi(x)|^2)^{-n/2} * exp(-2 pi i phi(x) dot k) d sigma(x) where phi is stereographic projection. Prove it is an isometry using the conformal factor (1+|x|^2)^2/4 that relates the spherical and Euclidean metrics. Show spherical harmonics Y_l^m map to generalized Hermite functions with radial profile r^l * (1+r^2)^{-(l+n/2)} * L_k^{l+n/2-1}(2r^2/(1+r^2)) where L are Laguerre polynomials. Test: compute F(Y_1^0) explicitly for n=2 and verify it is a multiple of the Hermite function H_1.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.310599+00:00",
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },

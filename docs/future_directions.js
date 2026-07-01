@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45565356",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -1740,7 +1740,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the Minimum Size of a Poset Realizing Z_2^k x Z_{2^n}"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d3621329",
     "description": "For each prime k with 5 \u2264 k \u2264 97, let s = 2k+4. For every prime p \u2265 11, the Diophantine equation P_s(n) = t^p has no integer solutions with n \u2209 {0,1}. This conjecture covers the remaining open cases from Theorem 1(iv) of the paper, where it is shown that there is at most one such solution for each p and any such solution must have n \u2265 10^{100,000p}. The paper expects no such solutions exist based on GRH and the weak effective abc conjecture.",
     "domains": [
       "Pythagorean"
@@ -1749,7 +1749,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28227v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T16:56:12.518505+00:00",
     "title": "No nontrivial perfect powers in even-indexed polygonal numbers for exponents p \u2265 11"
   },
@@ -2813,7 +2813,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c347334",
     "description": "For any p-adic field F and any irreducible smooth admissible generic representation \u03c0 of GL(n, F), the Bessel distribution B_{\u2113\u2081,\u2113\u2082} associated to Whittaker functionals is regular: there exists a unique smooth function j defined on a dense open subset of GL(n, F), locally integrable on GL(n, F), such that B_{\u2113\u2081,\u2113\u2082}(f) = \u222b_{GL(n,F)} j(g)f(g)dg for all Schwartz functions f. This follows from the paper's main result (regularity follows from nontrivial bounds on Kloosterman sums for all Levi subgroups) combined with the known Deligne-Weil bounds on Kloosterman sums for all Levi subgroups of GL(n), which are products of smaller GL(m)'s.",
     "domains": [
       "Algebra",
@@ -2823,7 +2823,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T04:29:53.482836+00:00",
     "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
   },
@@ -2985,7 +2985,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "k=3 Additive Uniqueness of Multiplicative Functions on Sums of Two Nonzero Squares"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "650b150d",
     "description": "For any set P of n \u2265 3 points in general position (no three collinear) in \u211d\u00b2, the number of labeled plane graphs on P is at least the number of labeled plane graphs on n points in convex position. This formalizes the conjecture that, among all n-point configurations in general position, convex position yields the fewest plane graphs. The paper proves that configurations with convex hull of size O(n/log n) have \u03a9(12.24^n) plane graphs, strictly more than the ~11.65^n achieved by convex position, providing strong evidence for this conjecture.",
     "domains": [
       "Pythagorean",
@@ -2995,7 +2995,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29446v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T08:52:56.888905+00:00",
     "title": "Convex Position Minimizes Plane Graphs"
   },
@@ -3131,7 +3131,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s Binary Product Conjecture for Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "23a5c510",
     "description": "For the Fibonacci numeration system $U$ with standard initial conditions (where $u_0=1, u_1=2$), the topological group $\\mathbb{Z}_U$, constructed as the completion of $\\mathbb{Z}$ under the pseudo-valuation $\\nu_U$, is continuously isomorphic to the circle group $\\mathbb{R}/\\mathbb{Z}$. This is a specific instance of the paper's main theorem where the Pisot number is the golden ratio (unimodular, degree 2).",
     "domains": [
       "Algebra",
@@ -3141,7 +3141,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30496v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T11:59:08.845373+00:00",
     "title": "Fibonacci Numeration Group is the Circle Group"
   },
@@ -4062,7 +4062,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete First-Coefficient Spectrum for Strongly Primitive Salem Growth Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ae9dee2",
     "description": "The maximum number of unit-distance pairs among n points in the rational plane Q\u00b2 is \u0398(n^{4/3}). The upper bound O(n^{4/3}) follows from the Szemer\u00e9di-Trotter incidence theorem applied to unit circles in Q\u00b2 (as a subset of R\u00b2). The lower bound \u03a9(n^{4/3}) is conjectural and supported by the algorithmic constructions in this paper, which exploit the algebraic structure of Pythagorean-type parametric families in Q\u00b2 to surpass previous grid-based lower bounds. Resolving this would settle the rational analogue of the Erd\u0151s unit distance problem with matching upper and lower asymptotic exponents.",
     "domains": [
       "Algebra",
@@ -4072,7 +4072,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T21:18:10.152547+00:00",
     "title": "Unit Distance Density in Q\u00b2 is \u0398(n^{4/3})"
   },
@@ -4178,7 +4178,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a925487",
     "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
     "domains": [
       "Algebra"
@@ -4187,7 +4187,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.987080+00:00",
     "title": "Frankl's Union-Closed Conjecture"
   },
@@ -4901,7 +4901,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Strategy Mining from Deep Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "adbfcd0f",
     "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
     "domains": [
       "Geometry",
@@ -4911,7 +4911,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.310599+00:00",
     "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },
