@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f2c77f29",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Euler–Mascheroni Acceleration\n\nDerived from this cycle's findings in\n`MachineLearning/EulerMascheroni/MidpointAcceleration.lean` and\n`MachineLearning/EulerMascheroni/ShiftedAppro",
-      "quality_score": 0.54104,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-27T00:12:21",
-      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-    },
-    {
       "cycle_id": "de494596",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Probabilistic Ramsey lower bounds\n\nDerived from this cycle's findings (see the Lab Notes in\n`RamseyProbabilisticLowerBound.lean` and `RamseyDiagonalSandwich.lean`).  This\ncycle f",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-01T21:20:21",
       "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
+    },
+    {
+      "cycle_id": "f29abd01",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Chromatic thresholds for C4-free diameter-2 graphs\n\nThis cycle isolated the structural skeleton of the problem *\"when must a\nC4-free graph of diameter two fail to be 3-colorable?\"",
+      "quality_score": 0.61208,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-01T21:41:57",
+      "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8322400000000001
     }
   ],
-  "last_updated": "2026-07-01T21:20:21",
+  "last_updated": "2026-07-01T21:41:57",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "03afc47a",
-        "quality": 0.6182000000000001,
-        "theorems": 6,
-        "title": "Langlands Correspondence: GL(1) Case"
-      },
-      {
         "cycle_id": "c9fb85eb",
         "quality": 0.4432100000000001,
         "theorems": 4,
@@ -3637,6 +3631,12 @@
         "quality": 0.8322400000000001,
         "theorems": 18,
         "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/"
+      },
+      {
+        "cycle_id": "f29abd01",
+        "quality": 0.61208,
+        "theorems": 8,
+        "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
       }
     ],
     "NumberTheory": [
