@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6452feb1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Kolmogorov–Arnold Representation\n\nDerived from this cycle's findings (see Lab Notes in\n`Catalog/Applications/KolmogorovArnoldEML.lean` and\n`Catalog/Applications/KolmogorovArn",
-      "quality_score": 0.43033200000000005,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-26T22:11:03",
-      "title": "EML Kolmogorov-Arnold Representation"
-    },
-    {
       "cycle_id": "6a7e7235",
       "domain": "Novelty",
       "key_insight": "# Future Directions — connectivity-preserving Hamiltonian prescribed-end paths\n\nDerived from this cycle's findings (`PathDegree.lean`, `Connectivity.lean`):\nthe degree bookkeeping for the `4k+4` conje",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-01T16:51:06",
       "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
+    },
+    {
+      "cycle_id": "04b163c8",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — digit sums of periodic base-`b` expansions of `1/p`\n\nDerived from the cycle that established: for a prime `p ≡ 1 (mod 4)` and a base `b`\nwhose multiplicative order modulo `p` is",
+      "quality_score": 0.6772579999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-01T16:52:12",
+      "title": "Sum of digits of 1/p for half-period length and p ≡ 1 mod 4"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7232000000000001
     }
   ],
-  "last_updated": "2026-07-01T16:51:06",
+  "last_updated": "2026-07-01T16:52:12",
   "open_questions": [
     {
       "context": "",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "6c747cdd",
-        "quality": 0.4689979318754185,
-        "theorems": 127,
-        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-      },
-      {
         "cycle_id": "12bdf767",
         "quality": 0.5597778115501519,
         "theorems": 74,
@@ -3265,6 +3259,12 @@
         "quality": 0.44923399999999997,
         "theorems": 13,
         "title": "Extremality of Projective Plane Block Designs in the Coupon Collector's Problem"
+      },
+      {
+        "cycle_id": "04b163c8",
+        "quality": 0.6772579999999999,
+        "theorems": 10,
+        "title": "Sum of digits of 1/p for half-period length and p ≡ 1 mod 4"
       }
     ],
     "Computation": [
