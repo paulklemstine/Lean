@@ -8173,7 +8173,7 @@
     "proof_strategy": "Use the combinatorial structure of the crystal B(ρ) and the properties of the lowering operators f_i to show that any ρ-dominant element can be uniquely expressed in the form f_D^nea(R) f_I^sea(R) u_ρ. This would involve analyzing the action of the crystal operators on the elements π_{D,I} and proving that they generate all ρ-dominant elements. Alternatively, use the connection with the PRV conjecture and the classification of highest weight vectors in L(ρ) ⊗ L(ρ).",
     "research_mode": "team",
     "source_exp_id": "2606.27197v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-07-01T08:30:18.160387+00:00",
     "title": "Classification of ρ-dominant elements in B(ρ) for symmetrizable Kac-Moody algebras"
   },
@@ -8320,6 +8320,61 @@
     "status": "available",
     "timestamp": "2026-07-01T10:06:03.524185+00:00",
     "title": "Characterization of Higher-Order Difference Set Inequalities in ℤ"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.AG",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For positive integers k < g with k ≥ 2, let m_k(g) denote the minimal positive integer m such that m · θ_k is algebraic on a very general principally polarized abelian variety (X, Θ) of dimension g, where θ_k = [Θ]^k/k!. The paper establishes that ∏_{p ≤ (k+1)/2} p divides m_k(g), which in particular gives exponential growth. We conjecture this divisibility bound is sharp: m_k(g) = ∏_{p prime, p ≤ (k+1)/2} p for all 2 ≤ k < g. This is consistent with known values m_3(4) = 2, m_4(5) = 2, and m_5(6) = 6. Equivalently, the conjecture asserts that no prime power p^a with a ≥ 2 divides m_k(g), and no prime p > (k+1)/2 divides m_k(g).",
+    "domain_bridges": [
+      "Algebraic cycles on abelian varieties → Graphic matroid F_p-representability",
+      "Hodge theory → Combinatorial topology of Albanese graphs of matroids"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3079",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The lower bound ∏_{p ≤ (k+1)/2} p | m_k(g) is established via the combinatorial result on non-existence of F_p-solutions in Albanese graphs of complete-graph matroids. To prove sharpness, one must show that for each prime p ≤ (k+1)/2, v_p(m_k(g)) = 1 (not higher), and for primes p > (k+1)/2, v_p(m_k(g)) = 0. The first direction requires showing that the graphic matroid obstruction vanishes for p^2, which may follow from constructing explicit algebraic cycles on specific ppavs (e.g., Jacobians of curves) whose class realizes exactly one factor of p. The second direction requires producing, for each prime p > (k+1)/2, a ppav carrying a subvariety of codimension k whose class has p-adic valuation 0—likely achievable on Jacobians or products of elliptic curves where explicit cycle constructions are available.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31894v1",
+    "status": "available",
+    "timestamp": "2026-07-01T10:25:02.333721+00:00",
+    "title": "Exact Formula for Minimal Algebraic Multiples of Minimal Cohomology Classes on Abelian Varieties"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "prime_counting_function",
+      "logarithmic_integral",
+      "riemann_sums",
+      "triangular_numbers",
+      "prime_number_theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The estimator π̂(x) obtained by discretizing the logarithmic integral li(x) = ∫₂ˣ dt/log(t) over the non-uniform partition defined by generalized triangular numbers T_k = k(k+1)/2 (with T_n ≤ x < T_{n+1}), specifically π̂(x) = Σ_{k=1}^{n-1} (T_{k+1} - T_k)/log(T_k) + (x - T_n)/log(T_n), satisfies the error bound |π̂(x) - π(x)| = O(x^{1/2} · log²(x)) as x → ∞. This asserts that the triangular-number Riemann sum approximation, despite using only O(√x) evaluation points with locally computed updates, achieves the same order of accuracy as the best conditional bounds on |li(x) - π(x)| under the Riemann Hypothesis.",
+    "domain_bridges": [
+      "Numerical_Analysis->Analytic_Number_Theory",
+      "Approximation_Theory->Computational_Number_Theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3080",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Decompose the error into two parts: (1) discretization error |π̂(x) - li(x)| arising from the Riemann sum over the triangular partition, bounded by analyzing the modulus of continuity of 1/log(t) against the local interval widths T_{k+1} - T_k = k+1, which grow as O(√T_k); (2) the analytic error |li(x) - π(x)|, invoking known conditional or unconditional bounds. The triangular partition's quadratic growth ensures that the sum of local discretization errors remains O(√x · log x), and combining both error sources yields the target bound.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31761v1",
+    "status": "available",
+    "timestamp": "2026-07-01T10:25:52.382688+00:00",
+    "title": "Triangular Partition Estimator Error Bound for π(x)"
   },
   {
     "ambition_level": "extension",
