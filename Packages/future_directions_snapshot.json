@@ -5175,7 +5175,7 @@
       "Riemann xi function",
       "self-adjoint extension theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "32f1634b",
     "description": "The Berry-Keating Hamiltonian H_BK = (xp + px)/2 on L²(ℝ⁺), when equipped with a suitable self-adjoint extension satisfying the appropriate boundary condition, has spectrum {λ_n} such that λ_n = t_n² + 1/4, where ρ_n = 1/2 + it_n ranges over the non-trivial zeros of the Riemann zeta function. This would verify the Hilbert-Pólya conjecture for this specific operator and imply the Riemann Hypothesis, since self-adjoint operators have real eigenvalues, forcing all t_n to be real and thus all ρ_n to lie on Re(s) = 1/2.",
     "domain_bridges": [
       "spectral theory of unbounded operators ↔ analytic number theory",
@@ -5192,7 +5192,7 @@
     "proof_strategy": "1) Define H_BK = (xp+px)/2 rigorously as an unbounded operator on L²(ℝ⁺) with domain specified by boundary conditions. 2) Prove existence and uniqueness of the self-adjoint extension using von Neumann deficiency index theory. 3) Compute the trace of the resolvent Tr((H_BK - s(s-1))⁻¹) via the Gutzwiller trace formula for this Hamiltonian. 4) Show via analytic continuation that the spectral zeta function ζ_{H_BK}(s) equals the Riemann xi function ξ(s). 5) Conclude spectral correspondence via the equality of zeta-regularized spectral determinants: det_ζ(H_BK - s(s-1)I) = ξ(s).",
     "research_mode": "team",
     "source_exp_id": "2606.29294v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T09:11:33.770269+00:00",
     "title": "Berry-Keating Hamiltonian Spectrum Corresponds to Riemann Zeta Non-Trivial Zeros"
   },
