@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7496c7ce",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Zero-Knowledge Proofs & Verifiable Computation\n\nDerived from this cycle's findings in `Catalog/Cryptography/ZeroKnowledge/Graph3Coloring.lean`,\n`Catalog/Cryptography/ZeroKnowledg",
-      "quality_score": 0.80792,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-26T18:52:44",
-      "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-    },
-    {
       "cycle_id": "53529d3f",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Flip graphs of the m×n Miura-ori\n\nDerived from this cycle's findings: (a) the crease graph has exactly `(m-1)(n-1)`\ndegree-4 vertices (`card_degreeFour`), and (b) the single-site",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-01T08:49:04",
       "title": "Quadratic Reciprocity: Five Proofs Formalized"
+    },
+    {
+      "cycle_id": "3257177e",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Autocorrelation of Simultaneously Visible Lattice Points\n\nThis cycle established the local (per-prime) backbone of the autocorrelation of the\nset `V_S` of lattice points simultan",
+      "quality_score": 0.5029119272727274,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-01T12:34:06",
+      "title": "Euler Product for Autocorrelation of Simultaneously Visible Lattice Points"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74152
     }
   ],
-  "last_updated": "2026-07-01T08:49:04",
+  "last_updated": "2026-07-01T12:34:06",
   "open_questions": [
     {
       "context": "",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "2683755a",
-        "quality": 0.5860000000000001,
-        "theorems": 14,
-        "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
-      },
-      {
         "cycle_id": "f810a812",
         "quality": 0.5494902834008097,
         "theorems": 23,
@@ -3575,6 +3569,12 @@
         "quality": 0.77624,
         "theorems": 16,
         "title": "Projective Plane Coupon Collection Slowness"
+      },
+      {
+        "cycle_id": "3257177e",
+        "quality": 0.5029119272727274,
+        "theorems": 12,
+        "title": "Euler Product for Autocorrelation of Simultaneously Visible Lattice Points"
       }
     ],
     "Novelty": [
