@@ -6303,7 +6303,7 @@
       "Zeilberger1988",
       "Eisenberg2020"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea07da03",
     "description": "The determinant of an \\( n \\times n \\) matrix with entries defined by \\( \\binom{\\ell + m - i - j + 2}{m - 1} \\) for \\( 1 \\leq i,j \\leq n \\) and \\( 2 \\leq m \\leq n \\) is identically equal to 1, as shown through a bijective correspondence between lattice paths and matrix permanents.",
     "domain_bridges": [
       "binomial coefficients",
@@ -6320,7 +6320,7 @@
     "proof_strategy": "Construct a sign-reversing involution on the set of perfect matchings in a modified grid graph, where fixed points correspond to lattice paths counted by permanents of submatrices, thereby proving determinant preservation.",
     "research_mode": "team",
     "source_exp_id": "2606.27763v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T01:01:53.020039+00:00",
     "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
   },
