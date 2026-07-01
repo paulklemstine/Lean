@@ -3550,7 +3550,7 @@
       "math.CO",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddab9e68",
     "description": "For any integers d, e > 1, a partition λ is d-balanced (with respect to e) if every hook of λ whose length is divisible by e has arm length divisible by d. The conjecture states that the affine crystal reflection operators on partitions preserve the d-balanced property: for any d, e > 1, any d-balanced partition λ, and any valid crystal reflection index i, the partition s_i(λ) obtained by applying the i-th affine crystal reflection to λ is again d-balanced.",
     "domain_bridges": [
       "representation_theory",
@@ -3566,7 +3566,7 @@
     "proof_strategy": "Define partitions, hook lengths, arm lengths, and d-balanced property in Lean. Formalize the affine crystal reflection operators on partitions (via abacus configurations or node addition/removal). The key step is showing that if h_{rc}(λ) ≡ 0 (mod e) implies a_{rc}(λ) ≡ 0 (mod d), then the same holds after applying a crystal reflection s_i. This likely proceeds by analyzing how a single affine reflection modifies hook lengths and arm lengths, using the fact that the reflection changes the partition by adding/removing a rim hook of e-residue i, and checking the d-balanced condition is preserved at each affected node.",
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T22:40:00.751415+00:00",
     "title": "Crystal Reflections Preserve d-Balanced Property of Partitions"
   },
