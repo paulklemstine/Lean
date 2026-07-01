@@ -314,7 +314,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "3fc75f2f",
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domains": [
       "NumberTheory",
@@ -324,7 +324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -1055,7 +1055,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unimodality of Modified GJZ Mixed Scalar Factor Coefficients"
   },
   {
-    "consumed_by_exp_id": "f4a3062b",
+    "consumed_by_exp_id": "",
     "description": "Characterize the set of limit points of the largest matching roots $\\mu(G)$ for all finite graphs $G$. Specifically, prove that the set of limit points contains the interval $[\\tau^{1/2} + \\tau^{-1/2}, \\infty)$ and identify the discrete structure of limit points below the threshold $\\tau^{1/2} + \\tau^{-1/2}$, where $\\tau$ is the golden ratio.",
     "domains": [
       "Bridges"
@@ -1064,7 +1064,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28162v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T05:26:29.809366+00:00",
     "title": "Limit Points of Largest Matching Roots of Graphs"
   },
@@ -1446,7 +1446,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp lower bound for the sixth moment of the Riemann zeta function"
   },
   {
-    "consumed_by_exp_id": "34cada6c",
+    "consumed_by_exp_id": "",
     "description": "For any partition \u03bb of n and any support pattern S \u2286 [n] \u00d7 [n], the number of n \u00d7 n nilpotent matrices over F_q with Jordan canonical form type \u03bb and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian\u2013Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
     "domains": [
       "Algebra",
@@ -1456,7 +1456,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27497v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
@@ -3656,7 +3656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Identity for Harmonic Zeta Function Values"
   },
   {
-    "consumed_by_exp_id": "9c32cc45",
+    "consumed_by_exp_id": "",
     "description": "For an acyclic quiver Q of affine Dynkin type X\u0303\u2099 where X\u0303\u2099 \u2209 {\u00c3\u2099, \u1ebc\u2087}, every banded coordinate projection \u03c0_{vw} (with \u03b4_v = \u03b4_w) surjects onto its band {(x,y) : |x\u2212y| \u2264 b_{vw}}. That is, the only non-filling banded pairs across all affine types are the source-sink diagonal in \u00c3\u2099 and the unique pair of null-root coefficient 2 vertices in \u1ebc\u2087.",
     "domains": [
       "Pythagorean",
@@ -3666,7 +3666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27523v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T04:21:47.558779+00:00",
     "title": "Filling Conjecture for Banded Pairs in Affine Types Beyond \u00c3\u2099 and \u1ebc\u2087"
   },
@@ -3804,12 +3804,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "An affine semigroup S = <E \u2294 A> \u2286 \u2115^p with minimal generating set E \u2294 A is strong if and only if the Ap\u00e9ry set Ap(S, E) satisfies Ap(S, E) \u2286 A \u222a 2A \u222a {0}, where 2A = {2a | a \u2208 A}. This generalizes the known characterization for numerical semigroups to the higher-dimensional affine setting, providing a computationally effective criterion for strongness.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3021",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28420v1",
+    "status": "available",
+    "timestamp": "2026-07-01T08:03:18.609971+00:00",
+    "title": "Ap\u00e9ry Set Characterization of Strong Affine Semigroups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3824,7 +3839,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3022",
+    "id": "fd_3023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3838,7 +3853,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3023",
+    "id": "fd_3024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3853,7 +3868,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3024",
+    "id": "fd_3025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3868,7 +3883,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3025",
+    "id": "fd_3026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3883,7 +3898,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3026",
+    "id": "fd_3027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3892,17 +3907,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Correspondence for Borel Orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9"
   },
   {
-    "consumed_by_exp_id": "af008f91",
+    "consumed_by_exp_id": "",
     "description": "For any positive integer m, any real number p with 0 \u2264 p \u2264 1/3, and any positive weights w\u2081,...,w\u2098 summing to 1, if v\u2081,...,v\u2098 are i.i.d. Bernoulli(p) random variables, then P(\u2211\u1d62 w\u1d62v\u1d62 \u2265 p) \u2265 p. This is the central conjecture of the paper, which the authors connect to the Manickam-Mikl\u00f3s-Singhi conjecture and prove for sufficiently small p. The bound p is sharp, achieved when m=1 and w\u2081=1.",
     "domains": [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T13:38:03.172846+00:00",
     "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
   },
@@ -3912,7 +3927,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3028",
+    "id": "fd_3029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3926,7 +3941,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3029",
+    "id": "fd_3030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3940,7 +3955,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3030",
+    "id": "fd_3031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3954,7 +3969,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3031",
+    "id": "fd_3032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3969,7 +3984,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3032",
+    "id": "fd_3033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3983,7 +3998,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3033",
+    "id": "fd_3034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3997,7 +4012,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3034",
+    "id": "fd_3035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -4011,7 +4026,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3035",
+    "id": "fd_3036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -4026,7 +4041,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3036",
+    "id": "fd_3037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -4041,7 +4056,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3037",
+    "id": "fd_3038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -4055,7 +4070,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3038",
+    "id": "fd_3039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -4070,7 +4085,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3039",
+    "id": "fd_3040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -4084,7 +4099,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3040",
+    "id": "fd_3041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -4093,17 +4108,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph Algebra sl\u2082-Module Tensor Power Isomorphism"
   },
   {
-    "consumed_by_exp_id": "46a53213",
+    "consumed_by_exp_id": "",
     "description": "Let $E$ be a $d$-dimensional Anderson $t$-module defined over a finite extension $L$ of $K=\\mathbb{F}_q(\\theta)$, and let $P_1, \\dots, P_\\ell \\in E(L)$ be $L$-rational points. The $\\mathbb{F}_q[t]$-module of linear relations among these points is free of finite rank. We conjecture that there exists an explicit polynomial bound on the degrees of the generators of this relation module, specifically that the maximum degree of any generator is bounded by a polynomial function in $d$, $\\ell$, and the maximum of the logarithmic Weil heights of $P_1, \\dots, P_\\ell$. This serves as an effective analogue of Masser's relation module bounds for commutative algebraic groups.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3041",
+    "id": "fd_3042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T18:40:11.183273+00:00",
     "title": "Explicit Degree Bound for Generators of $\\mathbb{F}_q[t]$-Linear Relations on $t$-Modules"
   },
@@ -4113,7 +4128,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3042",
+    "id": "fd_3043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -4127,7 +4142,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3043",
+    "id": "fd_3044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -4142,7 +4157,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3044",
+    "id": "fd_3045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -4151,17 +4166,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Almost-Prime Goldbach Gap Conjecture"
   },
   {
-    "consumed_by_exp_id": "bbb1cf47",
+    "consumed_by_exp_id": "",
     "description": "Let K and L be anabelomorphic p-adic fields (i.e., their absolute Galois groups Gal(K\u0304/K) and Gal(L\u0304/L) are topologically isomorphic), and let G be a connected split reductive group over Q_p. The Synchronization Conjecture (Conjecture 3.3.1 of the paper) asserts that the Fargues-Scholze local Langlands correspondence for G over K is compatible with the correspondence for G over L via the anabelomorphism. Concretely, if \u03c6: Gal(K\u0304/K) \u2192 Gal(L\u0304/L) is a topological isomorphism, then the bijection between smooth irreducible representations of G(K) and Langlands parameters for (G, K) synchronizes with the corresponding bijection for (G, L) via the functoriality induced by \u03c6. The author establishes this for split tori (Theorem 4.1); the conjecture extends it to all connected split reductive groups.",
     "domains": [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3045",
+    "id": "fd_3046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T20:03:02.619132+00:00",
     "title": "Anabelomorphic Synchronization of the Fargues-Scholze Local Langlands Correspondence"
   },
@@ -4172,7 +4187,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3046",
+    "id": "fd_3047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4186,7 +4201,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3047",
+    "id": "fd_3048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4200,7 +4215,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3048",
+    "id": "fd_3049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4215,7 +4230,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3049",
+    "id": "fd_3050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4230,7 +4245,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3050",
+    "id": "fd_3051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4245,7 +4260,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3051",
+    "id": "fd_3052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4259,7 +4274,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3052",
+    "id": "fd_3053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4273,7 +4288,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3053",
+    "id": "fd_3054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4287,7 +4302,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3054",
+    "id": "fd_3055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -4301,7 +4316,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3055",
+    "id": "fd_3056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27507v1",
@@ -4316,7 +4331,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3056",
+    "id": "fd_3057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27516v1",
@@ -4330,7 +4345,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3057",
+    "id": "fd_3058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
@@ -4345,7 +4360,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3058",
+    "id": "fd_3059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27273v1",
@@ -4359,7 +4374,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3059",
+    "id": "fd_3060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
@@ -4374,7 +4389,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3060",
+    "id": "fd_3061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
@@ -4388,7 +4403,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3061",
+    "id": "fd_3062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
@@ -4402,7 +4417,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_3062",
+    "id": "fd_3063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27451v1",
@@ -4417,7 +4432,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3063",
+    "id": "fd_3064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27208v1",
@@ -4432,13 +4447,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3064",
+    "id": "fd_3065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27170v1",
     "status": "available",
     "timestamp": "2026-07-01T07:38:57.448374+00:00",
     "title": "Automorphism Group Dichotomy for Hereditary B-Free Subshifts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the merge regime with \u03bb=2 initial blocks, consider binary Reed-Muller codes where each initial code is RM(r, m-1) of length 2^{m-1} and the final code is RM(r, m) of length 2^m, with 0 < r \u2264 m. The explicit conversion constructed via the Plotkin decomposition RM(r,m) = {(u, u+v) : u \u2208 RM(r,m-1), v \u2208 RM(r-1,m-1)} achieves the universal lower bound on read cost derived from the generalized Hamming weight hierarchy. This conjecture posits that the gap identified for one initial block in prior analysis can be closed, making the Plotkin-based RM conversion both write-optimal and read-optimal.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_3066",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27179v2",
+    "status": "available",
+    "timestamp": "2026-07-01T08:03:50.676293+00:00",
+    "title": "Read-Cost Optimality of Reed-Muller Convertible Codes in the Merge Regime"
   },
   {
     "consumed_by_exp_id": "",
@@ -4818,7 +4847,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3a5f08b7",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -4828,7 +4857,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -5103,7 +5132,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "0c19b86d",
+    "consumed_by_exp_id": "",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domains": [
       "Cryptography",
@@ -5113,7 +5142,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
