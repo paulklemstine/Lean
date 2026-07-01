@@ -3613,7 +3613,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finiteness of Common Values of ABC Power Sum Recurrences"
   },
   {
-    "consumed_by_exp_id": "ea07da03",
+    "consumed_by_exp_id": "",
     "description": "The determinant of an \\( n \\times n \\) matrix with entries defined by \\( \\binom{\\ell + m - i - j + 2}{m - 1} \\) for \\( 1 \\leq i,j \\leq n \\) and \\( 2 \\leq m \\leq n \\) is identically equal to 1, as shown through a bijective correspondence between lattice paths and matrix permanents.",
     "domains": [
       "Cryptography",
@@ -3623,7 +3623,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27763v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T01:01:53.020039+00:00",
     "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
   },
@@ -3656,7 +3656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Identity for Harmonic Zeta Function Values"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c32cc45",
     "description": "For an acyclic quiver Q of affine Dynkin type X\u0303\u2099 where X\u0303\u2099 \u2209 {\u00c3\u2099, \u1ebc\u2087}, every banded coordinate projection \u03c0_{vw} (with \u03b4_v = \u03b4_w) surjects onto its band {(x,y) : |x\u2212y| \u2264 b_{vw}}. That is, the only non-filling banded pairs across all affine types are the source-sink diagonal in \u00c3\u2099 and the unique pair of null-root coefficient 2 vertices in \u1ebc\u2087.",
     "domains": [
       "Pythagorean",
@@ -3666,7 +3666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27523v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T04:21:47.558779+00:00",
     "title": "Filling Conjecture for Banded Pairs in Affine Types Beyond \u00c3\u2099 and \u1ebc\u2087"
   },
@@ -3775,12 +3775,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any $f \\in L^2(\\mathbb{R}^2)$, the maximal Carleson-Radon operator $CR^* f(x,y) = \\sup_{0<r<R<\\infty, a \\in \\mathbb{R}} \\left| \\int_{r<|t|\\leq R} f(x-t, y-t^2) e(a t^2) \\frac{1}{t} dt \\right|$ is bounded on $L^2(\\mathbb{R}^2)$, i.e., there exists a constant $C > 0$ such that $\\|CR^* f\\|_{L^2(\\mathbb{R}^2)} \\leq C \\|f\\|_{L^2(\\mathbb{R}^2)}$. This corresponds to the $D=1$ case of the paper's main theorem with the resonant subspace $\\mathbb{V}$ spanned by $(0,1)$ and the standard Hilbert kernel.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3019",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27219v1",
+    "status": "available",
+    "timestamp": "2026-07-01T07:14:40.894963+00:00",
+    "title": "L^2 Boundedness of the Maximal Carleson-Radon Transform Along the Parabola"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3795,7 +3809,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3809,7 +3823,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3824,7 +3838,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3022",
+    "id": "fd_3023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3839,7 +3853,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3023",
+    "id": "fd_3024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3854,7 +3868,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3024",
+    "id": "fd_3025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3869,7 +3883,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3025",
+    "id": "fd_3026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3878,30 +3892,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Probability that a Weighted Bernoulli Sum Exceeds Its Mean is at Least p"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af008f91",
     "description": "For any 0 < \u03b5 < 1, there exist constants \u03b3 > 0 and C > 0 such that for any dimension n, any subset A of the discrete cube (ZMod 2)^n with |A| \u2265 \u03b5 * 2^n, and any (\u03b3, C)-well-spread set S, the Minkowski sum A + S has size at least (1 - \u03b5) * 2^n. This generalizes the classical concentration of measure phenomenon where S is a Hamming ball.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3026",
+    "id": "fd_3027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:57:52.389023+00:00",
     "title": "Generalized Concentration of Measure for Well-Spread Sets"
   },
   {
-    "consumed_by_exp_id": "af008f91",
+    "consumed_by_exp_id": "",
     "description": "The conjecture posits that joint descendant sizes scale asymptotically below linear growth, bounded by \u221an, conflicting with polynomial expectations from recursive dependencies.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T14:19:18.123295+00:00",
     "title": "Sublinear Growth of Joint Descendants"
   },
@@ -3911,7 +3925,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3028",
+    "id": "fd_3029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3925,7 +3939,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3029",
+    "id": "fd_3030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3940,7 +3954,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3030",
+    "id": "fd_3031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3954,7 +3968,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3031",
+    "id": "fd_3032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3968,7 +3982,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3032",
+    "id": "fd_3033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3982,7 +3996,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3033",
+    "id": "fd_3034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3997,7 +4011,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3034",
+    "id": "fd_3035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -4012,7 +4026,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3035",
+    "id": "fd_3036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -4026,7 +4040,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3036",
+    "id": "fd_3037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -4041,7 +4055,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3037",
+    "id": "fd_3038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -4055,7 +4069,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3038",
+    "id": "fd_3039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -4070,7 +4084,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3039",
+    "id": "fd_3040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -4079,30 +4093,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Degree Bound for Generators of $\\mathbb{F}_q[t]$-Linear Relations on $t$-Modules"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "Every plane triangulation on n vertices contains a P3-packing of size at least floor(n/5). This is the primary theorem for P3-packings established in the paper, proved by combining Barnette's theorem on spanning trees in 3-connected planar graphs with an inductive packing lemma on subcubic trees.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_3040",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29743v1",
-    "status": "available",
-    "timestamp": "2026-06-30T19:04:14.554319+00:00",
-    "title": "P3-Packing Lower Bound in Plane Triangulations"
-  },
-  {
     "consumed_by_exp_id": "46a53213",
-    "description": "For every self-reciprocal (palindromic) polynomial P \u2208 \u2124[X] of even degree 2m, the polynomial factors as P(x) = x^m \u00b7 Q(x + x\u207b\u00b9) for a unique degree-m polynomial Q (the Chebyshev transform). All roots of P lie on the unit circle in \u2102 if and only if all roots of Q are real and lie in the interval [-2, 2]. The forward direction follows because x on the unit circle implies u = x + x\u207b\u00b9 = 2Re(x) \u2208 [-2, 2]; the reverse because u \u2208 [-2, 2] implies both roots of x\u00b2 - ux + 1 = 0 satisfy |x| = 1 since |x|\u00b2 = x\u00b7x\u0304 = 1 when x\u207b\u00b9 = x\u0304.",
+    "description": "Every plane triangulation on n vertices contains a P3-packing of size at least floor(n/5). This is the primary theorem for P3-packings established in the paper, proved by combining Barnette's theorem on spanning trees in 3-connected planar graphs with an inductive packing lemma on subcubic trees.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_3041",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.29669v1",
+    "source_exp_id": "2606.29743v1",
     "status": "in_progress",
+    "timestamp": "2026-06-30T19:04:14.554319+00:00",
+    "title": "P3-Packing Lower Bound in Plane Triangulations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every self-reciprocal (palindromic) polynomial P \u2208 \u2124[X] of even degree 2m, the polynomial factors as P(x) = x^m \u00b7 Q(x + x\u207b\u00b9) for a unique degree-m polynomial Q (the Chebyshev transform). All roots of P lie on the unit circle in \u2102 if and only if all roots of Q are real and lie in the interval [-2, 2]. The forward direction follows because x on the unit circle implies u = x + x\u207b\u00b9 = 2Re(x) \u2208 [-2, 2]; the reverse because u \u2208 [-2, 2] implies both roots of x\u00b2 - ux + 1 = 0 satisfy |x| = 1 since |x|\u00b2 = x\u00b7x\u0304 = 1 when x\u207b\u00b9 = x\u0304.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3042",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29669v1",
+    "status": "available",
     "timestamp": "2026-06-30T19:27:53.327772+00:00",
     "title": "Chebyshev Transform Root Location Equivalence for Self-Reciprocal Polynomials"
   },
@@ -4113,7 +4127,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3042",
+    "id": "fd_3043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -4128,7 +4142,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3043",
+    "id": "fd_3044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -4137,31 +4151,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Anabelomorphic Synchronization of the Fargues-Scholze Local Langlands Correspondence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bbb1cf47",
     "description": "For any finite tree T with designated root r and leaf set L, if there exists a graph homomorphism f: V(T) \u2192 \u2124 (satisfying |f(u) - f(v)| = 1 for all adjacent u, v) with f(v) = 0 for all v \u2208 L, then for a uniformly random such homomorphism f, the variance of f(r) is at least the effective resistance R_eff(r, L) in the unit resistance network on T. This conjectures that the discrete random homomorphism variance always dominates the corresponding Gaussian (continuous) variance, which equals R_eff. Verified for paths (where Var(f(k)) \u2265 k(n-k)/n on P_n) and star graphs (where Var = 1 \u2265 1/n = R_eff).",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3044",
+    "id": "fd_3045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T20:21:50.897757+00:00",
     "title": "Variance-Resistance Inequality for Root Value of Random Tree Homomorphisms"
   },
   {
-    "consumed_by_exp_id": "bbb1cf47",
+    "consumed_by_exp_id": "",
     "description": "For every n \u2265 2, the average specification number \u03c3\u0304_n of Boolean threshold functions on n variables satisfies \u03c3\u0304_n \u2265 n + 2, strictly exceeding the minimum possible specification number n + 1. Equivalently, the average facet count of chambers in the central hyperplane arrangement dual to the lifted Boolean cube strictly exceeds n + 1. This strengthens the trivial lower bound \u03c3\u0304_n \u2265 n + 1 (from \u03c3_n(f) \u2265 n + 1 for all f) and complements the paper's upper bound \u03c3\u0304_n \u2264 2n obtained via the Fukuda\u2013Tamura\u2013Tokuyama theorem.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3045",
+    "id": "fd_3046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T20:40:41.523700+00:00",
     "title": "Strict lower bound on the average specification number of Boolean threshold functions"
   },
@@ -4171,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3046",
+    "id": "fd_3047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4186,7 +4200,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3047",
+    "id": "fd_3048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4201,7 +4215,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3048",
+    "id": "fd_3049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4216,7 +4230,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3049",
+    "id": "fd_3050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4230,7 +4244,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3050",
+    "id": "fd_3051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4244,7 +4258,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3051",
+    "id": "fd_3052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4258,7 +4272,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3052",
+    "id": "fd_3053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -4272,7 +4286,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3053",
+    "id": "fd_3054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27507v1",
@@ -4287,7 +4301,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3054",
+    "id": "fd_3055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27516v1",
@@ -4301,7 +4315,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3055",
+    "id": "fd_3056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
@@ -4316,7 +4330,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3056",
+    "id": "fd_3057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27273v1",
@@ -4330,7 +4344,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3057",
+    "id": "fd_3058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
@@ -4345,7 +4359,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3058",
+    "id": "fd_3059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
@@ -4359,7 +4373,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3059",
+    "id": "fd_3060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
@@ -4373,13 +4387,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_3060",
+    "id": "fd_3061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27451v1",
     "status": "available",
     "timestamp": "2026-07-01T06:57:07.943337+00:00",
     "title": "Uniqueness of Totally Disjoint Diametral Paths in Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every finite group whose order is coprime with 30 is R-sequenceable. This translates a major consequence of the paper's findings on odd cycle indices and the Quotient-Normal Gadget theorem into a formal statement, extending classical abelian group results to all such finite groups.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3062",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27208v1",
+    "status": "available",
+    "timestamp": "2026-07-01T07:15:17.677296+00:00",
+    "title": "R-sequenceability of Groups of Order Coprime to 30"
   },
   {
     "consumed_by_exp_id": "",

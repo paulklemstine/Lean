@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-01T06:50:43.475496+00:00",
+  "last_updated": "2026-07-01T07:13:49.173546+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -23239,6 +23239,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-01T06:50:43.095078+00:00",
       "title": "Elementary Abelian 2-Groups Characterize Pairwise Reflection-Symmetric Latin Squares of Order 2^k"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3545,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 65,
+      "domain": "Cryptography",
+      "duration_seconds": -248.23720288276672,
+      "end_time": 1782884552.2540994,
+      "files_integrated": 0,
+      "job_id": "ea07da03",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.77,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "cross_domain": 0.95,
+        "importance": 0.4507188235294118,
+        "novelty": 0.9500000000000001,
+        "pegb_compliance": 0.25,
+        "proof_depth": 0.23674117647058823,
+        "usefulness": 0.5933705882352941
+      },
+      "quality_score": 0.46104,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782884800.4913023,
+      "strategy_count": 0,
+      "theorem_count": 13,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 13,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-01T07:13:48.855018+00:00",
+      "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
     }
   ]
 }
