@@ -1157,7 +1157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
   {
-    "consumed_by_exp_id": "f3b6ce9e",
+    "consumed_by_exp_id": "",
     "description": "Every \u03c4_k-maximal graph on n vertices (with n \u2265 2k+2) has exactly (k+1)(n-1)-1 edges. A graph is \u03c4_k-maximal if it contains no subgraph with k+1 edge-disjoint spanning trees, yet adding any edge from its complement creates such a subgraph.",
     "domains": [
       "Bridges"
@@ -1166,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T06:06:52.919140+00:00",
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
@@ -1896,21 +1896,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T19:23:54.603938+00:00",
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
-  },
-  {
-    "consumed_by_exp_id": "deb92459",
-    "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_2888",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.28121v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-29T19:42:40.348725+00:00",
-    "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -2842,7 +2827,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "L^p Relaxation of the KNRS Conjecture for Graphons"
   },
   {
-    "consumed_by_exp_id": "0eefe6b1",
+    "consumed_by_exp_id": "",
     "description": "For a prime p \u2265 3 and an integer b \u2265 2 with p \u2224 b, if the multiplicative order of b modulo p is l = (p-1)/2^m and p \u2261 1 mod 2^(m+1), then the sum of the base-b digits in one full period of the expansion of 1/p equals (b-1)(p-1)/2^(m+1).",
     "domains": [
       "Pythagorean"
@@ -2851,12 +2836,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:05:42.798221+00:00",
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
   {
-    "consumed_by_exp_id": "7d2ed753",
+    "consumed_by_exp_id": "",
     "description": "The paper establishes that c(s/log s)^{4/3} \u2264 F(s) \u2264 (1+o(1))s^{3/2}/log s, where F(s) = max{\u03c7(G) : \u03c9(G) \u2264 s, g(G\u0305) \u2265 6}. The conjecture proposes that the true asymptotic growth rate is \u0398(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) \u2265 c \u00b7 s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
     "domains": [
       "Pythagorean"
@@ -2865,7 +2850,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:26:20.098555+00:00",
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
@@ -5051,6 +5036,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 8875d434 (Q=0.748) proved 14 theorems in Computation but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "sorry_fill_8875d434_d7cba003",
+    "priority_score": 0.7976214285714286,
+    "research_mode": "team",
+    "source_exp_id": "8875d434",
+    "status": "available",
+    "timestamp": "2026-07-01T15:19:18.659839+00:00",
+    "title": "Close Proofs: Minimum Independence Ratio Constraint"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domains": [
       "Algebra"
@@ -5121,6 +5120,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Independence Ratios of Unit-Distance Graphs\n\nThis cycle established a clean, sharp relationship between colourability and the\nindependence ratio of finite graphs, instantiated it on planar unit-distance\ngraphs, and isolated exactly where the folklore \"one quarter\" threshold stops\nbeing a theorem and becomes a conjecture. The following directions are derived\ndirectly from those findings.\n\n## 1. The true infimum of the planar independence ratio\n\n**Conjecture.** The infimum, over all finite unit-distance graphs in the plane,\nof the ratio between a largest set of mutually non-unit-distance vertices and the\ntotal number of vertices is a single well-defined constant strictly between\n`0.22` and `0.26`, and in particular it is **strictly below one quarter**.\n\n*The key insight is* that the \"one quarter\" figure is an artefact of four-colour\nintuition, and colourability provably cannot deliver it: there exist finite\nplanar configurations requiring five colours, so the quarter bound must be argued\n\u2014if it holds at all\u2014by a packing or density argument rather than by colouring,\nand the best packing constructions already push the ceiling toward `0.229`.\n\n*Why now?* The recent discovery of explicit five-chromatic planar\nunit-distance configurations removed the last reason to expect a four-colour\nproof of the quarter bound, and modern flag-algebra and linear-programming\ndensity methods are finally sharp enough to pin the constant to two decimal\nplaces.\n\n## 2. Sharpness is a colouring phenomenon, not a geometric one\n\n**Conjecture.** Among finite unit-distance graphs in the plane, the colouring\nlower bound `1 / k` on the independence ratio is attained (as an equality) only\nby graphs whose largest complete subgraph is a triangle, and never by a\ngenuinely `k`-colour-critical planar family for `k \u2265 4`.\n\n*The key insight is* that the abstract bound `1 / k` is tight exactly on complete\ngraphs, but complete graphs stop being realisable by planar unit distances once\nthey exceed three vertices, so the geometric constraint forces every planar\nwitness strictly into the interior of the admissible region.\n\n*Why now?* We have, in this cycle, both the exact tightness statement for the\nabstract bound and an explicit planar triangle attaining `1 / 3`; the natural\nnext step is to prove that no planar family can hug the bound as `k` grows.\n\n## 3. An edge-count phase transition for the ratio\n\n**Conjecture.** For finite unit-distance graphs on `n` vertices with `m` edges,\nthe independence ratio is bounded below by a quantity of order `n / (m + n)`, and\nthis edge-count bound overtakes any colouring bound precisely in the sparse\nregime `m = o(n^{4/3})`, which is the extremal edge count for planar unit\ndistances.\n\n*The key insight is* that two entirely different mechanisms control the ratio in\ndifferent density regimes\u2014averaging over colour classes when the graph is dense,\nand the Tur\u00e1n/Caro\u2013Wei degree averaging when it is sparse\u2014and the crossover sits\nexactly at the known extremal edge density for unit-distance graphs.\n\n*Why now?* The extremal `n^{4/3}` edge bound for unit-distance graphs is\nclassical, but only recently have matching sparse constructions been catalogued,\nmaking it feasible to test where the two independence-ratio mechanisms exchange\ndominance.\n\n## 4. Dimension lifts the threshold\n\n**Conjecture.** In three-dimensional space the analogous independence-ratio\ninfimum is strictly smaller than in the plane, and it decays to zero as the\nambient dimension grows, at a rate governed by the exponential growth of the\nkissing number.\n\n*The key insight is* that higher dimensions permit ever larger cliques of\nmutually unit-distant points (a regular simplex uses one extra dimension per\nextra vertex), and each such clique drags the local independence ratio down\ntoward the reciprocal of the clique size.\n\n*Why now?* Sphere-packing and kissing-number bounds were recently settled in\nseveral key dimensions, giving, for the first time, quantitative control over how\nmany mutually unit-distant points a bounded region can host.\n\n## 5. A certified separation between the fractional and integral bounds\n\n**Conjecture.** There is an explicit finite planar unit-distance graph whose\nindependence ratio is strictly larger than the reciprocal of its fractional\nchromatic number, exhibiting a certified gap between the fractional-colouring\nprediction and the true integral ratio.\n\n*The key insight is* that the reciprocal-fractional-chromatic-number heuristic is\nonly an inequality, and the slack in that inequality is itself measurable on\nsmall critical configurations, so a single well-chosen finite graph can witness\nthe separation exactly.\n\n*Why now?* Fractional chromatic numbers of small planar unit-distance graphs are\nnow computable to high precision, so the predicted gap can be exhibited on a\nconcrete, fully checkable example rather than argued asymptotically.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3102",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8875d434",
+    "status": "available",
+    "timestamp": "2026-07-01T15:19:09.721624+00:00",
+    "title": "Clean, sharp relationship between colourability and the"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5149,7 +5163,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "c56262ed",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -5159,7 +5173,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },

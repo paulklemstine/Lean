@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1394b2e6",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Self-dual string C-groups of alternating groups\n\nDerived from this cycle's findings (the formalized `Foundations.lean` and\n`RankArithmetic.lean`). Each conjecture is falsifiable",
-      "quality_score": 0.73028,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T02:11:52",
-      "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
-    },
-    {
       "cycle_id": "11521acf",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Differential & Linear Cryptanalysis Bounds\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. Each conjecture is bold, falsifiable, and ready for",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-01T13:29:33",
       "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly great"
+    },
+    {
+      "cycle_id": "8875d434",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Independence Ratios of Unit-Distance Graphs\n\nThis cycle established a clean, sharp relationship between colourability and the\nindependence ratio of finite graphs, instantiated it",
+      "quality_score": 0.7476214285714285,
+      "sorry_count": 5,
+      "theorem_count": 14,
+      "timestamp": "2026-07-01T15:19:18",
+      "title": "Minimum Independence Ratio Constraint"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7b228cc3",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Differential Galois Theory for EML ODEs\n\nDerived from this cycle's results in `EMLDifferentialGalois.lean`,\n`EMLKovacicSharp.lean`, and `EMLWronskianGalois.lean` (which build on",
-      "quality_score": 0.74264,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-26T19:56:58",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
     {
       "cycle_id": "1f3047ef",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 22,
       "timestamp": "2026-07-01T13:29:33",
       "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly great"
+    },
+    {
+      "cycle_id": "8875d434",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Independence Ratios of Unit-Distance Graphs\n\nThis cycle established a clean, sharp relationship between colourability and the\nindependence ratio of finite graphs, instantiated it",
+      "quality_score": 0.7476214285714285,
+      "sorry_count": 5,
+      "theorem_count": 14,
+      "timestamp": "2026-07-01T15:19:18",
+      "title": "Minimum Independence Ratio Constraint"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0a880828",
-      "domain": "Novelty",
-      "name": "gaussTerm_le",
-      "quality": 0.70384
-    },
-    {
-      "cycle_id": "0a880828",
-      "domain": "Novelty",
-      "name": "gaussTerm_ge",
-      "quality": 0.70384
-    },
-    {
-      "cycle_id": "72f7aee6",
-      "domain": "Novelty",
-      "name": "airyKernel_symm",
-      "quality": 0.73264
-    },
     {
       "cycle_id": "72f7aee6",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Geometry",
       "name": "card_le_indepNum_mul_total",
       "quality": 0.8091999999999999
+    },
+    {
+      "cycle_id": "8875d434",
+      "domain": "Computation",
+      "name": "triPoints_dist_one",
+      "quality": 0.7476214285714285
+    },
+    {
+      "cycle_id": "8875d434",
+      "domain": "Computation",
+      "name": "triGraph_adj_iff",
+      "quality": 0.7476214285714285
+    },
+    {
+      "cycle_id": "8875d434",
+      "domain": "Computation",
+      "name": "triGraph_colorable",
+      "quality": 0.7476214285714285
     }
   ],
-  "last_updated": "2026-07-01T13:29:33",
+  "last_updated": "2026-07-01T15:19:18",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "595ce011",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-06-17T13:02:19"
-    },
     {
       "context": "",
       "cycle_id": "5884df3d",
@@ -3016,6 +3009,13 @@
       "domain": "Physics",
       "sorry_count": 2,
       "timestamp": "2026-06-30T06:07:15"
+    },
+    {
+      "context": "+    -- current Mathlib, so the step is left as the single documented `sorry`.; sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry",
+      "cycle_id": "8875d434",
+      "domain": "Computation",
+      "sorry_count": 5,
+      "timestamp": "2026-07-01T15:19:18"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "16bb5867",
-        "quality": 0.44580200000000003,
-        "theorems": 6,
-        "title": "Langlands Program: Functoriality"
-      },
-      {
         "cycle_id": "a5fa8083",
         "quality": 0.789328,
         "theorems": 7,
@@ -3327,6 +3321,12 @@
         "quality": 0.63296,
         "theorems": 5,
         "title": "Crystal Reflections Preserve d-Balanced Property of Partitions"
+      },
+      {
+        "cycle_id": "8875d434",
+        "quality": 0.7476214285714285,
+        "theorems": 14,
+        "title": "Minimum Independence Ratio Constraint"
       }
     ],
     "Cryptography": [
