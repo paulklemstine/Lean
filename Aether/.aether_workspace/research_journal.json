@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6a7e7235",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — connectivity-preserving Hamiltonian prescribed-end paths\n\nDerived from this cycle's findings (`PathDegree.lean`, `Connectivity.lean`):\nthe degree bookkeeping for the `4k+4` conje",
-      "quality_score": 0.5980399999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-26T22:13:45",
-      "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
-    },
-    {
       "cycle_id": "15963379",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Monotone Circuit Complexity\n\nDerived from the v19 research cycle that produced `Basic.lean`,\n`KarchmerWigderson.lean`, and `Clique.lean`. The cycle established: monotone\ncircuits",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-01T16:52:12",
       "title": "Sum of digits of 1/p for half-period length and p ≡ 1 mod 4"
+    },
+    {
+      "cycle_id": "c56262ed",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Worst-Case Lattices and Learning with Errors\n\nThe results of this cycle isolate the ordering data of a lattice (its successive\nminima), the pointwise Gaussian weight, and the sin",
+      "quality_score": 0.456932,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-07-01T17:18:06",
+      "title": "Learning with Errors: Hardness Reductions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7232000000000001
     }
   ],
-  "last_updated": "2026-07-01T16:52:12",
+  "last_updated": "2026-07-01T17:18:06",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "dfab202e",
-        "quality": 0.8119999999999999,
-        "theorems": 0,
-        "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
-      },
-      {
         "cycle_id": "9ecd5b8c",
         "quality": 0.7327899999999999,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.7232000000000001,
         "theorems": 8,
         "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m "
+      },
+      {
+        "cycle_id": "c56262ed",
+        "quality": 0.456932,
+        "theorems": 26,
+        "title": "Learning with Errors: Hardness Reductions"
       }
     ],
     "Bridges": [

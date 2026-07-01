@@ -821,7 +821,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "33af5349",
+    "consumed_by_exp_id": "",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domains": [
       "Computation",
@@ -831,7 +831,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:10.070200+00:00",
     "title": "Sensitivity Conjecture Extensions"
   },
@@ -970,7 +970,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
   },
   {
-    "consumed_by_exp_id": "e5cb827b",
+    "consumed_by_exp_id": "",
     "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
     "domains": [
       "Geometry"
@@ -979,7 +979,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T04:01:41.266053+00:00",
     "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
@@ -1898,7 +1898,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
   {
-    "consumed_by_exp_id": "deb92459",
+    "consumed_by_exp_id": "",
     "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
     "domains": [
       "Algebra",
@@ -1908,7 +1908,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -1987,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Combinatorial Nerve Theorem"
   },
   {
-    "consumed_by_exp_id": "c732c146",
+    "consumed_by_exp_id": "",
     "description": "For every positive integer n \u2265 1, the minimum number of elements in a poset whose automorphism group is isomorphic to Z\u2082 \u00d7 Z_{2^n} equals 2^{n+1} + 2. This extends the paper's main theorem from n \u2265 3 to all n \u2265 1, covering the previously unresolved cases n = 1 (Klein four-group) and n = 2.",
     "domains": [
       "Algebra"
@@ -1996,7 +1996,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28231v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T20:19:27.243667+00:00",
     "title": "\u03b2(Z\u2082 \u00d7 Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
   },
@@ -2366,7 +2366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s-Falconer Distance Set Threshold n/2+1/3 in Even Dimensions over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "fe0d0a64",
+    "consumed_by_exp_id": "",
     "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domains": [
       "Geometry"
@@ -2375,7 +2375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:04:18.171502+00:00",
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
@@ -2856,7 +2856,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
   {
-    "consumed_by_exp_id": "7d2ed753",
+    "consumed_by_exp_id": "",
     "description": "The paper establishes that c(s/log s)^{4/3} \u2264 F(s) \u2264 (1+o(1))s^{3/2}/log s, where F(s) = max{\u03c7(G) : \u03c9(G) \u2264 s, g(G\u0305) \u2265 6}. The conjecture proposes that the true asymptotic growth rate is \u0398(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) \u2265 c \u00b7 s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
     "domains": [
       "Pythagorean"
@@ -2865,7 +2865,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:26:20.098555+00:00",
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
@@ -4008,7 +4008,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ForcingEdges in Odd Wheels"
   },
   {
-    "consumed_by_exp_id": "657467a8",
+    "consumed_by_exp_id": "",
     "description": "The theoretical convergence of the optimal vanishing slope for homology groups with braided vector spaces, validated through asymptotic analysis of convergence rates.",
     "domains": [
       "Algebra",
@@ -4018,7 +4018,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26440v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T13:30:00.396622+00:00",
     "title": "Convergence of Vanishing Slope"
   },
@@ -4125,12 +4125,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For all dimensions d \u2265 2 and any initial simplex, the maximum simplex diameter after one Delaunay minicenter refinement iteration is reduced by a contraction factor strictly greater than that achieved by one Euclidean barycentric subdivision iteration.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3043",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25854v1",
+    "status": "available",
+    "timestamp": "2026-07-01T17:19:21.195537+00:00",
+    "title": "Delaunay Minicenter Refinement Achieves Stricter Contraction Factors Than Barycentric Subdivision in All Dimensions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3043",
+    "id": "fd_3044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -4145,7 +4159,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3044",
+    "id": "fd_3045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -4159,7 +4173,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3045",
+    "id": "fd_3046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -4174,7 +4188,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3046",
+    "id": "fd_3047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -4189,7 +4203,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3047",
+    "id": "fd_3048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -4204,7 +4218,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3048",
+    "id": "fd_3049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -4219,7 +4233,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3049",
+    "id": "fd_3050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -4233,7 +4247,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3050",
+    "id": "fd_3051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -4247,7 +4261,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3051",
+    "id": "fd_3052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -4261,7 +4275,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3052",
+    "id": "fd_3053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -4275,7 +4289,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3053",
+    "id": "fd_3054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -4290,7 +4304,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3054",
+    "id": "fd_3055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -4304,7 +4318,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3055",
+    "id": "fd_3056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -4318,7 +4332,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3056",
+    "id": "fd_3057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -4332,7 +4346,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3057",
+    "id": "fd_3058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -4347,7 +4361,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3058",
+    "id": "fd_3059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -4362,7 +4376,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3059",
+    "id": "fd_3060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -4376,7 +4390,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3060",
+    "id": "fd_3061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -4391,7 +4405,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3061",
+    "id": "fd_3062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -4405,7 +4419,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3062",
+    "id": "fd_3063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -4420,7 +4434,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3063",
+    "id": "fd_3064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -4434,7 +4448,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3064",
+    "id": "fd_3065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -4448,7 +4462,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3065",
+    "id": "fd_3066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -4463,7 +4477,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3066",
+    "id": "fd_3067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -4478,7 +4492,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3067",
+    "id": "fd_3068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -4493,7 +4507,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3068",
+    "id": "fd_3069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4507,7 +4521,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3069",
+    "id": "fd_3070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4521,7 +4535,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3070",
+    "id": "fd_3071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4536,7 +4550,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3071",
+    "id": "fd_3072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4551,7 +4565,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3072",
+    "id": "fd_3073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4566,7 +4580,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3073",
+    "id": "fd_3074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4575,16 +4589,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Andr\u00e9's Height Bound for Non-Equisetential Curves"
   },
   {
-    "consumed_by_exp_id": "21b9f7f8",
+    "consumed_by_exp_id": "",
     "description": "Every level-one spherical automorphic form on the upper half-plane X = SL(2, Z) \\ H can be written as the sum of a cusp form and a finite linear combination of Laurent coefficients of the standard Eisenstein series E(s; z).",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3074",
+    "id": "fd_3075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T00:40:43.642727+00:00",
     "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
   },
@@ -4594,7 +4608,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3075",
+    "id": "fd_3076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4608,7 +4622,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3076",
+    "id": "fd_3077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -4622,7 +4636,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3077",
+    "id": "fd_3078",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27507v1",
@@ -4637,7 +4651,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3078",
+    "id": "fd_3079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27516v1",
@@ -4651,7 +4665,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3079",
+    "id": "fd_3080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
@@ -4666,7 +4680,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3080",
+    "id": "fd_3081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27273v1",
@@ -4680,7 +4694,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3081",
+    "id": "fd_3082",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
@@ -4695,7 +4709,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3082",
+    "id": "fd_3083",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
@@ -4709,7 +4723,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3083",
+    "id": "fd_3084",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
@@ -4723,7 +4737,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_3084",
+    "id": "fd_3085",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27451v1",
@@ -4738,7 +4752,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3085",
+    "id": "fd_3086",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27208v1",
@@ -4753,7 +4767,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3086",
+    "id": "fd_3087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27170v1",
@@ -4767,7 +4781,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3087",
+    "id": "fd_3088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27179v2",
@@ -4781,7 +4795,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3088",
+    "id": "fd_3089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27197v1",
@@ -4796,7 +4810,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3089",
+    "id": "fd_3090",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27190v1",
@@ -4811,7 +4825,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3090",
+    "id": "fd_3091",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27118v1",
@@ -4825,7 +4839,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3091",
+    "id": "fd_3092",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27104v1",
@@ -4840,7 +4854,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Bridges"
     ],
-    "id": "fd_3092",
+    "id": "fd_3093",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27070v1",
@@ -4854,7 +4868,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3093",
+    "id": "fd_3094",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27087v1",
@@ -4869,7 +4883,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_3094",
+    "id": "fd_3095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26851v1",
@@ -4884,7 +4898,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3095",
+    "id": "fd_3096",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26983v1",
@@ -4898,7 +4912,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3096",
+    "id": "fd_3097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26776v2",
@@ -4913,7 +4927,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3097",
+    "id": "fd_3098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26589v1",
@@ -4928,7 +4942,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3098",
+    "id": "fd_3099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26761v1",
@@ -4943,7 +4957,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3099",
+    "id": "fd_3100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26639v1",
@@ -4957,7 +4971,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3100",
+    "id": "fd_3101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26570v1",
@@ -4966,16 +4980,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Triviality of the core-free subgroup in regular Cayley maps of skew-type three on semidihedral groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fa2ac2e4",
     "description": "For any integers n \u2265 2, 1 \u2264 r \u2264 s \u2264 n with r < n, any k with 1 \u2264 k \u2264 n\u00b2, any k\u2011tuple (\u03c1_\u2113) of positive integers summing to n\u00b2, and any r\u00d7s partial array M over [k] satisfying the natural per\u2011row and per\u2011column upper bounds \u2308\u03c1_\u2113 / n\u2309 on the size of each symbol\u2019s multiset in each filled cell and total multiplicity \u2264 \u03c1_\u2113, there exists an n\u00d7n array N extending M such that each symbol \u2113 appears exactly \u03c1_\u2113 times in total and the counts of \u2113 in any two rows (resp. columns) differ by at most one.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3101",
+    "id": "fd_3102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26335v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T13:32:29.710233+00:00",
     "title": "Equitable rectangle extension conjecture"
   },
@@ -4986,7 +5000,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3102",
+    "id": "fd_3103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26550v1",
@@ -5000,7 +5014,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3103",
+    "id": "fd_3104",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
@@ -5014,7 +5028,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3104",
+    "id": "fd_3105",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -5028,7 +5042,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3105",
+    "id": "fd_3106",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5043,7 +5057,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3106",
+    "id": "fd_3107",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26275v1",
@@ -5058,13 +5072,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3107",
+    "id": "fd_3108",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26043v1",
     "status": "available",
     "timestamp": "2026-07-01T16:15:53.527957+00:00",
     "title": "Finite height property is preserved under finite \u00e9tale covers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every \u03ba > 0 and sufficiently large Y, there exist constants c, Y_\u03ba, Q_\u03ba, Z_\u03ba such that in [c\u2080Y, Y], at least c(YQ\u00b2Z)/(log Y)^6 coprime pairs (u,v) satisfy \u03c3(3600u)+\u03c3(3600v)=\u03c3(3600(u+v)) but \u03c3(u)+\u03c3(v)\u2260\u03c3(u+v).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_3109",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25849v1",
+    "status": "available",
+    "timestamp": "2026-07-01T17:20:50.879745+00:00",
+    "title": "Lower Bound on Two-Height Core Solutions"
   },
   {
     "consumed_by_exp_id": "",
@@ -5207,36 +5235,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erd\u0151s\u2013Straus Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Digit Sums of Prime Reciprocals and Beyond\n\nThe cycle established a closed form for the base-`b` digit sum of one period of\n`1/p` when the multiplicative order of `b` modulo `p` is even, namely `(b-1)\u00b7l/2`\nwhere `l` is the period length. The proof isolated the true mechanism \u2014 the two\nhalves of a period are digit-wise complements \u2014 and showed that the elaborate\n`2^m` congruence conditions are just a convenient way to guarantee an even period.\nSeveral bold, testable questions follow.\n\n## 1. Exact block-sum formula for odd periods with prime-power order drop\n\nWhen the period `l` is odd, the two-halves symmetry disappears, yet the digit sum\nis far from arbitrary: it is governed by how the residues `b^i mod p` distribute\nacross the `b` intervals `[jp/b, (j+1)p/b)`. Conjecture: for odd `l` the digit sum\nequals `(b-1)l/2` **minus** a correction term expressible through a Dedekind-type\nsum `s(b, p)` counting sawtooth discrepancies of `{i\u00b7b^{-1}/p}`.\n\nThe key insight is that the \"missing\" complement symmetry of an odd period is\nmeasured precisely by a Dedekind sum, converting a digit-combinatorics question\ninto a lattice-point count. Why now? Dedekind sums have a mature reciprocity\ntheory and recent effective bounds, so a conjectural correction term can be pinned\ndown numerically across thousands of primes and then attacked with reciprocity.\n\n## 2. A generalized-Bernoulli spectral law for digit-sum fluctuations\n\nAverage the period digit sum of `1/p` over primes `p \u2264 X` in a fixed residue\nclass modulo a small modulus `q`. Conjecture: the second-order fluctuation of\nthese digit sums around the mean `(b-1)(p-1)/2` is controlled by generalized\nBernoulli numbers `B_{2,\u03c7}` attached to the even Dirichlet characters `\u03c7 mod q`,\nwith the leading fluctuation coefficient proportional to `L(2, \u03c7)`.\n\nThe key insight is that digit sums are linear functionals of the orbit\n`{b^i mod p}`, whose bias under a character `\u03c7` is exactly what generalized\nBernoulli numbers encode. Why now? Large-scale factorization and order\ncomputations make it feasible to sample period statistics for primes into the\nmillions, giving enough resolution to detect a character-indexed spectral signal.\n\n## 3. Midy's theorem is sharp: evenness of the order is necessary and sufficient\n\nConjecture: the identity \"period digit sum `= (b-1)\u00b7l/2`\" holds for a prime `p`\nand base `b` **if and only if** the multiplicative order `l = ord_p(b)` is even.\nEquivalently, for odd order the digit sum is strictly less than `(b-1)\u00b7l/2`, with a\nstrictly positive deficit for every such prime.\n\nThe key insight is that an even order forces a `-1` square root in the field\n`Z/pZ`, which is exactly the algebraic fingerprint of the complementary-halves\nphenomenon; no even order, no exact halving. Why now? The forward direction is\nalready established, so the converse is a crisp, isolated target whose failure\ncases are enumerable and whose deficit can be tabulated immediately.\n\n## 4. Multiplicative digit-sum towers across nested base powers\n\nFix `p` and study the period digit sums of `1/p` in the family of bases\n`b, b^2, b^4, b^8, \u2026`. Conjecture: as long as the order of `b` retains a factor of\n`2`, the digit sums follow a geometric-with-defect recursion `S(b^{2^k}) =\n(b^{2^k}-1)\u00b7l_k/2`, and the sequence of \"shape vectors\" (the multiset of digit\ncounts) stabilizes after finitely many squarings determined by the 2-adic\nvaluation of `p-1`.\n\nThe key insight is that squaring the base halves the period while doubling the\nper-digit weight, so the total digit sum is a 2-adic invariant of `p` rather than\nof the individual base. Why now? The 2-adic valuation of `p-1` is trivially\ncomputable, making the predicted stabilization index directly checkable against\nbrute-force digit expansions.\n\n## 5. A digit-sum reciprocity bridging bases b and p\n\nConjecture: there is a reciprocity relation exchanging the roles of `b` and `p` in\nthe digit sum of `1/p` in base `b` versus the digit sum of `1/b`-type expansions\nmodulo `p`, mirroring Dedekind\u2013Rademacher reciprocity, with an explicit polynomial\ncorrection in `b`, `p` and `gcd`-data.\n\nThe key insight is that both digit sums are sawtooth sums over the same lattice\n`{(i, i\u00b7b mod p)}` read along complementary axes, so a single reciprocity identity\nshould govern both. Why now? Reciprocity laws for sawtooth/Dedekind sums have been\nsharpened recently, and the two-variable digit-sum data can be generated densely\nenough to fit and then prove the exact correction polynomial.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_3108",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0eefe6b1",
-    "status": "available",
-    "timestamp": "2026-07-01T16:50:55.313545+00:00",
-    "title": "The cycle established a closed form for the base-`b` digit sum of one period of"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 digit sums of periodic base-`b` expansions of `1/p`\n\nDerived from the cycle that established: for a prime `p \u2261 1 (mod 4)` and a base `b`\nwhose multiplicative order modulo `p` is exactly `(p-1)/2`, the digits of one period of\nthe base-`b` expansion of `1/p` sum to `(b-1)(p-1)/4`; and, for a primitive-root base\n(order `p-1`), they sum to `(b-1)(p-1)/2`.\n\n## Conjecture 1 \u2014 A single order-indexed digit-sum law\n\nFor any prime `p`, any base `b \u2265 2` with `p \u2224 b`, and period `d = ord_p(b)`, the digit\nsum of one period equals `(b-1)\u00b7s/p`, where `s` is the sum of the elements of the cyclic\nsubgroup generated by `b` in the nonzero residues.  When that subgroup is closed under\nnegation (equivalently, contains `-1`), the sum `s` is exactly `p\u00b7d/2` and the digit sum\ncollapses to `(b-1)\u00b7d/2`.\n\nThe key insight is that the digit sum is a *linear image of the remainder-orbit sum*, so\nthe entire arithmetic of the digits is controlled by a single group-theoretic quantity \u2014\nthe sum over the orbit \u2014 rather than by the digits individually.\n\nWhy now? The half-period and full-reptend results are the two extreme instances of this\nlaw (orbit closed under negation), and the negation-closure criterion `-1 \u2208 \u27e8b\u27e9` is a\nclean, checkable divisibility condition (`2 \u2223 ord_p(b)` together with the right residue of\n`p`), making the general statement immediately testable across all intermediate orders.\n\n## Conjecture 2 \u2014 Midy blocks of arbitrary equal length\n\nWhenever `-1` is a power `b^{d/2}` of the base within one period (`d` even and the\nhalf-power equal to `-1`), splitting the period into two halves yields two blocks whose\ndigitwise sum is constant `b-1` in every position; consequently the two half-block values\nsum to `b^{d/2} - 1`.  More generally, if `b^{d/m} \u2261 \u03b6` runs through the `m`-th roots of\nunity, the `m` equal sub-blocks have digitwise column sums that are completely determined.\n\nThe key insight is that a root-of-unity relation among the base powers forces an exact\ndigitwise cancellation pattern, upgrading the classical two-block Midy phenomenon to an\n`m`-block phenomenon governed by the order of `b` relative to `d`.\n\nWhy now? The `b^{(p-1)/4} = -1` identity that drives the half-period result is precisely\nthe `m = 2` case; recognizing it as one instance of a root-of-unity family invites the\ngeneral `m`-block refinement.\n\n## Conjecture 3 \u2014 Average digit value stabilizes at `(b-1)/2`\n\nFor the two symmetric regimes above the average digit of one period is exactly `(b-1)/2`\n(half-period: `((b-1)(p-1)/4)/((p-1)/2)`; full reptend: `((b-1)(p-1)/2)/(p-1)`).  We\nconjecture the average digit of one period of `1/p` in base `b` tends to `(b-1)/2` for\n*every* base as `p \u2192 \u221e`, with a bias term controlled by how far the orbit of `b` is from\nbeing negation-symmetric.\n\nThe key insight is that negation symmetry of the remainder orbit is exactly the mechanism\nthat makes each digit's \"complement\" also appear, pinning the mean at the central value\n`(b-1)/2`.\n\nWhy now? Both proved theorems land exactly on average `(b-1)/2`, which is strong evidence\nthat the mean is a robust invariant and that deviations are a lower-order, measurable\ncorrection rather than noise.\n\n## Conjecture 4 \u2014 Residue class dichotomy is sharp\n\nFor `p \u2261 3 (mod 4)` with `ord_p(b) = (p-1)/2` the digit sum is strictly *less than*\n`(b-1)(p-1)/4`, and the exact deficit equals `(b-1)/p` times the difference between the\nsum of quadratic residues and `p(p-1)/4`.  Equivalently, the deficit is a rational\nmultiple of the class number `h(-p)` of the imaginary quadratic field `\u211a(\u221a-p)`.\n\nThe key insight is that for `p \u2261 3 (mod 4)` the residues in the orbit are *not*\nsymmetric under negation, and their imbalance is precisely the quantity measured by the\nclass number through the analytic class-number formula.\n\nWhy now? The computational evidence shows a systematic (never random) shortfall for\n`p \u2261 3 (mod 4)`; tying that shortfall to `h(-p)` would convert an empirical gap into an\nexact arithmetic-geometry statement.\n\n## Conjecture 5 \u2014 Digit sums separate primes from Carmichael-like composites\n\nDefine the base-`b` \"period digit sum\" `D(n,b)` for any `n` coprime to `b` using the\nperiod of `1/n`.  We conjecture that the clean closed forms `(b-1)\u00b7ord/2` hold for a\ncomposite `n` only in degenerate cases, so that a mismatch between `D(n,b)` and the value\npredicted by the order alone is a *witness of compositeness* \u2014 a digit-sum analogue of a\nFermat/Euler test.\n\nThe key insight is that the closed form relied on `p` being prime (so that `x^2 = 1` has\nonly the roots `\u00b11`); for composite moduli extra square roots of unity break the pairing,\nleaving a detectable digit-sum signature.\n\nWhy now? Square roots of unity modulo `n` are the exact obstruction exploited by\nMiller\u2013Rabin, so a digit-sum test built on the same obstruction could give a\nhuman-readable primality witness directly from the decimal (or base-`b`) expansion of\n`1/n`.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_3109",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "04b163c8",
-    "status": "available",
-    "timestamp": "2026-07-01T16:52:03.639302+00:00",
-    "title": "Derived from the cycle that established: for a prime `p \u2261 1 (mod 4)` and a base "
   },
   {
     "consumed_by_exp_id": "",
