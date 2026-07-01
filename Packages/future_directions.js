@@ -1171,7 +1171,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bde25b99",
     "description": "We conjecture that for any deformation parameters t and s the mixed product of the modified Greaves\u2011Jing\u2011Zhu operators yields a scalar factor that can be expressed as a rational function of infinite q\u2011Pochhammer symbols: F(t,s;u) = (u;t)_\\u221e (\u2011u;s)_\\u221e / ((\u2011u;t)_\\u221e (u;s)_\\u221e). Moreover, the q\u2011expansion of F(t,s;u) has palindromic coefficients and satisfies a finite\u2011order linear recurrence; after removing the alternating signs the coefficients are non\u2011negative integers.",
     "domains": [
       "Pythagorean"
@@ -1180,7 +1180,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:24:54.047368+00:00",
     "title": "Generalized scalar factor for mixed modified Greaves\u2011Jing\u2011Zhu operators"
   },
@@ -1446,7 +1446,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp lower bound for the sixth moment of the Riemann zeta function"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "479547c5",
     "description": "For any partition \u03bb of n and any support pattern S \u2286 [n] \u00d7 [n], the number of n \u00d7 n nilpotent matrices over F_q with Jordan canonical form type \u03bb and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian\u2013Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
     "domains": [
       "Algebra",
@@ -1456,7 +1456,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27497v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
@@ -1855,7 +1855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Indivisibility of Nonzero Character Values in GL_n(F_q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8875d434",
     "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
     "domains": [
       "Bridges"
@@ -1864,7 +1864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:26:42.958632+00:00",
     "title": "Minimum Independence Ratio Constraint"
   },
@@ -3716,7 +3716,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of Class-Uniformly Resolvable Designs for Powers of Two"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd442784",
     "description": "For any Latin square M of order n \u2265 5, the dimension of the second homology group of the clique complex of the strongly regular graph associated with M over any field F is exactly (n-1)^3 - I(M), where I(M) is the number of intercalates (2x2 Latin subsquares) in M.",
     "domains": [
       "Algebra",
@@ -3726,7 +3726,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27328v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T05:47:37.249707+00:00",
     "title": "Dimension of Second Clique Homology for Latin Square Graphs"
   },
@@ -4573,7 +4573,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unconditional Lower Bound for the Sixth Moment of the Riemann Zeta Function"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19ffaeae",
     "description": "Let $T_{n,g}$ be a uniform random triangulation with $2n$ faces and genus $g$ such that $g/n \\to \\theta \\in (0,1/2)$. While the paper proves that the typical distance between two uniformly chosen vertices of $T_{n,g}$ rescaled by $\\log(n)$ converges in probability to a deterministic constant $D_\\theta$, we conjecture that the diameter of $T_{n,g}$ rescaled by $\\log(n)$ also converges in probability to the same constant $D_\\theta$.",
     "domains": [
       "Computation",
@@ -4583,7 +4583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T06:10:51.113909+00:00",
     "title": "Diameter Concentration for High-Genus Triangulations"
   },
@@ -5109,7 +5109,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e9cd409c",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -5118,7 +5118,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
@@ -5212,7 +5212,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "09b2b1bc",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -5222,7 +5222,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
