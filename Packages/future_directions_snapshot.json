@@ -2245,7 +2245,7 @@
       "math.AG",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "479547c5",
     "description": "For any partition λ of n and any support pattern S ⊆ [n] × [n], the number of n × n nilpotent matrices over F_q with Jordan canonical form type λ and support contained in S is a polynomial in q with non-negative integer coefficients. This extends known polynomiality results for Hessenberg supports (connected to chromatic quasisymmetric function evaluations via Shareshian–Wachs theory) and directly addresses the polynomiality questions the paper raises for more general support patterns and prescribed affine slices of adjoint orbits.",
     "domain_bridges": [
       "Algebraic geometry (Hessenberg varieties and Springer fibers)",
@@ -2262,7 +2262,7 @@
     "proof_strategy": "Leverage the paper's Hall scalar product formula expressing the count in terms of skew modified Hall-Littlewood functions and q-Whittaker functions. For Hessenberg supports, connect to chromatic quasisymmetric functions and the Shareshian-Wachs theorem relating Hessenberg variety point counts to chromatic quasisymmetric function evaluations. For general supports, develop combinatorial-algebraic tools showing the relevant Hall scalar products specialize to polynomials in q, potentially using geometric methods on Springer fibers and deformation arguments to reduce arbitrary supports to Hessenberg-type patterns.",
     "research_mode": "team",
     "source_exp_id": "2606.27497v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T09:52:47.763963+00:00",
     "title": "Polynomiality of Nilpotent Matrix Counts with Prescribed Support"
   },
