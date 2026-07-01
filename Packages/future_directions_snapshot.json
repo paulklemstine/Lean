@@ -9444,6 +9444,58 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "math.RT",
+      "math.GR",
+      "math.AC"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "If the H-orbit of a field element α under a subgroup H of Aut(E) is finite, then α is algebraic over the fixed field E^H. The minimal polynomial of α can be constructed as the product of (X - β) for β in the orbit, ensuring separability.",
+    "domain_bridges": [
+      "Field theory",
+      "Group actions"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3123",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Demonstrate that the orbit polynomial generates a separable minimal polynomial, leveraging orbit finiteness to bound coefficients and ensure algebraic closure.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31900v1",
+    "status": "available",
+    "timestamp": "2026-07-01T20:23:16.849321+00:00",
+    "title": "Finiteness of H-Orbits Implies Algebraic Closure in E/H-Orbits"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Harmonic Lemma",
+      "Markov Chain Stopping Times"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "In any finite, strongly connected, edge-weighted digraph, if every vertex's color is a convex combination of its neighbors' colors under a color equivalence relation respecting convex combinations, then all vertices must share the same color.",
+    "domain_bridges": [
+      "Combinatorial Graph Theory",
+      "Probabilistic Stopping Rules"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_3123",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Employ a contradiction argument using a Markov chain stopping rule to show that any non-constant color assignment leads to a violation of the convexity-preserving color equivalence, mirroring the harmonic lemma's structure without relying on order properties.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31908v1",
+    "status": "available",
+    "timestamp": "2026-07-01T20:23:47.138126+00:00",
+    "title": "Chromonic Lemma Conjecture"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",

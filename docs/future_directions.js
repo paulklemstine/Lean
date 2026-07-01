@@ -5285,6 +5285,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "If the H-orbit of a field element \u03b1 under a subgroup H of Aut(E) is finite, then \u03b1 is algebraic over the fixed field E^H. The minimal polynomial of \u03b1 can be constructed as the product of (X - \u03b2) for \u03b2 in the orbit, ensuring separability.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3123",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31900v1",
+    "status": "available",
+    "timestamp": "2026-07-01T20:23:16.849321+00:00",
+    "title": "Finiteness of H-Orbits Implies Algebraic Closure in E/H-Orbits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In any finite, strongly connected, edge-weighted digraph, if every vertex's color is a convex combination of its neighbors' colors under a color equivalence relation respecting convex combinations, then all vertices must share the same color.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_3123",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31908v1",
+    "status": "available",
+    "timestamp": "2026-07-01T20:23:47.138126+00:00",
+    "title": "Chromonic Lemma Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
