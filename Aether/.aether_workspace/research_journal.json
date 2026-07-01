@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0171d9bf",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Mutually Orthogonal Italian (Latin) Squares\n\nThis cycle formally established, for Italian squares (= Latin squares) of order\n`n = #α`:\n\n- **Upper bound** `ItalianSquares.card_le_",
-      "quality_score": 0.67428,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-26T23:39:12",
-      "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
-    },
-    {
       "cycle_id": "f2c77f29",
       "domain": "Applications",
       "key_insight": "# Future Directions — Euler–Mascheroni Acceleration\n\nDerived from this cycle's findings in\n`MachineLearning/EulerMascheroni/MidpointAcceleration.lean` and\n`MachineLearning/EulerMascheroni/ShiftedAppro",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-07-01T20:10:19",
       "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/4"
+    },
+    {
+      "cycle_id": "c732c146",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions: Minimum Realization Numbers of Finite Abelian 2-Groups\n\nThis cycle established that the minimum number of elements of a poset whose\nsymmetry group is the Klein four-group is exact",
+      "quality_score": 0.6195219999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-01T21:20:21",
+      "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8322400000000001
     }
   ],
-  "last_updated": "2026-07-01T20:10:19",
+  "last_updated": "2026-07-01T21:20:21",
   "open_questions": [
     {
       "context": "",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "bcd85103",
-        "quality": 0.63257,
-        "theorems": 15,
-        "title": "Type Theory: Cubical Type Theory Foundations"
-      },
-      {
         "cycle_id": "1670a4b8",
         "quality": 0.61528,
         "theorems": 6,
@@ -3079,6 +3073,12 @@
         "quality": 0.45374800000000004,
         "theorems": 19,
         "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration e"
+      },
+      {
+        "cycle_id": "c732c146",
+        "quality": 0.6195219999999999,
+        "theorems": 8,
+        "title": "β(Z₂ × Z_{2^n}) = 2^{n+1} + 2 for all positive integers n"
       }
     ],
     "Applications": [
