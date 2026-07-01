@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "43f6ae62",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Code-Based Cryptography (McEliece / Goppa)\n\nDerived from this cycle's findings in `LinearCode.lean`, `GoppaDistance.lean`,\nand `Parameters.lean`. Each conjecture is bold, falsifi",
-      "quality_score": 0.7796,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-27T07:21:54",
-      "title": "Code-Based Cryptography: McEliece from Goppa Codes"
-    },
-    {
       "cycle_id": "669193db",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Delaunay minicenter refinement & approximate Carathéodory\n\nThis cycle added three files to the `DelaunayContraction` catalog:\n\n* `PerturbedContraction.lean` — inhomogeneous contr",
@@ -499,19 +489,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-01T20:10:19",
       "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/4"
+    },
+    {
+      "cycle_id": "a725bb00",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Metric embeddings of the Petersen graph into abelian Cayley graphs\n\nThis cycle established a clean two-part obstruction: a *metric* principle (an\nisometric image of an edge is an",
+      "quality_score": 0.7976880000000001,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-01T23:31:29",
+      "title": "Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6adcd103",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nDerived from this research cycle (`EML/FixedPointRate.lean`,\n`EML/FixedPointConcreteInstance.lean`), which upgraded the EML fixed-point story\nfrom \"conv",
-      "quality_score": 0.6233200000000001,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-27T01:25:50",
-      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-    },
     {
       "cycle_id": "9871aa6d",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-01T23:10:20",
       "title": "Proof Automation: Custom Lean 4 Tactics"
+    },
+    {
+      "cycle_id": "a725bb00",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Metric embeddings of the Petersen graph into abelian Cayley graphs\n\nThis cycle established a clean two-part obstruction: a *metric* principle (an\nisometric image of an edge is an",
+      "quality_score": 0.7976880000000001,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-01T23:31:29",
+      "title": "Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "dbb7efcb",
-      "domain": "Novelty",
-      "name": "firstOrder_prod",
-      "quality": 0.79816
-    },
-    {
-      "cycle_id": "cff6413b",
-      "domain": "Novelty",
-      "name": "edgeDensity_lt_nwThreshold",
-      "quality": 0.8251200000000001
-    },
     {
       "cycle_id": "cff6413b",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "not_colorable_four_of_indepRatio_lt",
       "quality": 0.8322400000000001
+    },
+    {
+      "cycle_id": "a725bb00",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.7976880000000001
+    },
+    {
+      "cycle_id": "a725bb00",
+      "domain": "Applications",
+      "name": "colorable_of_isometric",
+      "quality": 0.7976880000000001
     }
   ],
-  "last_updated": "2026-07-01T23:10:20",
+  "last_updated": "2026-07-01T23:31:29",
   "open_questions": [
     {
       "context": "This file develops a small but complete and `sorry`-free combinatorial foundation",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "0a1f99db",
-        "quality": 0.57392,
-        "theorems": 0,
-        "title": "Ramsey Theory: Bounds and Constructions"
-      },
-      {
         "cycle_id": "4f7ad584",
         "quality": 0.6244,
         "theorems": 24,
@@ -3141,6 +3135,12 @@
         "quality": 0.6437080000000001,
         "theorems": 15,
         "title": "Proof Automation: Custom Lean 4 Tactics"
+      },
+      {
+        "cycle_id": "a725bb00",
+        "quality": 0.7976880000000001,
+        "theorems": 9,
+        "title": "Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
       }
     ],
     "Bridges": [

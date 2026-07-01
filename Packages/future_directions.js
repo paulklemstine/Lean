@@ -150,6 +150,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle a725bb00 (Q=0.798), which proved 9 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Petersen graph does not admit an isometric embedding into any Cayley graph of any finite abelian group. Since the Petersen graph is not a partial cube (not bipartite), it cannot embed into hypercubes Q_k = Cay((Z/2)^k, standard basis). This conjecture asserts the stronger claim that no abelian g",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_a725bb00_9c9c2f64",
+    "priority_score": 0.897688,
+    "research_mode": "team",
+    "source_exp_id": "a725bb00",
+    "status": "available",
+    "timestamp": "2026-07-01T23:31:30.171856+00:00",
+    "title": "Deepening: Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that any integer a \u2260 -1,\u25a1 that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
     "domains": [
       "Algebra"
@@ -391,7 +405,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Collatz Conjecture"
   },
   {
-    "consumed_by_exp_id": "b87dcfdc",
+    "consumed_by_exp_id": "",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "Algebra"
@@ -400,7 +414,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -1855,7 +1869,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Indivisibility of Nonzero Character Values in GL_n(F_q)"
   },
   {
-    "consumed_by_exp_id": "35d54dba",
+    "consumed_by_exp_id": "",
     "description": "The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
     "domains": [
       "Bridges"
@@ -1864,7 +1878,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T18:26:42.958632+00:00",
     "title": "Minimum Independence Ratio Constraint"
   },
@@ -2030,7 +2044,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Edge Count of $\\tau_k$-Maximal Graphs"
   },
   {
-    "consumed_by_exp_id": "7ddc2247",
+    "consumed_by_exp_id": "",
     "description": "For every positive integer M and integer k with 0 \u2264 k \u2264 M, define a_{M,k}(t) as the absolute value of the coefficient of u^k in the expansion (u;t)_M / (-u;t)_M = \u03a3_{k=0}^{M} (-1)^k a_{M,k}(t) u^k, where (u;t)_M = \u03a0_{j=0}^{M-1}(1 - u t^j) and (-u;t)_M = \u03a0_{j=0}^{M-1}(1 + u t^j). The paper establishes that each a_{M,k}(t) is a palindromic polynomial in t with nonnegative integer coefficients (being signed principal specializations of one-row Schur Q-functions). The conjecture is that each a_{M,k}(t) is also unimodal as a polynomial in t: if a_{M,k}(t) = \u03a3_{i=0}^{d} c_i t^i, then there exists j such that c_0 \u2264 c_1 \u2264 \u00b7\u00b7\u00b7 \u2264 c_j \u2265 c_{j+1} \u2265 \u00b7\u00b7\u00b7 \u2265 c_d. Since a_{M,k}(t) is palindromic, this is equivalent to the first half of the coefficient sequence being weakly increasing.",
     "domains": [
       "Pythagorean"
@@ -2039,7 +2053,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28108v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T21:16:08.826100+00:00",
     "title": "Unimodality of the Mixed Scalar Factor Coefficients"
   },
@@ -2642,7 +2656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Phase transition for variance asymptotics of Steinhaus short-interval sums"
   },
   {
-    "consumed_by_exp_id": "f955b422",
+    "consumed_by_exp_id": "",
     "description": "For any graph G with maximum degree d, there exists a signing \u03c3 of its edges such that the spectral radius of the signed adjacency matrix A_\u03c3 is at most 2\u221a(3(d-1)).",
     "domains": [
       "Physics"
@@ -2651,7 +2665,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T11:32:36.681739+00:00",
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
@@ -2956,21 +2970,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
   {
-    "consumed_by_exp_id": "946cfca3",
-    "description": "For all d \u2265 1, the maximum number of equiangular lines in \u211d^d with common angle arccos(1/3) satisfies N_{1/3}(d) \u2264 max{28, 2(d \u2212 1)}. This is a special case of Balla's conjecture where the spectral radius order \u03ba\u2081 = 2 (witnessed by K\u2082), making the bound reduce to max{(1\u22121/9)(1\u22122/9)/(2/81), \u230a2(d\u22121)/1\u230b} = max{28, 2(d\u22121)}.",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_2963",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29392v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-30T08:16:16.372094+00:00",
-    "title": "Balla's Conjecture for \u03b1 = 1/3"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For k=3, any multiplicative function f : \u2115 \u2192 \u2102 that is 3-additive on the set E\u2082 of sums of two nonzero squares and satisfies f(2) \u2260 0 must be the identity function. Formally, if f is multiplicative, f(2) \u2260 0, and f(x\u2081\u00b2 + x\u2082\u00b2 + x\u2083\u00b2 + x\u2084\u00b2 + x\u2085\u00b2 + x\u2086\u00b2) = f(x\u2081\u00b2 + x\u2082\u00b2) + f(x\u2083\u00b2 + x\u2084\u00b2) + f(x\u2085\u00b2 + x\u2086\u00b2) for all positive integers x\u2081, ..., x\u2086, then f(n) = n for all n \u2208 \u2115.",
     "domains": [
@@ -3015,7 +3014,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Berry-Keating Hamiltonian Spectrum Corresponds to Riemann Zeta Non-Trivial Zeros"
   },
   {
-    "consumed_by_exp_id": "b03dbdb9",
+    "consumed_by_exp_id": "",
     "description": "For every odd prime p and integer r with 1 \u2264 r \u2264 p-1, the maximum size of a symmetric set S = -S \u2286 \u2124_p \\ {0} such that the Cayley graph Cay(\u2124_p, S) is K_{r+1}-free equals p - 1 - 2\u230ap/(r+1)\u230b. This is the main theorem of the paper, established via a polynomial method.",
     "domains": [
       "Pythagorean",
@@ -3025,7 +3024,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29284v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T09:28:09.181224+00:00",
     "title": "Cayley-Tur\u00e1n number of complete graphs over prime cyclic groups"
   },
@@ -5633,6 +5632,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Metric embeddings of the Petersen graph into abelian Cayley graphs\n\nThis cycle established a clean two-part obstruction: a *metric* principle (an\nisometric image of an edge is an edge, so an isometric embedding into a bipartite\nhost forces the source to be bipartite) combined with a *cheap bipartite\ncertificate* for abelian Cayley graphs (a single group character sending the\nwhole connection set to the nonzero element of the two-element group). Applied to\nthe Petersen graph \u2014 whose shortest odd closed walk has length five \u2014 this rules\nout every bipartite abelian Cayley host, hypercubes included. The following\nconjectures push past the bipartite frontier that this argument leaves open.\n\n## Conjecture 1 \u2014 The grand non-embeddability\n\nThe Petersen graph admits no distance-preserving embedding into the connection\ngraph of any finite commutative group, whatever the choice of symmetric\ngenerating set \u2014 including generating sets that produce odd cycles and are\ntherefore beyond the reach of any parity coloring.\n\nThe key insight is that commutativity forces the set of directions realized along\nshortest paths to behave like a system of independent coordinates, and the\nPetersen graph's five-fold symmetry cannot be reconciled with any such coordinate\nsystem without collapsing two of its non-adjacent vertices to equal distance\nprofiles.\n\nWhy now? The bipartite half is fully settled, so the remaining obstruction is\nsharply localized to non-bipartite hosts; isolating it turns a vague \"no abelian\nhost works\" into a precise statement whose only missing ingredient is a\ncoordinate-independence lemma for commutative connection graphs.\n\n## Conjecture 2 \u2014 Odd girth versus abelian coordinates\n\nIf a vertex-transitive graph of odd girth at least five embeds isometrically into\na commutative connection graph, then it is a Cartesian product of even cycles and\ncomplete graphs on at most two vertices; in particular no such embedding exists\nfor graphs, like the Petersen graph, that are prime with respect to the Cartesian\nproduct.\n\nThe key insight is that odd girth five simultaneously forbids the bipartite\n(hypercube) factors and the short odd-cycle factors, squeezing the host into a\nproduct structure the Petersen graph cannot possess because it is\nCartesian-prime.\n\nWhy now? Cartesian primeness of the Petersen graph is elementary and the\neven-cycle/edge factorization of bipartite abelian hosts is exactly what the\ncharacter certificate produced this cycle exposes, so the two halves are ready to\nbe joined.\n\n## Conjecture 3 \u2014 Kneser graphs as a non-embeddable family\n\nFor every `n \u2265 5`, the Kneser graph on the two-element subsets of an\n`n`-element set (of which the Petersen graph is the case `n = 5`) admits no\nisometric embedding into any finite commutative connection graph.\n\nThe key insight is that the disjointness metric on two-element subsets encodes an\nodd cycle of length five for every `n \u2265 5`, so the same parity obstruction\npropagates through the whole family, while the growing automorphism group makes a\ncoordinate representation strictly harder rather than easier.\n\nWhy now? The base case is proved for bipartite hosts, and the family shares a\nsingle reusable odd cycle, so a uniform argument needs only to be shown stable as\n`n` grows rather than re-discovered for each `n`.\n\n## Conjecture 4 \u2014 Sharp distortion into the hypercube\n\nSince the Petersen graph cannot embed isometrically into any hypercube, the least\nmultiplicative distortion of any embedding of the Petersen graph into a hypercube\nis strictly greater than one, and its exact value is `3/2`, attained by a\nlabeling that stretches exactly the edges of one perfect matching.\n\nThe key insight is that the only obstruction is the parity of the five-cycles, so\noptimal distortion is governed by how cheaply one can \"repair\" odd cycles by\nlengthening a minimum set of edges \u2014 a covering-design problem on the Petersen\ngraph's cycle space.\n\nWhy now? The exact non-embeddability result identifies parity as the sole\nbarrier, converting a hard geometric optimization into a finite combinatorial\ncovering question that current tools can attack directly.\n\n## Conjecture 5 \u2014 Bipartite double cover as the universal repair\n\nThe bipartite double cover of the Petersen graph embeds isometrically into a\nhypercube, and more generally the bipartite double cover of any non-bipartite\nabelian-Cayley-obstructed graph is the smallest bipartite graph into which the\noriginal maps with distortion two.\n\nThe key insight is that doubling the vertex set along a parity coordinate removes\nevery odd closed walk while preserving all even-distance structure, so the double\ncover is the canonical bipartite \"unfolding\" that a hypercube can host.\n\nWhy now? The double-cover construction already lives in the same commutative\nsetting used this cycle (adjoining a single order-two coordinate), so testing\nwhether it is the optimal bipartite repair is immediate rather than speculative.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3137",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a725bb00",
+    "status": "available",
+    "timestamp": "2026-07-01T23:31:22.493610+00:00",
+    "title": "Clean two-part obstruction: a *metric* principle (an"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5881,7 +5895,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d0833a0",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -5891,7 +5905,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
