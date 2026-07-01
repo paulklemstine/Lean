@@ -345,7 +345,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Type Theory: Cubical Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "8a7d0352",
+    "consumed_by_exp_id": "",
     "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
     "domains": [
       "Physics",
@@ -356,7 +356,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432775+00:00",
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
@@ -2380,7 +2380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
   {
-    "consumed_by_exp_id": "c69c4ab9",
+    "consumed_by_exp_id": "",
     "description": "For f a normalized Hecke eigenform for SL(2,Z) (holomorphic of weight k \u2265 2 or Hecke-Maass) with Hecke eigenvalues \u03bb_f(n), and for any \u03b5 > 0 with 1 \u2264 Y \u2264 X^{1/2-\u03b5}, the triple correlation sum satisfies |\u2211_{n\u2264X} \u2211_{m\u2264Y} \u03bb_f(n)\u03bb_f(m)\u03bb_f(n+m)| \u226a_{f,\u03b5} X^{1/2+\u03b5}Y. This is the optimal bound predicted by Sato-Tate heuristics and random matrix theory, going beyond the non-trivial power-saving bounds established in the paper for bilinear sums of GL(2) Fourier coefficients.",
     "domains": [
       "Computation"
@@ -2389,7 +2389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T05:25:55.578636+00:00",
     "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
   },
@@ -2656,7 +2656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
   {
-    "consumed_by_exp_id": "0bd0cdee",
+    "consumed_by_exp_id": "",
     "description": "The 27-vertex unit-distance graph G\u2082\u2087 constructed by Matolcsi, Ruzsa, Varga, and Zs\u00e1mboki has geometric fractional chromatic number exactly 4. There exists a two-vertex augmentation G\u2082\u2089 of G\u2082\u2087 (obtained by adding two suitably chosen points to the point configuration) that is still realizable as a unit-distance graph in \u211d\u00b2 and has geometric fractional chromatic number strictly greater than 4. Concretely: there exist points p\u2082\u2088, p\u2082\u2089 \u2208 \u211d\u00b2 such that the graph G\u2082\u2089 on 29 vertices, with edges determined by unit distance among all 29 points, satisfies \u03c7_gf(G\u2082\u2089) > 4.",
     "domains": [
       "Geometry"
@@ -2665,7 +2665,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T21:48:36.541820+00:00",
     "title": "Strictly super-4 geometric fractional chromatic number of the augmented Matolcsi\u2013Ruzsa\u2013Varga\u2013Zs\u00e1mboki graph"
   },
@@ -2813,7 +2813,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c347334",
     "description": "For any p-adic field F and any irreducible smooth admissible generic representation \u03c0 of GL(n, F), the Bessel distribution B_{\u2113\u2081,\u2113\u2082} associated to Whittaker functionals is regular: there exists a unique smooth function j defined on a dense open subset of GL(n, F), locally integrable on GL(n, F), such that B_{\u2113\u2081,\u2113\u2082}(f) = \u222b_{GL(n,F)} j(g)f(g)dg for all Schwartz functions f. This follows from the paper's main result (regularity follows from nontrivial bounds on Kloosterman sums for all Levi subgroups) combined with the known Deligne-Weil bounds on Kloosterman sums for all Levi subgroups of GL(n), which are products of smaller GL(m)'s.",
     "domains": [
       "Algebra",
@@ -2823,7 +2823,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T04:29:53.482836+00:00",
     "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
   },
@@ -3629,12 +3629,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let \u03c1(q) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third order mock theta function defined by \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{k=0}^{m} (1 + q^{2k+1} + q^{4k+2}). Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. The paper proves the asymptotic version (for sufficiently large n) but the exact finite sign law remains open. The only zeros in the negative residue classes are r(2) = r(4) = r(8) = r(11) = r(20) = 0.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3009",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27902v1",
+    "status": "available",
+    "timestamp": "2026-07-01T01:31:32.953293+00:00",
+    "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function \u03c1(q)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3009",
+    "id": "fd_3010",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3649,7 +3663,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3010",
+    "id": "fd_3011",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3663,7 +3677,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3678,7 +3692,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3693,7 +3707,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3708,7 +3722,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3723,7 +3737,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3737,7 +3751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3751,7 +3765,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3765,7 +3779,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3779,7 +3793,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3794,7 +3808,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3808,7 +3822,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3822,7 +3836,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3022",
+    "id": "fd_3023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3836,7 +3850,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3023",
+    "id": "fd_3024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3851,7 +3865,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3024",
+    "id": "fd_3025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3866,7 +3880,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3025",
+    "id": "fd_3026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3880,7 +3894,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3026",
+    "id": "fd_3027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3895,7 +3909,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3909,7 +3923,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3028",
+    "id": "fd_3029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3924,7 +3938,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3029",
+    "id": "fd_3030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -3938,7 +3952,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3030",
+    "id": "fd_3031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3952,7 +3966,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3031",
+    "id": "fd_3032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -3967,7 +3981,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3032",
+    "id": "fd_3033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3982,7 +3996,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3033",
+    "id": "fd_3034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -3997,7 +4011,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3034",
+    "id": "fd_3035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4011,7 +4025,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3035",
+    "id": "fd_3036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4025,7 +4039,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3036",
+    "id": "fd_3037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4040,7 +4054,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3037",
+    "id": "fd_3038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4049,32 +4063,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unit Distance Density in Q\u00b2 is \u0398(n^{4/3})"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ae9dee2",
     "description": "For integers $1 \\le r \\le n+1$, let $N(n,r)$ denote the minimum number of maximal chains in the Boolean lattice $B_n$ required to cover every strict $r$-term chain. The paper proves a general upper bound $N(n,n-t) \\le n!/t$ using the inversion number of permutations modulo $t$, and shows it is exact for $t=2$. This conjecture posits the exact value $N(n,n-2) = n!/2$ for all $n \\ge 2$, which is equivalent to stating that the set of permutations of $[n]$ with an even number of inversions (the alternating group $A_n$) covers all strict $(n-2)$-term chains, and no smaller set of permutations can do so.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3038",
+    "id": "fd_3039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T21:36:09.655202+00:00",
     "title": "Exact Value of Near-Maximal Chain Covering Number for t=2"
   },
   {
-    "consumed_by_exp_id": "1ae9dee2",
+    "consumed_by_exp_id": "",
     "description": "This conjecture formalizes Theorem 1.1 of the paper: an effective version of Andr\u00e9's theorem for curves in $\\mathbb{A}^2(\\mathbb{C})$ where the coordinate degrees are distinct. It asserts that for a geometrically irreducible, non-special curve $V$ defined over a number field $L$, the Weil heights of complex multiplication (CM) points on $V$ are bounded by a term linear in the height of $V$, with an explicit coefficient $26 \\max\\{d_1, d_2\\}^3$ and an effectively computable constant $c_1$ depending only on the field degree and maximum coordinate degree.",
     "domains": [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3039",
+    "id": "fd_3040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T21:55:06.338968+00:00",
     "title": "Effective Andr\u00e9's Height Bound for Non-Equisetential Curves"
   },
@@ -4084,7 +4098,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3040",
+    "id": "fd_3041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4098,13 +4112,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3041",
+    "id": "fd_3042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
     "status": "available",
     "timestamp": "2026-07-01T01:03:19.331401+00:00",
     "title": "Alternating-Position Overpartition Refinement of Slater's Identity (29)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the inhomogeneous random graph G_n with preferential attachment kernel \u03ba(x,y) = \u03b2(x\u2227y)^{-\u03b3}(x\u2228y)^{\u03b3-1} where \u03b3 \u2208 (1/2,1) (equivalently \u03c4 \u2208 (2,3)), if the percolation probability p_n satisfies p_n / n^{(1-2\u03b3)/2} \u2192 \u221e (i.e., above the critical window), then with high probability the largest connected component has size \u0398(n \u00b7 p_n^{1/(2\u03b3-1)}). In the original parametrization with \u03c4 = 1+1/\u03b3, this reads: the critical window is at p_c \u223c \u03b2 n^{(\u03c4-3)/(2\u03c4-2)}, and above it the giant component has order n \u00b7 p_n^{(\u03c4-1)/(3-\u03c4)}.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_3043",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27844v1",
+    "status": "available",
+    "timestamp": "2026-07-01T01:31:58.361094+00:00",
+    "title": "Order of the giant component above the moving critical window for preferential attachment percolation"
   },
   {
     "consumed_by_exp_id": "",
