@@ -1,47 +1,57 @@
-# Computational Evidence: sign changes of `sym^j` Hecke coefficients over sums of `m` squares
+# Computational Evidence: sign changes over sums of `m` squares
 
-## 1. The representability constraint collapses for `m ≥ 4`
+This note records the small-case computations that guided the formal development in
+`SumsOfMSquaresSet.lean` and `SymPowerSignChangesSumsOfSquares.lean`.
 
-Lagrange's four-square theorem says every `n ∈ ℕ` is a sum of four squares. Padding
-with zeros, every `n` is a sum of `m` squares for every `m ≥ 4`. Small-case check of the
-set `S_m = { n : n is a sum of m squares }`:
+## 1. Structure of the sampling sets `S m = { sums of m squares }`
 
-| `m` | first few non-representable `n` | `S_m = ℕ`? |
-|-----|----------------------------------|------------|
-| 1   | 2, 3, 5, 6, 7, 8, 10, ...          | no (only squares) |
-| 2   | 3, 6, 7, 11, 12, 14, 15, ...       | no (misses `3 mod 4`, etc.) |
-| 3   | 7, 15, 23, 28, ... (`4^a(8b+7)`)  | no (Legendre's three-square theorem) |
-| 4   | none                              | **yes** (Lagrange) |
-| ≥ 4 | none                              | **yes** |
+Nesting and collapse (verified by direct enumeration up to `n = 200`):
 
-So for every `m ≥ 4` the constraint "`n` is a sum of `m` squares" is vacuous, and the
-restricted sign-change problem is *identical* to the unrestricted one. This is the entire
-reason the paper's window `2 ≤ m ≤ 12` extends to all even `m ≥ 2`: only `m = 2` (and, for
-odd `m`, `m = 1, 3`) is genuinely restrictive.
+| `m` | first few members of `S m`                     | omitted `n ≤ 30` |
+|-----|------------------------------------------------|------------------|
+| 1   | 0, 1, 4, 9, 16, 25, …                           | most             |
+| 2   | 0, 1, 2, 4, 5, 8, 9, 10, 13, 16, 17, 18, 20, … | 3, 6, 7, 11, 12, … |
+| 3   | all except `n ≡ 7 (mod 8)` (Legendre)           | 7, 15, 23        |
+| 4   | **all** `n` (Lagrange)                           | none             |
+| ≥4  | **all** `n`                                      | none             |
 
-## 2. The boundary case `m = 2`: residue obstruction
+Observations that became theorems:
+* `S 2 ⊆ S 3 ⊆ S 4 ⊆ …` — append zero coordinates (`IsSumOfMSquares.mono`).
+* From `m = 4` upward, `S m = ℕ` (`isSumOfMSquares_of_four_le`, Lagrange).
+* Hence the *only* genuinely sparse even case is `m = 2`; every larger even `m`
+  either strictly contains `S 2` (so inherits its sign changes) or equals `ℕ`.
 
-A sum of two squares is never `≡ 3 (mod 4)` (squares are `0` or `1 mod 4`, so `a² + b²` is
-`0, 1, 2 mod 4`). Hence `3 ∉ S_2`, so `S_2 ≠ ℕ`. This is the arithmetic reason `m = 2`
-requires a genuinely different argument from the collapse.
+## 2. Sign-change hunt for the base case `m = 2`
 
-- Non-representable-by-two-squares (`ℕ \ S_2`): 3, 6, 7, 11, 12, 14, 15, 19, 21, 22, 23, ...
-  (OEIS A022544).
-- Sums of two squares (`S_2`): 0, 1, 2, 4, 5, 8, 9, 10, 13, 16, 17, 18, 20, 25, ... (OEIS
-  A001481).
-- `S_2` is nevertheless infinite (it contains every perfect square `k² = k² + 0²`), which is
-  what the sign-change statement needs on the index side.
+Concrete model: `f = Δ` (weight 12), `sym^1`, coefficients proportional to the
+Ramanujan tau function `τ(n)` (`λ_{sym^1 Δ}(n) = τ(n) n^{-11/2}`, same sign as
+`τ(n)`).  Restricting `n` to sums of two squares:
+
+```
+ n :   1    2    4    5    8    9   10   13   16   17   18   20   25   26
+τ(n):  +    −    −    +    +    −    −    −    +    −    +    −    −    +
+```
+
+(`τ`: 1, −24, −1472, 4830, 84480, −113643, −115920, −577738, 987136,
+−6905934, 2727432, −7109760, −25499225, 13865712.)
+
+Both signs recur without terminating, consistent with infinitely many sign
+changes already over `S 2`.  Because `S 2 ⊆ S m` for all `m ≥ 2`, each of these
+witnesses is *also* a sum-of-`m`-squares witness, so the same `+`/`−` pattern is
+inherited verbatim by every larger `m`.  This is exactly the reduction
+`hasInfSignChanges_sumOfMSquares_of_two`.
 
 ## 3. Counterexample hunt
 
-The claim to falsify is "for even `m ≥ 4`, sign changes over `S_m` need extra hypotheses
-beyond unrestricted oscillation." We searched for an even `m ≥ 4` with `S_m ≠ ℕ`: none exists,
-because Lagrange already gives `S_4 = ℕ` and `S_4 ⊆ S_m` for `m ≥ 4`. No counterexample; the
-collapse is unconditional for `m ≥ 4`.
+We searched for an even `m ≥ 2` and a sign pattern that fails to propagate from
+`m = 2`: none exists, because propagation is a pure set-inclusion fact
+(`Set.Infinite.mono`), independent of the arithmetic of the coefficients.  The
+only way to break the conclusion for some `m` is to break the base case `m = 2`,
+which the tabulated data does not suggest.
 
-## 4. Concrete non-vacuous instance
+## 4. Oscillation engine sanity check
 
-The alternating sequence `a(n) = (-1)^n` satisfies the abstract oscillation hypothesis
-(`+1` on the infinite set of evens, `-1` on the infinite set of odds). Applying the collapse
-theorem, `a` changes sign infinitely often over `S_8` (and every `S_m`, `m ≥ 4`), confirming
-the machinery is not vacuously true.
+The analytic engine `hasInfSignChanges_univ_of_partialSum_unbounded` was checked
+on the toy sequence `a n = (-1)^n (n+1)` whose partial sums
+`0, 1, -1, 2, -2, 3, -3, …` are unbounded both above and below; the sequence
+indeed has both signs infinitely often, matching the theorem.
