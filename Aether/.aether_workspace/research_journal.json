@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8ed8ca57",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Sharp approximate Carathéodory & iterated Delaunay refinement\n\nDerived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,\n`Contraction.lean`, `Bridge.lean`, and the",
-      "quality_score": 0.7478369230769231,
-      "sorry_count": 1,
-      "theorem_count": 13,
-      "timestamp": "2026-06-27T04:13:04",
-      "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refinement"
-    },
-    {
       "cycle_id": "905ed2dd",
       "domain": "Novelty",
       "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings: the EML operator `f(x) = exp(a)·log(b·x + c)`\nhas a *sharp closed-form existence threshold* `c ≥ exp(a)·(1 − a)` (fo",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-07-01T15:21:02",
       "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even"
+    },
+    {
+      "cycle_id": "dd442784",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Homology of Latin Square Graphs\n\nThese conjectures are distilled from the current cycle's findings on the clique\nstructure of Latin square graphs. Each is falsifiable and, we beli",
+      "quality_score": 0.759526,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-01T15:25:50",
+      "title": "Dimension of Second Clique Homology for Latin Square Graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bdb5ae9b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Quadratic irrational density in the ratio spectrum\n\nDerived from the Phase A v19b cycle that produced `MobiusQuadratic.lean`,\n`DeterminantSpectrum.lean`, and the new `RatioSpectr",
-      "quality_score": 0.67947,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-26T20:49:35",
-      "title": "Quadratic irrational density in the ratio spectrum"
-    },
     {
       "cycle_id": "f36ed9b7",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-01T15:21:02",
       "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m Squares for All Even"
+    },
+    {
+      "cycle_id": "dd442784",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Homology of Latin Square Graphs\n\nThese conjectures are distilled from the current cycle's findings on the clique\nstructure of Latin square graphs. Each is falsifiable and, we beli",
+      "quality_score": 0.759526,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-01T15:25:50",
+      "title": "Dimension of Second Clique Homology for Latin Square Graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7232000000000001
     }
   ],
-  "last_updated": "2026-07-01T15:21:02",
+  "last_updated": "2026-07-01T15:25:50",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "12b5f4b2",
-        "quality": 0.6807300000000001,
-        "theorems": 10,
-        "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
-      },
-      {
         "cycle_id": "3c64518a",
         "quality": 0.79664,
         "theorems": 24,
@@ -3637,6 +3631,12 @@
         "quality": 0.3699978030769231,
         "theorems": 6,
         "title": "Projective Plane Coupon Collection Slowness"
+      },
+      {
+        "cycle_id": "dd442784",
+        "quality": 0.759526,
+        "theorems": 15,
+        "title": "Dimension of Second Clique Homology for Latin Square Graphs"
       }
     ],
     "NumberTheory": [

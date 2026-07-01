@@ -1899,6 +1899,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2888",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28121v1",
+    "status": "available",
+    "timestamp": "2026-06-29T19:42:40.348725+00:00",
+    "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every integer n \u2265 2 and every prime \u2113, the proportion of entries in the character table of GL_n(F_q) not divisible by \u2113 (in the ring of algebraic integers) converges to 1/2 as q \u2192 \u221e over prime powers coprime to \u2113. Formally: lim_{q\u2192\u221e} N_\u2113^{(n)}(q) / k_n(q)^2 = 1/2, where N_\u2113^{(n)}(q) = |{(\u03c7, C) \u2208 Irr(GL_n(F_q)) \u00d7 Cl(GL_n(F_q)) : \u2113 \u2224 \u03c7(C)}| counts character table entries not divisible by \u2113, and k_n(q) is the number of conjugacy classes of GL_n(F_q). This generalizes the paper's Theorem 1.1, which establishes the n = 2 case with the asymptotic N_\u2113(q) = q^4/2 + O_\u03b5(q^{3+\u03b5}).",
     "domains": [
       "Algebra",
@@ -3364,7 +3379,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the L^p Threshold for KNRS Relaxation"
   },
   {
-    "consumed_by_exp_id": "04b163c8",
+    "consumed_by_exp_id": "",
     "description": "Let p be a prime, b an integer \u2265 2 such that p does not divide b. If the multiplicative order of b modulo p is (p-1)/2, and p \u2261 1 mod 4, then the sum of the digits of one period of the base-b expansion of 1/p is (b-1)(p-1)/4.",
     "domains": [
       "Pythagorean"
@@ -3373,7 +3388,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T18:01:55.527180+00:00",
     "title": "Sum of digits of 1/p for half-period length and p \u2261 1 mod 4"
   },
@@ -3993,7 +4008,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ForcingEdges in Odd Wheels"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "657467a8",
     "description": "The theoretical convergence of the optimal vanishing slope for homology groups with braided vector spaces, validated through asymptotic analysis of convergence rates.",
     "domains": [
       "Algebra",
@@ -4003,7 +4018,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26440v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T13:30:00.396622+00:00",
     "title": "Convergence of Vanishing Slope"
   },
@@ -4065,12 +4080,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let L \u2282 \u2124^n be a linear subspace of dimension d not contained in any coordinate hyperplane, and let M = Matroid(L). For any flat F of M (including the whole matroid), denote by rank(F) the rank of F and by M/F the contraction of M by F. Let (L|_F^{-1})^\u2071 be the projectively dual hypersurface of the reciprocal linear space of the restriction L|_F (when it is a hypersurface). Then we conjecture that\n\n    deg((L|_F^{-1})^\u2071) = 2^{rank(F)} \u00b7 \u03b2(M/F),\n\nwhere \u03b2(\u00b5) denotes the \u03b2\u2011invariant (the dimension of the largest proper cofitting subspace). This extends Conjecture\u202f7.3 of Matsubara\u2013Heo\u2013Telen, which corresponds to F = L.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_3040",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26281v1",
+    "status": "available",
+    "timestamp": "2026-07-01T15:27:38.872072+00:00",
+    "title": "Generalized Degree Conjecture for Reciprocal Linear Space Hypersurfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3040",
+    "id": "fd_3041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -4085,7 +4115,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3041",
+    "id": "fd_3042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -4099,7 +4129,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3042",
+    "id": "fd_3043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -4114,7 +4144,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3043",
+    "id": "fd_3044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -4129,7 +4159,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3044",
+    "id": "fd_3045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -4144,7 +4174,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3045",
+    "id": "fd_3046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -4159,7 +4189,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3046",
+    "id": "fd_3047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -4173,7 +4203,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3047",
+    "id": "fd_3048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -4187,7 +4217,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3048",
+    "id": "fd_3049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -4201,7 +4231,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3049",
+    "id": "fd_3050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -4215,7 +4245,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3050",
+    "id": "fd_3051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -4230,7 +4260,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3051",
+    "id": "fd_3052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -4244,7 +4274,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3052",
+    "id": "fd_3053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -4258,7 +4288,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3053",
+    "id": "fd_3054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -4272,7 +4302,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3054",
+    "id": "fd_3055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -4287,7 +4317,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3055",
+    "id": "fd_3056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -4302,7 +4332,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3056",
+    "id": "fd_3057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -4316,7 +4346,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3057",
+    "id": "fd_3058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -4331,7 +4361,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3058",
+    "id": "fd_3059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -4345,7 +4375,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3059",
+    "id": "fd_3060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -4360,7 +4390,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3060",
+    "id": "fd_3061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -4374,7 +4404,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3061",
+    "id": "fd_3062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -4388,7 +4418,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3062",
+    "id": "fd_3063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -4403,7 +4433,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3063",
+    "id": "fd_3064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -4418,7 +4448,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3064",
+    "id": "fd_3065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -4433,7 +4463,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3065",
+    "id": "fd_3066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4447,7 +4477,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3066",
+    "id": "fd_3067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4461,7 +4491,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3067",
+    "id": "fd_3068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4476,7 +4506,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3068",
+    "id": "fd_3069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4491,7 +4521,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3069",
+    "id": "fd_3070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4506,7 +4536,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3070",
+    "id": "fd_3071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4520,7 +4550,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3071",
+    "id": "fd_3072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4534,7 +4564,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3072",
+    "id": "fd_3073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4548,7 +4578,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3073",
+    "id": "fd_3074",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -4562,7 +4592,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3074",
+    "id": "fd_3075",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27507v1",
@@ -4577,7 +4607,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3075",
+    "id": "fd_3076",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27516v1",
@@ -4591,7 +4621,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3076",
+    "id": "fd_3077",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
@@ -4606,7 +4636,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3077",
+    "id": "fd_3078",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27273v1",
@@ -4620,7 +4650,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3078",
+    "id": "fd_3079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
@@ -4635,7 +4665,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3079",
+    "id": "fd_3080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
@@ -4649,7 +4679,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3080",
+    "id": "fd_3081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
@@ -4663,7 +4693,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Logic"
     ],
-    "id": "fd_3081",
+    "id": "fd_3082",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27451v1",
@@ -4678,7 +4708,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3082",
+    "id": "fd_3083",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27208v1",
@@ -4693,7 +4723,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3083",
+    "id": "fd_3084",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27170v1",
@@ -4707,7 +4737,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3084",
+    "id": "fd_3085",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27179v2",
@@ -4721,7 +4751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3085",
+    "id": "fd_3086",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27197v1",
@@ -4736,7 +4766,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3086",
+    "id": "fd_3087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27190v1",
@@ -4751,7 +4781,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3087",
+    "id": "fd_3088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27118v1",
@@ -4765,7 +4795,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3088",
+    "id": "fd_3089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27104v1",
@@ -4780,7 +4810,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Bridges"
     ],
-    "id": "fd_3089",
+    "id": "fd_3090",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27070v1",
@@ -4794,7 +4824,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3090",
+    "id": "fd_3091",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27087v1",
@@ -4809,7 +4839,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_3091",
+    "id": "fd_3092",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26851v1",
@@ -4824,7 +4854,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3092",
+    "id": "fd_3093",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26983v1",
@@ -4838,7 +4868,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3093",
+    "id": "fd_3094",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26776v2",
@@ -4853,7 +4883,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3094",
+    "id": "fd_3095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26589v1",
@@ -4868,7 +4898,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3095",
+    "id": "fd_3096",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26761v1",
@@ -4883,7 +4913,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3096",
+    "id": "fd_3097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26639v1",
@@ -4897,7 +4927,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3097",
+    "id": "fd_3098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26570v1",
@@ -4911,7 +4941,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3098",
+    "id": "fd_3099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26335v1",
@@ -4926,7 +4956,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3099",
+    "id": "fd_3100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26550v1",
@@ -4940,7 +4970,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3100",
+    "id": "fd_3101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
@@ -4954,13 +4984,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3101",
+    "id": "fd_3102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
     "status": "available",
     "timestamp": "2026-07-01T14:59:23.165263+00:00",
     "title": "Universality of the Sum of a Triangular, a Pentagonal, and an Octagonal Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A planar graph admits a conflict-free 4-coloring if and only if it is 4-colorable, and this equivalence is established through a refined Gallai-Edmonds decomposition that assigns unique colors to universal vertices while ensuring core vertices have distinct neighboring colors.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3103",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25988v1",
+    "status": "available",
+    "timestamp": "2026-07-01T15:30:44.490974+00:00",
+    "title": "Equivalence of Conflict-Free 4-Coloring and Four Color Theorem via Gallai-Edmonds Decomposition"
   },
   {
     "consumed_by_exp_id": "",
@@ -5036,20 +5080,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 8875d434 (Q=0.748) proved 14 theorems in Computation but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The independence ratio of any finite unit-distance graph in the plane cannot fall below 1/4, disproving claims below this threshold based on the paper's result.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "sorry_fill_8875d434_d7cba003",
-    "priority_score": 0.7976214285714286,
-    "research_mode": "team",
-    "source_exp_id": "8875d434",
-    "status": "available",
-    "timestamp": "2026-07-01T15:19:18.659839+00:00",
-    "title": "Close Proofs: Minimum Independence Ratio Constraint"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domains": [
       "Algebra"
@@ -5117,36 +5147,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erd\u0151s\u2013Straus Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Independence Ratios of Unit-Distance Graphs\n\nThis cycle established a clean, sharp relationship between colourability and the\nindependence ratio of finite graphs, instantiated it on planar unit-distance\ngraphs, and isolated exactly where the folklore \"one quarter\" threshold stops\nbeing a theorem and becomes a conjecture. The following directions are derived\ndirectly from those findings.\n\n## 1. The true infimum of the planar independence ratio\n\n**Conjecture.** The infimum, over all finite unit-distance graphs in the plane,\nof the ratio between a largest set of mutually non-unit-distance vertices and the\ntotal number of vertices is a single well-defined constant strictly between\n`0.22` and `0.26`, and in particular it is **strictly below one quarter**.\n\n*The key insight is* that the \"one quarter\" figure is an artefact of four-colour\nintuition, and colourability provably cannot deliver it: there exist finite\nplanar configurations requiring five colours, so the quarter bound must be argued\n\u2014if it holds at all\u2014by a packing or density argument rather than by colouring,\nand the best packing constructions already push the ceiling toward `0.229`.\n\n*Why now?* The recent discovery of explicit five-chromatic planar\nunit-distance configurations removed the last reason to expect a four-colour\nproof of the quarter bound, and modern flag-algebra and linear-programming\ndensity methods are finally sharp enough to pin the constant to two decimal\nplaces.\n\n## 2. Sharpness is a colouring phenomenon, not a geometric one\n\n**Conjecture.** Among finite unit-distance graphs in the plane, the colouring\nlower bound `1 / k` on the independence ratio is attained (as an equality) only\nby graphs whose largest complete subgraph is a triangle, and never by a\ngenuinely `k`-colour-critical planar family for `k \u2265 4`.\n\n*The key insight is* that the abstract bound `1 / k` is tight exactly on complete\ngraphs, but complete graphs stop being realisable by planar unit distances once\nthey exceed three vertices, so the geometric constraint forces every planar\nwitness strictly into the interior of the admissible region.\n\n*Why now?* We have, in this cycle, both the exact tightness statement for the\nabstract bound and an explicit planar triangle attaining `1 / 3`; the natural\nnext step is to prove that no planar family can hug the bound as `k` grows.\n\n## 3. An edge-count phase transition for the ratio\n\n**Conjecture.** For finite unit-distance graphs on `n` vertices with `m` edges,\nthe independence ratio is bounded below by a quantity of order `n / (m + n)`, and\nthis edge-count bound overtakes any colouring bound precisely in the sparse\nregime `m = o(n^{4/3})`, which is the extremal edge count for planar unit\ndistances.\n\n*The key insight is* that two entirely different mechanisms control the ratio in\ndifferent density regimes\u2014averaging over colour classes when the graph is dense,\nand the Tur\u00e1n/Caro\u2013Wei degree averaging when it is sparse\u2014and the crossover sits\nexactly at the known extremal edge density for unit-distance graphs.\n\n*Why now?* The extremal `n^{4/3}` edge bound for unit-distance graphs is\nclassical, but only recently have matching sparse constructions been catalogued,\nmaking it feasible to test where the two independence-ratio mechanisms exchange\ndominance.\n\n## 4. Dimension lifts the threshold\n\n**Conjecture.** In three-dimensional space the analogous independence-ratio\ninfimum is strictly smaller than in the plane, and it decays to zero as the\nambient dimension grows, at a rate governed by the exponential growth of the\nkissing number.\n\n*The key insight is* that higher dimensions permit ever larger cliques of\nmutually unit-distant points (a regular simplex uses one extra dimension per\nextra vertex), and each such clique drags the local independence ratio down\ntoward the reciprocal of the clique size.\n\n*Why now?* Sphere-packing and kissing-number bounds were recently settled in\nseveral key dimensions, giving, for the first time, quantitative control over how\nmany mutually unit-distant points a bounded region can host.\n\n## 5. A certified separation between the fractional and integral bounds\n\n**Conjecture.** There is an explicit finite planar unit-distance graph whose\nindependence ratio is strictly larger than the reciprocal of its fractional\nchromatic number, exhibiting a certified gap between the fractional-colouring\nprediction and the true integral ratio.\n\n*The key insight is* that the reciprocal-fractional-chromatic-number heuristic is\nonly an inequality, and the slack in that inequality is itself measurable on\nsmall critical configurations, so a single well-chosen finite graph can witness\nthe separation exactly.\n\n*Why now?* Fractional chromatic numbers of small planar unit-distance graphs are\nnow computable to high precision, so the predicted gap can be exhibited on a\nconcrete, fully checkable example rather than argued asymptotically.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_3102",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "8875d434",
-    "status": "available",
-    "timestamp": "2026-07-01T15:19:09.721624+00:00",
-    "title": "Clean, sharp relationship between colourability and the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: sign changes of symmetric-power coefficients on thin sets\n\nThese conjectures grow out of the central finding of this cycle: the constraint \"`n` is a sum\nof `m` squares\" stops binding once `m \u2265 4`, so the interesting arithmetic lives entirely in the\nthin sets `m = 1, 2, 3`, where the representable integers form a positive- or zero-density but\nstrictly proper subset of the naturals.\n\n## 1. Uniform density of sign changes on thin two-square sets\n\n**Conjecture.** For a normalised Hecke eigenform `f`, every symmetric power `sym^j f`, the\nnumber of sign changes of `\u03bb_{sym^j f}(n)` among sums of two squares up to `X` grows like a\npositive power of `X`, with an exponent independent of `j`.\n\nThe key insight is that once the ambient set is thin, the sign-change count is governed by the\nlocal density of the thin set rather than by the depth `j` of the symmetric power, because the\noscillation of the coefficients is already \"generic\" relative to any fixed arithmetic filter.\nWhy now? The collapse phenomenon isolates `m = 2` as the sole genuinely restrictive even case,\nso quantitative sign-change counting can be attacked one thin set at a time instead of across a\nwhole family of `m`.\n\n## 2. Three-square sets and the Legendre obstruction\n\n**Conjecture.** The sign-change phenomenon persists over sums of *three* squares, i.e. over\n`\u2115 \\ {4^a(8b+7)}`, for every `sym^j f`, even though this set omits an infinite,\npositive-density family of integers.\n\nThe key insight is that the removed integers `4^a(8b+7)` form a multiplicatively structured,\nsign-neutral family, so deleting them cannot destroy an oscillation that is spread across\nresidue classes. Why now? The two-square boundary case shows that a single residue obstruction\n(`3 mod 4`) is compatible with infinitely many sign changes; the three-square case tests whether\nthe phenomenon survives a *hierarchical* obstruction indexed by powers of four.\n\n## 3. Sign changes over shifted representable sets\n\n**Conjecture.** For every fixed shift `h \u2265 0`, the coefficients `\u03bb_{sym^j f}(n + h)` change\nsign infinitely often as `n` ranges over sums of two squares.\n\nThe key insight is that shifting the index set by a constant preserves its asymptotic density\nwhile decorrelating it from the multiplicative structure of the coefficients, so the shift\ncannot conspire to freeze the sign. Why now? Having reduced the whole even-`m` family to the\nsingle set `S_2`, one can probe robustness by perturbing that set rather than by changing `m`.\n\n## 4. Simultaneous sign changes across symmetric powers\n\n**Conjecture.** For any finite set of exponents `j_1 < ... < j_r`, there are infinitely many\nsums of two squares `n` at which all of `\u03bb_{sym^{j_1} f}(n), ..., \u03bb_{sym^{j_r} f}(n)` are\npositive, and infinitely many at which all are negative.\n\nThe key insight is that the symmetric-power coefficients, viewed as coordinates, equidistribute\nagainst the Sato\u2013Tate measure jointly, so any prescribed sign pattern occurs with positive\nfrequency even after restricting to a thin representable set. Why now? The collapse result makes\nthe ambient set uniform across all `m \u2265 4`, focusing attention on *joint* behaviour of the\ncoefficients rather than on the representability index.\n\n## 5. A `sum-of-m-squares` threshold theorem for general oscillating multiplicative data\n\n**Conjecture.** Any real multiplicative sequence that is unbounded in both signs changes sign\ninfinitely often over sums of `m` squares for every `m \u2265 4`, with no arithmetic hypothesis on\nthe sequence beyond two-sided unboundedness.\n\nThe key insight is that the four-square collapse is a purely combinatorial fact about the index\nset, so it should transfer *any* two-sided oscillation \u2014 automorphic or not \u2014 from `\u2115` to the\nrepresentable set. Why now? The present cycle proves exactly this transfer for the abstract\n`SignOscillating` interface; the conjecture asks how far the interface can be weakened while\nretaining the conclusion.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_3103",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "52dd778d",
-    "status": "available",
-    "timestamp": "2026-07-01T15:20:56.265256+00:00",
-    "title": "These conjectures grow out of the central finding of this cycle: the constraint "
   },
   {
     "consumed_by_exp_id": "",
