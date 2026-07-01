@@ -284,7 +284,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorical Foundations: Yoneda and Adjunctions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "94dfb51e",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domains": [
       "Logic",
@@ -294,7 +294,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:03.446924+00:00",
     "title": "Homotopy Type Theory Foundations"
   },
@@ -2147,7 +2147,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Projective Plane Coupon Mechanisms Dominate the Full Model"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddab9e68",
     "description": "For any integers d, e > 1, a partition \u03bb is d-balanced (with respect to e) if every hook of \u03bb whose length is divisible by e has arm length divisible by d. The conjecture states that the affine crystal reflection operators on partitions preserve the d-balanced property: for any d, e > 1, any d-balanced partition \u03bb, and any valid crystal reflection index i, the partition s_i(\u03bb) obtained by applying the i-th affine crystal reflection to \u03bb is again d-balanced.",
     "domains": [
       "Pythagorean",
@@ -2157,7 +2157,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T22:40:00.751415+00:00",
     "title": "Crystal Reflections Preserve d-Balanced Property of Partitions"
   },
@@ -3642,7 +3642,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function \u03c1(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "311b39b3",
     "description": "For any integer $p \\ge 2$, the classical harmonic zeta function $\\zeta_H(p)$ and the Riemann zeta function $\\zeta(s)$ satisfy the identity $2\\zeta_H(p) = (p+2)\\zeta(p+1) - \\sum_{j=1}^{p-2} \\zeta(p-j)\\zeta(j+1)$. This conjecture proposes the formalization of this specific classical identity, which expresses the special values of the harmonic zeta function at positive integers in terms of the Riemann zeta function.",
     "domains": [
       "Pythagorean"
@@ -3651,7 +3651,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27827v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T01:51:13.586256+00:00",
     "title": "Euler Identity for Harmonic Zeta Function Values"
   },
@@ -3922,7 +3922,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vertex-Ramsey Stability Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8641bed1",
     "description": "Let B \u2282 GL(n) be a Borel subgroup and let \ud835\udd05\u2099 be the flag variety of GL(n).  There is an explicit B\u2011equivariant embedding \u03b9\u2099 of the set of B\u2011orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 into the set of Borel orbits on the flag variety \ud835\udd05_{n+1} of GL(n+1).  Each orbit in the image of \u03b9\u2099 is indexed by a permutation w \u2208 S_{n+1}.  The conjecture states that for any two such permutations v,w the following are equivalent:\n1. The orbit \u03b9\u2099\u207b\u00b9(O_w) lies in the Zariski closure of \u03b9\u2099\u207b\u00b9(O_v).\n2. v \u2264 w in the Bruhat order on S_{n+1}.\nThis gives a complete, combinatorial description of the orbit\u2011closure poset on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9 and shows that the embedding \u03b9\u2099 preserves the closure relations exactly as the Bruhat order does on \ud835\udd05_{n+1}.  The conjecture is falsifiable: a counter\u2011example would be a pair (v,w) with v \u2264 w but with \u03b9\u2099\u207b\u00b9(O_w) not contained in the closure of \u03b9\u2099\u207b\u00b9(O_v), or vice\u2011versa.",
     "domains": [
       "Algebra",
@@ -3932,7 +3932,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:20:24.782492+00:00",
     "title": "Bruhat Correspondence for Borel Orbits on \ud835\udd05\u2099\u00a0\u00d7\u00a0\u2119\u207f\u207b\u00b9"
   },
@@ -4008,7 +4008,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prime-Base Reduction for $n=q^t p$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3257177e",
     "description": "For k \u2265 2 and a finite set S \u2282 \u2124\u1d4f, let V_S = {v \u2208 \u2124\u1d4f : \u2200x \u2208 S, gcd(v \u2212 x) = 1} be the set of points simultaneously visible from all points in S. The autocorrelation \u03b3_S(z) = lim_{N\u2192\u221e} |V_S \u2229 (V_S + z) \u2229 [\u2212N,N]\u1d4f| / (2N+1)\u1d4f exists for all z \u2208 \u2124\u1d4f and equals the convergent Euler product \u220f_p (1 \u2212 |S_p \u222a (S\u2212z)_p| / p\u1d4f), where S_p and (S\u2212z)_p denote the images of S and S\u2212z in (\u2124/p\u2124)\u1d4f respectively. This generalizes the classical single-origin visible lattice point autocorrelation (where S = {0} recovers the known formula involving the M\u00f6bius function and Riemann zeta values) to arbitrary finite observation sets, and the Euler product structure immediately implies the pure point nature of the diffraction spectrum.",
     "domains": [
       "Pythagorean",
@@ -4018,7 +4018,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T15:19:26.975381+00:00",
     "title": "Euler Product for Autocorrelation of Simultaneously Visible Lattice Points"
   },
@@ -4095,7 +4095,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite Field Falconer Conjecture at the Critical Exponent for Even Dimensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46a53213",
     "description": "The sequence of log-convexity gaps $G_n = B_{n+1}B_{n-1} - (B_n)^2$ for Bell numbers is itself log-convex, meaning $G_{n+1}G_{n-1} \\ge (G_n)^2$ for all $n \\ge 2$.",
     "domains": [
       "Geometry"
@@ -4104,7 +4104,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T17:37:27.634066+00:00",
     "title": "Log-Convexity of the Bell Number Gap Sequence"
   },
@@ -4906,7 +4906,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3a5f08b7",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -4916,7 +4916,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -5191,7 +5191,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c19b86d",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domains": [
       "Cryptography",
@@ -5201,7 +5201,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },

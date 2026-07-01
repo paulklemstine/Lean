@@ -378,7 +378,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "94dfb51e",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domain_bridges": [],
     "domains": [
@@ -391,7 +391,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:03.446924+00:00",
     "title": "Homotopy Type Theory Foundations"
   },
@@ -3550,7 +3550,7 @@
       "math.CO",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddab9e68",
     "description": "For any integers d, e > 1, a partition λ is d-balanced (with respect to e) if every hook of λ whose length is divisible by e has arm length divisible by d. The conjecture states that the affine crystal reflection operators on partitions preserve the d-balanced property: for any d, e > 1, any d-balanced partition λ, and any valid crystal reflection index i, the partition s_i(λ) obtained by applying the i-th affine crystal reflection to λ is again d-balanced.",
     "domain_bridges": [
       "representation_theory",
@@ -3566,7 +3566,7 @@
     "proof_strategy": "Define partitions, hook lengths, arm lengths, and d-balanced property in Lean. Formalize the affine crystal reflection operators on partitions (via abacus configurations or node addition/removal). The key step is showing that if h_{rc}(λ) ≡ 0 (mod e) implies a_{rc}(λ) ≡ 0 (mod d), then the same holds after applying a crystal reflection s_i. This likely proceeds by analyzing how a single affine reflection modifies hook lengths and arm lengths, using the fact that the reflection changes the partition by adding/removing a rim hook of e-residue i, and checking the d-balanced condition is preserved at each affected node.",
     "research_mode": "team",
     "source_exp_id": "2606.28305v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T22:40:00.751415+00:00",
     "title": "Crystal Reflections Preserve d-Balanced Property of Partitions"
   },
@@ -6390,7 +6390,7 @@
       "math.NT",
       "math.CV"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "311b39b3",
     "description": "For any integer $p \\ge 2$, the classical harmonic zeta function $\\zeta_H(p)$ and the Riemann zeta function $\\zeta(s)$ satisfy the identity $2\\zeta_H(p) = (p+2)\\zeta(p+1) - \\sum_{j=1}^{p-2} \\zeta(p-j)\\zeta(j+1)$. This conjecture proposes the formalization of this specific classical identity, which expresses the special values of the harmonic zeta function at positive integers in terms of the Riemann zeta function.",
     "domain_bridges": [
       "Special Functions",
@@ -6405,7 +6405,7 @@
     "proof_strategy": "Define the harmonic zeta function and the Riemann zeta function over the reals, establish their Dirichlet series representations for convergent domains, and prove the identity using generating function techniques or by evaluating the Dirichlet convolution of the harmonic numbers and the identity sequence, reducing the sum to known telescoping properties.",
     "research_mode": "team",
     "source_exp_id": "2606.27827v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T01:51:13.586256+00:00",
     "title": "Euler Identity for Harmonic Zeta Function Values"
   },
@@ -6925,7 +6925,7 @@
       "Mathlib.AlgebraicGeometry.FlagVariety",
       "https://arxiv.org/abs/2204.00121"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8641bed1",
     "description": "Let B ⊂ GL(n) be a Borel subgroup and let 𝔅ₙ be the flag variety of GL(n).  There is an explicit B‑equivariant embedding ιₙ of the set of B‑orbits on 𝔅ₙ × ℙⁿ⁻¹ into the set of Borel orbits on the flag variety 𝔅_{n+1} of GL(n+1).  Each orbit in the image of ιₙ is indexed by a permutation w ∈ S_{n+1}.  The conjecture states that for any two such permutations v,w the following are equivalent:\n1. The orbit ιₙ⁻¹(O_w) lies in the Zariski closure of ιₙ⁻¹(O_v).\n2. v ≤ w in the Bruhat order on S_{n+1}.\nThis gives a complete, combinatorial description of the orbit‑closure poset on 𝔅ₙ × ℙⁿ⁻¹ and shows that the embedding ιₙ preserves the closure relations exactly as the Bruhat order does on 𝔅_{n+1}.  The conjecture is falsifiable: a counter‑example would be a pair (v,w) with v ≤ w but with ιₙ⁻¹(O_w) not contained in the closure of ιₙ⁻¹(O_v), or vice‑versa.",
     "domain_bridges": [
       "Algebraic Geometry ↔ Representation Theory",
@@ -6941,7 +6941,7 @@
     "proof_strategy": "The strategy is to first establish that the embedding ιₙ is compatible with the Demazure monoid action on the orbit set, as shown in the cited paper.  Using the known description of the Demazure product on S_{n+1} and the fact that closure relations on flag varieties are governed by the Bruhat order, one can translate the orbit closure inclusion into an inequality in the symmetric group.  A key step is to prove that the dimension of an orbit indexed by w equals the length ℓ(w) of the permutation, and that the closure of an orbit contains exactly the orbits indexed by all permutations below it in Bruhat order.  This can be carried out by induction on n, using the Gelfand–Zetlin pattern to localise the action of the stabilizer S_i and to reduce to lower rank cases.  The final step is to formalise the equivalence of the two conditions using the partial order structure in Lean, verifying the closure inclusion with dimension arguments and the Bruhat inequalities.",
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T13:20:24.782492+00:00",
     "title": "Bruhat Correspondence for Borel Orbits on 𝔅ₙ × ℙⁿ⁻¹"
   },
@@ -7081,7 +7081,7 @@
       "52C23",
       "11N25"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3257177e",
     "description": "For k ≥ 2 and a finite set S ⊂ ℤᵏ, let V_S = {v ∈ ℤᵏ : ∀x ∈ S, gcd(v − x) = 1} be the set of points simultaneously visible from all points in S. The autocorrelation γ_S(z) = lim_{N→∞} |V_S ∩ (V_S + z) ∩ [−N,N]ᵏ| / (2N+1)ᵏ exists for all z ∈ ℤᵏ and equals the convergent Euler product ∏_p (1 − |S_p ∪ (S−z)_p| / pᵏ), where S_p and (S−z)_p denote the images of S and S−z in (ℤ/pℤ)ᵏ respectively. This generalizes the classical single-origin visible lattice point autocorrelation (where S = {0} recovers the known formula involving the Möbius function and Riemann zeta values) to arbitrary finite observation sets, and the Euler product structure immediately implies the pure point nature of the diffraction spectrum.",
     "domain_bridges": [
       "Multiplicative Number Theory ↔ Aperiodic Order",
@@ -7098,7 +7098,7 @@
     "proof_strategy": "1. Reformulate the visibility condition gcd(v − x) = 1 as a local condition: for all primes p, v ≢ x (mod p) in (ℤ/pℤ)ᵏ. 2. Apply the Chinese Remainder Theorem to decompose the joint condition v ∈ V_S ∩ (V_S − z) into independent conditions at each prime p: v (mod p) ∉ S_p ∪ (S−z)_p. 3. Compute each local factor as a finite counting problem in (ℤ/pℤ)ᵏ, yielding factor (1 − |S_p ∪ (S−z)_p|/pᵏ). 4. Prove convergence of the infinite Euler product using the bound |S_p ∪ (S−z)_p| ≤ 2|S| for all but finitely many p, combined with k ≥ 2 ensuring ∑_p 2|S|/pᵏ converges. 5. Rigorously justify the CRT-based density decomposition via inclusion-exclusion over primes and the uniform convergence of the partial products.",
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T15:19:26.975381+00:00",
     "title": "Euler Product for Autocorrelation of Simultaneously Visible Lattice Points"
   },
@@ -7240,7 +7240,7 @@
       "OEIS_A000110",
       "Alzer_2019_Engel"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46a53213",
     "description": "The sequence of log-convexity gaps $G_n = B_{n+1}B_{n-1} - (B_n)^2$ for Bell numbers is itself log-convex, meaning $G_{n+1}G_{n-1} \\ge (G_n)^2$ for all $n \\ge 2$.",
     "domain_bridges": [
       "Integer Sequences",
@@ -7255,7 +7255,7 @@
     "proof_strategy": "Establish that the ratio $G_{n+1}/G_n$ is monotonically increasing by leveraging the asymptotic expansion of Bell numbers alongside the explicit lower bounds for the gap provided in the paper.",
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T17:37:27.634066+00:00",
     "title": "Log-Convexity of the Bell Number Gap Sequence"
   },
@@ -8577,7 +8577,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3a5f08b7",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domain_bridges": [],
     "domains": [
@@ -8590,7 +8590,7 @@
     "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -8957,7 +8957,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c19b86d",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domain_bridges": [],
     "domains": [
@@ -8970,7 +8970,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
