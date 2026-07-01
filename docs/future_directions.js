@@ -1811,7 +1811,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on edge count of \u03c4_k-maximal graphs with minimum degree at least k+1"
   },
   {
-    "consumed_by_exp_id": "f01189a1",
+    "consumed_by_exp_id": "",
     "description": "Every pairwise reflection-symmetric Latin square of order n=2^k is the Cayley table of an elementary abelian 2-group.",
     "domains": [
       "Algebra"
@@ -1820,7 +1820,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28315v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T17:14:17.022638+00:00",
     "title": "Elementary Abelian 2-Groups Characterize Pairwise Reflection-Symmetric Latin Squares of Order 2^k"
   },
@@ -3760,12 +3760,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Generalization of the main theorem to s-grid drawings: For any integer s \u2265 2, every graph with maximum degree at most 2s admits an unbent collection of two non-planar s-grid drawings (where edges are polygonal curves using segments from s fixed slopes, and an edge is unbent if it is a straight segment in at least one drawing).",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_3018",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27501v1",
+    "status": "available",
+    "timestamp": "2026-07-01T06:55:37.254769+00:00",
+    "title": "Unbent collections of non-planar s-grid drawings for s \u2265 3"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3780,7 +3795,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3794,7 +3809,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3809,7 +3824,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3824,7 +3839,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3022",
+    "id": "fd_3023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3839,7 +3854,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3023",
+    "id": "fd_3024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3854,7 +3869,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3024",
+    "id": "fd_3025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3868,7 +3883,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3025",
+    "id": "fd_3026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3877,16 +3892,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized Concentration of Measure for Well-Spread Sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af008f91",
     "description": "The conjecture posits that joint descendant sizes scale asymptotically below linear growth, bounded by \u221an, conflicting with polynomial expectations from recursive dependencies.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3026",
+    "id": "fd_3027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T14:19:18.123295+00:00",
     "title": "Sublinear Growth of Joint Descendants"
   },
@@ -3896,7 +3911,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3910,7 +3925,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3028",
+    "id": "fd_3029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3925,7 +3940,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3029",
+    "id": "fd_3030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3939,7 +3954,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3030",
+    "id": "fd_3031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3953,7 +3968,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3031",
+    "id": "fd_3032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3967,7 +3982,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3032",
+    "id": "fd_3033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3982,7 +3997,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3033",
+    "id": "fd_3034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3997,7 +4012,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3034",
+    "id": "fd_3035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -4011,7 +4026,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3035",
+    "id": "fd_3036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -4026,7 +4041,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3036",
+    "id": "fd_3037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -4040,7 +4055,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3037",
+    "id": "fd_3038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -4055,7 +4070,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3038",
+    "id": "fd_3039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -4069,7 +4084,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3039",
+    "id": "fd_3040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -4078,31 +4093,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "P3-Packing Lower Bound in Plane Triangulations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46a53213",
     "description": "For every self-reciprocal (palindromic) polynomial P \u2208 \u2124[X] of even degree 2m, the polynomial factors as P(x) = x^m \u00b7 Q(x + x\u207b\u00b9) for a unique degree-m polynomial Q (the Chebyshev transform). All roots of P lie on the unit circle in \u2102 if and only if all roots of Q are real and lie in the interval [-2, 2]. The forward direction follows because x on the unit circle implies u = x + x\u207b\u00b9 = 2Re(x) \u2208 [-2, 2]; the reverse because u \u2208 [-2, 2] implies both roots of x\u00b2 - ux + 1 = 0 satisfy |x| = 1 since |x|\u00b2 = x\u00b7x\u0304 = 1 when x\u207b\u00b9 = x\u0304.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3040",
+    "id": "fd_3041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T19:27:53.327772+00:00",
     "title": "Chebyshev Transform Root Location Equivalence for Self-Reciprocal Polynomials"
   },
   {
-    "consumed_by_exp_id": "46a53213",
+    "consumed_by_exp_id": "",
     "description": "For every \u03b5 > 0, there exists X\u2080 such that for all X \u2265 X\u2080, at least (1 - \u03b5)\u230aX/2\u230b even integers N \u2208 [4, X] can be expressed as N = p\u2081 + p\u2082 with p\u2081, p\u2082 prime and p\u2081 - p\u2082 + 1 \u2208 \u2119\u2082 (a product of at most 2 primes). This strengthens the paper's Theorem for \u2119\u2084 to \u2119\u2082, and would follow from an improved level of distribution for Goldbach primes beyond 1/6.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3041",
+    "id": "fd_3042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T19:45:04.465776+00:00",
     "title": "Almost-Prime Goldbach Gap Conjecture"
   },
@@ -4113,7 +4128,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3042",
+    "id": "fd_3043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -4128,7 +4143,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3043",
+    "id": "fd_3044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4137,30 +4152,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Variance-Resistance Inequality for Root Value of Random Tree Homomorphisms"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "For every n \u2265 2, the average specification number \u03c3\u0304_n of Boolean threshold functions on n variables satisfies \u03c3\u0304_n \u2265 n + 2, strictly exceeding the minimum possible specification number n + 1. Equivalently, the average facet count of chambers in the central hyperplane arrangement dual to the lifted Boolean cube strictly exceeds n + 1. This strengthens the trivial lower bound \u03c3\u0304_n \u2265 n + 1 (from \u03c3_n(f) \u2265 n + 1 for all f) and complements the paper's upper bound \u03c3\u0304_n \u2264 2n obtained via the Fukuda\u2013Tamura\u2013Tokuyama theorem.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_3044",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.29477v1",
-    "status": "available",
-    "timestamp": "2026-06-30T20:40:41.523700+00:00",
-    "title": "Strict lower bound on the average specification number of Boolean threshold functions"
-  },
-  {
     "consumed_by_exp_id": "bbb1cf47",
-    "description": "For every integer k \u2265 5, there exists a finite connected graph \u0393 such that the full reciprocal-radius polynomial P_\u0393 is an irreducible Salem polynomial with first sub-leading coefficient a\u2081 = -k. This extends the paper's sharp obstruction bound a\u2081 \u2264 -5 by asserting realizability of every integer value in the admissible range.",
+    "description": "For every n \u2265 2, the average specification number \u03c3\u0304_n of Boolean threshold functions on n variables satisfies \u03c3\u0304_n \u2265 n + 2, strictly exceeding the minimum possible specification number n + 1. Equivalently, the average facet count of chambers in the central hyperplane arrangement dual to the lifted Boolean cube strictly exceeds n + 1. This strengthens the trivial lower bound \u03c3\u0304_n \u2265 n + 1 (from \u03c3_n(f) \u2265 n + 1 for all f) and complements the paper's upper bound \u03c3\u0304_n \u2264 2n obtained via the Fukuda\u2013Tamura\u2013Tokuyama theorem.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_3045",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.29397v1",
+    "source_exp_id": "2606.29477v1",
     "status": "in_progress",
+    "timestamp": "2026-06-30T20:40:41.523700+00:00",
+    "title": "Strict lower bound on the average specification number of Boolean threshold functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 5, there exists a finite connected graph \u0393 such that the full reciprocal-radius polynomial P_\u0393 is an irreducible Salem polynomial with first sub-leading coefficient a\u2081 = -k. This extends the paper's sharp obstruction bound a\u2081 \u2264 -5 by asserting realizability of every integer value in the admissible range.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3046",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29397v1",
+    "status": "available",
     "timestamp": "2026-06-30T20:58:35.716548+00:00",
     "title": "Complete First-Coefficient Spectrum for Strongly Primitive Salem Growth Polynomials"
   },
@@ -4171,7 +4186,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3046",
+    "id": "fd_3047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4186,7 +4201,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3047",
+    "id": "fd_3048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4201,7 +4216,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3048",
+    "id": "fd_3049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4215,7 +4230,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3049",
+    "id": "fd_3050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4229,7 +4244,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3050",
+    "id": "fd_3051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4243,7 +4258,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3051",
+    "id": "fd_3052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
@@ -4257,7 +4272,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3052",
+    "id": "fd_3053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27507v1",
@@ -4272,7 +4287,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3053",
+    "id": "fd_3054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27516v1",
@@ -4286,7 +4301,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3054",
+    "id": "fd_3055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27682v1",
@@ -4301,7 +4316,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_3055",
+    "id": "fd_3056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27273v1",
@@ -4315,7 +4330,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3056",
+    "id": "fd_3057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27323v1",
@@ -4330,7 +4345,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3057",
+    "id": "fd_3058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27357v1",
@@ -4344,13 +4359,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3058",
+    "id": "fd_3059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27322v1",
     "status": "available",
     "timestamp": "2026-07-01T06:31:51.361312+00:00",
     "title": "Legendre Symbol Characterization for Primes 3 mod 4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any tree, the maximum size of a set of totally disjoint diametral paths is exactly 1. That is, no tree can contain two totally disjoint diametral paths. The proof relies on the fact that if two such paths P1 and P2 of length d existed, the unique path Q connecting them in the tree would have length c >= 1. Let a and b be the distances from the respective endpoints of P1 and P2 to the endpoints of Q along P1 and P2. The distance between the far endpoints of P1 and P2 would be a + c + (d - b) <= d and the distance between the other far endpoints would be (d - a) + c + b <= d. Summing these inequalities yields 2d + 2c <= 2d, implying c <= 0, which contradicts the total disjointedness of P1 and P2.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3060",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27451v1",
+    "status": "available",
+    "timestamp": "2026-07-01T06:57:07.943337+00:00",
+    "title": "Uniqueness of Totally Disjoint Diametral Paths in Trees"
   },
   {
     "consumed_by_exp_id": "",
