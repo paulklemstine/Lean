@@ -1095,7 +1095,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33af5349",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domain_bridges": [],
     "domains": [
@@ -1108,7 +1108,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:10.070200+00:00",
     "title": "Sensitivity Conjecture Extensions"
   },
@@ -1708,7 +1708,7 @@
       "Nash-Williams-Tutte theorem on spanning tree packing",
       "Bondy-Murty graph theory notation"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3b6ce9e",
     "description": "Every τ_k-maximal graph on n vertices (with n ≥ 2k+2) has exactly (k+1)(n-1)-1 edges. A graph is τ_k-maximal if it contains no subgraph with k+1 edge-disjoint spanning trees, yet adding any edge from its complement creates such a subgraph.",
     "domain_bridges": [
       "Extremal graph theory",
@@ -1724,7 +1724,7 @@
     "proof_strategy": "Use the Nash-Williams/Tutte criterion to show that any τ_k-maximal graph must achieve the upper bound. Assume for contradiction that |E(G)| < (k+1)(n-1)-1, then construct an edge e in Gᶜ such that G+e still lacks k+1 edge-disjoint spanning trees, violating τ_k-maximality.",
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:06:52.919140+00:00",
     "title": "Edge count equality for τ_k-maximal graphs"
   },
@@ -3076,7 +3076,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "deb92459",
     "description": "For any integer t ≥ 2 and any tK3-free graph G of order n ≥ 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}, with equality if and only if G is isomorphic to this extremal graph.",
     "domain_bridges": [
       "Linear Algebra",
@@ -3092,7 +3092,7 @@
     "proof_strategy": "Apply the stability method in extremal graph theory combined with spectral techniques. Specifically, analyze the eigenvector corresponding to the largest eigenvalue of the signless Laplacian, bound the maximum degree, and iteratively remove vertex-disjoint triangles to reduce the problem to smaller subgraphs, ultimately characterizing the extremal structure as the join of a clique and a balanced complete bipartite graph.",
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -3957,7 +3957,7 @@
       "log-convexity",
       "Fibonacci numbers"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe0d0a64",
     "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domain_bridges": [
       "Combinatorics",
@@ -3973,7 +3973,7 @@
     "proof_strategy": "Formalize the combinatorial injection mapping pairs of partitions of [n] with the same base to partitions of [n+1], apply the Cauchy-Schwarz inequality on the sums grouped by base, and bound the remaining terms recursively using the Fibonacci sequence properties.",
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:04:18.171502+00:00",
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
@@ -4870,7 +4870,7 @@
       "Generalized Bernoulli numbers",
       "Digit expansions"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0eefe6b1",
     "description": "For a prime p ≥ 3 and an integer b ≥ 2 with p ∤ b, if the multiplicative order of b modulo p is l = (p-1)/2^m and p ≡ 1 mod 2^(m+1), then the sum of the base-b digits in one full period of the expansion of 1/p equals (b-1)(p-1)/2^(m+1).",
     "domain_bridges": [
       "algebraic_number_theory",
@@ -4886,7 +4886,7 @@
     "proof_strategy": "Define the base-b digit sequence of 1/p using the division algorithm on remainders, a_i = ⌊b * r_i / p⌋ where r_i = b^i mod p. The sum of digits S = Σ a_i can be expressed in terms of the sum of remainders. The condition that the order of b is (p-1)/2^m restricts the remainders to a subgroup of (ℤ/pℤ)×. The congruence p ≡ 1 mod 2^(m+1) ensures that this subgroup is stable under negation modulo p (since l is even and b^(l/2) ≡ -1 mod p), which allows the sum of remainders to be simplified to p*l/2, leading directly to the formula S = (b-1)*l/2 = (b-1)(p-1)/2^(m+1).",
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:05:42.798221+00:00",
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
@@ -4899,7 +4899,7 @@
       "complement_graph",
       "chromatic_number"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d2ed753",
     "description": "The paper establishes that c(s/log s)^{4/3} ≤ F(s) ≤ (1+o(1))s^{3/2}/log s, where F(s) = max{χ(G) : ω(G) ≤ s, g(G̅) ≥ 6}. The conjecture proposes that the true asymptotic growth rate is Θ(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) ≥ c · s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
     "domain_bridges": [
       "asymptotic_analysis",
@@ -4914,7 +4914,7 @@
     "proof_strategy": "To prove the lower bound F(s) ≥ c·s^{3/2}/log s, construct an explicit family of graphs G_s with ω(G_s) ≤ s and g(G̅_s) ≥ 6 such that χ(G_s) ≥ c·s^{3/2}/log s. This likely requires probabilistic constructions or algebraic graph families that saturate the complement-girth-6 constraint while maximizing chromatic number relative to clique number. The existing lower bound construction yielding s^{4/3} would need substantial refinement—potentially using blow-ups of Ramsey-type constructions or sparse pseudorandom graphs with controlled complement girth.",
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:26:20.098555+00:00",
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
@@ -5896,7 +5896,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04b163c8",
     "description": "Let p be a prime, b an integer ≥ 2 such that p does not divide b. If the multiplicative order of b modulo p is (p-1)/2, and p ≡ 1 mod 4, then the sum of the digits of one period of the base-b expansion of 1/p is (b-1)(p-1)/4.",
     "domain_bridges": [
       "Discrete Mathematics"
@@ -5910,7 +5910,7 @@
     "proof_strategy": "Define the sequence of digits in the base-b expansion of 1/p. Show that they are given by the integer division of b by p times the sequence of remainders. Use the fact that the remainders cycle through the elements of the subgroup of index 2 in (Z/pZ)*. Since p ≡ 1 mod 4, -1 is in this subgroup, which implies that the digits can be paired as (d, b-1-d). The sum of each pair is b-1, and there are (p-1)/4 pairs, giving a total sum of (b-1)(p-1)/4.",
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:01:55.527180+00:00",
     "title": "Sum of digits of 1/p for half-period length and p ≡ 1 mod 4"
   },
@@ -9180,7 +9180,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c56262ed",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domain_bridges": [],
     "domains": [
@@ -9193,7 +9193,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },

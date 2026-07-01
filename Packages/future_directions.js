@@ -821,7 +821,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33af5349",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domains": [
       "Computation",
@@ -831,7 +831,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:10.070200+00:00",
     "title": "Sensitivity Conjecture Extensions"
   },
@@ -1157,7 +1157,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proving that unit-distance graphs with low independence ratios exist"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3b6ce9e",
     "description": "Every \u03c4_k-maximal graph on n vertices (with n \u2265 2k+2) has exactly (k+1)(n-1)-1 edges. A graph is \u03c4_k-maximal if it contains no subgraph with k+1 edge-disjoint spanning trees, yet adding any edge from its complement creates such a subgraph.",
     "domains": [
       "Bridges"
@@ -1166,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28198v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T06:06:52.919140+00:00",
     "title": "Edge count equality for \u03c4_k-maximal graphs"
   },
@@ -1898,7 +1898,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "deb92459",
     "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
     "domains": [
       "Algebra",
@@ -1908,7 +1908,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -2366,7 +2366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s-Falconer Distance Set Threshold n/2+1/3 in Even Dimensions over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe0d0a64",
     "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domains": [
       "Geometry"
@@ -2375,7 +2375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:04:18.171502+00:00",
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
@@ -2842,7 +2842,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "L^p Relaxation of the KNRS Conjecture for Graphons"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0eefe6b1",
     "description": "For a prime p \u2265 3 and an integer b \u2265 2 with p \u2224 b, if the multiplicative order of b modulo p is l = (p-1)/2^m and p \u2261 1 mod 2^(m+1), then the sum of the base-b digits in one full period of the expansion of 1/p equals (b-1)(p-1)/2^(m+1).",
     "domains": [
       "Pythagorean"
@@ -2851,12 +2851,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:05:42.798221+00:00",
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d2ed753",
     "description": "The paper establishes that c(s/log s)^{4/3} \u2264 F(s) \u2264 (1+o(1))s^{3/2}/log s, where F(s) = max{\u03c7(G) : \u03c9(G) \u2264 s, g(G\u0305) \u2265 6}. The conjecture proposes that the true asymptotic growth rate is \u0398(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) \u2265 c \u00b7 s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
     "domains": [
       "Pythagorean"
@@ -2865,7 +2865,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:26:20.098555+00:00",
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
@@ -3379,7 +3379,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the L^p Threshold for KNRS Relaxation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04b163c8",
     "description": "Let p be a prime, b an integer \u2265 2 such that p does not divide b. If the multiplicative order of b modulo p is (p-1)/2, and p \u2261 1 mod 4, then the sum of the digits of one period of the base-b expansion of 1/p is (b-1)(p-1)/4.",
     "domains": [
       "Pythagorean"
@@ -3388,7 +3388,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T18:01:55.527180+00:00",
     "title": "Sum of digits of 1/p for half-period length and p \u2261 1 mod 4"
   },
@@ -5178,7 +5178,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c56262ed",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -5188,7 +5188,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
