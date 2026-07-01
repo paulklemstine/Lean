@@ -821,7 +821,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33af5349",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domains": [
       "Computation",
@@ -831,7 +831,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:10.070200+00:00",
     "title": "Sensitivity Conjecture Extensions"
   },
@@ -968,6 +968,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T03:49:32.425118+00:00",
     "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
+  },
+  {
+    "consumed_by_exp_id": "e5cb827b",
+    "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2815",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-29T04:01:41.266053+00:00",
+    "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
   {
     "consumed_by_exp_id": "",
@@ -1884,7 +1898,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "deb92459",
     "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
     "domains": [
       "Algebra",
@@ -1894,7 +1908,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -2352,7 +2366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s-Falconer Distance Set Threshold n/2+1/3 in Even Dimensions over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe0d0a64",
     "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domains": [
       "Geometry"
@@ -2361,7 +2375,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:04:18.171502+00:00",
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
@@ -2842,7 +2856,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d2ed753",
     "description": "The paper establishes that c(s/log s)^{4/3} \u2264 F(s) \u2264 (1+o(1))s^{3/2}/log s, where F(s) = max{\u03c7(G) : \u03c9(G) \u2264 s, g(G\u0305) \u2265 6}. The conjecture proposes that the true asymptotic growth rate is \u0398(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) \u2265 c \u00b7 s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
     "domains": [
       "Pythagorean"
@@ -2851,7 +2865,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:26:20.098555+00:00",
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
@@ -4561,7 +4575,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Effective Andr\u00e9's Height Bound for Non-Equisetential Curves"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21b9f7f8",
     "description": "Every level-one spherical automorphic form on the upper half-plane X = SL(2, Z) \\ H can be written as the sum of a cusp form and a finite linear combination of Laurent coefficients of the standard Eisenstein series E(s; z).",
     "domains": [
       "Bridges"
@@ -4570,7 +4584,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T00:40:43.642727+00:00",
     "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
   },

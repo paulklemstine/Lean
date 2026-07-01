@@ -1095,7 +1095,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33af5349",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domain_bridges": [],
     "domains": [
@@ -1108,7 +1108,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:10.070200+00:00",
     "title": "Sensitivity Conjecture Extensions"
   },
@@ -1359,6 +1359,33 @@
     "status": "available",
     "timestamp": "2026-06-29T03:49:32.425118+00:00",
     "title": "Enumeration of 2-balanced p-regular partitions by p-weight"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "MRVZ_27_vertex_config",
+      "de_Grey_chromatic_number",
+      "Erdos_independence_ratio_problem"
+    ],
+    "consumed_by_exp_id": "e5cb827b",
+    "description": "The 29-vertex unit-distance graph G_29, obtained by augmenting the 27-vertex configuration G_27 of Matolcsi et al. with two specific vertices, has geometric fractional chromatic number strictly greater than 4. This is the core technical result of the paper, from which the main theorem (existence of a unit-distance graph with independence ratio below 1/4) and the corollary that the fractional chromatic number of the plane exceeds 4 both follow via the blow-up framework.",
+    "domain_bridges": [
+      "linear_programming",
+      "polytope_extremal_structure",
+      "measurable_chromatic_number"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2815",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the 27-vertex configuration G_27 as an explicit point set in R^2 with its unit-distance graph structure. Define geometric fractional chromatic number as the optimum of a linear program over Borel measurable vertex-weighting functions. Characterize the 23 extremal geometric fractional colorings of G_27 as vertices of an 11-dimensional polytope (the key computational step). Show that for the specific two-vertex augmentation, every optimal coloring of G_27 forces a constraint violation on the new vertices, implying the LP optimum must strictly exceed 4. The polytope characterization reduces the verification to checking constraints at finitely many extremal points.",
+    "research_mode": "team",
+    "source_exp_id": "2606.28157v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-29T04:01:41.266053+00:00",
+    "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
   },
   {
     "ambition_level": "extension",
@@ -3049,7 +3076,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "deb92459",
     "description": "For any integer t ≥ 2 and any tK3-free graph G of order n ≥ 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}, with equality if and only if G is isomorphic to this extremal graph.",
     "domain_bridges": [
       "Linear Algebra",
@@ -3065,7 +3092,7 @@
     "proof_strategy": "Apply the stability method in extremal graph theory combined with spectral techniques. Specifically, analyze the eigenvector corresponding to the largest eigenvalue of the signless Laplacian, bound the maximum degree, and iteratively remove vertex-disjoint triangles to reduce the problem to smaller subgraphs, ultimately characterizing the extremal structure as the join of a clique and a balanced complete bipartite graph.",
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -3930,7 +3957,7 @@
       "log-convexity",
       "Fibonacci numbers"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe0d0a64",
     "description": "For all integers n >= 5, the log-convexity gap of Bell numbers is bounded below by a Fibonacci-weighted sum of squares of smaller Bell numbers: B_{n+1} B_{n-1} >= sum_{i=0}^n F_i (B_{n-i})^2, where F_i is the i-th Fibonacci number with F_0 = F_1 = 1.",
     "domain_bridges": [
       "Combinatorics",
@@ -3946,7 +3973,7 @@
     "proof_strategy": "Formalize the combinatorial injection mapping pairs of partitions of [n] with the same base to partitions of [n+1], apply the Cauchy-Schwarz inequality on the sums grouped by base, and bound the remaining terms recursively using the Fibonacci sequence properties.",
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:04:18.171502+00:00",
     "title": "Fibonacci-Weighted Log-Convexity of Bell Numbers"
   },
@@ -4872,7 +4899,7 @@
       "complement_graph",
       "chromatic_number"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d2ed753",
     "description": "The paper establishes that c(s/log s)^{4/3} ≤ F(s) ≤ (1+o(1))s^{3/2}/log s, where F(s) = max{χ(G) : ω(G) ≤ s, g(G̅) ≥ 6}. The conjecture proposes that the true asymptotic growth rate is Θ(s^{3/2}/log s), i.e., the upper bound is tight. Specifically, there exists a constant c > 0 such that for all sufficiently large s, F(s) ≥ c · s^{3/2} / log s, which would close the gap between the exponent 4/3 in the lower bound and 3/2 in the upper bound.",
     "domain_bridges": [
       "asymptotic_analysis",
@@ -4887,7 +4914,7 @@
     "proof_strategy": "To prove the lower bound F(s) ≥ c·s^{3/2}/log s, construct an explicit family of graphs G_s with ω(G_s) ≤ s and g(G̅_s) ≥ 6 such that χ(G_s) ≥ c·s^{3/2}/log s. This likely requires probabilistic constructions or algebraic graph families that saturate the complement-girth-6 constraint while maximizing chromatic number relative to clique number. The existing lower bound construction yielding s^{4/3} would need substantial refinement—potentially using blow-ups of Ramsey-type constructions or sparse pseudorandom graphs with controlled complement girth.",
     "research_mode": "team",
     "source_exp_id": "2606.29873v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T05:26:20.098555+00:00",
     "title": "Asymptotic Growth Rate of the Sivaraman Function F(s)"
   },
@@ -8118,7 +8145,7 @@
       "math.RT",
       "math.SP"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21b9f7f8",
     "description": "Every level-one spherical automorphic form on the upper half-plane X = SL(2, Z) \\ H can be written as the sum of a cusp form and a finite linear combination of Laurent coefficients of the standard Eisenstein series E(s; z).",
     "domain_bridges": [
       "Complex Analysis",
@@ -8134,7 +8161,7 @@
     "proof_strategy": "Define the space of automorphic forms A(X) as z-finite and uniformly moderately growing smooth functions on X. Define the constant term and cusp forms A_0(X). Define the Eisenstein series E(s; z) and prove its meromorphic continuation. Prove the decomposition by analyzing the constant term of an automorphic form, subtracting the Laurent coefficients of E(s) to cancel the non-cuspidal growth, and applying Green's identity (Maass-Selberg relations) to show the remainder is a cusp form.",
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T00:40:43.642727+00:00",
     "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
   },
