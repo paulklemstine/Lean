@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "aa3d24c5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Quantum Thermodynamics: Landauer's Principle at the Nanoscale\n\nDerived from this cycle's findings in `Catalog/Physics/LandauerSaturation.lean`\n(saturation ⇔ zero work fluctuation",
-      "quality_score": 0.70446,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-26T17:21:49",
-      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-    },
-    {
       "cycle_id": "518f172b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Natural Proofs Barrier (Razborov–Rudich)\n\nDerived from this cycle's findings in\n`Cryptography/NaturalProofs/{Core,Counting,Examples}.lean`.\n\nThis cycle formalized the combinatori",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-01T00:59:12",
       "title": "Fourier Analysis on Finite Groups"
+    },
+    {
+      "cycle_id": "c69c4ab9",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Square-Root Cancellation for GL(2) Triple Correlation Sums\n\nThis cycle established two unconditional facts about the triple correlation sum\n`T_f(X,Y) = ∑_{n<X} ∑_{m<Y} λ_f(n) λ_f",
+      "quality_score": 0.4328038727272727,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-07-01T01:50:50",
+      "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.76576
     }
   ],
-  "last_updated": "2026-07-01T00:59:12",
+  "last_updated": "2026-07-01T01:50:50",
   "open_questions": [
     {
       "context": "",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "0abb7f10",
-        "quality": 0.614,
-        "theorems": 157,
-        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-      },
-      {
         "cycle_id": "8e353e57",
         "quality": 0.63384,
         "theorems": 3,
@@ -3513,6 +3507,12 @@
         "quality": 0.52704,
         "theorems": 20,
         "title": "Generalized Gawron–Miska–Ulas unboundedness for arbitrary integer bases"
+      },
+      {
+        "cycle_id": "c69c4ab9",
+        "quality": 0.4328038727272727,
+        "theorems": 7,
+        "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
       }
     ],
     "MachineLearning": [
