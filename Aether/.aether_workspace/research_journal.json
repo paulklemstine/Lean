@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5544e8f5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Research Cycle Brief\n\nThese directions are grounded in verified catalog files. The selected (primary)\ndirection is **D1**; D2–D4 are alternatives in adjacent under-explored corne",
-      "quality_score": 0.5449999999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-26T22:52:00",
-      "title": "Lambda Calculus: Church-Rosser and Normalization"
-    },
-    {
       "cycle_id": "913e3580",
       "domain": "Applications",
       "key_insight": "# Future Directions — Shifted t-Schur Basis / Plethystic Triviality\n\nThis cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the\ngenerating-function backbone of the shifted (Schur `Q`) basis",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-07-01T18:34:44",
       "title": "Geometric fractional chromatic number of the 29-vertex augmented configuration exceeds 4"
+    },
+    {
+      "cycle_id": "21b9f7f8",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Franke decomposition and the pole geometry of Eisenstein series\n\nThe cycle established two complementary facts about level-one spherical automorphic forms on the\nmodular surface:",
+      "quality_score": 0.6964000000000001,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-01T18:44:41",
+      "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7232000000000001
     }
   ],
-  "last_updated": "2026-07-01T18:34:44",
+  "last_updated": "2026-07-01T18:44:41",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "9ecd5b8c",
-        "quality": 0.7327899999999999,
-        "theorems": 15,
-        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-      },
-      {
         "cycle_id": "bfc7b99e",
         "quality": 0.44995,
         "theorems": 0,
@@ -3141,6 +3135,12 @@
         "quality": 0.456932,
         "theorems": 26,
         "title": "Learning with Errors: Hardness Reductions"
+      },
+      {
+        "cycle_id": "21b9f7f8",
+        "quality": 0.6964000000000001,
+        "theorems": 8,
+        "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
       }
     ],
     "Bridges": [
