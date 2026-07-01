@@ -4423,7 +4423,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "da5ca670",
+    "consumed_by_exp_id": "",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -4433,7 +4433,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
@@ -4535,7 +4535,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T19:55:25.385376+00:00",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
