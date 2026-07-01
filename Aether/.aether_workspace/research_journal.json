@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9871aa6d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Langlands for GL₂ over ℚ (Eichler–Shimura & Deligne)\n\nDerived from this cycle's findings in `Catalog/Novelty/EichlerShimuraGL2.lean` and\n`Catalog/Novelty/DeligneBoundGL2.lean`, w",
-      "quality_score": 0.7236,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-27T01:29:38",
-      "title": "Langlands for GL₂ over Q"
-    },
-    {
       "cycle_id": "1394b2e6",
       "domain": "Applications",
       "key_insight": "# Future Directions — Self-dual string C-groups of alternating groups\n\nDerived from this cycle's findings (the formalized `Foundations.lean` and\n`RankArithmetic.lean`). Each conjecture is falsifiable",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-07-01T04:21:22",
       "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+    },
+    {
+      "cycle_id": "fb9fd2df",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Fractional colouring of the plane via independence ratios\n\nThis cycle isolated a single, domain-free inequality — the fractional chromatic number\nof a finite graph is at least it",
+      "quality_score": 0.8091999999999999,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-01T13:29:33",
+      "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly great"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "580d1f18",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Certified Novelty Detection for Theorem Provers\n\nDerived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,\n`FibonacciNoveltyStream.lean`).  This cycle establishe",
-      "quality_score": 0.73672,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-06-26T19:55:31",
-      "title": "Certified Novelty Detection for Theorem Provers"
-    },
     {
       "cycle_id": "7b228cc3",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-01T13:02:10",
       "title": "STRD Domatic Number Equals One for Graphs with a Degree-3 Vertex"
+    },
+    {
+      "cycle_id": "fb9fd2df",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Fractional colouring of the plane via independence ratios\n\nThis cycle isolated a single, domain-free inequality — the fractional chromatic number\nof a finite graph is at least it",
+      "quality_score": 0.8091999999999999,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-07-01T13:29:33",
+      "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic number strictly great"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9e0667c2",
-      "domain": "Applications",
-      "name": "neg_diam",
-      "quality": 0.7800670000000001
-    },
-    {
-      "cycle_id": "9e0667c2",
-      "domain": "Applications",
-      "name": "diam_ne_zero",
-      "quality": 0.7800670000000001
-    },
-    {
-      "cycle_id": "0a880828",
-      "domain": "Novelty",
-      "name": "gaussTerm_nonneg",
-      "quality": 0.70384
-    },
     {
       "cycle_id": "0a880828",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "roundAcceptProb_le_one",
       "quality": 0.74152
+    },
+    {
+      "cycle_id": "fb9fd2df",
+      "domain": "Geometry",
+      "name": "total_nonneg",
+      "quality": 0.8091999999999999
+    },
+    {
+      "cycle_id": "fb9fd2df",
+      "domain": "Geometry",
+      "name": "double_count",
+      "quality": 0.8091999999999999
+    },
+    {
+      "cycle_id": "fb9fd2df",
+      "domain": "Geometry",
+      "name": "card_le_indepNum_mul_total",
+      "quality": 0.8091999999999999
     }
   ],
-  "last_updated": "2026-07-01T13:02:10",
+  "last_updated": "2026-07-01T13:29:33",
   "open_questions": [
     {
       "context": "",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "693eed6d",
-        "quality": 0.4390899069767442,
-        "theorems": 8,
-        "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-      },
-      {
         "cycle_id": "39103244",
         "quality": 0.3928874,
         "theorems": 5,
@@ -3451,6 +3445,12 @@
         "quality": 0.49574803827751207,
         "theorems": 18,
         "title": "Duality of Sublevel Set Homotopy Types for RC Functions on Finite‑Dimensional Ba"
+      },
+      {
+        "cycle_id": "fb9fd2df",
+        "quality": 0.8091999999999999,
+        "theorems": 22,
+        "title": "The 29-vertex augmented unit-distance graph has geometric fractional chromatic n"
       }
     ],
     "Logic": [
