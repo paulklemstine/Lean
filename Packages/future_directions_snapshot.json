@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "099051c0",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -34,7 +34,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -418,7 +418,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3fc75f2f",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domain_bridges": [],
     "domains": [
@@ -431,7 +431,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -3076,7 +3076,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9dbfa453",
     "description": "For any integer t ≥ 2 and any tK3-free graph G of order n ≥ 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} ∨ K_{⌊(n-t+1)/2⌋, ⌈(n-t+1)/2⌉}, with equality if and only if G is isomorphic to this extremal graph.",
     "domain_bridges": [
       "Linear Algebra",
@@ -3092,7 +3092,7 @@
     "proof_strategy": "Apply the stability method in extremal graph theory combined with spectral techniques. Specifically, analyze the eigenvector corresponding to the largest eigenvalue of the signless Laplacian, bound the maximum degree, and iteratively remove vertex-disjoint triangles to reduce the problem to smaller subgraphs, ultimately characterizing the extremal structure as the join of a clique and a balanced complete bipartite graph.",
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -3133,7 +3133,7 @@
       "finite_geometry",
       "coupon_collector"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "90d1d2b2",
     "description": "For every prime power q ≥ 2, the expected time to collect all n = q² + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum–Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domain_bridges": [
       "finite_geometry_to_probability",
@@ -3150,7 +3150,7 @@
     "proof_strategy": "Use the 2-(q²+q+1, q+1, 1) design properties of projective planes to derive exact inclusion-exclusion formulas for the expected coverage time. The key structural insight is that in a projective plane, any two points lie on exactly one common line, creating systematic 'clustering' that delays coverage. Compare the resulting expression term-by-term against the full model's expected time using the fact that the full model minimizes certain overlap statistics while the projective plane maximizes them. A potential approach leverages the eigenvalue structure of the incidence matrix to bound the probability that k specific coupons remain uncollected after t draws.",
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
@@ -4401,7 +4401,7 @@
       "math.CO",
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "80c8b0ed",
     "description": "For some absolute constant C, any subset A of {1, ..., N} with cardinality at least 5N/8 + C contains distinct elements a, b, c such that a+b, a+c, and b+c are all in A. This resolves Erdős Problem 865 and corresponds to Theorem 1.1 of the paper.",
     "domain_bridges": [
       "Finset cardinality",
@@ -4418,7 +4418,7 @@
     "proof_strategy": "Induction on the size of the set, utilizing the folded additive lemma (Lemma 2.1) and the centering argument, mirroring the paper's reduction from a coarse bound to the sharp bound.",
     "research_mode": "team",
     "source_exp_id": "2606.29361v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T10:28:39.364137+00:00",
     "title": "Sharp 5/8 Bound for Erdős-Sós Pairwise-Sums Problem"
   },
@@ -4813,7 +4813,7 @@
       "math.NT",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c347334",
     "description": "For any p-adic field F and any irreducible smooth admissible generic representation π of GL(n, F), the Bessel distribution B_{ℓ₁,ℓ₂} associated to Whittaker functionals is regular: there exists a unique smooth function j defined on a dense open subset of GL(n, F), locally integrable on GL(n, F), such that B_{ℓ₁,ℓ₂}(f) = ∫_{GL(n,F)} j(g)f(g)dg for all Schwartz functions f. This follows from the paper's main result (regularity follows from nontrivial bounds on Kloosterman sums for all Levi subgroups) combined with the known Deligne-Weil bounds on Kloosterman sums for all Levi subgroups of GL(n), which are products of smaller GL(m)'s.",
     "domain_bridges": [
       "p-adic harmonic analysis",
@@ -4831,7 +4831,7 @@
     "proof_strategy": "Apply the paper's conditional regularity theorem (Bessel distributions are regular provided Kloosterman sums for all Levi subgroups have nontrivial bounds) to GL(n). Since every Levi subgroup of GL(n) is isomorphic to a product ∏ GL(mᵢ) with ∑ mᵢ = n, the corresponding Kloosterman sums admit nontrivial bounds by Deligne's estimates from the Riemann hypothesis for varieties over finite fields (Weil II), yielding unconditional regularity for GL(n). The key intermediate step is formalizing the germ expansion of Kloosterman integrals and verifying the nontrivial bound condition for all Levi subgroups.",
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T04:29:53.482836+00:00",
     "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
   },
@@ -6333,7 +6333,7 @@
       "Zeilberger1988",
       "Eisenberg2020"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea07da03",
     "description": "The determinant of an \\( n \\times n \\) matrix with entries defined by \\( \\binom{\\ell + m - i - j + 2}{m - 1} \\) for \\( 1 \\leq i,j \\leq n \\) and \\( 2 \\leq m \\leq n \\) is identically equal to 1, as shown through a bijective correspondence between lattice paths and matrix permanents.",
     "domain_bridges": [
       "binomial coefficients",
@@ -6350,7 +6350,7 @@
     "proof_strategy": "Construct a sign-reversing involution on the set of perfect matchings in a modified grid graph, where fixed points correspond to lattice paths counted by permanents of submatrices, thereby proving determinant preservation.",
     "research_mode": "team",
     "source_exp_id": "2606.27763v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T01:01:53.020039+00:00",
     "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
   },
@@ -7656,7 +7656,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da5ca670",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domain_bridges": [],
     "domains": [
@@ -7669,7 +7669,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },

@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "099051c0",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -314,7 +314,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3fc75f2f",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domains": [
       "NumberTheory",
@@ -324,7 +324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -1898,7 +1898,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9dbfa453",
     "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
     "domains": [
       "Algebra",
@@ -1908,7 +1908,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -1928,7 +1928,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "90d1d2b2",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
@@ -1938,7 +1938,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
@@ -2599,7 +2599,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mod 2 to Z Characteristic Map Lifting for Low-Dimensional PL Spheres"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "80c8b0ed",
     "description": "For some absolute constant C, any subset A of {1, ..., N} with cardinality at least 5N/8 + C contains distinct elements a, b, c such that a+b, a+c, and b+c are all in A. This resolves Erd\u0151s Problem 865 and corresponds to Theorem 1.1 of the paper.",
     "domains": [
       "Bridges"
@@ -2608,7 +2608,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29361v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T10:28:39.364137+00:00",
     "title": "Sharp 5/8 Bound for Erd\u0151s-S\u00f3s Pairwise-Sums Problem"
   },
@@ -2813,7 +2813,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7c347334",
     "description": "For any p-adic field F and any irreducible smooth admissible generic representation \u03c0 of GL(n, F), the Bessel distribution B_{\u2113\u2081,\u2113\u2082} associated to Whittaker functionals is regular: there exists a unique smooth function j defined on a dense open subset of GL(n, F), locally integrable on GL(n, F), such that B_{\u2113\u2081,\u2113\u2082}(f) = \u222b_{GL(n,F)} j(g)f(g)dg for all Schwartz functions f. This follows from the paper's main result (regularity follows from nontrivial bounds on Kloosterman sums for all Levi subgroups) combined with the known Deligne-Weil bounds on Kloosterman sums for all Levi subgroups of GL(n), which are products of smaller GL(m)'s.",
     "domains": [
       "Algebra",
@@ -2823,7 +2823,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T04:29:53.482836+00:00",
     "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
   },
@@ -3613,7 +3613,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finiteness of Common Values of ABC Power Sum Recurrences"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea07da03",
     "description": "The determinant of an \\( n \\times n \\) matrix with entries defined by \\( \\binom{\\ell + m - i - j + 2}{m - 1} \\) for \\( 1 \\leq i,j \\leq n \\) and \\( 2 \\leq m \\leq n \\) is identically equal to 1, as shown through a bijective correspondence between lattice paths and matrix permanents.",
     "domains": [
       "Cryptography",
@@ -3623,7 +3623,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27763v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T01:01:53.020039+00:00",
     "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
   },
@@ -4364,7 +4364,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da5ca670",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -4374,7 +4374,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
