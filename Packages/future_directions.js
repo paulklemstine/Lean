@@ -391,7 +391,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Collatz Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b87dcfdc",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "Algebra"
@@ -400,7 +400,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -511,7 +511,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logic-Physics Bridge: Consistency of Physical Theories"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6f62dc7",
     "description": "Prove or disprove that every bounded linear operator on a separable Hilbert space has a non-trivial closed invariant subspace. Formalize known results for compact operators and normal operators.",
     "domains": [
       "Algebra"
@@ -520,7 +520,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.788604+00:00",
     "title": "Invariant Subspace Problem"
   },
@@ -2642,7 +2642,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Phase transition for variance asymptotics of Steinhaus short-interval sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f955b422",
     "description": "For any graph G with maximum degree d, there exists a signing \u03c3 of its edges such that the spectral radius of the signed adjacency matrix A_\u03c3 is at most 2\u221a(3(d-1)).",
     "domains": [
       "Physics"
@@ -2651,7 +2651,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T11:32:36.681739+00:00",
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
@@ -2956,7 +2956,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "946cfca3",
     "description": "For all d \u2265 1, the maximum number of equiangular lines in \u211d^d with common angle arccos(1/3) satisfies N_{1/3}(d) \u2264 max{28, 2(d \u2212 1)}. This is a special case of Balla's conjecture where the spectral radius order \u03ba\u2081 = 2 (witnessed by K\u2082), making the bound reduce to max{(1\u22121/9)(1\u22122/9)/(2/81), \u230a2(d\u22121)/1\u230b} = max{28, 2(d\u22121)}.",
     "domains": [
       "Pythagorean",
@@ -2966,7 +2966,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for \u03b1 = 1/3"
   },
@@ -3451,7 +3451,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "P-positions of Halve Nim coincide with ordinary Nim P-positions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50540462",
     "description": "For every fixed N \u2265 2 and j \u2265 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
     "domains": [
       "Computation",
@@ -3461,7 +3461,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T19:44:33.195784+00:00",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
@@ -3628,7 +3628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "307e78f2",
     "description": "Let \u03c1(q) = \u03a3_{n\u22650} r(n)q^n be Ramanujan's third order mock theta function defined by \u03c1(q) = \u03a3_{m\u22650} q^{2m(m+1)} / \u03a0_{k=0}^{m} (1 + q^{2k+1} + q^{4k+2}). Then for all n \u2265 0: r(3n) > 0, r(3n+1) \u2264 0, and r(3n+2) \u2264 0. The paper proves the asymptotic version (for sufficiently large n) but the exact finite sign law remains open. The only zeros in the negative residue classes are r(2) = r(4) = r(8) = r(11) = r(20) = 0.",
     "domains": [
       "Bridges"
@@ -3637,7 +3637,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T01:31:32.953293+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function \u03c1(q)"
   },
@@ -5837,7 +5837,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Idempotent Probability: Large Deviations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2bfec88c",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical",
@@ -5847,7 +5847,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
@@ -5881,7 +5881,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d0833a0",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -5891,7 +5891,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },

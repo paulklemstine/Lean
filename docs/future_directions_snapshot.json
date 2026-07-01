@@ -520,7 +520,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b87dcfdc",
     "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domain_bridges": [],
     "domains": [
@@ -532,7 +532,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.906325+00:00",
     "title": "Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -680,7 +680,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6f62dc7",
     "description": "Prove or disprove that every bounded linear operator on a separable Hilbert space has a non-trivial closed invariant subspace. Formalize known results for compact operators and normal operators.",
     "domain_bridges": [],
     "domains": [
@@ -692,7 +692,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.788604+00:00",
     "title": "Invariant Subspace Problem"
   },
@@ -4483,7 +4483,7 @@
       "ThisPaper",
       "MSS15_Interlacing_Families"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f955b422",
     "description": "For any graph G with maximum degree d, there exists a signing σ of its edges such that the spectral radius of the signed adjacency matrix A_σ is at most 2√(3(d-1)).",
     "domain_bridges": [
       "spectral_graph_theory",
@@ -4499,7 +4499,7 @@
     "proof_strategy": "Formalize the method of interlacing polynomials and mixed characteristic polynomials for the sum of independent random rank-1 matrices. Establish the upper bound on the largest root of the mixed characteristic polynomial to derive the spectral bound for the signed adjacency matrix.",
     "research_mode": "team",
     "source_exp_id": "2606.28797v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T11:32:36.681739+00:00",
     "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
   },
@@ -5089,7 +5089,7 @@
       "Balla-Draxler-Keevash-Sudakov-18",
       "Jiang-Polyanskii-20"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "946cfca3",
     "description": "For all d ≥ 1, the maximum number of equiangular lines in ℝ^d with common angle arccos(1/3) satisfies N_{1/3}(d) ≤ max{28, 2(d − 1)}. This is a special case of Balla's conjecture where the spectral radius order κ₁ = 2 (witnessed by K₂), making the bound reduce to max{(1−1/9)(1−2/9)/(2/81), ⌊2(d−1)/1⌋} = max{28, 2(d−1)}.",
     "domain_bridges": [
       "spectral_graph_theory",
@@ -5106,7 +5106,7 @@
     "proof_strategy": "First establish κ₁ = 2 by showing K₂ has spectral radius 1 and no 1-vertex graph has spectral radius 1. Then use the relative bound / Lemmens-Seidel framework: given a set of equiangular lines with angle arccos(1/3), form the Gram matrix M with diagonal 1 and off-diagonal ±1/3. The eigenvalue structure of M combined with the spectral radius order constraint yields the linear upper bound 2(d−1) for d ≥ 15, and the absolute bound gives 28 for small d.",
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for α = 1/3"
   },
@@ -6030,7 +6030,7 @@
       "majorization",
       "stochastic_optimization"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50540462",
     "description": "For every fixed N ≥ 2 and j ≥ 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
     "domain_bridges": [
       "probability_theory ↔ convex_analysis",
@@ -6047,7 +6047,7 @@
     "proof_strategy": "Express E_p[U_j^N] via the Adler–Oren–Ross integral formula, then verify the Schur-concavity of the integrand as a function of p using the Schur–Ostrowski criterion (the partial derivative monotonicity condition). Since the uniform distribution majorizes every probability vector on the simplex, Schur-concavity implies it uniquely maximizes the expectation. Uniqueness follows from strict Schur-concavity on the interior of the simplex.",
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T19:44:33.195784+00:00",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
@@ -6363,7 +6363,7 @@
       "Ramanujan",
       "partition_theory"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "307e78f2",
     "description": "Let ρ(q) = Σ_{n≥0} r(n)q^n be Ramanujan's third order mock theta function defined by ρ(q) = Σ_{m≥0} q^{2m(m+1)} / Π_{k=0}^{m} (1 + q^{2k+1} + q^{4k+2}). Then for all n ≥ 0: r(3n) > 0, r(3n+1) ≤ 0, and r(3n+2) ≤ 0. The paper proves the asymptotic version (for sufficiently large n) but the exact finite sign law remains open. The only zeros in the negative residue classes are r(2) = r(4) = r(8) = r(11) = r(20) = 0.",
     "domain_bridges": [
       "q-series_coefficient_extraction",
@@ -6380,7 +6380,7 @@
     "proof_strategy": "The asymptotic result uses Watson's identity 2ρ(q) + ω(q) = T(q) to reduce to comparing Rademacher-type expansions for ω(q) and a theta-eta product T(q). To prove the exact finite sign law, one needs: (1) effective error bounds on the Rademacher expansion for r(n), (2) explicit computation of r(n) for all n below the effective cutoff, and (3) verification that the sign pattern holds in the finite range. The effective bound would give an explicit N₀ such that the asymptotic sign holds for n ≥ N₀; then one verifies the remaining finitely many cases computationally.",
     "research_mode": "team",
     "source_exp_id": "2606.27902v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T01:31:32.953293+00:00",
     "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function ρ(q)"
   },
@@ -10288,7 +10288,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2bfec88c",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domain_bridges": [],
     "domains": [
@@ -10301,7 +10301,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
@@ -10347,7 +10347,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d0833a0",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domain_bridges": [],
     "domains": [
@@ -10360,7 +10360,7 @@
     "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
