@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-01T04:02:33.461158+00:00",
+  "last_updated": "2026-07-01T04:21:26.695871+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -22940,6 +22940,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-01T04:02:33.146128+00:00",
       "title": "Convex Position Minimizes Plane Graphs"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4718,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 61,
+      "domain": "Physics",
+      "duration_seconds": 1146.53941988945,
+      "end_time": 1782879593.616017,
+      "files_integrated": 7,
+      "job_id": "562c0234",
+      "outcome_quality": 0.74152,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7318,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.6701,
+        "novelty": 0.83,
+        "proof_depth": 0.6016,
+        "usefulness": 0.7758
+      },
+      "quality_score": 0.74152,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782878447.0765972,
+      "strategy_count": 0,
+      "theorem_count": 10,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 10,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-01T04:21:24.555852+00:00",
+      "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
     }
   ]
 }

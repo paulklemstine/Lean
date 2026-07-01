@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "099051c0",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -314,7 +314,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "3fc75f2f",
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domains": [
       "NumberTheory",
@@ -324,7 +324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -1898,7 +1898,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nonnegativity of General Mixed Product Scalar Factor Coefficients"
   },
   {
-    "consumed_by_exp_id": "9dbfa453",
+    "consumed_by_exp_id": "",
     "description": "For any integer t \u2265 2 and any tK3-free graph G of order n \u2265 28t - 17, the signless Laplacian spectral radius of G is at most that of the join graph K_{t-1} \u2228 K_{\u230a(n-t+1)/2\u230b, \u2308(n-t+1)/2\u2309}, with equality if and only if G is isomorphic to this extremal graph.",
     "domains": [
       "Algebra",
@@ -1908,7 +1908,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T19:42:40.348725+00:00",
     "title": "Signless Laplacian Spectral Radius Bound for tK3-Free Graphs"
   },
@@ -1928,7 +1928,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Average Divisibility Conjecture for GL_n over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "90d1d2b2",
+    "consumed_by_exp_id": "",
     "description": "For every prime power q \u2265 2, the expected time to collect all n = q\u00b2 + q + 1 coupons under the projective plane line-set mechanism (where each draw is a uniformly random line of the projective plane of order q, each line being a (q+1)-subset of points) is strictly greater than the expected coverage time under the uniform (q+1)-subset mechanism on the same ground set. This generalizes the paper's Theorem proving the q = 2 (Fano plane) case, which disproved the Grunbaum\u2013Yaakobi conjecture. Computational evidence supports q = 3, 4, 5, but no general proof is known.",
     "domains": [
       "Pythagorean",
@@ -1938,7 +1938,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28216v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T18:49:21.986832+00:00",
     "title": "Projective Plane Coupon Collection Slowness"
   },
@@ -2351,7 +2351,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimum Vertex Bound for Discrete Pseudomanifolds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "91958be5",
     "description": "For every even dimension n \u2265 2, every 0 < \u03b1 < 1/2, and every non-degenerate quadratic form Q on F_q^n (q an odd prime power), there exist constants C_\u03b1 > 0 and q_\u03b1 such that for all q \u2265 q_\u03b1 and all E \u2286 F_q^n with |E| \u2265 C_\u03b1 \u00b7 q^{n/2+1/3}, the distance set \u0394_Q(E) = {Q(x\u2212y) : x,y \u2208 E} satisfies |\u0394_Q(E)| > 1 + \u03b1(q\u22121). This improves the previous threshold exponent (n+1)/2 to n/2+1/3, achieved via a Delsarte linear programming bound on the association scheme of level sets of Q, with eigenvalue estimates relying on Gauss sums and Kloosterman sums via the Weil bound.",
     "domains": [
       "Algebra",
@@ -2361,7 +2361,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T04:46:13.465158+00:00",
     "title": "Erd\u0151s-Falconer Distance Set Threshold n/2+1/3 in Even Dimensions over Finite Fields"
   },
@@ -2599,7 +2599,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mod 2 to Z Characteristic Map Lifting for Low-Dimensional PL Spheres"
   },
   {
-    "consumed_by_exp_id": "80c8b0ed",
+    "consumed_by_exp_id": "",
     "description": "For some absolute constant C, any subset A of {1, ..., N} with cardinality at least 5N/8 + C contains distinct elements a, b, c such that a+b, a+c, and b+c are all in A. This resolves Erd\u0151s Problem 865 and corresponds to Theorem 1.1 of the paper.",
     "domains": [
       "Bridges"
@@ -2608,7 +2608,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29361v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T10:28:39.364137+00:00",
     "title": "Sharp 5/8 Bound for Erd\u0151s-S\u00f3s Pairwise-Sums Problem"
   },
@@ -2813,7 +2813,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Harder's Conjecture for the Scalar-Valued Hermitian Boundary Case (k=3)"
   },
   {
-    "consumed_by_exp_id": "7c347334",
+    "consumed_by_exp_id": "",
     "description": "For any p-adic field F and any irreducible smooth admissible generic representation \u03c0 of GL(n, F), the Bessel distribution B_{\u2113\u2081,\u2113\u2082} associated to Whittaker functionals is regular: there exists a unique smooth function j defined on a dense open subset of GL(n, F), locally integrable on GL(n, F), such that B_{\u2113\u2081,\u2113\u2082}(f) = \u222b_{GL(n,F)} j(g)f(g)dg for all Schwartz functions f. This follows from the paper's main result (regularity follows from nontrivial bounds on Kloosterman sums for all Levi subgroups) combined with the known Deligne-Weil bounds on Kloosterman sums for all Levi subgroups of GL(n), which are products of smaller GL(m)'s.",
     "domains": [
       "Algebra",
@@ -2823,7 +2823,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29852v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T04:29:53.482836+00:00",
     "title": "Regularity of Bessel Distributions for Generic Representations of GL(n) over p-adic Fields"
   },
@@ -2983,6 +2983,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-30T08:33:25.944831+00:00",
     "title": "k=3 Additive Uniqueness of Multiplicative Functions on Sums of Two Nonzero Squares"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any set P of n \u2265 3 points in general position (no three collinear) in \u211d\u00b2, the number of labeled plane graphs on P is at least the number of labeled plane graphs on n points in convex position. This formalizes the conjecture that, among all n-point configurations in general position, convex position yields the fewest plane graphs. The paper proves that configurations with convex hull of size O(n/log n) have \u03a9(12.24^n) plane graphs, strictly more than the ~11.65^n achieved by convex position, providing strong evidence for this conjecture.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2965",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29446v1",
+    "status": "available",
+    "timestamp": "2026-06-30T08:52:56.888905+00:00",
+    "title": "Convex Position Minimizes Plane Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3598,7 +3613,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finiteness of Common Values of ABC Power Sum Recurrences"
   },
   {
-    "consumed_by_exp_id": "ea07da03",
+    "consumed_by_exp_id": "",
     "description": "The determinant of an \\( n \\times n \\) matrix with entries defined by \\( \\binom{\\ell + m - i - j + 2}{m - 1} \\) for \\( 1 \\leq i,j \\leq n \\) and \\( 2 \\leq m \\leq n \\) is identically equal to 1, as shown through a bijective correspondence between lattice paths and matrix permanents.",
     "domains": [
       "Cryptography",
@@ -3608,7 +3623,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27763v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-01T01:01:53.020039+00:00",
     "title": "Unimodularity of Figurate Number Binomial Matrices via Bijective Proofs"
   },
@@ -3642,12 +3657,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For an acyclic quiver Q of affine Dynkin type X\u0303\u2099 where X\u0303\u2099 \u2209 {\u00c3\u2099, \u1ebc\u2087}, every banded coordinate projection \u03c0_{vw} (with \u03b4_v = \u03b4_w) surjects onto its band {(x,y) : |x\u2212y| \u2264 b_{vw}}. That is, the only non-filling banded pairs across all affine types are the source-sink diagonal in \u00c3\u2099 and the unique pair of null-root coefficient 2 vertices in \u1ebc\u2087.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_3011",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27523v1",
+    "status": "available",
+    "timestamp": "2026-07-01T04:21:47.558779+00:00",
+    "title": "Filling Conjecture for Banded Pairs in Affine Types Beyond \u00c3\u2099 and \u1ebc\u2087"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let G be a finite nilpotent group with |G|>1, and let p be the smallest prime divisor of |G|. For any integer k < p, and any two sequences a_1, ..., a_k in G (pairwise distinct) and b_1, ..., b_k in G, there exists a permutation sigma on {1, ..., k} such that the products a_1 * b_{sigma(1)}, ..., a_k * b_{sigma(k)} are pairwise distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3011",
+    "id": "fd_3012",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30506v1",
@@ -3662,7 +3692,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3012",
+    "id": "fd_3013",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
@@ -3676,7 +3706,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3013",
+    "id": "fd_3014",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
@@ -3691,7 +3721,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_3014",
+    "id": "fd_3015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30618v1",
@@ -3706,7 +3736,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3015",
+    "id": "fd_3016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v1",
@@ -3721,7 +3751,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3016",
+    "id": "fd_3017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30478v1",
@@ -3736,7 +3766,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_3017",
+    "id": "fd_3018",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30287v1",
@@ -3750,7 +3780,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3018",
+    "id": "fd_3019",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30351v1",
@@ -3764,7 +3794,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3019",
+    "id": "fd_3020",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
@@ -3778,7 +3808,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3020",
+    "id": "fd_3021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30418v1",
@@ -3792,7 +3822,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_3021",
+    "id": "fd_3022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
@@ -3807,7 +3837,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_3022",
+    "id": "fd_3023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30132v1",
@@ -3821,7 +3851,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3023",
+    "id": "fd_3024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30076v1",
@@ -3835,7 +3865,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3024",
+    "id": "fd_3025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30208v1",
@@ -3849,7 +3879,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3025",
+    "id": "fd_3026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29768v1",
@@ -3864,7 +3894,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_3026",
+    "id": "fd_3027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29753v1",
@@ -3879,7 +3909,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_3027",
+    "id": "fd_3028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29965v1",
@@ -3893,7 +3923,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_3028",
+    "id": "fd_3029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29884v1",
@@ -3908,7 +3938,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_3029",
+    "id": "fd_3030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29822v1",
@@ -3922,7 +3952,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3030",
+    "id": "fd_3031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29558v1",
@@ -3937,7 +3967,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3031",
+    "id": "fd_3032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29688v1",
@@ -3951,7 +3981,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3032",
+    "id": "fd_3033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29743v1",
@@ -3965,7 +3995,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3033",
+    "id": "fd_3034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29669v1",
@@ -3980,7 +4010,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_3034",
+    "id": "fd_3035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29559v1",
@@ -3995,7 +4025,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Bridges"
     ],
-    "id": "fd_3035",
+    "id": "fd_3036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29478v1",
@@ -4010,7 +4040,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3036",
+    "id": "fd_3037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29426v1",
@@ -4024,7 +4054,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3037",
+    "id": "fd_3038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29477v1",
@@ -4038,7 +4068,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3038",
+    "id": "fd_3039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29397v1",
@@ -4053,7 +4083,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_3039",
+    "id": "fd_3040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29415v1",
@@ -4068,7 +4098,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_3040",
+    "id": "fd_3041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29385v1",
@@ -4083,7 +4113,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_3041",
+    "id": "fd_3042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29369v1",
@@ -4097,7 +4127,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_3042",
+    "id": "fd_3043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27749v1",
@@ -4111,7 +4141,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_3043",
+    "id": "fd_3044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27702v1",
@@ -4125,13 +4155,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_3044",
+    "id": "fd_3045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27844v1",
     "status": "available",
     "timestamp": "2026-07-01T01:31:58.361094+00:00",
     "title": "Order of the giant component above the moving critical window for preferential attachment percolation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 1, the coefficient of q^n z^s in the normalized Jacobi triple product tail J_k(z,q) is a nonnegative integer for all n \u2265 0 and s \u2208 \u2124, where J_k(z,q) = (\u2211_{j=k}^{\u221e} (-1)^{j-k} q^{C(j+1,2)} \u2211_{i=-j}^{j} z^i) / ((zq;q)_\u221e (q/z;q)_\u221e). This implies Merca's nonnegativity conjecture on truncated Jacobi triple product series for all residue classes \u00b1S mod R.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_3046",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27507v1",
+    "status": "available",
+    "timestamp": "2026-07-01T04:22:10.287171+00:00",
+    "title": "Coefficientwise Nonnegativity of Normalized Jacobi Triple Product Tails"
   },
   {
     "consumed_by_exp_id": "",
@@ -4277,21 +4321,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Convex Position and the Combinatorics of Plane Graphs\n\nThis cycle studied the number of crossing-free (plane) straight-line graphs on a\nplanar point set, with an eye on the conjecture that convex position minimizes this\ncount. Working in the exact combinatorial model of convex position, we validated\nthe count against the known sequence `1, 1, 2, 8, 48, 352, \u2026`, proved explicit\nexponential lower bounds from fixed triangulations, showed that the natural\ntriangulation-based lower bound is minimized precisely at convex position, and\ndiscovered a forced parity of the count. The following conjectures are the bold,\ntestable questions these findings suggest.\n\n## Conjecture 1 \u2014 Boundary edges are independent generators\n\nFor a set of `n` points with `h` of them on the convex hull, the number of plane\ngraphs is at least `2^h` times the number of plane graphs on the `n` points with\nall `h` hull edges deleted and forbidden. The key insight is that a hull edge\njoins two consecutive extreme points and therefore crosses no other segment, so it\ncan be freely included or excluded without affecting any crossing constraint \u2014 the\nhull edges behave like `h` independent binary switches. Why now? We have just\nproved that toggling a single hull edge is a fixed-point-free involution on the set\nof plane graphs (yielding a forced factor of `2`); promoting one switch to all `h`\nswitches is the natural next step and would give a clean structural lower bound\nthat grows with hull size.\n\n## Conjecture 2 \u2014 Monotone decrease of the count in hull size\n\nOrder all `n`-point configurations in general position by the size `h` of their\nconvex hull. Then the minimum number of plane graphs over configurations with hull\nsize `h` is a strictly decreasing function of `h`, attaining its global minimum at\n`h = n` (convex position). The key insight is that shrinking the hull frees\ninterior points to be triangulated in more ways, and every triangulation\ncontributes an independent family of `2^{(edges)}` plane subgraphs whose exponent\n`3n - 3 - h` strictly increases as `h` decreases. Why now? We have formalized\nexactly this monotonicity for the triangulation-subset lower bound; the conjecture\nasserts that the true count inherits the same monotonicity, turning a bound-level\nphenomenon into a theorem about the extremal configuration.\n\n## Conjecture 3 \u2014 A sharp exponential base for convex position\n\nThe number of plane graphs on `n` points in convex position equals\n`c \u00b7 n^{-3/2} \u00b7 \u03b2^n \u00b7 (1 + o(1))` for an explicit algebraic constant `\u03b2` near\n`11.6`, and no configuration in general position has growth base below `\u03b2`. The key\ninsight is that convex position is the unique arrangement in which the crossing\nrelation among chords is governed solely by the linear cyclic order of the points,\nso the count becomes a pure order statistic amenable to an exact transfer-matrix or\ngenerating-function analysis; every departure from convexity adds crossing\nconstraints that can only be relaxed, never tightened. Why now? Our exact model\nreproduces the initial terms `8, 48, 352` and the `2^{2n-3}` triangulation floor,\npinning down the regime in which the constant `\u03b2` lives and making the extremal\nclaim `\u03b2 = min` precise and attackable.\n\n## Conjecture 4 \u2014 Parity is only the first layer of arithmetic structure\n\nFor each `n`, the number of plane graphs on `n` convex points is divisible by\n`2^{k(n)}` where `k(n)` grows at least linearly in `n`. The key insight is that\neach of the `n` hull edges is universally crossing-free, and disjoint hull edges\ngive commuting, independent toggling involutions, so the count should carry one\nfactor of `2` per independent boundary switch rather than just the single factor we\nproved. Why now? We have established the base case `2 | count` via one boundary\nedge; the commuting-involutions viewpoint immediately predicts a much higher power\nof two and is directly testable against the exact values of the sequence.\n\n## Conjecture 5 \u2014 Convexity extremizes every crossing-free family, not just graphs\n\nAmong all `n`-point sets in general position, convex position simultaneously\nminimizes the number of plane graphs, plane spanning trees, plane perfect\nmatchings, and plane Hamiltonian cycles (each in the appropriate parity of `n`).\nThe key insight is that all these families are downward- or connectivity-closed\nsubfamilies of the plane-graph lattice, and the same order-only description of\ncrossings that makes convex position extremal for the full lattice should force it\nto be extremal for each natural sublattice. Why now? The unified combinatorial\nmodel developed this cycle treats every plane structure as a crossing-free chord\nfamily on a cyclic order, so a single extremal principle can be tested against all\nof these classical counting sequences at once.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_3047",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "650b150d",
-    "status": "available",
-    "timestamp": "2026-07-01T04:02:23.525912+00:00",
-    "title": "This cycle studied the number of crossing-free (plane) straight-line graphs on a"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4335,7 +4364,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "da5ca670",
+    "consumed_by_exp_id": "",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -4345,7 +4374,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
@@ -4392,21 +4421,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-29T03:32:05.123415+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: Any continuous quantum phase transition in a local spin lattice can be identified by a non\u2011trivial element of the second cohomology group H\u00b2(G,U(1)) of the symmetry group G, computable from the model\u2019s transfer matrix. Test: For a set of exactly solvable lattice models, compute H\u00b2(G,U(1)) and verify that each observed critical point yields a non\u2011trivial class while transitions with trivial class must be first\u2011order; a counterexample would falsify the conjecture. Impact: This yields a complete algebraic classification of quantum phases, enabling precise design of topological quantum materials and error\u2011corrected quantum processors.",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_3046",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-07-01T02:49:12.307234+00:00",
-    "title": "Cohomological Classification of Quantum Phase Transitions"
   },
   {
     "consumed_by_exp_id": "",
@@ -4826,7 +4840,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "562c0234",
+    "consumed_by_exp_id": "",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domains": [
       "Cryptography",
@@ -4836,7 +4850,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },

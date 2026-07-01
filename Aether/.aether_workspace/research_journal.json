@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "913e3580",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Shifted t-Schur Basis / Plethystic Triviality\n\nThis cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the\ngenerating-function backbone of the shifted (Schur `Q`) basis",
-      "quality_score": 0.7981560000000001,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-26T23:37:29",
-      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-    },
-    {
       "cycle_id": "9871aa6d",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Langlands for GL₂ over ℚ (Eichler–Shimura & Deligne)\n\nDerived from this cycle's findings in `Catalog/Novelty/EichlerShimuraGL2.lean` and\n`Catalog/Novelty/DeligneBoundGL2.lean`, w",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-06-30T02:56:43",
       "title": "Certified Adversarial Robustness via Sheaf Cohomology"
+    },
+    {
+      "cycle_id": "562c0234",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Simulation-Based Privacy for Colouring Proofs\n\nThe results of this cycle establish, for the three-colouring proof of a graph,\nthat a single challenged edge reveals a transcript w",
+      "quality_score": 0.74152,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-01T04:21:22",
+      "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3be846c2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from the cycle that produced `RamseyFourFour.lean` (the exact value\n`R(4,4) = 18`) and `RamseyDiagonalBound.lean` (the general bo",
-      "quality_score": 0.464016452173913,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-26T18:05:49",
-      "title": "Ramsey Theory: Bounds and Constructions"
-    },
     {
       "cycle_id": "762ed13d",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 18,
       "timestamp": "2026-07-01T04:02:29",
       "title": "Convex Position Minimizes Plane Graphs"
+    },
+    {
+      "cycle_id": "562c0234",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Simulation-Based Privacy for Colouring Proofs\n\nThe results of this cycle establish, for the three-colouring proof of a graph,\nthat a single challenged edge reveals a transcript w",
+      "quality_score": 0.74152,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-07-01T04:21:22",
+      "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c011c95b",
-      "domain": "Novelty",
-      "name": "special_soundness",
-      "quality": 0.7862199999999999
-    },
-    {
-      "cycle_id": "c011c95b",
-      "domain": "Novelty",
-      "name": "sim_accepts",
-      "quality": 0.7862199999999999
-    },
-    {
-      "cycle_id": "9e0667c2",
-      "domain": "Applications",
-      "name": "two_mul_diam",
-      "quality": 0.7800670000000001
-    },
     {
       "cycle_id": "9e0667c2",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "global_robustness_certificate",
       "quality": 0.76576
+    },
+    {
+      "cycle_id": "562c0234",
+      "domain": "Physics",
+      "name": "is",
+      "quality": 0.74152
+    },
+    {
+      "cycle_id": "562c0234",
+      "domain": "Physics",
+      "name": "roundAcceptProb_nonneg",
+      "quality": 0.74152
+    },
+    {
+      "cycle_id": "562c0234",
+      "domain": "Physics",
+      "name": "roundAcceptProb_le_one",
+      "quality": 0.74152
     }
   ],
-  "last_updated": "2026-07-01T04:02:29",
+  "last_updated": "2026-07-01T04:21:22",
   "open_questions": [
     {
       "context": "",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "831891b4",
-        "quality": 0.49792574394463673,
-        "theorems": 28,
-        "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
-      },
-      {
         "cycle_id": "d7a09318",
         "quality": 0.7246,
         "theorems": 13,
@@ -3761,6 +3755,12 @@
         "quality": 0.40141157142857153,
         "theorems": 14,
         "title": "Sums of Three Cubes"
+      },
+      {
+        "cycle_id": "562c0234",
+        "quality": 0.74152,
+        "theorems": 10,
+        "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
       }
     ],
     "Probability": [
