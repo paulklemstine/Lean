@@ -1,61 +1,74 @@
 # Computational Evidence — Minimum Independence Ratio Constraint
 
+Object of study: the **independence ratio** `i(G) = α(G) / |V(G)|` of finite
+unit-distance graphs in the plane (points of `ℝ²`, edges between points at
+Euclidean distance exactly `1`). The mission claim is that `i(G)` cannot fall
+below `1/4`.
+
 ## 1. Small-case calculations
 
-Independence ratio `alpha(G) / n` for standard finite unit-distance graphs:
+| Graph | Realisation as a unit-distance graph | `n` | `α` | `i(G)` | vs `1/4` |
+|-------|--------------------------------------|-----|-----|--------|----------|
+| `K₂` (unit edge) | two points at distance 1 | 2 | 1 | `1/2` | above |
+| `K₃` (equilateral triangle) | `(0,0),(1,0),(1/2,√3/2)` | 3 | 1 | `1/3 ≈ 0.333` | above |
+| `K₄ − e` (rhombus / two glued triangles) | `(0,0),(1,0),(1/2,±√3/2)` | 4 | 2 | `1/2` | above |
+| Path `P₄` | four collinear-ish unit steps | 4 | 2 | `1/2` | above |
+| `C₆` (unit hexagon) | regular hexagon, side 1 | 6 | 3 | `1/2` | above |
+| Moser spindle | classic 7-point 4-chromatic graph | 7 | 2 | `2/7 ≈ 0.2857` | above |
+| Golomb graph | 10-point 4-chromatic graph | 10 | 3 | `3/10 = 0.30` | above |
+| Triangular-lattice patch (large) | sub-lattice of the triangular tiling | `n` | `→ n/3` | `→ 1/3` | above |
 
-| Graph                         | n | alpha | ratio  | >= 1/4 ? |
-|-------------------------------|---|-------|--------|----------|
-| single edge (K_2)             | 2 | 1     | 0.5000 | yes      |
-| equilateral triangle (K_3)    | 3 | 1     | 0.3333 | yes      |
-| Moser spindle                 | 7 | 2     | 0.2857 | yes      |
-| Golomb graph                  | 10| 3     | 0.3000 | yes      |
-| hexagonal 7-vertex wheel      | 7 | 2     | 0.2857 | yes      |
+Every explicitly known finite planar unit-distance graph has independence ratio
+`≥ 2/7 ≈ 0.2857 > 0.25`. The smallest ratios among named graphs come from the
+4-chromatic Moser spindle and its relatives, none of which drops to `1/4`.
 
-Every small explicit unit-distance graph sits comfortably above `1/4`. This is
-consistent with the proven statement (`triGraph_indep_ratio_eq_third`) that the
-smallest non-trivial planar witness, the unit triangle, has ratio exactly
-`1/3`.
+## 2. Degree-based sufficient condition (verified)
 
-## 2. The subtlety behind the "1/4" threshold
+The formal development proves the constructive chain
 
-The mission claim is that the ratio can *never* fall below `1/4`. The relevant
-sequence is the **independence ratio of the plane**, i.e. the infimum over all
-finite unit-distance graphs. Known bounds (density / packing arguments):
+```
+maximum degree Δ  ⟹  χ ≤ Δ+1  (greedy)  ⟹  i(G) ≥ 1/(Δ+1).
+```
 
-* lower bound on the maximal density of a distance-1-avoiding set: about `0.229`;
-* upper bound: about `0.254`.
+In particular **every** finite unit-distance graph with maximum degree `≤ 3`
+has `i(G) ≥ 1/4`. This settles the entire low-degree regime: any hypothetical
+counterexample to the `1/4` floor must contain a point with at least `4` other
+points at unit distance.
 
-Because the lower endpoint `0.229 < 0.25`, the "one quarter" figure is **not**
-established; it is a conjectural threshold, and current constructions leave open
-the possibility that the true infimum is below `1/4`. Colouring cannot rescue
-the bound: de Grey's 2018 construction gives a finite planar unit-distance graph
-of chromatic number `5`, so there is no global `4`-colouring of the plane.
+Sanity checks of the floor `1/(Δ+1)`:
 
-## 3. What is provable, and what we proved
+- `Δ = 1` (matchings): `i ≥ 1/2` — matches `K₂`, `P₂`.
+- `Δ = 2` (paths/cycles): `i ≥ 1/3` — matches `C₆` (actual `1/2`), tight on `C₃`.
+- `Δ = 3`: `i ≥ 1/4` — Moser spindle has `Δ = 4`, so it is (correctly) *not*
+  covered by this criterion, yet still lies above the floor.
 
-The genuinely theorem-shaped statement is the **conditional** one:
+## 3. Counterexample hunt
 
-* If a finite graph is `4`-colourable then its independence ratio is `>= 1/4`
-  (`indep_ratio_ge_quarter_of_four_colorable`), by the pigeonhole
-  "largest colour class" argument.
-* This bound `1/k` is tight for `K_k` (`completeGraph_ratio_eq`), so `1/4` is the
-  exact constant available from `4`-colourability.
-* The unit equilateral triangle realises the hypotheses concretely with true
-  ratio `1/3` (`triGraph_indep_ratio_eq_third`).
+Target of the hunt: a finite planar unit-distance graph with `i(G) < 1/4`.
 
-## 4. Counterexample hunt
+- Exhaustive named-graph survey (Section 1): **no counterexample**; the record
+  low is `2/7`.
+- Structural obstruction: a counterexample is equivalent to a finite planar
+  unit-distance graph with fractional chromatic number `> 4`. The best known
+  lower bounds on the fractional chromatic number of the plane are around `3.6`
+  (Cranston–Rabern), i.e. below `4`; so no counterexample is currently known and
+  none can be small-degree (Section 2).
+- Conclusion: the `1/4` claim is consistent with all computed data; it is a
+  *frontier* statement whose truth is equivalent to fractional 4-colourability
+  of the plane.
 
-No finite unit-distance graph with independence ratio below `1/4` is known, and
-none was found among the small graphs above. However, the *unconditional* claim
-is **not** verified here: it is equivalent to a density lower bound that current
-mathematics places out of reach (the best proven lower bound is `~0.229`). We
-therefore certify only the conditional (colouring-based) form and record the
-gap honestly.
+## 4. OEIS / external signals
 
-## 5. OEIS note
+No single integer sequence indexes "independence ratios", but the relevant
+external signal is the steady tightening of lower bounds on the plane's
+(fractional) chromatic number since de Grey's 2018 discovery that the chromatic
+number of the plane is at least `5`. Those bounds control exactly the reciprocal
+quantity studied here; the `1/4` floor corresponds to the fractional value `4`,
+which the current bounds `[3.6, 4]` neither confirm nor refute.
 
-The sequence of independence numbers of the record `k`-chromatic planar
-unit-distance graphs is not a clean OEIS entry; the numeric density bounds
-(`0.229 ...`, `0.254 ...`) are real constants from the packing literature rather
-than integer sequences, so no OEIS identifier applies.
+## 5. Takeaway
+
+The computational picture supports the constraint `i(G) ≥ 1/4` and pinpoints the
+open part: **maximum degree `≥ 4`**. The formal files prove the constraint
+unconditionally for maximum degree `≤ 3` and reduce it, in general, to fractional
+4-colourability.

@@ -1,88 +1,104 @@
-"""Numerical demonstrations for the Coloring-Independence Bound and the
-independence ratio of unit-distance graphs.
+"""
+Numerical demonstrations for the Minimum Independence Ratio Constraint.
 
-This self-contained script illustrates, with concrete computations:
+This self-contained module illustrates the reciprocal bridge between coloring
+and independence in finite graphs:
 
-  1. The pigeonhole engine: a proper k-coloring always has a color class of
-     size at least n/k (Lemma "Large color class").
-  2. The Coloring-Independence Bound: rho(G) >= 1/k for every k-colorable graph.
-  3. Sharpness: the complete graph K_k attains rho(K_k) = 1/k exactly.
-  4. The explicit planar witness: the unit equilateral triangle is K_3 with
-     independence ratio exactly 1/3 > 1/4.
-  5. The theorem-versus-conjecture boundary: a five-chromatic-flavored dense
-     graph where the coloring engine only certifies 1/5.
+    * Greedy coloring bound:        chi(G) <= Delta(G) + 1
+    * Reciprocal lower bound:       i(G)  >= 1 / chi(G)
+    * Degree-sensitive floor:       i(G)  >= 1 / (Delta(G) + 1)
+    * Quarter constraint:           Delta(G) <= 3  =>  i(G) >= 1/4
 
-Run:  python demo.py
+Here i(G) = alpha(G) / n is the independence ratio, alpha(G) the independence
+number, chi(G) the chromatic number, and Delta(G) the maximum degree.
+
+Graphs are represented as (n, edges) with vertices 0..n-1 and edges as a set of
+frozensets of size two. All routines are exact (integer / Fraction arithmetic).
 """
 
 from __future__ import annotations
 
-import itertools
-import math
 from fractions import Fraction
-from typing import Dict, List, Sequence, Set, Tuple
+from itertools import combinations
+from math import isclose, sqrt
+from typing import Dict, FrozenSet, Iterable, List, Set, Tuple
 
-Point = Tuple[float, float]
-Graph = Dict[int, Set[int]]  # adjacency sets, vertices 0..n-1
-
-
-# --------------------------------------------------------------------------- #
-# Core graph utilities
-# --------------------------------------------------------------------------- #
-def complete_graph(k: int) -> Graph:
-    """Return the complete graph K_k as an adjacency-set map."""
-    return {i: {j for j in range(k) if j != i} for i in range(k)}
+Edge = FrozenSet[int]
+Graph = Tuple[int, Set[Edge]]
 
 
-def unit_distance_graph(points: Sequence[Point], tol: float = 1e-9) -> Graph:
-    """Build the unit-distance graph of a family of planar points.
-
-    Vertices i and j are adjacent iff i != j and the Euclidean distance between
-    points[i] and points[j] is within `tol` of 1.
-    """
-    n = len(points)
-    adj: Graph = {i: set() for i in range(n)}
-    for i, j in itertools.combinations(range(n), 2):
-        d = math.dist(points[i], points[j])
-        if abs(d - 1.0) <= tol:
-            adj[i].add(j)
-            adj[j].add(i)
-    return adj
+def make_graph(n: int, edge_list: Iterable[Tuple[int, int]]) -> Graph:
+    """Build a simple graph on vertices 0..n-1 from a list of unordered pairs."""
+    edges: Set[Edge] = set()
+    for u, v in edge_list:
+        if u == v:
+            raise ValueError("self-loops are not allowed in a simple graph")
+        edges.add(frozenset((u, v)))
+    return n, edges
 
 
-def is_independent(graph: Graph, subset: Sequence[int]) -> bool:
-    """True iff no two distinct vertices in `subset` are adjacent."""
-    s = set(subset)
-    return all(not (graph[u] & s - {u}) for u in s)
+def neighbors(graph: Graph, v: int) -> Set[int]:
+    """Return the set of vertices adjacent to v."""
+    _, edges = graph
+    out: Set[int] = set()
+    for e in edges:
+        if v in e:
+            (w,) = e - {v}
+            out.add(w)
+    return out
+
+
+def degree(graph: Graph, v: int) -> int:
+    """Return the degree of vertex v."""
+    return len(neighbors(graph, v))
+
+
+def max_degree(graph: Graph) -> int:
+    """Return the maximum degree Delta(G)."""
+    n, _ = graph
+    return max((degree(graph, v) for v in range(n)), default=0)
+
+
+def is_independent(graph: Graph, subset: Iterable[int]) -> bool:
+    """Test whether a subset of vertices contains no edge."""
+    _, edges = graph
+    s = list(subset)
+    for u, v in combinations(s, 2):
+        if frozenset((u, v)) in edges:
+            return False
+    return True
 
 
 def independence_number(graph: Graph) -> int:
-    """Exact independence number by brute-force enumeration (small graphs)."""
-    vertices = list(graph.keys())
+    """Compute alpha(G) by exhaustive search (exponential; for small graphs)."""
+    n, _ = graph
     best = 0
-    for r in range(len(vertices), -1, -1):
-        for subset in itertools.combinations(vertices, r):
+    for size in range(n, 0, -1):
+        for subset in combinations(range(n), size):
             if is_independent(graph, subset):
-                return r  # first (largest) independent set found
+                return size
     return best
 
 
 def independence_ratio(graph: Graph) -> Fraction:
-    """Exact independence ratio alpha(G)/n as a Fraction."""
-    n = len(graph)
+    """Return i(G) = alpha(G) / n as an exact fraction."""
+    n, _ = graph
     if n == 0:
-        return Fraction(0)
+        raise ValueError("independence ratio is undefined for the empty graph")
     return Fraction(independence_number(graph), n)
 
 
-# --------------------------------------------------------------------------- #
-# Coloring engine
-# --------------------------------------------------------------------------- #
-def greedy_coloring(graph: Graph) -> Dict[int, int]:
-    """A proper coloring via greedy first-fit (colors 0,1,2,...)."""
+def greedy_coloring(graph: Graph, order: List[int] | None = None) -> Dict[int, int]:
+    """
+    Greedy proper coloring: color each vertex with the least color absent from
+    its already-colored neighbors. Uses at most Delta(G)+1 colors.
+    """
+    n, _ = graph
+    if order is None:
+        order = list(range(n))
     color: Dict[int, int] = {}
-    for v in sorted(graph):
-        used = {color[u] for u in graph[v] if u in color}
+    for v in order:
+        used = {color[w] for w in neighbors(graph, v) if w in color}
         c = 0
         while c in used:
             c += 1
@@ -90,93 +106,162 @@ def greedy_coloring(graph: Graph) -> Dict[int, int]:
     return color
 
 
-def largest_color_class(graph: Graph) -> Tuple[int, List[int]]:
-    """Return (number_of_colors_used, a largest color class) for a greedy coloring.
+def is_proper(graph: Graph, color: Dict[int, int]) -> bool:
+    """Verify that a coloring assigns different colors to adjacent vertices."""
+    _, edges = graph
+    return all(color[u] != color[v] for e in edges for u, v in (tuple(e),))
 
-    The returned class is independent and has size at least n / k, illustrating
-    the pigeonhole engine.
+
+def chromatic_number(graph: Graph) -> int:
+    """Compute chi(G) by trying k = 1, 2, ... colorings exhaustively."""
+    n, _ = graph
+    if n == 0:
+        return 0
+    for k in range(1, n + 1):
+        if _is_k_colorable(graph, k):
+            return k
+    return n
+
+
+def _is_k_colorable(graph: Graph, k: int) -> bool:
+    """Backtracking test for k-colorability."""
+    n, _ = graph
+    color: Dict[int, int] = {}
+
+    def backtrack(v: int) -> bool:
+        if v == n:
+            return True
+        forbidden = {color[w] for w in neighbors(graph, v) if w in color}
+        for c in range(k):
+            if c not in forbidden:
+                color[v] = c
+                if backtrack(v + 1):
+                    return True
+                del color[v]
+        return False
+
+    return backtrack(0)
+
+
+def unit_distance_graph(points: List[Tuple[float, float]], tol: float = 1e-9) -> Graph:
     """
-    color = greedy_coloring(graph)
-    k = max(color.values()) + 1 if color else 0
-    classes: Dict[int, List[int]] = {}
-    for v, c in color.items():
-        classes.setdefault(c, []).append(v)
-    largest = max(classes.values(), key=len)
-    return k, largest
+    Build the unit-distance graph of a finite planar point set: an edge joins two
+    points whose Euclidean distance is 1 (within tolerance tol).
+    """
+    n = len(points)
+    edges: Set[Edge] = set()
+    for i, j in combinations(range(n), 2):
+        (xi, yi), (xj, yj) = points[i], points[j]
+        d = sqrt((xi - xj) ** 2 + (yi - yj) ** 2)
+        if isclose(d, 1.0, abs_tol=tol):
+            edges.add(frozenset((i, j)))
+    return n, edges
 
 
 # --------------------------------------------------------------------------- #
-# Demonstrations
+# Named example configurations
 # --------------------------------------------------------------------------- #
-def demo_pigeonhole_and_bound() -> None:
-    print("=" * 70)
-    print("1-2. Pigeonhole engine and the Coloring-Independence Bound")
-    print("=" * 70)
-    for k in (2, 3, 4, 5):
-        G = complete_graph(k)
-        n = len(G)
-        num_colors, cls = largest_color_class(G)
-        assert is_independent(G, cls)
-        assert n <= num_colors * len(cls)  # n <= k * |S|
-        print(
-            f"K_{k}: n={n}, colors used={num_colors}, "
-            f"largest color class size={len(cls)}, "
-            f"n <= k*|S| holds ({n} <= {num_colors * len(cls)})"
-        )
+
+def triangle_K3() -> Graph:
+    """Equilateral triangle: complete graph K_3, i = 1/3 = 1/chi."""
+    return make_graph(3, [(0, 1), (1, 2), (0, 2)])
 
 
-def demo_sharpness() -> None:
-    print("\n" + "=" * 70)
-    print("3. Sharpness: rho(K_k) = 1/k exactly")
-    print("=" * 70)
-    for k in (1, 2, 3, 4, 5, 6):
-        G = complete_graph(k)
-        rho = independence_ratio(G)
-        assert rho == Fraction(1, k)
-        print(f"K_{k}: independence ratio = {rho} (= 1/{k})")
+def moser_spindle() -> Graph:
+    """
+    The Moser spindle, built from genuine planar coordinates: two unit rhombi
+    sharing the origin, the second rotated so their far tips are a unit apart.
+    Yields 7 vertices, 11 edges, alpha = 2, chi = 4, i = 2/7.
+    """
+    from math import asin, cos, sin
+
+    def rot(p: Tuple[float, float], t: float) -> Tuple[float, float]:
+        x, y = p
+        return (x * cos(t) - y * sin(t), x * sin(t) + y * cos(t))
+
+    s = sqrt(3) / 2
+    base = [(0.0, 0.0), (1.0, 0.0), (0.5, s), (1.5, s)]
+    phi = 2 * asin(1 / (2 * sqrt(3)))  # rotation making the two tips unit-distant
+    pts = base + [rot(base[1], phi), rot(base[2], phi), rot(base[3], phi)]
+    return unit_distance_graph(pts)
 
 
-def demo_equilateral_triangle() -> None:
-    print("\n" + "=" * 70)
-    print("4. Planar witness: unit equilateral triangle")
-    print("=" * 70)
-    pts: List[Point] = [(0.0, 0.0), (1.0, 0.0), (0.5, math.sqrt(3) / 2)]
-    for i, j in itertools.combinations(range(3), 2):
-        d = math.dist(pts[i], pts[j])
-        print(f"  dist(p{i}, p{j}) = {d:.15f}")
-        assert abs(d - 1.0) < 1e-12
-    G = unit_distance_graph(pts)
-    # It is exactly K_3: every distinct pair adjacent.
-    assert all(G[i] == {0, 1, 2} - {i} for i in range(3))
-    rho = independence_ratio(G)
-    print(f"  Unit-distance graph is K_3; independence ratio = {rho}")
-    print(f"  1/3 = {float(rho):.4f} > 1/4 = 0.2500  -> clears the quarter bound")
-    assert rho == Fraction(1, 3)
-    assert rho > Fraction(1, 4)
+def prism_graph() -> Graph:
+    """The triangular prism (3-regular): 6 vertices, alpha = 2, chi = 3, Delta = 3."""
+    edges = [
+        (0, 1), (1, 2), (0, 2),   # top triangle
+        (3, 4), (4, 5), (3, 5),   # bottom triangle
+        (0, 3), (1, 4), (2, 5),   # vertical rungs
+    ]
+    return make_graph(6, edges)
 
 
-def demo_theorem_vs_conjecture() -> None:
-    print("\n" + "=" * 70)
-    print("5. Theorem vs. conjecture: a K_5 needs 5 colors")
-    print("=" * 70)
-    G = complete_graph(5)
-    num_colors, cls = largest_color_class(G)
-    print(
-        f"  K_5 requires {num_colors} colors; coloring engine certifies only "
-        f"rho >= 1/{num_colors} = {Fraction(1, num_colors)}"
-    )
-    print("  A 4-coloring would give 1/4 -- but no 4-coloring of K_5 exists.")
-    print("  This mirrors why the *unconditional* planar quarter claim does not")
-    print("  follow from colorability: five-chromatic planar unit-distance graphs")
-    print("  exist (de Grey, 2018), and the plane's best lower bounds are < 1/4.")
+def cycle(n: int) -> Graph:
+    """The n-cycle C_n."""
+    return make_graph(n, [(i, (i + 1) % n) for i in range(n)])
+
+
+# --------------------------------------------------------------------------- #
+# Reporting
+# --------------------------------------------------------------------------- #
+
+def report(name: str, graph: Graph) -> None:
+    """Print all invariants and verify the certified bounds for one graph."""
+    n, edges = graph
+    delta = max_degree(graph)
+    alpha = independence_number(graph)
+    chi = chromatic_number(graph)
+    i_g = Fraction(alpha, n)
+
+    greedy = greedy_coloring(graph)
+    greedy_colors = len(set(greedy.values()))
+
+    print(f"=== {name} ===")
+    print(f"  vertices n            = {n}")
+    print(f"  edges                 = {len(edges)}")
+    print(f"  max degree Delta      = {delta}")
+    print(f"  independence number   = {alpha}")
+    print(f"  chromatic number chi  = {chi}")
+    print(f"  independence ratio i  = {i_g}  (~ {float(i_g):.4f})")
+    print(f"  greedy colors used    = {greedy_colors}  (bound Delta+1 = {delta + 1})")
+
+    # Verifications
+    assert is_proper(graph, greedy), "greedy coloring must be proper"
+    assert greedy_colors <= delta + 1, "greedy must use <= Delta+1 colors"
+    assert chi <= delta + 1, "chi <= Delta+1 (greedy bound)"
+    assert n <= chi * alpha, "pigeonhole: n <= chi * alpha"
+    assert i_g >= Fraction(1, chi), "i(G) >= 1/chi (reciprocal bound)"
+    assert i_g >= Fraction(1, delta + 1), "i(G) >= 1/(Delta+1)"
+    if delta <= 3:
+        assert i_g >= Fraction(1, 4), "Delta <= 3 => i(G) >= 1/4"
+    print("  checks: chi<=Delta+1, i>=1/chi, i>=1/(Delta+1)  [OK]")
+    if delta <= 3:
+        print("  quarter constraint Delta<=3 => i>=1/4          [OK]")
+    print()
 
 
 def main() -> None:
-    demo_pigeonhole_and_bound()
-    demo_sharpness()
-    demo_equilateral_triangle()
-    demo_theorem_vs_conjecture()
-    print("\nAll demonstrations completed and assertions verified.")
+    print("Minimum Independence Ratio Constraint -- numerical demonstrations\n")
+
+    examples = [
+        ("Equilateral triangle K3", triangle_K3()),
+        ("Moser spindle", moser_spindle()),
+        ("Triangular prism (3-regular)", prism_graph()),
+        ("Cycle C4", cycle(4)),
+        ("Cycle C5", cycle(5)),
+        ("Cycle C6", cycle(6)),
+    ]
+    for name, g in examples:
+        report(name, g)
+
+    # A unit-distance graph built directly from planar coordinates.
+    print("Unit-distance graph from coordinates (unit equilateral triangle):")
+    pts = [(0.0, 0.0), (1.0, 0.0), (0.5, sqrt(3) / 2)]
+    g = unit_distance_graph(pts)
+    report("Planar unit triangle", g)
+
+    print("Summary: in every example i(G) >= 1/chi(G) and i(G) >= 1/(Delta+1);")
+    print("whenever Delta <= 3, the quarter floor i(G) >= 1/4 holds.")
 
 
 if __name__ == "__main__":
