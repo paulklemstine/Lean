@@ -2258,6 +2258,62 @@
     "title": "Average 2-Selmer rank in quadratic twists of an elliptic curve"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Dermenjian's work on greedy ν-Tamari posets",
+      "Bousquet-Mélou and Chapoton's functional equation solution for m-Tamari intervals",
+      "Flajolet and Sedgewick's Analytic Combinatorics for tree/map decompositions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every m ≥ 1, the greedy m-Tamari intervals admit a recursive decomposition structure isomorphic to that of planar (m+1)-constellations, establishing a refined bijection preserving key combinatorial statistics such as the number of valleys, peaks, and component sizes. This conjecture generalizes the m=1 case proven in the paper and implies equi-enumeration with planar (m+1)-constellations.",
+    "domain_bridges": [
+      "Bijection between Dyck paths and plane trees",
+      "Recursive decomposition schemes in planar maps",
+      "Functional equations in Tamari-type posets"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0099",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Define recursive decomposition rules for greedy m-Tamari intervals based on valley/peak structures. 2. Establish analogous decomposition for planar (m+1)-constellations using m-edge-colored map operations. 3. Construct a structure-preserving bijection between the two decompositions, proving isomorphism. 4. Derive generating function equivalence through the decomposition isomorphism and validate against known functional equations.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01206v1",
+    "status": "available",
+    "timestamp": "2026-07-02T22:37:32.513498+00:00",
+    "title": "Recursive Decomposition Isomorphism for General m-Tamari Intervals and Planar Constellations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "KMR13",
+      "KMR14",
+      "PT25"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for a fixed elliptic curve E over Q and an odd prime p, the proportion of p-cyclic extensions L/Q (ordered by discriminant) for which the p-Selmer rank increment equals k converges to (1-1/p)·(1/p)^k as the discriminant bound tends to infinity.",
+    "domain_bridges": [
+      "EllipticCurves",
+      "SelmerGroups",
+      "CyclicExtensions"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0099",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "analytic_number_theory combined with probabilistic model of Selmer groups",
+    "research_mode": "team",
+    "source_exp_id": "2607.01126v1",
+    "status": "available",
+    "timestamp": "2026-07-02T22:37:45.370140+00:00",
+    "title": "Distribution of p-Selmer rank increments in p-cyclic extensions"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
