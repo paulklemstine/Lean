@@ -1,4 +1,4 @@
-import Algebra.«2ff65a6a_retry1_aristotle».Tropical.FundamentalTheorem.Basic
+import Tropical.FundamentalTheorem.Basic
 
 /-!
 # The Fundamental Theorem of Tropical Geometry for a hypersurface (Kapranov's theorem)

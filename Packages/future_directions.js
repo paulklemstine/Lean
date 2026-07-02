@@ -3,6 +3,20 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 4055f798 (Q=0.791), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume cont",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_4055f798_1a01f993",
+    "priority_score": 0.8906799999999999,
+    "research_mode": "team",
+    "source_exp_id": "4055f798",
+    "status": "available",
+    "timestamp": "2026-07-02T09:02:20.116764+00:00",
+    "title": "Deepening: The Library of Babel: Combinatorics of the Universal Library"
+  },
+  {
     "consumed_by_exp_id": "2c53e63a",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -423,6 +437,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T08:56:25.558105+00:00",
     "title": "These conjectures grow out of the finding that the good-manifold count of an"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Combinatorics of the Universal Library\n\nThe universal library \u2014 the space of *all* strings of a fixed length over a\nfixed alphabet \u2014 is finite yet astronomically large. Our cycle established four\nload-bearing facts: the population of the library is the alphabet size raised to\nthe book length; a fixed passage of length `m` occupies a `(L - m + 1)\u00b7A^{-m}`\nfraction of volumes; the number of possible catalogs strictly exceeds the number\nof volumes, so no volume can list them all; and a complete distributed catalog\nrequires exactly one catalog entry per volume. The following conjectures push\nthese findings further.\n\n## 1. The true meaning-density prefactor is the placement count, not the passage length\n\n**Conjecture.** For any fixed target passage of length `m` inside a book of\nlength `L`, the fraction of volumes containing that passage is at most\n`(L - m + 1)\u00b7A^{-m}`, and this bound is asymptotically tight up to a factor\n`1 + O(m\u00b7A^{-m})` as `L \u2192 \u221e` with `m` fixed.\n\nThe key insight is that the polynomial prefactor governing how often meaning\nappears is the number of *placements* a passage can occupy, `L - m + 1`, rather\nthan the passage's own length. Overlapping placements cause a controlled\nover-count that vanishes as the passage grows, so the union bound becomes an\nequality in the limit.\n\nWhy now? We have already proved the one-sided bound exactly; the missing piece is\na matching lower bound via inclusion\u2013exclusion on overlapping windows, which is\nnow a concrete finite computation rather than a heuristic.\n\n## 2. Catalog self-reference is impossible at every scale, but locatability is universal\n\n**Conjecture.** For all alphabet sizes `A \u2265 2` and book lengths `L \u2265 1`, the\nnumber of complete catalogs of the library exceeds the number of volumes by a\ndoubly-exponential margin `2^{A^L} / A^L`, and consequently *no* injective\nself-cataloguing scheme exists; yet a surjective distributed catalog exists for\nevery `N \u2265 A^L`, with the minimum such `N` equal to `A^L` exactly.\n\nThe key insight is that a library is *locatable but never self-locating*: a guide\nto all volumes always exists as a distributed structure of full size, while a\nsingle self-referential master volume is forbidden by a finite diagonal count.\n\nWhy now? Both halves are already isolated as exact statements \u2014 the diagonal\ninequality `A^L < 2^{A^L}` and the surjection threshold `N \u2265 A^L` \u2014 so the\nremaining work is to quantify the doubly-exponential catalog surplus and prove\nits monotonicity in `A` and `L`.\n\n## 3. The de Bruijn length is the optimal single-volume code catalog\n\n**Conjecture.** The shortest single volume that exhibits every length-`k`\nreference code exactly once has length precisely `A^k + k - 1`, the length of a\nde Bruijn sequence, and any volume of length `\u2265 A^k + k` necessarily repeats a\ncode.\n\nThe key insight is that the subword-complexity ceiling `A^k` and the pigeonhole\ncollision threshold `A^k + k` are two faces of the same extremal object: the de\nBruijn sequence saturates the ceiling and sits exactly one symbol below the\nforced-collision length.\n\nWhy now? We have proved both the capacity ceiling and the collision threshold; a\nconstructive existence proof of the saturating de Bruijn catalog would close the\ngap between \"at most `A^k` codes\" and \"exactly `A^k` codes achievable\".\n\n## 4. Distributed catalogs admit a redundancy\u2013coverage trade-off curve\n\n**Conjecture.** If a distributed catalog of `N < A^L` volumes cannot be complete,\nthen the maximum fraction of the library it can cover is exactly `N / A^L`, and\nany coverage strictly above `1 - 1/A^L` already forces `N = A^L`.\n\nThe key insight is that partial catalogues degrade linearly: coverage is capped\nby the raw ratio of catalog volumes to library volumes, with no economy of scale,\nbecause distinct volumes demand distinct catalog entries.\n\nWhy now? The completeness threshold `N \u2265 A^L` is an equality boundary; relaxing\n\"surjective\" to \"image of size `\u2265 c\u00b7A^L`\" turns it into a coverage-versus-size\ncurve that is immediately amenable to the same counting technique.\n\n## 5. Passage co-occurrence obeys a second-moment concentration law\n\n**Conjecture.** Fix two disjoint passages of lengths `m\u2081` and `m\u2082`. The fraction\nof volumes containing both, at any placement, concentrates around\n`(L - m\u2081 + 1)(L - m\u2082 + 1)\u00b7A^{-(m\u2081+m\u2082)}` with fluctuations of smaller order as\n`L \u2192 \u221e`, exhibiting asymptotic independence of distinct passages.\n\nThe key insight is that far-apart passages behave like independent events in the\nuniform library measure, so joint meaning-density factorises into the product of\nindividual densities.\n\nWhy now? The single-passage density is now an exact theorem; extending the same\nwindow-counting argument to pairs, and bounding the overlap correction, is the\nnatural next increment toward a full concentration-of-measure theory of meaning.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_0030",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4055f798",
+    "status": "available",
+    "timestamp": "2026-07-02T09:02:10.529929+00:00",
+    "title": "The universal library \u2014 the space of *all* strings of a fixed length over a"
   },
   {
     "consumed_by_exp_id": "",

@@ -60,7 +60,7 @@ prove periodicity only for specific `t` (`t = 1`, powers of two, `t = 3`); here 
 is established for *every* `t`, which is the rationality backbone of `c_t`.
 -/
 
-import Applications.CusickShiftThreeDensity
+import Catalog.Applications.CusickShiftThreeDensity
 
 open Nat Finset
 
