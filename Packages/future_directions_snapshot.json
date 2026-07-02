@@ -2183,6 +2183,60 @@
     "title": "Conjecture on sharp lower bounds for low moments of Dirichlet character sums"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "dermenjian 2024, arxiv:2305.06365"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture extends the equi-enumeration result for planar $(m+1)$-constellations to general $m$ by asserting that greedy intervals admit a decomposition matching the combinatorial structure of bipartite planar maps, now formalized in Lean.",
+    "domain_bridges": [
+      "combinatorics",
+      "mathematical logic",
+      "algorithmic complexity"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0093",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "inductive decomposition with graph-theoretic reduction",
+    "research_mode": "team",
+    "source_exp_id": "2607.01206v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:53:59.453996+00:00",
+    "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "SDtwists",
+      "KMR13",
+      "KMR14",
+      "SDtwists"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the statistical behavior of Selmer ranks of twisted elliptic curves in various Galois extension settings, under assumptions related to the Extended Riemann Hypothesis. The study aims to formalize probabilistic predictions through an ordered framework inspired by combinatorial fan structures.",
+    "domain_bridges": [
+      "Algebraic Number Theory",
+      "Probabilistic Combinatorics"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0093",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct probabilistic model via twisted elliptic curves and apply counting arguments in encoded configurations.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01126v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:54:06.879713+00:00",
+    "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
