@@ -1,24 +1,5 @@
 [
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "a0eabca0",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0013",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T06:04:29.105469+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -258,6 +239,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "arXiv:2310.12345 (hypothetical reference for the paper)"
+    ],
+    "consumed_by_exp_id": "a0eabca0",
+    "description": "There exists a finite set of vectors in l² satisfying specific convolution inequalities such that their weighted average achieves the coefficient γ₀=0.94601 in the bound F(N) ≤ N^{1/2} + γ₀N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
+    "domain_bridges": [
+      "l² spaces",
+      "Sidon sets",
+      "convolution inequalities"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0013",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a minimal vector family and verify convolution bounds via exact arithmetic",
+    "research_mode": "team",
+    "source_exp_id": "2607.01169v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T06:22:13.488931+00:00",
+    "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1.5",
       "Kane's work"
     ],
@@ -305,6 +311,32 @@
     "status": "available",
     "timestamp": "2026-07-02T06:04:27.717812+00:00",
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "LDMSaj",
+      "Akbari26"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture posits that for sufficiently large $s$ and structured seating conditions, a unique non-trivial solution exists in the combinatorial model of the generalized honeymoon problem, formalizable via properties of balanced bipartite decompositions.",
+    "domain_bridges": [
+      "combinatorial optimization",
+      "extremal graph theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0016",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "inductive structure of table decompositions",
+    "research_mode": "team",
+    "source_exp_id": "2607.01130v1",
+    "status": "available",
+    "timestamp": "2026-07-02T06:22:20.382248+00:00",
+    "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
   },
   {
     "ambition_level": "extension",

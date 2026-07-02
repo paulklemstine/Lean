@@ -591,44 +591,50 @@
       "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
     },
     {
-      "ambition_level": "grand_challenge",
+      "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2310.12345 (hypothetical reference for the paper)"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "a0eabca0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-      "domain_bridges": [],
+      "description": "There exists a finite set of vectors in l² satisfying specific convolution inequalities such that their weighted average achieves the coefficient γ₀=0.94601 in the bound F(N) ≤ N^{1/2} + γ₀N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
+      "domain_bridges": [
+        "l² spaces",
+        "Sidon sets",
+        "convolution inequalities"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Novelty"
+        "Bridges"
       ],
-      "github_issue": 7,
+      "github_issue": 0,
       "id": "fd_0013",
-      "last_attempt_time": "2026-07-02T06:04:31.054109+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "∃v₁, ..., vₘ ∈ l²: ∀x, Σ|vᵢ * 1_A|² ≤ C and Σ wᵢ|vᵢ|² ≤ D ⇒ F(N) ≤ N^{1/2} + 0.94601N^{1/4} + O(1)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 1000.0,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a minimal vector family and verify convolution bounds via exact arithmetic",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source": "github_injection",
-      "source_exp_id": "github",
-      "source_path": "github",
+      "source": "",
+      "source_exp_id": "2607.01169v1",
+      "source_path": "http://arxiv.org/abs/2607.01169v1",
       "status": "in_progress",
       "thread_id": "",
-      "timestamp": "2026-07-02T06:04:29.105469+00:00",
-      "title": "Prove Fermats Little Theorem for p=5"
+      "timestamp": "2026-07-02T06:22:13.488931+00:00",
+      "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
     },
     {
       "ambition_level": "extension",
@@ -724,6 +730,53 @@
       "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "LDMSaj",
+        "Akbari26"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "This conjecture posits that for sufficiently large $s$ and structured seating conditions, a unique non-trivial solution exists in the combinatorial model of the generalized honeymoon problem, formalizable via properties of balanced bipartite decompositions.",
+      "domain_bridges": [
+        "combinatorial optimization",
+        "extremal graph theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0016",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Assume the existence of a structured covering that mirrors the underlying parity constraints",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "inductive structure of table decompositions",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01130v1",
+      "source_path": "http://arxiv.org/abs/2607.01130v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T06:22:20.382248+00:00",
+      "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -767,7 +820,5 @@
   "pruned": [],
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
-  "selection_log": [
-    "famous_subtask"
-  ]
+  "selection_log": []
 }
