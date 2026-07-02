@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "11521acf",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Differential & Linear Cryptanalysis Bounds\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. Each conjecture is bold, falsifiable, and ready for",
-      "quality_score": 0.72888,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-27T03:44:32",
-      "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
-    },
-    {
       "cycle_id": "887d83d7",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Erdős Problem 550 (tree vs. complete multipartite Ramsey)\n\nThis cycle formalized the **lower-bound / tightness** half and the **exact base case**\nof Erdős Problem 550 in its all-",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-02T02:02:27",
       "title": "Uniform Extremality for Siblings of the Coupon Collector"
+    },
+    {
+      "cycle_id": "38047daa",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: critical augmentations and the fractional chromatic number of the plane\n\nThis cycle isolated the exact counting mechanism behind the phenomenon whereby a 27-point\nplanar unit-dist",
+      "quality_score": 0.6813500000000001,
+      "sorry_count": 3,
+      "theorem_count": 16,
+      "timestamp": "2026-07-02T02:27:45",
+      "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7700800000000001
     }
   ],
-  "last_updated": "2026-07-02T02:02:27",
+  "last_updated": "2026-07-02T02:27:45",
   "open_questions": [
-    {
-      "context": "preserved.  All compiled with no `sorry`.",
-      "cycle_id": "bcf3395e",
-      "domain": "Geometry",
-      "sorry_count": 1,
-      "timestamp": "2026-06-20T11:07:38"
-    },
     {
       "context": "",
       "cycle_id": "722e1f4a",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 8,
       "timestamp": "2026-07-02T01:59:53"
+    },
+    {
+      "context": "-    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry; -    ∀ i < k, c i = ",
+      "cycle_id": "38047daa",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-07-02T02:27:45"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "90d1d2b2",
-        "quality": 0.3699978030769231,
-        "theorems": 6,
-        "title": "Projective Plane Coupon Collection Slowness"
-      },
-      {
         "cycle_id": "dd442784",
         "quality": 0.759526,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.7700800000000001,
         "theorems": 9,
         "title": "Uniform Extremality for Siblings of the Coupon Collector"
+      },
+      {
+        "cycle_id": "38047daa",
+        "quality": 0.6813500000000001,
+        "theorems": 16,
+        "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
       }
     ],
     "NumberTheory": [

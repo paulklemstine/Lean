@@ -103,6 +103,8 @@ def inject_directions_into_memory(workspace_path: Path):
             "status": "available",
             "source": "github_injection",
             "github_issue": issue_number,
+            "source_exp_id": "github",
+            "source_path": "github",
             "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "attempt_count": 0,
             "ambition_level": "grand_challenge"
