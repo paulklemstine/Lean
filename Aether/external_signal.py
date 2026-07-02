@@ -62,6 +62,8 @@ class ExternalSignalFeed:
                 continue
             d.category = d.category or "cross_domain_bridge"
             self.fd_manager.add_direction(d)
+            print(f"[ExternalSignal] -> Added {getattr(d, 'source', 'external')} direction: {d.title[:100]}")
+            print(f"[ExternalSignal]    {d.description[:150]}...")
             added += 1
         return added
 
