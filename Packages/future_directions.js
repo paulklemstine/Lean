@@ -3,6 +3,20 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "b4dd4609",
+    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0033",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T14:15:58.572208+00:00",
+    "title": "Prove Fermats Little Theorem for p=5"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -47,7 +61,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
-    "consumed_by_exp_id": "84a44854",
+    "consumed_by_exp_id": "",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domains": [
       "Novelty",
@@ -57,12 +71,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.027554+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "1365b835",
+    "consumed_by_exp_id": "",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty"
@@ -71,12 +85,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "5e4735e1",
+    "consumed_by_exp_id": "",
     "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
       "NumberTheory"
@@ -85,12 +99,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
   },
   {
-    "consumed_by_exp_id": "6054ec76",
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -100,12 +114,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.030558+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
-    "consumed_by_exp_id": "b7ed90de",
+    "consumed_by_exp_id": "",
     "description": "For every algebraically closed field F of characteristic 0, every integer k\u22652, and every non\u2011zero polynomial n\u2208F[x], any set A\u2282F[x] satisfying that ab+n is a k\u2011th power for all distinct a,b\u2208A must have size at most 6, except when n is a perfect k\u2011th power and A is contained in the principal ideal generated by a k\u2011th root of n.",
     "domains": [
       "Algebra",
@@ -115,7 +129,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01165v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:43:12.676004+00:00",
     "title": "Conjecture on Absolute Boundedness of Polynomial Diophantine Tuples"
   },
@@ -177,7 +191,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
   {
-    "consumed_by_exp_id": "5a8a4bbe",
+    "consumed_by_exp_id": "",
     "description": "For any graphs G and H, the domination number of their Cartesian product satisfies \u03b3(G\u25a1H) \u2265 (19 - \u221a73)/18 * \u03b3(G)\u03b3(H).",
     "domains": [
       "Bridges"
@@ -186,7 +200,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01109v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:39:03.958610+00:00",
     "title": "Improved Constant for Domination in Cartesian Product of Graphs"
   },
@@ -350,7 +364,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite Color Wheels: No Nontrivial Neighbor\u2011Blend Colorings"
   },
   {
-    "consumed_by_exp_id": "5d4d528e",
+    "consumed_by_exp_id": "",
     "description": "This conjecture posits that under strict asymptotic constraints on the edge distribution, the number of high-density graphs must reflect a nontrivial regularity, which can be captured by verifying a function-valued inequality at critical thresholds.",
     "domains": [
       "Pythagorean",
@@ -360,7 +374,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T11:32:25.412615+00:00",
     "title": "Lower bounds on clique densities using generalized inverses"
   },
@@ -395,7 +409,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Cup Radical Depends Only on the Maximal Pro-2 Quotient"
   },
   {
-    "consumed_by_exp_id": "e0cc2f18",
+    "consumed_by_exp_id": "",
     "description": "The conjecture states that planar graphs lacking C\u2085 subgraphs are inherently 4-choosable, based on their structural constraints.",
     "domains": [
       "Pythagorean"
@@ -404,12 +418,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31702v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T12:47:07.708715+00:00",
     "title": "Planar Graphs and 4-Choosability"
   },
   {
-    "consumed_by_exp_id": "2336d5ed",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the problem of deciding whether a tournament is cycle Mengerian (CM) is NP\u2011complete, i.e. there exists a polynomial\u2011time many\u2011to\u2011one reduction from 3\u2011SAT to the CM decision problem. Equivalently, there is a polynomial\u2011time computable mapping `f` from Boolean formulas to tournaments such that a formula `\u03c6` is satisfiable if and only if the tournament `f \u03c6` is CM.",
     "domains": [
       "Pythagorean"
@@ -418,7 +432,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T13:13:32.363565+00:00",
     "title": "NP\u2011Completeness of the Cycle Mengerian Tournament Decision Problem"
   },
@@ -439,12 +453,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every fixed number of layers m \u2265 2, there exists an integer N(m) such that for all n \u2265 N(m) the critical palette size r for the existence of a rainbow stacking of m independent uniformly random r\u2011edge\u2011colourings of the complete graph K_n satisfies: with high probability (i.e., probability \u2192 1 as n \u2192 \u221e) a rainbow stacking exists iff r \u2265 \u2308 m\u00b7(n choose 2) / (2\u00b7log(n!)) + (2m\u22121)/6 \u2309. This strengthens the existing result which holds only for a density\u2011one set of n by eliminating the exceptional set entirely.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_0032",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31376v1",
+    "status": "available",
+    "timestamp": "2026-07-02T14:14:41.903032+00:00",
+    "title": "Sharp threshold for rainbow stackings of random edge-colourings of K_n for all sufficiently large n"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0032",
+    "id": "fd_0034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -458,7 +487,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0033",
+    "id": "fd_0035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
@@ -473,7 +502,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0034",
+    "id": "fd_0036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
@@ -487,7 +516,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0035",
+    "id": "fd_0037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -502,7 +531,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0036",
+    "id": "fd_0038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -517,7 +546,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0037",
+    "id": "fd_0039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00732v1",
@@ -531,7 +560,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0038",
+    "id": "fd_0040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00674v1",
@@ -545,7 +574,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0039",
+    "id": "fd_0041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -560,7 +589,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0040",
+    "id": "fd_0042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00367v1",
@@ -575,7 +604,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0041",
+    "id": "fd_0043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00238v1",
@@ -590,7 +619,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0042",
+    "id": "fd_0044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00212v1",
@@ -604,7 +633,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0043",
+    "id": "fd_0045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00352v1",
@@ -619,7 +648,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0044",
+    "id": "fd_0046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31900v1",
@@ -634,7 +663,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0045",
+    "id": "fd_0047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31894v1",
@@ -649,7 +678,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0046",
+    "id": "fd_0048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
@@ -663,7 +692,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0047",
+    "id": "fd_0049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31815v1",
@@ -678,7 +707,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0048",
+    "id": "fd_0050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -693,7 +722,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0049",
+    "id": "fd_0051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
@@ -707,7 +736,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0050",
+    "id": "fd_0052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v1",
@@ -722,13 +751,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0051",
+    "id": "fd_0053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
     "status": "available",
     "timestamp": "2026-07-02T13:33:35.154740+00:00",
     "title": "Finiteness conjecture for semisimple geometric representations of Hiranouchi's ramified fundamental group"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "An explicit formula for the number of non-trivial zeros of Artin L-functions below height T under Artin's conjecture.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0054",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31441v1",
+    "status": "available",
+    "timestamp": "2026-07-02T14:15:54.879802+00:00",
+    "title": "Counting Zeros of Artin L-functions"
   },
   {
     "consumed_by_exp_id": "",
