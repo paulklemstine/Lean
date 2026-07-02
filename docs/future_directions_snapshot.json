@@ -2,26 +2,26 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "b4dd4609",
+    "consumed_by_exp_id": "3d2280dc",
     "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
     "domain_bridges": [],
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0033",
+    "id": "fd_0034",
     "lineage_refs": [],
     "priority_score": 1000.0,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-07-02T14:15:58.572208+00:00",
+    "timestamp": "2026-07-02T14:55:00.839688+00:00",
     "title": "Prove Fermats Little Theorem for p=5"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d991c87b",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domain_bridges": [],
     "domains": [
@@ -34,7 +34,7 @@
     "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.029563+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -100,7 +100,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7289bdda",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domain_bridges": [],
     "domains": [
@@ -112,7 +112,7 @@
     "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -134,26 +134,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer — the mathematical formalization of 'reality depends on the observer'.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0055",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "Define a phantom topology as a function T: O -> Top(X) from a set of observers to topologies on X. Define the intersection topology T_cap = intersection of all T(o). Prove: every second-countable T_0 space (X, tau) admits a phantom representation with |O| = 2. Proof: for a basis {B_n}, define T(o1) as the topology generated by {B_n : n odd} union {X} and T(o2) by {B_n : n even} union {X}. Then T_cap = tau. Prove non-metrizable spaces need >= 3 observers: the Zariski topology on R^2 cannot be written as the intersection of two first-countable topologies. Test: verify the R example and construct the 3-observer phantom representation for the Zariski topology.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T14:31:50.599722+00:00",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
     "ambition_level": "extension",
@@ -789,6 +769,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "dp2024",
+      "serre1978",
+      "steinberg1972"
+    ],
+    "consumed_by_exp_id": "b4dd4609",
+    "description": "We conjecture an explicit formula for the Jordan canonical form of the image of a regular unipotent element under any finite‑dimensional irreducible polynomial representation of GL₃(ₖ). Let λ = (a,b,c) be a dominant weight with a > b > c. Define d₁ = a‑ b, d₂ = b‑ c, d₃ = a‑ c and the rational function\n\nM(t) = (1‑ t^{d₁+1})(1‑ t^{d₂+1})(1‑ t^{d₃+2}) /\n       ((1‑ t^{d₁})(1‑ t^{d₂})(1‑ t^{d₃})).\n\nWrite M(t) = Σ_{j≥0} m_j t^j. Then the Jordan canonical form of π_λ(u) (the regular unipotent u ∈ GL₃(ₖ) under the representation π_λ) is the partition whose parts are (j+1) repeated m_j times. In particular the multiplicities m_j satisfy a linear recurrence with characteristic polynomial (1‑ t^{d₁})(1‑ t^{d₂})(1‑ t^{d₃}).",
+    "domain_bridges": [
+      "mathlib/algebraic_groups",
+      "mathlib/representation_theory",
+      "mathlib/character_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0033",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Use the character formula (Serre) to compute Θ_λ(z) as a rational function. 2. Identify the coefficients a_k of z^k in Θ_λ(z) and relate them to the multiplicities m_j via m_j = a_j ‑ a_{j+2}. 3. Show that the generating function M(t) = Σ m_j t^j equals the rational expression above, which yields a linear recurrence for m_j. 4. Prove non‑≥negativity of m_j (e.g., by interpreting them as Kostka numbers). 5. Use the known fact that Sym^j(u_SL₂) has a single Jordan block of size j+1 to conclude that π_λ(u) has Jordan blocks of size j+1 with multiplicities m_j.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31398v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T14:45:19.943455+00:00",
+    "title": "Jordan type of regular unipotent image for GL₀ representations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1.5",
       "Kane's work"
     ],
@@ -799,7 +807,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0034",
+    "id": "fd_0035",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct arithmetic verification",
@@ -827,7 +835,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0035",
+    "id": "fd_0036",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the dominant oscillatory term in the asymptotic expansion near ω and show that its phase enforces sign alternation, except when phase cancellation occurs finitely often or on a sparse set.",
@@ -853,7 +861,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0036",
+    "id": "fd_0037",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive structure of table decompositions",
@@ -869,7 +877,7 @@
       "cover1965geometrical",
       "feng2023function"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e52c27d",
     "description": "For a d-dimensional submanifold E of ℝ^M and a smooth injective map Φ:E→ℝ^{M'}, any N-point set F⊂E in general position satisfies Kruskal rank s ≤ d+1. This implies the Φ-separable dichotomy count C_F(N) is bounded by Cover's counting function C(N,d+M'+1), generalizing high-dimensional bounds to low-dimensional data structures.",
     "domain_bridges": [
       "Differential Geometry (Submanifolds)",
@@ -879,13 +887,13 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0037",
+    "id": "fd_0038",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Characterize smooth injective maps on submanifolds via local charts. 2) Bound the Kruskal rank using dimension arguments: each additional point can increase rank by at most 1 until reaching d+1. 3) Relate this rank constraint to dichotomy counts via Cover's lemma. 4) Verify tightness with synthetic low-dimensional examples.",
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:40:25.125636+00:00",
     "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
   },
@@ -905,7 +913,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0038",
+    "id": "fd_0039",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the mod p local Langlands correspondence to relate \\bar{V}_{k,a_p} to smooth mod p representations of GL_2(ℚ_p), then apply the classification of irreducible smooth mod p representations (principal series, special, and supersingular) together with explicit Breuil module calculations for small slopes and a patching argument to extend the result to all fractional slopes < p-1.",
@@ -930,7 +938,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0039",
+    "id": "fd_0040",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic constructions: take a random r-uniform hypergraph with edge probability p = n^{-α} for suitable α to avoid G as a subgraph while ensuring large induced F-free subsets via the deletion method and the hypergraph container method; then apply the first moment method to show existence of induced F-free subgraphs of size at least c (log n)^{β_F}. Matching the upper bound from the paper would establish tightness.",
@@ -956,7 +964,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0040",
+    "id": "fd_0041",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample binary word exists and analyze the combinatorial constraints imposed by the parameterized equivalence relation. Use a pumping‑style argument or an infinite descent on the lengths of minimal forbidden factors to derive a contradiction, exploiting the limited alphabet size and the requirement that all squares must have length ≥ 2k. Alternatively, construct a finite automaton encoding the forbidden factor set and show that it accepts only finite words, contradicting infinitude.",
@@ -982,7 +990,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0041",
+    "id": "fd_0042",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define phi as the golden ratio and implement the floor functions for a(n) and b(n). 2. Define epsilon(j) based on the Fibonacci membership test. 3. Prove the Lemma stating a(F_k) + (-1)^k = b(F_{k-1}) and b(F_k) + (-1)^k = a(F_{k+1}) using Binet's formula. 4. Establish the partition property (A* union B* = N and A* intersect B* = empty) by analyzing the shifts in the Wythoff sequences at Fibonacci indices. 5. Define the permutation q*_j using the ranges A* and B* and prove the involution property q*_q*_j = j for j >= 5 using the complementary nature of LWF and UWF.",
@@ -1008,7 +1016,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0042",
+    "id": "fd_0043",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the hyper-aperiodic elements method and twelve tiles theorem from the continuous case to show that no Borel homomorphism exists to a tournament on 6 vertices, while constructing a Borel homomorphism to a tournament on 7 vertices.",
@@ -1036,7 +1044,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0043",
+    "id": "fd_0044",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the five-point topological space explicitly in Lean, define the sheaf categories as diagrams of vector spaces, implement the pairing construction using Ext and tensor product operations, then verify the perfectness condition via dimension counting and the canonical module ω_W.",
@@ -1062,7 +1070,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0044",
+    "id": "fd_0045",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via graph decomposition and case analysis on maximum degree configurations, building upon techniques from [KKPW] while leveraging constraints from the adjacency condition to reduce color requirements below 5.",
@@ -1081,7 +1089,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0045",
+    "id": "fd_0046",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive verification on subgroup structures",
@@ -1109,7 +1117,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0046",
+    "id": "fd_0047",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate that a uniform bound on orbit lengths forces the degree [E : E^H] to be finite, and construct the minimal polynomial of any α as the product of (X - σ(α)) over its orbit, showing separability and normality; then use these facts to prove the equivalence statements.",
@@ -1133,7 +1141,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0047",
+    "id": "fd_0048",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the known non-algebraicity of θ_k for very general ppav (EGFS) and a combinatorial lemma concerning F_p-solutions of graphic matroids in Albanese graphs. In Lean, develop intersection theory on abelian varieties, define θ_k via the Chow ring, and prove the divisibility by reducing modulo p and analyzing the resulting finite schemes to force p | m.",
@@ -1164,7 +1172,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0048",
+    "id": "fd_0049",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Use the explicit counterexamples constructed by Katz (e.g. $(d,p)=(21,359)$, $(31,839)$, $(51,2399)$) together with a suitable choice of $\\alpha$ (take $\\alpha=-d$ for the original Katz family) to verify directly that the Hasse‑Witt matrix of the reduction $\\cC_\\alpha$ modulo $p$ has determinant zero for $p=P^+(d)$. 2. Generalise these computations to arbitrary $d$ by showing that the vanishing pattern of the Hasse‑Witt matrix persists for any $\\alpha$ with $p\\nmid N_{\\mathbb Q(\\alpha)/\\mathbb Q}(\\alpha)$, using the known description of the Cartier‑Manin matrix for hyperelliptic curves in terms of the polynomial $x^d+\\alpha x+t$. 3. Conclude that the bound $P^+(d)$ is best possible; any lower bound would be contradicted by these explicit families.",
@@ -1189,7 +1197,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0049",
+    "id": "fd_0050",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate via graph decomposition that P4-tidy graphs can be partitioned into clique-forest-like components connected through controlled bipartite interfaces, enabling step-by-step reconfiguration while maintaining invariants at P4-critical vertices.",
@@ -1216,7 +1224,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0050",
+    "id": "fd_0051",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define in Lean the Greenberg–Wiles local factor c_p(A) using the ramification‑measuring maps 𝔅_p and 𝔏_p from the paper. Prove that for a constant‑torsion family the global ℓ‑Selmer group decomposes as the restricted product of the local cohomology groups with the prescribed local conditions, so its order equals the product of the orders of the local quotients H¹(G_p,M)/H¹_𝔏(p)(G_p,M). Show that for almost all primes the unramified subgroup H¹_ur(G_p,M) is maximal among admissible local conditions, which forces the inequality to be an equality. Use Chebotarev density to argue that the set of primes where extra ramification could increase the Selmer size has density zero. Formalise the density argument via Dirichlet density in Lean, and combine with the explicit description of the Greenberg–Wiles pairing Ω_𝔏 to obtain the desired equality for density‑one set of primes.",
@@ -1243,7 +1251,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0051",
+    "id": "fd_0052",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Scholze's construction of automorphic determinants to Z_ℓ-coefficients, use the comparison isomorphism between étale and de Rham cohomology (via p-adic Hodge theory) to obtain de Rham Galois representations, then apply the p-adic local Langlands correspondence for GL_n over local fields to match the local Langlands parameter at places dividing ℓ with the automorphic data.",
@@ -1262,7 +1270,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0052",
+    "id": "fd_0053",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "exhaustive enumeration",
@@ -1288,7 +1296,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0053",
+    "id": "fd_0054",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic étale cohomology, comparison with characteristic zero via lifting, and apply known finiteness theorems for tamely ramified fundamental groups.",
@@ -1307,7 +1315,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0054",
+    "id": "fd_0055",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "explicit modular form analysis",
@@ -1319,23 +1327,29 @@
   },
   {
     "ambition_level": "extension",
-    "catalog_references": [],
+    "catalog_references": [
+      "Some new congruences and identities for $SOME(n)$, $DSOME(n)$, $\\overline{SOME}(n)$ functions and analogues"
+    ],
     "consumed_by_exp_id": "",
-    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
-    "domain_bridges": [],
+    "description": "For any integer n ≥ 1, the DSOME function satisfies:\nDSOME(n) + 2 * ∑_{i=1}^{⌊n/2⌋} q(n-2i) * σ_odd(i) = n * q(n),\nwhere q(n) is the number of partitions of n into distinct parts, and σ_odd(i) is the sum of odd divisors of i.",
+    "domain_bridges": [
+      "Partition theory",
+      "q-series",
+      "Divisor sums"
+    ],
     "domains": [
-      "Novelty",
+      "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0058",
+    "id": "fd_0056",
     "lineage_refs": [],
     "priority_score": 0.8,
-    "proof_strategy": "Define an Escher staircase in ring R as a strictly ascending chain I_1 strictly contained in I_2 strictly contained in ... such that intersection of I_n is contained in I_1. Prove Int(Z) has an Escher staircase: I_n = {f in Int(Z) : f(Z) contained in 2^n Z}. Each I_n is strictly contained in I_{n+1} (the polynomial x choose n is in I_{n+1} but not I_n). Intersection of I_n = {0} contained in I_1. Prove k[x_1,...,x_n] has Escher height n: the chain (x_1) contained in (x_1,x_2) contained in ... contained in (x_1,...,x_n) has length n. Prove Z_p has no Escher staircase (Noetherian). Test: verify for Int(Z) and k[x,y,z].",
+    "proof_strategy": "Use generating functions for distinct partitions and logarithmic differentiation, analogous to the proof of Theorem 1 for SOME(n). The generating function for DSOME(n) is ∑_{n≥1} DSOME(n) q^n = (-q;q)_∞ ∑_{m≥1} m q^m/(1+q^m). By manipulating the series, one can derive the identity.",
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "2606.31264v1",
     "status": "available",
-    "timestamp": "2026-07-02T14:31:50.674214+00:00",
-    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    "timestamp": "2026-07-02T14:54:55.608249+00:00",
+    "title": "An identity for DSOME(n) in terms of distinct partition numbers and odd divisor sums"
   },
   {
     "ambition_level": "extension",
@@ -1356,66 +1370,6 @@
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0056",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "Define vampire numbers formally: v is a vampire number iff v has 2n digits and there exist x, y each with n digits such that v = x*y and the multiset of digits of v equals the union of digits of x and y. Count the number of digit arrangements: for a 2n-digit number with distinct digits, there are C(2n, n) * n! * n! possible fang pairs, so the expected number of fang pairs is C(2n, n) * (n!)^2 / 10^{2n} = C(2n,n) / 10^n ~ 1/sqrt(n). Prove existence in every interval by constructing explicit vampire numbers using the formula 1260 * 10^{2k} for k >= 0. Test: enumerate up to 10^8.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T14:31:50.653306+00:00",
-    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Domination in Cartesian products of graphs\n\nThis cycle established a clean bracket for the domination number of a Cartesian\n(box) product,\n`max(γ(G), γ(H)) ≤ γ(G □ H) ≤ γ(G) · |V(H)|`,\nvia a coordinate-projection lower bound and a cylindrification upper bound, and it\npinned down the arithmetic of the improved multiplicative constant\n`c = (19 − √73)/18`, showing it is the smaller root of `9x² − 19x + 8` and lies\nstrictly between `1/2` and `1`. The projection bound already yields the\n`c`-multiplicative inequality whenever one factor has domination number at most 1.\nThe directions below aim beyond that regime.\n\n## 1. Extend the constant bound past domination number one\n\n**Conjecture.** For all finite graphs `G`, `H`,\n`γ(G □ H) ≥ (19 − √73)/18 · γ(G) · γ(H)` holds unconditionally, and the constant is\nbest possible for the \"partition-and-charge\" family of arguments.\n\nThe key insight is that the projection argument only spends the *fixed-coordinate*\nhalf of each product edge; the missing factor comes from a discharging step that\nalso accounts for the *moving-coordinate* half, and balancing the two halves is\nexactly what produces a quadratic whose smaller root is `(19 − √73)/18`.\n\nWhy now? The bracket and the exact algebra of the constant are already in hand, so\nthe only remaining ingredient is the charging inequality for the `min ≥ 2` regime;\nisolating it as a standalone combinatorial lemma makes it directly attackable.\n\n## 2. Sharpness certificates for the lower bracket\n\n**Conjecture.** For every `k` there exist graphs `G`, `H` with `γ(G) = γ(H) = k`\nand `γ(G □ H)` equal to `max(γ(G), γ(H)) = k`, so the projection lower bound is\ntight for arbitrarily large domination numbers.\n\nThe key insight is that a single \"universal\" fibre — a coordinate whose deletion\nstill dominates every other fibre — collapses the product's domination number to\nthat of one factor, so tightness is a statement about the existence of such fibres.\n\nWhy now? The projection lower bound is proved and its equality case is transparent\n(the projection is injective and already minimal), so constructing tight families\nis a concrete extremal problem rather than an open-ended search.\n\n## 3. A fractional / weighted relaxation with a matching constant\n\n**Conjecture.** The fractional domination number satisfies\n`γ_f(G □ H) = γ_f(G) · γ_f(H)` exactly, and the integrality gap on each side is\nwhat forces the deficit captured by `(19 − √73)/18` in the integral case.\n\nThe key insight is that fractional domination is multiplicative under the box\nproduct because a product of optimal fractional dominating functions is itself\nfractionally dominating, unlike the integral case where rounding destroys the\nproduct structure.\n\nWhy now? The integral bracket makes the integral–fractional gap the precise\nobstruction to Vizing's conjecture, turning a monolithic conjecture into a\nmeasurable quantity that can be tracked family by family.\n\n## 4. Upper-bracket refinement via covering fibres\n\n**Conjecture.** `γ(G □ H) ≤ γ(G) · γ(H) + (γ(G) − 1)(γ(H) − 1)`, strictly\nimproving the cylindrification bound `γ(G) · |V(H)|` whenever `H` is sparse.\n\nThe key insight is that one need not use *every* fibre of `H`: a dominating set of\n`H` selects which fibres to cylindrify, and cross-terms between the two dominating\nsets repair the vertices left uncovered.\n\nWhy now? The cylindrification construction is already formalized, so replacing the\n\"all fibres\" choice by \"a dominating set of fibres\" is a local modification of an\nexisting proof rather than a new method.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0059",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "5a8a4bbe",
-    "status": "available",
-    "timestamp": "2026-07-02T14:35:04.229318+00:00",
-    "title": "Clean bracket for the domination number of a Cartesian"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely — the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence — instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0057",
-    "lineage_refs": [],
-    "priority_score": 0.73,
-    "proof_strategy": "Define A(1) = A(2) = 1, A(n+1) = smallest positive integer not equal to A(n) + A(n-1). Prove by strong induction: A(n) >= floor(n^2/4). Base: A(1)=1 >= 0, A(2)=1 >= 1. Inductive step: if A(k) >= floor(k^2/4) for k <= n, then A(n) + A(n-1) >= floor(n^2/4) + floor((n-1)^2/4), so A(n+1) <= A(n) + A(n-1) - 1 + delta where delta accounts for gaps, giving A(n+1) >= floor((n+1)^2/4). Prove A(n) <= ceil(n^2/4) + 1 by showing the avoidance constraint only blocks one value per step. Test: compute A(n) for n=1..10^6 and verify A(n)/n^2 -> 1/4.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T14:31:50.663636+00:00",
-    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
     "ambition_level": "extension",
@@ -1454,5 +1408,24 @@
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "f8ea6470",
+    "description": "Propose a framework where the computational complexity of simulating quantum state correlations in noncommutative geometries determines the hardness of certain mathematical problems. The hypothesis suggests that a polynomial-time algorithm for such problems would imply a breakdown of the cyclicity of Hilbert space dimensionality.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0010",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T05:18:32.052109+00:00",
+    "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
   }
 ]

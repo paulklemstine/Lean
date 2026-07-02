@@ -3,21 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "b4dd4609",
+    "consumed_by_exp_id": "3d2280dc",
     "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0033",
+    "id": "fd_0034",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-07-02T14:15:58.572208+00:00",
+    "timestamp": "2026-07-02T14:55:00.839688+00:00",
     "title": "Prove Fermats Little Theorem for p=5"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d991c87b",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.029563+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -76,7 +76,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7289bdda",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty"
@@ -85,7 +85,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -102,21 +102,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0055",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T14:31:50.599722+00:00",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
     "consumed_by_exp_id": "6054ec76",
@@ -482,13 +467,28 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp threshold for rainbow stackings of random edge-colourings of K_n for all sufficiently large n"
   },
   {
+    "consumed_by_exp_id": "b4dd4609",
+    "description": "We conjecture an explicit formula for the Jordan canonical form of the image of a regular unipotent element under any finite\u2011dimensional irreducible polynomial representation of GL\u2083(\u2096). Let \u03bb = (a,b,c) be a dominant weight with a > b > c. Define d\u2081 = a\u2011 b, d\u2082 = b\u2011 c, d\u2083 = a\u2011 c and the rational function\n\nM(t) = (1\u2011 t^{d\u2081+1})(1\u2011 t^{d\u2082+1})(1\u2011 t^{d\u2083+2}) /\n       ((1\u2011 t^{d\u2081})(1\u2011 t^{d\u2082})(1\u2011 t^{d\u2083})).\n\nWrite M(t) = \u03a3_{j\u22650} m_j t^j. Then the Jordan canonical form of \u03c0_\u03bb(u) (the regular unipotent u \u2208 GL\u2083(\u2096) under the representation \u03c0_\u03bb) is the partition whose parts are (j+1) repeated m_j times. In particular the multiplicities m_j satisfy a linear recurrence with characteristic polynomial (1\u2011 t^{d\u2081})(1\u2011 t^{d\u2082})(1\u2011 t^{d\u2083}).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0033",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31398v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T14:45:19.943455+00:00",
+    "title": "Jordan type of regular unipotent image for GL\u2080 representations"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0034",
+    "id": "fd_0035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -502,7 +502,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0035",
+    "id": "fd_0036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
@@ -517,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0036",
+    "id": "fd_0037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
@@ -526,16 +526,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e52c27d",
     "description": "For a d-dimensional submanifold E of \u211d^M and a smooth injective map \u03a6:E\u2192\u211d^{M'}, any N-point set F\u2282E in general position satisfies Kruskal rank s \u2264 d+1. This implies the \u03a6-separable dichotomy count C_F(N) is bounded by Cover's counting function C(N,d+M'+1), generalizing high-dimensional bounds to low-dimensional data structures.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0037",
+    "id": "fd_0038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:40:25.125636+00:00",
     "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
   },
@@ -546,7 +546,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0038",
+    "id": "fd_0039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -561,7 +561,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0039",
+    "id": "fd_0040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00732v1",
@@ -575,7 +575,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0040",
+    "id": "fd_0041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00674v1",
@@ -589,7 +589,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0041",
+    "id": "fd_0042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -604,7 +604,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0042",
+    "id": "fd_0043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00367v1",
@@ -619,7 +619,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0043",
+    "id": "fd_0044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00238v1",
@@ -634,7 +634,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0044",
+    "id": "fd_0045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00212v1",
@@ -648,7 +648,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0045",
+    "id": "fd_0046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00352v1",
@@ -663,7 +663,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0046",
+    "id": "fd_0047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31900v1",
@@ -678,7 +678,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0047",
+    "id": "fd_0048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31894v1",
@@ -693,7 +693,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0048",
+    "id": "fd_0049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
@@ -707,7 +707,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0049",
+    "id": "fd_0050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31815v1",
@@ -722,7 +722,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0050",
+    "id": "fd_0051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -737,7 +737,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0051",
+    "id": "fd_0052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
@@ -751,7 +751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0052",
+    "id": "fd_0053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v1",
@@ -766,7 +766,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0053",
+    "id": "fd_0054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -780,7 +780,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0054",
+    "id": "fd_0055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31441v1",
@@ -790,18 +790,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
+    "description": "For any integer n \u2265 1, the DSOME function satisfies:\nDSOME(n) + 2 * \u2211_{i=1}^{\u230an/2\u230b} q(n-2i) * \u03c3_odd(i) = n * q(n),\nwhere q(n) is the number of partitions of n into distinct parts, and \u03c3_odd(i) is the sum of odd divisors of i.",
     "domains": [
-      "Novelty",
+      "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0058",
+    "id": "fd_0056",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "2606.31264v1",
     "status": "available",
-    "timestamp": "2026-07-02T14:31:50.674214+00:00",
-    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+    "timestamp": "2026-07-02T14:54:55.608249+00:00",
+    "title": "An identity for DSOME(n) in terms of distinct partition numbers and odd divisor sums"
   },
   {
     "consumed_by_exp_id": "",
@@ -817,51 +817,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0056",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T14:31:50.653306+00:00",
-    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Domination in Cartesian products of graphs\n\nThis cycle established a clean bracket for the domination number of a Cartesian\n(box) product,\n`max(\u03b3(G), \u03b3(H)) \u2264 \u03b3(G \u25a1 H) \u2264 \u03b3(G) \u00b7 |V(H)|`,\nvia a coordinate-projection lower bound and a cylindrification upper bound, and it\npinned down the arithmetic of the improved multiplicative constant\n`c = (19 \u2212 \u221a73)/18`, showing it is the smaller root of `9x\u00b2 \u2212 19x + 8` and lies\nstrictly between `1/2` and `1`. The projection bound already yields the\n`c`-multiplicative inequality whenever one factor has domination number at most 1.\nThe directions below aim beyond that regime.\n\n## 1. Extend the constant bound past domination number one\n\n**Conjecture.** For all finite graphs `G`, `H`,\n`\u03b3(G \u25a1 H) \u2265 (19 \u2212 \u221a73)/18 \u00b7 \u03b3(G) \u00b7 \u03b3(H)` holds unconditionally, and the constant is\nbest possible for the \"partition-and-charge\" family of arguments.\n\nThe key insight is that the projection argument only spends the *fixed-coordinate*\nhalf of each product edge; the missing factor comes from a discharging step that\nalso accounts for the *moving-coordinate* half, and balancing the two halves is\nexactly what produces a quadratic whose smaller root is `(19 \u2212 \u221a73)/18`.\n\nWhy now? The bracket and the exact algebra of the constant are already in hand, so\nthe only remaining ingredient is the charging inequality for the `min \u2265 2` regime;\nisolating it as a standalone combinatorial lemma makes it directly attackable.\n\n## 2. Sharpness certificates for the lower bracket\n\n**Conjecture.** For every `k` there exist graphs `G`, `H` with `\u03b3(G) = \u03b3(H) = k`\nand `\u03b3(G \u25a1 H)` equal to `max(\u03b3(G), \u03b3(H)) = k`, so the projection lower bound is\ntight for arbitrarily large domination numbers.\n\nThe key insight is that a single \"universal\" fibre \u2014 a coordinate whose deletion\nstill dominates every other fibre \u2014 collapses the product's domination number to\nthat of one factor, so tightness is a statement about the existence of such fibres.\n\nWhy now? The projection lower bound is proved and its equality case is transparent\n(the projection is injective and already minimal), so constructing tight families\nis a concrete extremal problem rather than an open-ended search.\n\n## 3. A fractional / weighted relaxation with a matching constant\n\n**Conjecture.** The fractional domination number satisfies\n`\u03b3_f(G \u25a1 H) = \u03b3_f(G) \u00b7 \u03b3_f(H)` exactly, and the integrality gap on each side is\nwhat forces the deficit captured by `(19 \u2212 \u221a73)/18` in the integral case.\n\nThe key insight is that fractional domination is multiplicative under the box\nproduct because a product of optimal fractional dominating functions is itself\nfractionally dominating, unlike the integral case where rounding destroys the\nproduct structure.\n\nWhy now? The integral bracket makes the integral\u2013fractional gap the precise\nobstruction to Vizing's conjecture, turning a monolithic conjecture into a\nmeasurable quantity that can be tracked family by family.\n\n## 4. Upper-bracket refinement via covering fibres\n\n**Conjecture.** `\u03b3(G \u25a1 H) \u2264 \u03b3(G) \u00b7 \u03b3(H) + (\u03b3(G) \u2212 1)(\u03b3(H) \u2212 1)`, strictly\nimproving the cylindrification bound `\u03b3(G) \u00b7 |V(H)|` whenever `H` is sparse.\n\nThe key insight is that one need not use *every* fibre of `H`: a dominating set of\n`H` selects which fibres to cylindrify, and cross-terms between the two dominating\nsets repair the vertices left uncovered.\n\nWhy now? The cylindrification construction is already formalized, so replacing the\n\"all fibres\" choice by \"a dominating set of fibres\" is a local modification of an\nexisting proof rather than a new method.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0059",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5a8a4bbe",
-    "status": "available",
-    "timestamp": "2026-07-02T14:35:04.229318+00:00",
-    "title": "Clean bracket for the domination number of a Cartesian"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0057",
-    "priority_score": 0.73,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T14:31:50.663636+00:00",
-    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
     "consumed_by_exp_id": "",
@@ -890,5 +845,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "f8ea6470",
+    "description": "Propose a framework where the computational complexity of simulating quantum state correlations in noncommutative geometries determines the hardness of certain mathematical problems. The hypothesis suggests that a polynomial-time algorithm for such problems would imply a breakdown of the cyclicity of Hilbert space dimensionality.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0010",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T05:18:32.052109+00:00",
+    "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
   }
 ];
