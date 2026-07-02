@@ -1,434 +1,367 @@
-# The No-Stretching Property of Hypercube Labelings Induced by Edge Partitions
+# The No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions
+
+**Author:** Aristotle
+**Date:** 2026-07-02
+**Domain:** Applications (metric graph theory, distance labeling, coding-theoretic sketches)
 
 ## Abstract
 
-Let $G$ be a connected graph and let $\ell$ be a labeling of its vertices by the
-corners of a binary hypercube $Q_k$ — that is, by length-$k$ strings over the
-field $\mathbb{Z}/2\mathbb{Z}$ — with the property that every edge of $G$ joins
-two vertices whose labels are either equal or differ in exactly one coordinate.
-We prove that such a labeling is **non-expansive**: for all vertices $u,v$,
-$$d_{Q_k}\big(\ell(u),\ell(v)\big) \le d_G(u,v),$$
-where $d_G$ is graph distance and $d_{Q_k}$ is hypercube distance. The labeling
-can therefore fail to be isometric only by *contracting* distances (taking
-shortcuts), never by *stretching* them. The argument rests on the elementary but
-fundamental identity that hypercube distance equals Hamming distance, together
-with a length-monotone push-forward of walks. The canonical source of such
-labelings is the parity quotient attached to an edge partition of $G$: sorting
-the edges into $t$ classes and recording class-parities of walks modulo the
-graph's cycle space yields a labeling into a hypercube of dimension
-$t - \mathrm{rank}(A)$, where $A$ is the cycle-class parity matrix over
-$\mathbb{Z}/2\mathbb{Z}$. We develop the theory in self-contained form, give
-algorithms for computing labels and the resulting distance defect, and discuss
-the one-sided distortion as an invariant connecting partial-cube recognition,
-low-distortion embeddings, and coding theory.
-
-**Keywords.** hypercube, Hamming distance, non-expansive map, edge partition,
-cycle space, partial cube, GF(2), graph metric, low-distortion embedding.
-
----
+Given a connected graph $G$ whose edge set is partitioned into $t$ classes, we
+associate to each class a generator of the elementary abelian $2$-group
+$(\mathbb{Z}/2\mathbb{Z})^t$ and quotient by the *cycle-class parity space* $C$ —
+the subspace of parity constraints forced by closed walks. The result is a vertex
+labeling $\ell : V(G) \to Q$ into the finite abelian $2$-group
+$Q = (\mathbb{Z}/2\mathbb{Z})^t / C$, of dimension $t - \operatorname{rank}(A)$
+where $A$ is the cycle-class parity matrix. We prove that this labeling is
+**distance non-increasing** — it never *stretches* distances — when the label space
+is equipped with the metric of the Cayley graph $H$ of $Q$ on the class generators:
+$$ d_H(\ell(u), \ell(v)) \le d_G(u, v) \quad \text{for all } u, v \in V(G). $$
+The core of the argument is a general and elementary principle: any
+*edge-contracting* vertex map (one that sends adjacent vertices to
+adjacent-or-equal vertices) between graphs is distance non-increasing on the
+connected components of the source. We isolate this principle, derive the
+quotient-labeling theorem as a corollary, compute the quotient dimension, and
+exhibit an explicit triangle showing that the *coordinate hypercube* with Hamming
+distance is the *wrong* target — it reports a stretch — whereas the Cayley graph is
+the correct one. The one-sided (never-over-estimating) nature of the labeling makes
+it a certified lower-bound oracle for graph distance whose size is governed by the
+corank $t - \operatorname{rank}(A)$ rather than by the number of vertices.
 
 ## 1. Introduction
 
-A recurring theme across combinatorics, coding theory, and the geometry of metric
-spaces is the attempt to represent the vertices of a graph as binary strings so
-that graph adjacency is reflected by simple bitwise structure. The cleanest such
-representations are the *isometric* ones, in which graph distance is reproduced
-exactly by Hamming distance; the graphs admitting them are precisely the
-**partial cubes**, a class with a deep and elegant theory rooted in the
-Djoković–Winkler relation.
-
-Isometry, however, is a strong demand that most graphs cannot meet. This paper
-isolates the part of the story that holds *unconditionally*, for every connected
-graph and every reasonable labeling. We show that as long as a labeling changes
-by at most one coordinate along each edge — the natural local constraint shared by
-all parity labelings — it can distort distances in only one direction. It may
-contract, but it can never expand.
-
-The result is deliberately minimal in its hypotheses, which makes it broadly
-applicable. We require neither that the labeling be injective, nor that it be
-surjective onto any subcube, nor that the graph be bipartite. We require only
-connectedness of $G$ and the per-edge bound. In return we obtain a universal
-upper bound on labeled distance, and with it a clean, always-nonnegative measure
-of how far a labeling falls short of isometry.
-
-### 1.1 Contributions
-
-1. A self-contained development of the metric of the binary hypercube, including
-   the identity $d_{Q_k} = \mathrm{H}$ (Theorem 3.4).
-2. A length-monotone push-forward of walks under any edge-gentle labeling
-   (Theorem 4.2).
-3. The **No-Stretching Theorem** (Theorem 4.3): non-expansiveness of edge-gentle
-   labelings on connected graphs.
-4. A description of the canonical edge-partition parity labeling that supplies the
-   hypothesis, and an interpretation of the resulting distortion as a defect
-   invariant (Sections 2 and 5).
-5. Algorithms for computing labels, hypercube distances, and the total
-   contraction defect, with complexity analysis (Section 6).
-
----
-
-## 2. The edge-partition labeling
-
-We begin with the construction that motivates the entire development.
-
-### 2.1 Edge partitions and the cycle-class parity matrix
-
-Let $G = (V,E)$ be a connected graph and let
-$P = \{E_1, \dots, E_t\}$ be a partition of its edge set into $t$ nonempty
-classes. Assign to each edge $e$ the standard basis vector $\mathbf{e}_{c(e)} \in
-(\mathbb{Z}/2\mathbb{Z})^t$, where $c(e)$ is the index of the class containing
-$e$.
-
-Fix a base vertex $r$. For a vertex $v$, choose any walk $W$ from $r$ to $v$ and
-form the **raw parity vector**
-$$\sigma(W) = \sum_{e \in W} \mathbf{e}_{c(e)} \in (\mathbb{Z}/2\mathbb{Z})^t,$$
-the sum taken with multiplicity and reduced modulo $2$; coordinate $j$ records the
-parity of the number of class-$j$ edges traversed by $W$.
-
-This raw vector depends on the choice of walk, but only up to the **cycle space**
-of $G$. Concretely, any two $r$–$v$ walks differ by a closed walk, and the
-class-parity vectors of closed walks form a subspace $\mathcal{C} \subseteq
-(\mathbb{Z}/2\mathbb{Z})^t$. Let $A$ be the **cycle-class parity matrix** whose
-rows are the class-parity vectors of a cycle basis of $G$; then $\mathcal{C} =
-\mathrm{row\,space}(A)$ and $\dim \mathcal{C} = \mathrm{rank}(A)$.
-
-### 2.2 The quotient labeling
-
-Passing to the quotient kills the ambiguity. Define
-$$\ell \colon V \longrightarrow (\mathbb{Z}/2\mathbb{Z})^t / \mathcal{C}, \qquad
-\ell(v) = \sigma(W) + \mathcal{C}$$
-for any $r$–$v$ walk $W$. The target is a vector space of dimension
-$$k := t - \mathrm{rank}(A),$$
-and a choice of basis identifies it with the hypercube $Q_k$.
-
-**One generator per edge.** If $\{u,v\}$ is an edge of $G$ in class $j$, then
-appending it to a walk to $u$ adds $\mathbf{e}_j$ to the raw parity vector. Hence
-$$\ell(v) - \ell(u) = \bar{\mathbf{e}}_j := \mathbf{e}_j + \mathcal{C},$$
-which is either the zero coset (when $\mathbf{e}_j \in \mathcal{C}$, i.e. the class
-direction is collapsed by the cycle space) or one of the class generators. The
-natural target geometry is therefore the **Cayley graph** $H$ on the quotient
-group $(\mathbb{Z}/2\mathbb{Z})^k$ with generating set $\{\bar{\mathbf{e}}_1,
-\dots, \bar{\mathbf{e}}_t\}$: every edge of $G$ moves the label by exactly one
-generator. Running the push-forward argument of Section 4 verbatim with $H$ in
-place of $Q_k$ shows the labeling is non-expansive into $H$,
-$$d_H(\ell(u),\ell(v)) \le d_G(u,v) \quad\text{for all } u,v.$$
-
-**The Hamming special case.** When the surviving class generators are *distinct
-standard basis vectors* — equivalently, when each surviving class corresponds to a
-single independent coordinate — the Cayley graph $H$ is precisely the standard
-Hamming hypercube $Q_k$ of Section 3, and the labeling is *edge-gentle* in the
-sense of Definition 4.1. This is the situation of the Djoković–Winkler relation
-used to recognize partial cubes: when $P$ is that relation and the cycle space
-collapses no surviving direction, $\ell$ is isometric and exhibits $G$ as a
-partial cube. For a general partition the class images may be linearly dependent
-(for instance, in a triangle with each edge its own class the three generators
-become $\bar{\mathbf{e}}_1, \bar{\mathbf{e}}_2, \bar{\mathbf{e}}_1 +
-\bar{\mathbf{e}}_2$, so $H$ is the complete graph $K_4$ rather than $Q_2$); the
-labeling need not be isometric, and controlling that failure is the subject of
-this paper. Sections 3–4 develop the Hamming case, which already contains the full
-strength of the push-forward argument; the Cayley-graph generalization is
-immediate.
-
----
-
-## 3. The hypercube metric
-
-We now develop the metric of $Q_k$ from scratch. Throughout, a vertex of $Q_k$ is
-a function $x \colon \{0,1,\dots,k-1\} \to \mathbb{Z}/2\mathbb{Z}$.
-
-### 3.1 Hamming distance
-
-**Definition 3.1 (Hamming distance).** For $x,y \in Q_k$,
-$$\mathrm{H}(x,y) = \#\{\, i : x_i \neq y_i \,\}.$$
-
-**Lemma 3.2 (basic properties).** For all $x,y,z \in Q_k$:
-(i) $\mathrm{H}(x,y)=\mathrm{H}(y,x)$;
-(ii) $\mathrm{H}(x,y)=0 \iff x=y$;
-(iii) $\mathrm{H}(x,z) \le \mathrm{H}(x,y)+\mathrm{H}(y,z)$.
-
-*Proof.* (i) Symmetry of the relation $x_i \ne y_i$. (ii) The disagreement set is
-empty iff the strings agree in every coordinate. (iii) Any coordinate where $x$
-and $z$ differ must be a coordinate where $x$ differs from $y$ or $y$ differs from
-$z$; hence the disagreement set of $(x,z)$ is contained in the union of those of
-$(x,y)$ and $(y,z)$, and the bound follows from the size of a union. $\qquad\square$
-
-Thus $\mathrm{H}$ is a metric on $Q_k$.
-
-### 3.2 Adjacency and the hypercube graph
-
-**Definition 3.3 (hypercube graph).** $Q_k$ is the graph on
-$(\mathbb{Z}/2\mathbb{Z})^k$ in which $x$ and $y$ are adjacent iff
-$\mathrm{H}(x,y)=1$.
-
-For a coordinate $i$, write $\mathrm{flip}_i(x)$ for the string obtained by adding
-$1$ to $x_i$ (leaving all other coordinates fixed). Then
-$\mathrm{H}(x, \mathrm{flip}_i(x)) = 1$, so $x$ and $\mathrm{flip}_i(x)$ are
-adjacent; these are the only neighbors of $x$.
-
-A key arithmetic observation in $\mathbb{Z}/2\mathbb{Z}$: if $x_i \ne y_i$, then
-$y_i = x_i + 1$, so flipping coordinate $i$ of $x$ removes exactly that one
-disagreement. Formally,
-$$x_i \ne y_i \implies \mathrm{H}(\mathrm{flip}_i(x), y) + 1 = \mathrm{H}(x,y). \tag{$\ast$}$$
-
-### 3.3 Distance equals Hamming distance
-
-**Theorem 3.4 (hypercube distance).** For all $x,y \in Q_k$,
-$$d_{Q_k}(x,y) = \mathrm{H}(x,y).$$
-
-*Proof.* We prove both inequalities.
-
-*Lower bound $d_{Q_k} \ge \mathrm{H}$.* Let $W$ be any walk in $Q_k$ from $x$ to
-$y$, say $x = w_0, w_1, \dots, w_L = y$. Each step is a cube edge, so
-$\mathrm{H}(w_{i-1},w_i)=1$. By the triangle inequality (Lemma 3.2(iii)) applied
-repeatedly,
-$$\mathrm{H}(x,y) \le \sum_{i=1}^{L} \mathrm{H}(w_{i-1},w_i) = L.$$
-Since this holds for every walk, in particular for a shortest one, $\mathrm{H}(x,y)
-\le d_{Q_k}(x,y)$. (Inductively: a walk of length $0$ joins equal endpoints with
-$\mathrm{H}=0$; prepending one edge of Hamming length $1$ raises the bound by at
-most $1$.)
-
-*Upper bound $d_{Q_k} \le \mathrm{H}$.* We construct a walk of length exactly
-$\mathrm{H}(x,y)$ by induction on $n = \mathrm{H}(x,y)$. If $n=0$ then $x=y$ by
-Lemma 3.2(ii) and the empty walk suffices. If $n = m+1 > 0$, then $x \ne y$, so
-there is a coordinate $i$ with $x_i \ne y_i$. Let $x' = \mathrm{flip}_i(x)$. Then
-$x$ and $x'$ are adjacent, and by $(\ast)$ we have $\mathrm{H}(x',y) = m$. By the
-inductive hypothesis there is a walk from $x'$ to $y$ of length $m$; prepending
-the edge $x \to x'$ yields a walk from $x$ to $y$ of length $m+1 = n$. Hence
-$d_{Q_k}(x,y) \le \mathrm{H}(x,y)$.
-
-Combining the two bounds gives equality. $\qquad\square$
-
-Theorem 3.4 is the engine of everything that follows: it lets us replace the
-shortest-path distance in $Q_k$ by the algebraically transparent Hamming count.
-
----
-
-## 4. The No-Stretching Theorem
-
-We now fix a connected graph $G=(V,E)$ and a labeling $\ell \colon V \to Q_k$.
-
-**Definition 4.1 (edge-gentle labeling).** The labeling $\ell$ is *edge-gentle*
-if for every edge $\{u,v\}$ of $G$,
-$$\ell(u) = \ell(v) \quad \text{or} \quad \mathrm{H}(\ell(u),\ell(v)) = 1.$$
-
-By Section 2, every parity quotient labeling of an edge partition is edge-gentle.
-
-### 4.1 Push-forward of walks
-
-**Theorem 4.2 (length-monotone image walk).** Let $\ell$ be edge-gentle. For every
-walk $W$ in $G$ from $u$ to $v$ there is a walk $W'$ in $Q_k$ from $\ell(u)$ to
-$\ell(v)$ with
-$$\mathrm{length}(W') \le \mathrm{length}(W).$$
-
-*Proof.* Induct on $W$. If $W$ is the trivial walk at $u$, take $W'$ trivial at
-$\ell(u)$; lengths are both $0$. Otherwise $W = (u \to b) \cdot P$, where $u \to
-b$ is an edge and $P$ is a walk from $b$ to $v$. By induction there is a walk $P'$
-from $\ell(b)$ to $\ell(v)$ with $\mathrm{length}(P') \le \mathrm{length}(P)$.
-Edge-gentleness gives two cases.
-
-- If $\ell(u) = \ell(b)$: transport $P'$ to start at $\ell(u)$ (it already ends at
-  $\ell(v)$). Its length is unchanged, and $\mathrm{length}(P') \le
-  \mathrm{length}(P) < \mathrm{length}(W)$.
-- If $\mathrm{H}(\ell(u),\ell(b)) = 1$: then $\ell(u)$ and $\ell(b)$ are adjacent
-  in $Q_k$, so we may prepend that single edge to $P'$, obtaining $W'$ with
-  $\mathrm{length}(W') = \mathrm{length}(P') + 1 \le \mathrm{length}(P) + 1 =
-  \mathrm{length}(W)$.
-
-In both cases $\mathrm{length}(W') \le \mathrm{length}(W)$. $\qquad\square$
-
-The proof literally *contracts*: the "equal-label" edges are dropped, so the
-image walk is always at least as short as its preimage.
-
-### 4.2 Non-expansiveness
-
-**Theorem 4.3 (No-Stretching Theorem).** Let $G$ be connected and let $\ell
-\colon V \to Q_k$ be edge-gentle. Then for all $u,v \in V$,
-$$d_{Q_k}\big(\ell(u),\ell(v)\big) \le d_G(u,v).$$
-Equivalently, by Theorem 3.4, $\mathrm{H}(\ell(u),\ell(v)) \le d_G(u,v)$.
-
-*Proof.* Since $G$ is connected there is a geodesic walk $W$ from $u$ to $v$ with
-$\mathrm{length}(W) = d_G(u,v)$. By Theorem 4.2 there is a walk $W'$ in $Q_k$ from
-$\ell(u)$ to $\ell(v)$ with $\mathrm{length}(W') \le \mathrm{length}(W)$. The
-hypercube distance, being the minimum walk length, satisfies
-$$d_{Q_k}(\ell(u),\ell(v)) \le \mathrm{length}(W') \le \mathrm{length}(W) =
-d_G(u,v). \qquad\square$$
-
-**Corollary 4.4 (one-sided distortion).** An edge-gentle labeling of a connected
-graph is non-expansive. Its failure to be isometric is entirely one-sided: for all
-$u,v$,
-$$0 \le d_G(u,v) - d_{Q_k}(\ell(u),\ell(v)).$$
-The labeling is isometric if and only if this defect vanishes for every pair.
-
-The corollary motivates the central object of study in Section 5.
-
----
-
-## 5. The contraction defect
-
-**Definition 5.1 (pairwise and total defect).** For an edge-gentle labeling $\ell$
-of a connected graph $G$, define the *pairwise defect*
-$$\delta_\ell(u,v) = d_G(u,v) - d_{Q_k}(\ell(u),\ell(v)) \ge 0$$
-and the *total defect*
-$$\Delta(\ell) = \sum_{\{u,v\}} \delta_\ell(u,v),$$
-the sum over unordered vertex pairs.
-
-By Theorem 4.3 every term is nonnegative, so $\Delta(\ell) \ge 0$ with equality
-iff $\ell$ is isometric. The defect is therefore a faithful, monotone gauge of how
-far a partition is from witnessing a partial-cube embedding.
-
-**Mechanism of the defect.** Each unit of defect arises from a closed walk whose
-class-parities cancel: a cycle that the partition fails to "see" forces two
-labels to coincide that geography would keep apart. In the quotient picture of
-Section 2, this is exactly the collapse of a class direction $\mathbf{e}_j$ into
-the cycle space $\mathcal{C}$. Thus the defect counts, with multiplicity, the
-cycles the partition collapses rather than resolves. Making this heuristic into an
-exact cycle-space formula is the first open problem of Section 7.
-
-**Two extremes.**
-
-- The *trivial partition* with one class ($t=1$) collapses every cycle of even
-  parity; its labeling is a single parity bit and contracts maximally.
-- The *Djoković–Winkler partition* on a partial cube achieves $\Delta(\ell)=0$ and
-  realizes the graph as an isometric subgraph of a hypercube.
-
-Between these lie all intermediate partitions, with the defect interpolating
-monotonically as classes are merged.
-
----
-
-## 6. Worked examples
-
-We illustrate the theory on small graphs; each can be checked by hand.
-
-**A path is isometric.** Let $G$ be the path $0\!-\!1\!-\!2\!-\!3$ with each edge in
-its own class ($t=3$). The graph is a tree, so the cycle space is trivial,
-$\mathrm{rank}(A)=0$ and $k=3$. The labels are $\ell(0)=000$, $\ell(1)=100$,
-$\ell(2)=110$, $\ell(3)=111$, each edge flipping one fresh coordinate. The labeling
-is edge-gentle and isometric: $\mathrm{H}(\ell(i),\ell(j))=|i-j|=d_G(i,j)$, so
-$\Delta(\ell)=0$. Every tree is a partial cube in this way.
-
-**An even cycle is isometric under the opposite-edge partition.** Let $G$ be the
-$4$-cycle $0\!-\!1\!-\!2\!-\!3\!-\!0$ and let the partition place opposite edges in
-a common class: $\{01,23\}$ in class $0$ and $\{12,30\}$ in class $1$ ($t=2$). The
-single independent cycle contributes the parity vector $00$ (each class is
-crossed twice), so $\mathrm{rank}(A)=0$ and $k=2$. The labels are $\ell(0)=00$,
-$\ell(1)=10$, $\ell(2)=11$, $\ell(3)=01$ — the four corners of $Q_2$ — and the
-embedding is isometric. This is the Djoković–Winkler partition; both class
-generators are standard basis vectors, so $H=Q_2$.
-
-**A triangle must contract, and the target is $K_4$.** Let $G=K_3$ on
-$\{0,1,2\}$ with each edge its own class ($t=3$). The single cycle has class-parity
-$111$, so $\mathrm{rank}(A)=1$ and $k=2$. The class generators in the quotient are
-$\bar{\mathbf e}_1=10$, $\bar{\mathbf e}_2=01$, $\bar{\mathbf e}_3=11$; they are
-linearly dependent, so the Cayley target $H$ is the complete graph $K_4$, not the
-Hamming cube $Q_2$. With labels $\ell(0)=00$, $\ell(1)=10$, $\ell(2)=11$, every
-pair of vertices is at $H$-distance $1$, matching $d_G\equiv 1$, so the embedding
-is isometric *into $K_4$*. Note that interpreting the same labels in the standard
-Hamming cube would give $\mathrm{H}(\ell(0),\ell(2))=2 > 1 = d_G(0,2)$: the labeling
-is *not* edge-gentle, which is exactly why the correct target is the Cayley graph
-$H$. This is the canonical illustration that the no-stretching guarantee is a
-statement about the generating set carried by the partition.
-
-**A genuine contraction.** Label the path $0\!-\!1\!-\!2\!-\!3\!-\!4$ by the single
-parity bit $\ell(v)=(v \bmod 2)\in Q_1$. Each edge flips the one coordinate, so the
-labeling is edge-gentle and Theorem 4.3 applies; yet $\ell(0)=\ell(2)=\ell(4)=0$,
-so $d_{Q_1}(\ell(0),\ell(4))=0 < 4 = d_G(0,4)$. Here the total defect is strictly
-positive: the labeling contracts heavily, but never stretches.
+Distance labeling schemes attach to each vertex of a graph a compact label so that
+the distance between two vertices can be estimated — ideally computed — from their
+labels alone. Such schemes underpin routing, reachability, and graph-similarity
+search in large networks. A recurring theme is the tension between *exactness*
+(labels reproduce the true distance, i.e. an isometric embedding) and *economy*
+(labels are far smaller than a full distance table). Between these poles sits a
+practically vital middle ground: labelings that are guaranteed to be wrong in only
+*one direction*. A labeling whose induced distance never *exceeds* the true distance
+certifies a lower bound; a labeling whose induced distance never *falls below* the
+true distance certifies an upper bound. One-sided guarantees cannot be gamed by an
+adversarial index and compose gracefully.
+
+This paper studies a natural and cheap family of labelings built from parity. Color
+the edges of a connected graph $G$ with $t$ colors — an arbitrary *edge partition*.
+Assign each color a generator of the elementary abelian $2$-group. Label a vertex by
+the XOR of the generators along any path from a fixed root; cycles guarantee this is
+well-defined once we quotient by the parity constraints they impose. The output is a
+labeling into a finite abelian $2$-group.
+
+Our main contribution is a proof, from first principles, that this labeling has the
+**No-Stretching Property**: it is distance non-increasing into the appropriate
+target graph. We further show that identifying the *appropriate* target is not a
+formality — the intuitive choice (the coordinate hypercube with Hamming distance)
+fails, and the correct choice (the Cayley graph on the class generators) succeeds.
+The failure is not marginal; a single triangle already exhibits a stretched edge
+under the Hamming reading.
+
+### Contributions
+
+1. **A general contraction principle** (Section 3). Edge-contracting maps between
+   graphs are distance non-increasing on connected sources. This is the discrete
+   analogue of a $1$-Lipschitz map and the engine behind everything that follows.
+2. **The No-Stretching Theorem for quotient labelings** (Section 5), in both an
+   abstract "symmetric generating set" form and a concrete "edge-partition / class
+   generator" form.
+3. **The quotient dimension formula** (Section 4): the label space has dimension
+   $t - \operatorname{rank}(A)$.
+4. **A separating example** (Section 6): an explicit triangle whose quotient
+   labeling does not stretch into the Cayley graph but *does* stretch into the
+   coordinate hypercube, pinning down the correct target.
+5. **Applications and structure theory** (Sections 7–8): one-sided distance
+   oracles, corank as the isometry defect, and connections to partial cubes and
+   median graphs.
+
+## 2. Preliminaries and Definitions
+
+Throughout, $G = (V, E)$ is a simple, connected, undirected graph. We write
+$d_G(u,v)$ for the graph distance: the length (number of edges) of a shortest walk
+from $u$ to $v$. A **walk** of length $n$ is a sequence of vertices
+$w_0, w_1, \dots, w_n$ with $w_{k} w_{k+1} \in E$ for each $k$; the distance is the
+minimum length over all walks joining the endpoints, which for a connected graph is
+finite.
+
+**Definition 2.1 (Edge partition).** An *edge partition into $t$ classes* is a
+surjective map $c : E \to \{1, \dots, t\}$; the fiber $c^{-1}(i)$ is class $i$.
+Equivalently, a coloring of the edges with $t$ colors, each used at least once.
+
+**Definition 2.2 (Parity space and generators).** Let
+$\mathbb{F}_2 = \mathbb{Z}/2\mathbb{Z}$. The *ambient parity space* is
+$\mathbb{F}_2^t$ (functions $\{1,\dots,t\} \to \mathbb{F}_2$ under XOR). A choice of
+*class generators* is a map $\mathrm{gen} : \{1,\dots,t\} \to Q$ into an abelian
+$2$-group $Q$; in the canonical construction $Q$ is a quotient of $\mathbb{F}_2^t$
+and $\mathrm{gen}\, i$ is the image of the $i$-th standard basis vector.
+
+**Definition 2.3 (Cycle-class parity space).** For each closed walk in $G$, form the
+vector in $\mathbb{F}_2^t$ whose $i$-th coordinate is the parity of the number of
+class-$i$ edges traversed. The *cycle-class parity space* $C \le \mathbb{F}_2^t$ is
+the span of these vectors; the *cycle-class parity matrix* $A$ is any matrix with
+row space $C$, so $\operatorname{rank}(A) = \dim C$.
+
+**Definition 2.4 (Quotient label space).** The *quotient label space* is
+$Q = \mathbb{F}_2^t / C$, a finite $\mathbb{F}_2$-vector space, and the class
+generators are the cosets $\mathrm{gen}\, i = e_i + C$.
+
+**Definition 2.5 (Quotient labeling).** Fix a root $r \in V$. For $v \in V$, choose
+any walk from $r$ to $v$ and let $\ell(v) \in Q$ be the sum (XOR) of the generators
+$\mathrm{gen}\, c(e)$ over the edges $e$ of the walk. Because any two walks between
+the same endpoints differ by a closed walk, whose class-parity lies in $C$ and hence
+vanishes in $Q$, the label $\ell(v)$ is well-defined. By construction, if $uv \in E$
+lies in class $i$ then $\ell(u) - \ell(v) = \mathrm{gen}\, i$.
+
+**Definition 2.6 (Cayley graph).** For an additive group $Q$ and a generating set
+$S \subseteq Q$ that is *symmetric* ($s \in S \Rightarrow -s \in S$), the *Cayley
+graph* $\operatorname{Cay}(Q, S)$ has vertex set $Q$ and adjacency
+$$ x \sim y \iff x \neq y \ \text{and}\ x - y \in S. $$
+Symmetry of $S$ makes the relation symmetric; the $x \ne y$ clause makes it
+loopless. Note that in a $2$-group every element is its own inverse, so *every*
+subset is symmetric and the Cayley graph is automatically an undirected simple
+graph. We write $H = \operatorname{Cay}(Q, \{\mathrm{gen}\, i\})$ for the target.
+
+**Definition 2.7 (Edge-contracting map).** A vertex map
+$\varphi : V(G) \to V(H)$ is *edge-contracting* if for every edge $uv \in E(G)$,
+either $\varphi(u)\varphi(v) \in E(H)$ or $\varphi(u) = \varphi(v)$. Equivalently,
+$\varphi$ sends adjacent vertices to adjacent-or-equal vertices.
+
+## 3. The Contraction Principle
+
+The technical heart of the paper is an elementary but sharp statement about
+edge-contracting maps. It requires no algebra whatsoever — only walks.
+
+**Lemma 3.1 (Walk contraction).** Let $\varphi : V(G) \to V(H)$ be edge-contracting.
+Then for any walk $p$ in $G$ from $u$ to $v$, there is a walk $q$ in $H$ from
+$\varphi(u)$ to $\varphi(v)$ with $\operatorname{length}(q) \le
+\operatorname{length}(p)$.
+
+*Proof.* Induct on the walk $p$. If $p$ is the empty walk at $u$, take $q$ to be the
+empty walk at $\varphi(u)$; lengths are both $0$. Otherwise $p$ begins with an edge
+$ab$ followed by a walk $p'$ from $b$ to $v$; by induction there is a walk $q'$ in
+$H$ from $\varphi(b)$ to $\varphi(v)$ with $\operatorname{length}(q') \le
+\operatorname{length}(p')$. Because $\varphi$ is edge-contracting, either
+$\varphi(a)\varphi(b) \in E(H)$ or $\varphi(a) = \varphi(b)$.
+
+- If $\varphi(a)\varphi(b)$ is an edge, prepend it to $q'$ to obtain a walk $q$ from
+  $\varphi(a) = \varphi(u)$ to $\varphi(v)$ with length
+  $\operatorname{length}(q') + 1 \le \operatorname{length}(p') + 1 =
+  \operatorname{length}(p)$.
+- If $\varphi(a) = \varphi(b)$, then $q'$ already starts at $\varphi(a) =
+  \varphi(u)$; take $q = q'$, whose length is $\operatorname{length}(q') \le
+  \operatorname{length}(p') \le \operatorname{length}(p)$.
+
+In both cases the constructed walk has length at most that of $p$. $\qquad\blacksquare$
+
+**Theorem 3.2 (Contraction principle).** Let $G$ be connected and
+$\varphi : V(G) \to V(H)$ edge-contracting. Then for all $u, v \in V(G)$,
+$$ d_H(\varphi(u), \varphi(v)) \le d_G(u, v). $$
+
+*Proof.* Since $G$ is connected there is a walk $p$ from $u$ to $v$ of length exactly
+$d_G(u,v)$. By Lemma 3.1 there is a walk $q$ in $H$ from $\varphi(u)$ to
+$\varphi(v)$ with $\operatorname{length}(q) \le \operatorname{length}(p)$. The
+distance $d_H(\varphi(u),\varphi(v))$ is the minimum walk length between those
+endpoints, hence at most $\operatorname{length}(q)$. Chaining,
+$$ d_H(\varphi(u),\varphi(v)) \le \operatorname{length}(q) \le
+\operatorname{length}(p) = d_G(u,v). \qquad\blacksquare $$
+
+Theorem 3.2 is the discrete analogue of the fact that a $1$-Lipschitz map does not
+increase distance. The map may of course *decrease* distance — collapsing edges
+creates shortcuts — but never increase it. This asymmetry is the whole point.
+
+## 4. The Quotient Dimension
+
+Before applying the contraction principle we record the size of the label space.
+
+**Theorem 4.1 (Quotient dimension).** For the quotient label space
+$Q = \mathbb{F}_2^t / C$,
+$$ \dim_{\mathbb{F}_2} Q = t - \operatorname{rank}(A), $$
+where $\operatorname{rank}(A) = \dim_{\mathbb{F}_2} C$.
+
+*Proof.* For a subspace $C$ of a finite-dimensional space the dimensions satisfy
+$\dim(\mathbb{F}_2^t/C) + \dim C = \dim \mathbb{F}_2^t = t$. Since $\dim C =
+\operatorname{rank}(A)$, rearranging gives $\dim Q = t - \operatorname{rank}(A)$.
+$\qquad\blacksquare$
+
+Thus every independent cycle constraint folds away one coordinate. A partition whose
+cycles impose no constraints (e.g. any partition of a tree, where there are no
+cycles) yields $\dim Q = t$; a partition with many independent constrained cycles
+yields a much smaller, more compressed label. The **corank** $t -
+\operatorname{rank}(A) = \dim Q$ measures the storage cost of the sketch, and, as we
+discuss in Section 8, controls its isometry defect.
+
+## 5. The No-Stretching Theorem
+
+We now combine the contraction principle with the algebra of the Cayley target. We
+give the abstract form first, then specialize.
+
+**Theorem 5.1 (No-stretching, symmetric-set form).** Let $G$ be connected, $Q$ an
+additive group, $S \subseteq Q$ symmetric, and $H = \operatorname{Cay}(Q, S)$.
+Suppose $\ell : V(G) \to Q$ is *compatible with $S$*: for every edge $uv \in E(G)$,
+either $\ell(u) = \ell(v)$ or $\ell(u) - \ell(v) \in S$. Then for all $u,v \in V(G)$,
+$$ d_H(\ell(u), \ell(v)) \le d_G(u, v). $$
+
+*Proof.* We show $\ell$ is edge-contracting into $H$ and invoke Theorem 3.2. Take an
+edge $uv$ of $G$. By compatibility, $\ell(u) = \ell(v)$ or $\ell(u) - \ell(v) \in
+S$. In the first case $\ell(u) = \ell(v)$, so the images are equal. In the second
+case, distinguish whether $\ell(u) = \ell(v)$: if so, the images are equal; if not,
+then $\ell(u) \ne \ell(v)$ and $\ell(u) - \ell(v) \in S$, which is exactly adjacency
+in $H$. Either way the images are adjacent-or-equal, so $\ell$ is edge-contracting.
+Theorem 3.2 finishes the proof. $\qquad\blacksquare$
+
+**Theorem 5.2 (No-stretching, edge-partition form).** Let $G$ be connected with an
+edge partition into $t$ classes, $Q$ an abelian group, and class generators
+$\mathrm{gen} : \{1,\dots,t\} \to Q$ with the symmetry property $-\mathrm{gen}\, i
+\in \{\mathrm{gen}\, 1, \dots, \mathrm{gen}\, t\}$ for each $i$. Let $\ell : V(G)
+\to Q$ satisfy, on every edge, $\ell(u) - \ell(v) = \mathrm{gen}\, i$ for some class
+$i$. Then, writing $H$ for the Cayley graph on the generating set
+$S = \{\mathrm{gen}\, 1, \dots, \mathrm{gen}\, t\}$,
+$$ d_H(\ell(u), \ell(v)) \le d_G(u, v) \quad \text{for all } u, v \in V(G). $$
+
+*Proof.* The symmetry hypothesis makes $S = \{\mathrm{gen}\, i\}$ a symmetric
+generating set, so $H = \operatorname{Cay}(Q, S)$ is defined. For any edge $uv$ there
+is a class $i$ with $\ell(u) - \ell(v) = \mathrm{gen}\, i \in S$, so $\ell$ is
+compatible with $S$. Apply Theorem 5.1. $\qquad\blacksquare$
+
+In a $2$-group the symmetry hypothesis is automatic, since $-\mathrm{gen}\, i =
+\mathrm{gen}\, i$. Applied to the canonical construction of Definition 2.5, Theorem
+5.2 yields the headline statement:
+
+> **The GF(2) quotient labeling from any edge partition of a connected graph is
+> distance non-increasing into the Cayley graph of the quotient on the class
+> generators.**
+
+## 6. The Correct Target: A Separating Triangle
+
+Why the Cayley graph rather than the coordinate hypercube? Because they genuinely
+disagree, and only the Cayley graph supports the theorem. We make the disagreement
+concrete on the smallest nontrivial example.
+
+**Setup.** Let $G = K_3$, the triangle on vertices $\{0,1,2\}$, with each of the
+three edges in its own class ($t = 3$). Traversing the triangle is a closed walk
+using all three classes once, forcing the single parity constraint $(1,1,1) \in C$;
+one checks $C = \langle(1,1,1)\rangle$ has dimension $1$. By Theorem 4.1, $\dim Q =
+3 - 1 = 2$, so $Q \cong \mathbb{F}_2^2$. Concretely the class generators and vertex
+labels are
+$$
+\mathrm{gen}\, 0 = (1,0), \quad \mathrm{gen}\, 1 = (0,1), \quad \mathrm{gen}\, 2 =
+(1,1),
+$$
+$$
+\ell(0) = (0,0), \quad \ell(1) = (1,0), \quad \ell(2) = (1,1).
+$$
+(These satisfy $\ell(0)-\ell(1) = (1,0) = \mathrm{gen}\, 0$, $\ell(1)-\ell(2) =
+(0,1) = \mathrm{gen}\, 1$, $\ell(0)-\ell(2) = (1,1) = \mathrm{gen}\, 2$, matching the
+three class assignments.)
+
+**Cayley reading (correct).** In $H = \operatorname{Cay}(\mathbb{F}_2^2,
+\{(1,0),(0,1),(1,1)\})$, all three nonzero vectors are generators, so *every* pair
+of distinct labels is adjacent — $H$ is itself a triangle $K_4$ minus nothing on the
+three occupied vertices, and in particular $d_H(\ell(0), \ell(2)) = 1$. Since the
+graph edge $\{0,2\}$ has $d_G(0,2) = 1$, the labeling matches exactly: no stretch.
+Theorem 5.2 guarantees $d_H(\ell(u),\ell(v)) \le d_G(u,v)$ for all pairs, as one may
+verify directly (indeed here equality holds on every pair).
+
+**Hamming reading (incorrect).** Now measure the same labels in the coordinate
+hypercube $\mathbb{Q}_2$ (the $2$-cube), where $x \sim y$ iff $x$ and $y$ differ in
+exactly one coordinate. Then $\ell(0) = (0,0)$ and $\ell(2) = (1,1)$ differ in *two*
+coordinates, so their Hamming distance is $2$. But $d_G(0,2) = 1$. The labeling
+therefore *stretches* the edge $\{0,2\}$ from distance $1$ to distance $2$:
+$$ d_{\mathbb{Q}_2}(\ell(0), \ell(2)) = 2 > 1 = d_G(0,2). $$
+
+**Moral.** The generator $\mathrm{gen}\, 2 = (1,1)$ is a *single* class token, hence
+a single Cayley step, even though it flips two coordinates. Hamming distance
+double-counts precisely the coordinate that the cycle folded. The Cayley graph is
+the geometry in which "one class token" always means "one step," and it is the only
+target for which the No-Stretching Theorem holds in general. This example pins down
+the correct formulation and shows the theorem is not vacuous: the naive alternative
+provably fails.
 
 ## 7. Algorithms
 
-We record the natural algorithms behind the construction, with complexity in terms
-of $n=|V|$, $m=|E|$, and $t$ (number of classes); $k = t - \mathrm{rank}(A)$.
+The constructions above are effective. We summarize the two central procedures.
 
-### 7.1 Computing the labels
+**Algorithm A — Quotient labeling from an edge partition.** Given $G$, a spanning
+tree $T$, and an edge coloring $c$, compute the vertex labels and the cycle-class
+parity space.
 
-Choose a spanning tree $T$ of $G$ rooted at $r$. The tree determines a label for
-every vertex by accumulating class basis vectors along tree paths; non-tree edges
-contribute the rows of the cycle-class parity matrix $A$, whose row space is
-quotiented out.
+1. Root the spanning tree $T$ at $r$; set $\ell(r) = 0$.
+2. Traverse $T$ (BFS/DFS). For a tree edge $uv$ of class $i$ discovered from $u$ to
+   $v$, set $\ell(v) = \ell(u) + e_i$ in $\mathbb{F}_2^t$.
+3. For each non-tree edge $uv$ of class $i$, the fundamental cycle contributes the
+   parity vector $\ell(u) + \ell(v) + e_i$ (all in $\mathbb{F}_2^t$); collect these
+   as the rows of $A$.
+4. Reduce $A$ to row echelon form over $\mathbb{F}_2$ to obtain $\operatorname{rank}
+   (A) = \dim C$; the labels in the quotient are $\ell(v) + C$, and $\dim Q =
+   t - \operatorname{rank}(A)$.
 
-```
-Algorithm RAW-LABELS(G, P, r):
-    fix spanning tree T of G rooted at r
-    label[r] := 0 in (Z/2)^t
-    for each vertex v in BFS/DFS order from r over T:
-        let e = tree edge from parent(v) to v, class j
-        label[v] := label[parent(v)] + e_j   (mod 2)
-    return label   # raw parity vectors in (Z/2)^t
-```
+Steps 1–3 are linear in $|V| + |E|$; step 4 is a Gaussian elimination over
+$\mathbb{F}_2$ costing $O(m \cdot t / w)$ machine words for $m$ non-tree edges and
+word size $w$ using bitset rows. The output certifies, via Theorem 5.2, a lower
+bound $d_H(\ell(u),\ell(v)) \le d_G(u,v)$.
 
-To pass to the quotient, compute a basis of $\mathcal{C}$ from the non-tree edges,
-Gaussian-eliminate over $\mathbb{Z}/2\mathbb{Z}$ to obtain $\mathrm{rank}(A)$ and a
-complementary coordinate system, and project each raw label onto the surviving
-$k = t-\mathrm{rank}(A)$ coordinates. Raw labels cost $O(nt)$; the elimination
-costs $O(m t^2 / 64)$ with bitset arithmetic.
+**Algorithm B — Cayley lower bound.** Given labels $\ell(u), \ell(v)$ and the
+generating set $S = \{\mathrm{gen}\, i\}$, compute $d_H(\ell(u),\ell(v))$, the
+minimum number of tokens (with repetition) summing to $\ell(u) - \ell(v)$ in $Q$.
+This is a shortest-word / covering-radius computation in the abelian group; for small
+$\dim Q$ it is a BFS on the (small) Cayley graph, and the returned value is a
+certified lower bound on $d_G(u,v)$.
 
-### 7.2 Hypercube distance
+## 8. Applications and Structural Consequences
 
-By Theorem 3.4, $d_{Q_k}(x,y)$ is just $\mathrm{H}(x,y) = \mathrm{popcount}(x
-\oplus y)$, computable in $O(k)$ time (or $O(k/64)$ with word-level XOR and
-population count).
+**One-sided distance oracles.** By Theorem 5.2, $d_H \circ (\ell \times \ell)$ never
+over-estimates $d_G$. Stored as $\dim Q = t - \operatorname{rank}(A)$ bits per
+vertex, it is a *certified lower-bound oracle*: any reported bound is valid, and
+validity is independent of the number of vertices. Because non-expansion is preserved
+under pointwise maxima, a family $\{\ell_k\}$ of such labelings (different colorings,
+different quotients) yields the stronger certificate $\max_k d_{H_k}(\ell_k(u),
+\ell_k(v)) \le d_G(u,v)$, still one-sided and still uncheatable by an adversarial
+index.
 
-### 7.3 Total defect
+**Corank as isometry defect.** The labeling contracts a distance exactly when a
+shortest $G$-path maps to a shorter $H$-walk, which happens only when a cycle folds
+two token-steps into one (as in the triangle). Consequently the labeling is an
+isometry — never contracting — precisely when the cycle-class parity space is
+trivial on the relevant subspaces; each independent nonzero cycle contributes one
+folded coordinate. The corank $t - \operatorname{rank}(A)$ thus interpolates between
+a lossless embedding (small rank) and a heavily compressed one-sided sketch (large
+rank).
 
-```
-Algorithm TOTAL-DEFECT(G, label):
-    D := all-pairs shortest paths of G        # BFS from each vertex
-    S := 0
-    for each unordered pair {u, v}:
-        S := S + ( D[u][v] - hamming(label[u], label[v]) )
-    return S
-```
+**Partial cubes and median graphs.** Graphs admitting an isometric embedding into a
+coordinate hypercube are the *partial cubes*, a class containing the median graphs
+that model solution spaces, phylogenetic structures, and concept lattices. The
+edge-partition/quotient construction is a lens on this theory: the finest partition
+for which every quotient labeling is isometric is conjectured to characterize the
+partial cubes, with the median graphs as fixed points of the refinement.
 
-All-pairs distances by repeated BFS cost $O(nm)$; the defect summation costs
-$O(n^2 k)$. Every summand is guaranteed nonnegative by Theorem 4.3, which doubles
-as a runtime sanity check: a negative term signals a bug in the labeling.
+## 9. Discussion
 
----
+The result decomposes cleanly into a purely combinatorial core (Theorem 3.2,
+contraction) and a purely algebraic wrapper (the Cayley target and the quotient
+dimension). This separation is deliberate and portable. The contraction principle
+applies to *any* edge-contracting map — graph minors, homomorphisms that may
+collapse edges, and colorings alike — and immediately generalizes the classical
+hypercube no-stretch statement from the coordinate hypercube to an arbitrary Cayley
+graph of an abelian $2$-group (and, mutatis mutandis, of any group with a symmetric
+generating set). The triangle of Section 6 is not a curiosity but a diagnostic: it
+locates exactly where the coordinate-hypercube intuition breaks and certifies that
+the Cayley formulation is the right one.
 
-## 8. Discussion and future directions
+## 10. Future Work
 
-The No-Stretching Theorem isolates the unconditional half of the partial-cube
-story. Its value lies in turning the distortion of a labeling into a single
-clean, always-nonnegative number — the contraction defect — that can be summed,
-compared, and minimized. Three lines of inquiry follow naturally.
+Three directions stand out. First, quantifying the isometry defect: proving that the
+maximum coordinate-hypercube stretch is a monotone function of $\operatorname{rank}
+(A)$, with isometry iff the rank vanishes on every induced even-cycle subspace.
+Second, scaling one-sided certification: bounding the multiplicative lower-bound
+quality achievable by a family of small-Cayley labelings using space independent of
+$|V|$. Third, the fixed-point theory: proving that iterating the construction with
+the finest isometric partition converges to the partial cubes, with median graphs as
+fixed points. Each is a concrete step from a clean structural principle toward
+deployable, verifiable distance sketches.
 
-**A cycle-space formula for the defect.** We conjecture that the total defect of a
-partition is zero exactly when the partition refines the canonical relation
-grouping "directly opposite" edges, and that in general the defect is governed by
-the dimension of the cycle space the partition fails to detect. The mechanism of
-Section 5 makes the cycle-collapsing local and countable — one edge moves the
-label by one direction — suggesting the global metric comparison reduces to a
-bookkeeping of cancellations amenable to an exact formula.
+## References (selected, standard)
 
-**An intrinsic characterization of partial cubes.** We conjecture that a graph
-admits a zero-defect partition iff it is a partial cube, and that among all such
-partitions there is a unique coarsest one, obtained by merging classes whenever
-the merge preserves zero defect. No-Stretching already supplies one inequality for
-free; being a partial cube is then equivalent to closing the remaining gap, and
-gap-closing is monotone under merging compatible classes, hinting at a tractable
-lattice of "good" partitions.
-
-**Concentration of random defects.** If the edges of a bounded-degree graph are
-colored into a fixed number of classes uniformly at random, we conjecture that the
-normalized contraction defect concentrates sharply around a deterministic value
-determined only by the degree distribution and the number of classes. The per-edge
-increment is an independent draw from a small abelian group, so labeled distance is
-a sum of weakly dependent steps, exactly the setting where martingale concentration
-is most effective.
-
-Each direction grows from the same observation: once distortion is known to be
-one-sided, its magnitude becomes a single invariant worth chasing.
-
----
-
-## 9. Conclusion
-
-We have shown that any labeling of a connected graph into a binary hypercube that
-changes by at most one coordinate along each edge is non-expansive: labeled
-distance never exceeds graph distance. The proof reduces, through the identity that
-hypercube distance equals Hamming distance, to a length-monotone push-forward of
-walks. The canonical source of such labelings — the parity quotient of an edge
-partition — places the result at the foundation of partial-cube theory, where it
-guarantees the one-sided distortion bound unconditionally and recasts the residual
-distortion as a well-behaved invariant ripe for further study.
+- D. Ž. Djoković, *Distance-preserving subgraphs of hypercubes*, J. Combin. Theory
+  Ser. B, 1973 (partial cubes).
+- H.-J. Bandelt and V. Chepoi, *Metric graph theory and geometry: a survey*
+  (median graphs and partial cubes).
+- C. Gavoille, D. Peleg, S. Pérennes, R. Raz, *Distance labeling in graphs*, J.
+  Algorithms, 2004 (distance labeling schemes).
