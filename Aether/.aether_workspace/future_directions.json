@@ -420,7 +420,102 @@
       "title": "Extremal t-star count in non k-edge hamiltonian graphs equals G(n,k-1,i*) construction"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "De Bruijn and Erd\u0151s (1948)",
+        "arXiv:math/0311226",
+        "Erd\u0151s\u2013Ginzburg\u2013Ziv theorem"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every positive integer r there exists a periodic recipe \u03c3 (i.e., a finite permutation of {1,\u2026,p} for some p) such that the asymptotic ratio \u03bc_r(\u03c3) equals 1.",
+      "domain_bridges": [
+        "combinatorics on words",
+        "graph theory",
+        "dynamical systems"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
       "id": "fd_0005",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem exists_recipe_unit_ratio (r : \u2115) : \u2203 (p : \u2115) (\u03c3 : Fin p \u2192 Fin p), \u03c3.Bijective \u2227 \u03bc_r \u03c3 = 1",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "constructive combinatorial design using balanced permutations",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.00775v1",
+      "source_path": "http://arxiv.org/abs/2607.00775v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T04:36:55.171353+00:00",
+      "title": "Existence of Recipes with Unit Ratio for any r"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Entringer et al. (1974)",
+        "Cori (1990) on abelian square-free words"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "In the constructed ternary word via the morphism \u03bc: \u03a3\u2083* \u2192 \u03a3\u2083* (with C = cbbbc), any parameterized square of length \u2265 2\u2113 must satisfy u = v under the given parameterization.",
+      "domain_bridges": [
+        "Parameterized equivalence relations",
+        "Morphic constructions",
+        "Nonrepetitive sequences"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0005",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem no_nonstandard_parameterized_squares (k : \u2115) (\u2113 : \u2115) (w : Fin (2*\u2113) \u2192 {a, b, c}) : \n  assumes Hw : w \u2208 subwords x_k \n        Hsquare : \u2113 \u2265 1 \n        Hparameterized : \u2203 f : {a, b, c}^\u2113 \u2192 {a, b, c}^\u2113 \n           (\u2200i j, f i = f j \u2192 w i = w j) \n  show \u2203 u v, w = u ++ v \u2227 u = v",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Structural induction on the morphism's iteration depth, verifying that any parameterized square of sufficient length inherits the standard square property through the morphism's constraints.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.00674v1",
+      "source_path": "http://arxiv.org/abs/2607.00674v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T04:37:52.628735+00:00",
+      "title": "All \u2113^+ parameterized squares in the morphically constructed ternary word are standard squares"
+    },
+    {
+      "id": "fd_0006",
       "title": "Prove Fermats Little Theorem for p=5",
       "domains": [
         "Novelty"
@@ -430,7 +525,7 @@
       "status": "available",
       "source": "github_injection",
       "github_issue": 7,
-      "timestamp": "2026-07-02T04:20:22.343946+00:00",
+      "timestamp": "2026-07-02T04:37:56.626899+00:00",
       "attempt_count": 0,
       "ambition_level": "grand_challenge"
     }

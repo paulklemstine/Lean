@@ -191,6 +191,59 @@
     "title": "Extremal t-star count in non k-edge hamiltonian graphs equals G(n,k-1,i*) construction"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "De Bruijn and Erdős (1948)",
+      "arXiv:math/0311226",
+      "Erdős–Ginzburg–Ziv theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer r there exists a periodic recipe σ (i.e., a finite permutation of {1,…,p} for some p) such that the asymptotic ratio μ_r(σ) equals 1.",
+    "domain_bridges": [
+      "combinatorics on words",
+      "graph theory",
+      "dynamical systems"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0005",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "constructive combinatorial design using balanced permutations",
+    "research_mode": "team",
+    "source_exp_id": "2607.00775v1",
+    "status": "available",
+    "timestamp": "2026-07-02T04:36:55.171353+00:00",
+    "title": "Existence of Recipes with Unit Ratio for any r"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Entringer et al. (1974)",
+      "Cori (1990) on abelian square-free words"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "In the constructed ternary word via the morphism μ: Σ₃* → Σ₃* (with C = cbbbc), any parameterized square of length ≥ 2ℓ must satisfy u = v under the given parameterization.",
+    "domain_bridges": [
+      "Parameterized equivalence relations",
+      "Morphic constructions",
+      "Nonrepetitive sequences"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0005",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Structural induction on the morphism's iteration depth, verifying that any parameterized square of sufficient length inherits the standard square property through the morphism's constraints.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00674v1",
+    "status": "available",
+    "timestamp": "2026-07-02T04:37:52.628735+00:00",
+    "title": "All ℓ^+ parameterized squares in the morphically constructed ternary word are standard squares"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",

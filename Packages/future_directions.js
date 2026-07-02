@@ -8,12 +8,12 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0005",
+    "id": "fd_0006",
     "priority_score": 1000.0,
     "research_mode": "",
     "source_exp_id": "",
     "status": "available",
-    "timestamp": "2026-07-02T04:20:22.343946+00:00",
+    "timestamp": "2026-07-02T04:37:56.626899+00:00",
     "title": "Prove Fermats Little Theorem for p=5"
   },
   {
@@ -119,6 +119,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:20:18.951683+00:00",
     "title": "Extremal t-star count in non k-edge hamiltonian graphs equals G(n,k-1,i*) construction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer r there exists a periodic recipe \u03c3 (i.e., a finite permutation of {1,\u2026,p} for some p) such that the asymptotic ratio \u03bc_r(\u03c3) equals 1.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0005",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00775v1",
+    "status": "available",
+    "timestamp": "2026-07-02T04:36:55.171353+00:00",
+    "title": "Existence of Recipes with Unit Ratio for any r"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the constructed ternary word via the morphism \u03bc: \u03a3\u2083* \u2192 \u03a3\u2083* (with C = cbbbc), any parameterized square of length \u2265 2\u2113 must satisfy u = v under the given parameterization.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0005",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00674v1",
+    "status": "available",
+    "timestamp": "2026-07-02T04:37:52.628735+00:00",
+    "title": "All \u2113^+ parameterized squares in the morphically constructed ternary word are standard squares"
   },
   {
     "consumed_by_exp_id": "",
