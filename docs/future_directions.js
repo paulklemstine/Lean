@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "7f18348a",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0016",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T06:58:36.429374+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -134,7 +120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Absolute Boundedness of Polynomial Diophantine Tuples"
   },
   {
-    "consumed_by_exp_id": "756bc0b6",
+    "consumed_by_exp_id": "",
     "description": "For all n, k \u2208 \u2115, the number of intervals [x,y] in the greedy 1\u2011Tamari poset on Dyck_n such that the lower endpoint x has exactly k valleys equals the number of bipartite planar maps with n+1 edges and exactly k black vertices.",
     "domains": [
       "Bridges"
@@ -143,7 +129,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:44:51.275254+00:00",
     "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined enumeration of bipartite planar maps by black vertex count"
   },
@@ -219,6 +205,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Extended 1-2-3 Conjecture Threshold is N = 7"
   },
   {
+    "consumed_by_exp_id": "7f18348a",
+    "description": "The conjecture posits that conflict constraints necessitate a bounded number of agents for fairness, directly linked to the first two levels of a graph's strong chromatic hierarchy.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0016",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01059v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T07:32:40.113656+00:00",
+    "title": "Conflicts and Fair Allocation Bounds"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
@@ -290,6 +290,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T06:58:32.634677+00:00",
     "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for r\u22653, if F is a nonempty r-uniform hypergraph, G is a 2-tightly connected r-uniform hypergraph with no homomorphism from G to F, then the function f_{F,G}(n) satisfies f_{F,G}(n) = \u0398((log n)^{\u03b2_F}) where \u03b2_F = max_{\u2205\u2260P\u2286\u2202\u2082F} e(P)/(v(P)-1). In particular, there exist constants c, C > 0 such that for infinitely many n, c (log n)^{\u03b2_F} \u2264 f_{F,G}(n) \u2264 C (log n)^{\u03b2_F}.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0022",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00732v1",
+    "status": "available",
+    "timestamp": "2026-07-02T07:33:15.641298+00:00",
+    "title": "Tightness of the Generalized Erd\u0151s--Rogers Bound for Hypergraphs"
   },
   {
     "consumed_by_exp_id": "",

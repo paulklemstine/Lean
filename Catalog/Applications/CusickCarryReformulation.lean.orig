@@ -52,7 +52,7 @@ binary expansion ends in at most one `1` — a non-trivial, checkable condition.
 The proof depends essentially on `s2_subadditive` (Legendre), not on `decide`.
 -/
 
-import Catalog.Applications.CusickSumOfDigits
+import Applications.CusickSumOfDigits
 
 open Nat
 

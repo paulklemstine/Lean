@@ -1,24 +1,5 @@
 [
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "7f18348a",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0016",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T06:58:36.429374+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -187,7 +168,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "756bc0b6",
+    "consumed_by_exp_id": "",
     "description": "For all n, k ∈ ℕ, the number of intervals [x,y] in the greedy 1‑Tamari poset on Dyck_n such that the lower endpoint x has exactly k valleys equals the number of bipartite planar maps with n+1 edges and exactly k black vertices.",
     "domain_bridges": [
       "enumerative combinatorics",
@@ -203,7 +184,7 @@
     "proof_strategy": "Use the recursive decomposition of greedy Tamari intervals into sum and product operations given in the paper and show that it matches the decomposition of bipartite planar maps by inserting a black vertex. This yields a size‑ and valley‑preserving bijection, which can be formalized by induction on n.",
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:44:51.275254+00:00",
     "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined enumeration of bipartite planar maps by black vertex count"
   },
@@ -335,6 +316,27 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "arXiv:math/12034567"
+    ],
+    "consumed_by_exp_id": "7f18348a",
+    "description": "The conjecture posits that conflict constraints necessitate a bounded number of agents for fairness, directly linked to the first two levels of a graph's strong chromatic hierarchy.",
+    "domain_bridges": "Strong Chromatic Relationships",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0016",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalization via example cases and theorems",
+    "research_mode": "team",
+    "source_exp_id": "2607.01059v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T07:32:40.113656+00:00",
+    "title": "Conflicts and Fair Allocation Bounds"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1.5",
       "Kane's work"
     ],
@@ -460,6 +462,31 @@
     "status": "available",
     "timestamp": "2026-07-02T06:58:32.634677+00:00",
     "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2405.00001"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for r≥3, if F is a nonempty r-uniform hypergraph, G is a 2-tightly connected r-uniform hypergraph with no homomorphism from G to F, then the function f_{F,G}(n) satisfies f_{F,G}(n) = Θ((log n)^{β_F}) where β_F = max_{∅≠P⊆∂₂F} e(P)/(v(P)-1). In particular, there exist constants c, C > 0 such that for infinitely many n, c (log n)^{β_F} ≤ f_{F,G}(n) ≤ C (log n)^{β_F}.",
+    "domain_bridges": [
+      "Ramsey theory",
+      "Extremal hypergraph theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0022",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use probabilistic constructions: take a random r-uniform hypergraph with edge probability p = n^{-α} for suitable α to avoid G as a subgraph while ensuring large induced F-free subsets via the deletion method and the hypergraph container method; then apply the first moment method to show existence of induced F-free subgraphs of size at least c (log n)^{β_F}. Matching the upper bound from the paper would establish tightness.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00732v1",
+    "status": "available",
+    "timestamp": "2026-07-02T07:33:15.641298+00:00",
+    "title": "Tightness of the Generalized Erdős--Rogers Bound for Hypergraphs"
   },
   {
     "ambition_level": "extension",
