@@ -3,6 +3,20 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "4770cef4",
+    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0043",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T18:35:34.334583+00:00",
+    "title": "Prove Fermats Little Theorem for p=5"
+  },
+  {
     "consumed_by_exp_id": "bb37b806",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -90,7 +104,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in NumberTheory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "076754c3",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -100,7 +114,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.030558+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -525,7 +539,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Recurrence for Effective Resistance in G_N^{(2)}"
   },
   {
-    "consumed_by_exp_id": "3e52c27d",
+    "consumed_by_exp_id": "",
     "description": "For each dimension d \u2265 1, the upper bound on the number of vertices of a d-dimensional lattice polytope in terms of its volume given by Andrew's theorem is asymptotically optimal. Specifically, there exists a sequence of lattice polytopes with volumes V_n \u2192 \u221e such that the number of vertices m_n satisfies lim sup (m_n / V_n^{d/(d-1)}) = c_d, where c_d is the constant from Andrew's theorem.",
     "domains": [
       "Cryptography"
@@ -534,7 +548,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T17:12:36.766138+00:00",
     "title": "Andrew's theorem is asymptotically tight for maximal vertex counts of lattice polytopes"
   },
@@ -583,12 +597,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the natural bijection \u03c6 from the set of B-orbits on B_n \u00d7 P^(n-1) to its image in W_(n+1) \u00d7 W_(n+1), the closure relation on orbits coincides with the restriction of the product Bruhat order: O\u2081 \u2286 O\u0305\u2082 iff \u03c6(O\u2081) \u2264 \u03c6(O\u2082) in (W_(n+1), \u2264_Bruhat) \u00d7 (W_(n+1), \u2264_Bruhat).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0042",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30478v1",
+    "status": "available",
+    "timestamp": "2026-07-02T18:30:28.722983+00:00",
+    "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0042",
+    "id": "fd_0044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -602,7 +630,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0043",
+    "id": "fd_0045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
@@ -617,7 +645,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0044",
+    "id": "fd_0046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
@@ -631,7 +659,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0045",
+    "id": "fd_0047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -646,7 +674,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0046",
+    "id": "fd_0048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -655,17 +683,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
   },
   {
-    "consumed_by_exp_id": "debcecca",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for r\u22653, if F is a nonempty r-uniform hypergraph, G is a 2-tightly connected r-uniform hypergraph with no homomorphism from G to F, then the function f_{F,G}(n) satisfies f_{F,G}(n) = \u0398((log n)^{\u03b2_F}) where \u03b2_F = max_{\u2205\u2260P\u2286\u2202\u2082F} e(P)/(v(P)-1). In particular, there exist constants c, C > 0 such that for infinitely many n, c (log n)^{\u03b2_F} \u2264 f_{F,G}(n) \u2264 C (log n)^{\u03b2_F}.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0047",
+    "id": "fd_0049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00732v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T07:33:15.641298+00:00",
     "title": "Tightness of the Generalized Erd\u0151s--Rogers Bound for Hypergraphs"
   },
@@ -675,7 +703,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0048",
+    "id": "fd_0050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00674v1",
@@ -689,7 +717,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0049",
+    "id": "fd_0051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -704,7 +732,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0050",
+    "id": "fd_0052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00367v1",
@@ -719,7 +747,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0051",
+    "id": "fd_0053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00238v1",
@@ -734,7 +762,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0052",
+    "id": "fd_0054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00212v1",
@@ -748,7 +776,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0053",
+    "id": "fd_0055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00352v1",
@@ -763,7 +791,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0054",
+    "id": "fd_0056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31900v1",
@@ -778,7 +806,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0055",
+    "id": "fd_0057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31894v1",
@@ -793,7 +821,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0056",
+    "id": "fd_0058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
@@ -807,7 +835,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0057",
+    "id": "fd_0059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31815v1",
@@ -822,7 +850,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0058",
+    "id": "fd_0060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -837,7 +865,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0059",
+    "id": "fd_0061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
@@ -851,7 +879,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0060",
+    "id": "fd_0062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v1",
@@ -866,7 +894,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0061",
+    "id": "fd_0063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -880,7 +908,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0062",
+    "id": "fd_0064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31441v1",
@@ -895,7 +923,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0063",
+    "id": "fd_0065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -910,7 +938,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0064",
+    "id": "fd_0066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31075v1",
@@ -924,7 +952,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0065",
+    "id": "fd_0067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30950v1",
@@ -938,7 +966,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0066",
+    "id": "fd_0068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
@@ -953,7 +981,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0067",
+    "id": "fd_0069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30567v1",
@@ -967,7 +995,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0068",
+    "id": "fd_0070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
@@ -981,7 +1009,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0069",
+    "id": "fd_0071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
@@ -996,7 +1024,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0070",
+    "id": "fd_0072",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v2",
@@ -1010,13 +1038,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0071",
+    "id": "fd_0073",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30505v1",
     "status": "available",
     "timestamp": "2026-07-02T18:12:21.463153+00:00",
     "title": "Conjecture on the asymptotic growth of \u03c7_S(n,\u230an/2\u230b,P_4)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The function h(\u03b1, \u03b2) := density{n \u2208 \u2115 : \u2203 d|n, d \u2208 [n^\u03b1, n^\u03b2]} is real-analytic on the domain {(\u03b1, \u03b2) \u2208 \u211d\u00b2 : 0 < \u03b1 < \u03b2 < 1, \u03b2 - \u03b1 > 0.02} and continuous on its closure {\u03b2 - \u03b1 \u2265 0.02}.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0074",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30428v1",
+    "status": "available",
+    "timestamp": "2026-07-02T18:35:30.838855+00:00",
+    "title": "Analyticity of the localized divisor density function"
   },
   {
     "consumed_by_exp_id": "",
