@@ -1378,41 +1378,49 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
+      "attempt_count": 0,
+      "catalog_references": [
+        "Even, N., et al. (2004). 'On the Feedback Arc Set Problem'.",
+        "Seymour, P. D. (1995). 'Matching structure in digraphs'.",
+        "Chen, J., et al. (2020). 'Structural characterization of cycle Mengerian tournaments'."
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "2336d5ed",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-      "domain_bridges": [],
+      "description": "Conjecture that the problem of deciding whether a tournament is cycle Mengerian (CM) is NP‑complete, i.e. there exists a polynomial‑time many‑to‑one reduction from 3‑SAT to the CM decision problem. Equivalently, there is a polynomial‑time computable mapping `f` from Boolean formulas to tournaments such that a formula `φ` is satisfiable if and only if the tournament `f φ` is CM.",
+      "domain_bridges": [
+        "Graph Theory",
+        "Integer Programming",
+        "Algorithmic Complexity"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Novelty"
+        "Pythagorean"
       ],
-      "github_issue": 7,
+      "github_issue": 0,
       "id": "fd_0030",
-      "last_attempt_time": "2026-07-02T12:49:36.511954+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem is_CM_decision_NP_complete : ∃ f : Formula → Tournament, (∀ φ, φ.satisfiable ↔ is_CM (f φ)) := sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 1000.0,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct an explicit polynomial‑time reduction from 3‑SAT to the CM decision problem by building a tournament gadget for each variable and clause. The gadgets force that a minimum feedback arc set equals a maximum cycle packing exactly when the Boolean formula is satisfiable. Verify that the resulting tournament is CM if and only if the formula has a satisfying assignment, thus completing the reduction.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source": "github_injection",
-      "source_exp_id": "github",
-      "source_path": "github",
+      "source": "",
+      "source_exp_id": "2606.31565v1",
+      "source_path": "http://arxiv.org/abs/2606.31565v1",
       "status": "in_progress",
       "thread_id": "",
-      "timestamp": "2026-07-02T12:49:34.939845+00:00",
-      "title": "Prove Fermats Little Theorem for p=5"
+      "timestamp": "2026-07-02T13:13:32.363565+00:00",
+      "title": "NP‑Completeness of the Cycle Mengerian Tournament Decision Problem"
     },
     {
       "ambition_level": "extension",
@@ -2260,6 +2268,46 @@
       "title": "Torsion local-global compatibility at p = ℓ for GL_n over CM fields"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "A 7-dimensional 0/1-polytope with vertices violating central symmetry while satisfying Ziegler's conditions.",
+      "domain_bridges": "central_symmetry",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0049",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "existence_proof",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "exhaustive enumeration",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2606.31640v1",
+      "source_path": "http://arxiv.org/abs/2606.31640v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T13:14:19.130414+00:00",
+      "title": "Non-Central Symmetric 7-D Polytope"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -2303,7 +2351,5 @@
   "pruned": [],
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
-  "selection_log": [
-    "famous_subtask"
-  ]
+  "selection_log": []
 }

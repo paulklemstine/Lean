@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "2336d5ed",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0030",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T12:49:34.939845+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "consumed_by_exp_id": "4b429121",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -423,6 +409,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Planar Graphs and 4-Choosability"
   },
   {
+    "consumed_by_exp_id": "2336d5ed",
+    "description": "Conjecture that the problem of deciding whether a tournament is cycle Mengerian (CM) is NP\u2011complete, i.e. there exists a polynomial\u2011time many\u2011to\u2011one reduction from 3\u2011SAT to the CM decision problem. Equivalently, there is a polynomial\u2011time computable mapping `f` from Boolean formulas to tournaments such that a formula `\u03c6` is satisfiable if and only if the tournament `f \u03c6` is CM.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0030",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31565v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T13:13:32.363565+00:00",
+    "title": "NP\u2011Completeness of the Cycle Mengerian Tournament Decision Problem"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
@@ -685,6 +685,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = \u2113 for GL_n over CM fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A 7-dimensional 0/1-polytope with vertices violating central symmetry while satisfying Ziegler's conditions.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0049",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31640v1",
+    "status": "available",
+    "timestamp": "2026-07-02T13:14:19.130414+00:00",
+    "title": "Non-Central Symmetric 7-D Polytope"
   },
   {
     "consumed_by_exp_id": "",

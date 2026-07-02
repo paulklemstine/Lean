@@ -1,24 +1,5 @@
 [
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2336d5ed",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0030",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T12:49:34.939845+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "4b429121",
@@ -683,6 +664,33 @@
     "title": "Planar Graphs and 4-Choosability"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Even, N., et al. (2004). 'On the Feedback Arc Set Problem'.",
+      "Seymour, P. D. (1995). 'Matching structure in digraphs'.",
+      "Chen, J., et al. (2020). 'Structural characterization of cycle Mengerian tournaments'."
+    ],
+    "consumed_by_exp_id": "2336d5ed",
+    "description": "Conjecture that the problem of deciding whether a tournament is cycle Mengerian (CM) is NP‑complete, i.e. there exists a polynomial‑time many‑to‑one reduction from 3‑SAT to the CM decision problem. Equivalently, there is a polynomial‑time computable mapping `f` from Boolean formulas to tournaments such that a formula `φ` is satisfiable if and only if the tournament `f φ` is CM.",
+    "domain_bridges": [
+      "Graph Theory",
+      "Integer Programming",
+      "Algorithmic Complexity"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0030",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an explicit polynomial‑time reduction from 3‑SAT to the CM decision problem by building a tournament gadget for each variable and clause. The gadgets force that a minimum feedback arc set equals a maximum cycle packing exactly when the Boolean formula is satisfiable. Verify that the resulting tournament is CM if and only if the formula has a satisfying assignment, thus completing the reduction.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31565v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T13:13:32.363565+00:00",
+    "title": "NP‑Completeness of the Cycle Mengerian Tournament Decision Problem"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem 1.5",
@@ -1148,6 +1156,25 @@
     "status": "available",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = ℓ for GL_n over CM fields"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "A 7-dimensional 0/1-polytope with vertices violating central symmetry while satisfying Ziegler's conditions.",
+    "domain_bridges": "central_symmetry",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0049",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "exhaustive enumeration",
+    "research_mode": "team",
+    "source_exp_id": "2606.31640v1",
+    "status": "available",
+    "timestamp": "2026-07-02T13:14:19.130414+00:00",
+    "title": "Non-Central Symmetric 7-D Polytope"
   },
   {
     "ambition_level": "extension",
