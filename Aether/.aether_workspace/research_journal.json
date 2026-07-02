@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "57a09ecd",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings in `Catalog/EML/FixedPointExistenceDichotomy.lean`\n(sharp existence iff `c ≥ exp(a)·(1−a)`) and `Catalog/EML/FixedPoi",
-      "quality_score": 0.31055800000000006,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T07:50:35",
-      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-    },
-    {
       "cycle_id": "08b15f3b",
       "domain": "Applications",
       "key_insight": "# Future Directions — Effective Computability of Erdős Zero-Sum Thresholds\n\nDerived from this cycle's findings (`davenport_zero_sum`, `card_pi_zmod`,\n`effective_threshold_prod`, `egz_multimodulus`), w",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-07-02T12:22:49",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
+    },
+    {
+      "cycle_id": "e3b2c2b9",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's study of the congruence \"the fifth power of an\ninteger differs from the integer itself by a multiple of five\", together with\nits finite-field explanation",
+      "quality_score": 0.5254,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-02T12:46:30",
+      "title": "Prove Fermats Little Theorem for p=5"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7303200000000001
     }
   ],
-  "last_updated": "2026-07-02T12:22:49",
+  "last_updated": "2026-07-02T12:46:30",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "57fbcb2f",
-        "quality": 0.48476875555555554,
-        "theorems": 16,
-        "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers)"
-      },
-      {
         "cycle_id": "2b44c5bb",
         "quality": 0.6913,
         "theorems": 6,
@@ -3823,6 +3817,12 @@
         "quality": 0.41286596521739133,
         "theorems": 8,
         "title": "Goldbach Verification Framework"
+      },
+      {
+        "cycle_id": "e3b2c2b9",
+        "quality": 0.5254,
+        "theorems": 14,
+        "title": "Prove Fermats Little Theorem for p=5"
       }
     ],
     "Pythagorean": [
