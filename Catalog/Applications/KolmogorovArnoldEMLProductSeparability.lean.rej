@@ -1,0 +1,13 @@
+--- KolmogorovArnoldEMLProductSeparability.lean
++++ KolmogorovArnoldEMLProductSeparability.lean
+@@ -30,8 +30,8 @@
+ ## Lab Notes — see `-- !-- Lab Notes -- !--` block below.
+ -/
+ import Mathlib
+-import Applications.EMLTermAlgebra
+-import Applications.KolmogorovArnoldEML
++import Catalog.Applications.EMLTermAlgebra
++import Catalog.Applications.KolmogorovArnoldEML
+ 
+ 
+ 

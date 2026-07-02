@@ -1,5 +1,24 @@
 [
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "a6669fde",
+    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0018",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T07:57:47.628899+00:00",
+    "title": "Prove Fermats Little Theorem for p=5"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -41,7 +60,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "82e2c894",
+    "consumed_by_exp_id": "",
     "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domain_bridges": [],
     "domains": [
@@ -54,14 +73,14 @@
     "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "813a28d3",
+    "consumed_by_exp_id": "",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domain_bridges": [],
     "domains": [
@@ -74,7 +93,7 @@
     "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.027554+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
   },
@@ -100,7 +119,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "de16211e",
+    "consumed_by_exp_id": "",
     "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domain_bridges": [],
     "domains": [
@@ -112,14 +131,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4055f798",
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
     "domain_bridges": [],
     "domains": [
@@ -132,7 +151,7 @@
     "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.030558+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -241,7 +260,7 @@
     "catalog_references": [
       "arXiv:2310.12345 (hypothetical reference for the paper)"
     ],
-    "consumed_by_exp_id": "a0eabca0",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l² satisfying specific convolution inequalities such that their weighted average achieves the coefficient γ₀=0.94601 in the bound F(N) ≤ N^{1/2} + γ₀N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domain_bridges": [
       "l² spaces",
@@ -257,7 +276,7 @@
     "proof_strategy": "Construct a minimal vector family and verify convolution bounds via exact arithmetic",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -318,7 +337,7 @@
     "catalog_references": [
       "arXiv:math/12034567"
     ],
-    "consumed_by_exp_id": "7f18348a",
+    "consumed_by_exp_id": "",
     "description": "The conjecture posits that conflict constraints necessitate a bounded number of agents for fairness, directly linked to the first two levels of a graph's strong chromatic hierarchy.",
     "domain_bridges": "Strong Chromatic Relationships",
     "domains": [
@@ -330,9 +349,32 @@
     "proof_strategy": "Formalization via example cases and theorems",
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T07:32:40.113656+00:00",
     "title": "Conflicts and Fair Allocation Bounds"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Erdos–Ko–Rado",
+      "Gemil Gerbner et al."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The conjecture posits that the maximum number of disjoint t-star subgraphs in a graph with n vertices is bounded by n^{t-1}. This aligns with the extremal nature of such configurations, though testing its falsifiability requires verifying the bound against extremal examples.",
+    "domain_bridges": "none",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0017",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Direct contradiction via edge count comparison",
+    "research_mode": "team",
+    "source_exp_id": "2607.00770v1",
+    "status": "available",
+    "timestamp": "2026-07-02T07:56:03.396775+00:00",
+    "title": "Extremal Graph Constraint"
   },
   {
     "ambition_level": "extension",
@@ -347,7 +389,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0017",
+    "id": "fd_0019",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct arithmetic verification",
@@ -375,7 +417,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0018",
+    "id": "fd_0020",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the dominant oscillatory term in the asymptotic expansion near ω and show that its phase enforces sign alternation, except when phase cancellation occurs finitely often or on a sparse set.",
@@ -401,7 +443,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0019",
+    "id": "fd_0021",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive structure of table decompositions",
@@ -417,7 +459,7 @@
       "cover1965geometrical",
       "feng2023function"
     ],
-    "consumed_by_exp_id": "e6125fc1",
+    "consumed_by_exp_id": "",
     "description": "For a d-dimensional submanifold E of ℝ^M and a smooth injective map Φ:E→ℝ^{M'}, any N-point set F⊂E in general position satisfies Kruskal rank s ≤ d+1. This implies the Φ-separable dichotomy count C_F(N) is bounded by Cover's counting function C(N,d+M'+1), generalizing high-dimensional bounds to low-dimensional data structures.",
     "domain_bridges": [
       "Differential Geometry (Submanifolds)",
@@ -427,13 +469,13 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0020",
+    "id": "fd_0022",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Characterize smooth injective maps on submanifolds via local charts. 2) Bound the Kruskal rank using dimension arguments: each additional point can increase rank by at most 1 until reaching d+1. 3) Relate this rank constraint to dichotomy counts via Cover's lemma. 4) Verify tightness with synthetic low-dimensional examples.",
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:40:25.125636+00:00",
     "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
   },
@@ -453,7 +495,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0021",
+    "id": "fd_0023",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the mod p local Langlands correspondence to relate \\bar{V}_{k,a_p} to smooth mod p representations of GL_2(ℚ_p), then apply the classification of irreducible smooth mod p representations (principal series, special, and supersingular) together with explicit Breuil module calculations for small slopes and a patching argument to extend the result to all fractional slopes < p-1.",
@@ -478,7 +520,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0022",
+    "id": "fd_0024",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic constructions: take a random r-uniform hypergraph with edge probability p = n^{-α} for suitable α to avoid G as a subgraph while ensuring large induced F-free subsets via the deletion method and the hypergraph container method; then apply the first moment method to show existence of induced F-free subgraphs of size at least c (log n)^{β_F}. Matching the upper bound from the paper would establish tightness.",
@@ -487,6 +529,32 @@
     "status": "available",
     "timestamp": "2026-07-02T07:33:15.641298+00:00",
     "title": "Tightness of the Generalized Erdős--Rogers Bound for Hypergraphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2300.12345",
+      "Cori 1990 Abelian",
+      "Entringer et al. 1974"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any integer k ≥ 3 there is no infinite word over a binary alphabet that contains no k⁺‑parameterized squares (i.e., no squares of length at least 2k whose halves are parameterized‑equivalent). Equivalently, every infinite binary word contains a k⁺‑parameterized square for all k ≥ 3. This conjecture is falsifiable: finding a single infinite binary word that avoids k⁺‑parameterized squares for some k ≥ 3 would refute it.",
+    "domain_bridges": [
+      "formal_language_theory",
+      "combinatorics_on_words"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0025",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Assume a counterexample binary word exists and analyze the combinatorial constraints imposed by the parameterized equivalence relation. Use a pumping‑style argument or an infinite descent on the lengths of minimal forbidden factors to derive a contradiction, exploiting the limited alphabet size and the requirement that all squares must have length ≥ 2k. Alternatively, construct a finite automaton encoding the forbidden factor set and show that it accepts only finite words, contradicting infinitude.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00674v1",
+    "status": "available",
+    "timestamp": "2026-07-02T07:57:43.823405+00:00",
+    "title": "Nonexistence of Infinite 3⁺–Parameterized‑Square‑Free Binary Words"
   },
   {
     "ambition_level": "extension",
@@ -530,7 +598,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8b7f43f1",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -542,7 +610,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },

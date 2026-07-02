@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8e92c627",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Stack-Sorting Depth\n\nFollow-up conjectures arising from `Catalog/Applications/StackSortingDepth.lean`.\nEach is precise and falsifiable; the small-`n` instances are already machin",
-      "quality_score": 0.5924299999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T05:38:48",
-      "title": "Exact asymptotic value of the average stack-sorting depth"
-    },
-    {
       "cycle_id": "7f4f0e8d",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nBold, falsifiable conjectures distilled from this cycle (primitive-divisor schema mined\nfrom Carmichael's theorem + Erdős–Straus parametric families).\n\n## 1. Universal Carmichael",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-07-02T07:32:05",
       "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
+    },
+    {
+      "cycle_id": "756bc0b6",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, testable conjectures emerging from the study of the valley statistic on lower\nendpoints of greedy Tamari intervals and its relation to bipartite planar maps.\n\n## 1. The refi",
+      "quality_score": 0.389,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-07-02T07:55:33",
+      "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined enumeration of biparti"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7859200000000002
     }
   ],
-  "last_updated": "2026-07-02T07:32:05",
+  "last_updated": "2026-07-02T07:55:33",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "83afa678",
-        "quality": 0.60704,
-        "theorems": 12,
-        "title": "Fourier Analysis on Finite Groups"
-      },
-      {
         "cycle_id": "adbfcd0f",
         "quality": 0.45705761904761916,
         "theorems": 1,
@@ -3141,6 +3135,12 @@
         "quality": 0.6341419999999999,
         "theorems": 2,
         "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
+      },
+      {
+        "cycle_id": "756bc0b6",
+        "quality": 0.389,
+        "theorems": 0,
+        "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined en"
       }
     ],
     "Bridges": [

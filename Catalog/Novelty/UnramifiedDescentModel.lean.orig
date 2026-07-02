@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.UnramifiedDescentObstruction
+import Novelty.UnramifiedDescentObstruction
 
 /-!
 # A concrete non-vacuous model of unramified = descent obstruction

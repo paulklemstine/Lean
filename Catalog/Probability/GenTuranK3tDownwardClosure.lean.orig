@@ -12,7 +12,7 @@ All proofs are elementary consequences of subgraph monotonicity; the heavy doubl
 is reused as a black box via `GenTuranK3t.KabCopies_cubic_of_K3tFree`.
 -/
 import Mathlib
-import Catalog.Novelty.GenTuranK3tUpperBound
+import Novelty.GenTuranK3tUpperBound
 
 open Finset
 

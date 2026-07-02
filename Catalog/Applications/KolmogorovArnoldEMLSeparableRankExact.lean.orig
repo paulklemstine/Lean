@@ -25,7 +25,7 @@ sum-of-products Kolmogorov–Arnold superposition `f x y = ∑_{k<r} a_k(x)·b_k
 ## Lab Notes — see `-- !-- Lab Notes -- !--` block below.
 -/
 import Mathlib
-import Catalog.Applications.KolmogorovArnoldEMLSeparableRank
+import Applications.KolmogorovArnoldEMLSeparableRank
 
 open Real Matrix Finset
 

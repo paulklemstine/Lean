@@ -1,4 +1,4 @@
-import Catalog.Applications.LagrangeRatioSpectrum.Core
+import Applications.LagrangeRatioSpectrum.Core
 
 /-!
 # Lagarias–Shallit lower ratio bound for diagonal dilations
