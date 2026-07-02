@@ -51,7 +51,7 @@ not a sampling effect.  The bound itself is non-vacuous: `5/8` clears `17/32` by
 `3/32 > 0`.
 -/
 
-import Catalog.Applications.CusickPeriodicity
+import Applications.CusickPeriodicity
 
 open Nat Finset
 

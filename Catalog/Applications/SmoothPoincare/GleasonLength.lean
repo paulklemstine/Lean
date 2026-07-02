@@ -49,7 +49,7 @@ Failure analysis: ℕ-subtraction in the exponent `n - wt y` is tamed by the alg
 -/
 
 import Mathlib
-import Catalog.Applications.SmoothPoincare.SelfDualLength
+import Applications.SmoothPoincare.SelfDualLength
 
 open scoped BigOperators
 

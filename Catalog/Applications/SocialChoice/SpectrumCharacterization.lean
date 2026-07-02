@@ -42,7 +42,7 @@ enlarged by multi-atom frames — the structural completion of the saturation
 contrast and the engine of non-finite-axiomatization.  See `FUTURE_DIRECTIONS.md`.
 -- !-- Lab Notes -- !--
 -/
-import Catalog.Applications.SocialChoice.OrderSpectrum
+import Applications.SocialChoice.OrderSpectrum
 
 namespace SocialChoice
 

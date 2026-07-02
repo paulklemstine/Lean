@@ -51,7 +51,7 @@ density over all `[0,256m)` is genuine via periodicity.  Bound vacuous?  No — 
 margin over DKS is `171/256 − 513/1024 = 171/256 − 0.5009… ≈ 0.17`.
 -/
 
-import Catalog.Applications.CusickPeriodicity
+import Applications.CusickPeriodicity
 
 open Nat Finset
 
