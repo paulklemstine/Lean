@@ -654,7 +654,6 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 prod_prompt = continuation_check.get("prod_prompt", "Please continue your work to completion.")
                 print(f"[Tick] Prodding job {job.job_id[:8]} to continue (Prod {job.prod_count}): {prod_prompt}")
                 try:
-                    import asyncio
                     # Resume the existing project on the server
                     await extractor.aristotle.resume_project(job.project_id, prod_prompt)
                     # Reset status to put it back in the polling queue
