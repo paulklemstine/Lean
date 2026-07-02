@@ -477,6 +477,9 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         # Reload inflight state from disk in case another process updated it
         # while we were waiting for the lock.
         extractor._load_inflight()
+        # Also reload the long-lived FutureDirectionsManager so it doesn't overwrite the disk file with stale memory
+        if hasattr(extractor, "fd_manager"):
+            extractor.fd_manager._load()
         # Phase 0: reset per-tick LLM call accounting.
         try:
             if hasattr(extractor, "pi_agent") and extractor.pi_agent is not None:
