@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "33ce8829",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0044",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T18:57:54.382398+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "consumed_by_exp_id": "6af69f22",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -553,7 +539,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Andrew's theorem is asymptotically tight for maximal vertex counts of lattice polytopes"
   },
   {
-    "consumed_by_exp_id": "0a63402c",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any normalized Hecke eigenform f of even weight for SL(2,Z), any integer j \u2265 1, and any even m with 2 \u2264 m \u2264 12, the number of sign changes of the j-th symmetric power L-function coefficient \u03bb_sym^j f(n) as n runs over integers representable as a sum of m squares up to x is at least C\u00b7x/(log x) for some constant C>0 depending only on f, j, and m.",
     "domains": [
       "Pythagorean"
@@ -562,7 +548,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T17:31:40.243045+00:00",
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
   },
@@ -622,6 +608,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
+  },
+  {
+    "consumed_by_exp_id": "33ce8829",
+    "description": "For any positive integers k and r \u2264 k, the minimal n\u2080 such that every k-uniform hypergraph on n \u2265 n\u2080 vertices with \u03b4_r \u2265 1 contains a Berge-Ct^r for all t \u2265 r+1 is exactly k + 1.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0044",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30418v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T19:19:02.169058+00:00",
+    "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with \u03b4_r \u2265 1"
   },
   {
     "consumed_by_exp_id": "37903e54",
@@ -1089,6 +1089,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T18:57:50.869620+00:00",
     "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any fixed prime q there exist infinitely many pairs (t,p) with p prime, p\u2260q such that p divides A_t^{(q)} and s_q((q-1)p) \u2265 (q-1)t, where A_t^{(q)} = binom(q^{t+1}, q^t) - q^{q^t}. This would yield infinitely many n = q^t p satisfying binom(qn,n) \u2261 q^n (mod n).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0077",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30232v1",
+    "status": "available",
+    "timestamp": "2026-07-02T19:19:52.418155+00:00",
+    "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
   },
   {
     "consumed_by_exp_id": "",

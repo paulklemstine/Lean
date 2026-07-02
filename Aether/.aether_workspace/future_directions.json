@@ -341,7 +341,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
@@ -358,7 +358,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0007",
-      "last_attempt_time": "2026-07-02T18:58:13.107616+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -464,7 +464,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -480,7 +480,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0010",
-      "last_attempt_time": "2026-07-02T18:58:07.738609+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -1816,7 +1816,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "0a63402c",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -1847,7 +1847,7 @@
       "source": "",
       "source_exp_id": "2606.30603v1",
       "source_path": "http://arxiv.org/abs/2606.30603v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T17:31:40.243045+00:00",
       "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
@@ -2044,44 +2044,49 @@
       "title": "Limit Distribution of Descendants in Random d-DAGs"
     },
     {
-      "ambition_level": "grand_challenge",
+      "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
+      "attempt_count": 0,
+      "catalog_references": [
+        "Lu and Wang [2021]"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "33ce8829",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-      "domain_bridges": [],
+      "description": "For any positive integers k and r ≤ k, the minimal n₀ such that every k-uniform hypergraph on n ≥ n₀ vertices with δ_r ≥ 1 contains a Berge-Ct^r for all t ≥ r+1 is exactly k + 1.",
+      "domain_bridges": [
+        "extremal hypergraph theory",
+        "cycle enumeration"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Novelty"
+        "Bridges"
       ],
-      "github_issue": 7,
+      "github_issue": 0,
       "id": "fd_0044",
-      "last_attempt_time": "2026-07-02T18:57:56.920921+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "∀k, r ≤ k, ∀H : k-uniform hypergraph with δ_r(H) ≥ 1, ∃n₀ = k + 1 such that for all n ≥ n₀, H contains Berge-Ct^r for all t ≥ r+1",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 1000.0,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extremal combinatorics and induction",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source": "github_injection",
-      "source_exp_id": "github",
-      "source_path": "github",
+      "source": "",
+      "source_exp_id": "2606.30418v1",
+      "source_path": "http://arxiv.org/abs/2606.30418v1",
       "status": "in_progress",
       "thread_id": "",
-      "timestamp": "2026-07-02T18:57:54.382398+00:00",
-      "title": "Prove Fermats Little Theorem for p=5"
+      "timestamp": "2026-07-02T19:19:02.169058+00:00",
+      "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with δ_r ≥ 1"
     },
     {
       "ambition_level": "extension",
@@ -3582,6 +3587,53 @@
       "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2305.12345",
+        "OEIS:A080469",
+        "GuedesMachado2023"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that for any fixed prime q there exist infinitely many pairs (t,p) with p prime, p≠q such that p divides A_t^{(q)} and s_q((q-1)p) ≥ (q-1)t, where A_t^{(q)} = binom(q^{t+1}, q^t) - q^{q^t}. This would yield infinitely many n = q^t p satisfying binom(qn,n) ≡ q^n (mod n).",
+      "domain_bridges": [
+        "math.CO",
+        "math.NT"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0077",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem infinite_solutions_q (q : ℕ) [hpq : Nat.Prime q] : ∃ (t p : ℕ), Nat.Prime p ∧ p ≠ q ∧ p ∣ (Nat.choose (q ^ (t + 1)) (q ^ t) - q ^ (q ^ t)) ∧ s_q ((q - 1) * p) ≥ (q - 1) * t",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "search_and_pigeonhole",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2606.30232v1",
+      "source_path": "http://arxiv.org/abs/2606.30232v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T19:19:52.418155+00:00",
+      "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -3625,8 +3677,5 @@
   "pruned": [],
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
-  "selection_log": [
-    "famous_subtask",
-    "famous_subtask"
-  ]
+  "selection_log": []
 }

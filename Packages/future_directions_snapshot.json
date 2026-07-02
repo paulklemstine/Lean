@@ -1,24 +1,5 @@
 [
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "33ce8829",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0044",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T18:57:54.382398+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "6af69f22",
@@ -930,7 +911,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "0a63402c",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any normalized Hecke eigenform f of even weight for SL(2,Z), any integer j ≥ 1, and any even m with 2 ≤ m ≤ 12, the number of sign changes of the j-th symmetric power L-function coefficient λ_sym^j f(n) as n runs over integers representable as a sum of m squares up to x is at least C·x/(log x) for some constant C>0 depending only on f, j, and m.",
     "domain_bridges": [
       "Automorphic forms",
@@ -946,7 +927,7 @@
     "proof_strategy": "Use an asymptotic formula for the second moment of λ_sym^j f(n) sums of m squares, together with spectral sieve to obtain a power-saving term moment; then apply a Turán-type lemma to obtain a power-saving bound on the variance of λ_sym^j f(n) over sums of m squares via Voronoi summation and Weil bounds for Kloosterman sums. Combine this with a large sieve inequality to improve the bound on the first moment. Finally, apply a Turán-type lemma to translate a nontrivial bound on the first moment into a quantitative lower bound for the number of sign changes.",
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T17:31:40.243045+00:00",
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
   },
@@ -1056,6 +1037,30 @@
     "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Lu and Wang [2021]"
+    ],
+    "consumed_by_exp_id": "33ce8829",
+    "description": "For any positive integers k and r ≤ k, the minimal n₀ such that every k-uniform hypergraph on n ≥ n₀ vertices with δ_r ≥ 1 contains a Berge-Ct^r for all t ≥ r+1 is exactly k + 1.",
+    "domain_bridges": [
+      "extremal hypergraph theory",
+      "cycle enumeration"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0044",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extremal combinatorics and induction",
+    "research_mode": "team",
+    "source_exp_id": "2606.30418v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T19:19:02.169058+00:00",
+    "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with δ_r ≥ 1"
   },
   {
     "ambition_level": "extension",
@@ -1882,6 +1887,32 @@
     "status": "available",
     "timestamp": "2026-07-02T18:57:50.869620+00:00",
     "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2305.12345",
+      "OEIS:A080469",
+      "GuedesMachado2023"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any fixed prime q there exist infinitely many pairs (t,p) with p prime, p≠q such that p divides A_t^{(q)} and s_q((q-1)p) ≥ (q-1)t, where A_t^{(q)} = binom(q^{t+1}, q^t) - q^{q^t}. This would yield infinitely many n = q^t p satisfying binom(qn,n) ≡ q^n (mod n).",
+    "domain_bridges": [
+      "math.CO",
+      "math.NT"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0077",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "search_and_pigeonhole",
+    "research_mode": "team",
+    "source_exp_id": "2606.30232v1",
+    "status": "available",
+    "timestamp": "2026-07-02T19:19:52.418155+00:00",
+    "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
   },
   {
     "ambition_level": "extension",
