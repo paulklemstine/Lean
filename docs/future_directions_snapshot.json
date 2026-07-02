@@ -1,142 +1,5 @@
 [
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle d80d981e (Q=0.871), which proved 15 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that the Petersen graph's metric obstruction to isometric embedding into classical abelian Cayley graphs extends to Cayley graphs of idempotent semirings (tropical semirings) because the tropical distance valuation preserves the essential girth and diameter constraints that forbid",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_d80d981e_f533ff69",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d80d981e",
-    "status": "available",
-    "timestamp": "2026-07-02T03:51:06.938222+00:00",
-    "title": "Deepening: Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0010",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T03:28:51.239302+00:00",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0007",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T03:28:51.216448+00:00",
-    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0008",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T03:28:51.235448+00:00",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0009",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T03:28:51.237233+00:00",
-    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "auto_reset_NumberTheory_e72d5932",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "auto_reset",
-    "status": "available",
-    "timestamp": "2026-07-02T03:33:38.295255+00:00",
-    "title": "[Reset] Fresh approach in NumberTheory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Combinatorics"
-    ],
-    "id": "fd_0011",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T03:28:51.240735+00:00",
-    "title": "The Library of Babel: Combinatorics of the Universal Library"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Dermanjian, 2023; Bousquet-Mélou & Chapoton, 2024"
@@ -159,6 +22,34 @@
     "status": "available",
     "timestamp": "2026-07-02T02:03:28.210568+00:00",
     "title": "Equivalence of Greedy m-Tamari Intervals and Bipartite Planar Maps with m+1 Components"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Drinfeld-Lau-Zink sheared Witt vectors",
+      "EGA I filtered colimit properties",
+      "Böckle's Dieudonné theory for p-divisible groups"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any filtered system of nilperfect rings {R_i} with colimit R, the canonical map colim ℝW(R_i) → ℝW(R) is an isomorphism of abelian groups. This conjecture addresses the fundamental motivation for sheared Witt vectors: resolving the failure of W(R)/p^n to commute with filtered colimits while preserving essential Dieudonné-theoretic properties.",
+    "domain_bridges": [
+      "Formalization of Witt vectors in mathlib (W. Park, 2023)",
+      "Filtered colimits in commutative algebra libraries",
+      "Perfect rings and Frobenius morphisms in characteristic p"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0001",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the isomorphism by proving ℝW preserves filtered colimits through the pullback definition and limit representation. Key steps: (1) Show ℎw commutes appropriately with filtered colimits using nilpotent element control, (2) Prove lim_F commutes with filtered colimits in the category of p-complete rings, (3) Apply the five lemma to the resulting diagram of short exact sequences.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01178v1",
+    "status": "available",
+    "timestamp": "2026-07-02T02:03:55.315381+00:00",
+    "title": "Sheared Witt Vectors Commutation with Filtered Colimits"
   },
   {
     "ambition_level": "grand_challenge",
@@ -190,6 +81,36 @@
     "title": "Low-Dimensional Dichotomy Bound Conjecture"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Edi92",
+      "Breuil, Breuil",
+      "Bergdall and Levin (BLZ)",
+      "Bergsund Blissett (BGR18)",
+      "Buzzard et al. (BG09; BG13; GG15; BG15)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A precise conjecture regarding the irreducibility of the semi-simplification $\bar{V}_{k,a_p}$ under specific bounds on the slope valuation $v(a_p)$, formalizable in Lean 4 through algorithmic verification of shape criteria.",
+    "domain_bridges": [
+      "categorical Galois theory",
+      "local Langlands",
+      "crystalline representations"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0002",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a categorical criterion based on the Jordan-Hölder decomposition and validate via Grothendieck-style lemma formulations in Lean 4.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00930v1",
+    "status": "available",
+    "timestamp": "2026-07-02T02:49:31.521966+00:00",
+    "title": "Reductions Of Crystalline Representations Of Fractional Slope"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "BarmanViswanathan2020",
@@ -217,102 +138,57 @@
     "title": "Deterministic 2Δ-Coloring for SD-EF1 under Conflict Constraints"
   },
   {
-    "ambition_level": "grand_challenge",
+    "ambition_level": "extension",
     "catalog_references": [
-      "Drinfeld-Lau-Zink sheared Witt vectors",
-      "EGA I filtered colimit properties",
-      "Böckle's Dieudonné theory for p-divisible groups"
+      "math.NT"
     ],
     "consumed_by_exp_id": "",
-    "description": "For any filtered system of nilperfect rings {R_i} with colimit R, the canonical map colim ℝW(R_i) → ℝW(R) is an isomorphism of abelian groups. This conjecture addresses the fundamental motivation for sheared Witt vectors: resolving the failure of W(R)/p^n to commute with filtered colimits while preserving essential Dieudonné-theoretic properties.",
+    "description": "For every positive integer k, there exists an odd integer s such that the 5-rank of the Pólya group of the corresponding Lecacheux quintic field K_s is exactly k. This conjecture refines the paper's result on arbitrarily large 5-ranks by asserting the existence of fields with precisely prescribed rank values.",
     "domain_bridges": [
-      "Formalization of Witt vectors in mathlib (W. Park, 2023)",
-      "Filtered colimits in commutative algebra libraries",
-      "Perfect rings and Frobenius morphisms in characteristic p"
+      "Algebraic Number Theory",
+      "Class Field Theory"
     ],
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0005",
+    "id": "fd_0004",
     "lineage_refs": [],
     "priority_score": 0.8,
-    "proof_strategy": "Establish the isomorphism by proving ℝW preserves filtered colimits through the pullback definition and limit representation. Key steps: (1) Show ℎw commutes appropriately with filtered colimits using nilpotent element control, (2) Prove lim_F commutes with filtered colimits in the category of p-complete rings, (3) Apply the five lemma to the resulting diagram of short exact sequences.",
+    "proof_strategy": "Leverage density arguments from the paper to construct explicit examples or use contradiction to show that gaps in rank values cannot exist, potentially via p-adic analysis of the defining polynomials.",
     "research_mode": "team",
-    "source_exp_id": "2607.01178v1",
+    "source_exp_id": "2607.00675v1",
     "status": "available",
-    "timestamp": "2026-07-02T02:03:55.315381+00:00",
-    "title": "Sheared Witt Vectors Commutation with Filtered Colimits"
+    "timestamp": "2026-07-02T04:19:30.866443+00:00",
+    "title": "Exact 5-Rank Realization for Lecacheux Quintic Fields"
   },
   {
-    "ambition_level": "grand_challenge",
+    "ambition_level": "extension",
     "catalog_references": [
-      "Edi92",
-      "Breuil, Breuil",
-      "Bergdall and Levin (BLZ)",
-      "Bergsund Blissett (BGR18)",
-      "Buzzard et al. (BG09; BG13; GG15; BG15)"
+      "Erdős (1963) on non-Hamiltonian extremal graphs",
+      "Berikkyzy-Hogenson-Kirsch-McDonald (2022) on k-edge hamiltonian extremal problems",
+      "Bondy-Murty Graph Theory textbook"
     ],
     "consumed_by_exp_id": "",
-    "description": "A precise conjecture regarding the irreducibility of the semi-simplification $\bar{V}_{k,a_p}$ under specific bounds on the slope valuation $v(a_p)$, formalizable in Lean 4 through algorithmic verification of shape criteria.",
+    "description": "For an n-vertex graph that is not k-edge hamiltonian, the maximum number of t-stars is exactly g_t(n,k-1,i*) where i* = max{1, d-(k-1)} for some parameter d, and this bound is tight and achieved precisely by the graph G(n,k-1,i*) = K_{i*+k-1} + (K_{n-2i*-k+1} ∪ I_{i*})",
     "domain_bridges": [
-      "categorical Galois theory",
-      "local Langlands",
-      "crystalline representations"
+      "Turán-type extremal problems",
+      "Hamiltonicity and cycle structure",
+      "Star counting in forbidden subgraph families"
     ],
     "domains": [
-      "Pythagorean",
-      "Algebra"
+      "Algebra",
+      "Physics"
     ],
-    "id": "fd_0006",
+    "id": "fd_0004",
     "lineage_refs": [],
     "priority_score": 0.8,
-    "proof_strategy": "Construct a categorical criterion based on the Jordan-Hölder decomposition and validate via Grothendieck-style lemma formulations in Lean 4.",
+    "proof_strategy": "Prove by induction on k: establish that among all non k-edge hamiltonian graphs, removing a vertex and analyzing the resulting (k-1)-edge hamiltonian subgraph leads to the recursive structure. Use discharging arguments to show that any extremal graph must have the clique-independent set structure of G(n,k-1,i*). Verify tightness by direct computation of t-star count in this construction and showing it achieves the claimed maximum.",
     "research_mode": "team",
-    "source_exp_id": "2607.00930v1",
+    "source_exp_id": "2607.00770v1",
     "status": "available",
-    "timestamp": "2026-07-02T02:49:31.521966+00:00",
-    "title": "Reductions Of Crystalline Representations Of Fractional Slope"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Metric Rigidity of the Petersen Graph across Valued Cayley Geometries\n\nThis cycle established that the Petersen graph — and, more generally, any graph\ncarrying an odd closed walk — cannot be realized isometrically inside a Cayley\ngraph whose generating set is the *odd part* of an integer-valued valuation on an\nabelian group. The obstruction splits cleanly into a valuation-free metric core\n(an isometric image pulls back proper colorings of any number of colors) and a\none-parameter certificate (the parity of the valuation two-colors the host). The\ndirections below push on the boundary of this dichotomy.\n\n## Conjecture 1 (Even-valuation hosts)\nThere exists an abelian group `A`, an integer-valued valuation `v` all of whose\ngenerators have **even** value, and an isometric embedding of the Petersen graph\ninto the associated Cayley graph.\n\n**The key insight is** that the parity certificate is the *only* place oddness of\nthe valuation is used; once every generator has even value the host may contain\nodd closed walks of its own, removing the coloring obstruction and potentially\nopening room for a genuine isometric copy of an odd-girth graph.\n\n**Why now?** The clean separation between the metric core and the parity\ncertificate isolates exactly one hypothesis to relax, turning a broad\nnon-embeddability statement into a sharp, testable existence question about\neven-valued generating sets.\n\n## Conjecture 2 (Valuation rank threshold)\nFor every abelian group `A` equipped with a valuation whose value group has rank\none, no odd-girth graph embeds isometrically into the odd-valuation Cayley graph;\nbut there is a rank-two valued group into which the Petersen graph does embed\nisometrically.\n\n**The key insight is** that a rank-one valuation forces a global linear order on\ngenerator lengths, which propagates the parity obstruction along every closed\nwalk, whereas incomparable lengths in higher rank can cancel the length parity\nthat a single odd walk would otherwise force.\n\n**Why now?** Valuation-theoretic rank is the natural graded refinement of the\npresent integer-valued setting, and it converts the qualitative \"odd vs even\"\ndichotomy into a quantitative rank threshold that can be probed group by group.\n\n## Conjecture 3 (Tropical distance spectrum)\nThe multiset of pairwise tropical (min-plus) path lengths realizable inside any\nodd-valuation Cayley graph omits at least one distance value that the Petersen\nmetric requires; consequently the omission itself, not merely bipartiteness, is\nthe true obstruction, and it persists for a positive-density family of\nnon-bipartite hosts.\n\n**The key insight is** that shortest-path distance is intrinsically a min-plus\ncomputation, so an embedding must reproduce an entire tropical distance spectrum,\nand the Petersen spectrum (diameter two, girth five) is over-determined relative\nto what valuation-graded hosts can supply.\n\n**Why now?** Recasting graph distance as a tropical eigen-quantity makes the\ndistance spectrum a computable invariant, so the conjectured omission can be\nsearched for directly across families of valued groups.\n\n## Conjecture 4 (Universal odd-girth barrier)\nFix an odd integer `g ≥ 5`. No vertex-transitive graph of girth `g` embeds\nisometrically into any odd-valuation Cayley graph, and the Petersen graph is the\nsmallest such witness for `g = 5`.\n\n**The key insight is** that vertex-transitivity forces the odd closed walk to be\n\"spread\" uniformly over the graph, so the parity obstruction cannot be localized\naway by re-centering the embedding, making girth alone the controlling parameter.\n\n**Why now?** The odd-closed-walk engine already proven here is indifferent to the\nparticular source graph, so extending it from Petersen to an entire girth class\nis a natural and immediately checkable generalization.\n\n## Conjecture 5 (Idempotent-coefficient rigidity)\nReplacing the integer value group by an arbitrary linearly ordered idempotent\nadditive monoid leaves the non-embeddability intact precisely when the monoid\nadmits a surjection onto the two-element idempotent monoid; otherwise the barrier\ndisappears.\n\n**The key insight is** that bipartiteness of the host is equivalent to the\nexistence of a two-valued reduction of the coefficient monoid, so the entire\nobstruction is governed by the two-element quotient structure of the underlying\nidempotent algebra.\n\n**Why now?** Idempotent (tropical) coefficient systems are exactly the setting in\nwhich distance and addition coincide, so characterizing which of them retain the\nPetersen barrier pins the phenomenon to a single algebraic quotient condition.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_0012",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d80d981e",
-    "status": "available",
-    "timestamp": "2026-07-02T03:50:58.643112+00:00",
-    "title": "That the Petersen graph — and, more generally, any graph"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Explicit class field theory beyond the prime-degree layer\n\nThis cycle established that the smallest abelian layers over a number field — those of prime\ndegree — are rigid: they have cyclic Galois groups and no intermediate fields, uniformly across\nthe cyclotomic tower and the Hilbert class field. The following bold, falsifiable conjectures\nextend that finding.\n\n## Conjecture 1 — Lattice rigidity is exactly the \"squarefree class number\" phenomenon\n\nFor a number field `K`, the Hilbert class field `H/K` has a *distributive* subfield lattice that\nis a Boolean-type product of prime layers precisely when the class number is squarefree; the first\nnon-distributive behaviour appears at the smallest square factor.\n\nThe key insight is that the subfield lattice of the class field is an exact mirror of the subgroup\nlattice of the class group, so the arithmetic question \"when is the tower of abelian layers\nlattice-simple?\" becomes the purely group-theoretic question \"when is the class group a product of\ndistinct cyclic prime factors?\" — squarefreeness of the class number.\n\nWhy now? Class numbers and class-group structures are tabulated for enormous ranges of\ndiscriminants, so the squarefree/non-squarefree split can be tested against millions of fields\nimmediately, turning a structural conjecture into a data-driven one.\n\n## Conjecture 2 — Prime-degree minimality forces a reciprocity fingerprint on splitting primes\n\nIf `H/K` is an abelian extension of prime degree `p`, then the rational primes (or prime ideals of\n`K`) split completely in `H` exactly along a single congruence/ray class condition of index `p`,\nand no coarser condition suffices.\n\nThe key insight is that a prime-degree layer has no room for intermediate splitting behaviour: the\nabsence of intermediate fields means a prime is either inert-type or fully split, so the splitting\nlaw must be governed by one primitive character of order `p` rather than a composite of several.\n\nWhy now? The prime-degree rigidity is exactly the hypothesis under which the still-incomplete\ngeneral reciprocity law simplifies to a single character, making it the most tractable next case to\npin down explicitly and to check against known splitting tables for cubic and quintic fields.\n\n## Conjecture 3 — Genus layers are the unique obstruction to prime-degree rigidity\n\nThe failure of subfield-lattice rigidity for a class field is controlled entirely by the 2-part\n(more generally the `p`-part) of the class group: the number of independent quadratic (resp.\ndegree-`p`) intermediate layers equals the `p`-rank of the class group, and these are precisely the\n\"genus\" subfields.\n\nThe key insight is that non-trivial intermediate fields can only come from non-cyclic factors of\nthe class group, and the count of independent minimal layers is a rank, not a size — so the entire\ndeviation from rigidity is measured by a single rank invariant.\n\nWhy now? `p`-ranks of class groups (especially the 2-rank via genus theory) are computable directly\nfrom the factorization of the discriminant, so the rank-versus-layer-count identity can be verified\nexhaustively for quadratic fields without computing full class groups.\n\n## Conjecture 4 — Cyclic class groups characterize \"single-generator\" arithmetic\n\nA number field has cyclic ideal class group if and only if its Hilbert class field is generated over\nthe base by a single algebraic element whose minimal polynomial has degree equal to the class\nnumber — a one-parameter explicit description in the spirit of Hilbert's twelfth problem.\n\nThe key insight is that cyclicity of the class group is equivalent to cyclicity of the class-field\nGalois group, and a cyclic Galois extension is exactly a simple (primitive-element) extension whose\ndegree is the group order, converting an abstract structural property into a concrete\nsingle-generator statement.\n\nWhy now? Cyclic class groups dominate the statistics of small discriminants, so a single-generator\ndescription would immediately apply to the vast majority of tabulated fields and could be checked\nagainst explicit generators already recorded for imaginary quadratic fields of small class number.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0013",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6501d983",
-    "status": "available",
-    "timestamp": "2026-07-02T03:55:49.617569+00:00",
-    "title": "That the smallest abelian layers over a number field — th"
+    "timestamp": "2026-07-02T04:20:18.951683+00:00",
+    "title": "Extremal t-star count in non k-edge hamiltonian graphs equals G(n,k-1,i*) construction"
   },
   {
     "ambition_level": "extension",
@@ -336,19 +212,19 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "71d4ed72",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0004",
+    "id": "fd_0000",
     "lineage_refs": [],
     "priority_score": 0.7,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T01:33:56.530529+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
