@@ -91,21 +91,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0070",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T18:08:31.163393+00:00",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -583,12 +568,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The product of primes in the extension field equals its order.",
+    "description": "Let G be a finite group of order p^m where p is prime. For any k < p, and any two sequences a_1,..., a_k and b_1,..., b_k in G where the a_i are distinct, there exists a permutation sigma of {1,..., k} such that the products a_i * b_sigma(i) are all distinct.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0041",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30506v1",
+    "status": "available",
+    "timestamp": "2026-07-02T18:11:54.994533+00:00",
+    "title": "Extension of Snevily-type Permutation Property to p-groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The product of primes in the extension field equals its order.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -602,7 +602,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0042",
+    "id": "fd_0043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
@@ -617,7 +617,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0043",
+    "id": "fd_0044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
@@ -631,7 +631,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0044",
+    "id": "fd_0045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -646,7 +646,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0045",
+    "id": "fd_0046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -655,31 +655,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "debcecca",
     "description": "Conjecture that for r\u22653, if F is a nonempty r-uniform hypergraph, G is a 2-tightly connected r-uniform hypergraph with no homomorphism from G to F, then the function f_{F,G}(n) satisfies f_{F,G}(n) = \u0398((log n)^{\u03b2_F}) where \u03b2_F = max_{\u2205\u2260P\u2286\u2202\u2082F} e(P)/(v(P)-1). In particular, there exist constants c, C > 0 such that for infinitely many n, c (log n)^{\u03b2_F} \u2264 f_{F,G}(n) \u2264 C (log n)^{\u03b2_F}.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0046",
+    "id": "fd_0047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00732v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T07:33:15.641298+00:00",
     "title": "Tightness of the Generalized Erd\u0151s--Rogers Bound for Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "debcecca",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for any integer k\u202f\u2265\u202f3 there is no infinite word over a binary alphabet that contains no k\u207a\u2011parameterized squares (i.e., no squares of length at least 2k whose halves are parameterized\u2011equivalent). Equivalently, every infinite binary word contains a k\u207a\u2011parameterized square for all k\u202f\u2265\u202f3. This conjecture is falsifiable: finding a single infinite binary word that avoids k\u207a\u2011parameterized squares for some k\u202f\u2265\u202f3 would refute it.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0047",
+    "id": "fd_0048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00674v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T07:57:43.823405+00:00",
     "title": "Nonexistence of Infinite 3\u207a\u2013Parameterized\u2011Square\u2011Free Binary Words"
   },
@@ -689,7 +689,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0048",
+    "id": "fd_0049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -704,7 +704,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0049",
+    "id": "fd_0050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00367v1",
@@ -719,7 +719,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0050",
+    "id": "fd_0051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00238v1",
@@ -734,7 +734,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0051",
+    "id": "fd_0052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00212v1",
@@ -748,7 +748,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0052",
+    "id": "fd_0053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00352v1",
@@ -763,7 +763,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0053",
+    "id": "fd_0054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31900v1",
@@ -778,7 +778,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0054",
+    "id": "fd_0055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31894v1",
@@ -793,7 +793,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0055",
+    "id": "fd_0056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
@@ -807,7 +807,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0056",
+    "id": "fd_0057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31815v1",
@@ -822,7 +822,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0057",
+    "id": "fd_0058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -837,7 +837,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0058",
+    "id": "fd_0059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
@@ -851,7 +851,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0059",
+    "id": "fd_0060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v1",
@@ -866,7 +866,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0060",
+    "id": "fd_0061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -880,7 +880,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0061",
+    "id": "fd_0062",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31441v1",
@@ -895,7 +895,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0062",
+    "id": "fd_0063",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -910,7 +910,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0063",
+    "id": "fd_0064",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31075v1",
@@ -924,7 +924,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0064",
+    "id": "fd_0065",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30950v1",
@@ -938,7 +938,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0065",
+    "id": "fd_0066",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31240v1",
@@ -953,7 +953,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0066",
+    "id": "fd_0067",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30567v1",
@@ -967,7 +967,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0067",
+    "id": "fd_0068",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30588v1",
@@ -981,7 +981,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0068",
+    "id": "fd_0069",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30612v1",
@@ -996,13 +996,27 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0069",
+    "id": "fd_0070",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30548v2",
     "status": "available",
     "timestamp": "2026-07-02T17:52:40.366510+00:00",
     "title": "Precise threshold for vertex\u2011Ramsey property in random perturbations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "There exists a constant K>0 such that for all sufficiently large n, \u03c7_S(n,\u230an/2\u230b,P_4) \u2264 K\u00b7n^{1/2}.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0071",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30505v1",
+    "status": "available",
+    "timestamp": "2026-07-02T18:12:21.463153+00:00",
+    "title": "Conjecture on the asymptotic growth of \u03c7_S(n,\u230an/2\u230b,P_4)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1018,51 +1032,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0071",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T18:08:31.207797+00:00",
-    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nBold, testable conjectures emerging from the study of `a\u2075 \u2212 a` and its\ndivisibility structure.\n\n## 1. The universal denominator of `a\u207f \u2212 a`\n\n**Conjecture.** For each exponent `n \u2265 1` there is a largest integer `D(n)` such\nthat `D(n)` divides `a\u207f \u2212 a` for *every* integer `a`, and `D(n)` equals the\nproduct of exactly those primes `p` for which `p \u2212 1` divides `n \u2212 1`. In\nparticular `D(5) = 2\u00b73\u00b75 = 30`, `D(3) = 6`, `D(7) = 2\u00b73\u00b77 = 42`.\n\nThe key insight is that divisibility of `a\u207f \u2212 a` by a prime `p` is governed\nentirely by whether the multiplicative order structure mod `p` collapses `n`-th\npowers back to the identity, which happens precisely when `p \u2212 1 \u2223 n \u2212 1`.\n\nWhy now? The present cycle already pinned `D(5) = 30` by gluing the prime factors\n`2, 3, 5` through coprimality; the same gluing mechanism generalises verbatim to\narbitrary `n`, so the full classification is within immediate reach.\n\n## 2. Last-digit periodicity of power towers\n\n**Conjecture.** For every base `a`, the last decimal digit of `a`, `a\u2075`, `a\u00b2\u2075`,\n`a\u00b9\u00b2\u2075`, \u2026 (iterated fifth powers) is eventually constant, and in fact constant\nfrom the very first term: the last digit is a fixed point of the fifth-power map\nmod 10.\n\nThe key insight is that `a\u2075 \u2261 a (mod 10)` makes the fifth-power operation a\nretraction on the ten residue classes, so iterating it can never change the last\ndigit.\n\nWhy now? We established `a\u2075 \u2261 a (mod 10)` in this cycle; iterating a proven\nidempotent-on-digits map is the natural next experiment and needs no new\nmachinery.\n\n## 3. Coprime-modulus gluing as a general bridge principle\n\n**Conjecture.** Any polynomial congruence `f(a) \u2261 0 (mod m)` that holds for all\nintegers `a` decomposes uniquely into the conjunction of the congruences modulo\neach prime-power factor of `m`, and the strongest such `m` is computable by\nchecking one full residue system per prime factor.\n\nThe key insight is that the Chinese Remainder Theorem turns a single global\ndivisibility into independent finite checks, one per coprime factor, which can be\nrecombined mechanically.\n\nWhy now? The `30 \u2223 a\u2075 \u2212 a` proof is exactly this principle in miniature (factors\n`2, 3, 5` checked separately, glued by coprimality); abstracting it into a reusable\nbridge lemma would streamline an entire class of divisibility results.\n\n## 4. From residue check to unconditional induction\n\n**Conjecture.** Every \"for all integers\" divisibility `m \u2223 f(a)` provable by a\nfinite residue check mod `m` is also provable by a single integer induction whose\nstep is the identity `f(a+1) \u2212 f(a) = m\u00b7g(a)` for an explicit integer polynomial\n`g`; equivalently, `m \u2223 f(a+1) \u2212 f(a)` identically.\n\nThe key insight is that a residue-class proof and an inductive proof are two faces\nof the same fact \u2014 periodicity of `f` mod `m` \u2014 and the inductive face always\nyields an explicit witness polynomial `g`.\n\nWhy now? We proved `5 \u2223 a\u2075 \u2212 a` twice this cycle \u2014 once by induction with the\nexplicit witness `n\u2074 + 2n\u00b3 + 2n\u00b2 + n`, once by a residue check \u2014 making the\nequivalence concrete and ripe for a general theorem extracting `g` from `f` and `m`.\n\n## 5. Sharpest simultaneous modulus for consecutive-power differences\n\n**Conjecture.** The greatest integer dividing `a\u207f\u207a\u2074 \u2212 a\u207f` for all `a` and all\n`n \u2265 1` is again `30`, i.e. the \"fifth-power gap\" carries the same universal\nfactor `2\u00b73\u00b75` regardless of the shift `n`.\n\nThe key insight is that `a\u207f\u207a\u2074 \u2212 a\u207f = a\u207f(a\u2074 \u2212 1)` shares the factor `a\u2074 \u2212 1`\nwhose universal divisor mod small primes is dictated by the exponent `4 = 5 \u2212 1`,\nthe same arithmetic that produced `30` for `a\u2075 \u2212 a`.\n\nWhy now? Having isolated the role of the factor `a\u2074 \u2212 1` inside `a\u2075 \u2212 a =\na(a\u2074 \u2212 1)` via the factorisation `(a\u22121)a(a+1)(a\u00b2+1)`, testing whether the shift\n`n` leaves the universal modulus invariant is the obvious stress test of that\nfactorisation.\n",
-    "domains": [
-      "Pythagorean",
-      "Tropical"
-    ],
-    "id": "fd_0073",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "bfccf79e",
-    "status": "available",
-    "timestamp": "2026-07-02T18:11:07.963632+00:00",
-    "title": "Bold, testable conjectures emerging from the study of `a\u2075 \u2212 a` and its"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0072",
-    "priority_score": 0.73,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T18:08:31.215814+00:00",
-    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
     "consumed_by_exp_id": "",
