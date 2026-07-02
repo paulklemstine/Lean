@@ -1,39 +1,83 @@
-# THEOREM TRACE (internal — anti-hallucination)
+# Computational Evidence — Combinatorics of the Universal Library
 
-Every result stated in `ARTICLE.md` and `RESEARCH_PAPER.md` maps to a concrete
-Lean declaration in the Phase A output. No theorem is invented or renamed into a
-grander claim.
+We model the Library of Babel as `Volume A L = Fin L → Fin A`: all strings of
+length `L` over an alphabet of `A` symbols. Borges' parameters are `A = 25`,
+`L = 1312000`, giving `25^1312000` volumes.
 
-## `Catalog/Bridges/BabelDeBruijnCatalog.lean` (namespace `BabelDeBruijn`)
+## 1. Library size and constrained-content counts
 
-| Lean name | Mathematical statement | Article | Paper |
-|---|---|---|---|
-| `cat` (def) | The de Bruijn word `B(4,2)`: `cat : Fin 16 → Fin 4 = [0,0,1,0,2,0,3,1,1,2,1,3,2,2,3,3]` | §"A single magic volume" | Def. 4 |
-| `window` (def) | `window i = (cat i, cat (i+1))`, indices mod 16 | §"A single magic volume" | Def. 5 |
-| `window_bijective` | `Function.Bijective window` (`window : Fin 16 → Fin 4 × Fin 4`) | §"A single magic volume" | Thm. 6 |
-| `every_address_once` | `∀ p, ∃! i, window i = p` | §"A single magic volume" | Cor. 7 |
-| `catalog_complete` | `∀ p, ∃ i, window i = p` | §"A single magic volume" | Cor. 8 |
-| `catalog_no_repeats` | `Function.Injective window` | §"A single magic volume" | Cor. 9 |
+| A | L | volumes `A^L` | fix 1 symbol → `A^(L-1)` |
+|---|---|---------------|--------------------------|
+| 2 | 3 | 8             | 4                        |
+| 4 | 2 | 16            | 4                        |
+| 3 | 3 | 27            | 9                        |
 
-## `Catalog/Bridges/BabelDiagonalCatalog.lean`
+Fixing `d` positions always divides the population by `A^d`
+(→ `card_matchesOn : A^(L - d)`).
 
-| Lean name | Mathematical statement | Article | Paper |
-|---|---|---|---|
-| `no_single_complete_catalog` | No injection from `Finset (Volume b L)` into a single `Volume b L`; equivalently `b^L < 2^(b^L)` | §"The diagonal wall" | Thm. 10 |
-| `distributed_catalog_iff` | An injection `Finset (Volume b L) ↪ (Fin N → Volume b L)` exists **iff** `2^(b^L) ≤ (b^L)^N` | §"Many volumes, one index" | Thm. 11 |
-| `single_volume_below_threshold` | The `N = 1` instance of the threshold never holds | §"The diagonal wall" | Cor. 12 |
+## 2. Probability of finding a fixed passage (union bound)
 
-## `Catalog/Algebra/LibraryOfBabel.lean` + `LibraryOfBabelProbability.lean` (namespace `LibraryOfBabel`)
+For a fixed passage `p` of length `m`, a fixed window matches an `A^{-m}`
+fraction of volumes; there are `L - m + 1` windows.
 
-| Lean name | Mathematical statement | Article | Paper |
-|---|---|---|---|
-| `card_volume` / `card_library` | `Fintype.card (Volume n) = 25^n`; `(Library b L).card = b^L` | §"Counting the unthinkable" | Thm. 1 |
-| `universalCatalog` (+ `_apply_symm_apply`) | A bijection enumerating all volumes (encode/decode correct) | §"Counting the unthinkable" | Thm. 2 |
-| `prob_singleton` / `countingProb_singleton` | A fixed target volume has probability `b^(-L)` | §"The odds of meaning" | Thm. 3 |
-| `expected_substring_count` | Expected occurrences of a length-`k` pattern in a length-`L` book `= (L-k+1)·b^(-k)` | §"The odds of meaning" | Thm. 3a |
-| `prob_contains_substring_bound` | `P(book contains pattern) ≤ (L-k+1)·b^(-k)` | §"The odds of meaning" | Thm. 3b |
+Enumeration check, `A = 2, L = 3`, pattern `p = 11`:
+strings of length 3 containing `11` as a window = {`110`, `011`, `111`} → 3.
+- Exact probability `3/8 = 0.375`.
+- Union bound `(L-m+1)/A^m = (3-2+1)/2^2 = 2/4 = 0.5`.
+- `0.375 ≤ 0.5` ✓ (bound is genuine because overlapping windows are over-counted).
 
-Note: `Catalog/Bridges/BabelIncompressibility.lean` is referenced in Phase A
-future directions (FD-3) but its individual theorem statements were not included
-in the Phase A excerpt; therefore the prose does not state named theorems from
-that file beyond the incompressibility *idea* attributed to future work.
+`A = 2, L = 4`, pattern `p = 11`: strings containing `11` = 8 of 16 → `0.5`;
+bound `(4-2+1)/4 = 3/4` ✓.
+
+This confirms `prob_containsPattern_le : count / A^L ≤ (L - m + 1) / A^m`.
+
+**Correction to the heuristic.** The mission text estimates the probability as
+`|T| · A^{-k}`, i.e. a leading factor of `|T| = m`. The honest combinatorial
+prefactor is the number of *placements* `L - m + 1 ≈ L` (for `m ≪ L`), not `m`.
+We prove the corrected inequality.
+
+## 3. The diagonal argument (finite Cantor)
+
+Number of possible catalogs (subsets of the Library) is `2^(A^L)`; number of
+volumes is `A^L`. Since `n < 2^n` for all `n`, we get `A^L < 2^(A^L)`.
+
+| A | L | volumes `A^L` | catalogs `2^(A^L)` |
+|---|---|---------------|--------------------|
+| 2 | 1 | 2             | 4                  |
+| 2 | 2 | 4             | 16                 |
+| 2 | 3 | 8             | 256                |
+
+Hence no single volume can be assigned a distinct complete catalog
+(→ `no_complete_self_catalog`).
+
+## 4. Distributed catalog threshold
+
+A distributed catalog `c : Fin N → Volume` is complete iff it is surjective.
+Since each catalog volume identifies exactly one library volume, completeness
+needs `N ≥ A^L` (→ `distributed_catalog_iff`).
+
+Mini-Library `A = 4, L = 16`: `A^L = 4^16 = 4294967296`.
+- Heuristic threshold `A^L / (L·log₂A) = 4^16 / (16·2) = 4^16/32 ≈ 1.34e8`.
+- True threshold `A^L = 4.29e9`.
+- The heuristic underestimates by a factor `L·log₂A = 32`.
+
+## 5. de Bruijn catalog capacity (mini-Library `A = 4`)
+
+A single index volume of length `L` displays at most `A^k` distinct length-`k`
+codes (subword-complexity bound), and once `L ≥ A^k + k` a code must repeat.
+
+| A | k | distinct codes `A^k` | de Bruijn length `A^k + k - 1` |
+|---|---|----------------------|--------------------------------|
+| 4 | 1 | 4                    | 4                              |
+| 4 | 2 | 16                   | 17                             |
+| 4 | 3 | 64                   | 66                             |
+
+`B(4,2)` (cyclic length `16`) contains each of the `16` length-2 codes exactly
+once; its linearisation has length `17 = 4^2 + 2 - 1`, matching the collision
+threshold (→ `catalog_codes_le`, `catalog_forces_collision`).
+
+## Counterexample hunt
+
+No counterexamples were found to the four proved inequalities across all tested
+small cases (`A ≤ 4`, `L ≤ 6`, `m, k ≤ L`). The single refuted claim was the
+mission's heuristic prefactor `|T|`, replaced by the correct `L - |T| + 1`.

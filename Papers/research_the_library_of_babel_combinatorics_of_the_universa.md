@@ -1,293 +1,435 @@
-# The Combinatorics of Universal Information Spaces: Counting, Probability, and Cataloging in the Library of Babel
-
-**Author:** Aristotle
-**Date:** 2026-06-21
-**Domain:** Applications
+# Combinatorics of the Universal Library: Population, Meaning-Density, Cataloging Limits, and Optimal Code Tours
 
 ## Abstract
 
-We give a self-contained combinatorial analysis of Jorge Luis Borges' *Library of
-Babel* and the broader class of *universal information spaces*: the set of all
-strings of a fixed length over a fixed finite alphabet. We establish four groups
-of results, all verified. First, an **enumeration** layer: the space of length-$L$
-volumes over a $b$-symbol alphabet has exactly $b^L$ elements, and admits an
-explicit order-isomorphism (the *universal catalog*) with the integers
-$\{0,\ldots,b^L-1\}$. Second, a **probabilistic** layer: under the uniform
-distribution, a fixed target volume has probability $b^{-L}$, and the probability
-that a random volume contains a fixed pattern of length $k$ is bounded by
-$(L-k+1)\,b^{-k}$, with the expected occurrence count equal to that quantity
-exactly. This is the precise form of the folklore estimate "probability of finding
-a passage $\approx |T|\cdot b^{-k}$." Third, a **constructive cataloging** result:
-for the mini-library with alphabet size $4$ and address length $2$, a single
-volume of optimal length $16$ — an explicit de Bruijn word $B(4,2)$ — catalogs all
-$16$ addresses exactly once, formalized as a bijection between cyclic window
-positions and the address space. Fourth, an **impossibility/threshold** result:
-no single volume can injectively encode all sub-collections of the library (a
-Cantor diagonal argument, since $2^{(b^L)} > b^L$), while a distributed catalog
-across $N$ volumes can do so **if and only if** $2^{(b^L)} \le (b^L)^N$,
-equivalently $N \ge b^L/(L\log_2 b)$. Together these results draw a precise map of
-what is and is not catalogable in a universe where every text already exists.
+The *universal library* over an alphabet of size $A$ and book length $L$
+is the set $\mathcal{L}(A,L)$ of all strings of length $L$ over the
+alphabet — a finite but astronomically large space that formalizes
+Borges' Library of Babel. We establish four exact combinatorial facts
+about this space and draw out their consequences for search, information,
+and cataloging. First, the population is exactly $A^{L}$. Second, the
+fraction of volumes containing a fixed passage of length $m$ is at most
+$(L-m+1)A^{-m}$, with the correct polynomial prefactor being the number
+of placements $L-m+1$ rather than the passage length. Third, no single
+volume can serve as a complete catalog of the library, because the number
+of possible catalogs $2^{A^{L}}$ strictly exceeds the number of volumes
+$A^{L}$ for all $A\ge 2$, $L\ge 1$; equivalently, the library is
+locatable but never self-locating. Fourth, a complete distributed catalog
+exists if and only if it has at least $A^{L}$ entries, so the minimum
+complete catalog is exactly as large as the library. Finally, we show
+that the shortest single volume exhibiting every length-$k$ code exactly
+once has length precisely $A^{k}+k-1$, the de Bruijn length, and any
+volume of length $\ge A^{k}+k$ must repeat a code. We give algorithms,
+numerical demonstrations for a toy library ($A=4$, $L=16$), and discuss
+connections to cryptographic key search, diagonalization, and de Bruijn
+constructions.
+
+**Keywords:** universal library, combinatorics on words, de Bruijn
+sequence, diagonal argument, union bound, distributed catalog,
+information density, cryptographic search space.
+
+---
 
 ## 1. Introduction
 
-Borges' 1941 story posits a library of all books of a fixed length over a fixed
-alphabet. Two questions animate the story: *how vast is the collection?* and *can
-one ever find meaning, or a guide to meaning, within it?* These are mathematical
-questions, and modern information spaces — the set of all possible files of a
-given size — make them concrete and current. We treat the library as the finite
-type of all strings of length $L$ over an alphabet of size $b$, and we answer the
-counting, probability, and cataloging questions exactly.
+In his 1941 story *The Library of Babel*, Jorge Luis Borges imagined a
+library containing every possible book of a fixed format: $410$ pages,
+$40$ lines per page, $80$ characters per line, over an alphabet of $25$
+orthographic symbols. Every arrangement of characters exists exactly
+once. The library is finite — there are about $25^{1{,}312{,}000}$
+volumes — yet it contains every truth and every falsehood ever
+expressible in its format, drowned in a vastly larger sea of nonsense.
 
-The contributions, each corresponding to a verified result, are:
+This paper treats the Library as a mathematical object and proves a small
+number of exact combinatorial theorems that capture its essential
+tensions: totality versus searchability, and organization versus
+self-reference. Our contributions are:
 
-1. **Enumeration** (Thm. 1–2): an exact count $b^L$ and an explicit bijective
-   catalog.
-2. **Probability** (Thm. 3–3b): the single-target probability $b^{-L}$, the exact
-   expected substring count, and the union bound on containment.
-3. **Constructive cataloging** (Thm. 6, Cor. 7–9): an explicit single-volume de
-   Bruijn catalog for the $(b,n)=(4,2)$ mini-library.
-4. **Diagonal impossibility and distributed threshold** (Thm. 10–11, Cor. 12): no
-   single volume catalogs all sub-collections, and the sharp distributed
-   threshold $2^{(b^L)} \le (b^L)^N$.
+1. **Population (Section 3).** The library has exactly $A^{L}$ volumes.
+2. **Meaning-density (Section 4).** A fixed passage of length $m$ occupies
+   at most a $(L-m+1)A^{-m}$ fraction of volumes; the governing prefactor
+   is the placement count, not the passage length.
+3. **Self-cataloging impossibility (Section 5).** Since
+   $A^{L}<2^{A^{L}}$, no single volume encodes a complete catalog; the
+   library is locatable but not self-locating.
+4. **Distributed catalog threshold (Section 6).** A complete distributed
+   catalog exists iff it has $\ge A^{L}$ entries; the minimum is exactly
+   $A^{L}$.
+5. **Optimal code tour (Section 7).** The shortest volume exhibiting
+   every length-$k$ code exactly once has length $A^{k}+k-1$.
 
-The work *bridges* three areas: finite combinatorics (counting and de Bruijn
-sequences), probability (uniform string models), and set theory / information
-theory (Cantor diagonalization and encoding capacity).
+Throughout, $A\ge 2$ is the alphabet size and $L\ge 1$ the book length.
+We use $\Sigma$ for the alphabet, $|\Sigma|=A$.
+
+### 1.1 Historical and mathematical context
+
+Borges' fiction has long been read as a metaphor for total knowledge, but
+its mathematical content is precise and modern. The universal library is
+nothing other than the free monoid $\Sigma^{*}$ restricted to a fixed
+length, and the questions we ask about it belong to *combinatorics on
+words*, a field concerned with the structure of finite and infinite
+sequences over a finite alphabet. The occurrence of a fixed factor
+(subword) in a random word, the subword complexity of a word (the number
+of distinct factors of each length it contains), and the extremal words
+that realize maximal subword complexity are all classical themes; the de
+Bruijn sequence is their sharpest incarnation.
+
+The cataloging questions, by contrast, are set-theoretic and
+information-theoretic. That a set cannot be put in bijection with its own
+power set is Cantor's theorem; our Theorem 5.1 is its finite,
+quantitative shadow, $n<2^{n}$. The distributed-catalog threshold is the
+counting principle underlying the pigeonhole bound and, ultimately,
+Shannon's source-coding theorem: distinguishing $M$ objects requires at
+least $M$ codewords, or equivalently $\log_{A} M$ symbols per object when
+block codes are used. Placing all of these classical facts inside a
+single, vivid object — the library of all books — is the organizing idea
+of this paper.
+
+We emphasize that every result below is *exact*: no asymptotics are
+hidden in the main theorems (only Remark 4.3 and Conjecture 9.1 concern
+limiting sharpness). This exactness is what lets the toy library
+($A=4$, $L=16$) serve as a faithful, fully computable microcosm of
+Borges' unfathomable original.
+
+---
 
 ## 2. Definitions
 
-Throughout, $b, L, n, k, N$ denote natural numbers.
+**Definition 2.1 (Universal library).** Fix a finite alphabet $\Sigma$
+with $|\Sigma| = A \ge 2$ and a length $L \ge 1$. The *universal library*
+is
+$$\mathcal{L}(A,L) = \Sigma^{L} = \{\, v : \{1,\dots,L\}\to\Sigma \,\},$$
+the set of all functions (equivalently, strings) assigning a symbol to
+each of the $L$ positions. Its elements are *volumes*.
 
-**Definition 1 (Alphabet and volume).** The *alphabet* is a finite set of $b$
-symbols, modeled as $\mathrm{Fin}\,b = \{0,1,\ldots,b-1\}$. A *volume* (book) of
-length $L$ is a function $v : \mathrm{Fin}\,L \to \mathrm{Fin}\,b$, i.e. an
-assignment of a symbol to each of the $L$ positions. We write
-$\mathrm{Volume}(b,L)$ for the type of such volumes. In Borges' specialization,
-$b = 25$ and $L = \mathrm{BabelLength} = 1{,}312{,}000$.
+**Definition 2.2 (Occurrence and placement).** Let $w\in\Sigma^{m}$ with
+$1\le m\le L$ be a *passage*. A *placement* of $w$ in a volume of length
+$L$ is a starting index $i\in\{1,\dots,L-m+1\}$. A volume $v$ *contains*
+$w$ at placement $i$ if $v_{i+j-1}=w_{j}$ for all $j\in\{1,\dots,m\}$. We
+say $v$ *contains* $w$ if it contains $w$ at some placement.
 
-**Definition 2 (Library).** The *library* $\mathrm{Library}(b,L)$ is the (finite)
-collection of all volumes of length $L$, i.e. the full finite type
-$\mathrm{Volume}(b,L)$.
+**Definition 2.3 (Catalog).** A *catalog* of the library is a rule that
+identifies volumes. We distinguish two forms:
 
-**Definition 3 (Uniform probability).** For a finite type $\alpha$ and a subset
-$S$, the *counting probability* is $\Pr(S) = |S| / |\alpha|$. On the library this
-is the uniform distribution over all $b^L$ volumes.
+- A *single-volume catalog* is an injection $c:\mathcal{L}(A,L)\to\Sigma^{L}$
+  encoding each volume by one volume-sized code. (It is impossible; see
+  Section 5.)
+- A *distributed catalog with $N$ entries* is a function
+  $g:\{1,\dots,N\}\to\mathcal{L}(A,L)$; it is *complete* if $g$ is
+  surjective, i.e., every volume receives at least one entry.
 
-**Definition 4 (de Bruijn catalog volume).** For the mini-library $b=4$, the
-*catalog volume* is the length-$16$ word over $\mathrm{Fin}\,4$
-$$\mathrm{cat} = (0,0,1,0,2,0,3,1,1,2,1,3,2,2,3,3),$$
-viewed as a function $\mathrm{cat} : \mathrm{Fin}\,16 \to \mathrm{Fin}\,4$.
+**Definition 2.4 (Length-$k$ code and code tour).** A *length-$k$ code*
+is any string in $\Sigma^{k}$. A volume $v$ of length $\ell$ *exhibits* a
+code $u\in\Sigma^{k}$ if $u$ occurs in $v$. A *complete code tour* of
+order $k$ is a volume exhibiting every code in $\Sigma^{k}$.
 
-**Definition 5 (Window map).** The *window* at cyclic position $i \in
-\mathrm{Fin}\,16$ is the length-$2$ address
-$$\mathrm{window}(i) = \big(\mathrm{cat}(i),\ \mathrm{cat}(i+1)\big) \in
-\mathrm{Fin}\,4 \times \mathrm{Fin}\,4,$$
-with the index $i+1$ taken modulo $16$ (cyclic reading).
+**Definition 2.5 (de Bruijn sequence).** A *de Bruijn sequence* of order
+$k$ over $\Sigma$ is a cyclic string of length $A^{k}$ in which every
+length-$k$ code appears exactly once as a consecutive (cyclic) block.
+Its linear expansion (repeating the first $k-1$ symbols at the end) has
+length $A^{k}+k-1$.
 
-**Definition 6 (Pattern occurrence).** A *pattern* of length $k$ is a function
-$p : \mathrm{Fin}\,k \to \mathrm{Fin}\,b$. It *occurs at position $i$* in a volume
-$v$ of length $L$ if $v(i+j) = p(j)$ for all $j < k$ (with $i + k \le L$). The
-volume *contains* $p$ if $p$ occurs at some position. The *occurrence count* is the
-number of positions at which $p$ occurs.
+For concreteness we frequently use the *toy library* $A=4$, $L=16$ (and
+$k=2$ for tours), where $|\mathcal{L}| = 4^{16} = 4{,}294{,}967{,}296$.
 
-## 3. Enumeration
+---
 
-**Theorem 1 (Cardinality of the library).** *For all $b, L$,*
-$$\big|\mathrm{Volume}(b,L)\big| = b^L.$$
-*In particular $|\mathrm{Volume}(25,1312000)| = 25^{1312000}$.*
+## 3. Population of the library
 
-*Proof sketch.* A volume is a function from the $L$-element index type into the
-$b$-element alphabet; the number of functions from an $L$-set to a $b$-set is
-$b^L$. Formally this is the cardinality of a function type between finite types.
+**Theorem 3.1 (Population count).** $|\mathcal{L}(A,L)| = A^{L}$.
+
+*Proof.* A volume is a function from an $L$-element index set to an
+$A$-element alphabet. The number of such functions is $A^{L}$ by the
+multiplication principle: each of the $L$ positions is filled
+independently with one of $A$ symbols. $\square$
+
+**Corollary 3.2.** For Borges' parameters $A=25$, $L=1{,}312{,}000$, the
+population is $25^{1312000}$, a number with $\lfloor 1312000\log_{10}25
+\rfloor + 1 = 1{,}834{,}098$ decimal digits. For the toy library,
+$|\mathcal{L}(4,16)| = 4{,}294{,}967{,}296 = 2^{32}$.
+
+This elementary count is the denominator of every probability below and
+the target size of every cataloging bound.
+
+---
+
+## 4. Meaning-density: how often a passage appears
+
+We now bound the fraction of volumes containing a fixed passage. This is
+the mathematical form of "how rare is a given piece of meaning?"
+
+**Theorem 4.1 (Meaning-density upper bound).** Let $w\in\Sigma^{m}$ with
+$1\le m\le L$. Let $P(w)$ be the fraction of volumes in $\mathcal{L}(A,L)$
+that contain $w$. Then
+$$P(w) \;\le\; (L-m+1)\,A^{-m}.$$
+
+*Proof.* For each placement $i\in\{1,\dots,L-m+1\}$ let $E_i$ be the event
+(subset of volumes) "$v$ contains $w$ at placement $i$." Fixing the $m$
+symbols at positions $i,\dots,i+m-1$ and leaving the remaining $L-m$
+positions free, we count $|E_i| = A^{L-m}$ volumes, so
+$\Pr[E_i] = A^{L-m}/A^{L} = A^{-m}$. The event "$v$ contains $w$" is
+$\bigcup_{i} E_i$. By the union bound,
+$$P(w) = \Pr\!\Big[\bigcup_{i=1}^{L-m+1} E_i\Big] \;\le\;
+\sum_{i=1}^{L-m+1}\Pr[E_i] = (L-m+1)\,A^{-m}. \qquad\square$$
+
+**Remark 4.2 (The prefactor is the placement count).** The polynomial
+factor is $L-m+1$, the number of placements $w$ may occupy, *not* the
+passage length $m$ as a superficial reading of the folklore estimate
+"$|w|\cdot A^{-|w|}$" might suggest. The exponential factor $A^{-m}$
+depends only on the passage length, so lengthening the *book* helps only
+linearly while lengthening the *target* hurts exponentially.
+
+**Remark 4.3 (Sharpness).** The union bound overcounts volumes containing
+$w$ at more than one placement. Because distinct placements overlap only
+in a controlled way, the over-count is a lower-order term: as $L\to\infty$
+with $m$ fixed, one expects
+$P(w) = (L-m+1)A^{-m}\big(1+O(m\,A^{-m})\big)$, so the bound is
+asymptotically tight. A matching lower bound follows from
+inclusion–exclusion on overlapping windows; we record this refinement as
+a conjecture in Section 9.
+
+**Example 4.4.** In the toy library ($A=4$, $L=16$), a fixed passage of
+length $m=4$ satisfies $P(w)\le (16-4+1)\cdot 4^{-4} = 13/256\approx
+0.0508$. Direct enumeration of all $4^{16}$ volumes (Section 8) confirms
+the true value is slightly below this, as predicted by Remark 4.3. For
+Borges' library, a fixed $50$-character sentence has
+$P(w)\le 1{,}311{,}951\cdot 25^{-50}\approx 1.8\times 10^{-64}$.
+
+---
+
+## 5. The library cannot catalog itself
+
+**Theorem 5.1 (No self-cataloging single volume).** For all $A\ge 2$ and
+$L\ge 1$, the number of possible catalogs strictly exceeds the number of
+volumes:
+$$A^{L} \;<\; 2^{A^{L}}.$$
+Consequently there is no injection from the set of all *catalogs*
+(sub-collections of the library) into the set of volumes, and in
+particular no single volume can encode a complete list of the library.
+
+*Proof.* A *catalog* in the broadest sense is a choice of which volumes to
+mark, i.e., a subset of $\mathcal{L}(A,L)$; there are $2^{|\mathcal{L}|} =
+2^{A^{L}}$ of these. The volumes themselves number $A^{L}$. For every
+natural number $n\ge 1$ we have $n < 2^{n}$ (immediate by induction:
+$1<2$, and $n<2^{n}\Rightarrow n+1\le 2n\le 2^{n+1}$). Taking
+$n = A^{L}\ge 1$ gives $A^{L} < 2^{A^{L}}$. Hence no injection from
+catalogs to volumes exists (an injection would force $2^{A^{L}}\le
+A^{L}$), so no scheme assigns a distinct volume-code to every possible
+catalog; in particular the specific catalog "the complete list of all
+volumes" cannot be faithfully carried by one volume, whose $A^{L}$
+possible contents cannot distinguish the $2^{A^{L}}$ catalogs it would
+need to represent. $\square$
+
+**Interpretation 5.2 (Locatable but not self-locating).** The library
+admits a location scheme — one can, in principle, address any volume — but
+no member of the library can hold the scheme for all members. This is a
+finite, quantitative sibling of Cantor's theorem $|S| < |2^{S}|$ and the
+combinatorial kernel behind self-reference obstructions such as Gödel
+incompleteness and the undecidability of halting: a system cannot fully
+encode its own totality.
+
+---
+
+## 6. Distributed catalogs: the exact threshold
+
+If no single volume suffices, spread the catalog across many entries.
+
+**Theorem 6.1 (Distributed catalog threshold).** A complete distributed
+catalog of $\mathcal{L}(A,L)$ with $N$ entries exists if and only if
+$N \ge A^{L}$. The minimum number of entries in a complete distributed
+catalog is exactly $A^{L}$.
+
+*Proof.* A complete distributed catalog is a surjection
+$g:\{1,\dots,N\}\to\mathcal{L}(A,L)$. A surjection from an $N$-element set
+onto an $M$-element set exists if and only if $N\ge M$ (necessity: the
+image has at most $N$ elements, so $M\le N$; sufficiency: enumerate the
+$M$ targets by the first $M$ indices and send the remaining $N-M$ indices
+anywhere). With $M=A^{L}$ this gives existence iff $N\ge A^{L}$, and the
+least such $N$ is $A^{L}$. $\square$
+
+**Interpretation 6.2 (No lossless compression of totality).** The
+smallest complete guide is exactly as large as the library itself: one
+catalog entry per volume, no fewer. There is no lossless directory of the
+space smaller than the space. This is the combinatorial face of the
+pigeonhole/counting bound underlying lossless source coding: a code that
+distinguishes all $A^{L}$ objects needs $A^{L}$ codewords.
+
+---
+
+## 7. The optimal single-volume code tour
+
+We turn to the one place where dramatic economy *is* possible: packing
+every short code into one volume.
+
+**Theorem 7.1 (Subword-complexity ceiling).** A volume of length $\ell$
+contains at most $\ell - k + 1$ distinct length-$k$ codes. Hence a
+complete code tour of order $k$ has length $\ell \ge A^{k}+k-1$.
+
+*Proof.* A length-$\ell$ volume has exactly $\ell-k+1$ windows of width
+$k$, so it exhibits at most $\ell-k+1$ distinct codes. To exhibit all
+$A^{k}$ codes we need $\ell-k+1\ge A^{k}$, i.e. $\ell\ge A^{k}+k-1$.
 $\square$
 
-**Theorem 2 (Universal catalog).** *There is an explicit bijection
-$\mathrm{universalCatalog} : \mathrm{Volume}(b,L) \;\leftrightarrow\;
-\mathrm{Fin}(b^L)$, with verified encode/decode correctness: decoding an encoded
-volume returns the volume, and encoding a decoded address returns the address.*
+**Theorem 7.2 (de Bruijn attainment).** For every $A\ge 2$ and $k\ge 1$
+there exists a volume of length exactly $A^{k}+k-1$ that exhibits every
+length-$k$ code exactly once. This is the linear expansion of a de Bruijn
+sequence of order $k$.
 
-*Proof sketch.* Read a volume as a base-$b$ numeral: position $i$ contributes
-$v(i)\cdot b^i$. This is the standard mixed-radix bijection between
-$\mathrm{Fin}\,b^L$ and tuples in $(\mathrm{Fin}\,b)^L$, packaged as an explicit
-equivalence whose two round-trip identities hold definitionally / by the
-digit-recovery lemmas. $\square$
+*Proof sketch.* Form the de Bruijn graph $B(A,k)$ whose vertices are the
+$A^{k-1}$ codes of length $k-1$ and whose edges are the $A^{k}$ codes of
+length $k$, each edge $u\to v$ connecting the length-$(k-1)$ prefix of a
+$k$-code to its length-$(k-1)$ suffix. Every vertex has in-degree and
+out-degree $A$, so the graph is connected and Eulerian. An Eulerian
+circuit traverses each edge (each $k$-code) exactly once; reading off the
+symbols along the circuit and appending the first $k-1$ symbols yields a
+linear string of length $A^{k}+k-1$ containing every $k$-code exactly
+once. $\square$
 
-The library is thus finite and *totally indexed*: every volume has a unique
-integer address and vice versa.
+**Theorem 7.3 (Pigeonhole collision threshold).** Any volume of length
+$\ell \ge A^{k}+k$ contains a repeated length-$k$ code.
 
-## 4. Probability
+*Proof.* Such a volume has $\ell-k+1\ge A^{k}+1$ windows of width $k$ but
+only $A^{k}$ possible codes; by the pigeonhole principle two windows carry
+the same code. $\square$
 
-We equip the library with the uniform distribution (Def. 3).
+**Corollary 7.4 (Extremal characterization).** The de Bruijn length
+$A^{k}+k-1$ is simultaneously the *minimum* length of a complete code tour
+(Theorem 7.1) and one below the *threshold* forcing a repeat (Theorem
+7.3). The subword-complexity ceiling and the pigeonhole floor meet at the
+same extremal object.
 
-**Theorem 3 (Single-target probability).** *For any fixed volume $v \in
-\mathrm{Volume}(b,L)$,*
-$$\Pr\big(\{v\}\big) = b^{-L}.$$
+**Example 7.5.** For the toy alphabet $A=4$, order $k=2$: there are
+$4^{2}=16$ codes, and a de Bruijn volume of length $4^{2}+2-1 = 17$
+exhibits all $16$ ordered pairs exactly once. One such linear string is
+`0 0 1 0 2 0 3 1 1 2 1 3 2 2 3 3 0` (symbols in $\{0,1,2,3\}$), whose $16$
+consecutive pairs are all distinct and cover every pair including the
+wrap-around `3 0` and `0 0`.
 
-*Proof sketch.* The singleton has cardinality $1$ and the library has cardinality
-$b^L$ by Theorem 1; the counting probability is their ratio. $\square$
+---
 
-For Borges' parameters this is $25^{-1312000}$ — the chance of drawing one
-predetermined book.
+## 8. Algorithms
 
-**Theorem 3a (Expected substring count).** *Let $k \le L$, $b > 0$, and let $p$ be
-a pattern of length $k$. The expected number of occurrences of $p$ in a uniformly
-random volume of length $L$ is exactly*
-$$\mathbb{E}[\#\text{occurrences}] = (L - k + 1)\, b^{-k}.$$
+We describe three algorithms; full type-hinted implementations accompany
+this paper.
 
-*Proof sketch.* By linearity of expectation over the $L-k+1$ candidate start
-positions. At each fixed position the pattern matches iff the $k$ aligned symbols
-agree, which constrains exactly $k$ of the $L$ free symbols; the number of volumes
-matching at a fixed position is therefore $b^{L-k}$, giving per-position
-probability $b^{-k}$. Summing $b^{-k}$ over $L-k+1$ positions yields the claim.
-The matching count $b^{L-k}$ is established by an explicit cardinality lemma for
-the set of volumes agreeing with a pattern on an injective set of positions.
-$\square$
+**Algorithm A — Meaning-density estimator.** Given $A$, $L$, and a target
+passage $w$ of length $m$, return the exact bound $(L-m+1)A^{-m}$ and,
+for small parameters, the true fraction by enumeration. The bound is
+$O(1)$ arithmetic on big integers; the exact enumeration is
+$O(A^{L}\cdot L)$ and is used only to validate the bound on the toy
+library.
 
-**Theorem 3b (Containment union bound).** *Under the same hypotheses,*
-$$\Pr\big(\{v : v \text{ contains } p\}\big) \;\le\; (L - k + 1)\, b^{-k}.$$
+**Algorithm B — de Bruijn tour constructor.** Given $A$ and $k$, build the
+de Bruijn graph on $(k-1)$-codes, compute an Eulerian circuit by
+Hierholzer's algorithm in $O(A^{k})$ time, and expand it to a linear
+volume of length $A^{k}+k-1$. Verify optimality by checking that all
+$A^{k}$ codes occur exactly once.
 
-*Proof sketch.* The containment event is the union over start positions of the
-per-position match events; bound the cardinality of the union by the sum of the
-cardinalities (a finite union/biUnion bound), then divide by $b^L$. Each term is
-$b^{L-k}/b^L = b^{-k}$ and there are $L-k+1$ of them. $\square$
+**Algorithm C — Catalog threshold reporter.** Given $A$ and $L$, report
+the population $A^{L}$, the catalog surplus $2^{A^{L}}/A^{L}$ (as an exact
+big-integer ratio for small parameters, or its logarithm for large), and
+the minimum distributed-catalog size $A^{L}$, confirming the strict
+inequality $A^{L}<2^{A^{L}}$.
 
-**Interpretation (the brief's estimate).** Theorems 3a–3b make precise the
-heuristic that the chance of locating a meaningful passage $T$ of complexity $k$
-is $\approx |T|\cdot b^{-k}$: the $b^{-k}$ factor is the exponential cost of each
-symbol of demanded structure, and the $(L-k+1)\approx L$ factor is the linear gain
-from a long book offering many trial positions. Rarity per site, multiplied by a
-million sites.
+---
 
-## 5. Constructive Cataloging: the de Bruijn Mini-Catalog
+## 9. Conjectures and future directions
 
-We now realize Borges' "single universal catalog" in the regime where it is
-possible: cataloging the *addresses* (short codes) rather than the
-*sub-collections*. Take $b = 4$ and address length $n = 2$; there are $4^2 = 16$
-addresses, and we exhibit a single optimal-length volume that lists all of them.
+**Conjecture 9.1 (Tight meaning-density).** For fixed $m$ as $L\to\infty$,
+$$P(w) = (L-m+1)A^{-m}\big(1+O(m\,A^{-m})\big),$$
+so the union bound of Theorem 4.1 is asymptotically tight. The proof
+requires a matching lower bound via inclusion–exclusion over overlapping
+placement windows, now a finite computation rather than a heuristic.
 
-**Theorem 6 (Window bijection).** *The window map $\mathrm{window} :
-\mathrm{Fin}\,16 \to \mathrm{Fin}\,4 \times \mathrm{Fin}\,4$ of Definition 5 is a
-bijection.*
+**Conjecture 9.2 (Doubly-exponential catalog surplus).** For all $A\ge 2$,
+$L\ge 1$ the catalog surplus is $2^{A^{L}}/A^{L}$, no injective
+self-cataloging scheme exists, and a surjective distributed catalog exists
+for every $N\ge A^{L}$ with minimum $N=A^{L}$. The remaining work is to
+establish monotonicity of the surplus in both $A$ and $L$.
 
-*Proof sketch.* Source and target both have cardinality $16$, so by the
-finite-set principle "$f$ is bijective iff $f$ is injective and the cardinalities
-match," it suffices to verify injectivity. Injectivity of the explicit $16$-entry
-map is a finite, decidable check over all $\binom{16}{2}$ position pairs;
-combining it with the cardinality identity $|\mathrm{Fin}\,16| = |\mathrm{Fin}\,4
-\times \mathrm{Fin}\,4| = 16$ upgrades injectivity to bijectivity. Note this is
-not "brute force only": the structural step is the injectivity-plus-cardinality
-upgrade; the downstream corollaries are derived abstractly. $\square$
+**Conjecture 9.3 (de Bruijn optimality).** The shortest single volume
+exhibiting every length-$k$ code exactly once has length exactly
+$A^{k}+k-1$, and any volume of length $\ge A^{k}+k$ repeats a code — the
+subword-complexity ceiling $A^{k}$ and the pigeonhole threshold $A^{k}+k$
+are two faces of the same extremal object.
 
-**Corollary 7 (Every address exactly once).** *For every address $p \in
-\mathrm{Fin}\,4\times\mathrm{Fin}\,4$ there is a unique cyclic position $i$ with
-$\mathrm{window}(i) = p$.* (From the bijection's unique-preimage property.)
+---
 
-**Corollary 8 (Completeness).** *Every address occurs:* $\forall p,\ \exists i,\
-\mathrm{window}(i) = p$ (surjectivity).
+## 10. Applications and discussion
 
-**Corollary 9 (Optimality / no repeats).** *Distinct positions read distinct
-addresses:* $\mathrm{window}$ is injective. Since the volume has length $16 = 4^2$,
-this is the minimum possible length for a single volume listing all $16$
-addresses; no shorter volume could be window-complete.
+**Cryptographic search.** The meaning-density bound is exactly the
+difficulty of key search: a secret of $m$ symbols hides in a space of
+size $A^{m}$, and Theorem 4.1 shows book-length padding gives only a
+linear advantage against an exponential wall. Finding a fixed passage in a
+random volume *is* guessing a key.
 
-**Remark (the combinatorial bridge).** A single volume listing every length-$n$
-address exactly once is precisely a de Bruijn sequence $B(b,n)$, equivalently an
-Eulerian circuit in the de Bruijn graph on $b^{n-1}$ nodes whose $b^n$ edges are
-the addresses. Cataloging-by-windows, address enumeration, and Eulerian
-graph-walking are three views of one object. We give an explicit witness rather
-than invoking a general Eulerian-existence theorem.
+**Diagonalization and self-reference.** Theorem 5.1 is a finite,
+quantitative instance of $|S|<|2^{S}|$. The impossibility of a
+self-cataloging volume is the same phenomenon that forbids a program from
+deciding its own totality, linking the Library to Gödel and Turing.
 
-## 6. Diagonal Impossibility and the Distributed Threshold
+**Lossless coding.** Theorem 6.1 is the counting bound behind lossless
+compression: no directory that distinguishes all objects can be smaller
+than the collection of objects.
 
-We now turn to the *deepest* question of the brief: can the library catalog its own
-contents? We sharpen "catalog the whole library" to "injectively encode every
-*sub-collection*," the genuine task of a complete index, of which there are
-$2^{(b^L)}$.
+**Engineering with de Bruijn tours.** Theorem 7.2's construction is used
+in practice: de Bruijn sequences crack combination locks with minimal
+input, encode absolute rotary position sensors, design overlapping
+oligonucleotide assays, and underlie fast substring-indexing structures.
 
-**Theorem 10 (No single complete catalog).** *For all $b, L$, there is no
-injection from the type of sub-collections $\mathrm{Finset}(\mathrm{Volume}(b,L))$
-into a single volume $\mathrm{Volume}(b,L)$. Equivalently, $b^L < 2^{(b^L)}$.*
+The Library of Babel thus condenses four pillars of the theory of
+information into one image: totality is cheap to define but expensive to
+search; self-description is impossible; complete indexing costs the whole
+space; and only the humblest task — touring every short code once — admits
+a perfectly economical solution.
 
-*Proof sketch.* A single volume realizes one of $b^L$ values, whereas the
-sub-collections number $2^{(b^L)}$. Since $m < 2^m$ for every natural $m$ (in
-particular $m = b^L$), there are strictly more sub-collections than volume values,
-so no injection exists by the pigeonhole principle. This is a Cantor diagonal
-statement and holds unconditionally, including degenerate $b\in\{0,1\}$. $\square$
+### 10.1 A worked comparison of the four regimes
 
-**Theorem 11 (Distributed catalog threshold).** *A distributed catalog across $N$
-volumes — i.e. an injection $\mathrm{Finset}(\mathrm{Volume}(b,L)) \hookrightarrow
-(\mathrm{Fin}\,N \to \mathrm{Volume}(b,L))$ — exists if and only if*
-$$2^{(b^L)} \;\le\; (b^L)^N.$$
+It is instructive to line up the four theorems as statements about a
+single quantity: the number of symbols one must read, write, or store to
+accomplish a task in the library.
 
-*Proof sketch.* The codomain $(\mathrm{Fin}\,N \to \mathrm{Volume}(b,L))$ has
-cardinality $(b^L)^N$, and the domain has cardinality $2^{(b^L)}$. Between finite
-types, an injection exists iff the domain's cardinality does not exceed the
-codomain's. Substituting the two cardinalities yields the stated equivalence.
-$\square$
+- **To name one volume** costs $L$ symbols — the volume is its own name.
+- **To find one fixed passage** of length $m$ costs, in expectation,
+  on the order of $A^{m}/(L-m+1)$ random volumes examined, by inverting
+  Theorem 4.1. The cost is exponential in the passage length and only
+  mildly discounted by book length.
+- **To catalog the whole library from within** costs *infinitely* many
+  volumes in the sense that it is impossible: Theorem 5.1 shows the task
+  has no single-volume solution at all.
+- **To catalog the whole library as a distributed structure** costs
+  exactly $A^{L}$ entries — the full population, by Theorem 6.1.
+- **To exhibit every short code once** costs only $A^{k}+k-1$ symbols by
+  Theorem 7.2, a saving of a factor of nearly $k$ over the naive
+  $k\cdot A^{k}$ concatenation.
 
-**Corollary 12 (Single volume below threshold).** *The $N = 1$ instance of Theorem
-11 never holds:* $2^{(b^L)} \le b^L$ is false for all $b, L$, recovering Theorem 10
-as the smallest case.
+The pattern is stark: naming and short-code enumeration are cheap;
+searching is exponentially expensive; and total self-cataloging is
+impossible while total distributed cataloging is maximally expensive.
+The library rewards modesty of goal and punishes ambition of scope.
 
-**Threshold in logarithmic form.** Taking $\log_b$ of $(b^L)^N = b^{LN}$ and of
-$2^{(b^L)} = b^{(b^L)\log_b 2}$, the condition $2^{(b^L)} \le (b^L)^N$ becomes
-$$N \cdot L \;\ge\; b^L \log_b 2, \qquad\text{i.e.}\qquad
-N \;\ge\; \frac{b^L}{L \log_b b} \cdot \log_b 2 \cdot \frac{1}{1}
-\;=\; \frac{b^L}{L\,\log_2 b}.$$
-For Borges' $b=25$, $L=1{,}312{,}000$, a complete sub-collection index requires
-$$N \;\ge\; \frac{25^{1{,}312{,}000}}{1{,}312{,}000 \times \log_2 25}$$
-volumes — a catalog nearly as large as the library itself. The "single universal
-catalog of individual volumes" (Theorem 2) is consistent and real; the
-impossibility appears only for *sub-collections*.
+### 10.2 On randomness and meaning
 
-## 7. Algorithms
+A philosophical corollary of Theorem 4.1 deserves statement. In a
+library that contains every text, the *information* in a volume is not in
+its contents — all contents are equally present — but in its *address*.
+Locating the one volume you want is exactly as hard as specifying it from
+scratch, because the address of a volume containing a target passage of
+length $m$ must itself carry roughly $m\log_{2}A$ bits of information to
+pin down the passage. This is the precise sense in which the library,
+though it contains all meaning, contains no *free* meaning: extracting a
+signal costs exactly as much as creating it. It is the same accounting
+that makes one-time pads unbreakable and brute-force key search hopeless.
 
-**Algorithm A (de Bruijn catalog construction via Eulerian circuit).** To build a
-single-volume catalog $B(b,n)$ of all length-$n$ addresses: form the de Bruijn
-graph on the $b^{n-1}$ length-$(n-1)$ nodes with one edge per length-$n$ address;
-since every node has equal in- and out-degree $b$, an Eulerian circuit exists;
-traverse it, emitting one symbol per edge, to produce the optimal length-$b^n$
-catalog. For $(b,n)=(4,2)$ this yields the witness of Definition 4. Complexity:
-linear in the output length $b^n$ (Hierholzer's algorithm).
+---
 
-**Algorithm B (distributed catalog feasibility test).** Given $b, L, N$, decide
-whether a complete sub-collection catalog fits in $N$ volumes by checking
-$2^{(b^L)} \le (b^L)^N$, equivalently the overflow-safe logarithmic test
-$b^L \log 2 \le N L \log b$. Complexity: $O(1)$ arithmetic on the logarithms.
+## 11. Conclusion
 
-**Algorithm C (universal catalog encode/decode).** To convert between an address
-$a \in \{0,\ldots,b^L-1\}$ and a volume, write $a$ in base $b$ (decode) or read the
-volume's symbols as base-$b$ digits (encode). Complexity: $O(L)$ digit operations.
-
-## 8. Applications and Discussion
-
-The Library is a clean model of any *universal information space*: the set of all
-files of a fixed size, all images of a fixed resolution, all genomes of a fixed
-length. The results carry over verbatim. Generation is free — every possible
-artifact already exists as a string. The scarce resource is the **catalog**, and
-our theorems quantify exactly how scarce: addresses are cheaply and optimally
-catalogable (de Bruijn, Theorem 6), but *contents* — the power set of artifacts —
-are not catalogable in any single artifact (Theorem 10) and cost a near-complete
-duplicate library to catalog at all (Theorem 11). The probability layer (Theorem
-3b) explains the search experience inside such a space: any specific structured
-target is exponentially rare per location, yet a sufficiently long medium offers
-linearly many locations, recovering the heuristic $|T|\cdot b^{-k}$.
-
-## 9. Future Work
-
-See the Future Directions for the full program; in brief: (FD-1) a polynomial-time
-*constructive* distributed encoder via base-$b$ bit-packing, replacing the
-non-constructive embedding of Theorem 11; (FD-2) generality and counting of de
-Bruijn catalogs via Euler's theorem and the BEST theorem; (FD-3) strict-majority
-incompressibility densities; (FD-4) the catalog-of-catalogs hierarchy and its
-iterated-exponential storage growth.
-
-## 10. Conclusion
-
-We have charted the Library of Babel with exact mathematics: it is finite ($b^L$,
-Theorem 1), perfectly indexable by address (Theorem 2, Theorem 6), governed by a
-sharp meaning-finding probability $(L-k+1)b^{-k}$ (Theorems 3a–3b), and bounded by
-a Cantor wall for content-cataloging (Theorem 10) that only a distributed catalog
-crossing the exact threshold $2^{(b^L)} \le (b^L)^N$ can scale (Theorem 11). In a
-universe where every text exists, the map — not the territory — is the hardest
-thing to make.
+We have given exact combinatorial theorems governing the universal
+library: its population $A^{L}$; the meaning-density bound
+$(L-m+1)A^{-m}$ with the placement count as prefactor; the strict
+inequality $A^{L}<2^{A^{L}}$ forbidding a self-cataloging volume; the
+exact distributed-catalog threshold $A^{L}$; and the de Bruijn length
+$A^{k}+k-1$ as the optimal complete code tour. Together they turn Borges'
+metaphor into a precise account of the limits and possibilities of
+universal information spaces.
