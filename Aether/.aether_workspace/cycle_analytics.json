@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-02T19:55:13.197629+00:00",
+  "last_updated": "2026-07-02T20:14:03.703557+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -28123,6 +28123,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-02T19:55:13.157490+00:00",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0156,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 59,
+      "domain": "Applications",
+      "duration_seconds": 840.0278792381287,
+      "end_time": 1783022934.7059486,
+      "files_integrated": 2,
+      "job_id": "b714fdc8",
+      "outcome_quality": 0.7480399999999999,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skip_reason": "phase_b_dispatch_failed",
+      "phase_b_skipped": true,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6644,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.6624,
+        "novelty": 0.65,
+        "proof_depth": 0.6678,
+        "usefulness": 0.7839
+      },
+      "quality_score": 0.7480399999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783022094.6780694,
+      "strategy_count": 0,
+      "theorem_count": 5,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-02T20:14:03.648123+00:00",
+      "title": "Prove Fermats Little Theorem for p=5"
     }
   ]
 }

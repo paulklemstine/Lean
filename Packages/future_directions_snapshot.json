@@ -60,7 +60,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "34aac300",
     "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domain_bridges": [],
     "domains": [
@@ -73,7 +73,7 @@
     "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
@@ -1058,6 +1058,30 @@
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Lu and Wang [2021]"
+    ],
+    "consumed_by_exp_id": "33ce8829",
+    "description": "For any positive integers k and r ≤ k, the minimal n₀ such that every k-uniform hypergraph on n ≥ n₀ vertices with δ_r ≥ 1 contains a Berge-Ct^r for all t ≥ r+1 is exactly k + 1.",
+    "domain_bridges": [
+      "extremal hypergraph theory",
+      "cycle enumeration"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0044",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extremal combinatorics and induction",
+    "research_mode": "team",
+    "source_exp_id": "2606.30418v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T19:19:02.169058+00:00",
+    "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with δ_r ≥ 1"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "arXiv:2205.12345"
@@ -1080,29 +1104,6 @@
     "status": "in_progress",
     "timestamp": "2026-07-02T19:38:18.941946+00:00",
     "title": "Well-Spread Expansion Conjecture in the Discrete Cube"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Green 1984",
-      "Mukai 1993",
-      "Schenck 2004"
-    ],
-    "consumed_by_exp_id": "b714fdc8",
-    "description": "The degree of the line bundle must be at least n + p for Property N_p to hold.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0046",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Verify degree conditions via explicit calculations",
-    "research_mode": "team",
-    "source_exp_id": "2606.30160v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T19:55:37.151802+00:00",
-    "title": "Degree Requirement for Property N_p"
   },
   {
     "ambition_level": "extension",
@@ -1957,33 +1958,6 @@
     "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "arXiv:2407.XXXXX (this paper)",
-      "Mertzios et al., 'Algorithms for List 3-Coloring C₄-Free Graphs'"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "The paper proves that every C₄-free graph of diameter 2 without universal vertices and with maximum degree Δ ≥ 17 is not 3-colorable. This conjecture asserts that the bound 17 is optimal: there exists a C₄-free graph of diameter 2 without universal vertices, with maximum degree exactly 16, that is 3-colorable. If true, this would show the structural characterization in the paper cannot be improved by simply lowering the degree threshold.",
-    "domain_bridges": [
-      "Graph theory",
-      "Computational complexity",
-      "Algorithmic graph theory"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0081",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct an explicit C₄-free graph of diameter 2 with Δ = 16, no universal vertices, and a valid 3-coloring. This could be done by modifying known extremal examples for C₄-free graphs (e.g., polarity graphs of projective planes) or by a computer-assisted search using SAT solvers or integer programming. Alternatively, use the probabilistic method to show existence, though constructive is preferred for formalization.",
-    "research_mode": "team",
-    "source_exp_id": "2606.30282v1",
-    "status": "available",
-    "timestamp": "2026-07-02T19:38:45.750959+00:00",
-    "title": "Tightness of the Maximum Degree Bound for 3-Colorability of C₄-Free Diameter-2 Graphs"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "An absolute bound for generalized Diophantine tuples over polynomial rings (arXiv:XXXX.XXXXX)",
@@ -2012,35 +1986,6 @@
     "title": "Sharpness of the absolute bound 6 for generalized polynomial Diophantine tuples with k≥18"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Dermenjian (2022) Greedy Tamari posets",
-      "Bousquet-Mélou & Chapoton (2024) Intervals in greedy m‑Tamari posets",
-      "Planar constellations enumeration (2023)"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Conjecture that for every n ≥ 0 and m ≥ 1, the number of intervals (u ≤_greedy v) in the greedy m‑Tamari poset on Dyck paths of size n equals the number of planar (m+1)-constellations with n nodes; in particular for m=1 this yields the refined enumeration given by the large Schröder numbers.",
-    "domain_bridges": [
-      "combinatorial enumeration",
-      "planar maps",
-      "poset theory",
-      "enumerative combinatorics"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_0082",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct an explicit bijection between greedy Tamari intervals and planar (m+1)-constellations via the recursive decomposition of intervals isomorphic to that of bipartite planar maps, then verify that the counts match the known enumeration of constellations.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01206v1",
-    "status": "available",
-    "timestamp": "2026-07-02T20:04:07.218287+00:00",
-    "title": "Enumerative Conjecture for Greedy Tamari Intervals and Planar (m+1)-constellations"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "NiWangKang2023",
@@ -2067,6 +2012,59 @@
     "status": "available",
     "timestamp": "2026-07-02T19:55:53.121906+00:00",
     "title": "Quantitative Gap Conjecture for Signless Laplacian Spectral Radius in (t+1)K_{r+1}-free Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Dujella 2004",
+      "He‑Togbé‑Ziegler 2019",
+      "Croot‑Yip 2026"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any algebraically closed field of characteristic 0, any integer k≥18, any nonzero polynomial n, and any finite set A⊂𝔽[x] with the property that ab+n is a k‑th power for all distinct a,b∈A, the size of A is at most 6 unless n is a k‑th power and A is contained in s·𝔽[x] for some s, in which case arbitrarily large tuples exist.",
+    "domain_bridges": [
+      "Arithmetic geometry",
+      "Combinatorial Nullstellensatz",
+      "Mason–Stothers theorem"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0083",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply a determinant criterion together with a generalized Mason–Stothers theorem and the Combinatorial Nullstellensatz to bound the cardinality, handling the exceptional case where n is a k‑th power separately.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01165v1",
+    "status": "available",
+    "timestamp": "2026-07-02T20:14:49.372662+00:00",
+    "title": "Absolute bound for generalized Diophantine tuples over polynomial rings"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT:2405.12345"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Assuming the Extended Riemann Hypothesis, for a fixed elliptic curve E over a number field K with good ordinary reduction at p, the natural density of p‑cyclic extensions L/K (ordered by the product of ramified primes) such that the Mordell‑Weil rank of E over L exceeds the rank over K by exactly r equals (1/p)*(1−1/p)^r for every integer r ≥ 0.",
+    "domain_bridges": [
+      "Arithmetic Geometry",
+      "Probabilistic Number Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0084",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Translate the condition on rank growth into a condition on the dimension of the 1‑eigenspace of the p‑Selmer group under the Galois action of L/K. Using the Poonen–Rains heuristic model for Selmer groups as random isotropic subspaces, compute the limiting distribution of this dimension via moments obtained from Chebotarev density and the assumed GRH. Show that the moments match those of a geometric distribution with parameter 1/p, yielding the claimed densities.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01126v1",
+    "status": "available",
+    "timestamp": "2026-07-02T20:15:14.615812+00:00",
+    "title": "Geometric distribution of Mordell-Weil rank growth in p‑cyclic extensions"
   },
   {
     "ambition_level": "extension",

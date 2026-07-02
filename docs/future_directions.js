@@ -46,7 +46,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "34aac300",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -56,7 +56,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
@@ -76,7 +76,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1fbcd99f",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty"
@@ -85,7 +85,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -652,20 +652,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Well-Spread Expansion Conjecture in the Discrete Cube"
   },
   {
-    "consumed_by_exp_id": "b714fdc8",
-    "description": "The degree of the line bundle must be at least n + p for Property N_p to hold.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0046",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30160v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T19:55:37.151802+00:00",
-    "title": "Degree Requirement for Property N_p"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
@@ -1148,18 +1134,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The paper proves that every C\u2084-free graph of diameter 2 without universal vertices and with maximum degree \u0394 \u2265 17 is not 3-colorable. This conjecture asserts that the bound 17 is optimal: there exists a C\u2084-free graph of diameter 2 without universal vertices, with maximum degree exactly 16, that is 3-colorable. If true, this would show the structural characterization in the paper cannot be improved by simply lowering the degree threshold.",
+    "description": "For every algebraically closed field $\\mathbb{F}$ of characteristic $0$, every integer $k\\ge 18$, and every nonzero polynomial $n\\in\\mathbb{F}[x]$, any set $A\\subset\\mathbb{F}[x]$ satisfying that $ab+n$ is a $k$\u2011th power in $\\mathbb{F}[x]$ for all distinct $a,b\\in A$ has cardinality at most $6$, and there exist choices of $n$ and $A$ with $|A|=6$ that are not contained in the exceptional family where $n=s^{k}$ and $A\\subset s\\mathbb{F}[x]$.",
     "domains": [
-      "Pythagorean",
-      "Algebra"
+      "Algebra",
+      "Pythagorean"
     ],
     "id": "fd_0081",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.30282v1",
+    "source_exp_id": "2607.01165v1",
     "status": "available",
-    "timestamp": "2026-07-02T19:38:45.750959+00:00",
-    "title": "Tightness of the Maximum Degree Bound for 3-Colorability of C\u2084-Free Diameter-2 Graphs"
+    "timestamp": "2026-07-02T20:03:41.181667+00:00",
+    "title": "Sharpness of the absolute bound 6 for generalized polynomial Diophantine tuples with k\u226518"
   },
   {
     "consumed_by_exp_id": "",
@@ -1175,6 +1161,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T19:55:53.121906+00:00",
     "title": "Quantitative Gap Conjecture for Signless Laplacian Spectral Radius in (t+1)K_{r+1}-free Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any algebraically closed field of characteristic\u202f0, any integer k\u226518, any nonzero polynomial n, and any finite set A\u2282\ud835\udd3d[x] with the property that ab+n is a k\u2011th power for all distinct a,b\u2208A, the size of A is at most\u202f6 unless n is a k\u2011th power and A is contained in s\u00b7\ud835\udd3d[x] for some s, in which case arbitrarily large tuples exist.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0083",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01165v1",
+    "status": "available",
+    "timestamp": "2026-07-02T20:14:49.372662+00:00",
+    "title": "Absolute bound for generalized Diophantine tuples over polynomial rings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Assuming the Extended Riemann Hypothesis, for a fixed elliptic curve E over a number field K with good ordinary reduction at p, the natural density of p\u2011cyclic extensions L/K (ordered by the product of ramified primes) such that the Mordell\u2011Weil rank of E over L exceeds the rank over K by exactly r equals (1/p)*(1\u22121/p)^r for every integer r \u2265 0.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0084",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01126v1",
+    "status": "available",
+    "timestamp": "2026-07-02T20:15:14.615812+00:00",
+    "title": "Geometric distribution of Mordell-Weil rank growth in p\u2011cyclic extensions"
   },
   {
     "consumed_by_exp_id": "",

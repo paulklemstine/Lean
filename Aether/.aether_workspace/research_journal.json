@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e3ff7cf5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Semi-induced stars `S_{k,1}` and the suboptimal envelope\n\nDerived from this cycle's findings (see `Basic.lean`, `TuranBridge.lean`, `ComputationalEvidence.md`).\nThis cycle proved",
-      "quality_score": 0.7938000000000001,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-27T20:38:29",
-      "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
-    },
-    {
       "cycle_id": "c027516f",
       "domain": "Applications",
       "key_insight": "# Future Directions — Proof Complexity: Resolution and Cutting Planes\n\nDerived from this cycle's findings (soundness of resolution, unsatisfiability of\nthe pigeonhole CNF `PHP n`, soundness of the two",
@@ -499,19 +489,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-02T18:55:06",
       "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
+    },
+    {
+      "cycle_id": "b714fdc8",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, testable conjectures distilled from this cycle's work on the divisibility\n`5 ∣ a⁵ − a`, its decimal-digit sharpening `10 ∣ a⁵ − a`, and the exponent-class\ngeneralisation `5",
+      "quality_score": 0.7480399999999999,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-02T20:14:02",
+      "title": "Prove Fermats Little Theorem for p=5"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "710a2a8b",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Universal Approximation: Quantitative Bounds\n\nDerived from this cycle's findings in `SobolevQuadraticRate.lean` (quadratic rate\n`M/n²` for `W^{2,∞}` targets) and `TentDepthSepara",
-      "quality_score": 0.415178125,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T10:10:08",
-      "title": "Universal Approximation: Quantitative Bounds"
-    },
     {
       "cycle_id": "af3ea261",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 23,
       "timestamp": "2026-07-02T18:55:06",
       "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
+    },
+    {
+      "cycle_id": "b714fdc8",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nBold, testable conjectures distilled from this cycle's work on the divisibility\n`5 ∣ a⁵ − a`, its decimal-digit sharpening `10 ∣ a⁵ − a`, and the exponent-class\ngeneralisation `5",
+      "quality_score": 0.7480399999999999,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-02T20:14:02",
+      "title": "Prove Fermats Little Theorem for p=5"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0a73d6d7",
-      "domain": "Probability",
-      "name": "derivable_mono",
-      "quality": 0.73856
-    },
-    {
-      "cycle_id": "0a73d6d7",
-      "domain": "Probability",
-      "name": "refutation_mono",
-      "quality": 0.73856
-    },
-    {
-      "cycle_id": "0a73d6d7",
-      "domain": "Probability",
-      "name": "not_derivable_nil",
-      "quality": 0.73856
-    },
     {
       "cycle_id": "99e4c1c9",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "coverCount_one_right",
       "quality": 0.7916800000000002
+    },
+    {
+      "cycle_id": "b714fdc8",
+      "domain": "Applications",
+      "name": "for",
+      "quality": 0.7480399999999999
+    },
+    {
+      "cycle_id": "b714fdc8",
+      "domain": "Applications",
+      "name": "on",
+      "quality": 0.7480399999999999
+    },
+    {
+      "cycle_id": "b714fdc8",
+      "domain": "Applications",
+      "name": "pow_five_modEq_self",
+      "quality": 0.7480399999999999
     }
   ],
-  "last_updated": "2026-07-02T18:55:06",
+  "last_updated": "2026-07-02T20:14:02",
   "open_questions": [
     {
       "context": "All results are fully proved; there are no `sorry`s. -/",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "adbfcd0f",
-        "quality": 0.45705761904761916,
-        "theorems": 1,
-        "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
-      },
-      {
         "cycle_id": "52dd778d",
         "quality": 0.7232000000000001,
         "theorems": 8,
@@ -3141,6 +3135,12 @@
         "quality": 0.389,
         "theorems": 0,
         "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined en"
+      },
+      {
+        "cycle_id": "b714fdc8",
+        "quality": 0.7480399999999999,
+        "theorems": 5,
+        "title": "Prove Fermats Little Theorem for p=5"
       }
     ],
     "Bridges": [
