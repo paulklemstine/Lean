@@ -3,21 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "bfccf79e",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0037",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T16:14:03.707606+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
-    "consumed_by_exp_id": "d991c87b",
+    "consumed_by_exp_id": "",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -27,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.029563+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -525,6 +511,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "No solutions for odd exponents in the coprime case"
   },
   {
+    "consumed_by_exp_id": "bfccf79e",
+    "description": "For the graph G_N^{(2)} obtained by deleting edges of circular distances \u00b11, \u00b12 from the complete graph K_N, the effective resistance R_{N,\u2113}^{(2)} between vertices at distance \u2113 satisfies a fourth-order linear recurrence with coefficients depending on N. Specifically, for N \u2265 5 and 0 \u2264 \u2113 \u2264 N-5, the sequence R_{N,\u2113}^{(2)} satisfies R_{\u2113+4} + R_{\u2113+3} - (N-1)R_{\u2113+2} + R_{\u2113+1} + R_\u2113 = 0.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0037",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31044v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T16:46:19.799142+00:00",
+    "title": "Recurrence for Effective Resistance in G_N^{(2)}"
+  },
+  {
     "consumed_by_exp_id": "3e52c27d",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
@@ -888,6 +888,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T16:14:00.036969+00:00",
     "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any fixed number field K and any integral ideal q, every class in the narrow ray class group Cl^{(\u221e)}_q can be represented as a product of two prime ideals of norm at most (Nq)^{103/64 + \u03ba} for any \u03ba > 0.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0063",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30567v1",
+    "status": "available",
+    "timestamp": "2026-07-02T16:48:39.773698+00:00",
+    "title": "Binary representation in narrow ray class groups"
   },
   {
     "consumed_by_exp_id": "",

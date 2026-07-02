@@ -345,7 +345,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d991c87b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -373,7 +373,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T04:59:08.029563+00:00",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
@@ -1713,44 +1713,50 @@
       "title": "No solutions for odd exponents in the coprime case"
     },
     {
-      "ambition_level": "grand_challenge",
+      "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
-      "catalog_references": [],
-      "category": "",
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2601.XXXXX"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "bfccf79e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-      "domain_bridges": [],
+      "description": "For the graph G_N^{(2)} obtained by deleting edges of circular distances ±1, ±2 from the complete graph K_N, the effective resistance R_{N,ℓ}^{(2)} between vertices at distance ℓ satisfies a fourth-order linear recurrence with coefficients depending on N. Specifically, for N ≥ 5 and 0 ≤ ℓ ≤ N-5, the sequence R_{N,ℓ}^{(2)} satisfies R_{ℓ+4} + R_{ℓ+3} - (N-1)R_{ℓ+2} + R_{ℓ+1} + R_ℓ = 0.",
+      "domain_bridges": [
+        "spectral graph theory",
+        "linear recurrences",
+        "discrete Fourier analysis"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Novelty"
+        "Bridges"
       ],
-      "github_issue": 7,
+      "github_issue": 0,
       "id": "fd_0037",
-      "last_attempt_time": "2026-07-02T16:14:06.490137+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem effective_resistance_r2_recurrence (N : ℕ) (hN : N ≥ 5) (ℓ : ℕ) (hℓ : ℓ ≤ N - 5) :\n  effective_resistance_r2 N (ℓ + 4) + effective_resistance_r2 N (ℓ + 3) - (N - 1 : ℚ) * effective_resistance_r2 N (ℓ + 2) + effective_resistance_r2 N (ℓ + 1) + effective_resistance_r2 N ℓ = 0 := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 1000.0,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the trigonometric sum representation R_{N,ℓ}^{(2)} = (1/N) ∑_{k=1}^{N-1} (1 - cos(2πkℓ/N)) / (N - 1 - 2 cos(2πk/N) - 2 cos(4πk/N)) from the paper. Multiply the denominator by e^{2iπk/N} to obtain the characteristic polynomial z^4 + z^3 - (N-1)z^2 + z + 1. Show that the sequence satisfies the corresponding linear recurrence by verifying that the summand is annihilated by the recurrence operator, or by using the closed-form expression in terms of the generalized Bejaia-Pisa sequences introduced in the paper.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source": "github_injection",
-      "source_exp_id": "github",
-      "source_path": "github",
+      "source": "",
+      "source_exp_id": "2606.31044v1",
+      "source_path": "http://arxiv.org/abs/2606.31044v1",
       "status": "in_progress",
       "thread_id": "",
-      "timestamp": "2026-07-02T16:14:03.707606+00:00",
-      "title": "Prove Fermats Little Theorem for p=5"
+      "timestamp": "2026-07-02T16:46:19.799142+00:00",
+      "title": "Recurrence for Effective Resistance in G_N^{(2)}"
     },
     {
       "ambition_level": "extension",
@@ -2177,7 +2183,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Baker-Norine graph Riemann-Roch",
         "Serre duality",
@@ -2202,7 +2208,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0047",
-      "last_attempt_time": "2026-07-02T16:14:12.571180+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem riemann_function_duality (r : ℕ) (W : perfect_matching r) (F : line_bundle r) (K : ℤ × ℤ) : let M := M_{W, (0,0)} in let M_dual := M_{W^∧ (K + (1,1)), K} in perfect_pairing (H⁰ (tensor_product M F)) (Ext 1 F M_dual) (H¹ (ω W))",
       "lineage_refs": [],
@@ -2918,6 +2924,55 @@
       "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Matomäki-Teräväinen (2021) - multiplicative dense model for primes",
+        "Deshouillers-Gun-Ramaré-Sivaraman (2019) - previous O_K((Nq)^3) bound",
+        "Wu (2022) - subconvexity bound α=α₀=103/256 for Hecke L-functions"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any fixed number field K and any integral ideal q, every class in the narrow ray class group Cl^{(∞)}_q can be represented as a product of two prime ideals of norm at most (Nq)^{103/64 + κ} for any κ > 0.",
+      "domain_bridges": [
+        "analytic number theory (character sums, subconvexity)",
+        "algebraic number theory (ray class groups, prime ideals)",
+        "additive combinatorics (dense model theorem, transference principle)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0063",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem binary_ray_class_conjecture {K : Type*} [NumberField K] (q : Ideal (RingOfIntegers K)) (κ : ℝ) (hκ : κ > 0) : ∀ (c : NarrowRayClassGroup K q), ∃ (p₁ p₂ : PrimeIdeal (RingOfIntegers K)), p₁ ∤ q ∧ p₂ ∤ q ∧ normNum p₁ ≤ (normNum q : ℝ) ^ (103 / 64 + κ) ∧ normNum p₂ ≤ (normNum q : ℝ) ^ (103 / 64 + κ) ∧ c = (p₁ : NarrowRayClassGroup K q) * (p₂ : NarrowRayClassGroup K q) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the Matomäki-Teräväinen dense-model/transference framework from ternary to binary products in the number field setting. This requires overcoming the coset obstructions that currently only allow a positive proportion of classes to be represented by two primes. Key steps: (1) refine the multiplicative dense model for prime ideals to capture binary correlations, (2) improve the treatment of exceptional characters using Wu's subconvexity bound, (3) adapt the transference argument from product sets in finite abelian groups to handle the narrower binary case, possibly using a more sophisticated version of the Cauchy-Davenport or Kneser-type inequalities for the ray class group.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2606.30567v1",
+      "source_path": "http://arxiv.org/abs/2606.30567v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T16:48:39.773698+00:00",
+      "title": "Binary representation in narrow ray class groups"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -2961,8 +3016,5 @@
   "pruned": [],
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
-  "selection_log": [
-    "famous_subtask",
-    "cross_domain_bridge"
-  ]
+  "selection_log": []
 }
