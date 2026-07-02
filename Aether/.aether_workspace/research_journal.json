@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "236373d0",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Abstract Navier–Stokes Energy Theory\n\nDerived from this cycle's findings (`ExponentialDecay.lean`, `Uniqueness.lean`,\nbuilding on `EnergyMethod.lean`, `Enstrophy2D.lean`, `Partia",
-      "quality_score": 0.55432,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T04:41:36",
-      "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-    },
-    {
       "cycle_id": "905ed2dd",
       "domain": "Novelty",
       "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings: the EML operator `f(x) = exp(a)·log(b·x + c)`\nhas a *sharp closed-form existence threshold* `c ≥ exp(a)·(1 − a)` (fo",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-02T03:51:06",
       "title": "Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
+    },
+    {
+      "cycle_id": "6501d983",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Explicit class field theory beyond the prime-degree layer\n\nThis cycle established that the smallest abelian layers over a number field — those of prime\ndegree — are rigid: they h",
+      "quality_score": 0.6341419999999999,
+      "sorry_count": 0,
+      "theorem_count": 2,
+      "timestamp": "2026-07-02T03:55:56",
+      "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.87056
     }
   ],
-  "last_updated": "2026-07-02T03:51:06",
+  "last_updated": "2026-07-02T03:55:56",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "65ebb6ab",
-        "quality": 0.5526146420618556,
-        "theorems": 12,
-        "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
-      },
-      {
         "cycle_id": "83afa678",
         "quality": 0.60704,
         "theorems": 12,
@@ -3141,6 +3135,12 @@
         "quality": 0.79052,
         "theorems": 12,
         "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
+      },
+      {
+        "cycle_id": "6501d983",
+        "quality": 0.6341419999999999,
+        "theorems": 2,
+        "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
       }
     ],
     "Bridges": [

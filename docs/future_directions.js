@@ -4,6 +4,20 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0014",
+    "priority_score": 1000.0,
+    "research_mode": "",
+    "source_exp_id": "",
+    "status": "available",
+    "timestamp": "2026-07-02T03:56:18.082191+00:00",
+    "title": "Prove Fermats Little Theorem for p=5"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d80d981e (Q=0.871), which proved 15 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that the Petersen graph's metric obstruction to isometric embedding into classical abelian Cayley graphs extends to Cayley graphs of idempotent semirings (tropical semirings) because the tropical distance valuation preserves the essential girth and diameter constraints that forbid",
     "domains": [
       "Tropical"
@@ -192,6 +206,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T03:50:58.643112+00:00",
     "title": "That the Petersen graph \u2014 and, more generally, any graph"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Explicit class field theory beyond the prime-degree layer\n\nThis cycle established that the smallest abelian layers over a number field \u2014 those of prime\ndegree \u2014 are rigid: they have cyclic Galois groups and no intermediate fields, uniformly across\nthe cyclotomic tower and the Hilbert class field. The following bold, falsifiable conjectures\nextend that finding.\n\n## Conjecture 1 \u2014 Lattice rigidity is exactly the \"squarefree class number\" phenomenon\n\nFor a number field `K`, the Hilbert class field `H/K` has a *distributive* subfield lattice that\nis a Boolean-type product of prime layers precisely when the class number is squarefree; the first\nnon-distributive behaviour appears at the smallest square factor.\n\nThe key insight is that the subfield lattice of the class field is an exact mirror of the subgroup\nlattice of the class group, so the arithmetic question \"when is the tower of abelian layers\nlattice-simple?\" becomes the purely group-theoretic question \"when is the class group a product of\ndistinct cyclic prime factors?\" \u2014 squarefreeness of the class number.\n\nWhy now? Class numbers and class-group structures are tabulated for enormous ranges of\ndiscriminants, so the squarefree/non-squarefree split can be tested against millions of fields\nimmediately, turning a structural conjecture into a data-driven one.\n\n## Conjecture 2 \u2014 Prime-degree minimality forces a reciprocity fingerprint on splitting primes\n\nIf `H/K` is an abelian extension of prime degree `p`, then the rational primes (or prime ideals of\n`K`) split completely in `H` exactly along a single congruence/ray class condition of index `p`,\nand no coarser condition suffices.\n\nThe key insight is that a prime-degree layer has no room for intermediate splitting behaviour: the\nabsence of intermediate fields means a prime is either inert-type or fully split, so the splitting\nlaw must be governed by one primitive character of order `p` rather than a composite of several.\n\nWhy now? The prime-degree rigidity is exactly the hypothesis under which the still-incomplete\ngeneral reciprocity law simplifies to a single character, making it the most tractable next case to\npin down explicitly and to check against known splitting tables for cubic and quintic fields.\n\n## Conjecture 3 \u2014 Genus layers are the unique obstruction to prime-degree rigidity\n\nThe failure of subfield-lattice rigidity for a class field is controlled entirely by the 2-part\n(more generally the `p`-part) of the class group: the number of independent quadratic (resp.\ndegree-`p`) intermediate layers equals the `p`-rank of the class group, and these are precisely the\n\"genus\" subfields.\n\nThe key insight is that non-trivial intermediate fields can only come from non-cyclic factors of\nthe class group, and the count of independent minimal layers is a rank, not a size \u2014 so the entire\ndeviation from rigidity is measured by a single rank invariant.\n\nWhy now? `p`-ranks of class groups (especially the 2-rank via genus theory) are computable directly\nfrom the factorization of the discriminant, so the rank-versus-layer-count identity can be verified\nexhaustively for quadratic fields without computing full class groups.\n\n## Conjecture 4 \u2014 Cyclic class groups characterize \"single-generator\" arithmetic\n\nA number field has cyclic ideal class group if and only if its Hilbert class field is generated over\nthe base by a single algebraic element whose minimal polynomial has degree equal to the class\nnumber \u2014 a one-parameter explicit description in the spirit of Hilbert's twelfth problem.\n\nThe key insight is that cyclicity of the class group is equivalent to cyclicity of the class-field\nGalois group, and a cyclic Galois extension is exactly a simple (primitive-element) extension whose\ndegree is the group order, converting an abstract structural property into a concrete\nsingle-generator statement.\n\nWhy now? Cyclic class groups dominate the statistics of small discriminants, so a single-generator\ndescription would immediately apply to the vast majority of tabulated fields and could be checked\nagainst explicit generators already recorded for imaginary quadratic fields of small class number.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0013",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6501d983",
+    "status": "available",
+    "timestamp": "2026-07-02T03:55:49.617569+00:00",
+    "title": "That the smallest abelian layers over a number field \u2014 th"
   },
   {
     "consumed_by_exp_id": "",
