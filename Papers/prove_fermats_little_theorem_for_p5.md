@@ -1,61 +1,53 @@
 # Computational Evidence — Fermat's Little Theorem for p = 5
 
-## Conjecture
-For every integer `a`, the number `a^5 - a` is a multiple of `5`.
-
 ## 1. Small-case calculations
 
-| a  | a^5    | a^5 - a | (a^5 - a)/5 |
-|----|--------|---------|-------------|
-| -3 | -243   | -240    | -48         |
-| -2 | -32    | -30     | -6          |
-| -1 | -1     | 0       | 0           |
-| 0  | 0      | 0       | 0           |
-| 1  | 1      | 0       | 0           |
-| 2  | 32     | 30      | 6           |
-| 3  | 243    | 240     | 48          |
-| 4  | 1024   | 1020    | 204         |
-| 5  | 3125   | 3120    | 624         |
-| 6  | 7776   | 7770    | 1554        |
-| 7  | 16807  | 16800   | 3360        |
+We tabulate `a^5 - a` and its residues modulo `5` and `30` for `a = 0..11`.
 
-Every entry in the last column is an integer: the claim survives all sampled cases.
+| a | a^5 - a | (a^5 - a) mod 5 | (a^5 - a) mod 30 |
+|---|---------|-----------------|-------------------|
+| 0 | 0       | 0 | 0 |
+| 1 | 0       | 0 | 0 |
+| 2 | 30      | 0 | 0 |
+| 3 | 240     | 0 | 0 |
+| 4 | 1020    | 0 | 0 |
+| 5 | 3120    | 0 | 0 |
+| 6 | 7770    | 0 | 0 |
+| 7 | 16800   | 0 | 0 |
+| 8 | 32760   | 0 | 0 |
+| 9 | 59040   | 0 | 0 |
+| 10| 99990   | 0 | 0 |
+| 11| 161040  | 0 | 0 |
 
-## 2. Structural / residue evidence
+Verified in Lean:
 
-Reducing modulo 5, the fifth-power map fixes every residue class:
-
-| a mod 5 | a^5 mod 5 |
-|---------|-----------|
-| 0       | 0         |
-| 1       | 1         |
-| 2       | 32 ≡ 2    |
-| 3       | 243 ≡ 3   |
-| 4       | 1024 ≡ 4  |
-
-Hence `a^5 ≡ a (mod 5)` for all residues, i.e. `5 ∣ a^5 - a`. This is exactly the
-statement of Fermat's little theorem specialised to the prime `p = 5`.
-
-## 3. Stronger observation (divisibility by 30)
-
-Every sampled value of `a^5 - a` is in fact divisible by `30 = 2·3·5`
-(-240, -30, 0, 30, 240, 1020, 3120, 7770, 16800 …). This is because `a^5 - a`
-factors as
 ```
-a^5 - a = (a^2 - a)(a^3 + a^2 + a + 1) = (a^2 + 1)(a^3 - a),
+#eval (List.range 12).map (fun a => ((a:Int)^5 - a) % 5)   -- all 0
+#eval (List.range 12).map (fun a => ((a:Int)^5 - a) % 30)  -- all 0
 ```
-so Fermat's little theorem for `p = 2` and `p = 3` gives `2 ∣ a^5 - a` and
-`3 ∣ a^5 - a`, and together with `5 ∣ a^5 - a` we obtain `30 ∣ a^5 - a`.
 
-## 4. Counterexample hunt
+Both lists are uniformly `0`. This confirms the headline claim `5 ∣ a^5 - a`
+**and** the sharper claim `30 ∣ a^5 - a`.
 
-No counterexample was found for `a` in `[-1000, 1000]`: `(a^5 - a) mod 5 = 0`
-in every case. The conjecture is confirmed computationally and proved formally
-in `Catalog/Physics/FermatLittleP5.lean`.
+## 2. Sequence identification
 
-## 5. OEIS
+`a^5 - a` for `a = 1,2,3,…` gives `0, 30, 240, 1020, 3120, 7770, …`.
+Dividing by 30 yields `0, 1, 8, 34, 104, 259, …`. The generating object is the
+integer polynomial `a(a-1)(a+1)(a^2+1)`, matching the factorisation used in the
+formal development (`pow_five_sub_factor`).
 
-The sequence `a^5 - a` for `a = 0,1,2,…` (0, 0, 30, 240, 1020, 3120, …) and the
-general "n^5 - n" values appear as OEIS A020536-type multiples of 30; the
-per-`a` quotient `(a^5-a)/30` matches A006542-adjacent polynomial values. The
-key structural fact is the constant divisibility by 30.
+## 3. Counterexample hunt
+
+The universal claim `5 ∣ a^5 - a` was tested on all residues mod 5 (via
+`interval_cases`/`decide` on `ZMod 5`), and the `30`-strengthening on all
+residues mod 30. No counterexample exists: every residue class satisfies the
+congruence, because `x^5 = x` holds for every `x` in each of `ZMod 2`, `ZMod 3`,
+`ZMod 5`.
+
+## 4. Why the strengthening to 30 holds
+
+`p - 1 ∣ 4` for each of `p = 2, 3, 5` (namely `1 ∣ 4`, `2 ∣ 4`, `4 ∣ 4`).
+Hence by Fermat's Little Theorem `a^5 ≡ a (mod p)` for each such prime, and since
+`2, 3, 5` are pairwise coprime with product `30`, we get `a^5 ≡ a (mod 30)`.
+`30` is optimal: `a = 2` gives `a^5 - a = 30`, so no larger constant divides all
+values.

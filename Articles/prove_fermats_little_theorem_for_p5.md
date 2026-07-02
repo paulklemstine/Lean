@@ -1,85 +1,83 @@
-# The Number That Never Escapes: Why $a^5 - a$ Is Always a Multiple of Thirty
+# The Number That Always Divides: A Small Miracle Hidden in $a^5 - a$
 
-Pick any whole number you like. Cube it, square it, do whatever you please — but here is a specific recipe: raise your number to the fifth power, then subtract the number you started with. Try it with $2$: you get $2^5 - 2 = 32 - 2 = 30$. Try it with $3$: $3^5 - 3 = 243 - 3 = 240$. Try it with $7$: $7^5 - 7 = 16807 - 7 = 16800$. And with $10$: $10^5 - 10 = 99990$.
+## A puzzle you can check on your fingers
 
-Now look at those answers: $30$, $240$, $16800$, $99990$. Every single one is divisible by $5$. In fact, every single one is divisible by $30$. This is not a coincidence, and it is not luck. It is a theorem — a statement that is *provably* true for **every** integer, positive, negative, or zero, without a single exception among the infinitely many numbers you could try.
+Pick any whole number you like. Call it $a$. Now compute $a^5 - a$: raise your number to the fifth power, then subtract the number itself. Try $a = 2$: we get $2^5 - 2 = 32 - 2 = 30$. Try $a = 3$: $3^5 - 3 = 243 - 3 = 240$. Try $a = 7$: $7^5 - 7 = 16807 - 7 = 16800$.
 
-This article is about *why* that happens. The surprise is not just that the pattern holds, but how deep and how simple the reason turns out to be. What looks like a curious arithmetical accident is in fact a shadow cast by one of the most elegant facts in all of mathematics.
+Look at those answers: $30$, $240$, $16800$. Every one of them is divisible by $5$. That is not a coincidence, and it is not luck. It is a theorem, and it is the modest headline of this article:
 
-## A Very Old Idea in Disguise
+> **For every integer $a$, the number $a^5 - a$ is a multiple of $5$.**
 
-The claim that $a^5 - a$ is always divisible by $5$ is a special case of a result discovered by Pierre de Fermat in the seventeenth century, now called **Fermat's Little Theorem**. In its cleanest form it says:
+But once you start staring at $30$, $240$, and $16800$, you notice something more. All three are divisible not just by $5$, but by $30$. And $30 = 2 \cdot 3 \cdot 5$. Is *that* a coincidence? It is not. The deeper truth is:
 
-> **Fermat's Little Theorem.** If $p$ is a prime number, then for *every* integer $a$, the quantity $a^p - a$ is divisible by $p$.
+> **For every integer $a$, the number $a^5 - a$ is a multiple of $30$.**
 
-Set $p = 5$ and you get exactly our claim: $a^5 - a$ is divisible by $5$. Set $p = 2$ and you learn that $a^2 - a$ is always even (which makes sense — $a^2 - a = a(a-1)$ is a product of two consecutive integers, one of which must be even). Set $p = 3$ and $a^3 - a$ is always divisible by $3$.
+This little cascade — from "divisible by $5$" to "divisible by $30$" — is a perfect miniature of how mathematics works. A concrete question ("is $a^5 - a$ always divisible by $5$?") turns out to be a special case of a grand pattern (Fermat's Little Theorem), and answering it carefully reveals that the true answer is *stronger and cleaner* than the question demanded.
 
-The word "prime" is doing enormous work here. The theorem is *false* if $p$ is not prime. For instance, $a^4 - a$ is not always divisible by $4$: take $a = 2$ and you get $16 - 2 = 14$, which is not a multiple of $4$. Primeness is the secret ingredient, and understanding *why* it matters is the heart of the story.
+## The grand pattern: Fermat's Little Theorem
 
-## Clock Arithmetic: The Right Way to Think About "Divisible By"
+Back in the seventeenth century, Pierre de Fermat noticed a beautiful regularity about prime numbers. In modern language, his **Little Theorem** says:
 
-To see why the theorem is true, we need to change how we look at numbers. Instead of asking "what is this number?", we ask "what is its remainder when divided by $5$?"
+> **If $p$ is a prime number, then for every integer $a$, the number $a^p - a$ is a multiple of $p$.**
 
-This is the arithmetic of a clock. On a $12$-hour clock, $15$ o'clock is the same as $3$ o'clock, because $15$ and $3$ leave the same remainder when divided by $12$. Mathematicians write this as $15 \equiv 3 \pmod{12}$ and say "$15$ is congruent to $3$ modulo $12$."
+Set $p = 5$ and you get exactly our headline. Set $p = 2$ and you learn that $a^2 - a = a(a-1)$ is always even — which is obvious, since one of two consecutive numbers must be even. Set $p = 3$ and you learn $a^3 - a$ is always a multiple of $3$. Set $p = 7$, $p = 11$, $p = 101$ — the pattern never breaks, as long as the exponent is prime.
 
-For our problem we use a $5$-hour clock. Every integer collapses onto one of just five positions: $0, 1, 2, 3, 4$. Saying "$a^5 - a$ is divisible by $5$" is *exactly* the same as saying "$a^5$ and $a$ land on the same position on the $5$-clock," i.e. $a^5 \equiv a \pmod 5$.
+Why should primes be special here? The cleanest way to see it is to change *what world we count in*.
 
-So the entire infinite claim — one statement for each of infinitely many integers — reduces to checking just **five** cases, one for each clock position:
+## Counting on a clock
 
-| $a \bmod 5$ | $a^5 \bmod 5$ | equal? |
-|:---:|:---:|:---:|
-| $0$ | $0^5 = 0$ | ✓ |
-| $1$ | $1^5 = 1$ | ✓ |
-| $2$ | $2^5 = 32 \equiv 2$ | ✓ |
-| $3$ | $3^5 = 243 \equiv 3$ | ✓ |
-| $4$ | $4^5 = 1024 \equiv 4$ | ✓ |
+Ordinary arithmetic runs along an infinite number line. But there is another, cozier kind of arithmetic that runs around a **clock**. On a $12$-hour clock, $10 + 5$ is not $15$; it is $3$, because after passing $12$ we start over. Mathematicians call this **modular arithmetic**, and they can build a clock with any number of hours they like.
 
-Five checks, five successes. Because every integer is congruent to one of these five residues, and because raising to the fifth power respects clock arithmetic (remainders of products are products of remainders), the pattern holds for *all* integers at once. This is the first miracle of modular arithmetic: it turns an infinite problem into a finite one.
+The magic of Fermat's Little Theorem is easiest to see on a clock with a *prime* number of hours — say a $5$-hour clock, whose only readings are $0, 1, 2, 3, 4$. On this clock, addition, subtraction, and multiplication all behave beautifully: in fact, a clock with a prime number of hours forms what algebraists call a **field**, a number system where every nonzero element has a genuine reciprocal, just like the rational or real numbers.
 
-## Why Fifth Powers Are the Identity
+On such a prime clock, a remarkable identity holds: **raising any hour to the $p$-th power sends it right back to itself.** In symbols, on the $p$-hour clock,
+$$x^p = x \quad \text{for every } x.$$
+On the $5$-hour clock you can verify this by hand: $0^5 = 0$, $1^5 = 1$, $2^5 = 32 = 6\cdot5 + 2$ reads as $2$, $3^5 = 243 = 48\cdot5 + 3$ reads as $3$, and $4^5 = 1024 = 204\cdot5 + 4$ reads as $4$. Every hour returns home.
 
-Staring at that table, something remarkable jumps out. On the $5$-clock, raising to the fifth power *does nothing at all*: $0 \mapsto 0$, $1 \mapsto 1$, $2 \mapsto 2$, $3 \mapsto 3$, $4 \mapsto 4$. The map "raise to the fifth power" is the **identity map** modulo $5$.
+Now translate back. Saying "$a^5$ and $a$ read the same on the $5$-hour clock" is *exactly* saying "$a^5 - a$ is a multiple of $5$." The clock identity $x^5 = x$ and our headline theorem are two descriptions of the very same fact. This is the whole engine, and it is worth stating as its own principle:
 
-Why should that be? Here is the beautiful reason. Throw away the number $0$ and look at the four nonzero positions $\{1, 2, 3, 4\}$. Under multiplication modulo $5$, these four form a self-contained world — multiply any two of them and you stay inside the set (you never hit $0$, precisely because $5$ is prime and cannot be split into smaller factors). This world has exactly $4$ elements.
+> **The bridge principle.** An integer $m$ is a multiple of $p$ precisely when it reads as $0$ on the $p$-hour clock.
 
-There is a general principle governing such finite multiplicative worlds: **raise any element to the power equal to the size of the world, and you return to $1$.** Since our world has $4$ elements, every nonzero residue $a$ satisfies $a^4 \equiv 1 \pmod 5$. Multiply both sides by $a$ and you get $a^5 \equiv a$. For $a \equiv 0$ the statement $0^5 \equiv 0$ is obvious. That covers every case — and it explains, without brute force, why the fifth power is the identity.
+Feed the clock identity $a^p = a$ through this bridge and Fermat's Little Theorem falls out for every prime $p$ at once — no separate argument for each prime, no case-by-case checking. That single unified mechanism, rather than an ad-hoc analysis of what $a$ leaves as a remainder when divided by $5$, is the elegant heart of the matter.
 
-This is the deep reason primeness matters. When $p$ is prime, the nonzero residues form a flawless multiplicative system — a *field* — in which every nonzero element has a multiplicative inverse and no two nonzero numbers ever multiply to zero. That perfect structure is what forces $a^p \equiv a$. When $p$ is not prime, the structure cracks: some nonzero residues multiply together to give zero, the tidy "return to $1$" rule breaks, and the pattern collapses.
+## Why the answer is really $30$
 
-## The Bonus: It's Really Divisible by Thirty
+The clock argument, applied to the primes $2$, $3$, and $5$ separately, tells us that $a^5 - a$ is *simultaneously* a multiple of each. For $p = 5$ this is Fermat directly. For $p = 3$: on a $3$-hour clock $x^3 = x$, and since $a^5 = a^3 \cdot a^2$ collapses appropriately, one checks $a^5 - a$ is a multiple of $3$. For $p = 2$: $a^5 - a$ is a product of consecutive-ish integers and is always even.
 
-Now for the part that elevates a textbook exercise into something genuinely satisfying. We claimed at the start that $a^5 - a$ is divisible not just by $5$ but by $30$. Where do the extra factors come from?
+Here is the punchline. If a number is divisible by $2$, by $3$, and by $5$, and if these divisors share no common factor with one another — which primes never do — then the number is automatically divisible by their *product*. This is the principle that **coprime divisors multiply**: divisibility by pairwise-coprime numbers combines into divisibility by their product. Since $2 \cdot 3 \cdot 5 = 30$, we conclude:
+$$30 \mid a^5 - a \quad \text{for every integer } a.$$
+The requested theorem asked only for $5$. The mathematics *gives us $30$ for free* — three times as strong.
 
-The number $30$ factors as $30 = 2 \times 3 \times 5$, a product of three distinct primes. The strategy is to prove divisibility by each prime *separately* and then combine them. This combination is legitimate precisely because $2$, $3$, and $5$ share no common factors: if a number is divisible by each of several pairwise-coprime numbers, it is divisible by their product.
+## A second window: the factorisation
 
-- **Divisible by $2$.** We can factor $a^5 - a = a(a^4 - 1) = a(a^2-1)(a^2+1) = (a-1)\,a\,(a+1)(a^2+1)$. Among the three consecutive integers $a-1$, $a$, $a+1$, at least one is even. So the product is even.
-- **Divisible by $3$.** Among the three consecutive integers $a-1$, $a$, $a+1$, one must be a multiple of $3$. So the product is divisible by $3$. (Equivalently, this is Fermat's Little Theorem with $p=3$: $a^3 \equiv a$, hence $a^5 = a^4\cdot a \equiv a^2\cdot a = a^3 \equiv a$.)
-- **Divisible by $5$.** This is exactly the theorem we proved above.
+There is a completely elementary way to see the same phenomenon, one that uses no clocks at all. A little algebra reveals a hidden structure inside $a^5 - a$:
+$$a^5 - a = a\,(a-1)\,(a+1)\,(a^2+1).$$
+You can expand the right-hand side and watch it collapse back to $a^5 - a$. This factorisation is a small marvel: it displays $a^5 - a$ as $a$ times its two immediate neighbours $a-1$ and $a+1$, times the quadratic $a^2 + 1$.
 
-Since $a^5 - a$ is divisible by $2$, by $3$, and by $5$, and these primes are mutually coprime, it is divisible by their product $2 \cdot 3 \cdot 5 = 30$.
+The three factors $a-1$, $a$, $a+1$ are **three consecutive integers**. Among any three consecutive integers, one must be a multiple of $3$, and at least one must be even — so their product already carries a factor of $6$. Chasing the factor of $5$ is a slightly more delicate residue check, but the factorisation makes the divisibility by $2$ and $3$ almost visible to the naked eye. The two windows — the clock and the factorisation — illuminate the same theorem from different sides.
 
-A charming feature of $a^5 - a$ is that it wears its secrets in more than one costume. It can be written as
-$$a^5 - a = (a-1)\,a\,(a+1)\,(a^2+1),$$
-which exposes the three consecutive integers responsible for the factors of $2$ and $3$. It can *also* be written as
-$$a^5 - a = (a^2 + 1)(a^3 - a) = (a^2 - a)(a^3 + a^2 + a + 1),$$
-and these alternative factorizations are exactly the tools one uses to pin down the small-prime divisibilities cleanly. The same polynomial, seen from two angles, hands you two different proofs.
+## Consequences that ripple outward
 
-## The Larger Pattern
+Once you own a clean fact, it starts paying dividends. Two immediate consequences follow with almost no extra work.
 
-Once you see the mechanism, an irresistible question arises: for which exponents $n$ does $a^n - a$ have a *universal* divisor — a fixed number that divides it for every integer $a$?
+First, a **congruence**: since $a^5 - a$ is always a multiple of $5$, the numbers $a^5$ and $a$ always leave the *same remainder* when divided by $5$. Written compactly,
+$$a^5 \equiv a \pmod 5.$$
+This is the "clock" phrasing of the theorem, and it is exactly the form that appears when you want to compute enormous fifth powers modulo $5$ instantly: you never actually raise anything to the fifth power; you just read off $a$.
 
-The answer is astonishingly clean. For each exponent $n$, there is a largest such universal divisor, call it $D(n)$, and it is always **squarefree** (a product of distinct primes, no repeats). A prime $p$ belongs to this product exactly when $p - 1$ divides $n - 1$. For $n = 5$ we ask which primes $p$ satisfy $(p-1) \mid 4$: the divisors of $4$ are $1, 2, 4$, corresponding to $p - 1 \in \{1, 2, 4\}$, i.e. $p \in \{2, 3, 5\}$. Their product is $2 \cdot 3 \cdot 5 = 30$ — precisely the strengthened divisor we found. The theory predicts the answer exactly.
+Second, a statement about **running totals**. Consider the sum
+$$\sum_{k=0}^{n-1} \bigl(k^5 - k\bigr) = (0^5-0) + (1^5-1) + (2^5-2) + \cdots + \bigl((n-1)^5 - (n-1)\bigr).$$
+Every single term is a multiple of $5$. A sum of multiples of $5$ is again a multiple of $5$. Therefore the whole sum is divisible by $5$, for every $n$ — a fact that would be tedious to guess from the raw numbers but is transparent once you know each summand's secret.
 
-This same criterion explains classic curiosities. Why is $a^7 - a$ always divisible by $42 = 2\cdot 3 \cdot 7$? Because the primes with $(p-1) \mid 6$ are $2, 3, 7$. Why is $a^{13} - a$ divisible by $2730 = 2\cdot3\cdot5\cdot7\cdot13$? Because $(p-1)\mid 12$ for $p \in \{2,3,5,7,13\}$. A single divisibility test on exponents governs an entire infinite family of results.
+## The horizon: how far does this go?
 
-## Where the Magic Stops
+The story does not end at $5$, or even at $30$. It opens onto a landscape.
 
-Part of understanding a theorem is knowing where it fails. The clean "fifth power is the identity" behavior lives modulo a prime because the nonzero residues form a field. Push to a *prime power* — say, work modulo $p^2$ instead of $p$ — and the field structure degenerates. There is no exponent $n > 1$ that makes $a^n \equiv a$ hold for all integers modulo $p^2$ when $p$ is an odd prime, even though the corresponding statement modulo $p$ is true. The perfect fixed-point property is a delicate gift of primeness, and it does not survive the move to $p^2$.
+Ask the natural next question: for a general exponent $n$, what is the *largest* fixed number $M(n)$ that divides $a^n - a$ for **every** integer $a$? For $n = 5$ we have discovered $M(5) = 30$. The conjectured general answer is strikingly clean: $M(n)$ is the product of exactly those primes $p$ for which $p - 1$ divides $n - 1$. For $n = 5$, we need $p - 1 \mid 4$, which the primes $2, 3, 5$ satisfy (since $1, 2, 4$ all divide $4$) — and indeed $2 \cdot 3 \cdot 5 = 30$. This universal divisor is always **squarefree**: no prime ever appears twice, because the arithmetic on a clock with $p^2$ hours is simply too roomy to force the identity.
 
-There is even a probabilistic echo. If you pick a random integer between $1$ and $N$ and ask whether a fixed prime $p$ divides $a^n - a$, then as $N$ grows the fraction of successes tends to $1$ whenever $(p-1) \mid (n-1)$ — the divisor is *guaranteed* — and tends to $1/p$ otherwise, exactly the odds that a random integer happens to be a multiple of $p$. The universal divisor $D(n)$ is precisely the set of primes for which the odds are not odds at all, but a certainty.
+That single formula ties our humble puzzle to some of the most celebrated objects in number theory. When you push the exponent to its extreme, the condition becomes **Korselt's criterion**, the fingerprint of the famous **Carmichael numbers** — composite numbers that masquerade as primes in Fermat's test. Our $30 \mid a^5 - a$ is nothing less than a baby instance of that criterion, a first step onto a road that leads to the frontier of what we know about pseudoprimes and primality testing.
 
-## The Moral
+## The moral
 
-We began with a party trick: raise a number to the fifth power, subtract the number, and marvel that the result is always a multiple of thirty. We end with a glimpse of a vast and orderly landscape. Behind the trick stands Fermat's Little Theorem; behind that stands the arithmetic of clocks; behind *that* stands the structure of finite fields, where primeness turns a chaotic set of numbers into a perfectly behaved multiplicative universe.
+We began with a party trick — $a^5 - a$ is always divisible by $5$ — that you can check on a handful of examples. We ended by seeing that trick as the shadow of a universal law: the identity $x^p = x$ on a prime clock, transported back to ordinary integers by a single bridge, then sharpened by the observation that coprime divisors multiply. Along the way the answer grew from $5$ to $30$, an algebraic factorisation appeared out of nowhere, congruences and sums fell into our lap, and a horizon opened toward Carmichael numbers.
 
-The infinite is tamed by the finite: infinitely many integers, all obeying one rule, because there are only five positions on the clock and each one checks out. That is the quiet power of number theory — to take a statement about *everything* and prove it by understanding *one small, perfect world*.
+That is the quiet pleasure of number theory. The smallest questions, asked precisely and answered honestly, keep handing you more than you asked for.
