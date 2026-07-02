@@ -91,6 +91,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0027",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-02T08:48:04.246121+00:00",
+    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -378,6 +393,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0028",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-02T08:48:04.271161+00:00",
+    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 good-manifold counts and the exponential tier\n\nThese conjectures grow out of the finding that the good-manifold count of an\n`n`-nice polytope has a finite exceptional head followed by the exact law `2^n`,\nplacing it precisely one growth tier below the factorial regime.\n\n## 1. The head length is intrinsic, not incidental\n\n**Conjecture.** For every family of \"nice\" polytopes whose good-manifold count is\neventually a fixed exponential `b^n`, the number of exceptional early terms that\ndeviate from `b^n` is bounded by a function of `b` alone, independent of the\ncombinatorial dimension parameter.\n\n*The key insight is* that the deviation `a(n) \u2212 b^n` in the observed data is a\nstep function that only ever decreases and reaches zero once the exponential term\novertakes the finite geometric correction \u2014 so the head length is governed by when\n`b^n` passes a fixed additive budget, not by the geometry itself.\n\n*Why now?* We now have an exact closed form separating a finite head from an\nexponential tail, so the head can be measured precisely and compared across\nfamilies rather than estimated asymptotically.\n\n## 2. Exactly-exponential sequences form a closed tier\n\n**Conjecture.** A monotone integer sequence that eventually equals a single\nexponential `b^n` is closed under termwise sums and maxima but not under\nconvolution: the convolution of two such sequences leaves the exponential tier\nand lands strictly between exponential and super-exponential growth.\n\n*The key insight is* that agreeing with `b^n` on a cofinite set is preserved by\npointwise operations that respect the dominant term, whereas convolution mixes all\nscales and injects a polynomial factor `n \u00b7 b^n` that breaks the pure exponential\nlaw.\n\n*Why now?* Having certified that the good-manifold count is `\u0398(2^n)` and *not*\nsuper-exponential, we can treat \"exactly exponential\" as a rigorous class and ask\nwhich operations keep a sequence inside it.\n\n## 3. A gap theorem below the factorial regime\n\n**Conjecture.** No good-manifold count of a nice-polytope family grows strictly\nfaster than every fixed exponential yet strictly slower than the factorial; the\nregion between the exponential tier and the super-exponential tier is empty for\nthese counts.\n\n*The key insight is* that the recursive doubling `a(n+1) = 2\u00b7a(n)` seen on the\ntail is the fastest self-similar growth a bounded-branching manifold-gluing\nprocess can produce, and any faster rate would require unbounded branching, which\nimmediately jumps to factorial growth.\n\n*Why now?* The catalog already isolates the super-exponential tier (the factorial\nand permutation counts); pairing that with the exact exponential law here lets us\nformulate the missing-middle gap as a testable dichotomy.\n\n## 4. Partial-sum telescoping characterizes the tail\n\n**Conjecture.** A sequence satisfies the clean telescoping identity\n`\u2211_{k=m}^{N} a(k) = a(N+1) \u2212 a(m)` for all large `N` if and only if it eventually\nobeys a doubling recurrence `a(n+1) = 2\u00b7a(n)`.\n\n*The key insight is* that the geometric partial-sum formula proved for the\ngood-manifold tail is equivalent to the ratio between consecutive terms being\nexactly `2`, so the summation identity is a faithful fingerprint of base-2\nexponential growth.\n\n*Why now?* We have both directions almost in hand: the doubling recurrence yields\nthe telescoping sum directly, and the converse is a short finite-difference\nargument that the present closed form makes accessible.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0029",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8b7f43f1",
+    "status": "available",
+    "timestamp": "2026-07-02T08:56:25.558105+00:00",
+    "title": "These conjectures grow out of the finding that the good-manifold count of an"
   },
   {
     "consumed_by_exp_id": "",

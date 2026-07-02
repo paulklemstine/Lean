@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bd70abee",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Cusick density `c_t = dens { n : s₂(n) ≤ s₂(n+t) }`\n\nThis research cycle proved (in `Catalog/Applications/`):\n\n* `CusickShiftSevenDensity.lean` — `c_7 = 43/64` (first exact `s₂(t",
-      "quality_score": 0.7003299999999999,
-      "sorry_count": 0,
-      "theorem_count": 27,
-      "timestamp": "2026-06-27T18:14:40",
-      "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
-    },
-    {
       "cycle_id": "f8a707b1",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Twin Prime Gaps / Maynard–Tao formalization\n\nDerived from this cycle's findings (the admissibility ⇄ bounded-gaps split, the\n`liminf` reduction, and the Selberg-weight bridge). E",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-02T05:18:37",
       "title": "unnamed_concept"
+    },
+    {
+      "cycle_id": "8b7f43f1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — good-manifold counts and the exponential tier\n\nThese conjectures grow out of the finding that the good-manifold count of an\n`n`-nice polytope has a finite exceptional head follow",
+      "quality_score": 0.7303200000000001,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-02T08:56:33",
+      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7f4f0e8d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures distilled from this cycle (primitive-divisor schema mined\nfrom Carmichael's theorem + Erdős–Straus parametric families).\n\n## 1. Universal Carmichael",
-      "quality_score": 0.505788,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-27T06:26:39",
-      "title": "Proof Strategy Mining from Deep Mathematics"
-    },
     {
       "cycle_id": "ed2a76aa",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-07-02T07:55:33",
       "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined enumeration of biparti"
+    },
+    {
+      "cycle_id": "8b7f43f1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — good-manifold counts and the exponential tier\n\nThese conjectures grow out of the finding that the good-manifold count of an\n`n`-nice polytope has a finite exceptional head follow",
+      "quality_score": 0.7303200000000001,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-02T08:56:33",
+      "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ce5b4268",
-      "domain": "Novelty",
-      "name": "exists_primitiveRoot_pSucc",
-      "quality": 0.71224
-    },
     {
       "cycle_id": "ce5b4268",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Pythagorean",
       "name": "parametrization_is_triple",
       "quality": 0.7859200000000002
+    },
+    {
+      "cycle_id": "8b7f43f1",
+      "domain": "Novelty",
+      "name": "must",
+      "quality": 0.7303200000000001
     }
   ],
-  "last_updated": "2026-07-02T07:55:33",
+  "last_updated": "2026-07-02T08:56:33",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f1070a48",
-        "quality": 0.8322400000000001,
-        "theorems": 18,
-        "title": "Existence of a finite unit-distance graph in R² with independence ratio below 1/"
-      },
-      {
         "cycle_id": "f29abd01",
         "quality": 0.61208,
         "theorems": 8,
@@ -3637,6 +3631,12 @@
         "quality": 0.7176246153846154,
         "theorems": 13,
         "title": "Classification of ρ-dominant elements in B(ρ) for symmetrizable Kac-Moody algebr"
+      },
+      {
+        "cycle_id": "8b7f43f1",
+        "quality": 0.7303200000000001,
+        "theorems": 8,
+        "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
       }
     ],
     "NumberTheory": [
