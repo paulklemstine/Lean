@@ -125,6 +125,8 @@ class ResearchJob:
     # Multi-cycle research threads
     thread_id: Optional[str] = None
     cycle_index: int = 0
+    # GitHub injection tracking
+    github_issue: int = 0
 
 
 
@@ -776,11 +778,13 @@ class KnowledgeExtractor:
             job_id=job_id,
             cycle_n=cycle_n,
             concept=concept,
-            prompt="",  # Will be filled in Phase 2
+            prompt="",
+            direction_id=best_dir.id if best_dir else None,
             source_exp_ids=source_exp_ids if source_exp_ids else None,
+            thread_id=thread_id,
+            cycle_index=cycle_index,
+            github_issue=getattr(best_dir, 'github_issue', 0) if best_dir else 0,
         )
-        job.thread_id = thread_id
-        job.cycle_index = cycle_index
         job.decomposition_depth = getattr(best_dir, 'decomposition_depth', 0) if best_dir else 0
         job.direction_id = best_dir.id if best_dir else None
         return job

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "061c7bd2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Proof Automation Tactics\n\nBold, falsifiable conjectures derived from this cycle's findings (the three\nsound tactics `tropical_simp`, `number_theory_decide`, `spectral_bound` and",
-      "quality_score": 0.6293409999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T02:13:21",
-      "title": "Proof Automation: Custom Lean 4 Tactics"
-    },
-    {
       "cycle_id": "7c592ed1",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings: the shifted `t`-Schur family `S^t_λ` is the image of\nthe Schur-`Q` basis `Q_λ` under the o",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-07-02T01:15:10",
       "title": "Hilbert 12: Kronecker-Weber Generalization"
+    },
+    {
+      "cycle_id": "f955b422",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Signings, Spectral Moments, and the Bilu–Linial Frontier\n\nThe results of this cycle separate the existence of a good edge-signing into two clean\nhalves: an elementary *averaging*",
+      "quality_score": 0.6399900000000001,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-07-02T01:24:33",
+      "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84436
     }
   ],
-  "last_updated": "2026-07-02T01:15:10",
+  "last_updated": "2026-07-02T01:24:33",
   "open_questions": [
     {
       "context": "This file develops a small but complete and `sorry`-free combinatorial foundation",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "913b7f3f",
-        "quality": 0.682396,
-        "theorems": 15,
-        "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-      },
-      {
         "cycle_id": "650b150d",
         "quality": 0.516675,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.84436,
         "theorems": 9,
         "title": "Hilbert 12: Kronecker-Weber Generalization"
+      },
+      {
+        "cycle_id": "f955b422",
+        "quality": 0.6399900000000001,
+        "theorems": 11,
+        "title": "Improved Bilu-Linial Spectral Bound via Interlacing Families"
       }
     ],
     "NumberTheory": [

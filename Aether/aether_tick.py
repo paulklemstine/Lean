@@ -943,6 +943,17 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     if stale_keys:
         for pid in stale_keys:
             job = extractor.inflight[pid]
+            
+            # --- NEW: Close GitHub injected issue if completed ---
+            if job.status == "integrated" and getattr(job, 'github_issue', 0) > 0:
+                try:
+                    import github_injector
+                    comment = f"Aether has completed researching this direction!\n\n**Quality Score**: {job.quality_score:.3f}\n**Theorems Proven**: {job.theorem_count}\n\nThe results have been integrated into the Aether Catalog."
+                    github_injector.close_injected_direction_with_comment(job.github_issue, comment)
+                except Exception as e:
+                    print(f"[Tick] Failed to close GitHub issue {job.github_issue}: {e}")
+            # -----------------------------------------------------
+
             if job.project_dir and Path(job.project_dir).exists():
                 try:
                     import shutil
@@ -1290,6 +1301,17 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 raise RuntimeError("Queue probe: at max_inflight")
         except Exception:
             pass
+
+        # --- NEW: Inject GitHub Issues ---
+        try:
+            import github_injector
+            github_injector.inject_directions_into_memory(extractor.workspace)
+            # Reload future directions into extractor's memory so it sees the injected ones immediately
+            from research_memory import FutureDirectionsManager
+            # We don't need to do a full reload of the memory class if we just rely on fd_manager loaded inside discover() 
+            # Wait, discover() instantiates FutureDirectionsManager fresh! So it will automatically pick up the updated json.
+        except Exception as e:
+            print(f"[Tick] Failed to inject GitHub issues: {e}")
 
         standard_slots = max(0, slots_available - novelty_slots)
         wild_slots = min(novelty_slots, slots_available)

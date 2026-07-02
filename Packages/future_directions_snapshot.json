@@ -10121,6 +10121,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Signings, Spectral Moments, and the Bilu–Linial Frontier\n\nThe results of this cycle separate the existence of a good edge-signing into two clean\nhalves: an elementary *averaging* principle (the best member of a family beats its\naverage even spectral moment) and a hard *combinatorial* estimate (how large that average\nmoment can be). The conjectures below are the natural bold targets that this separation\nexposes.\n\n## Conjecture 1 — The even-walk constant is exactly 3(d-1)\n\nFor every graph of maximum degree `d`, the average over all edge-signings of the\n`2k`-th spectral moment grows like `(3(d-1))^k` times the number of vertices, and this\nrate is achieved by trees near a high-degree vertex.\n\n*The key insight is* that averaging over signings annihilates every closed walk that\ntraverses some edge an odd number of times, leaving only \"even\" closed walks whose\ngrowth rate is set by the branching factor `3(d-1)` rather than the naive `d^2`.\n\n*Why now?* The averaging half of the argument is now settled unconditionally, so the\nentire improved spectral bound `2√(3(d-1))` reduces to this single scalar walk-counting\nstatement — a self-contained combinatorial problem detached from any spectral technology.\n\n## Conjecture 2 — Unbalance is the deterministic route to sub-degree spectra\n\nEvery non-bipartite graph admits an explicit signing, obtained by making a suitable\nodd-length cycle unbalanced, whose spectral radius is strictly below the maximum degree;\nmoreover the amount of improvement is controlled by the girth.\n\n*The key insight is* that an unbalanced cycle forces the shortest closed walks around it\nto enter with opposite signs and cancel, deterministically reproducing the cancellation\nthat the probabilistic method only achieves on average.\n\n*Why now?* The 4-cycle witness shows the mechanism concretely (spectral radius `√2`\nagainst degree `2`); the remaining question is purely which cycles to unbalance, a local\nand testable construction.\n\n## Conjecture 3 — Non-backtracking moments reach the Ramanujan constant\n\nReplacing ordinary closed walks by non-backtracking closed walks in the moment method\nlowers the achievable constant from `3(d-1)` all the way to the optimal `d-1`, so a\nsigning exists with spectral radius at most `2√(d-1)` for every `d`-regular graph.\n\n*The key insight is* that the backtracking steps are exactly the walks responsible for\nthe excess factor of `3`; excising them by working with the non-backtracking operator\nshould collapse the constant to its conjecturally sharp value.\n\n*Why now?* With the moment-to-existence reduction in hand, the optimal Bilu–Linial bound\nbecomes equivalent to a clean estimate on non-backtracking walk counts, isolating the one\nplace where sharper combinatorics is genuinely required.\n\n## Conjecture 4 — Signings compose under graph lifts\n\nIf a base graph has a signing with spectral radius `r`, then every `2`-lift of it has a\nsigning with spectral radius at most `r`, and iterating produces an infinite family of\nbounded-degree expanders with a uniform spectral-radius bound.\n\n*The key insight is* that a `2`-lift's spectrum is the union of the base spectrum and the\nspectrum of a signed version of the base, so a good signing of the base transfers to the\nlift without loss.\n\n*Why now?* This is the exact structure the interlacing-families method exploits; making\nthe transfer quantitative and unconditional would turn a single good signing into an\nentire tower of expanders.\n\n## Conjecture 5 — A moment certificate for spectral gaps\n\nA finite family of symmetric matrices has a member with a prescribed spectral-radius\nbound if and only if a single averaged even-moment inequality holds for the family; the\ncertificate size is polynomial in the matrix dimension.\n\n*The key insight is* that the even spectral moment is simultaneously an upper bound on\neach eigenvalue and an additive (hence averageable) functional, so one scalar inequality\nencodes an entire existence statement.\n\n*Why now?* The averaging principle proved this cycle already gives the \"if\" direction in\nfull; a matching converse would make \"there exists a good member\" a decidable,\ncertificate-checkable property, with immediate algorithmic consequences for constructing\nlow-spectral-radius signings.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3142",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f955b422",
+    "status": "available",
+    "timestamp": "2026-07-02T01:24:21.742855+00:00",
+    "title": "The results of this cycle separate the existence of a good edge-signing into two"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10435,7 +10455,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "106d8a62",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domain_bridges": [],
     "domains": [
@@ -10448,7 +10468,7 @@
     "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },

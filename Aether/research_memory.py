@@ -277,6 +277,9 @@ class FutureDirection:
     thread_id: str = ""                                            # if set, this direction is a follow-up in a research thread
     # --- 50/50 research menu categories ---
     category: str = ""                                             # famous_subtask | cross_domain_bridge | abduction_followup
+    # --- GitHub Injection ---
+    source: str = ""                                               # e.g., "github_injection"
+    github_issue: int = 0                                          # Issue number to close when processed
 
     def get_category(self) -> str:
         """Return explicit category if set, else infer from other fields."""
@@ -326,6 +329,8 @@ class FutureDirection:
             "parent_direction": self.parent_direction,
             "decomposed_from_job": self.decomposed_from_job,
             "decomposition_depth": self.decomposition_depth,
+            "source": self.source,
+            "github_issue": self.github_issue,
         }
 
     @classmethod
@@ -991,6 +996,12 @@ class FutureDirectionsManager:
             d for d in self._directions
             if d.status == "available" and not self.is_quarantined(d)
         ]
+
+        # --- NEW: Bypass for injected directions (101% probability) ---
+        injected = [d for d in available if getattr(d, 'source', None) == "github_injection"]
+        if injected:
+            return injected[0]
+
         if domain_filter:
             available = [d for d in available if domain_filter in d.domains or not d.domains]
         if exclude_domains:
