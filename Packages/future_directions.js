@@ -424,20 +424,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "No solutions for odd exponents in the coprime case"
   },
   {
-    "consumed_by_exp_id": "5205e698",
-    "description": "For each dimension d \u2265 1, the upper bound on the number of vertices of a d-dimensional lattice polytope in terms of its volume given by Andrew's theorem is asymptotically optimal. Specifically, there exists a sequence of lattice polytopes with volumes V_n \u2192 \u221e such that the number of vertices m_n satisfies lim sup (m_n / V_n^{d/(d-1)}) = c_d, where c_d is the constant from Andrew's theorem.",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "fd_0038",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30856v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T17:12:36.766138+00:00",
-    "title": "Andrew's theorem is asymptotically tight for maximal vertex counts of lattice polytopes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for any normalized Hecke eigenform f of even weight for SL(2,Z), any integer j \u2265 1, and any even m with 2 \u2264 m \u2264 12, the number of sign changes of the j-th symmetric power L-function coefficient \u03bb_sym^j f(n) as n runs over integers representable as a sum of m squares up to x is at least C\u00b7x/(log x) for some constant C>0 depending only on f, j, and m.",
     "domains": [
@@ -583,7 +569,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the Generalized Erd\u0151s--Rogers Bound for Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4633675",
     "description": "We conjecture that for any integer k\u202f\u2265\u202f3 there is no infinite word over a binary alphabet that contains no k\u207a\u2011parameterized squares (i.e., no squares of length at least 2k whose halves are parameterized\u2011equivalent). Equivalently, every infinite binary word contains a k\u207a\u2011parameterized square for all k\u202f\u2265\u202f3. This conjecture is falsifiable: finding a single infinite binary word that avoids k\u207a\u2011parameterized squares for some k\u202f\u2265\u202f3 would refute it.",
     "domains": [
       "Pythagorean"
@@ -592,7 +578,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00674v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T07:57:43.823405+00:00",
     "title": "Nonexistence of Infinite 3\u207a\u2013Parameterized\u2011Square\u2011Free Binary Words"
   },
@@ -830,20 +816,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T15:36:40.230896+00:00",
     "title": "Tokushige's r-wise intersecting conjecture for non\u2011uniform product measures"
-  },
-  {
-    "consumed_by_exp_id": "77868759",
-    "description": "For every finite simple graph G, the product of the power domination throttling number of G and that of its complement is at most 6, and this bound cannot be improved.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0071",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30950v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T15:56:32.304597+00:00",
-    "title": "Sharp Nordhaus\u2011Gaddum product bound for power domination throttling"
   },
   {
     "consumed_by_exp_id": "",
@@ -1344,17 +1316,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The sheared Witt vector functor preserves filtered colimits over nilperfect rings. Specifically, for any filtered category I and diagram (R_i)_{i \u2208 I} of nilperfect rings, the canonical morphism chW(\\varinjlim R_i) \u2192 \\varinjlim chW(R_i) is an isomorphism. This property is the key motivation for the sheared Witt construction and resolves the obstruction in extending Dieudonn\u00e9 theory to non-perfect rings.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_0106",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01178v1",
+    "status": "available",
+    "timestamp": "2026-07-02T23:51:14.163940+00:00",
+    "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This paper establishes an equi-enumerating relationship between greedy $m$-Tamari posets and planar $(m+1)$-constellations, leveraging recursive decomposition akin to bipartite planar maps. The conjecture formalizes this by analyzing the structural isomorphism between interval decompositions and planar mappings.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0105",
+    "id": "fd_0107",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
     "status": "available",
     "timestamp": "2026-07-02T23:33:27.145073+00:00",
     "title": "Decomposition of Greedy Tamari Intervals and Bipartite Planar Maps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let V_1,..., V_{d+1} be disjoint finite sets and K be the join of spanning k-trees T_1,..., T_{d+1} where each T_i is a simplicial complex on V_i. If A: |\u0394_V| -> R^d is an affine map such that 0 is in the convex hull of the image of each color class A(V_i), then there exists a face \u03c3 in the join of these k-trees such that 0 is in the image of \u03c3.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0108",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01143v1",
+    "status": "available",
+    "timestamp": "2026-07-02T23:51:53.327272+00:00",
+    "title": "Colorful Carath\u00e9odory Theorem for Spanning k-trees"
   },
   {
     "consumed_by_exp_id": "",
@@ -1372,7 +1373,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f291ce1",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -1381,7 +1382,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:44:52.457252+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
