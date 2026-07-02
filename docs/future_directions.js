@@ -4,6 +4,20 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle d80d981e (Q=0.871), which proved 15 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that the Petersen graph's metric obstruction to isometric embedding into classical abelian Cayley graphs extends to Cayley graphs of idempotent semirings (tropical semirings) because the tropical distance valuation preserves the essential girth and diameter constraints that forbid",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_d80d981e_f533ff69",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "d80d981e",
+    "status": "available",
+    "timestamp": "2026-07-02T03:51:06.938222+00:00",
+    "title": "Deepening: Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -135,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deterministic 2\u0394-Coloring for SD-EF1 under Conflict Constraints"
   },
   {
-    "consumed_by_exp_id": "9915ee53",
+    "consumed_by_exp_id": "",
     "description": "For any filtered system of nilperfect rings {R_i} with colimit R, the canonical map colim \u211dW(R_i) \u2192 \u211dW(R) is an isomorphism of abelian groups. This conjecture addresses the fundamental motivation for sheared Witt vectors: resolving the failure of W(R)/p^n to commute with filtered colimits while preserving essential Dieudonn\u00e9-theoretic properties.",
     "domains": [
       "Algebra",
@@ -145,7 +159,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01178v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T02:03:55.315381+00:00",
     "title": "Sheared Witt Vectors Commutation with Filtered Colimits"
   },
@@ -163,6 +177,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T02:49:31.521966+00:00",
     "title": "Reductions Of Crystalline Representations Of Fractional Slope"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Metric Rigidity of the Petersen Graph across Valued Cayley Geometries\n\nThis cycle established that the Petersen graph \u2014 and, more generally, any graph\ncarrying an odd closed walk \u2014 cannot be realized isometrically inside a Cayley\ngraph whose generating set is the *odd part* of an integer-valued valuation on an\nabelian group. The obstruction splits cleanly into a valuation-free metric core\n(an isometric image pulls back proper colorings of any number of colors) and a\none-parameter certificate (the parity of the valuation two-colors the host). The\ndirections below push on the boundary of this dichotomy.\n\n## Conjecture 1 (Even-valuation hosts)\nThere exists an abelian group `A`, an integer-valued valuation `v` all of whose\ngenerators have **even** value, and an isometric embedding of the Petersen graph\ninto the associated Cayley graph.\n\n**The key insight is** that the parity certificate is the *only* place oddness of\nthe valuation is used; once every generator has even value the host may contain\nodd closed walks of its own, removing the coloring obstruction and potentially\nopening room for a genuine isometric copy of an odd-girth graph.\n\n**Why now?** The clean separation between the metric core and the parity\ncertificate isolates exactly one hypothesis to relax, turning a broad\nnon-embeddability statement into a sharp, testable existence question about\neven-valued generating sets.\n\n## Conjecture 2 (Valuation rank threshold)\nFor every abelian group `A` equipped with a valuation whose value group has rank\none, no odd-girth graph embeds isometrically into the odd-valuation Cayley graph;\nbut there is a rank-two valued group into which the Petersen graph does embed\nisometrically.\n\n**The key insight is** that a rank-one valuation forces a global linear order on\ngenerator lengths, which propagates the parity obstruction along every closed\nwalk, whereas incomparable lengths in higher rank can cancel the length parity\nthat a single odd walk would otherwise force.\n\n**Why now?** Valuation-theoretic rank is the natural graded refinement of the\npresent integer-valued setting, and it converts the qualitative \"odd vs even\"\ndichotomy into a quantitative rank threshold that can be probed group by group.\n\n## Conjecture 3 (Tropical distance spectrum)\nThe multiset of pairwise tropical (min-plus) path lengths realizable inside any\nodd-valuation Cayley graph omits at least one distance value that the Petersen\nmetric requires; consequently the omission itself, not merely bipartiteness, is\nthe true obstruction, and it persists for a positive-density family of\nnon-bipartite hosts.\n\n**The key insight is** that shortest-path distance is intrinsically a min-plus\ncomputation, so an embedding must reproduce an entire tropical distance spectrum,\nand the Petersen spectrum (diameter two, girth five) is over-determined relative\nto what valuation-graded hosts can supply.\n\n**Why now?** Recasting graph distance as a tropical eigen-quantity makes the\ndistance spectrum a computable invariant, so the conjectured omission can be\nsearched for directly across families of valued groups.\n\n## Conjecture 4 (Universal odd-girth barrier)\nFix an odd integer `g \u2265 5`. No vertex-transitive graph of girth `g` embeds\nisometrically into any odd-valuation Cayley graph, and the Petersen graph is the\nsmallest such witness for `g = 5`.\n\n**The key insight is** that vertex-transitivity forces the odd closed walk to be\n\"spread\" uniformly over the graph, so the parity obstruction cannot be localized\naway by re-centering the embedding, making girth alone the controlling parameter.\n\n**Why now?** The odd-closed-walk engine already proven here is indifferent to the\nparticular source graph, so extending it from Petersen to an entire girth class\nis a natural and immediately checkable generalization.\n\n## Conjecture 5 (Idempotent-coefficient rigidity)\nReplacing the integer value group by an arbitrary linearly ordered idempotent\nadditive monoid leaves the non-embeddability intact precisely when the monoid\nadmits a surjection onto the two-element idempotent monoid; otherwise the barrier\ndisappears.\n\n**The key insight is** that bipartiteness of the host is equivalent to the\nexistence of a two-valued reduction of the coefficient monoid, so the entire\nobstruction is governed by the two-element quotient structure of the underlying\nidempotent algebra.\n\n**Why now?** Idempotent (tropical) coefficient systems are exactly the setting in\nwhich distance and addition coincide, so characterizing which of them retain the\nPetersen barrier pins the phenomenon to a single algebraic quotient condition.\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_0012",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d80d981e",
+    "status": "available",
+    "timestamp": "2026-07-02T03:50:58.643112+00:00",
+    "title": "That the Petersen graph \u2014 and, more generally, any graph"
   },
   {
     "consumed_by_exp_id": "",

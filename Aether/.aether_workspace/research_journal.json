@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "31cf2713",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Plethystic Triviality of the Shifted `t`-Schur Basis\n\nThis cycle promoted the single plethystic automorphism `φ_t : p_{2k+1} ↦ (1 - t^{2k+1})\np_{2k+1}` to its ambient **diagonal",
-      "quality_score": 0.70696,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-27T15:18:47",
-      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-    },
-    {
       "cycle_id": "6fec91f1",
       "domain": "Applications",
       "key_insight": "# Future Directions — EML Differential Equations (Kovacic / Riccati / Differential Galois)\n\nDerived from this cycle's findings in `EML.EMLRiccatiSolvableFamily` (an explicit\ninfinite solvable even-deg",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-02T02:48:24",
       "title": "Classification of ρ-dominant elements in B(ρ) for symmetrizable Kac-Moody algebras"
+    },
+    {
+      "cycle_id": "d80d981e",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Metric Rigidity of the Petersen Graph across Valued Cayley Geometries\n\nThis cycle established that the Petersen graph — and, more generally, any graph\ncarrying an odd closed walk",
+      "quality_score": 0.87056,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-02T03:51:06",
+      "title": "Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "49ad7738",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — unit-shift totient collisions and the GHP lower bound\n\nDerived from this cycle's findings in `TotientFermatCollisions.lean` (the\nFermat-prime prefix mechanism, `fermatPrime_prefi",
-      "quality_score": 0.6950400000000001,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-27T04:16:29",
-      "title": "Tightness of the unit-shift bound for Euler's totient function"
-    },
     {
       "cycle_id": "236373d0",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-07-02T02:48:24",
       "title": "Classification of ρ-dominant elements in B(ρ) for symmetrizable Kac-Moody algebras"
+    },
+    {
+      "cycle_id": "d80d981e",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Metric Rigidity of the Petersen Graph across Valued Cayley Geometries\n\nThis cycle established that the Petersen graph — and, more generally, any graph\ncarrying an odd closed walk",
+      "quality_score": 0.87056,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-07-02T03:51:06",
+      "title": "Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c8e22e5a",
-      "domain": "Applications",
-      "name": "of",
-      "quality": 0.8043199999999999
-    },
-    {
-      "cycle_id": "ef629b7b",
-      "domain": "Novelty",
-      "name": "s_zero",
-      "quality": 0.722996
-    },
     {
       "cycle_id": "ef629b7b",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "sum_erase_cartan",
       "quality": 0.7176246153846154
+    },
+    {
+      "cycle_id": "d80d981e",
+      "domain": "Tropical",
+      "name": "is",
+      "quality": 0.87056
+    },
+    {
+      "cycle_id": "d80d981e",
+      "domain": "Tropical",
+      "name": "colorable_of_isometric",
+      "quality": 0.87056
     }
   ],
-  "last_updated": "2026-07-02T02:48:24",
+  "last_updated": "2026-07-02T03:51:06",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "a747a0a8",
-        "quality": 0.60792,
-        "theorems": 45,
-        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-      },
-      {
         "cycle_id": "9537a45c",
         "quality": 0.7829999999999999,
         "theorems": 21,
@@ -4009,6 +4003,12 @@
         "quality": 0.65752,
         "theorems": 18,
         "title": "Universal Approximation: Quantitative Bounds"
+      },
+      {
+        "cycle_id": "d80d981e",
+        "quality": 0.87056,
+        "theorems": 15,
+        "title": "Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
       }
     ]
   }
