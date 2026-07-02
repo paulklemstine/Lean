@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-01T23:54:43.586352+00:00",
+  "last_updated": "2026-07-02T00:16:17.234766+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -25551,6 +25551,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-01T23:54:42.940395+00:00",
       "title": "Minimum Independence Ratio Constraint"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 137,
+      "domain": "Applications",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "d6f62dc7",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782945988.3898401,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-02T00:16:16.684385+00:00",
+      "title": "Invariant Subspace Problem"
     }
   ]
 }
