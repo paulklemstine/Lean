@@ -1252,16 +1252,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             queued.status = "dispatched"
             queued.dispatch_time = time.time()
             extractor.inflight[project_id] = queued
-            # Retry-queued dispatches skip the discover path (which calls
-            # mark_direction_consumed), so re-establish the direction link now
-            # using the direction_id retained from the original dispatch.
-            if getattr(queued, "direction_id", None):
-                try:
-                    from research_memory import FutureDirectionsManager as _FD
-                    _FD(extractor.workspace).mark_direction_consumed(
-                        queued.direction_id, queued.retry_of or queued.job_id)
-                except Exception as _e:
-                    print(f"[Tick] Queued retry direction link failed: {_e}")
+            # Retry-queued dispatches skip the discover path, but the direction
+            # was never released, so we do not need to re-consume it.
             print(f"[Tick] Dispatched queued retry {project_id[:8]}: {queued.concept.title[:60]}")
         except Exception as e:
             if extractor._is_queue_full_error(e):
@@ -1291,7 +1283,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     from collections import Counter
     inflight_domains = Counter()
     for j in extractor.inflight.values():
-        if j.status not in ("completed", "failed", "integrated", "rejected", "retry_queued"):
+        if j.status not in ("completed", "failed", "integrated", "rejected"):
             domain = getattr(j.concept, 'domain', '') if hasattr(j, 'concept') else ''
             if domain:
                 inflight_domains[domain] += 1
@@ -1380,8 +1372,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
             except Exception as e:
                 if job is not None and (extractor._is_queue_full_error(e) or job.status == "dispatch_queued"):
-                    print(f"[Tick] Aristotle queue full; releasing direction for {job.job_id[:8]} and stopping dispatch")
-                    extractor._release_direction_back_to_available(job)
+                    print(f"[Tick] Aristotle queue full; leaving job {job.job_id[:8]} queued and stopping dispatch")
                     job.status = "retry_queued"
                     job.retry_queued_time = time.time()
                     extractor.inflight[job.job_id] = job
@@ -1405,8 +1396,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     print(f"[Tick] Dispatched [NOVELTY] {job.project_id[:8]}: {job.concept.title[:60]}")
                     _signal_dashboard_update(job.project_id[:8], "dispatched_novelty")
                 elif job.status == "dispatch_queued":
-                    print(f"[Tick] Aristotle queue full; releasing direction for {job.job_id[:8]} and stopping dispatch")
-                    extractor._release_direction_back_to_available(job)
+                    print(f"[Tick] Aristotle queue full; leaving job {job.job_id[:8]} queued and stopping dispatch")
                     job.status = "retry_queued"
                     job.retry_queued_time = time.time()
                     extractor.inflight[job.job_id] = job
@@ -1416,8 +1406,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
             except Exception as e:
                 if job is not None and (extractor._is_queue_full_error(e) or job.status == "dispatch_queued"):
-                    print(f"[Tick] Aristotle queue full; releasing direction for {job.job_id[:8]} and stopping dispatch")
-                    extractor._release_direction_back_to_available(job)
+                    print(f"[Tick] Aristotle queue full; leaving job {job.job_id[:8]} queued and stopping dispatch")
                     job.status = "retry_queued"
                     job.retry_queued_time = time.time()
                     extractor.inflight[job.job_id] = job

@@ -518,7 +518,7 @@ class KnowledgeExtractor:
         """Count jobs currently occupying Aristotle slots."""
         return len([
             j for j in self.inflight.values()
-            if j.status not in ("completed", "failed", "integrated", "rejected", "retry_queued")
+            if j.status not in ("completed", "failed", "integrated", "rejected")
         ])
 
     async def dispatch_retry_async(self, job: "ResearchJob", retry_suggestion: Dict[str, Any], max_inflight: int = 9) -> "ResearchJob":
