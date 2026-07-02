@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.IndependenceRatioChromatic
+import Catalog.Novelty.IndependenceRatioChromatic
 
 /-!
 # The independence ratio lower bound: `i(G) ≥ 1/χ(G)`
