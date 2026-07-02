@@ -39,8 +39,8 @@ The main results are:
 ## Lab Notes — see `-- !-- Lab Notes -- !--` block below.
 -/
 import Mathlib
-import Catalog.Applications.EMLTermAlgebra
-import Catalog.Applications.KolmogorovArnoldEML
+import Applications.EMLTermAlgebra
+import Applications.KolmogorovArnoldEML
 
 open Real
 

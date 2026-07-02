@@ -49,7 +49,7 @@ Synthesis (PI): This is the reusable statement "subfields of cyclotomic fields a
 -- !-- Lab Notes -- !--
 -/
 import Mathlib
-import Novelty.CyclotomicGL1Langlands
+import Catalog.Novelty.CyclotomicGL1Langlands
 
 open Polynomial IntermediateField CyclotomicGL1
 
