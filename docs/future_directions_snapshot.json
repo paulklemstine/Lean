@@ -21,7 +21,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2c53e63a",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domain_bridges": [],
     "domains": [
@@ -34,7 +34,7 @@
     "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.029563+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -60,7 +60,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82e2c894",
     "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domain_bridges": [],
     "domains": [
@@ -73,14 +73,14 @@
     "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "813a28d3",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domain_bridges": [],
     "domains": [
@@ -93,7 +93,7 @@
     "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.027554+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
   },
@@ -119,7 +119,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "de16211e",
     "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domain_bridges": [],
     "domains": [
@@ -131,14 +131,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "41349be6",
     "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
     "domain_bridges": [],
     "domains": [
@@ -151,7 +151,7 @@
     "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.030558+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -260,7 +260,7 @@
     "catalog_references": [
       "arXiv:2310.12345 (hypothetical reference for the paper)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a0eabca0",
     "description": "There exists a finite set of vectors in l² satisfying specific convolution inequalities such that their weighted average achieves the coefficient γ₀=0.94601 in the bound F(N) ≤ N^{1/2} + γ₀N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domain_bridges": [
       "l² spaces",
@@ -276,7 +276,7 @@
     "proof_strategy": "Construct a minimal vector family and verify convolution bounds via exact arithmetic",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -381,7 +381,7 @@
     "catalog_references": [
       "ArXiv paper on type B polytopes"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a6669fde",
     "description": "This conjecture states that reduced words in type B_n have Coxeter lengths exactly double those of type A_n, ensuring non-equivalence in structural complexity.",
     "domain_bridges": "mathematics/algebra",
     "domains": [
@@ -394,7 +394,7 @@
     "proof_strategy": "inductive verification through Coxeter theory",
     "research_mode": "team",
     "source_exp_id": "2607.00646v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T08:32:08.049625+00:00",
     "title": "Coxeter Length Scaling"
   },
@@ -716,7 +716,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e39940c9",
     "description": "Propose a framework where the computational complexity of simulating quantum state correlations in noncommutative geometries determines the hardness of certain mathematical problems. The hypothesis suggests that a polynomial-time algorithm for such problems would imply a breakdown of the cyclicity of Hilbert space dimensionality.",
     "domain_bridges": [],
     "domains": [
@@ -728,7 +728,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:18:32.052109+00:00",
     "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
   }
