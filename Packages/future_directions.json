@@ -642,6 +642,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Brešar (2017)",
+        "Chen, Piotrowski, Shreve (1996)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any graphs G and H, the domination number of their Cartesian product satisfies γ(G□H) ≥ (19 - √73)/18 * γ(G)γ(H).",
+      "domain_bridges": [
+        "Graph Product Theory",
+        "Domination in Hypergraphs"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0014",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem improved_vizing : forall (G H : Graph), γ(G □ H) >= (19 - sqrt 73)/18 * γ(G) * γ(H)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Real-valued optimization of a piecewise maximum function via variable substitution and algebraic manipulation",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01109v1",
+      "source_path": "http://arxiv.org/abs/2607.01109v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T06:39:03.958610+00:00",
+      "title": "Improved Constant for Domination in Cartesian Product of Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem 1.5",
         "Kane's work"
       ],
@@ -659,7 +705,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0014",
+      "id": "fd_0015",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Assumed truth",
@@ -708,7 +754,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0015",
+      "id": "fd_0016",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": " theorem sign_alternation (q_series : q_series) (ω : ℂ) (H : ∃θ ∈ ℝ, H' : asymptotics_dominated_by_oscillatory(q_series, ω, θ)) : ∀n > N, sign(coefficient(q_series, n)) = (-1)^n, except for a density-zero set of n.",
@@ -755,7 +801,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0016",
+      "id": "fd_0017",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Assume the existence of a structured covering that mirrors the underlying parity constraints",
@@ -775,6 +821,53 @@
       "thread_id": "",
       "timestamp": "2026-07-02T06:22:20.382248+00:00",
       "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "cover1965geometrical",
+        "feng2023function"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a d-dimensional submanifold E of ℝ^M and a smooth injective map Φ:E→ℝ^{M'}, any N-point set F⊂E in general position satisfies Kruskal rank s ≤ d+1. This implies the Φ-separable dichotomy count C_F(N) is bounded by Cover's counting function C(N,d+M'+1), generalizing high-dimensional bounds to low-dimensional data structures.",
+      "domain_bridges": [
+        "Differential Geometry (Submanifolds)",
+        "Linear Algebra (Kruskal Rank)",
+        "Combinatorics (Dichotomy Counting)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0018",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem manifold_kruskal_bound (E : Type*) [smooth_manifold E] (d : ℕ) (Φ : E → ℝ M') [smooth_map Φ] (F : Fin N → E) (general_position : ...) : kranking {Φ(f k) | k ∈ F} ≤ d + 1 → dich_count Φ F ≤ counting_fn N (d + M' + 1)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "1) Characterize smooth injective maps on submanifolds via local charts. 2) Bound the Kruskal rank using dimension arguments: each additional point can increase rank by at most 1 until reaching d+1. 3) Relate this rank constraint to dichotomy counts via Cover's lemma. 4) Verify tightness with synthetic low-dimensional examples.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01010v1",
+      "source_path": "http://arxiv.org/abs/2607.01010v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T06:40:25.125636+00:00",
+      "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
     },
     {
       "ambition_level": "extension",

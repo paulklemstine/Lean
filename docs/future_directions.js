@@ -178,12 +178,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any graphs G and H, the domination number of their Cartesian product satisfies \u03b3(G\u25a1H) \u2265 (19 - \u221a73)/18 * \u03b3(G)\u03b3(H).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0014",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01109v1",
+    "status": "available",
+    "timestamp": "2026-07-02T06:39:03.958610+00:00",
+    "title": "Improved Constant for Domination in Cartesian Product of Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0014",
+    "id": "fd_0015",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -197,7 +211,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0015",
+    "id": "fd_0016",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
@@ -212,13 +226,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0016",
+    "id": "fd_0017",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
     "status": "available",
     "timestamp": "2026-07-02T06:22:20.382248+00:00",
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a d-dimensional submanifold E of \u211d^M and a smooth injective map \u03a6:E\u2192\u211d^{M'}, any N-point set F\u2282E in general position satisfies Kruskal rank s \u2264 d+1. This implies the \u03a6-separable dichotomy count C_F(N) is bounded by Cover's counting function C(N,d+M'+1), generalizing high-dimensional bounds to low-dimensional data structures.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_0018",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01010v1",
+    "status": "available",
+    "timestamp": "2026-07-02T06:40:25.125636+00:00",
+    "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
   },
   {
     "consumed_by_exp_id": "",
