@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6501d983",
     "description": "Building on cycle b87dcfdc (Q=0.844), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domain_bridges": [],
     "domains": [
@@ -34,7 +34,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "b87dcfdc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T01:15:10.773662+00:00",
     "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
   },
