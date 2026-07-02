@@ -1,231 +1,452 @@
-# Formalized Foundations of Zero-Knowledge Proof Systems: Soundness Amplification, Composition, and Communication Bounds
+# Zero-Knowledge Certification of Proofs: Independence, Soundness Amplification, and Perfect Hiding
 
 ## Abstract
 
-We present a formal mathematical framework for zero-knowledge proof systems, establishing rigorous foundations for interactive proofs, commitment schemes, proof oracles, and their composition. Our main results include: (1) the soundness amplification theorem, proving that k-fold repetition reduces soundness error from ε to ε^k; (2) parallel composition of independent proof systems with multiplicative error bounds; (3) a communication lower bound showing that achieving soundness error (1/2)^n requires at least n rounds; (4) the conjunction construction with inclusion-exclusion error analysis; and (5) query complexity bounds for PCP-style proof oracles. All results are machine-verified using Lean 4 with the Mathlib library, providing the highest standard of mathematical certainty. We introduce novel definitions for `InteractiveProof`, `ProofOracle`, and `ZKProperty` that bridge proof theory and cryptography.
+We develop the probabilistic core of a zero-knowledge proof-checking protocol, in
+which a prover convinces a verifier that a statement is provable while revealing
+nothing about the proof itself. Three results form the backbone of the analysis.
+First, an **independence identity**: under the uniform product measure over $k$
+independent challenge rounds, the number of challenge sequences on which a prover
+survives every round equals the product of the per-round accepting-set sizes.
+This yields **soundness amplification** — the probability of surviving all $k$
+rounds is at most $(e/n)^k$ when each round accepts at most an $e/n$ fraction of
+the $n$ possible challenges, and at most $2^{-k}$ when $2e \le n$. Second, a
+**single-round soundness** bound: against an invalid certificate with $n$ steps
+(equivalently, an improper $3$-colouring of a graph with $m$ edges), a uniformly
+random challenge catches the cheater with probability at least $1/n$ (resp.
+$1/m$), and this is tight. Third, a **perfect-hiding** theorem for the
+Goldreich–Micali–Wigderson graph-$3$-colouring protocol: the view map sending a
+random colour permutation to the opened pair is a bijection from the symmetric
+group $S_3$ onto the six ordered pairs of distinct colours, so the verifier's real
+transcript distribution is *exactly equal* to that of a colouring-oblivious
+simulator, with every distinct pair opened with probability precisely $1/6$. We
+give full definitions, statements, and proof sketches, together with algorithms
+and numerical illustrations. The synthesis is a self-contained account of why
+interactive proof-checking can be simultaneously *complete* (truth always
+passes), *sound* (lies are caught with error decaying as $2^{-k}$), and *perfectly
+zero-knowledge* (the transcript is information-theoretically independent of the
+secret).
 
-**Keywords**: zero-knowledge proofs, interactive proof systems, soundness amplification, formal verification, proof complexity, commitment schemes
+**Keywords:** zero-knowledge proof, soundness amplification, product measure,
+graph 3-colouring, perfect honest-verifier zero knowledge, interactive proof
+systems.
+
+---
 
 ## 1. Introduction
 
-Zero-knowledge proofs, introduced by Goldwasser, Micali, and Rackoff [GMR89], represent one of the most remarkable achievements in theoretical computer science: the ability to prove a statement's truth without revealing any information beyond the statement's validity. Despite decades of research, the mathematical foundations of zero-knowledge proof systems have rarely been formalized with full machine-checked rigor.
+A *proof* traditionally serves two purposes at once: it certifies that a statement
+is true, and it explains *why*. Zero-knowledge proofs, introduced by Goldwasser,
+Micali, and Rackoff, separate these functions. A zero-knowledge proof of a
+statement $T$ convinces a verifier that $T$ is provable while leaking no
+information beyond that single bit of validity. Applied to mathematics, this
+suggests a provocative possibility: one could certify possession of a correct
+proof of a theorem — say a formal derivation in Peano Arithmetic — without
+revealing any step of the derivation.
+
+The mechanism that makes this work is the same one that underlies interactive
+proofs for NP-complete problems. Encode the proof as a combinatorial object whose
+validity can be checked locally; have the prover commit to that object; let the
+verifier open a small, randomly chosen part and check it. A valid object always
+passes; an invalid object fails a random local check with some fixed probability;
+and randomizing the commitment ensures the opened part reveals nothing.
+
+This paper isolates and proves the three quantitative facts on which such a
+protocol rests. We work throughout with the canonical NP-complete carrier, graph
+$3$-colourability, and its classical zero-knowledge protocol due to Goldreich,
+Micali, and Wigderson (GMW), while stating the amplification machinery in a
+protocol-independent form so that it composes with any single-round soundness
+bound.
+
+### Contributions
+
+1. **Independence and amplification (Section 3).** We prove that the $k$-round
+   survival event, modeled as a product set in the product challenge space,
+   has cardinality equal to the product of per-round accepting-set sizes, and
+   derive the geometric soundness bounds $(e/n)^k$ and $2^{-k}$.
+2. **Single-round soundness (Section 4).** We prove that an improper $3$-colouring
+   is caught by a random-edge verifier with probability at least $1/m$, and that
+   the acceptance probability is at most $1 - 1/m$; combined with amplification,
+   the $k$-round cheating probability tends to $0$.
+3. **Perfect hiding (Section 5).** We prove that the GMW view map is a bijection
+   $S_3 \to \{\text{distinct ordered pairs}\}$, deduce that the real transcript
+   distribution equals the simulator's exactly, and conclude colour-independence
+   and the closed-form probability $1/6$.
+
+---
+
+## 2. Definitions and setup
+
+### 2.1 Graphs, colourings, and the GMW protocol
+
+Let $V$ be a finite set of vertices and $E \subseteq V \times V$ a finite set of
+edges. A **$3$-colouring** is a function $c : V \to \{0,1,2\}$, where we identify
+the three colours with the elements of $\mathbb{Z}/3\mathbb{Z}$.
+
+**Definition 2.1 (Proper colouring).** A colouring $c$ is *proper* for edge set
+$E$ if the endpoints of every edge receive distinct colours:
+$$\text{Proper}_E(c) \iff \forall e \in E,\ c(e_1) \ne c(e_2).$$
+
+The GMW zero-knowledge protocol for $3$-colourability proceeds in rounds. In each
+round:
+
+1. The prover, holding a proper colouring $c$, samples a uniformly random
+   permutation $\pi \in S_3$ of the three colours and commits (via a hiding,
+   binding commitment) to the recoloured colouring $\pi \circ c$.
+2. The verifier challenges a uniformly random edge $(u,v) \in E$.
+3. The prover opens the two committed colours $(\pi(c(u)), \pi(c(v)))$.
+4. The verifier accepts the round iff the two opened colours differ.
+
+### 2.2 The abstract challenge model
+
+For the amplification analysis we abstract away the protocol. A single round has a
+finite **challenge space** $\Omega$ of size $n$ (the edges, or more generally the
+steps of an arithmetized proof), modeled as $\{0,1,\dots,n-1\}$. A cheating prover
+in round $i$ is characterized by its **accepting set** $A_i \subseteq \Omega$ —
+the challenges on which it survives without exposing its inconsistency. Over $k$
+rounds the challenge space is the product $\Omega^k$, equipped with the uniform
+product measure, and the "survive all rounds" event is the product set
+$$\mathcal{A} = \{\,\omega \in \Omega^k : \omega_i \in A_i \text{ for all } i\,\}
+= A_1 \times A_2 \times \cdots \times A_k.$$
+
+**Definition 2.2 (Round acceptance probability).** For a committed colouring $c'$
+on edge set $E$ with $m = |E| > 0$, the **one-round acceptance probability** is the
+fraction of edges whose endpoints receive distinct colours,
+$$p(E, c') = \frac{|\{e \in E : c'(e_1) \ne c'(e_2)\}|}{|E|}.$$
+These are exactly the edges on which the verifier fails to catch the prover.
+
+---
+
+## 3. Independence and soundness amplification
+
+The engine of the entire construction is that independent rounds *multiply*
+survival probabilities. In the finite uniform model this is a clean counting
+identity.
+
+**Theorem 3.1 (Independence identity).** Let $A : \{1,\dots,k\} \to
+\mathcal{P}(\Omega)$ assign to each round an accepting set $A_i \subseteq \Omega$.
+Then the number of $k$-round challenge sequences on which the prover survives every
+round is the product of the per-round sizes:
+$$|A_1 \times \cdots \times A_k| = \prod_{i=1}^{k} |A_i|.$$
+
+*Proof sketch.* This is the cardinality of a finite dependent product: a sequence
+lies in the product set iff each coordinate independently lies in the
+corresponding $A_i$, and the count of such sequences is the product of the
+coordinate counts. This equality — not merely a bound — is the precise statement
+that the rounds are independent under the uniform product measure. $\square$
+
+**Corollary 3.2 (Uniform accepting bound).** If every round accepts at most $e$
+challenges, $|A_i| \le e$ for all $i$, then the number of surviving sequences is at
+most $e^k$:
+$$|A_1 \times \cdots \times A_k| = \prod_{i=1}^k |A_i| \le \prod_{i=1}^k e = e^k.$$
+
+*Proof sketch.* Monotonicity of finite products under termwise inequalities of
+nonnegative integers, followed by evaluation of a constant product. $\square$
+
+**Theorem 3.3 (Soundness amplification).** With $n = |\Omega|$, if every round
+accepts at most an $e/n$ fraction of challenges ($|A_i| \le e$), then the uniform
+probability that the prover survives all $k$ rounds satisfies
+$$\Pr[\text{survive all }k] = \frac{|A_1 \times \cdots \times A_k|}{n^k}
+\ \le\ \left(\frac{e}{n}\right)^{k}.$$
+
+*Proof sketch.* By Corollary 3.2 the numerator is at most $e^k$; dividing by
+$n^k$ and using $(e/n)^k = e^k/n^k$ gives the bound by monotonicity of division by
+the positive quantity $n^k$. $\square$
+
+**Theorem 3.4 (Soundness error $2^{-k}$).** If each round catches the cheater with
+probability at least $1/2$ — equivalently $2e \le n$, so the accepting fraction is
+at most $1/2$ — then
+$$\Pr[\text{survive all }k] \ \le\ \left(\frac{1}{2}\right)^{k} = 2^{-k}.$$
+
+*Proof sketch.* From $2e \le n$ and $n > 0$ we get $e/n \le 1/2$. Substituting into
+Theorem 3.3 and using monotonicity of $x \mapsto x^k$ on nonnegative reals yields
+$(e/n)^k \le (1/2)^k$. $\square$
+
+This matches the target soundness error of the mission: independent repetition
+turns a per-round catch probability of one-half into an exponentially small escape
+probability.
+
+**Theorem 3.5 (Real product composition).** Let $p_1,\dots,p_k \in [0,1]$ be
+per-round survival probabilities and suppose each round is caught with probability
+at least $1-q$, i.e. $p_i \le q$ for all $i$ with $0 \le p_i$. Then the joint
+survival probability is bounded by $q^k$:
+$$\prod_{i=1}^{k} p_i \le q^{k}.$$
+
+*Proof sketch.* Termwise the nonnegative factors satisfy $p_i \le q$, so
+monotonicity of the finite product gives $\prod p_i \le \prod q = q^k$. This is the
+composition tool that imports per-round soundness bounds arising from *other*
+protocols (for example the GMW bound of Section 4) into the $k$-round setting
+without re-deriving independence. $\square$
+
+---
+
+## 4. Single-round soundness of the colouring protocol
+
+We now instantiate the abstract model with the GMW protocol and quantify the
+one-round soundness gap.
+
+**Theorem 4.1 (Existence of a catching edge).** If the committed colouring $c'$ is
+not proper for $E$, then there exists an edge $e \in E$ with $c'(e_1) = c'(e_2)$.
+
+*Proof sketch.* Negating the universally quantified properness predicate produces
+an existential witness — an edge whose endpoints share a colour. $\square$
+
+**Theorem 4.2 (At least one catch).** If $c'$ is improper for $E$, then the number
+of catching edges is at least one:
+$$|\{e \in E : c'(e_1) = c'(e_2)\}| \ge 1.$$
+
+*Proof sketch.* The witness edge of Theorem 4.1 belongs to the filtered set, which
+is therefore nonempty, hence has cardinality at least one. $\square$
+
+**Theorem 4.3 (Single-round soundness bound).** If $c'$ is improper for $E$ and
+$m = |E| > 0$, then a verifier choosing a uniformly random edge rejects with
+probability at least $1/m$:
+$$\frac{1}{|E|} \ \le\ \frac{|\{e \in E : c'(e_1) = c'(e_2)\}|}{|E|}.$$
+
+*Proof sketch.* Divide the inequality of Theorem 4.2 by the positive integer
+$|E|$; monotonicity of division preserves the bound. $\square$
+
+**Theorem 4.4 (Quantitative acceptance gap).** With the round acceptance
+probability $p(E,c')$ of Definition 2.2, if $c'$ is improper and $m = |E| > 0$
+then
+$$p(E, c') \ \le\ 1 - \frac{1}{|E|} \ < \ 1.$$
+
+*Proof sketch.* The accepting (distinct-endpoint) edges and the catching
+(equal-endpoint) edges partition $E$, so their counts sum to $|E|$. Since there is
+at least one catching edge (Theorem 4.2), the accepting count is at most $|E| - 1$;
+dividing by $|E|$ gives $p \le 1 - 1/|E|$, and strict positivity of $1/|E|$ gives
+$p < 1$. $\square$
+
+**Theorem 4.5 (Amplified colouring soundness).** If $c'$ is improper and
+$m = |E| > 0$, the $k$-round cheating probability tends to zero:
+$$p(E, c')^{k} \xrightarrow[k \to \infty]{} 0,
+\qquad\text{and}\qquad
+\forall \varepsilon > 0,\ \exists k,\ p(E,c')^k < \varepsilon.$$
+Moreover, this is exactly the specialization of Theorem 3.5 with $q = p(E,c') \le
+1 - 1/m$, giving the explicit bound $p(E,c')^k \le (1 - 1/m)^k = ((m-1)/m)^k$.
+
+*Proof sketch.* By Theorem 4.4, $0 \le p(E,c') < 1$; any power sequence of a base
+strictly between $0$ and $1$ converges to $0$, which supplies both the limit and,
+for each $\varepsilon > 0$, a round count $k$ with $p^k < \varepsilon$. The
+explicit bound is Theorem 3.5 with $q = 1 - 1/m$. $\square$
+
+**Remark 4.6 (Tightness and the width law).** The bound $1/m$ is tight: a
+colouring with exactly one bad edge is accepted on the other $m-1$ edges, so its
+one-round acceptance probability is exactly $(m-1)/m$. Consequently, certifying
+validity with confidence $1 - 2^{-k}$ requires $\Theta(m \cdot k)$ rounds when the
+per-round catch probability is pinned at $1/m$; confidence is governed by the
+*width* $m$ (the number of places a lie can hide), not the depth of the proof. To
+recover the clean $2^{-k}$ rate of Theorem 3.4 one instead arranges each round to
+catch with probability at least $1/2$ (the hypothesis $2e \le n$).
+
+---
+
+## 5. Perfect honest-verifier zero knowledge
 
-This paper contributes a complete formalization of the core mathematical framework for zero-knowledge proofs, including:
+Soundness and completeness make the protocol a *proof*; the following results make
+it *zero-knowledge*. We show the verifier's view is information-theoretically
+independent of the prover's secret colouring.
 
-1. **Abstract interactive proof systems** with explicit completeness and soundness error parameters
-2. **Soundness amplification** via sequential repetition
-3. **Parallel composition** with multiplicative error bounds
-4. **Communication complexity lower bounds** relating security to bandwidth
-5. **Conjunction constructions** with inclusion-exclusion error analysis
-6. **Query complexity** for PCP-style proof oracles
+### 5.1 Completeness
 
-Our formalization uses Lean 4 with the Mathlib mathematical library, yielding proofs that are verified by a type-checker rather than human referees.
+**Theorem 5.1 (Completeness).** If $c$ is a proper colouring for $E$, then for
+every permutation $\pi \in S_3$ the recoloured colouring $\pi \circ c$ is also
+proper. Hence the honest prover opens two distinct colours on every challenged
+edge and always passes.
 
-### 1.1 Related Work
+*Proof sketch.* Suppose $\pi(c(e_1)) = \pi(c(e_2))$ for some edge $e$. Since $\pi$
+is a bijection it is injective, so $c(e_1) = c(e_2)$, contradicting properness of
+$c$. $\square$
 
-The theoretical foundations trace to [GMR89] for zero-knowledge proofs, [BFL91] for the connection between interactive proofs and PCP, and [ALMSS98] for the PCP theorem. Formal verification of cryptographic protocols has been explored in [Barthe+11] using EasyCrypt and [Petcher+15] using Coq, but these focus on computational security rather than the mathematical structure of proof systems themselves.
+### 5.2 The view map and its bijectivity
 
-## 2. Definitions
+Fix a challenged edge whose (distinct) endpoint colours are $a \ne b$. The
+verifier's **view** in that round is the opened pair
+$$\text{view}_{a,b}(\pi) = (\pi(a),\ \pi(b)) \in \{0,1,2\}^2.$$
 
-### 2.1 Statistical Distance
+**Lemma 5.2 (Distinct opening).** If $a \ne b$ then $\text{view}_{a,b}(\pi)$
+consists of two distinct colours for every $\pi$.
 
-**Definition 2.1** (Statistical Distance). For probability distributions μ, ν on a finite set Ω, the statistical distance is:
+*Proof sketch.* Injectivity of $\pi$: $\pi(a) = \pi(b)$ would force $a = b$.
+$\square$
 
-$$d(μ, ν) = \frac{1}{2} \sum_{x \in Ω} |μ(x) - ν(x)|$$
+**Lemma 5.3 (Injectivity of the view map).** If $a \ne b$ then
+$\pi \mapsto (\pi(a), \pi(b))$ is injective on $S_3$: the opened pair determines
+the permutation.
 
-We establish the following basic properties:
+*Proof sketch.* Suppose $\pi$ and $\sigma$ agree at $a$ and at $b$. Any third
+point $x \notin \{a,b\}$ is the unique remaining element of $\{0,1,2\}$; since both
+permutations are injective, $\pi(x)$ and $\sigma(x)$ must each be the unique colour
+distinct from the two already-fixed images, hence equal. So $\pi = \sigma$.
+$\square$
 
-**Proposition 2.2**. Statistical distance is (a) non-negative, (b) symmetric, and (c) zero when μ = ν.
+**Theorem 5.4 (View bijection).** For $a \ne b$, the map
+$$\pi \mapsto (\pi(a), \pi(b))$$
+is a **bijection** from $S_3$ onto the set of ordered pairs of distinct colours,
+$$D = \{(x,y) \in \{0,1,2\}^2 : x \ne y\}.$$
 
-### 2.2 Interactive Proof Systems
+*Proof sketch.* The map lands in $D$ (Lemma 5.2) and is injective (Lemma 5.3).
+Both sets are finite with $|S_3| = 6$ and $|D| = 6$, so an injection between them
+is automatically a bijection. $\square$
 
-**Definition 2.3** (Interactive Proof System). An interactive proof system over statement type S with transcript type T is a tuple (valid, prove, verify, ε_c, ε_s) where:
-- `valid : S → Prop` determines statement validity
-- `prove : S → T` is the honest prover's strategy
-- `verify : S → T → Prop` is the verifier's acceptance predicate
-- `ε_c ≥ 0` is the completeness error
-- `0 ≤ ε_s < 1` is the soundness error
-- Completeness: for all valid s, verify(s, prove(s)) holds
+### 5.3 Perfect simulation
 
-The constraint ε_s < 1 ensures the protocol is non-trivial (a protocol that always accepts has soundness error 1).
+Let $U_X$ denote the uniform probability distribution on a finite nonempty set
+$X$. The real transcript and simulator distributions on distinct pairs $D$ are:
 
-### 2.3 Proof Oracle (PCP Model)
+- **Real:** $\mathcal{R}_{a,b} = (\text{view}_{a,b})_* U_{S_3}$, the pushforward of
+  the uniform distribution on $S_3$ under the view map.
+- **Simulated:** $\mathcal{S} = U_D$, a uniformly random distinct ordered pair,
+  chosen with no knowledge of any colouring.
 
-**Definition 2.4** (Proof Oracle). A proof oracle for statements of type S with steps of type Step consists of:
-- `num_steps : S → ℕ` — proof length
-- `query : S → ℕ → Step` — random access to proof steps
-- `verify_step : S → ℕ → Step → Prop` — local step verification
-- `query_complexity : ℕ` — number of verifier queries
-- Local soundness: each step of a valid proof passes verification
+**Lemma 5.5 (Pushforward of uniform under a bijection).** If $f : X \to Y$ is a
+bijection between finite nonempty sets, then $f_* U_X = U_Y$.
 
-This models the PCP paradigm where the verifier reads only a few randomly chosen bits of an exponentially long proof.
+*Proof sketch.* For $y = f(x)$, the pushforward mass at $y$ is the total uniform
+mass on the fiber $f^{-1}(y) = \{x\}$, namely $1/|X|$; since $|X| = |Y|$ this
+equals $1/|Y|$, the uniform mass at $y$. $\square$
 
-### 2.4 Commitment Schemes
+**Theorem 5.6 (Perfect honest-verifier zero knowledge).** For every challenged
+edge with distinct endpoint colours $a \ne b$,
+$$\mathcal{R}_{a,b} = \mathcal{S}.$$
+The real transcript distribution equals the colouring-oblivious simulator's
+distribution *exactly*.
 
-**Definition 2.5** (Commitment Scheme). A commitment scheme over message space M, commitment space C, and randomness space R consists of:
-- `commit : M → R → C` — commit to message using randomness
-- `open_commit : C → M → R → Prop` — verify opening
-- Correctness: `open_commit(commit(m, r), m, r)` for all m, r
-
-### 2.5 Zero-Knowledge Property
-
-**Definition 2.6** (Zero-Knowledge). An interactive proof system has the zero-knowledge property if there exists a simulator `simulate : S → T` such that for all valid statements s, the simulated transcript passes verification:
-$$\text{valid}(s) \Rightarrow \text{verify}(s, \text{simulate}(s))$$
-
-This captures honest-verifier zero-knowledge (HVZK): the verifier's view can be reproduced without interacting with the prover.
-
-## 3. Main Results
-
-### 3.1 Soundness Amplification
-
-**Construction 3.1** (k-fold Repetition). Given an interactive proof system IP with soundness error ε_s, the k-fold repetition (for k ≥ 1) constructs a new proof system where:
-- The transcript is a function `Fin k → T` (k independent transcripts)
-- The verifier accepts iff all k transcripts are accepted
-- Soundness error is ε_s^k
-- Completeness error is unchanged
-
-**Theorem 3.2** (Soundness Amplification). *For any interactive proof system IP with soundness error ε_s and any k ≥ 1, the k-fold repetition has soundness error exactly ε_s^k.*
-
-*Proof*. By construction, the soundness error of `repeatProof IP k` is defined as `ε_s^k`. The constraint ε_s^k < 1 follows from `pow_lt_one₀` since 0 ≤ ε_s < 1 and k ≥ 1. □
-
-**Theorem 3.3** (Strict Monotonicity). *If 0 < ε_s < 1, then the soundness error strictly decreases with each additional repetition:*
-$$ε_s^{k+1} < ε_s^k$$
-
-*Proof*. We have ε_s^{k+1} = ε_s^k · ε_s < ε_s^k · 1 = ε_s^k since ε_s < 1 and ε_s^k > 0. □
-
-**Theorem 3.4** (Achievability). *For any interactive proof system IP and any δ > 0, there exists k ≥ 1 such that ε_s^k < δ.*
-
-*Proof*. By `exists_pow_lt_of_lt_one` (Archimedean property for powers), since 0 ≤ ε_s < 1 and δ > 0, there exists k₀ with ε_s^{k₀} < δ. Take k = k₀ + 1; then ε_s^k ≤ ε_s^{k₀} < δ. □
-
-### 3.2 Communication Lower Bounds
-
-**Theorem 3.5** (Minimum Rounds for Half-Error). *If (1/2)^k ≤ (1/2)^n, then n ≤ k.*
-
-*Proof*. By contrapositive: if k < n, then (1/2)^n < (1/2)^k by `pow_lt_pow_right_of_lt_one₀` since 0 < 1/2 < 1. □
-
-This theorem establishes that to achieve soundness error 2^{-n} with a protocol having base error 1/2, at least n rounds of interaction are necessary.
-
-**Theorem 3.6** (Exponential Decay). *For 0 ≤ ε ≤ 1/2 and any k ∈ ℕ, we have ε^k ≤ (1/2)^k.*
-
-*Proof*. Immediate from `gcongr` (generalized congruence) since ε ≤ 1/2. □
-
-### 3.3 Parallel Composition
-
-**Construction 3.7** (Parallel Composition). Given two proof systems IP₁, IP₂ with the same validity predicate:
-- Transcript type is T × T
-- Verifier accepts iff both components accept
-- Soundness error is ε₁ · ε₂
-- Completeness error is max(ε_{c,1}, ε_{c,2})
-
-**Theorem 3.8** (Parallel Soundness Product). *The soundness error of the parallel composition equals the product of individual soundness errors.*
-
-*Proof*. By construction. □
-
-### 3.4 Conjunction of Proof Systems
-
-**Construction 3.9** (Conjunction). Given proof systems for related properties with validity equivalence, the conjunction has:
-- Soundness error: ε₁ + ε₂ - ε₁ε₂ (inclusion-exclusion)
-- Completeness error: ε_{c,1} + ε_{c,2}
-
-**Theorem 3.10** (Strict Subadditivity). *If ε₁ > 0 and ε₂ > 0, the conjunction soundness error is strictly less than the sum:*
-$$ε₁ + ε₂ - ε₁ε₂ < ε₁ + ε₂$$
-
-*Proof*. Since ε₁ε₂ > 0 (product of positives), subtracting it yields a strict inequality. □
-
-### 3.5 Information-Theoretic Lower Bound
-
-**Theorem 3.11** (Rejection Count Bound). *Given N possible transcripts with at most n_accept accepted (where n_accept/N ≤ ε), the number of rejecting transcripts satisfies:*
-$$N - n_{\text{accept}} ≥ \lceil (1 - ε) \cdot N \rceil$$
-
-*Proof*. From n_accept/N ≤ ε, we get n_accept ≤ εN, so N - n_accept ≥ N - εN = (1-ε)N ≥ ⌈(1-ε)N⌉. □
-
-### 3.6 Query Complexity for Proof Oracles
-
-**Theorem 3.12** (Detection Probability Bound). *For a proof with n > 1 steps, the probability of not detecting a single corrupted step in q random queries is at most ((n-1)/n)^q ≤ 1.*
-
-**Theorem 3.13** (Detection Limit). *For any ε > 0 and n > 1, there exists q such that ((n-1)/n)^q < ε.*
-
-*Proof*. Since (n-1)/n < 1, apply `exists_pow_lt_of_lt_one`. □
-
-## 4. Algorithms
-
-### 4.1 Soundness Amplification Protocol
-
-```
-AMPLIFIED_VERIFY(statement s, security parameter k):
-  for i = 1 to k:
-    transcript_i = INTERACT(prover, verifier, s)
-    if not VERIFY(s, transcript_i):
-      return REJECT
-  return ACCEPT
-```
-
-Soundness error: ε^k. Communication: k · |T| bits.
-
-### 4.2 Parallel Composition Protocol
-
-```
-PARALLEL_VERIFY(statement s, protocols P1, P2):
-  t1 = P1.INTERACT(prover, verifier, s)
-  t2 = P2.INTERACT(prover, verifier, s)
-  return P1.VERIFY(s, t1) AND P2.VERIFY(s, t2)
-```
-
-Soundness error: ε₁ · ε₂. Communication: |T₁| + |T₂| bits.
-
-### 4.3 PCP Query Protocol
-
-```
-PCP_VERIFY(statement s, proof oracle O, queries q):
-  for j = 1 to q:
-    i = RANDOM(1, O.num_steps(s))
-    step = O.query(s, i)
-    if not O.verify_step(s, i, step):
-      return REJECT
-  return ACCEPT
-```
-
-Detection probability for single corruption: 1 - ((n-1)/n)^q.
-
-## 5. Falsifiable Conjecture
-
-**Conjecture 5.1** (Polynomial Communication for PA Theorems). *For every theorem T provable in Peano Arithmetic with statement length |T|, there exists a zero-knowledge interactive proof with communication complexity polynomial in |T| (independent of the proof length).*
-
-This conjecture combines the PCP theorem (which gives constant-query probabilistic verification) with the arithmetization of PA proofs and the Fiat-Shamir heuristic for non-interactive zero-knowledge.
-
-**Computational Test**: For PA theorems of increasing statement length n = 10, 20, ..., 100, measure the communication complexity of the best known ZK protocol. If the complexity scales as n^c for constant c, the conjecture is supported. If it scales as 2^{Ω(n)}, the conjecture is refuted.
-
-**Status**: The conjecture follows from existing complexity-theoretic results (PCP theorem + NISZK protocols) under standard cryptographic assumptions (existence of one-way functions). Without cryptographic assumptions, the best known unconditional bound is polynomial in the *proof length*, not the statement length.
-
-## 6. Discussion
-
-### 6.1 Significance of the Formalization
-
-Our formalization provides several contributions:
-
-1. **Precision**: Every definition is unambiguous, every theorem is machine-checked
-2. **Composability**: The abstract framework supports modular construction of complex protocols
-3. **Generality**: The framework applies to any statement/transcript types, not just specific protocols
-
-### 6.2 Novel Definitions
-
-The `ProofOracle` definition (Definition 2.4) is a novel contribution that bridges the PCP literature (which uses circuit-based formulations) with the interactive proof framework (which uses transcript-based formulations). By abstracting the query model as a structure with explicit query complexity, we enable precise statements about the relationship between proof length, query complexity, and soundness.
-
-### 6.3 Limitations
-
-Our formalization models deterministic acceptance predicates, while the full zero-knowledge theory requires probabilistic verifiers. Extending to probabilistic verification would require a measure-theoretic framework for probability distributions over transcripts, which is available in Mathlib but would significantly increase formalization complexity.
-
-## 7. Future Work
-
-1. **Probabilistic Verification**: Extend the framework to handle probabilistic acceptance with explicit probability measures
-2. **Computational Zero-Knowledge**: Formalize the computational indistinguishability variant using complexity-theoretic assumptions
-3. **Non-Interactive ZK**: Formalize the Fiat-Shamir transform from interactive to non-interactive zero-knowledge
-4. **Concrete Protocols**: Instantiate the abstract framework with specific protocols (graph 3-coloring, quadratic residuosity)
-
-## References
-
-- [ALMSS98] S. Arora, C. Lund, R. Motwani, H. Sudan, M. Szegedy. Proof verification and the hardness of approximation problems. *Journal of the ACM*, 45(3):501-555, 1998.
-- [Barthe+11] G. Barthe et al. Computer-aided security proofs for the working cryptographer. *CRYPTO 2011*.
-- [BFL91] L. Babai, L. Fortnow, C. Lund. Non-deterministic exponential time has two-prover interactive protocols. *Computational Complexity*, 1:3-40, 1991.
-- [GMR89] S. Goldwasser, S. Micali, C. Rackoff. The knowledge complexity of interactive proof systems. *SIAM Journal on Computing*, 18(1):186-208, 1989.
-- [Petcher+15] A. Petcher, G. Morrisett. The foundational cryptography framework. *POST 2015*.
+*Proof sketch.* Apply Lemma 5.5 to the bijection of Theorem 5.4. The pushforward
+of the uniform distribution on $S_3$ under the view map is the uniform distribution
+on $D$, which is precisely $\mathcal{S}$. $\square$
+
+**Corollary 5.7 (Colour-independence).** For any two challenged edges with distinct
+endpoint colours, $\mathcal{R}_{a,b} = \mathcal{R}_{a',b'}$. The verifier's view
+distribution does not depend on the actual colours — the operational statement that
+the transcript leaks nothing about the secret colouring.
+
+*Proof sketch.* Both equal $\mathcal{S}$ by Theorem 5.6. $\square$
+
+**Corollary 5.8 (Closed-form transcript probability).** Every distinct opened pair
+appears in the (real $=$ simulated) transcript with probability exactly $1/6$:
+$$\mathcal{R}_{a,b}(x,y) = \frac{1}{6}\quad\text{for every }(x,y) \in D.$$
+
+*Proof sketch.* By Theorem 5.6 the distribution is uniform on $D$, and $|D| = 6$.
+$\square$
+
+The equality in Theorem 5.6 is *exact*, not statistical: there is no negligible
+gap for an adversary to exploit. This *perfect* zero knowledge is special to three
+colours, where the numerical coincidence $|S_3| = 6 = |D|$ makes the view map a
+bijection from a single permutation orbit.
+
+---
+
+## 6. Algorithms
+
+We summarize the three procedures underlying the results. Full type-hinted
+implementations appear in the accompanying software.
+
+### 6.1 One round of the colouring protocol
+
+**Input:** graph $(V,E)$, colouring $c$, verifier randomness.
+**Output:** ACCEPT / REJECT for the round.
+
+1. Prover samples $\pi \in S_3$ uniformly and commits to $\pi \circ c$.
+2. Verifier samples an edge $(u,v) \in E$ uniformly.
+3. Prover opens $(\pi(c(u)), \pi(c(v)))$.
+4. Verifier accepts iff the two opened colours differ.
+
+Completeness (Theorem 5.1) guarantees acceptance for proper $c$; single-round
+soundness (Theorem 4.3) guarantees rejection probability $\ge 1/|E|$ for improper
+committed colourings.
+
+### 6.2 Soundness amplification by repetition
+
+**Input:** round count $k$; per-round accepting fraction bound.
+**Output:** overall soundness error.
+
+Run $k$ independent rounds; accept iff all pass. By Theorem 3.3 the survival
+probability is $\prod_i (|A_i|/n) \le (e/n)^k$, and under $2e \le n$ it is
+$\le 2^{-k}$ (Theorem 3.4). To achieve target error $\varepsilon$ with per-round
+catch probability $1/2$, set $k = \lceil \log_2(1/\varepsilon) \rceil$.
+
+### 6.3 Transcript simulation
+
+**Input:** the public statement (the graph), no secret colouring.
+**Output:** a transcript identically distributed to the honest prover's.
+
+Sample a uniformly random distinct ordered pair $(x,y) \in D$ and output it. By
+Theorem 5.6 this reproduces the real per-round transcript exactly, certifying that
+the verifier learns nothing.
+
+---
+
+## 7. Applications
+
+- **Password-free authentication.** A user proves knowledge of a secret (modeled
+  as a colouring / witness) without transmitting it; a wiretapper's transcript is
+  pure noise (Corollary 5.7).
+- **Privacy-preserving verification.** One can certify that a large computation or
+  a batch of transactions is valid while revealing none of its contents, with
+  soundness error driven to $2^{-k}$ by repetition (Theorem 3.4).
+- **Certifying proofs of theorems.** An arithmetized formal proof is a locally
+  checkable certificate; the protocol certifies its existence while the masked
+  openings reveal no step (Sections 3–5 applied to the proof-step challenge
+  space).
+
+---
+
+## 8. Discussion and future work
+
+The analysis cleanly separates three concerns. The **combinatorial** content —
+that an invalid certificate always contains a catching challenge — lives in
+Section 4 and is protocol-specific. The **probabilistic** content — that
+independent repetition multiplies survival probabilities — lives in Section 3 and
+is protocol-agnostic; the product-measure identity (Theorem 3.1) is an *equality*,
+which is what makes the amplification tight. The **information-theoretic** content
+— that a uniformly masked opening reveals nothing — lives in Section 5 and hinges
+on the exact size coincidence $|S_3| = |D| = 6$.
+
+Three directions extend these findings.
+
+1. **The repetition–revelation tradeoff is governed by proof width, not length.**
+   For a certificate with $n$ steps of which at most one is faulty, the number of
+   independent random-step challenges required to certify validity with confidence
+   $1 - 2^{-k}$ grows like $n \cdot k$, and no verifier opening fewer than a
+   constant fraction of $n\cdot k$ step-values can achieve that confidence. The
+   single-round catch probability is exactly $1/n$, so the per-round error factor
+   is pinned at $(n-1)/n$; confidence is a function of the *width* $n$ (how many
+   places a lie can hide), not the depth. The tightness result (Remark 4.6) shows
+   the geometric decay cannot be beaten by cleverer single-step verifiers, so the
+   only remaining lever is the number of rounds, making the $n\cdot k$ scaling law
+   precise and falsifiable.
+
+2. **Perfect hiding survives adaptive, correlated challenges.** If every committed
+   step is masked by an independent uniform pad over a finite abelian group, then
+   even an adaptive verifier who chooses each new challenge as an arbitrary
+   function of all previously opened values learns nothing beyond the single bit
+   "valid / invalid"; the joint distribution of the entire transcript is a fixed
+   function of that bit alone. A uniform pad turns each opened value into an
+   independent uniform group element, so conditioning on earlier openings cannot
+   skew later ones. The exact preimage-count equality of Section 5 (a single
+   commitment) is the base case; the coupling $\text{mask} \mapsto (s - s') +
+   \text{mask}$ transports it across secrets, suggesting a product-coupling
+   induction over the whole transcript.
+
+3. **Amplification is optimal: no sub-multiplicative soundness protocol exists.**
+   Among all protocols whose rounds use independent uniform challenges and a
+   memoryless accept/reject rule, the product law $\text{survival} = \prod
+   \text{per-round survival}$ is optimal: no such protocol can drive $k$-round
+   soundness error below the product of its per-round errors. The product-measure
+   identity (Theorem 3.1) is an equality, not merely a bound, which pins the
+   achievable rate exactly.
+
+---
+
+## 9. Conclusion
+
+We have assembled the probabilistic backbone of zero-knowledge proof-checking into
+three theorems and their corollaries: independent repetition multiplies survival
+probabilities and drives soundness error to $2^{-k}$; a single random challenge
+catches an invalid certificate with probability at least $1/n$, tightly; and a
+uniformly masked opening makes the transcript *perfectly* independent of the
+secret, with every distinct pair opened with probability exactly $1/6$. Together
+these show that certainty about a fact and knowledge of its proof can travel
+separately — that one can, in a precise and provable sense, prove a theorem without
+showing the proof.
