@@ -828,15 +828,21 @@ body {
     text-decoration: none;
 }
 
-.markdown-body h1 .katex,
-.markdown-body h2 .katex,
-.markdown-body h3 .katex,
-.markdown-body h4 .katex,
-.markdown-body a .katex {
+.markdown-body h1 .katex, .markdown-body h2 .katex, .markdown-body h3 .katex, .markdown-body h4 .katex, .markdown-body h5 .katex, .markdown-body h6 .katex,
+.markdown-body h1 math, .markdown-body h2 math, .markdown-body h3 math, .markdown-body h4 math, .markdown-body h5 math, .markdown-body h6 math,
+.markdown-body h1 .MathJax, .markdown-body h2 .MathJax, .markdown-body h3 .MathJax, .markdown-body h4 .MathJax, .markdown-body h5 .MathJax, .markdown-body h6 .MathJax,
+.markdown-body a .katex, .markdown-body a math, .markdown-body a .MathJax {
     background: inherit;
     animation: inherit;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.markdown-body h1 .katex *, .markdown-body h2 .katex *, .markdown-body h3 .katex *, .markdown-body h4 .katex *, .markdown-body h5 .katex *, .markdown-body h6 .katex *,
+.markdown-body h1 math *, .markdown-body h2 math *, .markdown-body h3 math *, .markdown-body h4 math *, .markdown-body h5 math *, .markdown-body h6 math *,
+.markdown-body h1 .MathJax *, .markdown-body h2 .MathJax *, .markdown-body h3 .MathJax *, .markdown-body h4 .MathJax *, .markdown-body h5 .MathJax *, .markdown-body h6 .MathJax *,
+.markdown-body a .katex *, .markdown-body a math *, .markdown-body a .MathJax * {
+    -webkit-text-fill-color: transparent !important;
 }
 
 .markdown-body a:hover {

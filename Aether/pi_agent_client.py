@@ -2910,8 +2910,9 @@ Be precise, be deep, be world-class.
 
             **CRITICAL**: The `demos`, `algorithms`, `visualizations`, and
             `interactive_demos` fields MUST be arrays of objects with the
-            exact structure shown above. Do NOT use placeholder strings like
-            "MISSING" — either include real content or omit the field entirely.
+            exact structure shown above. It is STRONGLY RECOMMENDED to generate
+            at least 3 of each interactive element if possible. Do NOT use placeholder 
+            strings like "MISSING" — either include real content or omit the field entirely.
 
             ### PACKAGE.json Metadata Extraction (v1.1)
             Derive the following fields from the mathematical work above.
