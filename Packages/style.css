@@ -832,8 +832,9 @@ body {
 .markdown-body h1 math, .markdown-body h2 math, .markdown-body h3 math, .markdown-body h4 math, .markdown-body h5 math, .markdown-body h6 math,
 .markdown-body h1 .MathJax, .markdown-body h2 .MathJax, .markdown-body h3 .MathJax, .markdown-body h4 .MathJax, .markdown-body h5 .MathJax, .markdown-body h6 .MathJax,
 .markdown-body a .katex, .markdown-body a math, .markdown-body a .MathJax {
-    background: inherit;
-    animation: inherit;
+    background: linear-gradient(90deg, #22ccff, #8844ff, #ff4466, #22ccff);
+    background-size: 300% 100%;
+    animation: gradientCycle 5s ease-in-out infinite;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
