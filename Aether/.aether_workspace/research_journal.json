@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d6c98458",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Collatz cycle (Phase A, v19a)\n\nDerived from this cycle's verified findings in `StoppingTime.lean`,\n`CycleObstruction.lean`, and `../Bridges/CollatzTwoAdic.lean`. Each conjecture",
-      "quality_score": 0.4269881818181818,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-27T08:47:27",
-      "title": "Collatz Conjecture"
-    },
-    {
       "cycle_id": "982feb93",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Duality Framework for Discrepancy Lower Bounds\n\nDerived from this cycle's findings (`PeriodicDiscrepancyCurse.lean`,\n`PeriodicDiscrepancyBridge.lean`, and the `ComputationalEvide",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-02T14:13:50",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "cycle_id": "5a8a4bbe",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Domination in Cartesian products of graphs\n\nThis cycle established a clean bracket for the domination number of a Cartesian\n(box) product,\n`max(γ(G), γ(H)) ≤ γ(G □ H) ≤ γ(G) · |V",
+      "quality_score": 0.6805899999999999,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-02T14:35:15",
+      "title": "Improved Constant for Domination in Cartesian Product of Graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7118800000000001
     }
   ],
-  "last_updated": "2026-07-02T14:13:50",
+  "last_updated": "2026-07-02T14:35:15",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "930ff410",
-        "quality": 0.5530301941466242,
-        "theorems": 132,
-        "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
-      },
-      {
         "cycle_id": "6e34371e",
         "quality": 0.3216371714285714,
         "theorems": 3,
@@ -3699,6 +3693,12 @@
         "quality": 0.3972276,
         "theorems": 6,
         "title": "Quadratic Reciprocity: Five Proofs Formalized"
+      },
+      {
+        "cycle_id": "5a8a4bbe",
+        "quality": 0.6805899999999999,
+        "theorems": 14,
+        "title": "Improved Constant for Domination in Cartesian Product of Graphs"
       }
     ],
     "Physics": [
