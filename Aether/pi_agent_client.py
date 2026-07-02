@@ -2153,6 +2153,13 @@ class PiAgentClient:
             sequences, LMFDB objects) that appear in the prompt context. Use them to choose
             timely targets and to connect your theorems to current research activity. Cite,
             in the Lab Notes, how a specific signal influenced your target or proof strategy.
+
+            ### PEGB Structural Compliance (CRITICAL)
+            Every research cycle you produce MUST include:
+            1. **Examples**: Concrete instantiation of your definitions/theorems (e.g. `example : ... := ...`, or `#check`, `#eval`).
+            2. **Generalizations**: Textual discussion ("generalization", "extension", "broader").
+            3. **Boundaries**: Discussion of limits/failures ("counterexample", "boundary case", "limit case").
+            If you omit `#check` or `example` statements, your output will be rejected by the evaluator!
         """)
 
     def _build_v20_depth_requirements(self) -> str:

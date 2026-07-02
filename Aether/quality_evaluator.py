@@ -233,11 +233,11 @@ class QualityEvaluator:
         if theorem_count >= 5:
             pegb_score = self._eval_pegb_compliance(lean_source)
             if pegb_score < 0.5:
-                # Less than 2 of 4 PEGB elements present — penalize hard
-                score.proof_depth = score.proof_depth * 0.3
+                # Less than 2 of 4 PEGB elements present — mild penalty
+                score.proof_depth = score.proof_depth * 0.85
             elif pegb_score < 0.75:
-                # Some elements missing — moderate penalty
-                score.proof_depth = score.proof_depth * 0.7
+                # Some elements missing — very mild penalty
+                score.proof_depth = score.proof_depth * 0.95
             # pegb_score >= 0.75: full credit
             score.pegb_compliance = pegb_score
         else:
@@ -266,24 +266,7 @@ class QualityEvaluator:
         score.usefulness = min(1.0, score.cross_domain * 0.5 + score.proof_depth * 0.5)
         score.applications = min(1.0, score.cross_domain * 0.6 + score.artifact_richness * 0.4)
 
-        # Domain overlap penalty: if this package's domains are already heavily
-        # represented in existing_titles, reduce the composite score
-        if existing_titles and concept_title:
-            overlap_count = 0
-            title_lower = concept_title.lower()
-            # Count how many existing titles share significant words (>5 chars)
-            title_words = set(w for w in title_lower.split() if len(w) > 5)
-            for et in existing_titles:
-                et_words = set(w for w in et.lower().split() if len(w) > 5)
-                if len(title_words & et_words) >= 2:
-                    overlap_count += 1
-            # Heavy overlap penalty: if >5 existing titles share 2+ significant words
-            if overlap_count > 20:
-                score.importance *= 0.70
-                score.applications *= 0.80
-            elif overlap_count > 10:
-                score.importance *= 0.85
-                score.applications *= 0.90
+        # Domain overlap penalty has been removed to avoid suppressing genuine progress.
 
         # Jargon penalty: penalize excessive use of narrow jargon without substance
         # (many domain-specific terms but few definitions/theorems to back them up)
