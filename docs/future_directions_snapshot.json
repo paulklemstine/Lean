@@ -1,5 +1,24 @@
 [
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "b714fdc8",
+    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0046",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T19:38:49.213882+00:00",
+    "title": "Prove Fermats Little Theorem for p=5"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "6af69f22",
@@ -61,7 +80,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c54f2933",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domain_bridges": [],
     "domains": [
@@ -74,14 +93,14 @@
     "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.027554+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8d820831",
+    "consumed_by_exp_id": "",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domain_bridges": [],
     "domains": [
@@ -93,7 +112,7 @@
     "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -1063,25 +1082,49 @@
     "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with δ_r ≥ 1"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2205.12345"
+    ],
+    "consumed_by_exp_id": "37903e54",
+    "description": "For every ε ∈ (0,1) there exist constants γ(ε)>0 and C(ε)>0 such that for all integers n and all subsets A,S⊆{0,1}^n with |A| ≥ ε·2^n and S satisfying the (γ,C)-well‑spread property, the sumset A+S satisfies |A+S| ≥ (1−ε)·2^n. Equivalently, for all A with μ(A)≥ε and all (γ,C)-well‑spread S, μ(A+S)≥1−ε.",
+    "domain_bridges": [
+      "math.PR",
+      "math.GR"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0045",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Assume explicit bounds on the influence of coordinates of S; use hypercontractivity and isoperimetric inequalities in the Boolean cube to bound the measure of the expansion A+S. A key step is to show that any (γ,C)-well‑spread S contains a large Hamming ball in a probabilistic sense, enabling the application of the standard concentration-of‑measure argument. The conjecture generalizes the known result for Hamming balls and proposes the existence of universal γ(ε),C(ε) independent of n.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30351v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T19:38:18.941946+00:00",
+    "title": "Well-Spread Expansion Conjecture in the Discrete Cube"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem 1.5",
       "Kane's work"
     ],
-    "consumed_by_exp_id": "37903e54",
+    "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domain_bridges": "extension",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0045",
+    "id": "fd_0047",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct arithmetic verification",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -1103,7 +1146,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0046",
+    "id": "fd_0048",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the dominant oscillatory term in the asymptotic expansion near ω and show that its phase enforces sign alternation, except when phase cancellation occurs finitely often or on a sparse set.",
@@ -1129,7 +1172,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0047",
+    "id": "fd_0049",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive structure of table decompositions",
@@ -1155,7 +1198,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0048",
+    "id": "fd_0050",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Characterize smooth injective maps on submanifolds via local charts. 2) Bound the Kruskal rank using dimension arguments: each additional point can increase rank by at most 1 until reaching d+1. 3) Relate this rank constraint to dichotomy counts via Cover's lemma. 4) Verify tightness with synthetic low-dimensional examples.",
@@ -1181,7 +1224,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0049",
+    "id": "fd_0051",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the mod p local Langlands correspondence to relate \\bar{V}_{k,a_p} to smooth mod p representations of GL_2(ℚ_p), then apply the classification of irreducible smooth mod p representations (principal series, special, and supersingular) together with explicit Breuil module calculations for small slopes and a patching argument to extend the result to all fractional slopes < p-1.",
@@ -1206,7 +1249,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0050",
+    "id": "fd_0052",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic constructions: take a random r-uniform hypergraph with edge probability p = n^{-α} for suitable α to avoid G as a subgraph while ensuring large induced F-free subsets via the deletion method and the hypergraph container method; then apply the first moment method to show existence of induced F-free subgraphs of size at least c (log n)^{β_F}. Matching the upper bound from the paper would establish tightness.",
@@ -1232,7 +1275,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0051",
+    "id": "fd_0053",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample binary word exists and analyze the combinatorial constraints imposed by the parameterized equivalence relation. Use a pumping‑style argument or an infinite descent on the lengths of minimal forbidden factors to derive a contradiction, exploiting the limited alphabet size and the requirement that all squares must have length ≥ 2k. Alternatively, construct a finite automaton encoding the forbidden factor set and show that it accepts only finite words, contradicting infinitude.",
@@ -1258,7 +1301,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0052",
+    "id": "fd_0054",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define phi as the golden ratio and implement the floor functions for a(n) and b(n). 2. Define epsilon(j) based on the Fibonacci membership test. 3. Prove the Lemma stating a(F_k) + (-1)^k = b(F_{k-1}) and b(F_k) + (-1)^k = a(F_{k+1}) using Binet's formula. 4. Establish the partition property (A* union B* = N and A* intersect B* = empty) by analyzing the shifts in the Wythoff sequences at Fibonacci indices. 5. Define the permutation q*_j using the ranges A* and B* and prove the involution property q*_q*_j = j for j >= 5 using the complementary nature of LWF and UWF.",
@@ -1284,7 +1327,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0053",
+    "id": "fd_0055",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the hyper-aperiodic elements method and twelve tiles theorem from the continuous case to show that no Borel homomorphism exists to a tournament on 6 vertices, while constructing a Borel homomorphism to a tournament on 7 vertices.",
@@ -1312,7 +1355,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0054",
+    "id": "fd_0056",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the five-point topological space explicitly in Lean, define the sheaf categories as diagrams of vector spaces, implement the pairing construction using Ext and tensor product operations, then verify the perfectness condition via dimension counting and the canonical module ω_W.",
@@ -1338,7 +1381,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0055",
+    "id": "fd_0057",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via graph decomposition and case analysis on maximum degree configurations, building upon techniques from [KKPW] while leveraging constraints from the adjacency condition to reduce color requirements below 5.",
@@ -1357,7 +1400,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0056",
+    "id": "fd_0058",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive verification on subgroup structures",
@@ -1385,7 +1428,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0057",
+    "id": "fd_0059",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate that a uniform bound on orbit lengths forces the degree [E : E^H] to be finite, and construct the minimal polynomial of any α as the product of (X - σ(α)) over its orbit, showing separability and normality; then use these facts to prove the equivalence statements.",
@@ -1409,7 +1452,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0058",
+    "id": "fd_0060",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the known non-algebraicity of θ_k for very general ppav (EGFS) and a combinatorial lemma concerning F_p-solutions of graphic matroids in Albanese graphs. In Lean, develop intersection theory on abelian varieties, define θ_k via the Chow ring, and prove the divisibility by reducing modulo p and analyzing the resulting finite schemes to force p | m.",
@@ -1440,7 +1483,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0059",
+    "id": "fd_0061",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Use the explicit counterexamples constructed by Katz (e.g. $(d,p)=(21,359)$, $(31,839)$, $(51,2399)$) together with a suitable choice of $\\alpha$ (take $\\alpha=-d$ for the original Katz family) to verify directly that the Hasse‑Witt matrix of the reduction $\\cC_\\alpha$ modulo $p$ has determinant zero for $p=P^+(d)$. 2. Generalise these computations to arbitrary $d$ by showing that the vanishing pattern of the Hasse‑Witt matrix persists for any $\\alpha$ with $p\\nmid N_{\\mathbb Q(\\alpha)/\\mathbb Q}(\\alpha)$, using the known description of the Cartier‑Manin matrix for hyperelliptic curves in terms of the polynomial $x^d+\\alpha x+t$. 3. Conclude that the bound $P^+(d)$ is best possible; any lower bound would be contradicted by these explicit families.",
@@ -1465,7 +1508,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0060",
+    "id": "fd_0062",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate via graph decomposition that P4-tidy graphs can be partitioned into clique-forest-like components connected through controlled bipartite interfaces, enabling step-by-step reconfiguration while maintaining invariants at P4-critical vertices.",
@@ -1492,7 +1535,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0061",
+    "id": "fd_0063",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define in Lean the Greenberg–Wiles local factor c_p(A) using the ramification‑measuring maps 𝔅_p and 𝔏_p from the paper. Prove that for a constant‑torsion family the global ℓ‑Selmer group decomposes as the restricted product of the local cohomology groups with the prescribed local conditions, so its order equals the product of the orders of the local quotients H¹(G_p,M)/H¹_𝔏(p)(G_p,M). Show that for almost all primes the unramified subgroup H¹_ur(G_p,M) is maximal among admissible local conditions, which forces the inequality to be an equality. Use Chebotarev density to argue that the set of primes where extra ramification could increase the Selmer size has density zero. Formalise the density argument via Dirichlet density in Lean, and combine with the explicit description of the Greenberg–Wiles pairing Ω_𝔏 to obtain the desired equality for density‑one set of primes.",
@@ -1519,7 +1562,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0062",
+    "id": "fd_0064",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Scholze's construction of automorphic determinants to Z_ℓ-coefficients, use the comparison isomorphism between étale and de Rham cohomology (via p-adic Hodge theory) to obtain de Rham Galois representations, then apply the p-adic local Langlands correspondence for GL_n over local fields to match the local Langlands parameter at places dividing ℓ with the automorphic data.",
@@ -1538,7 +1581,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0063",
+    "id": "fd_0065",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "exhaustive enumeration",
@@ -1564,7 +1607,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0064",
+    "id": "fd_0066",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic étale cohomology, comparison with characteristic zero via lifting, and apply known finiteness theorems for tamely ramified fundamental groups.",
@@ -1583,7 +1626,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0065",
+    "id": "fd_0067",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "explicit modular form analysis",
@@ -1609,7 +1652,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0066",
+    "id": "fd_0068",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use generating functions for distinct partitions and logarithmic differentiation, analogous to the proof of Theorem 1 for SOME(n). The generating function for DSOME(n) is ∑_{n≥1} DSOME(n) q^n = (-q;q)_∞ ∑_{m≥1} m q^m/(1+q^m). By manipulating the series, one can derive the identity.",
@@ -1642,7 +1685,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0067",
+    "id": "fd_0069",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a random partition of the ground set into at most r parts, reducing the problem to a small number of coordinates and solving the inequality exactly via elementary estimates.",
@@ -1665,7 +1708,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0068",
+    "id": "fd_0070",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "constructive_counterexample",
@@ -1692,7 +1735,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0069",
+    "id": "fd_0071",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the rank inequalities to show that any minimal obstruction must contain a monochromatic cycle; argue by edge‑deletion minimality that no other structure can exist.",
@@ -1720,7 +1763,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0070",
+    "id": "fd_0072",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Matomäki-Teräväinen dense-model/transference framework from ternary to binary products in the number field setting. This requires overcoming the coset obstructions that currently only allow a positive proportion of classes to be represented by two primes. Key steps: (1) refine the multiplicative dense model for prime ideals to capture binary correlations, (2) improve the treatment of exceptional characters using Wu's subconvexity bound, (3) adapt the transference argument from product sets in finite abelian groups to handle the narrower binary case, possibly using a more sophisticated version of the Cauchy-Davenport or Kneser-type inequalities for the ray class group.",
@@ -1745,7 +1788,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0071",
+    "id": "fd_0073",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduction to finite obstruction models followed by automated satisfiability checking via CP-SAT tools",
@@ -1764,7 +1807,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0072",
+    "id": "fd_0074",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Density-based argument with probabilistic bounds",
@@ -1796,7 +1839,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0073",
+    "id": "fd_0075",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Prove a stability theorem characterising vertex‑Ramsey graphs as Turán‑type graphs with only a few missing edges. 2. Derive supersaturation results for the vertex‑Ramsey property in terms of edge density. 3. Apply differential‑equation / sparse random graph techniques to the random‑edge addition process, establishing that once the density exceeds π_c by ≈ n^{−1/2} the property holds w.h.p., and that below this threshold it fails w.h.p. via a second‑moment or Chernoff argument. 4. Combine these to locate the critical window of width θ(n^{3/2}).",
@@ -1820,7 +1863,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0074",
+    "id": "fd_0076",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "density_increment_lemma",
@@ -1850,7 +1893,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0075",
+    "id": "fd_0077",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the refined formula for h(α, β) as a sum of integrals I(P_j(α, β)) over rational polytopes. Show each integral is real-analytic in (α, β) by differentiating under the integral sign (justified by uniform bounds on the polytopes' parameter dependence). Prove the series of derivatives converges uniformly on compact subsets of the domain using the exponential decay of terms when β - α ≥ 0.02 + ε. The continuity on the boundary follows from uniform convergence up to the boundary.",
@@ -1878,7 +1921,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_0076",
+    "id": "fd_0078",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Combine the second Borel-Cantelli lemma with a suitable mass transference principle to estimate Hausdorff measure of cylinder sets defined by the Cantor series, then apply standard dimension formulas.",
@@ -1904,7 +1947,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0077",
+    "id": "fd_0079",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "search_and_pigeonhole",
@@ -1913,6 +1956,33 @@
     "status": "available",
     "timestamp": "2026-07-02T19:19:52.418155+00:00",
     "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2407.XXXXX (this paper)",
+      "Mertzios et al., 'Algorithms for List 3-Coloring C₄-Free Graphs'"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that every C₄-free graph of diameter 2 without universal vertices and with maximum degree Δ ≥ 17 is not 3-colorable. This conjecture asserts that the bound 17 is optimal: there exists a C₄-free graph of diameter 2 without universal vertices, with maximum degree exactly 16, that is 3-colorable. If true, this would show the structural characterization in the paper cannot be improved by simply lowering the degree threshold.",
+    "domain_bridges": [
+      "Graph theory",
+      "Computational complexity",
+      "Algorithmic graph theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0080",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an explicit C₄-free graph of diameter 2 with Δ = 16, no universal vertices, and a valid 3-coloring. This could be done by modifying known extremal examples for C₄-free graphs (e.g., polarity graphs of projective planes) or by a computer-assisted search using SAT solvers or integer programming. Alternatively, use the probabilistic method to show existence, though constructive is preferred for formalization.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30282v1",
+    "status": "available",
+    "timestamp": "2026-07-02T19:38:45.750959+00:00",
+    "title": "Tightness of the Maximum Degree Bound for 3-Colorability of C₄-Free Diameter-2 Graphs"
   },
   {
     "ambition_level": "extension",
