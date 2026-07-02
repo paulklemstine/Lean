@@ -223,7 +223,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "87346215",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -251,7 +251,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T04:59:08.025410+00:00",
       "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
@@ -260,7 +260,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
@@ -277,7 +277,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0005",
-      "last_attempt_time": "2026-07-02T19:38:54.571383+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -382,11 +382,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "076754c3",
+      "consumed_by_exp_id": "449656c7",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -399,7 +399,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0008",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-02T19:56:10.018369+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -2007,7 +2007,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "4770cef4",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -2038,7 +2038,7 @@
       "source": "",
       "source_exp_id": "2606.30475v1",
       "source_path": "http://arxiv.org/abs/2606.30475v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T18:56:55.867431+00:00",
       "title": "Limit Distribution of Descendants in Random d-DAGs"
@@ -2134,6 +2134,50 @@
       "title": "Well-Spread Expansion Conjecture in the Discrete Cube"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Green 1984",
+        "Mukai 1993",
+        "Schenck 2004"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "b714fdc8",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The degree of the line bundle must be at least n + p for Property N_p to hold.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0046",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Degree-based verification criterion",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Verify degree conditions via explicit calculations",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2606.30160v1",
+      "source_path": "http://arxiv.org/abs/2606.30160v1",
+      "status": "in_progress",
+      "thread_id": "",
+      "timestamp": "2026-07-02T19:55:37.151802+00:00",
+      "title": "Degree Requirement for Property N_p"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -2141,7 +2185,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "b714fdc8",
+      "consumed_by_exp_id": "de67cc2c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -2152,8 +2196,8 @@
         "Novelty"
       ],
       "github_issue": 7,
-      "id": "fd_0046",
-      "last_attempt_time": "2026-07-02T19:38:49.819697+00:00",
+      "id": "fd_0047",
+      "last_attempt_time": "2026-07-02T19:55:57.739761+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -2170,7 +2214,7 @@
       "source_path": "github",
       "status": "in_progress",
       "thread_id": "",
-      "timestamp": "2026-07-02T19:38:49.213882+00:00",
+      "timestamp": "2026-07-02T19:55:56.520428+00:00",
       "title": "Prove Fermats Little Theorem for p=5"
     },
     {
@@ -2196,7 +2240,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0047",
+      "id": "fd_0048",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Assumed truth",
@@ -2245,7 +2289,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0048",
+      "id": "fd_0049",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": " theorem sign_alternation (q_series : q_series) (ω : ℂ) (H : ∃θ ∈ ℝ, H' : asymptotics_dominated_by_oscillatory(q_series, ω, θ)) : ∀n > N, sign(coefficient(q_series, n)) = (-1)^n, except for a density-zero set of n.",
@@ -2292,7 +2336,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0049",
+      "id": "fd_0050",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Assume the existence of a structured covering that mirrors the underlying parity constraints",
@@ -2339,7 +2383,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0050",
+      "id": "fd_0051",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem manifold_kruskal_bound (E : Type*) [smooth_manifold E] (d : ℕ) (Φ : E → ℝ M') [smooth_map Φ] (F : Fin N → E) (general_position : ...) : kranking {Φ(f k) | k ∈ F} ≤ d + 1 → dich_count Φ F ≤ counting_fn N (d + M' + 1)",
@@ -2386,7 +2430,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0051",
+      "id": "fd_0052",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_irreducible_mod_p_representation {p : ℕ} [Fact p.Prime] (hp_ne_two : p ≠ 2) (k : ℕ) (hk_even : k % 2 = 0) (hk_ge_two : 2 ≤ k) (a_p : ℚp) (ha_pos : 0 < (valuation a_p : ℝ)) (ha_lt : (valuation a_p : ℝ) < (p - 1 : ℝ)) : Irreducible (mod p reduction of the two-dimensional crystalline representation V_{k,a_p}) := by sorry",
@@ -2432,7 +2476,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0052",
+      "id": "fd_0053",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_erdos_rogers_lower_bound {r : ℕ} (h_r : r ≥ 3) {F G : Hypergraph r} (hF_nonempty : F.Nonempty) (hG_2tight : G.Is2TightlyConnected) (h_no_hom : ¬ HomExists G F) (βF : ℝ) (hβF : βF = MaxOverNonemptySubsetsOfBoundary2F (fun P => (P.numEdges : ℝ) / (P.numVertices - 1))) : ∃ (c C : ℝ), 0 < c ∧ 0 < C ∧ ∀ᶠ (n : ℕ) in Filter.atTop, (c * (Real.log n) ^ βF : ℝ) ≤ (f_FG n : ℝ) ∧ (f_FG n : ℝ) ≤ C * (Real.log n) ^ βF := by sorry",
@@ -2479,7 +2523,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0053",
+      "id": "fd_0054",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_infinite_3plus_param_square_free_binary : ¬ ∃ w : Stream (Fin 2), IsParamSquareFree 3 w",
@@ -2526,7 +2570,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0054",
+      "id": "fd_0055",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem wythoff_fibonacci_partition (n : ℕ) : \n  (∃ m : ℕ, n = LWF m) ⊕ (∃ m : ℕ, n = UWF m) := by\n  sorry\n\ntheorem q_star_almost_involution (j : ℕ) (hj : j ≥ 5) : \n  q_star (q_star j) = j := by\n  sorry",
@@ -2573,7 +2617,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0055",
+      "id": "fd_0056",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem borel_oriented_chromatic_number_eq_7 : borel_oriented_chromatic_number (bernoulli_schreier_graph Z² 2^{Z²}) = 7",
@@ -2622,7 +2666,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0056",
+      "id": "fd_0057",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem riemann_function_duality (r : ℕ) (W : perfect_matching r) (F : line_bundle r) (K : ℤ × ℤ) : let M := M_{W, (0,0)} in let M_dual := M_{W^∧ (K + (1,1)), K} in perfect_pairing (H⁰ (tensor_product M F)) (Ext 1 F M_dual) (H¹ (ω W))",
@@ -2669,7 +2713,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0057",
+      "id": "fd_0058",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strong_majority_edge_coloring_four_colors (G : SimpleGraph) (h : Admissible G) : ∃ (c : G.edges → Fin 4), StrongMajorityEdgeColoring c",
@@ -2709,7 +2753,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0058",
+      "id": "fd_0059",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Inductive proof over finite orders",
@@ -2758,7 +2802,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0059",
+      "id": "fd_0060",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem orbit_finite_iff_galois {E : Type*} [Field E] (H : Subgroup (Aut E)) : IsGalois (E / fixedField H) ↔ ∀ (α : E), FiniteOrbit H α",
@@ -2803,7 +2847,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0060",
+      "id": "fd_0061",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem theta_k_divisibility {g k : ℕ} (hk : k < g) (hg : 4 ≤ g) (X : AbelianVariety ℂ) (Θ : PrincipalPolarization X) (hX : VeryGeneral X Θ) (Z : Subvariety X) (hZ : codim Z = k) (hm : [Z] = m • theta_k X Θ) (p : ℕ) (hp : Nat.Prime p) (hple : p ≤ (k+1)/2) : p ∣ m := by sorry",
@@ -2855,7 +2899,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0061",
+      "id": "fd_0062",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bound_sharp (g : ℕ) (d : ℕ) (h : d = 2*g + 1 ∨ d = 2*g + 2) :\n  ∃ (α : AlgebraicInteger) (p : ℕ),\n    α ≠ 0 ∧ p = P_plus d ∧ p ∤ norm α ∧ ¬ IsOrdinaryFamily C_α p :=\n  -- Existence of an explicit counterexample (e.g. α = -d, p = P_plus d).\n  let α := -d,\n      p := P_plus d in\n  have hp : p = P_plus d := rfl,\n  have hα : α ≠ 0 := by simp,\n  have hp_norm : p ∤ norm α := by\n    -- Since norm (-d) = (-d)^{[ℚ(α):ℚ]} and p does not divide d for the known cases, this holds.\n    exact norm_ne_zero_divide,\n  have hnonord : ¬ IsOrdinaryFamily C_α p :=\n    -- Direct computation of the Hasse‑Witt matrix over 𝔽_p shows det = 0.\n    have det := compute_hasse_witt_det α p,\n    have det_zero : det = 0 := by exact known_counterexample,\n    exact det_zero,\n  exact ⟨α, p, hα, hp_norm, hnonord⟩",
@@ -2901,7 +2945,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0062",
+      "id": "fd_0063",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem P4_tidy_reconfiguration_theorem {Graph G : P4Tidy} {Set I I' : IndependentSet G} (h : cardinality I = cardinality I') : (∀ (P : InducedP4 G), (∃ (v : v ∈ I ∧ v ∈ I'), v ∈ P) ∨ (∀ (v : v ∈ G), v ∉ I ∪ I' → (∀ (u ∈ P), u ≠ v → (u ∈ I ↔ u ∉ I'))) → (∃ (seq : FinSequence (IndependentSet G)), (seq 0 = I) ∧ (∀ (i : FinIndex), (seq i+1) ∈ Reachable (seq i) G) ∧ (seq (length seq - 1) = I'))",
@@ -2949,7 +2993,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0063",
+      "id": "fd_0064",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem greenberg_wiles_sharpness {ℓ : ℕ} [Fact (Nat.Prime ℓ)] {𝔽 : Type*} [field 𝔽] [number_field 𝔽]\n  {A : AbelianVariety 𝔽} {M : GaloisModule ℚ ℓ} (hM : A.ℓ_torsion ≃ₗ[M] M) \n  (good_red : ∀ p : ℕ, Nat.Prime p → p ∉ A.bad_primes → True) :\n  ∀ᶠ p in Nat.primes, \n    (SelmerGroup ℓ A).card = (greenberg_wiles_local_factor ℓ A p) :=\nby\n  sorry",
@@ -2997,7 +3041,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0064",
+      "id": "fd_0065",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem torsion_local_global_compatibility_at_ell {F : NumberField} [F.isCM] {n : ℕ} (hn : n ≥ 1) {ℓ : ℕ} [Fact ℓ.Prime] (m : ℕ) (hm : m ≥ 1) (π : TorsionHeckeEigenclass F n ℓ m) (r : GaloisRep F n ℓ) : ∀ (v : Place F), v ∣ ℓ → (IsDeRham (r v) ∧ HodgeTateWeights (r v) = HTWeightsOf π ∞) ∧ LocalLanglandsMatch (r v) (π v) := sorry",
@@ -3022,7 +3066,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
@@ -3037,8 +3081,8 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0065",
-      "last_attempt_time": "",
+      "id": "fd_0066",
+      "last_attempt_time": "2026-07-02T19:56:05.114805+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "existence_proof",
       "lineage_refs": [],
@@ -3053,7 +3097,7 @@
       "source": "",
       "source_exp_id": "2606.31640v1",
       "source_path": "http://arxiv.org/abs/2606.31640v1",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-07-02T13:14:19.130414+00:00",
       "title": "Non-Central Symmetric 7-D Polytope"
@@ -3084,7 +3128,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0066",
+      "id": "fd_0067",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem finiteness_semisimple {k : Type*} [Field] [CharP k p] [Fact p ≠ 0] [FiniteField k] {X : Type*} [Normal X] [GeometricallyConnected X] (D : DivisorOnCompactification X) (F : Type*) [Field] [CharP F p] [AlgebraicallyClosed F] [DiscreteTopology F] (n : ℕ) : Fintype (SemisimpleRep π₁(X,D) (GL n F)) := by sorry",
@@ -3124,7 +3168,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0067",
+      "id": "fd_0068",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "N(T) ≈ T²",
@@ -3171,7 +3215,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0068",
+      "id": "fd_0069",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def DSOME (n : ℕ) : ℤ := by sorry\n\ndef q (n : ℕ) : ℕ := by sorry\n\ndef σ_odd (n : ℕ) : ℕ := by sorry\n\ntheorem DSOME_identity (n : ℕ) (hn : n ≥ 1) :\n    (DSOME n : ℤ) + 2 * (∑ i in Finset.Icc 1 (n / 2), (q (n - 2 * i) : ℤ) * (σ_odd i : ℤ)) = (n : ℤ) * (q n : ℤ) := by sorry",
@@ -3225,7 +3269,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0069",
+      "id": "fd_0070",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tokushige_conjecture {r : ℕ} (hr : r ≥ 3) {n : ℕ} (hn : n ≥ r + 1) {p : Fin n → ℝ} (hp_pos : ∀ i, 0 < p i) (hp_le_one : ∀ i, p i ≤ 1) (hp_order : ∀ i j, i ≤ j → p i ≥ p j) (hp_rplus1 : p (⟨r, by omega⟩ : Fin n) < (r - 1 : ℝ) / r) (A : Finset (Finset (Fin n))) (hA : ∀ (a : Finset (Fin n)), a ∈ A → r_wise_intersecting a) : μ_p A ≤ p 1 := by sorry",
@@ -3269,7 +3313,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0070",
+      "id": "fd_0071",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ng_pd_product_ng_bound (G : SimpleGraph ℕ) : throttling_product_pd G * throttling_product_pd (complement G) ≤ 6 := by sorry",
@@ -3317,7 +3361,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0071",
+      "id": "fd_0072",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_minimal_obstruction :\n  ∀ (G : SimpleGraph EdgeColor) (t : ℕ),\n    IsMinimalObstruction G t →\n    (∃ (C : Cycle G) (c : Color), ∀ e ∈ edges C, color e = c) := by\n  sorry",
@@ -3366,7 +3410,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0072",
+      "id": "fd_0073",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binary_ray_class_conjecture {K : Type*} [NumberField K] (q : Ideal (RingOfIntegers K)) (κ : ℝ) (hκ : κ > 0) : ∀ (c : NarrowRayClassGroup K q), ∃ (p₁ p₂ : PrimeIdeal (RingOfIntegers K)), p₁ ∤ q ∧ p₂ ∤ q ∧ normNum p₁ ≤ (normNum q : ℝ) ^ (103 / 64 + κ) ∧ normNum p₂ ≤ (normNum q : ℝ) ^ (103 / 64 + κ) ∧ c = (p₁ : NarrowRayClassGroup K q) * (p₂ : NarrowRayClassGroup K q) := by sorry",
@@ -3412,7 +3456,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0073",
+      "id": "fd_0074",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem min_out_degree_7_seymour: For any oriented graph D with δ⁺(D) ≤ 7, ∃v ∈ V(D) such that |N²⁺(v)| ≥ |N⁺(v)|.",
@@ -3452,7 +3496,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0074",
+      "id": "fd_0075",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Existence Theorem",
@@ -3505,7 +3549,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0075",
+      "id": "fd_0076",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vertex_ramsey_perturbed_threshold {r : ℕ} (H : Fin r → Graph) (n : ℕ) (ε : ℝ) :\n  ∀ (G0 : Graph n) (m : ℕ),\n    (density G0 ≤ 1 - 1 / ∥_{j : Fin r} (chromatic_number (H j) - 1) - ε) →\n    (m = (1 - 1 / ∥_{j : Fin r} (chromatic_number (H j) - 1)) * (n choose 2) + t * n^(3/2)) →\n    (∀ t, w.h.p. (perturbed G0 (add_edges_random m) → (H : i : Fin r → H i) _v‑Ramsey)).",
@@ -3550,7 +3594,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0076",
+      "id": "fd_0077",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem chi_S_upper_bound (n : ℕ) (u : ℝ) : chi_S n (⌊u*n⌋) P4 ≤ C * u * n := by sorry",
@@ -3601,7 +3645,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0077",
+      "id": "fd_0078",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_analytic : ∀ (α β : ℝ), 0 < α → α < β → β < 1 → β - α > 0.02 → AnalyticAt (fun p : ℝ × ℝ => h p.1 p.2) (α, β)",
@@ -3650,7 +3694,7 @@
         "MachineLearning"
       ],
       "github_issue": 0,
-      "id": "fd_0078",
+      "id": "fd_0079",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exact_dimension (Q : ℕ → ℕ) (hq : ∀ n, Q n ≥ 2) (hlim : Filter.Tendsto (fun n : ℕ => Real.log (∏ k in Finset.range n, Q k)) Filter.atTop (nhds 0)) (ψ : ℕ → ℝ) (hψ : ∀ n, 0 < ψ n) (hmono : Monotone ψ) (hsum : Summable (fun n ↦ ψ n * (∏ k in Finset.range n, Q k))) : ∃ (λ : ℝ), λ = liminf (fun n ↦ -Real.log (ψ n)) Filter.atTop / Real.log (∏ k in Finset.range n, Q k) → dim_H (ExactSet Q ψ) = 2 / λ := by sorry",
@@ -3697,7 +3741,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0079",
+      "id": "fd_0080",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_solutions_q (q : ℕ) [hpq : Nat.Prime q] : ∃ (t p : ℕ), Nat.Prime p ∧ p ≠ q ∧ p ∣ (Nat.choose (q ^ (t + 1)) (q ^ t) - q ^ (q ^ t)) ∧ s_q ((q - 1) * p) ≥ (q - 1) * t",
@@ -3745,7 +3789,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0080",
+      "id": "fd_0081",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_C4_free_diam2_delta16_3colorable : ∃ (G : SimpleGraph ℕ), G.C4Free ∧ G.Diameter = 2 ∧ ¬G.HasUniversalVertex ∧ G.MaxDegree = 16 ∧ G.ThreeColorable := by sorry",
@@ -3765,6 +3809,55 @@
       "thread_id": "",
       "timestamp": "2026-07-02T19:38:45.750959+00:00",
       "title": "Tightness of the Maximum Degree Bound for 3-Colorability of C₄-Free Diameter-2 Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "NiWangKang2023",
+        "Moon1968",
+        "Simonovits1966",
+        "He2005"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For fixed integers r≥3 and t≥0 there exists a positive constant δ(r,t) such that every n-vertex (t+1)K_{r+1}-free graph G that is not isomorphic to K_t ∨ T_r(n−t) satisfies ρ_q(G) ≤ ρ_q(K_t ∨ T_r(n−t))−δ(r,t) for all sufficiently large n. Moreover, K_t ∨ T_r(n−t) is the unique extremal graph.",
+      "domain_bridges": [
+        "spectral_graph_theory",
+        "extremal_combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0082",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem signless_laplacian_gap (r t : ℕ) (hr : 3 ≤ r) (ht : 0 ≤ t) (n : ℕ) (hn : n ≥ N r t) : ∀ (G : SimpleGraph ℕ), IsKtPlus1KrsFree G → ¬IsomorphicTo_Extremal G → signlessLaplacianSpectralRadius G ≤ signlessLaplacianSpectralRadius (K t ∨ Turán r (n - t)) - δ r t",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "spectral_interlacing_and_perturbation_to_show_positive_gap",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2606.30272v1",
+      "source_path": "http://arxiv.org/abs/2606.30272v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T19:55:53.121906+00:00",
+      "title": "Quantitative Gap Conjecture for Signless Laplacian Spectral Radius in (t+1)K_{r+1}-free Graphs"
     },
     {
       "ambition_level": "extension",
@@ -3812,6 +3905,6 @@
   "recent_theme_keywords": {},
   "selection_log": [
     "famous_subtask",
-    "famous_subtask"
+    "cross_domain_bridge"
   ]
 }
