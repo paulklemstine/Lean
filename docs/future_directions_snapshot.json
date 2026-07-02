@@ -1,24 +1,5 @@
 [
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ce78e135",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0021",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T09:30:38.090511+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "4fd32ea8",
@@ -452,6 +433,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "SteinbergEndomorphisms",
+      "CotnerSpringer"
+    ],
+    "consumed_by_exp_id": "ce78e135",
+    "description": "Conjecture that for any regular unipotent element \\(g\\) in a simply connected semisimple algebraic group \\(G\\) over an algebraically closed field, the scheme‑theoretic stabilizer of its conjugacy class in the center \\(Z(G)\\) is a single reduced point (i.e., trivial).",
+    "domain_bridges": [
+      "Algebraic geometry",
+      "Group cohomology"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0021",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the centralizer of a regular unipotent element as a unipotent group, show its center is trivial, and use the fact that any non‑trivial central element would contradict the regularity of the orbit.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00088v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T09:48:50.773388+00:00",
+    "title": "Trivial stabilizer for regular unipotent conjugacy classes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1.5",
       "Kane's work"
     ],
@@ -680,6 +687,34 @@
     "status": "available",
     "timestamp": "2026-07-02T09:09:17.045826+00:00",
     "title": "The Borel oriented chromatic number of the directed Schreier graph of the Bernoulli shift Z² on 2^{Z²} is 7"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Baker-Norine graph Riemann-Roch",
+      "Serre duality",
+      "canonical sheaves"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For an r-periodic Riemann function f with perfect matching weight W, and a line bundle F on the five-point space, the pairing H⁰(M_{W,0} ⊗ F) × Ext¹(F, M_{W^∧_{K+1},K}) → H¹(ω_W) ≅ k is a perfect pairing, establishing a Serre duality isomorphism dim H⁰(M_{W,0} ⊗ F) = dim Ext¹(F, M_{W^∧_{K+1},K}) for all degrees K ∈ ℤ².",
+    "domain_bridges": [
+      "algebraic_geometry",
+      "combinatorics",
+      "homological_algebra"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0031",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct the five-point topological space explicitly in Lean, define the sheaf categories as diagrams of vector spaces, implement the pairing construction using Ext and tensor product operations, then verify the perfectness condition via dimension counting and the canonical module ω_W.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00238v1",
+    "status": "available",
+    "timestamp": "2026-07-02T09:49:21.006265+00:00",
+    "title": "Perfect Pairings in Periodic Riemann Functions Yield Serre-Type Duality"
   },
   {
     "ambition_level": "extension",

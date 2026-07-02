@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "ce78e135",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0021",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T09:30:38.090511+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "consumed_by_exp_id": "4fd32ea8",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -291,6 +277,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the Minimum Number of b\u2011Invariant Edges in Near\u2011Bipartite Bricks"
   },
   {
+    "consumed_by_exp_id": "ce78e135",
+    "description": "Conjecture that for any regular unipotent element \\(g\\) in a simply connected semisimple algebraic group \\(G\\) over an algebraically closed field, the scheme\u2011theoretic stabilizer of its conjugacy class in the center \\(Z(G)\\) is a single reduced point (i.e., trivial).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0021",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00088v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T09:48:50.773388+00:00",
+    "title": "Trivial stabilizer for regular unipotent conjugacy classes"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
@@ -420,6 +421,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T09:09:17.045826+00:00",
     "title": "The Borel oriented chromatic number of the directed Schreier graph of the Bernoulli shift Z\u00b2 on 2^{Z\u00b2} is 7"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For an r-periodic Riemann function f with perfect matching weight W, and a line bundle F on the five-point space, the pairing H\u2070(M_{W,0} \u2297 F) \u00d7 Ext\u00b9(F, M_{W^\u2227_{K+1},K}) \u2192 H\u00b9(\u03c9_W) \u2245 k is a perfect pairing, establishing a Serre duality isomorphism dim H\u2070(M_{W,0} \u2297 F) = dim Ext\u00b9(F, M_{W^\u2227_{K+1},K}) for all degrees K \u2208 \u2124\u00b2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0031",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00238v1",
+    "status": "available",
+    "timestamp": "2026-07-02T09:49:21.006265+00:00",
+    "title": "Perfect Pairings in Periodic Riemann Functions Yield Serre-Type Duality"
   },
   {
     "consumed_by_exp_id": "",
