@@ -3,8 +3,8 @@ Copyright (c) 2024 Harmonic Research. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Novelty.CertifiedNovelty
-import Novelty.NoveltyRegions
+import Catalog.Novelty.CertifiedNovelty
+import Catalog.Novelty.NoveltyRegions
 
 /-!
 # Set-Level Novelty and Hausdorff Stability of the Birth Time

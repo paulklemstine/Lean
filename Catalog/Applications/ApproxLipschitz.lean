@@ -3,7 +3,7 @@ Copyright (c) 2024 Harmonic Research. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
-import Novelty.CertifiedNovelty
+import Catalog.Novelty.CertifiedNovelty
 
 /-!
 # Approximate Lipschitz Maps and Certificate Transfer with Error

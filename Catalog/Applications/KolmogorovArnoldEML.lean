@@ -33,7 +33,7 @@ terms guaranteed by Kolmogorov–Arnold for `n = 2`.
 ## Lab Notes — see `-- !-- Lab Notes -- !--` blocks below.
 -/
 import Mathlib
-import Applications.EMLTermAlgebra
+import Catalog.Applications.EMLTermAlgebra
 
 open Real
 
