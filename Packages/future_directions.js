@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "3d2280dc",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0034",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T14:55:00.839688+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "consumed_by_exp_id": "d991c87b",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -90,7 +76,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "5e4735e1",
+    "consumed_by_exp_id": "",
     "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
       "NumberTheory"
@@ -99,7 +85,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
   },
@@ -482,6 +468,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Jordan type of regular unipotent image for GL\u2080 representations"
   },
   {
+    "consumed_by_exp_id": "3d2280dc",
+    "description": "Conjecture that operators A_i and A_j in the Operator Theorem's inverse system for SR_G commute (A_i \u2218 A_j = A_j \u2218 A_i) if and only if the corresponding group elements in G = Z_r wr S_n commute.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0034",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30977v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T15:36:19.278040+00:00",
+    "title": "Commutativity of Operator Theorem operators in SR_G"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
@@ -802,6 +803,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T14:54:55.608249+00:00",
     "title": "An identity for DSOME(n) in terms of distinct partition numbers and odd divisor sums"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for all integers r\u22653, all n\u2265r+1, all probability vectors p1\u2265\u2026\u2265pn>0 with p_{r+1}<(r\u22121)/r, every r\u2011wise intersecting family A\u22862^[n] satisfies \u03bc_p(A)\u2264p1, with equality only for stars centred at a coordinate of maximal probability.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0057",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31075v1",
+    "status": "available",
+    "timestamp": "2026-07-02T15:36:40.230896+00:00",
+    "title": "Tokushige's r-wise intersecting conjecture for non\u2011uniform product measures"
   },
   {
     "consumed_by_exp_id": "",

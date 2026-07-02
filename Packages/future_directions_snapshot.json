@@ -1,24 +1,5 @@
 [
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "3d2280dc",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0034",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T14:55:00.839688+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "d991c87b",
@@ -119,7 +100,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5e4735e1",
+    "consumed_by_exp_id": "",
     "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domain_bridges": [],
     "domains": [
@@ -131,7 +112,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
   },
@@ -797,6 +778,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Sagan and Swanson's monomial basis conjecture",
+      "Operator Theorem in superspace coinvariants"
+    ],
+    "consumed_by_exp_id": "3d2280dc",
+    "description": "Conjecture that operators A_i and A_j in the Operator Theorem's inverse system for SR_G commute (A_i ∘ A_j = A_j ∘ A_i) if and only if the corresponding group elements in G = Z_r wr S_n commute.",
+    "domain_bridges": [
+      "Reflection groups",
+      "Wreath products"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0034",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the action of G on SR_G and verify operator compositions match group commutators",
+    "research_mode": "team",
+    "source_exp_id": "2606.30977v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T15:36:19.278040+00:00",
+    "title": "Commutativity of Operator Theorem operators in SR_G"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1.5",
       "Kane's work"
     ],
@@ -1350,6 +1357,39 @@
     "status": "available",
     "timestamp": "2026-07-02T14:54:55.608249+00:00",
     "title": "An identity for DSOME(n) in terms of distinct partition numbers and odd divisor sums"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Tokushige 2022",
+      "Friedgut 2008",
+      "Fishburn et al. 1986",
+      "Suda, Tanaka, Tokushige 2017",
+      "Filmus, Golubev, Lifshitz 2021",
+      "Wu, Feng 2026",
+      "Frankl, Tokushige 2003",
+      "Chang, Liu, Liu 2026"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for all integers r≥3, all n≥r+1, all probability vectors p1≥…≥pn>0 with p_{r+1}<(r−1)/r, every r‑wise intersecting family A⊆2^[n] satisfies μ_p(A)≤p1, with equality only for stars centred at a coordinate of maximal probability.",
+    "domain_bridges": [
+      "Extremal set theory",
+      "Product measure concentration",
+      "High‑dimensional geometry"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0057",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use a random partition of the ground set into at most r parts, reducing the problem to a small number of coordinates and solving the inequality exactly via elementary estimates.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31075v1",
+    "status": "available",
+    "timestamp": "2026-07-02T15:36:40.230896+00:00",
+    "title": "Tokushige's r-wise intersecting conjecture for non‑uniform product measures"
   },
   {
     "ambition_level": "extension",
