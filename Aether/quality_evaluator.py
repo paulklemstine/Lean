@@ -12,6 +12,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 
+try:
+    from arxiv_provider import ArxivTexProvider
+except ImportError:
+    ArxivTexProvider = None
 
 # Tactics considered "interesting" (non-trivial proof effort)
 DEEP_TACTICS = {
@@ -239,7 +243,7 @@ class QualityEvaluator:
         else:
             score.pegb_compliance = self._eval_pegb_compliance(lean_source)
 
-        score.novelty = self._eval_novelty(lean_source, concept_title, existing_titles)
+        score.novelty = self._eval_novelty(lean_source, concept_title, concept_description, phase, existing_titles)
         score.cross_domain = self._eval_cross_domain(lean_source)
         score.artifact_richness = self._eval_artifacts(result_dir, result_fields)
         score.actionability = self._eval_actionability(result_dir, result_fields)
@@ -537,6 +541,8 @@ class QualityEvaluator:
         return min(1.0, score)
 
     def _eval_novelty(self, lean_source: str, title: str,
+                      concept_description: str = "",
+                      phase: str = "A",
                       existing_titles: Optional[set] = None) -> float:
         """Score novelty based on distance from existing work."""
         if not lean_source:
@@ -565,7 +571,39 @@ class QualityEvaluator:
         if theorem_names:
             score -= common_count / len(theorem_names) * 0.2
 
-        return max(0.0, min(1.0, score))
+        heuristic_score = max(0.0, min(1.0, score))
+        
+        # --- LLM ArXiv Novelty Check ---
+        if phase == "A" and self.pi_agent and ArxivTexProvider:
+            try:
+                arxiv = ArxivTexProvider(batch_size=2)
+                papers = [arxiv.get_next_paper() for _ in range(2)]
+                papers = [p for p in papers if p]
+                if papers:
+                    abstracts = "\n\n".join(f"Title: {p['title']}\nAbstract: {p['abstract']}" for p in papers)
+                    prompt = (
+                        f"You are a mathematical novelty evaluator. Evaluate the following mathematical result for novelty "
+                        f"against recent arXiv literature.\n\n"
+                        f"Result Title: {title}\n"
+                        f"Result Description: {concept_description}\n"
+                        f"Lean Source Code:\n```lean\n{lean_source[:2000]}\n```\n\n"
+                        f"Recent arXiv Literature:\n{abstracts}\n\n"
+                        f"Determine if the result is genuinely novel or heavily overlapping with known literature. "
+                        f"Return ONLY a float between 0.0 and 1.0 representing the novelty score (1.0 = highly novel, 0.0 = completely derivative). "
+                        f"Do not return any other text."
+                    )
+                    # We pass simple system prompt directly or let _call_llm handle it
+                    response = self.pi_agent._call_llm(prompt, temperature=0.0)
+                    try:
+                        import ast
+                        llm_score = float(ast.literal_eval(response.strip()))
+                        return max(0.0, min(1.0, (heuristic_score + llm_score) / 2.0))
+                    except Exception as e_parse:
+                        print(f"[QualityEvaluator] ArXiv novelty parsing failed: {e_parse}, response: {response}")
+            except Exception as e:
+                print(f"[QualityEvaluator] ArXiv novelty check failed: {e}")
+        
+        return heuristic_score
 
     def _eval_cross_domain(self, lean_source: str) -> float:
         """Score cross-domain bridging."""

@@ -161,7 +161,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Improved Constant for Domination in Cartesian Product of Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc9679c8",
     "description": "For all finite nonempty sets A \u2286 \u2115 and all n \u2265 7, the symmetric difference |A \u0394 (2A) \u0394 ... \u0394 (nA)| \u2265 n. This conjecture asserts that the effective constant N in Theorem (pilz_large_n) can be taken to be as small as 7, which is the first value beyond what Pilz verified by hand, rather than the astronomically large bound 2\u00b7(3^80 - 321) proven in the paper.",
     "domains": [
       "Pythagorean"
@@ -170,7 +170,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:57:32.372597+00:00",
     "title": "The Extended 1-2-3 Conjecture Threshold is N = 7"
   },
@@ -1207,6 +1207,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T21:25:19.587863+00:00",
     "title": "A Conjecture on A\u2083\u2011formality for pro\u2011p Demushkin groups (extension beyond 2)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For $k=18$, there exists a generalized Diophantine tuple $A \\subset \\mathbb{F}[x]$ with $|A|=6$ satisfying property $D_{18}(n)$ that is not contained in the exceptional family (i.e., $n$ is not a square of an element $s \\in \\mathbb{F}[x]$ or $A \\not\\subset s\\mathbb{F}$).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0091",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01165v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:38:14.420490+00:00",
+    "title": "Existence of a D_18 tuple with size 6 outside the exceptional case"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any prime r, any real x with 1 \u2264 x \u2264 r^{0.49}, and any real q in [0,1], the average over all Dirichlet characters modulo r of the 2q\u2011th power of the absolute value of the short character sum satisfies (1/(r\u22121))\u2211_\u03c7 |\u2211_{n\u2264x} \u03c7(n)|^{2q} \u2265 (1/2) x^{q}.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0092",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01184v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:39:43.438987+00:00",
+    "title": "Conjecture on sharp lower bounds for low moments of Dirichlet character sums"
   },
   {
     "consumed_by_exp_id": "",

@@ -253,7 +253,7 @@
       "NT10",
       "NT20"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc9679c8",
     "description": "For all finite nonempty sets A ⊆ ℕ and all n ≥ 7, the symmetric difference |A Δ (2A) Δ ... Δ (nA)| ≥ n. This conjecture asserts that the effective constant N in Theorem (pilz_large_n) can be taken to be as small as 7, which is the first value beyond what Pilz verified by hand, rather than the astronomically large bound 2·(3^80 - 321) proven in the paper.",
     "domain_bridges": [
       "Coding Theory",
@@ -269,7 +269,7 @@
     "proof_strategy": "Formulate the problem in terms of parity of representation functions r_{A,[n]}(x) = |{(a,b) ∈ A × [n] : x = ab}|. Use induction on n and analyze the structure of sets A that could potentially violate the inequality |A ∗ [n]| < n. Leverage the Fourier-analytic approach and combine it with computational verification for small cases to establish the base cases, then extend to all n ≥ 7.",
     "research_mode": "team",
     "source_exp_id": "2607.00934v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:57:32.372597+00:00",
     "title": "The Extended 1-2-3 Conjecture Threshold is N = 7"
   },
@@ -2128,6 +2128,59 @@
     "status": "available",
     "timestamp": "2026-07-02T21:25:19.587863+00:00",
     "title": "A Conjecture on A₃‑formality for pro‑p Demushkin groups (extension beyond 2)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Dujella's monograph on Diophantine tuples",
+      "Mason-Stothers theorem",
+      "Combinatorial Nullstellensatz"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For $k=18$, there exists a generalized Diophantine tuple $A \\subset \\mathbb{F}[x]$ with $|A|=6$ satisfying property $D_{18}(n)$ that is not contained in the exceptional family (i.e., $n$ is not a square of an element $s \\in \\mathbb{F}[x]$ or $A \\not\\subset s\\mathbb{F}$).",
+    "domain_bridges": [
+      "Algebraic geometry over polynomial rings",
+      "Combinatorial Nullstellensatz applications"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0091",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an explicit example of a D_18 tuple with 6 elements or use the paper's methods to derive existence via determinant criteria and polynomial identity analysis.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01165v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:38:14.420490+00:00",
+    "title": "Existence of a D_18 tuple with size 6 outside the exceptional case"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Granville–Soundararajan, \"Large character sums\", 2005",
+      "Montgomery–Vaughan, \"Multiplicative Number Theory\", 1974",
+      "Szab´o, \"Lower bounds for character sum moments\", 2015"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any prime r, any real x with 1 ≤ x ≤ r^{0.49}, and any real q in [0,1], the average over all Dirichlet characters modulo r of the 2q‑th power of the absolute value of the short character sum satisfies (1/(r−1))∑_χ |∑_{n≤x} χ(n)|^{2q} ≥ (1/2) x^{q}.",
+    "domain_bridges": [
+      "Random multiplicative functions",
+      "Analytic number theory",
+      "Probabilistic models in number theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0092",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the large sieve inequality and Cauchy–Schwarz to relate the character sum average to its second moment, then combine with the known upper bound x^q to deduce a matching lower bound; the constant 1/2 follows from averaging over the full character group and applying orthogonality.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01184v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:39:43.438987+00:00",
+    "title": "Conjecture on sharp lower bounds for low moments of Dirichlet character sums"
   },
   {
     "ambition_level": "extension",
