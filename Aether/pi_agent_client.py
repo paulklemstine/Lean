@@ -1928,7 +1928,7 @@ class PiAgentClient:
             test the conjectures computationally by running small-case calculations,
             or logically validating them.
 
-            ### Stage 2 — Proof Sketching & Incremental Validation (team: Experimenter)
+            ### Stage 2 — Experiment & Proof Sketching (team: Experimenter)
             **Incremental Proof Building**: Before writing any Lean code, write a comprehensive,
             rigorous mathematical proof sketch. Break the problem down into small, exact lemmas.
             Formalize each lemma incrementally.
@@ -1936,7 +1936,7 @@ class PiAgentClient:
             must require significant mathematical insight, non-trivial auxiliary lemmas,
             and advanced tactics. Do not prove obvious facts just to increase the count.
 
-            ### Stage 3 — Analyze (team: Analyst)
+            ### Stage 3 — Generalize & Analyze (team: Analyst)
             Summarize what survived, what failed, and **why** failures failed.
             Distinguish "true but hard", "false", and "needs a different definition".
             **Novelty Push**: You are explicitly rewarded for introducing completely new,
@@ -1950,15 +1950,25 @@ class PiAgentClient:
             - Are there hidden assumptions or corner cases that break the claim?
             If you find a weakness, fix it or replace the theorem with a guarded version.
 
-            ### Stage 5 — Synthesize (team: Principal Investigator)
-            Combine the verified results into clean, compiling Lean 4 files with 0 sorries.
-            Write a `FUTURE_DIRECTIONS.md` that lists 3–5 **bold, testable** conjectures
-            derived from Stage 3 and Stage 4. Treat prior cycle context as a live research
-            thread and continue resolving open conjectures. Each new direction must include a
-            "The key insight is..." sentence and a "Why now?" justification.
+            ### Stage 5 — Future Directions (team: Principal Investigator)
+            Output exactly 5 standalone future directions. 
+            **CRITICAL REQUIREMENT:** You must output these directions into a new file named `future_directions.json`.
+            Each direction must be self-contained and independently actionable. Do not rely on "as shown above"—restate the necessary context so it can seed a brand new, unrelated research job.
+            
+            Use the following exact JSON schema for `future_directions.json`:
+            ```json
+            [
+              {
+                "title": "Concrete Mathematical Title",
+                "description": "Self-contained mathematical context and proposed approach",
+                "tags": ["Tag1", "Tag2"]
+              }
+            ]
+            ```
+            Your output MUST contain exactly 5 entries in this JSON array. Do NOT write FUTURE_DIRECTIONS.md.
 
             ### Perpetual Scientific Iteration (do not stop at first synthesis)
-            When the research team comes together with results, do not stop. Treat the synthesized findings as the next problem statement and immediately run the full scientific-method loop again: hypothesize, experiment, review, synthesize, critique. Repeat this cycle continuously within the available context window, refining, deepening, and cross-checking until forced to emit output. Use Aristotle to its fullest.
+            When the research team comes together with results, do not stop. Treat the synthesized findings as the next problem statement and immediately run the full scientific-method loop again: hypothesize, experiment, generalize, future directions, critique. Repeat this cycle continuously within the available context window, refining, deepening, and cross-checking until forced to emit output. Use Aristotle to its fullest.
         """)
 
 

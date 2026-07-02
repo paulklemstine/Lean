@@ -904,8 +904,29 @@ class CycleMaster:
                 from research_memory import FutureDirectionsManager
                 fd_manager = FutureDirectionsManager(self.workspace)
                 fd_added = 0
-                # Look for FUTURE_DIRECTIONS.md in the extracted results
+                
+                # 1. Look for explicit future_directions.json (Phase A v16 upgrade)
                 if extract_dir and extract_dir.exists():
+                    fd_json_file = extract_dir / "future_directions.json"
+                    if fd_json_file.exists():
+                        try:
+                            import json as _json
+                            fd_list = _json.loads(fd_json_file.read_text(encoding="utf-8"))
+                            for fd in fd_list:
+                                if isinstance(fd, dict) and "title" in fd and "description" in fd:
+                                    fd_manager.add_direction(
+                                        title=fd["title"],
+                                        description=fd["description"],
+                                        tags=fd.get("tags", []),
+                                        source=f"{exp_id}_json",
+                                        score=0.85,
+                                    )
+                                    fd_added += 1
+                        except Exception as e:
+                            print(f"[CycleMaster] Failed to parse future_directions.json: {e}")
+
+                # 2. Look for FUTURE_DIRECTIONS.md in the extracted results (Fallback)
+                if fd_added == 0 and extract_dir and extract_dir.exists():
                     for fd_pattern in ["FUTURE_DIRECTIONS.md", "future_directions*.md"]:
                         for fd_file in extract_dir.rglob(fd_pattern):
                             try:
