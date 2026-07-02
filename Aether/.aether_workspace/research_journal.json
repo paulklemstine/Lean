@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "669193db",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Delaunay minicenter refinement & approximate Carathéodory\n\nThis cycle added three files to the `DelaunayContraction` catalog:\n\n* `PerturbedContraction.lean` — inhomogeneous contr",
-      "quality_score": 0.71552,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T07:24:07",
-      "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
-    },
-    {
       "cycle_id": "57a09ecd",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings in `Catalog/EML/FixedPointExistenceDichotomy.lean`\n(sharp existence iff `c ≥ exp(a)·(1−a)`) and `Catalog/EML/FixedPoi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-02T11:55:27",
       "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
+    },
+    {
+      "cycle_id": "813a28d3",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Arithmetic on the Poincaré Disk\n\nThis cycle established a rigorous core for \"number theory on a curved space\": the vertices of\nthe modular tessellation of the hyperbolic plane ar",
+      "quality_score": 0.6896399999999999,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-07-02T12:22:49",
+      "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7303200000000001
     }
   ],
-  "last_updated": "2026-07-02T11:55:27",
+  "last_updated": "2026-07-02T12:22:49",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "12bdf767",
-        "quality": 0.5597778115501519,
-        "theorems": 74,
-        "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
-      },
-      {
         "cycle_id": "c3a3db57",
         "quality": 0.50342,
         "theorems": 7,
@@ -3265,6 +3259,12 @@
         "quality": 0.6772579999999999,
         "theorems": 10,
         "title": "Sum of digits of 1/p for half-period length and p ≡ 1 mod 4"
+      },
+      {
+        "cycle_id": "813a28d3",
+        "quality": 0.6896399999999999,
+        "theorems": 14,
+        "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
       }
     ],
     "Computation": [

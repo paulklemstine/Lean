@@ -32,7 +32,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "ad3e7fdf",
+    "consumed_by_exp_id": "",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -42,7 +42,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
@@ -90,7 +90,22 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in NumberTheory"
   },
   {
-    "consumed_by_exp_id": "10455700",
+    "consumed_by_exp_id": "",
+    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0044",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-02T12:14:12.935057+00:00",
+    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -100,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.030558+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -163,7 +178,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "a0eabca0",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -172,7 +187,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -263,7 +278,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
   },
   {
-    "consumed_by_exp_id": "4fe41de5",
+    "consumed_by_exp_id": "",
     "description": "Every essentially 4\u2011edge\u2011connected near\u2011bipartite brick G, with |V(G)| \u2265 6 and G \u2260 K4, contains at least \u2308|V(G)|/2\u2309 b\u2011invariant edges (and each such edge is a forcing edge).",
     "domains": [
       "Pythagorean"
@@ -272,7 +287,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T09:30:04.031609+00:00",
     "title": "Conjecture on the Minimum Number of b\u2011Invariant Edges in Near\u2011Bipartite Bricks"
   },
@@ -627,6 +642,66 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0045",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-02T12:14:12.964714+00:00",
+    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nBold, falsifiable conjectures arising from the study of `a^5 - a` and its\ngeneralizations.\n\n## 1. Sharpened divisibility: `30 \u2223 a^5 - a`\n\nFor every integer `a`, the quantity `a^5 - a` is divisible by `30`, not merely\nby `5`.\n\nThe key insight is that `a^5 - a` vanishes modulo each of the primes `2`, `3`,\nand `5` simultaneously \u2014 divisibility by `2` and `3` follows because `a^5 - a`\ncontains the factor `(a-1)a(a+1)`, a product of three consecutive integers, while\ndivisibility by `5` is the main theorem \u2014 so by coprimality of the moduli the\nproduct `2\u00b73\u00b75 = 30` divides `a^5 - a`.\n\nWhy now? The five-consecutive-integer decomposition already isolates the mod-`5`\nfactor cleanly; the same decomposition exposes the consecutive-integer factors\nthat force the mod-`2` and mod-`3` behavior, so all three prime obstructions can\nbe handled by one uniform argument.\n\n## 2. Universal exponent: the largest `m` with `m \u2223 a^n - a` for all `a`\n\nFor each fixed exponent `n \u2265 1` there is a largest modulus `m(n)` such that\n`m(n) \u2223 a^n - a` holds for every integer `a`, and `m(n)` equals the product of\nall primes `p` for which `(p - 1) \u2223 (n - 1)`.\n\nThe key insight is that `p \u2223 a^n - a` for all `a` exactly when the multiplicative\norder condition `(p-1) \u2223 (n-1)` holds, turning a divisibility question into a\npurely arithmetic condition on the exponent.\n\nWhy now? Having proved both the specific `p = 5` case and the general\nprime case, the natural next quantity to pin down is the *optimal* universal\nmodulus, which packages every prime-level statement into a single formula.\n\n## 3. Composite Korselt moduli (Carmichael phenomenon)\n\nThere exist composite integers `n` such that `n \u2223 a^n - a` for every integer `a`;\nthe smallest is `561 = 3\u00b711\u00b717`, and such `n` are exactly the squarefree numbers\nfor which `(p - 1) \u2223 (n - 1)` for every prime factor `p`.\n\nThe key insight is that the \"prime power map is the identity\" behavior can be\nfaked by carefully chosen composites, decoupling the identity `a^n \\equiv a`\nfrom primality and revealing Korselt's criterion as the true governing condition.\n\nWhy now? The counterexample hunt already showed that primality is load-bearing\nfor the *naive* statement (`4 \u2224 2^4 - 2`); the immediate scientific question is\nwhich composites nonetheless satisfy the identity, and Korselt's criterion is the\nprecise answer to test.\n\n## 4. Failure rate for composite moduli\n\nFor a composite modulus `m` that is *not* a Korselt number, the fraction of\nresidues `a \u2208 {0, \u2026, m-1}` satisfying `a^m \\equiv a (mod m)` is strictly less\nthan `1`, and this fraction is multiplicative across the prime-power factorization\nof `m`.\n\nThe key insight is that the solution set of `a^m \\equiv a` factors through the\nChinese Remainder Theorem, so counting fixed points reduces to independent local\ncounts at each prime power.\n\nWhy now? Once the all-or-nothing Korselt case is understood, quantifying *how\nbadly* the identity fails for generic composites is the natural refinement, and\nthe CRT factorization makes the count directly computable.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0047",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4fe41de5",
+    "status": "available",
+    "timestamp": "2026-07-02T12:18:30.591800+00:00",
+    "title": "Bold, falsifiable conjectures arising from the study of `a^5 - a` and its"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Arithmetic on the Poincar\u00e9 Disk\n\nThis cycle established a rigorous core for \"number theory on a curved space\": the vertices of\nthe modular tessellation of the hyperbolic plane are the reduced fractions, two of them are\njoined by an edge exactly when the associated integer determinant is `\u00b11`, the modular group\ncarries edges to edges, and mediants subdivide edges into ideal triangles. As a first\napplication we showed that the Fibonacci fractions `F(n+1)/F(n)` are precisely the geodesic\nray of this tessellation aimed at the golden ratio, with Cassini's identity as its incidence\nrelation. The following conjectures push that picture further.\n\n## 1. The golden ratio is the slowest-escaping cusp\n\n**Conjecture.** Among all geodesic rays of the modular tessellation that leave every bounded\nregion, the Fibonacci ray toward the golden ratio makes the fewest \"turns per unit of\ndenominator growth\": its denominators grow the most slowly of any escaping mediant walk, and\nthis extremal property characterizes the golden ratio uniquely.\n\n*The key insight is* that a mediant walk turns left or right at each ideal triangle exactly as\nthe continued fraction of its limit reads `1` or a larger partial quotient, so the all-ones\nexpansion `[1;1,1,\u2026]` is the unique walk that never accelerates \u2014 making the golden ratio the\ncombinatorially \"most central\" boundary point.\n\n*Why now?* We have just pinned the incidence relation of the tessellation to a determinant\nidentity and identified the Fibonacci walk as a pure mediant sequence; this converts a\nmetric statement about slow escape into a finite, checkable statement about turn sequences.\n\n## 2. Determinant depth equals continued-fraction length\n\n**Conjecture.** For any two reduced fractions there is a canonical shortest chain of mediant\nsubdivisions connecting their edges, and its length equals the sum of the partial quotients\nof the continued fraction of their \"difference\" `|ps \u2212 qr|`-normalized ratio. Equivalently,\ngraph distance in the Farey tessellation is computed by the subtractive Euclidean algorithm.\n\n*The key insight is* that each mediant step changes the determinant configuration in exactly\nthe way one subtraction changes a continued-fraction remainder, so the geometry of the\ntessellation and the arithmetic of the Euclidean algorithm are the same combinatorial object.\n\n*Why now?* With mediant subdivision proven to preserve the determinant edge relation, the path\nmetric is now a well-defined combinatorial quantity, and the Euclidean-algorithm bookkeeping\nbecomes a concrete induction rather than a heuristic analogy.\n\n## 3. A prime tessellation obstruction\n\n**Conjecture.** Restrict the vertex set to fractions `p/q` with `q` prime. The induced\nsubgraph of the Farey tessellation is connected if and only if one allows a single extra\n\"jump\" per prime, and the minimum number of such jumps needed to reach denominator `q` grows\nlike the number of distinct primes below `q`.\n\n*The key insight is* that the edge relation `|ps \u2212 qr| = 1` forces neighbouring denominators\nto be coprime, so restricting to prime denominators removes exactly the mediant links whose\nchild denominator is composite \u2014 turning connectivity into a statement about gaps between\nprimes.\n\n*Why now?* The proven fact that every tessellation vertex is automatically reduced (coprime\ncoordinates) means the prime-denominator restriction is intrinsic rather than imposed, so the\nobstruction can be measured edge-by-edge.\n\n## 4. An honest hyperbolic prime-counting law\n\n**Conjecture.** Define a hyperbolic disk of radius `R` as the set of cusps `p/q` reachable\nfrom `\u221e` by at most `R` mediant steps. Then the number of *primitive* new vertices created at\nstep `R` (the genuine \"hyperbolic primes\", i.e. mediants whose denominator exceeds both\nparents' and shares no factor with them) grows like `2^R`, and their denominators are\ndistributed according to the Stern\u2013Brocot measure.\n\n*The key insight is* that the naive `R\u00b2/(2 log R)` guess from the flat prime number theorem is\nthe wrong normalization for a tree-like tessellation: hyperbolic volume is exponential in\nradius, so the correct counting law is exponential, not quadratic.\n\n*Why now?* Having a proven, purely combinatorial notion of \"step\" (mediant subdivision) lets\nus replace the vague metric radius by an exact generation count, so the growth rate becomes a\nprovable recurrence instead of an analytic asymptotic.\n\n## 5. Fibonacci is the only linear recurrence that stays on the tessellation\n\n**Conjecture.** Among all sequences `a(n+2) = a(n+1) + a(n)` with coprime integer seeds, the\npair sequence `(a(n+1), a(n))` traces edges of the Farey tessellation for *every* `n` if and\nonly if the initial determinant `a(1)\u00b2\u2212a(0)a(2)` is `\u00b11`; and up to the modular group action\nthe Fibonacci and Lucas sequences are the only such walks.\n\n*The key insight is* that the additive recurrence is exactly the mediant rule, so staying on\nthe tessellation forever is equivalent to the seed edge being unimodular \u2014 a single\ndeterminant condition that the modular group then transports to every later step.\n\n*Why now?* We have just proved both halves of the mechanism in isolation \u2014 mediants preserve\nunimodular edges, and Cassini supplies the unimodular seed \u2014 so the classification is the\nnatural next theorem to attempt.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0048",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "813a28d3",
+    "status": "available",
+    "timestamp": "2026-07-02T12:22:41.323354+00:00",
+    "title": "Rigorous core for \"number theory on a curved space\": th"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0046",
+    "priority_score": 0.73,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-02T12:14:12.973126+00:00",
+    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
     "consumed_by_exp_id": "",
