@@ -76,7 +76,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "de16211e",
+    "consumed_by_exp_id": "",
     "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
       "NumberTheory"
@@ -85,7 +85,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
   },
@@ -293,12 +293,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer w \u2265 3, the Chromatic Sum problem is NP-complete on graphs of clique-width at most w. This extends the known result for w=3 and suggests a phase transition at clique-width 2 versus 3, where the problem becomes intractable.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0022",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00263v1",
+    "status": "available",
+    "timestamp": "2026-07-02T10:07:39.641162+00:00",
+    "title": "Chromatic Sum NP-Completeness for Clique-Width at Least 3"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0022",
+    "id": "fd_0023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -312,7 +326,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0023",
+    "id": "fd_0024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
@@ -327,7 +341,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0024",
+    "id": "fd_0025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
@@ -341,7 +355,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0025",
+    "id": "fd_0026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -356,7 +370,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0026",
+    "id": "fd_0027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -371,7 +385,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0027",
+    "id": "fd_0028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00732v1",
@@ -385,7 +399,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0028",
+    "id": "fd_0029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00674v1",
@@ -399,7 +413,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0029",
+    "id": "fd_0030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -414,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0030",
+    "id": "fd_0031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00367v1",
@@ -429,13 +443,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0031",
+    "id": "fd_0032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00238v1",
     "status": "available",
     "timestamp": "2026-07-02T09:49:21.006265+00:00",
     "title": "Perfect Pairings in Periodic Riemann Functions Yield Serre-Type Duality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every admissible graph (i.e., graph with no pendant path of length two) admits a strong majority edge-coloring using at most four colors. This directly addresses the conjecture from Kalinowski, Kamyczura, Pil\u015bniak, and Wo\u017aniak that 4 colors always suffice, improving upon the current upper bound of five colors proven in this paper.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0033",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00212v1",
+    "status": "available",
+    "timestamp": "2026-07-02T10:08:08.933718+00:00",
+    "title": "Four Colors Suffice for Strong Majority Edge-Coloring of Admissible Graphs"
   },
   {
     "consumed_by_exp_id": "",
