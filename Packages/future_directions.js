@@ -32,7 +32,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "fb4e42a2",
+    "consumed_by_exp_id": "",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -42,7 +42,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
@@ -88,6 +88,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0058",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-02T15:52:21.836754+00:00",
+    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
     "consumed_by_exp_id": "6054ec76",
@@ -821,6 +836,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0061",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-02T15:52:21.888656+00:00",
+    "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0062",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-02T15:52:21.898548+00:00",
+    "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns \u2014 one leg is a multiple of three, the legs jointly carry a\nfactor of four, one entry is a multiple of five \u2014 and that a four-dimensional right\n\"box\" (a solution of `a\u00b2 + b\u00b2 + c\u00b2 = d\u00b2`) is even more rigid: at most one of its three\nspatial edges can be odd. We also pinned down exactly which whole numbers can serve as a\nleg. These findings point to several bold, testable conjectures.\n\n## 1. The correct modulus for a power of two grows with the power\n**Conjecture.** In any solution of `a\u00b2 + b\u00b2 = c\u00b2`, the two-adic valuation of the leg\nproduct `a\u00b7b` is governed one level deeper than naive reduction suggests: deciding\nwhether `2^k` divides `a\u00b7b` is a question about residues modulo `2^{k+1}`, never modulo\n`2^k`.\n*The key insight is* that a difference of two odd squares is always divisible by eight,\nso each additional factor of two in the product must be certified one binary place\nfurther out than one would guess. *Why now?* Having isolated the exact `mod 8`\nobstruction behind the factor of four, we can test the pattern mechanically for `k = 3,\n4, 5` and either confirm a clean \"shift-by-one\" law or expose its first exception.\n\n## 2. A universal super-divisor for higher-dimensional right figures\n**Conjecture.** For every dimension `r`, solutions of `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` obey a single\nuniversal divisibility law: there is a constant `D(r)`, depending only on `r`, such that\n`D(r)` divides the product `x\u2081\u00b7x\u2082\u00b7\u22ef\u00b7x_r` for *every* solution, and `D(r)` is the largest\nsuch constant.\n*The key insight is* that reduction to a finite residue ring turns \"for all solutions\"\ninto a finite, decidable statement, so the optimal constant `D(r)` is computable and\nshould grow in a structured (conjecturally multiplicative-over-primes) way. *Why now?*\nThe three-dimensional case already yields `4 \u2223 x\u2081x\u2082x\u2083`; comparing it against the planar\nconstant `12` suggests a dimension-indexed sequence worth charting and predicting.\n\n## 3. Parity collapse in higher dimensions\n**Conjecture.** As the number of squared terms increases, the number of edges permitted to\nbe odd stays uniformly bounded: in `x\u2081\u00b2 + \u22ef + x_r\u00b2 = y\u00b2` at most three of the `x_i` can be\nodd, regardless of `r`.\n*The key insight is* that the sum of squares equals the count of odd terms modulo four,\nwhile a perfect square is `0` or `1` modulo four, capping the admissible odd-count no\nmatter how many terms are added. *Why now?* We proved the cap is \"at most one\" in three\ndimensions; extending the modular bookkeeping to arbitrary `r` is a self-contained next\nstep that would reveal whether the cap is truly dimension-independent.\n\n## 4. A sharp threshold characterization of legs in every dimension\n**Conjecture.** Just as the whole numbers that are a leg of a right triangle are exactly\nthose `\u2265 3`, in each higher dimension there is a sharp finite threshold above which every\ninteger appears as an edge of some right figure, and the finitely many exceptions can be\nlisted explicitly.\n*The key insight is* that a single explicit construction, split according to the parity of\nthe target edge, realizes all sufficiently large values, while the small exceptions are\nforced by a factorization that would otherwise require a vanishing edge. *Why now?* The\nplanar threshold `3` and its sharpness (the failures at `1` and `2`) give a template that\nshould transfer verbatim to the box equation and beyond.\n\n## 5. Divisibility as a sieve against near-solutions\n**Conjecture.** The combined congruence obstructions (`12 \u2223 a\u00b7b`, `60 \u2223 a\u00b7b\u00b7c`, and their\nhigher-dimensional analogues) are strong enough that a random integer triple satisfying\nthem has a positive, computable probability of being genuinely Pythagorean \u2014 i.e. the\ncongruence conditions capture a constant fraction of the \"arithmetic mass\" of true\nsolutions.\n*The key insight is* that each universal divisor removes a fixed proportion of impostors,\nso stacking independent prime-power obstructions multiplies into a sieve of predictable\ndensity. *Why now?* With the exact obstructions in hand for the primes `2, 3, 5`, one can\nimmediately measure how much of the solution set they explain and calibrate whether a few\nmore primes suffice to pin down solutions almost completely.\n",
     "domains": [
       "Pythagorean",
@@ -833,6 +878,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0059",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-02T15:52:21.869799+00:00",
+    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Stern's Diatomic Sequence\n\nThis cycle established three exact facts about Stern's diatomic sequence `s`\n(defined by `s(0)=0`, `s(1)=1`, `s(2n)=s(n)`, `s(2n+1)=s(n)+s(n+1)`): consecutive\nvalues are coprime; the all-ones binary index of length `n` has value `n`; and\nalong the alternating-bit (\"Jacobsthal\") indices `J n = (4^n \u2212 1)/3` the sequence\nreads off exactly the even-index Fibonacci numbers, `s(J n) = F(2n)`. The\nconjectures below grow directly out of those findings.\n\n## 1. Row sums are powers of three\n\n**Conjecture.** For every level `k`, the sum of the sequence over one dyadic block\nis `\u2211_{i=0}^{2^k \u2212 1} s(2^k + i) = 3^k`.\n\nThe key insight is that pairing each block index `2m` with `2m+1` turns the sum\nover level `k+1` into `\u2211 (2\u00b7s(m) + s(m+1))` over level `k`, and a single telescoping\nof the shifted term collapses this to exactly three times the previous sum.\n\nWhy now? The two equational lemmas `s(2n)=s(n)` and `s(2n+1)=s(n)+s(n+1)` proven\nthis cycle are precisely the tools that make the pairing rigorous; the numerical\ndata (`1, 3, 9, 27, 81, 243`) already pins the constant to `3^k` with no ambiguity.\n\n## 2. Extremal values on each level are Fibonacci numbers\n\n**Conjecture.** The maximum of `s` over the block `[2^k, 2^{k+1})` equals `F(k+2)`,\nand it is attained at the two alternating-bit indices closest to the ends of the\nblock.\n\nThe key insight is that the same alternating-bit indices that produce the\nFibonacci bridge are exactly the places where the additive recurrence compounds\nmost aggressively, so the largest entries of each level must be consecutive\nFibonacci numbers rather than arbitrary integers.\n\nWhy now? Having shown that Stern hits `F(2n)` and `F(2n+1)` along those indices,\nthe remaining step is an upper bound showing no other index in the block beats\nthem \u2014 a comparison argument that the coprimality and parity machinery already in\nhand is well suited to.\n\n## 3. A coprimality-to-enumeration ladder\n\n**Conjecture.** The map `n \u21a6 s(n)/s(n+1)` is a bijection from the natural numbers\nonto the nonnegative rationals in lowest terms.\n\nThe key insight is that coprimality of consecutive values (proven this cycle)\nguarantees each ratio is *already* in lowest terms, so the only missing ingredient\nfor a full enumeration of the rationals is surjectivity, which the binary\nrecurrence supplies by descending on numerator-plus-denominator.\n\nWhy now? Coprimality was the hard half of \"each fraction appears once\"; with it\nsettled, the enumeration becomes a structured induction rather than an open-ended\nsearch.\n\n## 4. Fibonacci bridges along other base-`b` alternating indices\n\n**Conjecture.** Replacing the base-4 Jacobsthal indices by the base-`b` analogue\n`(b^n \u2212 1)/(b \u2212 1)` yields, for each fixed `b`, a linear divisibility sequence\nwhose values along those indices satisfy a second-order recurrence with constant\ncoefficients depending only on `b` (the case `b = 4` giving Fibonacci).\n\nThe key insight is that the bridge proven this cycle is not a Fibonacci accident\nbut a shadow of the fixed two-step linear recurrence obeyed by the coupled pair\n`(s(J\u2099), s(2J\u2099+1))`; changing the base simply changes the coefficients of that\nrecurrence.\n\nWhy now? The coupled-pair invariant that carried the Fibonacci proof is stated in\na base-agnostic way, so the generalization is a matter of recomputing one 2\u00d72\ntransition rather than inventing new machinery.\n\n## 5. Carry-free additivity of the alternating indices\n\n**Conjecture.** The Jacobsthal indices are closed under a \"carry-free\" addition:\n`J m + J n` (added without binary carries wherever their bit patterns are disjoint)\nagain lands on an index whose Stern value factors through Fibonacci addition,\ngiving an identity of the shape `s(J m \u2295 J n) = F(2m)\u00b7F(2n+1) + F(2m+1)\u00b7F(2n)`.\n\nThe key insight is that the alternating-bit indices interleave cleanly in binary,\nso bitwise-disjoint combinations should mirror the Fibonacci addition law\n`F(a+b) = F(a)F(b+1) + F(a\u22121)F(b)` on the Stern side.\n\nWhy now? With `s(J n) = F(2n)` established, the addition law is the natural next\nprobe: it would upgrade a pointwise correspondence into a homomorphism-like\nstructure between two very different sequences.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0063",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5e4735e1",
+    "status": "available",
+    "timestamp": "2026-07-02T15:54:23.406477+00:00",
+    "title": "Three exact facts about Stern's diatomic sequence `s`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 5e4735e1 (Q=0.685) proved 12 theorems in NumberTheory but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield ",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_5e4735e1_252c7c74",
+    "priority_score": 0.73521,
+    "research_mode": "team",
+    "source_exp_id": "5e4735e1",
+    "status": "available",
+    "timestamp": "2026-07-02T15:54:30.390964+00:00",
+    "title": "Close Proofs: [Reset] Fresh approach in NumberTheory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
+    "domains": [
+      "Novelty",
+      "NumberTheory"
+    ],
+    "id": "fd_0060",
+    "priority_score": 0.73,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-02T15:52:21.879872+00:00",
+    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
     "consumed_by_exp_id": "",
@@ -863,7 +967,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
-    "consumed_by_exp_id": "f8ea6470",
+    "consumed_by_exp_id": "",
     "description": "Propose a framework where the computational complexity of simulating quantum state correlations in noncommutative geometries determines the hardness of certain mathematical problems. The hypothesis suggests that a polynomial-time algorithm for such problems would imply a breakdown of the cyclicity of Hilbert space dimensionality.",
     "domains": [
       "Novelty"
@@ -872,7 +976,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:18:32.052109+00:00",
     "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
   }
