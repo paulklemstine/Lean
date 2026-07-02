@@ -1,328 +1,153 @@
-# Explicit Class Field Theory: A Formally Verified Framework for Hilbert's 12th Problem
+# Explicit Reciprocity from Roots of Unity to Class Numbers: Steps Toward Hilbert's Twelfth Problem
 
 ## Abstract
 
-We introduce a formally verified framework for explicit abelian extension generation via ideal-class symmetry actions, establishing the first machine-checked "arithmetical symmetry compiler" in Lean 4. Our framework defines two core structures — `ExplicitClassFieldDatum` (encoding finite class quotients with invariant maps) and `HilbertClassFieldWitness` (encoding extension candidates with class group actions) — and proves nine theorems connecting class group arithmetic to permutation representation theory. Key results include: (1) a collapse theorem showing that trivial class groups force extensions to be trivial; (2) a faithfulness theorem (Cayley embedding) producing faithful permutation representations from class data; (3) an orbit cardinality bound connecting class numbers to extension degrees; and (4) a commutativity theorem showing that abelian class symmetry yields commuting permutations, creating a formal proto-Langlands interface. All theorems are machine-checked with standard axioms only (propext, Classical.choice, Quot.sound). We implement verified algorithms for regular representation construction, orbit computation, and cycle type analysis, and test conjectures on all finite abelian groups up to order 30.
+Hilbert's twelfth problem asks for an explicit construction of the abelian extensions of an arbitrary number field, generalizing the Kronecker–Weber theorem, which realizes every abelian extension of the rationals inside a cyclotomic field. We develop the arithmetic consequences of the abelian ($\mathrm{GL}_1$) reciprocity law in two settings. Over the rationals, we harvest the group-theoretic invariants of cyclotomic Galois groups from the Artin reciprocity isomorphism $(\mathbb{Z}/n\mathbb{Z})^\times \cong \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$: the order of the group equals Euler's totient $\varphi(n)$, and for prime modulus $p$ the group is cyclic of order $p-1$. We show by explicit example ($n=8$) that cyclicity genuinely requires the prime hypothesis. We then take the first structural step beyond $\mathbb{Q}$ by studying the Hilbert class field $H$ of a number field $K$, characterized by the higher reciprocity isomorphism $\mathrm{Gal}(H/K)\cong \mathrm{Cl}(\mathcal{O}_K)$. From this isomorphism we derive the fundamental degree law $[H:K] = h_K$, where $h_K$ is the class number, and the corollary that class number one forces $H = K$. We verify non-vacuity by instantiating the reciprocity datum for $K = H = \mathbb{Q}$. Throughout, the emphasis is on turning abstract reciprocity isomorphisms into exact, computable numerical invariants — the numerical fingerprints of explicit class field theory.
+
+**Keywords:** Kronecker–Weber theorem, cyclotomic fields, Artin reciprocity, Euler totient, cyclic Galois groups, Hilbert class field, ideal class group, class number, Hilbert's twelfth problem, Langlands program.
 
 ## 1. Introduction
 
-### 1.1 Background
+Class field theory describes the abelian extensions of a number field $K$ — its finite Galois extensions with commutative Galois group — in terms of the arithmetic of $K$ itself. Its foundational special case is the **Kronecker–Weber theorem**: every abelian extension of $\mathbb{Q}$ is contained in a cyclotomic field $\mathbb{Q}(\zeta_n)$, the field obtained by adjoining a primitive $n$-th root of unity. Hilbert's twelfth problem asks for the analogous *explicit* generators for an arbitrary base field $K$ — the "roots of unity of $K$."
 
-Hilbert's 12th Problem asks for explicit generators of abelian extensions of arbitrary number fields, generalizing the Kronecker–Weber theorem (which provides cyclotomic generators for abelian extensions of ℚ). Despite more than a century of effort, the problem remains open for general number fields.
+This paper is organized around a single organizing principle: an abelian reciprocity isomorphism does more than match two objects set-theoretically; it forces their numerical and structural invariants to coincide. We exploit this principle twice.
 
-Class field theory, developed by Takagi, Artin, and others in the early 20th century, provides an abstract classification of abelian extensions in terms of class groups and ideal-theoretic data. However, it does not produce *explicit* generators — it tells us that extensions exist and characterizes their Galois groups, but does not provide the polynomial equations or special values that generate them.
+1. Over $\mathbb{Q}$, the Artin reciprocity isomorphism
+   $$\rho_n : (\mathbb{Z}/n\mathbb{Z})^\times \xrightarrow{\ \sim\ } \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$$
+   determines the order and cyclic type of the cyclotomic Galois group (Section 3).
 
-### 1.2 Our Contribution
+2. Over an arbitrary number field $K$, the higher reciprocity isomorphism
+   $$\mathrm{Gal}(H/K)\xrightarrow{\ \sim\ }\mathrm{Cl}(\mathcal{O}_K)$$
+   characterizing the Hilbert class field $H$ determines the degree $[H:K]$ (Section 4).
 
-We take a new approach: rather than attempting to solve Hilbert's 12th Problem directly, we formalize the *structural architecture* that any solution must satisfy. Our framework:
+The results are elementary given the reciprocity isomorphisms, but their point is methodological: they are the reusable numerical lemmas — degree $=\varphi(n)$, prime-case cyclicity, degree $=$ class number — on which downstream conductor, ramification, and tower computations rest.
 
-1. **Defines** precise interfaces (`ExplicitClassFieldDatum`, `HilbertClassFieldWitness`) capturing the essential content of class field theory without requiring the full number-theoretic machinery.
+## 2. Definitions and background
 
-2. **Proves** structural theorems showing how class group data constrains extension candidates, with particular attention to the representation-theoretic consequences.
+Throughout, $n$ denotes a positive integer and $\zeta_n$ a primitive $n$-th root of unity.
 
-3. **Implements** verified algorithms that compute concrete instances of the theoretical constructions.
+**Definition 2.1 (Cyclotomic field).** The $n$-th *cyclotomic field* is $\mathbb{Q}(\zeta_n)$, the smallest subfield of $\mathbb{C}$ containing $\mathbb{Q}$ and $\zeta_n$. It is a Galois extension of $\mathbb{Q}$.
 
-4. **Tests** conjectures arising from the framework on computational examples.
+**Definition 2.2 (Galois group).** For a finite Galois extension $L/K$, the *Galois group* $\mathrm{Gal}(L/K)$ is the group of field automorphisms of $L$ fixing $K$ pointwise, under composition. Its cardinality equals the degree $[L:K] = \dim_K L$.
 
-All proofs are machine-checked in Lean 4 using Mathlib, ensuring correctness beyond what human peer review can guarantee.
+**Definition 2.3 (Euler totient).** For $n\ge 1$, $\varphi(n) = \#\{\,k : 1\le k\le n,\ \gcd(k,n)=1\,\} = \#(\mathbb{Z}/n\mathbb{Z})^\times$.
 
-### 1.3 Related Work
+**Definition 2.4 (Cyclic group).** A finite group $G$ is *cyclic* if there exists $g\in G$ with $G = \{g^0,g^1,\dots\}$; equivalently $G\cong \mathbb{Z}/|G|\mathbb{Z}$.
 
-The formalization of algebraic number theory in proof assistants has progressed significantly in recent years. Mathlib contains substantial infrastructure for commutative algebra, including Dedekind domains, fractional ideals, and class groups. However, the *explicit* generation problem — connecting class group data to concrete extension generators — has not been formalized.
+**Definition 2.5 (Ring of integers, ideal class group, class number).** For a number field $K$, let $\mathcal{O}_K$ be its ring of integers (the integral closure of $\mathbb{Z}$ in $K$). The *ideal class group* $\mathrm{Cl}(\mathcal{O}_K)$ is the quotient of the group of nonzero fractional ideals by the subgroup of principal fractional ideals; it is a finite abelian group. The *class number* is $h_K = \#\,\mathrm{Cl}(\mathcal{O}_K)$. One has $h_K = 1$ if and only if $\mathcal{O}_K$ is a principal ideal domain, i.e. factorization into primes is unique.
 
-On the representation theory side, Mathlib provides group actions, permutation representations, and basic character theory. Our work connects these two domains by showing that class field data canonically produces representation-theoretic objects.
+**Definition 2.6 (Hilbert class field).** The *Hilbert class field* $H$ of $K$ is the maximal unramified abelian extension of $K$. It is the canonical first target of explicit class field theory; its defining property is the Artin reciprocity isomorphism
+$$\mathrm{Gal}(H/K)\cong \mathrm{Cl}(\mathcal{O}_K).$$
 
-## 2. Definitions
+## 3. The cyclotomic case over $\mathbb{Q}$
 
-### 2.1 Explicit Class Field Datum
+The foundation for this section is the abelian reciprocity isomorphism over the rationals.
 
-```
-structure ExplicitClassFieldDatum (R : Type*) [CommRing R] where
-  Cl : Type*
-  [instFintypeCl : Fintype Cl]
-  [instDecidableEqCl : DecidableEq Cl]
-  classMap : Ideal R → Cl
-  principal_trivial : ∀ I : Ideal R, I.IsPrincipal → classMap I = classMap ⊥
-  surjective_classMap : Function.Surjective classMap
-```
+**Reciprocity datum 3.1 (Artin reciprocity over $\mathbb{Q}$).** For every modulus $n$ there is a canonical group isomorphism
+$$\rho_n : (\mathbb{Z}/n\mathbb{Z})^\times \xrightarrow{\ \sim\ } \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}),$$
+sending the class of $k$ to the automorphism $\sigma_k : \zeta_n \mapsto \zeta_n^{\,k}$.
 
-This structure captures the essential interface of a class group quotient without requiring the full Dedekind domain / fractional ideal machinery. The type `Cl` models the class group, `classMap` assigns each ideal to its class, `principal_trivial` ensures that principal ideals map to the trivial class, and `surjective_classMap` ensures every class is realized.
+This isomorphism is the concrete $\mathrm{GL}_1$ instance of Artin reciprocity, and it is constructed unconditionally for every $n$. Everything in this section is a transported consequence of $\rho_n$.
 
-**Design rationale.** We use ideals of a commutative ring rather than fractional ideals of a Dedekind domain because: (a) the structural theorems hold at this level of generality; (b) it avoids heavy Mathlib dependencies that would complicate the formalization; and (c) it makes the framework applicable to settings beyond classical number fields.
+### 3.1 The degree equals Euler's totient
 
-### 2.2 Hilbert Class Field Witness
+**Theorem 3.2 (Degree of the cyclotomic extension).** For every $n\ge 1$,
+$$\#\,\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) = \varphi(n),$$
+and hence $[\mathbb{Q}(\zeta_n):\mathbb{Q}] = \varphi(n)$.
 
-```
-structure HilbertClassFieldWitness (K L : Type*) [Field K] [Field L]
-    [Algebra K L] where
-  classGroup : Type*
-  [instFintypeClassGroup : Fintype classGroup]
-  [instDecidableEqClassGroup : DecidableEq classGroup]
-  [instGroupClassGroup : Group classGroup]
-  act : classGroup →* MulAut L
-  fixed_base : ∀ x : L, (∀ c, act c x = x) → ∃ y : K, algebraMap K L y = x
-```
+*Proof sketch.* The isomorphism $\rho_n$ is in particular a bijection of underlying sets, so
+$$\#\,\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) = \#(\mathbb{Z}/n\mathbb{Z})^\times.$$
+By Definition 2.3, $\#(\mathbb{Z}/n\mathbb{Z})^\times = \varphi(n)$. Since the cardinality of the Galois group of a finite Galois extension equals its degree, $[\mathbb{Q}(\zeta_n):\mathbb{Q}] = \varphi(n)$. $\qquad\blacksquare$
 
-This encodes the Galois-theoretic content of class field theory: a field extension L/K equipped with a finite group of automorphisms (modeling the class group) such that the fixed field of the action is exactly K.
+The proof requires only $n\neq 0$ (so that $\mathbb{Q}(\zeta_n)$ is well-defined); no primality is assumed. This recovers the classical statement that the minimal polynomial of $\zeta_n$ — the $n$-th cyclotomic polynomial — has degree $\varphi(n)$, now read off directly from the order of the reciprocity partner rather than from irreducibility arguments.
 
-The `fixed_base` axiom is a formalization of the fundamental theorem of Galois theory: an element fixed by all automorphisms must come from the base field. In classical Galois theory, this is one direction of the Galois correspondence.
+**Examples.** $[\mathbb{Q}(\zeta_5):\mathbb{Q}] = \varphi(5) = 4$; $[\mathbb{Q}(\zeta_{12}):\mathbb{Q}] = \varphi(12) = 4$; $[\mathbb{Q}(\zeta_{1}):\mathbb{Q}] = \varphi(1)=1$; $[\mathbb{Q}(\zeta_{2}):\mathbb{Q}] = \varphi(2)=1$ (since $\zeta_2 = -1$ already lies in $\mathbb{Q}$).
 
-### 2.3 Permutation Orbit
+### 3.2 Prime moduli give cyclic Galois groups
 
-```
-def permOrbit {G α : Type*} [Group G] [Fintype G] [DecidableEq α]
-    (ρ : G →* Equiv.Perm α) (x : α) : Finset α :=
-  Finset.univ.image (fun g => ρ g x)
-```
+**Theorem 3.3 (Cyclicity for prime modulus).** For a prime $p$, the group $\mathrm{Gal}(\mathbb{Q}(\zeta_p)/\mathbb{Q})$ is cyclic.
 
-### 2.4 Regular Class Action
+*Proof sketch.* The multiplicative group of a finite field is cyclic; in particular $(\mathbb{Z}/p\mathbb{Z})^\times = \mathbb{F}_p^\times$ is cyclic. Cyclicity is preserved under group isomorphism, so transporting along $\rho_p$ shows $\mathrm{Gal}(\mathbb{Q}(\zeta_p)/\mathbb{Q})$ is cyclic. $\qquad\blacksquare$
 
-```
-noncomputable def regularClassAction
-    {R : Type*} [CommRing R]
-    (D : ExplicitClassFieldDatum R) [Group D.Cl] :
-    D.Cl →* Equiv.Perm D.Cl :=
-  MulAction.toPermHom D.Cl D.Cl
-```
+**Theorem 3.4 (Order for prime modulus).** For a prime $p$,
+$$\#\,\mathrm{Gal}(\mathbb{Q}(\zeta_p)/\mathbb{Q}) = p - 1.$$
 
-This is the left regular permutation representation, specialized to class field data. It maps each class group element to the permutation defined by left multiplication.
+*Proof sketch.* By Theorem 3.2 the order is $\varphi(p)$, and for a prime $\varphi(p) = p-1$. $\qquad\blacksquare$
 
-## 3. Main Results
+Combining Theorems 3.3 and 3.4: $\mathrm{Gal}(\mathbb{Q}(\zeta_p)/\mathbb{Q})\cong \mathbb{Z}/(p-1)\mathbb{Z}$. A generator corresponds under $\rho_p$ to a *primitive root* modulo $p$.
 
-### 3.1 Theorem 1: Collapse of Trivial Class Groups
+### 3.3 The prime hypothesis is necessary
 
-**Statement.**
-```
-theorem fixedField_eq_base_of_subsingleton_classGroup
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    (H : HilbertClassFieldWitness K L)
-    [Subsingleton H.classGroup] :
-    ∀ x : L, ∃ y : K, algebraMap K L y = x
-```
+**Proposition 3.5 (Cyclicity fails for $n=8$).** $\mathrm{Gal}(\mathbb{Q}(\zeta_8)/\mathbb{Q})$ is not cyclic; it is isomorphic to $\mathbb{Z}/2\mathbb{Z}\times\mathbb{Z}/2\mathbb{Z}$.
 
-**Proof sketch.** Since `H.classGroup` is a subsingleton, every element `c` equals `1`. Therefore `H.act c = H.act 1 = id` (by the monoid homomorphism property). Hence every `x : L` is fixed by every automorphism, and `H.fixed_base` implies `x` descends to `K`.
+*Proof sketch.* Under $\rho_8$ the Galois group is isomorphic to $(\mathbb{Z}/8\mathbb{Z})^\times = \{1,3,5,7\}$. Each element squares to $1$ modulo $8$ ($3^2=9\equiv 1$, $5^2=25\equiv 1$, $7^2=49\equiv 1$), so every non-identity element has order $2$. A cyclic group of order $4$ has an element of order $4$; hence the group is not cyclic and must be the Klein four-group $\mathbb{Z}/2\mathbb{Z}\times\mathbb{Z}/2\mathbb{Z}$. $\qquad\blacksquare$
 
-**Significance.** This formalizes "class number one implies trivial Hilbert class field" — the fundamental arithmetic fact that a number field with unique factorization (i.e., trivial class group) needs no nontrivial abelian extension to "repair" its ideal structure.
+Thus the prime hypothesis in Theorems 3.3–3.4 is load-bearing, not decorative: the structural conclusion "cyclic" is a genuine feature of prime moduli.
 
-### 3.2 Theorem 2: Faithfulness of the Regular Representation
+## 4. The Hilbert class field of a general number field
 
-**Statement.**
-```
-theorem regularClassAction_injective
-    {R : Type*} [CommRing R]
-    (D : ExplicitClassFieldDatum R) [Group D.Cl] :
-    Function.Injective (regularClassAction D)
-```
-
-**Proof sketch.** If `ρ(g) = ρ(h)` as permutations, then for every `x`, `g * x = h * x`. Setting `x = 1`, we get `g = h`. This is Cayley's theorem specialized to our setting.
-
-**Significance.** This creates the first formal bridge from class field data to representation theory. Every class group canonically embeds into a symmetric group, producing a faithful representation. This is the starting point for connecting class field theory to the Langlands program, where abelian extensions correspond to one-dimensional Galois representations.
-
-**Corollary.**
-```
-theorem explicitClassFieldDatum_regular_rep_faithful
-    {R : Type*} [CommRing R]
-    (D : ExplicitClassFieldDatum R) [Group D.Cl] :
-    ∃ ρ : D.Cl →* Equiv.Perm D.Cl, Function.Injective ρ
-```
-
-### 3.3 Theorem 3: Orbit Cardinality Bound
-
-**Statement.**
-```
-theorem orbit_card_le_classGroup_card
-    {R : Type*} [CommRing R]
-    (D : ExplicitClassFieldDatum R) [Group D.Cl]
-    (x : D.Cl) :
-    (permOrbit (regularClassAction D) x).card ≤ Fintype.card D.Cl
-```
-
-**Proof sketch.** The orbit `permOrbit ρ x` is the image of `Finset.univ` under `g ↦ ρ(g)(x)`. By `Finset.card_image_le`, the cardinality of an image is at most that of the source. Since `Finset.card_univ = Fintype.card D.Cl`, the bound follows.
-
-**Significance.** This captures the arithmetic content that the Hilbert class field degree is controlled by the class number: `[H(K) : K] ≤ h(K)`. In fact, class field theory tells us equality holds, but the inequality is the formally tractable direction.
-
-### 3.4 Cross-Domain Theorem: Abelian Commutativity
-
-**Statement.**
-```
-theorem abelian_class_symmetry_commuting
-    {R : Type*} [CommRing R]
-    (D : ExplicitClassFieldDatum R)
-    [CommGroup D.Cl] :
-    ∀ a b : D.Cl,
-      (regularClassAction D) a * (regularClassAction D) b =
-      (regularClassAction D) b * (regularClassAction D) a
-```
-
-**Proof sketch.** Since `regularClassAction` is a monoid homomorphism, `ρ(a) * ρ(b) = ρ(a * b)` and `ρ(b) * ρ(a) = ρ(b * a)`. Since `D.Cl` is a `CommGroup`, `a * b = b * a`.
-
-**Significance.** This theorem creates a formal bridge between class field theory and representation theory. When the class group is abelian (which is always the case for abelian extensions), the permutation operators commute. Commuting operators can be simultaneously diagonalized, yielding one-dimensional eigenspaces — i.e., characters. This is the finite, formal shadow of the fact that abelian reciprocity should produce one-dimensional automorphic data, the starting point of the Langlands correspondence.
-
-### 3.5 Additional Results
-
-**Orbit membership characterization:**
-```
-theorem mem_permOrbit_iff : y ∈ permOrbit (regularClassAction D) x ↔ ∃ g : D.Cl, g * x = y
-```
-
-**Trivial representation for trivial groups:**
-```
-theorem trivial_class_data_gives_trivial_representation
-    [Subsingleton D.Cl] : ∀ c : D.Cl, (regularClassAction D) c = 1
-```
-
-**Class cardinality equals image cardinality:**
-```
-theorem class_card_eq_rep_image_card :
-    Fintype.card D.Cl = Finset.card (Finset.univ.image (regularClassAction D))
-```
-
-**Transitivity of the regular action:**
-```
-theorem permOrbit_one_eq_univ :
-    permOrbit (regularClassAction D) 1 = Finset.univ
-```
-
-## 4. Verified Algorithms
-
-### 4.1 Regular Representation Construction
-
-**Algorithm.** Given a finite group `G` of order `n`:
-1. For each element `g ∈ G`, compute the permutation `σ_g` where `σ_g(x) = g · x`.
-2. Store as an `n × n` array of images.
-
-**Complexity.** Time: O(n²), Space: O(n²).
-
-**Pseudocode:**
-```
-function RegularRepresentation(G):
-    n ← |G|
-    perms ← empty array of size n
-    for g in G.elements:
-        perm ← array of size n
-        for x in G.elements:
-            perm[x] ← G.op(g, x)
-        perms[g] ← perm
-    return perms
-```
+We now take the first structural step beyond the cyclotomic ($\mathrm{GL}_1/\mathbb{Q}$) case. Let $K$ be a number field with ring of integers $\mathcal{O}_K$ and Hilbert class field $H$ (Definition 2.6).
 
-### 4.2 Orbit Computation
+Because the full existence theory of the Hilbert class field — its maximality and unramifiedness — lies deeper than the numerical consequences we seek, we isolate the single property that makes $H$ useful and treat it as an explicit hypothesis: the reciprocity isomorphism.
 
-**Algorithm.** Given permutations `perms` and a starting element `x`:
-1. Initialize `orbit = {x}`, `frontier = [x]`.
-2. While `frontier` is non-empty:
-   a. Pop `current` from `frontier`.
-   b. For each permutation `σ`:
-      - Compute `y = σ(current)`.
-      - If `y ∉ orbit`, add to both `orbit` and `frontier`.
-3. Return `orbit`.
+**Reciprocity datum 4.1 (Artin reciprocity for the Hilbert class field).** There is a group isomorphism
+$$e : \mathrm{Gal}(H/K)\xrightarrow{\ \sim\ }\mathrm{Cl}(\mathcal{O}_K).$$
 
-**Complexity.** Time: O(n · |G|), Space: O(n).
+**Theorem 4.2 (Degree equals class number).** Let $K$ be a number field and $H/K$ a finite Galois extension equipped with a reciprocity isomorphism $e:\mathrm{Gal}(H/K)\cong \mathrm{Cl}(\mathcal{O}_K)$. Then
+$$[H:K] = h_K.$$
 
-### 4.3 Cycle Type Analysis
+*Proof sketch.* For a finite Galois extension the number of automorphisms equals the degree:
+$$\#\,\mathrm{Gal}(H/K) = [H:K].$$
+The isomorphism $e$ is a bijection, so
+$$\#\,\mathrm{Gal}(H/K) = \#\,\mathrm{Cl}(\mathcal{O}_K) = h_K$$
+by Definition 2.5. Chaining the two equalities gives $[H:K] = h_K$. $\qquad\blacksquare$
 
-**Algorithm.** Given a permutation `σ` of `{0, ..., n-1}`:
-1. Initialize `visited` array of size `n`, all false.
-2. For each unvisited `i`:
-   a. Follow `i → σ(i) → σ²(i) → ...` until returning to `i`.
-   b. Record the cycle length.
-3. Return sorted tuple of cycle lengths.
+**Corollary 4.3 (Class number one).** Under the hypotheses of Theorem 4.2, if $h_K = 1$ then $[H:K] = 1$; equivalently, $H = K$.
 
-**Complexity.** Time: O(n), Space: O(n).
+*Proof sketch.* Immediate from $[H:K] = h_K = 1$. $\qquad\blacksquare$
 
-### 4.4 Collapse Detection
+Corollary 4.3 formalizes the maxim that a number field with unique factorization is its own Hilbert class field: it admits no nontrivial unramified abelian extension.
 
-**Algorithm.** Given a finite group `G`:
-1. Compute the regular representation.
-2. Check if every permutation is the identity.
-3. Return `True` if collapsed (class number 1), `False` otherwise.
+### 4.1 Non-vacuity: the rational witness
 
-**Complexity.** Time: O(n²), Space: O(n²).
+A conditional theorem is only as valuable as the certainty that its hypotheses can be met. We exhibit the reciprocity datum concretely in the simplest case.
 
-## 5. Computational Experiments
+**Proposition 4.4 (Rational witness).** For $K = H = \mathbb{Q}$, the reciprocity isomorphism $e$ exists: both $\mathrm{Gal}(\mathbb{Q}/\mathbb{Q})$ and $\mathrm{Cl}(\mathbb{Z})$ are trivial groups, so the unique map between them is an isomorphism. Consequently Theorem 4.2 instantiates to $[\mathbb{Q}:\mathbb{Q}] = h_{\mathbb{Q}} = 1$.
 
-### 5.1 Exhaustive Verification
+*Proof sketch.* The ring of integers of $\mathbb{Q}$ is $\mathbb{Z}$, a principal ideal domain, so $\mathrm{Cl}(\mathbb{Z})$ is trivial and $h_{\mathbb{Q}} = 1$; the class group of $\mathbb{Z}$ has at most one element, hence is a singleton. The Galois group $\mathrm{Gal}(\mathbb{Q}/\mathbb{Q})$ is trivial. Any map between two trivial groups is an isomorphism, providing $e$. Theorem 4.2 then yields $[\mathbb{Q}:\mathbb{Q}] = 1$, consistent with the trivial extension. $\qquad\blacksquare$
 
-We computed the regular representation, verified faithfulness, checked commutativity, and computed orbit bounds for all finite abelian groups of order ≤ 30. Results:
+This witness rules out the failure mode in which the hypotheses of Theorem 4.2 can never be satisfied, and it exhibits Kronecker–Weber's base field $\mathbb{Q}$ as the degenerate corner of the general theory.
 
-| Order | # Groups | All Faithful | All Commuting | All Orbits = |G| |
-|-------|----------|-------------|---------------|---------------|
-| 1     | 1        | ✓           | ✓             | ✓             |
-| 2     | 1        | ✓           | ✓             | ✓             |
-| 4     | 2        | ✓           | ✓             | ✓             |
-| 8     | 3        | ✓           | ✓             | ✓             |
-| 12    | 2        | ✓           | ✓             | ✓             |
-| 16    | 5        | ✓           | ✓             | ✓             |
+## 5. Algorithms
 
-All formally verified theorems are confirmed computationally without exception.
+The reciprocity laws above are constructive and yield direct computational recipes.
 
-### 5.2 Cycle Type Distinguishability
+**Algorithm A (Cyclotomic degree and cyclic type).** Given $n$, compute $\varphi(n)$ by factoring $n = \prod p_i^{a_i}$ and using $\varphi(n) = \prod p_i^{a_i - 1}(p_i - 1)$; this is $[\mathbb{Q}(\zeta_n):\mathbb{Q}]$. The Galois group is cyclic if and only if $n\in\{1,2,4,p^k,2p^k\}$ for an odd prime $p$ (equivalently, $(\mathbb{Z}/n\mathbb{Z})^\times$ is cyclic); in the prime case a generator is found by locating a primitive root modulo $p$.
 
-We tested whether cycle type signatures distinguish non-isomorphic abelian groups:
+**Algorithm B (Hilbert class field degree).** Given a number field $K$, compute $\mathrm{Cl}(\mathcal{O}_K)$ (for example, via Minkowski's bound: every ideal class contains an integral ideal of norm at most the Minkowski bound $M_K$, so enumerate prime ideals of norm $\le M_K$ and their relations). The degree of the Hilbert class field is $[H:K] = h_K$, the size of the resulting group; $H = K$ exactly when $h_K = 1$.
 
-| Order | # Groups | Distinguished? |
-|-------|----------|---------------|
-| 4     | 2        | ✓             |
-| 8     | 3        | ✓             |
-| 9     | 2        | ✓             |
-| 12    | 2        | ✓             |
-| 16    | 5        | ✓             |
-| 24    | 3        | ✓             |
-| 25    | 2        | ✓             |
-| 27    | 3        | ✓             |
+## 6. Applications
 
-All tested cases show that cycle type signatures distinguish non-isomorphic abelian groups.
+- **Degree computations.** Theorem 3.2 provides degrees of cyclotomic extensions purely arithmetically, and Theorem 4.2 provides degrees of Hilbert class fields from class-number data — no explicit generators of the extensions are needed.
+- **Detecting unique factorization.** Corollary 4.3 links a field-theoretic invariant ($[H:K]$) to a purely arithmetic one ($h_K$); a nontrivial Hilbert class field is a certificate that unique factorization fails in $K$.
+- **Primitive roots and generators.** Theorem 3.3 identifies generators of prime cyclotomic Galois groups with primitive roots modulo $p$, tying field automorphisms to elementary number theory.
 
-### 5.3 Class Number Simulation
+## 7. Discussion
 
-We simulated known class groups of imaginary quadratic fields:
+The results here are individually elementary once the reciprocity isomorphisms are granted, but collectively they illustrate the core mechanism of explicit class field theory: reciprocity transports arithmetic invariants ($\varphi(n)$, cyclicity, the class number) onto structural invariants of field extensions (degree, Galois type). This is the abelian, $\mathrm{GL}_1$ layer of the Langlands program, where the correspondence is fully understood and unconditional over $\mathbb{Q}$.
 
-| Field       | Class Group | h  | Collapsed? |
-|-------------|------------|----|------------|
-| ℚ(√-1)     | trivial    | 1  | ✓          |
-| ℚ(√-2)     | trivial    | 1  | ✓          |
-| ℚ(√-3)     | trivial    | 1  | ✓          |
-| ℚ(√-5)     | ℤ/2        | 2  | ✗          |
-| ℚ(√-23)    | ℤ/3        | 3  | ✗          |
-| ℚ(√-84)    | ℤ/2 × ℤ/2 | 4  | ✗          |
+The Hilbert class field marks the genuine departure from Kronecker–Weber. Over $\mathbb{Q}$ the reciprocity partner is the concrete group $(\mathbb{Z}/n\mathbb{Z})^\times$; over a general $K$ it is the ideal class group, an invariant sensitive to the failure of unique factorization. The degree law $[H:K] = h_K$ is the precise analogue of $[\mathbb{Q}(\zeta_n):\mathbb{Q}] = \varphi(n)$ one level up in generality.
 
-The collapse theorem correctly identifies class-number-one fields.
+## 8. Future directions
 
-## 6. Discussion
+*Conductor duality for cyclotomic subfields.* Every abelian extension of $\mathbb{Q}$ has a smallest cyclotomic field containing it, and the modulus of that field — the conductor — is a computable arithmetic invariant equal to the least common multiple of the ramified primes' contributions. The subfield lattice of a cyclotomic field is in order-reversing bijection with the subgroup lattice of a finite abelian group, so the conductor is forced by group-theoretic index rather than by any transcendental input.
 
-### 6.1 Relation to Classical Class Field Theory
+*Class-number rigidity of the Hilbert tower.* For a number field of class number greater than one, the Hilbert class field again has its own class number; iterating produces a tower whose successive degrees are class numbers. The degree-equals-class-number law converts a qualitative tower into a sequence of exactly computable integers.
 
-Our framework captures the *structural skeleton* of class field theory: the passage from class group data to extension constraints. It does not formalize the full Artin reciprocity map or the existence theorem, which require substantially more infrastructure (adeles, ideles, profinite completions). However, the structural theorems we prove are universal consequences of *any* instantiation of the class field theory paradigm, and they hold at a level of generality that subsumes the classical setting.
+*Prime-cyclicity transfer to real subfields.* For each prime $p$, the maximal real subfield of $\mathbb{Q}(\zeta_p)$ is a cyclic extension of $\mathbb{Q}$ of degree $(p-1)/2$, being the unique index-two quotient of the full cyclotomic Galois group. Cyclicity descends to quotients, so the real subfield inherits an explicit cyclic generator.
 
-### 6.2 Limitations
+*Complex-multiplication analogue of Kronecker–Weber.* For an imaginary quadratic field, the abelian extensions are generated not by roots of unity but by special values of modular and elliptic functions (the theory of complex multiplication) — the archetypal solved case of Hilbert's twelfth problem beyond $\mathbb{Q}$.
 
-1. **No explicit generators.** Our framework characterizes the *constraints* that explicit generators must satisfy, but does not produce the generators themselves. The actual computation of generators (via CM theory, Stark units, or other methods) remains beyond the current formalization.
+## 9. Conclusion
 
-2. **Finite groups only.** The framework handles finite class groups but does not extend to profinite groups or adelic class groups, which are needed for the full class field theory.
-
-3. **No ramification theory.** We do not formalize ramification or conductor conditions, which are essential for ray class field theory.
-
-### 6.3 Axiom Usage
-
-All theorems depend only on the standard Lean 4 axioms: `propext`, `Classical.choice`, and `Quot.sound`. No additional axioms, `sorry` statements, or `@[implemented_by]` annotations are used.
-
-## 7. Future Work
-
-1. **Ray class field extensions.** Extend `ExplicitClassFieldDatum` to include modulus/conductor data, modeling ray class groups rather than just the full class group.
-
-2. **Profinite completion.** Connect the finite framework to profinite limits, enabling the formalization of infinite class field theory.
-
-3. **Explicit CM theory.** For imaginary quadratic fields, formalize the connection between class invariants (j-invariants, Weber functions) and the class group action.
-
-4. **Langlands interface.** Formalize the passage from faithful permutation representations to linear representations over ℂ, connecting class field data to automorphic forms.
-
-5. **Cycle type conjecture.** Prove or disprove that cycle type signatures distinguish all non-isomorphic finite abelian groups.
-
-## 8. References
-
-1. D. Hilbert, "Mathematische Probleme," Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, 1900.
-2. E. Artin, "Über eine neue Art von L-Reihen," Abhandlungen aus dem Mathematischen Seminar der Universität Hamburg, 1923.
-3. J. Neukirch, *Algebraic Number Theory*, Springer, 1999.
-4. J.S. Milne, *Class Field Theory*, available at www.jmilne.org, 2020.
-5. The mathlib Community, "Mathlib: a unified library of mathematics formalized in Lean," available at https://github.com/leanprover-community/mathlib4.
-6. D. Cox, *Primes of the Form x² + ny²*, Wiley, 2013.
+Starting from the abelian reciprocity isomorphisms, we extracted the exact numerical invariants of the objects they govern: the degree of a cyclotomic field is Euler's totient, prime moduli yield cyclic Galois groups of order $p-1$ (and the prime hypothesis is necessary, as $n=8$ shows), and the degree of a Hilbert class field equals the class number, collapsing to a trivial extension exactly when factorization is unique. Together these are the numerical fingerprints of explicit class field theory and concrete steps toward Hilbert's twelfth problem.
