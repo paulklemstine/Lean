@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "de67cc2c",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0047",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T19:55:56.520428+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
@@ -843,7 +829,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the Greenberg\u2013Wiles local lower bound for \u2113\u2011Selmer groups in constant\u2011torsion families"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9a53679",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/\u2113^m gives rise to a continuous semisimple Galois representation r : G_F \u2192 GL_n(Z_\u2113) which is de Rham at places v|\u2113, with Hodge\u2013Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered \u03c6\u2011module via Fontaine's functor corresponds under the p\u2011adic local Langlands correspondence to the automorphic component \u03c0_v.",
     "domains": [
       "Algebra",
@@ -853,7 +839,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = \u2113 for GL_n over CM fields"
   },
@@ -1151,12 +1137,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The generalized honeymoon Oberwolfach problem asks whether n couples can be seated over several nights at s tables of size 2 and t round tables of sizes 2m_1,...,2m_t (with n = s + \u2211 m_i) such that each person sits next to their spouse every night and next to every other person exactly once. The paper solves the case t=1, proving that the obvious necessary condition (\u2211 m_i divides 2n(n-1)) is sufficient. This conjecture extends the result to t \u2265 2, claiming that the same divisibility condition is also sufficient for any number of round tables.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0086",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01130v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:24:44.021492+00:00",
+    "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Assuming the Extended Riemann Hypothesis, for a fixed elliptic curve E over a number field K with good ordinary reduction at p, the natural density of p\u2011cyclic extensions L/K (ordered by the product of ramified primes) such that the Mordell\u2011Weil rank of E over L exceeds the rank over K by exactly r equals (1/p)*(1\u22121/p)^r for every integer r \u2265 0.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0086",
+    "id": "fd_0087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1171,7 +1171,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0087",
+    "id": "fd_0088",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1185,13 +1185,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0088",
+    "id": "fd_0089",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
     "status": "available",
     "timestamp": "2026-07-02T21:00:13.229045+00:00",
     "title": "On a conjecture of Andrews concerning alternating sign patterns in q-series"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime p, let G be a pro\u2011p Demushkin group. We conjecture that the differential graded algebra of continuous cochains \u0394b(G, \u04bcf_p) is A\u2083\u2011formal if and only if the Benson\u2011Krause\u2011Schwede canonical class c_G \u2208 Ext\u00b3(\u04bcf_p, \u04bcf_p[G]) vanishes. Moreover, using the classification of Demushkin groups (parameters (p,q)), we expect c_G to be non\u2011trivial precisely in the families with invariant q = 3, providing a concrete obstruction to A\u2083\u2011formality. This extends the proven result for pro\u20112 Demushkin groups to all odd primes.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0090",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01028v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:25:19.587863+00:00",
+    "title": "A Conjecture on A\u2083\u2011formality for pro\u2011p Demushkin groups (extension beyond 2)"
   },
   {
     "consumed_by_exp_id": "",

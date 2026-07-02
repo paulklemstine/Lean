@@ -1,24 +1,5 @@
 [
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "de67cc2c",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0047",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T19:55:56.520428+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -1460,7 +1441,7 @@
       "math.NT",
       "math.RT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9a53679",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/ℓ^m gives rise to a continuous semisimple Galois representation r : G_F → GL_n(Z_ℓ) which is de Rham at places v|ℓ, with Hodge–Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered φ‑module via Fontaine's functor corresponds under the p‑adic local Langlands correspondence to the automorphic component π_v.",
     "domain_bridges": [
       "Representation Theory",
@@ -1477,7 +1458,7 @@
     "proof_strategy": "Extend Scholze's construction of automorphic determinants to Z_ℓ-coefficients, use the comparison isomorphism between étale and de Rham cohomology (via p-adic Hodge theory) to obtain de Rham Galois representations, then apply the p-adic local Langlands correspondence for GL_n over local fields to match the local Langlands parameter at places dividing ℓ with the automorphic data.",
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = ℓ for GL_n over CM fields"
   },
@@ -2009,6 +1990,32 @@
     "title": "Conjecture on explicit closed form for (p,q)-deformed s-rook numbers on staircase boards"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Akbari26",
+      "LDMSaj"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The generalized honeymoon Oberwolfach problem asks whether n couples can be seated over several nights at s tables of size 2 and t round tables of sizes 2m_1,...,2m_t (with n = s + ∑ m_i) such that each person sits next to their spouse every night and next to every other person exactly once. The paper solves the case t=1, proving that the obvious necessary condition (∑ m_i divides 2n(n-1)) is sufficient. This conjecture extends the result to t ≥ 2, claiming that the same divisibility condition is also sufficient for any number of round tables.",
+    "domain_bridges": [
+      "graph theory",
+      "design theory",
+      "combinatorial optimization"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0086",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the equivalence between HOP solutions and HOP decompositions of 4K_n^•. Develop a general construction method for HOP (C_{m_1},...,C_{m_t})-decompositions of 4K_n^• using starter cycles, factorizations, and amalgamation techniques, extending the methods used for t=1. Leverage the existence of HOP C_m-factorizations for 4K_m^• (m even) and 4K_{2m}^• (m odd) as building blocks. Handle small exceptional cases by computer search.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01130v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:24:44.021492+00:00",
+    "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.NT:2405.12345"
@@ -2023,7 +2030,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0086",
+    "id": "fd_0087",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Translate the condition on rank growth into a condition on the dimension of the 1‑eigenspace of the p‑Selmer group under the Galois action of L/K. Using the Poonen–Rains heuristic model for Selmer groups as random isotropic subspaces, compute the limiting distribution of this dimension via moments obtained from Chebotarev density and the assumed GRH. Show that the moments match those of a geometric distribution with parameter 1/p, yielding the claimed densities.",
@@ -2051,7 +2058,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0087",
+    "id": "fd_0088",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "homological obstruction test via reduced homology concentration",
@@ -2077,7 +2084,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0088",
+    "id": "fd_0089",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "construction plus analytic estimation",
@@ -2086,6 +2093,41 @@
     "status": "available",
     "timestamp": "2026-07-02T21:00:13.229045+00:00",
     "title": "On a conjecture of Andrews concerning alternating sign patterns in q-series"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2403.xxxxx (A_3‑formality for pro‑2 Demushkin groups)",
+      "Benson, Krause, and Schwede, \"The canonical class of a finite group algebra\" (2005)",
+      "Demushkin, Serre, and Labute, classification of pro‑p Demushkin groups (1973–1975)",
+      "Hopkins‑Wickelgren, \"Vanishing triple Massey products\" (2020)",
+      "Positselski, \"On the rationality of certain group algebras\" (2015)",
+      "Harpaz‑Wittenberg, \"On the formality of cochain algebras\" (2022)",
+      "Merkurjev‑Scavia, \"Massey products and formality\" (2022, 2023)",
+      "GMT (Garkusha‑Meltzer‑Toännesen), \"Formality of cochains\" (2023)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime p, let G be a pro‑p Demushkin group. We conjecture that the differential graded algebra of continuous cochains Δb(G, Ҽf_p) is A₃‑formal if and only if the Benson‑Krause‑Schwede canonical class c_G ∈ Ext³(Ҽf_p, Ҽf_p[G]) vanishes. Moreover, using the classification of Demushkin groups (parameters (p,q)), we expect c_G to be non‑trivial precisely in the families with invariant q = 3, providing a concrete obstruction to A₃‑formality. This extends the proven result for pro‑2 Demushkin groups to all odd primes.",
+    "domain_bridges": [
+      "Massey products",
+      "Benson‑Krause‑Schwede canonical class",
+      "Demushkin group classification",
+      "higher algebra formalizations in Lean",
+      "pro‑p groups"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0090",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Review the classification of pro‑p Demushkin groups via parameters (p,q) and recall the description of H²(G,Ҽf_p) and cup‑product structure. 2. Compute the canonical class c_G in Ext³(Ҽf_p, Ҽf_p[G]) using the known minimal model of Δb(G,Ҽf_p) and the Benson‑Krause‑Schwede construction. 3. Show that c_G = 0 whenever q ≠ 3 (by direct algebraic computation and comparison with known vanishing results for triple Massey products). 4. For q = 3, compute c_G explicitly and exhibit a non‑zero Massey product, establishing that c_G ≠ 0 and thus m₃ ≠ 0 in the minimal model. 5. Formalize the algebraic steps and the equivalence between vanishing of c_G and A₃‑formality in a proof assistant, reducing the problem to elementary Grühenfeld calculations and Massey product manipulations.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01028v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:25:19.587863+00:00",
+    "title": "A Conjecture on A₃‑formality for pro‑p Demushkin groups (extension beyond 2)"
   },
   {
     "ambition_level": "extension",

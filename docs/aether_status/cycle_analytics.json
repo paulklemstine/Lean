@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-02T20:59:17.927778+00:00",
+  "last_updated": "2026-07-02T21:18:56.241071+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -28296,6 +28296,35 @@
       "theorem_novelty_new": 413,
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-02T20:59:17.847258+00:00",
+      "title": "Prove Fermats Little Theorem for p=5"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 61,
+      "domain": "Algebra",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "de67cc2c",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783022164.4786372,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-02T21:18:56.196904+00:00",
       "title": "Prove Fermats Little Theorem for p=5"
     }
   ]
