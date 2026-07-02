@@ -1,239 +1,449 @@
-# Quantum Surreal Numbers: Probability Defects in Non-Archimedean Quantum States
+# Superposition over Non-Archimedean Value Fields: The Standard Part as a Measurement Rule
 
 ## Abstract
 
-We develop a rigorous mathematical framework for quantum states over non-Archimedean graded basis sets, modeling the interaction between quantum superposition and infinitesimal structure. By partitioning a quantum state's basis into an observable sector and an infinitesimal sector — inspired by the scale structure of Conway's surreal numbers — we derive a probability conservation law that splits the Born rule into observable and "dark" components. We prove that the observable probability is always at most 1, with equality precisely when all infinitesimal amplitudes vanish. We establish measurement theory for Boolean projections, including a post-measurement normalization theorem, and prove both full and sector-restricted versions of the Cauchy-Schwarz inequality. All results have been formally verified in the Lean 4 proof assistant with the Mathlib library.
+We study finite superpositions whose amplitudes are drawn from a non-Archimedean
+ordered field — an ordered field extending the real numbers and containing
+nonzero infinitesimals, the setting exemplified by Conway's surreal numbers.
+Assigning to each branch its Born weight $w_i = \alpha_i^2 / \sum_j \alpha_j^2$
+produces a family of weights that sum to $1$ *exactly* in the field, but whose
+individual entries may be infinitesimal. We propose the **standard part** of the
+Born weight, $p_i = \mathrm{st}(w_i)$, as the rule governing what an observer
+records, and we prove that it constitutes a coherent theory of measurement. Under
+the natural hypotheses that all amplitudes are limited and the total weight is
+appreciable, the observed probabilities are nonnegative, sum to $1$, are additive
+over disjoint families of branches, and — decisively — assign probability
+exactly $0$ to any branch of infinitesimal amplitude. Thus a branch may carry a
+strictly positive weight in the exact ledger while being observationally
+invisible. We show the same collapse arises in a purely classical
+lexicographic-probability model, where the standard part reduces to projection
+onto the leading (primary) layer, and we outline a hierarchy of visibility levels
+indexed by infinitesimal order. The framework gives infinitesimal probabilities a
+rigorous, conservative treatment: they are retained exactly in computation and
+resolved only at the moment of observation.
 
-**Keywords:** Quantum mechanics, surreal numbers, non-Archimedean fields, Born rule, probability defect, projection operators, spectral theory
+**Keywords:** non-Archimedean field, infinitesimal, standard part, Born rule,
+superposition, surreal numbers, lexicographic probability, quantum measurement,
+finitely additive measure, orders of magnitude.
+
+---
 
 ## 1. Introduction
 
-Conway's surreal numbers [Conway, 1976] constitute the largest ordered field, containing the real numbers, ordinal numbers, and a rich hierarchy of infinitesimals and infinite elements. Despite their foundational significance, surreal numbers have seen limited application to physics. We propose that the scale structure of surreal numbers — specifically, the partition of surreal elements into standard (observable) and nonstandard (infinitesimal) components — provides a natural framework for studying quantum systems with multi-scale structure.
-
-The key observation is simple: if a quantum state's basis elements are labeled by surreal numbers, then some basis states may correspond to infinitesimal values. The Born rule probability of observing such a state — the square of its amplitude — may itself be infinitesimal, hence unobservable under the standard part map. This creates a "probability defect": the total observable probability falls short of 1 by exactly the amount of probability hiding in infinitesimal modes.
-
-This paper formalizes this observation and develops its consequences. We work axiomatically, abstracting the essential features of the surreal scale structure into a simple partition (the `ScaleDecomp` structure) and deriving results that hold for any finite-dimensional quantum system equipped with such a partition.
-
-## 2. Definitions and Setup
-
-### 2.1 Quantum States
-
-**Definition 2.1** (QState). A *quantum state* on `Fin n` is a function `amp : Fin n → ℝ` satisfying the Born rule normalization:
-
-$$\sum_{i=0}^{n-1} |\alpha_i|^2 = 1$$
-
-We work with real amplitudes for simplicity; the complex case follows by treating real and imaginary parts separately.
-
-### 2.2 Scale Decomposition
-
-**Definition 2.2** (ScaleDecomp). A *scale decomposition* on `Fin n` is a Boolean function `isObservable : Fin n → Bool` that partitions the basis into:
-- The *observable set* `obsSet = {i : isObservable(i) = true}`
-- The *infinitesimal set* `infSet = {i : isObservable(i) = false}`
-
-This models the key structure of surreal numbers: each basis element has a "scale" determining whether it contributes to observable physics (finite surreal values) or hides in the infinitesimal sector.
-
-### 2.3 Sector Probabilities
-
-**Definition 2.3**. The *observable probability* of a state ψ under decomposition s is:
-
-$$P_{\text{obs}}(\psi, s) = \sum_{i \in \text{obsSet}} |\alpha_i|^2$$
-
-The *infinitesimal probability* is:
-
-$$P_{\text{inf}}(\psi, s) = \sum_{i \in \text{infSet}} |\alpha_i|^2$$
-
-The *probability defect* is:
-
-$$\delta(\psi, s) = 1 - P_{\text{obs}}(\psi, s)$$
-
-### 2.4 Boolean Projections
-
-**Definition 2.4** (BoolProjection). A *Boolean projection* on `Fin n` is a function `keep : Fin n → Bool`. Its action on a state is:
-
-$$(P\psi)_i = \begin{cases} \alpha_i & \text{if } \text{keep}(i) = \text{true} \\ 0 & \text{otherwise} \end{cases}$$
-
-The *complement* of P is the projection with `keep' = ¬keep`.
-
-## 3. Main Results
-
-### 3.1 Probability Conservation (Theorem 1)
-
-**Theorem 3.1** (prob_conservation). *For any quantum state ψ and scale decomposition s:*
-
-$$P_{\text{obs}}(\psi, s) + P_{\text{inf}}(\psi, s) = 1$$
-
-*Proof sketch.* The observable and infinitesimal sets are disjoint (by construction) and their union is the full basis `Fin n`. Therefore:
-
-$$P_{\text{obs}} + P_{\text{inf}} = \sum_{i \in \text{obsSet}} |\alpha_i|^2 + \sum_{i \in \text{infSet}} |\alpha_i|^2 = \sum_{i \in \text{obsSet} \cup \text{infSet}} |\alpha_i|^2 = \sum_{i} |\alpha_i|^2 = 1$$
-
-The formal proof uses `Finset.sum_union` with the disjointness hypothesis `obs_inf_disjoint` and the covering hypothesis `obs_inf_union`. □
-
-### 3.2 Observable Probability Bound (Theorem 2)
-
-**Theorem 3.2** (observable_prob_le_one). *For any quantum state ψ and scale decomposition s:*
-
-$$P_{\text{obs}}(\psi, s) \leq 1$$
-
-*Proof.* Immediate from Theorem 3.1 and non-negativity of P_inf. □
-
-### 3.3 Characterization of Fully Observable States (Theorem 3)
-
-**Theorem 3.3** (observable_eq_one_iff_no_infinitesimal). *The following are equivalent:*
-1. $P_{\text{obs}}(\psi, s) = 1$
-2. $\forall i,\ \text{isObservable}(i) = \text{false} \implies \alpha_i = 0$
-
-*Proof sketch.* (1⇒2): If P_obs = 1, then P_inf = 0 by conservation. Since P_inf is a sum of non-negative terms (squares) equaling zero, each term is zero, hence each infinitesimal amplitude vanishes. (2⇒1): If all infinitesimal amplitudes are zero, then P_inf = 0, so P_obs = 1 by conservation. □
-
-This theorem provides the sharp criterion for when the probability defect vanishes. It formalizes the physical intuition that infinitesimal modes are "quantum dark matter" — they exist mathematically but contribute nothing to observable predictions.
-
-### 3.4 Complementary Projection Completeness (Theorem 4)
-
-**Theorem 3.4** (born_rule_complementary). *For any Boolean projection P and quantum state ψ:*
-
-$$\Pr[P|\psi] + \Pr[\bar{P}|\psi] = 1$$
-
-*Proof sketch.* For each basis element i, either keep(i) = true (contributing α_i² to the first term and 0 to the second) or keep(i) = false (contributing 0 to the first and α_i² to the second). Summing over all i gives ∑ α_i² = 1. □
-
-### 3.5 Post-Measurement Normalization (Theorem 5)
-
-**Theorem 3.5** (post_measurement_normalized). *If P is a Boolean projection with Pr[P|ψ] > 0, then the post-measurement state*
-
-$$\psi'_i = \frac{(P\psi)_i}{\sqrt{\sum_j |(P\psi)_j|^2}}$$
-
-*satisfies ∑ |ψ'_i|² = 1.*
-
-*Proof.* Factor out 1/√(norm²) from the sum, use the fact that (√x)² = x for x ≥ 0, and simplify to norm²/norm² = 1. □
-
-This theorem validates the projection postulate of quantum mechanics within our framework.
-
-### 3.6 Cauchy-Schwarz for Quantum States (Theorem 6)
-
-**Theorem 3.6** (quantum_cauchy_schwarz). *For any two quantum states ψ, φ:*
-
-$$\langle\psi|\phi\rangle^2 \leq 1$$
-
-*Proof.* By the classical Cauchy-Schwarz inequality for finite sums (Finset.sum_mul_sq_le_sq_mul_sq in Mathlib):
-
-$$\left(\sum_i \alpha_i \beta_i\right)^2 \leq \left(\sum_i \alpha_i^2\right)\left(\sum_i \beta_i^2\right) = 1 \cdot 1 = 1$$
-
-□
-
-### 3.7 Observable Cauchy-Schwarz (Theorem 7)
-
-**Theorem 3.7** (obs_cauchy_schwarz). *For any two quantum states ψ, φ and scale decomposition s:*
-
-$$\langle\psi|\phi\rangle_{\text{obs}}^2 \leq P_{\text{obs}}(\psi, s) \cdot P_{\text{obs}}(\phi, s)$$
-
-*Proof.* Apply Cauchy-Schwarz restricted to the observable sector. □
-
-This is perhaps the most physically interesting result. It says that the observable distinguishability of two quantum states is bounded not just by 1 (as in the full Cauchy-Schwarz inequality) but by the product of their observable probabilities. States with large probability defects are harder to distinguish observationally.
-
-## 4. The Probability Defect
-
-### 4.1 Defect Equals Infinitesimal Probability
-
-**Theorem 4.1** (prob_defect_eq_infinitesimal). $\delta(\psi, s) = P_{\text{inf}}(\psi, s)$.
-
-This follows immediately from probability conservation.
-
-### 4.2 Defect Characterization
-
-**Theorem 4.2** (prob_defect_zero_iff). $\delta(\psi, s) = 0$ if and only if all infinitesimal amplitudes vanish.
-
-This follows from Theorem 3.3.
-
-### 4.3 Physical Interpretation
-
-The probability defect has a natural physical interpretation. Consider a quantum system where basis states are labeled by surreal numbers, and the scale decomposition separates standard from infinitesimal values. The defect δ measures the total probability "hiding" in states with infinitesimal labels. Since the standard part of an infinitesimal is zero, this probability is invisible to any finite-precision measurement.
-
-This connects to several ideas in mathematical physics:
-
-1. **Renormalization**: In quantum field theory, infinities arise from summing over all momentum modes. The scale decomposition provides a rigorous framework for separating "relevant" (finite) from "irrelevant" (infinitesimal/infinite) modes.
-
-2. **Decoherence**: Environmental decoherence effectively projects a quantum state onto a preferred basis. In the surreal framework, the "preferred basis" is naturally the observable sector.
-
-3. **The measurement problem**: The inability to observe infinitesimal probabilities provides a mathematical mechanism for why certain quantum outcomes never occur — not because they're forbidden, but because they're infinitesimally unlikely.
-
-## 5. Connections to Existing Work
-
-### 5.1 Hyperreal Probability
-
-Benci et al. [2013] developed a theory of non-Archimedean probability using the hyperreal numbers. Our framework differs in using surreal numbers (which contain the hyperreals) and in focusing on the quantum-mechanical setting (normalized states, projections, measurement).
-
-### 5.2 Non-standard Quantum Mechanics
-
-Albeverio et al. [1986] applied nonstandard analysis to quantum mechanics, using hyperreal amplitudes in path integrals. Our approach is complementary: rather than making the amplitudes nonstandard, we make the *basis labels* nonstandard and study the consequences for observable probability.
-
-### 5.3 Surreal Analysis
-
-Recent work by Ehrlich [2012] and others has developed analysis on surreal numbers, including integration and exponential functions. A natural extension of our work would be to define surreal-valued inner products and study the resulting Hilbert space structure.
-
-## 6. Open Questions and Conjectures
-
-### 6.1 Spectral Theorem for Surreal Operators
-
-**Conjecture 6.1**. Every self-adjoint operator on a finite-dimensional quantum surreal Hilbert space admits a spectral decomposition with surreal eigenvalues:
-
-$$A = \sum_\lambda \lambda \cdot P_\lambda$$
-
-where the sum ranges over surreal eigenvalues and P_λ are projection operators.
-
-**Test**: Construct a 2×2 self-adjoint matrix with one real and one infinitesimal eigenvalue. Verify that the spectral decomposition separates observable and infinitesimal sectors.
-
-### 6.2 Entanglement and Dark Probability
-
-**Conjecture 6.2**. In a bipartite system with dark probability, the entanglement entropy of the observable sector is strictly less than the total entanglement entropy.
-
-### 6.3 Dynamics
-
-**Question**: Does there exist a natural unitary dynamics on quantum surreal states that preserves the scale decomposition? If so, the probability defect would be a conserved quantity — a new kind of quantum number.
+The Born rule assigns to a superposition $|\psi\rangle = \sum_i \alpha_i |s_i\rangle$
+the outcome probabilities $p_i \propto \alpha_i^2$. Classically the amplitudes
+$\alpha_i$ are real (or complex) and the normalization $\sum_i p_i = 1$ is an
+ordinary real identity. This paper asks what happens when the amplitudes are
+allowed to range over a strictly larger ordered field — one containing genuine
+infinitesimals. Such fields arise naturally: Conway's surreal numbers form the
+largest ordered field and contain, alongside every real number, an entire scale
+of infinities and infinitesimals; the hyperreals of nonstandard analysis and the
+Levi-Civita field provide equally serviceable homes for the infinitely small.
+
+The motivating puzzle is the status of an *infinitesimally weighted branch*. In
+the exact arithmetic of the field, such a branch has a positive, nonzero weight,
+and the total probability is conserved exactly. Yet no finite experiment can
+distinguish an infinitesimal chance from zero. We resolve the tension with the
+**standard part** map, the canonical ring homomorphism sending each limited field
+element to the unique real number infinitesimally close to it. Applying it to the
+Born weights yields observed probabilities that (i) reproduce ordinary
+probability theory on the visible branches and (ii) annihilate every infinitesimal
+branch, all while the underlying exact normalization is preserved. Infinitesimal
+possibilities are thus *real in the ledger and invisible in the world*.
+
+Our contributions are:
+
+1. A precise definition of a **superposition over a non-Archimedean value field**
+   and of its **observation functional** $p_i = \mathrm{st}(w_i)$ (Section 3).
+2. Three core theorems — **exact normalization**, **standard normalization with
+   nonnegativity**, and **unobservability of infinitesimal branches** (Section 4)
+   — establishing that the observation functional is a legitimate probability
+   assignment that suppresses the infinitely small.
+3. A worked non-Archimedean example exhibiting a branch of positive weight and
+   zero observed probability (Section 5).
+4. A **classical lexicographic-probability model** exhibiting the identical
+   collapse, identifying the standard part with projection onto the primary layer
+   (Section 6).
+5. A program of extensions: the observation functional as a finitely additive
+   measure, observability as a scaling invariant, and a hierarchy of visibility
+   levels indexed by infinitesimal order (Sections 7–8).
+
+---
+
+## 2. Non-Archimedean value fields and the standard part
+
+Throughout, $F$ denotes an ordered field with $\mathbb{R} \subseteq F$ as an
+ordered subfield, and $F$ is **non-Archimedean**: there exists $\varepsilon \in F$
+with $0 < \varepsilon < 1/n$ for every positive integer $n$. Any such
+$\varepsilon$ is called an **infinitesimal**. Concretely $F$ may be taken to be
+the field of surreal numbers, a hyperreal field ${}^{\ast}\mathbb{R}$, or the
+Levi-Civita field; only the order and field axioms plus the existence of an
+infinitesimal are used.
+
+**Definition 2.1 (Magnitude classes).** For $x \in F$:
+
+- $x$ is **limited** (finite) if $|x| \le n$ for some positive integer $n$;
+- $x$ is **infinitesimal** if $|x| < 1/n$ for every positive integer $n$
+  (equivalently $|x| \le r$ for every real $r > 0$);
+- $x$ is **appreciable** if $x$ is limited but not infinitesimal.
+
+The limited elements form a subring $L \subseteq F$; the infinitesimals form an
+ideal $I \subseteq L$; the appreciable elements are $L \setminus I$ together with
+their sign data (equivalently, the limited elements whose reciprocal is also
+limited). We record the arithmetic that drives every proof below.
+
+**Lemma 2.2 (Magnitude arithmetic).**
+
+1. A sum or product of limited elements is limited.
+2. A product of an infinitesimal and a limited element is infinitesimal.
+3. If $a$ is infinitesimal and $b$ is appreciable, then $a/b$ is infinitesimal.
+4. The square of an infinitesimal is infinitesimal; the square of an appreciable
+   element is appreciable.
+
+*Proof.* (1)–(2) are immediate from the defining inequalities. For (3), $b$
+appreciable means $1/b$ is limited, so $a/b = a\cdot(1/b)$ is infinitesimal by
+(2). For (4), if $|a| \le r$ for all real $r>0$ then $|a|^2 \le r^2$ for all such
+$r$, so $a^2$ is infinitesimal; if $b$ is appreciable then $|b| \ge c$ for some
+real $c>0$ and $|b|\le n$ for some integer $n$, whence $c^2 \le b^2 \le n^2$. ∎
+
+**Definition 2.3 (Standard part).** The **standard part** is the map
+$\mathrm{st} : L \to \mathbb{R}$ sending a limited $x$ to the unique real number
+$r$ with $x - r$ infinitesimal. (Existence and uniqueness of $r$ hold in every
+non-Archimedean ordered field extension of $\mathbb R$ in which the limited
+elements admit such a real shadow; this is standard for hyperreal and
+Levi-Civita fields and is assumed as the defining property of the value field.)
+
+**Proposition 2.4 (Properties of the standard part).** The map $\mathrm{st}$ is a
+surjective ordered ring homomorphism:
+
+1. $\mathrm{st}(x + y) = \mathrm{st}(x) + \mathrm{st}(y)$ and
+   $\mathrm{st}(xy) = \mathrm{st}(x)\,\mathrm{st}(y)$ for $x, y \in L$;
+2. $\mathrm{st}(r) = r$ for every real $r$; in particular $\mathrm{st}(1) = 1$;
+3. $x \le y \implies \mathrm{st}(x) \le \mathrm{st}(y)$; hence $x \ge 0 \implies
+   \mathrm{st}(x) \ge 0$;
+4. for limited $x$, $\mathrm{st}(x) = 0$ if and only if $x$ is infinitesimal; the
+   kernel of $\mathrm{st}$ is exactly the ideal $I$ of infinitesimals.
+
+*Proof sketch.* Writing $x = \mathrm{st}(x) + \iota_x$ and $y = \mathrm{st}(y) +
+\iota_y$ with $\iota_x, \iota_y$ infinitesimal, the sum and product identities
+follow from Lemma 2.2: the error terms $\iota_x + \iota_y$ and
+$\mathrm{st}(x)\iota_y + \mathrm{st}(y)\iota_x + \iota_x\iota_y$ are infinitesimal,
+so the real parts are as claimed. Order preservation follows because a real
+number strictly below $\mathrm{st}(x)$ stays below $x$. Statement (4) is the
+definition of infinitesimal. ∎
+
+Proposition 2.4 is the engine of the paper: it lets us transport an *exact*
+non-Archimedean identity, term by term, into an ordinary real identity, while
+sending every infinitesimal contribution to zero.
+
+---
+
+## 3. Superpositions over a value field
+
+**Definition 3.1 (Superposition / quantum surreal state).** A **superposition
+over $F$** is a finite indexed family
+$$
+|\psi\rangle = \big(\,(\alpha_i, s_i)\,\big)_{i=1}^n,
+$$
+where the **amplitudes** $\alpha_i \in F$ are field elements and the **branch
+labels** $s_i$ are distinct symbols (interpreted as the possible measured values,
+themselves drawn from $F$ or from any label set). We write it suggestively as
+$|\psi\rangle = \sum_{i=1}^n \alpha_i\,|s_i\rangle$.
+
+**Definition 3.2 (Total weight and Born weights).** The **total weight** of
+$|\psi\rangle$ is
+$$
+Z(\psi) = \sum_{i=1}^n \alpha_i^2 \in F .
+$$
+When $Z(\psi) \ne 0$, the **Born weight** of branch $i$ is
+$$
+w_i = \frac{\alpha_i^2}{Z(\psi)} \in F .
+$$
+
+We call $|\psi\rangle$ **admissible** if every amplitude $\alpha_i$ is limited and
+$Z(\psi)$ is appreciable. Admissibility is the exact non-Archimedean analogue of
+"a well-normalizable state with bounded amplitudes."
+
+**Definition 3.3 (Observation functional).** For an admissible superposition, the
+**observed probability** of branch $i$ is
+$$
+p_i \;=\; \mathrm{st}(w_i) \;=\; \mathrm{st}\!\left(\frac{\alpha_i^2}{Z(\psi)}\right).
+$$
+For a subset $A \subseteq \{1,\dots,n\}$ of branches, the **observation
+functional** is
+$$
+P(A) \;=\; \sum_{i \in A} p_i \;=\; \mathrm{st}\!\left(\sum_{i\in A} w_i\right),
+$$
+the second equality holding by additivity of $\mathrm{st}$.
+
+Note that $w_i$ is limited whenever $|\psi\rangle$ is admissible: $\alpha_i^2$ is
+limited by Lemma 2.2(4) and $1/Z$ is limited because $Z$ is appreciable, so the
+standard part in Definition 3.3 is well defined.
+
+---
+
+## 4. Core theorems
+
+Fix an admissible superposition $|\psi\rangle = \sum_{i=1}^n \alpha_i |s_i\rangle$
+with total weight $Z = Z(\psi)$ and Born weights $w_i = \alpha_i^2 / Z$.
+
+**Theorem 4.1 (Exact normalization).** In the field $F$,
+$$
+\sum_{i=1}^n w_i = 1 .
+$$
+
+*Proof.* $\sum_i w_i = \sum_i \alpha_i^2 / Z = \big(\sum_i \alpha_i^2\big)/Z =
+Z/Z = 1$, valid since $Z \ne 0$. ∎
+
+Exact normalization holds for *any* superposition with $Z \ne 0$, with no
+appreciability hypothesis: probability is conserved perfectly at the level of the
+value field.
+
+**Theorem 4.2 (Nonnegativity and standard normalization).** The observed
+probabilities satisfy $p_i \ge 0$ for all $i$ and
+$$
+\sum_{i=1}^n p_i = 1 .
+$$
+
+*Proof.* Each $w_i = \alpha_i^2 / Z \ge 0$: the numerator is a square hence
+nonnegative, and $Z > 0$ since it is an appreciable sum of squares (a sum of
+squares is $\ge 0$, and it is appreciable hence nonzero, so $> 0$). Order
+preservation of $\mathrm{st}$ (Proposition 2.4(3)) gives $p_i = \mathrm{st}(w_i)
+\ge 0$. For the sum, additivity of $\mathrm{st}$ and Theorem 4.1 yield
+$$
+\sum_i p_i = \sum_i \mathrm{st}(w_i) = \mathrm{st}\Big(\sum_i w_i\Big) =
+\mathrm{st}(1) = 1 . \qquad \blacksquare
+$$
+
+**Theorem 4.3 (Unobservability of infinitesimal branches).** If the amplitude
+$\alpha_k$ is infinitesimal, then $p_k = 0$.
+
+*Proof.* By Lemma 2.2(4), $\alpha_k^2$ is infinitesimal. Since $Z$ is
+appreciable, Lemma 2.2(3) gives $w_k = \alpha_k^2 / Z$ infinitesimal. By
+Proposition 2.4(4), $p_k = \mathrm{st}(w_k) = 0$. ∎
+
+**Corollary 4.4 (Coexistence of positive weight and zero observation).** If
+$\alpha_k \ne 0$ is infinitesimal, then $w_k > 0$ in $F$ while $p_k = 0$. The
+branch carries a strictly positive exact weight yet is observationally invisible.
+
+*Proof.* $w_k = \alpha_k^2 / Z$ is a quotient of a positive element by a positive
+element, hence positive; $p_k = 0$ by Theorem 4.3. ∎
+
+**Theorem 4.5 (Finite additivity of the observation functional).** For disjoint
+$A, B \subseteq \{1,\dots,n\}$,
+$$
+P(A \cup B) = P(A) + P(B), \qquad P(\varnothing) = 0, \qquad
+P(\{1,\dots,n\}) = 1 .
+$$
+Consequently $P$ is a nonnegative, normalized, finitely additive set function on
+the branch set — a finitely additive probability measure on the (finite) branch
+$\sigma$-algebra.
+
+*Proof.* Immediate from Definition 3.3 and additivity of finite sums: for
+disjoint $A,B$, $\sum_{i\in A\cup B} p_i = \sum_{i\in A}p_i + \sum_{i\in B}p_i$.
+The empty sum is $0$; the full sum is $1$ by Theorem 4.2; nonnegativity is
+Theorem 4.2. ∎
+
+Theorems 4.1–4.5 together say that the observation functional is a *bona-fide*
+measurement rule: it conserves total probability exactly at the field level,
+descends to an ordinary real probability distribution on the branches, and
+suppresses precisely the infinitesimal branches.
+
+---
+
+## 5. A worked example
+
+Let $\varepsilon \in F$ be a positive infinitesimal and consider the three-branch
+superposition
+$$
+|\psi\rangle = \tfrac{1}{\sqrt{2}}\,|0\rangle + \tfrac{1}{\sqrt{2}}\,|1\rangle
+              + \tfrac{1}{\sqrt{2}}\,\varepsilon\,|\varepsilon\rangle .
+$$
+The amplitudes are $\alpha_0 = \alpha_1 = \tfrac{1}{\sqrt2}$ (appreciable) and
+$\alpha_\varepsilon = \tfrac{1}{\sqrt2}\varepsilon$ (infinitesimal), all limited.
+The total weight is
+$$
+Z = \tfrac12 + \tfrac12 + \tfrac12\varepsilon^2 = 1 + \tfrac12\varepsilon^2,
+$$
+which is appreciable (it differs from the real number $1$ by an infinitesimal),
+so $|\psi\rangle$ is admissible. The Born weights are
+$$
+w_0 = w_1 = \frac{1/2}{1 + \tfrac12\varepsilon^2}, \qquad
+w_\varepsilon = \frac{\tfrac12\varepsilon^2}{1 + \tfrac12\varepsilon^2},
+$$
+and they sum to $1$ exactly (Theorem 4.1). Applying the standard part, and using
+$\mathrm{st}(1 + \tfrac12\varepsilon^2) = 1$:
+$$
+p_0 = p_1 = \mathrm{st}\!\left(\frac{1/2}{1+\tfrac12\varepsilon^2}\right) =
+\tfrac12, \qquad
+p_\varepsilon = \mathrm{st}\!\left(\frac{\tfrac12\varepsilon^2}{1+\tfrac12
+\varepsilon^2}\right) = 0 .
+$$
+The observer records outcome $0$ with probability $\tfrac12$, outcome $1$ with
+probability $\tfrac12$, and the infinitesimal branch *never* — consistent with
+Theorem 4.3 — while the observed probabilities sum to $1$ as guaranteed by
+Theorem 4.2. This is the promised phenomenon: a branch present in the state, with
+a strictly positive exact weight $w_\varepsilon > 0$, that is nonetheless
+observationally invisible.
+
+---
+
+## 6. The classical mirror: lexicographic probability
+
+The collapse of Section 4 is not special to amplitudes or to squaring; it is a
+structural consequence of ranking possibilities by order of magnitude. We
+exhibit the same phenomenon in a purely classical model.
+
+**Definition 6.1 (Lexicographic probability system).** A **lexicographic
+probability system** of depth $d$ on outcomes $\{1,\dots,n\}$ is an assignment to
+each outcome $i$ of a vector
+$$
+\mathbf{q}_i = (q_i^{(0)}, q_i^{(1)}, \dots, q_i^{(d-1)}) \in \mathbb{R}_{\ge 0}^{d},
+$$
+whose level-$\ell$ marginals $\sum_i q_i^{(\ell)}$ are each equal to $1$ (each
+level is itself a probability distribution). Outcomes are compared
+lexicographically: $i$ is deemed *more likely* than $j$ if $q_i^{(0)} > q_j^{(0)}$,
+or if they tie at level $0$ and $q_i^{(1)} > q_j^{(1)}$, and so on.
+
+Such systems formalize beliefs in which some events are regarded as *infinitely*
+less likely than others but not impossible. Encode a depth-$d$ system in the value
+field via
+$$
+Q_i = q_i^{(0)} + q_i^{(1)}\varepsilon + q_i^{(2)}\varepsilon^2 + \cdots +
+q_i^{(d-1)}\varepsilon^{d-1} \in F .
+$$
+
+**Proposition 6.2 (Lexicographic collapse).** With $Q_i$ as above,
+$\sum_i Q_i = 1 + (\text{infinitesimal})$ is appreciable, each $Q_i$ is limited,
+and the observation functional recovers the **primary layer**:
+$$
+\mathrm{st}\!\left(\frac{Q_i}{\sum_j Q_j}\right) = q_i^{(0)} .
+$$
+In particular an outcome with $q_i^{(0)} = 0$ but $q_i^{(1)} > 0$ — one that is
+possible only at the secondary, infinitely-less-likely level — has observed
+probability $0$.
+
+*Proof.* $\sum_j Q_j = \sum_j q_j^{(0)} + (\sum_j q_j^{(1)})\varepsilon + \cdots =
+1 + (\text{infinitesimal})$ because the level-$0$ marginal is $1$; this is
+appreciable, so $\mathrm{st}(\sum_j Q_j) = 1$. Each $Q_i$ has real part
+$q_i^{(0)}$, so $\mathrm{st}(Q_i) = q_i^{(0)}$. By multiplicativity of
+$\mathrm{st}$ (Proposition 2.4), $\mathrm{st}(Q_i / \sum_j Q_j) =
+\mathrm{st}(Q_i)/\mathrm{st}(\sum_j Q_j) = q_i^{(0)}/1 = q_i^{(0)}$. ∎
+
+Thus the standard part is exactly *projection onto the primary layer* of a
+lexicographic system, and the quantum unobservability theorem (Theorem 4.3) and
+the classical lexicographic collapse (Proposition 6.2) are one theorem viewed
+through two windows. The correspondence identifies "infinitesimal amplitude" with
+"vanishing primary probability, positive secondary probability."
+
+---
 
 ## 7. Algorithms
 
-### 7.1 Computing the Probability Defect
+The framework is fully computable when $F$ is represented by truncated
+$\varepsilon$-expansions (finite Laurent series in $\varepsilon$), as in the
+Levi-Civita field. We record the two central procedures.
 
-**Input**: A quantum state ψ (array of n amplitudes) and a Boolean mask `isObservable`.
-
-**Output**: The probability defect δ(ψ, s).
-
-```
-function ProbabilityDefect(amplitudes, isObservable):
-    total = 0
-    for i = 0 to n-1:
-        if not isObservable[i]:
-            total += amplitudes[i]^2
-    return total
-```
-
-Time complexity: O(n). Space complexity: O(1).
-
-### 7.2 Post-Measurement Renormalization
-
-**Input**: A quantum state ψ, a Boolean projection P with nonzero probability.
-
-**Output**: The post-measurement state ψ'.
+**Algorithm A (Observed probability distribution).**
+*Input:* amplitudes $\alpha_1,\dots,\alpha_n$ as truncated $\varepsilon$-series.
+*Output:* observed probabilities $p_1,\dots,p_n \in \mathbb{R}$.
 
 ```
-function PostMeasurement(amplitudes, keep):
-    norm_sq = sum(amplitudes[i]^2 for i where keep[i])
-    result = [0] * n
-    for i = 0 to n-1:
-        if keep[i]:
-            result[i] = amplitudes[i] / sqrt(norm_sq)
-    return result
+1.  for i in 1..n:  a_i ← square(alpha_i)          # truncated-series product
+2.  Z ← sum(a_1, ..., a_n)                          # truncated-series sum
+3.  assert Z is appreciable                          # leading (order-0) term ≠ 0
+4.  for i in 1..n:  w_i ← divide(a_i, Z)            # series inverse of Z, then ×
+5.  for i in 1..n:  p_i ← standardPart(w_i)         # order-0 coefficient of w_i
+6.  return (p_1, ..., p_n)
 ```
 
-## 8. Conclusion
+Correctness is Theorems 4.1–4.3; the output sums to $1$ by Theorem 4.2. With
+series truncated at order $d$ and $n$ branches, each product/inverse costs
+$O(d^2)$ and the whole procedure runs in $O(n\,d^2)$ time.
 
-We have developed a rigorous mathematical framework for quantum states equipped with a non-Archimedean scale structure. The key results — probability conservation, the characterization of fully observable states, post-measurement normalization, and the observable Cauchy-Schwarz inequality — have been formally verified in Lean 4, ensuring their correctness with machine-checked certainty.
+**Algorithm B (Visibility level of a branch).**
+*Input:* amplitude $\alpha_k$ and total weight $Z$ as truncated series; refinement
+depth $m$. *Output:* the smallest $\ell \le m$ at which branch $k$ becomes
+visible, or "hidden beyond depth $m$."
 
-The framework opens several avenues for future research: extending to infinite-dimensional Hilbert spaces, connecting to surreal-valued spectral theory, and exploring the physical implications of dark probability for quantum information and measurement theory.
+```
+1.  w_k ← divide(square(alpha_k), Z)
+2.  v ← valuation(w_k)          # least power of ε with nonzero coefficient
+3.  if v > m: return "hidden beyond depth m"
+4.  return v                     # branch is first seen by the ε^v-refined lens
+```
 
-## References
+Algorithm B computes the level in the visibility hierarchy of Section 8: a branch
+of weight $\sim \varepsilon^{\,v}$ is invisible to the ordinary standard part
+(which is the $v=0$ lens) whenever $v \ge 1$, and is first resolved by the
+$v$-th-order refined standard part.
 
-1. Conway, J.H. (1976). *On Numbers and Games*. Academic Press.
-2. Knuth, D.E. (1974). *Surreal Numbers*. Addison-Wesley.
-3. Ehrlich, P. (2012). "The absolute arithmetic continuum and the unification of all numbers great and small." *Bulletin of Symbolic Logic*, 18(1), 1-45.
-4. Benci, V., Horsten, L., & Wenmackers, S. (2013). "Non-Archimedean probability." *Milan Journal of Mathematics*, 81, 121-151.
-5. Albeverio, S., Fenstad, J.E., Høegh-Krohn, R., & Lindstrøm, T. (1986). *Nonstandard Methods in Stochastic Analysis and Mathematical Physics*. Academic Press.
-6. von Neumann, J. (1932). *Mathematische Grundlagen der Quantenmechanik*. Springer.
+---
+
+## 8. Extensions and future directions
+
+**8.1 The observation functional as a finitely additive measure (settled in part).**
+Theorem 4.5 already establishes that $P$ is a nonnegative, normalized, finitely
+additive set function on the finite branch algebra. The natural closure is to
+extend this to superpositions with countably many branches and to identify the
+resulting object as a genuine (finitely additive) probability measure on the full
+branch set. The key mechanism is unchanged: because $\mathrm{st}$ is a ring
+homomorphism on the limited elements, it transports the exact non-Archimedean
+normalization identity to a real normalization identity term by term.
+
+**8.2 Observability as a scaling invariant.** Say two superpositions are
+*appreciably equivalent* if their amplitude vectors are related by multiplication
+by a single appreciable factor (possibly branch-dependent but bounded above and
+below by appreciable constants). We conjecture that observability is an invariant
+of this equivalence: a branch unobservable in one representative is unobservable
+in every representative. The reason is that observability depends only on the
+*order of magnitude* of an amplitude relative to the total weight, and appreciable
+rescalings do not change orders of magnitude — they multiply $w_i$ by an
+appreciable factor, which cannot move an infinitesimal into the appreciable range
+or vice versa.
+
+**8.3 A hierarchy of visibility levels.** A single standard part resolves only the
+leading real component of a weight. Refining the value field with higher-order
+infinitesimals yields a sequence of successively finer observation functionals
+$\mathrm{st}_0, \mathrm{st}_1, \mathrm{st}_2, \dots$, where $\mathrm{st}_k$ reads
+the coefficient of $\varepsilon^k$. We conjecture that iterating the construction
+produces a *strict* tower of visibility levels: a branch of weight
+$\sim \varepsilon^{k}$ is invisible to $\mathrm{st}_0, \dots, \mathrm{st}_{k-1}$
+but visible to $\mathrm{st}_k$, yielding a filtration of the state space by how
+deeply a branch is hidden. The lexicographic model of Section 6 realizes this
+tower explicitly: level $k$ corresponds to the $k$-th entry of the lexicographic
+vector, and Algorithm B computes a branch's position in the tower.
+
+---
+
+## 9. Discussion
+
+The proposal is deliberately conservative. Nothing about ordinary quantum
+mechanics or ordinary probability is altered on the visible branches: the
+observed distribution is an honest real probability distribution obeying the Born
+rule. What the enlargement buys is a rigorous vocabulary for possibilities that
+the real line is too coarse to record. An infinitesimal branch is neither
+rounded to zero by fiat (which discards information) nor treated as a small real
+number (which misrepresents an *infinitely* unlikely event as merely a *very*
+unlikely one). Instead it is kept exactly throughout computation and resolved by a
+single principled map at the moment of observation.
+
+The dual appearance of the collapse — quantum in Section 4, classical
+lexicographic in Section 6 — suggests that the phenomenon is fundamentally about
+*orders of magnitude of belief or weight*, independent of the quantum
+superstructure. This positions the standard-part measurement rule as a general
+bridge between non-Archimedean analysis and the theory of chance.
+
+## 10. Conclusion
+
+We have shown that when the amplitudes of a finite superposition are drawn from a
+non-Archimedean ordered field, the standard part of the Born weights is the
+correct measurement rule. It preserves total probability exactly (Theorems 4.1
+and 4.2), respects nonnegativity and finite additivity (Theorems 4.2 and 4.5),
+and renders infinitesimal branches observationally invisible (Theorem 4.3,
+Corollary 4.4) — as illustrated by an explicit three-branch state (Section 5) and
+mirrored by a classical lexicographic model (Section 6). The extensions of
+Section 8 chart a path toward a full non-Archimedean measurement theory, a
+scaling-invariance principle for observability, and a graded hierarchy of hidden
+branches. Infinitesimal probabilities, long treated informally, acquire a precise
+and well-behaved home.
