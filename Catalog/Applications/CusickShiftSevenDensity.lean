@@ -63,7 +63,7 @@ Insight: comparing with the forthcoming `t = 5` file (`c_5 = 5/8`, also
 alone — see `FUTURE_DIRECTIONS.md`.
 -/
 
-import Catalog.Applications.CusickPeriodicity
+import Applications.CusickPeriodicity
 
 open Nat Finset
 

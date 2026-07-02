@@ -58,7 +58,7 @@ first fully-proved `s₂(t) = 2` density, the regime named as the hard case in
 `CusickDoublingInvariance`'s notes.
 -/
 
-import Catalog.Applications.CusickDoublingInvariance
+import Applications.CusickDoublingInvariance
 
 open Nat Finset
 
