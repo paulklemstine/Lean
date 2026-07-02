@@ -26,34 +26,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "Drinfeld-Lau-Zink sheared Witt vectors",
-      "EGA I filtered colimit properties",
-      "Böckle's Dieudonné theory for p-divisible groups"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For any filtered system of nilperfect rings {R_i} with colimit R, the canonical map colim ℝW(R_i) → ℝW(R) is an isomorphism of abelian groups. This conjecture addresses the fundamental motivation for sheared Witt vectors: resolving the failure of W(R)/p^n to commute with filtered colimits while preserving essential Dieudonné-theoretic properties.",
-    "domain_bridges": [
-      "Formalization of Witt vectors in mathlib (W. Park, 2023)",
-      "Filtered colimits in commutative algebra libraries",
-      "Perfect rings and Frobenius morphisms in characteristic p"
-    ],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0001",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Establish the isomorphism by proving ℝW preserves filtered colimits through the pullback definition and limit representation. Key steps: (1) Show ℎw commutes appropriately with filtered colimits using nilpotent element control, (2) Prove lim_F commutes with filtered colimits in the category of p-complete rings, (3) Apply the five lemma to the resulting diagram of short exact sequences.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01178v1",
-    "status": "available",
-    "timestamp": "2026-07-02T02:03:55.315381+00:00",
-    "title": "Sheared Witt Vectors Commutation with Filtered Colimits"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "Cover1965",
       "Narayanan2010",
       "Fefferman2016"
@@ -81,6 +53,61 @@
     "title": "Low-Dimensional Dichotomy Bound Conjecture"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "BarmanViswanathan2020",
+      "AlonFellows1995",
+      "Equbal2022"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every simple graph G with maximum degree Δ, any number of agents ℓ ≥ 2Δ is sufficient to guarantee a stochastic‑dominance envy‑free‐up‑to‑one‑item (SD‑EF1) allocation of the vertices on the agents, and moreover there exists a deterministic polynomial‑time algorithm that produces such an allocation.  This conjecture sharpens the currently known existential and algorithmic bounds of ℓ ≥ 3Δ−1 (and ℓ ≥ (3+ε)Δ) by reducing the required number of agents to 2Δ.\n\nIn graph‑theoretic terms the conjecture asserts that every Δ‑bounded simple graph admits a proper vertex‑colouring with at most 2Δ colours in which each colour class can be mapped to an agent in such a way that the resulting allocation satisfies the SD‑EF1 condition for any common preference order.  The conjecture is falsifiable: a single counter‑example graph with Δ and ℓ < 2Δ that admits no SD‑EF1 allocation would refute it.\n\nThis conjecture is formalizable in Lean 4 as a statement about the existence of a partition of V(G) into ℓ independent sets satisfying the SD‑EF1 inequalities, coupled with an explicit algorithmic construction.\n",
+    "domain_bridges": [
+      "graph_coloring",
+      "fair_division"
+    ],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0003",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof would follow a two‑step approach.  First, using a refined greedy colouring algorithm, we would show that any Δ‑bounded graph can be coloured with at most 2Δ colours while preserving an auxiliary structure that guarantees the SD‑EF1 inequalities for any common preference order.  Second, we would implement the colouring as a deterministic polynomial‑time procedure by iteratively resolving conflicts in a way that respects the strong colourability hierarchy introduced in the paper.  The key technical idea is to bound the number of recolourings needed using the fact that each vertex has at most Δ neighbours, thereby ensuring that the total running time is polynomial in |V(G)|.\n",
+    "research_mode": "team",
+    "source_exp_id": "2607.01059v1",
+    "status": "available",
+    "timestamp": "2026-07-02T03:13:12.350397+00:00",
+    "title": "Deterministic 2Δ-Coloring for SD-EF1 under Conflict Constraints"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Drinfeld-Lau-Zink sheared Witt vectors",
+      "EGA I filtered colimit properties",
+      "Böckle's Dieudonné theory for p-divisible groups"
+    ],
+    "consumed_by_exp_id": "9915ee53",
+    "description": "For any filtered system of nilperfect rings {R_i} with colimit R, the canonical map colim ℝW(R_i) → ℝW(R) is an isomorphism of abelian groups. This conjecture addresses the fundamental motivation for sheared Witt vectors: resolving the failure of W(R)/p^n to commute with filtered colimits while preserving essential Dieudonné-theoretic properties.",
+    "domain_bridges": [
+      "Formalization of Witt vectors in mathlib (W. Park, 2023)",
+      "Filtered colimits in commutative algebra libraries",
+      "Perfect rings and Frobenius morphisms in characteristic p"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0005",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the isomorphism by proving ℝW preserves filtered colimits through the pullback definition and limit representation. Key steps: (1) Show ℎw commutes appropriately with filtered colimits using nilpotent element control, (2) Prove lim_F commutes with filtered colimits in the category of p-complete rings, (3) Apply the five lemma to the resulting diagram of short exact sequences.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01178v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T02:03:55.315381+00:00",
+    "title": "Sheared Witt Vectors Commutation with Filtered Colimits"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Edi92",
@@ -100,7 +127,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0002",
+    "id": "fd_0006",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a categorical criterion based on the Jordan-Hölder decomposition and validate via Grothendieck-style lemma formulations in Lean 4.",
@@ -132,19 +159,19 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71d4ed72",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0000",
+    "id": "fd_0004",
     "lineage_refs": [],
     "priority_score": 0.7,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T01:33:56.530529+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
