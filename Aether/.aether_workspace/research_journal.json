@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "438f30b4",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Universal Approximation: Density of EML Functions\n\nThis cycle added `Catalog/Applications/EMLActivationDensity.lean`, which proves that the\nstandard machine-learning activati",
-      "quality_score": 0.34,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T06:56:04",
-      "title": "EML Universal Approximation: Density of EML Functions"
-    },
-    {
       "cycle_id": "43f6ae62",
       "domain": "Applications",
       "key_insight": "# Future Directions — Code-Based Cryptography (McEliece / Goppa)\n\nDerived from this cycle's findings in `LinearCode.lean`, `GoppaDistance.lean`,\nand `Parameters.lean`. Each conjecture is bold, falsifi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-07-02T09:05:30",
       "title": "Prove Fermats Little Theorem for p=5"
+    },
+    {
+      "cycle_id": "ce78e135",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nBold, testable conjectures arising from the study of when `a^n - a` is uniformly\ndivisible by a fixed modulus.\n\n## 1. The universal divisor of `a^n - a` is a squarefree product of",
+      "quality_score": 0.48488999999999993,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-02T11:13:24",
+      "title": "Prove Fermats Little Theorem for p=5"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7303200000000001
     }
   ],
-  "last_updated": "2026-07-02T09:05:30",
+  "last_updated": "2026-07-02T11:13:24",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "8e353e57",
-        "quality": 0.63384,
-        "theorems": 3,
-        "title": "Derived from the cycle whose verified results live in"
-      },
-      {
         "cycle_id": "b8df0deb",
         "quality": 0.8904000000000001,
         "theorems": 90,
@@ -3513,6 +3507,12 @@
         "quality": 0.4328038727272727,
         "theorems": 7,
         "title": "Square-Root Cancellation for GL(2) Triple Correlation Sums"
+      },
+      {
+        "cycle_id": "ce78e135",
+        "quality": 0.48488999999999993,
+        "theorems": 6,
+        "title": "Prove Fermats Little Theorem for p=5"
       }
     ],
     "MachineLearning": [
