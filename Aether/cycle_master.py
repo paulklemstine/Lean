@@ -531,8 +531,8 @@ class CycleMaster:
         # Phase 3: Build Aristotle prompt using Pi-Agent's write_aristotle_prompt
         print(f"[Prepare] Building Aristotle prompt...")
         if self.pi_agent:
-            # Cycle through the new prompt variations: v20 (Quality), v21 (Incremental), v22 (Novelty), v23 (Sub-agents)
-            cycle_variants = ["v20", "v21", "v22", "v23"]
+            # Cycle through the enhanced prompt variations
+            cycle_variants = ["v16"]
             selected_prompt_version = cycle_variants[cycle_n % len(cycle_variants)]
 
             prompt_text = self.pi_agent.write_aristotle_prompt(
