@@ -61,7 +61,7 @@ isomorphism with its arithmetic shadow `φ(n)`, anchored to the catalog's number
 bridge through the prime count `p - 1`.
 -/
 import Mathlib
-import Bridges.NumberTheoryBridge
+import Catalog.Bridges.NumberTheoryBridge
 
 open Polynomial
 

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "802107a7",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Transmission Zero Forcing vs. Domination on Trees\n\nCycle 1 deliverable: `Catalog/Novelty/TransmissionDominationTree.lean` proves, with zero\nsorries, the exact domination number o",
-      "quality_score": 0.6666400000000001,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-27T05:33:59",
-      "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
-    },
-    {
       "cycle_id": "688a9cbf",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Strange Attractors as Algebraic Objects\n\nDerived from this cycle's findings (files `InverseLimit.lean`, `DyadicSolenoid.lean`,\n`LorenzTransversal.lean`, `CohomologyObstruction.le",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-02T05:18:37",
       "title": "unnamed_concept"
+    },
+    {
+      "cycle_id": "89d6c3ef",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Exact Realizability and the Geometry of Learned Concepts\n\nThis cycle established that a single-neuron network with a polynomial read-out,\nbuilt on any *injective* feature map, is",
+      "quality_score": 0.6913,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-02T05:58:18",
+      "title": "ML-guided theorem discovery via adaptive proof distillation (NeuralProofMining)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7859200000000002
     }
   ],
-  "last_updated": "2026-07-02T05:18:37",
+  "last_updated": "2026-07-02T05:58:18",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "f810a812",
-        "quality": 0.5494902834008097,
-        "theorems": 23,
-        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-      },
-      {
         "cycle_id": "dafe288e",
         "quality": 0.42662737142857143,
         "theorems": 9,
@@ -3575,6 +3569,12 @@
         "quality": 0.5029119272727274,
         "theorems": 12,
         "title": "Euler Product for Autocorrelation of Simultaneously Visible Lattice Points"
+      },
+      {
+        "cycle_id": "89d6c3ef",
+        "quality": 0.6913,
+        "theorems": 12,
+        "title": "ML-guided theorem discovery via adaptive proof distillation (NeuralProofMining)"
       }
     ],
     "Novelty": [
