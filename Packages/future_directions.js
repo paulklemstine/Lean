@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9915ee53",
     "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
     "domains": [
       "Novelty"
@@ -12,9 +12,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T02:26:48.900793+00:00",
     "title": "Prove Fermats Little Theorem for p=5"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f4462f16 (Q=0.791), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling \u2113: V(G) \u2192 (Z/2Z)^(t \u2212 rank(A)) satisfies d_G(u,v) \u2265 d_H(\u2113(u), \u2113(v)) for all u,v \u2208 V(G), where H is the hypercube Cayley graph",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_f4462f16_9a5a0fd3",
+    "priority_score": 0.89052,
+    "research_mode": "team",
+    "source_exp_id": "f4462f16",
+    "status": "available",
+    "timestamp": "2026-07-02T02:29:19.951364+00:00",
+    "title": "Deepening: No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
   {
     "consumed_by_exp_id": "",
@@ -77,6 +91,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "auto_reset_NumberTheory_3134ae0f",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "auto_reset",
+    "status": "available",
+    "timestamp": "2026-07-02T02:29:21.085997+00:00",
+    "title": "[Reset] Fresh approach in NumberTheory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -104,6 +132,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T02:27:33.129988+00:00",
     "title": "This cycle isolated the exact counting mechanism behind the phenomenon whereby a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 No-Stretching of Quotient Labelings from Edge Partitions\n\nThese conjectures grew out of a single structural discovery: when the edges of a\nconnected graph are partitioned into classes and each class is assigned a generator\nof an elementary abelian 2-group, the resulting vertex labeling never *stretches*\ndistances into the Cayley graph on those generators, but it can and does fail to be\nHamming-nonexpanding once cycles force a generator to become a combination of others.\nThe correct ambient object is therefore the Cayley graph on the class generators, not\nthe coordinate hypercube.\n\n## 1. Corank governs the isometry defect\n\n**Conjecture.** For a connected graph with an edge partition into `t` classes whose\ncycle-class parity space has rank `r`, the maximum stretch of the quotient labeling\nwhen read into the coordinate hypercube on `t \u2212 r` coordinates is bounded by, and\ngenerically equal to, a monotone function of `r`; in particular the labeling is\nisometric into some coordinate hypercube if and only if `r = 0` on every induced\neven-cycle subspace.\n\n**The key insight is** that the only obstruction to a genuine hypercube embedding is a\ncycle whose class-parity vector is nonzero, and each independent such cycle contributes\nexactly one \"folded\" coordinate that a coordinate reading double-counts.\n\n**Why now?** Distance-labeling schemes for routing and for graph-similarity search are\nincreasingly built from cheap parity sketches; knowing precisely when a parity sketch is\nlossless (isometric) versus merely one-sided (no-stretch) tells a system designer when a\nsketch can certify a lower bound on true distance for free.\n\n## 2. One-sided labelings certify lower bounds at scale\n\n**Conjecture.** Any labeling that maps adjacent vertices to adjacent-or-equal vertices of\na fixed target graph yields a distance oracle that is never an over-estimate of the target\ndistance and never an under-estimate of the source distance simultaneously; consequently a\nfamily of such labelings into small Cayley graphs can certify multiplicative\nlower bounds on graph distance using space independent of the number of vertices.\n\n**The key insight is** that non-expansion is preserved under taking maxima over a family of\nedge-contracting maps, so many weak one-sided sketches combine into one strong certificate.\n\n**Why now?** Sublinear-space distance certification is a live demand in graph databases;\none-sided guarantees are exactly what verifiable query engines need, because a certified\nlower bound cannot be gamed by an adversarial index.\n\n## 3. Median graphs are the fixed point of the construction\n\n**Conjecture.** Iterating the edge-partition/quotient construction using the finest\npartition for which every quotient labeling is isometric converges, for finite connected\ngraphs, precisely to the class of partial cubes, and the fixed points among these under a\nnatural refinement order are exactly the median graphs.\n\n**The key insight is** that isometry of the parity labeling is equivalent to the\npartition refining the Djokovic\u2013Winkler relation, whose transitivity is the defining\nfeature of partial cubes and whose median property singles out median graphs.\n\n**Why now?** Median structures underpin phylogenetic networks and concept lattices;\na constructive parity-based test for \"how close is this graph to a partial cube\" would\ngive practitioners a quantitative defect measure rather than a yes/no classification.\n\n## 4. Stretch spectra distinguish expanders from grids\n\n**Conjecture.** The distribution of per-edge stretch values of the coordinate-hypercube\nreading of the quotient labeling, taken over all singleton edge partitions, separates\nbounded-degree expanders from bounded-genus graphs: expanders exhibit a heavy tail of\nhigh-stretch edges while planar-like graphs concentrate near stretch one.\n\n**The key insight is** that high stretch on an edge signals a short cycle carrying a large\nclass-parity weight, and the abundance of short independent cycles is exactly what\ndistinguishes expansion from planarity.\n\n**Why now?** Cheap spectral-free proxies for expansion are valuable for network design and\nfor pre-conditioning; a purely combinatorial parity statistic that correlates with the\nspectral gap would be attractive because it avoids eigenvalue computation entirely.\n\n## 5. Group choice trades contraction against dimension\n\n**Conjecture.** Replacing the elementary abelian 2-group by a general finite abelian group\nin the quotient construction preserves the no-stretch property and strictly reduces the\nachievable contraction, so that for every target contraction ratio there is an optimal\ngroup whose exponent matches the length of the longest chordless cycle carrying nontrivial\nclass parity.\n\n**The key insight is** that a generator of larger additive order can traverse a long cycle\nin a single algebraic step, converting what would be many hypercube coordinates into one,\nwhich is exactly the mechanism that turns contraction into dimension savings.\n\n**Why now?** Modern hashing and sketching increasingly exploit structured non-binary\ngroups; understanding the contraction-versus-dimension trade-off would let a designer pick\nthe coarsest sketch that still respects a required distance guarantee.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0007",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f4462f16",
+    "status": "available",
+    "timestamp": "2026-07-02T02:29:15.309081+00:00",
+    "title": "These conjectures grew out of a single structural discovery: when the edges of a"
   },
   {
     "consumed_by_exp_id": "",
