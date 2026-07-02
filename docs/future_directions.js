@@ -17,35 +17,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "34aac300",
-    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0004",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T04:59:08.025410+00:00",
-    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-  },
-  {
-    "consumed_by_exp_id": "196658a3",
-    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0006",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T04:59:08.028575+00:00",
-    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
@@ -495,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Recurrence for Effective Resistance in G_N^{(2)}"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5205e698",
     "description": "For each dimension d \u2265 1, the upper bound on the number of vertices of a d-dimensional lattice polytope in terms of its volume given by Andrew's theorem is asymptotically optimal. Specifically, there exists a sequence of lattice polytopes with volumes V_n \u2192 \u221e such that the number of vertices m_n satisfies lim sup (m_n / V_n^{d/(d-1)}) = c_d, where c_d is the constant from Andrew's theorem.",
     "domains": [
       "Cryptography"
@@ -504,7 +475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30856v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T17:12:36.766138+00:00",
     "title": "Andrew's theorem is asymptotically tight for maximal vertex counts of lattice polytopes"
   },
@@ -566,20 +537,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "33ce8829",
-    "description": "For any positive integers k and r \u2264 k, the minimal n\u2080 such that every k-uniform hypergraph on n \u2265 n\u2080 vertices with \u03b4_r \u2265 1 contains a Berge-Ct^r for all t \u2265 r+1 is exactly k + 1.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0044",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30418v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T19:19:02.169058+00:00",
-    "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with \u03b4_r \u2265 1"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
@@ -624,7 +581,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b44d43b2",
     "description": "For a d-dimensional submanifold E of \u211d^M and a smooth injective map \u03a6:E\u2192\u211d^{M'}, any N-point set F\u2282E in general position satisfies Kruskal rank s \u2264 d+1. This implies the \u03a6-separable dichotomy count C_F(N) is bounded by Cover's counting function C(N,d+M'+1), generalizing high-dimensional bounds to low-dimensional data structures.",
     "domains": [
       "Geometry"
@@ -633,7 +590,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:40:25.125636+00:00",
     "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
   },
@@ -917,7 +874,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tokushige's r-wise intersecting conjecture for non\u2011uniform product measures"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "77868759",
     "description": "For every finite simple graph G, the product of the power domination throttling number of G and that of its complement is at most 6, and this bound cannot be improved.",
     "domains": [
       "Bridges"
@@ -926,7 +883,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30950v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T15:56:32.304597+00:00",
     "title": "Sharp Nordhaus\u2011Gaddum product bound for power domination throttling"
   },
@@ -1253,18 +1210,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0094",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01178v1",
+    "status": "available",
+    "timestamp": "2026-07-02T22:10:42.305562+00:00",
+    "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This paper investigates the statistical behavior of Selmer ranks of twisted elliptic curves in various Galois extension settings, under assumptions related to the Extended Riemann Hypothesis. The study aims to formalize probabilistic predictions through an ordered framework inspired by combinatorial fan structures.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0093",
+    "id": "fd_0095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
     "status": "available",
     "timestamp": "2026-07-02T21:54:06.879713+00:00",
     "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integers k \u2265 1 and d \u2265 0, let V\u2081,\u2026,V_{d+1} be pairwise disjoint finite sets each equipped with a spanning k\u2011tree structure.  For every colorful Carath\u00e9odory map A : |\u0394_V| \u2192 \u211d^d with 0 \u2208 A(V_i) for all i, there exists a transversal face \u03c3 \u2286 T\u2081 * \u2026 * T_{d+1} (the join of the k\u2011trees) such that 0 \u2208 A(\u03c3).  Equivalently, any minimal subcomplex K \u2286 V\u2081*\u2026*V_{d+1} that blocks all colorful Carath\u00e9odory maps must contain a face from the join of the k\u2011trees.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0096",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01143v1",
+    "status": "available",
+    "timestamp": "2026-07-02T22:11:23.428375+00:00",
+    "title": "Colorful Carath\u00e9odory property for joins of spanning k\u2011trees"
   },
   {
     "consumed_by_exp_id": "",

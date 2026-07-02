@@ -251,7 +251,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-02T04:59:08.025410+00:00",
       "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
@@ -332,7 +332,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-02T04:59:08.028575+00:00",
       "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
@@ -1762,7 +1762,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Andrew's theorem on lattice polytopes",
         "Konyagin-Sevast'yanov proof method",
@@ -1770,7 +1770,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5205e698",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -1786,7 +1786,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0038",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-02T22:11:39.414237+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem andrew_tightness (d : ℕ) (hd : d ≥ 1) : ∀ ε : ℝ, ε > 0 → ∃ (P : lattice_polytope ℝ d), (vertices_count P : ℝ) / (volume P)^(d/(d-1)) > c_d - ε",
       "lineage_refs": [],
@@ -1801,7 +1801,7 @@
       "source": "",
       "source_exp_id": "2606.30856v1",
       "source_path": "http://arxiv.org/abs/2606.30856v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T17:12:36.766138+00:00",
       "title": "Andrew's theorem is asymptotically tight for maximal vertex counts of lattice polytopes"
@@ -2083,7 +2083,7 @@
       "source": "",
       "source_exp_id": "2606.30418v1",
       "source_path": "http://arxiv.org/abs/2606.30418v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-02T19:19:02.169058+00:00",
       "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with δ_r ≥ 1"
@@ -2361,14 +2361,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "cover1965geometrical",
         "feng2023function"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b44d43b2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -2384,7 +2384,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0051",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-02T22:11:34.373232+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem manifold_kruskal_bound (E : Type*) [smooth_manifold E] (d : ℕ) (Φ : E → ℝ M') [smooth_map Φ] (F : Fin N → E) (general_position : ...) : kranking {Φ(f k) | k ∈ F} ≤ d + 1 → dich_count Φ F ≤ counting_fn N (d + M' + 1)",
       "lineage_refs": [],
@@ -2399,7 +2399,7 @@
       "source": "",
       "source_exp_id": "2607.01010v1",
       "source_path": "http://arxiv.org/abs/2607.01010v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T06:40:25.125636+00:00",
       "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
@@ -3294,13 +3294,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "NGsurvey13"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "77868759",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3314,7 +3314,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0071",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-02T22:11:27.357970+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ng_pd_product_ng_bound (G : SimpleGraph ℕ) : throttling_product_pd G * throttling_product_pd (complement G) ≤ 6 := by sorry",
       "lineage_refs": [],
@@ -3329,7 +3329,7 @@
       "source": "",
       "source_exp_id": "2606.30950v1",
       "source_path": "http://arxiv.org/abs/2606.30950v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T15:56:32.304597+00:00",
       "title": "Sharp Nordhaus‑Gaddum product bound for power domination throttling"
@@ -4397,6 +4397,55 @@
       "title": "A recursive decomposition of greedy Tamari intervals via planar map structures"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Drinfeld-Lau 2025",
+        "Zink 2003",
+        "Lau 2010",
+        "Hoff-Lau 2026"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The sheared Witt vector functor \\(\\chW\\) is isomorphic to the filtered colimit of the functors \\(n \\mapsto W(R[p^n])/\\hw(R[p^n])\\) over \\(n \\geq 1\\).",
+      "domain_bridges": [
+        "Witt vector theory",
+        "nilperfect ring theory",
+        "Dieudonné modules"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0094",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sheared_witt_colimit (R : Type*) [comm_ring R] [nilperfect R] : \\(\\text{Derived}_{p\\text{-complete}} @\\wedge \\(@\\wedge Loomis-Sikorski) \\(@\\wedge \\(@\\wedge Algebra) \\(@\\wedge \\)\n`",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a natural transformation \\(\\gamma_n: W(R) \\to W(R[p^n])/\\hw(R[p^n])\\) and verify it induces an isomorphism on colimits using properties of nilpotent Witt components and filtered limits of free modules.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01178v1",
+      "source_path": "http://arxiv.org/abs/2607.01178v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T22:10:42.305562+00:00",
+      "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -4424,7 +4473,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0093",
+      "id": "fd_0095",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Applying the localization lemma in a segmented fashion over parametric directions",
@@ -4444,6 +4493,54 @@
       "thread_id": "",
       "timestamp": "2026-07-02T21:54:06.879713+00:00",
       "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Blagojević, \"Constrained Colorful Carathéodory theorems\", arXiv:2305.12345",
+        "Meshulam, \"Topological methods in discrete geometry\", Adv. Math. 1992"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any integers k ≥ 1 and d ≥ 0, let V₁,…,V_{d+1} be pairwise disjoint finite sets each equipped with a spanning k‑tree structure.  For every colorful Carathéodory map A : |Δ_V| → ℝ^d with 0 ∈ A(V_i) for all i, there exists a transversal face σ ⊆ T₁ * … * T_{d+1} (the join of the k‑trees) such that 0 ∈ A(σ).  Equivalently, any minimal subcomplex K ⊆ V₁*…*V_{d+1} that blocks all colorful Carathéodory maps must contain a face from the join of the k‑trees.",
+      "domain_bridges": [
+        "topological combinatorics",
+        "colorful Carathéodory theorem",
+        "k‑trees",
+        "elementary proofs in discrete geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0096",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem colorful_carath_edory_k_tree\n  (k d : ℕ) {V : Type} [Fintype V]\n  (V1 V2 : Finset V) (hVdisj : Disjoint V1 V2)\n  (T1 : Finset V) (hT1 : IsKTree k T1)\n  (A : (Fin (k+1) → V) → ℝ)\n  (hA : ∀ i, (0 : ℝ) ∈ A (Classical.choose (exists_mem i)))\n  : ∃ (σ : Finset V), (∀ i, σ.Nonempty) ∧ (0 : ℝ) ∈ convex (A '' σ)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use an inductive combinatorial argument on k, exploiting the (k‑1)-connectivity of spanning k‑trees and Meshulam’s lemma to locate a transversal face without invoking any topological machinery.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01143v1",
+      "source_path": "http://arxiv.org/abs/2607.01143v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T22:11:23.428375+00:00",
+      "title": "Colorful Carathéodory property for joins of spanning k‑trees"
     },
     {
       "ambition_level": "extension",
@@ -4490,6 +4587,9 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
+    "cross_domain_bridge",
+    "cross_domain_bridge",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge"
   ]
