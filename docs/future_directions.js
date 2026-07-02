@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prove Fermats Little Theorem for p=5"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6af69f22",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.029563+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -46,7 +46,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87346215",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -56,7 +56,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
@@ -76,7 +76,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d820831",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty"
@@ -85,7 +85,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -104,7 +104,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in NumberTheory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "076754c3",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -114,7 +114,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.030558+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -553,7 +553,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Andrew's theorem is asymptotically tight for maximal vertex counts of lattice polytopes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a63402c",
     "description": "Conjecture that for any normalized Hecke eigenform f of even weight for SL(2,Z), any integer j \u2265 1, and any even m with 2 \u2264 m \u2264 12, the number of sign changes of the j-th symmetric power L-function coefficient \u03bb_sym^j f(n) as n runs over integers representable as a sum of m squares up to x is at least C\u00b7x/(log x) for some constant C>0 depending only on f, j, and m.",
     "domains": [
       "Pythagorean"
@@ -562,12 +562,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T17:31:40.243045+00:00",
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7f2fc4f9",
     "description": "For any linear equation E with more than 2h variables and zero sum of coefficients, there exists a constant c < 1 such that any B_h subset of Z_N avoiding pairwise distinct solutions to E has size at most c * N^{1/h}. This conjecture posits that the upper bound on the size of such sets is strictly less than the maximum possible size of a B_h set by a constant factor.",
     "domains": [
       "Pythagorean"
@@ -576,7 +576,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30767v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T17:52:13.002762+00:00",
     "title": "Constant Factor Reduction in Size for B_h Sets Avoiding Linear Equations with More Than 2h Variables"
   },
@@ -610,7 +610,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bruhat Order Preserves Closure Relations for B-Orbits on Flag Variety Product"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4770cef4",
     "description": "For the random recursive DAG G_n with out-degree d \u2265 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n \u2192 \u221e.",
     "domains": [
       "Computation"
@@ -619,12 +619,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37903e54",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
@@ -634,7 +634,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -1134,7 +1134,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e140970a",
     "description": "Propose a framework where the computational complexity of simulating quantum state correlations in noncommutative geometries determines the hardness of certain mathematical problems. The hypothesis suggests that a polynomial-time algorithm for such problems would imply a breakdown of the cyclicity of Hilbert space dimensionality.",
     "domains": [
       "Novelty"
@@ -1143,7 +1143,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:18:32.052109+00:00",
     "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
   }

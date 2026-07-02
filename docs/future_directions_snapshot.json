@@ -21,7 +21,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6af69f22",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domain_bridges": [],
     "domains": [
@@ -34,7 +34,7 @@
     "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.029563+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -60,7 +60,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87346215",
     "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domain_bridges": [],
     "domains": [
@@ -73,7 +73,7 @@
     "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
@@ -100,7 +100,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d820831",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domain_bridges": [],
     "domains": [
@@ -112,7 +112,7 @@
     "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -138,7 +138,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "076754c3",
     "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
     "domain_bridges": [],
     "domains": [
@@ -151,7 +151,7 @@
     "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.030558+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -930,7 +930,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a63402c",
     "description": "Conjecture that for any normalized Hecke eigenform f of even weight for SL(2,Z), any integer j ≥ 1, and any even m with 2 ≤ m ≤ 12, the number of sign changes of the j-th symmetric power L-function coefficient λ_sym^j f(n) as n runs over integers representable as a sum of m squares up to x is at least C·x/(log x) for some constant C>0 depending only on f, j, and m.",
     "domain_bridges": [
       "Automorphic forms",
@@ -946,7 +946,7 @@
     "proof_strategy": "Use an asymptotic formula for the second moment of λ_sym^j f(n) sums of m squares, together with spectral sieve to obtain a power-saving term moment; then apply a Turán-type lemma to obtain a power-saving bound on the variance of λ_sym^j f(n) over sums of m squares via Voronoi summation and Weil bounds for Kloosterman sums. Combine this with a large sieve inequality to improve the bound on the first moment. Finally, apply a Turán-type lemma to translate a nontrivial bound on the first moment into a quantitative lower bound for the number of sign changes.",
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T17:31:40.243045+00:00",
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
   },
@@ -957,7 +957,7 @@
       "Conlon-Fox-Sudakov-Zhao on Sidon sets avoiding 5-variable equations",
       "Fourier pseudorandomness in additive combinatorics"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7f2fc4f9",
     "description": "For any linear equation E with more than 2h variables and zero sum of coefficients, there exists a constant c < 1 such that any B_h subset of Z_N avoiding pairwise distinct solutions to E has size at most c * N^{1/h}. This conjecture posits that the upper bound on the size of such sets is strictly less than the maximum possible size of a B_h set by a constant factor.",
     "domain_bridges": [
       "Fourier analysis",
@@ -973,7 +973,7 @@
     "proof_strategy": "Establish a uniform constant factor bound by leveraging Fourier analytic techniques to show that avoiding equations with sufficiently many variables forces structural constraints on B_h sets, thereby reducing their maximum achievable size below the theoretical upper bound. This would involve analyzing the Fourier coefficients of the indicator function of such sets and demonstrating that they must be small in a manner that limits the set's cardinality.",
     "research_mode": "team",
     "source_exp_id": "2606.30767v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T17:52:13.002762+00:00",
     "title": "Constant Factor Reduction in Size for B_h Sets Avoiding Linear Equations with More Than 2h Variables"
   },
@@ -1037,7 +1037,7 @@
       "Jan2023 - Recent work on descendants of n in G_n",
       "Drm2009 - Random recursive trees (d=1 case)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4770cef4",
     "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
     "domain_bridges": [
       "Multi-draw Pólya urn processes",
@@ -1053,7 +1053,7 @@
     "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
     "research_mode": "team",
     "source_exp_id": "2606.30475v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
@@ -1063,7 +1063,7 @@
       "Theorem 1.5",
       "Kane's work"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37903e54",
     "description": "The product of primes in the extension field equals its order.",
     "domain_bridges": "extension",
     "domains": [
@@ -1076,7 +1076,7 @@
     "proof_strategy": "Direct arithmetic verification",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -1944,7 +1944,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e140970a",
     "description": "Propose a framework where the computational complexity of simulating quantum state correlations in noncommutative geometries determines the hardness of certain mathematical problems. The hypothesis suggests that a polynomial-time algorithm for such problems would imply a breakdown of the cyclicity of Hilbert space dimensionality.",
     "domain_bridges": [],
     "domains": [
@@ -1956,7 +1956,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:18:32.052109+00:00",
     "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
   }
