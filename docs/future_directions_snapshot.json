@@ -86,31 +86,6 @@
   },
   {
     "ambition_level": "extension",
-    "catalog_references": [
-      "math.CO"
-    ],
-    "consumed_by_exp_id": "ba056378",
-    "description": "For all n, k ∈ ℕ, the number of intervals [x,y] in the greedy 1‑Tamari poset on Dyck_n such that the lower endpoint x has exactly k valleys equals the number of bipartite planar maps with n+1 edges and exactly k black vertices.",
-    "domain_bridges": [
-      "enumerative combinatorics",
-      "bijective combinatorics",
-      "map enumeration"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0002",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the recursive decomposition of greedy Tamari intervals into sum and product operations given in the paper and show that it matches the decomposition of bipartite planar maps by inserting a black vertex. This yields a size‑ and valley‑preserving bijection, which can be formalized by induction on n.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T04:44:51.275254+00:00",
-    "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined enumeration of bipartite planar maps by black vertex count"
-  },
-  {
-    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "For every m ≥ 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
@@ -2207,7 +2182,7 @@
       "Blagojević, \"Constrained Colorful Carathéodory theorems\", arXiv:2305.12345",
       "Meshulam, \"Topological methods in discrete geometry\", Adv. Math. 1992"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5352e8ee",
     "description": "For any integers k ≥ 1 and d ≥ 0, let V₁,…,V_{d+1} be pairwise disjoint finite sets each equipped with a spanning k‑tree structure.  For every colorful Carathéodory map A : |Δ_V| → ℝ^d with 0 ∈ A(V_i) for all i, there exists a transversal face σ ⊆ T₁ * … * T_{d+1} (the join of the k‑trees) such that 0 ∈ A(σ).  Equivalently, any minimal subcomplex K ⊆ V₁*…*V_{d+1} that blocks all colorful Carathéodory maps must contain a face from the join of the k‑trees.",
     "domain_bridges": [
       "topological combinatorics",
@@ -2224,9 +2199,63 @@
     "proof_strategy": "Use an inductive combinatorial argument on k, exploiting the (k‑1)-connectivity of spanning k‑trees and Meshulam’s lemma to locate a transversal face without invoking any topological machinery.",
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:11:23.428375+00:00",
     "title": "Colorful Carathéodory property for joins of spanning k‑trees"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Dermenjian 2024",
+      "Chapoton 2024",
+      "Bousquet-Mélou 2023"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture posits that the number of maximal greedy Tamari intervals in a planar $(m+1)$-constellation equals the number of maximal planar trees with $m$ internally labeled vertices, under a bijective correspondence established via Dyck paths. It generalizes the planarity-based result of Bousquet-Mélou and Chapoton and extends it to arbitrary $m$.",
+    "domain_bridges": [
+      "the theory of matroids",
+      "computational complexity"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_0097",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Recursive combinatorial argument leveraging bijections with Dyck paths and planar trees",
+    "research_mode": "team",
+    "source_exp_id": "2607.01206v1",
+    "status": "available",
+    "timestamp": "2026-07-02T22:19:01.445297+00:00",
+    "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "SD1999",
+      "Kane2013",
+      "KMR13"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The 2-Selmer rank of a fixed elliptic curve E over quadratic fields K=Q(√d) with discriminant |d|≤X satisfies an asymptotic formula (1/2)log X + C_E + o(1) as X→∞.",
+    "domain_bridges": [
+      "probability_theory",
+      "computational_number_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0098",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "analytic_methods_with_local_factors_and_average_over_discriminants",
+    "research_mode": "team",
+    "source_exp_id": "2607.01126v1",
+    "status": "available",
+    "timestamp": "2026-07-02T22:19:18.033644+00:00",
+    "title": "Average 2-Selmer rank in quadratic twists of an elliptic curve"
   },
   {
     "ambition_level": "extension",

@@ -61,20 +61,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Absolute Boundedness of Polynomial Diophantine Tuples"
   },
   {
-    "consumed_by_exp_id": "ba056378",
-    "description": "For all n, k \u2208 \u2115, the number of intervals [x,y] in the greedy 1\u2011Tamari poset on Dyck_n such that the lower endpoint x has exactly k valleys equals the number of bipartite planar maps with n+1 edges and exactly k black vertices.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0002",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01206v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T04:44:51.275254+00:00",
-    "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined enumeration of bipartite planar maps by black vertex count"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every m \u2265 1, the generating tree encoding the recursive decomposition of intervals in the greedy m-Tamari poset (on Dyck paths of size n) is isomorphic to the generating tree encoding the recursive decomposition of planar (m+1)-constellations of size n. This conjecture generalizes the m=1 case proved in the paper and would provide a combinatorial proof of the equinumerosity refined by the parameters tracked in the generating tree (e.g., number of valleys in Dyck paths and corresponding statistics in constellations).",
     "domains": [
@@ -1238,7 +1224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5352e8ee",
     "description": "For any integers k \u2265 1 and d \u2265 0, let V\u2081,\u2026,V_{d+1} be pairwise disjoint finite sets each equipped with a spanning k\u2011tree structure.  For every colorful Carath\u00e9odory map A : |\u0394_V| \u2192 \u211d^d with 0 \u2208 A(V_i) for all i, there exists a transversal face \u03c3 \u2286 T\u2081 * \u2026 * T_{d+1} (the join of the k\u2011trees) such that 0 \u2208 A(\u03c3).  Equivalently, any minimal subcomplex K \u2286 V\u2081*\u2026*V_{d+1} that blocks all colorful Carath\u00e9odory maps must contain a face from the join of the k\u2011trees.",
     "domains": [
       "Bridges"
@@ -1247,9 +1233,39 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:11:23.428375+00:00",
     "title": "Colorful Carath\u00e9odory property for joins of spanning k\u2011trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture posits that the number of maximal greedy Tamari intervals in a planar $(m+1)$-constellation equals the number of maximal planar trees with $m$ internally labeled vertices, under a bijective correspondence established via Dyck paths. It generalizes the planarity-based result of Bousquet-M\u00e9lou and Chapoton and extends it to arbitrary $m$.",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_0097",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01206v1",
+    "status": "available",
+    "timestamp": "2026-07-02T22:19:01.445297+00:00",
+    "title": "Recursive decomposition of greedy Tamari intervals via Dyck path structures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 2-Selmer rank of a fixed elliptic curve E over quadratic fields K=Q(\u221ad) with discriminant |d|\u2264X satisfies an asymptotic formula (1/2)log X + C_E + o(1) as X\u2192\u221e.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0098",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01126v1",
+    "status": "available",
+    "timestamp": "2026-07-02T22:19:18.033644+00:00",
+    "title": "Average 2-Selmer rank in quadratic twists of an elliptic curve"
   },
   {
     "consumed_by_exp_id": "",
