@@ -307,12 +307,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The product of primes in the extension field equals its order.",
+    "description": "Conjecture that the error term O_\u03b5(Q^{7/4+\u03b5}) in the mean square asymptotic formula for L(s, \u03a0\u2080\u00d7\u03c7) and Dirichlet polynomials can be strengthened to O_\u03b5(Q^{1+\u03b5}) under the same conditions, where \u03a0\u2080 is a cuspidal automorphic representation of PGL\u2083(\u211a) and \u03c7 is a primitive Dirichlet character of conductor \u2264 Q.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0023",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00282v1",
+    "status": "available",
+    "timestamp": "2026-07-02T10:27:03.642807+00:00",
+    "title": "Improved Error Bound for Asymptotic Formula in PGL(3) L-Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The product of primes in the extension field equals its order.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -326,7 +341,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0024",
+    "id": "fd_0025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
@@ -341,7 +356,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0025",
+    "id": "fd_0026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
@@ -355,7 +370,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0026",
+    "id": "fd_0027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -370,7 +385,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0027",
+    "id": "fd_0028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -385,7 +400,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0028",
+    "id": "fd_0029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00732v1",
@@ -399,7 +414,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0029",
+    "id": "fd_0030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00674v1",
@@ -413,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0030",
+    "id": "fd_0031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -428,7 +443,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0031",
+    "id": "fd_0032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00367v1",
@@ -443,7 +458,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0032",
+    "id": "fd_0033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00238v1",
@@ -458,13 +473,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0033",
+    "id": "fd_0034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00212v1",
     "status": "available",
     "timestamp": "2026-07-02T10:08:08.933718+00:00",
     "title": "Four Colors Suffice for Strong Majority Edge-Coloring of Admissible Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A complete classification exists for all bidihedral groups up to isomorphism.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0035",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00352v1",
+    "status": "available",
+    "timestamp": "2026-07-02T10:27:44.557266+00:00",
+    "title": "Bidihedral Group Classification"
   },
   {
     "consumed_by_exp_id": "",

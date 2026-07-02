@@ -484,6 +484,32 @@
     "title": "Chromatic Sum NP-Completeness for Clique-Width at Least 3"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Levinson's method",
+      "Asymptotic large sieve for L-functions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the error term O_ε(Q^{7/4+ε}) in the mean square asymptotic formula for L(s, Π₀×χ) and Dirichlet polynomials can be strengthened to O_ε(Q^{1+ε}) under the same conditions, where Π₀ is a cuspidal automorphic representation of PGL₃(ℚ) and χ is a primitive Dirichlet character of conductor ≤ Q.",
+    "domain_bridges": [
+      "Automorphic forms",
+      "Analytic number theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0023",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Refinement of existing mollifier techniques and Hecke algebra computations to tighten error bounds",
+    "research_mode": "team",
+    "source_exp_id": "2607.00282v1",
+    "status": "available",
+    "timestamp": "2026-07-02T10:27:03.642807+00:00",
+    "title": "Improved Error Bound for Asymptotic Formula in PGL(3) L-Functions"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem 1.5",
@@ -496,7 +522,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0023",
+    "id": "fd_0024",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct arithmetic verification",
@@ -524,7 +550,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0024",
+    "id": "fd_0025",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the dominant oscillatory term in the asymptotic expansion near ω and show that its phase enforces sign alternation, except when phase cancellation occurs finitely often or on a sparse set.",
@@ -550,7 +576,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0025",
+    "id": "fd_0026",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive structure of table decompositions",
@@ -576,7 +602,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0026",
+    "id": "fd_0027",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Characterize smooth injective maps on submanifolds via local charts. 2) Bound the Kruskal rank using dimension arguments: each additional point can increase rank by at most 1 until reaching d+1. 3) Relate this rank constraint to dichotomy counts via Cover's lemma. 4) Verify tightness with synthetic low-dimensional examples.",
@@ -602,7 +628,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0027",
+    "id": "fd_0028",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the mod p local Langlands correspondence to relate \\bar{V}_{k,a_p} to smooth mod p representations of GL_2(ℚ_p), then apply the classification of irreducible smooth mod p representations (principal series, special, and supersingular) together with explicit Breuil module calculations for small slopes and a patching argument to extend the result to all fractional slopes < p-1.",
@@ -627,7 +653,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0028",
+    "id": "fd_0029",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic constructions: take a random r-uniform hypergraph with edge probability p = n^{-α} for suitable α to avoid G as a subgraph while ensuring large induced F-free subsets via the deletion method and the hypergraph container method; then apply the first moment method to show existence of induced F-free subgraphs of size at least c (log n)^{β_F}. Matching the upper bound from the paper would establish tightness.",
@@ -653,7 +679,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0029",
+    "id": "fd_0030",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample binary word exists and analyze the combinatorial constraints imposed by the parameterized equivalence relation. Use a pumping‑style argument or an infinite descent on the lengths of minimal forbidden factors to derive a contradiction, exploiting the limited alphabet size and the requirement that all squares must have length ≥ 2k. Alternatively, construct a finite automaton encoding the forbidden factor set and show that it accepts only finite words, contradicting infinitude.",
@@ -679,7 +705,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0030",
+    "id": "fd_0031",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define phi as the golden ratio and implement the floor functions for a(n) and b(n). 2. Define epsilon(j) based on the Fibonacci membership test. 3. Prove the Lemma stating a(F_k) + (-1)^k = b(F_{k-1}) and b(F_k) + (-1)^k = a(F_{k+1}) using Binet's formula. 4. Establish the partition property (A* union B* = N and A* intersect B* = empty) by analyzing the shifts in the Wythoff sequences at Fibonacci indices. 5. Define the permutation q*_j using the ranges A* and B* and prove the involution property q*_q*_j = j for j >= 5 using the complementary nature of LWF and UWF.",
@@ -705,7 +731,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0031",
+    "id": "fd_0032",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the hyper-aperiodic elements method and twelve tiles theorem from the continuous case to show that no Borel homomorphism exists to a tournament on 6 vertices, while constructing a Borel homomorphism to a tournament on 7 vertices.",
@@ -733,7 +759,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0032",
+    "id": "fd_0033",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the five-point topological space explicitly in Lean, define the sheaf categories as diagrams of vector spaces, implement the pairing construction using Ext and tensor product operations, then verify the perfectness condition via dimension counting and the canonical module ω_W.",
@@ -759,7 +785,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0033",
+    "id": "fd_0034",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via graph decomposition and case analysis on maximum degree configurations, building upon techniques from [KKPW] while leveraging constraints from the adjacency condition to reduce color requirements below 5.",
@@ -768,6 +794,25 @@
     "status": "available",
     "timestamp": "2026-07-02T10:08:08.933718+00:00",
     "title": "Four Colors Suffice for Strong Majority Edge-Coloring of Admissible Graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "A complete classification exists for all bidihedral groups up to isomorphism.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0035",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Inductive verification on subgroup structures",
+    "research_mode": "team",
+    "source_exp_id": "2607.00352v1",
+    "status": "available",
+    "timestamp": "2026-07-02T10:27:44.557266+00:00",
+    "title": "Bidihedral Group Classification"
   },
   {
     "ambition_level": "extension",

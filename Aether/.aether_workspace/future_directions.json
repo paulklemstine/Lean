@@ -1048,6 +1048,53 @@
       "title": "Chromatic Sum NP-Completeness for Clique-Width at Least 3"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Levinson's method",
+        "Asymptotic large sieve for L-functions"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that the error term O_ε(Q^{7/4+ε}) in the mean square asymptotic formula for L(s, Π₀×χ) and Dirichlet polynomials can be strengthened to O_ε(Q^{1+ε}) under the same conditions, where Π₀ is a cuspidal automorphic representation of PGL₃(ℚ) and χ is a primitive Dirichlet character of conductor ≤ Q.",
+      "domain_bridges": [
+        "Automorphic forms",
+        "Analytic number theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0023",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "For all ε > 0, Π₀ ∈ AutMor(PGL₃(ℚ)), χ primitive with cond(χ) ≤ Q, there exists C_ε > 0 such that the error term in the asymptotic formula satisfies |error| ≤ C_ε Q^{1+ε}.",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Refinement of existing mollifier techniques and Hecke algebra computations to tighten error bounds",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.00282v1",
+      "source_path": "http://arxiv.org/abs/2607.00282v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T10:27:03.642807+00:00",
+      "title": "Improved Error Bound for Asymptotic Formula in PGL(3) L-Functions"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -1070,7 +1117,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0023",
+      "id": "fd_0024",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Assumed truth",
@@ -1119,7 +1166,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0024",
+      "id": "fd_0025",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": " theorem sign_alternation (q_series : q_series) (ω : ℂ) (H : ∃θ ∈ ℝ, H' : asymptotics_dominated_by_oscillatory(q_series, ω, θ)) : ∀n > N, sign(coefficient(q_series, n)) = (-1)^n, except for a density-zero set of n.",
@@ -1166,7 +1213,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0025",
+      "id": "fd_0026",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Assume the existence of a structured covering that mirrors the underlying parity constraints",
@@ -1213,7 +1260,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0026",
+      "id": "fd_0027",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem manifold_kruskal_bound (E : Type*) [smooth_manifold E] (d : ℕ) (Φ : E → ℝ M') [smooth_map Φ] (F : Fin N → E) (general_position : ...) : kranking {Φ(f k) | k ∈ F} ≤ d + 1 → dich_count Φ F ≤ counting_fn N (d + M' + 1)",
@@ -1260,7 +1307,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0027",
+      "id": "fd_0028",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_irreducible_mod_p_representation {p : ℕ} [Fact p.Prime] (hp_ne_two : p ≠ 2) (k : ℕ) (hk_even : k % 2 = 0) (hk_ge_two : 2 ≤ k) (a_p : ℚp) (ha_pos : 0 < (valuation a_p : ℝ)) (ha_lt : (valuation a_p : ℝ) < (p - 1 : ℝ)) : Irreducible (mod p reduction of the two-dimensional crystalline representation V_{k,a_p}) := by sorry",
@@ -1306,7 +1353,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0028",
+      "id": "fd_0029",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_erdos_rogers_lower_bound {r : ℕ} (h_r : r ≥ 3) {F G : Hypergraph r} (hF_nonempty : F.Nonempty) (hG_2tight : G.Is2TightlyConnected) (h_no_hom : ¬ HomExists G F) (βF : ℝ) (hβF : βF = MaxOverNonemptySubsetsOfBoundary2F (fun P => (P.numEdges : ℝ) / (P.numVertices - 1))) : ∃ (c C : ℝ), 0 < c ∧ 0 < C ∧ ∀ᶠ (n : ℕ) in Filter.atTop, (c * (Real.log n) ^ βF : ℝ) ≤ (f_FG n : ℝ) ∧ (f_FG n : ℝ) ≤ C * (Real.log n) ^ βF := by sorry",
@@ -1353,7 +1400,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0029",
+      "id": "fd_0030",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_infinite_3plus_param_square_free_binary : ¬ ∃ w : Stream (Fin 2), IsParamSquareFree 3 w",
@@ -1400,7 +1447,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0030",
+      "id": "fd_0031",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem wythoff_fibonacci_partition (n : ℕ) : \n  (∃ m : ℕ, n = LWF m) ⊕ (∃ m : ℕ, n = UWF m) := by\n  sorry\n\ntheorem q_star_almost_involution (j : ℕ) (hj : j ≥ 5) : \n  q_star (q_star j) = j := by\n  sorry",
@@ -1447,7 +1494,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0031",
+      "id": "fd_0032",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem borel_oriented_chromatic_number_eq_7 : borel_oriented_chromatic_number (bernoulli_schreier_graph Z² 2^{Z²}) = 7",
@@ -1496,7 +1543,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0032",
+      "id": "fd_0033",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem riemann_function_duality (r : ℕ) (W : perfect_matching r) (F : line_bundle r) (K : ℤ × ℤ) : let M := M_{W, (0,0)} in let M_dual := M_{W^∧ (K + (1,1)), K} in perfect_pairing (H⁰ (tensor_product M F)) (Ext 1 F M_dual) (H¹ (ω W))",
@@ -1543,7 +1590,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0033",
+      "id": "fd_0034",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strong_majority_edge_coloring_four_colors (G : SimpleGraph) (h : Admissible G) : ∃ (c : G.edges → Fin 4), StrongMajorityEdgeColoring c",
@@ -1563,6 +1610,46 @@
       "thread_id": "",
       "timestamp": "2026-07-02T10:08:08.933718+00:00",
       "title": "Four Colors Suffice for Strong Majority Edge-Coloring of Admissible Graphs"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "A complete classification exists for all bidihedral groups up to isomorphism.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0035",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Inductive proof over finite orders",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Inductive verification on subgroup structures",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.00352v1",
+      "source_path": "http://arxiv.org/abs/2607.00352v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T10:27:44.557266+00:00",
+      "title": "Bidihedral Group Classification"
     },
     {
       "ambition_level": "extension",
