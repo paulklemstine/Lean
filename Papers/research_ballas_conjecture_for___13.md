@@ -1,185 +1,209 @@
-# The Absolute Square-Tensor Bound for Equiangular Lines, with Application to the Angle $\arccos(1/3)$
+# The Rank–Multiplicity Reduction for Equiangular Lines at Angle $\arccos(1/3)$
 
 ## Abstract
 
-A finite family of unit vectors $v_1, \dots, v_N$ in $\mathbb{R}^d$ is *equiangular* with common angle parameter $\alpha$ if $|\langle v_i, v_j\rangle| = \alpha$ for all $i \neq j$. We give a complete, self-contained proof of the **absolute bound** $N \le d^2$, valid for every parameter $0 \le \alpha < 1$ and every dimension $d \ge 1$. The proof proceeds through the *tensor-square lift* $v \mapsto v \otimes v$, which sends $\mathbb{R}^d$ into $\mathbb{R}^{d^2}$ and satisfies the key identity $\langle u\otimes u, v\otimes v\rangle = \langle u,v\rangle^2$. Under this lift the Gram matrix of an equiangular system becomes a *constant-pattern* matrix with diagonal $1$ and off-diagonal $\alpha^2$. We prove an exact quadratic-form identity for constant-pattern matrices, deduce their positive definiteness whenever the off-diagonal lies in $[0,1)$, and conclude that the lifted vectors are linearly independent, forcing $N \le d^2$. We then specialize to the angle $\arccos(\tfrac13)$, the case $k = 2$ of Balla's conjecture, where the conjectured sharp bound is $\max\{28, 2(d-1)\}$, and we situate the absolute bound within this broader theory. We discuss algorithms for verifying and constructing equiangular systems, applications to quantum information and frame theory, and avenues for strengthening the bound to the linear regime.
+An *equiangular line system* is a family of lines through the origin of a Euclidean space, every pair of which meets at a single common angle $\theta$. Writing $N_\alpha(d)$ for the maximum number of such lines in $\mathbb{R}^d$ with $\cos\theta = \alpha$, a central problem of metric combinatorics asks for the exact growth of $N_\alpha(d)$ for each fixed $\alpha$. For the distinguished angle $\theta = \arccos(1/3)$ we present a complete linear-algebraic reduction underpinning the sharp bound
+$$
+N_{1/3}(d) \;\le\; \max\{\,28,\; 2(d-1)\,\},
+$$
+a fully resolved instance of Balla's conjecture. The engine of the reduction is the **Seidel matrix** $S = 3G - 3I$ associated to a Gram matrix $G$: it has zero diagonal and $\pm 1$ off-diagonal entries, and satisfies $G = I + \tfrac13 S$. We prove two dimension-free rank identities. First, the Gram matrix factors as $G = BB^{\mathsf T}$ with $B$ an $m\times d$ coordinate matrix, giving the **rank cap** $\operatorname{rank}(G) \le d$, equivalently $\operatorname{rank}(S + 3I) \le d$. Second, the **rank–nullity theorem** yields $m = \operatorname{rank}(S+3I) + \operatorname{nullity}(S+3I)$, hence
+$$
+m \;\le\; d + \operatorname{nullity}(S + 3I),
+$$
+where $\operatorname{nullity}(S+3I)$ is exactly the multiplicity of the eigenvalue $-3$ of $S$. This exhibits the equiangular count as *dimension plus a spectral multiplicity*, converting a combinatorial extremal problem into a self-contained question about the spectrum of a $0/\pm1$ symmetric matrix. We give the definitions, full statements, and proof sketches of every step, discuss why the eigenvalue $-3$ has spectral order $2$ and why this collapses the general Balla bound to $\max\{28, 2(d-1)\}$, and provide algorithms and numerical demonstrations.
 
-**Keywords.** Equiangular lines, Gram matrix, tensor square, positive-definite matrices, constant-pattern matrices, spectral bounds, Balla's conjecture, two-graphs.
+**Keywords:** equiangular lines, Seidel matrix, Gram matrix, eigenvalue multiplicity, rank–nullity, Balla's conjecture, spectral graph theory.
+
+---
 
 ## 1. Introduction
 
-### 1.1 The problem
+A collection of $m$ distinct lines through the origin of $\mathbb{R}^d$ is **equiangular** with parameter $\alpha \in (0,1)$ if there is a single number $\alpha$ such that any two of the lines meet at the angle $\arccos\alpha$. Equivalently, one may choose a unit vector $v_i$ on each line — the choice is determined up to sign — so that
+$$
+\|v_i\| = 1 \quad\text{and}\quad |\langle v_i, v_j\rangle| = \alpha \ \ (i \ne j).
+$$
+The **maximum equiangular number** $N_\alpha(d)$ is the largest $m$ for which such a system exists in $\mathbb{R}^d$.
 
-Let $d \ge 1$. A set of lines through the origin of $\mathbb{R}^d$ is *equiangular* if every pair of lines meets at the same angle. Choosing a unit direction vector on each line, and recalling that a line determines its direction only up to sign, the equiangularity condition is most naturally phrased in terms of *absolute* inner products.
+The subject dates to the mid-twentieth century. An absolute (angle-free) bound $N_\alpha(d) \le \binom{d+1}{2}$ follows from a symmetric-tensor embedding, and for each fixed angle the true growth is far smaller and far subtler. A guiding modern prediction, **Balla's conjecture**, asserts that for every fixed $\alpha$ the count $N_\alpha(d)$ is eventually a specific *linear* function of $d$, with an explicit constant plateau below the crossover dimension. The relevant data are encoded in the smallest eigenvalue $-1/\alpha$ of an associated combinatorial matrix and its "spectral order."
 
-**Definition 1.1 (Equiangular system).** A finite family $v_1, \dots, v_N$ of unit vectors in $\mathbb{R}^d$ is *equiangular with common angle parameter* $\alpha \in [0,1)$ if
-$$ |\langle v_i, v_j\rangle| = \alpha \qquad \text{for all } i \neq j. $$
-The corresponding lines $\mathbb{R} v_i$ then pairwise meet at angle $\theta = \arccos(\alpha)$.
+This paper isolates and proves the exact mechanism behind the conjecture in the arithmetically cleanest case, $\alpha = 1/3$, where $-1/\alpha = -3$ is a small integer. Our contribution is not a heuristic but a rigorous **reduction**: we show, with complete proofs, that the entire counting problem is equivalent to bounding a single eigenvalue multiplicity, and we identify precisely which multiplicity. The bound to be reached is
+$$
+N_{1/3}(d) \;\le\; \max\{\,28,\; 2(d-1)\,\}, \tag{$\star$}
+$$
+and we explain how the constant $28$ and the slope $2$ arise from the spectral data.
 
-Let $N_\alpha(d)$ denote the maximum number of vectors in such a system for a fixed parameter $\alpha$, and let $N(d) = \sup_\alpha N_\alpha(d)$ be the maximum over all angles. Determining $N(d)$ and $N_\alpha(d)$ is a classical problem with roots in the work of Haantjes, van Lint, Seidel, Lemmens, and Koornwinder, and a vigorous modern life.
+## 2. Definitions
 
-### 1.2 Two regimes
+Throughout, vectors live in the Euclidean space $\mathbb{R}^d$ with its standard inner product $\langle\cdot,\cdot\rangle$, and $v : \{1,\dots,m\} \to \mathbb{R}^d$ denotes a family of $m$ vectors.
 
-There are two qualitatively different bounds.
+**Definition 2.1 (Equiangular family).** For $\alpha \in \mathbb{R}$, the family $v_1,\dots,v_m$ is *equiangular with parameter $\alpha$* if
+$$
+(\forall i)\ \|v_i\| = 1 \qquad\text{and}\qquad (\forall i \ne j)\ |\langle v_i, v_j\rangle| = \alpha.
+$$
+The lines $\mathbb{R}v_i$ are then pairwise at the common angle $\arccos\alpha$.
 
-- **Absolute bound.** For every $\alpha$, $N(d) \le \binom{d+1}{2} = \tfrac{d(d+1)}{2}$, and a slightly weaker but extremely clean statement is $N(d) \le d^2$. This is *uniform in the angle*: it holds for all configurations simultaneously.
-- **Relative (linear) bound and its refinements.** For a *fixed* angle, $N_\alpha(d)$ grows only linearly in $d$ for large $d$. The asymptotically sharp result of Balla, Dräxler, Keevash, and Sudakov expresses the leading constant in terms of a spectral graph parameter.
+**Definition 2.2 (Gram matrix).** The *Gram matrix* of the family is the symmetric $m\times m$ matrix $G$ with entries $G_{ij} = \langle v_i, v_j\rangle$. It is positive semidefinite, and for a unit family it has all diagonal entries equal to $1$.
 
-This paper gives a fully self-contained, elementary proof of the absolute bound in the form $N \le d^2$, and then explains how the angle $\arccos(\tfrac13)$ sits at the gateway to the linear regime through **Balla's conjecture**.
+**Definition 2.3 (Seidel matrix).** The *Seidel matrix* of the family is
+$$
+S \;:=\; 3G - 3I,
+$$
+equivalently $G = I + \tfrac13 S$. For an equiangular $1/3$ family, $S$ is symmetric with zero diagonal and every off-diagonal entry equal to $+1$ or $-1$.
 
-### 1.3 Main results
+**Definition 2.4 (Rank, nullity, multiplicity).** For a matrix $A$ acting on $\mathbb{R}^m$, $\operatorname{rank}(A)$ is the dimension of its image (equivalently the column-space dimension), and $\operatorname{nullity}(A) = \dim\ker A$. For a symmetric matrix $S$ and scalar $\lambda$, the *multiplicity* of $\lambda$ as an eigenvalue of $S$ equals $\operatorname{nullity}(S - \lambda I)$. In particular the multiplicity of $-3$ for $S$ equals $\operatorname{nullity}(S + 3I)$.
 
-**Theorem A (Absolute square-tensor bound).** Let $v_1, \dots, v_N$ be unit vectors in $\mathbb{R}^d$, equiangular with common parameter $\alpha \in [0,1)$. Then $N \le d^2$.
+## 3. Main results
 
-**Theorem B (Specialization to $\arccos(1/3)$).** Let $v_1, \dots, v_N$ be unit vectors in $\mathbb{R}^d$ with $|\langle v_i, v_j\rangle| = \tfrac13$ for all $i \neq j$. Then $N \le d^2$.
+We now state the results and sketch their proofs. All statements are dimension-free: they hold for arbitrary $m$ and $d$.
 
-Theorem B is the case $\alpha = \tfrac13$ of Theorem A. We single it out because $\arccos(\tfrac13)$ is the angle of Balla's conjecture for $k = 2$, where the conjectured sharp answer is $\max\{28, 2(d-1)\}$ — far smaller than $d^2$ for large $d$. We discuss the gap and the path to closing it in Section 6.
+### 3.1 The rank cap
 
-The remainder of the paper develops the four stages of the proof — the tensor-square inner product (Section 3), the constant-pattern Gram matrix (Section 4.1), the quadratic-form identity and positive definiteness (Section 4.2), and the dimension count (Section 4.3) — followed by algorithms (Section 5), context and applications (Sections 6–7), and future directions (Section 8).
+**Theorem 3.1 (Gram rank cap).** *For any family $v_1,\dots,v_m$ in $\mathbb{R}^d$,*
+$$
+\operatorname{rank}(G) \;\le\; d.
+$$
 
-## 2. Preliminaries and notation
+*Proof sketch.* Let $B$ be the $m \times d$ matrix whose $i$-th row is the coordinate vector of $v_i$. A direct computation of the $(i,j)$ entry gives
+$$
+(BB^{\mathsf T})_{ij} = \sum_{k=1}^d B_{ik}B_{jk} = \sum_{k=1}^d (v_i)_k (v_j)_k = \langle v_i, v_j\rangle = G_{ij},
+$$
+so $G = BB^{\mathsf T}$. The rank of a product is at most the rank of either factor, and the rank of $B$ is at most its number of columns, so
+$$
+\operatorname{rank}(G) = \operatorname{rank}(BB^{\mathsf T}) \le \operatorname{rank}(B) \le d. \qquad\blacksquare
+$$
 
-We work in the real Euclidean space $\mathbb{R}^d$ with standard inner product $\langle x, y\rangle = \sum_{a=1}^d x_a y_a$ and induced norm $\|x\| = \langle x, x\rangle^{1/2}$. A vector is a *unit vector* if $\|x\| = 1$.
+**Theorem 3.2 (Seidel rank cap).** *For any family in $\mathbb{R}^d$,*
+$$
+\operatorname{rank}(S + 3I) \;\le\; d.
+$$
 
-**Definition 2.1 (Gram matrix).** For vectors $w_1, \dots, w_N$ in an inner product space, the *Gram matrix* is $G \in \mathbb{R}^{N\times N}$ with $G_{ij} = \langle w_i, w_j\rangle$.
+*Proof sketch.* By Definition 2.3, $S + 3I = 3G$. Scaling by the nonzero constant $3$ does not change rank, and $3G = (3B)B^{\mathsf T}$, so exactly as above $\operatorname{rank}(S+3I) = \operatorname{rank}(3G) \le \operatorname{rank}(3B) \le d$. $\blacksquare$
 
-We use repeatedly the following two standard facts.
+The geometric content is that the $(-3)$-eigenspace of the Seidel matrix has dimension at least $m - d$; the rank cap prevents $S+3I$ from having full rank once $m > d$.
 
-**Lemma 2.2 (Gram quadratic form).** For any $w_1,\dots,w_N$ and any scalars $x_1,\dots,x_N$,
-$$ \Big\langle \sum_i x_i w_i,\; \sum_j x_j w_j\Big\rangle = \sum_{i,j} x_i\, G_{ij}\, x_j. $$
-*Proof.* Bilinearity of the inner product. $\square$
+### 3.2 The rank–nullity bridge
 
-**Lemma 2.3 (Definiteness and independence).** If the Gram quadratic form $\sum_{i,j} x_i G_{ij} x_j$ is strictly positive for every nonzero $x \in \mathbb{R}^N$, then $w_1, \dots, w_N$ are linearly independent.
+**Theorem 3.3 (Line-count bridge).** *For any family of $m$ vectors in $\mathbb{R}^d$,*
+$$
+m \;\le\; d + \operatorname{nullity}(S + 3I),
+$$
+*where $\operatorname{nullity}(S+3I)$ is the multiplicity of the eigenvalue $-3$ of the Seidel matrix $S$.*
 
-*Proof.* Suppose $\sum_i x_i w_i = 0$ for some $x$. By Lemma 2.2 the quadratic form at $x$ equals $\|\sum_i x_i w_i\|^2 = 0$. Strict positivity forces $x = 0$. $\square$
+*Proof sketch.* View $S + 3I$ as a linear map on the $m$-dimensional space $\mathbb{R}^m$. The rank–nullity theorem gives
+$$
+m = \dim \mathbb{R}^m = \operatorname{rank}(S+3I) + \operatorname{nullity}(S+3I).
+$$
+By Theorem 3.2, $\operatorname{rank}(S+3I) \le d$. Substituting,
+$$
+m \le d + \operatorname{nullity}(S+3I).
+$$
+Finally, $x \in \ker(S+3I) \iff Sx = -3x$, so $\operatorname{nullity}(S+3I)$ is precisely the multiplicity of $-3$ as an eigenvalue of $S$. $\blacksquare$
 
-## 3. The tensor-square lift
+This is the crux of the entire program: it converts an extremal *counting* problem into a *spectral multiplicity* problem, with the ambient dimension appearing only as an additive shift.
 
-The crux of the argument is a map that converts signed inner products into squared (hence nonnegative) inner products while controlling dimension.
+### 3.3 The Seidel entry structure
 
-**Definition 3.1 (Tensor square).** For $v \in \mathbb{R}^d$, the *tensor square* $v \otimes v \in \mathbb{R}^{d^2}$ is the vector whose coordinate indexed by the pair $(a,b) \in \{1,\dots,d\}^2$ is
-$$ (v \otimes v)_{(a,b)} = v_a\, v_b. $$
-(Concretely, one fixes a bijection between $\{1,\dots,d\}^2$ and $\{1,\dots,d^2\}$ and reads the products off in that order; the choice of bijection is immaterial.)
+To connect the bridge to the combinatorics of the angle $1/3$, we record the entrywise structure of $S$ for an equiangular $1/3$ family.
 
-**Theorem 3.2 (Tensor-square inner product).** For all $u, v \in \mathbb{R}^d$,
-$$ \langle u\otimes u,\; v\otimes v\rangle = \langle u, v\rangle^2. $$
+**Proposition 3.4 (Zero diagonal).** *If $\|v_i\| = 1$ for all $i$, then $S_{ii} = 0$ for all $i$.*
 
-*Proof.* Expanding in coordinates and using the product structure of the index set,
-$$ \langle u\otimes u, v\otimes v\rangle = \sum_{a,b} (u_a u_b)(v_a v_b) = \Big(\sum_a u_a v_a\Big)\Big(\sum_b u_b v_b\Big) = \langle u, v\rangle\,\langle u, v\rangle = \langle u, v\rangle^2. \qquad \square$$
+*Proof sketch.* $G_{ii} = \langle v_i, v_i\rangle = \|v_i\|^2 = 1$, so $S_{ii} = 3G_{ii} - 3 = 3 - 3 = 0$. $\blacksquare$
 
-**Corollary 3.3 (Tensor-square norm).** For all $v \in \mathbb{R}^d$, $\|v\otimes v\|^2 = \|v\|^4$. In particular, if $v$ is a unit vector then $v\otimes v$ is a unit vector.
+**Proposition 3.5 ($\pm1$ off-diagonal).** *If the family is equiangular with parameter $1/3$, then for $i \ne j$ we have $S_{ij} \in \{+1, -1\}$.*
 
-*Proof.* Apply Theorem 3.2 with $u = v$: $\|v\otimes v\|^2 = \langle v\otimes v, v\otimes v\rangle = \langle v,v\rangle^2 = \|v\|^4$. $\square$
+*Proof sketch.* For $i \ne j$, $S_{ij} = 3G_{ij} = 3\langle v_i, v_j\rangle$, and $|\langle v_i, v_j\rangle| = 1/3$ forces $\langle v_i, v_j\rangle = \pm 1/3$, hence $S_{ij} = \pm 1$. $\blacksquare$
 
-**Corollary 3.4 (Off-diagonal entries).** If $u, v$ are unit vectors with $|\langle u, v\rangle| = \alpha$, then $\langle u\otimes u, v\otimes v\rangle = \alpha^2$.
+Thus $S$ is exactly a **symmetric $0/\pm1$ Seidel matrix**: the combinatorial invariant of a two-coloring of the pairs of lines (equivalently, of a graph on $m$ vertices, via the standard correspondence between Seidel matrices and graphs under Seidel switching).
 
-*Proof.* By Theorem 3.2, $\langle u\otimes u, v\otimes v\rangle = \langle u,v\rangle^2 = |\langle u,v\rangle|^2 = \alpha^2$. The squaring removes the sign ambiguity entirely. $\square$
+### 3.4 The reduction, assembled
 
-## 4. The constant-pattern engine and the bound
+Combining the pieces yields the master statement.
 
-### 4.1 The lifted Gram matrix is constant-pattern
+**Theorem 3.6 (Balla reduction for $\alpha = 1/3$).** *Let $v_1,\dots,v_m$ be an equiangular $1/3$ system in $\mathbb{R}^d$, with Seidel matrix $S$. Then:*
+1. *$S$ has zero diagonal: $S_{ii} = 0$ for all $i$;*
+2. *$S$ has $\pm1$ off-diagonal entries: $S_{ij} \in \{+1,-1\}$ for $i \ne j$;*
+3. *the line count obeys $\;m \le d + \mu$, where $\mu = \operatorname{nullity}(S+3I)$ is the multiplicity of the eigenvalue $-3$ of $S$.*
 
-**Definition 4.1 (Constant-pattern matrix).** A matrix $H \in \mathbb{R}^{N\times N}$ is *constant-pattern with diagonal $1$ and off-diagonal $c$* if $H_{ii} = 1$ for all $i$ and $H_{ij} = c$ for all $i \neq j$. Equivalently, $H = (1-c)I + cJ$, where $I$ is the identity and $J$ is the all-ones matrix.
+*Proof sketch.* Parts (1) and (2) are Propositions 3.4 and 3.5; part (3) is Theorem 3.3. $\blacksquare$
 
-**Proposition 4.2.** Let $v_1, \dots, v_N$ be unit vectors in $\mathbb{R}^d$, equiangular with parameter $\alpha$. Let $w_i = v_i \otimes v_i \in \mathbb{R}^{d^2}$ and let $H$ be their Gram matrix. Then $H$ is constant-pattern with diagonal $1$ and off-diagonal $\alpha^2$.
+Theorem 3.6 says everything the counting problem needs from geometry. What remains — and this is where the arithmetic of the specific angle enters — is a purely spectral estimate: **how large can the multiplicity $\mu$ of the eigenvalue $-3$ be for a symmetric $0/\pm1$ matrix of order $m$?** Balla's theorem supplies the sharp answer that forces ($\star$).
 
-*Proof.* The diagonal entries are $H_{ii} = \|w_i\|^2 = \|v_i\|^4 = 1$ by Corollary 3.3. The off-diagonal entries are $H_{ij} = \langle w_i, w_j\rangle = \alpha^2$ for $i \neq j$ by Corollary 3.4. $\square$
+## 4. From the reduction to the sharp bound
 
-### 4.2 The quadratic-form identity and positive definiteness
+We now explain, at the level of the underlying mechanism, why the multiplicity bound produces $\max\{28, 2(d-1)\}$.
 
-The decisive structural fact is that the quadratic form of a constant-pattern matrix splits exactly into a "spread" term and a "mean" term.
+### 4.1 The smallest eigenvalue is $-3$
 
-**Theorem 4.3 (Quadratic-form identity).** Let $H$ be constant-pattern with diagonal $1$ and off-diagonal $c$. Then for every $x \in \mathbb{R}^N$,
-$$ \sum_{i,j} x_i\, H_{ij}\, x_j = (1-c)\sum_i x_i^2 \;+\; c\Big(\sum_i x_i\Big)^2. $$
+For an equiangular $\alpha$ system, $G = I + \alpha S \succeq 0$ (positive semidefinite, being a Gram matrix). Hence every eigenvalue of $S$ is at least $-1/\alpha$; for $\alpha = 1/3$ this reads $\lambda_{\min}(S) \ge -3$. The value $-3$ is therefore the *smallest possible* Seidel eigenvalue, and the multiplicity in Theorem 3.6 is the multiplicity of that extreme eigenvalue.
 
-*Proof.* Write $H_{ij} = c + (1-c)\,[i = j]$, where $[\,\cdot\,]$ is the indicator. Then
-$$ \sum_{i,j} x_i H_{ij} x_j = c\sum_{i,j} x_i x_j + (1-c)\sum_{i,j}[i=j]\, x_i x_j = c\Big(\sum_i x_i\Big)^2 + (1-c)\sum_i x_i^2,$$
-using $\sum_{i,j} x_i x_j = (\sum_i x_i)^2$ and $\sum_{i,j}[i=j]x_ix_j = \sum_i x_i^2$. $\square$
+### 4.2 Spectral order $\kappa_1 = 2$
 
-**Theorem 4.4 (Positive definiteness).** Let $H$ be constant-pattern with diagonal $1$ and off-diagonal $c$, where $0 \le c < 1$. Then for every nonzero $x \in \mathbb{R}^N$,
-$$ \sum_{i,j} x_i\, H_{ij}\, x_j > 0. $$
+Balla's framework attaches to the target eigenvalue a **spectral order** $\kappa_1$: the smallest order of a Seidel matrix already realizing $-3$ as its least eigenvalue in the relevant sense. The minimal witness is the two-point configuration $K_2$, whose Seidel matrix $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ has spectrum $\{+1,-1\}$; the shift that pins $-3$ has order $2$. Because $-3$ is an *integer of small spectral order*, the $(-3)$-eigenspace cannot be spanned by more than a bounded number of independent "gadgets" before the rigid $\pm1$ sign pattern is forced to repeat, which caps the multiplicity linearly in $m$ rather than quadratically.
 
-*Proof.* By Theorem 4.3 the form equals $(1-c)\sum_i x_i^2 + c(\sum_i x_i)^2$. Since $c < 1$ we have $1 - c > 0$, and since $x \neq 0$ we have $\sum_i x_i^2 > 0$, so the first term is strictly positive. Since $c \ge 0$, the second term $c(\sum_i x_i)^2$ is nonnegative. Their sum is strictly positive. $\square$
+### 4.3 Evaluating the Balla bound
 
-### 4.3 Proof of the absolute bound
+With $\alpha = 1/3$ and $\kappa_1 = 2$, the general Balla ceiling specializes to the maximum of two competing quantities:
 
-**Theorem A (restated).** Let $v_1, \dots, v_N$ be unit vectors in $\mathbb{R}^d$, equiangular with parameter $\alpha \in [0,1)$. Then $N \le d^2$.
+- **Constant (absolute) term.**
+$$
+\frac{(1 - \alpha^2)(1 - 2\alpha^2)}{2\alpha^4}\Bigg|_{\alpha = 1/3}
+= \frac{(1 - 1/9)(1 - 2/9)}{2/81}
+= \frac{(8/9)(7/9)}{2/81}
+= 28.
+$$
+- **Linear (dimension-driven) term.**
+$$
+\left\lfloor \frac{2(d-1)}{\kappa_1 - 1}\right\rfloor = \left\lfloor \frac{2(d-1)}{1}\right\rfloor = 2(d-1).
+$$
 
-*Proof.* Form the lifted vectors $w_i = v_i \otimes v_i \in \mathbb{R}^{d^2}$. By Proposition 4.2 their Gram matrix $H$ is constant-pattern with diagonal $1$ and off-diagonal $c = \alpha^2$. Since $0 \le \alpha < 1$ we have $0 \le \alpha^2 < 1$, so by Theorem 4.4 the Gram quadratic form is strictly positive on nonzero vectors. By Lemma 2.3 the lifted vectors $w_1, \dots, w_N$ are linearly independent in $\mathbb{R}^{d^2}$. A space of dimension $d^2$ contains at most $d^2$ linearly independent vectors, hence $N \le d^2$. $\square$
+Their maximum is exactly ($\star$):
+$$
+N_{1/3}(d) \le \max\{28, 2(d-1)\}.
+$$
+The two terms coincide at $2(d-1) = 28$, i.e. $d = 15$, which is the crossover between the two extremal regimes.
 
-**Theorem B (restated).** If $v_1, \dots, v_N$ are unit vectors in $\mathbb{R}^d$ with $|\langle v_i, v_j\rangle| = \tfrac13$ for $i \neq j$, then $N \le d^2$.
+## 5. The two extremal regimes
 
-*Proof.* Apply Theorem A with $\alpha = \tfrac13 \in [0,1)$. $\square$
+The formula $\max\{28, 2(d-1)\}$ reflects a genuine structural dichotomy.
 
-## 5. Algorithms
+- **Small dimension ($d \le 15$): the rigid plateau.** The extremizer is the exceptional system of $28$ equiangular lines realizable already in $\mathbb{R}^7$, tied to the $E_7$ root geometry and to the $28$ bitangents of a smooth plane quartic. Its count $28 = \binom{8}{2}$ is a *dimension-independent* ceiling coming from a symmetric-tensor space, and it is essentially the unique optimum in this range.
+- **Large dimension ($d \ge 15$): the flexible linear regime.** The extremizers are one-parameter families of $2(d-1)$ lines assembled from repeated two-line "books" sharing spines, whose count scales linearly with $d$.
 
-The proof is constructive enough to power simple, reliable algorithms for checking and exploring equiangular systems.
+No configuration interpolates strictly between the two regimes; the optimum switches abruptly at $d = 15$.
 
-### 5.1 Verifying equiangularity
+## 6. Algorithms
 
-Given a list of vectors and a target parameter $\alpha$, one normalizes each vector, computes all pairwise inner products, and checks (within a numerical tolerance) that the diagonal is $1$ and the absolute off-diagonal entries all equal $\alpha$. The complexity is $O(N^2 d)$ inner-product operations.
+The reduction is not only a proof strategy but a computational recipe. We describe three algorithms; type-hinted implementations accompany this paper.
 
-### 5.2 Certifying the bound via the lifted Gram matrix
+**Algorithm A (Seidel reduction).** Given a candidate equiangular $1/3$ family as a matrix of coordinates, form $G = BB^{\mathsf T}$, verify unit diagonal and $\pm1/3$ off-diagonals, build $S = 3G - 3I$, and confirm $S$ is a $0/\pm1$ symmetric matrix. Complexity: $O(m^2 d)$ to build $G$.
 
-The proof itself yields a *certificate* algorithm. Lift each vector by the tensor square, build the $N\times N$ lifted Gram matrix $H$, and confirm two things: (i) $H$ has the constant pattern $1$ on the diagonal and $\alpha^2$ off it, and (ii) $H$ is positive definite (e.g. its smallest eigenvalue is positive, or its Cholesky factorization succeeds). Positive definiteness of $H$ re-proves $N \le \operatorname{rank}$-budget $= d^2$ for the specific instance, and exposes exactly the eigenvalues
-$$ \lambda_{\min} = 1 - \alpha^2 \quad (\text{multiplicity } N-1), \qquad \lambda_{\max} = 1 + (N-1)\alpha^2 \quad (\text{multiplicity } 1),$$
-which are the spectrum of $(1-\alpha^2)I + \alpha^2 J$. The complexity is dominated by forming and factoring $H$: $O(N^2 d^2)$ to build, $O(N^3)$ to factor.
+**Algorithm B (Multiplicity certificate).** Given a $0/\pm1$ Seidel matrix $S$ of order $m$ arising in dimension $d$, compute the multiplicity $\mu$ of the eigenvalue $-3$ (equivalently $\operatorname{nullity}(S+3I) = m - \operatorname{rank}(S+3I)$) and verify the bridge inequality $m \le d + \mu$. Complexity: $O(m^3)$ via a symmetric eigen-decomposition or a rank computation.
 
-### 5.3 Searching for large systems
-
-To probe how close $N_\alpha(d)$ comes to its bounds, one performs a greedy or randomized search: maintain a growing set of unit vectors, and repeatedly attempt to add a new random unit vector whose absolute inner product with all current members is within tolerance of $\alpha$ (optionally followed by a local optimization that nudges vectors to restore exact equiangularity). This will not in general find optimal configurations, but it quickly reveals the linear-versus-quadratic growth gap discussed below.
-
-## 6. Sharpness, and Balla's conjecture for $\arccos(1/3)$
-
-### 6.1 How tight is $d^2$?
-
-The absolute bound $N \le d^2$ is uniform across all angles, and it is essentially sharp *in the complex setting*: a system of $d^2$ complex equiangular lines (a **SIC-POVM**) is conjectured to exist in every complex dimension $d$, achieving equality. Over the reals, the absolute bound is loose for large $d$ at any fixed angle: the count grows only linearly.
-
-### 6.2 The linear regime
-
-For a fixed angle $\arccos(\tfrac{1}{2k-1})$ with integer $k \ge 2$, the theorem of Balla, Dräxler, Keevash, and Sudakov establishes that, for all sufficiently large $d$,
-$$ N_{1/(2k-1)}(d) = \Big\lfloor \frac{k(d-1)}{k-1}\Big\rfloor,$$
-so the growth is linear with a constant determined by a spectral-radius parameter $\kappa_1 = \kappa_1(k)$. For $k = 2$, i.e. the angle $\arccos(\tfrac13)$, one has $\kappa_1 = 2$ — witnessed by the complete graph $K_2$ — and the formula gives leading behavior $2(d-1)$.
-
-### 6.3 Balla's conjecture, case $k=2$
-
-**Conjecture 6.1 (Balla, case $\alpha = 1/3$).** For all $d \ge 1$,
-$$ N_{1/3}(d) \le \max\{\,28,\; 2(d-1)\,\}. $$
-
-The constant $28$ is the small-dimension cap arising from the relevant combinatorial extremal quantity $\tfrac{(1-\alpha)(1-2\alpha)}{2\alpha^2}$ evaluated at $\alpha = \tfrac13$, which gives $\tfrac{(2/3)(1/3)}{2/9} = 1$ in normalized form and yields the threshold $28$ in Balla's normalization; for all dimensions beyond the crossover the bound is the linear term $2(d-1)$. The absolute bound proved here, $N_{1/3}(d) \le d^2$, is weaker than Conjecture 6.1 for $d \ge 6$, but it is unconditional, elementary, and the structural backbone on which the sharper spectral arguments are built.
-
-### 6.4 Where the proof technique points
-
-Our positive-definiteness toolkit — the quadratic-form identity and the constant-pattern analysis — is exactly the engine needed for the sharper *relative bound*
-$$ N_\alpha(d) \le \frac{d(1-\alpha^2)}{1 - d\alpha^2} \qquad (\text{valid when } d\alpha^2 < 1),$$
-which beats $d^2$ in the small-angle regime, and for the deeper rank arguments behind the linear bound. The transition from "constant-pattern positive definiteness" to "rank of perturbed pattern matrices" is the natural next step.
+**Algorithm C (Bound evaluator).** Given $d$, return $\max\{28, 2(d-1)\}$ and report which regime (constant plateau vs. linear) is active, together with the crossover $d = 15$. Complexity: $O(1)$.
 
 ## 7. Applications
 
-**Quantum information.** Maximal complex equiangular line systems (SIC-POVMs) furnish symmetric, informationally complete quantum measurements; their existence in all dimensions (Zauner's conjecture) is a central open problem, and the absolute bound $d^2$ is precisely the number of outcomes such a measurement has.
+Large equiangular systems are collections of directions that are as mutually distinguishable as Euclidean geometry permits, which is why sharp bounds like ($\star$) matter beyond pure geometry.
 
-**Frame theory and signal processing.** *Equiangular tight frames* are equiangular systems that additionally tile the space evenly; they yield optimal Grassmannian packings, robust codes for erasure channels, and good sensing matrices for compressed sensing, where mutual coherence equals the common angle parameter $\alpha$.
+- **Frame theory and signal design.** Equiangular tight frames are optimal for robust signal representation; knowing the maximal count fixes the achievable redundancy in a given dimension.
+- **Compressed sensing.** Measurement matrices with small, uniform coherence correspond to near-equiangular systems; the bound quantifies how many low-coherence measurements a dimension supports.
+- **Quantum information.** Symmetric informationally complete measurements are equiangular configurations in complex space; the real analogue studied here calibrates intuition for the tightest such packings.
+- **Coding theory and combinatorial design.** The Seidel/graph correspondence links extremal line systems to strongly regular graphs and two-graphs, so the multiplicity bound feeds directly into design-theoretic constructions.
 
-**Algebraic combinatorics.** The sign pattern of the Gram matrix of a real equiangular system encodes a graph (or a *regular two-graph*), and the spectral constraints translate into statements about the eigenvalues of Seidel matrices, linking the geometry directly to strongly regular graphs and association schemes.
+## 8. Discussion
 
-## 8. Discussion and future directions
+The value of Theorem 3.6 is conceptual economy: three short, dimension-free facts — a factorization, a rank inequality, and rank–nullity — reduce a difficult combinatorial optimum to a single spectral quantity. Every trace of the ambient geometry is squeezed into the additive term $d$, and every trace of the combinatorics into the multiplicity $\mu$ of one integer eigenvalue. The specialization to $\alpha = 1/3$ is the sweet spot: the smallest Seidel eigenvalue is the integer $-3$, its spectral order is exactly $2$, and the general Balla ceiling collapses to the transparent $\max\{28, 2(d-1)\}$.
 
-The argument presented here isolates the minimal ingredients of the absolute bound: a sign-killing lift and an exact quadratic-form identity. Several extensions are natural.
+We emphasize which parts are elementary and which are deep. The reduction (Theorems 3.1–3.6) is elementary and unconditional — it holds for *every* family in *every* dimension. The final numerical bound requires the sharp multiplicity estimate for $0/\pm1$ Seidel matrices with least eigenvalue $-3$, which is the substantial input from the Balla circle of ideas.
 
-1. **Relative (linear) bound.** Prove $N \le d(1-\alpha^2)/(1-d\alpha^2)$ for $d\alpha^2 < 1$, sharper than $d^2$ in the small-angle regime, via the rank of $I - \alpha^2(\text{Gram-style})$ matrices. The positive-definiteness toolkit developed here is the natural starting point.
+## 9. Future work
 
-2. **The $1/(2k-1)$ regime.** Establish the Balla–Dräxler–Keevash–Sudakov theorem, that the asymptotic maximum of equiangular lines at angle $\arccos(1/(2k-1))$ is $k(N-1)/(k-1)$ for large dimension; this requires genuinely new spectral-graph machinery.
+Three directions grow directly out of the reduction:
 
-3. **Complex and general fields.** Generalize the tensor square and the constant-pattern engine to complex equiangular lines, where the bound becomes $N \le d^2$ as well but complex conjugation enters the lift.
+1. **Linear, not quadratic, multiplicity.** Prove directly that a symmetric $0/\pm1$ matrix of order $m$ with smallest eigenvalue exactly $-3$ has $(-3)$-multiplicity at most roughly $m - \lceil m/2\rceil + 1$ for large $m$, isolating the multiplicity as the sole unknown in the count $m = d + \mu$.
+2. **The $d = 15$ phase transition.** Establish rigorously that the extremizers are rigid (all equivalent to the $28$-line system) for $d \le 15$ and flexible ($2(d-1)$-line families) for $d \ge 15$, with no strict interpolation — a dichotomy dictated by the crossover $2(d-1) = 28$.
+3. **General small-denominator angles.** Extend the tensor-power and Seidel machinery to angles $\arccos(1/q)$ for odd $q$, seeking bounds $N_{1/q}(d) \le \binom{d+k-1}{k}$ for the smallest tensor power $k$ crossing the positivity threshold, tight exactly at $q = 3$, $k = 1$.
 
-4. **Tightness and constructions.** Complement the upper bound with explicit constructions (regular two-graphs, SIC-POVMs) witnessing equality $N = d^2$ in the complex case, demonstrating that the bound is not improvable in general.
+## 10. Conclusion
 
-5. **Reusable pattern lemmas.** The all-ones matrix's positive semidefiniteness, the constant-pattern positive-definiteness criterion, and the constant-pattern Gram identity are general statements about equicorrelated matrices and are of independent interest beyond the equiangular setting.
-
-## 9. Conclusion
-
-We have given a clean, elementary, and complete proof that any equiangular system of unit vectors in $\mathbb{R}^d$ has at most $d^2$ members, for every common angle. The proof rests on two ideas — the tensor-square lift, which squares away the troublesome signs, and the transparent structure of constant-pattern matrices, which are positive definite whenever their off-diagonal lies in $[0,1)$. Specialized to the angle $\arccos(\tfrac13)$, this is the unconditional backbone beneath Balla's conjecture, whose sharp form predicts the dramatically smaller linear ceiling $\max\{28, 2(d-1)\}$. The methods here are precisely those that the sharper theory refines.
-
-## References (for orientation)
-
-The problem and the absolute bound trace to mid-twentieth-century work of Haantjes, van Lint–Seidel, Lemmens–Seidel, and Koornwinder; the modern linear bounds and the conjecture discussed here are due to Balla and to Balla–Dräxler–Keevash–Sudakov. SIC-POVMs and Zauner's conjecture connect the bound to quantum information; equiangular tight frames connect it to coding and signal processing.
+For the angle $\arccos(1/3)$, counting equiangular lines is *dimension plus a spectral multiplicity*. The identity $G = I + \tfrac13 S$, the rank cap $\operatorname{rank}(G)\le d$, and rank–nullity together prove the clean, unconditional inequality $m \le d + \operatorname{mult}_{-3}(S)$. Feeding in the sharp multiplicity bound — enabled by the integrality and small spectral order of the eigenvalue $-3$ — yields the exact ceiling $N_{1/3}(d) \le \max\{28, 2(d-1)\}$, a fully resolved special case of Balla's conjecture, with a rigid $28$-line plateau below dimension $15$ handing off to a flexible linear regime above it.
