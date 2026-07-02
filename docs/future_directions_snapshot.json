@@ -22,7 +22,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6501d983",
     "description": "Building on cycle b87dcfdc (Q=0.844), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domain_bridges": [],
     "domains": [
@@ -34,7 +34,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "b87dcfdc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T01:15:10.773662+00:00",
     "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -1303,7 +1303,7 @@
       "unit_distance_graphs",
       "geometric_fractional_chromatic_number"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "38047daa",
     "description": "The paper demonstrates that augmenting the 27-vertex unit-distance graph G27 with a specific pair of vertices results in a 29-vertex graph with geometric fractional chromatic number strictly greater than 4. The authors note that such augmentations are exceedingly rare. This conjecture posits that, up to Euclidean isometry, this specific 2-vertex augmentation is the unique way to add two vertices to G27 such that the resulting unit-distance graph has a geometric fractional chromatic number strictly greater than 4.",
     "domain_bridges": [
       "Linear Programming",
@@ -1320,7 +1320,7 @@
     "proof_strategy": "Formalize the 27-vertex graph G27 and the convex polytope of its 23 extremal geometric fractional colorings. Then, perform a verified exhaustive search or algebraic classification over all possible 2-vertex additions, verifying that only the specific pair identified in the paper yields a unit-distance graph where the geometric fractional chromatic number exceeds 4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T03:31:25.863443+00:00",
     "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
   },
@@ -5074,11 +5074,41 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Djokovic-Winkler relation",
+      "partial cubes",
+      "isometric embeddings",
+      "Cayley graphs of abelian groups",
+      "GF(2) linear algebra"
+    ],
+    "consumed_by_exp_id": "f4462f16",
+    "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling ℓ: V(G) → (Z/2Z)^(t − rank(A)) satisfies d_G(u,v) ≥ d_H(ℓ(u), ℓ(v)) for all u,v ∈ V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t − rank(A)). That is, the labeling never stretches distances—it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
+    "domain_bridges": [
+      "graph_metrics",
+      "group_theory",
+      "linear_algebra_over_ZMod_2",
+      "cayley_graphs"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2962",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that each edge of G maps to an edge of H under the quotient labeling (by construction of the labeling from the edge partition), so every path in G maps to a path of equal or shorter length in H. The key step is proving that the GF(2) quotient construction preserves adjacency: if uv ∈ E(G) and uv lies in partition class i, then ℓ(u) and ℓ(v) differ in exactly the coordinate corresponding to the image of class i in the quotient. The non-stretching then follows by taking d_G(u,v) as the infimum over all path lengths, which bound the Hamming distance of the labels from below.",
+    "research_mode": "team",
+    "source_exp_id": "2606.29391v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-30T07:59:17.309660+00:00",
+    "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Lemmens-Seidel-73",
       "Balla-Draxler-Keevash-Sudakov-18",
       "Jiang-Polyanskii-20"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "946cfca3",
     "description": "For all d ≥ 1, the maximum number of equiangular lines in ℝ^d with common angle arccos(1/3) satisfies N_{1/3}(d) ≤ max{28, 2(d − 1)}. This is a special case of Balla's conjecture where the spectral radius order κ₁ = 2 (witnessed by K₂), making the bound reduce to max{(1−1/9)(1−2/9)/(2/81), ⌊2(d−1)/1⌋} = max{28, 2(d−1)}.",
     "domain_bridges": [
       "spectral_graph_theory",
@@ -5095,7 +5125,7 @@
     "proof_strategy": "First establish κ₁ = 2 by showing K₂ has spectral radius 1 and no 1-vertex graph has spectral radius 1. Then use the relative bound / Lemmens-Seidel framework: given a set of equiangular lines with angle arccos(1/3), form the Gram matrix M with diagonal 1 and off-diagonal ±1/3. The eigenvalue structure of M combined with the spectral radius order constraint yields the linear upper bound 2(d−1) for d ≥ 15, and the absolute bound gives 28 for small d.",
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for α = 1/3"
   },
@@ -6019,7 +6049,7 @@
       "majorization",
       "stochastic_optimization"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50540462",
     "description": "For every fixed N ≥ 2 and j ≥ 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
     "domain_bridges": [
       "probability_theory ↔ convex_analysis",
@@ -6036,7 +6066,7 @@
     "proof_strategy": "Express E_p[U_j^N] via the Adler–Oren–Ross integral formula, then verify the Schur-concavity of the integrand as a function of p using the Schur–Ostrowski criterion (the partial derivative monotonicity condition). Since the uniform distribution majorizes every probability vector on the simplex, Schur-concavity implies it uniquely maximizes the expectation. Uniqueness follows from strict Schur-concavity on the interior of the simplex.",
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T19:44:33.195784+00:00",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
@@ -9540,7 +9570,7 @@
       "math.CO",
       "cs.IT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce447eb1",
     "description": "For any fixed integers 1 ≤ s ≤ t, any real γ with 0 < γ ≤ 1, and any positive integer m, the upper bound |D_t(x)∩D_t(y)| ≤ (m γ^{t-s}/(t-s)!) n^{t-s} + O(n^{t-s-1}) proved in the paper is asymptotically tight. Specifically, for every ε > 0 there exist arbitrarily long n and q‑ary sequences x, y of length n having at most γ n runs and satisfying |D_s(x)∩D_s(y)| = m such that |D_t(x)∩D_t(y)| ≥ (1‑ε)·(m γ^{t-s}/(t-s)!) n^{t-s}.",
     "domain_bridges": [
       "coding theory",
@@ -9556,7 +9586,7 @@
     "proof_strategy": "Construct a finite ‘seed’ pair (x0, y0) over a small alphabet that realizes exactly m intersections in D_s and has a prescribed run density γ0. Then repeat this seed periodically to obtain long sequences x, y of length n whose total run count is at most γ n (by choosing the repetition rate appropriately). The deletions that contribute to D_t(x)∩D_t(y) essentially factor into independent choices from each block, giving a count asymptotic to (m γ^{t-s}/(t-s)!) n^{t-s}. A careful counting of cross‑block interactions shows that the lower bound holds up to any multiplicative 1‑ε factor for sufficiently large n.",
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T17:48:00.763550+00:00",
     "title": "Tightness of the run‑constrained deletion‑ball intersection bound"
   },
@@ -10575,7 +10605,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d301edf",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -10588,7 +10618,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

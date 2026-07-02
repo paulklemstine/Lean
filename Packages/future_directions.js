@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6501d983",
     "description": "Building on cycle b87dcfdc (Q=0.844), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "Novelty"
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94436,
     "research_mode": "team",
     "source_exp_id": "b87dcfdc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T01:15:10.773662+00:00",
     "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
   },
@@ -940,7 +940,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "38047daa",
     "description": "The paper demonstrates that augmenting the 27-vertex unit-distance graph G27 with a specific pair of vertices results in a 29-vertex graph with geometric fractional chromatic number strictly greater than 4. The authors note that such augmentations are exceedingly rare. This conjecture posits that, up to Euclidean isometry, this specific 2-vertex augmentation is the unique way to add two vertices to G27 such that the resulting unit-distance graph has a geometric fractional chromatic number strictly greater than 4.",
     "domains": [
       "Pythagorean",
@@ -950,7 +950,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-29T03:31:25.863443+00:00",
     "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
   },
@@ -2956,7 +2956,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Local-to-Global KKL Transfer for Simplicial Complexes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4462f16",
+    "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling \u2113: V(G) \u2192 (Z/2Z)^(t \u2212 rank(A)) satisfies d_G(u,v) \u2265 d_H(\u2113(u), \u2113(v)) for all u,v \u2208 V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t \u2212 rank(A)). That is, the labeling never stretches distances\u2014it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2962",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.29391v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-30T07:59:17.309660+00:00",
+    "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
+  },
+  {
+    "consumed_by_exp_id": "946cfca3",
     "description": "For all d \u2265 1, the maximum number of equiangular lines in \u211d^d with common angle arccos(1/3) satisfies N_{1/3}(d) \u2264 max{28, 2(d \u2212 1)}. This is a special case of Balla's conjecture where the spectral radius order \u03ba\u2081 = 2 (witnessed by K\u2082), making the bound reduce to max{(1\u22121/9)(1\u22122/9)/(2/81), \u230a2(d\u22121)/1\u230b} = max{28, 2(d\u22121)}.",
     "domains": [
       "Pythagorean",
@@ -2966,7 +2980,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for \u03b1 = 1/3"
   },
@@ -3451,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "P-positions of Halve Nim coincide with ordinary Nim P-positions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50540462",
     "description": "For every fixed N \u2265 2 and j \u2265 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
     "domains": [
       "Computation",
@@ -3461,7 +3475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-30T19:44:33.195784+00:00",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
@@ -5345,7 +5359,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound on Two-Height Core Solutions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce447eb1",
     "description": "For any fixed integers 1 \u2264 s \u2264 t, any real \u03b3 with 0 < \u03b3 \u2264 1, and any positive integer m, the upper bound |D_t(x)\u2229D_t(y)| \u2264 (m \u03b3^{t-s}/(t-s)!) n^{t-s} + O(n^{t-s-1}) proved in the paper is asymptotically tight. Specifically, for every \u03b5 > 0 there exist arbitrarily long n and q\u2011ary sequences x, y of length n having at most \u03b3 n runs and satisfying |D_s(x)\u2229D_s(y)| = m such that |D_t(x)\u2229D_t(y)| \u2265 (1\u2011\u03b5)\u00b7(m \u03b3^{t-s}/(t-s)!) n^{t-s}.",
     "domains": [
       "Bridges"
@@ -5354,7 +5368,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-01T17:48:00.763550+00:00",
     "title": "Tightness of the run\u2011constrained deletion\u2011ball intersection bound"
   },
@@ -6045,7 +6059,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d301edf",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -6055,7 +6069,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
