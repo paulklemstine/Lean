@@ -51,7 +51,7 @@ As payoff we read off two emblematic homotopy cardinalities:
 * `linearOrderSpecies_actionGroupoidCard`        — `|L[n] ⫽ Sₙ| = 1` (torsor / contractible).
 -/
 import Mathlib
-import Catalog.Applications.SpeciesConvolutionRing
+import Applications.SpeciesConvolutionRing
 
 open scoped BigOperators
 open PowerSeries Finset MulAction

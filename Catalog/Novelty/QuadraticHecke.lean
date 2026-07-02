@@ -53,7 +53,7 @@ Galois representations, one nontrivial each — the analytic fingerprint of the 
 subfield of the prime cyclotomic field.
 -/
 import Mathlib
-import Catalog.NumberTheory.Langlands.GaloisDuality
+import NumberTheory.Langlands.GaloisDuality
 
 open Polynomial
 

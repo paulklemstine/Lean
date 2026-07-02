@@ -1,4 +1,4 @@
-import Catalog.Novelty.CircuitComplexity.Basic
+import Novelty.CircuitComplexity.Basic
 
 /-!
 # The Karchmer–Wigderson connection (upper-bound direction)

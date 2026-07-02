@@ -38,7 +38,7 @@ draws the exact boundary, which we record rather than hide.
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Catalog.Algebra.NormalNumbers.Basic
+import Algebra.NormalNumbers.Basic
 
 namespace NormalConstants
 
