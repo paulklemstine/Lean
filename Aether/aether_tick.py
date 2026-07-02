@@ -968,10 +968,16 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             job = extractor.inflight[pid]
             
             # --- NEW: Close GitHub injected issue if completed ---
-            if job.status == "integrated" and getattr(job, 'github_issue', 0) > 0:
+            if getattr(job, 'github_issue', None):
                 try:
                     import github_injector
-                    comment = f"Aether has completed researching this direction!\n\n**Quality Score**: {job.quality_score:.3f}\n**Theorems Proven**: {job.theorem_count}\n\nThe results have been integrated into the Aether Catalog."
+                    if job.status == "integrated":
+                        comment = f"Aether has completed researching this direction!\n\n**Quality Score**: {job.quality_score:.3f}\n**Theorems Proven**: {job.theorem_count}\n\nThe results have been integrated into the Aether Catalog."
+                    elif job.status == "rejected":
+                        comment = f"Aether completed researching this direction, but the results did not meet the quality threshold for integration.\n\n**Quality Score**: {job.quality_score:.3f}\n**Theorems Proven**: {job.theorem_count}"
+                    else:
+                        comment = f"Aether encountered an error or failed to process this direction.\n\n**Status**: {job.status}\n**Error**: {getattr(job, 'error_message', 'Unknown error')}"
+                    
                     github_injector.close_injected_direction_with_comment(job.github_issue, comment)
                 except Exception as e:
                     print(f"[Tick] Failed to close GitHub issue {job.github_issue}: {e}")
