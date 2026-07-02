@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "7f2fc4f9",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0040",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T17:32:30.536227+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "consumed_by_exp_id": "bb37b806",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -525,7 +511,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No solutions for odd exponents in the coprime case"
   },
   {
-    "consumed_by_exp_id": "bfccf79e",
+    "consumed_by_exp_id": "",
     "description": "For the graph G_N^{(2)} obtained by deleting edges of circular distances \u00b11, \u00b12 from the complete graph K_N, the effective resistance R_{N,\u2113}^{(2)} between vertices at distance \u2113 satisfies a fourth-order linear recurrence with coefficients depending on N. Specifically, for N \u2265 5 and 0 \u2264 \u2113 \u2264 N-5, the sequence R_{N,\u2113}^{(2)} satisfies R_{\u2113+4} + R_{\u2113+3} - (N-1)R_{\u2113+2} + R_{\u2113+1} + R_\u2113 = 0.",
     "domains": [
       "Bridges"
@@ -534,7 +520,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:46:19.799142+00:00",
     "title": "Recurrence for Effective Resistance in G_N^{(2)}"
   },
@@ -565,6 +551,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-02T17:31:40.243045+00:00",
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
+  },
+  {
+    "consumed_by_exp_id": "7f2fc4f9",
+    "description": "For any linear equation E with more than 2h variables and zero sum of coefficients, there exists a constant c < 1 such that any B_h subset of Z_N avoiding pairwise distinct solutions to E has size at most c * N^{1/h}. This conjecture posits that the upper bound on the size of such sets is strictly less than the maximum possible size of a B_h set by a constant factor.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0040",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30767v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T17:52:13.002762+00:00",
+    "title": "Constant Factor Reduction in Size for B_h Sets Avoiding Linear Equations with More Than 2h Variables"
   },
   {
     "consumed_by_exp_id": "",
@@ -973,6 +973,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T17:32:26.643836+00:00",
     "title": "Existence of Uniform-Scaled Spanning Subgraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any fixed integer r\u22652 and any collection of graphs H1,\u202f\u2026, Hr, let \u03c8 = \u2225_{j=1}^r (\u03c967(Hj)\u20111). Define the critical edge density \u03c0_c = 1\u20111/\u03c8. For a host graph G0 on n vertices with edge density exactly \u03c0_c\u2212\u03b5 (for a fixed \u03b5>0) consider the random\u2011perturbation model where we add m random edges (without replacement). Then the minimal number of edges that forces the perturbed graph to be (H1,\u202f\u2026, Hr)_v\u2011Ramsey satisfies\n\n    m_c(n) = \u03c0_c * (n choose 2) + \u03a8(n^{3/2}),\n\nand there is a sharp threshold: if m = m_c(n) + \u03c9(n^{3/2}) then with high probability the perturbed graph is (H1,\u202f\u2026, Hr)_v\u2011Ramsey; if m = m_c(n) \u2212 \u03c9(n^{3/2}) then with high probability it is not. Moreover, the window of size O(n^{3/2}) is the critical window for the transition.",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0069",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30548v2",
+    "status": "available",
+    "timestamp": "2026-07-02T17:52:40.366510+00:00",
+    "title": "Precise threshold for vertex\u2011Ramsey property in random perturbations"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,24 +1,5 @@
 [
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "7f2fc4f9",
-    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0040",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T17:32:30.536227+00:00",
-    "title": "Prove Fermats Little Theorem for p=5"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "bb37b806",
@@ -878,7 +859,7 @@
     "catalog_references": [
       "arXiv:2601.XXXXX"
     ],
-    "consumed_by_exp_id": "bfccf79e",
+    "consumed_by_exp_id": "",
     "description": "For the graph G_N^{(2)} obtained by deleting edges of circular distances ±1, ±2 from the complete graph K_N, the effective resistance R_{N,ℓ}^{(2)} between vertices at distance ℓ satisfies a fourth-order linear recurrence with coefficients depending on N. Specifically, for N ≥ 5 and 0 ≤ ℓ ≤ N-5, the sequence R_{N,ℓ}^{(2)} satisfies R_{ℓ+4} + R_{ℓ+3} - (N-1)R_{ℓ+2} + R_{ℓ+1} + R_ℓ = 0.",
     "domain_bridges": [
       "spectral graph theory",
@@ -894,7 +875,7 @@
     "proof_strategy": "Use the trigonometric sum representation R_{N,ℓ}^{(2)} = (1/N) ∑_{k=1}^{N-1} (1 - cos(2πkℓ/N)) / (N - 1 - 2 cos(2πk/N) - 2 cos(4πk/N)) from the paper. Multiply the denominator by e^{2iπk/N} to obtain the characteristic polynomial z^4 + z^3 - (N-1)z^2 + z + 1. Show that the sequence satisfies the corresponding linear recurrence by verifying that the summand is annihilated by the recurrence operator, or by using the closed-form expression in terms of the generalized Bejaia-Pisa sequences introduced in the paper.",
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:46:19.799142+00:00",
     "title": "Recurrence for Effective Resistance in G_N^{(2)}"
   },
@@ -949,6 +930,33 @@
     "status": "in_progress",
     "timestamp": "2026-07-02T17:31:40.243045+00:00",
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Roth's theorem on 3-term arithmetic progressions",
+      "Conlon-Fox-Sudakov-Zhao on Sidon sets avoiding 5-variable equations",
+      "Fourier pseudorandomness in additive combinatorics"
+    ],
+    "consumed_by_exp_id": "7f2fc4f9",
+    "description": "For any linear equation E with more than 2h variables and zero sum of coefficients, there exists a constant c < 1 such that any B_h subset of Z_N avoiding pairwise distinct solutions to E has size at most c * N^{1/h}. This conjecture posits that the upper bound on the size of such sets is strictly less than the maximum possible size of a B_h set by a constant factor.",
+    "domain_bridges": [
+      "Fourier analysis",
+      "Graph theory (chromatic thresholds)",
+      "Extremal set theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0040",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish a uniform constant factor bound by leveraging Fourier analytic techniques to show that avoiding equations with sufficiently many variables forces structural constraints on B_h sets, thereby reducing their maximum achievable size below the theoretical upper bound. This would involve analyzing the Fourier coefficients of the indicator function of such sets and demonstrating that they must be small in a manner that limits the set's cardinality.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30767v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T17:52:13.002762+00:00",
+    "title": "Constant Factor Reduction in Size for B_h Sets Avoiding Linear Equations with More Than 2h Variables"
   },
   {
     "ambition_level": "extension",
@@ -1661,6 +1669,38 @@
     "status": "available",
     "timestamp": "2026-07-02T17:32:26.643836+00:00",
     "title": "Existence of Uniform-Scaled Spanning Subgraphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "LuczakRucińskiVoigt1993",
+      "Kreuter1996",
+      "DasMorrisTreglown2020",
+      "Ramsey1929"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any fixed integer r≥2 and any collection of graphs H1, …, Hr, let ψ = ∥_{j=1}^r (ω67(Hj)‑1). Define the critical edge density π_c = 1‑1/ψ. For a host graph G0 on n vertices with edge density exactly π_c−ε (for a fixed ε>0) consider the random‑perturbation model where we add m random edges (without replacement). Then the minimal number of edges that forces the perturbed graph to be (H1, …, Hr)_v‑Ramsey satisfies\n\n    m_c(n) = π_c * (n choose 2) + Ψ(n^{3/2}),\n\nand there is a sharp threshold: if m = m_c(n) + ω(n^{3/2}) then with high probability the perturbed graph is (H1, …, Hr)_v‑Ramsey; if m = m_c(n) − ω(n^{3/2}) then with high probability it is not. Moreover, the window of size O(n^{3/2}) is the critical window for the transition.",
+    "domain_bridges": [
+      "probabilistic method",
+      "random graphs",
+      "Turán theory",
+      "chromatic number",
+      "supersaturation",
+      "concentration inequalities"
+    ],
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_0069",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Prove a stability theorem characterising vertex‑Ramsey graphs as Turán‑type graphs with only a few missing edges. 2. Derive supersaturation results for the vertex‑Ramsey property in terms of edge density. 3. Apply differential‑equation / sparse random graph techniques to the random‑edge addition process, establishing that once the density exceeds π_c by ≈ n^{−1/2} the property holds w.h.p., and that below this threshold it fails w.h.p. via a second‑moment or Chernoff argument. 4. Combine these to locate the critical window of width θ(n^{3/2}).",
+    "research_mode": "team",
+    "source_exp_id": "2606.30548v2",
+    "status": "available",
+    "timestamp": "2026-07-02T17:52:40.366510+00:00",
+    "title": "Precise threshold for vertex‑Ramsey property in random perturbations"
   },
   {
     "ambition_level": "extension",
