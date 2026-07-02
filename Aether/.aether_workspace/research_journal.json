@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cf34309d",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Erdős–Rényi threshold phenomena\n\nDerived from this cycle's findings in `Model.lean`, `SecondMoment.lean`,\n`Concrete.lean`, and the new `Threshold.lean`. This cycle established th",
-      "quality_score": 0.584,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-27T01:31:25",
-      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-    },
-    {
       "cycle_id": "1394b2e6",
       "domain": "Applications",
       "key_insight": "# Future Directions — Self-dual string C-groups of alternating groups\n\nDerived from this cycle's findings (the formalized `Foundations.lean` and\n`RankArithmetic.lean`). Each conjecture is falsifiable",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-01T23:54:40",
       "title": "Minimum Independence Ratio Constraint"
+    },
+    {
+      "cycle_id": "307e78f2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nBold, testable conjectures arising from the study of the coefficient sequence\n$r(n)$ of Ramanujan's third order mock theta function\n$\\rho(q)=\\sum_{m\\ge0} q^{2m(m+1)}\\big/\\prod_{k=",
+      "quality_score": 0.46884433623188404,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-07-02T00:47:10",
+      "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function ρ(q)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7976880000000001
     }
   ],
-  "last_updated": "2026-07-01T23:54:40",
+  "last_updated": "2026-07-02T00:47:10",
   "open_questions": [
     {
       "context": "This file develops a small but complete and `sorry`-free combinatorial foundation",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "230b77ce",
-        "quality": 0.76576,
-        "theorems": 15,
-        "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-      },
-      {
         "cycle_id": "30133a3d",
         "quality": 0.3375488878571429,
         "theorems": 7,
@@ -3637,6 +3631,12 @@
         "quality": 0.527476,
         "theorems": 8,
         "title": "Minimum Independence Ratio Constraint"
+      },
+      {
+        "cycle_id": "307e78f2",
+        "quality": 0.46884433623188404,
+        "theorems": 6,
+        "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function ρ"
       }
     ],
     "NumberTheory": [
