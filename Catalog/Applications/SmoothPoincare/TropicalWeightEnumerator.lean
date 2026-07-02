@@ -69,7 +69,7 @@ Failure analysis: `Finset.inf'` nonemptiness side-goals are routed through `C.er
 -/
 
 import Mathlib
-import Applications.SmoothPoincare.CodeDirectSum
+import Catalog.Applications.SmoothPoincare.CodeDirectSum
 
 open scoped BigOperators
 
