@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-02T14:13:51.682076+00:00",
+  "last_updated": "2026-07-02T14:43:10.943220+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -27362,6 +27362,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-02T14:13:51.642485+00:00",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5023,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 32,
+      "domain": "NumberTheory",
+      "duration_seconds": 2594.9390795230865,
+      "end_time": 1783003008.5101626,
+      "files_integrated": 7,
+      "job_id": "5a8a4bbe",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6423,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.4455,
+        "novelty": 0.89,
+        "proof_depth": 0.255,
+        "usefulness": 0.5775
+      },
+      "quality_score": 0.562938,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783000413.571083,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-02T14:43:10.890936+00:00",
+      "title": "Improved Constant for Domination in Cartesian Product of Graphs"
     }
   ]
 }
