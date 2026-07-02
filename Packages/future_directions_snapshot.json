@@ -1,5 +1,24 @@
 [
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "e3b2c2b9",
+    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0025",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T10:53:46.099922+00:00",
+    "title": "Prove Fermats Little Theorem for p=5"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "4fd32ea8",
@@ -41,7 +60,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "82e2c894",
+    "consumed_by_exp_id": "ad3e7fdf",
     "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domain_bridges": [],
     "domains": [
@@ -119,7 +138,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "41349be6",
+    "consumed_by_exp_id": "10455700",
     "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
     "domain_bridges": [],
     "domains": [
@@ -436,7 +455,7 @@
       "SteinbergEndomorphisms",
       "CotnerSpringer"
     ],
-    "consumed_by_exp_id": "ce78e135",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any regular unipotent element \\(g\\) in a simply connected semisimple algebraic group \\(G\\) over an algebraically closed field, the scheme‑theoretic stabilizer of its conjugacy class in the center \\(Z(G)\\) is a single reduced point (i.e., trivial).",
     "domain_bridges": [
       "Algebraic geometry",
@@ -452,7 +471,7 @@
     "proof_strategy": "Analyze the centralizer of a regular unipotent element as a unipotent group, show its center is trivial, and use the fact that any non‑trivial central element would contradict the regularity of the orbit.",
     "research_mode": "team",
     "source_exp_id": "2607.00088v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T09:48:50.773388+00:00",
     "title": "Trivial stabilizer for regular unipotent conjugacy classes"
   },
@@ -512,6 +531,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Theorem 1.1 in 'Functional Equations Characterize Dirichlet Characters'"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "If an arithmetic function's completed Dirichlet series satisfies a functional equation with a given conductor and parity, then the function is a primitive Dirichlet character modulo that conductor.",
+    "domain_bridges": [
+      "Analytic number theory",
+      "Algebraic structures of Dirichlet characters"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0024",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Assume the completed L-function Λ(s,f) satisfies the functional equation. 2. Use the functional equation's properties to derive constraints on f(n). 3. Prove f is multiplicative and periodic by analyzing the Euler product structure forced by the equation. 4. Show f matches a primitive Dirichlet character via uniqueness of analytic continuation and the conductor's properties.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00332v1",
+    "status": "available",
+    "timestamp": "2026-07-02T10:53:17.529072+00:00",
+    "title": "Functional Equation Characterizes Primitive Dirichlet Characters"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1.5",
       "Kane's work"
     ],
@@ -522,7 +565,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0024",
+    "id": "fd_0026",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct arithmetic verification",
@@ -550,7 +593,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0025",
+    "id": "fd_0027",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the dominant oscillatory term in the asymptotic expansion near ω and show that its phase enforces sign alternation, except when phase cancellation occurs finitely often or on a sparse set.",
@@ -576,7 +619,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0026",
+    "id": "fd_0028",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive structure of table decompositions",
@@ -602,7 +645,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0027",
+    "id": "fd_0029",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Characterize smooth injective maps on submanifolds via local charts. 2) Bound the Kruskal rank using dimension arguments: each additional point can increase rank by at most 1 until reaching d+1. 3) Relate this rank constraint to dichotomy counts via Cover's lemma. 4) Verify tightness with synthetic low-dimensional examples.",
@@ -628,7 +671,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0028",
+    "id": "fd_0030",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the mod p local Langlands correspondence to relate \\bar{V}_{k,a_p} to smooth mod p representations of GL_2(ℚ_p), then apply the classification of irreducible smooth mod p representations (principal series, special, and supersingular) together with explicit Breuil module calculations for small slopes and a patching argument to extend the result to all fractional slopes < p-1.",
@@ -653,7 +696,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0029",
+    "id": "fd_0031",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic constructions: take a random r-uniform hypergraph with edge probability p = n^{-α} for suitable α to avoid G as a subgraph while ensuring large induced F-free subsets via the deletion method and the hypergraph container method; then apply the first moment method to show existence of induced F-free subgraphs of size at least c (log n)^{β_F}. Matching the upper bound from the paper would establish tightness.",
@@ -679,7 +722,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0030",
+    "id": "fd_0032",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample binary word exists and analyze the combinatorial constraints imposed by the parameterized equivalence relation. Use a pumping‑style argument or an infinite descent on the lengths of minimal forbidden factors to derive a contradiction, exploiting the limited alphabet size and the requirement that all squares must have length ≥ 2k. Alternatively, construct a finite automaton encoding the forbidden factor set and show that it accepts only finite words, contradicting infinitude.",
@@ -705,7 +748,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0031",
+    "id": "fd_0033",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define phi as the golden ratio and implement the floor functions for a(n) and b(n). 2. Define epsilon(j) based on the Fibonacci membership test. 3. Prove the Lemma stating a(F_k) + (-1)^k = b(F_{k-1}) and b(F_k) + (-1)^k = a(F_{k+1}) using Binet's formula. 4. Establish the partition property (A* union B* = N and A* intersect B* = empty) by analyzing the shifts in the Wythoff sequences at Fibonacci indices. 5. Define the permutation q*_j using the ranges A* and B* and prove the involution property q*_q*_j = j for j >= 5 using the complementary nature of LWF and UWF.",
@@ -731,7 +774,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0032",
+    "id": "fd_0034",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the hyper-aperiodic elements method and twelve tiles theorem from the continuous case to show that no Borel homomorphism exists to a tournament on 6 vertices, while constructing a Borel homomorphism to a tournament on 7 vertices.",
@@ -759,7 +802,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0033",
+    "id": "fd_0035",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the five-point topological space explicitly in Lean, define the sheaf categories as diagrams of vector spaces, implement the pairing construction using Ext and tensor product operations, then verify the perfectness condition via dimension counting and the canonical module ω_W.",
@@ -785,7 +828,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0034",
+    "id": "fd_0036",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via graph decomposition and case analysis on maximum degree configurations, building upon techniques from [KKPW] while leveraging constraints from the adjacency condition to reduce color requirements below 5.",
@@ -804,7 +847,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0035",
+    "id": "fd_0037",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive verification on subgroup structures",
@@ -813,6 +856,34 @@
     "status": "available",
     "timestamp": "2026-07-02T10:27:44.557266+00:00",
     "title": "Bidihedral Group Classification"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Galois Theory",
+      "Artin's Lemma",
+      "Orbit-Stabilizer Theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any field E and subgroup H ≤ Aut(E), the extension E/E^H is finite Galois if and only if the lengths of the H-orbits on E are bounded above; equivalently, E/E^H is Galois iff every H-orbit is finite, and finiteness of the extension follows from a uniform bound on those orbit lengths.",
+    "domain_bridges": [
+      "group_theory",
+      "field_theory",
+      "algebraic_geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0038",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Demonstrate that a uniform bound on orbit lengths forces the degree [E : E^H] to be finite, and construct the minimal polynomial of any α as the product of (X - σ(α)) over its orbit, showing separability and normality; then use these facts to prove the equivalence statements.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31900v1",
+    "status": "available",
+    "timestamp": "2026-07-02T10:53:42.375949+00:00",
+    "title": "Orbit Boundedness Criterion for Finite Galois Extensions"
   },
   {
     "ambition_level": "extension",

@@ -3,6 +3,20 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "e3b2c2b9",
+    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_0025",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T10:53:46.099922+00:00",
+    "title": "Prove Fermats Little Theorem for p=5"
+  },
+  {
     "consumed_by_exp_id": "4fd32ea8",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
@@ -32,7 +46,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "82e2c894",
+    "consumed_by_exp_id": "ad3e7fdf",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -90,7 +104,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in NumberTheory"
   },
   {
-    "consumed_by_exp_id": "41349be6",
+    "consumed_by_exp_id": "10455700",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -277,7 +291,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the Minimum Number of b\u2011Invariant Edges in Near\u2011Bipartite Bricks"
   },
   {
-    "consumed_by_exp_id": "ce78e135",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any regular unipotent element \\(g\\) in a simply connected semisimple algebraic group \\(G\\) over an algebraically closed field, the scheme\u2011theoretic stabilizer of its conjugacy class in the center \\(Z(G)\\) is a single reduced point (i.e., trivial).",
     "domains": [
       "Algebra",
@@ -287,7 +301,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00088v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T09:48:50.773388+00:00",
     "title": "Trivial stabilizer for regular unipotent conjugacy classes"
   },
@@ -322,12 +336,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "If an arithmetic function's completed Dirichlet series satisfies a functional equation with a given conductor and parity, then the function is a primitive Dirichlet character modulo that conductor.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0024",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00332v1",
+    "status": "available",
+    "timestamp": "2026-07-02T10:53:17.529072+00:00",
+    "title": "Functional Equation Characterizes Primitive Dirichlet Characters"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0024",
+    "id": "fd_0026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -341,7 +369,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0025",
+    "id": "fd_0027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
@@ -356,7 +384,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0026",
+    "id": "fd_0028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
@@ -370,7 +398,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0027",
+    "id": "fd_0029",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -385,7 +413,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0028",
+    "id": "fd_0030",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -400,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0029",
+    "id": "fd_0031",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00732v1",
@@ -414,7 +442,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0030",
+    "id": "fd_0032",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00674v1",
@@ -428,7 +456,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0031",
+    "id": "fd_0033",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -443,7 +471,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0032",
+    "id": "fd_0034",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00367v1",
@@ -458,7 +486,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0033",
+    "id": "fd_0035",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00238v1",
@@ -473,7 +501,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0034",
+    "id": "fd_0036",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00212v1",
@@ -487,13 +515,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0035",
+    "id": "fd_0037",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00352v1",
     "status": "available",
     "timestamp": "2026-07-02T10:27:44.557266+00:00",
     "title": "Bidihedral Group Classification"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any field E and subgroup H \u2264 Aut(E), the extension E/E^H is finite Galois if and only if the lengths of the H-orbits on E are bounded above; equivalently, E/E^H is Galois iff every H-orbit is finite, and finiteness of the extension follows from a uniform bound on those orbit lengths.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0038",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31900v1",
+    "status": "available",
+    "timestamp": "2026-07-02T10:53:42.375949+00:00",
+    "title": "Orbit Boundedness Criterion for Finite Galois Extensions"
   },
   {
     "consumed_by_exp_id": "",
