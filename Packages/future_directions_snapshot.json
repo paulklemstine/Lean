@@ -2,26 +2,26 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "4770cef4",
+    "consumed_by_exp_id": "33ce8829",
     "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
     "domain_bridges": [],
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0043",
+    "id": "fd_0044",
     "lineage_refs": [],
     "priority_score": 1000.0,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-07-02T18:35:34.334583+00:00",
+    "timestamp": "2026-07-02T18:57:54.382398+00:00",
     "title": "Prove Fermats Little Theorem for p=5"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "bb37b806",
+    "consumed_by_exp_id": "",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domain_bridges": [],
     "domains": [
@@ -34,7 +34,7 @@
     "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.029563+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -60,7 +60,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "87346215",
+    "consumed_by_exp_id": "",
     "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domain_bridges": [],
     "domains": [
@@ -73,7 +73,7 @@
     "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
@@ -100,7 +100,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8d820831",
+    "consumed_by_exp_id": "",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domain_bridges": [],
     "domains": [
@@ -112,7 +112,7 @@
     "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -138,7 +138,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "076754c3",
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
     "domain_bridges": [],
     "domains": [
@@ -151,7 +151,7 @@
     "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.030558+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -853,7 +853,7 @@
       "Noubissie, Togbé and Zhang 2020",
       "Fujita and Le 2024"
     ],
-    "consumed_by_exp_id": "8833345a",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
     "domain_bridges": [
       "Pell equations",
@@ -869,7 +869,7 @@
     "proof_strategy": "Apply a descent argument combined with effective bounds from linear forms in logarithms to show that for odd n>1 the product (a^n+1)(b^n+1) cannot be a perfect square when a and b are coprime.",
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T16:13:17.108600+00:00",
     "title": "No solutions for odd exponents in the coprime case"
   },
@@ -930,7 +930,7 @@
     "catalog_references": [
       "math.NT"
     ],
-    "consumed_by_exp_id": "0a63402c",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any normalized Hecke eigenform f of even weight for SL(2,Z), any integer j ≥ 1, and any even m with 2 ≤ m ≤ 12, the number of sign changes of the j-th symmetric power L-function coefficient λ_sym^j f(n) as n runs over integers representable as a sum of m squares up to x is at least C·x/(log x) for some constant C>0 depending only on f, j, and m.",
     "domain_bridges": [
       "Automorphic forms",
@@ -946,7 +946,7 @@
     "proof_strategy": "Use an asymptotic formula for the second moment of λ_sym^j f(n) sums of m squares, together with spectral sieve to obtain a power-saving term moment; then apply a Turán-type lemma to obtain a power-saving bound on the variance of λ_sym^j f(n) over sums of m squares via Voronoi summation and Weil bounds for Kloosterman sums. Combine this with a large sieve inequality to improve the bound on the first moment. Finally, apply a Turán-type lemma to translate a nontrivial bound on the first moment into a quantitative lower bound for the number of sign changes.",
     "research_mode": "team",
     "source_exp_id": "2606.30603v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T17:31:40.243045+00:00",
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
   },
@@ -957,7 +957,7 @@
       "Conlon-Fox-Sudakov-Zhao on Sidon sets avoiding 5-variable equations",
       "Fourier pseudorandomness in additive combinatorics"
     ],
-    "consumed_by_exp_id": "7f2fc4f9",
+    "consumed_by_exp_id": "",
     "description": "For any linear equation E with more than 2h variables and zero sum of coefficients, there exists a constant c < 1 such that any B_h subset of Z_N avoiding pairwise distinct solutions to E has size at most c * N^{1/h}. This conjecture posits that the upper bound on the size of such sets is strictly less than the maximum possible size of a B_h set by a constant factor.",
     "domain_bridges": [
       "Fourier analysis",
@@ -973,7 +973,7 @@
     "proof_strategy": "Establish a uniform constant factor bound by leveraging Fourier analytic techniques to show that avoiding equations with sufficiently many variables forces structural constraints on B_h sets, thereby reducing their maximum achievable size below the theoretical upper bound. This would involve analyzing the Fourier coefficients of the indicator function of such sets and demonstrating that they must be small in a manner that limits the set's cardinality.",
     "research_mode": "team",
     "source_exp_id": "2606.30767v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T17:52:13.002762+00:00",
     "title": "Constant Factor Reduction in Size for B_h Sets Avoiding Linear Equations with More Than 2h Variables"
   },
@@ -1033,6 +1033,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Janson (2023) - Ancestries in random d-DAGs (theorems on descendant distributions)",
+      "Jan2023 - Recent work on descendants of n in G_n",
+      "Drm2009 - Random recursive trees (d=1 case)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the random recursive DAG G_n with out-degree d ≥ 2, the rescaled number of descendants |D_n|/n^{1/d} converges in distribution to a Gamma distribution with shape parameter d and rate parameter 1 as n → ∞.",
+    "domain_bridges": [
+      "Multi-draw Pólya urn processes",
+      "Stochastic approximation methods",
+      "Limit theorems for combinatorial structures"
+    ],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_0043",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Generalize Janson's martingale-based analysis using refined Pólya urn techniques and derive explicit scaling limits through characteristic function methods",
+    "research_mode": "team",
+    "source_exp_id": "2606.30475v1",
+    "status": "available",
+    "timestamp": "2026-07-02T18:56:55.867431+00:00",
+    "title": "Limit Distribution of Descendants in Random d-DAGs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1.5",
       "Kane's work"
     ],
@@ -1043,7 +1070,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0044",
+    "id": "fd_0045",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct arithmetic verification",
@@ -1071,7 +1098,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0045",
+    "id": "fd_0046",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the dominant oscillatory term in the asymptotic expansion near ω and show that its phase enforces sign alternation, except when phase cancellation occurs finitely often or on a sparse set.",
@@ -1097,7 +1124,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0046",
+    "id": "fd_0047",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive structure of table decompositions",
@@ -1123,7 +1150,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0047",
+    "id": "fd_0048",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Characterize smooth injective maps on submanifolds via local charts. 2) Bound the Kruskal rank using dimension arguments: each additional point can increase rank by at most 1 until reaching d+1. 3) Relate this rank constraint to dichotomy counts via Cover's lemma. 4) Verify tightness with synthetic low-dimensional examples.",
@@ -1149,7 +1176,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0048",
+    "id": "fd_0049",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the mod p local Langlands correspondence to relate \\bar{V}_{k,a_p} to smooth mod p representations of GL_2(ℚ_p), then apply the classification of irreducible smooth mod p representations (principal series, special, and supersingular) together with explicit Breuil module calculations for small slopes and a patching argument to extend the result to all fractional slopes < p-1.",
@@ -1174,7 +1201,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0049",
+    "id": "fd_0050",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic constructions: take a random r-uniform hypergraph with edge probability p = n^{-α} for suitable α to avoid G as a subgraph while ensuring large induced F-free subsets via the deletion method and the hypergraph container method; then apply the first moment method to show existence of induced F-free subgraphs of size at least c (log n)^{β_F}. Matching the upper bound from the paper would establish tightness.",
@@ -1200,7 +1227,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0050",
+    "id": "fd_0051",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample binary word exists and analyze the combinatorial constraints imposed by the parameterized equivalence relation. Use a pumping‑style argument or an infinite descent on the lengths of minimal forbidden factors to derive a contradiction, exploiting the limited alphabet size and the requirement that all squares must have length ≥ 2k. Alternatively, construct a finite automaton encoding the forbidden factor set and show that it accepts only finite words, contradicting infinitude.",
@@ -1226,7 +1253,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0051",
+    "id": "fd_0052",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define phi as the golden ratio and implement the floor functions for a(n) and b(n). 2. Define epsilon(j) based on the Fibonacci membership test. 3. Prove the Lemma stating a(F_k) + (-1)^k = b(F_{k-1}) and b(F_k) + (-1)^k = a(F_{k+1}) using Binet's formula. 4. Establish the partition property (A* union B* = N and A* intersect B* = empty) by analyzing the shifts in the Wythoff sequences at Fibonacci indices. 5. Define the permutation q*_j using the ranges A* and B* and prove the involution property q*_q*_j = j for j >= 5 using the complementary nature of LWF and UWF.",
@@ -1252,7 +1279,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0052",
+    "id": "fd_0053",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the hyper-aperiodic elements method and twelve tiles theorem from the continuous case to show that no Borel homomorphism exists to a tournament on 6 vertices, while constructing a Borel homomorphism to a tournament on 7 vertices.",
@@ -1280,7 +1307,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0053",
+    "id": "fd_0054",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the five-point topological space explicitly in Lean, define the sheaf categories as diagrams of vector spaces, implement the pairing construction using Ext and tensor product operations, then verify the perfectness condition via dimension counting and the canonical module ω_W.",
@@ -1306,7 +1333,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0054",
+    "id": "fd_0055",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via graph decomposition and case analysis on maximum degree configurations, building upon techniques from [KKPW] while leveraging constraints from the adjacency condition to reduce color requirements below 5.",
@@ -1325,7 +1352,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0055",
+    "id": "fd_0056",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive verification on subgroup structures",
@@ -1353,7 +1380,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0056",
+    "id": "fd_0057",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate that a uniform bound on orbit lengths forces the degree [E : E^H] to be finite, and construct the minimal polynomial of any α as the product of (X - σ(α)) over its orbit, showing separability and normality; then use these facts to prove the equivalence statements.",
@@ -1377,7 +1404,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0057",
+    "id": "fd_0058",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the known non-algebraicity of θ_k for very general ppav (EGFS) and a combinatorial lemma concerning F_p-solutions of graphic matroids in Albanese graphs. In Lean, develop intersection theory on abelian varieties, define θ_k via the Chow ring, and prove the divisibility by reducing modulo p and analyzing the resulting finite schemes to force p | m.",
@@ -1408,7 +1435,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0058",
+    "id": "fd_0059",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Use the explicit counterexamples constructed by Katz (e.g. $(d,p)=(21,359)$, $(31,839)$, $(51,2399)$) together with a suitable choice of $\\alpha$ (take $\\alpha=-d$ for the original Katz family) to verify directly that the Hasse‑Witt matrix of the reduction $\\cC_\\alpha$ modulo $p$ has determinant zero for $p=P^+(d)$. 2. Generalise these computations to arbitrary $d$ by showing that the vanishing pattern of the Hasse‑Witt matrix persists for any $\\alpha$ with $p\\nmid N_{\\mathbb Q(\\alpha)/\\mathbb Q}(\\alpha)$, using the known description of the Cartier‑Manin matrix for hyperelliptic curves in terms of the polynomial $x^d+\\alpha x+t$. 3. Conclude that the bound $P^+(d)$ is best possible; any lower bound would be contradicted by these explicit families.",
@@ -1433,7 +1460,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0059",
+    "id": "fd_0060",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate via graph decomposition that P4-tidy graphs can be partitioned into clique-forest-like components connected through controlled bipartite interfaces, enabling step-by-step reconfiguration while maintaining invariants at P4-critical vertices.",
@@ -1460,7 +1487,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0060",
+    "id": "fd_0061",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define in Lean the Greenberg–Wiles local factor c_p(A) using the ramification‑measuring maps 𝔅_p and 𝔏_p from the paper. Prove that for a constant‑torsion family the global ℓ‑Selmer group decomposes as the restricted product of the local cohomology groups with the prescribed local conditions, so its order equals the product of the orders of the local quotients H¹(G_p,M)/H¹_𝔏(p)(G_p,M). Show that for almost all primes the unramified subgroup H¹_ur(G_p,M) is maximal among admissible local conditions, which forces the inequality to be an equality. Use Chebotarev density to argue that the set of primes where extra ramification could increase the Selmer size has density zero. Formalise the density argument via Dirichlet density in Lean, and combine with the explicit description of the Greenberg–Wiles pairing Ω_𝔏 to obtain the desired equality for density‑one set of primes.",
@@ -1487,7 +1514,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0061",
+    "id": "fd_0062",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Scholze's construction of automorphic determinants to Z_ℓ-coefficients, use the comparison isomorphism between étale and de Rham cohomology (via p-adic Hodge theory) to obtain de Rham Galois representations, then apply the p-adic local Langlands correspondence for GL_n over local fields to match the local Langlands parameter at places dividing ℓ with the automorphic data.",
@@ -1506,7 +1533,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0062",
+    "id": "fd_0063",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "exhaustive enumeration",
@@ -1532,7 +1559,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0063",
+    "id": "fd_0064",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic étale cohomology, comparison with characteristic zero via lifting, and apply known finiteness theorems for tamely ramified fundamental groups.",
@@ -1551,7 +1578,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0064",
+    "id": "fd_0065",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "explicit modular form analysis",
@@ -1577,7 +1604,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0065",
+    "id": "fd_0066",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use generating functions for distinct partitions and logarithmic differentiation, analogous to the proof of Theorem 1 for SOME(n). The generating function for DSOME(n) is ∑_{n≥1} DSOME(n) q^n = (-q;q)_∞ ∑_{m≥1} m q^m/(1+q^m). By manipulating the series, one can derive the identity.",
@@ -1610,7 +1637,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0066",
+    "id": "fd_0067",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a random partition of the ground set into at most r parts, reducing the problem to a small number of coordinates and solving the inequality exactly via elementary estimates.",
@@ -1633,7 +1660,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0067",
+    "id": "fd_0068",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "constructive_counterexample",
@@ -1660,7 +1687,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0068",
+    "id": "fd_0069",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the rank inequalities to show that any minimal obstruction must contain a monochromatic cycle; argue by edge‑deletion minimality that no other structure can exist.",
@@ -1688,7 +1715,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0069",
+    "id": "fd_0070",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Matomäki-Teräväinen dense-model/transference framework from ternary to binary products in the number field setting. This requires overcoming the coset obstructions that currently only allow a positive proportion of classes to be represented by two primes. Key steps: (1) refine the multiplicative dense model for prime ideals to capture binary correlations, (2) improve the treatment of exceptional characters using Wu's subconvexity bound, (3) adapt the transference argument from product sets in finite abelian groups to handle the narrower binary case, possibly using a more sophisticated version of the Cauchy-Davenport or Kneser-type inequalities for the ray class group.",
@@ -1713,7 +1740,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0070",
+    "id": "fd_0071",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Reduction to finite obstruction models followed by automated satisfiability checking via CP-SAT tools",
@@ -1732,7 +1759,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0071",
+    "id": "fd_0072",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Density-based argument with probabilistic bounds",
@@ -1764,7 +1791,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_0072",
+    "id": "fd_0073",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Prove a stability theorem characterising vertex‑Ramsey graphs as Turán‑type graphs with only a few missing edges. 2. Derive supersaturation results for the vertex‑Ramsey property in terms of edge density. 3. Apply differential‑equation / sparse random graph techniques to the random‑edge addition process, establishing that once the density exceeds π_c by ≈ n^{−1/2} the property holds w.h.p., and that below this threshold it fails w.h.p. via a second‑moment or Chernoff argument. 4. Combine these to locate the critical window of width θ(n^{3/2}).",
@@ -1788,7 +1815,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0073",
+    "id": "fd_0074",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "density_increment_lemma",
@@ -1818,7 +1845,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0074",
+    "id": "fd_0075",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the refined formula for h(α, β) as a sum of integrals I(P_j(α, β)) over rational polytopes. Show each integral is real-analytic in (α, β) by differentiating under the integral sign (justified by uniform bounds on the polytopes' parameter dependence). Prove the series of derivatives converges uniformly on compact subsets of the domain using the exponential decay of terms when β - α ≥ 0.02 + ε. The continuity on the boundary follows from uniform convergence up to the boundary.",
@@ -1827,6 +1854,34 @@
     "status": "available",
     "timestamp": "2026-07-02T18:35:30.838855+00:00",
     "title": "Analyticity of the localized divisor density function"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Khinchin24",
+      "Jarník29",
+      "Bugeaud03"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any monotone ψ : ℕ → (0,∞) with Σ_{n≥1} ψ(n)·(q1...qn) < ∞ and lim_{n→∞} log qn / log(q1...qn) = 0, the exact set E_c(ψ) = {x∈[0,1) : x-ω_n(x) < ψ(n)/(q1...qn) i.o.} has Hausdorff dimension dim_H E_c(ψ) = 2 / λ, where λ = liminf_{n→∞} (-log ψ(n)) / log(q1...qn).",
+    "domain_bridges": [
+      "Dynamical Systems",
+      "Fractal Geometry",
+      "Ergodic Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "MachineLearning"
+    ],
+    "id": "fd_0076",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine the second Borel-Cantelli lemma with a suitable mass transference principle to estimate Hausdorff measure of cylinder sets defined by the Cantor series, then apply standard dimension formulas.",
+    "research_mode": "team",
+    "source_exp_id": "2606.30435v1",
+    "status": "available",
+    "timestamp": "2026-07-02T18:57:50.869620+00:00",
+    "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
   },
   {
     "ambition_level": "extension",
@@ -1889,7 +1944,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1de8cc44",
+    "consumed_by_exp_id": "",
     "description": "Propose a framework where the computational complexity of simulating quantum state correlations in noncommutative geometries determines the hardness of certain mathematical problems. The hypothesis suggests that a polynomial-time algorithm for such problems would imply a breakdown of the cyclicity of Hilbert space dimensionality.",
     "domain_bridges": [],
     "domains": [
@@ -1901,7 +1956,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:18:32.052109+00:00",
     "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
   }

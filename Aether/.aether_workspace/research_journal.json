@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2e08d081",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — restricted-upper-index binomial GCDs\n\nDerived from this cycle's findings on `F(k) = gcd_{2 ≤ q ≤ k} C(q·k, k)` and its\nrelation to OEIS A080170 `D(k) = gcd_{2 ≤ q ≤ k+1} C(q·k, k",
-      "quality_score": 0.71083,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-27T20:09:16",
-      "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
-    },
-    {
       "cycle_id": "e3ff7cf5",
       "domain": "Applications",
       "key_insight": "# Future Directions — Semi-induced stars `S_{k,1}` and the suboptimal envelope\n\nDerived from this cycle's findings (see `Basic.lean`, `TuranBridge.lean`, `ComputationalEvidence.md`).\nThis cycle proved",
@@ -499,19 +489,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-02T18:11:16",
       "title": "Prove Fermats Little Theorem for p=5"
+    },
+    {
+      "cycle_id": "3e52c27d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Manifold-Constrained Dichotomy Counts\n\nThis cycle established that the number of linearly-separable labelings a\nclassifier family can realize on data drawn from a low-dimensional",
+      "quality_score": 0.7916800000000002,
+      "sorry_count": 4,
+      "theorem_count": 23,
+      "timestamp": "2026-07-02T18:55:06",
+      "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4a61f37f",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — EML Interpolation Theory (Stone–Weierstrass for exp-log Networks)\n\nDerived from the cycle that produced `EML/MonotoneSeparation.lean` (monotone\nseparation ⇒ density) and `EML/Qua",
-      "quality_score": 0.38234703875969,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T09:42:49",
-      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-    },
     {
       "cycle_id": "710a2a8b",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-07-02T18:11:16",
       "title": "Prove Fermats Little Theorem for p=5"
+    },
+    {
+      "cycle_id": "3e52c27d",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Manifold-Constrained Dichotomy Counts\n\nThis cycle established that the number of linearly-separable labelings a\nclassifier family can realize on data drawn from a low-dimensional",
+      "quality_score": 0.7916800000000002,
+      "sorry_count": 4,
+      "theorem_count": 23,
+      "timestamp": "2026-07-02T18:55:06",
+      "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3c64518a",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.79664
-    },
-    {
-      "cycle_id": "3c64518a",
-      "domain": "Novelty",
-      "name": "isDaisy_origin",
-      "quality": 0.79664
-    },
-    {
-      "cycle_id": "3c64518a",
-      "domain": "Novelty",
-      "name": "isDaisy_top",
-      "quality": 0.79664
-    },
     {
       "cycle_id": "0a73d6d7",
       "domain": "Probability",
@@ -2803,17 +2785,28 @@
       "domain": "Bridges",
       "name": "dvd_of_zmod",
       "quality": 0.712488
+    },
+    {
+      "cycle_id": "3e52c27d",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.7916800000000002
+    },
+    {
+      "cycle_id": "3e52c27d",
+      "domain": "Novelty",
+      "name": "coverCount_one_left",
+      "quality": 0.7916800000000002
+    },
+    {
+      "cycle_id": "3e52c27d",
+      "domain": "Novelty",
+      "name": "coverCount_one_right",
+      "quality": 0.7916800000000002
     }
   ],
-  "last_updated": "2026-07-02T18:11:16",
+  "last_updated": "2026-07-02T18:55:06",
   "open_questions": [
-    {
-      "context": "contains no `sorry`.  Corner case: `m = 0` or `k = 0` — handled because `unitsCRT` only needs",
-      "cycle_id": "f39e2cb3",
-      "domain": "NumberTheory",
-      "sorry_count": 1,
-      "timestamp": "2026-06-24T04:32:03"
-    },
     {
       "context": "All results are fully proved; there are no `sorry`s. -/",
       "cycle_id": "1d985141",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 2,
       "timestamp": "2026-07-02T15:54:30"
+    },
+    {
+      "context": "sorry; -    MixedRadix.value (fun i => i + 1) c k = FactorialNumberSystem.value c k := by sorry; -    MixedRadix.Valid (fun i => i + 1) c k ↔ FactorialNumberSystem.Valid c k := by sorry",
+      "cycle_id": "3e52c27d",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-07-02T18:55:06"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f29abd01",
-        "quality": 0.61208,
-        "theorems": 8,
-        "title": "Non-3-Colorability of C4-Free Diameter-2 Graphs with Maximum Degree at least 17"
-      },
-      {
         "cycle_id": "acbfd883",
         "quality": 0.65944,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.7303200000000001,
         "theorems": 8,
         "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+      },
+      {
+        "cycle_id": "3e52c27d",
+        "quality": 0.7916800000000002,
+        "theorems": 23,
+        "title": "Manifold-Constrained Kruskal Rank Bounds on Dichotomy Counts"
       }
     ],
     "NumberTheory": [
