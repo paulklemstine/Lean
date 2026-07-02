@@ -61,7 +61,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "813a28d3",
+    "consumed_by_exp_id": "",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domain_bridges": [],
     "domains": [
@@ -74,7 +74,7 @@
     "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.027554+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
   },
@@ -592,6 +592,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "heStratificationsReductionShimura2017",
+      "gortzFullyHodgeNewton2019"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For the unramified GU(1,n-1) Rapoport–Zink space with arbitrary parahoric level, a Kottwitz–Rapoport (KR) stratum indexed by an admissible element w is entirely contained in the basic locus if and only if the image of w in the finite Weyl group of the special fiber is a Coxeter element (i.e., has maximal length).",
+    "domain_bridges": [
+      "Ekedahl–Kottwitz–Oort–Rapoport stratification",
+      "Bruhat–Tits stratification",
+      "Kottwitz–Rapoport stratification"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0027",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show a bijection between admissible elements and vertices of the associated Bruhat–Tits building; compute the image of w in the finite Weyl group; prove that Coxeter elements correspond exactly to those strata lying in the basic locus using existing inclusion results and the description of the basic locus via the Newton polygon.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31940v1",
+    "status": "available",
+    "timestamp": "2026-07-02T11:56:39.543407+00:00",
+    "title": "Basic Strata in Unramified GU(1,n-1) Rapoport–Zink Spaces"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1.5",
       "Kane's work"
     ],
@@ -602,7 +629,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0027",
+    "id": "fd_0028",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct arithmetic verification",
@@ -630,7 +657,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0028",
+    "id": "fd_0029",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the dominant oscillatory term in the asymptotic expansion near ω and show that its phase enforces sign alternation, except when phase cancellation occurs finitely often or on a sparse set.",
@@ -656,7 +683,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0029",
+    "id": "fd_0030",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive structure of table decompositions",
@@ -682,7 +709,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0030",
+    "id": "fd_0031",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Characterize smooth injective maps on submanifolds via local charts. 2) Bound the Kruskal rank using dimension arguments: each additional point can increase rank by at most 1 until reaching d+1. 3) Relate this rank constraint to dichotomy counts via Cover's lemma. 4) Verify tightness with synthetic low-dimensional examples.",
@@ -708,7 +735,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0031",
+    "id": "fd_0032",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the mod p local Langlands correspondence to relate \\bar{V}_{k,a_p} to smooth mod p representations of GL_2(ℚ_p), then apply the classification of irreducible smooth mod p representations (principal series, special, and supersingular) together with explicit Breuil module calculations for small slopes and a patching argument to extend the result to all fractional slopes < p-1.",
@@ -733,7 +760,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0032",
+    "id": "fd_0033",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic constructions: take a random r-uniform hypergraph with edge probability p = n^{-α} for suitable α to avoid G as a subgraph while ensuring large induced F-free subsets via the deletion method and the hypergraph container method; then apply the first moment method to show existence of induced F-free subgraphs of size at least c (log n)^{β_F}. Matching the upper bound from the paper would establish tightness.",
@@ -759,7 +786,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0033",
+    "id": "fd_0034",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample binary word exists and analyze the combinatorial constraints imposed by the parameterized equivalence relation. Use a pumping‑style argument or an infinite descent on the lengths of minimal forbidden factors to derive a contradiction, exploiting the limited alphabet size and the requirement that all squares must have length ≥ 2k. Alternatively, construct a finite automaton encoding the forbidden factor set and show that it accepts only finite words, contradicting infinitude.",
@@ -785,7 +812,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0034",
+    "id": "fd_0035",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define phi as the golden ratio and implement the floor functions for a(n) and b(n). 2. Define epsilon(j) based on the Fibonacci membership test. 3. Prove the Lemma stating a(F_k) + (-1)^k = b(F_{k-1}) and b(F_k) + (-1)^k = a(F_{k+1}) using Binet's formula. 4. Establish the partition property (A* union B* = N and A* intersect B* = empty) by analyzing the shifts in the Wythoff sequences at Fibonacci indices. 5. Define the permutation q*_j using the ranges A* and B* and prove the involution property q*_q*_j = j for j >= 5 using the complementary nature of LWF and UWF.",
@@ -811,7 +838,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0035",
+    "id": "fd_0036",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the hyper-aperiodic elements method and twelve tiles theorem from the continuous case to show that no Borel homomorphism exists to a tournament on 6 vertices, while constructing a Borel homomorphism to a tournament on 7 vertices.",
@@ -839,7 +866,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0036",
+    "id": "fd_0037",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the five-point topological space explicitly in Lean, define the sheaf categories as diagrams of vector spaces, implement the pairing construction using Ext and tensor product operations, then verify the perfectness condition via dimension counting and the canonical module ω_W.",
@@ -865,7 +892,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0037",
+    "id": "fd_0038",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via graph decomposition and case analysis on maximum degree configurations, building upon techniques from [KKPW] while leveraging constraints from the adjacency condition to reduce color requirements below 5.",
@@ -884,7 +911,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0038",
+    "id": "fd_0039",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive verification on subgroup structures",
@@ -912,7 +939,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0039",
+    "id": "fd_0040",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate that a uniform bound on orbit lengths forces the degree [E : E^H] to be finite, and construct the minimal polynomial of any α as the product of (X - σ(α)) over its orbit, showing separability and normality; then use these facts to prove the equivalence statements.",
@@ -936,7 +963,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0040",
+    "id": "fd_0041",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the known non-algebraicity of θ_k for very general ppav (EGFS) and a combinatorial lemma concerning F_p-solutions of graphic matroids in Albanese graphs. In Lean, develop intersection theory on abelian varieties, define θ_k via the Chow ring, and prove the divisibility by reducing modulo p and analyzing the resulting finite schemes to force p | m.",
@@ -967,7 +994,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0041",
+    "id": "fd_0042",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Use the explicit counterexamples constructed by Katz (e.g. $(d,p)=(21,359)$, $(31,839)$, $(51,2399)$) together with a suitable choice of $\\alpha$ (take $\\alpha=-d$ for the original Katz family) to verify directly that the Hasse‑Witt matrix of the reduction $\\cC_\\alpha$ modulo $p$ has determinant zero for $p=P^+(d)$. 2. Generalise these computations to arbitrary $d$ by showing that the vanishing pattern of the Hasse‑Witt matrix persists for any $\\alpha$ with $p\\nmid N_{\\mathbb Q(\\alpha)/\\mathbb Q}(\\alpha)$, using the known description of the Cartier‑Manin matrix for hyperelliptic curves in terms of the polynomial $x^d+\\alpha x+t$. 3. Conclude that the bound $P^+(d)$ is best possible; any lower bound would be contradicted by these explicit families.",
@@ -976,6 +1003,31 @@
     "status": "available",
     "timestamp": "2026-07-02T11:33:13.036923+00:00",
     "title": "Sharpness of the ordinary bound for hyperelliptic families"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "JOURNAL_REF_1",
+      "CONFERENCE_REF_2"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any two independent sets I and I' in a P4-tidy graph G, a token sliding reconfiguration of I into I' exists if and only if they share the same cardinality and every induced P4 in G has a vertex in I ∩ I' or is resolved by a vertex not in I ∪ I'. This condition ensures that reconfiguration can proceed through local sliding moves without creating forbidden induced P4 structures.",
+    "domain_bridges": [
+      "token sliding algorithms",
+      "perfect graph theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0043",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Demonstrate via graph decomposition that P4-tidy graphs can be partitioned into clique-forest-like components connected through controlled bipartite interfaces, enabling step-by-step reconfiguration while maintaining invariants at P4-critical vertices.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31815v1",
+    "status": "available",
+    "timestamp": "2026-07-02T11:58:37.009714+00:00",
+    "title": "Reconfigurable Independent Sets in P4-Tidy Graphs via Token Sliding"
   },
   {
     "ambition_level": "extension",

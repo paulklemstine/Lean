@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "43f6ae62",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Code-Based Cryptography (McEliece / Goppa)\n\nDerived from this cycle's findings in `LinearCode.lean`, `GoppaDistance.lean`,\nand `Parameters.lean`. Each conjecture is bold, falsifi",
-      "quality_score": 0.7796,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-27T07:21:54",
-      "title": "Code-Based Cryptography: McEliece from Goppa Codes"
-    },
-    {
       "cycle_id": "669193db",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Delaunay minicenter refinement & approximate Carathéodory\n\nThis cycle added three files to the `DelaunayContraction` catalog:\n\n* `PerturbedContraction.lean` — inhomogeneous contr",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-02T11:13:24",
       "title": "Prove Fermats Little Theorem for p=5"
+    },
+    {
+      "cycle_id": "e39940c9",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\n*Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces*\n\nThis cycle established a rigorous dictionary between a linear recurrence and a\nsingle non-commuting transf",
+      "quality_score": 0.45987362,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-02T11:55:27",
+      "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7303200000000001
     }
   ],
-  "last_updated": "2026-07-02T11:13:24",
+  "last_updated": "2026-07-02T11:55:27",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "26902e54",
-        "quality": 0.4953453636363636,
-        "theorems": 34,
-        "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-      },
-      {
         "cycle_id": "60ec8c30",
         "quality": 0.48337107438016536,
         "theorems": 39,
@@ -3947,6 +3941,12 @@
         "quality": 0.65777,
         "theorems": 6,
         "title": "Digit Sum Formula for Prime Reciprocals with Half-Order Periods"
+      },
+      {
+        "cycle_id": "e39940c9",
+        "quality": 0.45987362,
+        "theorems": 8,
+        "title": "Entanglement-Inspired Algorithmic Complexity in Noncommutative Spaces"
       }
     ],
     "Tropical": [
