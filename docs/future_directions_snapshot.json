@@ -1,194 +1,53 @@
 [
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Dermanjian, 2023; Bousquet-Mélou & Chapoton, 2024"
-    ],
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "For each integer m ≥ 1, the number of greedy m-Tamari intervals of size n equals the number of bipartite planar maps with m+1 components",
+    "description": "Conjecture that for any algebraically closed field F of characteristic 0, any integer k ≥ 2, and any nonzero polynomial n ∈ F[x], a set A ⊂ F[x] with the property that ab + n is a k-th power in F[x] for all distinct a,b ∈ A has cardinality at most 6, unless n is simultaneously a square and a k-th power and A consists of constant multiples of the square root of n.",
     "domain_bridges": [
-      "poset theory",
-      "planar combinatorics"
+      "Polynomial rings",
+      "Diophantine geometry"
     ],
     "domains": [
-      "Bridges"
+      "Algebra",
+      "Pythagorean"
     ],
-    "id": "fd_0001",
+    "id": "fd_0000",
     "lineage_refs": [],
     "priority_score": 0.8,
-    "proof_strategy": "Inductive decomposition of greedy intervals aligned with recursive structure of bipartite planar maps",
+    "proof_strategy": "Adapt the determinant criterion and Mason–Stothers generalization used for k ≥ 18 to lower k by incorporating additional symmetry arguments and applying the Combinatorial Nullstellensatz to control degrees; reduce to the constant case via specialization and use known bounds for classical Diophantine tuples over algebraically closed fields.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01165v1",
+    "status": "available",
+    "timestamp": "2026-07-02T04:38:50.244588+00:00",
+    "title": "Absolute bound for generalized Diophantine tuples over polynomial rings for all k ≥ 2"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Bousquet-Mélou & Chapoton (2024)",
+      "Dermenjian (greedy ν-Tamari posets)",
+      "Bipartite planar map theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture generalizes the m=1 result proven in the paper by establishing a bijective correspondence between greedy Tamari intervals and planar (m+1)-constellations for arbitrary m, leveraging recursive decomposition structures analogous to bipartite planar maps. A falsifiable test would involve verifying the equivalence for m=2 via explicit enumeration or decomposition instances.",
+    "domain_bridges": [
+      "Tamari intervals ↔ planar constellations",
+      "Recursive decomposition ↔ bipartite planar maps"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_0000",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Inductive proof on m using recursive decomposition, combined with combinatorial verification of base cases and structural invariants preserved under decomposition steps.",
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
     "status": "available",
-    "timestamp": "2026-07-02T02:03:28.210568+00:00",
-    "title": "Equivalence of Greedy m-Tamari Intervals and Bipartite Planar Maps with m+1 Components"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Drinfeld-Lau-Zink sheared Witt vectors",
-      "EGA I filtered colimit properties",
-      "Böckle's Dieudonné theory for p-divisible groups"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For any filtered system of nilperfect rings {R_i} with colimit R, the canonical map colim ℝW(R_i) → ℝW(R) is an isomorphism of abelian groups. This conjecture addresses the fundamental motivation for sheared Witt vectors: resolving the failure of W(R)/p^n to commute with filtered colimits while preserving essential Dieudonné-theoretic properties.",
-    "domain_bridges": [
-      "Formalization of Witt vectors in mathlib (W. Park, 2023)",
-      "Filtered colimits in commutative algebra libraries",
-      "Perfect rings and Frobenius morphisms in characteristic p"
-    ],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0001",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Establish the isomorphism by proving ℝW preserves filtered colimits through the pullback definition and limit representation. Key steps: (1) Show ℎw commutes appropriately with filtered colimits using nilpotent element control, (2) Prove lim_F commutes with filtered colimits in the category of p-complete rings, (3) Apply the five lemma to the resulting diagram of short exact sequences.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01178v1",
-    "status": "available",
-    "timestamp": "2026-07-02T02:03:55.315381+00:00",
-    "title": "Sheared Witt Vectors Commutation with Filtered Colimits"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Cover1965",
-      "Narayanan2010",
-      "Fefferman2016"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Conjecture that for any set of N points on a d‑dimensional smooth submanifold of ℝ^M and any mapping Φ with Kruskal rank at least d+1, the number of dichotomies C_F(N) realizable by linear separators in the image space satisfies C_F(N) ≤ ∑_{i=0}^{d} binomial(N-1, i), which is strictly tighter than the classical Cover bound when d < M.",
-    "domain_bridges": [
-      "manifold hypothesis",
-      "VC dimension",
-      "Kruskal rank",
-      "covering numbers"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_0002",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Relate the intrinsic dimension d to the VC dimension of the induced hypothesis class, use known VC dimension bounds for linear separators in the image space, and prove the binomial sum bound by induction on N.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01010v1",
-    "status": "available",
-    "timestamp": "2026-07-02T02:49:17.934723+00:00",
-    "title": "Low-Dimensional Dichotomy Bound Conjecture"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Edi92",
-      "Breuil, Breuil",
-      "Bergdall and Levin (BLZ)",
-      "Bergsund Blissett (BGR18)",
-      "Buzzard et al. (BG09; BG13; GG15; BG15)"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "A precise conjecture regarding the irreducibility of the semi-simplification $\bar{V}_{k,a_p}$ under specific bounds on the slope valuation $v(a_p)$, formalizable in Lean 4 through algorithmic verification of shape criteria.",
-    "domain_bridges": [
-      "categorical Galois theory",
-      "local Langlands",
-      "crystalline representations"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0002",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Construct a categorical criterion based on the Jordan-Hölder decomposition and validate via Grothendieck-style lemma formulations in Lean 4.",
-    "research_mode": "team",
-    "source_exp_id": "2607.00930v1",
-    "status": "available",
-    "timestamp": "2026-07-02T02:49:31.521966+00:00",
-    "title": "Reductions Of Crystalline Representations Of Fractional Slope"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "BarmanViswanathan2020",
-      "AlonFellows1995",
-      "Equbal2022"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For every simple graph G with maximum degree Δ, any number of agents ℓ ≥ 2Δ is sufficient to guarantee a stochastic‑dominance envy‑free‐up‑to‑one‑item (SD‑EF1) allocation of the vertices on the agents, and moreover there exists a deterministic polynomial‑time algorithm that produces such an allocation.  This conjecture sharpens the currently known existential and algorithmic bounds of ℓ ≥ 3Δ−1 (and ℓ ≥ (3+ε)Δ) by reducing the required number of agents to 2Δ.\n\nIn graph‑theoretic terms the conjecture asserts that every Δ‑bounded simple graph admits a proper vertex‑colouring with at most 2Δ colours in which each colour class can be mapped to an agent in such a way that the resulting allocation satisfies the SD‑EF1 condition for any common preference order.  The conjecture is falsifiable: a single counter‑example graph with Δ and ℓ < 2Δ that admits no SD‑EF1 allocation would refute it.\n\nThis conjecture is formalizable in Lean 4 as a statement about the existence of a partition of V(G) into ℓ independent sets satisfying the SD‑EF1 inequalities, coupled with an explicit algorithmic construction.\n",
-    "domain_bridges": [
-      "graph_coloring",
-      "fair_division"
-    ],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0003",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The proof would follow a two‑step approach.  First, using a refined greedy colouring algorithm, we would show that any Δ‑bounded graph can be coloured with at most 2Δ colours while preserving an auxiliary structure that guarantees the SD‑EF1 inequalities for any common preference order.  Second, we would implement the colouring as a deterministic polynomial‑time procedure by iteratively resolving conflicts in a way that respects the strong colourability hierarchy introduced in the paper.  The key technical idea is to bound the number of recolourings needed using the fact that each vertex has at most Δ neighbours, thereby ensuring that the total running time is polynomial in |V(G)|.\n",
-    "research_mode": "team",
-    "source_exp_id": "2607.01059v1",
-    "status": "available",
-    "timestamp": "2026-07-02T03:13:12.350397+00:00",
-    "title": "Deterministic 2Δ-Coloring for SD-EF1 under Conflict Constraints"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.NT"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For every positive integer k, there exists an odd integer s such that the 5-rank of the Pólya group of the corresponding Lecacheux quintic field K_s is exactly k. This conjecture refines the paper's result on arbitrarily large 5-ranks by asserting the existence of fields with precisely prescribed rank values.",
-    "domain_bridges": [
-      "Algebraic Number Theory",
-      "Class Field Theory"
-    ],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0004",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Leverage density arguments from the paper to construct explicit examples or use contradiction to show that gaps in rank values cannot exist, potentially via p-adic analysis of the defining polynomials.",
-    "research_mode": "team",
-    "source_exp_id": "2607.00675v1",
-    "status": "available",
-    "timestamp": "2026-07-02T04:19:30.866443+00:00",
-    "title": "Exact 5-Rank Realization for Lecacheux Quintic Fields"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Erdős (1963) on non-Hamiltonian extremal graphs",
-      "Berikkyzy-Hogenson-Kirsch-McDonald (2022) on k-edge hamiltonian extremal problems",
-      "Bondy-Murty Graph Theory textbook"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For an n-vertex graph that is not k-edge hamiltonian, the maximum number of t-stars is exactly g_t(n,k-1,i*) where i* = max{1, d-(k-1)} for some parameter d, and this bound is tight and achieved precisely by the graph G(n,k-1,i*) = K_{i*+k-1} + (K_{n-2i*-k+1} ∪ I_{i*})",
-    "domain_bridges": [
-      "Turán-type extremal problems",
-      "Hamiltonicity and cycle structure",
-      "Star counting in forbidden subgraph families"
-    ],
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_0004",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Prove by induction on k: establish that among all non k-edge hamiltonian graphs, removing a vertex and analyzing the resulting (k-1)-edge hamiltonian subgraph leads to the recursive structure. Use discharging arguments to show that any extremal graph must have the clique-independent set structure of G(n,k-1,i*). Verify tightness by direct computation of t-star count in this construction and showing it achieves the claimed maximum.",
-    "research_mode": "team",
-    "source_exp_id": "2607.00770v1",
-    "status": "available",
-    "timestamp": "2026-07-02T04:20:18.951683+00:00",
-    "title": "Extremal t-star count in non k-edge hamiltonian graphs equals G(n,k-1,i*) construction"
+    "timestamp": "2026-07-02T04:39:20.527111+00:00",
+    "title": "For all integers m ≥ 1, the refined enumeration of greedy Tamari intervals in the greedy m-Tamari poset equals the number of planar (m+1)-constellations, and this equivalence is preserved under recurs"
   },
   {
     "ambition_level": "grand_challenge",
@@ -252,14 +111,14 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0000",
+    "id": "fd_0001",
     "lineage_refs": [],
     "priority_score": 0.7,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
     "status": "available",
-    "timestamp": "2026-07-02T01:33:56.530466+00:00",
+    "timestamp": "2026-07-02T04:39:20.942294+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
@@ -271,14 +130,14 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0000",
+    "id": "fd_0001",
     "lineage_refs": [],
     "priority_score": 0.7,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
     "status": "available",
-    "timestamp": "2026-07-02T01:33:56.530529+00:00",
+    "timestamp": "2026-07-02T04:39:20.942379+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   }
 ]
