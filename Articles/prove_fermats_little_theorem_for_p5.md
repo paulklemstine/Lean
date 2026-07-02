@@ -1,83 +1,77 @@
-# The Number That Always Divides: A Journey Through Fifth Powers
+# The Number Five Keeps a Secret
 
-Pick any whole number you like. Square it, then square it again, then multiply by the original once more — in other words, raise it to the fifth power. Now subtract the number you started with. Something quietly miraculous happens: the answer is *always* a multiple of five.
+Pick any whole number you like. Square it, square that, and multiply once more, so that you have raised your number to the fifth power. Now subtract the number you started with. Whatever you began with — $2$, $-17$, a billion — the result you get is always, without exception, a multiple of five.
 
-Try it. Start with $2$: we have $2^5 = 32$, and $32 - 2 = 30$, which is $5 \times 6$. Start with $3$: $3^5 = 243$, and $243 - 3 = 240 = 5 \times 48$. Start with $7$: $7^5 = 16807$, and $16807 - 7 = 16800 = 5 \times 3360$. No matter what integer you feed in — positive, negative, or zero — the machine spits out a multiple of five.
+Try it. Start with $2$: the fifth power is $32$, and $32 - 2 = 30 = 5 \times 6$. Start with $3$: the fifth power is $243$, and $243 - 3 = 240 = 5 \times 48$. Start with $7$: the fifth power is $16807$, and $16807 - 7 = 16800 = 5 \times 3360$. The pattern never breaks. This is the small, sharp fact at the heart of this article:
 
-This is the statement we will explore:
+> **For every integer $a$, the number $a^5 - a$ is a multiple of $5$.**
 
-> **For every integer $a$, the quantity $a^5 - a$ is divisible by $5$.**
+It looks like a curiosity, a party trick with numbers. But behind it lies a beautiful piece of structure — the arithmetic of *remainders* — and that structure quietly governs everything from the shapes of right triangles to the design of modern cryptography.
 
-It looks like a small curiosity. But it is a doorway. Behind it lies one of the most elegant patterns in all of number theory, a pattern that governs prime numbers, secret codes, and the very last digit of enormous computations. Let us walk through it.
+## Remainders are the real numbers
 
-## A pattern hiding in the differences
+The secret to understanding $a^5 - a$ is to stop looking at the number $a$ itself and start looking at its **remainder when divided by five**. Every integer leaves one of exactly five remainders: $0, 1, 2, 3,$ or $4$. Mathematicians call these the *residues modulo $5$*, and the surprising truth is that for many questions, the residue is all that matters.
 
-The most down-to-earth way to see *why* the pattern holds is to watch how $a^5 - a$ behaves as we march from one integer to the next. Suppose we already know that $n^5 - n$ is a multiple of $5$. What happens when we step up to $n+1$?
+Why? Because remainders respect addition and multiplication. If two numbers leave the same remainder mod $5$, then their squares do too, their cubes do too, and so on. So to check whether $a^5 - a$ is divisible by $5$ for *all* integers, we don't need to test infinitely many numbers. We only need to test five representatives — one for each possible remainder — and the rest follow for free.
 
-Here algebra hands us a gift. If you patiently expand $(n+1)^5$ using the binomial theorem and simplify, you discover a beautiful identity:
+Let us do exactly that. Write each residue $r$ and compute $r^5 - r$ modulo $5$:
 
-$$(n+1)^5 - (n+1) = (n^5 - n) + 5\,(n^4 + 2n^3 + 2n^2 + n).$$
+- $r = 0$: $\;0^5 - 0 = 0$, divisible by $5$. ✓
+- $r = 1$: $\;1^5 - 1 = 0$, divisible by $5$. ✓
+- $r = 2$: $\;2^5 - 2 = 32 - 2 = 30 = 5 \times 6$. ✓
+- $r = 3$: $\;3^5 - 3 = 243 - 3 = 240 = 5 \times 48$. ✓
+- $r = 4$: $\;4^5 - 4 = 1024 - 4 = 1020 = 5 \times 204$. ✓
 
-Look at what this says. The value at $n+1$ equals the value at $n$, *plus* an explicit chunk that is visibly five times a whole number. So if $n^5 - n$ was already a multiple of five, then $(n+1)^5 - (n+1)$ is a multiple of five as well: we simply added another multiple of five to it.
+Five checks, and we are done. Because every integer shares its remainder with one of these five, and because raising to a power preserves remainders, the divisibility we verified for the representatives holds for *all* integers. The infinite has been tamed by the finite.
 
-This is the domino effect mathematicians call **induction**. We knock over the first domino by checking the starting case — when $a = 0$, we get $0^5 - 0 = 0$, which is certainly a multiple of five. Then the identity guarantees each domino topples the next: from $0$ we reach $1$, from $1$ we reach $2$, and so on forever. A symmetric argument, subtracting instead of adding, carries the pattern into the negative integers. Every integer is covered.
+There is an even cleaner way to see the same thing. Split $a^5 - a$ into a product:
+$$
+a^5 - a = a\,(a^4 - 1) = a\,(a-1)(a+1)(a^2+1).
+$$
+Among the three consecutive integers $a-1, a, a+1$ we already capture some of the story, but the piece that pins down the factor of five is $a^2 + 1$ working together with $a$. The residue calculation above is really a statement that these factors conspire so that one of them always brings in a five.
 
-There is something deeply satisfying here. We never had to check infinitely many cases. We found a single algebraic law — that the *gap* between consecutive values is always a clean multiple of five — and let it ripple across the entire number line.
+## The fingerprint of squares
 
-## The same truth, told through a product
+To see *why* five is special here, look at what squares look like modulo $5$. Take each residue and square it:
+$$
+0^2 \equiv 0,\quad 1^2 \equiv 1,\quad 2^2 \equiv 4,\quad 3^2 \equiv 4,\quad 4^2 \equiv 1 \pmod 5.
+$$
+The squares only ever land on $\{0, 1, 4\}$. The values $2$ and $3$ are *never* squares modulo $5$; they are the **quadratic non-residues**. This little table — the fingerprint of squaring mod $5$ — is the engine driving our result and several of its cousins.
 
-There is a second way to see the pattern, and it reveals hidden structure. The expression $a^5 - a$ factors completely into a product of simpler pieces:
+Here is the connection. Fermat's celebrated observation, specialized to the prime five, says that raising to the fifth power sends every residue back to itself:
+$$
+a^5 \equiv a \pmod 5.
+$$
+That is precisely the statement $a^5 - a \equiv 0$. And it is no accident that the exponent is five and the modulus is five: for a prime $p$, raising to the $p$-th power is the identity map on residues. The number of loops it takes for repeated squaring and multiplying to return home is governed by $p - 1 = 4$, and $5 - 1 = 4$ divides the exponent gap $5 - 1 = 4$ exactly. That divisibility of exponents is the deep reason the pattern exists.
 
-$$a^5 - a = (a-1)\,a\,(a+1)\,(a^2 + 1).$$
+## Why right triangles care
 
-Read the first three factors aloud: $a-1$, $a$, $a+1$. Those are three *consecutive* integers. Among any three consecutive integers, one must be a multiple of three, and at least one must be even. That single observation already tells us $a^5 - a$ is divisible by both $2$ and $3$.
+The domain of this work is *Pythagorean* — the study of right triangles with whole-number sides, the triples $(a, b, c)$ with $a^2 + b^2 = c^2$ such as $(3,4,5)$, $(5,12,13)$, and $(8,15,17)$. What could the fifth-power identity possibly have to do with triangles?
 
-And the divisibility by five? That falls out too, once you notice that the five residue classes — the possible remainders when you divide by five — each get sent back to themselves under the fifth-power map. Whatever remainder $a$ leaves upon division by five, $a^5$ leaves the very same remainder, so their difference is swallowed by five.
+Look again at the fingerprint of squares mod $5$: a square is always $0$, $1$, or $4$. Now ask which residues a sum of two squares $a^2 + b^2$ can produce. If neither leg is a multiple of five, each square is $1$ or $4$, and the possible sums modulo $5$ are
+$$
+1+1 = 2,\quad 1+4 = 0,\quad 4+4 = 3 \pmod 5.
+$$
+For $c^2$ to be a genuine square, it must itself be $0$, $1$, or $4$ mod $5$ — and among the sums just listed, only $0$ qualifies. The value $0$ forces $5 \mid c$. In every other case, one of the two legs must already have been a multiple of five.
 
-The factorization does more than re-prove the result. It shows us that five was never the whole story.
+The conclusion is striking: **in every Pythagorean triple, at least one of the three numbers $a, b, c$ is divisible by $5$.** Check the classics: $(3,4,5)$ has its $5$; $(5,12,13)$ has its $5$; $(8,15,17)$ hides it in the $15$; $(20,21,29)$ hides it in the $20$. The residue table you used to prove the fifth-power identity is the very same table that forces a five into every right triangle.
 
-## Sharpening five into thirty
+This is one of three cooperating "obstructions." A parallel analysis modulo $4$ shows one leg is always divisible by four, and modulo $3$ shows one side is always divisible by three. Because $3$, $4$, and $5$ share no common factors, they combine: the product $a \cdot b \cdot c$ of any Pythagorean triple is always divisible by $3 \times 4 \times 5 = 60$. And the humble triangle $(3,4,5)$, whose product is exactly $60$, shows that no larger universal divisor is possible. Five is the final, decisive ingredient in that classical fact.
 
-If $a^5 - a$ is divisible by $2$, by $3$, and by $5$ all at once, and these three numbers share no common factor, then it must be divisible by their product:
+## A pattern that scales
 
-$$2 \times 3 \times 5 = 30.$$
+Once you see the mechanism, you cannot help asking: what about other exponents? The identity $a^5 \equiv a \pmod 5$ is a member of an infinite family. Its most famous sibling is
+$$
+a^3 - a = (a-1)\,a\,(a+1),
+$$
+a product of three consecutive integers, hence always divisible by $6 = 2 \times 3$. Our result adds a five to the pantheon.
 
-This is the reasoning behind the **Chinese Remainder Theorem**: independent divisibility by coprime numbers glues together into divisibility by their product. So the real theorem is sharper than we first suspected:
+The general principle is elegant. For a fixed exponent $k$, the largest constant that divides $a^k - a$ for *every* integer $a$ is the product of all primes $p$ for which $p - 1$ divides $k - 1$. For $k = 3$ the relevant primes are $2$ and $3$ (since $1$ and $2$ both divide $2$), giving $6$. For $k = 5$, the primes $p$ with $p - 1 \mid 4$ are $2, 3,$ and $5$, giving $2 \times 3 \times 5 = 30$. So in fact $a^5 - a$ is *always* divisible by thirty — a strengthening of the divisibility by five that we proved, and one that the same residue technique delivers with a little more bookkeeping.
 
-> **For every integer $a$, the quantity $a^5 - a$ is divisible by $30$.**
+## Why such a small fact matters
 
-Go back to our examples. $2^5 - 2 = 30$. $3^5 - 3 = 240 = 30 \times 8$. $7^5 - 7 = 16800 = 30 \times 560$. Every single one is a multiple of thirty, not merely of five. The table of values $0, 0, 30, 240, 1020, 3120, 7770, 16800, 32760, \ldots$ marches forward in perfect step-thirty rhythm.
+It is tempting to dismiss $a^5 \equiv a \pmod 5$ as trivial. It is anything but. This single congruence is a shard of one of the most consequential ideas in all of mathematics: that arithmetic performed on remainders forms a self-contained world with its own laws. That world is where prime numbers reveal their structure, where the security of internet communication is built (the RSA cryptosystem is, at its core, an elaborate use of exactly this kind of power-then-recover identity), and where deep questions about equations over the integers are made tractable by shrinking them to finite tables.
 
-## A fingerprint on the last digit
+The proof we gave has a philosophical charm too. A statement about *infinitely many* integers was settled by checking *five* cases. This is the recurring miracle of modular arithmetic: the right change of viewpoint collapses an unmanageable infinity into a handful of possibilities you can hold in your hand. The number five keeps a secret — and the secret, once revealed, is that you only ever needed to look in five places.
 
-Here is a consequence you can check in your head. Because $a^5 - a$ is divisible by both $2$ and $5$, it is divisible by $10$. And divisibility by ten is exactly a statement about *last digits*: it means $a^5$ ends in the same decimal digit as $a$.
-
-$$a^5 \equiv a \pmod{10}.$$
-
-Watch it work. $2^5 = 32$ ends in $2$. $3^5 = 243$ ends in $3$. $7^5 = 16807$ ends in $7$. $8^5 = 32768$ ends in $8$. The fifth power leaves your number's final digit completely untouched.
-
-This has a delightful ripple effect. Since raising to the fifth power preserves the last digit, doing it again changes nothing: $a^{25}$, $a^{125}$, and every tower of iterated fifth powers all end in the same digit as $a$ itself. The fifth-power map, viewed through the narrow window of last digits, is a perfect *fixed-point machine* — it moves nothing.
-
-## The grand pattern: Fermat's Little Theorem
-
-Now for the revelation. The number five is not special. What is special is that five is *prime*. The identical phenomenon holds for every prime number:
-
-> **Fermat's Little Theorem.** For every prime $p$ and every integer $a$, the quantity $a^p - a$ is divisible by $p$.
-
-For $p = 2$: $a^2 - a = a(a-1)$ is always even. For $p = 3$: $a^3 - a$ is always a multiple of three. For $p = 5$: our theorem. For $p = 7$: $a^7 - a$ is always a multiple of seven. Our little discovery about fifth powers is a single instance of a law that stretches across all the primes.
-
-Why does prime-ness matter so much? The cleanest explanation lives in *modular arithmetic* — the arithmetic of remainders. When $p$ is prime, the nonzero remainders modulo $p$ form a structure so rigid that raising anything to the $p$-th power sends it right back where it started. Composite numbers lack this rigidity, and the pattern breaks. It is prime-ness, quietly, that makes the whole edifice stand.
-
-And this is not merely elegant. Fermat's Little Theorem is the beating heart of modern cryptography. Every time you send a credit card number over the internet, algorithms descended directly from this theorem scramble and unscramble your data using the arithmetic of primes. The observation that $a^5 - a$ is always a multiple of five is a first, gentle glimpse of the machinery that keeps the digital world secure.
-
-## Why this matters
-
-What begins as a party trick — "your fifth power ends in the same digit!" — turns out to be the tip of a very deep iceberg. We saw three distinct proofs, each illuminating a different facet:
-
-- an **inductive** argument, showing the pattern propagates because consecutive values differ by a multiple of five;
-- a **factorization**, exposing three consecutive integers and thereby divisibility by $2$, $3$, and $5$ at once;
-- a **modular** argument, revealing the pattern as one prime's shadow of the universal Fermat's Little Theorem.
-
-The same fact, seen from three angles, becomes three different kinds of knowledge. That is the quiet joy of mathematics: a humble observation about the number thirty, followed far enough, opens onto primes, remainders, and the secret codes that protect us all.
-
-The next time someone hands you an integer, raise it to the fifth power and subtract. Hand back a multiple of thirty, and know that you are holding a small piece of a very large and very beautiful truth.
+From a card trick with fifth powers, to the hidden five in every right triangle, to the machinery guarding your online life, the same small idea echoes outward. That is the quiet power of a good theorem: it is never really about the number you started with. It is about the pattern that was there all along.

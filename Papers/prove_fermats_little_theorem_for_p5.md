@@ -1,63 +1,66 @@
-# Computational Evidence — `5 ∣ a⁵ − a` and its extensions
+# Computational Evidence — `5 ∣ a^5 - a` and Pythagorean residues mod 5
 
-All checks were run over the integers (Lean `#eval`, `ℤ`/`ℕ`), and every claim was
-subsequently turned into a formally verified theorem (0 sorries).
+## 1. Small-case check of `a^5 - a` divisible by 5
 
-## 1. Small-case calculations
+| a  | a^5    | a^5 - a | (a^5 - a)/5 |
+|----|--------|---------|-------------|
+| -3 | -243   | -240    | -48         |
+| -2 | -32    | -30     | -6          |
+| -1 | -1     |  0      |  0          |
+|  0 |  0     |  0      |  0          |
+|  1 |  1     |  0      |  0          |
+|  2 |  32    |  30     |  6          |
+|  3 |  243   |  240    |  48         |
+|  4 |  1024  |  1020   |  204        |
+|  5 |  3125  |  3120   |  624        |
+|  6 |  7776  |  7770   |  1554       |
 
-`a⁵ − a` for small `a`:
+Every value of `a^5 - a` is an exact multiple of 5. No counterexample was found
+over `-100 ≤ a ≤ 100`.
 
-| a  | a⁵    | a⁵ − a | (a⁵ − a)/5 |
-|----|-------|--------|------------|
-| 0  | 0     | 0      | 0          |
-| 1  | 1     | 0      | 0          |
-| 2  | 32    | 30     | 6          |
-| 3  | 243   | 240    | 48         |
-| 4  | 1024  | 1020   | 204        |
-| 5  | 3125  | 3120   | 624        |
-| 6  | 7776  | 7770   | 1554       |
-| −2 | −32   | −30    | −6         |
+## 2. Fifth powers mod 5 (Frobenius / Fermat)
 
-Every entry of `a⁵ − a` is a multiple of `5` (indeed of `10`).
+For `x` in `{0,1,2,3,4}`: `x^5 mod 5 = x`.
 
-## 2. Residue table for `a² + 1 (mod 5)`
+- 0^5 = 0 ≡ 0
+- 1^5 = 1 ≡ 1
+- 2^5 = 32 ≡ 2
+- 3^5 = 243 ≡ 3
+- 4^5 = 1024 ≡ 4
 
-| a mod 5 | a² mod 5 | (a²+1) mod 5 |
-|---------|----------|--------------|
-| 0       | 0        | 1            |
-| 1       | 1        | 2            |
-| 2       | 4        | 0            |
-| 3       | 4        | 0            |
-| 4       | 1        | 2            |
+So the map `x ↦ x^5` is the identity on `ℤ/5ℤ`; this is exactly `5 ∣ a^5 - a`.
 
-So `5 ∣ a² + 1` exactly for `a ≡ 2, 3 (mod 5)`; together with the consecutive
-factors `(a−1)·a·(a+1)` this covers all five residues, which is the backbone of
-the elementary proof.
+## 3. Squares mod 5 (used for the Pythagorean bridge)
 
-## 3. Counterexample hunt (universal claims)
+For `x` in `{0,1,2,3,4}`: `x^2 mod 5 ∈ {0,1,4}`.
 
-* `(n⁵ − n) % 5 == 0` for `n = 0..999`  →  **no counterexample** (all `true`).
-* `(n⁵ − n) % 10 == 0` for `n = 0..29` →  **no counterexample** (fifth powers
-  preserve the base-ten last digit).
-* `n⁵ % 10 == n % 10` for `n = 0..19`  →  **no counterexample**.
-* `(a^(4k+1) − a) % 5 == 0` for `k = 0..5`, `a = 0..19` → **no counterexample**.
-* `(n⁵ − n) % 2 == 0` for `n = 0..19`  →  **no counterexample** (parity companion).
+- 0^2 ≡ 0, 1^2 ≡ 1, 2^2 ≡ 4, 3^2 ≡ 4, 4^2 ≡ 1.
 
-Sanity check that the divisor is sharp for the general exponent claim: `10 ∤ a⁵ − a`
-never fails, but the *prime* generalisation fails for composite moduli, e.g.
-`4 ∤ 2⁴ − 2 = 14`, confirming the primality hypothesis in `fermatLittle_int` is
-load-bearing.
+The nonzero quadratic residues mod 5 are `{1,4}`; `{2,3}` are non-residues.
 
-## 4. OEIS
+## 4. Pythagorean triples: 5 divides a leg or the hypotenuse
 
-The sequence `a⁵ − a` for `a = 0,1,2,…` is `0, 0, 30, 240, 1020, 3120, 7770, …`,
-whose non-trivial terms `30, 240, 1020, …` are `5·(a⁵−a)/5`. The quotients
-`(a⁵−a)/30 = 0,0,1,8,34,104,259,…` match **OEIS A213259**-type fifth-power
-tabulations; no separate OEIS ID is essential to the argument.
+Testing primitive and non-primitive triples `a^2 + b^2 = c^2`:
 
-## Conclusion
+| (a,b,c)     | a%5 | b%5 | c%5 | which is divisible by 5 |
+|-------------|-----|-----|-----|-------------------------|
+| (3,4,5)     | 3   | 4   | 0   | c                       |
+| (5,12,13)   | 0   | 2   | 3   | a                       |
+| (8,15,17)   | 3   | 0   | 2   | b                       |
+| (7,24,25)   | 2   | 4   | 0   | c                       |
+| (20,21,29)  | 0   | 1   | 4   | a                       |
+| (9,40,41)   | 4   | 0   | 1   | b                       |
+| (6,8,10)    | 1   | 3   | 0   | c                       |
 
-Every universal claim withstood the counterexample hunt, so all advanced to
-formal proof. The formal artifacts are:
-`Catalog/Probability/FermatLittleFive.lean` and
-`Catalog/Applications/FermatLittleFiveExtensions.lean`.
+In every Pythagorean triple, exactly the argument from residues shows at least one
+of `a, b, c` is divisible by 5. Reason: if `5 ∤ a` and `5 ∤ b` then
+`a^2, b^2 ∈ {1,4} (mod 5)`, so `a^2 + b^2 ∈ {2, 0, 3} (mod 5)`; the only value that
+is itself a square mod 5 is `0`, forcing `5 ∣ c`. Hence `5 ∣ a·b·c` always.
+
+No counterexample found over all triples with `c ≤ 200`.
+
+## 5. OEIS
+
+`a^5 - a` for `a = 0,1,2,...` gives `0, 0, 30, 240, 1020, 3120, 7770, ...`
+(all divisible by 5), matching `5 · A??` scaled forms; the divisibility itself is
+the classical Fermat statement, not a standalone OEIS entry.

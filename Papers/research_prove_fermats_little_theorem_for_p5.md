@@ -1,138 +1,157 @@
-# Divisibility of $a^5 - a$: An Elementary Proof, Its Sharpenings, and Its Place in Fermat's Little Theorem
+# The Fifth-Power Congruence Modulo Five and Its Pythagorean Consequences
 
 ## Abstract
 
-We give a fully elementary, self-contained treatment of the classical fact that $a^5 - a$ is divisible by $5$ for every integer $a$, together with several genuine strengthenings and a placement of the result inside the general theory. Our primary proof avoids any appeal to finite-field theory or exhaustive residue checking: it rests on a single polynomial identity, $(n+1)^5 - (n+1) = (n^5 - n) + 5(n^4 + 2n^3 + 2n^2 + n)$, propagated across the integers by induction. We then record a complementary factorization $a^5 - a = (a-1)a(a+1)(a^2+1)$, which exposes divisibility by $2$ and $3$; combining these with divisibility by $5$ through coprimality yields the sharper statement $30 \mid a^5 - a$. A further consequence, $a^5 \equiv a \pmod{10}$, establishes that the last decimal digit of any integer is fixed by the fifth-power map. Finally we prove the general Fermat's Little Theorem, $p \mid a^p - a$ for every prime $p$, and recover the $p = 5$ case as a corollary, exhibiting the target as one instance of a universal law. We discuss algorithms for computing the "universal denominator" $D(n)$ of $a^n - a$, present numerical demonstrations, and outline directions for further research.
+We give a fully elementary, self-contained proof that for every integer $a$, the quantity $a^5 - a$ is divisible by $5$ — the case $p = 5$ of Fermat's little theorem — using nothing beyond the arithmetic of remainders. The argument reduces an assertion about infinitely many integers to a finite case analysis over the five residues modulo $5$. We then develop the surrounding structure: the table of quadratic residues modulo $5$ (namely $\{0, 1, 4\}$), and we use it to derive a classical consequence for Pythagorean triples — every triple $(a,b,c)$ with $a^2 + b^2 = c^2$ contains an entry divisible by $5$, and, in concert with the analogous obstructions modulo $3$ and $4$, the product $abc$ is always divisible by $60$ with $60$ sharp. We situate the $p=5$ identity within the general family $a^k - a$, whose universal modulus is the product of primes $p$ with $(p-1) \mid (k-1)$, and we discuss algorithmic and cryptographic ramifications. All results are stated inline with complete proof sketches.
 
 ## 1. Introduction
 
-Among the first surprises a student of number theory encounters is that certain polynomial expressions in an integer variable are *always* divisible by a fixed number, regardless of the input. The prototype is
+The congruence
+$$
+a^5 \equiv a \pmod 5, \qquad \text{equivalently} \qquad 5 \mid a^5 - a,
+$$
+holding for every integer $a$, is the specialization to the prime $5$ of Fermat's little theorem. While the general theorem admits slick proofs via group theory (Lagrange's theorem applied to the multiplicative group $(\mathbb{Z}/p\mathbb{Z})^\times$) or combinatorics (necklace counting), our aim here is a maximally elementary treatment of the single prime $p = 5$, requiring only the notion of division with remainder. The elementary route has two virtues: it is transparent, and it exposes the residue table of squares modulo $5$, which turns out to be the shared engine behind a family of Pythagorean divisibility facts.
 
-$$5 \mid a^5 - a \qquad \text{for all } a \in \mathbb{Z}.$$
-
-This paper studies this statement from several complementary vantage points, with three goals: to give a proof that is genuinely elementary (using only integer induction and a polynomial identity), to sharpen the modulus from $5$ to its true maximal value $30$, and to situate the result within the general framework of Fermat's Little Theorem. Along the way we obtain a concrete corollary about decimal last digits and describe the computational structure underlying the family of results $\{\,p \mid a^p - a\,\}$.
-
-Throughout, $\mathbb{Z}$ denotes the ring of integers, and for integers $m, x$ we write $m \mid x$ to mean $m$ divides $x$. For $m \in \mathbb{Z}_{>0}$ we write $x \equiv y \pmod{m}$ to mean $m \mid (x - y)$.
+The paper is organized as follows. Section 2 fixes definitions. Section 3 proves the main congruence by residue case analysis and by a factorization argument. Section 4 develops the quadratic-residue structure modulo $5$. Section 5 derives the Pythagorean consequences. Section 6 generalizes to arbitrary fixed exponents. Section 7 gives algorithms, Section 8 applications, and Section 9 discussion and future work.
 
 ## 2. Definitions and preliminaries
 
-**Definition 2.1 (Defect function).** For an integer $a$, define the *fifth-power defect* by $\Delta(a) := a^5 - a$. More generally, for a positive integer $n$, write $\Delta_n(a) := a^n - a$.
+Throughout, $a, b, c, n$ denote integers and $p$ a prime.
 
-**Definition 2.2 (Universal denominator).** For a positive integer $n$, define
-$$D(n) := \gcd\{\, a^n - a : a \in \mathbb{Z} \,\},$$
-the largest positive integer dividing $a^n - a$ for every integer $a$.
+**Definition 2.1 (Divisibility).** For integers $m, n$, we write $m \mid n$ ("$m$ divides $n$") if there exists an integer $k$ with $n = mk$.
 
-**Lemma 2.3 (Coprime gluing).** If $m_1, m_2$ are coprime integers and both $m_1 \mid x$ and $m_2 \mid x$, then $m_1 m_2 \mid x$.
+**Definition 2.2 (Congruence).** For a positive integer $m$, we write $a \equiv b \pmod m$ if $m \mid (a - b)$. This is an equivalence relation compatible with addition and multiplication: if $a \equiv a'$ and $b \equiv b' \pmod m$, then $a + b \equiv a' + b'$ and $ab \equiv a'b' \pmod m$.
 
-*Proof sketch.* Coprimality provides integers $u, v$ with $u m_1 + v m_2 = 1$ (Bézout). Writing $x = x \cdot 1 = x(u m_1 + v m_2) = u m_1 x + v m_2 x$ and substituting $x = m_2 y_2 = m_1 y_1$ from the two divisibilities shows $m_1 m_2$ divides each term, hence divides $x$. This is the ring-theoretic content of the Chinese Remainder Theorem in the special case of a single congruence class. $\square$
+**Definition 2.3 (Residue).** The *residue* of $a$ modulo $m$ is the unique integer $r$ with $0 \le r < m$ and $a \equiv r \pmod m$. Every integer is congruent to exactly one of $0, 1, \dots, m-1$.
 
-## 3. The primary result: an inductive proof
+**Definition 2.4 (Quadratic residue).** A residue $r$ modulo $m$ is a *quadratic residue* if $r \equiv x^2 \pmod m$ for some integer $x$; otherwise it is a *quadratic non-residue*.
 
-The centerpiece of our elementary approach is the following algebraic identity, which measures exactly how the defect changes when the argument increases by one.
+**Definition 2.5 (Pythagorean triple).** A *Pythagorean triple* is an ordered triple $(a, b, c)$ of positive integers with $a^2 + b^2 = c^2$.
 
-**Lemma 3.1 (Step identity).** For every integer $n$,
-$$(n+1)^5 - (n+1) = (n^5 - n) + 5\,(n^4 + 2n^3 + 2n^2 + n).$$
+We will use the following standard fact, itself an immediate consequence of division with remainder.
 
-*Proof.* Expand $(n+1)^5 = n^5 + 5n^4 + 10n^3 + 10n^2 + 5n + 1$ by the binomial theorem. Then
-$$(n+1)^5 - (n+1) = n^5 + 5n^4 + 10n^3 + 10n^2 + 5n + 1 - n - 1 = (n^5 - n) + (5n^4 + 10n^3 + 10n^2 + 5n),$$
-and the parenthesized tail equals $5(n^4 + 2n^3 + 2n^2 + n)$. This is a polynomial identity, verified by direct expansion. $\square$
+**Lemma 2.6 (Five-way residue decomposition).** For every integer $a$, exactly one of the following holds:
+$$
+a \bmod 5 \in \{0, 1, 2, 3, 4\}.
+$$
+Equivalently, there is a unique integer $q$ and residue $r \in \{0,1,2,3,4\}$ with $a = r + 5q$.
 
-**Theorem 3.2 (Divisibility by five).** For every integer $a$, $\;5 \mid a^5 - a$.
+*Proof.* Division with remainder of $a$ by $5$. $\qquad\blacksquare$
 
-*Proof.* We use integer induction, treating nonnegative and negative arguments separately from a common base.
+## 3. The main congruence
 
-*Base case.* For $a = 0$ we have $0^5 - 0 = 0 = 5 \cdot 0$.
+**Theorem 3.1 (Fermat's little theorem, $p = 5$).** For every integer $a$,
+$$
+5 \mid a^5 - a.
+$$
 
-*Forward step.* Suppose $5 \mid n^5 - n$ for some integer $n \ge 0$; write $n^5 - n = 5k$. By Lemma 3.1,
-$$(n+1)^5 - (n+1) = 5k + 5(n^4 + 2n^3 + 2n^2 + n) = 5\big(k + n^4 + 2n^3 + 2n^2 + n\big),$$
-which is a multiple of $5$. Hence the property propagates to $n+1$.
+*Proof (residue case analysis).* By Lemma 2.6 write $a = r + 5q$ with $r \in \{0,1,2,3,4\}$. Because congruence is compatible with multiplication, $a^5 - a \equiv r^5 - r \pmod 5$, so it suffices to verify the claim for the five representatives:
 
-*Backward step.* Applying Lemma 3.1 with $n$ replaced by $n-1$ gives $n^5 - n = \big((n-1)^5 - (n-1)\big) + 5\,g(n-1)$ for the integer polynomial $g(m) = m^4 + 2m^3 + 2m^2 + m$. Thus $(n-1)^5 - (n-1) = (n^5 - n) - 5\,g(n-1)$, so divisibility by $5$ descends from $n$ to $n-1$. This carries the property to all negative integers.
+| $r$ | $r^5$ | $r^5 - r$ | multiple of $5$ |
+|----|-------|-----------|------------------|
+| $0$ | $0$    | $0$        | $5 \cdot 0$ |
+| $1$ | $1$    | $0$        | $5 \cdot 0$ |
+| $2$ | $32$   | $30$       | $5 \cdot 6$ |
+| $3$ | $243$  | $240$      | $5 \cdot 48$ |
+| $4$ | $1024$ | $1020$     | $5 \cdot 204$ |
 
-By induction in both directions from the base case, $5 \mid a^5 - a$ for every $a \in \mathbb{Z}$. $\square$
+In every row $r^5 - r$ is a multiple of $5$; hence so is $a^5 - a$. $\qquad\blacksquare$
 
-The proof is genuinely inductive: it never enumerates the residue classes modulo $5$. Its load-bearing content is precisely the identity of Lemma 3.1, which expresses that the defect is *periodic with period one up to multiples of five* — the additive-preservation phenomenon.
+For completeness we record the explicit witnesses that make the case analysis fully constructive. Substituting $a = r + 5q$ and expanding, one obtains $a^5 - a = 5 \cdot Q_r(q)$ for an integer polynomial $Q_r$ in $q$:
 
-## 4. A structural factorization
+- $r=0$: $a^5 - a = 5\,(625 q^5 - q)$;
+- $r=1$: $a^5 - a = 5\,(625 q^5 + 625 q^4 + 250 q^3 + 50 q^2 + 4 q)$;
+- $r=2$: $a^5 - a = 5\,(625 q^5 + 1250 q^4 + 1000 q^3 + 400 q^2 + 79 q + 6)$;
+- $r=3$: $a^5 - a = 5\,(625 q^5 + 1875 q^4 + 2250 q^3 + 1350 q^2 + 404 q + 48)$;
+- $r=4$: $a^5 - a = 5\,(625 q^5 + 2500 q^4 + 4000 q^3 + 3200 q^2 + 1279 q + 204)$.
 
-**Theorem 4.1 (Factorization).** For every integer $a$,
-$$a^5 - a = (a-1)\,a\,(a+1)\,(a^2 + 1).$$
+Each identity is verified by expanding both sides as polynomials in $q$; the exhibited integer coefficient is the required cofactor, giving an explicit $k$ with $a^5 - a = 5k$.
 
-*Proof.* Factor $a^5 - a = a(a^4 - 1) = a(a^2 - 1)(a^2 + 1) = a(a-1)(a+1)(a^2+1)$, using the difference-of-squares factorization $a^4 - 1 = (a^2-1)(a^2+1)$ and $a^2 - 1 = (a-1)(a+1)$. $\square$
+*Alternative proof (factorization).* Factor
+$$
+a^5 - a = a(a^4 - 1) = a(a-1)(a+1)(a^2 + 1).
+$$
+If $a \equiv 0, 1,$ or $4 \pmod 5$, then respectively $a$, $a - 1$, or $a + 1$ is divisible by $5$. The remaining residues are $a \equiv 2$ and $a \equiv 3$; in both, $a^2 \equiv 4 \pmod 5$, so $a^2 + 1 \equiv 0 \pmod 5$. Thus one factor is always divisible by $5$. $\qquad\blacksquare$
 
-**Corollary 4.2.** For every integer $a$, both $2 \mid a^5 - a$ and $3 \mid a^5 - a$.
+**Corollary 3.2.** The divisibility $5 \mid a^5 - a$ holds in particular for every integer in any finite range; e.g. for all $a$ with $-1000 \le a \le 1000$. This is an immediate instance of Theorem 3.1 and requires no separate computation.
 
-*Proof.* The factorization exhibits the three consecutive integers $a-1, a, a+1$ as factors of $a^5 - a$. Among any two consecutive integers one is even, so $2 \mid a^5 - a$. Among any three consecutive integers one is a multiple of $3$, so $3 \mid a^5 - a$. $\square$
+## 4. Quadratic residues modulo five
 
-An alternative, uniform route to Corollary 4.2 is to observe that for each modulus $m \in \{2, 3\}$ the map $x \mapsto x^5$ fixes every residue class modulo $m$; equivalently $x^5 - x \equiv 0 \pmod m$ for all residues $x$, a finite check over the $m$ classes. Either way, the conclusion feeds into the next section.
+**Proposition 4.1 (Square table mod $5$).** The set of quadratic residues modulo $5$ is exactly $\{0, 1, 4\}$. Concretely,
+$$
+0^2 \equiv 0,\quad 1^2 \equiv 1,\quad 2^2 \equiv 4,\quad 3^2 \equiv 4,\quad 4^2 \equiv 1 \pmod 5.
+$$
+The residues $2$ and $3$ are quadratic non-residues.
 
-## 5. Sharpening the modulus to thirty
+*Proof.* Direct evaluation over the five residues, using that $x^2 \bmod 5$ depends only on $x \bmod 5$. $\qquad\blacksquare$
 
-**Theorem 5.1 (Divisibility by thirty).** For every integer $a$, $\;30 \mid a^5 - a$.
+**Proposition 4.2 (Sums of two squares mod $5$).** If $a, b$ are both coprime to $5$, then
+$$
+a^2 + b^2 \bmod 5 \in \{0, 2, 3\}.
+$$
+Moreover, of these, only $0$ is itself a quadratic residue modulo $5$.
 
-*Proof.* By Theorem 3.2 and Corollary 4.2 we have $2 \mid \Delta(a)$, $3 \mid \Delta(a)$, and $5 \mid \Delta(a)$. Since $2$ and $3$ are coprime, Lemma 2.3 gives $6 \mid \Delta(a)$. Since $6$ and $5$ are coprime, Lemma 2.3 again gives $30 \mid \Delta(a)$. $\square$
+*Proof.* By Proposition 4.1, each nonzero square is $1$ or $4$ mod $5$. The three unordered sums are $1+1 = 2$, $1 + 4 = 5 \equiv 0$, and $4 + 4 = 8 \equiv 3$. Comparing $\{0, 2, 3\}$ with the residue set $\{0,1,4\}$ from Proposition 4.1 shows only $0$ is a square. $\qquad\blacksquare$
 
-**Theorem 5.2 (Maximality).** The universal denominator satisfies $D(5) = 30$; that is, $30$ is the *largest* integer dividing $a^5 - a$ for all integers $a$.
+## 5. Pythagorean consequences
 
-*Proof sketch.* Theorem 5.1 shows $30 \mid D(5)$. For the reverse, evaluate at $a = 2$: $\Delta(2) = 30$. Any universal divisor must divide $\Delta(2) = 30$, so $D(5) \mid 30$. Combining, $D(5) = 30$. $\square$
+**Theorem 5.1 (Every Pythagorean triple contains a multiple of five).** For every Pythagorean triple $(a, b, c)$, at least one of $a, b, c$ is divisible by $5$.
 
-This maximality is reflected numerically. The table of defects for $a = 0, 1, \ldots, 8$ reads
-$$0,\; 0,\; 30,\; 240,\; 1020,\; 3120,\; 7770,\; 16800,\; 32760,$$
-and the greatest common divisor of the nonzero entries is exactly $30$.
+*Proof.* Suppose neither leg is divisible by $5$, i.e. $5 \nmid a$ and $5 \nmid b$. By Proposition 4.2, $c^2 = a^2 + b^2 \equiv 0, 2,$ or $3 \pmod 5$. But $c^2$ is a square, so by Proposition 4.1 it must be $\equiv 0, 1,$ or $4 \pmod 5$. The only common value is $0$, forcing $c^2 \equiv 0$ and hence $5 \mid c$ (as $5$ is prime). Therefore in all cases some entry is divisible by $5$. $\qquad\blacksquare$
 
-## 6. A consequence for last digits
+*Examples.* $(3,4,\mathbf{5})$, $(\mathbf{5},12,13)$, $(8,\mathbf{15},17)$, $(\mathbf{20},21,29)$, $(9,\mathbf{40},41)$ — the boldface entry is the guaranteed multiple of $5$.
 
-**Theorem 6.1 (Last-digit stability).** For every integer $a$, $\;a^5 \equiv a \pmod{10}$; equivalently, $a^5$ ends in the same decimal digit as $a$.
+**Theorem 5.2 (Universal divisor $60$, sharp).** For every Pythagorean triple $(a,b,c)$, the product $abc$ is divisible by $60$, and $60$ is the largest integer dividing $abc$ for all triples.
 
-*Proof.* By Theorem 3.2 and Corollary 4.2 we have $5 \mid \Delta(a)$ and $2 \mid \Delta(a)$. As $2$ and $5$ are coprime, Lemma 2.3 gives $10 \mid \Delta(a) = a^5 - a$, which is the claim. $\square$
+*Proof (sketch).* Three independent congruence obstructions cooperate:
 
-**Corollary 6.2 (Digit fixed points).** Iterating the fifth-power map never changes the last decimal digit: for every $a$ and every $k \ge 0$, $\;a^{5^k} \equiv a \pmod{10}$.
+1. *Factor $4$.* In a primitive triple one leg is even; a residue analysis modulo $4$ shows the even leg is in fact divisible by $4$. Scaling to imprimitive triples preserves the factor.
+2. *Factor $3$.* Squares modulo $3$ lie in $\{0,1\}$; if neither leg were divisible by $3$ then $a^2 + b^2 \equiv 2 \pmod 3$, which is not a square, a contradiction. Hence $3$ divides some entry.
+3. *Factor $5$.* Theorem 5.1.
 
-*Proof sketch.* Induction on $k$. The case $k = 0$ is trivial. If $a^{5^k} \equiv a \pmod{10}$, then raising both sides to the fifth power and applying Theorem 6.1 to the integer $a^{5^k}$ gives $a^{5^{k+1}} = (a^{5^k})^5 \equiv a^{5^k} \equiv a \pmod{10}$. Thus the last digit is a fixed point of the fifth-power operation on the ten residue classes modulo $10$. $\square$
+Since $3, 4, 5$ are pairwise coprime, their contributions multiply to give $3 \cdot 4 \cdot 5 = 60 \mid abc$. Sharpness follows from the triple $(3,4,5)$, whose product is exactly $3 \cdot 4 \cdot 5 = 60$; no larger constant can divide $60$. $\qquad\blacksquare$
 
-## 7. Placement within Fermat's Little Theorem
+## 6. The general fixed-power congruence
 
-The exponent $5$ is distinguished not by its size but by being *prime*. The general phenomenon is the following.
+Theorem 3.1 belongs to the family of identities $a^k - a$.
 
-**Theorem 7.1 (Fermat's Little Theorem, additive form).** For every prime $p$ and every integer $a$,
-$$p \mid a^p - a.$$
+**Theorem 6.1 (Universal modulus of $a^k - a$).** Fix an integer $k \ge 2$. The largest integer $m$ such that $m \mid a^k - a$ for all integers $a$ is
+$$
+m = \prod_{\substack{p \text{ prime} \\ (p-1) \mid (k-1)}} p,
+$$
+the product of all primes $p$ for which $p - 1$ divides $k - 1$.
 
-*Proof sketch.* Work in the ring of residues modulo $p$, which is a field because $p$ is prime. In this field the identity $x^p = x$ holds for every element $x$: the $p-1$ nonzero elements form a cyclic multiplicative group of order $p-1$, so $x^{p-1} = 1$ for each nonzero $x$ (whence $x^p = x$), and the identity is trivial for $x = 0$. Consequently $a^p - a$ reduces to $0$ modulo $p$, i.e. $p \mid a^p - a$. $\square$
+*Proof (sketch).* For a prime $p$: by Fermat's little theorem $a^{p} \equiv a \pmod p$, and more generally $a^{1 + t(p-1)} \equiv a \pmod p$ for all $t \ge 0$ (for $a$ coprime to $p$ raise $a^{p-1} \equiv 1$ to the $t$-th power; for $p \mid a$ both sides are $0$). Hence if $(p-1) \mid (k-1)$ then $a^k \equiv a \pmod p$ for all $a$, so $p \mid a^k - a$. Conversely, if $(p-1) \nmid (k-1)$, choose a primitive root $g$ modulo $p$; then $g^{k} \not\equiv g \pmod p$, so $p \nmid g^k - g$ and $p$ cannot divide the universal modulus. No prime power $p^2$ can be forced, since $a = p$ gives $a^k - a = p(p^{k-1} - 1)$ with $p \nmid p^{k-1}-1$. Squarefreeness and the stated product follow. $\qquad\blacksquare$
 
-**Corollary 7.2 (Target as an instance).** Taking $p = 5$ in Theorem 7.1 recovers Theorem 3.2: $\;5 \mid a^5 - a$.
+**Corollary 6.2.** For $k = 5$, the primes with $(p-1) \mid 4$ are $p \in \{2, 3, 5\}$, so $a^5 - a$ is universally divisible by $2 \cdot 3 \cdot 5 = 30$, strengthening Theorem 3.1. For $k = 3$, the primes with $(p-1)\mid 2$ are $\{2,3\}$, recovering the classical $6 \mid a^3 - a$.
 
-Theorem 7.1 is the "right home" for the entire family of results. The elementary inductive proof of Theorem 3.2 and the field-theoretic proof of Theorem 7.1 are two faces of a single fact — the periodicity of $x \mapsto x^p - x$ modulo $p$ — and each has its own virtues: the former yields an explicit witness polynomial $g$ with $\Delta_p(a+1) - \Delta_p(a) = p\,g(a)$, while the latter reveals the structural reason (the multiplicative group of a finite field) and instantly generalizes across all primes.
+## 7. Algorithms
 
-## 8. The universal denominator $D(n)$
+We describe the computational procedures that accompany the theory.
 
-The maximality result $D(5) = 30$ invites a general question: for arbitrary exponent $n$, what is $D(n)$?
+**Algorithm A (Residue-reduction verifier).** To confirm $5 \mid a^5 - a$ for arbitrary $a$ without large-number arithmetic: compute $r = a \bmod 5$, then check that $r^5 - r \equiv 0 \pmod 5$ from the precomputed table. Complexity $O(1)$ per input after building the size-$5$ table. This mirrors the proof of Theorem 3.1: correctness rests on the congruence-compatibility of powers.
 
-**Proposition 8.1 (Structure of $D(n)$).** For each $n \ge 1$, $D(n)$ is squarefree, and a prime $p$ divides $D(n)$ if and only if $p - 1$ divides $n - 1$.
+**Algorithm B (Universal-modulus computation).** To compute the sharp modulus of $a^k - a$ (Theorem 6.1): enumerate primes $p$ up to $k$ (a prime with $p - 1 \mid k - 1$ satisfies $p \le k$), test whether $(p-1) \mid (k-1)$, and multiply the qualifying primes. Complexity $O(k \log\log k)$ using a sieve.
 
-*Proof sketch.* A prime $p$ divides $a^n - a$ for all $a$ iff $x^n = x$ for all $x$ in the field of residues modulo $p$. For $x = 0$ this is automatic; for the cyclic multiplicative group of order $p-1$, the condition $x^{n-1} = 1$ for all nonzero $x$ holds iff the group exponent $p - 1$ divides $n - 1$. Higher powers $p^2$ never divide $D(n)$ because, choosing $a = p$, the term $a^n - a = p^n - p$ is divisible by $p$ but not $p^2$ once $n \ge 2$; hence $D(n)$ is squarefree. Thus $D(n) = \prod_{\,p : (p-1) \mid (n-1)} p$. $\square$
+**Algorithm C (Pythagorean five-witness).** Given a triple $(a,b,c)$, return which entry Theorem 5.1 guarantees is divisible by $5$: scan $a, b, c$ and report the first divisible by $5$. Correctness is Theorem 5.1; complexity $O(1)$.
 
-For example, $D(3) = 2 \cdot 3 = 6$ (primes with $p - 1 \mid 2$: namely $2, 3$), $D(5) = 2 \cdot 3 \cdot 5 = 30$ (primes with $p-1 \mid 4$: namely $2, 3, 5$), and $D(7) = 2 \cdot 3 \cdot 7 = 42$ (primes with $p - 1 \mid 6$: namely $2, 3, 7$). The absence of $5$ from $D(7)$ — because $5 - 1 = 4$ does not divide $6$ — is a small but instructive surprise.
+## 8. Applications
 
-## 9. Algorithms
+**Modular reduction and hashing.** The identity $a^5 \equiv a \pmod 5$ is a template for *power-preserving* maps used in checksum and hashing schemes over prime fields, where raising to a power fixes the field elementwise.
 
-We summarize the computational content in two procedures.
+**Public-key cryptography.** The RSA cryptosystem encrypts via $c = m^e \bmod N$ and decrypts via $m = c^d \bmod N$, relying on the identity $m^{ed} \equiv m$ — a direct generalization of the fixed-power congruence studied here to composite moduli via the Chinese Remainder Theorem and Euler's theorem. The $p = 5$ case is the smallest nontrivial prime illustration of the mechanism.
 
-**Algorithm A (Universal denominator by residue enumeration).** To compute $D(n)$: for each prime $p$ up to a bound, test whether $x^n \equiv x \pmod p$ for all residues $x \in \{0, 1, \ldots, p-1\}$; equivalently, by Proposition 8.1, test whether $(p-1) \mid (n-1)$. Multiply together all primes passing the test. The correctness follows from Proposition 8.1; using the divisibility criterion, the cost is one modular test per prime.
+**Diophantine filtering.** Theorem 5.1 and Proposition 4.2 provide instant necessary conditions ("sieves") that prune candidate solutions to quadratic Diophantine equations by inspecting residues modulo $5$, avoiding costly searches.
 
-**Algorithm B (Coprime gluing certificate).** Given that $m_1, \ldots, m_r$ are pairwise coprime and each divides $f(a)$ for all $a$, certify $m_1 \cdots m_r \mid f(a)$ by folding Lemma 2.3 across the factors: maintain a running product $M$, and at each step combine the accumulated divisibility by $M$ with divisibility by the next coprime factor $m_i$ to obtain divisibility by $M \cdot m_i$. This is exactly the mechanism used to pass from $\{2, 3, 5\}$ to $30$.
+## 9. Discussion and future work
 
-## 10. Numerical demonstrations
+The elementary proof of $5 \mid a^5 - a$ illustrates a recurring theme: infinite arithmetic assertions collapse to finite residue computations. The same residue table that proves the congruence forces a factor of five into every Pythagorean triple and, combined with the modulo-$3$ and modulo-$4$ obstructions, yields the sharp universal divisor $60$ for the product $abc$.
 
-The claims of this paper are directly checkable. The defects $a^5 - a$ for small $a$ are all multiples of $30$; the fifth power of any integer reproduces its last decimal digit; and iterating the fifth-power map modulo $10$ leaves every residue fixed. For the general theorem, exhaustive verification over the residues of any prime $p$ confirms $x^p \equiv x \pmod p$. Concrete implementations of all of these appear in the accompanying computational material.
+Several directions invite further study: pinning the exact universal modulus of $a^k - a$ for all $k$ (Theorem 6.1) and its interaction with Carmichael numbers; characterizing which residues are representable as sums of two squares modulo a prime and relating this to hypotenuse structure; and quantifying the density of fixed points of the map $x \mapsto x^m$ across prime and composite moduli. These are elaborated in the accompanying future-directions notes.
 
-## 11. Applications and discussion
+## Appendix: worked numerical instances
 
-The additive form of Fermat's Little Theorem underpins primality testing (the Fermat test and its refinements) and public-key cryptography, where exponentiation modulo a prime or a product of primes is the fundamental operation. The last-digit stability result, though modest, is a clean example of how divisibility by coprime moduli combines: $2 \mid \Delta$ and $5 \mid \Delta$ jointly give $10 \mid \Delta$. The universal-denominator viewpoint reframes many scattered "always divisible" curiosities as a single classification governed by the arithmetic condition $(p-1) \mid (n-1)$.
-
-## 12. Future directions
-
-Several natural questions extend this work. First, one may seek a full classification of the universal denominator $D(n)$ for all $n$, building on Proposition 8.1 and the coprime-gluing mechanism that fixed $D(5) = 30$. Second, the last-digit stability of iterated fifth powers suggests studying the eventual periodicity of last digits under general power maps. Third, the equivalence between residue-check proofs and inductive proofs — each inductive proof supplying an explicit witness polynomial $g$ with $f(a+1) - f(a) = m\,g(a)$ — deserves a general treatment as a bridge principle. These directions are elaborated in the accompanying future-directions material.
-
-## 13. Conclusion
-
-Starting from the humble observation that $a^5 - a$ is a multiple of $5$, we have given an elementary inductive proof, a structural factorization, a sharpening to divisibility by $30$ with a matching maximality statement, a corollary on decimal last digits, and a placement of the whole story inside Fermat's Little Theorem. The result that looked like an isolated curiosity turns out to be one visible instance of a universal law governed entirely by the primes $p$ for which $p - 1$ divides $n - 1$.
+- $a = 2$: $a^5 - a = 30 = 5 \cdot 6$.
+- $a = 7$: $a^5 - a = 16800 = 5 \cdot 3360 = 30 \cdot 560$ (illustrating the stronger $30 \mid a^5-a$).
+- $a = -3$: $a^5 - a = -243 + 3 = -240 = 5 \cdot(-48)$.
+- Triple $(20,21,29)$: $20 = 5\cdot 4$ is the guaranteed multiple of five; product $20\cdot21\cdot29 = 12180 = 60 \cdot 203$.
