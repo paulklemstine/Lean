@@ -25,6 +25,7 @@ import httpx
 
 from catalog_analyzer import CatalogAnalyzer, CatalogFileSummary
 from research_memory import ResearchMemory
+from arxiv_provider import ArxivTexProvider
 
 
 # Phase A prompt version registry and default A/B weights.
@@ -1184,6 +1185,22 @@ class PiAgentClient:
         if inflight_concepts:
             inflight_str = "\n".join(f"- {c}" for c in inflight_concepts)
 
+        # Build arXiv external context
+        arxiv_context = "No arXiv signals available."
+        try:
+            target_domain = domains[0].get("id", "Shared") if domains else "Shared"
+            # Get 2 papers to keep context length reasonable
+            provider = ArxivTexProvider(batch_size=2)
+            provider.set_domain_query(target_domain)
+            papers = provider._fetch_next_batch()
+            if papers:
+                arxiv_context = "\n".join(
+                    f"Title: {p.title}\nAuthors: {p.authors}\nAbstract: {p.summary[:500]}..." 
+                    for p in papers[:2]
+                )
+        except Exception as e:
+            print(f"[Pi-Agent] Could not fetch arXiv context: {e}")
+
         user_prompt = textwrap.dedent(f"""\
             Select ONE domain and ONE specific concept for mathematical research.
 
@@ -1201,6 +1218,10 @@ class PiAgentClient:
             ## Currently In-flight Jobs (DO NOT REPEAT THESE)
             These concepts are currently being worked on by parallel agents. You MUST pick something DIFFERENT to focus on:
             {inflight_str if inflight_str else "None."}
+
+            ## Current ArXiv Frontier (External Context)
+            To ensure your research is novel and connected to real-world mathematics, consider these recent abstracts from the arXiv for the target domain:
+            {arxiv_context}
 
             ## Catalog State
             {catalog_summary if catalog_summary else "Catalog not available."}
@@ -2965,8 +2986,8 @@ Be precise, be deep, be world-class.
 
             **CRITICAL**: The `demos`, `algorithms`, `visualizations`, and
             `interactive_demos` fields MUST be arrays of objects with the
-            exact structure shown above. It is STRONGLY RECOMMENDED to generate
-            at least 3 of each interactive element if possible. Do NOT use placeholder 
+            exact structure shown above. You MUST generate at least 3 of each interactive
+            element. This is a STRICT REQUIREMENT. Do NOT use placeholder 
             strings like "MISSING" — either include real content or omit the field entirely.
 
             ### PACKAGE.json Metadata Extraction (v1.1)
