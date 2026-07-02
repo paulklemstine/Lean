@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prove Fermats Little Theorem for p=5"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2c53e63a",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.029563+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -46,7 +46,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82e2c894",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -56,12 +56,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "813a28d3",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domains": [
       "Novelty",
@@ -71,7 +71,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.027554+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
@@ -90,7 +90,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "de16211e",
     "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
       "NumberTheory"
@@ -99,12 +99,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4055f798",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -114,7 +114,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.030558+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -177,7 +177,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a0eabca0",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -186,7 +186,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -219,7 +219,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Extended 1-2-3 Conjecture Threshold is N = 7"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7f18348a",
     "description": "The conjecture posits that conflict constraints necessitate a bounded number of agents for fairness, directly linked to the first two levels of a graph's strong chromatic hierarchy.",
     "domains": [
       "Pythagorean"
@@ -228,7 +228,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01059v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T07:32:40.113656+00:00",
     "title": "Conflicts and Fair Allocation Bounds"
   },
@@ -263,7 +263,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramified Prime Product Equality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e6125fc1",
     "description": "For a q-hypergeometric series whose coefficients have an asymptotic expansion dominated by oscillatory terms near a root of unity \u03c9, the signs of the coefficients alternate except for a density-zero set of indices n.",
     "domains": [
       "Geometry"
@@ -272,7 +272,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:04:27.717812+00:00",
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
@@ -379,7 +379,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8b7f43f1",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -388,7 +388,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
