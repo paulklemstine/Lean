@@ -297,6 +297,12 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = '';
 
         if (items && items.length > 0) {
+            const sectionTitle = document.createElement('h3');
+            sectionTitle.className = 'section-title';
+            sectionTitle.textContent = 'Python Demos';
+            sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-top: 32px;';
+            container.appendChild(sectionTitle);
+
             items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'code-card';

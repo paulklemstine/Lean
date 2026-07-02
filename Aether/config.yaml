@@ -18,16 +18,15 @@ pi_agent:
   top_p: 0.92
   num_predict: 4096
   # A/B finalized: settle on the single best arm for a while.
-  # Phase A -> v19d (re-pinned 2026-06-29: v16 produced 1 theorem/cycle vs
-  # v19d's 17 under Catalog-size-driven truncation; v19d has more substance).
+  # Phase A -> v16 (re-pinned by user request)
   phase_a_prompt_weights:
-    v19d: 1.0
+    v19d: 0.0
     v19: 0.0
     v19a: 0.0
     v19b: 0.0
     v19c: 0.0
     v15: 0.0
-    v16: 0.0
+    v16: 1.0
     v16a: 0.0
     v16b: 0.0
     v17: 0.0

@@ -1038,6 +1038,57 @@ class PiAgentClient:
 
         return directions[:5]
 
+    def analyze_for_continuation(self, result_lean: str) -> dict:
+        """Evaluate if an Aristotle output ended abruptly or left incomplete proofs (sorries).
+
+        Returns:
+            dict: {"needs_continuation": bool, "prod_prompt": str}
+        """
+        if not result_lean or len(result_lean) < 50:
+            return {"needs_continuation": False, "prod_prompt": ""}
+
+        # Simple heuristic check first
+        has_sorry = "sorry" in result_lean.lower()
+        ends_abruptly = not result_lean.strip().endswith(("\n", "```", "theorem", "lemma", "def", "end", "}"))
+
+        # If it doesn't have a sorry and doesn't look abruptly cut off, don't waste tokens
+        if not has_sorry and not ends_abruptly and "i ran out of time" not in result_lean.lower():
+             return {"needs_continuation": False, "prod_prompt": ""}
+
+        analysis_prompt = textwrap.dedent(f"""\
+            You are analyzing the raw output from a mathematical agent (Aristotle) that was
+            tasked with writing Lean 4 proofs.
+
+            Determine if the agent stopped abruptly, hit an output limit, or left incomplete
+            proofs (indicated by `sorry`) but is otherwise on a solid mathematical track.
+
+            If the agent simply got stuck on a mathematically false path, we should NOT prod it.
+            We ONLY prod it if it just needs more time/budget to finish writing out the proof
+            it was in the middle of, or if it explicitly stated it ran out of time.
+
+            Here is the tail end of the output (up to 4000 chars):
+            ---
+            {result_lean[-4000:]}
+            ---
+
+            Output a JSON object with:
+            - `needs_continuation`: boolean (true if we should tell it to continue)
+            - `prod_prompt`: A string prompt to send back to the agent to get it to finish.
+              (e.g. "You stopped abruptly in the middle of the lemma. Please continue from where you left off and finish the proof.")
+        """)
+
+        try:
+            raw_response = self._call_llm(analysis_prompt, max_tokens=1024, require_json=True)
+            if not raw_response:
+                return {"needs_continuation": False, "prod_prompt": ""}
+            result = self._parse_json_response(raw_response)
+            if not isinstance(result, dict) or "needs_continuation" not in result:
+                return {"needs_continuation": False, "prod_prompt": ""}
+            return result
+        except Exception as e:
+            print(f"[Pi-Agent] Error analyzing for continuation: {e}")
+            return {"needs_continuation": False, "prod_prompt": ""}
+
     # ------------------------------------------------------------------
     # Research direction selection
     # ------------------------------------------------------------------
@@ -1834,36 +1885,41 @@ class PiAgentClient:
 
 
     def _build_v16_depth_requirements(self) -> str:
-        """v16: Research-team scientific-method loop with adversarial review.
+        """v16: Research-team scientific-method loop with adversarial review and advanced constraints.
 
-        Replaces the flat v15 checklist with a loop: hypothesize → experiment →
-        analyze → critique → synthesize → report. The team is required to take
-        lab notes at every step and to derive future directions from actual
-        findings, not from the original brief.
+        This is the "super-prompt" version of v16, incorporating the best ideas from v19-v23:
+        Pre-Proof Computational Stage, Quality over Quantity, Incremental Proof Sketching,
+        Novelty Push, and the Multi-Agent Scientific Method Team.
         """
         return textwrap.dedent("""\
-            ## v16 Research Core Methodology — Scientific Team Loop
+            ## v16 Research Core Methodology — Multi-Agent Scientific Team Loop
 
             You are the Principal Investigator leading a research team with four
             roles: **Hypothesizer**, **Experimenter**, **Analyst**, and **Critic**.
-            Run the following loop and record notes at each stage.
+            Run the following loop and record notes at each stage in the Lab Notes.
+            You must act as a team of sub-agents working collaboratively.
 
-            ### Stage 1 — Hypothesize (team: Hypothesizer)
+            ### Stage 1 — Hypothesize & Computational Evidence (team: Hypothesizer)
             Brainstorm 5–7 falsifiable conjectures about the topic. At least two
             must be surprising or counter-intuitive. Rank them by expected
             scientific impact, not by ease of proof.
+            **Pre-Proof Experimentation**: Before attempting formal proofs, you must
+            test the conjectures computationally by running small-case calculations,
+            or logically validating them.
 
-            ### Stage 2 — Experiment (team: Experimenter)
-            For each conjecture, attempt to prove it in Lean 4 or disprove it with
-            a concrete counterexample. Prioritize the most surprising conjectures
-            first. If a proof is beyond reach, prove the strongest lemma you can
-            and mark the remaining step with exactly one `sorry` that is clearly
-            documented.
+            ### Stage 2 — Proof Sketching & Incremental Validation (team: Experimenter)
+            **Incremental Proof Building**: Before writing any Lean code, write a comprehensive,
+            rigorous mathematical proof sketch. Break the problem down into small, exact lemmas.
+            Formalize each lemma incrementally.
+            **Quality over Quantity**: Prove NO MORE than 3 main theorems. Each theorem
+            must require significant mathematical insight, non-trivial auxiliary lemmas,
+            and advanced tactics. Do not prove obvious facts just to increase the count.
 
             ### Stage 3 — Analyze (team: Analyst)
             Summarize what survived, what failed, and **why** failures failed.
-            Distinguish "true but hard", "false", and "needs a different
-            definition". These insights are as valuable as the proofs.
+            Distinguish "true but hard", "false", and "needs a different definition".
+            **Novelty Push**: You are explicitly rewarded for introducing completely new,
+            mathematically sound definitions that bridge two disparate domains.
 
             ### Stage 4 — Critique / Adversarial Review (team: Critic)
             Before finalizing, challenge every theorem:
@@ -1871,15 +1927,14 @@ class PiAgentClient:
             - Does every main theorem have 0 sorries?
             - Do the results genuinely extend the attached catalog files?
             - Are there hidden assumptions or corner cases that break the claim?
-            If you find a weakness, fix it or replace the theorem with a guarded
-            version and explain the boundary.
+            If you find a weakness, fix it or replace the theorem with a guarded version.
 
             ### Stage 5 — Synthesize (team: Principal Investigator)
-            Combine the verified results into clean, compiling Lean 4 files.
-            Write a `FUTURE_DIRECTIONS.md` that lists 3–5 **bold, testable**
-            conjectures derived from Stage 3 and Stage 4. Each conjecture must
-            include a "The key insight is..." sentence and a "Why now?"
-            justification.
+            Combine the verified results into clean, compiling Lean 4 files with 0 sorries.
+            Write a `FUTURE_DIRECTIONS.md` that lists 3–5 **bold, testable** conjectures
+            derived from Stage 3 and Stage 4. Treat prior cycle context as a live research
+            thread and continue resolving open conjectures. Each new direction must include a
+            "The key insight is..." sentence and a "Why now?" justification.
 
             ### Perpetual Scientific Iteration (do not stop at first synthesis)
             When the research team comes together with results, do not stop. Treat the synthesized findings as the next problem statement and immediately run the full scientific-method loop again: hypothesize, experiment, review, synthesize, critique. Repeat this cycle continuously within the available context window, refining, deepening, and cross-checking until forced to emit output. Use Aristotle to its fullest.

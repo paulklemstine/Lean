@@ -646,6 +646,27 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 extractor.failed_count += 1
             continue
 
+        # ── End-of-Thought Continuation Prod ──
+        if not is_phase_b_completion and job.result_lean:
+            continuation_check = extractor.pi_agent.analyze_for_continuation(job.result_lean)
+            if continuation_check.get("needs_continuation") and getattr(job, "prod_count", 0) < 2:
+                job.prod_count = getattr(job, "prod_count", 0) + 1
+                prod_prompt = continuation_check.get("prod_prompt", "Please continue your work to completion.")
+                print(f"[Tick] Prodding job {job.job_id[:8]} to continue (Prod {job.prod_count}): {prod_prompt}")
+                try:
+                    import asyncio
+                    # Resume the existing project on the server
+                    await extractor.aristotle.resume_project(job.project_id, prod_prompt)
+                    # Reset status to put it back in the polling queue
+                    job.status = "dispatched"
+                    job.phase = "A"
+                    extractor.inflight[job.project_id] = job
+                    extractor._save_inflight()
+                    # Skip the rest of this loop so it gets polled next tick
+                    continue
+                except Exception as e:
+                    print(f"[Tick] Failed to prod job {job.job_id[:8]}: {e}")
+
         job = extractor.evaluate(job)
         extractor._save_inflight()
 
@@ -1309,12 +1330,33 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         try:
             import github_injector
             github_injector.inject_directions_into_memory(extractor.workspace)
-            # Reload future directions into extractor's memory so it sees the injected ones immediately
-            from research_memory import FutureDirectionsManager
-            # We don't need to do a full reload of the memory class if we just rely on fd_manager loaded inside discover() 
-            # Wait, discover() instantiates FutureDirectionsManager fresh! So it will automatically pick up the updated json.
         except Exception as e:
             print(f"[Tick] Failed to inject GitHub issues: {e}")
+
+        # Dispatch injected issues bypassing max_inflight
+        try:
+            from research_memory import FutureDirectionsManager
+            local_fd = FutureDirectionsManager(extractor.workspace)
+            injected = [d for d in local_fd._directions if d.status == "available" and getattr(d, "source", "") == "github_injection"]
+            if injected:
+                for fd in injected:
+                    print(f"[Tick] Bypassing max_inflight to dispatch injected issue: {fd.title}")
+                    try:
+                        job = extractor.discover(forced_direction=fd)
+                        job = await extractor.dispatch_async(job)
+                        if job.project_id:
+                            extractor.inflight[job.project_id] = job
+                            print(f"[Tick] Dispatched injected issue {job.project_id[:8]}: {job.concept.title[:60]}")
+                            _signal_dashboard_update(job.project_id[:8], "dispatched")
+                        else:
+                            extractor._release_direction(job)
+                            print(f"[Tick] Dispatch failed for injected issue {job.concept.title[:60]}, direction released")
+                    except Exception as inner_e:
+                        print(f"[Tick] Inner error dispatching injected issue: {inner_e}")
+                        import traceback
+                        traceback.print_exc()
+        except Exception as e:
+            print(f"[Tick] Failed to dispatch injected issues: {e}")
 
         standard_slots = max(0, slots_available - novelty_slots)
         wild_slots = min(novelty_slots, slots_available)

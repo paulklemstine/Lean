@@ -100,6 +100,7 @@ class ResearchJob:
     adversarial_result: Optional[Dict] = None  # Adversarial judging metadata
     decomposition_depth: int = 0
     prompt_version: str = "v1"  # Which prompt version was used: v1, v2, v3
+    prod_count: int = 0  # How many times Aristotle was explicitly prodded to continue
     # Two-phase fields (Phase A: math, Phase B: packaging)
     phase: str = "A"  # "A" | "B" | "complete" | "A_only"
     phase_a_result: Optional[Dict] = None  # {"lean_files": [...], "theorem_count": N, "sorry_count": M, "self_grade": "world_class|substantial|partial"}
@@ -602,7 +603,7 @@ class KnowledgeExtractor:
     # Phase 1: DISCOVER — Pi decides what to research
     # ==================================================================
 
-    def discover(self, forced_domain: Optional[str] = None, domain_filter: Optional[str] = None, exclude_domains: Optional[list] = None) -> ResearchJob:
+    def discover(self, forced_domain: Optional[str] = None, domain_filter: Optional[str] = None, exclude_domains: Optional[list] = None, forced_direction=None) -> ResearchJob:
         """Pi analyzes the catalog and selects a research direction.
 
         Uses Aristotle Loop (UCB) for principled domain selection,
@@ -698,10 +699,13 @@ class KnowledgeExtractor:
 
         # Try domain-filtered selection first, fall back to any available
         # Skip directions whose title matches an already-inflight concept to prevent duplicate dispatch
-        effective_filter = domain_filter or loop_result['domain']
-        best_dir = fd_manager.select_direction_weighted(domain_filter=effective_filter, recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains, exclude_titles=inflight_concepts)
-        if not best_dir:
-            best_dir = fd_manager.select_direction_weighted(recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains, exclude_titles=inflight_concepts)
+        if forced_direction:
+            best_dir = forced_direction
+        else:
+            effective_filter = domain_filter or loop_result['domain']
+            best_dir = fd_manager.select_direction_weighted(domain_filter=effective_filter, recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains, exclude_titles=inflight_concepts)
+            if not best_dir:
+                best_dir = fd_manager.select_direction_weighted(recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains, exclude_titles=inflight_concepts)
 
         thread_id = None
         cycle_index = 0

@@ -521,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const sectionTitle = document.createElement('h3');
         sectionTitle.className = 'section-title';
         sectionTitle.textContent = 'Visualizations';
-        sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed);';
+        sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-top: 32px;';
         container.appendChild(sectionTitle);
 
         const isFilename = (s) => typeof s === 'string' && s.length < 80 && (s.endsWith('.py') || s.startsWith('viz_') || s.startsWith('visualize_'));
@@ -706,8 +706,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const sectionTitle = document.createElement('h3');
         sectionTitle.className = 'section-title';
-        sectionTitle.textContent = 'Interactive Demonstrations';
-        sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed);';
+        sectionTitle.textContent = 'Interactive HTML';
+        sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-top: 32px;';
         container.appendChild(sectionTitle);
 
         const validItems = items.filter(item => {
@@ -820,6 +820,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (validItems.length > 0) {
+            const sectionTitle = document.createElement('h3');
+            sectionTitle.className = 'section-title';
+            sectionTitle.textContent = 'Algorithms';
+            sectionTitle.style.cssText = 'margin-bottom: 16px; color: var(--accent-color, #7c3aed); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-top: 32px;';
+            container.appendChild(sectionTitle);
+
             validItems.forEach((item, idx) => {
                 const card = document.createElement('div');
                 card.className = 'code-card';

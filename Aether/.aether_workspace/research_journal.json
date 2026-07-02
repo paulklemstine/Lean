@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6fec91f1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Differential Equations (Kovacic / Riccati / Differential Galois)\n\nDerived from this cycle's findings in `EML.EMLRiccatiSolvableFamily` (an explicit\ninfinite solvable even-deg",
-      "quality_score": 0.7897859999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T16:25:23",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
-    {
       "cycle_id": "bd70abee",
       "domain": "Applications",
       "key_insight": "# Future Directions — Cusick density `c_t = dens { n : s₂(n) ≤ s₂(n+t) }`\n\nThis research cycle proved (in `Catalog/Applications/`):\n\n* `CusickShiftSevenDensity.lean` — `c_7 = 43/64` (first exact `s₂(t",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-07-02T03:51:06",
       "title": "Non-embeddability of the Petersen graph into tropical abelian Cayley graphs"
+    },
+    {
+      "cycle_id": "8b6fc6d0",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns — one leg is a multiple",
+      "quality_score": 0.7859200000000002,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-02T05:18:37",
+      "title": "unnamed_concept"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "905ed2dd",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — EML Fixed-Point Dynamics\n\nDerived from this cycle's findings: the EML operator `f(x) = exp(a)·log(b·x + c)`\nhas a *sharp closed-form existence threshold* `c ≥ exp(a)·(1 − a)` (fo",
-      "quality_score": 0.76274,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-27T05:32:07",
-      "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-    },
     {
       "cycle_id": "802107a7",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 2,
       "timestamp": "2026-07-02T03:55:56",
       "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
+    },
+    {
+      "cycle_id": "8b6fc6d0",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Congruence Rigidity of Sums of Squares\n\nThis cycle established that the entries of an integer right triangle are forced into\nstrong divisibility patterns — one leg is a multiple",
+      "quality_score": 0.7859200000000002,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-07-02T05:18:37",
+      "title": "unnamed_concept"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ef629b7b",
-      "domain": "Novelty",
-      "name": "s_one",
-      "quality": 0.722996
-    },
-    {
-      "cycle_id": "ef629b7b",
-      "domain": "Novelty",
-      "name": "s_succ",
-      "quality": 0.722996
-    },
-    {
-      "cycle_id": "872fa119",
-      "domain": "Novelty",
-      "name": "isMaximal_singleton_one",
-      "quality": 0.7050400000000001
-    },
     {
       "cycle_id": "ce5b4268",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "colorable_of_isometric",
       "quality": 0.87056
+    },
+    {
+      "cycle_id": "8b6fc6d0",
+      "domain": "Pythagorean",
+      "name": "every_int_ge_three_is_leg",
+      "quality": 0.7859200000000002
+    },
+    {
+      "cycle_id": "8b6fc6d0",
+      "domain": "Pythagorean",
+      "name": "gaussian_parametrization_is_triple",
+      "quality": 0.7859200000000002
+    },
+    {
+      "cycle_id": "8b6fc6d0",
+      "domain": "Pythagorean",
+      "name": "parametrization_is_triple",
+      "quality": 0.7859200000000002
     }
   ],
-  "last_updated": "2026-07-02T03:55:56",
+  "last_updated": "2026-07-02T05:18:37",
   "open_questions": [
     {
       "context": "sorry; sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "bab04850",
-        "quality": 0.4604252747252747,
-        "theorems": 177,
-        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-      },
-      {
         "cycle_id": "656b45a0",
         "quality": 0.46081729863543053,
         "theorems": 33,
@@ -3885,6 +3879,12 @@
         "quality": 0.455,
         "theorems": 5,
         "title": "Homotopy Type Theory as Foundations"
+      },
+      {
+        "cycle_id": "8b6fc6d0",
+        "quality": 0.7859200000000002,
+        "theorems": 12,
+        "title": "unnamed_concept"
       }
     ],
     "Shared": [
