@@ -31,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "34aac300",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -41,12 +41,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "196658a3",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty"
@@ -55,7 +55,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -495,7 +495,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No solutions for odd exponents in the coprime case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "96530621",
     "description": "For the graph G_N^{(2)} obtained by deleting edges of circular distances \u00b11, \u00b12 from the complete graph K_N, the effective resistance R_{N,\u2113}^{(2)} between vertices at distance \u2113 satisfies a fourth-order linear recurrence with coefficients depending on N. Specifically, for N \u2265 5 and 0 \u2264 \u2113 \u2264 N-5, the sequence R_{N,\u2113}^{(2)} satisfies R_{\u2113+4} + R_{\u2113+3} - (N-1)R_{\u2113+2} + R_{\u2113+1} + R_\u2113 = 0.",
     "domains": [
       "Bridges"
@@ -504,7 +504,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:46:19.799142+00:00",
     "title": "Recurrence for Effective Resistance in G_N^{(2)}"
   },
@@ -578,6 +578,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
+  },
+  {
+    "consumed_by_exp_id": "33ce8829",
+    "description": "For any positive integers k and r \u2264 k, the minimal n\u2080 such that every k-uniform hypergraph on n \u2265 n\u2080 vertices with \u03b4_r \u2265 1 contains a Berge-Ct^r for all t \u2265 r+1 is exactly k + 1.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0044",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30418v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T19:19:02.169058+00:00",
+    "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with \u03b4_r \u2265 1"
   },
   {
     "consumed_by_exp_id": "",

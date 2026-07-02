@@ -40,7 +40,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "34aac300",
     "description": "Gödel showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure — a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature — self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domain_bridges": [],
     "domains": [
@@ -53,14 +53,14 @@
     "proof_strategy": "Define NWFP (non-well-founded proofs) as coinductive types: a proof is a tree where children are proofs, but cycles are allowed as long as each cycle has decreasing ordinal rank. Define ordinal height: oh(P) = sup{oh(Q)+1 : Q is a subproof of P}. A NWFP is valid if oh(P) is a well-defined ordinal. Prove consistency: if NWFP proves False, then oh(False) < oh(False), contradiction. Prove completeness: every true Pi_1 sentence has a NWFP of finite height. Test: formalize in Lean 4 and verify the P-implies-P example.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "196658a3",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domain_bridges": [],
     "domains": [
@@ -72,7 +72,7 @@
     "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -838,7 +838,7 @@
     "catalog_references": [
       "arXiv:2601.XXXXX"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "96530621",
     "description": "For the graph G_N^{(2)} obtained by deleting edges of circular distances ±1, ±2 from the complete graph K_N, the effective resistance R_{N,ℓ}^{(2)} between vertices at distance ℓ satisfies a fourth-order linear recurrence with coefficients depending on N. Specifically, for N ≥ 5 and 0 ≤ ℓ ≤ N-5, the sequence R_{N,ℓ}^{(2)} satisfies R_{ℓ+4} + R_{ℓ+3} - (N-1)R_{ℓ+2} + R_{ℓ+1} + R_ℓ = 0.",
     "domain_bridges": [
       "spectral graph theory",
@@ -854,7 +854,7 @@
     "proof_strategy": "Use the trigonometric sum representation R_{N,ℓ}^{(2)} = (1/N) ∑_{k=1}^{N-1} (1 - cos(2πkℓ/N)) / (N - 1 - 2 cos(2πk/N) - 2 cos(4πk/N)) from the paper. Multiply the denominator by e^{2iπk/N} to obtain the characteristic polynomial z^4 + z^3 - (N-1)z^2 + z + 1. Show that the sequence satisfies the corresponding linear recurrence by verifying that the summand is annihilated by the recurrence operator, or by using the closed-form expression in terms of the generalized Bejaia-Pisa sequences introduced in the paper.",
     "research_mode": "team",
     "source_exp_id": "2606.31044v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T16:46:19.799142+00:00",
     "title": "Recurrence for Effective Resistance in G_N^{(2)}"
   },
@@ -989,6 +989,30 @@
     "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Lu and Wang [2021]"
+    ],
+    "consumed_by_exp_id": "33ce8829",
+    "description": "For any positive integers k and r ≤ k, the minimal n₀ such that every k-uniform hypergraph on n ≥ n₀ vertices with δ_r ≥ 1 contains a Berge-Ct^r for all t ≥ r+1 is exactly k + 1.",
+    "domain_bridges": [
+      "extremal hypergraph theory",
+      "cycle enumeration"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0044",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extremal combinatorics and induction",
+    "research_mode": "team",
+    "source_exp_id": "2606.30418v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T19:19:02.169058+00:00",
+    "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with δ_r ≥ 1"
   },
   {
     "ambition_level": "extension",
