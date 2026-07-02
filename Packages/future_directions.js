@@ -3,21 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 4055f798 (Q=0.791), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume cont",
+    "consumed_by_exp_id": "4fe41de5",
+    "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
     "domains": [
-      "Cryptography"
+      "Novelty"
     ],
-    "id": "push_4055f798_1a01f993",
-    "priority_score": 0.8906799999999999,
+    "id": "fd_0020",
+    "priority_score": 1000.0,
     "research_mode": "team",
-    "source_exp_id": "4055f798",
-    "status": "available",
-    "timestamp": "2026-07-02T09:02:20.116764+00:00",
-    "title": "Deepening: The Library of Babel: Combinatorics of the Universal Library"
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T09:09:21.022731+00:00",
+    "title": "Prove Fermats Little Theorem for p=5"
   },
   {
-    "consumed_by_exp_id": "2c53e63a",
+    "consumed_by_exp_id": "",
     "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.029563+00:00",
     "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
@@ -46,7 +46,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "82e2c894",
+    "consumed_by_exp_id": "",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -56,12 +56,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
-    "consumed_by_exp_id": "813a28d3",
+    "consumed_by_exp_id": "",
     "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
     "domains": [
       "Novelty",
@@ -71,7 +71,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.027554+00:00",
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
@@ -90,7 +90,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
-    "consumed_by_exp_id": "de16211e",
+    "consumed_by_exp_id": "",
     "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
       "NumberTheory"
@@ -99,24 +99,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T05:03:52.769183+00:00",
     "title": "[Reset] Fresh approach in NumberTheory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0027",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T08:48:04.246121+00:00",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
     "consumed_by_exp_id": "",
@@ -192,7 +177,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "a0eabca0",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -201,7 +186,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -263,7 +248,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremal Graph Constraint"
   },
   {
-    "consumed_by_exp_id": "a6669fde",
+    "consumed_by_exp_id": "",
     "description": "This conjecture states that reduced words in type B_n have Coxeter lengths exactly double those of type A_n, ensuring non-equivalence in structural complexity.",
     "domains": [
       "Pythagorean",
@@ -273,9 +258,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00646v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T08:32:08.049625+00:00",
     "title": "Coxeter Length Scaling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any graph $G$, if $G$ is distance-hereditary, then $G$ is balanced if and and only if $G$ does not contain $\\overline{3K_2}$ as an induced subgraph. This formalizes the paper's result that for the class of distance-hereditary graphs, the property of being balanced is equivalent to being $\\overline{3K_2}$-free.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0019",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00730v1",
+    "status": "available",
+    "timestamp": "2026-07-02T09:06:43.437769+00:00",
+    "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
   },
   {
     "consumed_by_exp_id": "",
@@ -284,7 +283,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0019",
+    "id": "fd_0021",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -293,16 +292,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ramified Prime Product Equality"
   },
   {
-    "consumed_by_exp_id": "e6125fc1",
+    "consumed_by_exp_id": "",
     "description": "For a q-hypergeometric series whose coefficients have an asymptotic expansion dominated by oscillatory terms near a root of unity \u03c9, the signs of the coefficients alternate except for a density-zero set of indices n.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0020",
+    "id": "fd_0022",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:04:27.717812+00:00",
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
@@ -313,7 +312,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0021",
+    "id": "fd_0023",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
@@ -327,7 +326,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0022",
+    "id": "fd_0024",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -342,7 +341,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0023",
+    "id": "fd_0025",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -357,7 +356,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0024",
+    "id": "fd_0026",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00732v1",
@@ -371,7 +370,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0025",
+    "id": "fd_0027",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00674v1",
@@ -385,13 +384,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0026",
+    "id": "fd_0028",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
     "status": "available",
     "timestamp": "2026-07-02T08:32:50.157512+00:00",
     "title": "Partition Property and Almost-Involution of Wythoff-Fibonacci Sequences"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "While the continuous oriented chromatic number of the directed Schreier graph of the Bernoulli shift Z\u00b2 on 2^{Z\u00b2} is proven to be 7, the Borel case remains open. This conjecture proposes that the Borel oriented chromatic number is also 7, bridging descriptive combinatorics and topological dynamics.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0029",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00367v1",
+    "status": "available",
+    "timestamp": "2026-07-02T09:09:17.045826+00:00",
+    "title": "The Borel oriented chromatic number of the directed Schreier graph of the Bernoulli shift Z\u00b2 on 2^{Z\u00b2} is 7"
   },
   {
     "consumed_by_exp_id": "",
@@ -407,51 +421,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T05:18:03.424231+00:00",
     "title": "That the entries of an integer right triangle are forced"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0028",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-02T08:48:04.271161+00:00",
-    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 good-manifold counts and the exponential tier\n\nThese conjectures grow out of the finding that the good-manifold count of an\n`n`-nice polytope has a finite exceptional head followed by the exact law `2^n`,\nplacing it precisely one growth tier below the factorial regime.\n\n## 1. The head length is intrinsic, not incidental\n\n**Conjecture.** For every family of \"nice\" polytopes whose good-manifold count is\neventually a fixed exponential `b^n`, the number of exceptional early terms that\ndeviate from `b^n` is bounded by a function of `b` alone, independent of the\ncombinatorial dimension parameter.\n\n*The key insight is* that the deviation `a(n) \u2212 b^n` in the observed data is a\nstep function that only ever decreases and reaches zero once the exponential term\novertakes the finite geometric correction \u2014 so the head length is governed by when\n`b^n` passes a fixed additive budget, not by the geometry itself.\n\n*Why now?* We now have an exact closed form separating a finite head from an\nexponential tail, so the head can be measured precisely and compared across\nfamilies rather than estimated asymptotically.\n\n## 2. Exactly-exponential sequences form a closed tier\n\n**Conjecture.** A monotone integer sequence that eventually equals a single\nexponential `b^n` is closed under termwise sums and maxima but not under\nconvolution: the convolution of two such sequences leaves the exponential tier\nand lands strictly between exponential and super-exponential growth.\n\n*The key insight is* that agreeing with `b^n` on a cofinite set is preserved by\npointwise operations that respect the dominant term, whereas convolution mixes all\nscales and injects a polynomial factor `n \u00b7 b^n` that breaks the pure exponential\nlaw.\n\n*Why now?* Having certified that the good-manifold count is `\u0398(2^n)` and *not*\nsuper-exponential, we can treat \"exactly exponential\" as a rigorous class and ask\nwhich operations keep a sequence inside it.\n\n## 3. A gap theorem below the factorial regime\n\n**Conjecture.** No good-manifold count of a nice-polytope family grows strictly\nfaster than every fixed exponential yet strictly slower than the factorial; the\nregion between the exponential tier and the super-exponential tier is empty for\nthese counts.\n\n*The key insight is* that the recursive doubling `a(n+1) = 2\u00b7a(n)` seen on the\ntail is the fastest self-similar growth a bounded-branching manifold-gluing\nprocess can produce, and any faster rate would require unbounded branching, which\nimmediately jumps to factorial growth.\n\n*Why now?* The catalog already isolates the super-exponential tier (the factorial\nand permutation counts); pairing that with the exact exponential law here lets us\nformulate the missing-middle gap as a testable dichotomy.\n\n## 4. Partial-sum telescoping characterizes the tail\n\n**Conjecture.** A sequence satisfies the clean telescoping identity\n`\u2211_{k=m}^{N} a(k) = a(N+1) \u2212 a(m)` for all large `N` if and only if it eventually\nobeys a doubling recurrence `a(n+1) = 2\u00b7a(n)`.\n\n*The key insight is* that the geometric partial-sum formula proved for the\ngood-manifold tail is equivalent to the ratio between consecutive terms being\nexactly `2`, so the summation identity is a faithful fingerprint of base-2\nexponential growth.\n\n*Why now?* We have both directions almost in hand: the doubling recurrence yields\nthe telescoping sum directly, and the converse is a short finite-difference\nargument that the present closed form makes accessible.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0029",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "8b7f43f1",
-    "status": "available",
-    "timestamp": "2026-07-02T08:56:25.558105+00:00",
-    "title": "These conjectures grow out of the finding that the good-manifold count of an"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Combinatorics of the Universal Library\n\nThe universal library \u2014 the space of *all* strings of a fixed length over a\nfixed alphabet \u2014 is finite yet astronomically large. Our cycle established four\nload-bearing facts: the population of the library is the alphabet size raised to\nthe book length; a fixed passage of length `m` occupies a `(L - m + 1)\u00b7A^{-m}`\nfraction of volumes; the number of possible catalogs strictly exceeds the number\nof volumes, so no volume can list them all; and a complete distributed catalog\nrequires exactly one catalog entry per volume. The following conjectures push\nthese findings further.\n\n## 1. The true meaning-density prefactor is the placement count, not the passage length\n\n**Conjecture.** For any fixed target passage of length `m` inside a book of\nlength `L`, the fraction of volumes containing that passage is at most\n`(L - m + 1)\u00b7A^{-m}`, and this bound is asymptotically tight up to a factor\n`1 + O(m\u00b7A^{-m})` as `L \u2192 \u221e` with `m` fixed.\n\nThe key insight is that the polynomial prefactor governing how often meaning\nappears is the number of *placements* a passage can occupy, `L - m + 1`, rather\nthan the passage's own length. Overlapping placements cause a controlled\nover-count that vanishes as the passage grows, so the union bound becomes an\nequality in the limit.\n\nWhy now? We have already proved the one-sided bound exactly; the missing piece is\na matching lower bound via inclusion\u2013exclusion on overlapping windows, which is\nnow a concrete finite computation rather than a heuristic.\n\n## 2. Catalog self-reference is impossible at every scale, but locatability is universal\n\n**Conjecture.** For all alphabet sizes `A \u2265 2` and book lengths `L \u2265 1`, the\nnumber of complete catalogs of the library exceeds the number of volumes by a\ndoubly-exponential margin `2^{A^L} / A^L`, and consequently *no* injective\nself-cataloguing scheme exists; yet a surjective distributed catalog exists for\nevery `N \u2265 A^L`, with the minimum such `N` equal to `A^L` exactly.\n\nThe key insight is that a library is *locatable but never self-locating*: a guide\nto all volumes always exists as a distributed structure of full size, while a\nsingle self-referential master volume is forbidden by a finite diagonal count.\n\nWhy now? Both halves are already isolated as exact statements \u2014 the diagonal\ninequality `A^L < 2^{A^L}` and the surjection threshold `N \u2265 A^L` \u2014 so the\nremaining work is to quantify the doubly-exponential catalog surplus and prove\nits monotonicity in `A` and `L`.\n\n## 3. The de Bruijn length is the optimal single-volume code catalog\n\n**Conjecture.** The shortest single volume that exhibits every length-`k`\nreference code exactly once has length precisely `A^k + k - 1`, the length of a\nde Bruijn sequence, and any volume of length `\u2265 A^k + k` necessarily repeats a\ncode.\n\nThe key insight is that the subword-complexity ceiling `A^k` and the pigeonhole\ncollision threshold `A^k + k` are two faces of the same extremal object: the de\nBruijn sequence saturates the ceiling and sits exactly one symbol below the\nforced-collision length.\n\nWhy now? We have proved both the capacity ceiling and the collision threshold; a\nconstructive existence proof of the saturating de Bruijn catalog would close the\ngap between \"at most `A^k` codes\" and \"exactly `A^k` codes achievable\".\n\n## 4. Distributed catalogs admit a redundancy\u2013coverage trade-off curve\n\n**Conjecture.** If a distributed catalog of `N < A^L` volumes cannot be complete,\nthen the maximum fraction of the library it can cover is exactly `N / A^L`, and\nany coverage strictly above `1 - 1/A^L` already forces `N = A^L`.\n\nThe key insight is that partial catalogues degrade linearly: coverage is capped\nby the raw ratio of catalog volumes to library volumes, with no economy of scale,\nbecause distinct volumes demand distinct catalog entries.\n\nWhy now? The completeness threshold `N \u2265 A^L` is an equality boundary; relaxing\n\"surjective\" to \"image of size `\u2265 c\u00b7A^L`\" turns it into a coverage-versus-size\ncurve that is immediately amenable to the same counting technique.\n\n## 5. Passage co-occurrence obeys a second-moment concentration law\n\n**Conjecture.** Fix two disjoint passages of lengths `m\u2081` and `m\u2082`. The fraction\nof volumes containing both, at any placement, concentrates around\n`(L - m\u2081 + 1)(L - m\u2082 + 1)\u00b7A^{-(m\u2081+m\u2082)}` with fluctuations of smaller order as\n`L \u2192 \u221e`, exhibiting asymptotic independence of distinct passages.\n\nThe key insight is that far-apart passages behave like independent events in the\nuniform library measure, so joint meaning-density factorises into the product of\nindividual densities.\n\nWhy now? The single-passage density is now an exact theorem; extending the same\nwindow-counting argument to pairs, and bounding the overlap correction, is the\nnatural next increment toward a full concentration-of-measure theory of meaning.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_0030",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "4055f798",
-    "status": "available",
-    "timestamp": "2026-07-02T09:02:10.529929+00:00",
-    "title": "The universal library \u2014 the space of *all* strings of a fixed length over a"
   },
   {
     "consumed_by_exp_id": "",

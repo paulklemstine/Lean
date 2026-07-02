@@ -1,11 +1,11 @@
---- CodeDirectSum.lean
-+++ CodeDirectSum.lean
-@@ -57,7 +57,7 @@
+--- GleasonLength.lean
++++ GleasonLength.lean
+@@ -49,7 +49,7 @@
  -/
  
  import Mathlib
--import Applications.SmoothPoincare.GleasonLength
-+import Catalog.Applications.SmoothPoincare.GleasonLength
+-import Catalog.Applications.SmoothPoincare.SelfDualLength
++import Applications.SmoothPoincare.SelfDualLength
  
  
  

@@ -1,0 +1,9 @@
+--- IndependenceRatioLowerBound.lean
++++ IndependenceRatioLowerBound.lean
+@@ -1,5 +1,5 @@
+ import Mathlib
+-import Catalog.Novelty.IndependenceRatioChromatic
++import Novelty.IndependenceRatioChromatic
+ 
+ /-!
+ 

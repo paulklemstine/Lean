@@ -1,0 +1,11 @@
+--- SymPowerSignChangesSumsOfSquares.lean
++++ SymPowerSignChangesSumsOfSquares.lean
+@@ -63,7 +63,7 @@
+ is entirely concentrated in the two-square case, and evaporates for `m ≥ 4`.
+ -/
+ import Mathlib
+-import Catalog.Novelty.SumsOfMSquaresSet
++import Novelty.SumsOfMSquaresSet
+ 
+ 
+ 

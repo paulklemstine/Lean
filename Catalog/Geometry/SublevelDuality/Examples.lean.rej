@@ -1,0 +1,11 @@
+--- Examples.lean
++++ Examples.lean
+@@ -1,6 +1,6 @@
+ import Mathlib
+-import Catalog.Geometry.SublevelDuality.Homogeneous
+-import Catalog.Geometry.SublevelDuality.Duality
++import Geometry.SublevelDuality.Homogeneous
++import Geometry.SublevelDuality.Duality
+ 
+ /-
+ 

@@ -1,0 +1,10 @@
+--- StrongChromaticFibonacci.lean
++++ StrongChromaticFibonacci.lean
+@@ -1,5 +1,5 @@
+-import Catalog.Combinatorics.StrongChromaticBipartite
+-import Catalog.Novelty.RiordanRowSumFibonacci
++import Combinatorics.StrongChromaticBipartite
++import Novelty.RiordanRowSumFibonacci
+ 
+ /-!
+ 

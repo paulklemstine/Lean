@@ -1,0 +1,9 @@
+--- UnramifiedDescentModel.lean
++++ UnramifiedDescentModel.lean
+@@ -1,5 +1,5 @@
+ import Mathlib
+-import Catalog.Novelty.UnramifiedDescentObstruction
++import Novelty.UnramifiedDescentObstruction
+ 
+ /-!
+ 

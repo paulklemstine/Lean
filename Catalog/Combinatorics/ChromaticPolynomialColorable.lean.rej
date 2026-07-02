@@ -1,0 +1,11 @@
+--- ChromaticPolynomialColorable.lean
++++ ChromaticPolynomialColorable.lean
+@@ -42,7 +42,7 @@
+ -- !-- End Lab Notes -- !--
+ -/
+ 
+-import Catalog.Combinatorics.ChromaticPolynomial
++import Combinatorics.ChromaticPolynomial
+ 
+ 
+ 

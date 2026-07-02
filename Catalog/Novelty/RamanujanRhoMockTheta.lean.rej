@@ -1,0 +1,9 @@
+--- RamanujanRhoMockTheta.lean
++++ RamanujanRhoMockTheta.lean
+@@ -1,5 +1,5 @@
+ import Mathlib
+-import Catalog.Novelty.RamanujanRhoFactorization
++import Novelty.RamanujanRhoFactorization
+ 
+ /-!
+ 

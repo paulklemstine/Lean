@@ -1,0 +1,11 @@
+--- Skeleton.lean
++++ Skeleton.lean
+@@ -3,7 +3,7 @@
+ Released under Apache 2.0 license as described in the file LICENSE.
+ -/
+ import Mathlib
+-import Bridges.TropicalHecke.MinPlusAlgebra
++import Tropical.MinPlusAlgebra
+ 
+ /-!
+ 

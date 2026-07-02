@@ -1,0 +1,10 @@
+--- CatalogBridge.lean
++++ CatalogBridge.lean
+@@ -1,5 +1,5 @@
+-import Catalog.Applications.LagrangeRatioSpectrum.DilationBound
+-import Catalog.NumberTheory.Irrationality
++import Applications.LagrangeRatioSpectrum.DilationBound
++import NumberTheory.Irrationality
+ 
+ /-!
+ 

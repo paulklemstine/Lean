@@ -1,0 +1,11 @@
+--- TropicalWeightEnumerator.lean
++++ TropicalWeightEnumerator.lean
+@@ -69,7 +69,7 @@
+ -/
+ 
+ import Mathlib
+-import Catalog.Applications.SmoothPoincare.CodeDirectSum
++import Applications.SmoothPoincare.CodeDirectSum
+ 
+ 
+ 

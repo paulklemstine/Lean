@@ -1,0 +1,11 @@
+--- KroneckerWeberRealization.lean
++++ KroneckerWeberRealization.lean
+@@ -49,7 +49,7 @@
+ -- !-- Lab Notes -- !--
+ -/
+ import Mathlib
+-import Catalog.Novelty.CyclotomicGL1Langlands
++import Novelty.CyclotomicGL1Langlands
+ 
+ 
+ 

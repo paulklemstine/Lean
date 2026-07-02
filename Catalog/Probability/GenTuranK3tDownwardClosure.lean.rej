@@ -1,0 +1,11 @@
+--- GenTuranK3tDownwardClosure.lean
++++ GenTuranK3tDownwardClosure.lean
+@@ -12,7 +12,7 @@
+ is reused as a black box via `GenTuranK3t.KabCopies_cubic_of_K3tFree`.
+ -/
+ import Mathlib
+-import Catalog.Novelty.GenTuranK3tUpperBound
++import Novelty.GenTuranK3tUpperBound
+ 
+ 
+ 

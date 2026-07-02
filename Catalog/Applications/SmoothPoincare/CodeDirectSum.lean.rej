@@ -1,11 +1,11 @@
---- CumulativeWeightConvolution.lean
-+++ CumulativeWeightConvolution.lean
-@@ -65,7 +65,7 @@
+--- CodeDirectSum.lean
++++ CodeDirectSum.lean
+@@ -57,7 +57,7 @@
  -/
  
  import Mathlib
--import Catalog.Applications.SmoothPoincare.TropicalWeightEnumerator
-+import Applications.SmoothPoincare.TropicalWeightEnumerator
+-import Catalog.Applications.SmoothPoincare.GleasonLength
++import Applications.SmoothPoincare.GleasonLength
  
  
  

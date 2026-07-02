@@ -1,0 +1,11 @@
+--- WeightDistributionConvolution.lean
++++ WeightDistributionConvolution.lean
+@@ -70,7 +70,7 @@
+ -/
+ 
+ import Mathlib
+-import Catalog.Applications.SmoothPoincare.CumulativeWeightConvolution
++import Applications.SmoothPoincare.CumulativeWeightConvolution
+ 
+ 
+ 

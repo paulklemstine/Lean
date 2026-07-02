@@ -1,0 +1,8 @@
+--- DilationBound.lean
++++ DilationBound.lean
+@@ -1,4 +1,4 @@
+-import Catalog.Applications.LagrangeRatioSpectrum.Core
++import Applications.LagrangeRatioSpectrum.Core
+ 
+ /-!
+ 

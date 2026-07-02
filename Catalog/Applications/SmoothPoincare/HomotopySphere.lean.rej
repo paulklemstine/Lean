@@ -1,11 +1,11 @@
---- GleasonLength.lean
-+++ GleasonLength.lean
-@@ -49,7 +49,7 @@
+--- HomotopySphere.lean
++++ HomotopySphere.lean
+@@ -35,7 +35,7 @@
  -/
  
  import Mathlib
--import Catalog.Applications.SmoothPoincare.SelfDualLength
-+import Applications.SmoothPoincare.SelfDualLength
+-import Catalog.Applications.SmoothPoincare.IntersectionForms
++import Applications.SmoothPoincare.IntersectionForms
  
  
  

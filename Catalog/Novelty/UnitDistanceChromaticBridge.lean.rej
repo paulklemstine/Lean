@@ -1,0 +1,11 @@
+--- UnitDistanceChromaticBridge.lean
++++ UnitDistanceChromaticBridge.lean
+@@ -1,6 +1,6 @@
+ import Mathlib
+-import Catalog.Novelty.IndependenceRatioChromatic
+-import Catalog.Novelty.UnitDistanceGraph
++import Novelty.IndependenceRatioChromatic
++import Novelty.UnitDistanceGraph
+ 
+ /-!
+ 
