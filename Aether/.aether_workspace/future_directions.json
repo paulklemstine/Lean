@@ -103,7 +103,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -149,7 +149,7 @@
         "bijective combinatorics",
         "map enumeration"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -610,7 +610,7 @@
         "Sidon sets",
         "convolution inequalities"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -656,7 +656,7 @@
         "Graph Product Theory",
         "Domination in Hypergraphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -879,7 +879,7 @@
         "Combinatorial Matrix Theory",
         "Structural Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -1021,7 +1021,7 @@
         "graph theory (clique-width)",
         "computational complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -1732,7 +1732,7 @@
         "linear recurrences",
         "discrete Fourier analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -2759,7 +2759,7 @@
       "depth_estimate": 3,
       "description": "A 7-dimensional 0/1-polytope with vertices violating central symmetry while satisfying Ziegler's conditions.",
       "domain_bridges": "central_symmetry",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -2991,7 +2991,7 @@
       "domain_bridges": [
         "graph-theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
