@@ -205,7 +205,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Trivial stabilizer for regular unipotent conjugacy classes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d329679",
     "description": "For every integer w \u2265 3, the Chromatic Sum problem is NP-complete on graphs of clique-width at most w. This extends the known result for w=3 and suggests a phase transition at clique-width 2 versus 3, where the problem becomes intractable.",
     "domains": [
       "Bridges"
@@ -214,7 +214,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T10:07:39.641162+00:00",
     "title": "Chromatic Sum NP-Completeness for Clique-Width at Least 3"
   },
@@ -1270,12 +1270,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "There exists a finite family of vector-valued convolution kernels {K_i} such that their weighted combination satisfies a ball-overbag inequality for Sidon sets, with the coefficient \u03b3_0=0.94601 achievable through optimized L\u00b2 energy distribution across kernels.",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0101",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01169v1",
+    "status": "available",
+    "timestamp": "2026-07-02T23:15:13.575664+00:00",
+    "title": "Multi-kernel smoothing lemma for Sidon sets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for a fixed elliptic curve E over Q and an odd prime p, the proportion of p-cyclic extensions L/Q (ordered by discriminant) for which the p-Selmer rank increment equals k converges to (1-1/p)\u00b7(1/p)^k as the discriminant bound tends to infinity.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0101",
+    "id": "fd_0102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1289,13 +1304,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_0102",
+    "id": "fd_0103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
     "status": "available",
     "timestamp": "2026-07-02T22:58:06.018849+00:00",
     "title": "Interplay between oscillatory asymptotics and alternating sign structure in $q$-series from Ramanujan's Lost Notebook"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every pro-2 Demushkin group G, the Benson--Krause--Schwede canonical class c(G) in the Hochschild cohomology HH^2(C^*(G;\ud835\udd3d\u2082), C^*(G;\ud835\udd3d\u2082)) of the cochain differential graded \ud835\udd3d\u2082-algebra of continuous cochains is zero. This is equivalent to the A\u2083-formality of C^*(G;\ud835\udd3d\u2082).",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0104",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01028v1",
+    "status": "available",
+    "timestamp": "2026-07-02T23:15:46.874733+00:00",
+    "title": "Vanishing of the Benson--Krause--Schwede canonical class for pro-2 Demushkin groups"
   },
   {
     "consumed_by_exp_id": "",
