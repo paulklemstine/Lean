@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "669193db",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Delaunay minicenter refinement & approximate Carathéodory\n\nThis cycle added three files to the `DelaunayContraction` catalog:\n\n* `PerturbedContraction.lean` — inhomogeneous contr",
-      "quality_score": 0.71552,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T07:24:07",
-      "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
-    },
-    {
       "cycle_id": "d409a01c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Linear Brown–Erdős–Sós at the span threshold\n\nDerived from this cycle's findings in `LinearBrownErdosSos.lean` and\n`LinearHypergraphPacking.lean`. Each conjecture is falsifiable.",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-07-01T23:31:29",
       "title": "Petersen Graph Non-Embeddability into Abelian Cayley Graphs"
+    },
+    {
+      "cycle_id": "b87dcfdc",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Explicit class field theory beyond the cyclotomic case\n\nThis cycle established three load-bearing facts: (i) the cyclotomic Galois group has\norder equal to Euler's totient and is",
+      "quality_score": 0.84436,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-02T01:15:10",
+      "title": "Hilbert 12: Kronecker-Weber Generalization"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1394b2e6",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Self-dual string C-groups of alternating groups\n\nDerived from this cycle's findings (the formalized `Foundations.lean` and\n`RankArithmetic.lean`). Each conjecture is falsifiable",
-      "quality_score": 0.73028,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T02:11:52",
-      "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
-    },
     {
       "cycle_id": "061c7bd2",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-07-02T00:47:10",
       "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function ρ(q)"
+    },
+    {
+      "cycle_id": "b87dcfdc",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Explicit class field theory beyond the cyclotomic case\n\nThis cycle established three load-bearing facts: (i) the cyclotomic Galois group has\norder equal to Euler's totient and is",
+      "quality_score": 0.84436,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-02T01:15:10",
+      "title": "Hilbert 12: Kronecker-Weber Generalization"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cff6413b",
-      "domain": "Novelty",
-      "name": "edgeDensity_ceiling_lt_C5",
-      "quality": 0.8251200000000001
-    },
-    {
-      "cycle_id": "5d028d25",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.747936
-    },
-    {
-      "cycle_id": "5d028d25",
-      "domain": "Novelty",
-      "name": "hartogs_dim_one",
-      "quality": 0.747936
-    },
     {
       "cycle_id": "5d028d25",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "colorable_of_isometric",
       "quality": 0.7976880000000001
+    },
+    {
+      "cycle_id": "b87dcfdc",
+      "domain": "Novelty",
+      "name": "card_galois_eq_totient",
+      "quality": 0.84436
+    },
+    {
+      "cycle_id": "b87dcfdc",
+      "domain": "Novelty",
+      "name": "isCyclic_galois_prime",
+      "quality": 0.84436
+    },
+    {
+      "cycle_id": "b87dcfdc",
+      "domain": "Novelty",
+      "name": "card_galois_prime",
+      "quality": 0.84436
     }
   ],
-  "last_updated": "2026-07-02T00:47:10",
+  "last_updated": "2026-07-02T01:15:10",
   "open_questions": [
     {
       "context": "This file develops a small but complete and `sorry`-free combinatorial foundation",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "30133a3d",
-        "quality": 0.3375488878571429,
-        "theorems": 7,
-        "title": "Exact sign law for coefficients of Ramanujan's third-order mock theta function ρ"
-      },
-      {
         "cycle_id": "913b7f3f",
         "quality": 0.682396,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.46884433623188404,
         "theorems": 6,
         "title": "Exact sign law for coefficients of Ramanujan's third order mock theta function ρ"
+      },
+      {
+        "cycle_id": "b87dcfdc",
+        "quality": 0.84436,
+        "theorems": 9,
+        "title": "Hilbert 12: Kronecker-Weber Generalization"
       }
     ],
     "NumberTheory": [

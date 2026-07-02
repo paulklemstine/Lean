@@ -23,6 +23,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b87dcfdc (Q=0.844), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_b87dcfdc_e117c9bf",
+    "lineage_refs": [],
+    "priority_score": 0.94436,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b87dcfdc",
+    "status": "available",
+    "timestamp": "2026-07-02T01:15:10.773662+00:00",
+    "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -1284,7 +1303,7 @@
       "unit_distance_graphs",
       "geometric_fractional_chromatic_number"
     ],
-    "consumed_by_exp_id": "38047daa",
+    "consumed_by_exp_id": "",
     "description": "The paper demonstrates that augmenting the 27-vertex unit-distance graph G27 with a specific pair of vertices results in a 29-vertex graph with geometric fractional chromatic number strictly greater than 4. The authors note that such augmentations are exceedingly rare. This conjecture posits that, up to Euclidean isometry, this specific 2-vertex augmentation is the unique way to add two vertices to G27 such that the resulting unit-distance graph has a geometric fractional chromatic number strictly greater than 4.",
     "domain_bridges": [
       "Linear Programming",
@@ -1301,7 +1320,7 @@
     "proof_strategy": "Formalize the 27-vertex graph G27 and the convex polytope of its 23 extremal geometric fractional colorings. Then, perform a verified exhaustive search or algebraic classification over all possible 2-vertex additions, verifying that only the specific pair identified in the paper yields a unit-distance graph where the geometric fractional chromatic number exceeds 4.",
     "research_mode": "team",
     "source_exp_id": "2606.28157v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-29T03:31:25.863443+00:00",
     "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
   },
@@ -5055,41 +5074,11 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Djokovic-Winkler relation",
-      "partial cubes",
-      "isometric embeddings",
-      "Cayley graphs of abelian groups",
-      "GF(2) linear algebra"
-    ],
-    "consumed_by_exp_id": "f4462f16",
-    "description": "For any connected graph G with an edge partition P of E(G) into t classes, let A be the cycle-class parity matrix over GF(2) constructed from P. The induced quotient labeling ℓ: V(G) → (Z/2Z)^(t − rank(A)) satisfies d_G(u,v) ≥ d_H(ℓ(u), ℓ(v)) for all u,v ∈ V(G), where H is the hypercube Cayley graph on (Z/2Z)^(t − rank(A)). That is, the labeling never stretches distances—it can fail to be isometric only by shortcuts (contracting distances), never by stretching them.",
-    "domain_bridges": [
-      "graph_metrics",
-      "group_theory",
-      "linear_algebra_over_ZMod_2",
-      "cayley_graphs"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2962",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Show that each edge of G maps to an edge of H under the quotient labeling (by construction of the labeling from the edge partition), so every path in G maps to a path of equal or shorter length in H. The key step is proving that the GF(2) quotient construction preserves adjacency: if uv ∈ E(G) and uv lies in partition class i, then ℓ(u) and ℓ(v) differ in exactly the coordinate corresponding to the image of class i in the quotient. The non-stretching then follows by taking d_G(u,v) as the infimum over all path lengths, which bound the Hamming distance of the labels from below.",
-    "research_mode": "team",
-    "source_exp_id": "2606.29391v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-30T07:59:17.309660+00:00",
-    "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Lemmens-Seidel-73",
       "Balla-Draxler-Keevash-Sudakov-18",
       "Jiang-Polyanskii-20"
     ],
-    "consumed_by_exp_id": "946cfca3",
+    "consumed_by_exp_id": "",
     "description": "For all d ≥ 1, the maximum number of equiangular lines in ℝ^d with common angle arccos(1/3) satisfies N_{1/3}(d) ≤ max{28, 2(d − 1)}. This is a special case of Balla's conjecture where the spectral radius order κ₁ = 2 (witnessed by K₂), making the bound reduce to max{(1−1/9)(1−2/9)/(2/81), ⌊2(d−1)/1⌋} = max{28, 2(d−1)}.",
     "domain_bridges": [
       "spectral_graph_theory",
@@ -5106,7 +5095,7 @@
     "proof_strategy": "First establish κ₁ = 2 by showing K₂ has spectral radius 1 and no 1-vertex graph has spectral radius 1. Then use the relative bound / Lemmens-Seidel framework: given a set of equiangular lines with angle arccos(1/3), form the Gram matrix M with diagonal 1 and off-diagonal ±1/3. The eigenvalue structure of M combined with the spectral radius order constraint yields the linear upper bound 2(d−1) for d ≥ 15, and the absolute bound gives 28 for small d.",
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for α = 1/3"
   },
@@ -6030,7 +6019,7 @@
       "majorization",
       "stochastic_optimization"
     ],
-    "consumed_by_exp_id": "50540462",
+    "consumed_by_exp_id": "",
     "description": "For every fixed N ≥ 2 and j ≥ 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
     "domain_bridges": [
       "probability_theory ↔ convex_analysis",
@@ -6047,7 +6036,7 @@
     "proof_strategy": "Express E_p[U_j^N] via the Adler–Oren–Ross integral formula, then verify the Schur-concavity of the integrand as a function of p using the Schur–Ostrowski criterion (the partial derivative monotonicity condition). Since the uniform distribution majorizes every probability vector on the simplex, Schur-concavity implies it uniquely maximizes the expectation. Uniqueness follows from strict Schur-concavity on the interior of the simplex.",
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T19:44:33.195784+00:00",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
@@ -10112,6 +10101,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Explicit class field theory beyond the cyclotomic case\n\nThis cycle established three load-bearing facts: (i) the cyclotomic Galois group has\norder equal to Euler's totient and is cyclic exactly in the prime-modulus case;\n(ii) every subfield of a cyclotomic field is an abelian extension of the rationals;\nand (iii) whenever a field carries the Artin reciprocity isomorphism between its\nmaximal unramified abelian extension and its ideal class group, the degree of that\nextension is precisely the class number. The conjectures below extend these findings\ntoward Hilbert's twelfth problem.\n\n## Conjecture 1 — Conductor duality for cyclotomic subfields\nEvery abelian extension of the rationals has a smallest cyclotomic field containing\nit, and the modulus of that field is a computable arithmetic invariant (the\nconductor) equal to the least common multiple of the ramified primes' contributions.\n\nThe key insight is that the subfield lattice of a cyclotomic field is in\norder-reversing bijection with the subgroup lattice of a finite abelian group, so the\nconductor is forced by the group-theoretic index rather than by any transcendental\ninput. Why now? The realization direction — that these subfields are exactly the\nabelian extensions — is now settled, so the conductor becomes the only remaining\ndegree of freedom and can be isolated and computed directly.\n\n## Conjecture 2 — Class-number rigidity of the Hilbert tower\nFor a number field of class number greater than one, the Hilbert class field again has\nits own class number, and iterating this construction yields a tower whose successive\ndegrees are class numbers that eventually stabilize at one for all but finitely many\nstarting fields.\n\nThe key insight is that the degree of each step equals the class number of the\nprevious field, so the tower's growth is governed entirely by how class numbers of\nsuccessive unramified abelian extensions shrink. Why now? The degree-equals-class-number\nlaw has been made explicit and unconditional given the reciprocity datum, converting a\nqualitative tower into a sequence of exactly computable integers.\n\n## Conjecture 3 — Prime-cyclicity transfer to real subfields\nFor every prime, the maximal real subfield of the corresponding cyclotomic field is a\ncyclic extension of the rationals of degree one less than half the prime, and its\nGalois group is the unique index-two quotient of the full cyclotomic Galois group.\n\nThe key insight is that cyclicity of the cyclotomic Galois group in the prime case\ndescends to every quotient, because quotients of cyclic groups are cyclic, so the real\nsubfield inherits an explicit cyclic generator. Why now? Prime-case cyclicity is now a\ntheorem rather than a heuristic, so its descent to canonical subfields is a direct\ncorollary awaiting formalization.\n\n## Conjecture 4 — Complex-multiplication analogue of Kronecker–Weber\nFor an imaginary quadratic field, the abelian extensions are generated not by roots of\nunity but by special values of a single transcendental modular function evaluated at\nthe field's own lattice points, and the resulting Galois action matches the class-group\naction predicted by reciprocity.\n\nThe key insight is that the reciprocity isomorphism already pins down the Galois group\nas the class group, so the only missing ingredient is an explicit generator, and\ncomplex multiplication supplies one intrinsic to the field. Why now? With the\ndegree-equals-class-number law in hand, the abstract target group is fully understood,\nmaking the search for explicit generators a well-posed, bounded problem rather than an\nopen-ended one.\n\n## Conjecture 5 — Character-count symmetry of the Langlands correspondence\nThe number of one-dimensional complex representations of a cyclotomic Galois group\nequals the number of Dirichlet characters of the same modulus, and both equal Euler's\ntotient of the modulus, with the correspondence preserving conductor and parity.\n\nThe key insight is that the reciprocity isomorphism identifies the two character\ngroups as duals of the same finite abelian group, and a finite abelian group is\nisomorphic to its own dual, forcing the counts to coincide with the group's order. Why\nnow? The order of the cyclotomic Galois group is now known to be the totient exactly,\nso the character-count symmetry reduces to the self-duality of finite abelian groups.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3141",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b87dcfdc",
+    "status": "available",
+    "timestamp": "2026-07-02T01:14:57.846935+00:00",
+    "title": "Three load-bearing facts: (i) the cyclotomic Galois group"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10367,7 +10376,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2bfec88c",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domain_bridges": [],
     "domains": [
@@ -10380,7 +10389,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
@@ -10426,7 +10435,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7d0833a0",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domain_bridges": [],
     "domains": [
@@ -10439,7 +10448,7 @@
     "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
