@@ -30,9 +30,9 @@ def run_gh_command(args):
         return None
 
 def fetch_injected_directions():
-    """Fetch open issues with the 'injected-direction' label."""
-    print("[GitHub Injector] Checking for injected directions from GitHub issues...")
-    output = run_gh_command(["issue", "list", "--state", "open", "--label", "injected-direction", "--json", "number,title,body"])
+    """Fetch open issues with the 'approved-direction' label."""
+    print("[GitHub Injector] Checking for approved directions from GitHub issues...")
+    output = run_gh_command(["issue", "list", "--state", "open", "--label", "approved-direction", "--json", "number,title,body"])
     
     if not output:
         return []

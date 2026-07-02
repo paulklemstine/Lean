@@ -2970,7 +2970,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
   },
   {
-    "consumed_by_exp_id": "946cfca3",
+    "consumed_by_exp_id": "",
     "description": "For all d \u2265 1, the maximum number of equiangular lines in \u211d^d with common angle arccos(1/3) satisfies N_{1/3}(d) \u2264 max{28, 2(d \u2212 1)}. This is a special case of Balla's conjecture where the spectral radius order \u03ba\u2081 = 2 (witnessed by K\u2082), making the bound reduce to max{(1\u22121/9)(1\u22122/9)/(2/81), \u230a2(d\u22121)/1\u230b} = max{28, 2(d\u22121)}.",
     "domains": [
       "Pythagorean",
@@ -2980,7 +2980,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for \u03b1 = 1/3"
   },
@@ -3465,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "P-positions of Halve Nim coincide with ordinary Nim P-positions"
   },
   {
-    "consumed_by_exp_id": "50540462",
+    "consumed_by_exp_id": "",
     "description": "For every fixed N \u2265 2 and j \u2265 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
     "domains": [
       "Computation",
@@ -3475,7 +3475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T19:44:33.195784+00:00",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },

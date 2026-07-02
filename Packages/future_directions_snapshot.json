@@ -5108,7 +5108,7 @@
       "Balla-Draxler-Keevash-Sudakov-18",
       "Jiang-Polyanskii-20"
     ],
-    "consumed_by_exp_id": "946cfca3",
+    "consumed_by_exp_id": "",
     "description": "For all d ≥ 1, the maximum number of equiangular lines in ℝ^d with common angle arccos(1/3) satisfies N_{1/3}(d) ≤ max{28, 2(d − 1)}. This is a special case of Balla's conjecture where the spectral radius order κ₁ = 2 (witnessed by K₂), making the bound reduce to max{(1−1/9)(1−2/9)/(2/81), ⌊2(d−1)/1⌋} = max{28, 2(d−1)}.",
     "domain_bridges": [
       "spectral_graph_theory",
@@ -5125,7 +5125,7 @@
     "proof_strategy": "First establish κ₁ = 2 by showing K₂ has spectral radius 1 and no 1-vertex graph has spectral radius 1. Then use the relative bound / Lemmens-Seidel framework: given a set of equiangular lines with angle arccos(1/3), form the Gram matrix M with diagonal 1 and off-diagonal ±1/3. The eigenvalue structure of M combined with the spectral radius order constraint yields the linear upper bound 2(d−1) for d ≥ 15, and the absolute bound gives 28 for small d.",
     "research_mode": "team",
     "source_exp_id": "2606.29392v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T08:16:16.372094+00:00",
     "title": "Balla's Conjecture for α = 1/3"
   },
@@ -6049,7 +6049,7 @@
       "majorization",
       "stochastic_optimization"
     ],
-    "consumed_by_exp_id": "50540462",
+    "consumed_by_exp_id": "",
     "description": "For every fixed N ≥ 2 and j ≥ 2, the expected number of empty spaces E_p[U_j^N] in the j-th sibling's album at the main collector's completion time is uniquely maximized over the open probability simplex by the uniform distribution p = (1/N, ..., 1/N). Moreover, E_p[U_j^N] is Schur-concave in p, so it strictly decreases along every nonconstant ray from the uniform vector within the simplex.",
     "domain_bridges": [
       "probability_theory ↔ convex_analysis",
@@ -6066,7 +6066,7 @@
     "proof_strategy": "Express E_p[U_j^N] via the Adler–Oren–Ross integral formula, then verify the Schur-concavity of the integrand as a function of p using the Schur–Ostrowski criterion (the partial derivative monotonicity condition). Since the uniform distribution majorizes every probability vector on the simplex, Schur-concavity implies it uniquely maximizes the expectation. Uniqueness follows from strict Schur-concavity on the interior of the simplex.",
     "research_mode": "team",
     "source_exp_id": "2606.29635v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-30T19:44:33.195784+00:00",
     "title": "Uniform Extremality for Siblings of the Coupon Collector"
   },
