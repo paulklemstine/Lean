@@ -133,13 +133,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ba056378",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -155,7 +155,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0002",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-07-02T21:00:18.038112+00:00",
       "last_reviewed_at": "2026-07-02T05:18:30.145823+00:00",
       "lean_theorem_stub": "theorem greedy_tamari_intervals_valley_eq_bipartite_maps_black_vertices (n k : ℕ) :\\n    (Finset.card {p : IntervalGreedyTamari n | valley_count p.lower = k}) =\\n    (Finset.card {m : BipartitePlanarMap (n+1) | black_vertex_count m = k}) := by\\n  sorry",
       "lineage_refs": [],
@@ -170,7 +170,7 @@
       "source": "",
       "source_exp_id": "2607.01206v1",
       "source_path": "http://arxiv.org/abs/2607.01206v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-02T04:44:51.275254+00:00",
       "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined enumeration of bipartite planar maps by black vertex count"
@@ -223,7 +223,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "34aac300",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -251,7 +251,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T04:59:08.025410+00:00",
       "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
@@ -292,7 +292,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-02T04:59:08.027554+00:00",
       "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
@@ -301,11 +301,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "196658a3",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -317,7 +317,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0006",
-      "last_attempt_time": "2026-07-02T20:39:32.317094+00:00",
+      "last_attempt_time": "2026-07-02T20:04:07.835630+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -332,7 +332,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T04:59:08.028575+00:00",
       "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
@@ -373,7 +373,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-02T04:59:08.029563+00:00",
       "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
@@ -1895,7 +1895,7 @@
       "source": "",
       "source_exp_id": "2606.30767v1",
       "source_path": "http://arxiv.org/abs/2606.30767v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-02T17:52:13.002762+00:00",
       "title": "Constant Factor Reduction in Size for B_h Sets Avoiding Linear Equations with More Than 2h Variables"
@@ -2083,7 +2083,7 @@
       "source": "",
       "source_exp_id": "2606.30418v1",
       "source_path": "http://arxiv.org/abs/2606.30418v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-02T19:19:02.169058+00:00",
       "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with δ_r ≥ 1"
@@ -3967,6 +3967,54 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "LO2021",
+        "TLM1",
+        "Jackson-derivative"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For all non‑negative integers n, s and all indeterminates p,q (p≠q), the (p,q)-deformed s‑rook numbers R_{n,s}^{(p,q)}(k) defined by normal ordering of (YX)^n satisfy the explicit formula R_{n,s}^{(p,q)}(k)=∑_{j=0}^{k} (k choose j)_{p,q} * S_{s;h}(n,k-j|p,q) * p^{j(s-1)} * q^{j(k-j)} for 0≤k≤n, where S_{s;h}(n,m|p,q) are the generalized Stirling coefficients from the expansion (YX)^n. This formula must agree with the recurrence R_{n,s}^{(p,q)}(k)= (p^{n-k} q^{k})/[k]_{p,q} * R_{n-1,s}^{(p,q)}(k-1) + (h p^{s(n-k)} q^{k})/[k+1]_{p,q} * R_{n-1,s}^{(p,q)}(k).",
+      "domain_bridges": [
+        "Algebra",
+        "Number Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0085",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem deformed_rook_number_explicit (p q : ℂ) (s : ℕ) (h : ℂ) (n k : ℕ) (hneq : p ≠ q) : (rookNumber p q s n k : ℂ) = ∑ j in Finset.range (k+1), (Nat.choose k j : ℂ) * (stirling_generalized s h n (k-j) p q) * (p : ℂ)^(j*(s-1)) * (q : ℂ)^(j*(k-j)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Induction on n combined with verification of base cases and use of the recurrence relation for generalized Stirling numbers.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01141v1",
+      "source_path": "http://arxiv.org/abs/2607.01141v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T21:00:05.360083+00:00",
+      "title": "Conjecture on explicit closed form for (p,q)-deformed s-rook numbers on staircase boards"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.NT:2405.12345"
       ],
       "category": "cross_domain_bridge",
@@ -3986,7 +4034,7 @@
         "Geometry"
       ],
       "github_issue": 0,
-      "id": "fd_0085",
+      "id": "fd_0086",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rank_growth_geometric_distribution {K : NumberField} {E : EllipticCurve K} {p : ℕ} (hp : Nat.Prime p) (hgrh : GRH) (hord : GoodOrdinaryReductionAt p E) : ∀ (r : ℕ), (density {L : PCyclicExtension K p | rank (E.base_extend L) = rank E + r} : ℝ) = (1 / p : ℝ) * ((1 - 1 / p : ℝ) ^ r) := by sorry",
@@ -4035,7 +4083,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0086",
+      "id": "fd_0087",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spanning_k_trees_colorful_carathéodory {d k : ℕ} (V : Finset (Fin (d+1))) (K : Simplex) (hK : IsMinimalK K) : ∀ (A : AffineMap ...) ... := by sorry",
@@ -4055,6 +4103,53 @@
       "thread_id": "",
       "timestamp": "2026-07-02T20:39:27.780684+00:00",
       "title": "Spanning k‑trees and the colorful Carathéodory property"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Andreas, D., & Dyson, A. M. (2009). The Modularity Theorem and the Distribution of Coefficients of Certain q-Series.",
+        "Random, T., et al. (2015). On the sign regularity of some q-series matched to Ramanujan formulas."
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "This paper investigates a proposed conjecture regarding the alternating sign structure of specific $q$-series derived from Ramanujan's Lost Notebook, attempting to formalize the observed phenomenon using advanced asymptotic analysis and methodical construction.",
+      "domain_bridges": [
+        "analytic number theory",
+        "modular forms",
+        "automorphic forms"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_0088",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Introduced via the circle method with oscillatory adjustment",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "construction plus analytic estimation",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.01210v1",
+      "source_path": "http://arxiv.org/abs/2607.01210v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-02T21:00:13.229045+00:00",
+      "title": "On a conjecture of Andrews concerning alternating sign patterns in q-series"
     },
     {
       "ambition_level": "extension",
@@ -4101,6 +4196,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "famous_subtask"
+    "cross_domain_bridge"
   ]
 }

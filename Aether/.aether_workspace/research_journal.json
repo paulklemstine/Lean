@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "af3ea261",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Strong blocking sets in finite projective spaces\n\nDerived from the cycle that proved `strongBlocking_iff_card` and\n`leastSize_strongBlocking` for `PG(2,2)`.\n\n## Conjecture 1 — `P",
-      "quality_score": 0.5364949999999999,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-27T10:32:16",
-      "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
-    },
-    {
       "cycle_id": "53256563",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Quantum Thermodynamics: Landauer's Principle at the Nanoscale (v19a)\n\nThis cycle added two finite-size results to the catalog's Landauer development\n(`Logic.JarzynskiLandauer`, `",
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-07-02T20:14:02",
       "title": "Prove Fermats Little Theorem for p=5"
+    },
+    {
+      "cycle_id": "7f2fc4f9",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions\n\nFive bold, testable conjectures arising from the study of `a^5 - a` and the\nquadratic-residue structure modulo `5`.\n\n## 1. A universal \"leg divisibility\" law for Pythagorean tripl",
+      "quality_score": 0.47561819905213276,
+      "sorry_count": 10,
+      "theorem_count": 422,
+      "timestamp": "2026-07-02T20:59:14",
+      "title": "Prove Fermats Little Theorem for p=5"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7480399999999999
     }
   ],
-  "last_updated": "2026-07-02T20:14:02",
+  "last_updated": "2026-07-02T20:59:14",
   "open_questions": [
-    {
-      "context": "All results are fully proved; there are no `sorry`s. -/",
-      "cycle_id": "1d985141",
-      "domain": "Tropical",
-      "sorry_count": 1,
-      "timestamp": "2026-06-24T22:34:09"
-    },
     {
       "context": "",
       "cycle_id": "3e805dd4",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-07-02T18:55:06"
+    },
+    {
+      "context": "`Lemmens-Seidel-73`); here we prove the *reduction* to it with zero `sorry`s.; eigenvalue `−3`.  Both rank facts are formalised with zero `sorry`s, reducing; engines are captured here rigorously and w",
+      "cycle_id": "7f2fc4f9",
+      "domain": "Pythagorean",
+      "sorry_count": 10,
+      "timestamp": "2026-07-02T20:59:14"
     }
   ],
   "research_threads": {
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "656b45a0",
-        "quality": 0.46081729863543053,
-        "theorems": 33,
-        "title": "Two boundary facts of the prime crossword in"
-      },
-      {
         "cycle_id": "51640204",
         "quality": 0.6127985535714285,
         "theorems": 96,
@@ -3885,6 +3879,12 @@
         "quality": 0.7859200000000002,
         "theorems": 12,
         "title": "unnamed_concept"
+      },
+      {
+        "cycle_id": "7f2fc4f9",
+        "quality": 0.47561819905213276,
+        "theorems": 422,
+        "title": "Prove Fermats Little Theorem for p=5"
       }
     ],
     "Shared": [

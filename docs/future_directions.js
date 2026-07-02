@@ -17,21 +17,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prove Fermats Little Theorem for p=5"
   },
   {
-    "consumed_by_exp_id": "6af69f22",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods \u2014 a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0007",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T04:59:08.029563+00:00",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
@@ -46,7 +31,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "34aac300",
+    "consumed_by_exp_id": "",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -56,27 +41,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.025410+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
-    "consumed_by_exp_id": "c54f2933",
-    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0005",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T04:59:08.027554+00:00",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
-  },
-  {
-    "consumed_by_exp_id": "196658a3",
+    "consumed_by_exp_id": "",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty"
@@ -85,7 +55,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -134,7 +104,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Absolute Boundedness of Polynomial Diophantine Tuples"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba056378",
     "description": "For all n, k \u2208 \u2115, the number of intervals [x,y] in the greedy 1\u2011Tamari poset on Dyck_n such that the lower endpoint x has exactly k valleys equals the number of bipartite planar maps with n+1 edges and exactly k black vertices.",
     "domains": [
       "Bridges"
@@ -143,7 +113,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:44:51.275254+00:00",
     "title": "Refined enumeration of greedy Tamari intervals by valley count equals refined enumeration of bipartite planar maps by black vertex count"
   },
@@ -567,20 +537,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sign changes of symmetric power L-function coefficients along sums of squares"
   },
   {
-    "consumed_by_exp_id": "7f2fc4f9",
-    "description": "For any linear equation E with more than 2h variables and zero sum of coefficients, there exists a constant c < 1 such that any B_h subset of Z_N avoiding pairwise distinct solutions to E has size at most c * N^{1/h}. This conjecture posits that the upper bound on the size of such sets is strictly less than the maximum possible size of a B_h set by a constant factor.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0040",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30767v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T17:52:13.002762+00:00",
-    "title": "Constant Factor Reduction in Size for B_h Sets Avoiding Linear Equations with More Than 2h Variables"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Let G be a finite group of order p^m where p is prime. For any k < p, and any two sequences a_1,..., a_k and b_1,..., b_k in G where the a_i are distinct, there exists a permutation sigma of {1,..., k} such that the products a_i * b_sigma(i) are all distinct.",
     "domains": [
@@ -622,20 +578,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T18:56:55.867431+00:00",
     "title": "Limit Distribution of Descendants in Random d-DAGs"
-  },
-  {
-    "consumed_by_exp_id": "33ce8829",
-    "description": "For any positive integers k and r \u2264 k, the minimal n\u2080 such that every k-uniform hypergraph on n \u2265 n\u2080 vertices with \u03b4_r \u2265 1 contains a Berge-Ct^r for all t \u2265 r+1 is exactly k + 1.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0044",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30418v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T19:19:02.169058+00:00",
-    "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with \u03b4_r \u2265 1"
   },
   {
     "consumed_by_exp_id": "",
@@ -1180,12 +1122,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For all non\u2011negative integers n, s and all indeterminates p,q (p\u2260q), the (p,q)-deformed s\u2011rook numbers R_{n,s}^{(p,q)}(k) defined by normal ordering of (YX)^n satisfy the explicit formula R_{n,s}^{(p,q)}(k)=\u2211_{j=0}^{k} (k choose j)_{p,q} * S_{s;h}(n,k-j|p,q) * p^{j(s-1)} * q^{j(k-j)} for 0\u2264k\u2264n, where S_{s;h}(n,m|p,q) are the generalized Stirling coefficients from the expansion (YX)^n. This formula must agree with the recurrence R_{n,s}^{(p,q)}(k)= (p^{n-k} q^{k})/[k]_{p,q} * R_{n-1,s}^{(p,q)}(k-1) + (h p^{s(n-k)} q^{k})/[k+1]_{p,q} * R_{n-1,s}^{(p,q)}(k).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0085",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01141v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:00:05.360083+00:00",
+    "title": "Conjecture on explicit closed form for (p,q)-deformed s-rook numbers on staircase boards"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Assuming the Extended Riemann Hypothesis, for a fixed elliptic curve E over a number field K with good ordinary reduction at p, the natural density of p\u2011cyclic extensions L/K (ordered by the product of ramified primes) such that the Mordell\u2011Weil rank of E over L exceeds the rank over K by exactly r equals (1/p)*(1\u22121/p)^r for every integer r \u2265 0.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0085",
+    "id": "fd_0086",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1200,13 +1157,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0086",
+    "id": "fd_0087",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
     "status": "available",
     "timestamp": "2026-07-02T20:39:27.780684+00:00",
     "title": "Spanning k\u2011trees and the colorful Carath\u00e9odory property"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates a proposed conjecture regarding the alternating sign structure of specific $q$-series derived from Ramanujan's Lost Notebook, attempting to formalize the observed phenomenon using advanced asymptotic analysis and methodical construction.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0088",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01210v1",
+    "status": "available",
+    "timestamp": "2026-07-02T21:00:13.229045+00:00",
+    "title": "On a conjecture of Andrews concerning alternating sign patterns in q-series"
   },
   {
     "consumed_by_exp_id": "",
