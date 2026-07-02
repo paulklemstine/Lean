@@ -1,4 +1,4 @@
-import Bridges.PolyaTreeRecurrence
+import Catalog.Bridges.PolyaTreeRecurrence
 
 /-! # Uniqueness of the Pólya tree sequence (Bridges)
 
