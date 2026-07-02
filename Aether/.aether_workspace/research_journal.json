@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "10d0f89d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Perfect Numbers and the Abundancy Index\n\nDerived from this cycle's findings in `AbundancyIndex.lean` and\n`EvenPerfectStructure.lean`. Each conjecture is bold, falsifiable, and po",
-      "quality_score": 0.69112,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T09:17:12",
-      "title": "Perfect Numbers: Structure of Even Perfects"
-    },
-    {
       "cycle_id": "d409a01c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Linear Brown–Erdős–Sós at the span threshold\n\nDerived from this cycle's findings in `LinearBrownErdosSos.lean` and\n`LinearHypergraphPacking.lean`. Each conjecture is falsifiable.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-07-02T15:54:30",
       "title": "[Reset] Fresh approach in NumberTheory"
+    },
+    {
+      "cycle_id": "d991c87b",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Succinct, Binding, Zero-Knowledge Certification of Proofs\n\nThis cycle established two pillars of a certify-without-revealing protocol for\nformal proofs: a hash-tree commitment th",
+      "quality_score": 0.4437857425742574,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-02T17:10:36",
+      "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7118800000000001
     }
   ],
-  "last_updated": "2026-07-02T15:54:30",
+  "last_updated": "2026-07-02T17:10:36",
   "open_questions": [
     {
       "context": "contains no `sorry`.  Corner case: `m = 0` or `k = 0` — handled because `unitsCRT` only needs",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "a5fa8083",
-        "quality": 0.789328,
-        "theorems": 7,
-        "title": "Close Proofs: These conjectures continue the research cycle begun in"
-      },
-      {
         "cycle_id": "c37a84a2",
         "quality": 0.5709080000000001,
         "theorems": 1,
@@ -3327,6 +3321,12 @@
         "quality": 0.7476214285714285,
         "theorems": 14,
         "title": "Minimum Independence Ratio Constraint"
+      },
+      {
+        "cycle_id": "d991c87b",
+        "quality": 0.4437857425742574,
+        "theorems": 8,
+        "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
       }
     ],
     "Cryptography": [
