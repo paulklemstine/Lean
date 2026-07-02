@@ -100,7 +100,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1fbcd99f",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domain_bridges": [],
     "domains": [
@@ -112,7 +112,7 @@
     "proof_strategy": "Define Q(No) as the tensor product of the surreal field No with the complex numbers C. Define quantum surreal Hilbert space H_Q(No) as the completion of Q(No)^n with respect to the surreal-valued inner product. Prove the spectral theorem for self-adjoint operators on H_Q(No) by transfinite induction on the birthday of the surreal eigenvalues. The key lemma: if A is self-adjoint with surreal eigenvalues, then A = integral lambda dE(lambda) where E(lambda) are projections and lambda ranges over surreal numbers up to the birthday of A. Test: construct the 2x2 example and verify measurement probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T04:59:08.028575+00:00",
     "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
@@ -1058,30 +1058,6 @@
     "title": "Limit Distribution of Descendants in Random d-DAGs"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Lu and Wang [2021]"
-    ],
-    "consumed_by_exp_id": "33ce8829",
-    "description": "For any positive integers k and r ≤ k, the minimal n₀ such that every k-uniform hypergraph on n ≥ n₀ vertices with δ_r ≥ 1 contains a Berge-Ct^r for all t ≥ r+1 is exactly k + 1.",
-    "domain_bridges": [
-      "extremal hypergraph theory",
-      "cycle enumeration"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0044",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Extremal combinatorics and induction",
-    "research_mode": "team",
-    "source_exp_id": "2606.30418v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T19:19:02.169058+00:00",
-    "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with δ_r ≥ 1"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "arXiv:2205.12345"
@@ -2006,6 +1982,63 @@
     "status": "available",
     "timestamp": "2026-07-02T19:38:45.750959+00:00",
     "title": "Tightness of the Maximum Degree Bound for 3-Colorability of C₄-Free Diameter-2 Graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "An absolute bound for generalized Diophantine tuples over polynomial rings (arXiv:XXXX.XXXXX)",
+      "Dujella, A. (2024) Diophantine m‑tuples, monograph",
+      "Mason, R., & Stothers, G. (1992) A result on sums of like powers"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every algebraically closed field $\\mathbb{F}$ of characteristic $0$, every integer $k\\ge 18$, and every nonzero polynomial $n\\in\\mathbb{F}[x]$, any set $A\\subset\\mathbb{F}[x]$ satisfying that $ab+n$ is a $k$‑th power in $\\mathbb{F}[x]$ for all distinct $a,b\\in A$ has cardinality at most $6$, and there exist choices of $n$ and $A$ with $|A|=6$ that are not contained in the exceptional family where $n=s^{k}$ and $A\\subset s\\mathbb{F}[x]$.",
+    "domain_bridges": [
+      "Algebraic geometry",
+      "Combinatorial number theory",
+      "Commutative algebra"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0081",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct explicit families attaining size 6 and prove that any larger set leads to a contradiction via the determinant criterion and Mason–Stothers type inequalities; equivalently, show that the maximal possible size is exactly 6.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01165v1",
+    "status": "available",
+    "timestamp": "2026-07-02T20:03:41.181667+00:00",
+    "title": "Sharpness of the absolute bound 6 for generalized polynomial Diophantine tuples with k≥18"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Dermenjian (2022) Greedy Tamari posets",
+      "Bousquet-Mélou & Chapoton (2024) Intervals in greedy m‑Tamari posets",
+      "Planar constellations enumeration (2023)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for every n ≥ 0 and m ≥ 1, the number of intervals (u ≤_greedy v) in the greedy m‑Tamari poset on Dyck paths of size n equals the number of planar (m+1)-constellations with n nodes; in particular for m=1 this yields the refined enumeration given by the large Schröder numbers.",
+    "domain_bridges": [
+      "combinatorial enumeration",
+      "planar maps",
+      "poset theory",
+      "enumerative combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_0082",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an explicit bijection between greedy Tamari intervals and planar (m+1)-constellations via the recursive decomposition of intervals isomorphic to that of bipartite planar maps, then verify that the counts match the known enumeration of constellations.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01206v1",
+    "status": "available",
+    "timestamp": "2026-07-02T20:04:07.218287+00:00",
+    "title": "Enumerative Conjecture for Greedy Tamari Intervals and Planar (m+1)-constellations"
   },
   {
     "ambition_level": "extension",
