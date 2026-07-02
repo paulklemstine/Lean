@@ -76,7 +76,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
   },
   {
-    "consumed_by_exp_id": "1fbcd99f",
+    "consumed_by_exp_id": "196658a3",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domains": [
       "Novelty"
@@ -638,20 +638,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with \u03b4_r \u2265 1"
   },
   {
-    "consumed_by_exp_id": "37903e54",
-    "description": "For every \u03b5 \u2208 (0,1) there exist constants \u03b3(\u03b5)>0 and C(\u03b5)>0 such that for all integers n and all subsets A,S\u2286{0,1}^n with |A| \u2265 \u03b5\u00b72^n and S satisfying the (\u03b3,C)-well\u2011spread property, the sumset A+S satisfies |A+S| \u2265 (1\u2212\u03b5)\u00b72^n. Equivalently, for all A with \u03bc(A)\u2265\u03b5 and all (\u03b3,C)-well\u2011spread S, \u03bc(A+S)\u22651\u2212\u03b5.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0045",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.30351v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T19:38:18.941946+00:00",
-    "title": "Well-Spread Expansion Conjecture in the Discrete Cube"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
@@ -1179,18 +1165,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any perfect $\\mathbb{F}_p$-algebra $R$, the canonical map $\\chW(R) \\to W(R)$ is an isomorphism of rings. This conjecture tests whether the sheared Witt vector construction reduces to the classical Witt vector functor when applied to perfect $\\mathbb{F}_p$-algebras, leveraging the vanishing of the ideal $\\hw(R)$ in such cases.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0084",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01178v1",
+    "status": "available",
+    "timestamp": "2026-07-02T20:39:15.695833+00:00",
+    "title": "Isomorphism of Sheared Witt Vectors for Perfect Algebras"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Assuming the Extended Riemann Hypothesis, for a fixed elliptic curve E over a number field K with good ordinary reduction at p, the natural density of p\u2011cyclic extensions L/K (ordered by the product of ramified primes) such that the Mordell\u2011Weil rank of E over L exceeds the rank over K by exactly r equals (1/p)*(1\u22121/p)^r for every integer r \u2265 0.",
     "domains": [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0084",
+    "id": "fd_0085",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
     "status": "available",
     "timestamp": "2026-07-02T20:15:14.615812+00:00",
     "title": "Geometric distribution of Mordell-Weil rank growth in p\u2011cyclic extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every integer d\u22651 and every minimal subcomplex K\u2286V\u2081*\u2026*V_{d+1} that guarantees a solution for all colorful Carath\u00e9odory maps A:|\u0394_V|\u2192\u211d^d, the reduced homology groups satisfy \\tilde H_i(K)=0 for all 0\u2264i<d\u22121.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0086",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01143v1",
+    "status": "available",
+    "timestamp": "2026-07-02T20:39:27.780684+00:00",
+    "title": "Spanning k\u2011trees and the colorful Carath\u00e9odory property"
   },
   {
     "consumed_by_exp_id": "",

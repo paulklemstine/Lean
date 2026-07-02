@@ -100,7 +100,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1fbcd99f",
+    "consumed_by_exp_id": "196658a3",
     "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION — simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 — the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
     "domain_bridges": [],
     "domains": [
@@ -1082,30 +1082,6 @@
     "title": "Minimal vertex count for Berge-Ct^r in k-uniform hypergraphs with δ_r ≥ 1"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "arXiv:2205.12345"
-    ],
-    "consumed_by_exp_id": "37903e54",
-    "description": "For every ε ∈ (0,1) there exist constants γ(ε)>0 and C(ε)>0 such that for all integers n and all subsets A,S⊆{0,1}^n with |A| ≥ ε·2^n and S satisfying the (γ,C)-well‑spread property, the sumset A+S satisfies |A+S| ≥ (1−ε)·2^n. Equivalently, for all A with μ(A)≥ε and all (γ,C)-well‑spread S, μ(A+S)≥1−ε.",
-    "domain_bridges": [
-      "math.PR",
-      "math.GR"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0045",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Assume explicit bounds on the influence of coordinates of S; use hypercontractivity and isoperimetric inequalities in the Boolean cube to bound the measure of the expansion A+S. A key step is to show that any (γ,C)-well‑spread S contains a large Hamming ball in a probabilistic sense, enabling the application of the standard concentration-of‑measure argument. The conjecture generalizes the known result for Hamming balls and proposes the existence of universal γ(ε),C(ε) independent of n.",
-    "research_mode": "team",
-    "source_exp_id": "2606.30351v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T19:38:18.941946+00:00",
-    "title": "Well-Spread Expansion Conjecture in the Discrete Cube"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem 1.5",
@@ -2044,6 +2020,37 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Witt vectors",
+      "Dieudonn\\'eon theory",
+      "p-divisible groups",
+      "Frobenius morphisms",
+      "Filtered colimits"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any perfect $\\mathbb{F}_p$-algebra $R$, the canonical map $\\chW(R) \\to W(R)$ is an isomorphism of rings. This conjecture tests whether the sheared Witt vector construction reduces to the classical Witt vector functor when applied to perfect $\\mathbb{F}_p$-algebras, leveraging the vanishing of the ideal $\\hw(R)$ in such cases.",
+    "domain_bridges": [
+      "Decompletion functors",
+      "Perfect $\\mathbb{F}_p$-algebras",
+      "Nilpotent elements in rings",
+      "Derived $p$-completeness"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0084",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Prove $\\hw(R) = 0$ for perfect $R$ via the definition of $\\hw(R)$ as Witt vectors with nilpotent components. 2. Show the pullback defining $\\chW(R)$ collapses to $W(R)$ when $\\hw(R) = 0$. 3. Establish the natural isomorphism $\\chW(R) \\cong W(R)$ via universal properties of limits and colimits. 4. Formalize in Lean 4 using the structure of Witt vector rings and perfect field theory.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01178v1",
+    "status": "available",
+    "timestamp": "2026-07-02T20:39:15.695833+00:00",
+    "title": "Isomorphism of Sheared Witt Vectors for Perfect Algebras"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.NT:2405.12345"
     ],
     "consumed_by_exp_id": "",
@@ -2056,7 +2063,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_0084",
+    "id": "fd_0085",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Translate the condition on rank growth into a condition on the dimension of the 1‑eigenspace of the p‑Selmer group under the Galois action of L/K. Using the Poonen–Rains heuristic model for Selmer groups as random isotropic subspaces, compute the limiting distribution of this dimension via moments obtained from Chebotarev density and the assumed GRH. Show that the moments match those of a geometric distribution with parameter 1/p, yielding the claimed densities.",
@@ -2065,6 +2072,34 @@
     "status": "available",
     "timestamp": "2026-07-02T20:15:14.615812+00:00",
     "title": "Geometric distribution of Mordell-Weil rank growth in p‑cyclic extensions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Blagojevic2023",
+      "Barany1982",
+      "DeLoeraGoaocMeunierMustafa2019"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every integer d≥1 and every minimal subcomplex K⊆V₁*…*V_{d+1} that guarantees a solution for all colorful Carathéodory maps A:|Δ_V|→ℝ^d, the reduced homology groups satisfy \\tilde H_i(K)=0 for all 0≤i<d−1.",
+    "domain_bridges": [
+      "topology",
+      "algorithmic geometry",
+      "combinatorial optimization"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0086",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "homological obstruction test via reduced homology concentration",
+    "research_mode": "team",
+    "source_exp_id": "2607.01143v1",
+    "status": "available",
+    "timestamp": "2026-07-02T20:39:27.780684+00:00",
+    "title": "Spanning k‑trees and the colorful Carathéodory property"
   },
   {
     "ambition_level": "extension",
