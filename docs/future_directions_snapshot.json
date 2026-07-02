@@ -2,20 +2,20 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "8833345a",
+    "consumed_by_exp_id": "bfccf79e",
     "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
     "domain_bridges": [],
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0036",
+    "id": "fd_0037",
     "lineage_refs": [],
     "priority_score": 1000.0,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-07-02T15:56:33.533708+00:00",
+    "timestamp": "2026-07-02T16:14:03.707606+00:00",
     "title": "Prove Fermats Little Theorem for p=5"
   },
   {
@@ -773,7 +773,7 @@
       "serre1978",
       "steinberg1972"
     ],
-    "consumed_by_exp_id": "b4dd4609",
+    "consumed_by_exp_id": "",
     "description": "We conjecture an explicit formula for the Jordan canonical form of the image of a regular unipotent element under any finite‑dimensional irreducible polynomial representation of GL₃(ₖ). Let λ = (a,b,c) be a dominant weight with a > b > c. Define d₁ = a‑ b, d₂ = b‑ c, d₃ = a‑ c and the rational function\n\nM(t) = (1‑ t^{d₁+1})(1‑ t^{d₂+1})(1‑ t^{d₃+2}) /\n       ((1‑ t^{d₁})(1‑ t^{d₂})(1‑ t^{d₃})).\n\nWrite M(t) = Σ_{j≥0} m_j t^j. Then the Jordan canonical form of π_λ(u) (the regular unipotent u ∈ GL₃(ₖ) under the representation π_λ) is the partition whose parts are (j+1) repeated m_j times. In particular the multiplicities m_j satisfy a linear recurrence with characteristic polynomial (1‑ t^{d₁})(1‑ t^{d₂})(1‑ t^{d₃}).",
     "domain_bridges": [
       "mathlib/algebraic_groups",
@@ -790,7 +790,7 @@
     "proof_strategy": "1. Use the character formula (Serre) to compute Θ_λ(z) as a rational function. 2. Identify the coefficients a_k of z^k in Θ_λ(z) and relate them to the multiplicities m_j via m_j = a_j ‑ a_{j+2}. 3. Show that the generating function M(t) = Σ m_j t^j equals the rational expression above, which yields a linear recurrence for m_j. 4. Prove non‑≥negativity of m_j (e.g., by interpreting them as Kostka numbers). 5. Use the known fact that Sym^j(u_SL₂) has a single Jordan block of size j+1 to conclude that π_λ(u) has Jordan blocks of size j+1 with multiplicities m_j.",
     "research_mode": "team",
     "source_exp_id": "2606.31398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T14:45:19.943455+00:00",
     "title": "Jordan type of regular unipotent image for GL₀ representations"
   },
@@ -800,7 +800,7 @@
       "Sagan and Swanson's monomial basis conjecture",
       "Operator Theorem in superspace coinvariants"
     ],
-    "consumed_by_exp_id": "3d2280dc",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that operators A_i and A_j in the Operator Theorem's inverse system for SR_G commute (A_i ∘ A_j = A_j ∘ A_i) if and only if the corresponding group elements in G = Z_r wr S_n commute.",
     "domain_bridges": [
       "Reflection groups",
@@ -816,7 +816,7 @@
     "proof_strategy": "Analyze the action of G on SR_G and verify operator compositions match group commutators",
     "research_mode": "team",
     "source_exp_id": "2606.30977v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T15:36:19.278040+00:00",
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
@@ -845,25 +845,54 @@
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Szalay 2000",
+      "Cohn 2002",
+      "Keskin 2019",
+      "Noubissie, Togbé and Zhang 2020",
+      "Fujita and Le 2024"
+    ],
+    "consumed_by_exp_id": "8833345a",
+    "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
+    "domain_bridges": [
+      "Pell equations",
+      "Exponential Diophantine equations",
+      "Linear forms in logarithms"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0036",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply a descent argument combined with effective bounds from linear forms in logarithms to show that for odd n>1 the product (a^n+1)(b^n+1) cannot be a perfect square when a and b are coprime.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31223v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T16:13:17.108600+00:00",
+    "title": "No solutions for odd exponents in the coprime case"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem 1.5",
       "Kane's work"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e52c27d",
     "description": "The product of primes in the extension field equals its order.",
     "domain_bridges": "extension",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0037",
+    "id": "fd_0038",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct arithmetic verification",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
@@ -875,7 +904,7 @@
       "Zwegers' mock modular forms",
       "Zagier's quantum modular forms"
     ],
-    "consumed_by_exp_id": "3e52c27d",
+    "consumed_by_exp_id": "",
     "description": "For a q-hypergeometric series whose coefficients have an asymptotic expansion dominated by oscillatory terms near a root of unity ω, the signs of the coefficients alternate except for a density-zero set of indices n.",
     "domain_bridges": [
       "q-series asymptotics",
@@ -885,13 +914,13 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0038",
+    "id": "fd_0039",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the dominant oscillatory term in the asymptotic expansion near ω and show that its phase enforces sign alternation, except when phase cancellation occurs finitely often or on a sparse set.",
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:04:27.717812+00:00",
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
@@ -911,7 +940,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0039",
+    "id": "fd_0040",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive structure of table decompositions",
@@ -937,7 +966,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0040",
+    "id": "fd_0041",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1) Characterize smooth injective maps on submanifolds via local charts. 2) Bound the Kruskal rank using dimension arguments: each additional point can increase rank by at most 1 until reaching d+1. 3) Relate this rank constraint to dichotomy counts via Cover's lemma. 4) Verify tightness with synthetic low-dimensional examples.",
@@ -963,7 +992,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0041",
+    "id": "fd_0042",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the mod p local Langlands correspondence to relate \\bar{V}_{k,a_p} to smooth mod p representations of GL_2(ℚ_p), then apply the classification of irreducible smooth mod p representations (principal series, special, and supersingular) together with explicit Breuil module calculations for small slopes and a patching argument to extend the result to all fractional slopes < p-1.",
@@ -988,7 +1017,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0042",
+    "id": "fd_0043",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use probabilistic constructions: take a random r-uniform hypergraph with edge probability p = n^{-α} for suitable α to avoid G as a subgraph while ensuring large induced F-free subsets via the deletion method and the hypergraph container method; then apply the first moment method to show existence of induced F-free subgraphs of size at least c (log n)^{β_F}. Matching the upper bound from the paper would establish tightness.",
@@ -1014,7 +1043,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0043",
+    "id": "fd_0044",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample binary word exists and analyze the combinatorial constraints imposed by the parameterized equivalence relation. Use a pumping‑style argument or an infinite descent on the lengths of minimal forbidden factors to derive a contradiction, exploiting the limited alphabet size and the requirement that all squares must have length ≥ 2k. Alternatively, construct a finite automaton encoding the forbidden factor set and show that it accepts only finite words, contradicting infinitude.",
@@ -1040,7 +1069,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0044",
+    "id": "fd_0045",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define phi as the golden ratio and implement the floor functions for a(n) and b(n). 2. Define epsilon(j) based on the Fibonacci membership test. 3. Prove the Lemma stating a(F_k) + (-1)^k = b(F_{k-1}) and b(F_k) + (-1)^k = a(F_{k+1}) using Binet's formula. 4. Establish the partition property (A* union B* = N and A* intersect B* = empty) by analyzing the shifts in the Wythoff sequences at Fibonacci indices. 5. Define the permutation q*_j using the ranges A* and B* and prove the involution property q*_q*_j = j for j >= 5 using the complementary nature of LWF and UWF.",
@@ -1066,7 +1095,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0045",
+    "id": "fd_0046",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the hyper-aperiodic elements method and twelve tiles theorem from the continuous case to show that no Borel homomorphism exists to a tournament on 6 vertices, while constructing a Borel homomorphism to a tournament on 7 vertices.",
@@ -1083,7 +1112,7 @@
       "Serre duality",
       "canonical sheaves"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "debcecca",
     "description": "For an r-periodic Riemann function f with perfect matching weight W, and a line bundle F on the five-point space, the pairing H⁰(M_{W,0} ⊗ F) × Ext¹(F, M_{W^∧_{K+1},K}) → H¹(ω_W) ≅ k is a perfect pairing, establishing a Serre duality isomorphism dim H⁰(M_{W,0} ⊗ F) = dim Ext¹(F, M_{W^∧_{K+1},K}) for all degrees K ∈ ℤ².",
     "domain_bridges": [
       "algebraic_geometry",
@@ -1094,13 +1123,13 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0046",
+    "id": "fd_0047",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the five-point topological space explicitly in Lean, define the sheaf categories as diagrams of vector spaces, implement the pairing construction using Ext and tensor product operations, then verify the perfectness condition via dimension counting and the canonical module ω_W.",
     "research_mode": "team",
     "source_exp_id": "2607.00238v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T09:49:21.006265+00:00",
     "title": "Perfect Pairings in Periodic Riemann Functions Yield Serre-Type Duality"
   },
@@ -1120,7 +1149,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0047",
+    "id": "fd_0048",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via graph decomposition and case analysis on maximum degree configurations, building upon techniques from [KKPW] while leveraging constraints from the adjacency condition to reduce color requirements below 5.",
@@ -1139,7 +1168,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0048",
+    "id": "fd_0049",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive verification on subgroup structures",
@@ -1167,7 +1196,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0049",
+    "id": "fd_0050",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate that a uniform bound on orbit lengths forces the degree [E : E^H] to be finite, and construct the minimal polynomial of any α as the product of (X - σ(α)) over its orbit, showing separability and normality; then use these facts to prove the equivalence statements.",
@@ -1191,7 +1220,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0050",
+    "id": "fd_0051",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the known non-algebraicity of θ_k for very general ppav (EGFS) and a combinatorial lemma concerning F_p-solutions of graphic matroids in Albanese graphs. In Lean, develop intersection theory on abelian varieties, define θ_k via the Chow ring, and prove the divisibility by reducing modulo p and analyzing the resulting finite schemes to force p | m.",
@@ -1222,7 +1251,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0051",
+    "id": "fd_0052",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Use the explicit counterexamples constructed by Katz (e.g. $(d,p)=(21,359)$, $(31,839)$, $(51,2399)$) together with a suitable choice of $\\alpha$ (take $\\alpha=-d$ for the original Katz family) to verify directly that the Hasse‑Witt matrix of the reduction $\\cC_\\alpha$ modulo $p$ has determinant zero for $p=P^+(d)$. 2. Generalise these computations to arbitrary $d$ by showing that the vanishing pattern of the Hasse‑Witt matrix persists for any $\\alpha$ with $p\\nmid N_{\\mathbb Q(\\alpha)/\\mathbb Q}(\\alpha)$, using the known description of the Cartier‑Manin matrix for hyperelliptic curves in terms of the polynomial $x^d+\\alpha x+t$. 3. Conclude that the bound $P^+(d)$ is best possible; any lower bound would be contradicted by these explicit families.",
@@ -1247,7 +1276,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0052",
+    "id": "fd_0053",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Demonstrate via graph decomposition that P4-tidy graphs can be partitioned into clique-forest-like components connected through controlled bipartite interfaces, enabling step-by-step reconfiguration while maintaining invariants at P4-critical vertices.",
@@ -1274,7 +1303,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0053",
+    "id": "fd_0054",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define in Lean the Greenberg–Wiles local factor c_p(A) using the ramification‑measuring maps 𝔅_p and 𝔏_p from the paper. Prove that for a constant‑torsion family the global ℓ‑Selmer group decomposes as the restricted product of the local cohomology groups with the prescribed local conditions, so its order equals the product of the orders of the local quotients H¹(G_p,M)/H¹_𝔏(p)(G_p,M). Show that for almost all primes the unramified subgroup H¹_ur(G_p,M) is maximal among admissible local conditions, which forces the inequality to be an equality. Use Chebotarev density to argue that the set of primes where extra ramification could increase the Selmer size has density zero. Formalise the density argument via Dirichlet density in Lean, and combine with the explicit description of the Greenberg–Wiles pairing Ω_𝔏 to obtain the desired equality for density‑one set of primes.",
@@ -1301,7 +1330,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0054",
+    "id": "fd_0055",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Scholze's construction of automorphic determinants to Z_ℓ-coefficients, use the comparison isomorphism between étale and de Rham cohomology (via p-adic Hodge theory) to obtain de Rham Galois representations, then apply the p-adic local Langlands correspondence for GL_n over local fields to match the local Langlands parameter at places dividing ℓ with the automorphic data.",
@@ -1320,7 +1349,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0055",
+    "id": "fd_0056",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "exhaustive enumeration",
@@ -1346,7 +1375,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0056",
+    "id": "fd_0057",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use p-adic étale cohomology, comparison with characteristic zero via lifting, and apply known finiteness theorems for tamely ramified fundamental groups.",
@@ -1365,7 +1394,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0057",
+    "id": "fd_0058",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "explicit modular form analysis",
@@ -1391,7 +1420,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0058",
+    "id": "fd_0059",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use generating functions for distinct partitions and logarithmic differentiation, analogous to the proof of Theorem 1 for SOME(n). The generating function for DSOME(n) is ∑_{n≥1} DSOME(n) q^n = (-q;q)_∞ ∑_{m≥1} m q^m/(1+q^m). By manipulating the series, one can derive the identity.",
@@ -1424,7 +1453,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0059",
+    "id": "fd_0060",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a random partition of the ground set into at most r parts, reducing the problem to a small number of coordinates and solving the inequality exactly via elementary estimates.",
@@ -1447,7 +1476,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0060",
+    "id": "fd_0061",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "constructive_counterexample",
@@ -1456,6 +1485,33 @@
     "status": "available",
     "timestamp": "2026-07-02T15:56:32.304597+00:00",
     "title": "Sharp Nordhaus‑Gaddum product bound for power domination throttling"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Ox2007",
+      "GM2009",
+      "Bro2021"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every minimal edge-colored graph (with respect to edge deletion) that does not admit a total rainbow forest must be a single monochromatic cycle (possibly with isolated vertices).",
+    "domain_bridges": [
+      "matroid intersection",
+      "edge-coloring",
+      "rainbow subgraph theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0062",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the rank inequalities to show that any minimal obstruction must contain a monochromatic cycle; argue by edge‑deletion minimality that no other structure can exist.",
+    "research_mode": "team",
+    "source_exp_id": "2606.31240v1",
+    "status": "available",
+    "timestamp": "2026-07-02T16:14:00.036969+00:00",
+    "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
   },
   {
     "ambition_level": "extension",

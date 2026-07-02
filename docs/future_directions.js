@@ -3,17 +3,17 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "8833345a",
+    "consumed_by_exp_id": "bfccf79e",
     "description": "## Conjecture\nProve that for any integer a, a^5 - a is an integer multiple of 5.\n## Test\nN/A\n## Impact\nTests basic number theory capabilities.",
     "domains": [
       "Novelty"
     ],
-    "id": "fd_0036",
+    "id": "fd_0037",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-07-02T15:56:33.533708+00:00",
+    "timestamp": "2026-07-02T16:14:03.707606+00:00",
     "title": "Prove Fermats Little Theorem for p=5"
   },
   {
@@ -467,7 +467,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp threshold for rainbow stackings of random edge-colourings of K_n for all sufficiently large n"
   },
   {
-    "consumed_by_exp_id": "b4dd4609",
+    "consumed_by_exp_id": "",
     "description": "We conjecture an explicit formula for the Jordan canonical form of the image of a regular unipotent element under any finite\u2011dimensional irreducible polynomial representation of GL\u2083(\u2096). Let \u03bb = (a,b,c) be a dominant weight with a > b > c. Define d\u2081 = a\u2011 b, d\u2082 = b\u2011 c, d\u2083 = a\u2011 c and the rational function\n\nM(t) = (1\u2011 t^{d\u2081+1})(1\u2011 t^{d\u2082+1})(1\u2011 t^{d\u2083+2}) /\n       ((1\u2011 t^{d\u2081})(1\u2011 t^{d\u2082})(1\u2011 t^{d\u2083})).\n\nWrite M(t) = \u03a3_{j\u22650} m_j t^j. Then the Jordan canonical form of \u03c0_\u03bb(u) (the regular unipotent u \u2208 GL\u2083(\u2096) under the representation \u03c0_\u03bb) is the partition whose parts are (j+1) repeated m_j times. In particular the multiplicities m_j satisfy a linear recurrence with characteristic polynomial (1\u2011 t^{d\u2081})(1\u2011 t^{d\u2082})(1\u2011 t^{d\u2083}).",
     "domains": [
       "Algebra",
@@ -477,12 +477,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T14:45:19.943455+00:00",
     "title": "Jordan type of regular unipotent image for GL\u2080 representations"
   },
   {
-    "consumed_by_exp_id": "3d2280dc",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that operators A_i and A_j in the Operator Theorem's inverse system for SR_G commute (A_i \u2218 A_j = A_j \u2218 A_i) if and only if the corresponding group elements in G = Z_r wr S_n commute.",
     "domains": [
       "Pythagorean",
@@ -492,7 +492,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30977v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T15:36:19.278040+00:00",
     "title": "Commutativity of Operator Theorem operators in SR_G"
   },
@@ -511,31 +511,45 @@ window.FUTURE_DIRECTIONS = [
     "title": "Path-Minimality of Positive p-Energies for Connected Bipartite Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8833345a",
+    "description": "Conjecture that for coprime positive integers a<b with a>1 and odd exponent n>1, the equation (a^n+1)(b^n+1)=x^2 has no positive integer solutions.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0036",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31223v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T16:13:17.108600+00:00",
+    "title": "No solutions for odd exponents in the coprime case"
+  },
+  {
+    "consumed_by_exp_id": "3e52c27d",
     "description": "The product of primes in the extension field equals its order.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0037",
+    "id": "fd_0038",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T05:35:59.496154+00:00",
     "title": "Ramified Prime Product Equality"
   },
   {
-    "consumed_by_exp_id": "3e52c27d",
+    "consumed_by_exp_id": "",
     "description": "For a q-hypergeometric series whose coefficients have an asymptotic expansion dominated by oscillatory terms near a root of unity \u03c9, the signs of the coefficients alternate except for a density-zero set of indices n.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0038",
+    "id": "fd_0039",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:04:27.717812+00:00",
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
@@ -546,7 +560,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0039",
+    "id": "fd_0040",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
@@ -560,7 +574,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0040",
+    "id": "fd_0041",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -575,7 +589,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0041",
+    "id": "fd_0042",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
@@ -590,7 +604,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0042",
+    "id": "fd_0043",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00732v1",
@@ -604,7 +618,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0043",
+    "id": "fd_0044",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00674v1",
@@ -618,7 +632,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0044",
+    "id": "fd_0045",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00814v1",
@@ -633,7 +647,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0045",
+    "id": "fd_0046",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00367v1",
@@ -642,17 +656,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Borel oriented chromatic number of the directed Schreier graph of the Bernoulli shift Z\u00b2 on 2^{Z\u00b2} is 7"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "debcecca",
     "description": "For an r-periodic Riemann function f with perfect matching weight W, and a line bundle F on the five-point space, the pairing H\u2070(M_{W,0} \u2297 F) \u00d7 Ext\u00b9(F, M_{W^\u2227_{K+1},K}) \u2192 H\u00b9(\u03c9_W) \u2245 k is a perfect pairing, establishing a Serre duality isomorphism dim H\u2070(M_{W,0} \u2297 F) = dim Ext\u00b9(F, M_{W^\u2227_{K+1},K}) for all degrees K \u2208 \u2124\u00b2.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0046",
+    "id": "fd_0047",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00238v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T09:49:21.006265+00:00",
     "title": "Perfect Pairings in Periodic Riemann Functions Yield Serre-Type Duality"
   },
@@ -663,7 +677,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0047",
+    "id": "fd_0048",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00212v1",
@@ -677,7 +691,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0048",
+    "id": "fd_0049",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00352v1",
@@ -692,7 +706,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0049",
+    "id": "fd_0050",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31900v1",
@@ -707,7 +721,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0050",
+    "id": "fd_0051",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31894v1",
@@ -722,7 +736,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0051",
+    "id": "fd_0052",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31783v1",
@@ -736,7 +750,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0052",
+    "id": "fd_0053",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31815v1",
@@ -751,7 +765,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0053",
+    "id": "fd_0054",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -766,7 +780,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0054",
+    "id": "fd_0055",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
@@ -780,7 +794,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0055",
+    "id": "fd_0056",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31640v1",
@@ -795,7 +809,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0056",
+    "id": "fd_0057",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -809,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0057",
+    "id": "fd_0058",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31441v1",
@@ -824,7 +838,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0058",
+    "id": "fd_0059",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
@@ -839,7 +853,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0059",
+    "id": "fd_0060",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31075v1",
@@ -853,13 +867,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0060",
+    "id": "fd_0061",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30950v1",
     "status": "available",
     "timestamp": "2026-07-02T15:56:32.304597+00:00",
     "title": "Sharp Nordhaus\u2011Gaddum product bound for power domination throttling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every minimal edge-colored graph (with respect to edge deletion) that does not admit a total rainbow forest must be a single monochromatic cycle (possibly with isolated vertices).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0062",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.31240v1",
+    "status": "available",
+    "timestamp": "2026-07-02T16:14:00.036969+00:00",
+    "title": "Conjecture on the Structure of Minimal Obstructions to Total Rainbow Forests"
   },
   {
     "consumed_by_exp_id": "",
