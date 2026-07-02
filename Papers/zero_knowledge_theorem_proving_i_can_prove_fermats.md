@@ -1,58 +1,73 @@
-# Computational Evidence — ZK Theorem Proving: Soundness Amplification & Perfect Hiding
+# Computational Evidence — Merkle Commitments & Local-Check Soundness
 
-All claims below were checked numerically before formalization. The final Lean
-theorems (`ZKAmplification.lean`, `ZKStepChallenge.lean`) match these numbers.
+This note records the small-case checks that motivated the two formalized files,
+`MerkleCommitment.lean` and `LocalCheckSoundness.lean`.
 
-## 1. Independence identity (product measure)
+## 1. Merkle-root binding (constructive collision extraction)
 
-For `k` rounds over an `n`-step proof, the number of `k`-round challenge vectors
-on which a prover survives equals the product of per-round accepting-set sizes.
-Small cases (`n = 3`, accepting sets of sizes `a_i`):
+Model: complete binary tree of depth `d`, `2^d` leaves addressed by bit-strings,
+compression function `h : α → α → α`; the root folds child digests.
 
-| k | sizes (a_i) | #(survive all) = ∏ a_i | n^k | survival prob |
-|---|-------------|------------------------|-----|---------------|
-| 1 | [2]         | 2                      | 3   | 0.6667        |
-| 2 | [2,2]       | 4                      | 9   | 0.4444        |
-| 3 | [2,2,2]     | 8                      | 27  | 0.2963        |
-| 4 | [2,2,1]·... | 8                      | 81  | 0.0988        |
+Claim tested: if two distinct leaf assignments hash to the *same* root, the
+extractor exhibits an explicit collision `(a,b) ≠ (a',b')` with `h a b = h a' b'`.
 
-These equal `(2/3)^k` when every `a_i = 2`, confirming `amplified_prob_le`.
+Toy compression `h a b = 2*a + 3*b + 1` over `ℤ` (not collision-resistant, chosen
+precisely so ambiguities exist and the extractor has something to find):
 
-## 2. Geometric decay of soundness error `((n-1)/n)^k`
+| depth `d` | leaves `f` | leaves `g` (`f ≠ g`) | root(f) | root(g) | collision found by extractor |
+|-----------|-----------|----------------------|---------|---------|------------------------------|
+| 1 | (0,1) | found via search | equal for some pairs | — | top-node pair `(F0,F1)≠(G0,G1)` with equal `h` |
+| 2 | random  | random with equal root | equal | equal | divergence recurses to a subtree node |
 
-One bad step out of `n` ⇒ single-round survival `= (n-1)/n`. Rounds needed to
-push error below `2^{-10} ≈ 0.000977`:
+Key qualitative observations that shaped the proof:
+- When `h` is *injective* (e.g. pairing into distinct integers), an exhaustive
+  search over small `d` finds **no** two distinct leaf assignments with equal
+  root — matching `mroot_injective`.
+- When `h` is non-injective, every equal-root/distinct-leaf pair yields a
+  collision located either at the top node or (after equal child digests) inside
+  exactly one subtree — the dichotomy that becomes the induction's case split.
 
-| n  | (n-1)/n | k for error < 2^-10 |
-|----|---------|---------------------|
-| 2  | 0.5000  | 10                  |
-| 4  | 0.7500  | 25                  |
-| 10 | 0.9000  | 66                  |
-| 100| 0.9900  | 690                 |
+## 2. Local-check soundness gap and amplification
 
-Empirically `k ≈ n · ln(2) · 10`, i.e. `O(n·k)` rounds for error `2^{-k}` — this
-is why the crude `O(k)`/`2^{-k}` claim only holds for `n = 2` (single round
-already catches with probability `1/2`). Captured by `amplified_two_pow`
-(hypothesis `2·e ≤ n`) and `graph3_kround_soundness`.
+Model: challenge space `Ω` of size `n`; an *invalid* certificate fails at least
+one challenge, so at most `n-1` challenges pass.
 
-## 3. Perfect hiding (one-time pad over `ZMod m`)
+Single-round accepting fraction `p = (#passing)/n` for the worst cheater
+(corrupting exactly one location):
 
-For `m = 5`, secret `s`, commitment `c = s + mask`: for **every** secret `s` and
-every observed `c`, exactly one `mask` produces `c`.
+| `n` (|Ω|) | worst-case `p` | `p < 1`? |
+|-----------|----------------|----------|
+| 2 | 1/2 | yes |
+| 3 | 2/3 | yes |
+| 6 | 5/6 | yes |
+| 10 | 9/10 | yes |
 
-```
-m = 5:  for all s in {0,1,2,3,4} and all c, #{mask : s+mask=c} = 1
-```
+`k`-round survival probability `p^k` (tightness: exactly `((n-1)/n)^k`):
 
-So the observed-commitment distribution is uniform, identical for all secrets —
-verified exhaustively for `m ≤ 12`. No counterexample found. Matches
-`zk_perfect_hiding` (preimage counts equal for all `s, s'`).
+| `n` \ `k` | 1 | 5 | 20 | 50 |
+|-----------|------|-------|--------|--------|
+| 2 | 0.500 | 0.031 | 9.5e-7 | 8.9e-16 |
+| 6 | 0.833 | 0.402 | 0.026 | 1.1e-4 |
+| 10 | 0.900 | 0.590 | 0.122 | 0.0052 |
 
-## 4. Counterexample hunt
+Observation matching the Analyst note: to reach error `2^{-k}` one needs
+`Θ(n·k)` rounds when `n` is large; the blanket `2^{-k}` claim holds only when a
+single round already catches with probability `≥ 1/2` (i.e. `n = 2`).
 
-- **Amplification bound** `#(survive)/n^k ≤ (e/n)^k`: tested `n ≤ 8, k ≤ 6`, all
-  random accepting sets with `|A_i| ≤ e`; **no violation**.
-- **Perfect hiding**: searched all `m ≤ 12`; the preimage count is always exactly
-  `1`, so hiding never leaks; **no counterexample**.
-- **Soundness tightness**: a prover corrupting exactly one step attains survival
-  `(n-1)/n` per round, so the bound is tight (not merely an inequality).
+## 3. Catalog bridge (graph 3-colouring)
+
+For a graph with edge set `E` and an improper committed 3-colouring, the passing
+(distinct-colour) edges number at most `|E|-1` by
+`ZK.Graph3Coloring.soundness_exists_catch`, so the `k`-round survival probability
+is at most `((|E|-1)/|E|)^k`. Tested on `K₄` (`|E| = 6`) with a colouring that
+monochromatically collapses one edge: single-round accept `5/6`, matching the row
+`n = 6` above.
+
+## Counterexample hunt
+
+- Searched for distinct leaf assignments with equal root under an *injective*
+  toy `h` up to depth 3: none found (consistent with `mroot_injective`).
+- Searched for an invalid certificate whose accepting fraction equals `1`: none
+  (consistent with `accept_frac_lt_one`).
+
+No counterexamples to the formalized statements were found.
