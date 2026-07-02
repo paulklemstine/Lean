@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "eb034b80",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Tropical / Baker–Norine Riemann–Roch\n\nThis cycle formalized chip-firing on finite graphs (`prin`, `LinEquiv`, degree\ninvariance), the canonical-degree identity `deg K = 2g − 2` f",
-      "quality_score": 0.8360800000000002,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T13:53:55",
-      "title": "Tropical Riemann-Roch Theorem"
-    },
-    {
       "cycle_id": "31cf2713",
       "domain": "Applications",
       "key_insight": "# Future Directions — Plethystic Triviality of the Shifted `t`-Schur Basis\n\nThis cycle promoted the single plethystic automorphism `φ_t : p_{2k+1} ↦ (1 - t^{2k+1})\np_{2k+1}` to its ambient **diagonal",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-02T02:29:19",
       "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
+    },
+    {
+      "cycle_id": "135cab00",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — dominant weights of the form `λ_{D,I} = 2ρ − β_I − β_D`\n\nThe results of this cycle isolate the weight-theoretic core of the `π_{D,I}` construction: in the\nsimply-laced setting, d",
+      "quality_score": 0.7176246153846154,
+      "sorry_count": 1,
+      "theorem_count": 13,
+      "timestamp": "2026-07-02T02:48:24",
+      "title": "Classification of ρ-dominant elements in B(ρ) for symmetrizable Kac-Moody algebras"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8ed8ca57",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Sharp approximate Carathéodory & iterated Delaunay refinement\n\nDerived from this cycle's findings (`Maurey.lean`, `MaureyGeneral.lean`,\n`Contraction.lean`, `Bridge.lean`, and the",
-      "quality_score": 0.7478369230769231,
-      "sorry_count": 1,
-      "theorem_count": 13,
-      "timestamp": "2026-06-27T04:13:04",
-      "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refinement"
-    },
     {
       "cycle_id": "49ad7738",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-07-02T02:29:19",
       "title": "No-Stretching Property of GF(2) Quotient Labelings from Edge Partitions"
+    },
+    {
+      "cycle_id": "135cab00",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — dominant weights of the form `λ_{D,I} = 2ρ − β_I − β_D`\n\nThe results of this cycle isolate the weight-theoretic core of the `π_{D,I}` construction: in the\nsimply-laced setting, d",
+      "quality_score": 0.7176246153846154,
+      "sorry_count": 1,
+      "theorem_count": 13,
+      "timestamp": "2026-07-02T02:48:24",
+      "title": "Classification of ρ-dominant elements in B(ρ) for symmetrizable Kac-Moody algebras"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a530b001",
-      "domain": "Novelty",
-      "name": "numGates_var",
-      "quality": 0.7436
-    },
-    {
-      "cycle_id": "a530b001",
-      "domain": "Novelty",
-      "name": "numGates_top",
-      "quality": 0.7436
-    },
     {
       "cycle_id": "c8e22e5a",
       "domain": "Applications",
@@ -2803,17 +2791,22 @@
       "domain": "Applications",
       "name": "cayleyGraph_adj",
       "quality": 0.79052
+    },
+    {
+      "cycle_id": "135cab00",
+      "domain": "Novelty",
+      "name": "is",
+      "quality": 0.7176246153846154
+    },
+    {
+      "cycle_id": "135cab00",
+      "domain": "Novelty",
+      "name": "sum_erase_cartan",
+      "quality": 0.7176246153846154
     }
   ],
-  "last_updated": "2026-07-02T02:29:19",
+  "last_updated": "2026-07-02T02:48:24",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "722e1f4a",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-06-20T11:10:43"
-    },
     {
       "context": "sorry; sorry",
       "cycle_id": "6c747cdd",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 3,
       "timestamp": "2026-07-02T02:27:45"
+    },
+    {
+      "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
+      "cycle_id": "135cab00",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-07-02T02:48:24"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "dd442784",
-        "quality": 0.759526,
-        "theorems": 15,
-        "title": "Dimension of Second Clique Homology for Latin Square Graphs"
-      },
-      {
         "cycle_id": "f1070a48",
         "quality": 0.8322400000000001,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.6813500000000001,
         "theorems": 16,
         "title": "Uniqueness of the Critical 2-Vertex Augmentation of G27"
+      },
+      {
+        "cycle_id": "135cab00",
+        "quality": 0.7176246153846154,
+        "theorems": 13,
+        "title": "Classification of ρ-dominant elements in B(ρ) for symmetrizable Kac-Moody algebr"
       }
     ],
     "NumberTheory": [
