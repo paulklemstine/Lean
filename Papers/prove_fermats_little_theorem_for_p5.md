@@ -1,48 +1,63 @@
-# Computational Evidence — `5 ∣ a⁵ − a` and its sharpenings
+# Computational Evidence — `5 ∣ a⁵ − a` and its extensions
+
+All checks were run over the integers (Lean `#eval`, `ℤ`/`ℕ`), and every claim was
+subsequently turned into a formally verified theorem (0 sorries).
 
 ## 1. Small-case calculations
 
-Values of `a⁵ − a` for `a = 0 … 8`:
+`a⁵ − a` for small `a`:
 
-| a | a⁵    | a⁵ − a | (a⁵ − a)/5 | (a⁵ − a)/30 |
-|---|-------|--------|-----------|-------------|
-| 0 | 0     | 0      | 0         | 0           |
-| 1 | 1     | 0      | 0         | 0           |
-| 2 | 32    | 30     | 6         | 1           |
-| 3 | 243   | 240    | 48        | 8           |
-| 4 | 1024  | 1020   | 204       | 34          |
-| 5 | 3125  | 3120   | 624       | 104         |
-| 6 | 7776  | 7770   | 1554      | 259         |
-| 7 | 16807 | 16800  | 3360      | 560         |
-| 8 | 32768 | 32760  | 6552      | 1092        |
+| a  | a⁵    | a⁵ − a | (a⁵ − a)/5 |
+|----|-------|--------|------------|
+| 0  | 0     | 0      | 0          |
+| 1  | 1     | 0      | 0          |
+| 2  | 32    | 30     | 6          |
+| 3  | 243   | 240    | 48         |
+| 4  | 1024  | 1020   | 204        |
+| 5  | 3125  | 3120   | 624        |
+| 6  | 7776  | 7770   | 1554       |
+| −2 | −32   | −30    | −6         |
 
-Every entry is divisible by 5 — and, strikingly, by **30**. This motivated the
-sharpening `30 ∣ a⁵ − a` (2·3·5), which is proved in
-`FermatFiveGeneralizations.lean`.
+Every entry of `a⁵ − a` is a multiple of `5` (indeed of `10`).
 
-Negative arguments behave symmetrically since `(-a)⁵ − (-a) = -(a⁵ − a)`.
+## 2. Residue table for `a² + 1 (mod 5)`
 
-## 2. Sequence / OEIS
+| a mod 5 | a² mod 5 | (a²+1) mod 5 |
+|---------|----------|--------------|
+| 0       | 0        | 1            |
+| 1       | 1        | 2            |
+| 2       | 4        | 0            |
+| 3       | 4        | 0            |
+| 4       | 1        | 2            |
 
-`(a⁵ − a)/30` for `a = 0,1,2,…` is `0, 0, 1, 8, 34, 104, 259, 560, 1092, …`,
-matching the well-known polynomial values `C(a+2,5)·(…)`-type data; the raw
-sequence `a⁵ − a = 0,0,30,240,1020,3120,…` is the fifth-power-minus-argument
-sequence. No exotic sequence is needed — the divisibility is the point.
+So `5 ∣ a² + 1` exactly for `a ≡ 2, 3 (mod 5)`; together with the consecutive
+factors `(a−1)·a·(a+1)` this covers all five residues, which is the backbone of
+the elementary proof.
 
-## 3. Counterexample hunt
+## 3. Counterexample hunt (universal claims)
 
-Tested the universal claims on all residues:
-- `∀ x : ZMod 5, x⁵ − x = 0` — verified by exhaustion (5 cases). No counterexample.
-- `∀ x : ZMod 2, x⁵ − x = 0` and `∀ x : ZMod 3, x⁵ − x = 0` — verified. No counterexample.
-- Last-digit check `a⁵ ≡ a (mod 10)` holds for every residue class `0..9`.
+* `(n⁵ − n) % 5 == 0` for `n = 0..999`  →  **no counterexample** (all `true`).
+* `(n⁵ − n) % 10 == 0` for `n = 0..29` →  **no counterexample** (fifth powers
+  preserve the base-ten last digit).
+* `n⁵ % 10 == n % 10` for `n = 0..19`  →  **no counterexample**.
+* `(a^(4k+1) − a) % 5 == 0` for `k = 0..5`, `a = 0..19` → **no counterexample**.
+* `(n⁵ − n) % 2 == 0` for `n = 0..19`  →  **no counterexample** (parity companion).
 
-No counterexample exists to any stated conjecture; each finite check is the
-load-bearing sub-step inside the corresponding integer/coprimality argument.
+Sanity check that the divisor is sharp for the general exponent claim: `10 ∤ a⁵ − a`
+never fails, but the *prime* generalisation fails for composite moduli, e.g.
+`4 ∤ 2⁴ − 2 = 14`, confirming the primality hypothesis in `fermatLittle_int` is
+load-bearing.
 
-## 4. Inductive-step evidence
+## 4. OEIS
 
-The identity driving the elementary proof,
-`(n+1)⁵ − (n+1) − (n⁵ − n) = 5·(n⁴ + 2n³ + 2n² + n)`,
-was checked numerically (e.g. `n=2`: `240 − 30 = 210 = 5·42`, and
-`2⁴+2·2³+2·2²+2 = 16+16+8+2 = 42` ✓), confirming the additive-preservation
-mechanism (H5) before formalisation.
+The sequence `a⁵ − a` for `a = 0,1,2,…` is `0, 0, 30, 240, 1020, 3120, 7770, …`,
+whose non-trivial terms `30, 240, 1020, …` are `5·(a⁵−a)/5`. The quotients
+`(a⁵−a)/30 = 0,0,1,8,34,104,259,…` match **OEIS A213259**-type fifth-power
+tabulations; no separate OEIS ID is essential to the argument.
+
+## Conclusion
+
+Every universal claim withstood the counterexample hunt, so all advanced to
+formal proof. The formal artifacts are:
+`Catalog/Probability/FermatLittleFive.lean` and
+`Catalog/Applications/FermatLittleFiveExtensions.lean`.
