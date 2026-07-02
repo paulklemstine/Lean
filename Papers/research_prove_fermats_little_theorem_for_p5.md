@@ -1,141 +1,138 @@
-# The Congruence $a^5 \equiv a \pmod 5$: Fermat's Little Theorem at a Prime, with Field-Theoretic, Elementary, and Combinatorial Proofs
+# Divisibility of $a^5 - a$: An Elementary Proof, Its Sharpenings, and Its Place in Fermat's Little Theorem
 
 ## Abstract
 
-We give a complete and self-contained account of the divisibility statement $5 \mid a^5 - a$ for every integer $a$, situating it as the special case $p = 5$ of Fermat's Little Theorem. We present three independent proofs that illuminate different facets of the phenomenon: (i) a structural proof via the Frobenius endomorphism of the finite field $\mathbb{F}_5$, in which raising to the fifth power is literally the identity map; (ii) an elementary proof by the factorization $a^5 - a = (a-1)a(a+1)(a^2+1)$ together with an exhaustive residue analysis modulo $5$; and (iii) a combinatorial/probabilistic proof counting aperiodic necklaces of prime length, where divisibility by $5$ appears as the orbit-size of a free cyclic group action. We state the general theorem for arbitrary primes, prove it in the same field-theoretic framework, and discuss extensions to composite moduli, culminating in Korselt's criterion for Carmichael numbers. Throughout, the guiding theme is that "$p$-th powering is the identity" is a synchronization statement about the cyclic structure of modular arithmetic.
-
----
+We give a fully elementary, self-contained treatment of the classical fact that $a^5 - a$ is divisible by $5$ for every integer $a$, together with several genuine strengthenings and a placement of the result inside the general theory. Our primary proof avoids any appeal to finite-field theory or exhaustive residue checking: it rests on a single polynomial identity, $(n+1)^5 - (n+1) = (n^5 - n) + 5(n^4 + 2n^3 + 2n^2 + n)$, propagated across the integers by induction. We then record a complementary factorization $a^5 - a = (a-1)a(a+1)(a^2+1)$, which exposes divisibility by $2$ and $3$; combining these with divisibility by $5$ through coprimality yields the sharper statement $30 \mid a^5 - a$. A further consequence, $a^5 \equiv a \pmod{10}$, establishes that the last decimal digit of any integer is fixed by the fifth-power map. Finally we prove the general Fermat's Little Theorem, $p \mid a^p - a$ for every prime $p$, and recover the $p = 5$ case as a corollary, exhibiting the target as one instance of a universal law. We discuss algorithms for computing the "universal denominator" $D(n)$ of $a^n - a$, present numerical demonstrations, and outline directions for further research.
 
 ## 1. Introduction
 
-Among the first surprises a student of number theory encounters is that certain algebraic combinations of an integer are *always* divisible by a fixed number, regardless of the integer chosen. The cleanest example attached to the prime $5$ is:
+Among the first surprises a student of number theory encounters is that certain polynomial expressions in an integer variable are *always* divisible by a fixed number, regardless of the input. The prototype is
 
-$$\boxed{\,5 \mid a^5 - a \quad \text{for every integer } a.\,}$$
+$$5 \mid a^5 - a \qquad \text{for all } a \in \mathbb{Z}.$$
 
-Numerically: $3^5 - 3 = 240 = 5\cdot 48$; $2^5 - 2 = 30 = 5\cdot 6$; $10^5 - 10 = 99990 = 5\cdot 19998$; and $(-4)^5 - (-4) = -1024 + 4 = -1020 = 5 \cdot (-204)$.
+This paper studies this statement from several complementary vantage points, with three goals: to give a proof that is genuinely elementary (using only integer induction and a polynomial identity), to sharpen the modulus from $5$ to its true maximal value $30$, and to situate the result within the general framework of Fermat's Little Theorem. Along the way we obtain a concrete corollary about decimal last digits and describe the computational structure underlying the family of results $\{\,p \mid a^p - a\,\}$.
 
-This is the instance $p = 5$ of **Fermat's Little Theorem**, which asserts $p \mid a^p - a$ for every prime $p$ and integer $a$. The purpose of this paper is to record, in fully self-contained form, why the statement holds, to give three conceptually distinct proofs, and to place the result in the broader landscape of modular arithmetic and its generalizations.
+Throughout, $\mathbb{Z}$ denotes the ring of integers, and for integers $m, x$ we write $m \mid x$ to mean $m$ divides $x$. For $m \in \mathbb{Z}_{>0}$ we write $x \equiv y \pmod{m}$ to mean $m \mid (x - y)$.
 
-The three proofs are not redundant. The field-theoretic proof reveals *why $5$ works and $6$ does not*: primality is precisely what makes the residue ring a field. The elementary proof is verifiable by hand and requires no abstraction. The combinatorial proof recasts an arithmetic congruence as the shadow of a symmetry group acting freely, connecting the result to probability and the theory of random cyclic structures.
+## 2. Definitions and preliminaries
 
-## 2. Preliminaries and Definitions
+**Definition 2.1 (Defect function).** For an integer $a$, define the *fifth-power defect* by $\Delta(a) := a^5 - a$. More generally, for a positive integer $n$, write $\Delta_n(a) := a^n - a$.
 
-**Definition 2.1 (Divisibility).** For integers $m, n$, we say $m$ *divides* $n$, written $m \mid n$, if there exists an integer $k$ with $n = mk$.
+**Definition 2.2 (Universal denominator).** For a positive integer $n$, define
+$$D(n) := \gcd\{\, a^n - a : a \in \mathbb{Z} \,\},$$
+the largest positive integer dividing $a^n - a$ for every integer $a$.
 
-**Definition 2.2 (Congruence).** For integers $a, b$ and a positive integer $n$, we write $a \equiv b \pmod n$ if $n \mid (a - b)$. Congruence modulo $n$ is an equivalence relation compatible with addition and multiplication.
+**Lemma 2.3 (Coprime gluing).** If $m_1, m_2$ are coprime integers and both $m_1 \mid x$ and $m_2 \mid x$, then $m_1 m_2 \mid x$.
 
-**Definition 2.3 (The residue ring $\mathbb{Z}/n\mathbb{Z}$).** The set of congruence classes modulo $n$ forms a commutative ring with $n$ elements under the induced addition and multiplication. We denote it $\mathbb{Z}/n\mathbb{Z}$, and write $\mathbb{F}_p$ when $n = p$ is prime.
+*Proof sketch.* Coprimality provides integers $u, v$ with $u m_1 + v m_2 = 1$ (Bézout). Writing $x = x \cdot 1 = x(u m_1 + v m_2) = u m_1 x + v m_2 x$ and substituting $x = m_2 y_2 = m_1 y_1$ from the two divisibilities shows $m_1 m_2$ divides each term, hence divides $x$. This is the ring-theoretic content of the Chinese Remainder Theorem in the special case of a single congruence class. $\square$
 
-**Definition 2.4 (Field).** A *field* is a commutative ring in which every nonzero element has a multiplicative inverse.
+## 3. The primary result: an inductive proof
 
-**Proposition 2.5.** $\mathbb{Z}/n\mathbb{Z}$ is a field if and only if $n$ is prime.
+The centerpiece of our elementary approach is the following algebraic identity, which measures exactly how the defect changes when the argument increases by one.
 
-*Proof sketch.* If $n = p$ is prime and $0 < a < p$, then $\gcd(a, p) = 1$, so by Bézout's identity there exist integers $x, y$ with $ax + py = 1$, whence $ax \equiv 1 \pmod p$ and $x$ is the inverse of $a$. Conversely, if $n = de$ with $1 < d, e < n$, then $d$ is a nonzero zero divisor and cannot be invertible. $\square$
+**Lemma 3.1 (Step identity).** For every integer $n$,
+$$(n+1)^5 - (n+1) = (n^5 - n) + 5\,(n^4 + 2n^3 + 2n^2 + n).$$
 
-**Definition 2.6 (Frobenius endomorphism).** In a commutative ring of prime characteristic $p$, the map $x \mapsto x^p$ is a ring homomorphism, called the *Frobenius endomorphism*. It is additive because in characteristic $p$ all intermediate binomial coefficients $\binom{p}{k}$ for $0 < k < p$ are divisible by $p$, so $(x+y)^p = x^p + y^p$.
+*Proof.* Expand $(n+1)^5 = n^5 + 5n^4 + 10n^3 + 10n^2 + 5n + 1$ by the binomial theorem. Then
+$$(n+1)^5 - (n+1) = n^5 + 5n^4 + 10n^3 + 10n^2 + 5n + 1 - n - 1 = (n^5 - n) + (5n^4 + 10n^3 + 10n^2 + 5n),$$
+and the parenthesized tail equals $5(n^4 + 2n^3 + 2n^2 + n)$. This is a polynomial identity, verified by direct expansion. $\square$
 
-## 3. The Main Result and Its Proofs
+**Theorem 3.2 (Divisibility by five).** For every integer $a$, $\;5 \mid a^5 - a$.
 
-### 3.1 Statement
+*Proof.* We use integer induction, treating nonnegative and negative arguments separately from a common base.
 
-**Theorem 3.1 (Fermat's Little Theorem, integer form).** *Let $p$ be a prime and $a$ an integer. Then $p \mid a^p - a$.*
+*Base case.* For $a = 0$ we have $0^5 - 0 = 0 = 5 \cdot 0$.
 
-**Corollary 3.2 (The case $p = 5$).** *For every integer $a$, $\;5 \mid a^5 - a$.*
+*Forward step.* Suppose $5 \mid n^5 - n$ for some integer $n \ge 0$; write $n^5 - n = 5k$. By Lemma 3.1,
+$$(n+1)^5 - (n+1) = 5k + 5(n^4 + 2n^3 + 2n^2 + n) = 5\big(k + n^4 + 2n^3 + 2n^2 + n\big),$$
+which is a multiple of $5$. Hence the property propagates to $n+1$.
 
-We now prove Theorem 3.1 in full generality, then specialize; afterward we give two further proofs specific to (but not limited to) $p = 5$.
+*Backward step.* Applying Lemma 3.1 with $n$ replaced by $n-1$ gives $n^5 - n = \big((n-1)^5 - (n-1)\big) + 5\,g(n-1)$ for the integer polynomial $g(m) = m^4 + 2m^3 + 2m^2 + m$. Thus $(n-1)^5 - (n-1) = (n^5 - n) - 5\,g(n-1)$, so divisibility by $5$ descends from $n$ to $n-1$. This carries the property to all negative integers.
 
-### 3.2 Proof I: The Frobenius endomorphism on a finite field
+By induction in both directions from the base case, $5 \mid a^5 - a$ for every $a \in \mathbb{Z}$. $\square$
 
-The central algebraic fact is the following.
+The proof is genuinely inductive: it never enumerates the residue classes modulo $5$. Its load-bearing content is precisely the identity of Lemma 3.1, which expresses that the defect is *periodic with period one up to multiples of five* — the additive-preservation phenomenon.
 
-**Lemma 3.3 (Power map on a finite field).** *In a finite field $F$ with exactly $q$ elements, every element $x \in F$ satisfies $x^q = x$.*
+## 4. A structural factorization
 
-*Proof sketch.* The nonzero elements $F^\times$ form a group of order $q - 1$ under multiplication. By Lagrange's theorem, $x^{q-1} = 1$ for every $x \in F^\times$. Multiplying by $x$ gives $x^q = x$ for all $x \neq 0$, and the identity $x^q = x$ holds trivially at $x = 0$. Hence $x^q = x$ throughout $F$. $\square$
-
-*Proof of Theorem 3.1.* Reduce modulo $p$. The ring $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$ is a field with exactly $p$ elements (Proposition 2.5). By Lemma 3.3 with $q = p$, we have $\bar a^{\,p} = \bar a$ in $\mathbb{F}_p$ for the class $\bar a$ of $a$. Equivalently, $a^p \equiv a \pmod p$, i.e. $p \mid a^p - a$. $\square$
-
-Specializing to $p = 5$ proves Corollary 3.2. The content of this proof is that **fifth-powering is the identity map on $\mathbb{F}_5$** — the Frobenius endomorphism $x \mapsto x^5$ equals $\mathrm{id}_{\mathbb{F}_5}$. Direct verification: $0^5=0$, $1^5=1$, $2^5 = 32 \equiv 2$, $3^5 = 243 \equiv 3$, $4^5 = 1024 \equiv 4 \pmod 5$.
-
-This proof also explains the necessity of primality: if $n$ is composite, $\mathbb{Z}/n\mathbb{Z}$ is not a field, $\mathbb{Z}/n\mathbb{Z}^\times$ has order $\varphi(n) < n - 1$, and the argument breaks down. Indeed $a^n \equiv a \pmod n$ fails for most composite $n$ (e.g. $2^4 = 16 \equiv 0 \not\equiv 2 \pmod 4$).
-
-### 3.3 Proof II: Elementary factorization and residue analysis
-
-**Lemma 3.4 (Factorization).** *For every integer $a$,*
+**Theorem 4.1 (Factorization).** For every integer $a$,
 $$a^5 - a = (a-1)\,a\,(a+1)\,(a^2 + 1).$$
 
-*Proof.* Expand: $(a-1)a(a+1) = a(a^2 - 1) = a^3 - a$, and $(a^3 - a)(a^2+1) = a^5 + a^3 - a^3 - a = a^5 - a$. $\square$
+*Proof.* Factor $a^5 - a = a(a^4 - 1) = a(a^2 - 1)(a^2 + 1) = a(a-1)(a+1)(a^2+1)$, using the difference-of-squares factorization $a^4 - 1 = (a^2-1)(a^2+1)$ and $a^2 - 1 = (a-1)(a+1)$. $\square$
 
-*Proof of Corollary 3.2.* Consider the residue $r = a \bmod 5 \in \{0,1,2,3,4\}$ and show $5$ divides one of the factors in Lemma 3.4:
+**Corollary 4.2.** For every integer $a$, both $2 \mid a^5 - a$ and $3 \mid a^5 - a$.
 
-| $r = a \bmod 5$ | Divisible factor | Reason |
-|---|---|---|
-| $0$ | $a$ | $5 \mid a$ |
-| $1$ | $a - 1$ | $a - 1 \equiv 0$ |
-| $2$ | $a^2 + 1$ | $2^2 + 1 = 5 \equiv 0$ |
-| $3$ | $a^2 + 1$ | $3^2 + 1 = 10 \equiv 0$ |
-| $4$ | $a + 1$ | $a + 1 \equiv 0$ |
+*Proof.* The factorization exhibits the three consecutive integers $a-1, a, a+1$ as factors of $a^5 - a$. Among any two consecutive integers one is even, so $2 \mid a^5 - a$. Among any three consecutive integers one is a multiple of $3$, so $3 \mid a^5 - a$. $\square$
 
-In every case exactly one factor is a multiple of $5$, so the product $a^5 - a$ is divisible by $5$. $\square$
+An alternative, uniform route to Corollary 4.2 is to observe that for each modulus $m \in \{2, 3\}$ the map $x \mapsto x^5$ fixes every residue class modulo $m$; equivalently $x^5 - x \equiv 0 \pmod m$ for all residues $x$, a finite check over the $m$ classes. Either way, the conclusion feeds into the next section.
 
-The key observation for $r \in \{2,3\}$ is that squares modulo $5$ take only the values $\{0,1,4\}$; the value $4$ arises precisely at $r = 2, 3$, making $a^2 + 1 \equiv 0$. This proof requires no field theory and can be checked entirely by finite computation.
+## 5. Sharpening the modulus to thirty
 
-### 3.4 Proof III: Aperiodic necklaces and a free group action
+**Theorem 5.1 (Divisibility by thirty).** For every integer $a$, $\;30 \mid a^5 - a$.
 
-We recast the quantity $a^5 - a$ as a count of combinatorial objects, exposing the divisibility as an orbit-counting phenomenon.
+*Proof.* By Theorem 3.2 and Corollary 4.2 we have $2 \mid \Delta(a)$, $3 \mid \Delta(a)$, and $5 \mid \Delta(a)$. Since $2$ and $3$ are coprime, Lemma 2.3 gives $6 \mid \Delta(a)$. Since $6$ and $5$ are coprime, Lemma 2.3 again gives $30 \mid \Delta(a)$. $\square$
 
-**Setup.** Fix an alphabet of $a$ symbols (colors). A *string* of length $p$ is an ordered tuple $(x_0, x_1, \dots, x_{p-1})$ with each $x_i$ drawn from the alphabet; there are $a^p$ strings. The *cyclic group* $C_p = \mathbb{Z}/p\mathbb{Z}$ acts by rotation: $\sigma \cdot (x_0, \dots, x_{p-1}) = (x_{p-1}, x_0, \dots, x_{p-2})$.
+**Theorem 5.2 (Maximality).** The universal denominator satisfies $D(5) = 30$; that is, $30$ is the *largest* integer dividing $a^5 - a$ for all integers $a$.
 
-**Lemma 3.5 (Free action on non-constant strings, prime length).** *Let $p$ be prime. A string of length $p$ is fixed by some nontrivial rotation if and only if it is constant (all symbols equal). Consequently, $C_p$ acts freely on the set of non-constant strings, and every such orbit has exactly $p$ elements.*
+*Proof sketch.* Theorem 5.1 shows $30 \mid D(5)$. For the reverse, evaluate at $a = 2$: $\Delta(2) = 30$. Any universal divisor must divide $\Delta(2) = 30$, so $D(5) \mid 30$. Combining, $D(5) = 30$. $\square$
 
-*Proof sketch.* Suppose a rotation by $k$ steps, $1 \le k \le p-1$, fixes the string. Since $p$ is prime, $\gcd(k, p) = 1$, so $k$ generates all of $C_p$; hence the string is fixed by *every* rotation, forcing all symbols equal. The contrapositive gives the claim, and by the orbit–stabilizer theorem an orbit with trivial stabilizer has size $|C_p| = p$. $\square$
+This maximality is reflected numerically. The table of defects for $a = 0, 1, \ldots, 8$ reads
+$$0,\; 0,\; 30,\; 240,\; 1020,\; 3120,\; 7770,\; 16800,\; 32760,$$
+and the greatest common divisor of the nonzero entries is exactly $30$.
 
-*Proof of Theorem 3.1 (combinatorial).* There are exactly $a$ constant strings (one per symbol), so there are $a^p - a$ non-constant strings. By Lemma 3.5 these partition into orbits of size exactly $p$; if there are $N$ orbits then $a^p - a = pN$. In particular $p \mid a^p - a$. $\square$
+## 6. A consequence for last digits
 
-For $p = 5$: the number of genuine $5$-bead necklaces on $a$ colors is $(a^5 - a)/5$. **Probabilistic phrasing.** Draw a string of prime length $p$ uniformly at random and condition on it being non-constant; then its rotation-orbit has exactly $p$ members with probability $1$. Divisibility by $p$ is the arithmetic shadow of this free symmetry.
+**Theorem 6.1 (Last-digit stability).** For every integer $a$, $\;a^5 \equiv a \pmod{10}$; equivalently, $a^5$ ends in the same decimal digit as $a$.
 
-## 4. Algorithms
+*Proof.* By Theorem 3.2 and Corollary 4.2 we have $5 \mid \Delta(a)$ and $2 \mid \Delta(a)$. As $2$ and $5$ are coprime, Lemma 2.3 gives $10 \mid \Delta(a) = a^5 - a$, which is the claim. $\square$
 
-We describe the constructive procedures underlying the demonstrations.
+**Corollary 6.2 (Digit fixed points).** Iterating the fifth-power map never changes the last decimal digit: for every $a$ and every $k \ge 0$, $\;a^{5^k} \equiv a \pmod{10}$.
 
-**Algorithm A (Residue-class witness).** Given $a$, determine which factor of $(a-1)a(a+1)(a^2+1)$ certifies divisibility by $5$, returning both the witnessing factor and the quotient $(a^5-a)/5$. Complexity: $O(1)$ arithmetic operations (on fixed-size inputs).
+*Proof sketch.* Induction on $k$. The case $k = 0$ is trivial. If $a^{5^k} \equiv a \pmod{10}$, then raising both sides to the fifth power and applying Theorem 6.1 to the integer $a^{5^k}$ gives $a^{5^{k+1}} = (a^{5^k})^5 \equiv a^{5^k} \equiv a \pmod{10}$. Thus the last digit is a fixed point of the fifth-power operation on the ten residue classes modulo $10$. $\square$
 
-**Algorithm B (Necklace counter).** Given alphabet size $a$ and prime length $p$, count aperiodic necklaces as $(a^p - a)/p$ and verify integrality by explicit orbit enumeration for small $p$. Enumeration complexity: $O(p\cdot a^p)$; closed-form complexity: $O(\log p)$ multiplications via fast exponentiation.
+## 7. Placement within Fermat's Little Theorem
 
-**Algorithm C (Frobenius table).** Build the map $x \mapsto x^p$ on $\mathbb{Z}/p\mathbb{Z}$ and check it equals the identity, confirming Lemma 3.3 computationally. Complexity: $O(p \log p)$.
+The exponent $5$ is distinguished not by its size but by being *prime*. The general phenomenon is the following.
 
-## 5. Applications
+**Theorem 7.1 (Fermat's Little Theorem, additive form).** For every prime $p$ and every integer $a$,
+$$p \mid a^p - a.$$
 
-- **Primality testing.** The Fermat test uses the contrapositive of Theorem 3.1: if $a^n \not\equiv a \pmod n$ for some $a$, then $n$ is composite. This underlies fast probabilistic primality screening.
-- **Public-key cryptography.** The RSA cryptosystem's correctness rests on Euler's generalization of Fermat's Little Theorem; the prime case is the conceptual seed.
-- **Cyclic redundancy and coding.** Arithmetic in $\mathbb{F}_p$ and its extensions, where $x^q = x$ characterizes the base field inside $\mathbb{F}_{q^k}$, is foundational to error-correcting codes.
+*Proof sketch.* Work in the ring of residues modulo $p$, which is a field because $p$ is prime. In this field the identity $x^p = x$ holds for every element $x$: the $p-1$ nonzero elements form a cyclic multiplicative group of order $p-1$, so $x^{p-1} = 1$ for each nonzero $x$ (whence $x^p = x$), and the identity is trivial for $x = 0$. Consequently $a^p - a$ reduces to $0$ modulo $p$, i.e. $p \mid a^p - a$. $\square$
 
-## 6. Extensions to Composite Moduli
+**Corollary 7.2 (Target as an instance).** Taking $p = 5$ in Theorem 7.1 recovers Theorem 3.2: $\;5 \mid a^5 - a$.
 
-The field-theoretic proof suggests immediately what can go wrong and be repaired for composite $n$.
+Theorem 7.1 is the "right home" for the entire family of results. The elementary inductive proof of Theorem 3.2 and the field-theoretic proof of Theorem 7.1 are two faces of a single fact — the periodicity of $x \mapsto x^p - x$ modulo $p$ — and each has its own virtues: the former yields an explicit witness polynomial $g$ with $\Delta_p(a+1) - \Delta_p(a) = p\,g(a)$, while the latter reveals the structural reason (the multiplicative group of a finite field) and instantly generalizes across all primes.
 
-**Definition 6.1 (Carmichael number).** A composite number $n$ is a *Carmichael number* if $a^n \equiv a \pmod n$ for every integer $a$.
+## 8. The universal denominator $D(n)$
 
-**Theorem 6.2 (Korselt's criterion).** *A composite $n > 1$ satisfies $a^n \equiv a \pmod n$ for all integers $a$ if and only if $n$ is squarefree and $p - 1 \mid n - 1$ for every prime $p \mid n$.*
+The maximality result $D(5) = 30$ invites a general question: for arbitrary exponent $n$, what is $D(n)$?
 
-*Proof idea.* By the Chinese Remainder Theorem the condition factors prime-by-prime. Squarefreeness eliminates nilpotent obstructions (a repeated prime factor $p^2 \mid n$ makes $p^n \equiv 0 \not\equiv p$); the condition $p - 1 \mid n - 1$ synchronizes the exponent with the order $p-1$ of each cyclic group $\mathbb{F}_p^\times$, so that $a^{n} \equiv a \pmod p$ for all $a$. $\square$
+**Proposition 8.1 (Structure of $D(n)$).** For each $n \ge 1$, $D(n)$ is squarefree, and a prime $p$ divides $D(n)$ if and only if $p - 1$ divides $n - 1$.
 
-The smallest Carmichael number is $561 = 3 \cdot 11 \cdot 17$, and indeed $2 \mid 560$, $10 \mid 560$, $16 \mid 560$. Thus the clean identity that $5$ enjoys because it is prime is enjoyed by a rare family of composites for a subtler, synchronization-based reason.
+*Proof sketch.* A prime $p$ divides $a^n - a$ for all $a$ iff $x^n = x$ for all $x$ in the field of residues modulo $p$. For $x = 0$ this is automatic; for the cyclic multiplicative group of order $p-1$, the condition $x^{n-1} = 1$ for all nonzero $x$ holds iff the group exponent $p - 1$ divides $n - 1$. Higher powers $p^2$ never divide $D(n)$ because, choosing $a = p$, the term $a^n - a = p^n - p$ is divisible by $p$ but not $p^2$ once $n \ge 2$; hence $D(n)$ is squarefree. Thus $D(n) = \prod_{\,p : (p-1) \mid (n-1)} p$. $\square$
 
-## 7. Discussion
+For example, $D(3) = 2 \cdot 3 = 6$ (primes with $p - 1 \mid 2$: namely $2, 3$), $D(5) = 2 \cdot 3 \cdot 5 = 30$ (primes with $p-1 \mid 4$: namely $2, 3, 5$), and $D(7) = 2 \cdot 3 \cdot 7 = 42$ (primes with $p - 1 \mid 6$: namely $2, 3, 7$). The absence of $5$ from $D(7)$ — because $5 - 1 = 4$ does not divide $6$ — is a small but instructive surprise.
 
-Three proofs of one small fact reveal three mathematical worldviews. Algebraically, $5 \mid a^5 - a$ because fifth-powering is the identity endomorphism of a five-element field. Elementarily, it is because five consecutive-ish factors cover every residue. Combinatorially, it is because a prime-order cyclic group shreds non-constant strings into equal orbits. That a single congruence admits such varied explanations is characteristic of number theory, where arithmetic, algebra, and combinatorics repeatedly converge.
+## 9. Algorithms
 
-The unifying slogan is *synchronization*: "power = identity" holds precisely when the exponent lands on a common period of the cyclic structure. For a prime the structure is a single clock of period $p - 1$ (plus the fixed point $0$), and $p$-th powering closes the loop. For composite moduli one must synchronize several clocks at once — the content of Korselt's criterion.
+We summarize the computational content in two procedures.
 
-## 8. Future Directions
+**Algorithm A (Universal denominator by residue enumeration).** To compute $D(n)$: for each prime $p$ up to a bound, test whether $x^n \equiv x \pmod p$ for all residues $x \in \{0, 1, \ldots, p-1\}$; equivalently, by Proposition 8.1, test whether $(p-1) \mid (n-1)$. Multiply together all primes passing the test. The correctness follows from Proposition 8.1; using the divisibility criterion, the cost is one modular test per prime.
 
-1. **Universal exponents beyond primes.** For fixed modulus $n$, the congruence $a^k \equiv a \pmod n$ holds for all $a$ exactly when the exponent $k$ synchronizes every cyclic component; for squarefree $n$ the least such $k > 1$ is governed by $\mathrm{lcm}\{p - 1 : p \mid n\}$. The identity-map viewpoint invites a systematic study of how far it survives when the modulus is composite and the ambient object is only a ring.
+**Algorithm B (Coprime gluing certificate).** Given that $m_1, \ldots, m_r$ are pairwise coprime and each divides $f(a)$ for all $a$, certify $m_1 \cdots m_r \mid f(a)$ by folding Lemma 2.3 across the factors: maintain a running product $M$, and at each step combine the accumulated divisibility by $M$ with divisibility by the next coprime factor $m_i$ to obtain divisibility by $M \cdot m_i$. This is exactly the mechanism used to pass from $\{2, 3, 5\}$ to $30$.
 
-2. **Squarefree = universal-power modulus.** Korselt's criterion (Theorem 6.2) marks the exact boundary between moduli that do and do not enjoy the universal-power property. The $p = 5$ result is the smallest nontrivial instance of the family whose composite members are the Carmichael numbers (beginning at $561$); charting this boundary is the immediate generalization.
+## 10. Numerical demonstrations
 
-3. **A probabilistic necklace interpretation.** For every prime $p$ and alphabet size $a$, the count $a^p - a$ is exactly $p$ times the number of aperiodic circular strings of length $p$; equivalently, a uniformly random non-constant string of prime length has a rotation-orbit of size exactly $p$ with probability one. This Burnside-style bridge connects elementary number theory to the theory of random symmetric structures.
+The claims of this paper are directly checkable. The defects $a^5 - a$ for small $a$ are all multiples of $30$; the fifth power of any integer reproduces its last decimal digit; and iterating the fifth-power map modulo $10$ leaves every residue fixed. For the general theorem, exhaustive verification over the residues of any prime $p$ confirms $x^p \equiv x \pmod p$. Concrete implementations of all of these appear in the accompanying computational material.
 
-## References
+## 11. Applications and discussion
 
-- P. de Fermat, correspondence (1640).
-- Standard treatments of finite fields, the Frobenius endomorphism, and Korselt's criterion in introductory algebraic number theory.
+The additive form of Fermat's Little Theorem underpins primality testing (the Fermat test and its refinements) and public-key cryptography, where exponentiation modulo a prime or a product of primes is the fundamental operation. The last-digit stability result, though modest, is a clean example of how divisibility by coprime moduli combines: $2 \mid \Delta$ and $5 \mid \Delta$ jointly give $10 \mid \Delta$. The universal-denominator viewpoint reframes many scattered "always divisible" curiosities as a single classification governed by the arithmetic condition $(p-1) \mid (n-1)$.
+
+## 12. Future directions
+
+Several natural questions extend this work. First, one may seek a full classification of the universal denominator $D(n)$ for all $n$, building on Proposition 8.1 and the coprime-gluing mechanism that fixed $D(5) = 30$. Second, the last-digit stability of iterated fifth powers suggests studying the eventual periodicity of last digits under general power maps. Third, the equivalence between residue-check proofs and inductive proofs — each inductive proof supplying an explicit witness polynomial $g$ with $f(a+1) - f(a) = m\,g(a)$ — deserves a general treatment as a bridge principle. These directions are elaborated in the accompanying future-directions material.
+
+## 13. Conclusion
+
+Starting from the humble observation that $a^5 - a$ is a multiple of $5$, we have given an elementary inductive proof, a structural factorization, a sharpening to divisibility by $30$ with a matching maximality statement, a corollary on decimal last digits, and a placement of the whole story inside Fermat's Little Theorem. The result that looked like an isolated curiosity turns out to be one visible instance of a universal law governed entirely by the primes $p$ for which $p - 1$ divides $n - 1$.

@@ -1,144 +1,130 @@
-"""
-Numerical demonstrations for the congruence  a^5 - a  ==  0  (mod 5),
-the case p = 5 of Fermat's Little Theorem, together with its
-field-theoretic, elementary, and combinatorial (necklace) proofs.
+"""Numerical demonstrations for the divisibility structure of a^5 - a.
 
-Every function is self-contained and type-hinted. Run directly:
+This self-contained script demonstrates the main results:
 
-    python demo.py
+  * 5  | a^5 - a          (divisibility by five)
+  * 30 | a^5 - a          (sharpened modulus, and 30 is maximal: D(5) = 30)
+  * a^5 = (a-1)a(a+1)(a^2+1)   (structural factorization)
+  * a^5 = a  (mod 10)     (last-digit stability, and its iterates)
+  * p | a^p - a           (Fermat's Little Theorem, additive form)
+  * D(n) = product of primes p with (p-1) | (n-1)   (universal denominator)
+
+Run with:  python demo.py
 """
 
 from __future__ import annotations
 
-from itertools import product
-from typing import Iterable, List, Tuple
+from math import gcd
+from functools import reduce
+from typing import List
 
 
-# ---------------------------------------------------------------------------
-# 1. Direct verification that 5 | a^5 - a
-# ---------------------------------------------------------------------------
-def five_divides_pow_five_sub_self(a: int) -> bool:
-    """Return True iff 5 divides a**5 - a."""
-    return (a ** 5 - a) % 5 == 0
+def defect(a: int, n: int = 5) -> int:
+    """Return a^n - a, the divisibility 'defect'."""
+    return a ** n - a
 
 
-def demo_direct(lo: int = -10, hi: int = 10) -> None:
-    """Check 5 | a^5 - a for a range of integers and print the quotient."""
-    print("== Direct check: 5 | a^5 - a ==")
-    for a in range(lo, hi + 1):
-        value = a ** 5 - a
-        assert five_divides_pow_five_sub_self(a)
-        print(f"  a={a:>3}:  a^5 - a = {value:>8}  = 5 * {value // 5}")
-    print()
+def divides(m: int, x: int) -> bool:
+    """Return True iff m divides x."""
+    return x % m == 0
 
 
-# ---------------------------------------------------------------------------
-# 2. Field-theoretic proof: fifth powering is the identity on Z/5Z
-# ---------------------------------------------------------------------------
-def frobenius_table(p: int) -> List[Tuple[int, int]]:
-    """Return the list of pairs (x, x^p mod p) for x in Z/pZ."""
-    return [(x, pow(x, p, p)) for x in range(p)]
+def check_five(lo: int = -20, hi: int = 20) -> bool:
+    """Verify 5 | a^5 - a for every integer a in [lo, hi]."""
+    return all(divides(5, defect(a)) for a in range(lo, hi + 1))
 
 
-def demo_frobenius(p: int = 5) -> None:
-    """Show that x -> x^p is the identity map on Z/pZ (p prime)."""
-    print(f"== Frobenius map x -> x^{p} on Z/{p}Z is the identity ==")
-    table = frobenius_table(p)
-    for x, xp in table:
-        print(f"  {x}^{p} mod {p} = {xp}   (identity: {x == xp})")
-    assert all(x == xp for x, xp in table)
-    print("  => fifth powering fixes every residue.\n")
+def check_thirty(lo: int = -20, hi: int = 20) -> bool:
+    """Verify 30 | a^5 - a for every integer a in [lo, hi]."""
+    return all(divides(30, defect(a)) for a in range(lo, hi + 1))
 
 
-# ---------------------------------------------------------------------------
-# 3. Elementary proof: factorization + residue witness
-# ---------------------------------------------------------------------------
-def residue_witness(a: int) -> Tuple[str, int]:
+def check_factorization(lo: int = -20, hi: int = 20) -> bool:
+    """Verify a^5 - a = (a-1) a (a+1) (a^2 + 1) for a in [lo, hi]."""
+    return all(
+        defect(a) == (a - 1) * a * (a + 1) * (a * a + 1)
+        for a in range(lo, hi + 1)
+    )
+
+
+def check_last_digit(lo: int = -20, hi: int = 20) -> bool:
+    """Verify a^5 ends in the same decimal digit as a, i.e. a^5 = a (mod 10)."""
+    return all((a ** 5) % 10 == a % 10 for a in range(lo, hi + 1))
+
+
+def check_iterated_last_digit(iterations: int = 4) -> bool:
+    """Verify that iterating x -> x^5 (mod 10) fixes every residue class."""
+    for r in range(10):
+        x = r
+        for _ in range(iterations):
+            x = (x ** 5) % 10
+        if x != r:
+            return False
+    return True
+
+
+def universal_denominator(n: int, prime_bound: int = 200) -> int:
+    """Compute D(n) = product of primes p (<= prime_bound) with (p-1) | (n-1).
+
+    D(n) is the largest integer dividing a^n - a for every integer a.
     """
-    Using  a^5 - a = (a-1) * a * (a+1) * (a^2 + 1),
-    return the name of a factor divisible by 5 and its value.
-    """
-    r = a % 5
-    if r == 0:
-        return ("a", a)
-    if r == 1:
-        return ("a - 1", a - 1)
-    if r == 4:
-        return ("a + 1", a + 1)
-    # r in {2, 3}:  a^2 + 1 == 0 (mod 5)
-    return ("a^2 + 1", a * a + 1)
+    def is_prime(p: int) -> bool:
+        if p < 2:
+            return False
+        return all(p % d for d in range(2, int(p ** 0.5) + 1))
+
+    primes = [p for p in range(2, prime_bound + 1) if is_prime(p)]
+    factors = [p for p in primes if (n - 1) % (p - 1) == 0]
+    return reduce(lambda x, y: x * y, factors, 1)
 
 
-def demo_factorization(lo: int = 0, hi: int = 12) -> None:
-    """Verify the factorization and exhibit the divisible-by-5 factor."""
-    print("== Elementary proof via factorization ==")
-    for a in range(lo, hi + 1):
-        lhs = a ** 5 - a
-        rhs = (a - 1) * a * (a + 1) * (a * a + 1)
-        assert lhs == rhs
-        name, val = residue_witness(a)
-        assert val % 5 == 0
-        print(f"  a={a:>2}:  factor '{name}' = {val:>4} is divisible by 5")
-    print()
+def empirical_universal_denominator(n: int, lo: int = 0, hi: int = 50) -> int:
+    """Estimate D(n) as gcd of a^n - a over a range (matches the true value)."""
+    values = [defect(a, n) for a in range(lo, hi + 1) if defect(a, n) != 0]
+    return reduce(gcd, values)
 
 
-# ---------------------------------------------------------------------------
-# 4. Combinatorial / probabilistic proof: aperiodic necklaces
-# ---------------------------------------------------------------------------
-def rotations(s: Tuple[int, ...]) -> Iterable[Tuple[int, ...]]:
-    """Yield all cyclic rotations of the tuple s."""
-    n = len(s)
-    for k in range(n):
-        yield s[k:] + s[:k]
+def check_fermat_little(primes: List[int], lo: int = -10, hi: int = 10) -> bool:
+    """Verify p | a^p - a for each prime in `primes` over a in [lo, hi]."""
+    return all(
+        divides(p, a ** p - a)
+        for p in primes
+        for a in range(lo, hi + 1)
+    )
 
 
-def aperiodic_necklace_count_bruteforce(alphabet: int, length: int) -> int:
-    """Count aperiodic necklaces of given length over an alphabet by orbits."""
-    seen: set = set()
-    count = 0
-    for s in product(range(alphabet), repeat=length):
-        if s in seen:
-            continue
-        orbit = set(rotations(s))
-        # aperiodic <=> orbit has full size == length (prime length, non-constant)
-        if len(orbit) == length:
-            count += 1
-        seen |= orbit
-    return count
+def main() -> None:
+    print("=" * 60)
+    print("Divisibility structure of a^5 - a")
+    print("=" * 60)
 
+    print("\n[1] Table of defects a^5 - a for a = 0..8:")
+    row = [defect(a) for a in range(9)]
+    print("   ", row)
+    print("    all divisible by 30:", all(divides(30, v) for v in row))
 
-def demo_necklaces(p: int = 5, max_alphabet: int = 4) -> None:
-    """
-    Show  a^p - a = p * (number of aperiodic necklaces)  for prime p.
-    """
-    print(f"== Necklace proof: a^{p} - a = {p} * (aperiodic necklaces) ==")
-    for a in range(1, max_alphabet + 1):
-        closed = (a ** p - a) // p
-        brute = aperiodic_necklace_count_bruteforce(a, p)
-        assert (a ** p - a) % p == 0
-        assert closed == brute
-        print(f"  alphabet a={a}:  (a^{p}-a)/{p} = {closed}  "
-              f"= brute-force count {brute}")
-    print()
+    print("\n[2] 5 | a^5 - a   on [-20, 20]:", check_five())
+    print("[3] 30 | a^5 - a  on [-20, 20]:", check_thirty())
+    print("[4] factorization a^5-a=(a-1)a(a+1)(a^2+1):",
+          check_factorization())
 
+    print("\n[5] last-digit stability a^5 = a (mod 10):", check_last_digit())
+    print("    iterated fifth power fixes last digit:",
+          check_iterated_last_digit())
 
-# ---------------------------------------------------------------------------
-# 5. General Fermat's Little Theorem for several primes
-# ---------------------------------------------------------------------------
-def demo_general_flt(primes: Tuple[int, ...] = (2, 3, 5, 7, 11)) -> None:
-    """Verify p | a^p - a for several primes and integers."""
-    print("== General Fermat's Little Theorem: p | a^p - a ==")
-    for p in primes:
-        ok = all((a ** p - a) % p == 0 for a in range(-6, 7))
-        print(f"  p={p:>2}:  holds for all tested a  -> {ok}")
-        assert ok
-    print()
+    print("\n[6] Fermat's Little Theorem p | a^p - a for p in {2,3,5,7,11,13}:")
+    print("   ", check_fermat_little([2, 3, 5, 7, 11, 13]))
+
+    print("\n[7] Universal denominators D(n):")
+    for n in range(2, 12):
+        d_theory = universal_denominator(n)
+        d_empirical = empirical_universal_denominator(n)
+        agree = "OK" if d_theory == d_empirical else "MISMATCH"
+        print(f"    D({n:2d}) = {d_theory:6d}  (empirical {d_empirical:6d})  {agree}")
+
+    print("\n    Notable: D(5) = 30, D(3) = 6, D(7) = 42 (no factor 5).")
+    print("=" * 60)
 
 
 if __name__ == "__main__":
-    demo_direct()
-    demo_frobenius()
-    demo_factorization()
-    demo_necklaces()
-    demo_general_flt()
-    print("All demonstrations passed.")
+    main()
