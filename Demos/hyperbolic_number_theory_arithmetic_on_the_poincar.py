@@ -1,336 +1,234 @@
-#!/usr/bin/env python3
 """
-Hyperbolic Number Theory: Interactive Demonstrations
+Numerical demonstrations for:
 
-This script demonstrates the key mathematical structures formalized
-in the Lean 4 proofs:
-1. Einstein addition and the rapidity isomorphism
-2. Chebyshev polynomial composition (trace-distance duality)
-3. Blaschke factor disk preservation
-4. Orbit counting in the Poincaré disk
+    Integer Structures on the Hyperbolic Disk
+    A Rigorous Foundation for Arithmetic on Curved Space
+
+Each demo corresponds to one of the proved results:
+
+  1. The Cayley transform maps the upper half-plane bijectively onto the
+     open unit disk, with an explicit two-sided inverse.
+  2. The matrices T = [[1,2],[0,1]] and S = [[1,0],[2,1]] generate (and
+     belong to) the principal congruence subgroup Gamma(2) of SL(2,Z).
+  3. The Gamma(2)-orbit relation on Z^2 is an equivalence relation.
+  4. Every Euclidean ball contains only finitely many lattice points.
+  5. The hyperbolic midpoint on the imaginary axis is the geometric mean:
+     equidistant, commutative, idempotent, but NOT associative.
+  6. The cross-ratio is invariant under Moebius transformations.
+
+The file is self-contained: run `python demo.py`.
 """
 
-import math
+from __future__ import annotations
+
 import cmath
-from typing import List, Tuple
+import math
+from itertools import product
+from typing import Iterable
 
 
-def einstein_add(a: float, b: float) -> float:
-    """Einstein addition: (a + b) / (1 + ab)."""
-    return (a + b) / (1 + a * b)
+# ---------------------------------------------------------------------------
+# 1. The Cayley transform  C(z) = (z - i)/(z + i)  and its inverse
+# ---------------------------------------------------------------------------
+
+def cayley(z: complex) -> complex:
+    """Map a point of the upper half-plane into the open unit disk."""
+    return (z - 1j) / (z + 1j)
 
 
-def rapidity(x: float) -> float:
-    """Rapidity (artanh): (1/2) log((1+x)/(1-x))."""
-    return 0.5 * math.log((1 + x) / (1 - x))
+def inv_cayley(w: complex) -> complex:
+    """Map a point of the unit disk back to the upper half-plane."""
+    return 1j * (1 + w) / (1 - w)
 
 
-def chebyshev_T(n: int, x: float) -> float:
-    """Chebyshev polynomial T_n(x) via recurrence."""
-    if n == 0: return 1.0
-    if n == 1: return x
-    t0, t1 = 1.0, x
-    for _ in range(2, n + 1):
-        t0, t1 = t1, 2 * x * t1 - t0
-    return t1
-
-
-def hyperbolic_distance(z1: complex, z2: complex) -> float:
-    """Poincaré disk hyperbolic distance."""
-    ratio = abs(z1 - z2) / abs(1 - z1.conjugate() * z2)
-    if ratio >= 1: return float('inf')
-    return math.atanh(ratio)
-
-
-def main():
+def demo_cayley() -> None:
     print("=" * 70)
-    print("  HYPERBOLIC NUMBER THEORY: Arithmetic on the Poincaré Disk")
+    print("1. Cayley transform: upper half-plane  <->  unit disk")
     print("=" * 70)
+    samples = [1j, 2j, 1 + 1j, -3 + 0.5j, 10 + 4j]
+    for z in samples:
+        w = cayley(z)
+        back = inv_cayley(w)
+        print(f"  z = {z!s:>12}  ->  C(z) = {w:.4f}   |C(z)| = {abs(w):.4f}")
+        assert abs(w) < 1 - 1e-12, "image must lie strictly inside the disk"
+        assert abs(back - z) < 1e-9, "inverse must recover z"
+    print("  All images satisfy |C(z)| < 1 and C^{-1}(C(z)) = z.  OK\n")
 
-    # ─── Demo 1: Einstein Addition Group ───────────────────────────────
-    print("\n── Demo 1: Einstein Addition is a Commutative Group on (-1,1) ──\n")
-    
-    test_values = [0.3, 0.5, 0.7, -0.4, 0.9]
-    
-    # Closure
-    print("Closure: a,b ∈ (-1,1) ⟹ a⊕b ∈ (-1,1)")
-    for a in [0.5, 0.9, -0.8]:
-        for b in [0.3, 0.7, -0.6]:
-            result = einstein_add(a, b)
-            print(f"  {a:+.1f} ⊕ {b:+.1f} = {result:+.6f}  (|result| = {abs(result):.6f} < 1 ✓)")
-    
-    # Associativity
-    print("\nAssociativity: (a⊕b)⊕c = a⊕(b⊕c)")
-    a, b, c = 0.3, 0.5, 0.7
-    left = einstein_add(einstein_add(a, b), c)
-    right = einstein_add(a, einstein_add(b, c))
-    print(f"  ({a}⊕{b})⊕{c} = {left:.10f}")
-    print(f"  {a}⊕({b}⊕{c}) = {right:.10f}")
-    print(f"  Difference: {abs(left - right):.2e} ✓")
-    
-    # Identity and inverse
-    print(f"\nIdentity: {a}⊕0 = {einstein_add(a, 0)}")
-    print(f"Inverse:  {a}⊕({-a}) = {einstein_add(a, -a):.2e} ≈ 0")
 
-    # ─── Demo 2: The Rapidity Isomorphism ──────────────────────────────
-    print("\n── Demo 2: Rapidity is a Homomorphism ──\n")
-    print("  rapidity(a ⊕ b) = rapidity(a) + rapidity(b)")
-    print()
-    
-    pairs = [(0.3, 0.5), (0.7, 0.2), (-0.4, 0.6), (0.9, -0.8)]
-    for a, b in pairs:
-        sum_val = einstein_add(a, b)
-        rap_sum = rapidity(sum_val)
-        rap_add = rapidity(a) + rapidity(b)
-        print(f"  a={a:+.1f}, b={b:+.1f}: "
-              f"rapidity(a⊕b) = {rap_sum:+.6f}, "
-              f"rap(a)+rap(b) = {rap_add:+.6f}, "
-              f"Δ = {abs(rap_sum - rap_add):.2e}")
+# ---------------------------------------------------------------------------
+# 2. Generators of Gamma(2)
+# ---------------------------------------------------------------------------
 
-    # ─── Demo 3: Chebyshev Cosine Duality ──────────────────────────────
-    print("\n── Demo 3: Chebyshev-Cosine Duality T_n(cos θ) = cos(nθ) ──\n")
-    
-    theta = 0.7
-    for n in range(0, 8):
-        lhs = chebyshev_T(n, math.cos(theta))
-        rhs = math.cos(n * theta)
-        print(f"  T_{n}(cos {theta}) = {lhs:+.8f}, cos({n}·{theta}) = {rhs:+.8f}, "
-              f"Δ = {abs(lhs - rhs):.2e}")
+Mat = tuple[int, int, int, int]  # (a, b, c, d) for [[a, b], [c, d]]
 
-    # ─── Demo 4: Chebyshev Composition T_m∘T_n = T_{mn} ───────────────
-    print("\n── Demo 4: Chebyshev Composition T_m(T_n(x)) = T_{mn}(x) ──\n")
-    
-    x = 2.5  # Note: works for ALL x, not just |x| ≤ 1
-    print(f"  Testing at x = {x} (outside [-1,1]!):\n")
-    for m, n in [(2, 3), (3, 4), (4, 5), (5, 7), (3, 11)]:
-        lhs = chebyshev_T(m, chebyshev_T(n, x))
-        rhs = chebyshev_T(m * n, x)
-        print(f"  T_{m}(T_{n}({x})) = {lhs:.4f}")
-        print(f"  T_{m*n}({x})      = {rhs:.4f}")
-        print(f"  Match: {abs(lhs - rhs) < 1e-4} (Δ = {abs(lhs-rhs):.2e})\n")
+T: Mat = (1, 2, 0, 1)
+S: Mat = (1, 0, 2, 1)
 
-    # ─── Demo 5: Blaschke Factor Identity ──────────────────────────────
-    print("── Demo 5: Blaschke Factor Disk Preservation ──\n")
-    
-    a = complex(1.2, 0.3)
-    b = complex(0.4, 0.1)
-    det = abs(a)**2 - abs(b)**2
-    print(f"  Coefficients: a = {a}, b = {b}")
-    print(f"  |a|² - |b|² = {det:.6f}")
-    print()
-    
-    test_points = [complex(0.3, 0.2), complex(-0.5, 0.1), complex(0, 0.7)]
-    for z in test_points:
-        denom = b.conjugate() * z + a.conjugate()
-        phi_z = (a * z + b) / denom
-        
-        lhs = abs(denom)**2 * (1 - abs(phi_z)**2)
-        rhs = det * (1 - abs(z)**2)
-        
-        print(f"  z = {z}:")
-        print(f"    φ(z) = {phi_z.real:+.6f}{phi_z.imag:+.6f}i")
-        print(f"    |z|  = {abs(z):.6f}, |φ(z)| = {abs(phi_z):.6f}")
-        print(f"    LHS  = {lhs:.10f}")
-        print(f"    RHS  = {rhs:.10f}")
-        print(f"    Match: {abs(lhs - rhs) < 1e-10} ✓\n")
 
-    # ─── Demo 6: Orbit Counting ────────────────────────────────────────
-    print("── Demo 6: Hyperbolic Distance and Trace-Distance ──\n")
-    
-    print("  Trace-distance relation: cosh(d) = |tr(γ)|/2\n")
-    for trace in [2, 3, 4, 5, 7, 10, 20]:
-        t = abs(trace) / 2.0
-        if t >= 1:
-            d = math.acosh(t)
-            print(f"  tr = {trace:3d}: d = {d:.6f}, cosh(d) = {math.cosh(d):.6f} = {t}")
-    
-    # Chebyshev recurrence for iterated trace
-    print("\n  Iterated traces via Chebyshev: tr(γⁿ) = 2·T_n(tr(γ)/2)")
-    trace = 3
-    print(f"\n  Base trace = {trace}:")
-    for n in range(1, 8):
-        tr_n = 2 * chebyshev_T(n, trace / 2)
-        print(f"    tr(γ^{n}) = {tr_n:.0f}")
+def det(m: Mat) -> int:
+    a, b, c, d = m
+    return a * d - b * c
 
-    print("\n" + "=" * 70)
-    print("  All demonstrations complete. See RESEARCH_PAPER.md for details.")
+
+def in_gamma2(m: Mat) -> bool:
+    """Test membership in Gamma(2): det 1 and congruent to I mod 2."""
+    a, b, c, d = m
+    return det(m) == 1 and (a % 2, b % 2, c % 2, d % 2) == (1, 0, 0, 1)
+
+
+def mat_mul(p: Mat, q: Mat) -> Mat:
+    a, b, c, d = p
+    e, f, g, h = q
+    return (a * e + b * g, a * f + b * h, c * e + d * g, c * f + d * h)
+
+
+def mat_inv(m: Mat) -> Mat:
+    """Inverse of a determinant-1 integer matrix."""
+    a, b, c, d = m
+    return (d, -b, -c, a)
+
+
+def demo_generators() -> None:
     print("=" * 70)
+    print("2. Generators T, S of the congruence subgroup Gamma(2)")
+    print("=" * 70)
+    for name, m in (("T", T), ("S", S)):
+        print(f"  {name} = {m}   det = {det(m)}   in Gamma(2)? {in_gamma2(m)}")
+        assert in_gamma2(m)
+    print("  Both generators lie in Gamma(2).  OK\n")
+
+
+# ---------------------------------------------------------------------------
+# 3. The Gamma(2)-orbit relation on Z^2 is an equivalence relation
+# ---------------------------------------------------------------------------
+
+Vec = tuple[int, int]
+
+
+def act(m: Mat, v: Vec) -> Vec:
+    a, b, c, d = m
+    x, y = v
+    return (a * x + b * y, c * x + d * y)
+
+
+def demo_orbit_relation() -> None:
+    print("=" * 70)
+    print("3. Gamma(2)-orbit relation on Z^2 (equivalence relation)")
+    print("=" * 70)
+    v: Vec = (1, 0)
+    # reflexivity via identity
+    I: Mat = (1, 0, 0, 1)
+    assert act(I, v) == v
+    # symmetry: if g.v = w then g^{-1}.w = v
+    g = mat_mul(T, S)
+    assert in_gamma2(g)
+    w = act(g, v)
+    assert act(mat_inv(g), w) == v
+    # transitivity: g2.(g1.v) = (g2 g1).v
+    g1, g2 = T, S
+    assert act(g2, act(g1, v)) == act(mat_mul(g2, g1), v)
+    print(f"  v = {v}")
+    print(f"  reflexive:  I.v = {act(I, v)}")
+    print(f"  symmetric:  g.v = {w},  g^-1.(g.v) = {act(mat_inv(g), w)}")
+    print(f"  transitive: (S T).v = {act(mat_mul(S, T), v)}"
+          f" = S.(T.v) = {act(S, act(T, v))}")
+    print("  Reflexive, symmetric, transitive.  OK\n")
+
+
+# ---------------------------------------------------------------------------
+# 4. Lattice discreteness: finitely many lattice points in a ball
+# ---------------------------------------------------------------------------
+
+def lattice_points_in_ball(center: tuple[float, float],
+                           radius: float) -> list[Vec]:
+    c1, c2 = center
+    r = abs(radius)
+    xs = range(math.ceil(c1 - r), math.floor(c1 + r) + 1)
+    ys = range(math.ceil(c2 - r), math.floor(c2 + r) + 1)
+    return [(m, n) for m, n in product(xs, ys)
+            if (m - c1) ** 2 + (n - c2) ** 2 < radius ** 2]
+
+
+def demo_discreteness() -> None:
+    print("=" * 70)
+    print("4. Discreteness: finitely many lattice points in any ball")
+    print("=" * 70)
+    for center, radius in (((0.0, 0.0), 1.5), ((0.3, -0.7), 3.0), ((0.0, 0.0), 5.0)):
+        pts = lattice_points_in_ball(center, radius)
+        print(f"  center {center}, radius {radius}: {len(pts)} lattice points")
+    print("  Every count is finite, as guaranteed.  OK\n")
+
+
+# ---------------------------------------------------------------------------
+# 5. The hyperbolic midpoint on the imaginary axis (geometric mean)
+# ---------------------------------------------------------------------------
+
+def h_dist(a: float, b: float) -> float:
+    """Hyperbolic distance between i*a and i*b."""
+    return abs(math.log(a / b))
+
+
+def h_mid(s: float, t: float) -> float:
+    """Hyperbolic midpoint on the imaginary axis: the geometric mean."""
+    return math.sqrt(s * t)
+
+
+def demo_midpoint() -> None:
+    print("=" * 70)
+    print("5. Hyperbolic midpoint = geometric mean")
+    print("=" * 70)
+    s, t = 1.0, 16.0
+    m = h_mid(s, t)
+    print(f"  s = {s}, t = {t}, midpoint sqrt(s t) = {m}")
+    print(f"  d(s, m) = {h_dist(s, m):.6f},  d(m, t) = {h_dist(m, t):.6f}"
+          "   (equidistant)")
+    assert abs(h_dist(s, m) - h_dist(m, t)) < 1e-12
+    print(f"  commutative: m(s,t) = {h_mid(s, t)}, m(t,s) = {h_mid(t, s)}")
+    print(f"  idempotent:  m(7,7) = {h_mid(7.0, 7.0)}")
+    # non-associativity witness s=t=1, u=16
+    left = h_mid(h_mid(1.0, 1.0), 16.0)
+    right = h_mid(1.0, h_mid(1.0, 16.0))
+    print(f"  NOT associative: m(m(1,1),16) = {left}, m(1,m(1,16)) = {right}")
+    assert left != right
+    print("  Equidistant, commutative, idempotent, non-associative.  OK\n")
+
+
+# ---------------------------------------------------------------------------
+# 6. Cross-ratio invariance under Moebius transformations
+# ---------------------------------------------------------------------------
+
+def cross_ratio(z1: complex, z2: complex, z3: complex, z4: complex) -> complex:
+    return ((z1 - z3) * (z2 - z4)) / ((z1 - z4) * (z2 - z3))
+
+
+def mobius(a: complex, b: complex, c: complex, d: complex, z: complex) -> complex:
+    return (a * z + b) / (c * z + d)
+
+
+def demo_cross_ratio() -> None:
+    print("=" * 70)
+    print("6. Cross-ratio invariance under Moebius transformations")
+    print("=" * 70)
+    pts = (0 + 0j, 1 + 0j, 2 + 1j, -1 + 3j)
+    a, b, c, d = (2 + 1j, -1 + 0j, 1 + 0j, 3 - 1j)  # det = ad - bc != 0
+    assert abs(a * d - b * c) > 1e-9
+    orig = cross_ratio(*pts)
+    moved = cross_ratio(*(mobius(a, b, c, d, z) for z in pts))
+    print(f"  cross-ratio (original) = {orig:.6f}")
+    print(f"  cross-ratio (Moebius)  = {moved:.6f}")
+    assert abs(orig - moved) < 1e-9
+    print("  Cross-ratio is preserved.  OK\n")
+
+
+def main() -> None:
+    demo_cayley()
+    demo_generators()
+    demo_orbit_relation()
+    demo_discreteness()
+    demo_midpoint()
+    demo_cross_ratio()
+    print("All demonstrations passed.")
 
 
 if __name__ == "__main__":
     main()
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Poincaré Disk Tessellation and Einstein Addition
-
-Generates plots showing:
-1. The Poincaré disk with PSL₂(ℤ) orbit points
-2. Einstein addition vs ordinary addition
-3. Chebyshev polynomial composition
-"""
-
-import math
-import cmath
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import numpy as np
-
-
-def einstein_add(a: float, b: float) -> float:
-    return (a + b) / (1 + a * b)
-
-
-def rapidity(x: float) -> float:
-    return 0.5 * math.log((1 + x) / (1 - x))
-
-
-def chebyshev_T(n: int, x: float) -> float:
-    if n == 0: return 1.0
-    if n == 1: return x
-    t0, t1 = 1.0, x
-    for _ in range(2, n + 1):
-        t0, t1 = t1, 2 * x * t1 - t0
-    return t1
-
-
-def cayley_to_disk(z: complex) -> complex:
-    return (z - 1j) / (z + 1j)
-
-
-def sl2z_action(a, b, c, d, z):
-    return (a * z + b) / (c * z + d)
-
-
-def get_orbit_points(max_depth=6):
-    """Generate PSL₂(ℤ) orbit of i, mapped to disk."""
-    origin = 1j
-    visited = set()
-    points = []
-    queue = [(origin, 0)]
-    
-    while queue:
-        z, depth = queue.pop(0)
-        w = cayley_to_disk(z)
-        key = (round(w.real, 6), round(w.imag, 6))
-        
-        if key in visited or abs(w) >= 0.999:
-            continue
-        visited.add(key)
-        points.append((w, depth))
-        
-        if depth < max_depth:
-            # S: z -> -1/z
-            if abs(z) > 1e-10:
-                queue.append((-1/z, depth + 1))
-            # T: z -> z + 1
-            queue.append((z + 1, depth + 1))
-            # T^{-1}: z -> z - 1
-            queue.append((z - 1, depth + 1))
-    
-    return points
-
-
-# ─── Figure 1: Poincaré Disk with Orbit Points ───────────────
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
-ax = axes[0]
-circle = plt.Circle((0, 0), 1, fill=False, color='black', linewidth=2)
-ax.add_patch(circle)
-
-orbit = get_orbit_points(max_depth=7)
-colors = plt.cm.viridis(np.linspace(0, 1, 8))
-
-for w, depth in orbit:
-    c = colors[min(depth, 7)]
-    size = max(20 - depth * 2, 3)
-    ax.plot(w.real, w.imag, 'o', color=c, markersize=size, alpha=0.7)
-
-ax.set_xlim(-1.15, 1.15)
-ax.set_ylim(-1.15, 1.15)
-ax.set_aspect('equal')
-ax.set_title('PSL₂(ℤ) Orbit on Poincaré Disk', fontsize=14)
-ax.set_xlabel('Re(z)')
-ax.set_ylabel('Im(z)')
-ax.grid(True, alpha=0.3)
-
-# ─── Figure 2: Einstein Addition vs Ordinary Addition ─────────
-ax = axes[1]
-
-b_vals = np.linspace(-0.95, 0.95, 200)
-a = 0.5
-einstein_results = [einstein_add(a, b) for b in b_vals]
-ordinary_results = [a + b for b in b_vals]
-
-ax.plot(b_vals, einstein_results, 'b-', linewidth=2, label=f'Einstein: {a} ⊕ b')
-ax.plot(b_vals, ordinary_results, 'r--', linewidth=2, label=f'Ordinary: {a} + b')
-ax.axhline(y=1, color='gray', linestyle=':', alpha=0.5, label='Speed of light')
-ax.axhline(y=-1, color='gray', linestyle=':', alpha=0.5)
-ax.fill_between(b_vals, -1, 1, alpha=0.05, color='blue')
-
-ax.set_xlim(-1, 1)
-ax.set_ylim(-2, 2)
-ax.set_xlabel('b', fontsize=12)
-ax.set_ylabel('Result', fontsize=12)
-ax.set_title('Einstein vs Ordinary Addition', fontsize=14)
-ax.legend(fontsize=10)
-ax.grid(True, alpha=0.3)
-
-# ─── Figure 3: Chebyshev Polynomials ──────────────────────────
-ax = axes[2]
-
-x_vals = np.linspace(-1, 1, 500)
-for n in range(1, 7):
-    y_vals = [chebyshev_T(n, x) for x in x_vals]
-    ax.plot(x_vals, y_vals, linewidth=1.5, label=f'T_{n}(x)')
-
-ax.set_xlim(-1, 1)
-ax.set_ylim(-1.2, 1.2)
-ax.set_xlabel('x', fontsize=12)
-ax.set_ylabel('T_n(x)', fontsize=12)
-ax.set_title('Chebyshev Polynomials T_n(x)', fontsize=14)
-ax.legend(fontsize=9, loc='lower left')
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('hyperbolic_arithmetic.png', dpi=150, bbox_inches='tight')
-plt.close()
-
-print("Saved: hyperbolic_arithmetic.png")
-
-# ─── Figure 4: Chebyshev Composition Verification ─────────────
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-ax = axes[0]
-x_vals = np.linspace(-1.5, 1.5, 500)
-m, n = 3, 4
-lhs = [chebyshev_T(m, chebyshev_T(n, x)) for x in x_vals]
-rhs = [chebyshev_T(m * n, x) for x in x_vals]
-
-ax.plot(x_vals, lhs, 'b-', linewidth=2, label=f'T_{m}(T_{n}(x))')
-ax.plot(x_vals, rhs, 'r--', linewidth=2, label=f'T_{m*n}(x)')
-ax.set_xlabel('x', fontsize=12)
-ax.set_ylabel('Value', fontsize=12)
-ax.set_title(f'Chebyshev Composition: T_{m}∘T_{n} = T_{m*n}', fontsize=14)
-ax.legend(fontsize=11)
-ax.grid(True, alpha=0.3)
-
-ax = axes[1]
-a_vals = np.linspace(-0.99, 0.99, 200)
-rap_vals = [rapidity(a) for a in a_vals]
-ax.plot(a_vals, rap_vals, 'b-', linewidth=2)
-ax.plot(a_vals, a_vals, 'r--', linewidth=1, alpha=0.5, label='y = x (linear)')
-ax.set_xlabel('x ∈ (-1, 1)', fontsize=12)
-ax.set_ylabel('rapidity(x)', fontsize=12)
-ax.set_title('Rapidity: The Bridge to Flat Arithmetic', fontsize=14)
-ax.legend(fontsize=11)
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('chebyshev_rapidity.png', dpi=150, bbox_inches='tight')
-plt.close()
-
-print("Saved: chebyshev_rapidity.png")

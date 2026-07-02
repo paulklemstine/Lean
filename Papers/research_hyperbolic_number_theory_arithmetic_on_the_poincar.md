@@ -1,203 +1,225 @@
-# Hyperbolic Number Theory: Arithmetic on the Poincaré Disk
+# Integer Structures on the Hyperbolic Disk: A Rigorous Foundation for Arithmetic on Curved Space
 
 ## Abstract
 
-We develop a rigorous algebraic and geometric framework for arithmetic on the Poincaré disk, establishing five main results with machine-verified proofs. First, we prove the **Blaschke disk-preservation identity**: for a Möbius transformation $\varphi(z) = (az+b)/(\bar{b}z+\bar{a})$, the identity $|\bar{b}z+\bar{a}|^2(1-|\varphi(z)|^2) = (|a|^2-|b|^2)(1-|z|^2)$ holds, giving a clean proof that disk automorphisms preserve the hyperbolic metric. Second, we prove that **Einstein addition** (relativistic velocity addition) defines a commutative group on $(-1,1)$, including the non-trivial closure and associativity properties. Third, we establish the **rapidity homomorphism theorem**: $\operatorname{artanh}(a \oplus b) = \operatorname{artanh}(a) + \operatorname{artanh}(b)$, showing that hyperbolic arithmetic is isomorphic to ordinary addition. Fourth, we prove the **Chebyshev-cosine duality** $T_n(\cos\theta) = \cos(n\theta)$ and the **Chebyshev composition formula** $T_m(T_n(x)) = T_{mn}(x)$ for all real $x$, the latter requiring polynomial extensionality arguments. Fifth, we prove **orbit discreteness** for integer lattices.
+We develop a set of exact foundational results linking the two standard models of the hyperbolic plane — the upper half-plane and the Poincaré disk — with the arithmetic of integer lattices and the symmetries of the modular group. We prove that the Cayley transform $C(z) = (z-i)/(z+i)$ maps the upper half-plane bijectively onto the open unit disk, exhibiting an explicit two-sided inverse. We identify two explicit generators of the principal congruence subgroup $\Gamma(2) \subseteq \mathrm{SL}(2,\mathbb{Z})$ and show that the $\Gamma(2)$-orbit relation on the integer lattice $\mathbb{Z}^2$ is an equivalence relation, partitioning the lattice into "hyperbolic integer" classes. We establish discreteness of the lattice by proving that every Euclidean ball contains only finitely many lattice points. On the imaginary axis we analyze the hyperbolic midpoint, proving it is the geometric mean, that it is equidistant from its endpoints, commutative and idempotent, but — crucially — **not** associative, an exact fingerprint of curvature. Finally, we prove the projective invariance of the cross-ratio under all Möbius transformations. Together these results form a rigorous first floor for a program of "number theory on curved space," in which primes are envisioned as vertices of a hyperbolic tessellation and analytic questions acquire a geometric character.
 
-**Keywords**: Poincaré disk, Einstein addition, Chebyshev polynomials, Möbius transformation, hyperbolic geometry, Selberg trace formula
+**Keywords:** hyperbolic geometry, Poincaré disk, Cayley transform, modular group, congruence subgroup, cross-ratio, geometric mean, lattice discreteness, Möbius transformation.
+
+---
 
 ## 1. Introduction
 
-The integers $\mathbb{Z}$ are the fundamental objects of number theory, living on the flat real line with addition as their group operation. A natural question arises: what happens to arithmetic on a curved space?
+The integers $\mathbb{Z}$ are usually pictured on a flat, straight line. Yet many of the richest structures in modern mathematics — from automorphic forms to the geometry of numbers — arise when arithmetic is transported onto a *curved* stage. The hyperbolic plane is the archetype of such a stage: a space of constant negative curvature whose isometry group is intimately bound up with the modular group $\mathrm{SL}(2,\mathbb{Z})$, the master symmetry group of classical number theory.
 
-The Poincaré disk $\mathbb{D} = \{z \in \mathbb{C} : |z| < 1\}$ is the standard model of the hyperbolic plane. Its isometries are Möbius transformations of the form $\varphi(z) = e^{i\theta}(z-a)/(1-\bar{a}z)$, and the group $\operatorname{PSL}_2(\mathbb{Z})$ acts on $\mathbb{D}$ via the Cayley transform from the upper half-plane. The orbit of any point under this action defines a discrete subset of $\mathbb{D}$ — the "hyperbolic integers."
+This paper assembles a rigorous foundation for doing arithmetic in this curved setting. We work with the two standard conformal models of the hyperbolic plane:
 
-In this paper, we establish the algebraic and geometric foundations needed to study number theory in this curved setting. Our results are:
+- the **upper half-plane** $\mathbb{H} = \{ z \in \mathbb{C} : \operatorname{Im} z > 0 \}$, and
+- the **Poincaré disk** $\mathbb{D} = \{ w \in \mathbb{C} : |w| < 1 \}$.
 
-1. **Blaschke identity** (Theorem 3.1): The fundamental metric identity for disk automorphisms.
-2. **Einstein group** (Theorems 4.1–4.5): $(-1,1)$ with Einstein addition is a commutative group.
-3. **Rapidity isomorphism** (Theorem 5.1): The artanh map is a group isomorphism $(-1,1) \xrightarrow{\sim} \mathbb{R}$.
-4. **Chebyshev duality and composition** (Theorems 6.1–6.2): $T_n(\cos\theta) = \cos(n\theta)$ and $T_m \circ T_n = T_{mn}$.
-5. **Orbit discreteness** (Theorems 7.1–7.2): Integer lattices in $\mathbb{R}$ are discrete.
+Our contributions are six exact results, each proved from first principles, which we organize into six parts:
 
-All proofs have been formally verified in Lean 4 with the Mathlib library.
+1. **The Cayley transform** is an explicit conformal bijection $\mathbb{H} \to \mathbb{D}$ with an explicit inverse.
+2. **Two explicit generators** of the principal congruence subgroup $\Gamma(2)$ are exhibited and verified.
+3. **The $\Gamma(2)$-orbit relation** on $\mathbb{Z}^2$ is an equivalence relation.
+4. **Lattice discreteness**: every Euclidean ball meets the lattice in a finite set.
+5. **The hyperbolic midpoint** on the imaginary axis is the geometric mean, and is equidistant, commutative, idempotent, but not associative.
+6. **Cross-ratio invariance** under all Möbius transformations.
 
-## 2. Preliminaries
+The larger vision motivating this work is a "hyperbolic number theory," in which the vertices of a modular tessellation of the hyperbolic plane play the role of primes, and in which the distribution of these geometric primes could be governed by the geometry of the tiling. The present results are the load-bearing foundations for that program; they are complete and exact, and they stand on their own.
 
-### 2.1 The Poincaré Disk
+---
 
-The Poincaré disk is the open unit disk $\mathbb{D} = \{z \in \mathbb{C} : |z| < 1\}$ equipped with the Riemannian metric $ds^2 = 4|dz|^2/(1-|z|^2)^2$. The hyperbolic distance is:
-$$d(z_1, z_2) = \operatorname{artanh}\left(\frac{|z_1-z_2|}{|1-\bar{z}_1 z_2|}\right)$$
+## 2. The Cayley Transform
 
-### 2.2 Möbius Transformations
+### 2.1 Definitions
 
-A Möbius transformation of the disk has the form $\varphi(z) = (az+b)/(\bar{b}z+\bar{a})$ where $|a|^2 - |b|^2 = 1$. These form the group $\operatorname{SU}(1,1)/\{\pm I\}$, isomorphic to $\operatorname{PSL}_2(\mathbb{R})$.
+**Definition 2.1 (Cayley transform).** The *Cayley transform* is the map
+$$C(z) = \frac{z - i}{z + i}.$$
 
-### 2.3 Notation
+**Definition 2.2 (inverse Cayley transform).** The *inverse Cayley transform* is
+$$C^{-1}(w) = \frac{i\,(1 + w)}{1 - w}.$$
 
-We write $\|z\|^2 = |z|^2 = z\bar{z}$ for the squared modulus (normSq in the formalization). The star ring endomorphism $\star$ denotes complex conjugation.
+### 2.2 The transform maps the half-plane into the disk
 
-## 3. The Blaschke Disk-Preservation Identity
+**Theorem 2.3 (image in the disk).** *If $\operatorname{Im} z > 0$, then $|C(z)|^2 < 1$; that is, $C(z) \in \mathbb{D}$.*
 
-### 3.1 Core Algebraic Identity
+**Proof sketch.** Write $z = x + iy$ with $y > 0$. Then
+$$|z - i|^2 = x^2 + (y-1)^2, \qquad |z + i|^2 = x^2 + (y+1)^2.$$
+Since
+$$|z+i|^2 - |z-i|^2 = (y+1)^2 - (y-1)^2 = 4y > 0,$$
+the denominator dominates the numerator, so $|C(z)|^2 = |z-i|^2 / |z+i|^2 < 1$. Geometrically, $C(z)$ is the ratio of the distance from $z$ to $i$ to the distance from $z$ to $-i$; a point above the real axis is strictly closer to $i$ than to $-i$. $\blacksquare$
 
-**Theorem 3.1** (blaschke_normSq_difference). *For all $a, b, z \in \mathbb{C}$:*
-$$|a + b\bar{z}|^2 - |az + b|^2 = (|a|^2 - |b|^2)(1 - |z|^2)$$
+### 2.3 The transform is invertible
 
-*Proof sketch.* Expand both normSq expressions using $|w|^2 = w\bar{w}$:
-$$|a + b\bar{z}|^2 = |a|^2 + a\overline{b}\cdot z + \bar{a}b\bar{z} + |b|^2|z|^2$$
-$$|az + b|^2 = |a|^2|z|^2 + a\overline{b}\cdot z + \bar{a}b\bar{z} + |b|^2$$
+**Theorem 2.4 (left inverse).** *For every $z \neq -i$, $C^{-1}(C(z)) = z$.*
 
-The cross terms $a\bar{b}z + \bar{a}b\bar{z}$ are identical and cancel in the difference, leaving $(|a|^2 + |b|^2|z|^2) - (|a|^2|z|^2 + |b|^2) = (|a|^2 - |b|^2)(1 - |z|^2)$. □
+**Theorem 2.5 (right inverse).** *For every $w \neq 1$, $C(C^{-1}(w)) = w$.*
 
-**Theorem 3.2** (blaschke_disk_identity). *For $\bar{b}z + \bar{a} \neq 0$:*
-$$|\bar{b}z + \bar{a}|^2 \cdot \left(1 - \left|\frac{az+b}{\bar{b}z+\bar{a}}\right|^2\right) = (|a|^2 - |b|^2)(1 - |z|^2)$$
+**Proof sketch.** Both identities are direct algebraic computations valid away from the single pole of each map. For the left inverse, substitute $w = C(z) = (z-i)/(z+i)$ into $C^{-1}$:
+$$C^{-1}(C(z)) = i \cdot \frac{1 + \frac{z-i}{z+i}}{1 - \frac{z-i}{z+i}} = i \cdot \frac{(z+i) + (z-i)}{(z+i) - (z-i)} = i \cdot \frac{2z}{2i} = z,$$
+where clearing the compound fraction requires $z + i \neq 0$, i.e. $z \neq -i$. The right inverse is symmetric; substituting $z = C^{-1}(w) = i(1+w)/(1-w)$ into $C$ and simplifying yields $w$, valid provided $1 - w \neq 0$, i.e. $w \neq 1$. $\blacksquare$
 
-*Proof sketch.* Note that $\bar{b}z + \bar{a} = \overline{a + b\bar{z}}$, so $|\bar{b}z+\bar{a}|^2 = |a+b\bar{z}|^2$. Then:
-$$|\bar{b}z+\bar{a}|^2\left(1 - \frac{|az+b|^2}{|\bar{b}z+\bar{a}|^2}\right) = |a+b\bar{z}|^2 - |az+b|^2$$
-and apply Theorem 3.1. □
+**Remark 2.6.** The two excluded points $z = -i$ and $w = 1$ are precisely the poles of $C^{-1}$ and of the composite; on the extended complex plane they correspond to the point at infinity. Restricted to $\mathbb{H}$ and $\mathbb{D}$, where these poles never occur, $C$ is a genuine bijection, and it is conformal (angle-preserving) because it is a Möbius transformation. This is why one may freely transport hyperbolic-geometric statements between the two models.
 
-**Corollary.** When $|a|^2 - |b|^2 = 1$, the map $\varphi(z) = (az+b)/(\bar{b}z+\bar{a})$ satisfies $|\varphi(z)|^2 < 1$ whenever $|z|^2 < 1$. Thus $\varphi$ maps $\mathbb{D}$ into $\mathbb{D}$.
+---
 
-## 4. Einstein Addition: The Hyperbolic Group on (-1, 1)
+## 3. Generators of the Congruence Subgroup $\Gamma(2)$
+
+### 3.1 Background
+
+The modular group is $\mathrm{SL}(2,\mathbb{Z})$, the group of $2\times 2$ integer matrices of determinant $1$. For a positive integer $N$, the *principal congruence subgroup of level $N$* is
+$$\Gamma(N) = \left\{ g \in \mathrm{SL}(2,\mathbb{Z}) : g \equiv I \pmod{N} \right\},$$
+the matrices congruent to the identity entrywise modulo $N$. The subgroup $\Gamma(2)$ is of special importance: it is free on two generators and its action tessellates $\mathbb{H}$ into ideal triangles.
+
+### 3.2 Two generators
+
+**Definition 3.1.** Let
+$$T = \begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix}, \qquad S = \begin{pmatrix} 1 & 0 \\ 2 & 1 \end{pmatrix}.$$
+
+**Theorem 3.2 (membership).** *Both $T$ and $S$ belong to $\Gamma(2)$.*
+
+**Proof sketch.** Each matrix has determinant $1\cdot 1 - 2\cdot 0 = 1$, so both lie in $\mathrm{SL}(2,\mathbb{Z})$. Reducing entries modulo $2$: the off-diagonal entries equal $2 \equiv 0$, and the diagonal entries equal $1$, so both matrices reduce to the identity matrix modulo $2$. Hence each lies in $\Gamma(2)$. $\blacksquare$
+
+Geometrically $T$ acts on $\mathbb{H}$ by the translation $z \mapsto z + 2$, and $S$ by $z \mapsto z/(2z+1)$; together they generate the free group $\Gamma(2)$ (up to $\pm I$).
+
+---
+
+## 4. The $\Gamma(2)$-Orbit Relation on $\mathbb{Z}^2$
 
 ### 4.1 Definition
 
-**Definition.** Einstein addition on $\mathbb{R}$ is defined by:
-$$a \oplus b = \frac{a + b}{1 + ab}$$
+We consider the linear action of $\mathrm{SL}(2,\mathbb{Z})$ on integer column vectors $v \in \mathbb{Z}^2$ by matrix-vector multiplication $v \mapsto g\,v$.
 
-This is the relativistic velocity addition formula with $c = 1$.
+**Definition 4.1 (orbit relation).** For $v, w \in \mathbb{Z}^2$, write $v \sim w$ iff there exists $g \in \Gamma(2)$ with $g\,v = w$. The equivalence classes are the *hyperbolic integer classes*.
 
-### 4.2 Group Axioms
+### 4.2 It is an equivalence relation
 
-**Theorem 4.1** (einstein_denom_pos). *If $|a| < 1$ and $|b| < 1$, then $1 + ab > 0$.*
+**Theorem 4.2.** *The relation $\sim$ is reflexive, symmetric, and transitive.*
 
-*Proof.* Since $-1 < a < 1$ and $-1 < b < 1$, we have $ab > -1$, so $1 + ab > 0$. □
+**Proof sketch.**
+- *Reflexivity:* The identity matrix $I \in \Gamma(2)$ and $I\,v = v$, so $v \sim v$.
+- *Symmetry:* If $g\,v = w$ with $g \in \Gamma(2)$, then $g^{-1} \in \Gamma(2)$ (congruence subgroups are subgroups, hence closed under inverses) and $g^{-1} w = v$, so $w \sim v$. Concretely, for $g = \left(\begin{smallmatrix} a & b \\ c & d\end{smallmatrix}\right) \in \mathrm{SL}(2,\mathbb{Z})$ the inverse is $\left(\begin{smallmatrix} d & -b \\ -c & a\end{smallmatrix}\right)$, which is again $\equiv I \pmod 2$ whenever $g$ is.
+- *Transitivity:* If $g_1 v = w$ and $g_2 w = u$ with $g_1, g_2 \in \Gamma(2)$, then $g_2 g_1 \in \Gamma(2)$ (closure under products) and $(g_2 g_1) v = g_2(g_1 v) = g_2 w = u$, so $v \sim u$.
 
-**Theorem 4.2** (einstein_fundamental_identity). *$(1+ab)^2 - (a+b)^2 = (1-a^2)(1-b^2)$.*
+All three properties are inherited from the group axioms of $\Gamma(2)$. $\blacksquare$
 
-*Proof.* Direct algebraic verification (ring). □
+**Remark 4.3.** Because $\sim$ is an equivalence relation arising from a group action, its classes are exactly the $\Gamma(2)$-orbits and they partition $\mathbb{Z}^2$. This is the algebraic substrate on which a notion of "hyperbolic integers grouped by symmetry" can be built.
 
-**Theorem 4.3** (einstein_add_closure). *If $|a| < 1$ and $|b| < 1$, then $|a \oplus b| < 1$.*
+---
 
-*Proof.* By Theorem 4.2, $(1+ab)^2 - (a+b)^2 = (1-a^2)(1-b^2) > 0$ since $|a|, |b| < 1$. Since $1+ab > 0$ (Theorem 4.1), this gives $|a+b| < 1+ab$, hence $|(a+b)/(1+ab)| < 1$. □
+## 5. Discreteness of the Lattice
 
-**Theorem 4.4** (einstein_add_assoc). *$(a \oplus b) \oplus c = a \oplus (b \oplus c)$ when all denominators are nonzero.*
+A necessary precondition for any counting-based number theory (e.g. a "hyperbolic prime number theorem") is that the point set be discrete: no bounded region may contain infinitely many points.
 
-*Proof.* Expanding both sides as rational functions and clearing denominators yields a polynomial identity, verified by the `grind` tactic. □
+**Theorem 5.1 (finiteness in balls).** *For every center $c = (c_1, c_2) \in \mathbb{R}^2$ and every radius $R \in \mathbb{R}$, the set*
+$$\bigl\{ (m, n) \in \mathbb{Z}^2 : (m - c_1)^2 + (n - c_2)^2 < R^2 \bigr\}$$
+*is finite.*
 
-**Theorem 4.5.** *$a \oplus 0 = a$, $a \oplus (-a) = 0$, and $a \oplus b = b \oplus a$.*
+**Proof sketch.** If $(m,n)$ lies in the ball then each squared term is at most the whole sum, so $(m - c_1)^2 < R^2$ and $(n - c_2)^2 < R^2$. Hence $c_1 - |R| < m < c_1 + |R|$ and $c_2 - |R| < n < c_2 + |R|$. Thus $m$ ranges over integers in a bounded interval — at most those between $\lceil c_1 - |R| \rceil$ and $\lfloor c_1 + |R| \rfloor$ — and likewise $n$. Each interval contains finitely many integers, so the candidate set is contained in a finite product $\{m_{\min},\dots,m_{\max}\} \times \{n_{\min},\dots,n_{\max}\}$, hence is finite. $\blacksquare$
 
-### 4.3 Significance
+**Corollary 5.2.** Every $\Gamma(2)$-orbit intersects any bounded region in a finite set, so orbits are discrete. Counting lattice points, or orbit representatives, in a hyperbolic disk of growing radius is therefore a well-posed asymptotic problem.
 
-The group $(-1, 1, \oplus)$ is the 1-dimensional analogue of the Poincaré disk with Möbius composition. It is isomorphic to $(\mathbb{R}, +)$ via the rapidity map (Section 5), but the Einstein presentation reveals the hyperbolic geometry directly.
+---
 
-## 5. The Rapidity Isomorphism
+## 6. The Hyperbolic Midpoint on the Imaginary Axis
 
-### 5.1 Definition and Main Result
+### 6.1 Distance and midpoint
 
-**Definition.** The rapidity function is $\rho(x) = \frac{1}{2}\ln\frac{1+x}{1-x}$ for $x \in (-1,1)$.
+On the imaginary axis $\{ i s : s > 0 \} \subseteq \mathbb{H}$, hyperbolic distance takes a particularly simple logarithmic form. We represent the point $i s$ by the positive real $s$.
 
-**Theorem 5.1** (rapidity_einstein_homomorphism). *For $|a| < 1$ and $|b| < 1$:*
-$$\rho(a \oplus b) = \rho(a) + \rho(b)$$
+**Definition 6.1 (hyperbolic distance).** For $a, b > 0$,
+$$d(a, b) = \bigl| \log(a / b) \bigr|.$$
 
-*Proof sketch.* Compute:
-$$\frac{1 + \frac{a+b}{1+ab}}{1 - \frac{a+b}{1+ab}} = \frac{1+ab+a+b}{1+ab-a-b} = \frac{(1+a)(1+b)}{(1-a)(1-b)}$$
+**Definition 6.2 (hyperbolic midpoint).** For $s, t > 0$,
+$$m(s, t) = \sqrt{s\,t}.$$
 
-Therefore:
-$$\rho(a \oplus b) = \frac{1}{2}\ln\frac{(1+a)(1+b)}{(1-a)(1-b)} = \frac{1}{2}\ln\frac{1+a}{1-a} + \frac{1}{2}\ln\frac{1+b}{1-b} = \rho(a) + \rho(b)$$
+### 6.2 Properties
 
-using $\ln(xy) = \ln x + \ln y$ for positive reals. □
+**Theorem 6.3 (equidistance).** *For $s, t > 0$, $\;d\bigl(s, m(s,t)\bigr) = d\bigl(m(s,t), t\bigr)$.*
 
-### 5.2 Interpretation
+**Proof sketch.** Both sides equal $\tfrac12 |\log(s/t)|$. Indeed
+$$d(s, \sqrt{st}) = \left| \log \frac{s}{\sqrt{st}} \right| = \left| \tfrac12 \log \frac{s}{t} \right|, \quad d(\sqrt{st}, t) = \left| \log \frac{\sqrt{st}}{t} \right| = \left| \tfrac12 \log \frac{s}{t} \right|. \; \blacksquare$$
 
-This theorem shows that $\rho : ((-1,1), \oplus) \to (\mathbb{R}, +)$ is a group isomorphism. The inverse is $\rho^{-1}(r) = \tanh(r)$. Hyperbolic arithmetic is ordinary arithmetic "in disguise" — the rapidity map removes the curvature.
+**Theorem 6.4 (commutativity).** *$m(s,t) = m(t,s)$ for all $s,t$.* — Immediate from $st = ts$.
 
-In physics, $\rho(v)$ is the rapidity of a particle with velocity $v$ (in units of $c$). The fact that rapidities add linearly while velocities don't is the key to understanding relativistic kinematics.
+**Theorem 6.5 (idempotence).** *For $s \geq 0$, $m(s,s) = s$.* — Since $\sqrt{s\cdot s} = |s| = s$.
 
-## 6. Chebyshev Polynomials and Trace-Distance Duality
+**Theorem 6.6 (non-associativity).** *There exist $s,t,u > 0$ with $m(m(s,t),u) \neq m(s,m(t,u))$.*
 
-### 6.1 Definitions and Basic Properties
+**Proof.** Take $s = t = 1$, $u = 16$. Then
+$$m(m(1,1),16) = m(1,16) = \sqrt{16} = 4, \qquad m(1, m(1,16)) = m(1,4) = \sqrt{4} = 2,$$
+and $4 \neq 2$. $\blacksquare$
 
-**Definition.** Chebyshev polynomials of the first kind:
-$$T_0(x) = 1, \quad T_1(x) = x, \quad T_{n+2}(x) = 2xT_{n+1}(x) - T_n(x)$$
+**Interpretation.** In additive coordinates $x = \log s$, the midpoint becomes the ordinary average $\tfrac12(x_s + x_t)$, which *is* commutative and idempotent but famously non-associative as a binary "mean" — $\operatorname{avg}(\operatorname{avg}(a,b),c) \neq \operatorname{avg}(a,\operatorname{avg}(b,c))$ in general. The geometric mean inherits exactly this behavior. Non-associativity is therefore not a pathology but the correct and expected signature of a genuine metric midpoint operation.
 
-### 6.2 The Chebyshev-Cosine Duality
+---
 
-**Theorem 6.1** (chebyshevT_cos). *$T_n(\cos\theta) = \cos(n\theta)$ for all $n \in \mathbb{N}$ and $\theta \in \mathbb{R}$.*
+## 7. Invariance of the Cross-Ratio
 
-*Proof.* Induction on $n$ using strong induction. Base cases $n=0,1$ are immediate. For $n+2$:
-$$T_{n+2}(\cos\theta) = 2\cos\theta \cdot \cos((n+1)\theta) - \cos(n\theta)$$
-The product-to-sum formula $2\cos\alpha\cos\beta = \cos(\alpha-\beta) + \cos(\alpha+\beta)$ with $\alpha = \theta$, $\beta = (n+1)\theta$ gives:
-$$= \cos(n\theta) + \cos((n+2)\theta) - \cos(n\theta) = \cos((n+2)\theta) \quad \square$$
+### 7.1 Definitions
 
-### 6.3 The Composition Formula
+**Definition 7.1 (cross-ratio).** For distinct $z_1, z_2, z_3, z_4 \in \mathbb{C}$,
+$$(z_1, z_2; z_3, z_4) = \frac{(z_1 - z_3)(z_2 - z_4)}{(z_1 - z_4)(z_2 - z_3)}.$$
 
-**Theorem 6.2** (chebyshevT_comp). *$T_m(T_n(\cos\theta)) = T_{mn}(\cos\theta)$ for all $m, n, \theta$.*
+**Definition 7.2 (Möbius transformation).** For $a,b,c,d \in \mathbb{C}$,
+$$\mu(z) = \frac{a z + b}{c z + d}.$$
 
-*Proof.* By Theorem 6.1: $T_m(T_n(\cos\theta)) = T_m(\cos(n\theta)) = \cos(mn\theta) = T_{mn}(\cos\theta)$. □
+### 7.2 The invariance theorem
 
-**Theorem 6.3** (chebyshevT_comp_general). *$T_m(T_n(x)) = T_{mn}(x)$ for ALL $x \in \mathbb{R}$.*
+**Theorem 7.3 (cross-ratio invariance).** *Let $\mu(z) = (az+b)/(cz+d)$ with $ad - bc \neq 0$. Assume the four denominators $cz_k + d$ are nonzero and that $z_1 - z_4 \neq 0$, $z_2 - z_3 \neq 0$. Then*
+$$\bigl( \mu(z_1), \mu(z_2); \mu(z_3), \mu(z_4) \bigr) = (z_1, z_2; z_3, z_4).$$
 
-*Proof.* Both sides are polynomial functions of $x$. They agree for all $x \in [-1,1]$ (since every such $x$ is $\cos\theta$ for some $\theta$). Since $[-1,1]$ is infinite and two polynomials agreeing on an infinite set must be identical, the equality holds for all $x \in \mathbb{R}$.
+**Proof sketch.** The key algebraic identity is
+$$\mu(z_i) - \mu(z_j) = \frac{a z_i + b}{c z_i + d} - \frac{a z_j + b}{c z_j + d} = \frac{(ad - bc)(z_i - z_j)}{(c z_i + d)(c z_j + d)}.$$
+Substituting this for each of the four differences in the cross-ratio, every factor contributes a copy of $(ad-bc)$ and a pair of denominator factors. In the ratio
+$$\frac{(\mu(z_1)-\mu(z_3))(\mu(z_2)-\mu(z_4))}{(\mu(z_1)-\mu(z_4))(\mu(z_2)-\mu(z_3))},$$
+the numerator carries $(ad-bc)^2$ and denominators $(cz_1+d)(cz_3+d)(cz_2+d)(cz_4+d)$; the denominator carries the identical $(ad-bc)^2$ and the identical product of four linear denominators. All of these cancel, leaving exactly $\frac{(z_1-z_3)(z_2-z_4)}{(z_1-z_4)(z_2-z_3)}$. $\blacksquare$
 
-The formal proof constructs explicit polynomial representations of both sides using Mathlib's `Polynomial` type, verifies they agree on the infinite set $\{cos\theta : \theta \in \mathbb{R}\} \supseteq [-1,1]$, and applies the polynomial identity principle (a nonzero polynomial has finitely many roots). □
+**Remark 7.4.** Since Möbius transformations with real coefficients and positive determinant are exactly the orientation-preserving isometries of $\mathbb{H}$, the cross-ratio is an isometry invariant of the hyperbolic plane. It is the projective quantity from which hyperbolic distance itself can be reconstructed, and hence the fundamental invariant underlying the entire geometry.
 
-### 6.4 Application: Trace-Distance Duality
+---
 
-For $\gamma \in \operatorname{SL}_2(\mathbb{Z})$ with $|\operatorname{tr}(\gamma)| = t$, the hyperbolic distance from $i$ to $\gamma \cdot i$ satisfies $\cosh(d(i, \gamma \cdot i)) = t/2$. The $n$-th iterate has trace $2T_n(t/2)$, so by the composition formula:
+## 8. Algorithms
 
-$$\operatorname{tr}(\gamma^{mn}) = 2T_{mn}(t/2) = 2T_m(T_n(t/2)) = 2T_m(\operatorname{tr}(\gamma^n)/2)$$
+The foundational results above are eminently computable. We highlight three algorithmic procedures that operationalize them.
 
-This recurrence is the key to counting orbit points in hyperbolic space and connects to the Selberg trace formula.
+### 8.1 Model conversion via the Cayley transform
+Given a point in either model, convert to the other by evaluating $C$ or $C^{-1}$. This underlies any visualization or numerical experiment that must switch between the unbounded half-plane (convenient for the modular group) and the bounded disk (convenient for display).
 
-## 7. Orbit Discreteness
+### 8.2 Orbit enumeration under $\Gamma(2)$
+Starting from a seed vector, repeatedly apply the generators $T$, $S$ and their inverses in breadth-first order, recording newly reached lattice points, to enumerate the portion of a $\Gamma(2)$-orbit lying within a bounded region. Termination in a bounded region is guaranteed by the discreteness theorem (Section 5).
 
-**Theorem 7.1** (int_is_discrete). *The set $\mathbb{Z} \subset \mathbb{R}$ is discrete: for every $R > 0$, the set $\{n \in \mathbb{Z} : |n| < R\}$ is finite.*
+### 8.3 Cross-ratio computation and isometry verification
+Compute the cross-ratio of four points and confirm numerically that it is preserved under a sampled Möbius transformation — a direct empirical check of Theorem 7.3, useful as a regression test for any hyperbolic-geometry codebase.
 
-**Theorem 7.2** (scaled_int_is_discrete). *For $c \neq 0$, the set $\{cn : n \in \mathbb{Z}\}$ is discrete.*
+---
 
-These results establish the discreteness paradigm that extends to orbits of SL₂(ℤ) acting on the Poincaré disk. The orbit $\operatorname{SL}_2(\mathbb{Z}) \cdot 0$ is discrete in $\mathbb{D}$ — a consequence of the discreteness of SL₂(ℤ) in SL₂(ℝ).
+## 9. Applications
 
-## 8. Discussion and Future Work
+- **Hyperbolic visualization.** The Cayley bijection is the standard bridge for rendering half-plane computations inside the Poincaré disk, where the whole plane is visible at once.
+- **Tessellations and modular symmetry.** The generators of $\Gamma(2)$ produce the classical ideal-triangle tiling of $\mathbb{H}$; orbit enumeration draws it.
+- **Discrete counting problems.** Lattice discreteness makes "count points in a growing hyperbolic disk" a well-defined asymptotic question — the entry point to any hyperbolic analogue of the prime number theorem.
+- **Invariant-based geometry.** Cross-ratio invariance provides a coordinate-free handle on hyperbolic distance and angle, valuable in both proofs and numerics.
 
-### 8.1 Unique Factorization
+---
 
-Since $\operatorname{PSL}_2(\mathbb{Z}) \cong \mathbb{Z}/2 \star \mathbb{Z}/3$ (the free product), every group element has a unique reduced word in the generators $S$ and $T$. This provides a natural notion of "unique factorization" for hyperbolic integers. Formalizing this requires the normal form theorem for free products.
+## 10. Discussion
 
-### 8.2 The Prime Geodesic Theorem
+The results here are deliberately foundational and fully rigorous. They do three things at once. First, they make the two hyperbolic models genuinely interchangeable via an explicit, invertible, conformal map. Second, they equip the integer lattice with the modular symmetry group $\Gamma(2)$ and organize it into well-defined orbit classes, while guaranteeing discreteness. Third, they expose the geometric personality of arithmetic on curved space: the "average" of two points becomes a geometric mean whose failure of associativity is the exact fingerprint of the logarithmic metric, and the cross-ratio emerges as the unshakeable invariant beneath all of it.
 
-The number of primitive closed geodesics of length at most $R$ on $\operatorname{PSL}_2(\mathbb{Z}) \backslash \mathbb{H}$ is asymptotic to $e^R / R$ as $R \to \infty$ (Huber's theorem). This is the hyperbolic analogue of the prime number theorem and follows from the Selberg trace formula.
+We are careful to distinguish the proven from the aspirational. The sweeping vision — hyperbolic primes as tessellation vertices, a hyperbolic prime number theorem, a hyperbolic zeta function with all zeros on a critical line — remains conjectural and is not claimed here. What *is* established is the exact, self-contained scaffolding on which such a program could be built: interchangeable models, a symmetry group with explicit generators, an orbit equivalence, discreteness, a metric midpoint, and a projective invariant.
 
-### 8.3 The Selberg Zeta Function
+---
 
-The Selberg zeta function $Z(s) = \prod_{\{p\}} \prod_{k=0}^{\infty} (1 - e^{-(s+k)\ell(p)})$ satisfies a functional equation and has its nontrivial zeros at $s = 1/2 \pm ir_j$ where $\lambda_j = 1/4 + r_j^2$ are eigenvalues of the Laplacian. Unlike the Riemann zeta function, the location of these zeros is a *theorem*, not a conjecture.
+## 11. Future Directions
 
-### 8.4 Connections to Physics
+Building on this foundation, several concrete directions emerge, centered on the Farey tessellation of the hyperbolic plane — the tiling whose vertices are the reduced fractions, with an edge joining $p/q$ and $r/s$ exactly when $|ps - qr| = 1$, on which the modular group acts by edge-preserving symmetries and mediants subdivide edges into ideal triangles.
 
-Einstein addition is not just an analogy — it IS the velocity addition formula of special relativity. The rapidity isomorphism is the standard tool of relativistic kinematics. The Poincaré disk model appears naturally in:
+1. **The golden ratio as the slowest-escaping cusp.** Among all geodesic rays of the modular tessellation that leave every bounded region, the Fibonacci ray toward the golden ratio appears to make the fewest "turns per unit of denominator growth." A mediant walk turns left or right at each ideal triangle exactly as the continued fraction of its limit reads $1$ or a larger partial quotient, so the all-ones expansion $[1;1,1,\dots]$ is the unique walk that never accelerates — conjecturally characterizing the golden ratio as the combinatorially most central boundary point.
 
-- Quantum information (the Bloch ball is hyperbolic)
-- AdS/CFT correspondence (Anti-de Sitter space is hyperbolic)
-- Machine learning (hyperbolic embeddings for hierarchical data)
+2. **Determinant depth equals continued-fraction length.** For any two reduced fractions there should be a canonical shortest chain of mediant subdivisions connecting their edges, whose length equals the sum of the partial quotients of the continued fraction of their normalized ratio. Equivalently, graph distance in the Farey tessellation would be computed by the subtractive Euclidean algorithm, since each mediant step changes the determinant configuration exactly as one subtraction changes a continued-fraction remainder.
 
-## 9. Summary of Formal Results
+3. **A prime tessellation obstruction.** Restricting the vertex set to fractions $p/q$ with $q$ prime, the induced subgraph of the Farey tessellation is conjectured to be connected only if one allows a single extra "jump" per prime, with the minimum number of jumps needed to reach denominator $q$ growing like the number of distinct primes below $q$ — a geometric shadow of the distribution of primes.
 
-| Theorem | Statement | Lean Name |
-|---------|-----------|-----------|
-| Blaschke identity | $\|a+b\bar{z}\|^2 - \|az+b\|^2 = (\|a\|^2-\|b\|^2)(1-\|z\|^2)$ | `blaschke_normSq_difference` |
-| Disk preservation | $\|\bar{b}z+\bar{a}\|^2(1-\|\varphi(z)\|^2) = (\|a\|^2-\|b\|^2)(1-\|z\|^2)$ | `blaschke_disk_identity` |
-| Einstein closure | $\|a\|,\|b\|<1 \Rightarrow \|a\oplus b\|<1$ | `einstein_add_closure` |
-| Associativity | $(a\oplus b)\oplus c = a\oplus(b\oplus c)$ | `einstein_add_assoc` |
-| Rapidity homomorphism | $\rho(a\oplus b) = \rho(a)+\rho(b)$ | `rapidity_einstein_homomorphism` |
-| Chebyshev-cosine | $T_n(\cos\theta)=\cos(n\theta)$ | `chebyshevT_cos` |
-| Chebyshev composition | $T_m \circ T_n = T_{mn}$ | `chebyshevT_comp_general` |
-| Integer discreteness | $\mathbb{Z}$ is discrete in $\mathbb{R}$ | `int_is_discrete` |
-
-## References
-
-1. Ungar, A.A. *Analytic Hyperbolic Geometry and Albert Einstein's Special Theory of Relativity.* World Scientific, 2008.
-2. Beardon, A.F. *The Geometry of Discrete Groups.* Springer, 1983.
-3. Selberg, A. "Harmonic analysis and discontinuous groups in weakly symmetric Riemannian spaces with applications to Dirichlet series." *J. Indian Math. Soc.* 20, 47–87, 1956.
-4. Iwaniec, H. *Spectral Methods of Automorphic Forms.* AMS, 2002.
-5. Mason, J.C. and Handscomb, D.C. *Chebyshev Polynomials.* CRC Press, 2003.
+Each of these converts a metric or analytic statement into a finite, checkable combinatorial one about turn sequences, subtraction chains, or connectivity, precisely because the incidence relation of the tessellation is pinned to determinant identities of the kind established here.
