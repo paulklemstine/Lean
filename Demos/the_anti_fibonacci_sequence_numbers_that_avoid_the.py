@@ -1,134 +1,159 @@
 """
-The Anti-Fibonacci Sequence: numerical demonstrations.
+Numerical demonstrations for the Greedy Anti-Fibonacci Sequence.
 
-The anti-Fibonacci sequence is defined by
+The greedy anti-Fibonacci sequence starts at 1 and repeatedly appends the
+smallest positive integer not yet used that is NOT the sum of two consecutive
+earlier terms. This script demonstrates the main theorems:
 
-    A(0) = 1,   A(n+1) = A(n) + n,
+  * The greedy simulation produces exactly the positive non-multiples of 3.
+  * The closed form  A(k) = floor((3k+2)/2)  matches the simulation.
+  * The structural identity  A(k) + A(k+1) = 3(k+1).
+  * Linear growth:  A(n)/n -> 3/2.
+  * Consecutive ratio:  A(n+1)/A(n) -> 1  (avoids the golden ratio phi).
+  * The avoided set is exactly the positive multiples of 3 (density 1/3).
 
-giving 1, 1, 2, 4, 7, 11, 16, 22, 29, 37, 46, 56, ...
-
-It is governed by the closed form
-
-    2*A(n) + n = n^2 + 2,     i.e.     A(n) = 1 + n*(n-1)//2.
-
-This script demonstrates, purely numerically:
-
-  1. the closed form matches the recurrence exactly;
-  2. A(n)/n^2 -> 1/2  (quadratic growth, leading coefficient 1/2);
-  3. A(n+1)/A(n) -> 1, monotonically after the second term,
-     and this limit differs from the golden ratio phi = (1+sqrt5)/2;
-  4. the Fibonacci relation A(n+2) = A(n+1) + A(n) holds exactly at n in {0, 3},
-     with strict undershoot for all n >= 4.
-
-Self-contained: standard library only.
+Run:  python demo.py
 """
 
 from __future__ import annotations
 
-from math import isqrt
-from typing import Dict, List, Tuple
-
-PHI: float = (1.0 + 5.0 ** 0.5) / 2.0  # golden ratio ~ 1.618033988749895
+from typing import List, Set, Tuple
 
 
-def anti_fibonacci_recurrence(n_max: int) -> List[int]:
-    """Return [A(0), ..., A(n_max)] via the recurrence A(k+1) = A(k) + k.
+# ---------------------------------------------------------------------------
+# 1. The honest greedy simulation
+# ---------------------------------------------------------------------------
+def greedy_anti_fibonacci(n_terms: int) -> Tuple[List[int], Set[int]]:
+    """Simulate the greedy rule directly.
 
-    Time O(n_max), space O(n_max).
+    At each step, append the smallest positive integer that has not yet
+    appeared and is not equal to any consecutive sum A(i) + A(i+1) of earlier
+    terms. Returns the list of terms and the set of avoided (forbidden) values.
     """
-    seq: List[int] = [1]
-    for k in range(n_max):
-        seq.append(seq[-1] + k)
-    return seq
+    if n_terms <= 0:
+        return [], set()
+    terms: List[int] = [1]
+    forbidden: Set[int] = set()
+    used: Set[int] = {1}
+    while len(terms) < n_terms:
+        # register the newest consecutive sum
+        s = terms[-1] + terms[-2] if len(terms) >= 2 else None
+        if s is not None:
+            forbidden.add(s)
+        candidate = terms[-1] + 1
+        while candidate in used or candidate in forbidden:
+            candidate += 1
+        terms.append(candidate)
+        used.add(candidate)
+    # record the final consecutive sum for completeness
+    if len(terms) >= 2:
+        forbidden.add(terms[-1] + terms[-2])
+    return terms, forbidden
 
 
-def anti_fibonacci_closed(n: int) -> int:
-    """Return A(n) via the closed form 1 + n*(n-1)//2 in O(1) integer arithmetic."""
-    return 1 + n * (n - 1) // 2
+# ---------------------------------------------------------------------------
+# 2. The closed form
+# ---------------------------------------------------------------------------
+def anti_fib(k: int) -> int:
+    """Closed form of the k-th term (0-indexed):  floor((3k+2)/2)."""
+    return (3 * k + 2) // 2
 
 
-def verify_closed_form(n_max: int) -> bool:
-    """Check the closed form and the identity 2*A(n)+n = n^2+2 for 0 <= n <= n_max."""
-    seq = anti_fibonacci_recurrence(n_max)
-    for n in range(n_max + 1):
-        if seq[n] != anti_fibonacci_closed(n):
-            return False
-        if 2 * seq[n] + n != n * n + 2:
-            return False
-    return True
+def consecutive_sum(k: int) -> int:
+    """A(k) + A(k+1), which equals 3*(k+1)."""
+    return anti_fib(k) + anti_fib(k + 1)
 
 
-def density_table(indices: List[int]) -> List[Tuple[int, int, float]]:
-    """Return [(n, A(n), A(n)/n^2)] for each n in indices (n >= 1)."""
-    rows: List[Tuple[int, int, float]] = []
-    for n in indices:
-        a = anti_fibonacci_closed(n)
-        rows.append((n, a, a / (n * n)))
-    return rows
+# ---------------------------------------------------------------------------
+# 3. Demonstrations
+# ---------------------------------------------------------------------------
+def demo_first_terms() -> None:
+    print("=" * 68)
+    print("First 12 terms: greedy simulation vs. closed form")
+    print("=" * 68)
+    terms, forbidden = greedy_anti_fibonacci(12)
+    closed = [anti_fib(k) for k in range(12)]
+    print(f"  greedy      : {terms}")
+    print(f"  closed form : {closed}")
+    print(f"  match       : {terms == closed}")
+    print(f"  non-mult-of-3: {terms == [m for m in range(1, 40) if m % 3 != 0][:12]}")
+    print(f"  avoided set (multiples of 3): {sorted(forbidden)[:8]}")
 
 
-def ratio_table(n_max: int) -> List[Tuple[int, float]]:
-    """Return [(n, A(n+1)/A(n))] for 0 <= n <= n_max."""
-    seq = anti_fibonacci_recurrence(n_max + 1)
-    return [(n, seq[n + 1] / seq[n]) for n in range(n_max + 1)]
+def demo_structural_identity() -> None:
+    print("\n" + "=" * 68)
+    print("Structural identity  A(k) + A(k+1) = 3(k+1)")
+    print("=" * 68)
+    for k in range(8):
+        s = consecutive_sum(k)
+        print(f"  A({k}) + A({k+1}) = {anti_fib(k)} + {anti_fib(k+1)} = {s}"
+              f"   (3*{k+1} = {3*(k+1)}, divisible by 3: {s % 3 == 0})")
 
 
-def fibonacci_coincidences(n_max: int) -> Dict[str, List[int]]:
-    """Scan n in [0, n_max]: where does A(n+2) = A(n+1) + A(n)?
-
-    Returns the coincidence indices and the indices where A strictly undershoots.
-    """
-    seq = anti_fibonacci_recurrence(n_max + 2)
-    equal: List[int] = []
-    undershoot: List[int] = []
-    for n in range(n_max + 1):
-        lhs = seq[n + 2]
-        rhs = seq[n + 1] + seq[n]
-        if lhs == rhs:
-            equal.append(n)
-        elif lhs < rhs:
-            undershoot.append(n)
-    return {"equal": equal, "undershoot": undershoot}
+def demo_avoidance() -> None:
+    print("\n" + "=" * 68)
+    print("Avoidance: no term is ever a consecutive sum")
+    print("=" * 68)
+    terms = set(anti_fib(k) for k in range(200))
+    sums = set(consecutive_sum(k) for k in range(200))
+    overlap = terms & sums
+    print(f"  #terms (k<200)        : {len(terms)}")
+    print(f"  #consecutive sums     : {len(sums)}")
+    print(f"  overlap (should be 0) : {len(overlap)}")
+    print(f"  every term % 3 != 0   : {all(t % 3 != 0 for t in terms)}")
+    print(f"  every sum   % 3 == 0  : {all(s % 3 == 0 for s in sums)}")
 
 
-def is_perfect_square(m: int) -> bool:
-    r = isqrt(m)
-    return r * r == m
+def demo_asymptotics() -> None:
+    print("\n" + "=" * 68)
+    print("Asymptotics:  A(n)/n -> 3/2   and   A(n+1)/A(n) -> 1")
+    print("=" * 68)
+    phi = (1 + 5 ** 0.5) / 2
+    print(f"  (for reference, golden ratio phi = {phi:.6f})")
+    print(f"  {'n':>10} {'A(n)':>12} {'A(n)/n':>12} {'A(n+1)/A(n)':>14}")
+    for n in [10, 100, 1_000, 10_000, 100_000, 1_000_000]:
+        a_n = anti_fib(n)
+        ratio_lin = a_n / n
+        ratio_con = anti_fib(n + 1) / a_n
+        print(f"  {n:>10} {a_n:>12} {ratio_lin:>12.6f} {ratio_con:>14.6f}")
+    print("  -> A(n)/n approaches 1.5, consecutive ratio approaches 1.0")
+
+
+def demo_density() -> None:
+    print("\n" + "=" * 68)
+    print("Densities: terms have density 2/3, avoided set density 1/3")
+    print("=" * 68)
+    for N in [1_000, 10_000, 100_000, 1_000_000]:
+        terms = sum(1 for m in range(1, N + 1) if m % 3 != 0)
+        avoided = sum(1 for m in range(1, N + 1) if m % 3 == 0)
+        print(f"  N={N:>9}: term density = {terms/N:.5f}, "
+              f"avoided density = {avoided/N:.5f}")
+
+
+def demo_folklore_correction() -> None:
+    print("\n" + "=" * 68)
+    print("Folklore correction: the quadratic list is lazy-caterer numbers")
+    print("=" * 68)
+
+    def lazy_caterer(n: int) -> int:
+        return 1 + n * (n - 1) // 2
+
+    lc = [lazy_caterer(n) for n in range(1, 9)]
+    print(f"  lazy-caterer q(n) = 1 + C(n,2): {lc}")
+    print(f"  (this is the '1,2,4,7,11,16,...' quadratic list)")
+    # These are NOT sum-avoiding: q(3)+q(4) = q(5)
+    q3, q4, q5 = lazy_caterer(3), lazy_caterer(4), lazy_caterer(5)
+    print(f"  q(3)+q(4) = {q3}+{q4} = {q3+q4} = q(5) = {q5}  "
+          f"-> a term IS a consecutive sum, so NOT anti-Fibonacci")
 
 
 def main() -> None:
-    print("=" * 66)
-    print("The Anti-Fibonacci Sequence: A(0)=1, A(n+1)=A(n)+n")
-    print("=" * 66)
-
-    seq = anti_fibonacci_recurrence(11)
-    print("\nFirst terms A(0..11):")
-    print("  ", seq)
-
-    print("\n[1] Closed form 2*A(n)+n = n^2+2 and A(n)=1+n(n-1)/2:")
-    ok = verify_closed_form(2000)
-    print(f"    Verified for 0 <= n <= 2000: {ok}")
-
-    print("\n[2] Density: A(n)/n^2 -> 1/2")
-    for n, a, r in density_table([10, 100, 1000, 10 ** 4, 10 ** 6]):
-        print(f"    n={n:>8}  A(n)={a:>18}  A(n)/n^2 = {r:.8f}")
-
-    print("\n[3] Consecutive ratio A(n+1)/A(n) -> 1  (phi = %.6f is NOT reached)" % PHI)
-    for n, r in ratio_table(10):
-        print(f"    n={n:>2}  A(n+1)/A(n) = {r:.6f}")
-    for n in [100, 10_000, 1_000_000]:
-        r = (anti_fibonacci_closed(n + 1)) / anti_fibonacci_closed(n)
-        print(f"    n={n:>8}  A(n+1)/A(n) = {r:.10f}")
-    print(f"    limit 1 differs from golden ratio phi by {PHI - 1.0:.6f}")
-
-    print("\n[4] Fibonacci relation A(n+2) = A(n+1) + A(n):")
-    res = fibonacci_coincidences(50)
-    print(f"    Coincidence indices in [0,50]: {res['equal']}   (expected [0, 3])")
-    print(f"    Strict undershoot for all n>=4: "
-          f"{all(n >= 4 for n in res['undershoot']) and res['undershoot'][:1] == [4]}")
-    print(f"    Check A(2)=A(1)+A(0): {seq[2]} = {seq[1]}+{seq[0]}")
-    print(f"    Check A(5)=A(4)+A(3): {seq[5]} = {seq[4]}+{seq[3]}")
-
+    demo_first_terms()
+    demo_structural_identity()
+    demo_avoidance()
+    demo_asymptotics()
+    demo_density()
+    demo_folklore_correction()
     print("\nAll demonstrations complete.")
 
 
