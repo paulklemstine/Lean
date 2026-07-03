@@ -466,7 +466,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sign Alternation in q-Hypergeometric Series via Oscillatory Asymptotics Near Roots of Unity"
   },
   {
-    "consumed_by_exp_id": "4ff8ff84",
+    "consumed_by_exp_id": "",
     "description": "This conjecture posits that for sufficiently large $s$ and structured seating conditions, a unique non-trivial solution exists in the combinatorial model of the generalized honeymoon problem, formalizable via properties of balanced bipartite decompositions.",
     "domains": [
       "Pythagorean",
@@ -476,7 +476,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:20.382248+00:00",
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
   },
@@ -936,7 +936,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphism of Sheared Witt Vectors for Perfect Algebras"
   },
   {
-    "consumed_by_exp_id": "32ef9e5d",
+    "consumed_by_exp_id": "",
     "description": "For all non\u2011negative integers n, s and all indeterminates p,q (p\u2260q), the (p,q)-deformed s\u2011rook numbers R_{n,s}^{(p,q)}(k) defined by normal ordering of (YX)^n satisfy the explicit formula R_{n,s}^{(p,q)}(k)=\u2211_{j=0}^{k} (k choose j)_{p,q} * S_{s;h}(n,k-j|p,q) * p^{j(s-1)} * q^{j(k-j)} for 0\u2264k\u2264n, where S_{s;h}(n,m|p,q) are the generalized Stirling coefficients from the expansion (YX)^n. This formula must agree with the recurrence R_{n,s}^{(p,q)}(k)= (p^{n-k} q^{k})/[k]_{p,q} * R_{n-1,s}^{(p,q)}(k-1) + (h p^{s(n-k)} q^{k})/[k+1]_{p,q} * R_{n-1,s}^{(p,q)}(k).",
     "domains": [
       "Pythagorean",
@@ -946,7 +946,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T21:00:05.360083+00:00",
     "title": "Conjecture on explicit closed form for (p,q)-deformed s-rook numbers on staircase boards"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "7a3f0b42",
+    "consumed_by_exp_id": "b9e95156",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1693,12 +1693,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every positive integer $k$, there exists a parameter $s$ in the Lecacheux family such that the $5$-rank of the P\u00f3lya group of the corresponding quintic field is exactly $k$.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0143",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00675v1",
+    "status": "available",
+    "timestamp": "2026-07-03T11:59:32.474562+00:00",
+    "title": "Exact 5-Rank Realization in Lecacheux P\u00f3lya Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1712,7 +1726,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1726,7 +1740,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1740,7 +1754,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1749,31 +1763,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "061b612f",
     "description": "Every class 2 graph G with \u0394(G) > |V(G)|/3 contains an induced \u0394(G)-overfull subgraph H such that every vertex in V(G)\\V(H) has degree at most \u0394(G) - 2 in the original graph G. This conjecture strengthens the Overfull Conjecture by asserting not just existence but also a structural property: the overfull subgraph can be found so that removing it reduces the maximum degree significantly.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T03:33:00.928355+00:00",
     "title": "Structural Location of Overfull Subgraphs in Class 2 Graphs"
   },
   {
-    "consumed_by_exp_id": "061b612f",
+    "consumed_by_exp_id": "",
     "description": "For any odd prime power q\u22653 and integer m\u22654, the largest codimension of a cyclically covering subspace of\u202f\ud835\udd3d_q\u207f with n=(q^m+1)/2 equals\u202f1. Equivalently, there exists a cyclic code of length (q^m+1)/2 and dimension n\u22121 that contains no full\u2011weight codeword, and no cyclically covering subspace of larger codimension can exist.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:50:00.178097+00:00",
     "title": "Exact Codimension for Cyclically Covering Subspaces of Length (q\u1d50+1)/2"
   },
@@ -1784,7 +1798,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1799,7 +1813,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -1808,16 +1822,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Probing the limits of matroid conjectures through counterexamples"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a511a89e",
     "description": "For any admissible class C and any non\u2011matching Sidorenko graph H, every W \u2208 C satisfying t(H,W)=p(W)^{e(H)} must be regular; i.e., the equality case regularizes optimally.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T04:56:06.560111+00:00",
     "title": "Equality case regularity conjecture for admissible Sidorenko classes"
   },
@@ -1828,7 +1842,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1843,7 +1857,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1857,7 +1871,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1872,7 +1886,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -1887,7 +1901,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -1901,7 +1915,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0157",
+    "id": "fd_0158",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -1915,7 +1929,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -1930,7 +1944,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -1939,16 +1953,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71bd52e9",
     "description": "For any odd prime p\u22613 mod4 and a\u2208Fp\u00d7 with \u03c7(a n!)=-1, the positive integer \u03c3_{p,a} defined by s_p D_a(x)=\u03c3_{p,a}\u00b2(nx-1) is equal to 1. This would mean the factorization simplifies to s_p D_a(x)=nx-1 without any additional scaling.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0160",
+    "id": "fd_0161",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T09:32:14.513880+00:00",
     "title": "Conjecture on \u03c3_{p,a} being unity for Legendre symbol conditions"
   },
@@ -1958,7 +1972,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0161",
+    "id": "fd_0162",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -1973,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -1987,7 +2001,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2002,7 +2016,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2016,7 +2030,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2030,13 +2044,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
     "status": "available",
     "timestamp": "2026-07-03T11:40:31.517494+00:00",
     "title": "Monotonicity of the minimal absolute value of sums of fifth roots of unity within each residue class modulo 5"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Establishes a precise exponential growth bound for the sequence A393920, relating it to the Fibonacci sequence and its combinatorial structure in additive subcategories.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0168",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00651v1",
+    "status": "available",
+    "timestamp": "2026-07-03T11:59:43.715928+00:00",
+    "title": "On the Growth Rate of Extension-Closed Additive Subcategories for Oriented A_n Quivers"
   },
   {
     "consumed_by_exp_id": "",
