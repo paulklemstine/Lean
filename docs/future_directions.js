@@ -936,7 +936,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphism of Sheared Witt Vectors for Perfect Algebras"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "32ef9e5d",
     "description": "For all non\u2011negative integers n, s and all indeterminates p,q (p\u2260q), the (p,q)-deformed s\u2011rook numbers R_{n,s}^{(p,q)}(k) defined by normal ordering of (YX)^n satisfy the explicit formula R_{n,s}^{(p,q)}(k)=\u2211_{j=0}^{k} (k choose j)_{p,q} * S_{s;h}(n,k-j|p,q) * p^{j(s-1)} * q^{j(k-j)} for 0\u2264k\u2264n, where S_{s;h}(n,m|p,q) are the generalized Stirling coefficients from the expansion (YX)^n. This formula must agree with the recurrence R_{n,s}^{(p,q)}(k)= (p^{n-k} q^{k})/[k]_{p,q} * R_{n-1,s}^{(p,q)}(k-1) + (h p^{s(n-k)} q^{k})/[k+1]_{p,q} * R_{n-1,s}^{(p,q)}(k).",
     "domains": [
       "Pythagorean",
@@ -946,7 +946,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T21:00:05.360083+00:00",
     "title": "Conjecture on explicit closed form for (p,q)-deformed s-rook numbers on staircase boards"
   },
@@ -1081,7 +1081,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
   {
-    "consumed_by_exp_id": "2d9578c9",
+    "consumed_by_exp_id": "",
     "description": "This paper investigates the statistical behavior of Selmer ranks of twisted elliptic curves in various Galois extension settings, under assumptions related to the Extended Riemann Hypothesis. The study aims to formalize probabilistic predictions through an ordered framework inspired by combinatorial fan structures.",
     "domains": [
       "Algebra",
@@ -1091,7 +1091,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T21:54:06.879713+00:00",
     "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
   },
@@ -1635,12 +1635,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that for any partitions \u03bc, \u03bb, the coefficients in the expansion of (-1)^{|\u03bc|-\u2113(\u03bc)}\u27e8\u2207m\u03bc, s\u03bb\u27e9 are non-negative integers.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0139",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00940v1",
+    "status": "available",
+    "timestamp": "2026-07-03T10:38:18.237447+00:00",
+    "title": "Nonnegativity of Schur Positivity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0139",
+    "id": "fd_0140",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1654,7 +1669,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0140",
+    "id": "fd_0141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1668,7 +1683,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1682,7 +1697,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1696,7 +1711,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1711,7 +1726,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1726,7 +1741,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1741,7 +1756,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -1750,31 +1765,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Probing the limits of matroid conjectures through counterexamples"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "061b612f",
     "description": "For any admissible class C and any non\u2011matching Sidorenko graph H, every W \u2208 C satisfying t(H,W)=p(W)^{e(H)} must be regular; i.e., the equality case regularizes optimally.",
     "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0147",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02260v1",
-    "status": "available",
-    "timestamp": "2026-07-03T04:56:06.560111+00:00",
-    "title": "Equality case regularity conjecture for admissible Sidorenko classes"
-  },
-  {
-    "consumed_by_exp_id": "061b612f",
-    "description": "Conjecture that for any non\u2011empty finite set \u03a8 of non\u2011zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_\u03a8(G) \u2264 n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
-    "domains": [
-      "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0148",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.02132v1",
+    "source_exp_id": "2607.02260v1",
     "status": "in_progress",
+    "timestamp": "2026-07-03T04:56:06.560111+00:00",
+    "title": "Equality case regularity conjecture for admissible Sidorenko classes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any non\u2011empty finite set \u03a8 of non\u2011zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_\u03a8(G) \u2264 n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0149",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02132v1",
+    "status": "available",
     "timestamp": "2026-07-03T05:55:53.302394+00:00",
     "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
   },
@@ -1785,7 +1800,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1799,7 +1814,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1814,7 +1829,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -1829,7 +1844,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -1843,7 +1858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -1857,7 +1872,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -1872,7 +1887,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -1886,7 +1901,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -1900,7 +1915,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0157",
+    "id": "fd_0158",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -1915,13 +1930,27 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
     "status": "available",
     "timestamp": "2026-07-03T10:20:23.815272+00:00",
     "title": "Alexander's Conjecture for Infinite Simplicial Complexes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The lower and upper bounds on the number of \u03a6-separable dichotomies C_F given in Theorem 1 (in terms of N, r = rank(\u03a6(F)), and s = kruskal_rank(\u03a6(F))) are tight for every achievable pair (r, s). That is, for any N \u2208 \u2115 and any integers r, s with 1 \u2264 s \u2264 r \u2264 min(N, M'), there exists a point set F \u2286 \u211d^M of size N and a linear map \u03a6: \u211d^M \u2192 \u211d^{M'} such that rank(\u03a6(F)) = r, kruskal_rank(\u03a6(F)) = s, and C_F achieves the lower bound; similarly, there exists a configuration achieving the upper bound.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0160",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01010v1",
+    "status": "available",
+    "timestamp": "2026-07-03T10:39:12.276840+00:00",
+    "title": "Tightness of Function-Counting Bounds for All Rank-Kruskal Rank Pairs"
   },
   {
     "consumed_by_exp_id": "",
@@ -1954,7 +1983,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "92210ffa",
+    "consumed_by_exp_id": "f498d6bb",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
