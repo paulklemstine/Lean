@@ -4,21 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0211",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T21:00:28.912840+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -45,21 +30,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0212",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T21:00:28.956123+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -352,7 +322,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sign law for the third order mock theta function phi(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d61ff6b",
     "description": "We conjecture an explicit formula for the Jordan canonical form of the image of a regular unipotent element under any finite\u2011dimensional irreducible polynomial representation of GL\u2083(\u2096). Let \u03bb = (a,b,c) be a dominant weight with a > b > c. Define d\u2081 = a\u2011 b, d\u2082 = b\u2011 c, d\u2083 = a\u2011 c and the rational function\n\nM(t) = (1\u2011 t^{d\u2081+1})(1\u2011 t^{d\u2082+1})(1\u2011 t^{d\u2083+2}) /\n       ((1\u2011 t^{d\u2081})(1\u2011 t^{d\u2082})(1\u2011 t^{d\u2083})).\n\nWrite M(t) = \u03a3_{j\u22650} m_j t^j. Then the Jordan canonical form of \u03c0_\u03bb(u) (the regular unipotent u \u2208 GL\u2083(\u2096) under the representation \u03c0_\u03bb) is the partition whose parts are (j+1) repeated m_j times. In particular the multiplicities m_j satisfy a linear recurrence with characteristic polynomial (1\u2011 t^{d\u2081})(1\u2011 t^{d\u2082})(1\u2011 t^{d\u2083}).",
     "domains": [
       "Algebra",
@@ -362,7 +332,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T14:45:19.943455+00:00",
     "title": "Jordan type of regular unipotent image for GL\u2080 representations"
   },
@@ -1578,7 +1548,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit error bound for smoothed sigma divisor sum"
   },
   {
-    "consumed_by_exp_id": "e1ce2dca",
+    "consumed_by_exp_id": "",
     "description": "For the general linear Lie superalgebra \ud835\udd24\ud835\udd29(m,n) with standard representation V = V\u2080 \u2295 V\u2081 (dim V\u2080 = m, dim V\u2081 = n), the Euler character of the k-th exterior power \u2227\u1d4fV coincides with the k-th elementary supersymmetric polynomial in the variables x\u2081,\u2026,x\u2098,y\u2081,\u2026,y\u2099. Specifically, \u03c7_Euler(\u2227\u1d4fV) = e\u2096(x\u2081,\u2026,x\u2098; y\u2081,\u2026,y\u2099) where e\u2096 is the k-th elementary supersymmetric polynomial, and this polynomial lies in the ring \u039b^\u00b1_{m,n} of supersymmetric Laurent polynomials invariant under S\u2098 \u00d7 S\u2099 and satisfying x_i \u2202f/\u2202x_i + y_j \u2202f/\u2202y_j \u2208 (x_i + y_j).",
     "domains": [
       "Algebra"
@@ -1587,7 +1557,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01782v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T08:15:37.979428+00:00",
     "title": "Euler Characters of Exterior Powers of the Standard Representation of \ud835\udd24\ud835\udd29(m,n)"
   },
@@ -2027,7 +1997,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multiplicity formula for the restriction of GL_3 irreducible representations to the principal SL_2"
   },
   {
-    "consumed_by_exp_id": "c98890ef",
+    "consumed_by_exp_id": "",
     "description": "The conjecture posits that if the greatest common divisor of a and b exceeds 1 and the exponent n is even, then no positive integer solutions (a, b, x) with a < b exist for the equation (a^n+1)(b^n+1)=x\u00b2.",
     "domains": [
       "Pythagorean"
@@ -2036,7 +2006,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T20:15:36.843139+00:00",
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x\u00b2 when gcd(a,b) > 1 and n is even"
   },
@@ -2056,12 +2026,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any d \u00d7 d matrix A over a number field K with ring of integers O_K, if there exists n \u2265 1 such that A^n \u2208 M_d(O_K), then the pseudo-determinant of A is an algebraic integer in K.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0166",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30876v1",
+    "status": "available",
+    "timestamp": "2026-07-03T21:26:19.991104+00:00",
+    "title": "Pseudo-determinant of power-integral matrices is an algebraic integer"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -2075,7 +2059,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0167",
+    "id": "fd_0168",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -2089,7 +2073,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0168",
+    "id": "fd_0169",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -2103,7 +2087,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0169",
+    "id": "fd_0170",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -2117,7 +2101,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0170",
+    "id": "fd_0171",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -2132,7 +2116,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0171",
+    "id": "fd_0172",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -2147,7 +2131,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0172",
+    "id": "fd_0173",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -2162,7 +2146,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0173",
+    "id": "fd_0174",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -2176,7 +2160,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0174",
+    "id": "fd_0175",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -2191,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0175",
+    "id": "fd_0176",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -2206,7 +2190,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0176",
+    "id": "fd_0177",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -2220,7 +2204,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0177",
+    "id": "fd_0178",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -2235,7 +2219,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0178",
+    "id": "fd_0179",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -2250,7 +2234,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0179",
+    "id": "fd_0180",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -2264,7 +2248,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0180",
+    "id": "fd_0181",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2278,7 +2262,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0181",
+    "id": "fd_0182",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2293,7 +2277,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0182",
+    "id": "fd_0183",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2307,7 +2291,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0183",
+    "id": "fd_0184",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2321,7 +2305,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0184",
+    "id": "fd_0185",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2336,7 +2320,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0185",
+    "id": "fd_0186",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2350,7 +2334,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0186",
+    "id": "fd_0187",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2365,7 +2349,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0187",
+    "id": "fd_0188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2379,7 +2363,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0188",
+    "id": "fd_0189",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2393,7 +2377,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0189",
+    "id": "fd_0190",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2407,7 +2391,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0190",
+    "id": "fd_0191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2421,7 +2405,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0191",
+    "id": "fd_0192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2436,7 +2420,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0192",
+    "id": "fd_0193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2445,16 +2429,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
   },
   {
-    "consumed_by_exp_id": "a8c9dac2",
+    "consumed_by_exp_id": "",
     "description": "Let G be a brick (i.e. a 3\u2011connected bicritical non\u2011bipartite graph) that is not isomorphic to K4, the complement of C6 (\u0143C6) nor the Petersen graph. Then the following are equivalent:\n\n1) Every b\u2011invariant edge of G is a forcing edge.\n2) G is a near\u2011bipartite brick belonging to the class characterised in the main theorem of the paper (i.e. the complete description of near\u2011bipartite bricks for which every b\u2011invariant edge is forcing).\n\nThus, apart from the three small exceptions, the property \"all b\u2011invariant edges are forcing\" precisely picks out the near\u2011bipartite bricks.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0193",
+    "id": "fd_0194",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T13:25:27.639831+00:00",
     "title": "Every b\u2011invariant edge is forcing exactly for near\u2011bipartite bricks (up to the three classical exceptions)"
   },
@@ -2465,7 +2449,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0194",
+    "id": "fd_0195",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2480,7 +2464,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0195",
+    "id": "fd_0196",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
@@ -2495,7 +2479,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0196",
+    "id": "fd_0197",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00372v1",
@@ -2509,7 +2493,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0197",
+    "id": "fd_0198",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00332v1",
@@ -2523,7 +2507,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Physics"
     ],
-    "id": "fd_0198",
+    "id": "fd_0199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.32024v1",
@@ -2538,7 +2522,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0199",
+    "id": "fd_0200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31967v1",
@@ -2553,7 +2537,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_0200",
+    "id": "fd_0201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31940v1",
@@ -2568,7 +2552,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0201",
+    "id": "fd_0202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31908v1",
@@ -2583,7 +2567,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0202",
+    "id": "fd_0203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31687v1",
@@ -2598,7 +2582,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0203",
+    "id": "fd_0204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31821v2",
@@ -2613,7 +2597,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0204",
+    "id": "fd_0205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31547v1",
@@ -2628,7 +2612,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0205",
+    "id": "fd_0206",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31649v1",
@@ -2643,7 +2627,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0206",
+    "id": "fd_0207",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31565v1",
@@ -2657,7 +2641,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0207",
+    "id": "fd_0208",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31526v1",
@@ -2672,7 +2656,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0208",
+    "id": "fd_0209",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31341v1",
@@ -2687,7 +2671,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0209",
+    "id": "fd_0210",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31262v1",
@@ -2702,13 +2686,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0210",
+    "id": "fd_0211",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31264v1",
     "status": "available",
     "timestamp": "2026-07-03T20:16:11.452751+00:00",
     "title": "A congruence conjecture for DSOME(n) modulo 4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any d-dimensional lattice polytope with m vertices, its surface area is bounded below by (d-1)/d times its volume, ensuring a precise upper limit on surface measures despite growth rates, making this inequality falsifiable through counterexamples in higher dimensions.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_0212",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.30856v1",
+    "status": "available",
+    "timestamp": "2026-07-03T21:26:47.114852+00:00",
+    "title": "Surface-to-Volume Bounding Inequality"
   },
   {
     "consumed_by_exp_id": "",
@@ -2757,21 +2756,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. The Escher Height Invariant via Krull Dimension Gaps\nDefine the *Escher height* of a commutative ring as the largest Krull dimension of\na quotient by the base of a strictly ascending ideal chain whose infinite\nintersection returns to that base. One expects the polynomial ring in `n`\nvariables to have Escher height exactly `n`, the ring in infinitely many variables\nto have infinite height, and height zero to characterize the Artinian rings.\n\n**The key insight is** that the height of an \"impossible staircase\" is not about\nthe chain looping back \u2014 it always does \u2014 but about how much room the ambient\nquotient leaves for the staircase to climb, which is precisely a dimension count.\n\n**Why now?** The equivalence \"ascending staircase exists \u21d4 non-Noetherian\" is now\nfirmly established, so the natural next step is to measure, not merely detect, the\nfailure of the ascending chain condition.\n\n## 2. Ascending\u2013Descending Duality of Vanishing Intersections\nAn ascending chain's intersection is forced to equal its first term, whereas a\ndescending chain of nonzero ideals can collapse all the way to zero. Conjecture a\nsharp duality: descending collapse to zero with nonzero terms happens exactly when\nsome nonzero element sits inside arbitrarily high powers of a proper ideal.\n\n**The key insight is** that the two seemingly opposite pictures \u2014 the ascending\n\"loop-back\" and the descending \"vanishing\" \u2014 are governed by the same quantity,\nthe way small elements survive across the whole chain.\n\n**Why now?** With both the ascending loop-back and the dyadic descending collapse\nin the integers proved side by side, the symmetry between them is begging for a\nunifying criterion.\n\n## 3. Escher Staircases in Semirings and the Tropical Setting\nCarry the whole theory into commutative semirings, where subtraction is\nunavailable. The support-below-`n` construction should still produce strictly\nascending chains of semiring ideals in any product semiring over an infinite index\nset, and the tropical polynomial semiring in infinitely many variables should be\nnon-Noetherian in this sense.\n\n**The key insight is** that non-Noetherianity is fundamentally an order-theoretic\nstatement about chains, so it should survive the loss of additive inverses that\ndistinguishes semirings from rings.\n\n**Why now?** The characterization was proved with a well-founded-order argument\nthat never used subtraction, strongly suggesting it transfers verbatim to the\ntropical world.\n\n## 4. The Escher Height of the Ring of All Algebraic Integers\nThe ring of all algebraic integers is a one-dimensional non-Noetherian domain.\nBuild an explicit staircase from the ideals generated by successive square-root\ntowers `2^(1/2^n)` and show it is strictly ascending with base-returning\nintersection, so that the Escher height is infinite despite Krull dimension one.\n\n**The key insight is** that Krull dimension counts the length of *prime* chains,\nwhile the Escher height counts arbitrary ideal chains \u2014 and a Bezout domain can be\nprime-thin yet ideal-rich.\n\n**Why now?** Explicit radical towers give a concrete, testable staircase, turning a\nfamously abstract non-Noetherian ring into a hands-on example.\n\n## 5. Escher Staircases as a Measure of Distance from Noetherianity\nAttach to each ring its *staircase spectrum*: the collection of order types\nrealized by its strictly ascending ideal chains. Noetherian rings are exactly\nthose whose spectrum omits the natural numbers; product rings over infinite index\nsets should realize every countable ascending order type.\n\n**The key insight is** that \"how far from Noetherian\" is best recorded not by a\nsingle number but by the family of chain shapes a ring can support.\n\n**Why now?** Having a clean model \u2014 the Boolean product ring \u2014 that visibly\nrealizes the natural-number order type gives a foothold for mapping out the full\nspectrum of possibilities.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0213",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6d5a2dac",
-    "status": "available",
-    "timestamp": "2026-07-03T21:04:49.951604+00:00",
-    "title": "Define the *Escher height* of a commutative ring as the largest Krull dimension "
-  },
-  {
-    "consumed_by_exp_id": "e1e6fc31",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -2781,7 +2765,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
@@ -2798,20 +2782,5 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T04:44:52.457313+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: In the infinite-width limit, the empirical eigenvalue distribution of the Neural Tangent Kernel (NTK) of a fully connected ReLU network with i.i.d. Gaussian weights converges to the Marchenko-Pastur distribution scaled by a depth-dependent factor, independent of architecture details beyond depth. Test: Generate NTK matrices for networks of varying width (e.g., 500\u20135000) and fixed depth, compute eigenvalue histograms, and apply a two-sample Kolmogorov\u2011Smirnov test against the predicted scaled MP law; rejection at p<0.01 across multiple random seeds falsifies the conjecture. Impact: Establishes a direct link between random matrix theory and deep learning generalization, enabling principled initialization schemes and depth\u2011dependent learning\u2011rate schedules.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0214",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-07-03T21:09:51.383213+00:00",
-    "title": "Universal Spectral Law for Wide Neural Tangent Kernels"
   }
 ];
