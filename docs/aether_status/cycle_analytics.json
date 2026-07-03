@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-03T12:55:59.435072+00:00",
+  "last_updated": "2026-07-03T13:13:19.457113+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -30223,6 +30223,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-03T12:55:59.391719+00:00",
       "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 44,
+      "domain": "Bridges",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "a77032bd",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783078840.8038344,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-03T13:13:19.415748+00:00",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }
   ]
 }

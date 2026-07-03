@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "a77032bd",
+    "consumed_by_exp_id": "258cd11f",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -1736,12 +1736,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that for every finite simple graph G, the following are equivalent: (i) G is balanced (its clique\u2011matrix contains no odd square submatrix with exactly two 1's in each row and each column); (ii) G is hereditary clique\u2011Helly (every induced subgraph has the Helly property for cliques); and (iii) G contains no induced copy of the complement of 3K2 (i.e., \\u03c3\u03052K2). This extends the result of [arXiv:xxxx] from distance\u2011hereditary graphs to all graphs, providing a single forbidden induced subgraph characterization of balancedness.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0146",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00730v1",
+    "status": "available",
+    "timestamp": "2026-07-03T13:24:03.491700+00:00",
+    "title": "Conjecture: Balanced graphs coincide with hereditary clique\u2011Helly graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1750,30 +1764,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fan-structured order and uniform bounds in the Selmer group distribution"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "061b612f",
     "description": "In the setting of the paper, let K be a subcomplex of the join of all spanning k\u2011trees of a complete (k+1)-partite graph on disjoint finite vertex sets V\u2081,\u2026,V_{k+1} together with a wedge of an m\u2011sphere. Conjecture: Every colorful Carath\u00e9odory map A:|K|\u2192\u211d^{k+1} must contain a non\u2011empty face of dimension at most k that maps to 0, and the collection of such minimal faces forms exactly the flag complex of the hypergraph of spanning k\u2011trees satisfying a certain exchange property. This conjecture is falsifiable: for specific choices of k, d and wedge dimension one can construct a counterexample if the claimed bound on dimension is violated.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:15:12.510112+00:00",
     "title": "Conjecture on minimal hitting subcomplexes in joins of spanning k\u2011trees with wedge of spheres"
   },
   {
-    "consumed_by_exp_id": "061b612f",
+    "consumed_by_exp_id": "",
     "description": "For any s \u2208 \u2115\u2080, h \u2208 \u2102\\{0}, and non-negative integers n,k, the (p,q)-generalized Stirling numbers \ud835\udd16_{s;h}(n,k|p,q) defined by the normal ordering of (YX)^n in the (p,q)-deformed generalized Weyl algebra can be expressed as a linear combination of (p,q)-binomial coefficients with non-negative integer coefficients.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:39:20.537784+00:00",
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
@@ -1783,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1797,7 +1811,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1806,23 +1820,8 @@ window.FUTURE_DIRECTIONS = [
     "title": "Structural Location of Overfull Subgraphs in Class 2 Graphs"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "For any odd prime power q\u22653 and integer m\u22654, the largest codimension of a cyclically covering subspace of\u202f\ud835\udd3d_q\u207f with n=(q^m+1)/2 equals\u202f1. Equivalently, there exists a cyclic code of length (q^m+1)/2 and dimension n\u22121 that contains no full\u2011weight codeword, and no cyclically covering subspace of larger codimension can exist.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0151",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02239v1",
-    "status": "available",
-    "timestamp": "2026-07-03T03:50:00.178097+00:00",
-    "title": "Exact Codimension for Cyclically Covering Subspaces of Length (q\u1d50+1)/2"
-  },
-  {
     "consumed_by_exp_id": "a511a89e",
-    "description": "For a family of unitary CFTs dual to AdS black holes with central charge c \u2192 \u221e, let M_c denote the maximal number of primary operators in a fixed energy window of width \u0394. Define the centered and scaled variable Y_c = (log M_c - \u03bc_c)/\u03c3_c, where \u03bc_c and \u03c3_c are the mean and standard deviation of log M_c. Conjecture that Y_c converges in distribution to the Gumbel law, i.e., for every real x, \\(\\lim_{c\\to\\infty} P(Y_c \\leq x) = \\exp(-\\exp(-x))\\).",
+    "description": "For any odd prime power q\u22653 and integer m\u22654, the largest codimension of a cyclically covering subspace of\u202f\ud835\udd3d_q\u207f with n=(q^m+1)/2 equals\u202f1. Equivalently, there exists a cyclic code of length (q^m+1)/2 and dimension n\u22121 that contains no full\u2011weight codeword, and no cyclically covering subspace of larger codimension can exist.",
     "domains": [
       "Pythagorean",
       "Algebra"
@@ -1830,8 +1829,23 @@ window.FUTURE_DIRECTIONS = [
     "id": "fd_0152",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.02233v1",
+    "source_exp_id": "2607.02239v1",
     "status": "in_progress",
+    "timestamp": "2026-07-03T03:50:00.178097+00:00",
+    "title": "Exact Codimension for Cyclically Covering Subspaces of Length (q\u1d50+1)/2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a family of unitary CFTs dual to AdS black holes with central charge c \u2192 \u221e, let M_c denote the maximal number of primary operators in a fixed energy window of width \u0394. Define the centered and scaled variable Y_c = (log M_c - \u03bc_c)/\u03c3_c, where \u03bc_c and \u03c3_c are the mean and standard deviation of log M_c. Conjecture that Y_c converges in distribution to the Gumbel law, i.e., for every real x, \\(\\lim_{c\\to\\infty} P(Y_c \\leq x) = \\exp(-\\exp(-x))\\).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0153",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02233v1",
+    "status": "available",
     "timestamp": "2026-07-03T04:12:15.268770+00:00",
     "title": "Gumbel limit for extremal microstate counts in AdS/CFT"
   },
@@ -1842,7 +1856,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -1856,7 +1870,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -1871,7 +1885,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1886,7 +1900,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1900,7 +1914,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0157",
+    "id": "fd_0158",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1915,7 +1929,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
@@ -1930,7 +1944,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -1939,30 +1953,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71bd52e9",
     "description": "We conjecture that for every \u03bb > 1 with gcd(\u03bb,6) = 1, the \u03bb\u2011skeleton L_\u03bb contains infinitely many rows that contain at least one prime. Equivalently, the set of prime\u2011free rows in L_\u03bb is finite. This extends the paper's result that only the principal skeleton L_1 has the infinite prime\u2011free arithmetic progression k \u2261 2 (mod 4).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0160",
+    "id": "fd_0161",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T08:21:14.699332+00:00",
     "title": "Infinite prime rows in \u03bb\u2011skeletons beyond \u03bb=1"
   },
   {
-    "consumed_by_exp_id": "71bd52e9",
+    "consumed_by_exp_id": "",
     "description": "For any finite antipodal set X on the d-dimensional sphere (d \u2265 2), if the harmonic strength Hst(X) contains any even integer, then it must contain 2. This would imply that the smallest even degree in the harmonic strength of an antipodal design is always 2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0161",
+    "id": "fd_0162",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T08:45:09.613104+00:00",
     "title": "Even Harmonic Strength of Antipodal Spherical Designs Contains 2"
   },
@@ -1973,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -1987,7 +2001,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2001,7 +2015,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2016,7 +2030,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2030,7 +2044,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2045,7 +2059,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0167",
+    "id": "fd_0168",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2059,7 +2073,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0168",
+    "id": "fd_0169",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2073,7 +2087,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0169",
+    "id": "fd_0170",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2087,7 +2101,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0170",
+    "id": "fd_0171",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2101,7 +2115,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0171",
+    "id": "fd_0172",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2116,13 +2130,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0172",
+    "id": "fd_0173",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
     "status": "available",
     "timestamp": "2026-07-03T12:57:08.370062+00:00",
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a brick (i.e. a 3\u2011connected bicritical non\u2011bipartite graph) that is not isomorphic to K4, the complement of C6 (\u0143C6) nor the Petersen graph. Then the following are equivalent:\n\n1) Every b\u2011invariant edge of G is a forcing edge.\n2) G is a near\u2011bipartite brick belonging to the class characterised in the main theorem of the paper (i.e. the complete description of near\u2011bipartite bricks for which every b\u2011invariant edge is forcing).\n\nThus, apart from the three small exceptions, the property \"all b\u2011invariant edges are forcing\" precisely picks out the near\u2011bipartite bricks.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0174",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00608v1",
+    "status": "available",
+    "timestamp": "2026-07-03T13:25:27.639831+00:00",
+    "title": "Every b\u2011invariant edge is forcing exactly for near\u2011bipartite bricks (up to the three classical exceptions)"
   },
   {
     "consumed_by_exp_id": "",
