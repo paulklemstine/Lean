@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "beb2abc2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Uniqueness of Extremal Graphons in Sparse Threshold Problems\n\nDerived from this cycle's findings in\n`Catalog/Novelty/SparseThresholdVariational.lean` and\n`Catalog/Novelty/SparseT",
-      "quality_score": 0.5954,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T14:16:47",
-      "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems"
-    },
-    {
       "cycle_id": "06caccbf",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Excluded minors for bias graphs gainable over ℤ/pℤ\n\nBuilding on `Catalog/Novelty/BiasGraphGainsZp.lean`, which establishes (1) switching\ninvariance of balance and (2) the `p`-dep",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-07-03T05:53:55",
       "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+    },
+    {
+      "cycle_id": "7488be0a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Sheared Witt vectors and filtered colimits\n\nThese conjectures grew out of a single observation: truncated Witt vectors,\nbuilt from finitely many coordinates, commute with filtere",
+      "quality_score": 0.51904,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-07-03T06:58:14",
+      "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7902000000000001
     }
   ],
-  "last_updated": "2026-07-03T05:53:55",
+  "last_updated": "2026-07-03T06:58:14",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "52dd778d",
-        "quality": 0.7232000000000001,
-        "theorems": 8,
-        "title": "Infinite Sign Changes of Symmetric Power L-Function Coefficients over Sums of m "
-      },
-      {
         "cycle_id": "c56262ed",
         "quality": 0.456932,
         "theorems": 26,
@@ -3141,6 +3135,12 @@
         "quality": 0.7480399999999999,
         "theorems": 5,
         "title": "Prove Fermats Little Theorem for p=5"
+      },
+      {
+        "cycle_id": "7488be0a",
+        "quality": 0.51904,
+        "theorems": 4,
+        "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
       }
     ],
     "Bridges": [

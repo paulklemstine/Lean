@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "70c42dc4",
+    "consumed_by_exp_id": "",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -61,7 +61,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "c4bca99c",
+    "consumed_by_exp_id": "",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -70,7 +70,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -481,7 +481,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7a96d972",
     "description": "Conjecture: For any odd prime p, any even integer k \u2265 2, and any a_p \u2208 \u211a\u0304_p with 0 < v(a_p) < p-1 (i.e., a fractional slope), the semi-simplification \\bar{V}_{k,a_p} of the mod p reduction of the two-dimensional crystalline representation V_{k,a_p} of G_{\u211a_p} of weight k and parameter a_p is irreducible as a mod p representation of G_{\u211a_p}.",
     "domains": [
       "Pythagorean",
@@ -491,7 +491,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00930v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:58:32.634677+00:00",
     "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
   },
@@ -658,7 +658,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the Greenberg\u2013Wiles local lower bound for \u2113\u2011Selmer groups in constant\u2011torsion families"
   },
   {
-    "consumed_by_exp_id": "583299ca",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/\u2113^m gives rise to a continuous semisimple Galois representation r : G_F \u2192 GL_n(Z_\u2113) which is de Rham at places v|\u2113, with Hodge\u2013Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered \u03c6\u2011module via Fontaine's functor corresponds under the p\u2011adic local Langlands correspondence to the automorphic component \u03c0_v.",
     "domains": [
       "Algebra",
@@ -668,7 +668,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31698v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T12:49:31.510793+00:00",
     "title": "Torsion local-global compatibility at p = \u2113 for GL_n over CM fields"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "72278e2e",
+    "consumed_by_exp_id": "",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1326,7 +1326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -1360,7 +1360,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheared Witt vectors commute with filtered colimits of nilperfect rings"
   },
   {
-    "consumed_by_exp_id": "744870f6",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any prime r, any 1 \u2264 x \u2264 r^{0.499}, and any real q \u2208 [0,1], the average over characters modulo r of |\u2211_{n\u2264x} \u03c7(n)|^{2q} is at least (1/2)^q x^q, matching the known upper bounds and implying sharpness.",
     "domains": [
       "Pythagorean"
@@ -1369,7 +1369,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01184v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:37:52.136398+00:00",
     "title": "Lower bound conjecture for low moments of Dirichlet character sums"
   },
@@ -1520,12 +1520,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A precise conjecture relating generalized Hurwitz class numbers and the distribution of traces of Hecke operators, with applications to number fields and arithmetic geometry.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0131",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01957v1",
+    "status": "available",
+    "timestamp": "2026-07-03T07:02:29.975116+00:00",
+    "title": "The Eichler--Selberg trace formula for Hilbert cusp forms in class number problems"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0131",
+    "id": "fd_0132",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1539,7 +1554,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0132",
+    "id": "fd_0133",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1553,7 +1568,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0133",
+    "id": "fd_0134",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1567,7 +1582,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0134",
+    "id": "fd_0135",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1581,7 +1596,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0135",
+    "id": "fd_0136",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1596,7 +1611,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0136",
+    "id": "fd_0137",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1611,7 +1626,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0137",
+    "id": "fd_0138",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1620,17 +1635,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Gumbel limit for extremal microstate counts in AdS/CFT"
   },
   {
-    "consumed_by_exp_id": "12f18d90",
+    "consumed_by_exp_id": "",
     "description": "This research strives to identify precise mathematical conjectures in the theory of matroids and to design formalized counterexamples that expose their boundaries. The focus is on replicable designs that challenge theoretical assumptions.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0138",
+    "id": "fd_0139",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T04:32:20.108021+00:00",
     "title": "Probing the limits of matroid conjectures through counterexamples"
   },
@@ -1640,7 +1655,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0139",
+    "id": "fd_0140",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -1655,7 +1670,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0140",
+    "id": "fd_0141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1670,7 +1685,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1684,13 +1699,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
     "status": "available",
     "timestamp": "2026-07-03T06:33:32.655747+00:00",
     "title": "Geodesic Treewidth Upper Bound for Planar Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any oriented product structure \\((A,B,P)\\) of type \\((m,n)\\) with \\(m,n\\ge2\\) satisfying the no\u2011fold condition \\(\\mathsf T_2\\), the weighted dual Fisher inequality is strict unless \\((m,n)=(2,2)\\) and the structure is the affine plane of order\u202f2 (i.e. the unique 2\u00d72 grid). Moreover, if the middle\u2011link girth is\u202f6 then the minimum of the two horizontal\u2011link girths is at most\u202f4, and equality in the weighted dual Fisher inequality forces the structure to be exactly this affine\u2011plane construction. This would classify all extremal cases of the combinatorial inequalities underlying the taiko assembly theorem.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0144",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01716v1",
+    "status": "available",
+    "timestamp": "2026-07-03T07:08:28.593276+00:00",
+    "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
   },
   {
     "consumed_by_exp_id": "",
@@ -1723,7 +1753,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "ba614c22",
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -1733,12 +1763,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "8638d104",
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -1748,7 +1778,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
