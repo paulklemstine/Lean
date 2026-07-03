@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-03T01:11:54.141177+00:00",
+  "last_updated": "2026-07-03T01:37:01.948481+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -28756,6 +28756,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-03T01:11:54.100092+00:00",
       "title": "Nonexistence of Infinite 3\u207a\u2013Parameterized\u2011Square\u2011Free Binary Words"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6168,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Logic",
+      "duration_seconds": 2201.6510157585144,
+      "end_time": 1783042284.445536,
+      "files_integrated": 7,
+      "job_id": "150736b0",
+      "outcome_quality": 0.6976800000000001,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.7468,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.6611,
+        "novelty": 0.89,
+        "proof_depth": 0.563,
+        "usefulness": 0.7565
+      },
+      "quality_score": 0.6976800000000001,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783040082.7945201,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-03T01:37:01.907856+00:00",
+      "title": "Conjecture on Absolute Boundedness of Polynomial Diophantine Tuples"
     }
   ]
 }
