@@ -2363,7 +2363,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a51976ad",
+    "consumed_by_exp_id": "72278e2e",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
     "domain_bridges": [],
     "domains": [
@@ -2683,6 +2683,47 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "\"Panda, Verma, Keerti (2020)\"",
+      "\"Zhang et al. (2005)\"",
+      "\"Behzad (1965)\"",
+      "\"Vizing (1968)\"",
+      "\"Wang (2007)\"",
+      "\"Chen (2008)\"",
+      "\"Lu et al. (2017)\"",
+      "\"PR (2014)\"",
+      "\"CG (2009)\"",
+      "\"LCM (2015)\"",
+      "\"PM (2010)\"",
+      "\"VFP (2022)\"",
+      "\"Vernold (2007)\""
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$‑regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD‑total chromatic number, namely $\\chi''_{a}(C(G)) = d+3$, except in the degenerate case where $G$ is a complete graph $K_{d+1}$ (for which $\\chi''_{a}(C(G)) = d+2$). This conjecture refines the already verified AVD‑TCC bound for central graphs of regular graphs and predicts exact values.",
+    "domain_bridges": [
+      "adjacent vertex distinguishing coloring",
+      "total coloring",
+      "central graph",
+      "regular graph",
+      "join of graphs",
+      "subdivision graph",
+      "AVD-Type classification"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0129",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture is approached in two parts. 1. **Lower bound**: Show that any AVD‑total coloring of $C(G)$ must use at least $d+3$ colors by constructing a small subgraph (e.g., a copy of $K_{d+1}$ or a suitable $d$‑regular subgraph) whose AVD‑total chromatic number is known to be $d+3$ (using results of Zhang et al. or the AVD‑TCC). This yields $\\chi''_{a}(C(G)) \\ge d+3$. 2. **Upper bound**: Build an explicit AVD‑total coloring of $C(G)$ with $d+3$ colors. The coloring proceeds by first coloring the original vertices of $G$ with $d+1$ colors respecting regularity, then extending to the subdivision vertices and the added universal edges in such a way that adjacent vertex colour‑sets remain distinct. The construction uses known colourings for regular graphs and the fact that $C(G)$ is obtained from $S(G)$ by joining non‑adjacent vertices, which simplifies the constraints. Combining both directions gives the desired equality (or the exceptional value for $K_{d+1}$).",
+    "research_mode": "team",
+    "source_exp_id": "2607.01979v1",
+    "status": "available",
+    "timestamp": "2026-07-03T06:12:59.143802+00:00",
+    "title": "Exact AVD‑total chromatic number of central graphs of regular graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "SDtwists",
       "KMR13",
       "KMR14",
@@ -2700,7 +2741,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0129",
+    "id": "fd_0130",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -2725,7 +2766,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0130",
+    "id": "fd_0131",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
@@ -2756,7 +2797,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0131",
+    "id": "fd_0132",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
@@ -2782,7 +2823,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0132",
+    "id": "fd_0133",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
@@ -2811,7 +2852,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0133",
+    "id": "fd_0134",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Approach by contradiction assuming no such subgraph exists. Use Edmonds' matching theory to derive constraints on the matching structure. Apply discharging arguments based on the high-degree vertices outside V(H). Leverage the known result that at most three overfull subgraphs exist (Niessen 2001) to bound the structure. Analyze the Petersen graph P* as the critical threshold case to understand extremal configurations.",
@@ -2838,7 +2879,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0134",
+    "id": "fd_0135",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit cyclic code of length n=(q^m+1)/2 whose generator polynomial is the minimal polynomial of a primitive element of 𝔽_{q^m} of order q^m+1 divided by (x−1). Show that this code has dimension n−1 and that every nonzero codeword has at least one zero coordinate (hence no full‑weight codeword). Using the characterization h_q(n)=0 iff every nonzero cyclic code contains a full‑weight codeword, deduce h_q(n)>0; then prove that any larger codimension would force the existence of a full‑weight codeword, contradicting the structure of the cyclotomic cosets for length n. This establishes h_q(n)=1. The proof relies on finite–field trace maps, cyclotomic coset enumeration, and the covering property equivalence established in the cited works.",
@@ -2866,7 +2907,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0135",
+    "id": "fd_0136",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage known results on the convergence of extremal statistics of Gaussian log‑correlated processes to the Gumbel distribution, combine them with a rigorous saddle‑point analysis of the CFT partition function to identify the appropriate scaling of μ_c and σ_c, and verify the required tightness and moment conditions for the limit theorem.",
@@ -2892,7 +2933,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0136",
+    "id": "fd_0137",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a minimal counterexamples based on combinatorial bounds on exchange numbers and flip counts.",
@@ -2909,7 +2950,7 @@
       "Sidorenko1991",
       "Hatami2010"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12f18d90",
     "description": "For any admissible class C and any non‑matching Sidorenko graph H, every W ∈ C satisfying t(H,W)=p(W)^{e(H)} must be regular; i.e., the equality case regularizes optimally.",
     "domain_bridges": [
       "graph theory",
@@ -2919,13 +2960,13 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0137",
+    "id": "fd_0138",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample W violating regularity; use tensor amplification (degree‑biased or Perron‑biased) to derive a contradiction with the Sidorenko inequality or with known regularity constraints, thereby proving the conjecture.",
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T04:56:06.560111+00:00",
     "title": "Equality case regularity conjecture for admissible Sidorenko classes"
   },
@@ -2934,7 +2975,7 @@
     "catalog_references": [
       "G. Wang, Comm. Algebra 2025"
     ],
-    "consumed_by_exp_id": "12f18d90",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for any non‑empty finite set Ψ of non‑zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_Ψ(G) ≤ n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
     "domain_bridges": [
       "additive combinatorics",
@@ -2945,15 +2986,40 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0138",
+    "id": "fd_0139",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the equivalence by constructing an explicit finite subcover from a minimal sequence and using the universal property of the direct sum to relate induced homomorphisms to sums of ψ_i.",
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T05:55:53.302394+00:00",
     "title": "Kernel‑cover characterisation of the weighted Davenport constant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let A be a line arrangement in the complex projective plane of degree d such that every singular point has multiplicity at most 3 (i.e., only double and triple points). If the minimal degree of a Jacobian relation satisfies mdr(A) < d/2, then mdr(A) is combinatorially determined: any other line arrangement B with the same intersection lattice (and hence the same singularity multiplicities) has mdr(B) = mdr(A).",
+    "domain_bridges": [
+      "math.CO",
+      "math.AC"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0140",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the fact that for arrangements with only double and triple points the Jacobian ideal is generated by the partial derivatives of a defining polynomial that is known to be quasi-homogeneous with respect to certain weights. Apply Saito's criterion for freeness and the relation between the exponents of the arrangement and the degrees of minimal syzygies. Show that under the hypothesis mdr < d/2 the arrangement is plus-one generated, which forces the Jacobian syzygy module to have a predictable graded structure determined solely by the intersection lattice. Verify the claim by computing the relevant graded Betti numbers via Gröbner basis techniques in the polynomial ring S = C[x,y,z].",
+    "research_mode": "team",
+    "source_exp_id": "2607.01985v1",
+    "status": "available",
+    "timestamp": "2026-07-03T06:13:22.731805+00:00",
+    "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
   },
   {
     "ambition_level": "extension",

@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "a51976ad",
+    "consumed_by_exp_id": "72278e2e",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1491,12 +1491,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every regular graph $G$ of degree $d\\ge 2$ (i.e., $\\Delta(G)=d$ and $G$ is $d$\u2011regular), we conjecture that the central graph $C(G)$ achieves the maximal possible AVD\u2011total chromatic number, namely $\\chi''_{a}(C(G)) = d+3$, except in the degenerate case where $G$ is a complete graph $K_{d+1}$ (for which $\\chi''_{a}(C(G)) = d+2$). This conjecture refines the already verified AVD\u2011TCC bound for central graphs of regular graphs and predicts exact values.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0129",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01979v1",
+    "status": "available",
+    "timestamp": "2026-07-03T06:12:59.143802+00:00",
+    "title": "Exact AVD\u2011total chromatic number of central graphs of regular graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0129",
+    "id": "fd_0130",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1510,7 +1524,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0130",
+    "id": "fd_0131",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1524,7 +1538,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0131",
+    "id": "fd_0132",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1538,7 +1552,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0132",
+    "id": "fd_0133",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1552,7 +1566,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0133",
+    "id": "fd_0134",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1567,7 +1581,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0134",
+    "id": "fd_0135",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1582,7 +1596,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0135",
+    "id": "fd_0136",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1597,7 +1611,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0136",
+    "id": "fd_0137",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -1606,33 +1620,48 @@ window.FUTURE_DIRECTIONS = [
     "title": "Probing the limits of matroid conjectures through counterexamples"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12f18d90",
     "description": "For any admissible class C and any non\u2011matching Sidorenko graph H, every W \u2208 C satisfying t(H,W)=p(W)^{e(H)} must be regular; i.e., the equality case regularizes optimally.",
     "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0137",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02260v1",
-    "status": "available",
-    "timestamp": "2026-07-03T04:56:06.560111+00:00",
-    "title": "Equality case regularity conjecture for admissible Sidorenko classes"
-  },
-  {
-    "consumed_by_exp_id": "12f18d90",
-    "description": "Conjecture that for any non\u2011empty finite set \u03a8 of non\u2011zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_\u03a8(G) \u2264 n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
-    "domains": [
-      "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0138",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.02132v1",
+    "source_exp_id": "2607.02260v1",
     "status": "in_progress",
+    "timestamp": "2026-07-03T04:56:06.560111+00:00",
+    "title": "Equality case regularity conjecture for admissible Sidorenko classes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any non\u2011empty finite set \u03a8 of non\u2011zero homomorphisms from an abelian group F to G, the weighted Davenport constant D_\u03a8(G) \u2264 n holds precisely when the family of kernels of the induced universal homomorphisms from F^n to G forms a cover of F^n.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0139",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02132v1",
+    "status": "available",
     "timestamp": "2026-07-03T05:55:53.302394+00:00",
     "title": "Kernel\u2011cover characterisation of the weighted Davenport constant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let A be a line arrangement in the complex projective plane of degree d such that every singular point has multiplicity at most 3 (i.e., only double and triple points). If the minimal degree of a Jacobian relation satisfies mdr(A) < d/2, then mdr(A) is combinatorially determined: any other line arrangement B with the same intersection lattice (and hence the same singularity multiplicities) has mdr(B) = mdr(A).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0140",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01985v1",
+    "status": "available",
+    "timestamp": "2026-07-03T06:13:22.731805+00:00",
+    "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
   },
   {
     "consumed_by_exp_id": "",
