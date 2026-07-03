@@ -1081,7 +1081,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
   },
   {
-    "consumed_by_exp_id": "87ba90ae",
+    "consumed_by_exp_id": "",
     "description": "This paper investigates the statistical behavior of Selmer ranks of twisted elliptic curves in various Galois extension settings, under assumptions related to the Extended Riemann Hypothesis. The study aims to formalize probabilistic predictions through an ordered framework inspired by combinatorial fan structures.",
     "domains": [
       "Algebra",
@@ -1091,7 +1091,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T21:54:06.879713+00:00",
     "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
   },
@@ -1780,12 +1780,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
+    "description": "This conjecture extends the classical Complete Intersection Theorem to permutation groups, focusing on bounded intersections using fixed-point conditions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0149",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00318v1",
+    "status": "available",
+    "timestamp": "2026-07-03T14:28:51.936404+00:00",
+    "title": "Proving the Existence of a Sufficiently Large Extremal Family"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1799,7 +1814,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1813,7 +1828,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1827,7 +1842,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1836,31 +1851,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9e981077",
     "description": "Every class 2 graph G with \u0394(G) > |V(G)|/3 contains an induced \u0394(G)-overfull subgraph H such that every vertex in V(G)\\V(H) has degree at most \u0394(G) - 2 in the original graph G. This conjecture strengthens the Overfull Conjecture by asserting not just existence but also a structural property: the overfull subgraph can be found so that removing it reduces the maximum degree significantly.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T03:33:00.928355+00:00",
     "title": "Structural Location of Overfull Subgraphs in Class 2 Graphs"
   },
   {
-    "consumed_by_exp_id": "9e981077",
+    "consumed_by_exp_id": "",
     "description": "For any odd prime power q\u22653 and integer m\u22654, the largest codimension of a cyclically covering subspace of\u202f\ud835\udd3d_q\u207f with n=(q^m+1)/2 equals\u202f1. Equivalently, there exists a cyclic code of length (q^m+1)/2 and dimension n\u22121 that contains no full\u2011weight codeword, and no cyclically covering subspace of larger codimension can exist.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T03:50:00.178097+00:00",
     "title": "Exact Codimension for Cyclically Covering Subspaces of Length (q\u1d50+1)/2"
   },
@@ -1871,7 +1886,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
@@ -1886,7 +1901,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -1900,7 +1915,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0157",
+    "id": "fd_0158",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -1915,7 +1930,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1930,7 +1945,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1939,31 +1954,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "Combinatorial determination of mdr for line arrangements with only double and triple points"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad3b2c83",
     "description": "Every planar graph has geodesic treewidth at most 5. The paper improves the known lower bound to 5, and this conjecture asserts that 5 is also tight as an upper bound for planar graphs.",
     "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_0160",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.02098v1",
-    "status": "available",
-    "timestamp": "2026-07-03T06:33:32.655747+00:00",
-    "title": "Geodesic Treewidth Upper Bound for Planar Graphs"
-  },
-  {
-    "consumed_by_exp_id": "ad3b2c83",
-    "description": "We conjecture that for any oriented product structure \\((A,B,P)\\) of type \\((m,n)\\) with \\(m,n\\ge2\\) satisfying the no\u2011fold condition \\(\\mathsf T_2\\), the weighted dual Fisher inequality is strict unless \\((m,n)=(2,2)\\) and the structure is the affine plane of order\u202f2 (i.e. the unique 2\u00d72 grid). Moreover, if the middle\u2011link girth is\u202f6 then the minimum of the two horizontal\u2011link girths is at most\u202f4, and equality in the weighted dual Fisher inequality forces the structure to be exactly this affine\u2011plane construction. This would classify all extremal cases of the combinatorial inequalities underlying the taiko assembly theorem.",
-    "domains": [
-      "Algebra",
       "Pythagorean"
     ],
     "id": "fd_0161",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2607.01716v1",
+    "source_exp_id": "2607.02098v1",
     "status": "in_progress",
+    "timestamp": "2026-07-03T06:33:32.655747+00:00",
+    "title": "Geodesic Treewidth Upper Bound for Planar Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any oriented product structure \\((A,B,P)\\) of type \\((m,n)\\) with \\(m,n\\ge2\\) satisfying the no\u2011fold condition \\(\\mathsf T_2\\), the weighted dual Fisher inequality is strict unless \\((m,n)=(2,2)\\) and the structure is the affine plane of order\u202f2 (i.e. the unique 2\u00d72 grid). Moreover, if the middle\u2011link girth is\u202f6 then the minimum of the two horizontal\u2011link girths is at most\u202f4, and equality in the weighted dual Fisher inequality forces the structure to be exactly this affine\u2011plane construction. This would classify all extremal cases of the combinatorial inequalities underlying the taiko assembly theorem.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0162",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01716v1",
+    "status": "available",
     "timestamp": "2026-07-03T07:08:28.593276+00:00",
     "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
   },
@@ -1974,7 +1989,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Physics"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01738v1",
@@ -1988,7 +2003,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01718v1",
@@ -2002,7 +2017,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01761v1",
@@ -2017,7 +2032,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
@@ -2031,7 +2046,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01695v1",
@@ -2045,7 +2060,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0167",
+    "id": "fd_0168",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01438v1",
@@ -2060,7 +2075,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0168",
+    "id": "fd_0169",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01349v1",
@@ -2074,7 +2089,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0169",
+    "id": "fd_0170",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01010v1",
@@ -2089,7 +2104,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0170",
+    "id": "fd_0171",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00838v1",
@@ -2103,7 +2118,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0171",
+    "id": "fd_0172",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00775v1",
@@ -2117,7 +2132,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0172",
+    "id": "fd_0173",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00825v2",
@@ -2131,7 +2146,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0173",
+    "id": "fd_0174",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00651v1",
@@ -2145,7 +2160,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0174",
+    "id": "fd_0175",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00643v1",
@@ -2160,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0175",
+    "id": "fd_0176",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
@@ -2174,7 +2189,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0176",
+    "id": "fd_0177",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00608v1",
@@ -2189,7 +2204,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0177",
+    "id": "fd_0178",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00456v1",
@@ -2204,13 +2219,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0178",
+    "id": "fd_0179",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00366v1",
     "status": "available",
     "timestamp": "2026-07-03T14:07:20.160717+00:00",
     "title": "Threshold Discrepancy in Orthogonal Projections"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer n \u2265 3, any \u03b7 > 0, and sufficiently large prime p, there exists a set A \u2282 F_p with |A| \u2265 p^{3/(2n-1)-\u03b7} such that for all choices of coefficients t_1,\u2026,t_n \u2208 F_p the sumset t_1A + \u2026 + t_nA is not equal to F_p. Conversely, if |A| \u2265 C_{n,\u03b7} p^{3/(2n-1)+\u03b7} then such coefficients exist (as proved in the paper). This conjecture asserts that the exponent 3/(2n-1) is optimal up to the additive \u03b7 term.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0180",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00372v1",
+    "status": "available",
+    "timestamp": "2026-07-03T14:29:21.386130+00:00",
+    "title": "Sharpness of the exponent 3/(2n-1) in the linear covering problem for product sets over finite fields"
   },
   {
     "consumed_by_exp_id": "",
