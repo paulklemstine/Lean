@@ -4,21 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0122",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T01:31:21.277128+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -191,7 +176,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Trivial stabilizer for regular unipotent conjugacy classes"
   },
   {
-    "consumed_by_exp_id": "6d329679",
+    "consumed_by_exp_id": "",
     "description": "For every integer w \u2265 3, the Chromatic Sum problem is NP-complete on graphs of clique-width at most w. This extends the known result for w=3 and suggests a phase transition at clique-width 2 versus 3, where the problem becomes intractable.",
     "domains": [
       "Bridges"
@@ -200,7 +185,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T10:07:39.641162+00:00",
     "title": "Chromatic Sum NP-Completeness for Clique-Width at Least 3"
   },
@@ -876,7 +861,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on the asymptotic growth of \u03c7_S(n,\u230an/2\u230b,P_4)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d751fda",
     "description": "The function h(\u03b1, \u03b2) := density{n \u2208 \u2115 : \u2203 d|n, d \u2208 [n^\u03b1, n^\u03b2]} is real-analytic on the domain {(\u03b1, \u03b2) \u2208 \u211d\u00b2 : 0 < \u03b1 < \u03b2 < 1, \u03b2 - \u03b1 > 0.02} and continuous on its closure {\u03b2 - \u03b1 \u2265 0.02}.",
     "domains": [
       "Pythagorean",
@@ -886,7 +871,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30428v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:35:30.838855+00:00",
     "title": "Analyticity of the localized divisor density function"
   },
@@ -1419,12 +1404,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for any prime r, any 1 \u2264 x \u2264 r^{0.499}, and any real q \u2208 [0,1], the average over characters modulo r of |\u2211_{n\u2264x} \u03c7(n)|^{2q} is at least (1/2)^q x^q, matching the known upper bounds and implying sharpness.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0120",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01184v1",
+    "status": "available",
+    "timestamp": "2026-07-03T01:37:52.136398+00:00",
+    "title": "Lower bound conjecture for low moments of Dirichlet character sums"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0120",
+    "id": "fd_0121",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1438,13 +1437,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0121",
+    "id": "fd_0122",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
     "status": "available",
     "timestamp": "2026-07-03T01:15:12.510112+00:00",
     "title": "Conjecture on minimal hitting subcomplexes in joins of spanning k\u2011trees with wedge of spheres"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any s \u2208 \u2115\u2080, h \u2208 \u2102\\{0}, and non-negative integers n,k, the (p,q)-generalized Stirling numbers \ud835\udd16_{s;h}(n,k|p,q) defined by the normal ordering of (YX)^n in the (p,q)-deformed generalized Weyl algebra can be expressed as a linear combination of (p,q)-binomial coefficients with non-negative integer coefficients.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0123",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01141v1",
+    "status": "available",
+    "timestamp": "2026-07-03T01:39:20.537784+00:00",
+    "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
     "consumed_by_exp_id": "236d7724",
@@ -1477,7 +1490,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That the entries of an integer right triangle are forced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dbc16a2f",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -1487,27 +1500,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Boundedness of Polynomial Diophantine Tuples\n\nThe cycle established three structural pillars: (i) sets of *constants* over an\nalgebraically closed field carry no size restriction whatsoever; (ii) a family of\npolynomials sharing a single degree `d` (with a small shift) can be a Diophantine\ntuple only when the exponent divides `2d`; and (iii) the zero polynomial can join\nsuch a family exactly when the shift is itself a perfect power. These findings\nsharpen the boundary of the boundedness question and suggest the following bold,\ntestable conjectures.\n\n## Direction 1 \u2014 A degree-spectrum bound replacing the raw cardinality bound\n**Conjecture.** For an algebraically closed field of characteristic zero, a\nnonzero shift `n`, and exponent `k \u2265 2`, any Diophantine tuple of nonconstant\npolynomials has at most `k + 4` members whose degrees are pairwise distinct.\n\nThe key insight is that the only place the exponent enters the degree ledger is\nthrough the identity \"the degree of a `k`-th power is a multiple of `k`\", so the\nobstruction is fundamentally about how many distinct residues modulo `k` the\npairwise product degrees can occupy. **Why now?** The same-degree divisibility law\n`k \u2223 2d` isolates exactly this modular mechanism, turning a hard counting problem\ninto a tractable question about degree residues.\n\n## Direction 2 \u2014 Rigidity forces an arithmetic progression of degrees\n**Conjecture.** In a maximal Diophantine tuple of nonconstant polynomials with a\nfixed shift, the multiset of degrees forms an arithmetic progression whose common\ndifference divides the exponent.\n\nThe key insight is that once two members share a degree the product degree is\npinned to `2d` and the shift becomes negligible, so growth is only possible by\nclimbing through degrees in regulated steps rather than arbitrarily. **Why now?**\nThe proof that equal-degree members impose `k \u2223 2d` shows degrees cannot cluster\nfreely; the natural next object is the gap sequence between successive degrees.\n\n## Direction 3 \u2014 The perfect-power exception is the unique unbounded regime\n**Conjecture.** A polynomial Diophantine tuple is infinite if and only if the\nshift is a perfect `k`-th power and every member lies in the ideal generated by a\nfixed `k`-th root of the shift.\n\nThe key insight is that the zero element can be adjoined precisely when the shift\nis a perfect power, and this \"attachment condition\" is the seed from which every\ninfinite family must grow, forcing all members into a single principal ideal.\n**Why now?** The exact characterization of the zero-extension pins down the only\nmechanism by which an unbounded family can be assembled, making the \"only if\"\ndirection attackable.\n\n## Direction 4 \u2014 Coprimality replaces the false common-factor heuristic\n**Conjecture.** If a member of a Diophantine tuple is coprime to the shift, then\nit is coprime to every other member of the tuple.\n\nThe key insight is that the naive guess \"a shared factor of two members divides\nthe shift\" is false, but its correct repair is a coprimality-propagation law read\noff from the equation `a\u00b7b + n = c^k` modulo any prime dividing the shift.\n**Why now?** The counterexample hunt this cycle showed exactly which divisibility\nstatement fails and why, pointing at the coprimality reformulation as the salvage.\n\n## Direction 5 \u2014 Characteristic zero is essential, not cosmetic\n**Conjecture.** Over an algebraically closed field of positive characteristic `p`\ndividing the exponent, there exist arbitrarily large Diophantine tuples of\nnonconstant polynomials for a suitable nonzero shift.\n\nThe key insight is that in characteristic `p` the Frobenius map makes `p`-th\npowers behave additively, so the degree obstruction that bounds tuples in\ncharacteristic zero collapses. **Why now?** Having pinned the bound to the degree\narithmetic of `k`-th powers, the natural stress test is a field where that\narithmetic degenerates, which is exactly the Frobenius regime.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0123",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "150736b0",
-    "status": "available",
-    "timestamp": "2026-07-03T01:36:53.686210+00:00",
-    "title": "The cycle established three structural pillars: (i) sets of *constants* over an"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f7b97a34",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -1517,7 +1515,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },

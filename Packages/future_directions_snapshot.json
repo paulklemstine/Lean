@@ -3,26 +3,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0122",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "Define a dark theorem of level k as a Pi_2 statement 'for all n, there exist at least k values of m such that P(n,m)' such that PA proves the existential claim but PA does not prove P(n,m) for any specific m. Level 1: Paris-Harrington theorem (the strengthened finite Ramsey theorem). Level 2: the Paris-Harrington theorem for the statement 'there exist at least 2 values of m satisfying the Ramsey property'. Prove strictness: if T is level k+1, then T implies a level-k statement that is independent of PA. Prove density: among all Pi_2 statements provable in ZFC, the fraction that are dark approaches 1 as statement length grows. Test: formalize levels 1-3 in Lean 4 using the Paris-Harrington and Goodstein sequences.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T01:31:21.277128+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domain_bridges": [],
     "domains": [
@@ -307,7 +287,7 @@
       "Ma01",
       "paper proves NP-completeness for clique-width 3"
     ],
-    "consumed_by_exp_id": "6d329679",
+    "consumed_by_exp_id": "",
     "description": "For every integer w ≥ 3, the Chromatic Sum problem is NP-complete on graphs of clique-width at most w. This extends the known result for w=3 and suggests a phase transition at clique-width 2 versus 3, where the problem becomes intractable.",
     "domain_bridges": [
       "graph theory (clique-width)",
@@ -322,7 +302,7 @@
     "proof_strategy": "By reduction from the w=3 case, demonstrating that increasing clique-width does not yield polynomial-time solutions. Use composition of graphs to encode hardness while increasing clique-width, leveraging known constructions for clique-width operations.",
     "research_mode": "team",
     "source_exp_id": "2607.00263v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T10:07:39.641162+00:00",
     "title": "Chromatic Sum NP-Completeness for Clique-Width at Least 3"
   },
@@ -1529,7 +1509,7 @@
       "sieve integrals",
       "Haddad-Koukoulopoulos middle divisors"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d751fda",
     "description": "The function h(α, β) := density{n ∈ ℕ : ∃ d|n, d ∈ [n^α, n^β]} is real-analytic on the domain {(α, β) ∈ ℝ² : 0 < α < β < 1, β - α > 0.02} and continuous on its closure {β - α ≥ 0.02}.",
     "domain_bridges": [
       "analytic number theory",
@@ -1547,7 +1527,7 @@
     "proof_strategy": "Use the refined formula for h(α, β) as a sum of integrals I(P_j(α, β)) over rational polytopes. Show each integral is real-analytic in (α, β) by differentiating under the integral sign (justified by uniform bounds on the polytopes' parameter dependence). Prove the series of derivatives converges uniformly on compact subsets of the domain using the exponential decay of terms when β - α ≥ 0.02 + ε. The continuity on the boundary follows from uniform convergence up to the boundary.",
     "research_mode": "team",
     "source_exp_id": "2606.30428v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T18:35:30.838855+00:00",
     "title": "Analyticity of the localized divisor density function"
   },
@@ -2538,6 +2518,31 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "arXiv:2306.12345"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any prime r, any 1 ≤ x ≤ r^{0.499}, and any real q ∈ [0,1], the average over characters modulo r of |∑_{n≤x} χ(n)|^{2q} is at least (1/2)^q x^q, matching the known upper bounds and implying sharpness.",
+    "domain_bridges": [
+      "random multiplicative functions",
+      "probabilistic number theory",
+      "character sums"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0120",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use Fourier analysis on finite abelian groups together with explicit bounds on character sums to establish the inequality.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01184v1",
+    "status": "available",
+    "timestamp": "2026-07-03T01:37:52.136398+00:00",
+    "title": "Lower bound conjecture for low moments of Dirichlet character sums"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "SDtwists",
       "KMR13",
       "KMR14",
@@ -2555,7 +2560,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0120",
+    "id": "fd_0121",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -2580,7 +2585,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0121",
+    "id": "fd_0122",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
@@ -2589,6 +2594,37 @@
     "status": "available",
     "timestamp": "2026-07-03T01:15:12.510112+00:00",
     "title": "Conjecture on minimal hitting subcomplexes in joins of spanning k‑trees with wedge of spheres"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "TLM1",
+      "LO2021",
+      "LO2024",
+      "TMMS2016",
+      "TMMS2011",
+      "Burde2005",
+      "AV2005"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any s ∈ ℕ₀, h ∈ ℂ\\{0}, and non-negative integers n,k, the (p,q)-generalized Stirling numbers 𝔖_{s;h}(n,k|p,q) defined by the normal ordering of (YX)^n in the (p,q)-deformed generalized Weyl algebra can be expressed as a linear combination of (p,q)-binomial coefficients with non-negative integer coefficients.",
+    "domain_bridges": [
+      "algebraic combinatorics",
+      "noncommutative algebra",
+      "rook theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0123",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01141v1",
+    "status": "available",
+    "timestamp": "2026-07-03T01:39:20.537784+00:00",
+    "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
   {
     "ambition_level": "extension",
@@ -2633,7 +2669,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dbc16a2f",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist — 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 — they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures — combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domain_bridges": [],
     "domains": [
@@ -2646,34 +2682,14 @@
     "proof_strategy": "Define vampire numbers formally: v is a vampire number iff v has 2n digits and there exist x, y each with n digits such that v = x*y and the multiset of digits of v equals the union of digits of x and y. Count the number of digit arrangements: for a 2n-digit number with distinct digits, there are C(2n, n) * n! * n! possible fang pairs, so the expected number of fang pairs is C(2n, n) * (n!)^2 / 10^{2n} = C(2n,n) / 10^n ~ 1/sqrt(n). Prove existence in every interval by constructing explicit vampire numbers using the formula 1260 * 10^{2k} for k >= 0. Test: enumerate up to 10^8.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Boundedness of Polynomial Diophantine Tuples\n\nThe cycle established three structural pillars: (i) sets of *constants* over an\nalgebraically closed field carry no size restriction whatsoever; (ii) a family of\npolynomials sharing a single degree `d` (with a small shift) can be a Diophantine\ntuple only when the exponent divides `2d`; and (iii) the zero polynomial can join\nsuch a family exactly when the shift is itself a perfect power. These findings\nsharpen the boundary of the boundedness question and suggest the following bold,\ntestable conjectures.\n\n## Direction 1 — A degree-spectrum bound replacing the raw cardinality bound\n**Conjecture.** For an algebraically closed field of characteristic zero, a\nnonzero shift `n`, and exponent `k ≥ 2`, any Diophantine tuple of nonconstant\npolynomials has at most `k + 4` members whose degrees are pairwise distinct.\n\nThe key insight is that the only place the exponent enters the degree ledger is\nthrough the identity \"the degree of a `k`-th power is a multiple of `k`\", so the\nobstruction is fundamentally about how many distinct residues modulo `k` the\npairwise product degrees can occupy. **Why now?** The same-degree divisibility law\n`k ∣ 2d` isolates exactly this modular mechanism, turning a hard counting problem\ninto a tractable question about degree residues.\n\n## Direction 2 — Rigidity forces an arithmetic progression of degrees\n**Conjecture.** In a maximal Diophantine tuple of nonconstant polynomials with a\nfixed shift, the multiset of degrees forms an arithmetic progression whose common\ndifference divides the exponent.\n\nThe key insight is that once two members share a degree the product degree is\npinned to `2d` and the shift becomes negligible, so growth is only possible by\nclimbing through degrees in regulated steps rather than arbitrarily. **Why now?**\nThe proof that equal-degree members impose `k ∣ 2d` shows degrees cannot cluster\nfreely; the natural next object is the gap sequence between successive degrees.\n\n## Direction 3 — The perfect-power exception is the unique unbounded regime\n**Conjecture.** A polynomial Diophantine tuple is infinite if and only if the\nshift is a perfect `k`-th power and every member lies in the ideal generated by a\nfixed `k`-th root of the shift.\n\nThe key insight is that the zero element can be adjoined precisely when the shift\nis a perfect power, and this \"attachment condition\" is the seed from which every\ninfinite family must grow, forcing all members into a single principal ideal.\n**Why now?** The exact characterization of the zero-extension pins down the only\nmechanism by which an unbounded family can be assembled, making the \"only if\"\ndirection attackable.\n\n## Direction 4 — Coprimality replaces the false common-factor heuristic\n**Conjecture.** If a member of a Diophantine tuple is coprime to the shift, then\nit is coprime to every other member of the tuple.\n\nThe key insight is that the naive guess \"a shared factor of two members divides\nthe shift\" is false, but its correct repair is a coprimality-propagation law read\noff from the equation `a·b + n = c^k` modulo any prime dividing the shift.\n**Why now?** The counterexample hunt this cycle showed exactly which divisibility\nstatement fails and why, pointing at the coprimality reformulation as the salvage.\n\n## Direction 5 — Characteristic zero is essential, not cosmetic\n**Conjecture.** Over an algebraically closed field of positive characteristic `p`\ndividing the exponent, there exist arbitrarily large Diophantine tuples of\nnonconstant polynomials for a suitable nonzero shift.\n\nThe key insight is that in characteristic `p` the Frobenius map makes `p`-th\npowers behave additively, so the degree obstruction that bounds tuples in\ncharacteristic zero collapses. **Why now?** Having pinned the bound to the degree\narithmetic of `k`-th powers, the natural stress test is a field where that\narithmetic degenerates, which is exactly the Frobenius regime.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0123",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "150736b0",
-    "status": "available",
-    "timestamp": "2026-07-03T01:36:53.686210+00:00",
-    "title": "The cycle established three structural pillars: (i) sets of *constants* over an"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f7b97a34",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely — the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence — instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domain_bridges": [],
     "domains": [
@@ -2686,7 +2702,7 @@
     "proof_strategy": "Define A(1) = A(2) = 1, A(n+1) = smallest positive integer not equal to A(n) + A(n-1). Prove by strong induction: A(n) >= floor(n^2/4). Base: A(1)=1 >= 0, A(2)=1 >= 1. Inductive step: if A(k) >= floor(k^2/4) for k <= n, then A(n) + A(n-1) >= floor(n^2/4) + floor((n-1)^2/4), so A(n+1) <= A(n) + A(n-1) - 1 + delta where delta accounts for gaps, giving A(n+1) >= floor((n+1)^2/4). Prove A(n) <= ceil(n^2/4) + 1 by showing the avoidance constraint only blocks one value per step. Test: compute A(n) for n=1..10^6 and verify A(n)/n^2 -> 1/4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
