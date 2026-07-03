@@ -4,36 +4,6 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domains": [
-      "Novelty",
-      "NumberTheory"
-    ],
-    "id": "fd_0148",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T07:23:54.257186+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0145",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T07:23:54.219924+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domains": [
       "Pythagorean"
@@ -48,20 +18,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 583299ca (Q=0.778), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/\u2113^m gives rise to a continuous semisimple Galois representation r : G_F \u2192 GL_n(Z_\u2113) which is de Rham at places v|\u2113, with Hodge\u2013Tate weights determi",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_583299ca_ec374fb9",
-    "priority_score": 0.8779935103225806,
-    "research_mode": "team",
-    "source_exp_id": "583299ca",
-    "status": "available",
-    "timestamp": "2026-07-03T07:34:00.005689+00:00",
-    "title": "Deepening: Torsion local-global compatibility at p = \u2113 for GL_n over CM fields"
-  },
-  {
-    "consumed_by_exp_id": "70c42dc4",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -71,24 +27,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0146",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T07:23:54.234652+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -120,7 +61,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9bec4051",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -129,7 +70,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -538,6 +479,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-02T06:22:20.382248+00:00",
     "title": "Complementary feasibility in seating configurations for the generalized honeymoon Oberwolfach problem"
+  },
+  {
+    "consumed_by_exp_id": "7a96d972",
+    "description": "Conjecture: For any odd prime p, any even integer k \u2265 2, and any a_p \u2208 \u211a\u0304_p with 0 < v(a_p) < p-1 (i.e., a fractional slope), the semi-simplification \\bar{V}_{k,a_p} of the mod p reduction of the two-dimensional crystalline representation V_{k,a_p} of G_{\u211a_p} of weight k and parameter a_p is irreducible as a mod p representation of G_{\u211a_p}.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0052",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.00930v1",
+    "status": "in_progress",
+    "timestamp": "2026-07-02T06:58:32.634677+00:00",
+    "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
   },
   {
     "consumed_by_exp_id": "",
@@ -1476,7 +1432,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07344e82",
     "description": "The Gallai homothety number $ G_3(\\{0,2,5\\}) $ equals 77.",
     "domains": [
       "Bridges"
@@ -1485,7 +1441,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02226v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T04:11:45.471727+00:00",
     "title": "Exact value of G\u2083({0,2,5})"
   },
@@ -1579,12 +1535,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for all real x \u2265 650, the error term in the smoothed sigma divisor problem satisfies |D(x) - x d(x) - (x/2)(log(2\u03c0)+\u03b3-1)| \u2264 16 * x^(3/10) * log x.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0132",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01956v1",
+    "status": "available",
+    "timestamp": "2026-07-03T07:37:25.325878+00:00",
+    "title": "Explicit error bound for smoothed sigma divisor sum"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0132",
+    "id": "fd_0133",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1598,7 +1568,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0133",
+    "id": "fd_0134",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1612,7 +1582,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0134",
+    "id": "fd_0135",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
@@ -1626,7 +1596,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0135",
+    "id": "fd_0136",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1640,7 +1610,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0136",
+    "id": "fd_0137",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1655,7 +1625,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0137",
+    "id": "fd_0138",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
@@ -1664,17 +1634,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Codimension for Cyclically Covering Subspaces of Length (q\u1d50+1)/2"
   },
   {
-    "consumed_by_exp_id": "12f18d90",
+    "consumed_by_exp_id": "",
     "description": "For a family of unitary CFTs dual to AdS black holes with central charge c \u2192 \u221e, let M_c denote the maximal number of primary operators in a fixed energy window of width \u0394. Define the centered and scaled variable Y_c = (log M_c - \u03bc_c)/\u03c3_c, where \u03bc_c and \u03c3_c are the mean and standard deviation of log M_c. Conjecture that Y_c converges in distribution to the Gumbel law, i.e., for every real x, \\(\\lim_{c\\to\\infty} P(Y_c \\leq x) = \\exp(-\\exp(-x))\\).",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0138",
+    "id": "fd_0139",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02233v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T04:12:15.268770+00:00",
     "title": "Gumbel limit for extremal microstate counts in AdS/CFT"
   },
@@ -1685,7 +1655,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0139",
+    "id": "fd_0140",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
@@ -1699,7 +1669,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0140",
+    "id": "fd_0141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02260v1",
@@ -1714,7 +1684,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0141",
+    "id": "fd_0142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02132v1",
@@ -1729,7 +1699,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0142",
+    "id": "fd_0143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01985v1",
@@ -1743,7 +1713,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0143",
+    "id": "fd_0144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02098v1",
@@ -1758,13 +1728,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0144",
+    "id": "fd_0145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01716v1",
     "status": "available",
     "timestamp": "2026-07-03T07:08:28.593276+00:00",
     "title": "Equality case of the weighted dual Fisher inequality for taiko product structures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a Hamiltonian graph G with minimum degree at least 3, there exists a constant c > 0 such that G contains a nontrivial cycle of length at least n - c n^{2/3}. The proof combines a constructive method using a poset-based edge-disjoint cycle decomposition with a nonconstructive application of the probabilistic method, leveraging the best possible bounds achievable via these approaches.",
+    "domains": [
+      "Logic",
+      "Physics"
+    ],
+    "id": "fd_0146",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01738v1",
+    "status": "available",
+    "timestamp": "2026-07-03T07:37:36.028717+00:00",
+    "title": "Existence of a nontrivial cycle of length n-O(n^{2/3}) in Hamiltonian graphs with \u03b4(G) \u2265 3"
   },
   {
     "consumed_by_exp_id": "",
@@ -1780,21 +1765,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-03T00:49:27.041847+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0147",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T07:23:54.245988+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
   {
     "consumed_by_exp_id": "",
@@ -1825,21 +1795,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nBold, falsifiable conjectures growing out of the combinatorial and inverse-limit core of torsion\nlocal\u2013global compatibility for conjugate self-dual representations over CM fields.\n\n## 1. A central weight forces a distinguished sub-object in odd dimension\n\n**Conjecture.** For an odd-dimensional conjugate self-dual representation with a regular\n(multiplicity-free) set of Hodge\u2013Tate weights and similitude weight `c`, the weight sitting exactly\nat the centre `c/2` is not merely a numerical accident: it marks a canonical one-dimensional\nconstituent stable under the polarizing pairing, whose reduction modulo the residue characteristic\nsurvives semisimplification.\n\nThe key insight is that a fixed-point-free reflection `a \u21a6 c - a` on the weights can never exhaust\nan odd-sized regular family, so exactly one weight is self-paired, and self-paired data tends to\ncarry its own invariant line. Why now? The purely combinatorial fact that odd regular polarized\nweight sets always contain the central value is now settled, which turns \"does a central line exist?\"\nfrom a heuristic into a precise structural question ready to be attacked.\n\n## 2. Purity pins the determinant of every torsion lift\n\n**Conjecture.** Every characteristic-zero lift of a fixed torsion conjugate self-dual eigensystem\nhas the same determinant Hodge\u2013Tate weight, namely `c\u00b7n/2`, independent of which lift is chosen;\nconsequently the determinant character is rigid across the whole congruence family.\n\nThe key insight is that the relation `2\u00b7(determinant weight) = c\u00b7n` is forced by the reflection\nsymmetry alone, so it is invariant under any deformation that preserves the polarization and the\nsimilitude weight. Why now? The determinant-weight identity has been isolated as a consequence of\nsymmetry rather than of any analytic input, so it can be transported verbatim to every member of a\ncongruence family without re-deriving it case by case.\n\n## 3. Uniqueness of the adic assembly upgrades to functoriality\n\n**Conjecture.** The assignment sending a compatible tower of torsion eigensystems to its unique\nadic limit is functorial in the coefficient ring and commutes with Hecke correspondences; in\nparticular two towers that agree at every finite level define isomorphic adic systems together with\nthe same Hecke action.\n\nThe key insight is that the limit is characterized by a universal property \u2014 it is the *unique* map\nreducing correctly at every level \u2014 and universal objects are automatically functorial. Why now?\nThe existence-and-uniqueness of the adic assembly has been made precise, so the natural next step is\nto promote uniqueness to a functor and test its compatibility with the Hecke algebra.\n\n## 4. Prime-power torsion counts detect ramification\n\n**Conjecture.** For `GL(1)`, the exact count `p^{k-1}(p-1)` of torsion eigensystems of level `p^k`\nis the maximal one, and any drop below it in a family of arithmetic origin signals additional\nramification or congruence constraints at `p`; the deficiency is a computable ramification invariant.\n\nThe key insight is that the clean prime-power count comes from the cyclic structure of the residue\ndata, so any smaller count must come from an extra relation, and extra relations are exactly what\nramification imposes. Why now? The prime-power count is now available in closed form, giving a fixed\nbaseline against which deficiencies \u2014 and hence ramification \u2014 can be measured.\n\n## 5. Regularity is the exact boundary for the central-weight phenomenon\n\n**Conjecture.** Dropping the multiplicity-free hypothesis, an odd-dimensional polarized weight\nmultiset avoids a central weight if and only if every repeated weight is balanced by an equally\nrepeated mirror weight; equivalently, the \"central line\" exists precisely on the regular locus and\nits failure is measured by the multiset of unbalanced multiplicities.\n\nThe key insight is that the parity obstruction lives entirely in the multiplicities: pairing `a`\nwith `c-a` fails to force a fixed point only when repetitions can absorb the odd count. Why now? The\nregular case is fully understood, which exposes multiplicity as the single remaining variable and\nmakes the exact boundary of the phenomenon a well-posed target.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_0149",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "583299ca",
-    "status": "available",
-    "timestamp": "2026-07-03T07:33:54.576680+00:00",
-    "title": "Bold, falsifiable conjectures growing out of the combinatorial and inverse-limit"
   },
   {
     "consumed_by_exp_id": "8638d104",
