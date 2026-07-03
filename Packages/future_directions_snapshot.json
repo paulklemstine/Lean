@@ -3,45 +3,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0171",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "Define a dark theorem of level k as a Pi_2 statement 'for all n, there exist at least k values of m such that P(n,m)' such that PA proves the existential claim but PA does not prove P(n,m) for any specific m. Level 1: Paris-Harrington theorem (the strengthened finite Ramsey theorem). Level 2: the Paris-Harrington theorem for the statement 'there exist at least 2 values of m satisfying the Ramsey property'. Prove strictness: if T is level k+1, then T implies a level-k statement that is independent of PA. Prove density: among all Pi_2 statements provable in ZFC, the fraction that are dark approaches 1 as statement length grows. Test: formalize levels 1-3 in Lean 4 using the Paris-Harrington and Goodstein sequences.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T12:38:43.577653+00:00",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f91c88c3 (Q=0.790), which proved 8 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any graph $G$, if $G$ is distance-hereditary, then $G$ is balanced if and and only if $G$ does not contain $\\overline{3K_2}$ as an induced subgraph. This formalizes the paper's result that for the class of distance-hereditary graphs, the property of being balanced is equivalent to being $\\overli",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_f91c88c3_9a3e900d",
-    "lineage_refs": [],
-    "priority_score": 0.88952,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f91c88c3",
-    "status": "available",
-    "timestamp": "2026-07-03T12:42:34.766233+00:00",
-    "title": "Deepening: Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-M"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 8b6fc6d0 (Q=0.786), which proved 12 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Research direction from LLM: unknown domain (retry: be more specific)",
     "domain_bridges": [],
     "domains": [
@@ -60,7 +21,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a77032bd",
+    "consumed_by_exp_id": "",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer — the mathematical formalization of 'reality depends on the observer'.",
     "domain_bridges": [],
     "domains": [
@@ -73,29 +34,9 @@
     "proof_strategy": "Define a phantom topology as a function T: O -> Top(X) from a set of observers to topologies on X. Define the intersection topology T_cap = intersection of all T(o). Prove: every second-countable T_0 space (X, tau) admits a phantom representation with |O| = 2. Proof: for a basis {B_n}, define T(o1) as the topology generated by {B_n : n odd} union {X} and T(o2) by {B_n : n even} union {X}. Then T_cap = tau. Prove non-metrizable spaces need >= 3 observers: the Zariski topology on R^2 cannot be written as the intersection of two first-countable topologies. Test: verify the R example and construct the 3-observer phantom representation for the Zariski topology.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot — the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0172",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "Define cognitive braids: each brain region is a strand, each neural firing sequence is a crossing. A cognitive process is an element of B_n (braid group on n strands). Two thoughts are equivalent if related by Reidemeister moves. Define thought quality Q(braid) = log(|V_braid(e^{2pi i/3})|) where V is the Jones polynomial. Prove Q is a braid invariant. Prove: trivial braid has V = 1 so Q = 0 (trivial thought). Trefoil has V = -t^2+t+1 so Q = log(|V(e^{2pi i/3})|) = log(sqrt(3)) > 0 (creative thought). Figure-eight has Q = log(2) (confused thought with maximum entanglement). Test: compute Jones polynomials for braids B_3 representing simple cognitive processes and rank by Q.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T12:38:43.625635+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
     "ambition_level": "extension",
@@ -1739,7 +1680,7 @@
       "Akbari26",
       "LDMSaj"
     ],
-    "consumed_by_exp_id": "6d0ee8e6",
+    "consumed_by_exp_id": "",
     "description": "The generalized honeymoon Oberwolfach problem asks whether n couples can be seated over several nights at s tables of size 2 and t round tables of sizes 2m_1,...,2m_t (with n = s + ∑ m_i) such that each person sits next to their spouse every night and next to every other person exactly once. The paper solves the case t=1, proving that the obvious necessary condition (∑ m_i divides 2n(n-1)) is sufficient. This conjecture extends the result to t ≥ 2, claiming that the same divisibility condition is also sufficient for any number of round tables.",
     "domain_bridges": [
       "graph theory",
@@ -1755,7 +1696,7 @@
     "proof_strategy": "Use the equivalence between HOP solutions and HOP decompositions of 4K_n^•. Develop a general construction method for HOP (C_{m_1},...,C_{m_t})-decompositions of 4K_n^• using starter cycles, factorizations, and amalgamation techniques, extending the methods used for t=1. Leverage the existence of HOP C_m-factorizations for 4K_m^• (m even) and 4K_{2m}^• (m odd) as building blocks. Handle small exceptional cases by computer search.",
     "research_mode": "team",
     "source_exp_id": "2607.01130v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-02T21:24:44.021492+00:00",
     "title": "Generalized Honeymoon Oberwolfach Problem with Multiple Round Tables"
   },
@@ -1988,7 +1929,7 @@
       "KMR14",
       "SDtwists"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87ba90ae",
     "description": "This paper investigates the statistical behavior of Selmer ranks of twisted elliptic curves in various Galois extension settings, under assumptions related to the Extended Riemann Hypothesis. The study aims to formalize probabilistic predictions through an ordered framework inspired by combinatorial fan structures.",
     "domain_bridges": [
       "Algebraic Number Theory",
@@ -2004,7 +1945,7 @@
     "proof_strategy": "Construct probabilistic model via twisted elliptic curves and apply counting arguments in encoded configurations.",
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T21:54:06.879713+00:00",
     "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
   },
@@ -2422,7 +2363,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b9e95156",
+    "consumed_by_exp_id": "",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
     "domain_bridges": [],
     "domains": [
@@ -2435,7 +2376,7 @@
     "proof_strategy": "Define an Escher staircase in ring R as a strictly ascending chain I_1 strictly contained in I_2 strictly contained in ... such that intersection of I_n is contained in I_1. Prove Int(Z) has an Escher staircase: I_n = {f in Int(Z) : f(Z) contained in 2^n Z}. Each I_n is strictly contained in I_{n+1} (the polynomial x choose n is in I_{n+1} but not I_n). Intersection of I_n = {0} contained in I_1. Prove k[x_1,...,x_n] has Escher height n: the chain (x_1) contained in (x_1,x_2) contained in ... contained in (x_1,...,x_n) has length n. Prove Z_p has no Escher staircase (Noetherian). Test: verify for Int(Z) and k[x,y,z].",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -3175,6 +3116,25 @@
   },
   {
     "ambition_level": "grand_challenge",
+    "catalog_references": "math.NT",
+    "consumed_by_exp_id": "",
+    "description": "The conjecture states that asymptotic bounds for sums of Dirichlet characters over y-smooth numbers exhibit negligible growth relative to √Ψ(x,y), aligning with computational verifications and theoretical expectations.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0145",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "inductive_verification",
+    "research_mode": "team",
+    "source_exp_id": "2607.00592v1",
+    "status": "available",
+    "timestamp": "2026-07-03T12:56:39.684301+00:00",
+    "title": "Character sums over smooth numbers"
+  },
+  {
+    "ambition_level": "grand_challenge",
     "catalog_references": [
       "SDtwists",
       "KMR13",
@@ -3193,7 +3153,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0145",
+    "id": "fd_0146",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a probabilistic model inspired by the fan structure and apply ergodic arguments under mild GT conditions.",
@@ -3218,7 +3178,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0146",
+    "id": "fd_0147",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on k combined with parity arguments analogous to Meshulam's lemma",
@@ -3249,7 +3209,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0147",
+    "id": "fd_0148",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the combinatorial interpretation via (p,q)-deformed s-rook placements on staircase boards to construct an explicit bijection between rook placements and the terms in the (p,q)-binomial expansion, showing that each rook placement contributes positively.",
@@ -3265,7 +3225,7 @@
       "Erdős-Turán Theorem on Sidon Sets",
       "Singer's Construction"
     ],
-    "consumed_by_exp_id": "061b612f",
+    "consumed_by_exp_id": "",
     "description": "Formalize the upper bound on the maximum size of a Sidon subset of {0, ..., N-1}, specifically proving that F(N) <= N^{1/2} + 0.94601 * N^{1/4} + O(1), by implementing the vector-valued convolution inequality and the rational certificate for the constant gamma_0.",
     "domain_bridges": [
       "Harmonic Analysis (Convolution Inequalities)",
@@ -3275,13 +3235,13 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0148",
+    "id": "fd_0149",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the property of being a Sidon set in Lean 4. 2. Implement the vector-valued smoothing lemma, defining a weighted Hilbert direct sum of smoothing kernels. 3. Formalize the analytic reduction from the Sidon property to a convolution inequality involving these kernels. 4. Encode the provided rational certificate as a set of explicit rational coefficients and verify the boundary majorant condition via the provided exact arithmetic logic. 5. Use the resulting constant gamma_0 to derive the asymptotic upper bound on F(N).",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:56:27.032018+00:00",
     "title": "Upper Bound for the Cardinality of Finite Sidon Sets"
   },
@@ -3304,7 +3264,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0149",
+    "id": "fd_0150",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Approach by contradiction assuming no such subgraph exists. Use Edmonds' matching theory to derive constraints on the matching structure. Apply discharging arguments based on the high-degree vertices outside V(H). Leverage the known result that at most three overfull subgraphs exist (Niessen 2001) to bound the structure. Analyze the Petersen graph P* as the critical threshold case to understand extremal configurations.",
@@ -3331,7 +3291,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0150",
+    "id": "fd_0151",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit cyclic code of length n=(q^m+1)/2 whose generator polynomial is the minimal polynomial of a primitive element of 𝔽_{q^m} of order q^m+1 divided by (x−1). Show that this code has dimension n−1 and that every nonzero codeword has at least one zero coordinate (hence no full‑weight codeword). Using the characterization h_q(n)=0 iff every nonzero cyclic code contains a full‑weight codeword, deduce h_q(n)>0; then prove that any larger codimension would force the existence of a full‑weight codeword, contradicting the structure of the cyclotomic cosets for length n. This establishes h_q(n)=1. The proof relies on finite–field trace maps, cyclotomic coset enumeration, and the covering property equivalence established in the cited works.",
@@ -3359,7 +3319,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0151",
+    "id": "fd_0152",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage known results on the convergence of extremal statistics of Gaussian log‑correlated processes to the Gumbel distribution, combine them with a rigorous saddle‑point analysis of the CFT partition function to identify the appropriate scaling of μ_c and σ_c, and verify the required tightness and moment conditions for the limit theorem.",
@@ -3374,7 +3334,7 @@
     "catalog_references": [
       "White, N., Honey, R., & Sketchwala, A. (2018). Counterexamples to a collection of conjectures in matroid theory. International Journal of Combinatorial Theory, 66(1), 1-24."
     ],
-    "consumed_by_exp_id": "a511a89e",
+    "consumed_by_exp_id": "",
     "description": "This research strives to identify precise mathematical conjectures in the theory of matroids and to design formalized counterexamples that expose their boundaries. The focus is on replicable designs that challenge theoretical assumptions.",
     "domain_bridges": [
       "algebraic geometry",
@@ -3385,13 +3345,13 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0152",
+    "id": "fd_0153",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a minimal counterexamples based on combinatorial bounds on exchange numbers and flip counts.",
     "research_mode": "team",
     "source_exp_id": "2607.02208v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T04:32:20.108021+00:00",
     "title": "Probing the limits of matroid conjectures through counterexamples"
   },
@@ -3412,7 +3372,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0153",
+    "id": "fd_0154",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume a counterexample W violating regularity; use tensor amplification (degree‑biased or Perron‑biased) to derive a contradiction with the Sidorenko inequality or with known regularity constraints, thereby proving the conjecture.",
@@ -3438,7 +3398,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0154",
+    "id": "fd_0155",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the equivalence by constructing an explicit finite subcover from a minimal sequence and using the universal property of the direct sum to relate induced homomorphisms to sums of ψ_i.",
@@ -3463,7 +3423,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0155",
+    "id": "fd_0156",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that for arrangements with only double and triple points the Jacobian ideal is generated by the partial derivatives of a defining polynomial that is known to be quasi-homogeneous with respect to certain weights. Apply Saito's criterion for freeness and the relation between the exponents of the arrangement and the degrees of minimal syzygies. Show that under the hypothesis mdr < d/2 the arrangement is plus-one generated, which forces the Jacobian syzygy module to have a predictable graded structure determined solely by the intersection lattice. Verify the claim by computing the relevant graded Betti numbers via Gröbner basis techniques in the polynomial ring S = C[x,y,z].",
@@ -3490,7 +3450,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0156",
+    "id": "fd_0157",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage planar graph separators and the four-color theorem to construct geodesic partitions with bounded treewidth, combined with the paper's algorithmic framework for geodesic treewidth in restricted graph classes",
@@ -3520,7 +3480,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0157",
+    "id": "fd_0158",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "We would formalize the definition of an oriented product structure, its girth functions, the no‑fold condition, and the weighted dual Fisher inequality in Lean. Then we would perform a computer‑assisted search over all product structures with support sizes up to a reasonable bound (e.g. \\(m,n\\le 10\\)). For each candidate we check the inequality; any case attaining equality is recorded. Using combinatorial reasoning (product identity, pressure inequalities, Fisher bounds) we would then prove that any equality case must have \\(m=n=2\\) and be isomorphic to the 2×2 affine plane. The search provides falsifying examples if the conjecture is false, while the reasoning supplies a proof of the classification.",
@@ -3548,7 +3508,7 @@
       "Logic",
       "Physics"
     ],
-    "id": "fd_0158",
+    "id": "fd_0159",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish that all long cycles are blocked by a specific edge, then use a cycle-pairing strategy from poset theory to construct a nontrivial cycle, augmented by a probabilistic counting argument to ensure the existence of a sufficiently long alternative cycle.",
@@ -3574,7 +3534,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0159",
+    "id": "fd_0160",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalize the predicate in Lean and perform exhaustive searches for small λ (e.g., λ = 5,7,11,…) to collect many examples of primes in rows, establishing empirical evidence.\n\n2. Use known results on primes in exponential sequences (e.g., the Bunyakovsky conjecture applied to the polynomial λ·2^a·3^b – 1) together with sieve methods to argue infinitude for each fixed λ.\n\n3. Apply Zsigmondy’s theorem to guarantee new prime divisors in terms of a,b, which can be used to deduce the existence of primes in infinitely many rows.\n\n4. Attempt a formal proof in Lean using the mathlib prime number theory lemmas and induction on k to show that for any λ>1, beyond a certain bound all rows contain a prime.",
@@ -3599,7 +3559,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0160",
+    "id": "fd_0161",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Investigate the relationship between the moment tensors of antipodal sets. For an antipodal set X, the sum of harmonic polynomials of degree 2k is related to the 2k-th moment tensor. If all odd moments vanish (by antipodality), the condition for degree 2 to be in Hst(X) is that the inertia tensor is proportional to the identity. If degree 2 is not in Hst(X), the inertia tensor has distinct eigenvalues. Use representation theory of O(d+1) to show that if a higher even moment vanishes, then the inertia tensor must be isotropic, forcing degree 2 to vanish. Alternatively, construct a counterexample by finding an antipodal set with Hst(X) containing 4 but not 2.",
@@ -3617,7 +3577,7 @@
       "Simplicial Complexes",
       "h-vectors"
     ],
-    "consumed_by_exp_id": "71bd52e9",
+    "consumed_by_exp_id": "",
     "description": "Formalize the proof that the transformation matrix $H_{\\mathcal{F}}$ associated with the interval subdivision of a finite simplicial complex is totally positive (TP). This requires defining the $h$-vector of a simplicial complex, the interval subdivision operation, the resulting transformation matrix $H_{\\mathcal{F}}$, and proving that all its minors are non-negative.",
     "domain_bridges": [
       "Linear Algebra",
@@ -3627,13 +3587,13 @@
       "Geometry",
       "Logic"
     ],
-    "id": "fd_0161",
+    "id": "fd_0162",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the structure of a finite simplicial complex and the $h$-vector as a function of the $f$-vector. 2. Implement the $\\mathcal{F}$-uniform subdivision framework specifically for the interval subdivision to derive the explicit entries of the transformation matrix $H_{\\mathcal{F}}$. 3. Use the Lindström-Gessel-Viennot (LGV) lemma or a similar combinatorial path-counting method to show that the determinants of all minors are non-negative, leveraging the combinatorial proof provided in the paper.",
     "research_mode": "team",
     "source_exp_id": "2607.01577v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T09:05:38.885794+00:00",
     "title": "Total Positivity of the Interval Subdivision Transformation Matrix"
   },
@@ -3652,7 +3612,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0162",
+    "id": "fd_0163",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove σ_{p,a}=1 by analyzing the determinant structure modulo primes and leveraging properties of the Legendre symbol. Examine the matrix's Pfaffian decomposition to show the scaling factor vanishes.",
@@ -3679,7 +3639,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0163",
+    "id": "fd_0164",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit families of hypergraphs (e.g., extensions of the graph constructions that achieve equality for each \\u03bd) and prove the inequality using degree‑sum and counting arguments. Formalize the definitions in Lean and verify the conjecture on small hypergraphs computationally.",
@@ -3705,7 +3665,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_0164",
+    "id": "fd_0165",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a common $\\omega$-stellar subdivision by iteratively refining the triangulations using locally finite sequences of stellar moves, leveraging the existence of a common subdivision and the local finiteness condition.",
@@ -3731,7 +3691,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0165",
+    "id": "fd_0166",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit point configurations and linear maps for each (r, s) pair. For the upper bound, use points in general position within an r-dimensional subspace. For the lower bound, design configurations with controlled linear dependencies that minimize separable dichotomies while fixing r and s. Use induction on N and properties of the counting function C(·,·).",
@@ -3760,7 +3720,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0166",
+    "id": "fd_0167",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture can be approached by analyzing the structure of $\\Delta^{[p]}$ (the Stanley-Reisner complex of $I_\\Delta^{[p]}$) and its facets. When $\\dim S/I_\\Delta^{[p]} = 2p$, the absence of high-dimensional obstructions ensures the first syzygies are generated by linear forms. Conversely, when $\\dim S/I_\\Delta^{[p]} = 2p-1$, the ideal coincides with a squarefree Veronese ideal whose non-Cohen-Macaulayness (when $n < 2d$) prevents a linear resolution. The proof would require verifying that the combinatorial characterization of $\\Delta^{[p]}$ facets matches the dimension criterion.",
@@ -3787,7 +3747,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0167",
+    "id": "fd_0168",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on r using the self-similar structure of the recursive bisection process. The key insight is that each bisection step at most doubles the number of periods while preserving ratios. Use the periodic structure property from Proposition propLen to reduce analysis to a single phase with sufficiently many periods, then apply extremal combinatorial arguments on the distribution of piece sizes within each period.",
@@ -3812,7 +3772,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0168",
+    "id": "fd_0169",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the connection with rational approximations to the golden ratio φ and the theory of continued fractions to show that any potential decrease would produce a better approximation than a convergent, contradicting optimality of convergents.",
@@ -3839,7 +3799,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0169",
+    "id": "fd_0170",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a bijection between A393920's geometric configurations and Fibonacci-themed tiling-like structures, then prove exponential bounds via characteristic polynomial analysis.",
@@ -3866,7 +3826,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0170",
+    "id": "fd_0171",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Establish modular transformation properties of the coupled product. 2. Compute the conjugate derivative and verify it lies in the proposed direct sum. 3. Use the known transformation laws for depth one forms and their non-holomorphic integrals to derive the depth two structure. 4. Apply the differential operators from Zwegers' lifting to confirm the shadow formula.",
@@ -3875,6 +3835,34 @@
     "status": "available",
     "timestamp": "2026-07-03T12:23:11.405875+00:00",
     "title": "Coupling Depth One Mock Modular Eisenstein Series into Depth Two Forms"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Fang and Zhai (2020), Conjectures on spectral radius and edge extremal graphs",
+      "Wang, Kang and Xue (2020), Spectral extremal problem for non-bipartite graphs",
+      "Simonovits (1974), Stability proof for edge-color-critical graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every edge-color-critical graph F with chromatic number χ(F) = r + 1 (r ≥ 2), all sufficiently large non-r-partite F-free graphs maximizing the adjacency spectral radius also maximize the number of edges. Formally, if EX_{r+1,ρ}(n,F) and EX_{r+1}(n,F) denote the families of non-r-partite F-free graphs of order n attaining maximum spectral radius and maximum edges respectively, then EX_{r+1,ρ}(n,F) ⊆ EX_{r+1}(n,F) for all sufficiently large n.",
+    "domain_bridges": [
+      "Chromatic number and edge-color-critical graphs",
+      "Turán-type extremal problems",
+      "Spectral radius of graphs"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0172",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine Simonovits's decomposition techniques for F with spectral characterization methods from [WKX]. Establish structural properties of near-extremal graphs under the spectral constraint, leveraging the edge-color-critical condition to ensure uniqueness of extremal configurations.",
+    "research_mode": "team",
+    "source_exp_id": "2607.00561v1",
+    "status": "available",
+    "timestamp": "2026-07-03T12:57:08.370062+00:00",
+    "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
   },
   {
     "ambition_level": "extension",
@@ -3895,26 +3883,6 @@
     "status": "available",
     "timestamp": "2026-07-03T00:49:27.041847+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' — they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0173",
-    "lineage_refs": [],
-    "priority_score": 0.77,
-    "proof_strategy": "Define the periodic table of finite groups: rows indexed by order (atomic number), columns indexed by composition factor pattern (chemical series). Group types: cyclic (noble gases), symmetric (halogens), simple non-abelian (transition metals), nilpotent (alkali metals), solvable non-nilpotent (alkaline earth). Prove: groups in the same column have isomorphic composition factors (Jordan-Holder theorem). Prove: the 'valence' (number of minimal normal subgroups) is determined by the chief factors. Construct the table for order <= 100 and verify periodicity: cyclic groups of prime order form the first column, groups with composition {2,2,3} form the second column, etc. Test: predict properties of groups of order 120 before computing them.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-03T12:38:43.645368+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
   {
     "ambition_level": "extension",
@@ -3955,26 +3923,6 @@
     "status": "available",
     "timestamp": "2026-07-03T00:49:27.007324+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nDerived from this cycle's findings about the octahedron `\\overline{3K₂}` — the\ncomplement of a perfect matching on six vertices — as the single forbidden induced\nsubgraph separating balanced graphs from unbalanced ones inside the\ndistance-hereditary class.\n\n## 1. A metric certificate for the balanced/unbalanced boundary\n\n**Conjecture.** A distance-hereditary graph is balanced if and only if no six of\nits vertices induce an octahedron, and moreover this obstruction can be detected\npurely metrically: a graph is unbalanced exactly when it contains six vertices,\nsplit into three pairs, such that vertices in different pairs are at distance one\nand vertices in the same pair are at distance two.\n\nThe key insight is that in the octahedron every vertex has a *unique* vertex at\ndistance two — its antipode — and it is precisely this \"one missing edge per\nvertex\" rigidity, not any global counting, that creates the odd combinatorial\ncycle responsible for unbalancedness. Reformulating the forbidden subgraph as a\ndistance pattern turns a subgraph search into a search over the distance matrix.\n\nWhy now? We have isolated the octahedron's defining local property (unique\nnon-neighbour) and shown it is exactly what blocks induced four-vertex paths;\ntranslating that property into distance-matrix language is the natural next step\nand would make the balanced test executable directly on shortest-path data.\n\n## 2. From one forbidden octahedron to a hereditary hierarchy\n\n**Conjecture.** For each `k ≥ 3`, the graphs whose only forbidden induced subgraph\nis the complete multipartite graph with `k` parts of size two (the `k`-dimensional\ncocktail-party graph) form a strictly increasing chain of hereditary classes, and\nthe balanced distance-hereditary graphs are exactly the first level `k = 3`.\n\nThe key insight is that the octahedron is `K_{2,2,2}`, the second member of the\ncocktail-party family, so the balanced characterisation is the base case of a\nladder obtained by adding one more antipodal pair at a time; each rung should add\nexactly one new \"odd obstruction\" of larger order.\n\nWhy now? We have proved the octahedron is a proper cograph (it contains an induced\nfour-cycle yet no induced four-path), which pins down its exact position in the\ncograph lattice; the same cograph machinery applies verbatim to every larger\ncocktail-party graph, so the ladder is within immediate reach.\n\n## 3. Balancedness is decided on cograph cotrees\n\n**Conjecture.** Every cograph is balanced if and only if its canonical cotree — the\nrecursive union/join decomposition — never performs a join of three or more\nmutually non-trivial factors that each contribute an independent pair; equivalently,\nbalancedness of a cograph is a local condition at each join node of its cotree.\n\nThe key insight is that the octahedron is the smallest join of three edges, so an\nunbalanced cograph must expose a \"triple join of pairs\" somewhere in its\ndecomposition, and conversely a cotree free of such nodes cannot hide an induced\noctahedron.\n\nWhy now? We have established that the octahedron is `P₄`-free, i.e. a cograph, and\nthat `P₄`-freeness is hereditary; since cographs are exactly the graphs with a\ncotree, the forbidden-subgraph condition can be pushed down to a purely local test\non that tree, which is far cheaper than a global subgraph search.\n\n## 4. Spectral shadow of the balanced boundary\n\n**Conjecture.** Among connected `4`-regular graphs on six vertices, the octahedron\nis the unique one whose adjacency spectrum is `{4, 0, 0, 0, -2, -2}`, and this\nspectral signature — a single large eigenvalue, a repeated `-2`, and a high-nullity\nzero eigenvalue — is a necessary spectral fingerprint of the unbalancing\nobstruction in every distance-hereditary graph that contains it.\n\nThe key insight is that the octahedron's regularity (every vertex has degree four,\nproved here) combined with its unique-non-neighbour structure forces its adjacency\nmatrix to be `J − I − P`, where `P` is a permutation of order two, whose spectrum is\ncompletely determined; unbalancedness should therefore leave a detectable trace in\nthe interlacing eigenvalues of any host graph.\n\nWhy now? We have the exact regular, antipodal structure of the forbidden graph in\nhand, which is precisely the data needed to compute its spectrum and to test\nwhether eigenvalue interlacing can certify the presence of the obstruction without\nexhibiting the six vertices explicitly.\n\n## 5. Balanced graphs and the parity of shortest-path multiplicities\n\n**Conjecture.** A distance-hereditary graph is unbalanced if and only if some pair\nof vertices at distance two is joined by an *even* number of common neighbours that\nthemselves form no edge — the octahedron being the minimal witness, where each\nantipodal pair has exactly four such common neighbours arranged as two\nnon-adjacent pairs.\n\nThe key insight is that balancedness is fundamentally a parity phenomenon (it\nforbids certain odd cyclic structures), and the octahedron encodes that parity\nlocally through the even, edge-free neighbourhood shared by each antipodal pair,\nwhich is exactly the configuration our unique-non-neighbour analysis exposes.\n\nWhy now? Having reduced the octahedron to the statement \"each vertex misses exactly\none other, and that missing partner shares all remaining vertices as neighbours\",\nwe can read off the common-neighbour parity directly, making this parity criterion\na concrete and testable reformulation of the whole characterisation.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0174",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f91c88c3",
-    "status": "available",
-    "timestamp": "2026-07-03T12:42:27.800219+00:00",
-    "title": "Derived from this cycle's findings about the octahedron `\\overline{3K₂}` — the"
   },
   {
     "ambition_level": "extension",

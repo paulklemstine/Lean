@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6fec91f1",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Differential Equations (Kovacic / Riccati / Differential Galois)\n\nDerived from this cycle's findings in `EML.EMLRiccatiSolvableFamily` (an explicit\ninfinite solvable even-deg",
-      "quality_score": 0.7897859999999999,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T16:25:23",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
-    {
       "cycle_id": "492e1625",
       "domain": "Applications",
       "key_insight": "# Future Directions: Panmagic Affine Permutations over `ZMod n`\n\nBuilt on the results in `Catalog/Algebra/PanmagicAffine.lean`:\n\n* `isPanmagic_iff_units` — `σ_{a,b}` panmagic ⇔ `a, a−1, a+1` all units",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-07-03T12:42:34",
       "title": "Characterization of Balanced Distance-Hereditary Graphs by the Complement of 3-Matching"
+    },
+    {
+      "cycle_id": "f498d6bb",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The Bestiary of Arithmetic Monsters\n\nFive self-contained, falsifiable conjectures growing out of the study of vampire\nnumbers and their kin. A *vampire number* is a composite numb",
+      "quality_score": 0.6591141074626865,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-03T12:55:58",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78952
     }
   ],
-  "last_updated": "2026-07-03T12:42:34",
+  "last_updated": "2026-07-03T12:55:58",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "35d54dba",
-        "quality": 0.527476,
-        "theorems": 8,
-        "title": "Minimum Independence Ratio Constraint"
-      },
-      {
         "cycle_id": "307e78f2",
         "quality": 0.46884433623188404,
         "theorems": 6,
@@ -3637,6 +3631,12 @@
         "quality": 0.5700000000000001,
         "theorems": 17,
         "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+      },
+      {
+        "cycle_id": "f498d6bb",
+        "quality": 0.6591141074626865,
+        "theorems": 8,
+        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
       }
     ],
     "NumberTheory": [
