@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a151a9c3",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Birkhoff polytopes and the clique-face property\n\nDerived from this cycle's findings (proved: `birkhoff_cliqueFace_iff` — `B_n` has the\nclique-face property iff `n ≤ 2`; the mecha",
-      "quality_score": 0.5405,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T12:08:06",
-      "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
-    },
-    {
       "cycle_id": "2cb7b634",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Extremal Graph Theory: Turán, Kruskal–Katona, Szemerédi, Roth\n\nThis cycle formalized, with 0 sorries:\n\n* `turan_density_bound` — Turán's theorem in density form\n  `ex(n, K_r) ≤ (",
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-07-03T03:31:20",
       "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
+    },
+    {
+      "cycle_id": "f7b97a34",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — The Anti-Fibonacci Sequence\n\nDerived from this cycle's findings: the additive greedy sequence\n`A(0)=1, A(n+1)=A(n)+n` equals `1 + n(n-1)/2`, grows like `n²/2`, has consecutive\nra",
+      "quality_score": 0.460800096969697,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-07-03T04:31:26",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7480399999999999
     }
   ],
-  "last_updated": "2026-07-03T03:31:20",
+  "last_updated": "2026-07-03T04:31:26",
   "open_questions": [
     {
       "context": "",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "e2815d63",
-        "quality": 0.5423795180722892,
-        "theorems": 9,
-        "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-      },
-      {
         "cycle_id": "7e71ceda",
         "quality": 0.48598591282051284,
         "theorems": 12,
@@ -3761,6 +3755,12 @@
         "quality": 0.3417571627906977,
         "theorems": 0,
         "title": "Prove Fermats Little Theorem for p=5"
+      },
+      {
+        "cycle_id": "f7b97a34",
+        "quality": 0.460800096969697,
+        "theorems": 9,
+        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
       }
     ],
     "Probability": [
