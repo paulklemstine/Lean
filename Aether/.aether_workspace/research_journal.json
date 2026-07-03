@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "10d599ef",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — GL(1) Langlands / Global Class Field Theory\n\nDerived from this cycle's findings:\n\n* **Galois side (catalog `GL1Correspondence`)**: `Gal(ℚ(ζₙ)/ℚ) ≃* (ℤ/nℤ)ˣ` and the abstract\n  co",
-      "quality_score": 0.64325,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T15:54:16",
-      "title": "Langlands Correspondence: GL(1) Case"
-    },
-    {
       "cycle_id": "e4cbdb61",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Riordan Array Row Sums and Fibonacci Diagonals\n\nDerived from the cycle that proved `∑_{k} C(n+k, 2k) = fib(2n+1)`\n(`Catalog/Novelty/RiordanRowSumFibonacci.lean`) via the coupled",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-03T08:08:24",
       "title": "Knots That Think: Cognition as Braiding in Category Theory"
+    },
+    {
+      "cycle_id": "9bec4051",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nFive bold, falsifiable conjectures growing out of this cycle's study of the\nextremal Sidon function `F(N)` — the largest number of integers in `{1, …, N}`\nwhose pairwise differenc",
+      "quality_score": 0.4398394666666667,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-07-03T09:53:34",
+      "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7779935103225806
     }
   ],
-  "last_updated": "2026-07-03T08:08:24",
+  "last_updated": "2026-07-03T09:53:34",
   "open_questions": [
     {
       "context": "",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "dafe288e",
-        "quality": 0.42662737142857143,
-        "theorems": 9,
-        "title": "Baum-Connes Conjecture"
-      },
-      {
         "cycle_id": "4dca8a63",
         "quality": 0.5251532857142858,
         "theorems": 297,
@@ -3575,6 +3569,12 @@
         "quality": 0.6913,
         "theorems": 12,
         "title": "ML-guided theorem discovery via adaptive proof distillation (NeuralProofMining)"
+      },
+      {
+        "cycle_id": "9bec4051",
+        "quality": 0.4398394666666667,
+        "theorems": 8,
+        "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
       }
     ],
     "Novelty": [
