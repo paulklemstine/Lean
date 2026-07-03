@@ -1079,7 +1079,8 @@ class PiAgentClient:
         """)
 
         try:
-            raw_response = self._call_llm(analysis_prompt, max_tokens=1024, require_json=True)
+            system_prompt = "You are a mathematical agent supervisor. Respond only in strict JSON."
+            raw_response = self._call_ollama(system=system_prompt, user=analysis_prompt, category="eval")
             if not raw_response:
                 return {"needs_continuation": False, "prod_prompt": ""}
             result = self._parse_json_response(raw_response)
