@@ -1,85 +1,83 @@
-# Computational Evidence — Sheared Witt vectors as a filtered colimit
+# Computational Evidence: Sheared vectors as the colimit of truncated vectors
 
-This note records the small-case checks performed before formalizing the three
-main theorems in `ShearedWittVectorBridge.lean` (which build on the abstract
-directed-union results of `FilteredColimitArity.lean` and their subring
-specialisations in `ShearedWittColimit.lean`).
+This note records the small-case checks performed before formalization, for the
+claim that the *sheared* (finite-essential-support) coordinate functor is the
+filtered colimit of the *truncated* (finite-arity) functors, both in the
+arity variable and, fused, in the base-ring variable.
 
-## Model of the colimit
+## 1. The shearing mechanism (arity direction)
 
-A filtered colimit of rings is modelled as a directed union `⨆ i, S i` of a
-monotone family of subrings `S : ι → Subring R`. Set-theoretically the Witt
-functors are powers of the base:
+Model a truncated object at level `n` as the sequences `g : ℕ → A` that are equal
+to a fixed basepoint `b` beyond coordinate `n`:
 
-* truncated Witt `Wₙ(R) ≅ Fin n → R` (finite power, **finite arity**),
-* full Witt `W(R) ≅ ℕ → R` (countable power, **infinite arity**),
-* sheared Witt = full Witt restricted to **finitely-supported** coordinate
-  sequences.
+```
+T_n = { g : ℕ → A | ∀ k, n ≤ k → g k = b }.
+```
 
-## 1. Finite-arity lift — small cases
+These form an increasing chain `T_0 ⊆ T_1 ⊆ T_2 ⊆ …` (padding a level-`n`
+sequence with `b` embeds it at level `n+1`). Small cases with `A = ℕ`, `b = 0`:
 
-Claim: a finite tuple whose entries each lie in `⋃ i, S i` already lies in a
-single stage. Checked by hand with `S i = Set.Iic i ⊆ ℕ`:
+| `g`                     | smallest `n` with `g ∈ T_n` |
+|-------------------------|-----------------------------|
+| `0,0,0,0,…`             | 0                           |
+| `5,0,0,0,…`             | 1                           |
+| `5,3,0,0,…`             | 2                           |
+| `5,3,7,0,0,…`           | 3                           |
+| `1,1,1,1,…` (identity)  | none (not finitely supported) |
 
-| tuple                 | per-coordinate stage | merged stage `max` | in one stage? |
-|-----------------------|----------------------|--------------------|---------------|
-| `(0, 3)`              | `S₀, S₃`             | `S₃`               | yes           |
-| `(5, 2, 4)`           | `S₅, S₂, S₄`         | `S₅`               | yes           |
-| `(7, 1, 9, 0)`        | `S₇, S₁, S₉, S₀`     | `S₉`               | yes           |
+Directed union `⋃ₙ T_n` = exactly the finitely-supported sequences
+`{ g | ∃ N, ∀ k ≥ N, g k = b }` (the sheared object). The identity-like
+`k ↦ k` is *not* captured — as expected, it has infinite support. This is the
+content of `iUnion_trunc_eq_sheared`.
 
-The merge always exists because a finite set of indices has an upper bound in a
-directed order (`Finset.exists_le`). This is exactly the truncated case
-`truncatedWitt_lifts`.
+## 2. Base-ring direction fused with arity (the full statement)
 
-## 2. Infinite-arity failure — the witness
+Take `R = MvPolynomial ℕ K` with the variable-support filtration
+`S_i = { p | p.vars ⊆ {0,…,i} }`. This is a monotone directed family of subrings
+with `⨆ᵢ S_i = R`. A finitely-supported coordinate sequence over `R`, say
 
-Claim: the naive countable power does **not** commute with the directed union.
-Witness: `S i = Set.Iic i ⊆ ℕ`, sequence `f = id`, so `f k = k`.
+```
+g = (X 0, X 0 * X 2, 0, 0, …),
+```
 
-* Every coordinate lifts: `f k = k ∈ Set.Iic k ⊆ ⋃ i, Set.Iic i`.
-* No single stage works: if `f` lay in `S i`, then `f (i+1) = i+1 ≤ i`, false.
+has support `≤ 3` (level `n = 3`) and all entries in `S_2` (all variables `≤ 2`),
+so it appears at the single stage `(i, n) = (2, 3)` of the double union
+`⋃ᵢ ⋃ₙ { g | (g truncated at n) ∧ (entries in Sᵢ) }`. Every finitely-supported
+sequence with entries in the colimit is caught by *some* single `(i, n)`, because
+directedness merges the finitely many stages of the finitely many non-`b`
+coordinates. This is `sheared_double_colimit`.
 
-Ring-theoretic upgrade used in the formal proof: `R = MvPolynomial ℕ K`,
-`S i = varSubring K i = {p | p.vars ⊆ {0,…,i}}`, and the Witt vector
-`x` with `x.coeff k = X k`.
+## 3. Counterexample hunt (necessity of shearing)
 
-| `k`   | `x.coeff k = X k` | `vars` | smallest stage `varSubring K k` |
-|-------|-------------------|--------|---------------------------------|
-| `0`   | `X 0`             | `{0}`  | `varSubring K 0`                |
-| `1`   | `X 1`             | `{1}`  | `varSubring K 1`                |
-| `i+1` | `X (i+1)`         | `{i+1}`| `varSubring K (i+1)`            |
+The "vector of all variables" `g = (X 0, X 1, X 2, X 3, …)` over
+`MvPolynomial ℕ K` is the decisive counterexample to dropping finite support:
 
-Every coordinate is in the colimit, but a lift to stage `i` would force
-`X (i+1) ∈ varSubring K i`, i.e. `{i+1} ⊆ {0,…,i}`, which is false. This is
-`naiveWitt_lift_fails`.
+* Every coordinate lifts: `X k ∈ S_k ⊆ ⨆ᵢ Sᵢ`.
+* The whole vector lifts to **no** single stage: a lift to stage `i` would force
+  `X (i+1) ∈ S_i`, i.e. `{i+1} ⊆ {0,…,i}`, i.e. `i+1 ≤ i`, false.
 
-## 3. Sheared repair — small cases
+Checked for `i = 0,1,2,3`: in each case the obstruction is the coordinate
+`X (i+1)` whose single variable exceeds the stage bound. This is
+`naiveWitt_colimit_fails`, and it certifies that the colimit statement is *false*
+without shearing — the sheared repair is genuinely needed, not a convenience.
 
-Claim: restricting to finitely-supported sequences (eventually `0`) restores the
-finite-arity behaviour of case 1, because only finitely many coordinates carry
-information; the rest sit at the basepoint `0 ∈ S i` for every `i`.
+## 4. Tropical instance
 
-| sequence (support)         | pre-support stages | merged stage | in one stage? |
-|----------------------------|--------------------|--------------|---------------|
-| `(3, 5, 0, 0, …)`          | `S₃, S₅`           | `S₅`         | yes           |
-| `(2, 9, 4, 0, 0, …)`       | `S₂, S₉, S₄`       | `S₉`         | yes           |
-| `id` (no finite support)   | unbounded          | none         | **no**        |
+The mechanism is basepoint-agnostic. Over the tropical (min–plus) semiring
+`Tropical (WithTop ℕ)` the tropical zero is `0 = trop ∞`, and "finite support"
+means "eventually `∞`". Small cases:
 
-The last row is exactly the failure of case 2: it is *not* finitely supported,
-which is why it escapes `shearedWitt_lifts`.
+| tropical vector           | finitely supported? |
+|---------------------------|---------------------|
+| `(trop 2, trop 5, ∞, ∞…)` | yes (level 2)       |
+| `(trop k)_{k}` growing    | yes only if eventually `∞` |
 
-## OEIS / counterexample hunt
-
-No integer sequence is intrinsic to the statement (the content is order- and
-ring-theoretic, not enumerative), so no OEIS lookup applies. The universal claim
-"the full Witt functor preserves the colimit" was actively hunted for
-counterexamples; the variable Witt vector `k ↦ X k` is a clean witness that it
-is **false**, which is the surprising main result and the justification for the
-sheared construction.
+So the same chain-union identity holds verbatim, giving the Witt ⇄ tropical
+bridge `tropical_sheared_eq_colimit_truncated`.
 
 ## Conclusion
 
-The small cases confirm: finite arity and finite essential support both merge
-into a single stage, while genuine infinite arity does not. This matched the
-final formal theorems exactly (`truncatedWitt_lifts`, `shearedWitt_lifts`,
-`naiveWitt_lift_fails`), all proved with clean axioms.
+All small cases are consistent with the four formalized statements; the single
+universal claim that could fail — colimit preservation *without* shearing — does
+fail, exactly on the natural "all variables" vector, and this failure is itself
+formalized.

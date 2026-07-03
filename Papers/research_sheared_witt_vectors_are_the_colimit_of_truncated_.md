@@ -2,331 +2,402 @@
 
 ## Abstract
 
-We study the interaction between the Witt vector construction and filtered
-colimits of commutative rings, realized concretely as directed unions of monotone
-families of subrings. We prove three complementary results. First, the
-**truncated** Witt vector construction $W_n$, being built from finitely many
-coordinates, preserves such colimits: every truncated Witt vector over a directed
-union $\bigcup_i S_i$ lifts to a single stage $S_i$. Second, the **full** Witt
-vector construction $W$ does **not** preserve these colimits; the obstruction is
-witnessed by an explicit and entirely natural example — the Witt vector over a
-polynomial ring whose $k$-th coordinate is the variable $X_k$ — every coordinate
-of which lies in the colimit while the vector as a whole lifts to no stage. Third,
-the **sheared** (finitely supported) Witt vector construction repairs the failure:
-every finitely supported Witt vector over the colimit lifts, functorially, to a
-single stage. Taken together these results identify the sheared Witt vector
-construction with the filtered colimit of the truncated Witt vector
-constructions, and pinpoint finite essential support as the exact, minimal
-condition separating preservation from failure. Throughout, the arguments rest on
-a single elementary principle: in a directed system, finitely many germs can be
-merged into one stage, and finite essential support is precisely what makes an
-infinite-arity construction behave like a finite-arity one.
+We give a concrete, self-contained account of the identification of the *sheared
+Witt vector functor* with the filtered colimit of its truncations, realized at the
+two levels where a filtered colimit genuinely occurs: the *arity* direction (the
+truncation level) and the *base-ring* direction (a presentation of the base ring as
+a rising union of subrings). Our central result states that over a commutative ring
+$R$ presented as a directed union of subrings $R = \bigcup_i S_i$, the sheared Witt
+coordinate sequences over $R$ — infinite sequences of finite essential support with
+all coordinates in $R$ — are *exactly* the double directed union, over truncation
+level $n$ and ring stage $i$, of the truncated coordinate sequences over the single
+stage $S_i$. The colimit in the base-ring variable and the colimit in the
+arity variable fuse into one directed union. We upgrade the statement from
+coordinate sequences to genuine Witt vectors via functoriality, and we prove that
+the finite-support (shearing) hypothesis is *necessary*: dropping it makes the
+identification fail, witnessed by an explicit, natural counterexample — the vector
+of all variables over a polynomial ring in countably many variables. Finally, we
+observe that the shearing mechanism is basepoint-agnostic, yielding a verbatim
+tropical analogue over the min-plus semiring. All results are stated inline with
+proof sketches.
 
-**Keywords.** Witt vectors, truncated Witt vectors, filtered colimit, directed
-union of subrings, finite arity, shearing, finite support, polynomial ring.
+**Keywords.** Witt vectors, truncated Witt vectors, filtered colimit, direct limit,
+finite support, shearing, directed system, tropical semiring, min-plus algebra.
+
+---
 
 ## 1. Introduction
 
-The Witt vector functor is a cornerstone of $p$-adic algebra and arithmetic
-geometry. Fixing a prime $p$, it assigns to each commutative ring $R$ a
-commutative ring $W(R)$ whose underlying set is the countable power
-$R^{\mathbb{N}}$ of "Witt coordinates," but whose addition and multiplication are
-governed by a universal family of integer polynomials rather than by coordinatewise
-operations. The defining structural feature — and the source of both its power and
-its subtlety — is that the $k$-th coordinate of a sum or product depends only on
-the first $k{+}1$ coordinates of the inputs. The **truncated** Witt vectors
-$W_n(R)$, obtained by keeping only the first $n$ coordinates, inherit a ring
-structure precisely because of this triangular dependence.
+The ring of Witt vectors $W(A)$ attached to a commutative ring $A$ and a prime $p$
+is a cornerstone of $p$-adic arithmetic: it is the canonical functor lifting
+characteristic $p$ to characteristic $0$, reconstructing $\mathbb{Z}_p$ from
+$\mathbb{F}_p$ and underlying crystalline cohomology, $p$-adic Hodge theory, and the
+theory of formal groups. Classically, $W(A)$ is realized as the *inverse limit*
+$\varprojlim_n W_n(A)$ of its truncations $W_n(A) \cong A^n$, gluing compatible
+finite approximations.
 
-A recurring structural question for any ring-valued construction $F$ is whether it
-**commutes with filtered colimits**: given a directed system of rings with colimit
-$\varinjlim_i S_i$, is the natural map $\varinjlim_i F(S_i) \to F(\varinjlim_i
-S_i)$ an isomorphism? Filtered colimits model "building a ring as an increasing
-union of manageable pieces," and preservation of them is what allows local, stage
--by-stage reasoning to determine global behavior. For finitely presented algebraic
-constructions, preservation is automatic; for constructions with an infinite
-number of coordinates, it can fail.
+Inverse limits, however, interact poorly with *colimits*. A general Witt vector has
+infinitely many nonzero coordinates and therefore cannot descend to any finite
+stage of a rising system. The remedy, central to recent work on prismatic and
+sheared constructions (Zink 2003; Lau 2010; Drinfeld–Lau 2025; Hoff–Lau 2026), is
+*shearing*: restricting to Witt vectors of finite essential support. This paper
+isolates the elementary combinatorial content of the resulting identification
+$$
+\chi W \;\cong\; \operatorname*{colim}_n\; W\!\bigl(R[p^n]\bigr)/\widehat{hw}\!
+\bigl(R[p^n]\bigr),
+$$
+transported to the concrete "directed union of subrings" model of a filtered colimit
+of rings, and shows that the phenomenon is genuinely a statement about
+finitely-supported sequences.
 
-This paper isolates, in the cleanest possible setting, exactly where the Witt
-vector construction sits on this divide. We model a filtered colimit of rings by
-its most concrete incarnation, a **directed union of subrings** $\bigcup_i S_i$ of
-a fixed ambient ring $R$, and we ask which flavors of the Witt construction detect
-no more of the union than a single stage does. Our answer is a trichotomy of
-truncated (finite), full (infinite), and sheared (finitely supported) Witt
-vectors, with a sharp characterization of when lifting to a single stage is
-possible.
+### Contributions
 
-The technical core is elementary and self-contained: it reduces every case to the
-statement that a *finite* set of elements of a directed union lies in a common
-stage. The interest lies not in the difficulty of the arguments but in the
-precision of the phenomenon they capture — in particular, in a natural
-counterexample showing that the failure of the full functor is genuine, and in the
-observation that finite support is the exact minimal repair.
+1. **Shearing in isolation (arity colimit).** For any coordinate type and
+   basepoint, the eventually-basepoint (sheared) sequences are exactly the rising
+   union of the truncated sequences (§3).
+2. **The double colimit (main theorem).** For a monotone directed family of
+   subrings with colimit $R = \bigcup_i S_i$, the sheared Witt coordinate sequences
+   over $R$ are exactly the double directed union over truncation level and ring
+   stage of truncated coordinate sequences over the stages (§4).
+3. **Genuine Witt vectors.** The identification upgrades from coordinate sequences
+   to honest Witt vectors through the functorial map induced by the subring
+   inclusions (§5).
+4. **Necessity of shearing.** Dropping finite support falsifies the identification;
+   we exhibit an explicit natural counterexample (§6).
+5. **Tropical analogue.** The mechanism is basepoint-agnostic, giving a verbatim
+   statement over the tropical (min-plus) semiring (§7).
+
+---
 
 ## 2. Preliminaries
 
-### 2.1 Directed unions of subrings as filtered colimits
+### 2.1 Witt vectors and their truncations
 
-Let $R$ be a commutative ring and $(\iota, \le)$ a nonempty **directed** preorder,
-meaning any two indices have a common upper bound. A family of subrings
-$S : \iota \to \mathrm{Subring}(R)$ is **monotone** if $i \le j$ implies
-$S_i \subseteq S_j$. Its colimit inside $R$ is the join
-$$S_\infty \;=\; \bigsqcup_{i} S_i,$$
-the smallest subring containing all $S_i$. Because the family is directed and
-monotone, this join coincides with the set-theoretic directed union:
-$$x \in S_\infty \iff \exists\, i,\; x \in S_i.$$
-This equivalence — that membership in the categorical colimit is witnessed at a
-single stage — is the only structural fact about colimits we use. We refer to the
-$S_i$ as **stages**.
+Fix a prime $p$. For a commutative ring $A$, the ring of ($p$-typical) **Witt
+vectors** $W(A)$ has underlying set $A^{\mathbb{N}}$, written
+$a = (a_0, a_1, a_2, \dots)$, with ring operations determined by the requirement
+that the **ghost maps**
+$$
+w_n(a) \;=\; \sum_{i=0}^{n} p^i\, a_i^{\,p^{\,n-i}}
+\;=\; a_0^{p^n} + p\, a_1^{p^{n-1}} + \cdots + p^n a_n
+$$
+be ring homomorphisms $W(A) \to A$ for all $n$. The **truncated Witt vectors**
+$W_n(A)$ have underlying set $A^n$, and the truncation maps $W_{n+1}(A) \to W_n(A)$
+forget the last coordinate. As sets, $W(A) = \varprojlim_n W_n(A)$.
 
-The organizing principle of the paper is the following elementary lemma, which we
-state once and invoke repeatedly.
+For the colimit analysis, what matters is not the ring law but the *coordinate
+support*. We embed $W_n(A) \cong A^n$ into $A^{\mathbb{N}}$ by padding coordinates
+$\ge n$ with the basepoint $0$; the image is precisely the sequences that vanish
+beyond coordinate $n$.
 
-> **Lemma 2.1 (Finite merging).** Let $S : \iota \to \mathrm{Subring}(R)$ be
-> monotone over a nonempty directed index. If $a_1, \dots, a_m \in S_\infty$, then
-> there is a single stage $S_i$ with $a_1, \dots, a_m \in S_i$.
+### 2.2 Sheared Witt vectors
 
-*Proof.* Each $a_t$ lies in some stage $S_{i_t}$. The finite set of indices
-$\{i_1, \dots, i_m\}$ has a common upper bound $i$ by directedness, and
-monotonicity gives $S_{i_t} \subseteq S_i$ for all $t$, so all $a_t \in S_i$.
+The **sheared Witt vector functor** $\chi W$ selects the coordinate sequences of
+**finite essential support**:
+$$
+\chi W(A) \;=\; \bigl\{\, a \in A^{\mathbb N} : \exists N,\ \forall k \ge N,\ a_k = 0
+\,\bigr\}.
+$$
+
+### 2.3 Directed systems and filtered colimits of rings
+
+Let $\iota$ be a nonempty preordered index set that is **directed**: any two indices
+$i, j$ admit a common upper bound $k \ge i, j$. A family $S : \iota \to
+\operatorname{Subring}(R)$ is **monotone** if $i \le j \Rightarrow S_i \subseteq
+S_j$. Its colimit is realized concretely as the subring $\bigsqcup_i S_i = \bigcup_i
+S_i$ (the directed union is a subring). The key structural fact we use repeatedly is
+membership in a directed supremum:
+$$
+x \in \bigsqcup_i S_i \iff \exists i,\ x \in S_i,
+$$
+valid precisely because the system is directed.
+
+We record two combinatorial engines.
+
+**Directed-merge principle.** *In a directed order, any finite set of indices has a
+common upper bound.* This is immediate by induction from binary directedness and is
+the workhorse for "collect finitely many stages into one."
+
+**Finite support principle.** *A sequence of finite essential support is determined
+by finitely many coordinates*; beyond the support bound $N$, every coordinate equals
+the basepoint.
+
+---
+
+## 3. Shearing in isolation: sheared = colimit of truncated
+
+We first isolate the shearing mechanism, free of any ring structure.
+
+**Theorem 3.1 (Arity colimit).** *Let $A$ be any type and $b \in A$ a basepoint.
+Then*
+$$
+\bigcup_{n \in \mathbb{N}} \bigl\{\, g : \mathbb{N} \to A \mid \forall k \ge n,\
+g(k) = b \,\bigr\}
+\;=\;
+\bigl\{\, g : \mathbb{N} \to A \mid \exists N,\ \forall k \ge N,\ g(k) = b \,\bigr\}.
+$$
+
+*Proof sketch.* A function $g$ lies in the left-hand union iff there exists $n$ with
+$g(k) = b$ for all $k \ge n$; that is verbatim the membership condition of the
+right-hand set, with $N = n$. The two sets have literally the same defining
+predicate up to renaming the witness, so equality holds. $\qquad\blacksquare$
+
+**Interpretation.** Padding $W_n(A) \cong A^n$ into $A^{\mathbb N}$ by the basepoint
+identifies the $n$-th truncated set with the "vanish beyond $n$" set. Theorem 3.1
+says the sheared functor $\chi W$ *is* the filtered colimit $\operatorname*{colim}_n
+W_n$ of these truncations, in the arity variable. This is the shearing mechanism
+distilled: finite support is exactly "membership at some finite stage of the arity
+tower."
+
+---
+
+## 4. The main theorem: sheared Witt over a filtered colimit of rings
+
+We now combine the arity colimit with a colimit in the base ring.
+
+**Theorem 4.1 (Double colimit).** *Let $R$ be a commutative ring and $S : \iota \to
+\operatorname{Subring}(R)$ a monotone family over a nonempty directed index set.
+Then*
+$$
+\bigcup_{i \in \iota}\ \bigcup_{n \in \mathbb{N}}\
+\bigl\{\, g : \mathbb{N} \to R \mid (\forall k \ge n,\ g(k) = 0)\ \wedge\ (\forall k,\
+g(k) \in S_i) \,\bigr\}
+$$
+$$
+=\
+\bigl\{\, g : \mathbb{N} \to R \mid (\exists N,\ \forall k \ge N,\ g(k) = 0)\ \wedge\
+(\forall k,\ g(k) \in \textstyle\bigsqcup_i S_i) \,\bigr\}.
+$$
+
+*That is, the sheared Witt coordinate sequences over the colimit ring $R =
+\bigsqcup_i S_i$ are exactly the double directed union, over truncation level $n$ and
+ring stage $i$, of the truncated coordinate sequences over the stage $S_i$.*
+
+*Proof sketch.* We prove the two inclusions.
+
+($\subseteq$) Fix $g$ in the left union, witnessed by a stage $i$ and level $n$: $g$
+vanishes beyond $n$ and every coordinate lies in $S_i$. The support bound $n$ shows
+$g$ has finite essential support. And $S_i \subseteq \bigsqcup_i S_i$, so every
+coordinate lies in the colimit ring. Hence $g$ lies in the right-hand set.
+
+($\supseteq$) Fix $g$ in the right-hand set: there is a support bound $N$ with
+$g(k) = 0$ for $k \ge N$, and every coordinate $g(k) \in \bigsqcup_i S_i$. We must
+produce a *single* stage $i$ and *single* level $n$ working for all coordinates.
+
+- **Take the level** $n = N$: by hypothesis $g$ vanishes beyond $N$.
+- **Locate each coordinate.** By the directed-supremum criterion (§2.3), for each
+  $k$ there is an index $c(k)$ with $g(k) \in S_{c(k)}$. (For $k \ge N$ the
+  coordinate is $0 \in S_i$ for any $i$, so only the coordinates $k < N$ are
+  constraining.)
+- **Merge finitely many stages.** The indices $\{\, c(k) : k < N \,\}$ form a
+  *finite* set, so by the directed-merge principle they have a common upper bound
+  $M \in \iota$. Monotonicity gives $S_{c(k)} \subseteq S_M$, hence $g(k) \in S_M$
+  for every $k < N$; and for $k \ge N$, $g(k) = 0 \in S_M$. Thus every coordinate
+  lies in the single stage $S_M$.
+
+With $i = M$ and $n = N$, the sequence $g$ vanishes beyond $n$ and has all
+coordinates in $S_i$, so it belongs to the left union. $\qquad\blacksquare$
+
+**Remark 4.2 (Why the fusion is the content).** The $\supseteq$ direction merges two
+colimits *simultaneously*. Finite support bounds the arity (giving the level $n =
+N$), and the directed-merge principle bounds the base ring (giving the stage $M$),
+and — crucially — the *same* finiteness ("finitely many constraining coordinates")
+feeds both bounds. This is why the statement is a genuine double colimit and not
+merely a pair of independent one-dimensional statements. It is the concrete
+directed-union incarnation of $\chi W \cong \operatorname*{colim}_n
+W(R[p^n])/\widehat{hw}(R[p^n])$.
+
+---
+
+## 5. Genuine Witt vectors via functoriality
+
+Theorem 4.1 is a statement about coordinate sequences. It lifts to honest Witt
+vectors through functoriality. The Witt vector construction is a functor: a ring
+homomorphism $f : A \to B$ induces $W(f) : W(A) \to W(B)$ acting coordinatewise on
+Witt components, i.e. $W(f)(a)_k = f(a_k)$.
+
+**Theorem 5.1 (Genuine sheared Witt colimit).** *With $R$, $\iota$, and $S$ as in
+Theorem 4.1, apply the functorial maps $W(\text{incl}_i) : W(S_i) \to W(R)$ induced
+by the subring inclusions $\mathrm{incl}_i : S_i \hookrightarrow R$. Then a Witt
+vector $x \in W(R)$ is sheared (its coordinate sequence has finite essential
+support) if and only if it lies in the image of some finite-support Witt vector over
+some stage $S_i$; equivalently, the sheared part of $W(R)$ is the double directed
+union, over $n$ and $i$, of the images of the truncated Witt vectors of $W(S_i)$.*
+
+*Proof sketch.* Because $W(\text{incl}_i)$ acts coordinatewise, the coordinate
+sequence of $W(\text{incl}_i)(a)$ is exactly the coordinate sequence of $a$ viewed
+in $R$. So the statement for Witt vectors is the statement for coordinate sequences
+(Theorem 4.1), repackaged: extract the coordinate sequence of $x$, apply Theorem
+4.1 to obtain a stage $M$, level $N$, and a coordinate sequence over $S_M$; then
+reassemble that sequence into a truncated Witt vector $a \in W(S_M)$ with
+$W(\text{incl}_M)(a) = x$, using that a Witt vector is determined by its
+coordinates and that the functorial map is coordinatewise. The converse is the easy
+($\subseteq$) inclusion transported through the same coordinatewise identity.
 $\qquad\blacksquare$
 
-The entire content of the paper is the observation that Lemma 2.1 applies verbatim
-to finitely many coordinates, fails for infinitely many, and is rescued by finite
-support.
+---
 
-### 2.2 Witt vectors and their coordinates
+## 6. Necessity of shearing
 
-Fix a prime $p$. For a commutative ring $R$, the **Witt vectors** $W(R)$ have
-underlying set $R^{\mathbb{N}}$; we write $x_k = x.\mathrm{coeff}(k) \in R$ for the
-$k$-th coordinate of $x \in W(R)$. Two Witt vectors are equal iff all their
-coordinates agree. For a length $n \in \mathbb{N}$, the **truncated Witt vectors**
-$W_n(R)$ have underlying set $R^{\{0,\dots,n-1\}}$; again we write $y_k$ for the
-$k$-th coordinate ($0 \le k < n$), and a truncated Witt vector is determined by
-its coordinate tuple.
+The finite-support hypothesis in Theorems 4.1 and 5.1 is not cosmetic; the
+identification is *false* without it. We exhibit an explicit, natural obstruction.
 
-The Witt construction is functorial: a ring homomorphism $f : A \to B$ induces a
-ring homomorphism $W(f) : W(A) \to W(B)$ acting coordinatewise, i.e.
-$W(f)(x)_k = f(x_k)$. The same holds for the truncated functors. When
-$\varphi : S_i \hookrightarrow R$ is the inclusion of a subring, $W(\varphi)$ maps
-a Witt vector over $S_i$ to the Witt vector over $R$ with the same coordinates,
-reinterpreted through the inclusion. All we use about the Witt construction is
-this coordinatewise functoriality together with the extensionality principle
-(equality is detected coordinatewise).
+Let $K$ be a field (more generally a nontrivial commutative ring, $0 \ne 1$), and let
+$R = K[x_0, x_1, x_2, \dots]$ be the polynomial ring in countably many variables.
+Present $R$ as the rising union of the subrings
+$$
+S_i \;=\; K[x_0, x_1, \dots, x_{i-1}] \qquad (i \ge 0),
+$$
+generated by the first $i$ variables; these are monotone and directed with
+$\bigcup_i S_i = R$. Form the **unsheared** coordinate sequence of all variables,
+$$
+X = (x_0, x_1, x_2, \dots), \qquad X(k) = x_k.
+$$
 
-### 2.3 Support and shearing
+**Theorem 6.1 (Shearing is necessary).** *Every individual coordinate of $X$
+descends to a finite stage — indeed $X(k) = x_k \in S_{k+1}$ — yet $X$ descends to no
+single stage: there is no index $i$ with $X(k) \in S_i$ for all $k$. Consequently
+the colimit identification fails once the finite-support hypothesis is dropped: the
+unrestricted (naive) Witt functor does not preserve the colimit.*
 
-A Witt vector $x \in W(R)$ has **finite support** (equivalently, is **sheared**)
-if there is a cutoff $N$ with $x_k = 0$ for all $k \ge N$. The basepoint $0$ lies
-in every subring, so a finitely supported vector has only finitely many
-coordinates that need to be "placed" in a stage; the rest are automatically
-present everywhere. The sheared Witt vectors are exactly the finitely supported
-elements of $W(R)$; they form the essentially finite part of the full construction.
+*Proof sketch.* Coordinatewise descent is clear: $x_k$ is a polynomial in
+$x_0, \dots, x_k$, hence $x_k \in K[x_0, \dots, x_k] = S_{k+1}$. For the failure of
+global descent, suppose for contradiction that $X(k) \in S_i$ for all $k$, for some
+fixed $i$. Taking $k = i$ gives $x_i \in S_i = K[x_0, \dots, x_{i-1}]$. But the
+variable $x_i$ does not lie in the subring generated by $x_0, \dots, x_{i-1}$: it is
+algebraically independent from them (its degree in $x_i$ is $1$, while every element
+of $S_i$ has degree $0$ in $x_i$). This is the arithmetic contradiction $i \in
+\{0, 1, \dots, i-1\}$ in disguise. Hence no such $i$ exists. Since the sheared
+identification would force such an $i$, it fails for $X$. $\qquad\blacksquare$
 
-## 3. Main Results
+**Remark 6.2.** The contrast is sharp and diagnostic. In the sheared world (§4) the
+support is finite, so only finitely many coordinates are constraining and the
+directed-merge principle applies. Here the support is infinite, the family of
+constraining stages $\{S_{k+1}\}$ is *cofinal* rather than bounded, and directed
+merging has nothing finite to merge. Finite support is precisely what makes the
+relevant portion of the directed system have an upper bound; it is the minimal
+repair that restores colimit-preservation.
 
-We now state and prove the three theorems. Throughout, $R$ is a commutative ring,
-$(\iota,\le)$ is a nonempty directed preorder, $S : \iota \to \mathrm{Subring}(R)$
-is monotone, and $S_\infty = \bigsqcup_i S_i$.
+---
 
-### 3.1 Finite arity: truncated Witt vectors preserve the colimit
+## 7. The tropical analogue
 
-> **Theorem A (Truncated preservation).** Let $x \in W_n(S_\infty)$ be a
-> truncated Witt vector all of whose coordinates lie in $S_\infty$. Then there
-> exist a stage index $i$ and a truncated Witt vector $y \in W_n(S_i)$ such that
-> the inclusion $S_i \hookrightarrow R$ sends each coordinate of $y$ to the
-> corresponding coordinate of $x$: for all $k$, $\;\iota_{S_i}(y_k) = x_k$.
+Theorem 3.1 makes no use of the ring structure of the coordinates: it is a statement
+about sequences that are *eventually equal to a basepoint*. Changing the basepoint
+transports the entire mechanism to any other pointed coordinate world. The tropical
+semiring furnishes a striking instance.
 
-*Proof sketch.* The vector $x$ has finitely many coordinates $x_0, \dots,
-x_{n-1}$, each in $S_\infty$. By Lemma 2.1 there is a single stage $S_i$
-containing all of them, say $x_k \in S_i$ for every $k$. Define $y \in W_n(S_i)$ to
-be the truncated Witt vector whose $k$-th coordinate is the element $x_k$ regarded
-as living in $S_i$ (i.e. the pair $\langle x_k, \text{proof } x_k \in S_i\rangle$).
-Then the inclusion sends $y_k$ back to $x_k$ by construction, for every $k$. By
-coordinatewise equality this exhibits $y$ as a lift of $x$. $\qquad\blacksquare$
+Recall the **tropical (min-plus) semiring** on $\overline{\mathbb{N}} = \mathbb{N}
+\cup \{+\infty\}$ (or on $\mathrm{Tropical}(\mathrm{WithTop}\,\mathbb{N})$), where
+$a \oplus b = \min(a, b)$ and $a \odot b = a + b$; the additive identity is
+$+\infty$ (the tropical zero) and the multiplicative identity is $0$. Tropical
+algebra is the min-plus degeneration of ordinary algebra: polynomials become
+piecewise-linear functions, and much of algebraic geometry becomes polyhedral
+combinatorics.
 
-Theorem A is the "finite limits commute with filtered colimits" phenomenon
-specialized to the finite-arity Witt functor: each truncated stage of the story is
-governed by a finite tuple, so Lemma 2.1 applies directly. It expresses that each
-truncation level $W_n$ preserves the filtered colimit of subrings.
+The natural "finitely-supported" tropical vectors are those that are *eventually
+$+\infty$* — eventually equal to the tropical zero. Specializing Theorem 3.1 to
+basepoint $b = +\infty$:
 
-### 3.2 The obstruction: the full Witt functor fails
+**Corollary 7.1 (Tropical shearing).** *Over the tropical semiring, the
+finitely-supported vectors — the sequences eventually equal to the tropical zero
+$+\infty$ — are exactly the filtered colimit of the truncated tropical vectors
+(those equal to $+\infty$ beyond some coordinate):*
+$$
+\bigcup_{n} \bigl\{\, g : \forall k \ge n,\ g(k) = +\infty \,\bigr\}
+= \bigl\{\, g : \exists N,\ \forall k \ge N,\ g(k) = +\infty \,\bigr\}.
+$$
 
-The naive hope is that Theorem A survives the removal of the truncation. It does
-not, and the failure is realized by a canonical example.
+*Proof sketch.* Immediate specialization of Theorem 3.1 with $A =
+\mathrm{Tropical}(\mathrm{WithTop}\,\mathbb{N})$ and $b = +\infty$. $\qquad
+\blacksquare$
 
-Let $K$ be a nontrivial commutative ring (e.g. a field) and let
-$R = K[X_0, X_1, X_2, \dots]$ be the polynomial ring in countably many variables.
-For $i \in \mathbb{N}$ define the **variable-support subring**
-$$S_i \;=\; \{\, f \in R : \mathrm{vars}(f) \subseteq \{0, 1, \dots, i\} \,\},$$
-the polynomials using only the variables $X_0, \dots, X_i$. This is a subring
-(closed under $0$, $1$, negation, sums, and products because the variable set of a
-sum or product is contained in the union of the variable sets), and the family is
-monotone in $i$. Its union is all of $R$, since any polynomial mentions only
-finitely many variables:
-$$\bigsqcup_i S_i \;=\; R.$$
+**Remark 7.2 (Witt $\leftrightarrows$ tropical bridge).** Witt vectors (basepoint
+$0$) and tropical vectors (basepoint $+\infty$) obey the *same* shearing law and
+differ only in the choice of basepoint. The identification "sheared = colimit of
+truncated" is therefore a basepoint-agnostic fact about how finite support interacts
+with directed unions — indifferent to whether coordinates are $p$-adic ghost
+components or min-plus distances.
 
-Consider the **Witt vector of variables** $x \in W(R)$ defined by $x_k = X_k$ for
-all $k$.
+---
 
-> **Theorem B (Naive failure).** For the variable Witt vector $x$ above, every
-> coordinate lies in the colimit — indeed $x_k = X_k \in S_k \subseteq S_\infty =
-> R$ — yet there is **no** stage $i$ and Witt vector over $S_i$ mapping to $x$
-> under $W(S_i \hookrightarrow R)$. Consequently the full Witt vector functor does
-> not preserve this filtered colimit.
+## 8. Algorithms
 
-*Proof sketch.* Pointwise membership is immediate: $X_k$ uses only the variable
-$X_k$, so $X_k \in S_k \subseteq S_\infty$. Suppose, for contradiction, that $x =
-W(\iota_{S_i})(z)$ for some stage $i$ and $z \in W(S_i)$. Comparing the
-$(i{+}1)$-th coordinates gives $X_{i+1} = \iota_{S_i}(z_{i+1})$, so $X_{i+1} \in
-S_i$, i.e. $X_{i+1}$ uses only variables among $\{0, \dots, i\}$. But
-$\mathrm{vars}(X_{i+1}) = \{i+1\}$, and $\{i+1\} \not\subseteq \{0, \dots, i\}$ —
-contradiction (here nontriviality of $K$ ensures $X_{i+1}$ genuinely involves the
-variable $X_{i+1}$). Hence no stage lift exists. $\qquad\blacksquare$
+The proofs are constructive, and the constructions are directly executable.
 
-Two features make Theorem B the crux of the paper. First, the obstruction is
-**genuine, not vacuous**: the hypotheses are satisfiable and the conclusion is a
-true non-existence, exhibited by an explicit natural vector. Second, and more
-striking, the failure is purely **collective**: every individual coordinate lifts
-(coordinate $k$ to stage $k$), and only the entire vector refuses to. The
-coordinates drift outward without bound, and directedness — which merges any
-*finite* family of stages — cannot corral infinitely many escaping demands.
+**Algorithm A (Descent of a sheared vector to a single stage).** Given a
+finitely-supported sequence over $R = \bigcup_i S_i$ together with an oracle
+locating each coordinate in some stage, return a stage $M$ and level $N$ witnessing
+descent (Theorem 4.1, $\supseteq$).
 
-### 3.3 The repair: sheared Witt vectors preserve the colimit
+1. Compute the support bound $N$ (least $N$ with $g(k) = 0$ for all $k \ge N$).
+2. For each $k < N$, locate a stage $c(k)$ with $g(k) \in S_{c(k)}$.
+3. Merge $\{c(0), \dots, c(N-1)\}$ to a common upper bound $M$ via directed joins.
+4. Return $(M, N)$; then $g(k) \in S_M$ for all $k$ and $g(k) = 0$ for $k \ge N$.
 
-Restricting to finite support removes exactly the drift that Theorem B exploits.
+Complexity: $O(N)$ locate-calls and $O(N)$ join operations.
 
-> **Theorem C (Sheared preservation).** Let $p$ be prime and let $x \in
-> W(S_\infty)$ be finitely supported — there is $N$ with $x_k = 0$ for all $k \ge
-> N$ — with every coordinate in $S_\infty$. Then there exists a stage $i$ such
-> that $x$ lies in the image of the functorial map $W(S_i \hookrightarrow R) :
-> W(S_i) \to W(S_\infty)$; that is, $x$ lifts to a single stage.
+**Algorithm B (Colimit membership test).** Decide whether a coordinate sequence lies
+in the double directed union, by checking finite support and stagewise membership up
+to the support bound.
 
-*Proof sketch.* Only the coordinates $x_0, \dots, x_{N-1}$ can be nonzero. These
-are finitely many elements of $S_\infty$, so by Lemma 2.1 there is a stage $S_i$
-containing all of them. For $k \ge N$ we have $x_k = 0 \in S_i$ as well, since $0$
-belongs to every subring. Thus **every** coordinate of $x$ lies in $S_i$. Package
-the coordinates into a Witt vector $z \in W(S_i)$ (with $z_k$ the element $x_k$
-viewed in $S_i$); then $W(\iota_{S_i})(z)$ agrees with $x$ coordinatewise, hence
-equals $x$ by extensionality. $\qquad\blacksquare$
+**Algorithm C (Necessity witness).** Construct the unsheared "all variables" vector
+$X$ and certify that no finite stage contains it, by exhibiting for each candidate
+stage $i$ the escaping coordinate $x_i \notin S_i$ (Theorem 6.1).
 
-Comparing Theorems B and C isolates finite support as the precise dividing line.
-The full functor fails because the variable vector has infinitely many nonzero
-coordinates escaping to infinity; the sheared functor succeeds because finite
-support caps the number of coordinates that need placing. The very vector that
-breaks Theorem B, $x_k = X_k$, is the minimal violation: each of its coordinates
-sits at a distinct, growing stage, so *no* finiteness condition weaker than finite
-essential support could rescue preservation. Shearing is therefore not merely *a*
-repair but the *minimal* one.
+---
 
-## 4. Synthesis: the sheared colimit identification
+## 9. Applications and significance
 
-The three theorems combine into a single statement about the structure of the
-Witt construction relative to filtered colimits.
+- **Prismatic and sheared constructions.** The identification is the concrete
+  engine behind treating the sheared Witt functor as a filtered colimit, which
+  licenses commuting it past other filtered colimits and reducing statements about
+  the limit to statements at finite stages.
+- **Reduction to finite stages.** Any property of a sheared Witt vector that is
+  detected at finite truncation level and finite ring stage holds for the whole
+  object, because the object *is* one of those finite approximations.
+- **Cross-domain transfer.** The basepoint-agnostic formulation transfers the
+  colimit law from $p$-adic to tropical settings for free, suggesting a common
+  framework for "eventually-basepoint" functors.
 
-> **Corollary D (Colimit identification).** Over any directed union of subrings
-> $S_\infty = \bigsqcup_i S_i$:
-> 1. each truncation level $W_n$ preserves the colimit (Theorem A);
-> 2. the finitely supported (sheared) Witt vectors over $S_\infty$ are exactly the
->    union of the images of the stagewise Witt vectors $W(S_i)$ (Theorem C); and
-> 3. this identification fails for the full, unsheared functor (Theorem B).
+---
 
-Read functorially, the sheared Witt vector construction is assembled from its
-finite truncations, each of which respects the colimit, and stacking these finite
-layers under the finite-support condition reproduces exactly the union over the
-stages. In slogan form: **the sheared Witt vectors over a colimit of rings are the
-colimit of the truncated Witt vectors over the stages.** The object that naively
-broke colimit-preservation is, after shearing, rebuilt from the very finite pieces
-that respect it.
+## 10. Discussion and future work
 
-## 5. Algorithms
+Three directions grow directly out of the identification.
 
-The proofs are constructive and translate directly into procedures. We record
-their logic; runnable implementations over polynomial coordinates appear in the
-accompanying software.
+**1. Descent is an equivalence, not merely a surjection.** Every finitely-supported
+vector over a rising union of subrings comes from a truncated vector at a single
+finite stage. We conjecture the descent is a genuine bijection: two truncated
+vectors that agree after passing to the whole ring already agree at a common later
+stage. The same "common upper bound" that collects finitely many coordinates into
+one stage should collect two competing representatives into one stage where they
+coincide — upgrading a one-sided approximation into a structural equivalence.
 
-**Algorithm 1 (Stage lift for finitely many / finitely supported coordinates).**
-*Input:* a monotone family of subrings represented by membership predicates $x
-\mapsto \mathrm{stage}(x)$ returning the least stage containing $x$; a finite list
-of coordinates (either the $n$ coordinates of a truncated vector, or the nonzero
-prefix of a sheared vector). *Output:* a single stage index $i$ and the lifted
-coordinates. *Method:* compute $\mathrm{stage}(x_k)$ for each coordinate, set $i =
-\max_k \mathrm{stage}(x_k)$ (the common upper bound from Lemma 2.1), and return $i$
-with each coordinate reinterpreted in $S_i$. This realizes Theorems A and C.
+**2. The natural filtration is the right filtration.** The truncation tower is
+defined crudely, by forcing coordinates to vanish past a cutoff. We conjecture it
+can be replaced by the intrinsic shift filtration coming from the arithmetic
+structure, that the two towers are cofinal (hence define the same limit), and that
+the intrinsic one additionally respects the ring operations and the Frobenius-type
+symmetry — because "vanish past level $n$" is secretly the image of an $n$-fold
+structural shift.
 
-**Algorithm 2 (Obstruction detector).** *Input:* a Witt vector over a polynomial
-ring with the variable-support filtration and a candidate stage $i$. *Output:* a
-certificate that the vector does **not** lift to stage $i$, when one exists.
-*Method:* search for a coordinate index $k$ with $\mathrm{vars}(x_k)
-\not\subseteq \{0,\dots,i\}$; return $k$ as a witness. For the variable vector
-$x_k = X_k$, the witness $k = i+1$ works for every $i$, certifying global failure.
-This realizes Theorem B.
+**3. The failure of the unsheared limit is cohomological.** Over a covering that is
+not directed, the precise set of vectors that still descend should be governed by a
+first-order gluing obstruction of the covering poset, so shearing is the exact price
+of trivializing that obstruction: descent to a single stage is a gluing problem,
+gluing is controlled by the nerve of the cover, and finite support keeps the
+relevant piece of the nerve contractible. The extreme counterexample of §6 is a
+concrete probe for stress-testing this on small non-directed lattices.
 
-## 6. Applications and discussion
+---
 
-**Local-to-global reasoning.** Preservation of filtered colimits is what licenses
-proving a property of a Witt ring over a large (colimit) base by checking it on
-finite stages. Theorem A shows this is always legitimate for truncated Witt
-vectors, and Theorem C shows it remains legitimate for the sheared theory. Theorem
-B is a caution: for the full theory one must not assume stagewise verification
-suffices.
+## References
 
-**A design principle for coordinate constructions.** The trichotomy is a template
-that recurs far beyond Witt vectors. Any construction whose output is an infinite
-tuple of coordinate-local data will fail to commute with directed unions exactly
-when infinitely many coordinates can drift outward, and the finite-support
-("sheared") variant will restore preservation. The variable vector $x_k = X_k$ is
-a universal cautionary example.
-
-**Why the counterexample is canonical.** The polynomial ring with the variable
--support filtration is the *free* object in which coordinates can be made maximally
-independent: the $k$-th variable is designed to require the $k$-th stage and no
-earlier one. That is why the variable vector is the sharpest possible witness to
-failure and why it certifies the *minimality* of the finite-support repair.
-
-## 7. Future Directions
-
-The present results identify the sheared Witt construction with the filtered
-colimit of truncated Witt constructions at the level of underlying sets. The
-natural next steps promote this identification to the level of algebra and
-operators.
-
-**From set to ring.** Realize a filtered colimit of rings as a directed union of a
-monotone family of subrings and consider the finitely supported Witt vectors over
-the colimit. As a set these are the union of the images from the individual
-stages. We conjecture this union is closed under Witt addition and multiplication,
-so it is a genuine subring of the Witt vectors over the colimit, and the induced
-map from the ring colimit of the stagewise Witt rings is a ring isomorphism. The
-key insight is that the $n$-th Witt addition and multiplication polynomials depend
-only on the first $n$ coordinates, so on finitely supported vectors both
-operations preserve finite support and factor through a single stage once finitely
-many indices are merged.
-
-**Frobenius and Verschiebung.** The Witt vectors carry Frobenius and Verschiebung
-operators. We conjecture that on finitely supported vectors both operators map the
-union of the stagewise images into itself and are computed one stage at a time, so
-that the isomorphism between the sheared object and the filtered colimit
-intertwines these operators. The key insight is that each output coordinate of
-Frobenius and Verschiebung is a polynomial in finitely many input coordinates, and
-Verschiebung merely shifts support by one, so neither operator can destroy finite
-support or single-stage factorization.
-
-**A trichotomy of Witt vectors over a colimit.** Over a colimit ring there are
-three natural classes of Witt vectors: those whose coordinates merely lie
-pointwise in the colimit, those that are *stage-bounded* (a single stage contains
-every coordinate), and those of finite support. We conjecture these form a
-strictly nested hierarchy, with the variable vector separating the pointwise class
-from the stage-bounded class, and quantitative analogues distinguishing finite
-support from mere stage-boundedness.
-
-## 8. Conclusion
-
-We have located the Witt vector construction precisely on the divide between
-finite and infinite arity relative to filtered colimits. Truncated Witt vectors,
-being finite, always descend to a single stage; the full Witt vectors do not, as
-witnessed canonically by the vector of all the variables over a polynomial ring;
-and the sheared, finitely supported Witt vectors restore preservation and do so
-minimally. The unifying thread is Lemma 2.1: finitely many germs merge into one
-stage. Finite essential support is exactly the condition that makes an
-infinite-arity coordinate construction behave, once more, like a finite one — and
-that is the algebraic meaning of shearing.
+- E. Witt, *Zyklische Körper und Algebren der Charakteristik $p$ vom Grad $p^n$*,
+  J. Reine Angew. Math. **176** (1937).
+- T. Zink, *The display of a formal $p$-divisible group* (2003).
+- E. Lau, *Frames and finite group schemes over complete regular local rings*
+  (2010).
+- V. Drinfeld and E. Lau, work on sheared Witt vectors (2025).
+- Hoff and Lau, further developments (2026).

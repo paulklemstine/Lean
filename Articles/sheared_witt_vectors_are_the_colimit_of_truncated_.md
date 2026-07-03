@@ -1,193 +1,215 @@
-# The Vector Made of All the Variables: How "Shearing" Repairs a Broken Limit
+# The Infinite from the Finite: How Sheared Vectors Are Built One Truncation at a Time
 
-## A tale of two infinities
+## A tower reaching up, a tower reaching in
 
-Mathematics is full of machines that take a ring — a number system where you can
-add, subtract, and multiply — and build a bigger, richer ring out of it. One of
-the most beautiful of these machines is the **Witt vector** construction. Given a
-prime number $p$ and a ring $R$, it produces a new ring $W(R)$ whose elements are
-infinite sequences $(x_0, x_1, x_2, \dots)$ of elements of $R$. What makes Witt
-vectors magical — and notoriously subtle — is that you do **not** add these
-sequences coordinate by coordinate. Instead, addition and multiplication are
-governed by a specific, universal family of polynomials, engineered so that
-$W(R)$ secretly remembers arithmetic "one prime at a time." When $R$ is a field
-of characteristic $p$, the Witt vectors miraculously reassemble it into a ring of
-characteristic zero. Witt vectors are the backbone of modern $p$-adic geometry,
-crystalline cohomology, and the theory of perfectoid spaces.
+Some of the most useful objects in mathematics are infinite, but they are only
+useful because they are secretly assembled out of finite pieces. A real number is
+an infinite decimal, yet we compute with it through its finite truncations. A
+power series is an infinite list of coefficients, yet every question we can
+actually answer about it is answered at some finite degree. The art is knowing
+*which* infinite objects are honestly the limit of their finite shadows — and
+which only pretend to be.
 
-This article is about a small, sharp phenomenon hiding inside this machine — a
-place where the construction breaks, and an elegant fix, called **shearing**,
-that puts it back together. The whole drama plays out around a single question:
+This article is about one such object from arithmetic geometry, and about a clean,
+surprising answer to exactly this question. The object is a *sheared vector*: an
+infinite sequence of coordinates that is allowed to be nonzero only finitely often.
+The claim, stated once and for all, is that these sheared vectors are the *colimit*
+of their truncations — you can build every one of them by climbing a tower of
+finite-length approximations — and that the shearing condition is not a technical
+convenience but the exact, minimal price of admission.
 
-> When you build a ring as a limit of smaller pieces, does the Witt vector
-> construction respect that limit?
+To make the statement vivid we need two ideas: what a *Witt vector* is, and what a
+*colimit* is.
 
-The answer turns out to be a crisp *"it depends,"* and understanding exactly what
-it depends on reveals something clean about the difference between the finite and
-the infinite.
+## Witt vectors, in one paragraph
 
-## Building rings out of pieces
+Fix a prime number $p$. To every commutative ring $A$ one can attach a new ring,
+the ring of **Witt vectors** $W(A)$, whose elements are infinite sequences
+$$
+a = (a_0, a_1, a_2, \dots), \qquad a_i \in A.
+$$
+What makes $W(A)$ remarkable is *how* these sequences add and multiply: not
+coordinate by coordinate, but through a system of universal polynomial formulas
+engineered so that the "ghost components"
+$$
+w_n(a) = a_0^{p^n} + p\,a_1^{p^{n-1}} + \cdots + p^n a_n
+$$
+behave like ordinary coordinates. Witt vectors are the machine that turns a ring
+of characteristic $p$ into a ring of characteristic zero in the most canonical way
+possible; over the field with $p$ elements they reconstruct the $p$-adic integers.
+They are everywhere in modern number theory.
 
-Rings are often assembled from an increasing tower of smaller rings. Imagine a
-sequence of subrings
-$$S_1 \subseteq S_2 \subseteq S_3 \subseteq \cdots$$
-sitting inside one big ambient ring $R$, each contained in the next. Their union
-$$S_\infty = \bigcup_{i} S_i$$
-is again a ring — every element of $S_\infty$ lives in *some* finite stage $S_i$,
-and any two elements can be found together in a common (large enough) stage where
-you can add and multiply them. This kind of increasing union is the concrete face
-of what category theorists call a **filtered colimit**: a limit built by merging
-a *directed* family of pieces, where any finite collection of pieces fits inside a
-single later one.
+A **truncated Witt vector** simply stops after finitely many coordinates:
+$W_n(A)$ consists of the length-$n$ tuples $(a_0, \dots, a_{n-1})$, and one passes
+from length $n+1$ to length $n$ by forgetting the last entry. There is a classical
+way to view the full ring $W(A)$ as the *inverse* limit of these truncations —
+gluing together compatible finite approximations, the way an infinite decimal is
+glued from its digits.
 
-A guiding slogan of algebra is that *finite constructions commute with filtered
-colimits.* If you build something out of finitely many ingredients, then building
-it over the union $S_\infty$ is the same as building it over some single stage
-$S_i$ and then passing to the union. The reason is disarmingly simple: finitely
-many elements, each living in some stage, can all be rounded up into one common
-stage, because "directed" means any finite set of stages has an upper bound.
+But this article is about the opposite direction.
 
-The interesting mathematics begins the moment "finitely many" becomes
-"infinitely many."
+## Colimits: building up instead of drilling down
 
-## Truncated Witt vectors: the finite case works
+An **inverse limit** drills down: it collects all the finite views of an object
+and asks for one master object compatible with every view. A **colimit** (or
+direct limit) builds up: you have a rising tower of pieces,
+$$
+X_1 \subseteq X_2 \subseteq X_3 \subseteq \cdots,
+$$
+each sitting inside the next, and the colimit is simply their union $\bigcup_n X_n$
+— everything you can reach by going far enough up the tower. The union of the
+intervals $[-n, n]$ is the whole real line; the colimit of the polynomials of
+degree $\le n$ is all polynomials. Nothing lives in the colimit that does not
+already live at some finite stage.
 
-Witt vectors come in a finite flavor. The **truncated Witt vectors** of length
-$n$, written $W_n(R)$, keep only the first $n$ coordinates: as a set,
-$W_n(R) = R^n$, a tuple $(x_0, x_1, \dots, x_{n-1})$. The Witt ring operations
-respect this truncation because the $k$-th coordinate of a sum or product depends
-only on the first $k$ coordinates — nothing from further out ever leaks back. So
-$W_n$ is genuinely a *finite-arity* construction: each of its outputs is
-assembled from finitely many inputs.
+Here is the tension. The full ring of Witt vectors $W(A)$ is an inverse limit, and
+inverse limits are famously *bad* at being colimits: an infinite sequence that is
+nonzero in every coordinate cannot possibly come from any single finite stage.
+So $W$, as it stands, does not build up from its truncations.
 
-Because of that, the slogan applies without a fight. Here is the precise
-statement.
+The fix is **shearing**. Restrict attention to the sequences with *finite
+essential support* — those that are eventually equal to the basepoint $0$:
+$$
+\chi W(A) \;=\; \bigl\{\, a = (a_0, a_1, a_2, \dots) \;:\; a_k = 0 \text{ for all
+sufficiently large } k \,\bigr\}.
+$$
+These are the **sheared Witt vectors**. And with this single restriction, the
+object snaps into place as an honest colimit.
 
-> **Truncated Witt vectors preserve filtered colimits (the finite case).**
-> Let $S_1 \subseteq S_2 \subseteq \cdots$ be an increasing (directed) family of
-> subrings of a ring $R$, with union $S_\infty = \bigcup_i S_i$. Then every
-> truncated Witt vector $x \in W_n(S_\infty)$ lifts to a single stage: there is
-> an index $i$ and a truncated Witt vector $y \in W_n(S_i)$ whose coordinates map
-> back to those of $x$ under the inclusion $S_i \hookrightarrow S_\infty$.
+## The shearing theorem, stated plainly
 
-The proof is exactly the slogan in action. The vector $x$ has only $n$
-coordinates $x_0, \dots, x_{n-1}$, each an element of the union $S_\infty$, hence
-each living in some stage. Finitely many stages have a common upper bound $S_i$,
-so all $n$ coordinates live in $S_i$ at once. Repackage them as a truncated Witt
-vector $y$ over $S_i$, and you are done. Finiteness did all the work.
+Here is the mechanism in its purest form, stripped of arithmetic. Take *any* set
+$A$ of coordinate values and *any* basepoint $b \in A$. Consider two families of
+sequences:
 
-## The full Witt vectors: the infinite case breaks
+- the **truncated** family at level $n$: all sequences that are equal to $b$ from
+  coordinate $n$ onward;
+- the **sheared** family: all sequences that are *eventually* equal to $b$.
 
-Now remove the truncation. The full Witt vectors $W(R) = R^{\mathbb{N}}$ use
-*infinitely many* coordinates $(x_0, x_1, x_2, \dots)$. The naive hope is that the
-same lifting theorem still holds. It does not — and the failure is not some
-pathological edge case. It is witnessed by the single most natural infinite Witt
-vector you could write down.
+**Shearing Theorem.** *The sheared family is exactly the rising union of the
+truncated families:*
+$$
+\bigcup_{n \ge 0} \bigl\{\, g : \mathbb{N} \to A \;:\; g(k) = b \text{ for all }
+k \ge n \,\bigr\}
+\;=\;
+\bigl\{\, g : \mathbb{N} \to A \;:\; g(k) = b \text{ for all sufficiently large }
+k \,\bigr\}.
+$$
 
-Take a field $K$ and form the polynomial ring $R = K[X_0, X_1, X_2, \dots]$ in
-countably many variables. Filter it by how many variables you are allowed to use:
-let
-$$S_i = \{\, \text{polynomials using only the variables } X_0, \dots, X_i \,\}.$$
-Each $S_i$ is a subring, the family is increasing, and its union is all of $R$,
-because any single polynomial mentions only finitely many variables.
+The proof is a single honest observation: a sequence lies in the union precisely
+when *some* level $n$ works, and "some level works" is the literal definition of
+"eventually equal to $b$." Every truncated vector is sheared (its support is
+bounded by its length); and every sheared vector, having a finite support, lands
+in the truncated family the moment $n$ exceeds that support. Truncated vectors
+$W_n(A) \cong A^n$ embed into $A^{\mathbb N}$ by padding with the basepoint, and
+their union is $\chi W$. That is the colimit, in isolation.
 
-Now consider the **vector of all the variables**:
-$$x = (X_0, X_1, X_2, X_3, \dots) \in W(R),$$
-whose $k$-th coordinate is simply the variable $X_k$. Look closely at what
-happens.
+## Two colimits at once
 
-- **Every coordinate lifts.** The coordinate $X_k$ lives in the stage $S_k$ (it
-  uses only the variable $X_k$), which is inside the union $S_\infty = R$. So
-  *pointwise*, this vector is entirely built from elements of the colimit. There
-  is no obstruction visible one coordinate at a time.
-- **The whole vector lifts nowhere.** Suppose the entire vector lived in a single
-  stage $S_i$. Then in particular the coordinate $X_{i+1}$ would have to be a
-  polynomial in $X_0, \dots, X_i$ only — but $X_{i+1}$ is a brand-new variable
-  that no such polynomial can equal. Contradiction. No stage is large enough to
-  hold all the variables at once.
+The real theorem is richer, because in practice the ring $A$ is *itself* a colimit.
+Rings in arithmetic geometry are constantly presented as rising unions of smaller
+subrings: adjoin one variable, then another, then another; or take a field and pile
+on algebraic extensions. Write such a presentation as a monotone, directed family
+of subrings
+$$
+S_1 \subseteq S_2 \subseteq \cdots, \qquad R = \bigcup_i S_i.
+$$
+Now there are two towers in play at once — the *arithmetic* tower of subrings
+$S_i$, and the *arity* tower of truncation levels $n$ — and the question is whether
+the sheared vectors over the big ring $R$ can be built by climbing both towers
+simultaneously.
 
-> **The naive lift fails (the obstruction).** Over the polynomial ring
-> $K[X_0, X_1, \dots]$ with the variable-count filtration above, the Witt vector
-> $x = (X_0, X_1, X_2, \dots)$ has every coordinate in the colimit $S_\infty$, yet
-> lies in no single stage $S_i$. Hence the full Witt vector construction does
-> **not** preserve this filtered colimit.
+**Double Colimit Theorem.** *The sheared Witt coordinate sequences over the colimit
+ring $R = \bigcup_i S_i$ — the sequences with finite support whose every coordinate
+lies in $R$ — are exactly the double rising union, over truncation level $n$ and
+stage $i$, of the truncated coordinate sequences whose every coordinate lies in the
+single stage $S_i$:*
+$$
+\bigcup_{i}\ \bigcup_{n}\ \bigl\{\, g : g(k)=0 \text{ for } k \ge n,\ \text{and }
+g(k) \in S_i \text{ for all } k \,\bigr\}
+\;=\;
+\bigl\{\, g : g \text{ has finite support, and } g(k) \in \textstyle\bigcup_i S_i
+\text{ for all } k \,\bigr\}.
+$$
 
-This is the heart of the story, and it is worth savoring. Each individual
-coordinate is perfectly well-behaved; the pathology is purely collective. The
-vector escapes every finite stage not because any one of its entries is bad, but
-because its entries *drift outward forever*, coordinate $k$ demanding stage $k$.
-Directedness can merge any *finite* set of demands into one stage — but here the
-demands never stop.
+This is the mission statement in one equation: the colimit in the *base ring*
+variable and the colimit in the *truncation* variable fuse into a single directed
+union that computes the sheared object.
 
-## Shearing: the minimal repair
+The subtle direction is showing that every sheared vector over $R$ descends to a
+single stage. A sheared vector has only finitely many nonzero coordinates, say the
+first $n$ of them; each of those finitely many coordinates lives in *some* stage
+$S_{i_k}$; and because the tower is directed, finitely many stages always have a
+common upper bound $M$. All the relevant coordinates then live in the one ring
+$S_M$, and the vector is a truncated vector at level $n$ over stage $M$. **The same
+"finitely many things have an upper bound" principle powers both towers at once** —
+the finite support bounds the arity, the finite list of stages bounds the base
+ring, and directedness collapses them into a single stage. That fusion is the
+heart of the result.
 
-If the problem is that the coordinates drift out to infinity, the fix is to
-forbid that drift — but as gently as possible. Enter **shearing**.
+## Why the shearing is not optional
 
-A Witt vector is called **finitely supported** (or *sheared*) if all but finitely
-many of its coordinates are zero: there is some cutoff $N$ beyond which every
-$x_k = 0$. This is a mild restriction — you keep the full infinite tower of
-coordinates, you just insist that eventually they settle down to the basepoint
-$0$ (which, conveniently, lives in every subring). The sheared Witt vectors form
-exactly the "essentially finite" part of the full Witt vectors.
+It is tempting to think finite support is a harmless simplification. It is not —
+and there is a clean way to see the failure. Take a field $K$ with more than one
+element and the polynomial ring $K[x_0, x_1, x_2, \dots]$ in countably many
+variables, presented as the rising union of the subrings $S_i = K[x_0, \dots,
+x_{i-1}]$ generated by the first $i$ variables. Now form the *unsheared* vector
+whose $k$-th coordinate is the variable $x_k$:
+$$
+X = (x_0, x_1, x_2, \dots).
+$$
 
-And with that single restriction, preservation snaps back into place.
+**Necessity Theorem.** *Every individual coordinate of $X$ descends to a finite
+stage — indeed $x_k \in S_{k+1}$ — yet the whole vector $X$ descends to no stage at
+all. Hence, without the finite-support restriction, the colimit identification is
+false.*
 
-> **Sheared Witt vectors preserve filtered colimits (the repair).** Let
-> $S_1 \subseteq S_2 \subseteq \cdots$ be an increasing family of subrings with
-> union $S_\infty$. If a Witt vector $x \in W(S_\infty)$ is finitely supported —
-> so $x_k = 0$ for all $k \ge N$ — and every coordinate lies in $S_\infty$, then
-> $x$ lifts to a single stage: there is an index $i$ such that $x$ is the image
-> of a Witt vector over $S_i$ under the map $W(S_i) \to W(S_\infty)$ induced by
-> the inclusion.
+The reason is arithmetic and absolute: if $X$ came from stage $S_i$, then in
+particular the coordinate $x_{i+1}$ would lie in $K[x_0, \dots, x_{i-1}]$ — a
+polynomial ring that simply does not contain the variable $x_{i+1}$. Coordinate by
+coordinate the vector is perfectly tame; taken all at once it escapes every finite
+stage forever. Shearing is precisely the minimal repair that keeps the
+infinite-arity Witt functor honest about colimits.
 
-The proof is once again the finite slogan in disguise. Only the coordinates
-$x_0, \dots, x_{N-1}$ can be nonzero; that is *finitely many* elements of the
-union, so they all fit into a common stage $S_i$. Every remaining coordinate is
-$0$, which already lives in $S_i$. So the entire (essentially finite) vector lives
-in $S_i$. Finiteness is restored, and with it, preservation.
+## The tropical echo
 
-Shearing is not merely *a* fix; it is the *minimal* one. Recall the vector of all
-the variables: its $k$-th coordinate is supported at stage $k$, one step further
-out each time, with no cutoff. This is precisely the behavior that finite support
-forbids and nothing weaker does. Any relaxation that still allowed infinitely
-many nonzero coordinates to drift outward would readmit the counterexample. So
-"finite essential support" is not an arbitrary convenience — it is exactly the
-boundary between preservation and failure.
+The most satisfying part of the story is that none of this is really about Witt
+vectors. Strip away the elaborate addition and multiplication and what remains is a
+statement about *eventually-basepoint sequences* — and that statement does not care
+what the coordinate values mean. Change the basepoint and the same mechanism
+reappears in an entirely different world.
 
-## Why this is the right picture
+Consider the **tropical semiring**, where "addition" is taking the minimum and
+"multiplication" is ordinary addition, with the value $+\infty$ playing the role of
+zero. Tropical mathematics is the min-plus shadow of ordinary algebra; it turns
+polynomials into piecewise-linear functions and geometry into combinatorics. In
+this world the natural finitely-supported vectors are the sequences that are
+*eventually $+\infty$*.
 
-Step back and the three results line up into a single, satisfying statement about
-the difference between finite and infinite.
+**Tropical Corollary.** *Over the tropical semiring, the eventually-$\infty$
+(finitely-supported) vectors are exactly the colimit of the truncated ones — the
+identical shearing mechanism, with the basepoint $0$ replaced by the tropical zero
+$+\infty$.*
 
-- **Finite arity preserves colimits.** Truncated Witt vectors $W_n$, built from
-  $n$ coordinates, always descend to a single stage. ($W_n(S_\infty)$ lifts.)
-- **Infinite arity does not.** The full Witt vectors $W$, built from infinitely
-  many coordinates, can escape every stage — and the escape is realized by the
-  most natural example imaginable, the vector of all the variables.
-- **Finite support restores it.** Shearing to finitely supported coordinates
-  makes the infinite construction behave like a finite one again, and this is the
-  sharpest possible repair.
+Witt vectors and tropical vectors, two objects with nothing obvious in common, obey
+the *same* colimit law, and they differ only in the choice of basepoint. The
+shearing phenomenon is basepoint-agnostic: it is a fact about how finite support
+interacts with rising unions, and it is indifferent to whether the coordinates are
+$p$-adic ghosts or tropical distances.
 
-Read as a slogan: **the sheared Witt vectors over a union of rings are exactly
-the union of the Witt vectors over the stages.** Each finite layer of the sheared
-object behaves like a truncated Witt functor, and stacking those layers rebuilds
-the whole. In the language of limits, *the sheared Witt vector construction is the
-filtered colimit of the truncated Witt vector constructions.* The object that
-naively broke the colimit is, after shearing, assembled from the very finite
-pieces that respect it.
+## What it means
 
-## The moral
+There is a recurring lesson in mathematics that infinite objects earn their keep
+only when they are governed by the finite. Sheared Witt vectors pass that test in
+the strongest possible way: not only is every one of them approximated by finite
+truncations, every one of them *is* a finite truncation, living at a definite,
+findable stage of a definite, findable tower. The unsheared vectors fail the test
+just as decisively, and the counterexample — a vector that is finite in every
+coordinate but infinite as a whole — shows exactly where the boundary lies.
 
-There is a lesson here that reaches well beyond Witt vectors. Whenever we build a
-structure out of infinitely many coordinates and then try to assemble it from
-finite approximations, the danger is never any single coordinate — it is the
-*collective drift* of infinitely many of them refusing to be pinned down at once.
-The cure is to insist on finite essential support: keep the infinite scaffolding,
-but require that it eventually rests on solid ground. That is shearing, and the
-vector of all the variables is the perfect cautionary tale showing why it is
-needed — and why nothing less will do.
-
-Finiteness commutes with taking unions. Infinity, left unchecked, does not. And
-between them sits the delicate, beautiful compromise of the finitely supported —
-enough infinity to be interesting, enough finiteness to be tractable.
+That boundary, drawn once for Witt vectors, turns out to be drawn everywhere at
+once. The same line separates the tame from the wild in the tropical world, and in
+any setting where finitely-supported sequences meet a rising union of value sets.
+Shearing is the name of the repair; the colimit is the reward; and the fact that
+both are indifferent to the meaning of the coordinates is what makes the idea
+beautiful.

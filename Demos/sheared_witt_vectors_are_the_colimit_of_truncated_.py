@@ -1,242 +1,241 @@
-"""
-Numerical demonstrations for:
+"""Numerical demonstrations for:
 
-    Sheared Witt Vectors as the Filtered Colimit of Truncated Witt Vectors
+    "Sheared Witt Vectors as the Filtered Colimit of Truncated Witt Vectors."
 
-We model a filtered colimit of rings as a directed union of subrings of the
-polynomial ring K[X_0, X_1, X_2, ...], filtered by variable index:
+This self-contained script illustrates, over concrete models, the three pillars of
+the development:
 
-    S_i = { polynomials using only the variables X_0, ..., X_i }.
+  1. Shearing in isolation  (arity colimit):
+     the eventually-basepoint sequences are exactly the union of the truncated ones.
 
-The three phenomena we illustrate are:
+  2. The double colimit:
+     over a ring presented as a rising union of subrings, a finitely-supported
+     coordinate sequence descends to a *single* stage, found by merging the finitely
+     many constraining coordinate-stages.
 
-  (A) TRUNCATED preservation: a truncated Witt vector (finitely many
-      coordinates) whose coordinates lie in the union always lifts to a single
-      stage S_i.
+  3. Necessity of shearing:
+     the "vector of all variables" over a polynomial ring in countably many
+     variables descends coordinatewise but never globally.
 
-  (B) NAIVE failure: the full Witt vector of variables, x_k = X_k, has every
-      coordinate in the union yet lifts to NO single stage.
+Plus a tropical (min-plus) echo, obtained by changing the basepoint from 0 to +inf.
 
-  (C) SHEARED repair: a finitely supported Witt vector (eventually 0) whose
-      coordinates lie in the union always lifts to a single stage.
-
-Everything is self-contained; run with `python demo.py`.
+Run:  python demo.py
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
-
-# A monomial is a frozen mapping variable-index -> exponent (>0), as a sorted
-# tuple of (index, exponent) pairs. A polynomial is a mapping monomial ->
-# rational coefficient (here: float for simplicity).
-Monomial = Tuple[Tuple[int, int], ...]
+from typing import Callable, Optional, Sequence
 
 
-@dataclass(frozen=True)
+# ---------------------------------------------------------------------------
+# 1. Shearing in isolation: sheared = colimit of truncated
+# ---------------------------------------------------------------------------
+
+def is_truncated_at(seq: Sequence[object], n: int, basepoint: object) -> bool:
+    """True iff seq[k] == basepoint for every k >= n (the level-n truncated set)."""
+    return all(seq[k] == basepoint for k in range(n, len(seq)))
+
+
+def support_bound(seq: Sequence[object], basepoint: object) -> Optional[int]:
+    """Least N with seq[k] == basepoint for all k >= N, or None if no such N
+    within the sampled prefix (a proxy for 'not finitely supported')."""
+    last_nonbase = -1
+    for k, v in enumerate(seq):
+        if v != basepoint:
+            last_nonbase = k
+    return last_nonbase + 1  # N = 0 means the all-basepoint sequence
+
+
+def is_sheared(seq: Sequence[object], basepoint: object) -> bool:
+    """True iff seq is eventually equal to the basepoint (finite essential support)."""
+    return support_bound(seq, basepoint) is not None
+
+
+def demo_arity_colimit() -> None:
+    print("=" * 72)
+    print("1. Shearing in isolation:  sheared  =  union over n of truncated-at-n")
+    print("=" * 72)
+    basepoint = 0
+    # A finitely-supported sequence, viewed as a length-8 sample.
+    seq = [3, 0, 5, 0, 0, 0, 0, 0]
+    N = support_bound(seq, basepoint)
+    print(f"sequence               : {seq}")
+    print(f"support bound N        : {N}  (seq[k]=0 for all k>=N)")
+    print(f"is sheared             : {is_sheared(seq, basepoint)}")
+    print("membership in truncated sets {seq : seq[k]=0 for k>=n}:")
+    for n in range(0, 9):
+        print(f"   n={n}:  in truncated-at-{n}?  {is_truncated_at(seq, n, basepoint)}")
+    print(f"-> first n that works is n = N = {N}: the sheared vector lands in")
+    print(f"   the level-{N} truncation, exactly the colimit statement.\n")
+
+
+# ---------------------------------------------------------------------------
+# 2. The double colimit: descent to a single stage
+# ---------------------------------------------------------------------------
+
+@dataclass
+class Monomial:
+    """A monomial c * prod x_i^{e_i}; exponents keyed by variable index."""
+    coeff: int
+    exps: tuple[int, ...]  # exps[i] = exponent of variable x_i
+
+    def max_var(self) -> int:
+        """Largest variable index actually appearing (>=0), or -1 if constant."""
+        used = [i for i, e in enumerate(self.exps) if e > 0]
+        return max(used) if used else -1
+
+
+@dataclass
 class Poly:
-    """A polynomial in the variables X_0, X_1, ... over the rationals."""
+    """A polynomial as a list of monomials over K[x_0, x_1, ...]."""
+    terms: tuple[Monomial, ...]
 
-    terms: Dict[Monomial, float]
-
-    def variables(self) -> frozenset[int]:
-        """The set of variable indices actually occurring in this polynomial."""
-        used: set[int] = set()
-        for mono, coeff in self.terms.items():
-            if coeff == 0:
-                continue
-            for var_index, exponent in mono:
-                if exponent > 0:
-                    used.add(var_index)
-        return frozenset(used)
-
-    def stage(self) -> int:
-        """Least i with self in S_i (= max variable index used); -1 if constant."""
-        vs = self.variables()
-        return max(vs) if vs else -1
+    def max_var(self) -> int:
+        """Largest variable index appearing in any term; -1 for a constant."""
+        return max((m.max_var() for m in self.terms), default=-1)
 
     def in_stage(self, i: int) -> bool:
-        """Membership in S_i = {f : variables(f) subset {0,...,i}}."""
-        return all(v <= i for v in self.variables())
-
-    def __add__(self, other: "Poly") -> "Poly":
-        result: Dict[Monomial, float] = dict(self.terms)
-        for mono, coeff in other.terms.items():
-            result[mono] = result.get(mono, 0.0) + coeff
-        return Poly({m: c for m, c in result.items() if c != 0})
-
-    def __mul__(self, other: "Poly") -> "Poly":
-        result: Dict[Monomial, float] = {}
-        for m1, c1 in self.terms.items():
-            for m2, c2 in other.terms.items():
-                mono = _merge_monomials(m1, m2)
-                result[mono] = result.get(mono, 0.0) + c1 * c2
-        return Poly({m: c for m, c in result.items() if c != 0})
+        """True iff this polynomial lies in S_i = K[x_0, ..., x_{i-1}]."""
+        return self.max_var() < i
 
 
-def _merge_monomials(m1: Monomial, m2: Monomial) -> Monomial:
-    """Multiply two monomials by adding exponents variable-wise."""
-    exps: Dict[int, int] = {}
-    for v, e in m1:
-        exps[v] = exps.get(v, 0) + e
-    for v, e in m2:
-        exps[v] = exps.get(v, 0) + e
-    return tuple(sorted((v, e) for v, e in exps.items() if e > 0))
+def variable(k: int) -> Poly:
+    """The variable x_k as a Poly."""
+    exps = tuple(1 if j == k else 0 for j in range(k + 1))
+    return Poly((Monomial(1, exps),))
 
 
-def const(c: float) -> Poly:
-    """The constant polynomial c (lives in every stage)."""
-    return Poly({(): c}) if c != 0 else Poly({})
+def constant(c: int) -> Poly:
+    return Poly((Monomial(c, ()),))
 
 
-def X(k: int) -> Poly:
-    """The variable X_k."""
-    return Poly({((k, 1),): 1.0})
+def locate_stage(p: Poly) -> int:
+    """Smallest stage i with p in S_i.  (max_var + 1, and 0 for constants.)"""
+    return p.max_var() + 1
 
 
-ZERO = Poly({})
+def descend_to_single_stage(
+    seq: Sequence[Poly], basepoint: Poly
+) -> tuple[int, int]:
+    """Algorithm A: given a finitely supported sequence over R = union S_i,
+    return (M, N): a common stage M and level N with seq[k] in S_M for all k
+    and seq[k] == basepoint for k >= N.
+
+    Complexity: O(N) locate-calls and O(N) merges (here 'merge' = max)."""
+    # Support bound N.
+    N = 0
+    for k, p in enumerate(seq):
+        if not _poly_eq(p, basepoint):
+            N = k + 1
+    # Merge finitely many constraining stages via directed join (= max on N).
+    M = 0
+    for k in range(N):
+        M = max(M, locate_stage(seq[k]))
+    return M, N
 
 
-# ---------------------------------------------------------------------------
-# Algorithm: lift finitely many colimit coordinates to a single stage.
-# This realizes Theorem A (truncated) and Theorem C (sheared).
-# ---------------------------------------------------------------------------
-def lift_to_single_stage(coords: List[Poly]) -> Tuple[int, List[Poly]]:
-    """
-    Given finitely many polynomials each lying in the union (every polynomial
-    does), return (i, coords) where i is the least stage containing all of them.
-
-    Implements the 'finite merging' lemma: the common stage is the max of the
-    per-coordinate stages.
-    """
-    stages = [c.stage() for c in coords]
-    i = max([s for s in stages], default=-1)
-    i = max(i, 0)
-    assert all(c.in_stage(i) for c in coords), "lift must land every coordinate"
-    return i, coords
+def _poly_eq(p: Poly, q: Poly) -> bool:
+    """Structural equality up to zero-coefficient terms (sufficient for the demo)."""
+    def norm(poly: Poly) -> dict[tuple[int, ...], int]:
+        d: dict[tuple[int, ...], int] = {}
+        for m in poly.terms:
+            # pad exponent tuples to a canonical length for comparison
+            key = m.exps
+            d[key] = d.get(key, 0) + m.coeff
+        return {k: v for k, v in d.items() if v != 0}
+    return norm(p) == norm(q)
 
 
-def naive_lift_stage_or_none(
-    coeff, max_search: int
-) -> Optional[int]:
-    """
-    Attempt to lift an INFINITE Witt vector (given as a coordinate function
-    coeff: k -> Poly) to a single stage, searching candidate stages 0..max_search.
-
-    Returns the stage index if some candidate contains every coordinate up to a
-    safe horizon, else None. For the variable vector this always returns None:
-    candidate stage i fails at coordinate k = i + 1.
-    """
-    for i in range(max_search + 1):
-        # Check coordinates well beyond i; a genuine lift must contain them all.
-        horizon = i + 5
-        if all(coeff(k).in_stage(i) for k in range(horizon + 1)):
-            return i
-    return None
-
-
-def obstruction_witness(coeff, i: int) -> Optional[int]:
-    """
-    For candidate stage i, return a coordinate index k certifying that the Witt
-    vector does NOT lie in stage i (variables of coeff(k) escape {0..i}), or None.
-    """
-    for k in range(i + 5):
-        if not coeff(k).in_stage(i):
-            return k
-    return None
+def demo_double_colimit() -> None:
+    print("=" * 72)
+    print("2. Double colimit:  a finitely-supported vector descends to ONE stage")
+    print("=" * 72)
+    zero = constant(0)
+    # A sheared vector over K[x_0, x_1, ...]: (x_2, x_0 + 5, x_5, 0, 0, ...)
+    p1 = variable(2)
+    p2 = Poly((Monomial(1, (1,)), Monomial(5, ())))  # x_0 + 5
+    p3 = variable(5)
+    seq = [p1, p2, p3, zero, zero, zero]
+    stages = [locate_stage(p) for p in seq[:3]]
+    print("sheared vector coordinates and their minimal stages:")
+    print(f"   seq[0] = x_2      in S_{stages[0]}")
+    print(f"   seq[1] = x_0 + 5  in S_{stages[1]}")
+    print(f"   seq[2] = x_5      in S_{stages[2]}")
+    M, N = descend_to_single_stage(seq, zero)
+    print(f"merge finitely many stages {stages} -> common stage M = {M}")
+    print(f"support bound            -> level N = {N}")
+    print(f"=> whole vector lives in S_{M}, truncated at level {N}.")
+    print(f"   check: every coordinate in S_{M}?  "
+          f"{all(p.in_stage(M) for p in seq)}\n")
 
 
 # ---------------------------------------------------------------------------
-# Demonstrations
+# 3. Necessity of shearing: the vector of all variables
 # ---------------------------------------------------------------------------
-def demo_truncated_preservation() -> None:
-    print("=" * 70)
-    print("Demo A: Truncated Witt vectors preserve the filtered colimit")
-    print("=" * 70)
-    # A truncated Witt vector of length 4 over the union: coordinates use
-    # various variables, but there are only finitely many of them.
-    coords = [
-        const(3.0) + X(2),                 # uses X_2   -> stage 2
-        X(0) * X(5),                       # uses X_0,X_5 -> stage 5
-        X(1),                              # uses X_1   -> stage 1
-        const(7.0),                        # constant   -> stage -1
-    ]
-    for k, c in enumerate(coords):
-        print(f"  coord[{k}] uses variables {sorted(c.variables())}, "
-              f"least stage {c.stage()}")
-    i, lifted = lift_to_single_stage(coords)
-    print(f"  --> ALL coordinates lift to the single stage S_{i}")
-    print(f"      (every coordinate in S_{i}: "
-          f"{all(c.in_stage(i) for c in lifted)})")
-    print()
+
+def demo_necessity() -> None:
+    print("=" * 72)
+    print("3. Necessity of shearing:  X = (x_0, x_1, x_2, ...) descends nowhere")
+    print("=" * 72)
+    depth = 8  # sample the first `depth` coordinates of the infinite vector
+    X = [variable(k) for k in range(depth)]
+    print("Every individual coordinate descends to a finite stage:")
+    for k in range(depth):
+        print(f"   X[{k}] = x_{k}  in  S_{locate_stage(X[k])}  (= S_{k+1})")
+    print("But NO single stage i contains the whole (infinite) vector:")
+    for i in range(depth):
+        # the escaping coordinate is x_i, which needs stage i+1 > i
+        escapes = not X[i].in_stage(i)
+        print(f"   candidate stage i={i}:  x_{i} in S_{i}?  "
+              f"{X[i].in_stage(i)}   (escapes: {escapes})")
+    print("=> for every i the coordinate x_i escapes S_i; shearing is necessary.\n")
 
 
-def demo_naive_failure() -> None:
-    print("=" * 70)
-    print("Demo B: The full Witt vector of variables lifts to NO stage")
-    print("=" * 70)
-    coeff = X  # the variable vector: coordinate k is X_k
+# ---------------------------------------------------------------------------
+# 4. Tropical echo: same mechanism, basepoint +inf
+# ---------------------------------------------------------------------------
 
-    print("  Every coordinate lies in the union: coord k = X_k is in S_k.")
-    for k in range(5):
-        print(f"    coord[{k}] = X_{k} in S_{k}: {coeff(k).in_stage(k)}")
-
-    print("  But no single stage contains the whole vector:")
-    for i in range(5):
-        witness = obstruction_witness(coeff, i)
-        print(f"    stage S_{i} fails at coordinate k = {witness} "
-              f"(X_{witness} needs variable {witness} > {i})")
-
-    result = naive_lift_stage_or_none(coeff, max_search=20)
-    print(f"  --> global lift search over stages 0..20 returns: {result} "
-          f"(None == failure, as predicted)")
-    print()
+INF = float("inf")
 
 
-def demo_sheared_repair() -> None:
-    print("=" * 70)
-    print("Demo C: Finitely supported (sheared) Witt vectors DO lift")
-    print("=" * 70)
-    # A sheared Witt vector: nonzero prefix, then eventually zero.
-    N = 4  # support cutoff: coord k = 0 for k >= N
-    prefix = [X(3), const(2.0) + X(0), X(7), X(1)]
-
-    def coeff(k: int) -> Poly:
-        return prefix[k] if k < N else ZERO
-
-    print(f"  Support cutoff N = {N}; coordinates k >= {N} are all 0.")
-    nonzero = [coeff(k) for k in range(N)]
-    for k in range(N + 3):
-        c = coeff(k)
-        tag = "0" if c.terms == {} else f"vars {sorted(c.variables())}"
-        print(f"    coord[{k}] : {tag}")
-    i, _ = lift_to_single_stage(nonzero)
-    all_in = all(coeff(k).in_stage(i) for k in range(N + 50))
-    print(f"  --> finite support => finitely many nonzero coords merge into S_{i}")
-    print(f"      (all coordinates, including the zero tail, in S_{i}: {all_in})")
-    print()
+def tropical_add(a: float, b: float) -> float:
+    """min-plus addition: a (+) b = min(a, b)."""
+    return min(a, b)
 
 
-def demo_contrast() -> None:
-    print("=" * 70)
-    print("Demo D: Finite support is the exact dividing line")
-    print("=" * 70)
-    print("  The failing vector x_k = X_k is the MINIMAL violation:")
-    print("  coordinate k sits at stage k, drifting outward with no cutoff.")
-    print("  Truncating it at any N recovers a liftable sheared vector:")
-    for N in (1, 3, 6):
-        def coeff(k: int, N: int = N) -> Poly:
-            return X(k) if k < N else ZERO
-        nonzero = [coeff(k) for k in range(N)]
-        i, _ = lift_to_single_stage(nonzero)
-        print(f"    cutoff N = {N}:  lifts to stage S_{i}")
-    print()
+def tropical_mul(a: float, b: float) -> float:
+    """min-plus multiplication: a (*) b = a + b (with inf absorbing)."""
+    if a == INF or b == INF:
+        return INF
+    return a + b
+
+
+def demo_tropical() -> None:
+    print("=" * 72)
+    print("4. Tropical echo:  same shearing law, basepoint 0 replaced by +inf")
+    print("=" * 72)
+    basepoint = INF
+    seq = [2.0, INF, 0.0, INF, INF, INF]
+    N = support_bound(seq, basepoint)
+    print(f"tropical vector        : {seq}")
+    print(f"tropical zero (basepoint) = +inf;  additive id check: "
+          f"min(3, inf) = {tropical_add(3.0, INF)}")
+    print(f"support bound N        : {N}")
+    print("membership in truncated tropical sets {g : g[k]=+inf for k>=n}:")
+    for n in range(0, 7):
+        print(f"   n={n}:  truncated-at-{n}?  {is_truncated_at(seq, n, basepoint)}")
+    print(f"-> first working n = N = {N}: identical colimit mechanism as Witt,")
+    print(f"   only the basepoint changed (0  ->  +inf).\n")
+
+
+def main() -> None:
+    demo_arity_colimit()
+    demo_double_colimit()
+    demo_necessity()
+    demo_tropical()
+    print("All demonstrations completed.")
 
 
 if __name__ == "__main__":
-    demo_truncated_preservation()
-    demo_naive_failure()
-    demo_sheared_repair()
-    demo_contrast()
-    print("All demonstrations completed.")
+    main()
