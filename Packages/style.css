@@ -1765,6 +1765,8 @@ body.light-theme .code-output.error {
     border: 1px solid var(--border-color);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .direction-card::before {
@@ -1907,6 +1909,7 @@ body.light-theme .code-output.error {
     cursor: pointer;
     font-family: 'Inter', sans-serif;
     transition: all 0.3s ease;
+    margin-top: auto;
 }
 
 .direction-card-expand:hover {
