@@ -17,20 +17,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "4ba429e3",
-    "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "auto_reset_NumberTheory_e9b441c3",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "auto_reset",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T05:03:52.769183+00:00",
-    "title": "[Reset] Fresh approach in NumberTheory"
-  },
-  {
     "consumed_by_exp_id": "9d614be4",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
@@ -351,7 +337,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sign law for the third order mock theta function phi(q)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ffbab418",
     "description": "For every fixed number of layers m \u2265 2, there exists an integer N(m) such that for all n \u2265 N(m) the critical palette size r for the existence of a rainbow stacking of m independent uniformly random r\u2011edge\u2011colourings of the complete graph K_n satisfies: with high probability (i.e., probability \u2192 1 as n \u2192 \u221e) a rainbow stacking exists iff r \u2265 \u2308 m\u00b7(n choose 2) / (2\u00b7log(n!)) + (2m\u22121)/6 \u2309. This strengthens the existing result which holds only for a density\u2011one set of n by eliminating the exceptional set entirely.",
     "domains": [
       "Computation",
@@ -361,7 +347,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31376v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T14:14:41.903032+00:00",
     "title": "Sharp threshold for rainbow stackings of random edge-colourings of K_n for all sufficiently large n"
   },
@@ -730,7 +716,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness of the Greenberg\u2013Wiles local lower bound for \u2113\u2011Selmer groups in constant\u2011torsion families"
   },
   {
-    "consumed_by_exp_id": "f9a53679",
+    "consumed_by_exp_id": "3aeecf42",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/\u2113^m gives rise to a continuous semisimple Galois representation r : G_F \u2192 GL_n(Z_\u2113) which is de Rham at places v|\u2113, with Hodge\u2013Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered \u03c6\u2011module via Fontaine's functor corresponds under the p\u2011adic local Langlands correspondence to the automorphic component \u03c0_v.",
     "domains": [
       "Algebra",
@@ -1168,20 +1154,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fan-structure in Selmer group distributions over p-cyclic extensions"
   },
   {
-    "consumed_by_exp_id": "5352e8ee",
-    "description": "For any integers k \u2265 1 and d \u2265 0, let V\u2081,\u2026,V_{d+1} be pairwise disjoint finite sets each equipped with a spanning k\u2011tree structure.  For every colorful Carath\u00e9odory map A : |\u0394_V| \u2192 \u211d^d with 0 \u2208 A(V_i) for all i, there exists a transversal face \u03c3 \u2286 T\u2081 * \u2026 * T_{d+1} (the join of the k\u2011trees) such that 0 \u2208 A(\u03c3).  Equivalently, any minimal subcomplex K \u2286 V\u2081*\u2026*V_{d+1} that blocks all colorful Carath\u00e9odory maps must contain a face from the join of the k\u2011trees.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0096",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2607.01143v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T22:11:23.428375+00:00",
-    "title": "Colorful Carath\u00e9odory property for joins of spanning k\u2011trees"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "This conjecture posits that the number of maximal greedy Tamari intervals in a planar $(m+1)$-constellation equals the number of maximal planar trees with $m$ internally labeled vertices, under a bijective correspondence established via Dyck paths. It generalizes the planarity-based result of Bousquet-M\u00e9lou and Chapoton and extends it to arbitrary $m$.",
     "domains": [
@@ -1271,7 +1243,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Distribution of p-Selmer rank increments in p-cyclic extensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4a282477",
     "description": "This paper investigates whether Andrews' observed sign phenomenon in specific $q$-series arises from a universal oscillatory mechanism linked to the distribution of roots of unity, with a goal of formalizing the result in Lean 4.",
     "domains": [
       "Computation"
@@ -1280,7 +1252,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:58:06.018849+00:00",
     "title": "Interplay between oscillatory asymptotics and alternating sign structure in $q$-series from Ramanujan's Lost Notebook"
   },
@@ -1346,11 +1318,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "This paper establishes an equi-enumerating relationship between greedy $m$-Tamari posets and planar $(m+1)$-constellations, leveraging recursive decomposition akin to bipartite planar maps. The conjecture formalizes this by analyzing the structural isomorphism between interval decompositions and planar mappings.",
+    "description": "Conjecture that for all sufficiently large N, the maximal size F(N) of a Sidon subset of {0,\u2026,N-1} satisfies F(N) \u2264 N^{1/2} + 0.94601\u00b7N^{1/4} + O(1).",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_0108",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01169v1",
+    "status": "available",
+    "timestamp": "2026-07-03T00:33:08.950460+00:00",
+    "title": "Vector-valued smoothing for finite Sidon sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper establishes an equi-enumerating relationship between greedy $m$-Tamari posets and planar $(m+1)$-constellations, leveraging recursive decomposition akin to bipartite planar maps. The conjecture formalizes this by analyzing the structural isomorphism between interval decompositions and planar mappings.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0109",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01206v1",
@@ -1364,7 +1350,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0109",
+    "id": "fd_0110",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
@@ -1378,13 +1364,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0110",
+    "id": "fd_0111",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
     "status": "available",
     "timestamp": "2026-07-03T00:16:17.133115+00:00",
     "title": "Asymptotic alternating sign conjecture for Andrews q-series v\u2082(q), v\u2083(q), v\u2084(q)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture posits a direct and computable characterization of solvability conditions for a restricted variant of the generalized honeymoon Oberwolfach problem using algebraic constraints, focusing on the structure of seating graphs and the feasibility of pairing pairs over time.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0112",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.01130v1",
+    "status": "available",
+    "timestamp": "2026-07-03T00:33:22.393572+00:00",
+    "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
     "consumed_by_exp_id": "",

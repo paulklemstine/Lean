@@ -21,25 +21,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4ba429e3",
-    "description": "Domain NumberTheory has declined by 0.184 over recent cycles (recent avg=0.456 vs prior=0.640). Take a completely fresh approach — different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "auto_reset_NumberTheory_e9b441c3",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "auto_reset",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T05:03:52.769183+00:00",
-    "title": "[Reset] Fresh approach in NumberTheory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "9d614be4",
     "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
     "domain_bridges": [],
@@ -596,7 +577,7 @@
       "math.CO:05C15",
       "math.PR:60C05"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ffbab418",
     "description": "For every fixed number of layers m ≥ 2, there exists an integer N(m) such that for all n ≥ N(m) the critical palette size r for the existence of a rainbow stacking of m independent uniformly random r‑edge‑colourings of the complete graph K_n satisfies: with high probability (i.e., probability → 1 as n → ∞) a rainbow stacking exists iff r ≥ ⌈ m·(n choose 2) / (2·log(n!)) + (2m−1)/6 ⌉. This strengthens the existing result which holds only for a density‑one set of n by eliminating the exceptional set entirely.",
     "domain_bridges": [
       "Statistical Physics",
@@ -612,7 +593,7 @@
     "proof_strategy": "Extend the cluster‑expansion/Fadnavis method used in the paper to control higher‑order error terms uniformly in n. Show that the o(1/(log n)^2) fluctuations can be bounded by a summable series over n, allowing a union bound that removes the density‑one restriction. Combine sharp concentration inequalities for the weighted permutation sum with a refined triangle‑count argument in the auxiliary conflict graph G_π to obtain error bounds that hold for every large n.",
     "research_mode": "team",
     "source_exp_id": "2606.31376v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T14:14:41.903032+00:00",
     "title": "Sharp threshold for rainbow stackings of random edge-colourings of K_n for all sufficiently large n"
   },
@@ -1274,7 +1255,7 @@
       "math.NT",
       "math.RT"
     ],
-    "consumed_by_exp_id": "f9a53679",
+    "consumed_by_exp_id": "3aeecf42",
     "description": "Conjecture that a torsion Hecke eigenclass in the cohomology of the arithmetic manifold attached to GL_n over a CM number field F with coefficients in Z/ℓ^m gives rise to a continuous semisimple Galois representation r : G_F → GL_n(Z_ℓ) which is de Rham at places v|ℓ, with Hodge–Tate weights determined by the infinitesimal character of the automorphic representation at infinity, and whose associated filtered φ‑module via Fontaine's functor corresponds under the p‑adic local Langlands correspondence to the automorphic component π_v.",
     "domain_bridges": [
       "Representation Theory",
@@ -2077,33 +2058,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "Blagojević, \"Constrained Colorful Carathéodory theorems\", arXiv:2305.12345",
-      "Meshulam, \"Topological methods in discrete geometry\", Adv. Math. 1992"
-    ],
-    "consumed_by_exp_id": "5352e8ee",
-    "description": "For any integers k ≥ 1 and d ≥ 0, let V₁,…,V_{d+1} be pairwise disjoint finite sets each equipped with a spanning k‑tree structure.  For every colorful Carathéodory map A : |Δ_V| → ℝ^d with 0 ∈ A(V_i) for all i, there exists a transversal face σ ⊆ T₁ * … * T_{d+1} (the join of the k‑trees) such that 0 ∈ A(σ).  Equivalently, any minimal subcomplex K ⊆ V₁*…*V_{d+1} that blocks all colorful Carathéodory maps must contain a face from the join of the k‑trees.",
-    "domain_bridges": [
-      "topological combinatorics",
-      "colorful Carathéodory theorem",
-      "k‑trees",
-      "elementary proofs in discrete geometry"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_0096",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use an inductive combinatorial argument on k, exploiting the (k‑1)-connectivity of spanning k‑trees and Meshulam’s lemma to locate a transversal face without invoking any topological machinery.",
-    "research_mode": "team",
-    "source_exp_id": "2607.01143v1",
-    "status": "in_progress",
-    "timestamp": "2026-07-02T22:11:23.428375+00:00",
-    "title": "Colorful Carathéodory property for joins of spanning k‑trees"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "Dermenjian 2024",
       "Chapoton 2024",
       "Bousquet-Mélou 2023"
@@ -2272,7 +2226,7 @@
       "Random 1988",
       "Zwegers 2025"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4a282477",
     "description": "This paper investigates whether Andrews' observed sign phenomenon in specific $q$-series arises from a universal oscillatory mechanism linked to the distribution of roots of unity, with a goal of formalizing the result in Lean 4.",
     "domain_bridges": [
       "analytic number theory",
@@ -2288,7 +2242,7 @@
     "proof_strategy": "Adaptive circle method with refinement near roots of unity",
     "research_mode": "team",
     "source_exp_id": "2607.01210v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T22:58:06.018849+00:00",
     "title": "Interplay between oscillatory asymptotics and alternating sign structure in $q$-series from Ramanujan's Lost Notebook"
   },
@@ -2403,6 +2357,38 @@
     "title": "Combinatorial Interpretation of $s$-Rook Polynomials via $(p,q)$-Deformed Normal Ordering"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Singer1938",
+      "ErdosTuran1941",
+      "Lindstrom1955",
+      "BaloghFR2007",
+      "OBryant2009",
+      "CarterHunterOBBryant2010",
+      "Tao2023",
+      "OptimizationConstants"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for all sufficiently large N, the maximal size F(N) of a Sidon subset of {0,…,N-1} satisfies F(N) ≤ N^{1/2} + 0.94601·N^{1/4} + O(1).",
+    "domain_bridges": [
+      "Additive Combinatorics",
+      "Analytic Number Theory",
+      "Computational Mathematics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_0108",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine a finite family of smoothing kernels in a weighted Hilbert direct sum, average their L^2 energies via Cauchy–Schwarz, and verify the final constant with an exact rational certificate.",
+    "research_mode": "team",
+    "source_exp_id": "2607.01169v1",
+    "status": "available",
+    "timestamp": "2026-07-03T00:33:08.950460+00:00",
+    "title": "Vector-valued smoothing for finite Sidon sets"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Dermenjian, Greedy Tamari Interval",
@@ -2417,7 +2403,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0108",
+    "id": "fd_0109",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Recursive decomposition guided by planar map isomorphism invariants",
@@ -2442,7 +2428,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_0109",
+    "id": "fd_0110",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof should proceed by induction on the dimension d and the size of the vertex sets, utilizing a combinatorial version of Meshulam's Lemma. One would need to formalize the notion of a'spanning k-tree' in terms of its homology or connectivity properties and show that the join of such complexes maintains sufficient topological connectivity to satisfy the conditions of the colorful Carathéodory-type theorem.",
@@ -2472,7 +2458,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0110",
+    "id": "fd_0111",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the circle method framework from Folsom-Males-Rolen-Storzer to handle the generalized q-hypergeometric families. Establish uniform asymptotic expansions for V_i(n) near primitive roots of unity, identify the dominant oscillatory factor, and prove that the remainder terms do not disrupt the alternating sign structure outside a sparse exceptional set.",
@@ -2481,6 +2467,31 @@
     "status": "available",
     "timestamp": "2026-07-03T00:16:17.133115+00:00",
     "title": "Asymptotic alternating sign conjecture for Andrews q-series v₂(q), v₃(q), v₄(q)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "LDMSaj"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture posits a direct and computable characterization of solvability conditions for a restricted variant of the generalized honeymoon Oberwolfach problem using algebraic constraints, focusing on the structure of seating graphs and the feasibility of pairing pairs over time.",
+    "domain_bridges": [
+      "quantitative graph theory",
+      "combinatorial optimization"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0112",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive existence via graph decomposition and combinatorial constraints",
+    "research_mode": "team",
+    "source_exp_id": "2607.01130v1",
+    "status": "available",
+    "timestamp": "2026-07-03T00:33:22.393572+00:00",
+    "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
     "ambition_level": "extension",
