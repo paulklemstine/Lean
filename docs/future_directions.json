@@ -189,7 +189,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -620,7 +620,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃v₁, ..., vₘ ∈ l²: ∀x, Σ|vᵢ * 1_A|² ≤ C and Σ wᵢ|vᵢ|² ≤ D ⇒ F(N) ≤ N^{1/2} + 0.94601N^{1/4} + O(1)",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.7083999999999999,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Construct a minimal vector family and verify convolution bounds via exact arithmetic",
@@ -631,7 +631,7 @@
       "source": "",
       "source_exp_id": "2607.01169v1",
       "source_path": "http://arxiv.org/abs/2607.01169v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-07-02T06:22:13.488931+00:00",
       "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
@@ -2284,7 +2284,7 @@
         "modular form theory",
         "oscillatory asymptotic analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -2414,7 +2414,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "7a96d972",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -2446,7 +2446,7 @@
       "source": "",
       "source_exp_id": "2607.00930v1",
       "source_path": "http://arxiv.org/abs/2607.00930v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-02T06:58:32.634677+00:00",
       "title": "Irreducibility of mod p reductions of two-dimensional crystalline representations with even weight and fractional slope"
@@ -3035,7 +3035,7 @@
         "Arithmetic Geometry",
         "p-adic Hodge Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -4075,7 +4075,7 @@
         "Arithmetic Geometry",
         "Probabilistic Number Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -4611,7 +4611,7 @@
         "probability_theory",
         "computational_number_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -4805,7 +4805,7 @@
         "SelmerGroups",
         "CyclicExtensions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -4900,7 +4900,7 @@
         "galois_cohomology",
         "massey_products"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -5193,7 +5193,7 @@
         "Discrete Geometry",
         "Topological Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -5330,7 +5330,7 @@
       "depth_estimate": 3,
       "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer — the mathematical formalization of 'reality depends on the observer'.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Geometry"
@@ -5689,7 +5689,7 @@
         "Automorphic properties of q-series (Cohen)",
         "Circle method asymptotics (Hardy-Ramanujan-Rademacher tradition)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -6941,6 +6941,170 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [],
+      "category": "famous_subtask",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable — theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements — most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark — they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty",
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_0147",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9,
+      "proof_strategy": "Define a dark theorem of level k as a Pi_2 statement 'for all n, there exist at least k values of m such that P(n,m)' such that PA proves the existential claim but PA does not prove P(n,m) for any specific m. Level 1: Paris-Harrington theorem (the strengthened finite Ramsey theorem). Level 2: the Paris-Harrington theorem for the statement 'there exist at least 2 values of m satisfying the Ramsey property'. Prove strictness: if T is level k+1, then T implies a level-k statement that is independent of PA. Prove density: among all Pi_2 statements provable in ZFC, the fraction that are dark approaches 1 as statement length grows. Test: formalize levels 1-3 in Lean 4 using the Paris-Harrington and Goodstein sequences.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T07:52:54.498904+00:00",
+      "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "famous_subtask",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot — the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Novelty",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0148",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.81,
+      "proof_strategy": "Define cognitive braids: each brain region is a strand, each neural firing sequence is a crossing. A cognitive process is an element of B_n (braid group on n strands). Two thoughts are equivalent if related by Reidemeister moves. Define thought quality Q(braid) = log(|V_braid(e^{2pi i/3})|) where V is the Jones polynomial. Prove Q is a braid invariant. Prove: trivial braid has V = 1 so Q = 0 (trivial thought). Trefoil has V = -t^2+t+1 so Q = log(|V(e^{2pi i/3})|) = log(sqrt(3)) > 0 (creative thought). Figure-eight has Q = log(2) (confused thought with maximum entanglement). Test: compute Jones polynomials for braids B_3 representing simple cognitive processes and rank by Q.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T07:52:54.510462+00:00",
+      "title": "Knots That Think: Cognition as Braiding in Category Theory"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' — they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0149",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.77,
+      "proof_strategy": "Define the periodic table of finite groups: rows indexed by order (atomic number), columns indexed by composition factor pattern (chemical series). Group types: cyclic (noble gases), symmetric (halogens), simple non-abelian (transition metals), nilpotent (alkali metals), solvable non-nilpotent (alkaline earth). Prove: groups in the same column have isomorphic composition factors (Jordan-Holder theorem). Prove: the 'valence' (number of minimal normal subgroups) is determined by the chief factors. Construct the table for order <= 100 and verify periodicity: cyclic groups of prime order form the first column, groups with composition {2,2,3} form the second column, etc. Test: predict properties of groups of order 120 before computing them.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T07:52:54.521075+00:00",
+      "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — Phantom Topologies\n\nBold, falsifiable conjectures arising from this cycle's finding that the real line\nis the two-observer consensus of the lower- and upper-limit topologies, while the\ntwo-point indiscrete space is *also* a two-observer consensus despite being\nnon-metrizable — refuting the idea that blurriness forces more observers.\n\n## 1. The phantom number is a lattice invariant, not a geometric one\n\n**Conjecture.** The minimum number of sharper observers whose shared open sets\nreconstruct a space equals the depth to which that space's topology can be split\ninto strictly finer topologies that intersect back to it; it is finite exactly\nwhen the topology is not irreducible under such splitting.\n\n*The key insight is* that \"how many observers reconstruct reality\" is a purely\norder-theoretic quantity — the reducibility of a topology as a meet of strictly\nlarger topologies — and has nothing to do with distances or curvature.\n\n*Why now?* We have exact values (2 for the Euclidean line, 2 for the indiscrete\npair) for spaces that sit at opposite extremes of geometric structure, so the\ncommon thread must be lattice-theoretic rather than metric.\n\n## 2. Separation and phantom number are independent\n\n**Conjecture.** For every target phantom number `k ≥ 2` and every separation\nstrength (from indistinguishable points up to full metrizability), there is a\nspace realizing exactly that combination; the two invariants can be dialed\nindependently.\n\n*The key insight is* that separation axioms measure how well points can be told\napart, whereas the phantom number measures how reality factors through sharper\nobservers, and the indiscrete counterexample shows neither controls the other.\n\n*Why now?* The refutation of \"non-metrizable needs three observers\" already\npunctures the assumed link; the natural next step is to prove the link is not\nmerely absent but that *every* combination is achievable.\n\n## 3. Adding observers can only blur, never sharpen\n\n**Conjecture.** The consensus operation on a diagram of observers is order-reversing\nand meet-continuous: enlarging the observer set can only coarsen the agreed\ntopology, and the agreed topology over a union of observer groups is the common\nrefinement of the group consensuses.\n\n*The key insight is* that agreement is an intersection of viewpoints, so more\nviewpoints can only shrink what everyone accepts as open — measurement is a\nstrictly coarsening act.\n\n*Why now?* The monotonicity has been observed on two-observer families; promoting\nit to arbitrary observer diagrams would turn \"reality as consensus\" into a genuine\nfunctorial principle with predictive force about many-observer systems.\n\n## 4. Every second-countable space is a two-observer consensus\n\n**Conjecture.** Any space with a countable base that is not irreducible under\nsplitting can be reconstructed by exactly two sharper observers, built by adjoining\none-sided half-neighborhoods to each basic open on the left and on the right.\n\n*The key insight is* that the Sorgenfrey trick for the real line — pinning each\npoint from the left and from the right and squeezing — is not special to intervals\nbut works verbatim for any countable base.\n\n*Why now?* The real-line case is fully established, and its proof only used a\ncountable base and a two-sided squeeze, so the generalization is within reach and\nwould settle the positive half of the original programme.\n\n## 5. The Zariski plane has phantom number two\n\n**Conjecture.** The Zariski topology on the affine plane over an infinite field is\nthe consensus of exactly two sharper observers derived from the two coordinate\ndirections, so its phantom number is two — not three.\n\n*The key insight is* that the coordinate projections supply two natural refinements\nwhose only common open sets are the genuine Zariski opens, mirroring the left/right\ndecomposition of the line.\n\n*Why now?* With the \"non-metrizable needs three observers\" barrier already broken by\nthe indiscrete example, the Zariski plane is the sharpest remaining test of whether\nany natural non-Hausdorff space truly needs more than two observers.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_0150",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "70c42dc4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/70c42dc4",
+      "status": "available",
+      "thread_id": "th_54967684",
+      "timestamp": "2026-07-03T07:55:32.229515+00:00",
+      "title": "Bold, falsifiable conjectures arising from this cycle's finding that the real li"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
@@ -6977,8 +7141,33 @@
     }
   ],
   "pruned": [],
-  "recent_domain_counts": {},
-  "recent_theme_keywords": {},
+  "recent_domain_counts": {
+    "Bridges": 1
+  },
+  "recent_theme_keywords": {
+    "achievable": 1,
+    "achieves": 1,
+    "average": 1,
+    "bounds": 1,
+    "coefficient": 1,
+    "convolution": 1,
+    "exists": 1,
+    "finite": 1,
+    "inequalities": 1,
+    "kernels": 1,
+    "method": 1,
+    "n^{1/2}": 1,
+    "optimality": 1,
+    "satisfying": 1,
+    "sidon": 1,
+    "smaller": 1,
+    "specific": 1,
+    "vector-valued": 1,
+    "vectors": 1,
+    "weighted": 1,
+    "γ₀=0.94601": 1,
+    "γ₀n^{1/4}": 1
+  },
   "selection_log": [
     "cross_domain_bridge",
     "cross_domain_bridge",
