@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-03T22:05:56.371353+00:00",
+  "last_updated": "2026-07-03T22:28:47.775989+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -31473,6 +31473,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-03T22:05:56.303231+00:00",
       "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x\u00b2 when gcd(a,b) > 1 and n is even"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4384,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 77,
+      "domain": "Novelty",
+      "duration_seconds": 1186.2163491249084,
+      "end_time": 1783117537.659316,
+      "files_integrated": 7,
+      "job_id": "2f34538d",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6684,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.5473,
+        "novelty": 0.77,
+        "proof_depth": 0.4518,
+        "usefulness": 0.6509
+      },
+      "quality_score": 0.7903600000000002,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783116351.442967,
+      "strategy_count": 0,
+      "theorem_count": 6,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 6,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-03T22:28:47.716169+00:00",
+      "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
     }
   ]
 }
