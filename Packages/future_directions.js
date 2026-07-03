@@ -2244,6 +2244,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a countable FAC poset P with no saturated chain D (where D or D^* is a countable direct sum of co-wellfounded infinite posets), the chain extension H(P) constructed via mutual finite incomparability equivalence classes forms a tree under the domination order, where every pair of elements has a unique greatest lower bound.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0181",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-03T14:41:26.570093+00:00",
+    "title": "H(P) is a tree under the domination order for countable FAC posets avoiding specified saturated chains"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any rational polytopal measure P in \u211d^d, the set of hyperplanes that bisect P is exactly the real zero set of a finite system of polynomial equations with rational coefficients derived from the coordinates of the defining polytopes; moreover, this system can be effectively computed and each solution corresponds to an algebraic number of bounded degree.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0181",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-03T14:41:45.416983+00:00",
+    "title": "Semialgebraic Characterization of Bisecting Hyperplanes for Rational Polytopal Measures"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",

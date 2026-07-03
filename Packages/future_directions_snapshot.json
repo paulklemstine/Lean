@@ -4082,6 +4082,58 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Aharoni-Korman conjecture",
+      "chain extension H(P)",
+      "mutual finite incomparability"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a countable FAC poset P with no saturated chain D (where D or D^* is a countable direct sum of co-wellfounded infinite posets), the chain extension H(P) constructed via mutual finite incomparability equivalence classes forms a tree under the domination order, where every pair of elements has a unique greatest lower bound.",
+    "domain_bridges": [
+      "well-quasi-ordering",
+      "scattered posets"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0181",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct H(P) explicitly and verify tree properties via induction on the equivalence classes of chains.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02500v1",
+    "status": "available",
+    "timestamp": "2026-07-03T14:41:26.570093+00:00",
+    "title": "H(P) is a tree under the domination order for countable FAC posets avoiding specified saturated chains"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2305.12345",
+      "arXiv:2306.05432"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any rational polytopal measure P in ℝ^d, the set of hyperplanes that bisect P is exactly the real zero set of a finite system of polynomial equations with rational coefficients derived from the coordinates of the defining polytopes; moreover, this system can be effectively computed and each solution corresponds to an algebraic number of bounded degree.",
+    "domain_bridges": [
+      "algebraic_topology",
+      "optimization"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_0181",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that the bisecting condition translates to polynomial equations via the cap-volume function; apply quantifier elimination to obtain a semialgebraic description; verify that the resulting variety matches the set of bisecting hyperplanes.",
+    "research_mode": "team",
+    "source_exp_id": "2607.02400v1",
+    "status": "available",
+    "timestamp": "2026-07-03T14:41:45.416983+00:00",
+    "title": "Semialgebraic Characterization of Bisecting Hyperplanes for Rational Polytopal Measures"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Deja vu — the feeling that you've experienced something before — is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 — a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch — it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
