@@ -91,7 +91,7 @@
     "catalog_references": [
       "arXiv:2310.12345 (hypothetical reference for the paper)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61cdc208",
     "description": "There exists a finite set of vectors in l² satisfying specific convolution inequalities such that their weighted average achieves the coefficient γ₀=0.94601 in the bound F(N) ≤ N^{1/2} + γ₀N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domain_bridges": [
       "l² spaces",
@@ -107,7 +107,7 @@
     "proof_strategy": "Construct a minimal vector family and verify convolution bounds via exact arithmetic",
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -1513,7 +1513,7 @@
       "OEIS:A080469",
       "GuedesMachado2023"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f34538d",
     "description": "Conjecture that for any fixed prime q there exist infinitely many pairs (t,p) with p prime, p≠q such that p divides A_t^{(q)} and s_q((q-1)p) ≥ (q-1)t, where A_t^{(q)} = binom(q^{t+1}, q^t) - q^{q^t}. This would yield infinitely many n = q^t p satisfying binom(qn,n) ≡ q^n (mod n).",
     "domain_bridges": [
       "math.CO",
@@ -1528,7 +1528,7 @@
     "proof_strategy": "search_and_pigeonhole",
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T19:19:52.418155+00:00",
     "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
   },
@@ -2363,7 +2363,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82eecb25",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible — how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian — the algebraic equivalent of Escher's impossible architecture.",
     "domain_bridges": [],
     "domains": [
@@ -2376,7 +2376,7 @@
     "proof_strategy": "Define an Escher staircase in ring R as a strictly ascending chain I_1 strictly contained in I_2 strictly contained in ... such that intersection of I_n is contained in I_1. Prove Int(Z) has an Escher staircase: I_n = {f in Int(Z) : f(Z) contained in 2^n Z}. Each I_n is strictly contained in I_{n+1} (the polynomial x choose n is in I_{n+1} but not I_n). Intersection of I_n = {0} contained in I_1. Prove k[x_1,...,x_n] has Escher height n: the chain (x_1) contained in (x_1,x_2) contained in ... contained in (x_1,...,x_n) has length n. Prove Z_p has no Escher staircase (Noetherian). Test: verify for Int(Z) and k[x,y,z].",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -2808,7 +2808,7 @@
       "Gruson-Serganova (GS)",
       "Brundan-Stroppel (BS)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1ce2dca",
     "description": "For the general linear Lie superalgebra 𝔤𝔩(m,n) with standard representation V = V₀ ⊕ V₁ (dim V₀ = m, dim V₁ = n), the Euler character of the k-th exterior power ∧ᵏV coincides with the k-th elementary supersymmetric polynomial in the variables x₁,…,xₘ,y₁,…,yₙ. Specifically, χ_Euler(∧ᵏV) = eₖ(x₁,…,xₘ; y₁,…,yₙ) where eₖ is the k-th elementary supersymmetric polynomial, and this polynomial lies in the ring Λ^±_{m,n} of supersymmetric Laurent polynomials invariant under Sₘ × Sₙ and satisfying x_i ∂f/∂x_i + y_j ∂f/∂y_j ∈ (x_i + y_j).",
     "domain_bridges": [
       "combinatorics",
@@ -2824,7 +2824,7 @@
     "proof_strategy": "Define the Euler character χ_Euler(L) for L ∈ ℱ as the alternating sum of characters of the Lie superalgebra cohomology H^•(𝔤𝔩(m,n), L). For exterior powers ∧ᵏV, use the Koszul complex resolution to compute cohomology explicitly. Show the resulting character matches the elementary supersymmetric polynomial by verifying the generating function identity ∑_{k=0}^{m+n} χ_Euler(∧ᵏV) t^k = ∏_{i=1}^m (1 + x_i t) ∏_{j=1}^n (1 - y_j t) and checking the supersymmetry condition x_i ∂f/∂x_i + y_j ∂f/∂y_j ∈ (x_i + y_j). Formalize the computation for small m,n in Lean to provide computational evidence.",
     "research_mode": "team",
     "source_exp_id": "2607.01782v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T08:15:37.979428+00:00",
     "title": "Euler Characters of Exterior Powers of the Standard Representation of 𝔤𝔩(m,n)"
   },
@@ -3635,7 +3635,7 @@
       "Keskin 2019",
       "Togbé et al. 2020"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c98890ef",
     "description": "The conjecture posits that if the greatest common divisor of a and b exceeds 1 and the exponent n is even, then no positive integer solutions (a, b, x) with a < b exist for the equation (a^n+1)(b^n+1)=x².",
     "domain_bridges": [
       "Pell equations",
@@ -3651,7 +3651,7 @@
     "proof_strategy": "Combine descent methods with analysis of Pell equation solutions and modular constraints to show contradictions under the given conditions.",
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T20:15:36.843139+00:00",
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x² when gcd(a,b) > 1 and n is even"
   },
@@ -4415,7 +4415,7 @@
       "Wang, Kang and Xue (2020), Spectral extremal problem for non-bipartite graphs",
       "Simonovits (1974), Stability proof for edge-color-critical graphs"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8c9dac2",
     "description": "For every edge-color-critical graph F with chromatic number χ(F) = r + 1 (r ≥ 2), all sufficiently large non-r-partite F-free graphs maximizing the adjacency spectral radius also maximize the number of edges. Formally, if EX_{r+1,ρ}(n,F) and EX_{r+1}(n,F) denote the families of non-r-partite F-free graphs of order n attaining maximum spectral radius and maximum edges respectively, then EX_{r+1,ρ}(n,F) ⊆ EX_{r+1}(n,F) for all sufficiently large n.",
     "domain_bridges": [
       "Chromatic number and edge-color-critical graphs",
@@ -4432,7 +4432,7 @@
     "proof_strategy": "Combine Simonovits's decomposition techniques for F with spectral characterization methods from [WKX]. Establish structural properties of near-extremal graphs under the spectral constraint, leveraging the edge-color-critical condition to ensure uniqueness of extremal configurations.",
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T12:57:08.370062+00:00",
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
   },
@@ -4999,7 +4999,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1e6fc31",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely — the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence — instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domain_bridges": [],
     "domains": [
@@ -5012,7 +5012,7 @@
     "proof_strategy": "Define A(1) = A(2) = 1, A(n+1) = smallest positive integer not equal to A(n) + A(n-1). Prove by strong induction: A(n) >= floor(n^2/4). Base: A(1)=1 >= 0, A(2)=1 >= 1. Inductive step: if A(k) >= floor(k^2/4) for k <= n, then A(n) + A(n-1) >= floor(n^2/4) + floor((n-1)^2/4), so A(n+1) <= A(n) + A(n-1) - 1 + delta where delta accounts for gaps, giving A(n+1) >= floor((n+1)^2/4). Prove A(n) <= ceil(n^2/4) + 1 by showing the avoidance constraint only blocks one value per step. Test: compute A(n) for n=1..10^6 and verify A(n)/n^2 -> 1/4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },

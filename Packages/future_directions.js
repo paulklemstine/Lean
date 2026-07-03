@@ -17,7 +17,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: unnamed_concept"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ade3f670",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -27,7 +27,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:26.963635+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -61,7 +61,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lower Bound for Low Moments of Dirichlet Character Sums"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61cdc208",
     "description": "There exists a finite set of vectors in l\u00b2 satisfying specific convolution inequalities such that their weighted average achieves the coefficient \u03b3\u2080=0.94601 in the bound F(N) \u2264 N^{1/2} + \u03b3\u2080N^{1/4} + O(1), and no smaller coefficient is achievable via this method.",
     "domains": [
       "Bridges"
@@ -70,7 +70,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T06:22:13.488931+00:00",
     "title": "Optimality of vector-valued convolution kernels for Sidon set bounds"
   },
@@ -862,7 +862,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Hausdorff dimension of Cantor series exact approximation sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2f34538d",
     "description": "Conjecture that for any fixed prime q there exist infinitely many pairs (t,p) with p prime, p\u2260q such that p divides A_t^{(q)} and s_q((q-1)p) \u2265 (q-1)t, where A_t^{(q)} = binom(q^{t+1}, q^t) - q^{q^t}. This would yield infinitely many n = q^t p satisfying binom(qn,n) \u2261 q^n (mod n).",
     "domains": [
       "Pythagorean"
@@ -871,7 +871,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.30232v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-02T19:19:52.418155+00:00",
     "title": "Infinitely Many Solutions to Prime-Base Binomial Congruences"
   },
@@ -1316,7 +1316,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing the generalized honeymoon Oberwolfach problem in Lean 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82eecb25",
     "description": "An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring of integer-valued polynomials Int(Z), the chain I_n = {f in Int(Z) : f(Z) contained in 2^n Z} is strictly ascending (I_n strictly contained in I_{n+1}) yet the intersection of all I_n is {0}, which contains the zero polynomial that is also in I_1. Conjecture: Every non-Noetherian ring contains an Escher staircase, and the 'height' of the Escher effect (measured by the Krull dimension gap) is a new ring invariant. For Int(Z), the Escher height is infinite (the chain never stabilizes). For Z[x_1, x_2, ...], the Escher height equals the number of variables. For the p-adic integers Z_p, there is NO Escher staircase (Z_p is a DVR, hence Noetherian). Test: prove that Int(Z) has an Escher staircase of infinite height. Prove that k[x_1,...,x_n] has Escher height n. Compute the Escher height for the ring of all algebraic integers. Impact: a new invariant for non-Noetherian rings that measures how far a ring is from being Noetherian \u2014 the algebraic equivalent of Escher's impossible architecture.",
     "domains": [
       "Novelty",
@@ -1326,7 +1326,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.030210+00:00",
     "title": "Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
@@ -1548,7 +1548,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit error bound for smoothed sigma divisor sum"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1ce2dca",
     "description": "For the general linear Lie superalgebra \ud835\udd24\ud835\udd29(m,n) with standard representation V = V\u2080 \u2295 V\u2081 (dim V\u2080 = m, dim V\u2081 = n), the Euler character of the k-th exterior power \u2227\u1d4fV coincides with the k-th elementary supersymmetric polynomial in the variables x\u2081,\u2026,x\u2098,y\u2081,\u2026,y\u2099. Specifically, \u03c7_Euler(\u2227\u1d4fV) = e\u2096(x\u2081,\u2026,x\u2098; y\u2081,\u2026,y\u2099) where e\u2096 is the k-th elementary supersymmetric polynomial, and this polynomial lies in the ring \u039b^\u00b1_{m,n} of supersymmetric Laurent polynomials invariant under S\u2098 \u00d7 S\u2099 and satisfying x_i \u2202f/\u2202x_i + y_j \u2202f/\u2202y_j \u2208 (x_i + y_j).",
     "domains": [
       "Algebra"
@@ -1557,7 +1557,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01782v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T08:15:37.979428+00:00",
     "title": "Euler Characters of Exterior Powers of the Standard Representation of \ud835\udd24\ud835\udd29(m,n)"
   },
@@ -1997,7 +1997,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multiplicity formula for the restriction of GL_3 irreducible representations to the principal SL_2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c98890ef",
     "description": "The conjecture posits that if the greatest common divisor of a and b exceeds 1 and the exponent n is even, then no positive integer solutions (a, b, x) with a < b exist for the equation (a^n+1)(b^n+1)=x\u00b2.",
     "domains": [
       "Pythagorean"
@@ -2006,7 +2006,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.31223v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T20:15:36.843139+00:00",
     "title": "Non-existence of solutions for (a^n+1)(b^n+1)=x\u00b2 when gcd(a,b) > 1 and n is even"
   },
@@ -2414,7 +2414,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coupling Depth One Mock Modular Eisenstein Series into Depth Two Forms"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8c9dac2",
     "description": "For every edge-color-critical graph F with chromatic number \u03c7(F) = r + 1 (r \u2265 2), all sufficiently large non-r-partite F-free graphs maximizing the adjacency spectral radius also maximize the number of edges. Formally, if EX_{r+1,\u03c1}(n,F) and EX_{r+1}(n,F) denote the families of non-r-partite F-free graphs of order n attaining maximum spectral radius and maximum edges respectively, then EX_{r+1,\u03c1}(n,F) \u2286 EX_{r+1}(n,F) for all sufficiently large n.",
     "domains": [
       "Pythagorean",
@@ -2424,7 +2424,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.00561v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T12:57:08.370062+00:00",
     "title": "Fang-Zhai Conjecture: Spectral extremal graphs for edge-color-critical graphs are edge extremal"
   },
@@ -2755,7 +2755,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1e6fc31",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -2765,7 +2765,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
