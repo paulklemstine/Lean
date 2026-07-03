@@ -1289,7 +1289,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Serre: Galois Cohomology",
         "Neukirch-Schmidt-Wingberg: Cohomology of Number Fields"
@@ -1312,7 +1312,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0028",
-      "last_attempt_time": "2026-07-03T03:50:05.115280+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cup_radical_pro2_dependence {G H : profinite_group} (h : maximalPro2Quotient G ≃ maximalPro2Quotient H) : cupRadical G ≃ cupRadical H := by sorry",
       "lineage_refs": [],
@@ -5406,7 +5406,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f7b97a34",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5434,7 +5434,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-03T00:49:27.017991+00:00",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
@@ -5863,6 +5863,52 @@
       "title": "Tree Structure Characterization for Good Position in Hyperelliptic Mumford Curves"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Hales--Jewett numbers",
+        "Gallai homothety numbers"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The Gallai homothety number $ G_3(\\{0,2,5\\}) $ equals 77.",
+      "domain_bridges": [
+        "combinatorics",
+        "model theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "github_issue": 0,
+      "id": "fd_0125",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "def G3_S {0,2,5} : nat := 77",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "exhaustive search or combinatorial construction",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02226v1",
+      "source_path": "http://arxiv.org/abs/2607.02226v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T04:11:45.471727+00:00",
+      "title": "Exact value of G₃({0,2,5})"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -5892,7 +5938,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0125",
+      "id": "fd_0126",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem 1.3 using DGH and the fan ordering over primes } p",
@@ -5923,7 +5969,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "bb3ce4ee",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5938,7 +5984,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0126",
+      "id": "fd_0127",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_spanning_k_tree_carathéodory {k d : ℕ} (V₁ V₂ ... : Finset Vertex) (K : SimplicialComplex) (hK : IsJoinOfSpanningKTreeWithWedge K) : ∀ (A : AffineMap K ℝ^{k+1}), Colorful A → ∃ (σ : Face K), σ.Nonempty ∧ σ.Dimension ≤ k ∧ A σ = 0",
@@ -5954,7 +6000,7 @@
       "source": "",
       "source_exp_id": "2607.01143v1",
       "source_path": "http://arxiv.org/abs/2607.01143v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-03T01:15:12.510112+00:00",
       "title": "Conjecture on minimal hitting subcomplexes in joins of spanning k‑trees with wedge of spheres"
@@ -5975,7 +6021,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "bb3ce4ee",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -5990,7 +6036,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0127",
+      "id": "fd_0128",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positivity_in_pq_binomial_basis (s : ℕ) (h : ℂ) (n k : ℕ) : (𝔖 s h n k).expand_in_pq_binomial_basis.coeff _ ≥ 0 := by sorry",
@@ -6006,7 +6052,7 @@
       "source": "",
       "source_exp_id": "2607.01141v1",
       "source_path": "http://arxiv.org/abs/2607.01141v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-03T01:39:20.537784+00:00",
       "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
@@ -6037,7 +6083,7 @@
         "Bridges"
       ],
       "github_issue": 0,
-      "id": "fd_0128",
+      "id": "fd_0129",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidon_upper_bound (N : ℕ) : ∃ (C : ℝ), ∀ (A : Finset ℕ), (A.toSet.is_sidon ∧ A ⊆ {n | n < N}) → A.card ≤ ⌈(N : ℝ)^(1/2) + 0.94601 * (N : ℝ)^(1/4) + C⌉",
@@ -6087,7 +6133,7 @@
         "Pythagorean"
       ],
       "github_issue": 0,
-      "id": "fd_0129",
+      "id": "fd_0130",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem overfull_subgraph_structural_location (G : Graph) (hG : Δ G > (V G).size / 3) : ¬(χ'_adj G = Δ G + 1) ∨ ∃ (H : Graph) (hH : H ⟵ G) (h_overfull : |E H| > Δ G * ⌊|V H| / 2⌋) (h_induced : Induced H G) , ∀ v ∈ V G \\ V H, deg_G v ≤ Δ G - 2",
@@ -6135,7 +6181,7 @@
         "Algebra"
       ],
       "github_issue": 0,
-      "id": "fd_0130",
+      "id": "fd_0131",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_q_half_sum (q : ℕ) [Fact (PrimePower q)] (m : ℕ) (hm : 4 ≤ m) : h q ((q ^ m + 1) / 2) = 1",
@@ -6155,6 +6201,55 @@
       "thread_id": "",
       "timestamp": "2026-07-03T03:50:00.178097+00:00",
       "title": "Exact Codimension for Cyclically Covering Subspaces of Length (qᵐ+1)/2"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Fyodorov‑Hiary‑Keating conjecture",
+        "Gaussian log‑correlated fields",
+        "Extreme value theory (Gumbel distribution)",
+        "AdS/CFT correspondence"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a family of unitary CFTs dual to AdS black holes with central charge c → ∞, let M_c denote the maximal number of primary operators in a fixed energy window of width Δ. Define the centered and scaled variable Y_c = (log M_c - μ_c)/σ_c, where μ_c and σ_c are the mean and standard deviation of log M_c. Conjecture that Y_c converges in distribution to the Gumbel law, i.e., for every real x, \\(\\lim_{c\\to\\infty} P(Y_c \\leq x) = \\exp(-\\exp(-x))\\).",
+      "domain_bridges": [
+        "Random matrix theory ↔ CFT",
+        "Statistical mechanics ↔ quantum gravity"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_0132",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem microstate_gumbel_limit (c : ℕ) (Δ_low Δ_high : ℝ) (hΔ : 0 < Δ_low) (hΔ' : Δ_low < Δ_high) : ∀ ε > 0, ∃ N₀, ∀ n ≥ N₀, |P( (log (M_n) - μ_n) / σ_n ≤ x ) - exp(-exp(-x))| < ε",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Leverage known results on the convergence of extremal statistics of Gaussian log‑correlated processes to the Gumbel distribution, combine them with a rigorous saddle‑point analysis of the CFT partition function to identify the appropriate scaling of μ_c and σ_c, and verify the required tightness and moment conditions for the limit theorem.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "2607.02233v1",
+      "source_path": "http://arxiv.org/abs/2607.02233v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-07-03T04:12:15.268770+00:00",
+      "title": "Gumbel limit for extremal microstate counts in AdS/CFT"
     },
     {
       "ambition_level": "extension",
@@ -6201,7 +6296,6 @@
   "recent_domain_counts": {},
   "recent_theme_keywords": {},
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

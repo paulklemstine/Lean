@@ -1433,12 +1433,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Gallai homothety number $ G_3(\\{0,2,5\\}) $ equals 77.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_0125",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02226v1",
+    "status": "available",
+    "timestamp": "2026-07-03T04:11:45.471727+00:00",
+    "title": "Exact value of G\u2083({0,2,5})"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "This conjecture predicts that under the Extended Riemann Hypothesis, the dimension of the Selmer group over a finite number field $K$ of conductor $N$ grows asymptotically as a function of the Euler characteristic of the stabilizer, mirroring the fan structure described in the paper. It provides a falsifiable benchmark for the number of Selmer ranks attained by a fixed elliptic curve in cyclic extensions.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_0125",
+    "id": "fd_0126",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01126v1",
@@ -1447,30 +1461,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fan-structured order and uniform bounds in the Selmer group distribution"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb3ce4ee",
     "description": "In the setting of the paper, let K be a subcomplex of the join of all spanning k\u2011trees of a complete (k+1)-partite graph on disjoint finite vertex sets V\u2081,\u2026,V_{k+1} together with a wedge of an m\u2011sphere. Conjecture: Every colorful Carath\u00e9odory map A:|K|\u2192\u211d^{k+1} must contain a non\u2011empty face of dimension at most k that maps to 0, and the collection of such minimal faces forms exactly the flag complex of the hypergraph of spanning k\u2011trees satisfying a certain exchange property. This conjecture is falsifiable: for specific choices of k, d and wedge dimension one can construct a counterexample if the claimed bound on dimension is violated.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0126",
+    "id": "fd_0127",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01143v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-03T01:15:12.510112+00:00",
     "title": "Conjecture on minimal hitting subcomplexes in joins of spanning k\u2011trees with wedge of spheres"
   },
   {
-    "consumed_by_exp_id": "bb3ce4ee",
+    "consumed_by_exp_id": "",
     "description": "For any s \u2208 \u2115\u2080, h \u2208 \u2102\\{0}, and non-negative integers n,k, the (p,q)-generalized Stirling numbers \ud835\udd16_{s;h}(n,k|p,q) defined by the normal ordering of (YX)^n in the (p,q)-deformed generalized Weyl algebra can be expressed as a linear combination of (p,q)-binomial coefficients with non-negative integer coefficients.",
     "domains": [
       "Algebra"
     ],
-    "id": "fd_0127",
+    "id": "fd_0128",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01141v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T01:39:20.537784+00:00",
     "title": "Positivity of (p,q)-Generalized Stirling Numbers in the (p,q)-Binomial Basis"
   },
@@ -1480,7 +1494,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_0128",
+    "id": "fd_0129",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.01169v1",
@@ -1494,7 +1508,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_0129",
+    "id": "fd_0130",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02270v1",
@@ -1509,13 +1523,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_0130",
+    "id": "fd_0131",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.02239v1",
     "status": "available",
     "timestamp": "2026-07-03T03:50:00.178097+00:00",
     "title": "Exact Codimension for Cyclically Covering Subspaces of Length (q\u1d50+1)/2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a family of unitary CFTs dual to AdS black holes with central charge c \u2192 \u221e, let M_c denote the maximal number of primary operators in a fixed energy window of width \u0394. Define the centered and scaled variable Y_c = (log M_c - \u03bc_c)/\u03c3_c, where \u03bc_c and \u03c3_c are the mean and standard deviation of log M_c. Conjecture that Y_c converges in distribution to the Gumbel law, i.e., for every real x, \\(\\lim_{c\\to\\infty} P(Y_c \\leq x) = \\exp(-\\exp(-x))\\).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0132",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2607.02233v1",
+    "status": "available",
+    "timestamp": "2026-07-03T04:12:15.268770+00:00",
+    "title": "Gumbel limit for extremal microstate counts in AdS/CFT"
   },
   {
     "consumed_by_exp_id": "",
@@ -1563,7 +1592,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
   {
-    "consumed_by_exp_id": "f7b97a34",
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -1573,7 +1602,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-03T00:49:27.017991+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
