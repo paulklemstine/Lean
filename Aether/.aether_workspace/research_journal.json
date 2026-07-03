@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "53364cc2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Cusick's sum-of-digits density `c_t`\n\nThis cycle established two new results in the catalog's Cusick thread\n(`CusickShiftThreeDensity.lean`, `CusickPeriodicity.lean`):\n\n* **Exact",
-      "quality_score": 0.6837600000000001,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-27T11:55:44",
-      "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
-    },
-    {
       "cycle_id": "a151a9c3",
       "domain": "Applications",
       "key_insight": "# Future Directions — Birkhoff polytopes and the clique-face property\n\nDerived from this cycle's findings (proved: `birkhoff_cliqueFace_iff` — `B_n` has the\nclique-face property iff `n ≤ 2`; the mecha",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-07-03T01:37:00",
       "title": "Conjecture on Absolute Boundedness of Polynomial Diophantine Tuples"
+    },
+    {
+      "cycle_id": "e4796c8c",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\nDerived from the current cycle's finding that colimit preservation of a\npower-shaped functor is governed entirely by the *finiteness of the essential\nindex set* over which its coo",
+      "quality_score": 0.6757399999999999,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-07-03T03:31:20",
+      "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7480399999999999
     }
   ],
-  "last_updated": "2026-07-03T01:37:00",
+  "last_updated": "2026-07-03T03:31:20",
   "open_questions": [
     {
       "context": "",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "a1973066",
-        "quality": 0.7684399999999999,
-        "theorems": 13,
-        "title": "Brocard's Problem: n! + 1 = m²"
-      },
-      {
         "cycle_id": "d3c0af99",
         "quality": 0.63104,
         "theorems": 19,
@@ -3823,6 +3817,12 @@
         "quality": 0.7118800000000001,
         "theorems": 12,
         "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showin"
+      },
+      {
+        "cycle_id": "e4796c8c",
+        "quality": 0.6757399999999999,
+        "theorems": 5,
+        "title": "Filtered Colimit Preservation by Sheared Witt Vectors"
       }
     ],
     "Pythagorean": [
