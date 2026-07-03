@@ -1,341 +1,139 @@
-#!/usr/bin/env python3
 """
-Cognitive Braid Algebra — Interactive Demo
+Cognitive Braids: numerical demonstration of the writhe as an information
+invariant that detects creativity but is blind to confusion.
 
-Demonstrates the key theorems:
-1. Exponent sum is a braid invariant
-2. Complexity shadow characterization
-3. Coherence ratio computation
-"""
+A braid word is a sequence of signed generators. We represent a generator
+sigma_i by the integer (i+1) and its inverse sigma_i^{-1} by -(i+1). Thus:
+    sigma_0        ->  1
+    sigma_0^{-1}   -> -1
+    sigma_1        ->  2
+    sigma_1^{-1}   -> -2
 
-from dataclasses import dataclass
-from typing import List, Tuple
-import math
+We compute two complementary invariants:
+    * writhe(w)      = signed crossing count (a homomorphism into the integers),
+    * permutation(w) = the underlying permutation of the strands (into S_{n+1}).
 
+The three archetypal cognitive braids:
+    trivial   = []                          (in B_2, one generator sigma_0)
+    creative  = [1, 1, 1]  = sigma_0^3      (in B_2)
+    confused  = [1, -2, 1, -2] = (sigma_0 sigma_1^{-1})^2   (in B_3)
 
-@dataclass
-class BraidGen:
-    """A braid generator σ_i^ε"""
-    index: int
-    pos: bool  # True = σ_i, False = σ_i⁻¹
-
-    @property
-    def sign(self) -> int:
-        return 1 if self.pos else -1
-
-    def __repr__(self):
-        sym = "σ" if self.pos else "σ⁻¹"
-        return f"{sym}_{self.index}"
-
-
-BraidWord = List[BraidGen]
-
-
-def exponent_sum(w: BraidWord) -> int:
-    """The abelianization map B_n → ℤ"""
-    return sum(g.sign for g in w)
-
-
-def pos_count(w: BraidWord) -> int:
-    return sum(1 for g in w if g.pos)
-
-
-def neg_count(w: BraidWord) -> int:
-    return sum(1 for g in w if not g.pos)
-
-
-@dataclass
-class ComplexityShadow:
-    """The (exponent, crossings) complexity data of a braid"""
-    exponent: int
-    crossings: int
-
-    @property
-    def realizable(self) -> bool:
-        return abs(self.exponent) <= self.crossings and \
-               (self.exponent + self.crossings) % 2 == 0
-
-    @property
-    def coherence_ratio(self) -> float:
-        if self.crossings == 0:
-            return 0.0
-        return abs(self.exponent) / self.crossings
-
-
-def shadow(w: BraidWord) -> ComplexityShadow:
-    return ComplexityShadow(exponent_sum(w), len(w))
-
-
-def construct_from_shadow(s: ComplexityShadow) -> BraidWord:
-    """Construct a braid word realizing a given shadow (if realizable)."""
-    assert s.realizable, f"Shadow {s} is not realizable"
-    p = (s.crossings + s.exponent) // 2  # positive count
-    n = s.crossings - p                   # negative count
-    return [BraidGen(0, True)] * p + [BraidGen(0, False)] * n
-
-
-# ─── Demo 1: Exponent Sum Invariance ───
-
-print("=" * 60)
-print("DEMO 1: Exponent Sum is a Braid Invariant")
-print("=" * 60)
-
-# The braid relation: σ₁σ₂σ₁ = σ₂σ₁σ₂
-w1 = [BraidGen(0, True), BraidGen(1, True), BraidGen(0, True)]
-w2 = [BraidGen(1, True), BraidGen(0, True), BraidGen(1, True)]
-print(f"\nWord 1 (σ₀σ₁σ₀):  {w1}")
-print(f"Word 2 (σ₁σ₀σ₁):  {w2}")
-print(f"Exponent sum 1: {exponent_sum(w1)}")
-print(f"Exponent sum 2: {exponent_sum(w2)}")
-print(f"Equal? {exponent_sum(w1) == exponent_sum(w2)} ✓")
-
-# Cancellation: σ₁σ₁⁻¹ = ε
-w3 = [BraidGen(0, True), BraidGen(0, False)]
-w4: BraidWord = []
-print(f"\nWord 3 (σ₀σ₀⁻¹): {w3}")
-print(f"Word 4 (empty):   {w4}")
-print(f"Exponent sum 3: {exponent_sum(w3)}")
-print(f"Exponent sum 4: {exponent_sum(w4)}")
-print(f"Equal? {exponent_sum(w3) == exponent_sum(w4)} ✓")
-
-# ─── Demo 2: Complexity Shadow Characterization ───
-
-print("\n" + "=" * 60)
-print("DEMO 2: Complexity Shadow Characterization")
-print("=" * 60)
-print("\nTheorem: (e, c) is realizable iff |e| ≤ c and e + c is even\n")
-
-test_shadows = [
-    ComplexityShadow(3, 5),   # realizable: |3|≤5, 3+5=8 even
-    ComplexityShadow(2, 5),   # NOT: 2+5=7 odd
-    ComplexityShadow(6, 4),   # NOT: |6|>4
-    ComplexityShadow(0, 4),   # realizable: |0|≤4, 0+4=4 even
-    ComplexityShadow(-3, 7),  # realizable: |-3|≤7, -3+7=4 even
-    ComplexityShadow(0, 0),   # realizable: trivial braid
-]
-
-for s in test_shadows:
-    status = "✓ realizable" if s.realizable else "✗ NOT realizable"
-    reason = f"|{s.exponent}|={'≤' if abs(s.exponent)<=s.crossings else '>'}{s.crossings}, " \
-             f"{s.exponent}+{s.crossings}={s.exponent+s.crossings} ({'even' if (s.exponent+s.crossings)%2==0 else 'odd'})"
-    print(f"  ({s.exponent:+d}, {s.crossings}): {status}  [{reason}]")
-
-# Construct words for realizable shadows
-print("\nConstruction examples:")
-for s in test_shadows:
-    if s.realizable:
-        w = construct_from_shadow(s)
-        print(f"  Shadow ({s.exponent:+d}, {s.crossings}) → word {w}")
-        print(f"    Verify: exponent_sum={exponent_sum(w)}, length={len(w)}")
-
-# ─── Demo 3: Coherence Ratio ───
-
-print("\n" + "=" * 60)
-print("DEMO 3: Coherence Ratio — Measuring Thought Quality")
-print("=" * 60)
-
-cognitive_processes = {
-    "Focused thought (all positive)": [BraidGen(i % 3, True) for i in range(6)],
-    "Creative insight (trefoil)": [BraidGen(0, True), BraidGen(1, True), BraidGen(0, True)],
-    "Confused thinking (balanced)": [BraidGen(0, True), BraidGen(0, False),
-                                     BraidGen(1, True), BraidGen(1, False)],
-    "Linear reasoning (identity)": [],
-    "Mixed process": [BraidGen(0, True), BraidGen(1, True), BraidGen(0, False),
-                      BraidGen(2, True), BraidGen(1, True)],
-}
-
-print(f"\n{'Process':<35} {'|w|':>4} {'Σ':>4} {'|Σ|/|w|':>8} {'Interpretation'}")
-print("-" * 80)
-for name, w in cognitive_processes.items():
-    s = shadow(w)
-    interp = ("trivial" if s.crossings == 0
-              else "maximally coherent" if s.coherence_ratio == 1.0
-              else "maximally incoherent" if s.coherence_ratio == 0.0
-              else f"partially coherent")
-    print(f"  {name:<33} {s.crossings:>4} {s.exponent:>+4} {s.coherence_ratio:>8.3f}   {interp}")
-
-# ─── Demo 4: Parity and Triangle Inequality ───
-
-print("\n" + "=" * 60)
-print("DEMO 4: Parity Theorem Verification")
-print("=" * 60)
-print("\nTheorem: exponentSum(w) + |w| is always even\n")
-
-import random
-random.seed(42)
-for trial in range(8):
-    n = random.randint(0, 10)
-    w = [BraidGen(random.randint(0, 3), random.choice([True, False])) for _ in range(n)]
-    e = exponent_sum(w)
-    print(f"  Random braid (len {n:>2}): e={e:>+3}, e+|w|={e+n:>+3} "
-          f"({'even ✓' if (e+n)%2==0 else 'ODD ✗'}), "
-          f"|e|≤|w|? {abs(e)<=n} ✓")
-
-print("\n" + "=" * 60)
-print("All demos completed successfully!")
-print("=" * 60)
-
-
-#!/usr/bin/env python3
-"""
-Visualization: Realizable Complexity Shadows
-
-Plots the lattice of realizable (exponent, crossings) pairs,
-showing the triangle inequality and parity constraints.
+Results reproduced numerically:
+    writhe(creative) = 3,   writhe(trivial) = 0,   writhe(confused) = 0,
+    yet the confused braid has a nontrivial underlying permutation (a 3-cycle),
+    so it is a genuinely nontrivial braid that the writhe cannot see.
 """
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
+from __future__ import annotations
+
+from typing import List, Dict
 
 
-def main():
-    max_c = 15
-    realizable_e = []
-    realizable_c = []
-    unrealizable_e = []
-    unrealizable_c = []
+def writhe(word: List[int]) -> int:
+    """Signed crossing count (exponent sum) of a braid word.
 
-    for c in range(max_c + 1):
-        for e in range(-c, c + 1):
-            if abs(e) <= c and (e + c) % 2 == 0:
-                realizable_e.append(e)
-                realizable_c.append(c)
-            else:
-                unrealizable_e.append(e)
-                unrealizable_c.append(c)
+    Each positive generator contributes +1, each inverse contributes -1.
+    This is a homomorphism, so the value depends only on the braid, not the word.
+    """
+    return sum(1 if letter > 0 else -1 for letter in word)
 
-    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
 
-    # Plot unrealizable points
-    ax.scatter(unrealizable_e, unrealizable_c, c='lightgray', s=20,
-               alpha=0.5, label='Not realizable', zorder=1)
+def underlying_permutation(word: List[int], strands: int) -> List[int]:
+    """Underlying permutation of a braid word on the given number of strands.
 
-    # Plot realizable points colored by coherence ratio
-    coherence = [abs(e) / c if c > 0 else 0
-                 for e, c in zip(realizable_e, realizable_c)]
-    sc = ax.scatter(realizable_e, realizable_c, c=coherence, cmap='RdYlGn_r',
-                    s=40, edgecolors='black', linewidths=0.5,
-                    label='Realizable', zorder=2, vmin=0, vmax=1)
+    Returns a list p of length `strands` with p[k] = image of strand k.
+    Each letter +-(i+1) applies the adjacent transposition (i, i+1).
+    """
+    p: List[int] = list(range(strands))
+    for letter in word:
+        i = abs(letter) - 1  # generator index; sign is irrelevant for the permutation
+        p[i], p[i + 1] = p[i + 1], p[i]
+    return p
 
-    # Draw boundary lines |e| = c
-    e_line = np.linspace(-max_c, max_c, 100)
-    ax.plot(e_line, np.abs(e_line), 'r--', linewidth=1.5, alpha=0.7,
-            label='Boundary: |e| = c')
 
-    # Mark special points
-    special = {
-        (0, 0): 'Trivial\n(identity)',
-        (3, 3): 'Maximally\ncoherent',
-        (0, 4): 'Balanced\n(confused)',
+def is_identity_permutation(p: List[int]) -> bool:
+    """True iff p is the identity permutation."""
+    return all(p[k] == k for k in range(len(p)))
+
+
+def cycle_type(p: List[int]) -> List[int]:
+    """Return the sorted list of cycle lengths of a permutation p."""
+    n = len(p)
+    seen = [False] * n
+    lengths: List[int] = []
+    for start in range(n):
+        if seen[start]:
+            continue
+        length = 0
+        j = start
+        while not seen[j]:
+            seen[j] = True
+            j = p[j]
+            length += 1
+        lengths.append(length)
+    return sorted(lengths, reverse=True)
+
+
+def analyze(name: str, word: List[int], strands: int) -> Dict[str, object]:
+    """Compute both invariants for one cognitive braid and print a report."""
+    w = writhe(word)
+    perm = underlying_permutation(word, strands)
+    nontrivial_perm = not is_identity_permutation(perm)
+    report: Dict[str, object] = {
+        "name": name,
+        "word": word,
+        "strands": strands,
+        "writhe": w,
+        "permutation": perm,
+        "permutation_cycle_type": cycle_type(perm),
+        "permutation_nontrivial": nontrivial_perm,
     }
-    for (e, c), label in special.items():
-        ax.annotate(label, (e, c), textcoords="offset points",
-                    xytext=(15, 10), fontsize=8,
-                    arrowprops=dict(arrowstyle='->', color='black'))
-
-    plt.colorbar(sc, ax=ax, label='Coherence ratio |e|/c')
-    ax.set_xlabel('Exponent sum (e)', fontsize=12)
-    ax.set_ylabel('Crossing count (c)', fontsize=12)
-    ax.set_title('Complexity Shadow Lattice\n'
-                 'Realizable iff |e| ≤ c and e + c even', fontsize=14)
-    ax.legend(loc='upper left')
-    ax.set_aspect('equal')
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('shadow_lattice.png', dpi=150, bbox_inches='tight')
-    print("Saved shadow_lattice.png")
+    print(f"--- {name} ---")
+    print(f"  braid word           : {word}")
+    print(f"  strands (n+1)        : {strands}")
+    print(f"  writhe (exponent sum): {w}")
+    print(f"  underlying perm      : {perm}  cycle type {cycle_type(perm)}")
+    print(f"  permutation != id    : {nontrivial_perm}")
+    print()
+    return report
 
 
-if __name__ == "__main__":
-    main()
+def main() -> None:
+    print("Cognitive Braids: writhe detects creativity but is blind to confusion")
+    print("=" * 70)
+    print()
 
+    trivial = analyze("trivial  (linear reasoning)  1", [], 2)
+    creative = analyze("creative (insight)  sigma_0^3", [1, 1, 1], 2)
+    confused = analyze(
+        "confused (deliberation)  (sigma_0 sigma_1^-1)^2", [1, -2, 1, -2], 3
+    )
 
-#!/usr/bin/env python3
-"""
-Visualization: Cognitive Braid Trajectories
+    print("Verification of the main results:")
+    print("-" * 70)
 
-Plots the partial exponent sum trajectory for different types
-of cognitive processes, showing how coherent vs confused thought
-patterns differ in their complexity evolution.
-"""
+    assert creative["writhe"] == 3, "creative braid should have writhe 3"
+    assert trivial["writhe"] == 0, "trivial braid should have writhe 0"
+    assert confused["writhe"] == 0, "confused braid should have writhe 0"
+    print("  writhe(creative) = 3  != 0          -> creativity is DETECTED")
+    print("  writhe(confused) = 0  = writhe(trivial) -> confusion is INVISIBLE to writhe")
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import numpy as np
+    # But the confused braid is genuinely nontrivial: nontrivial permutation.
+    assert confused["permutation_nontrivial"], "confused braid must be nontrivial"
+    assert confused["permutation_cycle_type"] == [3], "confused perm is a 3-cycle"
+    assert not creative["permutation_nontrivial"] is False  # sanity
+    print("  confused underlying permutation is a 3-cycle -> confused braid != identity")
+    print()
+    print("Conclusion: the writhe cannot distinguish the confused braid from the")
+    print("trivial braid, yet the confused braid is genuinely nontrivial.")
+    print()
 
-
-def partial_sums(signs):
-    """Compute running partial sums."""
-    sums = [0]
-    for s in signs:
-        sums.append(sums[-1] + s)
-    return sums
-
-
-def main():
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-
-    # Define cognitive process types
-    processes = {
-        'Focused thought\n(all positive, coherence=1.0)': {
-            'signs': [1, 1, 1, 1, 1, 1, 1, 1],
-            'color': '#2ca02c',
-            'ax': axes[0, 0]
-        },
-        'Creative insight\n(trefoil braid, coherence=1.0)': {
-            'signs': [1, 1, 1],
-            'color': '#d62728',
-            'ax': axes[0, 1]
-        },
-        'Confused thinking\n(balanced, coherence=0.0)': {
-            'signs': [1, -1, 1, -1, 1, -1, 1, -1],
-            'color': '#9467bd',
-            'ax': axes[1, 0]
-        },
-        'Mixed process\n(partial coherence=0.6)': {
-            'signs': [1, 1, -1, 1, 1, -1, 1, -1, 1, 1],
-            'color': '#ff7f0e',
-            'ax': axes[1, 1]
-        },
-    }
-
-    for title, info in processes.items():
-        signs = info['signs']
-        sums = partial_sums(signs)
-        ax = info['ax']
-
-        # Plot trajectory
-        ax.plot(range(len(sums)), sums, 'o-', color=info['color'],
-                linewidth=2, markersize=6)
-        ax.fill_between(range(len(sums)), sums, alpha=0.15, color=info['color'])
-        ax.axhline(y=0, color='black', linewidth=0.5, linestyle='-')
-
-        # Annotate
-        e = sum(signs)
-        c = len(signs)
-        cr = abs(e) / c if c > 0 else 0
-        depth = max(abs(s) for s in sums)
-
-        ax.set_title(title, fontsize=11, fontweight='bold')
-        ax.set_xlabel('Step')
-        ax.set_ylabel('Partial exponent sum')
-        ax.text(0.02, 0.98,
-                f'e = {e:+d}\nc = {c}\n|e|/c = {cr:.2f}\ndepth = {depth}',
-                transform=ax.transAxes, fontsize=9, verticalalignment='top',
-                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
-        ax.grid(True, alpha=0.3)
-        ax.set_xticks(range(len(sums)))
-
-    plt.suptitle('Cognitive Braid Trajectories\n'
-                 'Partial exponent sums reveal thought structure',
-                 fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('braid_trajectories.png', dpi=150, bbox_inches='tight')
-    print("Saved braid_trajectories.png")
+    # Bonus: the writhe is a homomorphism (additive over concatenation).
+    a = [1, 1, -2]
+    b = [2, -1, 1]
+    assert writhe(a + b) == writhe(a) + writhe(b)
+    print(f"Homomorphism check: writhe({a}+{b}) = writhe(a)+writhe(b) = "
+          f"{writhe(a)}+{writhe(b)} = {writhe(a + b)}")
 
 
 if __name__ == "__main__":
