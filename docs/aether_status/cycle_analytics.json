@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-03T18:11:10.374385+00:00",
+  "last_updated": "2026-07-03T18:34:13.140343+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -30912,6 +30912,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-07-03T18:11:10.291972+00:00",
       "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7077,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 67,
+      "domain": "Applications",
+      "duration_seconds": 1220.4703695774078,
+      "end_time": 1783103408.3315732,
+      "files_integrated": 7,
+      "job_id": "3d19dc30",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8402,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.9253,
+        "novelty": 0.95,
+        "proof_depth": 0.9147,
+        "usefulness": 0.9074
+      },
+      "quality_score": 0.4650941176470589,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1783102187.8612037,
+      "strategy_count": 0,
+      "theorem_count": 13,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 13,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-07-03T18:34:13.091932+00:00",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ]
 }

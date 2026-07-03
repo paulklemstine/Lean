@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f8a707b1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Twin Prime Gaps / Maynard–Tao formalization\n\nDerived from this cycle's findings (the admissibility ⇄ bounded-gaps split, the\n`liminf` reduction, and the Selberg-weight bridge). E",
-      "quality_score": 0.7756646153846154,
-      "sorry_count": 1,
-      "theorem_count": 13,
-      "timestamp": "2026-06-27T18:43:36",
-      "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
-    },
-    {
       "cycle_id": "2ff65a6a",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Tropical Geometry as a Limit of Classical Algebraic Geometry\n\nDerived from the Phase A cycle that produced:\n\n* `Tropical/ClassicalLimit/Dequantization.lean` — Maslov dequantizati",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-07-03T18:11:08",
       "title": "Sheared Witt vectors are the colimit of truncated Witt vectors"
+    },
+    {
+      "cycle_id": "3d19dc30",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Numerical Monsters\n\n## 1. The base-`(b-1)` unit spectrum of digit-sharing factorisations\n\n**Conjecture.** For every base `b ≥ 3`, a factorisation `v = x·y` in which the\nfactors t",
+      "quality_score": 0.4650941176470589,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-07-03T18:34:11",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.73448
     }
   ],
-  "last_updated": "2026-07-03T18:11:08",
+  "last_updated": "2026-07-03T18:34:11",
   "open_questions": [
     {
       "context": "Main results (all 0-sorry):; Main new results (all 0-sorry):",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "21b9f7f8",
-        "quality": 0.6964000000000001,
-        "theorems": 8,
-        "title": "Franke Decomposition for SL(2, Z) Automorphic Forms"
-      },
-      {
         "cycle_id": "7469cf90",
         "quality": 0.6437080000000001,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.5938800000000001,
         "theorems": 6,
         "title": "Knots That Think: Cognition as Braiding in Category Theory"
+      },
+      {
+        "cycle_id": "3d19dc30",
+        "quality": 0.4650941176470589,
+        "theorems": 13,
+        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
       }
     ],
     "Bridges": [
