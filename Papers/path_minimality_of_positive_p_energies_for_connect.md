@@ -1,71 +1,69 @@
 # Computational Evidence — Path-Minimality of Positive p-Energies
 
-All computations below were run in exact/`Float` arithmetic before the formal proofs and
-motivated the exact statements that were subsequently verified.
+All quantities below were computed numerically before the formal proofs were
+attempted. The adjacency spectrum of the path `P_n` is
+`λ_k = 2 cos((k+1)π/(n+1))`, `k = 0, …, n-1`.
 
-## 1. Path spectrum and sign-symmetry
+## 1. Squared spectral energy of the path equals `2(n-1)`
 
-The adjacency eigenvalues of the path `P_n` are `λ_k = 2 cos((k+1)π/(n+1))`, `k = 0,…,n-1`.
-For `n = 5` the pairs `(λ_k, -λ_{n-1-k})` are
+`∑_k λ_k²` for `P_n`:
 
-| k | λ_k | -λ_{4-k} |
-|---|------|----------|
-| 0 | 1.7320508 | 1.7320508 |
-| 1 | 1.0000000 | 1.0000000 |
-| 2 | 0.0000000 | -0.0000000 |
-| 3 | -1.0000000 | -1.0000000 |
-| 4 | -1.7320508 | -1.7320508 |
+| n | ∑ λ_k² (computed) | 2(n-1) |
+|---|-------------------|--------|
+| 2 | 2.000000          | 2      |
+| 3 | 4.000000          | 4      |
+| 4 | 6.000000          | 6      |
+| 5 | 8.000000          | 8      |
 
-Confirms `λ_{n-1-k} = -λ_k` (index reflection negates the eigenvalue), the spectral fingerprint of
-bipartiteness. Formalized as `pathEig_reflect`.
+This matches the trace identity `∑ λ² = trace(A²) = ∑_v deg(v) = 2|E|`, and
+`P_n` has exactly `n-1` edges. Formalized as `sum_pathEig_sq` (companion file)
+and, at the level of an arbitrary graph's genuine adjacency spectrum, as
+`sum_eigenvalues_sq_eq_two_card_edges`.
 
-## 2. Positive 2-energy of the path equals the number of edges
+## 2. Positive 2-energy of the path equals `n-1`
 
-`E_2^+(P_n) = ∑_{λ_k>0} λ_k^2` computed for `n = 1,…,8`:
+`∑_{λ_k>0} λ_k²` for `P_n`:
 
 | n | E_2^+(P_n) | n-1 |
 |---|-----------|-----|
-| 1 | 0 | 0 |
-| 2 | 1 | 1 |
-| 3 | 2 | 2 |
-| 4 | 3 | 3 |
-| 5 | 4 | 4 |
-| 6 | 5 | 5 |
-| 7 | 6 | 6 |
-| 8 | 7 | 7 |
+| 2 | 1.000000  | 1   |
+| 3 | 2.000000  | 2   |
+| 4 | 3.000000  | 3   |
+| 5 | 4.000000  | 4   |
 
-Exactly `E_2^+(P_n) = n-1 = |E(P_n)|`. Formalized as `path_posEnergy_two`. The underlying trace
-identity `∑_k λ_k^2 = 2(n-1)` is `sum_pathEig_sq`, proved through the roots-of-unity cosine sum
-`sum_cos_two_pi_div`.
+The path spectrum is sign-symmetric (`λ_{n-1-k} = -λ_k`), so
+`E_2^+ = ½ ∑ λ² = (n-1)`. Formalized as `path_posEnergy_two`.
 
-## 3. Path-minimality at p = 2 (edge count)
+## 3. Counterexample hunt for path-minimality (n = 4, p = 3)
 
-For any connected graph on `n` vertices, `E_2^+(G) = |E(G)| ≥ n-1`, with equality for trees such as
-`P_n`. Sample of connected graphs on 4 vertices (positive 2-energy = edge count):
+Connected graphs on 4 vertices, positive 3-energy `∑_{λ>0} λ³`:
 
-| graph | edges = E_2^+ |
-|-------|---------------|
-| P_4 (path) | 3 |
-| star K_{1,3} | 3 |
-| C_4 (cycle) | 4 |
-| paw | 4 |
-| K_4 | 6 |
+| Graph | positive eigenvalues     | E_3^+     |
+|-------|--------------------------|-----------|
+| P_4   | {1.618…, 0.618…}         | 4.472136  |
+| C_4   | {2, 0}                   | 8.000000  |
+| K_4   | {3}                      | 27        |
+| star  | {√3}                     | 5.196…    |
 
-Minimum is 3 = n-1, attained by the trees. Formalized as `connected_card_edgeFinset_ge`.
+The path `P_4` attains the minimum (`4.472136`), consistent with the
+conjecture `E_p^+(G) ≥ E_p^+(P_n)`. No connected 4-vertex counterexample was
+found.
 
-## 4. Counterexample hunt for p > 2 (path is the minimiser)
+## 4. Sequence note
 
-For `n = 4`, `E_p^+(C_4) = 2^p` versus `E_p^+(P_4) = φ^p + φ^{-p}` with `φ = (1+√5)/2`:
+`E_2^+(P_n) = n - 1` is the trivial linear sequence; `∑ λ² = 2(n-1)` is
+`2, 4, 6, 8, …` (OEIS A005843 shifted). The interesting content is the
+extremal *inequality*, not the sequence.
 
-| p | 2^p (C_4) | φ^p+φ^{-p} (P_4) |
-|---|-----------|------------------|
-| 2.0 | 4.000 | 3.000 |
-| 2.5 | 5.657 | 3.630 |
-| 3.0 | 8.000 | 4.472 |
-| 4.0 | 16.000 | 7.000 |
-| 6.0 | 64.000 | 18.000 |
+## Scope of what is formally proved
 
-`C_4 ≥ P_4` for every tested `p ≥ 2`, with equality only at `p = 2`. No counterexample to
-path-minimality was found in a sweep of all connected graphs on `n ≤ 7` vertices and `p ∈ {2,…,8}`.
-This supports the general conjecture `E_p^+(G) ≥ E_p^+(P_n)` for connected bipartite `G` and `p ≥ 2`,
-which remains the open target beyond the `p = 2` case proved here.
+* `∑ λ_i(G)² = 2|E(G)|` for **any** finite simple graph (spectral theorem +
+  degree sum), file `PositivePEnergyGraphTwo.lean`.
+* `connected_squaredEnergy_ge_path`: for connected `G` on `n` vertices,
+  `∑_k λ_k(P_n)² ≤ ∑_i λ_i(G)²` — squared-energy path-minimality.
+* For bipartite (reflection-antisymmetric) spectra,
+  `∑ |λ|^p = 2 E_p^+` (file `PositivePEnergySchatten.lean`), so the squared
+  identity gives `E_2^+(G) = |E(G)| ≥ n-1 = E_2^+(P_n)`.
+
+The full `p ≥ 2` inequality for all positive eigenvalues remains open (needs
+spectral majorization); see `FUTURE_DIRECTIONS.md`.

@@ -2,308 +2,430 @@
 
 ## Abstract
 
-For a finite simple graph $G$ we study the *positive $p$-energy*
-$E_p^{+}(G) = \sum_{\lambda > 0} \lambda^{p}$, the sum of the positive adjacency
-eigenvalues each raised to a real exponent $p$, together with its mirror quantity
-the negative $p$-energy $E_p^{-}(G) = \sum_{\lambda < 0} (-\lambda)^{p}$. Our central
-structural result isolates the algebraic mechanism behind an identity long observed
-for special families: whenever a real spectrum is antisymmetric under index
-reflection — $\lambda_{n-1-k} = -\lambda_k$ — its positive and negative $p$-energies
-coincide for *every* real $p$. This reflection antisymmetry is precisely the spectral
-signature of bipartiteness, so we obtain the **Bipartite Balance Theorem**:
-$E_p^{+}(G) = E_p^{-}(G)$ for all bipartite $G$ and all $p$. Specializing to the path
-graph $P_n$, whose spectrum is the classical closed form
-$\lambda_k = 2\cos((k+1)\pi/(n+1))$, we prove the exact evaluation
-$E_2^{+}(P_n) = n-1$ via a roots-of-unity cosine sum, and we prove the combinatorial
-core of path-minimality at $p=2$: every connected graph on $n$ vertices has at least
-$n-1$ edges, with equality for trees. Since $E_2^{+}(G) = |E(G)|$ for bipartite $G$,
-this yields $E_2^{+}(G) \ge E_2^{+}(P_n)$ for connected bipartite $G$, with the path
-attaining the minimum. We close by formulating the full $p \ge 2$ minimality
-conjecture as a spectral majorization problem.
+We study the *positive $p$-energy* $E_p^{+}(G) = \sum_{\lambda_k > 0} \lambda_k^{\,p}$
+of a finite simple graph $G$, where $\lambda_1, \dots, \lambda_n$ are the
+eigenvalues of the adjacency matrix. Our central contribution is an exact,
+elementary anchor for the extremal theory of these energies at the exponent
+$p = 2$. We prove a spectral–combinatorial identity, that the squared spectral
+energy equals twice the number of edges,
+$\sum_{i} \lambda_i^2 = 2\,|E(G)|$, valid for every finite simple graph. Combining
+it with the tree bound $|E(G)| \ge n-1$ for connected graphs yields
+**path-minimality of the squared spectral energy**: every connected graph on $n$
+vertices has $\sum_i \lambda_i^2 \ge 2(n-1)$, the exact value attained by the path
+$P_n$. For bipartite graphs the spectrum is symmetric about zero, which we
+formalize as a reflection-antisymmetry property of the ordered spectrum; this
+collapses the positive $p$-energy to exactly one half of the absolute (Schatten)
+$p$-energy $\sum_k |\lambda_k|^p$ for every nonzero exponent $p$. As a consequence,
+for connected bipartite $G$ we obtain $E_2^{+}(G) = |E(G)| \ge n-1 = E_2^{+}(P_n)$:
+the path minimizes the positive $2$-energy among connected bipartite graphs. We
+also record the closed-form path spectrum $\lambda_k = 2\cos((k+1)\pi/(n+1))$ and
+verify consistency of the two computations. We conclude with a program for
+extending path-minimality to all $p \ge 2$ via spectral majorization.
 
-**Keywords.** graph energy, positive $p$-energy, adjacency spectrum, bipartite
-graph, path graph, spectral majorization, reflection involution, spanning tree.
+**Keywords:** graph energy, adjacency spectrum, positive $p$-energy, bipartite
+graph, path graph, Schatten norm, spectral–combinatorial identity, majorization.
 
 ---
 
 ## 1. Introduction
 
-The **energy** of a graph, introduced in mathematical chemistry, is the sum of the
-absolute values of its adjacency eigenvalues. It approximates the total $\pi$-electron
-energy of conjugated hydrocarbons and has grown into a rich area of spectral graph
-theory. A natural generalization replaces absolute value by a power law: for a real
-exponent $p$, split the spectrum into its positive and negative parts and sum the
-$p$-th powers separately. The *positive $p$-energy* $E_p^{+}$ isolates the
-contribution of the positive eigenvalues, which for many extremal questions carry the
-essential information.
+The *spectrum* of a graph — the multiset of eigenvalues of its adjacency
+matrix — is one of the most fruitful invariants in combinatorics, encoding
+connectivity, expansion, coloring bounds, and much more. A recurring theme is to
+attach a scalar *energy* to the spectrum and ask which graphs are extremal. The
+original notion, due to Gutman, is the graph energy
+$\mathcal{E}(G) = \sum_k |\lambda_k|$, motivated by Hückel molecular-orbital theory,
+where it approximates the total $\pi$-electron energy of a conjugated hydrocarbon.
+Since then a family of variants — Schatten energies, Estrada indices, signed and
+one-sided energies — has been studied intensively.
 
-This paper answers, at the exponent $p=2$, a concrete extremal question — *which
-connected graph minimizes $E_p^{+}$?* — and identifies the reusable structural
-principle that governs the whole family. The answer to the extremal question is the
-**path graph** $P_n$, the unique tree that is a single simple chain. The structural
-principle is that the balance $E_p^{+} = E_p^{-}$ is not a property of any particular
-graph but of any *reflection-antisymmetric* real spectrum, of which bipartite spectra
-are the archetype.
+This paper concerns the **positive $p$-energy**
+$$
+E_p^{+}(G) = \sum_{\lambda_k > 0} \lambda_k^{\,p},
+$$
+the sum over positive eigenvalues of their $p$-th powers. We ask the extremal
+question: *among connected graphs on a fixed number of vertices, which minimizes
+$E_p^{+}$?* We conjecture, and for the exponent $p = 2$ prove, that the answer is
+the **path** $P_n$ — the unique tree with maximum diameter, a straight line of
+vertices.
+
+Our results are organized around a single clarifying identity. While
+$E_p^{+}$ is defined spectrally, at $p = 2$ it is *purely combinatorial*: the sum
+of the squares of all eigenvalues equals twice the edge count. This transforms an
+extremal spectral problem into the elementary observation that connected graphs
+need at least $n-1$ edges. Bipartiteness then supplies a symmetry that turns the
+"all eigenvalues" statement into the desired "positive eigenvalues" statement,
+because the positive $p$-energy of a bipartite graph is exactly half of a Schatten
+$p$-norm.
 
 ### Contributions
 
-1. **Abstract bipartite balance (Theorem 1).** For any finite real spectrum
-   $f(0), \ldots, f(n-1)$ with $f(n-1-k) = -f(k)$, and any real $p$, the positive and
-   negative $p$-energies are equal. The proof is a reindexing plus a termwise sign
-   case-split, entirely free of trigonometry.
-2. **Path balance (Corollary 2).** The path graph satisfies $E_p^{+}(P_n) =
-   E_p^{-}(P_n)$ for all $p$, recovered from Theorem 1 via the reflection identity of
-   the path spectrum.
-3. **Exact path evaluation (Theorem 4).** $E_2^{+}(P_n) = n-1$, obtained from a
-   roots-of-unity evaluation of a Dirichlet cosine sum.
-4. **Combinatorial minimality at $p=2$ (Theorem 5 and Corollary 6).** Every
-   connected graph on $n$ vertices has at least $n-1$ edges; combined with
-   $E_2^{+}(G) = |E(G)|$ for bipartite $G$, this gives $E_2^{+}(G) \ge E_2^{+}(P_n)$
-   for connected bipartite $G$, with the path attaining equality.
+1. **The squared-energy identity** (Theorem 4.1):
+   $\sum_i \lambda_i^2 = 2|E(G)|$ for every finite simple graph, proved via the
+   trace of $A^2$ and the degree sum.
+2. **Path-minimality at $p = 2$** (Theorem 4.4): every connected graph on $n$
+   vertices satisfies $\sum_i \lambda_i^2 \ge 2(n-1)$, with equality for $P_n$.
+3. **Positive energy as half a Schatten norm** (Theorem 5.3): for a
+   reflection-antisymmetric (bipartite) spectrum and any nonzero $p$,
+   $\sum_k |\lambda_k|^p = 2 E_p^{+}$; equivalently $E_p^{+} = \tfrac12 \sum_k |\lambda_k|^p$.
+4. **Bipartite path-minimality of positive $2$-energy** (Corollary 5.4):
+   $E_2^{+}(G) = |E(G)| \ge n-1 = E_2^{+}(P_n)$ for connected bipartite $G$.
+5. **Closed-form consistency** (Section 6): the path spectrum
+   $\lambda_k = 2\cos((k+1)\pi/(n+1))$ satisfies $\sum_k \lambda_k^2 = 2(n-1)$,
+   reconciling the closed-form and combinatorial routes.
 
 ---
 
-## 2. Definitions
+## 2. Preliminaries and notation
 
-Throughout, $G$ is a finite simple graph on vertex set $\{1, \ldots, n\}$ with
-adjacency matrix $A(G)$, the symmetric $0/1$ matrix whose $(i,j)$ entry is $1$ iff
-$ij$ is an edge. Because $A(G)$ is real symmetric, its eigenvalues (the **adjacency
-spectrum**) are real; we list them as $\lambda_0, \lambda_1, \ldots, \lambda_{n-1}$.
+Let $G = (V, E)$ be a finite simple graph on $n = |V|$ vertices, with no loops or
+multiple edges. Fix an ordering $v_1, \dots, v_n$ of the vertices.
 
-**Definition 2.1 (Positive and negative $p$-energy).** For a real exponent $p$,
-$$E_p^{+}(G) = \sum_{k \,:\, \lambda_k > 0} \lambda_k^{\,p},
-\qquad
-E_p^{-}(G) = \sum_{k \,:\, \lambda_k < 0} (-\lambda_k)^{\,p}.$$
-Equivalently, writing $x_+ = \max(x,0)$ and using the convention that terms with a
-non-positive base contribute $0$,
-$$E_p^{+}(G) = \sum_{k} \big[\lambda_k > 0\big]\,\lambda_k^{p},
-\qquad
-E_p^{-}(G) = \sum_{k} \big[\lambda_k < 0\big]\,(-\lambda_k)^{p}.$$
+**Adjacency matrix.** The *adjacency matrix* $A = A(G) \in \mathbb{R}^{n\times n}$
+has entries
+$$
+A_{ij} = \begin{cases} 1 & \text{if } v_i \text{ and } v_j \text{ are adjacent},\\ 0 & \text{otherwise.}\end{cases}
+$$
+Because adjacency is symmetric and irreflexive, $A$ is a real symmetric matrix with
+zero diagonal; in particular $A^{\mathsf T} = A$ (it is Hermitian over $\mathbb{R}$).
 
-**Definition 2.2 (Path spectrum).** The adjacency spectrum of the path graph $P_n$ on
-$n$ vertices is the classical closed form
-$$\lambda_k \;=\; 2\cos\!\left(\frac{(k+1)\pi}{n+1}\right), \qquad k = 0, 1, \ldots, n-1.$$
-Since the angles $(k+1)\pi/(n+1)$ lie strictly between $0$ and $\pi$, every $\lambda_k$
-lies in the open interval $(-2, 2)$, and the eigenvalues are strictly decreasing in
-$k$. Accordingly we write
-$$E_p^{+}(P_n) = \sum_{k=0}^{n-1} \big[\lambda_k > 0\big]\,\lambda_k^p,
-\qquad
-E_p^{-}(P_n) = \sum_{k=0}^{n-1} \big[\lambda_k < 0\big]\,(-\lambda_k)^p.$$
+**Spectrum.** By the spectral theorem, $A$ has $n$ real eigenvalues (with
+multiplicity) $\lambda_1(G) \ge \lambda_2(G) \ge \cdots \ge \lambda_n(G)$, and an
+orthonormal eigenbasis; equivalently $A = U D U^{\mathsf T}$ for an orthogonal $U$
+and $D = \operatorname{diag}(\lambda_1, \dots, \lambda_n)$. This multiset is the
+*spectrum* of $G$.
 
-**Definition 2.3 (Reflection antisymmetry).** A finite real sequence
-$f(0), \ldots, f(n-1)$ is *antisymmetric under index reflection* if
-$$f(n-1-k) = -f(k) \qquad \text{for all } 0 \le k < n.$$
-Reflection $k \mapsto n-1-k$ is an order-reversing involution on $\{0, \ldots, n-1\}$;
-antisymmetry says it realizes the sign involution $\lambda \mapsto -\lambda$ on the
-values.
+**Degree.** The degree $\deg(v)$ of a vertex is the number of edges incident to
+$v$. The handshake identity $\sum_v \deg(v) = 2|E|$ holds because each edge
+contributes to exactly two degrees.
 
-**Remark.** A graph is bipartite iff its spectrum is symmetric about $0$ (each
-eigenvalue $\lambda$ is matched by $-\lambda$ with equal multiplicity). Ordering the
-spectrum monotonically, this symmetry becomes exactly the reflection antisymmetry of
-Definition 2.3. Thus "bipartite" and "reflection-antisymmetric spectrum" are two views
-of the same phenomenon, and this is the bridge between our abstract theorem and its
-graph-theoretic corollaries.
+**Energies.** For a real exponent $p$, define
+$$
+E_p^{+}(G) = \sum_{k:\ \lambda_k > 0} \lambda_k^{\,p}, \qquad
+E_p^{-}(G) = \sum_{k:\ \lambda_k < 0} (-\lambda_k)^{\,p}, \qquad
+\|G\|_p^p = \sum_{k} |\lambda_k|^{\,p}.
+$$
+$E_p^{+}$ and $E_p^{-}$ are the *positive* and *negative* $p$-energies;
+$\|G\|_p^p$ is the *absolute* (Schatten) $p$-energy. Zero eigenvalues contribute to
+none of the three sums for $p > 0$.
 
----
+**The path graph.** The *path* $P_n$ has vertex set $\{1, \dots, n\}$ and edges
+$\{i, i+1\}$ for $1 \le i \le n-1$; it is connected, bipartite, and has exactly
+$n-1$ edges. Its adjacency eigenvalues have the classical closed form
+$$
+\lambda_k(P_n) = 2\cos\!\left(\frac{(k+1)\pi}{n+1}\right), \qquad k = 0, 1, \dots, n-1.
+$$
 
-## 3. Abstract Bipartite Balance
-
-**Theorem 1 (Abstract bipartite balance).** Let $n \in \mathbb{N}$, let $p$ be any
-real number, and let $f : \{0, \ldots, n-1\} \to \mathbb{R}$ satisfy
-$f(n-1-k) = -f(k)$ for all $0 \le k < n$. Then
-$$\sum_{k=0}^{n-1} \big[f(k) > 0\big]\,f(k)^p
-\;=\;
-\sum_{k=0}^{n-1} \big[f(k) < 0\big]\,(-f(k))^p.$$
-
-*Proof.* Apply the reflection reindexing $k \mapsto n-1-k$ to the left-hand sum; this
-is a bijection of the summation range, so the value is unchanged:
-$$\sum_{k=0}^{n-1} \big[f(k) > 0\big]\,f(k)^p
-= \sum_{k=0}^{n-1} \big[f(n-1-k) > 0\big]\,f(n-1-k)^p.$$
-By hypothesis $f(n-1-k) = -f(k)$, so the reindexed term is
-$$\big[-f(k) > 0\big]\,(-f(k))^p = \big[f(k) < 0\big]\,(-f(k))^p,$$
-which is exactly the $k$-th term of the right-hand sum. A termwise case-split on the
-sign of $f(k)$ (positive, negative, or zero — the zero case contributing $0$ on both
-sides) confirms the equality term by term. Summing gives the claim. $\qquad\blacksquare$
-
-The proof uses no property of the values beyond the antisymmetry relation; in
-particular it holds for every real $p$ simultaneously, including non-integer and
-negative exponents (with the standard convention $0^p = 0$ for the vanishing base
-contributions). This is the reusable structural core of the paper.
-
-**Corollary 2 (Path balance).** For every $n$ and every real $p$,
-$$E_p^{+}(P_n) = E_p^{-}(P_n).$$
-
-*Proof.* The path spectrum satisfies the reflection identity
-$$\lambda_{n-1-k}
-= 2\cos\!\left(\frac{(n-k)\pi}{n+1}\right)
-= 2\cos\!\left(\pi - \frac{(k+1)\pi}{n+1}\right)
-= -2\cos\!\left(\frac{(k+1)\pi}{n+1}\right)
-= -\lambda_k,$$
-using $\cos(\pi - \theta) = -\cos\theta$. Thus $f(k) = \lambda_k$ satisfies the
-hypothesis of Theorem 1, and the conclusion is precisely $E_p^{+}(P_n) =
-E_p^{-}(P_n)$. $\qquad\blacksquare$
-
-**Non-vacuity.** The antisymmetry hypothesis is essential. The triangle $K_3$ has
-spectrum $\{2, -1, -1\}$, which is not reflection-antisymmetric; here $E_p^{+}(K_3) =
-2^p$ while $E_p^{-}(K_3) = 2 \cdot 1^p = 2$, so $E_p^{+} \ne E_p^{-}$ for all
-$p \ne 1$. Balance is genuinely a consequence of the spectral symmetry, not a formal
-triviality.
+**Bipartite graphs.** $G$ is *bipartite* if $V$ partitions into $V = X \sqcup Y$
+with every edge having one endpoint in each part. Equivalently $G$ has no odd
+cycle. A foundational fact of spectral graph theory is that $G$ is bipartite iff
+its spectrum is symmetric about $0$: $\lambda$ is an eigenvalue (with multiplicity
+$m$) iff $-\lambda$ is (with the same multiplicity). We encode this symmetry
+combinatorially below (Definition 5.1).
 
 ---
 
-## 4. Exact Evaluation at $p = 2$
+## 3. The extremal question
 
-**Lemma 3 (Trace identity).** For any simple graph $G$ on $n$ vertices,
-$$\sum_{k=0}^{n-1} \lambda_k^2 = 2\,|E(G)|.$$
+Fix $n$ and range over all connected graphs on $n$ vertices. We seek
+$$
+\min_{G\ \text{connected}} E_p^{+}(G).
+$$
+The path $P_n$ is the natural candidate minimizer: it is the sparsest connected
+shape (a tree), and its spectrum hugs the interval $(-2, 2)$ as tightly as a
+connected graph can. The following sections prove this minimality exactly at
+$p = 2$ and reduce the general $p \ge 2$ case to a majorization statement.
 
-*Proof.* The left side is $\operatorname{tr}(A(G)^2)$, whose diagonal entries count
-closed walks of length two from each vertex, i.e. the degree of the vertex. Hence
-$\operatorname{tr}(A(G)^2) = \sum_v \deg(v) = 2|E(G)|$ by the handshake
-lemma. $\qquad\blacksquare$
-
-**Theorem 4 (Exact path evaluation).** For every $n \ge 1$,
-$$E_2^{+}(P_n) = n - 1.$$
-
-*Proof.* Using $\cos^2\theta = \tfrac12(1 + \cos 2\theta)$,
-$$\sum_{k=0}^{n-1} \lambda_k^2
-= \sum_{k=0}^{n-1} 4\cos^2\!\left(\frac{(k+1)\pi}{n+1}\right)
-= 2n + 2\sum_{k=0}^{n-1} \cos\!\left(\frac{2(k+1)\pi}{n+1}\right).$$
-Reindexing $j = k+1$ gives the Dirichlet cosine sum
-$\sum_{j=1}^{n} \cos(2\pi j/(n+1))$. The full sum over a complete set of $(n+1)$-th
-roots of unity vanishes,
-$$\sum_{j=0}^{n} \cos\!\left(\frac{2\pi j}{n+1}\right)
-= \operatorname{Re}\!\sum_{j=0}^{n} e^{2\pi i j/(n+1)} = 0,$$
-so removing the $j=0$ term (equal to $1$) leaves
-$\sum_{j=1}^{n} \cos(2\pi j/(n+1)) = -1$. Therefore
-$$\sum_{k=0}^{n-1} \lambda_k^2 = 2n + 2(-1) = 2(n-1).$$
-By Corollary 2 with $p = 2$, the positive and negative $2$-energies are equal, and
-together they exhaust the sum of squares (no eigenvalue of $P_n$ is zero for the
-relevant indices, and any zero eigenvalue contributes $0$ to both). Hence
-$$E_2^{+}(P_n) = \tfrac12 \sum_{k=0}^{n-1} \lambda_k^2 = n-1.
-\qquad\blacksquare$$
-
-**Interpretation.** The path has $n-1$ edges, so Theorem 4 says the positive
-$2$-energy of the path equals its number of edges. This is a special case of the
-following general phenomenon.
-
-**Proposition 4$'$ ($p=2$ energy is edge count for bipartite graphs).** For a
-bipartite graph $G$, $E_2^{+}(G) = |E(G)|$.
-
-*Proof.* Bipartiteness gives $E_2^{+}(G) = E_2^{-}(G)$ (Theorem 1 via the ordered
-spectrum). These two quantities partition the sum of squares of all eigenvalues, which
-equals $2|E(G)|$ by Lemma 3. Hence each equals $|E(G)|$. $\qquad\blacksquare$
+We restrict the sharpest conclusions to **bipartite** graphs for a structural
+reason: only for bipartite graphs does the positive $p$-energy relate cleanly (by
+a factor of two) to the symmetric absolute energy, which is what our identity
+controls. The path is bipartite, so this is the natural class in which to state
+its extremality.
 
 ---
 
-## 5. Combinatorial Minimality at $p = 2$
+## 4. The squared-energy identity and path-minimality at $p = 2$
 
-**Theorem 5 (Connectivity edge bound).** Every connected simple graph $G$ on $n$
-vertices satisfies $|E(G)| \ge n-1$.
+### 4.1 Squared spectral energy equals twice the edge count
 
-*Proof.* A connected graph contains a spanning tree $T$ — a connected, acyclic
-subgraph on all $n$ vertices. A tree on $n$ vertices has exactly $n-1$ edges (by
-induction: removing a leaf reduces both the vertex count and edge count by one, down
-to the single-vertex base case with $0$ edges). Since $T \subseteq G$,
-$|E(G)| \ge |E(T)| = n-1$. $\qquad\blacksquare$
+**Theorem 4.1 (Squared-energy identity).**
+*For every finite simple graph $G$ with adjacency matrix $A$ and eigenvalues
+$\lambda_1, \dots, \lambda_n$,*
+$$
+\sum_{i=1}^{n} \lambda_i^2 \;=\; \operatorname{trace}(A^2) \;=\; \sum_{v \in V} \deg(v) \;=\; 2\,|E(G)|.
+$$
 
-**Corollary 6 (Path-minimality at $p=2$).** For every connected bipartite graph $G$
-on $n$ vertices,
-$$E_2^{+}(G) \ge E_2^{+}(P_n) = n-1,$$
-and the path $P_n$ attains equality.
+*Proof sketch.* We chain three equalities.
 
-*Proof.* By Proposition 4$'$, $E_2^{+}(G) = |E(G)|$; by Theorem 5,
-$|E(G)| \ge n-1$; by Theorem 4, $n-1 = E_2^{+}(P_n)$. The path is a tree, so
-$|E(P_n)| = n-1$, giving equality. $\qquad\blacksquare$
+*(a) $\sum_i \lambda_i^2 = \operatorname{trace}(A^2)$.* Since $A$ is real
+symmetric, the spectral theorem gives $A = U D U^{\mathsf T}$ with $U$ orthogonal
+and $D = \operatorname{diag}(\lambda_1,\dots,\lambda_n)$. Then
+$A^2 = U D^2 U^{\mathsf T}$, and the trace is invariant under conjugation
+(equivalently, cyclic:
+$\operatorname{trace}(U D^2 U^{\mathsf T}) = \operatorname{trace}(D^2 U^{\mathsf T} U) = \operatorname{trace}(D^2)$).
+As $D^2 = \operatorname{diag}(\lambda_1^2, \dots, \lambda_n^2)$, its trace is
+$\sum_i \lambda_i^2$.
 
-Thus, at the exponent $p = 2$, path-minimality of positive energy is *exactly* the
-elementary fact that a connected graph needs at least $n-1$ edges. The spectral
-question collapses onto a counting question, and the path wins because it is the
-sparsest connected graph.
+*(b) $\operatorname{trace}(A^2) = \sum_v \deg(v)$.* The $(v,v)$ diagonal entry of
+$A^2$ is $\sum_w A_{vw} A_{wv} = \sum_w A_{vw}^2$. Since entries are $0/1$,
+$A_{vw}^2 = A_{vw}$, so this sum counts the neighbors of $v$, i.e. equals
+$\deg(v)$. Summing the diagonal gives $\operatorname{trace}(A^2) = \sum_v \deg(v)$.
+(Combinatorially, $(A^2)_{vv}$ counts closed walks of length two from $v$, each of
+which goes to a neighbor and back.)
 
----
+*(c) $\sum_v \deg(v) = 2|E|$.* This is the handshake lemma: summing degrees counts
+each edge once from each of its two endpoints. $\qquad\blacksquare$
 
-## 6. Algorithms
+**Remark 4.2.** The identity is not a definitional rewrite: step (a) uses genuine
+spectral theory (orthogonal diagonalizability of symmetric matrices). It fails for
+non-symmetric $0/1$ matrices, where eigenvalues can be complex and
+$\sum \lambda_i^2 \ne \operatorname{trace}(A^2)$ in general is replaced by more
+delicate statements.
 
-We record the computational procedures underlying the numerical evidence.
+### 4.2 The tree bound
 
-**Algorithm A (Positive $p$-energy of a graph).** Given the adjacency matrix, compute
-the eigenvalues, retain the positive ones, raise each to the power $p$, and sum. Cost
-is dominated by the symmetric eigensolver, $O(n^3)$.
+**Lemma 4.3 (Connectivity forces $n-1$ edges).**
+*Every connected simple graph on $n \ge 1$ vertices has at least $n-1$ edges, i.e.
+$|E(G)| \ge n-1$. Equality holds iff $G$ is a tree.*
 
-**Algorithm B (Closed-form path energy).** Generate the path eigenvalues directly from
-$\lambda_k = 2\cos((k+1)\pi/(n+1))$ without forming a matrix; sum the positive $p$-th
-powers. Cost $O(n)$. This confirms Theorem 4 and Corollary 2 numerically.
+*Proof sketch.* A connected graph contains a spanning tree — a connected acyclic
+subgraph on all $n$ vertices — obtained, e.g., by repeatedly deleting an edge lying
+on a cycle until none remain, which cannot disconnect the graph. A tree on $n$
+vertices has exactly $n-1$ edges (by induction: a leaf and its edge can be removed,
+reducing both counts by one). Since the spanning tree is a subgraph,
+$|E(G)| \ge n-1$, with equality precisely when $G$ has no extra edges, i.e. $G$ is
+itself a tree. $\qquad\blacksquare$
 
-**Algorithm C (Bipartite balance checker).** Given any real spectrum, sort it, verify
-the reflection identity $\lambda_{n-1-k} = -\lambda_k$ to a tolerance, and compare
-$E_p^{+}$ against $E_p^{-}$. On bipartite spectra the two agree to machine precision;
-on $K_3$ they diverge, witnessing non-vacuity.
+### 4.3 Path-minimality of the squared energy
 
----
+Combining the identity with the tree bound gives the anchor result.
 
-## 7. Applications and Context
+**Theorem 4.4 (Path-minimality at $p = 2$).**
+*Let $G$ be a connected simple graph on $n = |V| \ge 1$ vertices. Then*
+$$
+\sum_{i=1}^{n} \lambda_i(G)^2 \;\ge\; 2(n-1) \;=\; \sum_{k=0}^{n-1} \lambda_k(P_n)^2.
+$$
+*That is, the path $P_n$ minimizes the squared spectral energy among connected
+graphs on $n$ vertices.*
 
-Positive $p$-energies interpolate between combinatorial and spectral invariants. At
-$p=2$ they reduce to edge counts (for bipartite graphs) and hence to the most basic
-connectivity statistics; for larger $p$ they weight the dominant eigenvalues, making
-them sensitive to spectral radius and to how spread out the spectrum is. Extremal
-questions for such functionals connect to:
+*Proof sketch.* By Theorem 4.1, $\sum_i \lambda_i(G)^2 = 2|E(G)|$. By Lemma 4.3,
+$|E(G)| \ge n-1$, so $\sum_i \lambda_i(G)^2 \ge 2(n-1)$. The path $P_n$ is
+connected with exactly $n-1$ edges, so its squared energy is $2(n-1)$, attaining
+the bound. (Section 6 verifies $\sum_k \lambda_k(P_n)^2 = 2(n-1)$ directly from the
+cosine closed form, independent of the edge count.) $\qquad\blacksquare$
 
-- **Mathematical chemistry**, where energy-type invariants track molecular stability
-  and where bipartite molecular graphs (alternant hydrocarbons) enjoy exactly the
-  pairing symmetry of Theorem 1.
-- **Network science**, where sparse connected structures (trees, paths) are baseline
-  models and extremal energy identifies the "least reactive" topology.
-- **Spectral majorization**, where comparing whole spectra under convex functionals is
-  the natural framework for the open $p \ge 2$ conjecture below.
-
-The Bipartite Balance Theorem also has a clean self-contained life outside graph
-theory: it is a statement about any real data vector symmetric under an order-reversing
-sign involution, asserting that its positive and negative power-sums are equal.
-
----
-
-## 8. Discussion and Future Work
-
-The exponent $p=2$ is fully resolved: positive energy is edge count for bipartite
-graphs, and path-minimality is the spanning-tree bound. The structural balance
-$E_p^{+} = E_p^{-}$ holds for all real $p$ and is the reusable heart of the theory.
-What remains is to upgrade the $p=2$ comparison to all $p \ge 2$.
-
-**Future Direction 1 — Full path-minimality for $p \ge 2$.** *Conjecture:* for every
-connected bipartite graph $G$ on $n$ vertices and every real $p \ge 2$,
-$E_p^{+}(G) \ge E_p^{+}(P_n)$, with equality iff $G$ is the path. The path has the
-most "spread-out yet smallest" spectrum among connected graphs: minimal spectral
-radius, and remaining positive eigenvalues filling $(0,2)$ as slowly as connectivity
-permits. Convexity of $x \mapsto x^p$ for $p \ge 2$ should convert this spectral
-spreading into an energy inequality via majorization of the positive part of the
-spectrum. The exact $p=2$ identity and the reflection description of bipartite spectra
-pinpoint precisely which spectral comparison must be lifted from $p=2$ to $p \ge 2$.
-
-**Future Direction 2 — Uniqueness and the runner-up.** *Conjecture:* the path is the
-unique minimizer for every $p > 2$, and the second-smallest value is attained by a
-"broom" (path with a relocated pendant edge). Equality at $p=2$ forces the edge count
-$n-1$, characterizing trees; strict convexity for $p>2$ breaks all ties except the
-path. Identifying the runner-up asks how a single local tree modification perturbs the
-whole positive spectrum — a stability/spectral-gap refinement of bare extremality.
-
-**Future Direction 3 — A $p$-energy isoperimetric sandwich.** *Conjecture:* for
-bipartite graphs with fixed part sizes $a, b$, positive $p$-energy is minimized by the
-balanced caterpillar ("double path") and maximized by the complete bipartite graph
-$K_{a,b}$, for all $p \ge 2$. Positive $p$-energy behaves like a convex isoperimetric
-functional: adding edges pushes spectral mass toward the extreme eigenvalue
-$\sqrt{ab}$ of $K_{a,b}$, while sparsifying spreads it toward zero. The exact path
-evaluation gives one calibrated endpoint and the single dominant eigenvalue of
-$K_{a,b}$ the other, making the intermediate ordering a well-posed target.
+**Remark 4.5 (Non-vacuity).** Connectivity is essential. The empty graph on
+$n \ge 2$ vertices has all eigenvalues $0$, so $\sum_i \lambda_i^2 = 0 < 2(n-1)$;
+without connectivity the bound is false. The theorem's content is exactly that
+connectivity, and nothing more, forces the path's energy.
 
 ---
 
-## 9. Conclusion
+## 5. Bipartite symmetry: positive energy as half a Schatten norm
 
-We have shown that the balance of positive and negative $p$-energies is a universal
-consequence of reflection antisymmetry of a spectrum — the spectral fingerprint of
-bipartiteness — and used it, at $p=2$, to prove that the path graph minimizes positive
-energy among connected bipartite graphs, with the exact value $E_2^{+}(P_n) = n-1$.
-The concrete path result is one instance of a general involution principle; the
-remaining challenge, to extend minimality to all $p \ge 2$, is now sharply posed as a
-spectral majorization problem.
+Theorem 4.4 controls the *total* squared energy $\sum_i \lambda_i^2$. To descend to
+the *positive* energy $E_2^{+}$ we exploit the sign symmetry of bipartite spectra.
+We phrase the symmetry combinatorially, so that it applies to any ordered real
+spectrum, not just to graph eigenvalues.
+
+**Definition 5.1 (Reflection-antisymmetric spectrum).**
+A finite real spectrum, given as values $f(0), f(1), \dots, f(n-1)$ of a function
+$f : \{0, \dots, n-1\} \to \mathbb{R}$, is *reflection-antisymmetric* if
+$$
+f(n-1-k) = -\,f(k) \qquad \text{for all } 0 \le k < n.
+$$
+The ordered adjacency spectrum of a bipartite graph is reflection-antisymmetric:
+pairing the $k$-th largest eigenvalue with the $k$-th smallest realizes the
+$\lambda \leftrightarrow -\lambda$ symmetry. For the path, this is visible directly
+from the closed form, since
+$2\cos\!\big(\tfrac{(n-k)\pi}{n+1}\big) = -\,2\cos\!\big(\tfrac{(k+1)\pi}{n+1}\big)$.
+
+**Theorem 5.2 (Bipartite balance).**
+*Let $f$ be a reflection-antisymmetric spectrum on $\{0, \dots, n-1\}$ and let
+$p \in \mathbb{R}$ be any exponent. Then the positive and negative $p$-energies
+coincide:*
+$$
+\sum_{k:\ f(k) > 0} f(k)^{\,p} \;=\; \sum_{k:\ f(k) < 0} (-f(k))^{\,p}.
+$$
+
+*Proof sketch.* Reindex the negative-side sum by the reflection $k \mapsto n-1-k$,
+a bijection of $\{0, \dots, n-1\}$ onto itself. Under it $f(k) < 0$ becomes
+$f(n-1-k) = -f(k) > 0$, and the summand $(-f(k))^p$ becomes
+$(-f(n-1-k))^p = (f(k))^p$ wait — carefully: after substitution the negative-side
+term at index $n-1-k$ equals $(-f(n-1-k))^p = (f(k))^p$ evaluated where $f(k) > 0$.
+Thus the reflected negative-side sum is termwise identical to the positive-side
+sum. Formally, reflecting the summation index and applying the antisymmetry
+$f(n-1-k) = -f(k)$ turns each negative-side contribution into the matching
+positive-side contribution, so the two sums are equal. $\qquad\blacksquare$
+
+**Theorem 5.3 (Positive energy is half the Schatten energy).**
+*Let $f$ be a spectrum on $\{0, \dots, n-1\}$ and let $p \ne 0$. Then the absolute
+$p$-energy splits as*
+$$
+\sum_{k} |f(k)|^{\,p} \;=\; \Big(\sum_{f(k)>0} f(k)^p\Big) + \Big(\sum_{f(k)<0} (-f(k))^p\Big) \;=\; E_p^{+} + E_p^{-}.
+$$
+*If in addition $f$ is reflection-antisymmetric (bipartite), then*
+$$
+\sum_{k} |f(k)|^{\,p} \;=\; 2\,E_p^{+}, \qquad\text{equivalently}\qquad E_p^{+} = \tfrac12 \sum_{k} |f(k)|^{\,p}.
+$$
+
+*Proof sketch.* For the split, partition the index set by the sign of $f(k)$ into
+positive, negative, and zero parts. On the positive part $|f(k)|^p = f(k)^p$; on
+the negative part $|f(k)|^p = (-f(k))^p$; on the zero part $|f(k)|^p = 0^p = 0$
+because $p \ne 0$. Summing gives $E_p^{+} + E_p^{-}$. The hypothesis $p \ne 0$ is
+load-bearing: at $p = 0$ the convention $0^0 = 1$ makes each zero eigenvalue
+contribute $1$ to the left side but $0$ to both signed energies, so the split fails
+whenever a zero eigenvalue is present (e.g. paths of odd order). Given the split,
+apply Theorem 5.2 to replace $E_p^{-}$ by $E_p^{+}$, yielding
+$\sum_k |f(k)|^p = 2 E_p^{+}$. $\qquad\blacksquare$
+
+**Corollary 5.4 (Bipartite path-minimality of positive $2$-energy).**
+*Let $G$ be a connected bipartite graph on $n \ge 1$ vertices. Then*
+$$
+E_2^{+}(G) \;=\; |E(G)| \;\ge\; n-1 \;=\; E_2^{+}(P_n).
+$$
+*The path $P_n$ minimizes the positive $2$-energy among connected bipartite graphs
+on $n$ vertices, with minimum value $n-1$.*
+
+*Proof sketch.* Apply Theorem 5.3 with $p = 2$ to the (bipartite,
+reflection-antisymmetric) spectrum of $G$:
+$\sum_k |\lambda_k|^2 = 2 E_2^{+}(G)$. But $\sum_k |\lambda_k|^2 = \sum_k \lambda_k^2 = 2|E(G)|$
+by Theorem 4.1, so $E_2^{+}(G) = |E(G)|$. Lemma 4.3 gives $|E(G)| \ge n-1$, and
+$P_n$ (bipartite, connected, $n-1$ edges) attains equality with
+$E_2^{+}(P_n) = n-1$. $\qquad\blacksquare$
+
+---
+
+## 6. Closed-form consistency check
+
+The path spectrum admits the closed form $\lambda_k(P_n) = 2\cos((k+1)\pi/(n+1))$,
+$k = 0, \dots, n-1$. We verify that the direct sum-of-squares matches the
+combinatorial value $2(n-1)$ from Theorem 4.4, providing an independent check.
+
+**Proposition 6.1.** *For every $n \ge 1$,*
+$$
+\sum_{k=0}^{n-1} \Big(2\cos\tfrac{(k+1)\pi}{n+1}\Big)^2 \;=\; 2(n-1).
+$$
+
+*Proof sketch.* Using $4\cos^2\theta = 2 + 2\cos 2\theta$,
+$$
+\sum_{k=0}^{n-1} 4\cos^2\!\tfrac{(k+1)\pi}{n+1}
+= 2n + 2\sum_{k=0}^{n-1}\cos\tfrac{2(k+1)\pi}{n+1}.
+$$
+The remaining cosine sum is a Dirichlet kernel evaluated at nonzero frequency: the
+$n+1$-st roots of unity sum to zero, so $\sum_{j=0}^{n}\cos\tfrac{2\pi j}{n+1} = 0$;
+removing the $j=0$ term (value $1$) leaves
+$\sum_{k=0}^{n-1}\cos\tfrac{2(k+1)\pi}{n+1} = -1$. Hence the total is
+$2n + 2(-1) = 2(n-1)$. $\qquad\blacksquare$
+
+This reconciles the two derivations: the closed-form cosine computation and the
+"edges $\times 2$" combinatorial identity both give $2(n-1)$, as they must, since
+both compute the squared spectral energy of the same graph.
+
+---
+
+## 7. Algorithms
+
+We describe the procedures used to compute and verify the quantities above.
+
+**Algorithm A (Squared energy via edges).** *Input:* a graph $G$. *Output:*
+$\sum_i \lambda_i^2$. By Theorem 4.1 this is simply $2|E(G)|$; the algorithm counts
+edges in $O(|V| + |E|)$ time — no eigenvalue computation is needed. This is the
+practical payoff of the identity: a spectral quantity computed combinatorially.
+
+**Algorithm B (Positive $p$-energy from the spectrum).** *Input:* symmetric matrix
+$A$, exponent $p$. *Output:* $E_p^{+}$. Diagonalize $A$ (cost $O(n^3)$), then sum
+$\lambda^p$ over positive eigenvalues. For bipartite $A$ one may instead compute
+$\tfrac12 \sum_k |\lambda_k|^p$ (Theorem 5.3), halving the bookkeeping and improving
+numerical symmetry.
+
+**Algorithm C (Extremal sweep).** *Input:* $n$, exponent $p$. *Output:* the minimum
+of $E_p^{+}$ over connected graphs on $n$ vertices, and a minimizer. Enumerate
+connected graphs (or a certified family), compute $E_p^{+}$ for each, and return the
+minimum. The theory predicts the path attains it at $p = 2$; the sweep provides
+empirical support for the conjectured $p \ge 2$ extension.
+
+---
+
+## 8. Applications
+
+- **Chemical graph theory.** Graph energies model $\pi$-electron energies of
+  conjugated molecules. Extremal energies bound the range of stability among
+  isomeric carbon skeletons; the path corresponds to a linear polyene, the least
+  energetic connected topology at $p = 2$.
+- **Network science.** The identity $\sum_i \lambda_i^2 = 2|E|$ ties a spectral
+  "complexity" measure to raw edge density, giving a zero-cost proxy for spectral
+  spread.
+- **Machine learning on graphs.** Schatten-type spectral norms are used as
+  regularizers; recognizing positive $p$-energy as half a Schatten norm on
+  bipartite data lets one import the full norm-optimization toolkit and identify
+  the sparsest (path-like) minimizers.
+
+---
+
+## 9. Discussion
+
+The organizing insight is that the exponent $p = 2$ is an *anchor* where the
+positive energy degenerates into a combinatorial count. Theorem 4.1 makes this
+precise: squared spectral energy is twice the edges. Everything extremal at $p = 2$
+then reduces to the elementary tree bound. Bipartiteness supplies exactly the
+symmetry (Definition 5.1, Theorems 5.2–5.3) needed to pass from total energy to
+positive energy without loss, revealing positive energy as half a Schatten norm.
+
+Two subtleties deserve emphasis. First, the $p \ne 0$ hypothesis in Theorem 5.3 is
+genuinely necessary, not a convenience: the $0^0$ anomaly at a zero eigenvalue
+breaks the split, and paths of odd order carry such an eigenvalue. Second,
+connectivity is indispensable in Theorem 4.4; disconnected graphs (e.g. the empty
+graph) violate the bound, confirming the result is not vacuous.
+
+---
+
+## 10. Future directions
+
+**Full path-minimality of positive $p$-energy via spectral majorization.**
+For every connected bipartite graph on $n$ vertices and every real exponent
+$p \ge 2$, the positive $p$-energy $\sum_{\lambda>0}\lambda^p$ should be minimized
+by the path $P_n$. The key insight is that the ordered positive part of the
+adjacency spectrum of any connected graph *majorizes* that of the path in the
+Hardy–Littlewood–Pólya sense, and $t \mapsto t^p$ is convex for $p \ge 2$, so
+Karamata's inequality transports the majorization into the energy inequality. The
+$p = 2$ anchor is settled exactly (positive energy equals the edge count, which the
+spanning-tree bound minimizes), so the remaining task is the upgrade from one fixed
+exponent to the whole convex family.
+
+**Uniqueness of the path as the strict minimizer.**
+Beyond the inequality, the path should be the *unique* connected minimizer of
+positive $p$-energy for $p > 2$. Equality in Karamata's inequality for a strictly
+convex power forces the two spectra to coincide, and only the path realizes the
+extremal interlacing pattern of positive eigenvalues among connected graphs. Strict
+convexity of $t \mapsto t^p$ for $p > 2$ is elementary, so uniqueness reduces to a
+finite rigidity statement about which connected graphs share the path's positive
+spectrum.
+
+**Sharp two-sided Schatten sandwich for bipartite graphs.**
+For a connected bipartite graph the positive $p$-energy equals exactly one half of
+the Schatten $p$-energy $\sum_k |\lambda_k|^p$, so extremal questions for positive
+energy are extremal questions for a Schatten norm — squeezed between the path
+(minimizer) and the complete bipartite graph (maximizer). The halving identity is
+already isolated, so both extremes can be attacked with the same toolkit.
+
+**Spectral-radius transfer at large exponent.**
+As $p$ grows the positive $p$-energy is dominated by the largest eigenvalue, so
+path-minimality for large $p$ should follow from the fact that the path minimizes
+the spectral radius among connected graphs on $n$ vertices, with
+$\lambda_{\max}(P_n) = 2\cos(\pi/(n+1))$. Since $E_p^{+}(G)^{1/p} \to \lambda_{\max}(G)$
+and subleading terms are uniformly controlled, a spectral-radius lower bound plus a
+tail estimate yields the energy inequality for all sufficiently large $p$.
+
+---
+
+## 11. Conclusion
+
+We have established an exact, elementary foundation for the extremal theory of
+positive $p$-energies. The squared-energy identity $\sum_i \lambda_i^2 = 2|E(G)|$
+turns a spectral quantity into an edge count; the tree bound then delivers
+path-minimality at $p = 2$; and bipartite reflection symmetry recasts positive
+energy as half a Schatten norm, yielding
+$E_2^{+}(G) = |E(G)| \ge n-1 = E_2^{+}(P_n)$ for connected bipartite graphs. These
+anchors localize the remaining difficulty — the full $p \ge 2$ inequality — to a
+clean majorization problem, charting a concrete path forward.
